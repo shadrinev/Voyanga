@@ -30,7 +30,7 @@ class SiteController extends Controller {
      * This is the action to handle external exceptions.
      */
     public function actionError() {
-        if ( $error = Yii::app()->errorHandler->error ){
+        if ( $error = Yii::app()->errorHandler->error ) {
             if ( Yii::app()->request->isAjaxRequest ) echo $error['message'];
             else $this->render( 'error', $error );
         }
@@ -41,9 +41,9 @@ class SiteController extends Controller {
      */
     public function actionContact() {
         $model = new ContactForm();
-        if ( isset( $_POST['ContactForm'] ) ){
+        if ( isset( $_POST['ContactForm'] ) ) {
             $model->attributes = $_POST['ContactForm'];
-            if ( $model->validate() ){
+            if ( $model->validate() ) {
                 $headers = "From: {$model->email}\r\nReply-To: {$model->email}";
                 mail( Yii::app()->params['adminEmail'], $model->subject, $model->body, $headers );
                 Yii::app()->user->setFlash( 'contact', 'Thank you for contacting us. We will respond to you as soon as possible.' );
@@ -61,13 +61,13 @@ class SiteController extends Controller {
         $model = new LoginForm();
         
         // if it is ajax validation request
-        if ( isset( $_POST['ajax'] ) && $_POST['ajax'] === 'login-form' ){
+        if ( isset( $_POST['ajax'] ) && $_POST['ajax'] === 'login-form' ) {
             echo CActiveForm::validate( $model );
             Yii::app()->end();
         }
         
         // collect user input data
-        if ( isset( $_POST['LoginForm'] ) ){
+        if ( isset( $_POST['LoginForm'] ) ) {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ( $model->validate() && $model->login() ) $this->redirect( Yii::app()->user->returnUrl );
@@ -85,30 +85,52 @@ class SiteController extends Controller {
         $this->redirect( Yii::app()->homeUrl );
     }
     
+    public function actionPassport() {
+        $model = new PassportForm();
+        $form = new CForm( 'application.views.site.passportForm', $model );
+        if ( $form->submitted( 'smb' ) && $form->validate() ) {
+            echo '#####jjjjjj####';
+            $ar_model = new Passport();
+            
+            $ar_model->attributes = $model->attributes;
+            $ar_model->save();
+            print_r( $ar_model->attributes );
+            $this->render( 'passport', array(
+                    'form' => $form, 
+                    'message' => 'all right' ) );
+        } else {
+            
+            echo '#####kkkjjj####';
+            print_r( $model->errors );
+            $this->render( 'passport', array(
+                    'form' => $form ) );
+        }
+    
+    }
+    
     public function actionTest() {
         //$country = new Country();
-        
-
-        $aParams = array(
+        $oFlightSearchParams = new FlightSearchParams();
+        $oFlightSearchParams->addRoute( array(
                 'adult_count' => 5, 
                 'child_count' => 2, 
                 'infant_count' => 0, 
-                'flight_class' => 'E', 
-                'flights' => array(
-                        array(
-                                'departure_city_id' => 5185, 
-                                'arrival_city_id' => 4466, 
-                                'departure_date' => '21.05.2012' ), 
-                        array(
-                                'departure_city_id' => 5185, 
-                                'arrival_city_id' => 4466, 
-                                'departure_date' => '21.05.2012' ) ) );
-        
+                'departure_city_id' => 5185, 
+                'arrival_city_id' => 4466, 
+                'departure_date' => '21.05.2012' ) );
+        $oFlightSearchParams->addRoute( array(
+                'adult_count' => 5, 
+                'child_count' => 2, 
+                'infant_count' => 0, 
+                'departure_city_id' => 4466, 
+                'arrival_city_id' => 5185, 
+                'departure_date' => '30.05.2012' ) );
+        $oFlightSearchParams->flight_class = 'E';
         $fs = new FlightSearch();
         $fs->status = 1;
         $fs->request_id = '1';
         $fs->data = '{}';
-        $fs->sendRequest( $aParams );
+        $fs->sendRequest( $oFlightSearchParams );
         echo get_class( $fs->oFlightVoyageStack->aFlightVoyages[0] );
         //echo json_encode($fs->oFlightVoyageStack);
         //$fs->save();
@@ -119,12 +141,13 @@ class SiteController extends Controller {
         //echo 1;
         //$fs->test = 'tst';
         $logRouter = Yii::app()->log;
-        $logRouter->routes[1]->setLogFile('info2.log');
+        $logRouter->routes[1]->setLogFile( 'info2.log' );
         
         //$logRouter->routes[2]->enabled = false;
         Yii::log( 'Hello people!!!', 'info', 'application' );
+        
         $this->render( 'test', array(
-                'sText' => 'hh'.print_r(Yii::app()->gdsAdapter), 
+                'sText' => 'hh' . print_r( Yii::app()->gdsAdapter ), 
                 'flightStack' => $fs->oFlightVoyageStack ) );
     }
     

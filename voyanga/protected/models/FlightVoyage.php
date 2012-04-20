@@ -9,6 +9,7 @@ class FlightVoyage {
     public $price;
     public $taxes;
     public $flight_key;
+    public $airline_id;
     public $commission;
     public $aFlights;
     public $oAdultPassengerInfo;
@@ -26,28 +27,32 @@ class FlightVoyage {
         $lastArrTime = 0;
         $lastCityToId = 0;
         $bStart = true;
-        if ( $oParams->parts ){
-            foreach( $oParams->parts as $iGroupId => $aParts ){
+        if ( $oParams->parts ) {
+            foreach( $oParams->parts as $iGroupId => $aParts ) {
                 $iIndPart = 0;
                 $this->aFlights[$iGroupId] = new Flight();
-               
-                foreach( $aParts as $oPartParams ){
+                
+                foreach( $aParts as $oPartParams ) {
                     $oPart = new FlightPart( $oPartParams );
                     $this->aFlights[$iGroupId]->addPart( $oPart );
-                
+                    if(!$this->airline_id) {
+                        $this->airline_id = $oPart->airline_id;
+                    }
                 }
             }
-        }else
+        } else {
             throw new CException( Yii::t( 'application', 'Required param $oParams->parts not set.' ) );
+        }
     
     }
     
     public function getFullDuration() {
         $iFullDuration = 0;
-        foreach( $this->aFlights as $oFlight ){
+        foreach( $this->aFlights as $oFlight ) {
             $iFullDuration += $oFlight->fullDuration;
         }
         return $iFullDuration;
     }
+    
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 class Airline extends CActiveRecord {
     public $id;
     public $code;

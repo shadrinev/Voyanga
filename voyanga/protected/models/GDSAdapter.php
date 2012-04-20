@@ -1,4 +1,10 @@
 <?php
+/**
+ * GDSAdapter class
+ * Frontend layer GDS adapter
+ * @author oleg
+ *
+ */
 class GDSAdapter extends CApplicationComponent {
     public function FlightSearch( $aParams ) {
         $sData = file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/flightsearch.json' );

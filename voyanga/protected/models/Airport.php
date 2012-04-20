@@ -1,4 +1,10 @@
 <?php
+/**
+ * Airport class
+ * Information about airport
+ * @author oleg
+ *
+ */
 class Airport extends CActiveRecord {
     public $id;
     public $code;

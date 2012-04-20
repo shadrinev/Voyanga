@@ -1,4 +1,10 @@
 <?php
+/**
+ * City class
+ * Contain information about city
+ * @author oleg
+ *
+ */
 class City extends CActiveRecord {
     public $id;
     public $code;
@@ -31,5 +37,4 @@ class City extends CActiveRecord {
             return parent::__get( $name );
         }
     }
-
 }

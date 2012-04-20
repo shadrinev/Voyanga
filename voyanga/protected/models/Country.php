@@ -1,4 +1,10 @@
 <?php
+/**
+ * Country class
+ * Contain information about country
+ * @author oleg
+ *
+ */
 class Country extends CActiveRecord {
     public $id;
     public $code;

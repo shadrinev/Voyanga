@@ -107,15 +107,20 @@ return array(
                                         'class' => 'CEmailLogRoute', 
                                         'levels' => 'error, warning', 
                                         'emails' => 'maximov@danechka.com' ) )// uncomment the following to show log messages on web pages
-                        /*
-				array(
-					'class'=>'CWebLogRoute',
-				),
-				*/
                          ) ), 
         
         // application-level parameters that can be accessed
         // using Yii::app()->params['paramName']
         'params' => array(
                 // this is used in contact page
-                'adminEmail' => 'webmaster@example.com' ) );
+                'adminEmail' => 'webmaster@example.com',
+                //Time in secontds for searching results from cache
+                'flight_search_cache_time'=>3600 * 3,
+                //Price factor for flight optimal
+                'flight_price_factor'=>100,
+                //Time factor for flight optimal
+                'flight_time_factor'=>70,
+                         
+                         
+                         
+                         ) );
