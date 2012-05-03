@@ -5,42 +5,52 @@
  * @author oleg
  *
  */
-class GDSAdapter extends CApplicationComponent {
-    public function FlightSearch( $aParams ) {
-        $sData = file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/flightsearch.json' );
-        $sStatus = 'ok';
-        $sDescription = '';
-        if ( $sData ){
-            $sJdata = json_decode( file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/flightsearch.json' ) );
-            if ( !$sJdata->section ){
-                $sStatus = 'error';
-                $sDescription = 'Error input parameters';
+class GDSAdapter extends CApplicationComponent
+{
+    public function flightSearch($params)
+    {
+        $data = file_get_contents($_SERVER["DOCUMENT_ROOT"] . '/flightsearch.json');
+        $status = 'ok';
+        $description = '';
+        if ($data)
+        {
+            $jData = json_decode(file_get_contents($_SERVER["DOCUMENT_ROOT"] . '/flightsearch.json'));
+            if (!$jData->section)
+            {
+                $status = 'error';
+                $description = 'Error input parameters';
             }
-        }else{
-            $sStatus = 'error';
-            $sDescription = 'Cant connect to remote GDS Adapter';
+        } else
+        {
+            $status = 'error';
+            $description = 'Cant connect to remote GDS Adapter';
         }
-        if ( $sStatus == 'error' ){
-            throw new CException( Yii::t( 'application', 'Problem in FlightSearch request. Reason: {description}', array(
-                    '{description}' => $sDescription ) ) );
+        if ($status == 'error')
+        {
+            throw new CException(Yii::t('application', 'Problem in FlightSearch request. Reason: {description}', array(
+                '{description}' => $description)));
             return FALSE;
-        }else
-            return $sJdata;
+        } else
+            return $jData;
     }
-    
-    public function FlightBooking() {
+
+    public function flightBooking()
+    {
 
     }
-    
-    public function FlightTariffRules() {
+
+    public function flightTariffRules()
+    {
 
     }
-    
-    public function FlightTicketing() {
+
+    public function flightTicketing()
+    {
 
     }
-    
-    public function FlightVoid() {
+
+    public function flightVoid()
+    {
 
     }
 }
