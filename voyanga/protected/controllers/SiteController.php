@@ -152,7 +152,7 @@ class SiteController extends Controller {
         //echo 1;
         //$fs->test = 'tst';
         $logRouter = Yii::app()->log;
-        $logRouter->routes[1]->setLogFile( 'info2.log' );
+        $logRouter->routes[1]->setLogFile( 'info2.log' );//test
         
         //$logRouter->routes[2]->enabled = false;
         Yii::log( 'Hello people!!!', 'info', 'application' );
