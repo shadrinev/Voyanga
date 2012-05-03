@@ -4,15 +4,19 @@ class m120503_123548_inital_db extends CDbMigration
 {
 	public function up()
 	{
-        $sql = "CREATE  TABLE IF NOT EXISTS `airline` (
-              `id` INT NOT NULL AUTO_INCREMENT ,
-              `position` INT NOT NULL DEFAULT 0 ,
-              `code` VARCHAR(5) NOT NULL ,
-              `localRu` VARCHAR(45) NULL ,
-              `sLocalEn` VARCHAR(45) NULL ,
-              PRIMARY KEY (`id`) )
-            ENGINE = InnoDB";
-        $this->execute($sql);
+        $this->renameColumn('airline', 'local_ru', 'localRu');
+        $this->renameColumn('airline', 'local_en', 'localEn');
+        
+        $this->renameColumn('airport', 'local_ru', 'localRU');
+        $this->renameColumn('airport', 'local_en', 'localEn');
+        $this->renameColumn('airport', 'city_id', 'cityId');
+        
+        $this->renameColumn('city', 'local_ru', 'localRU');
+        $this->renameColumn('city', 'local_en', 'localEn');
+        $this->renameColumn('city', 'country_id', 'countryId');
+        
+        $this->renameColumn('country', 'local_ru', 'localRU');
+        $this->renameColumn('country', 'local_en', 'localEn');
 	}
 
 	public function down()

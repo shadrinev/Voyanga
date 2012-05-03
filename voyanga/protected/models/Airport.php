@@ -39,6 +39,11 @@ class Airport extends CActiveRecord {
         }
     }
     
+    public function beforeFind()
+    {
+        parent::query($criteria);
+    }
+    
     public function tableName() {
         return 'airport';
     }
