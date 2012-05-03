@@ -6,9 +6,9 @@
  *
  */
 class Flight {
-    public $aFlightParts = array();
-    public $aTransits = array();
-    public $departure_city_id;
+    public $flightParts = array();
+    public $transits = array();
+    public $departureCityId;
     public $arrival_city_id;
     public $departure_date;
     public $fullDuration = 0;
@@ -17,19 +17,19 @@ class Flight {
     
     public function addPart( FlightPart $oPart ) {
         if($oPart instanceof FlightPart){
-            if ( !$this->aFlightParts ) {
-                $this->aFlightParts[] = $oPart;
-                $this->departure_city_id = $oPart->departure_city_id;
+            if ( !$this->flightParts ) {
+                $this->flightParts[] = $oPart;
+                $this->departureCityId = $oPart->departureCityId;
                 $this->arrival_city_id = $oPart->arrival_city_id;
                 $this->departure_date = $oPart->datetimeBegin;
             } else {
-                $oLastPart = &$this->aFlightParts[count( $this->aFlightParts ) - 1];
+                $oLastPart = &$this->flightParts[count( $this->flightParts ) - 1];
                 $aTransit = array();
                 $aTransit['time_for_transit'] = $oPart->timestampBegin - $oLastPart->timestampEnd;
-                $aTransit['city_id'] = $oPart->departure_city_id;
+                $aTransit['city_id'] = $oPart->departureCityId;
                 $this->arrival_city_id = $oPart->arrival_city_id;
-                $this->aTransits[] = $aTransit;
-                $this->aFlightParts[] = $oPart;
+                $this->transits[] = $aTransit;
+                $this->flightParts[] = $oPart;
                 $this->fullDuration += $aTransit['time_for_transit'];
             }
             $this->fullDuration += $oPart->duration;

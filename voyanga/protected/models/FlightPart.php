@@ -6,7 +6,7 @@
  *
  */
 class FlightPart {
-    public $iDepartureCityId;
+    public $departureCityId;
     public $iArrivalCityId;
     public $sAirlineCode;
     public $sTransportAirlineCode;
