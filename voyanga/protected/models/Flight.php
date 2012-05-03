@@ -20,14 +20,14 @@ class Flight {
             if ( !$this->flightParts ) {
                 $this->flightParts[] = $oPart;
                 $this->departureCityId = $oPart->departureCityId;
-                $this->arrival_city_id = $oPart->arrival_city_id;
+                $this->arrival_city_id = $oPart->arrivalCityId;
                 $this->departure_date = $oPart->datetimeBegin;
             } else {
                 $oLastPart = &$this->flightParts[count( $this->flightParts ) - 1];
                 $aTransit = array();
                 $aTransit['time_for_transit'] = $oPart->timestampBegin - $oLastPart->timestampEnd;
                 $aTransit['city_id'] = $oPart->departureCityId;
-                $this->arrival_city_id = $oPart->arrival_city_id;
+                $this->arrival_city_id = $oPart->arrivalCityId;
                 $this->transits[] = $aTransit;
                 $this->flightParts[] = $oPart;
                 $this->fullDuration += $aTransit['time_for_transit'];
