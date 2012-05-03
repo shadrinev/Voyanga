@@ -26,7 +26,8 @@ return array(
                         'password' => 'a1a2a3a4', 
                         // If removed, Gii defaults to localhost only. Edit carefully to taste.
                         'ipFilters' => array(
-                                '192.168.0.74', 
+                                '192.168.0.74',
+                                '192.168.0.8',
                                 '::1' ) ), 
                 'gds' ), 
         
@@ -46,19 +47,10 @@ return array(
 			),
 		),
 		*/
-                'db' => array(
-                        'connectionString' => 'mysql:host=localhost;dbname=search', 
-                        'username' => 'oleg', 
-                        'password' => 'q1w2e3r4', 
-                        'charset' => 'utf8', 
-                        'emulatePrepare' => true ),  // необходимо для некоторых версий инсталляций MySQL
-                'logdb' => array(
-                        'class' => 'CDbConnection', 
-                        'connectionString' => 'mysql:host=localhost;dbname=logdb', 
-                        'username' => 'oleg', 
-                        'password' => 'q1w2e3r4', 
-                        'charset' => 'utf8', 
-                        'emulatePrepare' => true ),  // необходимо для некоторых версий инсталляций MySQL
+                'db' => require 'db.php',
+
+                'logdb' => require 'log_db.php',
+
                 'cache' => array(
                         'class' => 'CMemCache', 
                         'servers' => array(
