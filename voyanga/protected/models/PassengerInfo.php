@@ -1,6 +1,6 @@
 <?php
-class PassengerInfo {
+class PassengerInfo
+{
     public $count = 0;
-    public $oPriceDetail;
-
+    public $priceDetail;
 }

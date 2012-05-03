@@ -1,15 +1,15 @@
 <?php
-class Passenger{
-    /*
-     * iType:
-     * 1 - adult
-     * 2 - child
-     * 3 - infant
-     */
-    public $iType;
-    public $oPassport;
-    
-    public function checkValid(){
+class Passenger
+{
+    const TYPE_ADULT = 1;
+    const TYPE_CHILD = 2;
+    const TYPE_INFANT = 3;
+
+    public $type;
+    public $passport;
+
+    public function checkValid()
+    {
         return true;
     }
 }
