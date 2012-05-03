@@ -3,6 +3,7 @@
  * Database connection settings
  */
 return array(
+    'class' => 'CDbConnection',
     'connectionString' => 'mysql:host=localhost;dbname=logdb',
     'emulatePrepare' => true,
     'username' => 'oleg',
