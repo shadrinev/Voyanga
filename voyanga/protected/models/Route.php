@@ -1,44 +1,73 @@
 <?php
 /**
  * Route class
- * Class for save and load routes for flight 
+ * Class for save and load routes for flight
  * @author oleg
  *
+ * The followings are the available columns in table 'route':
+ * @property integer $id
+ * @property integer $searchId
+ * @property integer $departureCityId
+ * @property integer $departureAirportId
+ * @property string $departureDate
+ * @property integer $arrivalCityId
+ * @property integer $arrivalAirportId
+ * @property integer $adultCount
+ * @property integer $childCount
+ * @property integer $infantCount
+ *
+ * The followings are the available model relations:
+ * @property FlightSearch $search
+ * @property City $departureCity
+ * @property City $arrivalCity
  */
-class Route extends CActiveRecord {
-    public $id;
-    public $search_id;
-    public $departure_city_id;
-    public $departure_airport_id;
-    public $departure_date;
-    public $arrival_city_id;
-    public $arrival_airport_id;
-    public $adult_count = 0;
-    public $child_count = 0;
-    public $infant_count = 0;
-    private $departure_city;
-    private $arrival_city;
-    
-    public static function model( $className = __CLASS__ ) {
-        return parent::model( $className );
-    }
-    
-    public function tableName() {
-        return 'route';
-    }
-    
-    public function __get( $name ) {
-        if ( $name == 'departure_city' || $name == 'arrival_city' ) {
-            if ( !$this->$name ) {
-                $this->$name = City::model()->findByPk( $this->{$name . '_id'} );
-                if ( !$this->$name ) throw new CException( Yii::t( 'application', '{var_name} not found. City with id {city_id} not set in db.', array(
-                        '{var_name}' => $name, 
-                        '{city_id}' => $this->{$name . '_id'} ) ) );
-            }
-            return $this->$name;
-        } else {
-            return $this->$name;
-        }
+class Route extends CActiveRecord
+{
+    /**
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return Route the static model class
+     */
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
     }
 
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'route';
+    }
+
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('searchId, departureCityId, departureAirportId, arrivalCityId, arrivalAirportId, adultCount, childCount, infantCount', 'numerical', 'integerOnly'=>true),
+            array('departureDate', 'safe'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, searchId, departureCityId, departureAirportId, departureDate, arrivalCityId, arrivalAirportId, adultCount, childCount, infantCount', 'safe', 'on'=>'search'),
+        );
+    }
+
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'search' => array(self::BELONGS_TO, 'FlightSearch', 'searchId'),
+            'departureCity' => array(self::BELONGS_TO, 'City', 'departureCityId'),
+            'arrivalCity' => array(self::BELONGS_TO, 'City', 'arrivalCityId'),
+        );
+    }
 }
