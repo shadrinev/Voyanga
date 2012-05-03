@@ -2,20 +2,20 @@
 
 class m120503_123548_inital_db extends CDbMigration
 {
-	public function up()
+	public function safeUp()
 	{
-        $this->renameColumn('airline', 'local_ru', 'localRu');
-        $this->renameColumn('airline', 'local_en', 'localEn');
-        
-        $this->renameColumn('airport', 'local_ru', 'localRU');
-        $this->renameColumn('airport', 'local_en', 'localEn');
+        $this->renameColumn('airport', 'localRU', 'localRu');
+        $this->dropForeignKey('fk_airport_city', 'airport');
         $this->renameColumn('airport', 'city_id', 'cityId');
+        $this->addForeignKey('fk_airport_city', 'airport','cityId','city','id');
         
-        $this->renameColumn('city', 'local_ru', 'localRU');
+        $this->renameColumn('city', 'local_ru', 'localRu');
         $this->renameColumn('city', 'local_en', 'localEn');
+        $this->dropForeignKey('fk_city_country', 'city');
         $this->renameColumn('city', 'country_id', 'countryId');
+        $this->addForeignKey('fk_city_country', 'city','countryId','country','id');
         
-        $this->renameColumn('country', 'local_ru', 'localRU');
+        $this->renameColumn('country', 'local_ru', 'localRu');
         $this->renameColumn('country', 'local_en', 'localEn');
 	}
 
