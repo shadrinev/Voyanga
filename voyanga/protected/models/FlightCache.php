@@ -95,7 +95,7 @@ class FlightCache extends CActiveRecord {
             $this->departure_city_id = $oFlightVoyage->aFlights[0]->departure_city_id;
             $this->arrival_city_id = $oFlightVoyage->aFlights[0]->arrival_city_id;
             $this->departure_date = $oFlightVoyage->aFlights[0]->departure_date;
-            $this->airline_id = $oFlightVoyage->airline_id;
+            $this->airline_id = $oFlightVoyage->sAirlineCode;
             $this->price = $oFlightVoyage->price;
             $this->duration = $oFlightVoyage->getFullDuration();
             $this->with_return = count($oFlightVoyage->aFlights) == 2;

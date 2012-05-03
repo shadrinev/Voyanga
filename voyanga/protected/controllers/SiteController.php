@@ -108,6 +108,17 @@ class SiteController extends Controller {
     
     }
     
+    public function actionGeoip(){
+        $geoIpService = new GeoIpService();
+        $GeoIP = new GetGeoIP();
+        $GeoIP->IPAddress = '93.187.189.205';
+        
+        $response = $geoIpService->GetGeoIP($GeoIP);
+        print_r($response);
+        $geoIp = $response->GetGeoIPResult;
+        echo sprintf('Your IP: %s (%s, %s)',$geoIp->IP,$geoIp->CountryName,$geoIp->CountryCode);
+    }
+    
     public function actionTest() {
         //$country = new Country();
         $oFlightSearchParams = new FlightSearchParams();

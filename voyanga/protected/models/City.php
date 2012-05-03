@@ -7,12 +7,12 @@
  */
 class City extends CActiveRecord {
     public $id;
-    public $code;
+    public $sCode;
     private $_country;
     public $country_id;
-    public $position;
-    public $local_ru;
-    public $local_en;
+    public $iPosition;
+    public $sLocalRu;
+    public $sLocalEn;
     
     public static function model( $className = __CLASS__ ) {
         return parent::model( $className );

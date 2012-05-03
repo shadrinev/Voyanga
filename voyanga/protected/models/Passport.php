@@ -12,7 +12,14 @@ class Passport extends CActiveRecord {
     public $number;
     public $birthday;
     public $series;
+    /*
+     * documentTypeId values:
+     * 1 - Passport RF
+     * 2 - Passport other country
+     * 3 - Zagran
+     */
     public $document_type_id;
+    public $expiration;
     public $country_id;
     public $gender_id;
     
@@ -30,5 +37,9 @@ class Passport extends CActiveRecord {
     
     public function tableName() {
         return 'passport';
+    }
+    
+    public function checkValid(){
+        return true;
     }
 }

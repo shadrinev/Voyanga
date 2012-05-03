@@ -17,18 +17,18 @@ return array(
         // autoloading model and component classes
         'import' => array(
                 'application.models.*', 
-                'application.components.*' ), 
+                'application.components.*', 
+                'application.helpers.*' ), 
         
-        'modules' => array()// uncomment the following to enable the Gii tool
-        /*
-		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
-		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
-		),
-		*/
-        , 
+        'modules' => array(
+                'gii' => array(
+                        'class' => 'system.gii.GiiModule', 
+                        'password' => 'a1a2a3a4', 
+                        // If removed, Gii defaults to localhost only. Edit carefully to taste.
+                        'ipFilters' => array(
+                                '192.168.0.74', 
+                                '::1' ) ), 
+                'gds' ), 
         
         // application components
         'components' => array(
@@ -51,26 +51,23 @@ return array(
                         'username' => 'oleg', 
                         'password' => 'q1w2e3r4', 
                         'charset' => 'utf8', 
-                        'emulatePrepare' => true )// необходимо для некоторых версий инсталляций MySQL
-, 
+                        'emulatePrepare' => true ),  // необходимо для некоторых версий инсталляций MySQL
                 'logdb' => array(
                         'class' => 'CDbConnection', 
                         'connectionString' => 'mysql:host=localhost;dbname=logdb', 
                         'username' => 'oleg', 
                         'password' => 'q1w2e3r4', 
                         'charset' => 'utf8', 
-                        'emulatePrepare' => true )// необходимо для некоторых версий инсталляций MySQL
-, 
+                        'emulatePrepare' => true ),  // необходимо для некоторых версий инсталляций MySQL
                 'cache' => array(
                         'class' => 'CMemCache', 
                         'servers' => array(
                                 array(
                                         'host' => 'localhost', 
                                         'port' => 11211, 
-                                        'weight' => 60 ) ) ),
+                                        'weight' => 60 ) ) ), 
                 'gdsAdapter' => array(
-                        'class' => 'GDSAdapter', 
-                         ),
+                        'class' => 'GDSAdapter' ), 
                 // uncomment the following to use a MySQL database
                 /*
 		'db'=>array(
@@ -104,23 +101,26 @@ return array(
                                         'autoCreateLogTable' => ture, 
                                         'logTableName' => 'log_table' ), 
                                 array(
+                                        'class' => 'CProfileLogRoute', 
+                                        'levels' => 'profile', 
+                                        'enabled' => true ), 
+                                array(
                                         'class' => 'CEmailLogRoute', 
                                         'levels' => 'error, warning', 
-                                        'emails' => 'maximov@danechka.com' ) )// uncomment the following to show log messages on web pages
-                         ) ), 
+                                        'emails' => 'maximov@danechka.com' ) ) ) )// uncomment the following to show log messages on web pages
+, 
         
         // application-level parameters that can be accessed
         // using Yii::app()->params['paramName']
         'params' => array(
                 // this is used in contact page
-                'adminEmail' => 'webmaster@example.com',
+                'adminEmail' => 'webmaster@example.com', 
                 //Time in secontds for searching results from cache
-                'flight_search_cache_time'=>3600 * 3,
+                'flight_search_cache_time' => 3600 * 3, 
                 //Price factor for flight optimal
-                'flight_price_factor'=>100,
+                'flight_price_factor' => 100, 
                 //Time factor for flight optimal
-                'flight_time_factor'=>70,
-                         
-                         
-                         
-                         ) );
+                'flight_time_factor' => 70,
+                'aPassegerTypes'=>array(1=>'ADT',2=>'CNN',3=>'INN') ) )
+
+;

@@ -6,11 +6,11 @@
  *
  */
 class FlightVoyage {
-    public $price;
-    public $taxes;
-    public $flight_key;
-    public $airline_id;
-    public $commission;
+    public $iPrice;
+    public $iTaxes;
+    public $sFlightKey;
+    public $sAirlineCode;
+    public $iCommission;
     public $aFlights;
     public $oAdultPassengerInfo;
     public $oChildPassengerInfo;
@@ -18,10 +18,10 @@ class FlightVoyage {
     public $iBestMask = 0;
     
     public function __construct( $oParams ) {
-        $this->price = $oParams->full_sum;
-        $this->taxes = $oParams->commission_price;
-        $this->flight_key = $oParams->flight_key;
-        $this->commission = $oParams->commission_price;
+        $this->$iPrice = $oParams->full_sum;
+        $this->iTaxes = $oParams->commission_price;
+        $this->sFlightKey = $oParams->flight_key;
+        $this->iCommission = $oParams->commission_price;
         $this->aFlights = array();
         $iInd = 0;
         $lastArrTime = 0;
@@ -35,8 +35,8 @@ class FlightVoyage {
                 foreach( $aParts as $oPartParams ) {
                     $oPart = new FlightPart( $oPartParams );
                     $this->aFlights[$iGroupId]->addPart( $oPart );
-                    if(!$this->airline_id) {
-                        $this->airline_id = $oPart->airline_id;
+                    if(!$this->sAirlineCode) {
+                        $this->sAirlineCode = $oPart->airline_id;
                     }
                 }
             }
