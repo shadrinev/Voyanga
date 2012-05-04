@@ -11,12 +11,13 @@ if(YII_DEBUG) {
 
 date_default_timezone_set('UTC');
 
-chdir (dirname(__FILE__).'/../..');
+chdir(dirname(__FILE__).'/../../');
 
 $root=dirname(__FILE__).'/..';
 $common=$root.'/../common';
 
 $config='frontend/config/main.php';
+require_once($config);
 require_once('common/components/Yii.php');
 require_once('common/components/WebApplication.php');
 require_once('common/lib/global.php');
