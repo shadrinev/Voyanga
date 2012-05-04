@@ -2,6 +2,7 @@
 
 $root = dirname(__FILE__) . '/../..';
 $params = require('frontend/config/params.php');
+$routes = require('frontend/config/routes.php');
 
 // We need to set this path alias to be able to use the path of alias
 // some of this may not be nescessary now, as now the directory is changed to projects root in the bootstrap script
@@ -58,7 +59,7 @@ return CMap::mergeArray(
             'urlManager' => array(
                 'urlFormat' => 'path',
                 'showScriptName' => false,
-                'rules' => require(dirname(__FILE__) . '/parts/routes.php'),
+                'rules' => $routes,
             ),
 
             'cache' => array(
