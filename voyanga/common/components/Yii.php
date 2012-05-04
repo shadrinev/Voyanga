@@ -11,7 +11,7 @@
  * @package system
  * @since 1.0
  */
-require(dirname(__FILE__) . '/../lib/yii-1.1.8/YiiBase.php');
+require(dirname(__FILE__) . '/../lib/yii-1.1.10/YiiBase.php');
 
 /**
  * Yii is a helper class serving common framework functionalities.
