@@ -5,29 +5,30 @@
  * @author oleg
  *
  */
-class Flight {
+class Flight extends CComponent
+{
     public $flightParts = array();
     public $transits = array();
     public $departureCityId;
-    public $arrival_city_id;
+    public $arrivalCityId;
     public $departure_date;
     public $fullDuration = 0;
-    private $departure_city;
-    private $arrival_city;
+    private $departureCity;
+    private $arrivalCity;
     
     public function addPart( FlightPart $oPart ) {
         if($oPart instanceof FlightPart){
             if ( !$this->flightParts ) {
                 $this->flightParts[] = $oPart;
                 $this->departureCityId = $oPart->departureCityId;
-                $this->arrival_city_id = $oPart->arrival_city_id;
+                $this->arrivalCityId = $oPart->arrivalCityId;
                 $this->departure_date = $oPart->datetimeBegin;
             } else {
                 $oLastPart = &$this->flightParts[count( $this->flightParts ) - 1];
                 $aTransit = array();
                 $aTransit['time_for_transit'] = $oPart->timestampBegin - $oLastPart->timestampEnd;
                 $aTransit['city_id'] = $oPart->departureCityId;
-                $this->arrival_city_id = $oPart->arrival_city_id;
+                $this->arrivalCityId = $oPart->arrivalCityId;
                 $this->transits[] = $aTransit;
                 $this->flightParts[] = $oPart;
                 $this->fullDuration += $aTransit['time_for_transit'];
@@ -36,6 +37,11 @@ class Flight {
         }else{
              throw new CException( Yii::t( 'application', 'Required param type FlightPart' ) );
         }
+    }
+
+    public function getDepartureCity()
+    {
+
     }
     
     public function __get( $name ) {
