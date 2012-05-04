@@ -41,20 +41,21 @@ class Flight extends CComponent
 
     public function getDepartureCity()
     {
-
+        if (!$this->departureCity)
+        {
+            $this->departureCity = City::model()->findByPk( $this->departureCityId );
+            if ( !$this->departureCity ) throw new CException( Yii::t( 'application', 'Departure city not found. City with id {city_id} not set in db.', array(
+                '{city_id}' => $this->departureCityId ) ) );
+        }
     }
-    
-    public function __get( $name ) {
-        if ( $name == 'departure_city' || $name == 'arrival_city' ) {
-            if ( !$this->$name ) {
-                $this->$name = City::model()->findByPk( $this->{$name . '_id'} );
-                if ( !$this->$name ) throw new CException( Yii::t( 'application', '{var_name} not found. City with id {city_id} not set in db.', array(
-                        '{var_name}' => $name, 
-                        '{city_id}' => $this->{$name . '_id'} ) ) );
-            }
-            return $this->$name;
-        } else {
-            return $this->$name;
+
+    public function getArrivalCity()
+    {
+        if (!$this->arrivalCity)
+        {
+            $this->arrivalCity = City::model()->findByPk( $this->arrivalCityId );
+            if ( !$this->arrivalCity ) throw new CException( Yii::t( 'application', 'Arrival city not found. City with id {city_id} not set in db.', array(
+                '{city_id}' => $this->arrivalCityId ) ) );
         }
     }
 
