@@ -24,8 +24,8 @@
  * @ignore
  */
 
-require_once dirname(__FILE__).'/../Renderer.php';
-require_once dirname(__FILE__).'/../Renderer/Array.php';
+require_once dirname(__FILE__) . '/../Renderer.php';
+require_once dirname(__FILE__) . '/../Renderer/Array.php';
 
 // BC trick : only define constants if Text/Highlighter.php
 // is not yet included

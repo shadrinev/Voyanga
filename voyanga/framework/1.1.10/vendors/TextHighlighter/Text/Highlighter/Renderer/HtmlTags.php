@@ -26,8 +26,8 @@
  * @ignore
  */
 
-require_once dirname(__FILE__).'/../Renderer.php';
-require_once dirname(__FILE__).'/../Renderer/Array.php';
+require_once dirname(__FILE__) . '/../Renderer.php';
+require_once dirname(__FILE__) . '/../Renderer/Array.php';
 
 /**
  * HTML basic tags renderer, based on Andrey Demenev's HTML renderer.
