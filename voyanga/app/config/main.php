@@ -51,10 +51,6 @@ return array(
             'rules'=> require(dirname(__FILE__).'/parts/routes.php'),
         ),
 
-        'db' => require(dirname(__FILE__).'/parts/db.php'),
-
-        'logdb' => require(dirname(__FILE__).'/parts/log_db.php'),
-
         'cache' => array(
             'class' => 'CMemCache',
             'servers' => array(
