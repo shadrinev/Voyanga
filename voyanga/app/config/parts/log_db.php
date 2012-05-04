@@ -1,6 +1,6 @@
 <?php
 /**
- * Database connection settings
+ * Log database connection settings
  */
 return array(
     'class' => 'CDbConnection',

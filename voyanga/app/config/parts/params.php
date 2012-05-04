@@ -1,10 +1,6 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: Kuklin
- * Date: 04.05.12
- * Time: 11:20
- * To change this template use File | Settings | File Templates.
+ * Params for application. Accesible via Yii::app->param['paramName'].
  */
 return array(
     // this is used in contact page
