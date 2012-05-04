@@ -11,6 +11,7 @@ return array(
     'name' => 'Voyanga',
 
     'runtimePath' => Yii::getPathOfAlias('system') . '/../../runtime/',
+    'theme' => 'greengoblin',
 
     'preload' => array(
         'log'
