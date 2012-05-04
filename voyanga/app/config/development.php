@@ -8,4 +8,10 @@
  * Specific development config goes here
  *
  */
-return array();
+return CMap::mergeArray(
+    require(dirname(__FILE__).'/main.php'),
+
+    array(
+        //insert here
+    )
+);
