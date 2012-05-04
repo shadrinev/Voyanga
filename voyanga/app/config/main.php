@@ -42,21 +42,18 @@ return array(
     'components' => array(
         'user' => array(
             // enable cookie-based authentication
-            'allowAutoLogin' => true),
-        // uncomment the following to enable URLs in path-format
-        /*
-          'urlManager'=>array(
-              'urlFormat'=>'path',
-              'rules'=>array(
-                  '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-                  '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-                  '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-              ),
-          ),
-          */
-        'db' => require 'db.php',
+            'allowAutoLogin' => true
+        ),
 
-        'logdb' => require 'log_db.php',
+        'urlManager'=>array(
+            'urlFormat'=>'path',
+            'showScriptName'=>false,
+            'rules'=> require(dirname(__FILE__).'/parts/routes.php'),
+        ),
+
+        'db' => require(dirname(__FILE__).'/parts/db.php'),
+
+        'logdb' => require(dirname(__FILE__).'/parts/log_db.php'),
 
         'cache' => array(
             'class' => 'CMemCache',
@@ -64,13 +61,20 @@ return array(
                 array(
                     'host' => 'localhost',
                     'port' => 11211,
-                    'weight' => 60))),
+                    'weight' => 60
+                )
+            )
+        ),
+
         'gdsAdapter' => array(
-            'class' => 'GDSAdapter'),
+            'class' => 'GDSAdapter'
+        ),
 
         'errorHandler' => array(
             // use 'site/error' action to display errors
-            'errorAction' => 'site/error'),
+            'errorAction' => 'site/error'
+        ),
+
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(
@@ -78,37 +82,40 @@ return array(
                     'class' => 'CWebLogRoute',
                     'levels' => 'error, warning',
                     'categories' => 'application',
-                    'levels' => 'error, warning, trace, profile, info'),
+                    'levels' => 'error, warning, trace, profile, info'
+                ),
+
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'trace, info',
-                    'categories' => 'application.*'),
+                    'categories' => 'application.*'
+                ),
+
                 array(
                     'class' => 'CDbLogRoute',
                     'levels' => 'info',
                     'categories' => 'system.*',
                     'connectionID' => 'logdb',
-                    'autoCreateLogTable' => ture,
-                    'logTableName' => 'log_table'),
+                    'autoCreateLogTable' => true,
+                    'logTableName' => 'log_table'
+                ),
+
                 array(
                     'class' => 'CProfileLogRoute',
                     'levels' => 'profile',
-                    'enabled' => true),
+                    'enabled' => true
+                ),
+
                 array(
                     'class' => 'CEmailLogRoute',
                     'levels' => 'error, warning',
-                    'emails' => 'maximov@danechka.com'))))// uncomment the following to show log messages on web pages
-,
+                    'emails' => 'maximov@danechka.com'
+                )
+            )
+        )
+    ),
 
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
-    'params' => array(
-        // this is used in contact page
-        'adminEmail' => 'webmaster@example.com',
-        //Time in secontds for searching results from cache
-        'flight_search_cache_time' => 3600 * 3,
-        //Price factor for flight optimal
-        'flight_price_factor' => 100,
-        //Time factor for flight optimal
-        'flight_time_factor' => 70,
-        'aPassegerTypes' => array(1 => 'ADT', 2 => 'CNN', 3 => 'INN')));
+    'params' => require(dirname(__FILE__).'/parts/params.php')
+);
