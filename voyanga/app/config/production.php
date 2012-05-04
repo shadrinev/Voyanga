@@ -12,6 +12,10 @@ return CMap::mergeArray(
     require(dirname(__FILE__).'/main.php'),
 
     array(
-        //insert here
+        'components' => array(
+            'db' => require(dirname(__FILE__) . '/parts/db_production.php'),
+
+            'logdb' => require(dirname(__FILE__).'/parts/log_db_production.php'),
+        )
     )
 );
