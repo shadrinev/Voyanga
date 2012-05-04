@@ -1,4 +1,4 @@
-<h1>Hi, I am FRONTEND</h1>
+<h1>Hi, I am BACKEND</h1>
 <?php $this->pageTitle=Yii::app()->name; ?>
 
 <h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>

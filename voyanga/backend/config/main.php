@@ -1,29 +1,28 @@
 <?php
 
 $root = dirname(__FILE__) . '/../..';
-$params = require('frontend/config/params.php');
-$routes = require('frontend/config/routes.php');
+$params = require('backend/config/params.php');
+$routes = require('backend/config/routes.php');
 
 // We need to set this path alias to be able to use the path of alias
 // some of this may not be nescessary now, as now the directory is changed to projects root in the bootstrap script
 Yii::setPathOfAlias('root', $root);
 Yii::setPathOfAlias('common', $root . '/common');
 Yii::setPathOfAlias('backend', $root . '/common');
-Yii::setPathOfAlias('www', $root . '/frontend/www');
-Yii::setPathOfAlias('frontend', $root . '/frontend');
-Yii::setPathOfAlias('uploads', $root . '/frontend/www/uploads');
+Yii::setPathOfAlias('www', $root . '/backend/www');
+Yii::setPathOfAlias('backend', $root . '/backend');
+Yii::setPathOfAlias('uploads', $root . '/backend/www/uploads');
 
-$frontendMainLocal = file_exists('frontend/config/main-local.php') ? require('frontend/config/main-local.php') : array();
+$backendMainLocal = file_exists('backend/config/main-local.php') ? require('backend/config/main-local.php') : array();
 
 return CMap::mergeArray(
     require_once ('common/config/main.php'),
     array(
-        'id' => 'frontend.voyanga.com',
+        'id' => 'backend.voyanga.com',
         'name' => 'Voyanga',
-        'basePath' => 'frontend',
+        'basePath' => 'backend',
         'params'  => $params,
         'language' => 'ru',
-        'theme' => 'greengoblin',
         'preload' => array(
             'log'
         ),

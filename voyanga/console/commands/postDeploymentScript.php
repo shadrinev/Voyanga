@@ -71,41 +71,25 @@
 			foreach($result as $row) echo $row, "\n";
 		}
 
-// Below is legacy:
-// 
-//		//Copy *-environmnetName.php to *-env.php
-//		$directories = array (pth($root."common/config/"), pth($root."frontend/config/"), pth($root."console/config/"), pth($root."api/config/"));
-//
-//		//choose environemnet specific configs
-//		foreach ($directories as $dir)
-//		{
-//			$files = glob (pth($dir."environments/"."*-".$envType.'.php'));
-//			foreach ($files as $srcFile)
-//			{
-//				$pattern = "/-".$envType.".php$/";
-//				$dstFile = preg_replace ($pattern, "-env.php", $srcFile);
-//				$dstFile = preg_replace ('/environments\\\|environments\//', "", $dstFile); // remove "environments/" or "environments\" from the path
-//				$res = copy ($srcFile, $dstFile);
-//				if (!$res)
-//					echo "Error. Failed to copy $srcFile to $dstFile\n";
-//				chmod ($dstFile, 0644); // for some reason after copying the permissions are wrong
-//			}
-//		}
-
 		//Create and flush assets directory
 		rmdirRecursive(pth($root."frontend/www/assets"));
 		createDirIfNotExists(pth($root."frontend/www/assets"));
 
-		// runtime
+        //Create and flush assets directory
+        rmdirRecursive(pth($root."backend/www/assets"));
+        createDirIfNotExists(pth($root."backend/www/assets"));
+
+        // runtime
 		createDirIfNotExists(pth($root."frontend/runtime"));
 		createDirIfNotExists(pth($root."console/runtime"));
-		createDirIfNotExists(pth($root."api/runtime"));
+        createDirIfNotExists(pth($root."backend/runtime"));
 
 		//Setting permissions
 		chmod (pth($root."frontend/runtime"), 02775); //permissions with setguid
 		chmod (pth($root."console/runtime"), 02775);
-		chmod (pth($root."api/runtime"), 02775);
+		chmod (pth($root."backend/runtime"), 02775);
 		chmod (pth($root."frontend/www/assets"), 02775);
+        chmod (pth($root."backend/www/assets"), 02775);
 
 		//applying migrations
 		//adding in ability to specify to not migrate even when not in local environment. Needed for our newclient script 

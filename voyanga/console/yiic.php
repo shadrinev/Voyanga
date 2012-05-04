@@ -10,7 +10,6 @@ require_once('common/components/Yii.php');
 $config='console/config/main.php'; 
 require_once('common/lib/global.php');
 
-
 if(isset($config))
 {
 	$app=Yii::createConsoleApplication($config);

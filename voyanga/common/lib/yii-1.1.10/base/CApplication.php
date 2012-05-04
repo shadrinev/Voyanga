@@ -123,7 +123,6 @@ abstract class CApplication extends CModule
 		Yii::setApplication($this);
 
 		// set basePath at early as possible to avoid trouble
-        echo getcwd()."\n";
 		if(is_string($config))
 			$config=require($config);
 		if(isset($config['basePath']))

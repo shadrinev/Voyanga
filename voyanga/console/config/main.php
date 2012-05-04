@@ -38,9 +38,6 @@ return CMap::mergeArray (
      ),
 
 	'components'=>array(
-		'configManager' => array (
-			'class' => 'ConfigurationManager',
-		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -59,14 +56,6 @@ return CMap::mergeArray (
 			'charset' => 'utf8',
 			'enableParamLogging' => YII_DEBUG,
 			'emulatePrepare'=>true,
-        ),
-		/*some commands need to run against test db as well*/
-		'testdb'=>array(
-			'class'=>'CDbConnection',
-			'connectionString' => $params['testdb.connectionString'],
-			'username' => $params['testdb.username'],
-			'password' => $params['testdb.password'],
-			'charset' => 'utf8',
         ),
 		'urlManager' => array(
 			'urlFormat' => 'path',

@@ -1,5 +1,4 @@
 <?php
-
 defined('YII_DEBUG') or define('YII_DEBUG',true);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
@@ -16,7 +15,7 @@ chdir (dirname(__FILE__).'/../..');
 $root=dirname(__FILE__).'/..';
 $common=$root.'/../common';
 
-$config='frontend/config/main.php';
+$config='backend/config/main.php';
 require_once('common/components/Yii.php');
 require_once('common/components/WebApplication.php');
 require_once('common/lib/global.php');
