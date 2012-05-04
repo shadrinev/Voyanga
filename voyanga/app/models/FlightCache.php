@@ -92,13 +92,13 @@ class FlightCache extends CActiveRecord {
      */
     public function setFromFlightVoyage(FlightVoyage $oFlightVoyage) {
         if($oFlightVoyage instanceof FlightVoyage) {
-            $this->departure_city_id = $oFlightVoyage->aFlights[0]->departure_city_id;
-            $this->arrival_city_id = $oFlightVoyage->aFlights[0]->arrival_city_id;
-            $this->departure_date = $oFlightVoyage->aFlights[0]->departure_date;
-            $this->airline_id = $oFlightVoyage->sAirlineCode;
+            $this->departure_city_id = $oFlightVoyage->flights[0]->departure_city_id;
+            $this->arrival_city_id = $oFlightVoyage->flights[0]->arrival_city_id;
+            $this->departure_date = $oFlightVoyage->flights[0]->departure_date;
+            $this->airline_id = $oFlightVoyage->airlineCode;
             $this->price = $oFlightVoyage->price;
             $this->duration = $oFlightVoyage->getFullDuration();
-            $this->with_return = count($oFlightVoyage->aFlights) == 2;
+            $this->with_return = count($oFlightVoyage->flights) == 2;
         } else {
             throw new CException( Yii::t( 'application', 'Required param type FlightVoyage' ) );
         }

@@ -15,16 +15,20 @@ class Flight extends CComponent
     public $fullDuration = 0;
     private $departureCity;
     private $arrivalCity;
-    
-    public function addPart( FlightPart $oPart ) {
-        if($oPart instanceof FlightPart){
-            if ( !$this->flightParts ) {
+
+    public function addPart(FlightPart $oPart)
+    {
+        if ($oPart instanceof FlightPart)
+        {
+            if (!$this->flightParts)
+            {
                 $this->flightParts[] = $oPart;
                 $this->departureCityId = $oPart->departureCityId;
                 $this->arrivalCityId = $oPart->arrivalCityId;
                 $this->departure_date = $oPart->datetimeBegin;
-            } else {
-                $oLastPart = &$this->flightParts[count( $this->flightParts ) - 1];
+            } else
+            {
+                $oLastPart = &$this->flightParts[count($this->flightParts) - 1];
                 $aTransit = array();
                 $aTransit['time_for_transit'] = $oPart->timestampBegin - $oLastPart->timestampEnd;
                 $aTransit['city_id'] = $oPart->departureCityId;
@@ -34,8 +38,9 @@ class Flight extends CComponent
                 $this->fullDuration += $aTransit['time_for_transit'];
             }
             $this->fullDuration += $oPart->duration;
-        }else{
-             throw new CException( Yii::t( 'application', 'Required param type FlightPart' ) );
+        } else
+        {
+            throw new CException(Yii::t('application', 'Required param type FlightPart'));
         }
     }
 
@@ -43,9 +48,9 @@ class Flight extends CComponent
     {
         if (!$this->departureCity)
         {
-            $this->departureCity = City::model()->findByPk( $this->departureCityId );
-            if ( !$this->departureCity ) throw new CException( Yii::t( 'application', 'Departure city not found. City with id {city_id} not set in db.', array(
-                '{city_id}' => $this->departureCityId ) ) );
+            $this->departureCity = City::model()->findByPk($this->departureCityId);
+            if (!$this->departureCity) throw new CException(Yii::t('application', 'Departure city not found. City with id {city_id} not set in db.', array(
+                '{city_id}' => $this->departureCityId)));
         }
     }
 
@@ -53,9 +58,9 @@ class Flight extends CComponent
     {
         if (!$this->arrivalCity)
         {
-            $this->arrivalCity = City::model()->findByPk( $this->arrivalCityId );
-            if ( !$this->arrivalCity ) throw new CException( Yii::t( 'application', 'Arrival city not found. City with id {city_id} not set in db.', array(
-                '{city_id}' => $this->arrivalCityId ) ) );
+            $this->arrivalCity = City::model()->findByPk($this->arrivalCityId);
+            if (!$this->arrivalCity) throw new CException(Yii::t('application', 'Arrival city not found. City with id {city_id} not set in db.', array(
+                '{city_id}' => $this->arrivalCityId)));
         }
     }
 

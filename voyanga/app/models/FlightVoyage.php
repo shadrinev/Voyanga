@@ -5,54 +5,63 @@
  * @author oleg
  *
  */
-class FlightVoyage {
-    public $iPrice;
-    public $iTaxes;
-    public $sFlightKey;
-    public $sAirlineCode;
-    public $iCommission;
-    public $aFlights;
-    public $oAdultPassengerInfo;
-    public $oChildPassengerInfo;
-    public $oInfantPassengerInfo;
-    public $iBestMask = 0;
-    
-    public function __construct( $oParams ) {
-        $this->$iPrice = $oParams->full_sum;
-        $this->iTaxes = $oParams->commission_price;
-        $this->sFlightKey = $oParams->flight_key;
-        $this->iCommission = $oParams->commission_price;
-        $this->aFlights = array();
+class FlightVoyage
+{
+    public $price;
+    public $taxes;
+    public $flightKey;
+    public $airlineCode;
+    public $commission;
+    public $flights;
+    public $adultPassengerInfo;
+    public $childPassengerInfo;
+    public $infantPassengerInfo;
+    public $bestMask = 0;
+
+    public function __construct($oParams)
+    {
+        $this->price = $oParams->full_sum;
+        $this->taxes = $oParams->commission_price;
+        $this->flightKey = $oParams->flight_key;
+        $this->commission = $oParams->commission_price;
+        $this->flights = array();
         $iInd = 0;
         $lastArrTime = 0;
         $lastCityToId = 0;
         $bStart = true;
-        if ( $oParams->parts ) {
-            foreach( $oParams->parts as $iGroupId => $aParts ) {
+        if ($oParams->parts)
+        {
+            foreach ($oParams->parts as $iGroupId => $aParts)
+            {
                 $iIndPart = 0;
-                $this->aFlights[$iGroupId] = new Flight();
-                
-                foreach( $aParts as $oPartParams ) {
-                    $oPart = new FlightPart( $oPartParams );
-                    $this->aFlights[$iGroupId]->addPart( $oPart );
-                    if(!$this->sAirlineCode) {
-                        $this->sAirlineCode = $oPart->airline_id;
+                $this->flights[$iGroupId] = new Flight();
+
+                foreach ($aParts as $oPartParams)
+                {
+                    $oPart = new FlightPart($oPartParams);
+                    $this->flights[$iGroupId]->addPart($oPart);
+                    if (!$this->airlineCode)
+                    {
+                        $this->airlineCode = $oPart->airline_id;
                     }
                 }
             }
-        } else {
-            throw new CException( Yii::t( 'application', 'Required param $oParams->parts not set.' ) );
+        } else
+        {
+            throw new CException(Yii::t('application', 'Required param $oParams->parts not set.'));
         }
-    
+
     }
-    
-    public function getFullDuration() {
+
+    public function getFullDuration()
+    {
         $iFullDuration = 0;
-        foreach( $this->aFlights as $oFlight ) {
+        foreach ($this->flights as $oFlight)
+        {
             $iFullDuration += $oFlight->fullDuration;
         }
         return $iFullDuration;
     }
-    
+
 
 }

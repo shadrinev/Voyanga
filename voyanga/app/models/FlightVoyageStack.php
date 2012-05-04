@@ -104,7 +104,7 @@ class FlightVoyageStack
     public function addFlightVoyage(FlightVoyage $oFlightVoyage)
     {
         $this->aFlightVoyages[] = $oFlightVoyage;
-        $this->bestMask |= $oFlightVoyage->iBestMask;
+        $this->bestMask |= $oFlightVoyage->bestMask;
     }
 
     public function setAttributes($values)
