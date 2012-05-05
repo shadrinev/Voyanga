@@ -1,35 +1,37 @@
 <?php
-class GDSNemo
+class GDSNemo extends CComponent
 {
+    public $wsdlUri = null;
 
-    private static function request($sMethod, $oParams, $bCache = FALSE, $iExpiration = 0)
+    /**
+     * @static
+     * @param $methodName name of method to call
+     * @param $params params for calling method
+     * @param bool $cache is cache it
+     * @param int $expiration expiration time in seconds
+     * @return mixed
+     */
+    private static function request($methodName, $params, $cache = FALSE, $expiration = 0)
     {
-        /*$soapClient = new SoapClient('http://srt.mute-lab.com/nemoflights/wsdl.php?for=SearchFlights');
-        $functions = $soapClient->__getFunctions();
-        print_r($functions);*/
-        //print_r($oParams);
-        $oClient = new GDSNemoSoapClient('http://109.120.157.20:10002/Flights.asmx?wsdl', array(
-            'trace' => 1,
-            ));
-        $i = 1;
-        //print_r($oClient->__getFunctions());
-        $oParams = (object) $oParams;
-        print_r($oParams);
-        return $oClient->$sMethod($oParams);
-
+        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['wsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace']));
+        //VarDumper::dump($params);
+        VarDumper::dump($client->__getTypes());
+        //$params = array('Search'=>$params);
+        return $client->$methodName($params['Request']);
     }
 
-    public function FlightSearch(FlightSearchParams $oFlightSearchParams)
+    public function FlightSearch(FlightSearchParams $flightSearchParams)
     {
-        if (!($oFlightSearchParams instanceof FlightSearchParams))
+        if (!($flightSearchParams instanceof FlightSearchParams))
         {
             throw new CException(Yii::t('application', 'Parameter oFlightSearchParams not type of FlightSearchParams'));
         }
         //prepare request  structure
-        $aParams = array(
+        $params = array(
             'Request' => array(
-                'Requisites' => array('Login' => 'webdev012', 'Password' => 'HHFJGYU3*^H'),
-                'UserID' => 15,
+                'Requisites' => array('Login' => Yii::app()->params['GDSNemo']['login'], 'Password' => Yii::app()->params['GDSNemo']['password']),
+                'RequestType'=>'U',
+                'UserID' => Yii::app()->params['GDSNemo']['userId'],
                 'Search' => array(
                     'LinkOnly' => false,
                     'ODPairs' => array(
@@ -40,83 +42,101 @@ class GDSNemo
                             'DepDate' => '2011-06-11T00:00:00',
                             'DepAirp' => array(
                                 'CodeType' => 'IATA',
-                                '_' => 'MOW'),
+                                '_' => 'MOW'
+                            ),
                             'ArrAirp' => array(
                                 'CodeType' => 'IATA',
-                                '_' => 'PAR'))),
+                                '_' => 'PAR'
+                            )
+                        )
+                    ),
                     'Travellers' => array(
                         'Traveller' => array(
                             array(
                                 'Type' => 'ADT',
-                                'Count' => '1'),
+                                'Count' => '1'
+                            ),
                             array(
                                 'Type' => 'CNN',
-                                'Count' => '1'))),
+                                'Count' => '1'
+                            )
+                        )
+                    ),
                     'Restrictions' => array(
                         'ClassPref' => 'all',
                         'OnlyAvail' => 'true',
                         'AirVPrefs' => '',
                         'IncludePrivateFare' => 'false',
-                        'CurrencyCode' => 'RUB'))));
-        $aPairs = array();
-        foreach ($oFlightSearchParams->routes as $oRoute)
+                        'CurrencyCode' => 'RUB'
+                    )
+                )
+            )
+        );
+        $pairs = array();
+        foreach ($flightSearchParams->routes as $route)
         {
-            $aODPair = array();
-            $aODPair['DepDate'] = $oRoute->departureDate . 'T00:00:00';
-            $aODPair['DepAirp'] = array(
+            //todo: think how to name it
+            $ODPair = array();
+            $ODPair['DepDate'] = $route->departureDate . 'T00:00:00';
+            $ODPair['DepAirp'] = array(
                 'CodeType' => 'IATA',
-                '_' => $oRoute->departureCity->code);
-            $aODPair['ArrAirp'] = array(
+                '_' => $route->departureCity->code
+            );
+            $ODPair['ArrAirp'] = array(
                 'CodeType' => 'IATA',
-                '_' => $oRoute->arrivalCity->code);
-            $aPairs[] = $aODPair;
+                '_' => $route->arrivalCity->code
+            );
+            $pairs[] = $ODPair;
         }
-        $sFType = 'OW';
-        if (count($oFlightSearchParams->routes) == 2)
+        $flightType = 'OW';
+        if (count($flightSearchParams->routes) == 2)
         {
-            $bEqualFrom = $oFlightSearchParams->routes[0]->departureCityId === $oFlightSearchParams->routes[1]->arrivalCityId;
-            $bEqualTo = $oFlightSearchParams->routes[0]->arrivalCityId === $oFlightSearchParams->routes[1]->departureCityId;
-            if ($bEqualFrom && $bEqualTo)
+            $equalFrom = $flightSearchParams->routes[0]->departureCityId === $flightSearchParams->routes[1]->arrivalCityId;
+            $equalTo = $flightSearchParams->routes[0]->arrivalCityId === $flightSearchParams->routes[1]->departureCityId;
+            if ($equalFrom && $equalTo)
             {
-                $sFType = 'RT';
+                $flightType = 'RT';
             } else
             {
-                $sFType = 'CR';
+                $flightType = 'CR';
             }
-        } elseif (count($oFlightSearchParams->routes) > 2)
+        } elseif (count($flightSearchParams->routes) > 2)
         {
-            $sFType = 'CR';
+            $flightType = 'CR';
         }
-        $aParams['Request']['SearchFlights']['ODPairs']['Type'] = $sFType;
-        $aParams['Request']['SearchFlights']['ODPairs']['ODPair'] = CUtilsHelper::normalizeArray($aPairs);
-        unset($aPairs);
+        $params['Request']['SearchFlights']['ODPairs']['Type'] = $flightType;
+        $params['Request']['SearchFlights']['ODPairs']['ODPair'] = UtilsHelper::normalizeArray($pairs);
+        unset($pairs);
 
         $traveller = array();
-        if ($oFlightSearchParams->adultCount > 0)
+        if ($flightSearchParams->adultCount > 0)
         {
             $traveller = array(
                 'Type' => 'ADN',
-                'Count' => $oFlightSearchParams->adultCount);
+                'Count' => $flightSearchParams->adultCount
+            );
         }
-        if ($oFlightSearchParams->childCount > 0)
+        if ($flightSearchParams->childCount > 0)
         {
             $traveller = array(
                 'Type' => 'CNN',
-                'Count' => $oFlightSearchParams->childCount);
+                'Count' => $flightSearchParams->childCount
+            );
         }
-        if ($oFlightSearchParams->infantCount > 0)
+        if ($flightSearchParams->infantCount > 0)
         {
             $traveller = array(
                 'Type' => 'INF',
-                'Count' => $oFlightSearchParams->infantCount);
+                'Count' => $flightSearchParams->infantCount
+            );
         }
-        $aParams['Request']['SearchFlights']['Travellers']['Traveller'] = CUtilsHelper::normalizeArray($traveller);
+        $params['Request']['SearchFlights']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($traveller);
         unset($traveller);
 
         //real request
 
-        $oSoapResponse = self::request('Search', $aParams, $bCache = FALSE, $iExpiration = 0);
-        print_r($oSoapResponse);
+        $soapResponse = self::request('Search', $params, $bCache = FALSE, $iExpiration = 0);
+        print_r($soapResponse);
         return;
 
         //processing response
@@ -125,12 +145,12 @@ class GDSNemo
         //print_r( $oSoapResponse );
         Yii::beginProfile('processingSoap');
         $flights = array();
-        CUtilsHelper::soapObjectsArray($oSoapResponse->Response->SearchFlights->Flights->Flight);
-        foreach ($oSoapResponse->Response->SearchFlights->Flights->Flight as $oSoapFlight)
+        UtilsHelper::soapObjectsArray($soapResponse->Response->SearchFlights->Flights->Flight);
+        foreach ($soapResponse->Response->SearchFlights->Flights->Flight as $oSoapFlight)
         {
             $aParts = array();
             Yii::beginProfile('processingSegments');
-            CUtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
+            UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
             foreach ($oSoapFlight->Segments->Segment as $oSegment)
             {
                 $oPart = new stdClass();
@@ -155,7 +175,7 @@ class GDSNemo
                 $oPart->aTariffs = array();
                 $oPart->aTaxes = array();
                 $oPart->aBookingCodes = array();
-                CUtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
+                UtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
                 foreach ($oSegment->BookingCodes->BookingCode as $sBookingCode)
                 {
                     $oPart->aBookingCodes[] = $sBookingCode;
@@ -167,7 +187,7 @@ class GDSNemo
             $aPassengers = array();
             $aTariffs = array();
             Yii::beginProfile('processingPassengers');
-            CUtilsHelper::soapObjectsArray($oSoapFlight->PricingInfo->PassengerFare);
+            UtilsHelper::soapObjectsArray($oSoapFlight->PricingInfo->PassengerFare);
             foreach ($oSoapFlight->PricingInfo->PassengerFare as $oFare)
             {
                 $sType = $oFare->Type;
@@ -177,7 +197,7 @@ class GDSNemo
                 $full_sum += ($oFare->TotalFare->Amount * $oFare->Quantity);
                 $aPassengers[$sType]['LastTicketDateTime'] = $oFare->LastTicketDateTime;
                 $aPassengers[$sType]['aTaxes'] = array();
-                CUtilsHelper::soapObjectsArray($oFare->Taxes->Tax);
+                UtilsHelper::soapObjectsArray($oFare->Taxes->Tax);
                 foreach ($oFare->Taxes->Tax as $oTax)
                 {
                     if ($oTax->CurCode == 'RUB')
@@ -186,10 +206,11 @@ class GDSNemo
                     } else
                     {
                         throw new CException(Yii::t('application', 'Valute code unexpected. Code: {code}. Expected RUB', array(
-                            '{code}' => $oTax->CurCode)));
+                            '{code}' => $oTax->CurCode
+                        )));
                     }
                 }
-                CUtilsHelper::soapObjectsArray($oFare->Tariffs->Tariff);
+                UtilsHelper::soapObjectsArray($oFare->Tariffs->Tariff);
                 foreach ($oFare->Tariffs->Tariff as $oTariff)
                 {
                     $aParts[$oTariff->SegNum]->aTariffs[$oTariff->Code] = $oTariff->Code;
@@ -199,7 +220,7 @@ class GDSNemo
             $aNewParts = array();
             //print_r($aParts);
             $oPart = reset($aParts);
-            foreach ($oFlightSearchParams->routes as $oRoute)
+            foreach ($flightSearchParams->routes as $route)
             {
                 $aSubParts = array();
                 $aCities = array();
@@ -207,7 +228,7 @@ class GDSNemo
                 {
                     $aSubParts[] = $oPart;
                     $aCities[] = $oPart->arrival_city->code;
-                    if ($oRoute->arrival_city->code === $oPart->arrival_city->code)
+                    if ($route->arrival_city->code === $oPart->arrival_city->code)
                     {
                         $oPart = next($aParts);
                         break;
@@ -218,11 +239,12 @@ class GDSNemo
                 {
                     $oPart = end($aParts);
 
-                    if ($oRoute->arrival_city->code !== $oPart->arrival_city->code)
+                    if ($route->arrival_city->code !== $oPart->arrival_city->code)
                     {
                         throw new CException(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}', array(
-                            '{code}' => $oRoute->arrival_city->code,
-                            '{codes}' => implode(', ', $aCities))));
+                            '{code}' => $route->arrival_city->code,
+                            '{codes}' => implode(', ', $aCities)
+                        )));
                     }
                 }
                 $aNewParts[] = $aSubParts;
@@ -256,11 +278,15 @@ class GDSNemo
                     'BookingCodes' => array(
                         'BookingCode' => array(
                             'Code' => 'Q',
-                            'SegNumber' => '1')),
+                            'SegNumber' => '1'
+                        )
+                    ),
                     'Agency' => array(
                         'Name' => 'Easy',
                         'Address' => array(
-                            'City' => 'Saint-Petersburg')),
+                            'City' => 'Saint-Petersburg'
+                        )
+                    ),
                     'Travellers' => array(
                         'Traveller' => array(
                             array(
@@ -271,20 +297,30 @@ class GDSNemo
                                     'Nationality' => 'RU',
                                     'Gender' => 'M',
                                     'FirstName' => 'Aleksandr',
-                                    'LastName' => 'Kovalev'),
+                                    'LastName' => 'Kovalev'
+                                ),
                                 'DocumentInfo' => array(
                                     'DocType' => 'М',
                                     'DocNum' => 'asdawe131',
                                     'CountryCode' => 'RU',
-                                    'DocElapsedTime' => '24.03.2026')),
+                                    'DocElapsedTime' => '24.03.2026'
+                                )
+                            ),
                             array(
                                 'Type' => 'ADT',
-                                'Count' => '1')))),
+                                'Count' => '1'
+                            )
+                        )
+                    )
+                ),
                 'Source' => array(
                     'ClientId' => 102,
                     'APIKey' => '7F48365D42B73307C99C12A578E92B36',
                     'Language' => 'UA',
-                    'Currency' => 'RUB')));
+                    'Currency' => 'RUB'
+                )
+            )
+        );
         if ($oFlightBookingParams->checkValid())
         {
             $aTraveler = array();
@@ -295,7 +331,7 @@ class GDSNemo
                 $oTraveller['Type'] = Yii::app()->params['aPassegerTypes'][$passenger->iType];
                 $oTraveller['Num'] = $iNum;
                 $oTraveller['PersonalInfo'] = array();
-                $oTraveller['PersonalInfo']['DateOfBirth'] = CUtilsHelper::dateToPointDate($passenger->oPassport->birthday);
+                $oTraveller['PersonalInfo']['DateOfBirth'] = UtilsHelper::dateToPointDate($passenger->oPassport->birthday);
                 $oTraveller['PersonalInfo']['Nationality'] = Country::model()->findByPk($passenger->oPassport->country_id)->code;
                 $oTraveller['PersonalInfo']['Gender'] = $passenger->oPassport->gender_id == 1 ? 'M' : 'F';
                 $oTraveller['PersonalInfo']['FirstName'] = $passenger->oPassport->first_name;
@@ -304,7 +340,7 @@ class GDSNemo
                 $oTraveller['DocumentInfo']['DocType'] = $passenger->oPassport->document_type_id;
                 $oTraveller['DocumentInfo']['DocNum'] = $passenger->oPassport->number;
                 $oTraveller['DocumentInfo']['CountryCode'] = Country::model()->findByPk($passenger->oPassport->country_id)->code;
-                $oTraveller['DocumentInfo']['DocElapsedTime'] = CUtilsHelper::dateToPointDate($passenger->oPassport->expiration);
+                $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->oPassport->expiration);
             }
         } else
         {
@@ -318,12 +354,16 @@ class GDSNemo
         $aParams = array(
             'Request' => array(
                 'GetAirRules' => array(
-                    'FlightId' => 534733),
+                    'FlightId' => 534733
+                ),
                 'Source' => array(
                     'ClientId' => 102,
                     'APIKey' => '7F48365D42B73307C99C12A578E92B36',
                     'Language' => 'UA',
-                    'Currency' => 'RUB')));
+                    'Currency' => 'RUB'
+                )
+            )
+        );
 
         print_r(self::request('GetAirRules', $aParams, $bCache = FALSE, $iExpiration = 0));
     }
@@ -333,12 +373,16 @@ class GDSNemo
         $aParams = array(
             'Request' => array(
                 'AirAvail' => array(
-                    'FlightId' => 534733),
+                    'FlightId' => 534733
+                ),
                 'Source' => array(
                     'ClientId' => 102,
                     'APIKey' => '7F48365D42B73307C99C12A578E92B36',
                     'Language' => 'UA',
-                    'Currency' => 'RUB')));
+                    'Currency' => 'RUB'
+                )
+            )
+        );
 
         print_r(self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0));
     }
@@ -351,12 +395,17 @@ class GDSNemo
                     'BookID' => 534733,
                     'ValCompany' => '',
                     'Commision' => array(
-                        'Percent' => '2')),
+                        'Percent' => '2'
+                    )
+                ),
                 'Source' => array(
                     'ClientId' => 102,
                     'APIKey' => '7F48365D42B73307C99C12A578E92B36',
                     'Language' => 'UA',
-                    'Currency' => 'RUB')));
+                    'Currency' => 'RUB'
+                )
+            )
+        );
 
         print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
 
@@ -367,12 +416,16 @@ class GDSNemo
         $aParams = array(
             'Request' => array(
                 'VoidTicket' => array(
-                    'BookID' => 534733),
+                    'BookID' => 534733
+                ),
                 'Source' => array(
                     'ClientId' => 102,
                     'APIKey' => '7F48365D42B73307C99C12A578E92B36',
                     'Language' => 'UA',
-                    'Currency' => 'RUB')));
+                    'Currency' => 'RUB'
+                )
+            )
+        );
 
         print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
     }

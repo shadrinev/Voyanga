@@ -36,10 +36,10 @@ class GDSNemoSoapClient extends SoapClient
 	public static $sLastHeaders;
 	public static $sLastCurlError;
 	
-	public function __doRequest($sRequest, $sLocation, $sAction, $iVersion)
+	public function __doRequest($request, $location, $action, $version)
 	{
-	    if($sAction == 'SearchFlights'){
-	        $sRequest = '<?xml version="1.0" encoding="UTF-8"?>
+	    if($action == 'SearchFlights'){
+	        $request = '<?xml version="1.0" encoding="UTF-8"?>
 <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:ns1="http://srt.mute-lab.com/nemoflights/?version%3D1.0%26for%3DSearchFlights">
   <env:Body>
     <ns1:search>
@@ -76,10 +76,10 @@ class GDSNemoSoapClient extends SoapClient
     </ns1:search>
   </env:Body>
 </env:Envelope>';
-	        $sXML = $this->makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion);
+	        $sXML = $this->makeSoapRequest($request, $location, $action, $version);
 	    }else{
 	        //echo htmlspecialchars($sRequest);
-	        $sXML = $this->makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion);
+	        $sXML = $this->makeSoapRequest($request, $location, $action, $version);
 	        //$sXML = '';
 	    }
 	    

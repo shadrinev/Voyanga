@@ -50,7 +50,6 @@ return CMap::mergeArray(
                     '::1'
                 )
             ),
-            'gds'
         ),
 
         // application components
