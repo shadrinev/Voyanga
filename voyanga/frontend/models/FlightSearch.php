@@ -32,7 +32,7 @@ class FlightSearch extends CActiveRecord {
     public function sendRequest(FlightSearchParams $oFlightSearchParams ) {
         if($oFlightSearchParams instanceof FlightSearchParams){
             if($oFlightSearchParams->checkValid()){
-                $this->_aRoutes = $oFlightSearchParams->aRoutes;
+                $this->_aRoutes = $oFlightSearchParams->routes;
                 $this->flight_class = $oFlightSearchParams->flight_class;
                 $this->key = $oFlightSearchParams->key;
                 

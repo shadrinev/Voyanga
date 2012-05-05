@@ -1,22 +1,22 @@
 <?php
 class FlightSearchParams {
-    public $aRoutes;
+    public $routes;
     public $flight_class;
-    public $adult_count;
-    public $child_count;
-    public $infant_count;
+    public $adultCount;
+    public $childCount;
+    public $infantCount;
     private $key;
     
     public function addRoute( $aRouteParams ) {
         $oRoute = new Route();
         if ( $aRouteParams['departure_city_id'] ) {
-            $oRoute->departure_city_id = $aRouteParams['departure_city_id'];
+            $oRoute->departureCityId = $aRouteParams['departure_city_id'];
         } else {
             throw new CException( Yii::t( 'application', 'Required param departure_city_id not set' ) );
         }
         
         if ( $aRouteParams['departure_city_id'] ) {
-            $oRoute->arrival_city_id = $aRouteParams['arrival_city_id'];
+            $oRoute->arrivalCityId = $aRouteParams['arrival_city_id'];
         } else {
             throw new CException( Yii::t( 'application', 'Required param arrival_city_id not set' ) );
         }
@@ -32,33 +32,33 @@ class FlightSearchParams {
                 throw new CException( Yii::t( 'application', 'departure_date parametr - date incorrect ' ) );
             }
             if ( $aRouteParams['adult_count'] ) {
-                $oRoute->adult_count = intval( $aRouteParams['adult_count'] );
-                $this->adult_count = $oRoute->adult_count;
+                $oRoute->adultCount = intval( $aRouteParams['adult_count'] );
+                $this->adultCount = $oRoute->adultCount;
             }
             if ( $aRouteParams['child_count'] ) {
-                $oRoute->child_count = intval( $aRouteParams['child_count'] );
-                $this->child_count = $oRoute->child_count;
+                $oRoute->childCount = intval( $aRouteParams['child_count'] );
+                $this->childCount = $oRoute->childCount;
             }
             if ( $aRouteParams['infant_count'] ) {
-                $oRoute->infant_count = intval( $aRouteParams['infant_count'] );
-                $this->infant_count = $oRoute->infant_count;
+                $oRoute->infantCount = intval( $aRouteParams['infant_count'] );
+                $this->infantCount = $oRoute->infantCount;
             }
-            $oRoute->departure_date = "{$yy}-{$mm}-{$dd}";
+            $oRoute->departureDate = "{$yy}-{$mm}-{$dd}";
         } else {
             throw new CException( Yii::t( 'application', 'Required param departure_date not set' ) );
         }
-        if ( ( $oRoute->adult_count + $oRoute->child_count ) <= 0 ) {
+        if ( ( $oRoute->adultCount + $oRoute->childCount ) <= 0 ) {
             throw new CException( Yii::t( 'application', 'Passengers count must be more then zero' ) );
         }
-        if ( ( $oRoute->adult_count + $oRoute->child_count ) < $oRoute->infant_count ) {
+        if ( ( $oRoute->adultCount + $oRoute->childCount ) < $oRoute->infantCount ) {
             throw new CException( Yii::t( 'application', 'Infants count must be equal or less then (adult + child) count' ) );
         }
-        $this->aRoutes[] = $oRoute;
+        $this->routes[] = $oRoute;
     }
     
     public function __get( $name ) {
         if ( $name === 'key' ) {
-            $sKey = $this->flight_class . json_encode( $this->aRoutes );
+            $sKey = $this->flight_class . json_encode( $this->routes );
             return md5( $sKey );
         } else {
             return $this->$name;
@@ -70,7 +70,7 @@ class FlightSearchParams {
         if ( !$this->flight_class ) {
             $bValid = false;
         }
-        if ( count( $this->aRoutes ) <= 0 ) {
+        if ( count( $this->routes ) <= 0 ) {
             $bValid = false;
         }
         return $bValid;

@@ -7,15 +7,14 @@ class GDSNemo
         /*$soapClient = new SoapClient('http://srt.mute-lab.com/nemoflights/wsdl.php?for=SearchFlights');
         $functions = $soapClient->__getFunctions();
         print_r($functions);*/
-        print_r($oParams);
-        $oClient = new GDSNemoSoapClient('http://srt.mute-lab.com/nemoflights/wsdl.php?for=SearchFlights', array(
+        //print_r($oParams);
+        $oClient = new GDSNemoSoapClient('http://109.120.157.20:10002/Flights.asmx?wsdl', array(
             'trace' => 1,
-            'typemap' => array(
-                array(
-                    'type_ns' => 'http://spos.ru/flights/2010-02-01',
-                    'type_name' => 'PersonFlightExtensions'))));
+            ));
         $i = 1;
-
+        //print_r($oClient->__getFunctions());
+        $oParams = (object) $oParams;
+        print_r($oParams);
         return $oClient->$sMethod($oParams);
 
     }
@@ -29,9 +28,9 @@ class GDSNemo
         //prepare request  structure
         $aParams = array(
             'Request' => array(
-                'Requisites' => array('Login' => 'lg', 'Password' => 'ps'),
+                'Requisites' => array('Login' => 'webdev012', 'Password' => 'HHFJGYU3*^H'),
                 'UserID' => 15,
-                'SearchFlights' => array(
+                'Search' => array(
                     'LinkOnly' => false,
                     'ODPairs' => array(
                         'Type' => 'OW',
@@ -60,23 +59,23 @@ class GDSNemo
                         'IncludePrivateFare' => 'false',
                         'CurrencyCode' => 'RUB'))));
         $aPairs = array();
-        foreach ($oFlightSearchParams->aRoutes as $oRoute)
+        foreach ($oFlightSearchParams->routes as $oRoute)
         {
             $aODPair = array();
-            $aODPair['DepDate'] = $oRoute->departure_date . 'T00:00:00';
+            $aODPair['DepDate'] = $oRoute->departureDate . 'T00:00:00';
             $aODPair['DepAirp'] = array(
                 'CodeType' => 'IATA',
-                '_' => $oRoute->departure_city->code);
+                '_' => $oRoute->departureCity->code);
             $aODPair['ArrAirp'] = array(
                 'CodeType' => 'IATA',
-                '_' => $oRoute->arrival_city->code);
+                '_' => $oRoute->arrivalCity->code);
             $aPairs[] = $aODPair;
         }
         $sFType = 'OW';
-        if (count($oFlightSearchParams->aRoutes) == 2)
+        if (count($oFlightSearchParams->routes) == 2)
         {
-            $bEqualFrom = $oFlightSearchParams->aRoutes[0]->departure_city_id === $oFlightSearchParams->aRoutes[1]->arrival_city_id;
-            $bEqualTo = $oFlightSearchParams->aRoutes[0]->arrival_city_id === $oFlightSearchParams->aRoutes[1]->departure_city_id;
+            $bEqualFrom = $oFlightSearchParams->routes[0]->departureCityId === $oFlightSearchParams->routes[1]->arrivalCityId;
+            $bEqualTo = $oFlightSearchParams->routes[0]->arrivalCityId === $oFlightSearchParams->routes[1]->departureCityId;
             if ($bEqualFrom && $bEqualTo)
             {
                 $sFType = 'RT';
@@ -84,7 +83,7 @@ class GDSNemo
             {
                 $sFType = 'CR';
             }
-        } elseif (count($oFlightSearchParams->aRoutes) > 2)
+        } elseif (count($oFlightSearchParams->routes) > 2)
         {
             $sFType = 'CR';
         }
@@ -92,37 +91,40 @@ class GDSNemo
         $aParams['Request']['SearchFlights']['ODPairs']['ODPair'] = CUtilsHelper::normalizeArray($aPairs);
         unset($aPairs);
 
-        $aTravelleler = array();
-        if ($oFlightSearchParams->adult_count > 0)
+        $traveller = array();
+        if ($oFlightSearchParams->adultCount > 0)
         {
-            $aTravelleler = array(
+            $traveller = array(
                 'Type' => 'ADN',
-                'Count' => $oFlightSearchParams->adult_count);
+                'Count' => $oFlightSearchParams->adultCount);
         }
-        if ($oFlightSearchParams->child_count > 0)
+        if ($oFlightSearchParams->childCount > 0)
         {
-            $aTravelleler = array(
+            $traveller = array(
                 'Type' => 'CNN',
-                'Count' => $oFlightSearchParams->child_count);
+                'Count' => $oFlightSearchParams->childCount);
         }
-        if ($oFlightSearchParams->infant_count > 0)
+        if ($oFlightSearchParams->infantCount > 0)
         {
-            $aTravelleler = array(
+            $traveller = array(
                 'Type' => 'INF',
-                'Count' => $oFlightSearchParams->infant_count);
+                'Count' => $oFlightSearchParams->infantCount);
         }
-        $aParams['Request']['SearchFlights']['Travellers']['Traveller'] = CUtilsHelper::normalizeArray($aTravelleler);
-        unset($aTravelleler);
+        $aParams['Request']['SearchFlights']['Travellers']['Traveller'] = CUtilsHelper::normalizeArray($traveller);
+        unset($traveller);
 
         //real request
-        $oSoapResponse = self::request('search', $aParams, $bCache = FALSE, $iExpiration = 0);
+
+        $oSoapResponse = self::request('Search', $aParams, $bCache = FALSE, $iExpiration = 0);
+        print_r($oSoapResponse);
+        return;
 
         //processing response
 
 
         //print_r( $oSoapResponse );
         Yii::beginProfile('processingSoap');
-        $aFlights = array();
+        $flights = array();
         CUtilsHelper::soapObjectsArray($oSoapResponse->Response->SearchFlights->Flights->Flight);
         foreach ($oSoapResponse->Response->SearchFlights->Flights->Flight as $oSoapFlight)
         {
@@ -197,7 +199,7 @@ class GDSNemo
             $aNewParts = array();
             //print_r($aParts);
             $oPart = reset($aParts);
-            foreach ($oFlightSearchParams->aRoutes as $oRoute)
+            foreach ($oFlightSearchParams->routes as $oRoute)
             {
                 $aSubParts = array();
                 $aCities = array();
@@ -231,13 +233,13 @@ class GDSNemo
             $oFlight->commission_price = 0;
             $oFlight->flight_key = $oSoapFlight->FlightId;
             $oFlight->parts = $aNewParts;
-            $aFlights[] = $oFlight;
+            $flights[] = $oFlight;
         }
         Yii::endProfile('processingSoap');
         //print_r($aFlights);
 
 
-        return $aFlights;
+        return $flights;
 
     }
 

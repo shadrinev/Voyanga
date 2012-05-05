@@ -8,10 +8,10 @@ class GDSNemoSoapClient extends SoapClient
 	public static $sLastHeaders;
 	public static $sLastCurlError;
 	
-	public function __doRequest($sRequest, $sLocation, $sAction, $iVersion)
+	public function __doRequest($sRequest, $sLocation, $sAction, $iVersion, $oneWay = 0)
 	{
 	    echo $sAction;
-	    $sXML = '<?xml version="1.0" encoding="UTF-8"?>
+	    /*$sXML = '<?xml version="1.0" encoding="UTF-8"?>
 <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:ns1="http://srt.mute-lab.com/nemoflights/?version%3D1.0%26for%3DSearchFlights" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <env:Body xmlns:rpc="http://www.w3.org/2003/05/soap-rpc">
     <ns1:searchResponse>
@@ -2687,8 +2687,8 @@ class GDSNemoSoapClient extends SoapClient
       </ResponseBin>
     </ns1:searchResponse>
   </env:Body>
-</env:Envelope>';
-	    if($sAction == 'search'){
+</env:Envelope>';*/
+	    if($sAction == 'search44'){
 	        $sRequest = '<?xml version="1.0" encoding="UTF-8"?>
 <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:ns1="http://srt.mute-lab.com/nemoflights/?version%3D1.0%26for%3DSearchFlights">
   <env:Body>
@@ -2727,10 +2727,10 @@ class GDSNemoSoapClient extends SoapClient
   </env:Body>
 </env:Envelope>';
 	        
-	        //$sXML = $this->makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion);
+	        $sXML = $this->makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion);
 	    }else{
-	        //echo htmlspecialchars($sRequest);
-	        //$sXML = $this->makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion);
+	        echo htmlspecialchars($sRequest);
+	        $sXML = $this->makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion);
 	        //$sXML = '';
 	    }
 	    
