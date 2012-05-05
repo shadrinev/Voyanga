@@ -14,10 +14,20 @@ class GDSNemoSoapClient extends SoapClient
 
         if ( strpos($action,'Search') !== FALSE )
         {
+            /*
+              <?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetMyName xmlns="http://tempuri.org/">
+      <name>string</name>
+    </GetMyName>
+  </soap:Body>
+</soap:Envelope>
+             */
             $request = '<?xml version="1.0" encoding="UTF-8"?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://tempuri.org/">
-  <env:Body>
-    <ns1:Search>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Search xmlns="http://tempuri.org/">
         <Request>
           <Requisites>
             <Login>webdev012</Login>
@@ -45,12 +55,12 @@ class GDSNemoSoapClient extends SoapClient
             </Restrictions>
           </Search>
         </Request>
-    </ns1:Search>
-  </env:Body>
-</env:Envelope>';
-
-            $sXML = $this->makeSoapRequest($request, $location, $action, $version);
-            echo VarDumper::dump($sXML);
+    </Search>
+  </soap:Body>
+</soap:Envelope>';
+            //echo parent::__doRequest($request, $location, $action, $version); die();
+            $xml = $this->makeSoapRequest($request, $location, $action, $version);
+            echo $xml;
             die();
         }
         else
@@ -58,36 +68,36 @@ class GDSNemoSoapClient extends SoapClient
             echo VarDumper::dump($request);
 
             //$sXML = $this->makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion);
-            $sXML = '';
+            $xml = '';
         }
 
-        return $sXML;
+        return $xml;
     }
 
-    private function makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion)
+    private function makeSoapRequest($request, $location, $action, $version)
     {
         $rCh = curl_init();
 
         curl_setopt($rCh, CURLOPT_POST, (true));
         curl_setopt($rCh, CURLOPT_HEADER, true);
         curl_setopt($rCh, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($rCh, CURLOPT_POSTFIELDS, $sRequest);
-        curl_setopt($rCh, CURLOPT_TIMEOUT, 190);
-        $aHeadersToSend = array();
-        $aHeadersToSend[] = "Content-Length: " . strlen($sRequest);
-        $aHeadersToSend[] = "Content-Type: text/xml; charset=utf-8";
-        $aHeadersToSend[] = "SOAPAction: \"$sAction\"";
+        curl_setopt($rCh, CURLOPT_POSTFIELDS, $request);
+        curl_setopt($rCh, CURLOPT_TIMEOUT, 360);
+        $headersToSend = array();
+        $headersToSend[] = "Content-Length: " . strlen($request);
+        $headersToSend[] = "Content-Type: text/xml; charset=utf-8";
+        //$headersToSend[] = "SOAPAction: \"$action\"";
 
-        curl_setopt($rCh, CURLOPT_HTTPHEADER, $aHeadersToSend);
-        curl_setopt($rCh, CURLOPT_URL, $sLocation);
-        $sData = curl_exec($rCh);
+        curl_setopt($rCh, CURLOPT_HTTPHEADER, $headersToSend);
+        curl_setopt($rCh, CURLOPT_URL, $location);
+        $data = curl_exec($rCh);
         //Biletoid_Utils::addLogMessage($sData, '/tmp/curl_response.txt');
-        if ($sData !== FALSE)
+        if ($data !== FALSE)
         {
-            list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
-            if (strpos($sHeaders, 'Continue') !== FALSE)
+            list($headers, $data) = explode("\r\n\r\n", $data, 2);
+            if (strpos($headers, 'Continue') !== FALSE)
             {
-                list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
+                list($headers, $data) = explode("\r\n\r\n", $data, 2);
             }
             //AlpOnline_SoapClient::$sLastHeaders = $sHeaders;
         }
@@ -96,6 +106,25 @@ class GDSNemoSoapClient extends SoapClient
             //AlpOnline_SoapClient::$sLastCurlError = curl_error ($rCh);
         }
 
-        return $sData;
+        return $data;
+    }
+
+    private function newSoapRequest($request, $location, $action, $version)
+    {
+        $soap_do = curl_init();
+        curl_setopt($soap_do, CURLOPT_URL,            $location );
+        curl_setopt($soap_do, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($soap_do, CURLOPT_TIMEOUT,        100);
+        curl_setopt($soap_do, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($soap_do, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($soap_do, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($soap_do, CURLOPT_POST,           true );
+        curl_setopt($soap_do, CURLOPT_POSTFIELDS,    $request);
+        curl_setopt($soap_do, CURLOPT_HTTPHEADER,     array('Content-Type: text/xml; charset=utf-8', 'Content-Length: '.strlen($request) ));
+        //curl_setopt($soap_do, CURLOPT_USERPWD, $user . ":" . $password);
+
+        $result = curl_exec($soap_do);
+        $err = curl_error($soap_do);
+        return $result;
     }
 }

@@ -15,7 +15,7 @@ class GDSNemo extends CComponent
     {
         $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['wsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace']));
         //VarDumper::dump($params);
-        VarDumper::dump($client->__getTypes());
+        //VarDumper::dump($client->__getTypes());
         //$params = array('Search'=>$params);
         return $client->$methodName($params['Request']);
     }

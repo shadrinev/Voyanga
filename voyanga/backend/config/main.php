@@ -35,7 +35,8 @@ return CMap::mergeArray(
             'application.components.*',
             'application.controllers.*',
             'application.models.*',
-            'application.helpers.*'
+            'application.helpers.*',
+            'application.lib.Dklab.*'
         ),
 
         'modules' => array(
