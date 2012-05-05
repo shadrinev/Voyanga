@@ -16,4 +16,16 @@ class VarDumper extends CVarDumper
     {
         echo self::dumpAsString($var, $depth, $highlight);
     }
+
+    public static function xmlDump($var)
+    {
+        $oDM = new DOMDocument();
+        $oDM->loadXML ($var);
+        if($oDM){
+            $oDM->formatOutput = true;
+            $oDM->normalize();
+            $var = $oDM->saveXML();
+            echo self::dumpAsString($var, 10, true);
+        }
+    }
 }

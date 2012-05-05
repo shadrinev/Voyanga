@@ -13,11 +13,18 @@ class GDSNemo extends CComponent
      */
     private static function request($methodName, $params, $cache = FALSE, $expiration = 0)
     {
-        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['wsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace']));
-        //VarDumper::dump($params);
+        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['wsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'],'exceptions'=>true,
+            //'typemap' => array(
+            //            array(
+            //                    'type_ns' => 'http://tempuri.org/',
+            //                    'type_name' => 'Search' ) )
+        ));
+        VarDumper::dump($params);
+
+        //VarDumper::dump($client->__getFunctions());
         //VarDumper::dump($client->__getTypes());
         //$params = array('Search'=>$params);
-        return $client->$methodName($params['Request']);
+        return $client->$methodName($params);
     }
 
     public function FlightSearch(FlightSearchParams $flightSearchParams)
@@ -26,6 +33,7 @@ class GDSNemo extends CComponent
         {
             throw new CException(Yii::t('application', 'Parameter oFlightSearchParams not type of FlightSearchParams'));
         }
+        VarDumper::dump($flightSearchParams);
         //prepare request  structure
         $params = array(
             'Request' => array(
@@ -33,21 +41,17 @@ class GDSNemo extends CComponent
                 'RequestType'=>'U',
                 'UserID' => Yii::app()->params['GDSNemo']['userId'],
                 'Search' => array(
-                    'LinkOnly' => false,
+                    'LinkOnly' => 'false',
                     'ODPairs' => array(
                         'Type' => 'OW',
-                        'Direct' => "false",
+                        'Direct' => false,
                         'AroundDates' => "0",
+
                         'ODPair' => array(
-                            'DepDate' => '2011-06-11T00:00:00',
-                            'DepAirp' => array(
-                                'CodeType' => 'IATA',
-                                '_' => 'MOW'
-                            ),
-                            'ArrAirp' => array(
-                                'CodeType' => 'IATA',
-                                '_' => 'PAR'
-                            )
+                            'DepDate' => '2012-06-13T00:00:00',
+                            'DepAirp' => 'MOW',
+                            'ArrAirp' =>  'IJK'
+
                         )
                     ),
                     'Travellers' => array(
@@ -55,18 +59,14 @@ class GDSNemo extends CComponent
                             array(
                                 'Type' => 'ADT',
                                 'Count' => '1'
-                            ),
-                            array(
-                                'Type' => 'CNN',
-                                'Count' => '1'
                             )
                         )
                     ),
                     'Restrictions' => array(
-                        'ClassPref' => 'all',
-                        'OnlyAvail' => 'true',
+                        'ClassPref' => 'All',
+                        'OnlyAvail' => true,
                         'AirVPrefs' => '',
-                        'IncludePrivateFare' => 'false',
+                        'IncludePrivateFare' => false,
                         'CurrencyCode' => 'RUB'
                     )
                 )
@@ -78,14 +78,8 @@ class GDSNemo extends CComponent
             //todo: think how to name it
             $ODPair = array();
             $ODPair['DepDate'] = $route->departureDate . 'T00:00:00';
-            $ODPair['DepAirp'] = array(
-                'CodeType' => 'IATA',
-                '_' => $route->departureCity->code
-            );
-            $ODPair['ArrAirp'] = array(
-                'CodeType' => 'IATA',
-                '_' => $route->arrivalCity->code
-            );
+            $ODPair['DepAirp'] =  $route->departureCity->code;
+            $ODPair['ArrAirp'] = $route->arrivalCity->code;
             $pairs[] = $ODPair;
         }
         $flightType = 'OW';
@@ -104,15 +98,15 @@ class GDSNemo extends CComponent
         {
             $flightType = 'CR';
         }
-        $params['Request']['SearchFlights']['ODPairs']['Type'] = $flightType;
-        $params['Request']['SearchFlights']['ODPairs']['ODPair'] = UtilsHelper::normalizeArray($pairs);
+        $params['Request']['Search']['ODPairs']['Type'] = $flightType;
+        $params['Request']['Search']['ODPairs']['ODPair'] = UtilsHelper::normalizeArray($pairs);
         unset($pairs);
 
         $traveller = array();
         if ($flightSearchParams->adultCount > 0)
         {
             $traveller = array(
-                'Type' => 'ADN',
+                'Type' => 'ADT',
                 'Count' => $flightSearchParams->adultCount
             );
         }
@@ -130,7 +124,7 @@ class GDSNemo extends CComponent
                 'Count' => $flightSearchParams->infantCount
             );
         }
-        $params['Request']['SearchFlights']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($traveller);
+        $params['Request']['Search']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($traveller);
         unset($traveller);
 
         //real request

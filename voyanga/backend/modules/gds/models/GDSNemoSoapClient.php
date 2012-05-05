@@ -12,21 +12,12 @@ class GDSNemoSoapClient extends SoapClient
     {
         echo $action;
 
-        if ( strpos($action,'Search') !== FALSE )
+        if ( strpos($action,'Search11') !== FALSE )
         {
-            /*
-              <?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetMyName xmlns="http://tempuri.org/">
-      <name>string</name>
-    </GetMyName>
-  </soap:Body>
-</soap:Envelope>
-             */
+            echo $action.'||||';
             $request = '<?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Body>
     <Search xmlns="http://tempuri.org/">
         <Request>
           <Requisites>
@@ -39,8 +30,8 @@ class GDSNemoSoapClient extends SoapClient
             <ODPairs Type="OW" Direct="false" AroundDates="0">
               <ODPair>
                 <DepDate>2012-06-13T00:00:00</DepDate>
-                <DepAirp CodeType="IATA">MOW</DepAirp>
-                <ArrAirp CodeType="IATA">PAR</ArrAirp>
+                <DepAirp>MOW</DepAirp>
+                <ArrAirp>IJK</ArrAirp>
               </ODPair>
             </ODPairs>
             <Travellers>
@@ -56,48 +47,52 @@ class GDSNemoSoapClient extends SoapClient
           </Search>
         </Request>
     </Search>
-  </soap:Body>
-</soap:Envelope>';
-            //echo parent::__doRequest($request, $location, $action, $version); die();
-            $xml = $this->makeSoapRequest($request, $location, $action, $version);
-            echo $xml;
+  </env:Body>
+</env:Envelope>';
+            echo VarDumper::xmlDump($request);
+            $sXML = $this->makeSoapRequest($request, $location, $action, $version);
+            //$sXML = parent::__doRequest($request, $location, $action, $version);
+            echo VarDumper::xmlDump($sXML);
             die();
         }
         else
         {
-            echo VarDumper::dump($request);
+            echo VarDumper::xmlDump($request);
+            //die();
 
-            //$sXML = $this->makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion);
-            $xml = '';
+            //$sXML = $this->makeSoapRequest($request, $location, $action, $version);
+            $sXML = parent::__doRequest($request, $location, $action, $version);
+            echo VarDumper::xmlDump($sXML);
+            die();
         }
 
-        return $xml;
+        return $sXML;
     }
 
-    private function makeSoapRequest($request, $location, $action, $version)
+    private function makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion)
     {
         $rCh = curl_init();
 
         curl_setopt($rCh, CURLOPT_POST, (true));
         curl_setopt($rCh, CURLOPT_HEADER, true);
         curl_setopt($rCh, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($rCh, CURLOPT_POSTFIELDS, $request);
-        curl_setopt($rCh, CURLOPT_TIMEOUT, 360);
-        $headersToSend = array();
-        $headersToSend[] = "Content-Length: " . strlen($request);
-        $headersToSend[] = "Content-Type: text/xml; charset=utf-8";
-        //$headersToSend[] = "SOAPAction: \"$action\"";
+        curl_setopt($rCh, CURLOPT_POSTFIELDS, $sRequest);
+        curl_setopt($rCh, CURLOPT_TIMEOUT, 190);
+        $aHeadersToSend = array();
+        $aHeadersToSend[] = "Content-Length: " . strlen($sRequest);
+        $aHeadersToSend[] = "Content-Type: text/xml; charset=utf-8";
+        $aHeadersToSend[] = "SOAPAction: \"$sAction\"";
 
-        curl_setopt($rCh, CURLOPT_HTTPHEADER, $headersToSend);
-        curl_setopt($rCh, CURLOPT_URL, $location);
-        $data = curl_exec($rCh);
+        curl_setopt($rCh, CURLOPT_HTTPHEADER, $aHeadersToSend);
+        curl_setopt($rCh, CURLOPT_URL, $sLocation);
+        $sData = curl_exec($rCh);
         //Biletoid_Utils::addLogMessage($sData, '/tmp/curl_response.txt');
-        if ($data !== FALSE)
+        if ($sData !== FALSE)
         {
-            list($headers, $data) = explode("\r\n\r\n", $data, 2);
-            if (strpos($headers, 'Continue') !== FALSE)
+            list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
+            if (strpos($sHeaders, 'Continue') !== FALSE)
             {
-                list($headers, $data) = explode("\r\n\r\n", $data, 2);
+                list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
             }
             //AlpOnline_SoapClient::$sLastHeaders = $sHeaders;
         }
@@ -106,25 +101,6 @@ class GDSNemoSoapClient extends SoapClient
             //AlpOnline_SoapClient::$sLastCurlError = curl_error ($rCh);
         }
 
-        return $data;
-    }
-
-    private function newSoapRequest($request, $location, $action, $version)
-    {
-        $soap_do = curl_init();
-        curl_setopt($soap_do, CURLOPT_URL,            $location );
-        curl_setopt($soap_do, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($soap_do, CURLOPT_TIMEOUT,        100);
-        curl_setopt($soap_do, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt($soap_do, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($soap_do, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($soap_do, CURLOPT_POST,           true );
-        curl_setopt($soap_do, CURLOPT_POSTFIELDS,    $request);
-        curl_setopt($soap_do, CURLOPT_HTTPHEADER,     array('Content-Type: text/xml; charset=utf-8', 'Content-Length: '.strlen($request) ));
-        //curl_setopt($soap_do, CURLOPT_USERPWD, $user . ":" . $password);
-
-        $result = curl_exec($soap_do);
-        $err = curl_error($soap_do);
-        return $result;
+        return $sData;
     }
 }

@@ -10,18 +10,18 @@ class DefaultController extends Controller
             'adult_count' => 1,
             'child_count' => 0,
             'infant_count' => 0,
-            'departure_city_id' => 4931,
-            'arrival_city_id' => 4466,
-            'departure_date' => '21.05.2012'
+            'departure_city_id' => 4466,
+            'arrival_city_id' => 3654,
+            'departure_date' => '13.06.2012'
         ));
-        $flightSearchParams->addRoute(array(
+        /*$flightSearchParams->addRoute(array(
             'adult_count' => 1,
             'child_count' => 0,
             'infant_count' => 0,
             'departure_city_id' => 4381,
             'arrival_city_id' => 4931,
             'departure_date' => '30.05.2012'
-        ));
+        ));*/
         $flightSearchParams->flight_class = 'E';
         $aFlights = $nemo->FlightSearch($flightSearchParams);
         $aParamsFS['aFlights'] = $aFlights;
