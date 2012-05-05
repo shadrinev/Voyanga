@@ -13,6 +13,7 @@ return CMap::mergeArray (
     CMap::mergeArray (array(
         'GDSNemo' => array(
             'wsdlUri' => 'http://109.120.157.20:10002/Flights.asmx?wsdl',
+            'uri' => 'http://109.120.157.20:10002/Flights.asmx',
             'trace'   => (int)(defined(YII_DEBUG)),
             'login' => 'webdev012',
             'password' => 'HHFJGYU3*^H',

@@ -44,6 +44,7 @@ class DklabSoapClient extends SoapClient
     private $_forcedResponse = null;
     private $_clientOptions = array();
     private $_cookies = array();
+    public $namespace = "http://tempuri.org/";
 
     /**
      * Create a new object.
@@ -63,11 +64,13 @@ class DklabSoapClient extends SoapClient
      */
     public function __doRequest($request, $location, $action, $version, $one_way = 0)
     {
+        echo $request;
         if ($this->_hasForcedResponse)
         {
             // We forced a response, so return it.
             return $this->_forcedResponse;
         }
+
         // Record the request for later async sending.
         // Note the "" appended to the beginning of the string: this creates
         // string copies to work-around PHP's SoapClient bug with refs counting. 
@@ -77,7 +80,7 @@ class DklabSoapClient extends SoapClient
             'action' => "" . $action,
             'cookies' => $this->_cookies,
         );
-        throw new Dklab_SoapClient_DelayedException();
+        throw new DklabSoapClientDelayedException();
     }
 
     /**
@@ -116,10 +119,10 @@ class DklabSoapClient extends SoapClient
             // call is "statically" because of E_STRICT.
             parent::__soapCall($functionName, $arguments, $options, $inputHeaders, $outputHeaders);
         }
-        catch (Dklab_SoapClient_DelayedException $e)
+        catch (DklabSoapClientDelayedException $e)
         {
         }
-        $request = new Dklab_SoapClient_Request($this, $this->_recordedRequest, $args, $this->_clientOptions);
+        $request = new DklabSoapClientRequest($this, $this->_recordedRequest, $args, $this->_clientOptions);
         $this->_recordedRequest = null;
         if ($isAsync)
         {
@@ -193,7 +196,7 @@ class DklabSoapClient extends SoapClient
     {
         if ($key == "async")
         {
-            return new Dklab_SoapClient_AsyncCaller($this);
+            return new DklabSoapClientAsyncCaller($this);
         }
         else
         {
@@ -206,7 +209,7 @@ class DklabSoapClient extends SoapClient
 /**
  * Object is accessed via $dklabSoapClient->async->someMethod().
  */
-class Dklab_SoapClient_AsyncCaller
+class DklabSoapClientAsyncCaller
 {
     private $_client;
 
@@ -225,7 +228,7 @@ class Dklab_SoapClient_AsyncCaller
  * Exception to mark recording calls to __doRequest().
  * Used internally.
  */
-class Dklab_SoapClient_DelayedException extends Exception
+class DklabSoapClientDelayedException extends Exception
 {
 }
 
@@ -234,12 +237,12 @@ class Dklab_SoapClient_DelayedException extends Exception
  * Background processed HTTP request.
  * Used internally.
  */
-class Dklab_SoapClient_Request
+class DklabSoapClientRequest
 {
     /**
      * Shared curl_multi manager.
      *
-     * @var Dklab_SoapClient_Curl
+     * @var DklabSoapClientCurl
      */
     private static $_curl = null;
 
@@ -274,7 +277,7 @@ class Dklab_SoapClient_Request
     /**
      * SOAP client object which created this request.
      *
-     * @var Dklab_SoapClient
+     * @var DklabSoapClient
      */
     private $_client = null;
 
@@ -295,16 +298,16 @@ class Dklab_SoapClient_Request
     /**
      * Create a new asynchronous cURL request.
      *
-     * @param Dklab_SoapClient $client
+     * @param DklabSoapClient $client
      * @param array $request             Information about SOAP request.
      * @param array $callArgs            Arguments to call __soapCall().
      * @param array $clientOptions       SoapClient constructor options.
      */
-    public function __construct(Dklab_SoapClient $client, $request, $callArgs, $clientOptions)
+    public function __construct(DklabSoapClient $client, $request, $callArgs, $clientOptions)
     {
         if (!self::$_curl)
         {
-            self::$_curl = new Dklab_SoapClient_Curl();
+            self::$_curl = new DklabSoapClientCurl();
         }
         $this->_client = $client;
         $this->_request = $request;
@@ -318,7 +321,8 @@ class Dklab_SoapClient_Request
         $curlOptions[CURLOPT_RETURNTRANSFER] = 1;
         $curlOptions[CURLOPT_HTTPHEADER] = array();
         // SOAP protocol encoding is always UTF8 according to RFC.
-        $curlOptions[CURLOPT_HTTPHEADER][] = "Content-Type: application/soap+xml; charset=utf-8";
+        $curlOptions[CURLOPT_HTTPHEADER][] = "Content-Type: application/soap+xml; charset=utf-8;";
+
         // Timeout handling.
         if (isset($clientOptions['timeout']))
         {
@@ -534,7 +538,7 @@ class Dklab_SoapClient_Request
  *     needs to be retried;
  *   - throw an exception if macimum retry count is reached.
  */
-class Dklab_SoapClient_Curl
+class DklabSoapClientCurl
 {
     /**
      * Emergency number of connect tries.
