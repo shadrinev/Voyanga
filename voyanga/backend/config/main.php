@@ -21,8 +21,9 @@ return CMap::mergeArray(
         'id' => 'backend.voyanga.com',
         'name' => 'Voyanga',
         'basePath' => 'backend',
-        'params'  => $params,
+        'params' => $params,
         'language' => 'ru',
+        'theme' => 'classic',
         'preload' => array(
             'log',
             'bootstrap'
@@ -37,7 +38,8 @@ return CMap::mergeArray(
             'application.controllers.*',
             'application.models.*',
             'application.helpers.*',
-            'application.lib.Dklab.*'
+            'application.lib.Dklab.*',
+            'ext.bootstrap.widgets.*'
         ),
 
         'modules' => array(
@@ -50,18 +52,20 @@ return CMap::mergeArray(
                     '192.168.0.8',
                     '::1',
                 ),
-                'generatorPaths'=>array(
+                'generatorPaths' => array(
                     'bootstrap.gii', // since 0.9.1
                 ),
             ),
-            'gds'
+
+            'gds',
         ),
 
         // application components
         'components' => array(
 
-            'bootstrap'=>array(
-                'class'=>'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
+            'bootstrap' => array(
+                'class' => 'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
+                'responsiveCss' => true,
             ),
 
             'cache' => array(
@@ -75,17 +79,6 @@ return CMap::mergeArray(
                 )
             ),
 
-            'db'=>array(
-                'class' => 'CDbConnection',
-                'pdoClass' => 'NestedPDO',
-                'connectionString' => $params['db.connectionString'],
-                'username' => $params['db.username'],
-                'password' => $params['db.password'],
-                'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
-                'enableParamLogging' => YII_DEBUG,
-                'charset' => 'utf8',
-            ),
-
             'errorHandler' => array(
                 // use 'site/error' action to display errors
                 'errorAction' => 'site/error'
@@ -94,17 +87,6 @@ return CMap::mergeArray(
             //todo: is it should be inside backend?
             'gdsAdapter' => array(
                 'class' => 'GDSAdapter'
-            ),
-
-            'logdb'=>array(
-                'class' => 'CDbConnection',
-                'pdoClass' => 'NestedPDO',
-                'connectionString' => $params['db.connectionString'],
-                'username' => $params['db.username'],
-                'password' => $params['db.password'],
-                'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
-                'enableParamLogging' => YII_DEBUG,
-                'charset' => 'utf8',
             ),
 
             'log' => array(
