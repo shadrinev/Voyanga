@@ -24,7 +24,8 @@ return CMap::mergeArray(
         'params'  => $params,
         'language' => 'ru',
         'preload' => array(
-            'log'
+            'log',
+            'bootstrap'
         ),
 
         // autoloading model and component classes
@@ -47,23 +48,20 @@ return CMap::mergeArray(
                 'ipFilters' => array(
                     '192.168.0.74',
                     '192.168.0.8',
-                    '::1'
-                )
+                    '::1',
+                ),
+                'generatorPaths'=>array(
+                    'bootstrap.gii', // since 0.9.1
+                ),
             ),
             'gds'
         ),
 
         // application components
         'components' => array(
-            'user' => array(
-                // enable cookie-based authentication
-                'allowAutoLogin' => true
-            ),
 
-            'urlManager' => array(
-                'urlFormat' => 'path',
-                'showScriptName' => false,
-                'rules' => $routes,
+            'bootstrap'=>array(
+                'class'=>'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
             ),
 
             'cache' => array(
@@ -77,15 +75,6 @@ return CMap::mergeArray(
                 )
             ),
 
-            'gdsAdapter' => array(
-                'class' => 'GDSAdapter'
-            ),
-
-            'errorHandler' => array(
-                // use 'site/error' action to display errors
-                'errorAction' => 'site/error'
-            ),
-
             'db'=>array(
                 'class' => 'CDbConnection',
                 'pdoClass' => 'NestedPDO',
@@ -95,6 +84,16 @@ return CMap::mergeArray(
                 'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
                 'enableParamLogging' => YII_DEBUG,
                 'charset' => 'utf8',
+            ),
+
+            'errorHandler' => array(
+                // use 'site/error' action to display errors
+                'errorAction' => 'site/error'
+            ),
+
+            //todo: is it should be inside backend?
+            'gdsAdapter' => array(
+                'class' => 'GDSAdapter'
             ),
 
             'logdb'=>array(
@@ -142,10 +141,21 @@ return CMap::mergeArray(
                     array(
                         'class' => 'CEmailLogRoute',
                         'levels' => 'error, warning',
-                        'emails' => 'maximov@danechka.com'
+                        'emails' => 'kuklin@voyanga.com'
                     )
                 )
-            )
+            ),
+
+            'user' => array(
+                // enable cookie-based authentication
+                'allowAutoLogin' => true
+            ),
+
+            'urlManager' => array(
+                'urlFormat' => 'path',
+                'showScriptName' => false,
+                'rules' => $routes,
+            ),
         ),
     )
 );
