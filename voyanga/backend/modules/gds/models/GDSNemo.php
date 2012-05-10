@@ -13,18 +13,13 @@ class GDSNemo extends CComponent
      */
     private static function request($methodName, $params, $cache = FALSE, $expiration = 0)
     {
-        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['wsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'],'exceptions'=>true,
-            //'typemap' => array(
-            //            array(
-            //                    'type_ns' => 'http://tempuri.org/',
-            //                    'type_name' => 'Search' ) )
+        $client = new DklabSoapClient(Yii::app()->params['GDSNemo']['wsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'],'exceptions'=>true,
         ));
-        VarDumper::dump($params);
 
         //VarDumper::dump($client->__getFunctions());
         //VarDumper::dump($client->__getTypes());
         //$params = array('Search'=>$params);
-        return $client->$methodName($params);
+        return $client->async->$methodName($params);
     }
 
     public function FlightSearch(FlightSearchParams $flightSearchParams)
@@ -33,7 +28,7 @@ class GDSNemo extends CComponent
         {
             throw new CException(Yii::t('application', 'Parameter oFlightSearchParams not type of FlightSearchParams'));
         }
-        VarDumper::dump($flightSearchParams);
+        //VarDumper::dump($flightSearchParams);
         //prepare request  structure
         $params = array(
             'Request' => array(

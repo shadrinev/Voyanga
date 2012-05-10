@@ -321,7 +321,7 @@ class DklabSoapClientRequest
         $curlOptions[CURLOPT_RETURNTRANSFER] = 1;
         $curlOptions[CURLOPT_HTTPHEADER] = array();
         // SOAP protocol encoding is always UTF8 according to RFC.
-        $curlOptions[CURLOPT_HTTPHEADER][] = "Content-Type: application/soap+xml; charset=utf-8;";
+        $curlOptions[CURLOPT_HTTPHEADER][] = "Content-Type: text/xml; charset=utf-8;";
 
         // Timeout handling.
         if (isset($clientOptions['timeout']))
@@ -369,6 +369,7 @@ class DklabSoapClientRequest
         $this->_isSynchronized = true;
         // Wait for a result.
         $response = self::$_curl->getResult($this->_handler);
+        var_dump($response); die();
         try
         {
             if ($response['result_timeout'] == 'data')
