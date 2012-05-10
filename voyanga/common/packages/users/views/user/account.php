@@ -1,17 +1,4 @@
-<?php
-/**
- * Shows the user's account page
- * @var AUser $model The user model
- */
-$this->layout = "//layouts/column2";
-$this->menu = array(
-    array(
-        "label" => "Test",
-        "url" => array("/site/index")
-    ),
-);
-?>
-<article class='user'>
+<div class="well">
 
     <?php
     $this->widget("packages.users.portlets.AUserImagePortlet", array(
@@ -27,4 +14,4 @@ $this->menu = array(
     <?php
     $this->endWidget();
     ?>
-</article>
+</div>

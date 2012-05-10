@@ -36,7 +36,31 @@
                 array('label' => 'Home', 'url' => array('/site/index')),
                 array('label' => 'About', 'url' => array('/site/page', 'view' => 'about')),
                 array('label' => 'Contact', 'url' => array('/site/contact')),
-                array('label' => 'Login', 'url' => array('/users/user/login'), 'visible' => Yii::app()->user->isGuest),
+            ),
+        ),
+        array(
+            'class'=>'bootstrap.widgets.BootButton',
+            'htmlOptions'=>array('class'=>'pull-right'),
+            'url' => array('/users/user/login'),
+            'label'=>'Войти',
+            'type'=>'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+            'size'=>'large', // '', 'large', 'small' or 'mini',
+            'visible' => Yii::app()->user->isGuest
+        ),
+        array(
+            'class'=>'bootstrap.widgets.BootButton',
+            'htmlOptions'=>array('class'=>'pull-right'),
+            'url' => array('/users/user/logout'),
+            'label'=>'Выйти',
+            'type'=>'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+            'size'=>'large', // '', 'large', 'small' or 'mini',
+            'visible' => !Yii::app()->user->isGuest
+        ),
+        array(
+            'class'=>'bootstrap.widgets.BootMenu',
+            'htmlOptions'=>array('class'=>'pull-right'),
+            'items'=>array(
+                array('label' => isset(Yii::app()->user->model->name) ? Yii::app()->user->model->name : '', 'url' => array('/users/user/account'), 'visible' => !Yii::app()->user->isGuest),
             ),
         ),
     ),

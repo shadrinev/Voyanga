@@ -9,17 +9,18 @@ class UserController extends AUserController
     {
         if (Yii::app()->user->isGuest)
         {
-            $this->redirect("user/login");
+            $this->redirect(array('user/login'));
         }
         else
         {
-            $this->redirect("user/account");
+            $this->redirect(array('user/account'));
         }
     }
 
-    public function logout()
+    public function actionLogout()
     {
-
+        Yii::app()->user->logout();
+        $this->redirect(array('user/login'));
     }
 
 }
