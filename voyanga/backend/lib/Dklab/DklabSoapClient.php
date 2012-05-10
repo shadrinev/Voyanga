@@ -600,12 +600,13 @@ class DklabSoapClientCurl
         $key = (string)$curlHandler;
         // Add it to the queue. Note that we NEVER USE curl_copy_handle(),
         // because it seems to be buggy and corrupts the memory.
-        $request = $this->_requests[$key] = (object)array(
-        'handle' => $curlHandler,
-        'options' => $curlOptions,
-        'tries' => 1,
-        'validator' => $responseValidator,
-    );
+        $request = (object)array(
+            'handle' => $curlHandler,
+            'options' => $curlOptions,
+            'tries' => 1,
+            'validator' => $responseValidator,
+        );
+        $this->_requests[$key] = $request;
         // Begin the processing.
         $this->_addCurlRequest($request, $key);
         return $key;
