@@ -7,10 +7,21 @@
  */
 return array(
 	"env.code" => "private",
+
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=localhost;dbname=search',
     'db.username'=>'oleg',
     'db.password'=>'q1w2e3r4',
+
+    'backendDb.name' => 'search',
+    'backendDb.connectionString'=>'mysql:host=localhost;dbname=backend',
+    'backendDb.username'=>'oleg',
+    'backendDb.password'=>'q1w2e3r4',
+
+    'userDb.name' => 'search',
+    'userDb.connectionString'=>'mysql:host=localhost;dbname=backend',
+    'userDb.username'=>'oleg',
+    'userDb.password'=>'q1w2e3r4',
 
     'log_db.name' => 'search',
     'log_db.connectionString'=>'mysql:host=localhost;dbname=logdb',

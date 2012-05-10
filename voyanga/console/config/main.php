@@ -13,7 +13,7 @@ $consoleMainLocal = file_exists('console/config/main-local.php') ? require('cons
 
 // please notice the order of the merged arrays. It is important, and reflectes an ineritance hirarchy in a sense
 return CMap::mergeArray (
-	//require_once ('../../common/config/main.php'), //currently doesn't exist
+	require_once ('common/config/main.php'), //currently doesn't exist
 	array(
 	'id'=>'bootstrap.clevertech.com',
 	'name'=>'bootstrap',
