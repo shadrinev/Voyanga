@@ -7,7 +7,7 @@ class m120510_153607_add_email_table extends UserDbMigration
         $this->createTable('emails', array(
         	'id'=>'pk',
         	'sender'=>'string NOT NULL',
-        	'recepient'=>'string NOT NULL',
+        	'recipient'=>'string NOT NULL',
         	'cc'=>'string',
         	'bcc'=>'string',
         	'subject'=>'string',
@@ -21,7 +21,7 @@ class m120510_153607_add_email_table extends UserDbMigration
 	public function down()
 	{
 		$this->dropTable('emails');
-		return false;
+		return true;
 	}
 
 	/*

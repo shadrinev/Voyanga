@@ -16,7 +16,7 @@ class m120510_091122_add_usergroup_member_table extends UserDbMigration
 	public function down()
 	{
 		$this->dropTable('usergroup_members');
-		return false;
+		return true;
 	}
 
 	/*

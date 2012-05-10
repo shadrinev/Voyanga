@@ -22,7 +22,6 @@ class APHPEmailSender extends AEmailSender
         $message .= "--" . $email->uniqueId . "--";
 
         return mail($email->recipient, $email->subject, $message, $headers);
-
     }
 
     /**
@@ -63,7 +62,7 @@ class APHPEmailSender extends AEmailSender
         {
             $headers[] = "BCC: " . $email->bcc;
         }
-        $headers[] = "Content-Type: multipart/mixed; boundary = " . $email->uniqueId;
+        $headers[] = 'Content-Type: multipart/mixed; boundary="' . $email->uniqueId . '"';
         return implode("\r\n", $headers) . "\r\n";
     }
 
