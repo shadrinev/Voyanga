@@ -11,8 +11,9 @@ class DefaultController extends Controller
             'child_count' => 0,
             'infant_count' => 0,
             'departure_city_id' => 4466,
-            'arrival_city_id' => 3654,
-            'departure_date' => '13.06.2012'
+            //'arrival_city_id' => 3654,
+            'arrival_city_id' => 5753,
+            'departure_date' => '15.07.2012'
         ));
         /*$flightSearchParams->addRoute(array(
             'adult_count' => 1,

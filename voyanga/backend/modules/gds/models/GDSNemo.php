@@ -13,13 +13,17 @@ class GDSNemo extends CComponent
      */
     private static function request($methodName, $params, $cache = FALSE, $expiration = 0)
     {
-        $client = new DklabSoapClient(Yii::app()->params['GDSNemo']['wsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'],'exceptions'=>true,
+        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['wsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'],'exceptions'=>true,
         ));
 
         //VarDumper::dump($client->__getFunctions());
         //VarDumper::dump($client->__getTypes());
         //$params = array('Search'=>$params);
-        return $client->async->$methodName($params);
+        //$soapRequest = $client->async->$methodName($params);
+        Yii::beginProfile('processingSoap'.$methodName);
+        $ret = $client->$methodName($params);
+        Yii::endProfile('processingSoap'.$methodName);
+        return $ret;
     }
 
     public function FlightSearch(FlightSearchParams $flightSearchParams)

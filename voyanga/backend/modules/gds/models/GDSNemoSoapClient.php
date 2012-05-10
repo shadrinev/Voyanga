@@ -49,21 +49,21 @@ class GDSNemoSoapClient extends SoapClient
     </Search>
   </env:Body>
 </env:Envelope>';
-            echo VarDumper::xmlDump($request);
+            //echo VarDumper::xmlDump($request);
             $sXML = $this->makeSoapRequest($request, $location, $action, $version);
             //$sXML = parent::__doRequest($request, $location, $action, $version);
-            echo VarDumper::xmlDump($sXML);
-            die();
+            //echo VarDumper::xmlDump($sXML);
+            //die();
         }
         else
         {
-            echo VarDumper::xmlDump($request);
+            //echo VarDumper::xmlDump($request);
             //die();
 
             //$sXML = $this->makeSoapRequest($request, $location, $action, $version);
             $sXML = parent::__doRequest($request, $location, $action, $version);
-            echo VarDumper::xmlDump($sXML);
-            die();
+            //echo VarDumper::xmlDump($sXML);
+            //die();
         }
 
         return $sXML;

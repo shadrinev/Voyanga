@@ -369,7 +369,7 @@ class DklabSoapClientRequest
         $this->_isSynchronized = true;
         // Wait for a result.
         $response = self::$_curl->getResult($this->_handler);
-        var_dump($response); die();
+        //var_dump($response); die();
         try
         {
             if ($response['result_timeout'] == 'data')
