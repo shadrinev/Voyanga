@@ -1,0 +1,37 @@
+##
+## dkLab RealSync configuration file.
+##
+
+# Local directory to be realtime-replicated.
+local = c:/WebServers/home/voyanga
+
+# Remote host to replicate to over SSH.
+host = 192.168.0.55:22
+
+# User to connect to the remote host.
+user = misha
+
+# Directory at the remote host to replicate files to.
+remote = /srv/www/misha.voyanga/public_html
+
+# Pathname wildcards to be excluded from the replication.
+# Use "*" for any filename character and "**" for any character,
+# including "/" in pathnames.
+exclude = ~*
+exclude = *.tmp
+exclude = *.pyc
+exclude = *.swp
+exclude = .git
+exclude = CVS
+exclude = .svn
+exclude = .realsync
+exclude = .cache
+exclude = .idea
+exclude = nbproject
+
+# To turn off "synchronization ding" sound, set the following to 1.
+nosound = 0
+
+# If you need to load some other config file from here, uncomment
+# and correct the following directive:
+#load = some_file.ini
