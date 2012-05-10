@@ -5,28 +5,20 @@
  */
 $this->pageTitle = "Enter A New Password";
 ?>
-<article>
-    <h1>Enter A New Password</h1>
+<div class="well login">
+    <h1><?php echo Yii::t('admin','Введите новый пароль') ?></h1>
 
-    <p>Please enter a new password in the form below.</p>
+    <?php $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
+    'id' => 'user-form',
+    'enableAjaxValidation' => true,
+    'htmlOptions' => array('class' => 'well'),
+)); ?>
 
-    <div class='form'>
-        <?php $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'user-form',
-        'enableAjaxValidation' => true,
-    )); ?>
-        <div class="row">
-            <?php echo $form->labelEx($model, 'password'); ?>
-            <?php echo $form->passwordField($model, 'password', array()); ?>
-            <?php echo $form->error($model, 'password'); ?>
-        </div>
+    <?php echo $form->passwordFieldRow($model, 'password', array('size' => 60, 'maxlength' => 450)); ?>
 
-        <div class="row buttons">
-            <?php echo CHtml::submitButton("Save", array("class" => "save button")); ?>
-        </div>
+    <?php $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit', 'icon' => 'ok', 'label' => Yii::t('admin','Сменить пароль'))); ?>
 
-        <?php
-        $this->endWidget();
-        ?>
-    </div>
-</article>
+    <?php
+    $this->endWidget();
+    ?>
+</div>

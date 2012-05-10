@@ -35,7 +35,7 @@ class APHPEmailSender extends AEmailSender
         $encoded[] = "--" . $email->uniqueId;
         $encoded[] = "Content-Type: " . ($email->isHtml ? "text/html" : "text/plain") . "; charset=" . Yii::app()->charset;
         $encoded[] = "Content-Transfer-Encoding: base64";
-        $encoded = implode("\r\n", $encoded) . "\r\n";
+        $encoded = implode("\r\n", $encoded) . "\r\n\r\n";
 
         $encoded .= chunk_split(base64_encode($email->render()));
         return $encoded;
@@ -79,7 +79,7 @@ class APHPEmailSender extends AEmailSender
         $encoded[] = "Content-Type: " . $attachment->type . "; name=\"" . $attachment->name . "\"";
         $encoded[] = "Content-Transfer-Encoding: base64";
         $encoded[] = "Content-Disposition: attachment";
-        $encoded = implode("\r\n", $encoded) . "\r\n";
+        $encoded = implode("\r\n", $encoded) . "\r\n\r\n";
         $encoded .= chunk_split(base64_encode($attachment->content));
         return $encoded;
     }

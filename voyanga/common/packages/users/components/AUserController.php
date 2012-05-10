@@ -130,11 +130,11 @@ abstract class AUserController extends Controller
             if (is_object($user))
             {
                 // send the user a password reset email
-
                 $email = new AEmail;
                 $email->recipient = $user->email;
                 $email->viewData = array("user" => $user);
                 $email->view = "/user/emails/resetPassword";
+                $email->isHtml = true;
                 if ($email->send() || true)
                 {
                     Yii::app()->user->setFlash("info", $this->renderPartial("flashMessages/resetEmailSent", array("user" => $user), true));
