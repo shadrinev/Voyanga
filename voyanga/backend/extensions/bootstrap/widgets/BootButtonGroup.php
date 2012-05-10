@@ -51,6 +51,8 @@ class BootButtonGroup extends CWidget
 	 */
 	public $toggle;
 
+    public $visible = true;
+
 	/**
 	 * Initializes the widget.
 	 */
@@ -73,6 +75,9 @@ class BootButtonGroup extends CWidget
 	 */
 	public function run()
 	{
+        if ($this->visible)
+            return;
+
 		echo CHtml::openTag('div', $this->htmlOptions);
 
 		foreach ($this->buttons as $button)

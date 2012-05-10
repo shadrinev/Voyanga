@@ -1,7 +1,7 @@
 <?php
 Yii::setPathOfAlias("packages", dirname(__FILE__));
 $components = array(
-//			"elasticSearch",
+			"email.components",
 //			"curl",
 //			"flashMessages",
 //			"redis",

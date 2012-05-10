@@ -71,5 +71,8 @@ return array(
             'class' => 'packages.users.AUsersModule',
             'userModelClass' => 'User', // the name of your custom user class
         ),
+        'email' => array(
+            'class' => 'packages.users.AEmailModule',
+        ),
     )
 );

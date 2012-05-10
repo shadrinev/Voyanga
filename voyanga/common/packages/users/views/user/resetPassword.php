@@ -5,28 +5,20 @@
  */
 $this->pageTitle = "Reset Your Password";
 ?>
-<article>
-    <h1>Reset Your Password</h1>
+<div class="well login">
+    <h1><?php echo Yii::t('admin', 'Сброс пароля'); ?></h1>
 
-    <p>Please enter your email address in the box below, and we'll send you a link to reset your password.</p>
-
-    <div class='form'>
-        <?php $form = $this->beginWidget('CActiveForm', array(
+    <?php $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
         'id' => 'user-form',
         'enableAjaxValidation' => true,
+        'htmlOptions' => array('class' => 'well'),
     )); ?>
-        <div class="row">
-            <?php echo $form->labelEx($model, 'email'); ?>
-            <?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 450)); ?>
-            <?php echo $form->error($model, 'email'); ?>
-        </div>
 
-        <div class="row buttons">
-            <?php echo CHtml::submitButton("Reset Password", array("class" => "button")); ?>
-        </div>
+    <?php echo $form->textFieldRow($model, 'email', array('size' => 60, 'maxlength' => 450)); ?>
 
-        <?php
+    <?php $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit', 'icon' => 'ok', 'label' => Yii::t('admin','Сбросить пароль'))); ?>
+
+    <?php
         $this->endWidget();
-        ?>
-    </div>
-</article>
+    ?>
+</div>

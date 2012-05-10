@@ -39,19 +39,22 @@
             ),
         ),
         array(
-            'class'=>'bootstrap.widgets.BootButton',
+            'class'=>'bootstrap.widgets.BootButtonGroup',
             'htmlOptions'=>array('class'=>'pull-right'),
-            'url' => array('/users/user/login'),
-            'label'=>'Войти',
             'type'=>'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-            'size'=>'large', // '', 'large', 'small' or 'mini',
-            'visible' => Yii::app()->user->isGuest
+            'buttons'=>array(
+                array('label'=>Yii::t('admin','Войти'), 'url'=>'/users/user/login'),
+                array('items'=>array(
+                    array('label'=>Yii::t('admin','Восстановить пароль'), 'url'=>'/users/user/resetPassword'),
+                )),
+            ),
+            'visible' => !Yii::app()->user->isGuest
         ),
         array(
             'class'=>'bootstrap.widgets.BootButton',
             'htmlOptions'=>array('class'=>'pull-right'),
             'url' => array('/users/user/logout'),
-            'label'=>'Выйти',
+            'label'=>Yii::t('admin','Выйти'),
             'type'=>'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
             'size'=>'large', // '', 'large', 'small' or 'mini',
             'visible' => !Yii::app()->user->isGuest
