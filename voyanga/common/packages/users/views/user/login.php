@@ -14,7 +14,7 @@
 )); ?>
 
     <?php echo $form->textFieldRow($model, 'email', array('class' => 'span3', 'size' => 60, 'maxlength' => 450)); ?>
-    <?php echo $form->textFieldRow($model, 'password', array('class' => 'span3', 'size' => 60, 'maxlength' => 450)); ?>
+    <?php echo $form->passwordFieldRow($model, 'password', array('class' => 'span3', 'size' => 60, 'maxlength' => 450)); ?>
     <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
 
     <?php $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit', 'icon' => 'ok', 'label' => 'Login')); ?><br>

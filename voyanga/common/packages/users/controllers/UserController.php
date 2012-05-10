@@ -17,4 +17,9 @@ class UserController extends AUserController
         }
     }
 
+    public function logout()
+    {
+
+    }
+
 }

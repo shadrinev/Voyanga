@@ -54,6 +54,15 @@ return array(
             'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
             'enableParamLogging' => YII_DEBUG,
             'charset' => 'utf8',
+        ),
+
+        'user'=>array(
+            'class'=>'common.components.VUser',
+            'behaviors'=>array(
+                'AUserBehavior' => array(
+                    'class' => 'packages.users.behaviors.AUserBehavior'
+                )
+            )
         )
     ),
 

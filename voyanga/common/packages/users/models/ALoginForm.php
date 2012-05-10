@@ -68,6 +68,7 @@ class ALoginForm extends CFormModel
         {
             $identityClass = Yii::app()->getModule("users")->identityClass;
             $this->_identity = new $identityClass($this->email, $this->password);
+
             if (!$this->_identity->authenticate())
             {
                 $this->addError('password', 'Incorrect username or password.');
