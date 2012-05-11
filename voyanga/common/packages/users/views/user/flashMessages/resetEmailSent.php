@@ -4,6 +4,6 @@
  * @var AUser $user the user who was emailed
  */
 ?>
-<h3>Please check your email</h3>
-<p>An email has been sent to <?php echo $user->email; ?> with a link to reset your password.</p>
-<p>Click the link in the email to change your password.</p>
+<h3>Пожалуйста, проверьте свой e-mail.</h3>
+<p>Письмо с ссылкой для сброса пароля было отправлено на адрес <?php echo $user->email; ?>.</p>
+<p>Кликните по ссылке в письме, чтобы установить новый пароль.</p>

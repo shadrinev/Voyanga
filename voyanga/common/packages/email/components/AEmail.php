@@ -41,6 +41,14 @@ class AEmail extends UserActiveRecord
      */
     protected $_uniqueId;
 
+    private $_defaultSender;
+
+    public function __construct($scenario='insert')
+    {
+        $this->_defaultSender = Yii::app()->params['email.sender'];
+        return parent::__construct($scenario);
+    }
+
     /**
      * Gets a unique id for this email message, used when encoding attachments.
      * @return string the unique id
@@ -104,6 +112,8 @@ class AEmail extends UserActiveRecord
         {
             return false;
         }
+        if ($this->sender==null)
+            $this->sender = $this->_defaultSender;
         return Yii::app()->getModule("email")->sender->send($this);
     }
 

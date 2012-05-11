@@ -11,6 +11,7 @@
     'id' => 'user-form',
     'enableAjaxValidation' => true,
     'htmlOptions' => array('class' => 'well'),
+    'focus' => array($model, 'email')
 )); ?>
 
     <?php echo $form->textFieldRow($model, 'email', array('class' => 'span3', 'size' => 60, 'maxlength' => 450)); ?>
@@ -18,7 +19,7 @@
     <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
 
     <?php $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit', 'icon' => 'ok', 'label' => 'Login')); ?><br>
-    <?php echo CHtml::link(Yii::t('admin','Зарегистрироваться'), array('user/register')); ?>
+    <?php echo CHtml::link(Yii::t('admin','Забыли пароль'), array('user/resetPassword')); ?>
 
     <?php
     $this->endWidget();

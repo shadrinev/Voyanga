@@ -16,12 +16,12 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon.ico">
-    <link rel="apple-touch-icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/images/favicon.ico">
+    <!--<link rel="apple-touch-icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72"
-          href="<?php echo Yii::app()->request->baseUrl; ?>/images/apple-touch-icon-72x72.png">
+          href="<?php echo Yii::app()->theme->baseUrl; ?>/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114"
-          href="<?php echo Yii::app()->request->baseUrl; ?>/images/apple-touch-icon-114x114.png">
+          href="<?php echo Yii::app()->theme->baseUrl; ?>/images/apple-touch-icon-114x114.png">-->
 </head>
 <body>
 <?php $this->widget('bootstrap.widgets.BootNavbar', array(
@@ -45,7 +45,7 @@
             'buttons'=>array(
                 array('label'=>Yii::t('admin','Войти'), 'url'=>'/users/user/login'),
                 array('items'=>array(
-                    array('label'=>Yii::t('admin','Восстановить пароль'), 'url'=>'/users/user/resetPassword'),
+                    array('label'=>Yii::t('admin','Зарегистрироваться'), 'url'=>'/users/user/register'),
                 )),
             ),
             'visible' => !Yii::app()->user->isGuest
@@ -76,6 +76,7 @@
             'links' => $this->breadcrumbs,
         )); ?>
         <?php endif?>
+        <?php $this->widget('bootstrap.widgets.BootAlert'); ?>
         <?php echo $content; ?>
         <div class="push"><!--//--></div>
     </div>

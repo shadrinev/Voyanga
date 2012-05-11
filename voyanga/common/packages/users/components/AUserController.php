@@ -32,11 +32,18 @@ abstract class AUserController extends Controller
         $model = new $modelClass("register");
         if (isset($_POST[$modelClass]))
         {
-
             $model->attributes = $_POST[$modelClass];
             if ($model->save())
             {
-
+                //sign in after registration
+                $loginFormClass = Yii::app()->getModule("users")->loginFormClass;
+                $loginForm = new $loginFormClass;
+                $loginForm->email = $model->email;
+                $loginForm->password = $_POST[$modelClass]['password'];
+                if ($loginForm->validate())
+                {
+                    $loginForm->login();
+                }
                 $this->redirect($usersModule->redirectAfterRegistration);
             }
         }

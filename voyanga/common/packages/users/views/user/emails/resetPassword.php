@@ -5,15 +5,14 @@
  * @var AUser $user The user being emailed
  */
 
-$this->subject = "Please reset your password";
+$this->subject = "Восстановление пароля";
 ?>
-<p>Hello<?php echo (isset($user->name) ? " " . $user->name : "")?>,</p>
-<p>To reset your <?php echo Yii::app()->name; ?> password, please click the following link, or copy and paste it into
-    your web browser:</p>
+<p>Привет<?php echo (isset($user->name) ? ", " . $user->name : "")?>!</p>
+<p>Чтобы сбросить твой пароль на <?php echo Yii::app()->name; ?>, пожалуйста, кликни по следующей ссылке:</p>
 <p><?php
     $url = Yii::app()->createAbsoluteUrl("/users/user/resetPassword", array("id" => $user->id, "key" => $user->passwordResetCode));
     echo CHtml::link($url, $url);
     ?></p>
-<p>If you received this message in error, please disregard it.</p>
-<p>Thanks,<br/>The <?php echo Yii::app()->name; ?> Team</p>
+<p>Если ты получил это письмо по ошибке, то просто не реагируй на него.</p>
+<p>Спасибо,<br/> твой робот сервиса <?php echo Yii::app()->name; ?>.</p>
 

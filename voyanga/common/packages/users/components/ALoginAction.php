@@ -11,6 +11,9 @@ class ALoginAction extends CAction
      */
     public function run()
     {
+        if (!Yii::app()->user->isGuest)
+            $this->getController()->redirect(array('user/account'));
+
         $loginFormClass = Yii::app()->getModule("users")->loginFormClass;
         $loginForm = new $loginFormClass;
         $controller = $this->controller;

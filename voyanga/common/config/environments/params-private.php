@@ -27,4 +27,6 @@ return array(
     'log_db.connectionString'=>'mysql:host=localhost;dbname=logdb',
     'log_db.username'=>'oleg',
     'log_db.password'=>'q1w2e3r4',
+
+    'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)'
 );
