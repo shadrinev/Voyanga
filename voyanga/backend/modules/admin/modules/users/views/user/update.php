@@ -4,22 +4,21 @@
  * @var User $model The User model to be updated
  */
 $this->breadcrumbs = array(
-    'Users' => array('index'),
+    'Пользователи' => array('index'),
     $model->name => array('view', 'id' => $model->id),
-    'Update',
+    'Редактирование',
 );
 
 $this->beginWidget("AAdminPortlet",
     array(
-
-        "title" => "Edit User: " . $model->name,
+        "title" => $model->name,
         "menuItems" => array(
             array(
-                "label" => "View",
+                "label" => "Просмотреть",
                 "url" => array("/admin/users/user/view", "id" => $model->id),
             ),
             array(
-                "label" => "Delete",
+                "label" => "Удалить",
                 "url" => "#",
                 'linkOptions' => array(
                     'class' => 'delete',

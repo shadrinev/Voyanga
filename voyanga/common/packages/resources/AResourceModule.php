@@ -15,6 +15,12 @@ class AResourceModule extends CWebModule
     protected $_resourceDir;
 
     /**
+     * Path to files
+     * @var string
+     */
+    public $resourcePath;
+
+    /**
      * Gets the base directory to store resources in.
      * This should be a protected directory, outside of the www root.
      * @return string the resource directory

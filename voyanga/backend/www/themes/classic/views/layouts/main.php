@@ -1,4 +1,4 @@
-<?php $additionalItems = isset(Yii::app()->getModule("admin")->mainMenu) ? Yii::app()->getModule("admin")->mainMenu : array();
+<?php $additionalItems = ((!Yii::app()->user->isGuest) and (isset(Yii::app()->getModule("admin")->mainMenu))) ? Yii::app()->getModule("admin")->mainMenu : array();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,9 +35,9 @@
         array(
             'class' => 'bootstrap.widgets.BootMenu',
             'items' => CMap::mergeArray(array(
-                array('label' => 'Home', 'url' => array('/site/index')),
+/*                array('label' => 'Home', 'url' => array('/site/index')),
                 array('label' => 'About', 'url' => array('/site/page', 'view' => 'about')),
-                array('label' => 'Contact', 'url' => array('/site/contact')),
+                array('label' => 'Contact', 'url' => array('/site/contact')),*/
                 ),
                 $additionalItems
             ),
@@ -82,8 +82,8 @@
         <?php endif?>
         <?php $this->widget('bootstrap.widgets.BootAlert'); ?>
         <?php echo $content; ?>
-        <div class="push"><!--//--></div>
     </div>
+    <div class="push"><!--//--></div>
 </div>
 
 <footer class="container-fluid footer">

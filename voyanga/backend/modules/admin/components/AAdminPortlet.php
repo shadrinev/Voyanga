@@ -11,16 +11,16 @@ class AAdminPortlet extends CPortlet
      * The tag name for the container
      * @var string
      */
-    public $tagName = "article";
+    public $tagName = "div";
     /**
      * @var array the HTML attributes for the portlet container tag.
      */
-    public $htmlOptions = array('class' => 'adminPortlet grid_12 alpha omega');
+    public $htmlOptions = array('class' => 'row');
 
     /**
      * @var string the CSS class for the decoration container tag.
      */
-    public $decorationCssClass = '';
+    public $decorationCssClass = 'span2';
     /**
      * @var string the CSS class for the portlet title tag.
      */
@@ -39,7 +39,7 @@ class AAdminPortlet extends CPortlet
      * The configuration for the header menu, if shown
      * @var array
      */
-    public $menuConfig = array("htmlOptions" => array("class" => "menu"));
+    public $menuConfig = array();
     /**
      * An array of CMenu items to show in the sidebar.
      * If this array is not set no sidebar will be shown
@@ -50,7 +50,7 @@ class AAdminPortlet extends CPortlet
      * The configuration for the sidebar menu, if shown
      * @var array
      */
-    public $sidebarMenuConfig = array("htmlOptions" => array("class" => "menu"));
+    public $sidebarMenuConfig = array("type" => "list");
     /**
      * The htmlOptions for the sidebar, if shown
      * @var array
@@ -77,8 +77,8 @@ class AAdminPortlet extends CPortlet
         $this->htmlOptions['id'] = $this->getId();
         echo CHtml::openTag($this->tagName, $this->htmlOptions) . "\n";
         $this->renderDecoration();
-        $this->renderSidebar();
-        echo "<section class=\"{$this->contentCssClass}\">\n";
+
+        echo "<div class=\"span10\">\n";
 
         $this->_openTag = ob_get_contents();
         ob_clean();
@@ -95,27 +95,8 @@ class AAdminPortlet extends CPortlet
             return;
         echo $this->_openTag;
         echo $content;
-        echo "</section>\n";
+        echo "</div>\n";
         echo CHtml::closeTag($this->tagName);
-    }
-
-    /**
-     * Shows a sidebar with menu and extra content if possible
-     */
-    protected function renderSidebar()
-    {
-        if ($this->sidebarContent == "" && (!is_array($this->sidebarMenuItems) || count($this->sidebarMenuItems) == 0))
-        {
-            return;
-        }
-        echo CHtml::openTag("section", $this->sidebarHtmlOptions);
-        if (is_array($this->sidebarMenuItems) && count($this->sidebarMenuItems))
-        {
-            $menuConfig = $this->sidebarMenuConfig;
-            $menuConfig['items'] = $this->sidebarMenuItems;
-            $this->widget("zii.widgets.CMenu", $menuConfig);
-        }
-        echo "</section>\n";
     }
 
     /**
@@ -126,15 +107,15 @@ class AAdminPortlet extends CPortlet
     {
         if ($this->title !== null)
         {
-            echo "<header class=\"{$this->decorationCssClass}\">\n";
-            echo "<h1 class=\"{$this->titleCssClass}\">{$this->title}</h1>\n";
-            if (is_array($this->menuItems) && count($this->menuItems))
-            {
-                $menuConfig = $this->menuConfig;
-                $menuConfig['items'] = $this->menuItems;
-                $this->widget("zii.widgets.CMenu", $menuConfig);
-            }
-            echo "</header>\n";
+            echo "<div class=\"{$this->decorationCssClass}\">\n<div class=\"well\">\n";
+            if (!is_array($this->sidebarMenuItems))
+                $this->sidebarMenuItems = array();
+            $menuConfig = $this->sidebarMenuConfig;
+            $menuConfig['items'] = CMap::mergeArray(array(array('label'=>$this->title)),$this->sidebarMenuItems);
+            if (sizeof($this->menuItems)>0)
+                $menuConfig['items'] = CMap::mergeArray($menuConfig['items'], array(array('label'=>'Действия')), $this->menuItems);
+            $this->widget("bootstrap.widgets.BootMenu", $menuConfig);
+            echo "</div>\n</div>\n";
         }
     }
 }

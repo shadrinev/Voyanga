@@ -45,7 +45,7 @@ return CMap::mergeArray(
         'modules' => array(
             'gii' => array(
                 'class' => 'system.gii.GiiModule',
-                'password' => 'a1a2a3a4',
+                'password' => '123',
                 // If removed, Gii defaults to localhost only. Edit carefully to taste.
                 'ipFilters' => array(
                     '192.168.0.74',
@@ -62,8 +62,8 @@ return CMap::mergeArray(
             'admin' => array(
                 'class' => 'application.modules.admin.AAdminModule',
                 'modules' => array(
-                    'user' => array(
-                        'class' =>
+                    'users' => array(
+                        'class' => 'application.modules.admin.modules.users.AUserAdminModule'
                     )
                 )
             )

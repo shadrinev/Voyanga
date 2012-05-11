@@ -25,7 +25,7 @@ class UserController extends ABaseAdminController
     {
         $modelClass = Yii::app()->getModule("users")->userModelClass;
         $model = new $modelClass("admin");
-
+        //CVarDumper::dump($model);
         $this->performAjaxValidation($model);
 
         if (isset($_POST[$modelClass]))
@@ -59,6 +59,9 @@ class UserController extends ABaseAdminController
             $model->attributes = $_POST[$modelClass];
             if ($model->save())
             {
+                if ($avatar=CUploadedFile::getInstance($model, 'thumbnail'))
+                    $model->thumbnail = $avatar;
+                Yii::app()->user->setFlash('success', 'Данные о пользователе успешно обновлены');
                 #$this->redirect(array('view','id'=>$model->id));
             }
         }

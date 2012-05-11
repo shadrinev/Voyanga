@@ -82,6 +82,7 @@ class AResourceful extends CActiveRecordBehavior
             }
             $this->_attributes[$name] = new AResourceAttribute;
             $this->_attributes[$name]->owner = $this->owner;
+            $this->_attributes[$name]->name = $name;
 
             foreach ($config as $attribute => $value)
             {
@@ -178,6 +179,12 @@ class AResourceful extends CActiveRecordBehavior
         return parent::__unset($name);
     }
 
+    public function afterDelete($event)
+    {
+        foreach ($this->attributes as $attribute)
+            $attribute->delete();
+    }
+
 }
 
 /**
@@ -214,7 +221,7 @@ class AResourceAttribute extends CComponent
      * The name of this resource attribute
      * @var string
      */
-    public $name;
+    public $name = 'res';
     /**
      * Holds the resources for this attribute
      * @var AResource[]

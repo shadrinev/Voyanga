@@ -5,16 +5,16 @@
  */
 
 $this->breadcrumbs = array(
-    'Users' => array('index'),
-    'Create',
+    'Пользователь' => array('index'),
+    'Создание',
 );
 
 $this->beginWidget("AAdminPortlet",
     array(
-        "title" => "Create a new User"
+        "title" => "Создание нового пользователя"
     ));
 ?>
-<p class='info box'>Add a new user to the system by filling out the form below.</p>
+<p class='info box'>Чтобы создать нового пользователя заполните форму ниже.</p>
 <?php echo $this->renderPartial('_form', array('model' => $model)); ?>
 <?php
 $this->endWidget();

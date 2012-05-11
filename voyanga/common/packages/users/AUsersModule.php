@@ -1,7 +1,6 @@
 <?php
 Yii::import("packages.users.behaviors.*");
 Yii::import("packages.users.components.*");
-Yii::import("packages.users.models.*");
 /**
  * Deals with registration and management of users.
  * To use this module, configure it as shown below in your application config:

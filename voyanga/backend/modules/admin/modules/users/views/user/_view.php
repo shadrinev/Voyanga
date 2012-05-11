@@ -6,13 +6,14 @@
  * @var CListView $widget The CListView widget rendering this view
  */
 ?>
-<article class="user view">
+<div class="span3 userinfo">
     <?php
     if (Yii::app()->getModule("users")->enableProfileImages)
     {
         $this->widget("packages.users.widgets.AUserImageWidget",
             array(
                 "user" => $data,
+                "attribute" => 'thumbnail',
                 "showLink" => true,
                 "linkUrl" => array("/admin/users/user/view", "id" => $data->id),
                 "htmlOptions" => array(
@@ -25,6 +26,4 @@
     <b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
     <?php echo CHtml::encode($data->email); ?>
     <br/>
-
-
-</article>
+</div>

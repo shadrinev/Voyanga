@@ -18,7 +18,6 @@ class AAdminModule extends CWebModule
     public function getMainMenu()
     {
         $menuItems = array();
-        VarDumper::dump($this->getModules());
         $menuItems = CMap::mergeArray($menuItems, $this->menuItems);
         foreach (array_keys($this->getModules()) as $name)
         {

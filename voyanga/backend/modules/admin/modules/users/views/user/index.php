@@ -4,28 +4,29 @@
  * @var AUser $model The User model used for searching
  */
 $this->breadcrumbs = array(
-    'Users'
+    'Пользователи'
 );
 $this->beginWidget("AAdminPortlet", array(
     "menuItems" => array(
         array(
-            "label" => "Create",
+            "label" => "Создать",
             "url" => array("/admin/users/user/create"),
         ),
     ),
-    "title" => "Users"
+    "title" => "Пользователи"
 ));
 ?>
+<?php $this->widget('bootstrap.widgets.BootThumbnails', array(
+    'dataProvider'=>$model->search(),
+    //'template'=>"{items}\n{pager}",
+    'itemView'=>'_view',
+)); ?>
 
-<p class='info box'>
+<!--<p class='info box'>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
     &lt;&gt;</b>
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-<?php $this->widget('zii.widgets.CListView', array(
-    'dataProvider' => $model->search(),
-    'itemView' => '_view',
-)); ?>
+</p>-->
 <?php
 
 /*$this->widget('zii.widgets.grid.CGridView', array(

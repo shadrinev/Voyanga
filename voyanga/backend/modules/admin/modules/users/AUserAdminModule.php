@@ -14,18 +14,18 @@ class AUserAdminModule extends ABaseAdminModule
      */
     protected $_menuItems = array(
         array(
-            "label" => "User Administration",
-            "url" => array("/admin/users/default/index"),
-            "linkOptions" => array(
+            "label" => "Работа с пользователями",
+            "url" => "#",
+/*            "linkOptions" => array(
                 "class" => "user icon",
-            ),
+            ),*/
             "items" => array(
                 array(
-                    "label" => "Users",
+                    "label" => "Пользователи",
                     "url" => array("/admin/users/user/index"),
                 ),
                 array(
-                    "label" => "User Groups",
+                    "label" => "Группы",
                     "url" => array("/admin/users/group/index"),
                 ),
             )

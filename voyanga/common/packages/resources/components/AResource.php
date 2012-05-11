@@ -61,7 +61,7 @@ class AResource extends UserActiveRecord
      */
     public function getFullPath()
     {
-        return Yii::app()->getModule("resources")->resourceDir . "/" . $this->path;
+        return $this->path;
     }
 
     /**
@@ -90,7 +90,7 @@ class AResource extends UserActiveRecord
      * @param string|CUploadedFile $content the file contents or an uploaded file
      * @return string the file contents
      */
-    public function setContent(C$content)
+    public function setContent($content)
     {
         if (is_object($content) && $content instanceof CUploadedFile)
         {
@@ -120,7 +120,7 @@ class AResource extends UserActiveRecord
             $path .= $this->ownerModel . "/" . $this->ownerId . "/" . $this->ownerAttribute . "/";
             if (!file_exists($path))
             {
-                mkdir($path);
+                mkdir($path, 0755, true);
             }
             $path .= $this->name;
             $this->path = $path;
@@ -173,5 +173,12 @@ class AResource extends UserActiveRecord
         $resource->content = $file;
 
         return $resource;
+    }
+
+    public function getUrl()
+    {
+        $path  = '/'. Yii::app()->getModule("resources")->resourcePath . "/";
+        $path .= $this->ownerModel . "/" . $this->ownerId . "/" . $this->ownerAttribute . "/" . $this->name;
+        return $path;
     }
 }

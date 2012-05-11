@@ -74,5 +74,10 @@ return array(
         'email' => array(
             'class' => 'packages.email.AEmailModule',
         ),
+        'resources' => array(
+            'class' => 'packages.resources.AResourceModule',
+            'resourceDir' => 'application.www.resources',
+            'resourcePath' => 'resources'
+        )
     )
 );

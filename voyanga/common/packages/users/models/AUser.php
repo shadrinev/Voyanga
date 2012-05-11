@@ -62,7 +62,7 @@ abstract class AUser extends UserActiveRecord
             array("name,email,password", "required", "on" => "register"),
             array("email", "email"),
             array("email", "unique"),
-            array("requiresNewPassword", "boolean", "on" => "admin"),
+            array("requireNewPassword", "boolean", "on" => "admin"),
             array("name,email,password", "safe", "on" => "admin"),
             array("password", "length", "min" => 6),
             array("email", "required", "on" => "resetPassword"),

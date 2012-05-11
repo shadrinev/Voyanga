@@ -6,5 +6,5 @@
  */
 class ABaseAdminController extends Controller
 {
-    public $layout = "packages.admin.views.layouts.column2";
+    //public $layout = "application.modules.admin.views.layouts.column2";
 }

@@ -3,6 +3,7 @@ Yii::setPathOfAlias("packages", dirname(__FILE__));
 $components = array(
     "email.components",
     "resources.components",
+    'users.models'
 //			"curl",
 //			"flashMessages",
 //			"redis",
