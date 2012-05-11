@@ -24,11 +24,11 @@ class DefaultController extends Controller
             'departure_date' => '30.05.2012'
         ));*/
         $flightSearchParams->flight_class = 'E';
-        $nemo->FlightTariffRules();
-        //$aFlights = $nemo->FlightSearch($flightSearchParams);
-        //$aParamsFS['aFlights'] = $aFlights;
-        //$oFlightVoyageStack = new FlightVoyageStack($aParamsFS);
-        //print_r($oFlightVoyageStack);
+        //$nemo->FlightTariffRules();
+        $aFlights = $nemo->FlightSearch($flightSearchParams);
+        $aParamsFS['aFlights'] = $aFlights;
+        $oFlightVoyageStack = new FlightVoyageStack($aParamsFS);
+        print_r($oFlightVoyageStack);
         $this->render('index');
     }
 }

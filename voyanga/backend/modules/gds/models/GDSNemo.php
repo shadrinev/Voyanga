@@ -2,6 +2,8 @@
 class GDSNemo extends CComponent
 {
     public $wsdlUri = null;
+    const ERROR_CODE_EMPTY = 1;
+    const ERROR_CODE_INVALID = 2;
 
     /**
      * @static
@@ -136,145 +138,159 @@ class GDSNemo extends CComponent
 
 
         //print_r( $oSoapResponse );
-        Yii::beginProfile('processingSoap');
+
         $flights = array();
         Yii::log(print_r($soapResponse,true),'info');
-        UtilsHelper::soapObjectsArray($soapResponse->SearchResult->SearchResult->Flights->Flight);
-        foreach ($soapResponse->SearchResult->SearchResult->Flights->Flight as $oSoapFlight)
-        {
-            $aParts = array();
-            Yii::beginProfile('processingSegments');
-            UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
-            foreach ($oSoapFlight->Segments->Segment as $arrKey=>$oSegment)
+        $errorCode = 0;
+        if($soapResponse->SearchResult->SearchResult->Flights->Flight){
+            Yii::beginProfile('processingSoap');
+            UtilsHelper::soapObjectsArray($soapResponse->SearchResult->SearchResult->Flights->Flight);
+            foreach ($soapResponse->SearchResult->SearchResult->Flights->Flight as $oSoapFlight)
             {
-                $oPart = new stdClass();
-                Yii::beginProfile('loadAirportData');
-                if(!isset($oSegment->DepAirp)){
-                    Yii::log(print_r($oSegment,true).'|||'.$arrKey,'info');
-                }
-                $oPart->departure_airport = Airport::getAirportByCode($oSegment->DepAirp);
-                //Yii::endProfile('laodAirportData');
-                $oPart->departure_city = $oPart->departure_airport->city;
-                //Yii::beginProfile('laodAirportData');
-                $oPart->arrival_airport = Airport::getAirportByCode($oSegment->ArrAirp);
+                $aParts = array();
+                Yii::beginProfile('processingSegments');
+                UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
+                foreach ($oSoapFlight->Segments->Segment as $arrKey=>$oSegment)
+                {
+                    $oPart = new stdClass();
+                    //Yii::beginProfile('loadAirportData');
+                    if(!isset($oSegment->DepAirp)){
+                        Yii::log(print_r($oSegment,true).'|||'.$arrKey,'info');
+                    }
+                    $oPart->departure_airport = Airport::getAirportByCode($oSegment->DepAirp);
+                    //Yii::endProfile('laodAirportData');
+                    $oPart->departure_city = $oPart->departure_airport->city;
+                    //Yii::beginProfile('laodAirportData');
+                    $oPart->arrival_airport = Airport::getAirportByCode($oSegment->ArrAirp);
 
-                $oPart->arrival_city = $oPart->arrival_airport->city;
-                Yii::endProfile('loadAirportData');
-                $oPart->departure_terminal_code = isset($oSegment->DepTerminal)? $oSegment->DepTerminal : '';
-                $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal)? $oSegment->ArrTerminal : '';
-                $oPart->airline = Airline::getAirlineByCode($oSegment->MarkAirline);
-                $oPart->code = $oSegment->FlightNumber;
-                $oPart->duration = $oSegment->FlightTime * 60;
-                $oPart->datetime_begin = $oSegment->DepDateTime;
-                $oPart->datetime_end = $oSegment->ArrDateTime;
-                $oPart->aircraft_code = $oSegment->AircraftType;
-                $oPart->transport_airline = Airline::getAirlineByCode($oSegment->OpAirline);
-                $oPart->aTariffs = array();
-                $oPart->aTaxes = array();
-                $oPart->aBookingCodes = array();
-                UtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
-                foreach ($oSegment->BookingCodes->BookingCode as $sBookingCode)
-                {
-                    $oPart->aBookingCodes[] = $sBookingCode;
-                }
-                $aParts[$oSegment->SegNum] = $oPart;
-            }
-            Yii::endProfile('processingSegments');
-            $full_sum = 0;
-            $aPassengers = array();
-            $aTariffs = array();
-            Yii::beginProfile('processingPassengers');
-            UtilsHelper::soapObjectsArray($oSoapFlight->PricingInfo->PassengerFare);
-            foreach ($oSoapFlight->PricingInfo->PassengerFare as $oFare)
-            {
-                $sType = $oFare->Type;
-                $aPassengers[$sType]['count'] = $oFare->Quantity;
-                $aPassengers[$sType]['base_fare'] = $oFare->BaseFare->Amount;
-                $aPassengers[$sType]['total_fare'] = $oFare->TotalFare->Amount;
-                $full_sum += ($oFare->TotalFare->Amount * $oFare->Quantity);
-                if(isset($oFare->LastTicketDateTime))
-                {
-                    $aPassengers[$sType]['LastTicketDateTime'] = $oFare->LastTicketDateTime;
-                }
-                else
-                {
-                    Yii::log('!!DONT have LastTicketDate flight:'.$oSoapFlight->FlightId,'info');
-                }
-                $aPassengers[$sType]['aTaxes'] = array();
-                if(isset($oFare->Taxes->Tax))
-                {
-                    UtilsHelper::soapObjectsArray($oFare->Taxes->Tax);
-                    foreach ($oFare->Taxes->Tax as $oTax)
+                    $oPart->arrival_city = $oPart->arrival_airport->city;
+                    //Yii::endProfile('loadAirportData');
+                    $oPart->departure_terminal_code = isset($oSegment->DepTerminal)? $oSegment->DepTerminal : '';
+                    $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal)? $oSegment->ArrTerminal : '';
+                    $oPart->airline = Airline::getAirlineByCode($oSegment->MarkAirline);
+                    $oPart->code = $oSegment->FlightNumber;
+                    $oPart->duration = $oSegment->FlightTime * 60;
+                    $oPart->datetime_begin = $oSegment->DepDateTime;
+                    $oPart->datetime_end = $oSegment->ArrDateTime;
+                    $oPart->aircraft_code = $oSegment->AircraftType;
+                    $oPart->transport_airline = Airline::getAirlineByCode($oSegment->OpAirline);
+                    $oPart->aTariffs = array();
+                    $oPart->aTaxes = array();
+                    $oPart->aBookingCodes = array();
+                    UtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
+                    foreach ($oSegment->BookingCodes->BookingCode as $sBookingCode)
                     {
-                        if (isset($oTax->CurCode) == 'RUB')
+                        $oPart->aBookingCodes[] = $sBookingCode;
+                    }
+                    $aParts[$oSegment->SegNum] = $oPart;
+                }
+                Yii::endProfile('processingSegments');
+                $full_sum = 0;
+                $aPassengers = array();
+                $aTariffs = array();
+                Yii::beginProfile('processingPassengers');
+                UtilsHelper::soapObjectsArray($oSoapFlight->PricingInfo->PassengerFare);
+                foreach ($oSoapFlight->PricingInfo->PassengerFare as $oFare)
+                {
+                    $sType = $oFare->Type;
+                    $aPassengers[$sType]['count'] = $oFare->Quantity;
+                    $aPassengers[$sType]['base_fare'] = $oFare->BaseFare->Amount;
+                    $aPassengers[$sType]['total_fare'] = $oFare->TotalFare->Amount;
+                    $full_sum += ($oFare->TotalFare->Amount * $oFare->Quantity);
+                    if(isset($oFare->LastTicketDateTime))
+                    {
+                        $aPassengers[$sType]['LastTicketDateTime'] = $oFare->LastTicketDateTime;
+                    }
+                    else
+                    {
+                        Yii::log('!!DONT have LastTicketDate flight:'.$oSoapFlight->FlightId,'info');
+                    }
+                    $aPassengers[$sType]['aTaxes'] = array();
+                    if(isset($oFare->Taxes->Tax))
+                    {
+                        UtilsHelper::soapObjectsArray($oFare->Taxes->Tax);
+                        foreach ($oFare->Taxes->Tax as $oTax)
                         {
-                            $aPassengers[$sType]['aTaxes'][$oTax->TaxCode] = $oTax->Amount;
+                            if (isset($oTax->CurCode) == 'RUB')
+                            {
+                                $aPassengers[$sType]['aTaxes'][$oTax->TaxCode] = $oTax->Amount;
+                            }
+                            else
+                            {
+                                Yii::log(print_r($oTax,true).'!!!'.$oSoapFlight->FlightId,'info');
+                                throw new CException(Yii::t('application', 'Valute code unexpected. Code: {code}. Expected RUB', array(
+                                    '{code}' => $oTax->CurCode
+                                )));
+                            }
                         }
-                        else
+                    }
+                    else
+                    {
+                        Yii::log('Flight dont have Taxes. FlightId:'.$oSoapFlight->FlightId,'info');
+                    }
+                    UtilsHelper::soapObjectsArray($oFare->Tariffs->Tariff);
+                    foreach ($oFare->Tariffs->Tariff as $oTariff)
+                    {
+                        $aParts[$oTariff->SegNum]->aTariffs[$oTariff->Code] = $oTariff->Code;
+                    }
+                }
+                Yii::endProfile('processingPassengers');
+                $aNewParts = array();
+                //print_r($aParts);
+                $oPart = reset($aParts);
+                foreach ($flightSearchParams->routes as $route)
+                {
+                    $aSubParts = array();
+                    $aCities = array();
+                    while ($oPart)
+                    {
+                        $aSubParts[] = $oPart;
+                        $aCities[] = $oPart->arrival_city->code;
+                        if ($route->arrivalCity->code === $oPart->arrival_city->code)
                         {
-                            Yii::log(print_r($oTax,true).'!!!'.$oSoapFlight->FlightId,'info');
-                            throw new CException(Yii::t('application', 'Valute code unexpected. Code: {code}. Expected RUB', array(
-                                '{code}' => $oTax->CurCode
+                            $oPart = next($aParts);
+                            break;
+                        }
+                        $oPart = next($aParts);
+                    }
+                    if (!$oPart)
+                    {
+                        $oPart = end($aParts);
+
+                        if ($route->arrivalCity->code !== $oPart->arrival_city->code)
+                        {
+                            throw new CException(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}', array(
+                                '{code}' => $route->arrivalCity->code,
+                                '{codes}' => implode(', ', $aCities)
                             )));
                         }
                     }
+                    $aNewParts[] = $aSubParts;
                 }
-                else
-                {
-                    Yii::log('Flight dont have Taxes. FlightId:'.$oSoapFlight->FlightId,'info');
-                }
-                UtilsHelper::soapObjectsArray($oFare->Tariffs->Tariff);
-                foreach ($oFare->Tariffs->Tariff as $oTariff)
-                {
-                    $aParts[$oTariff->SegNum]->aTariffs[$oTariff->Code] = $oTariff->Code;
-                }
-            }
-            Yii::endProfile('processingPassengers');
-            $aNewParts = array();
-            //print_r($aParts);
-            $oPart = reset($aParts);
-            foreach ($flightSearchParams->routes as $route)
-            {
-                $aSubParts = array();
-                $aCities = array();
-                while ($oPart)
-                {
-                    $aSubParts[] = $oPart;
-                    $aCities[] = $oPart->arrival_city->code;
-                    if ($route->arrivalCity->code === $oPart->arrival_city->code)
-                    {
-                        $oPart = next($aParts);
-                        break;
-                    }
-                    $oPart = next($aParts);
-                }
-                if (!$oPart)
-                {
-                    $oPart = end($aParts);
 
-                    if ($route->arrivalCity->code !== $oPart->arrival_city->code)
-                    {
-                        throw new CException(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}', array(
-                            '{code}' => $route->arrivalCity->code,
-                            '{codes}' => implode(', ', $aCities)
-                        )));
-                    }
-                }
-                $aNewParts[] = $aSubParts;
+                $oFlight = new stdClass();
+                $oFlight->full_sum = $full_sum;
+                $oFlight->commission_price = 0;
+                $oFlight->flight_key = $oSoapFlight->FlightId;
+                $oFlight->parts = $aNewParts;
+                $flights[] = $oFlight;
             }
-
-            $oFlight = new stdClass();
-            $oFlight->full_sum = $full_sum;
-            $oFlight->commission_price = 0;
-            $oFlight->flight_key = $oSoapFlight->FlightId;
-            $oFlight->parts = $aNewParts;
-            $flights[] = $oFlight;
+            Yii::endProfile('processingSoap');
         }
-        Yii::endProfile('processingSoap');
+        else
+        {
+            $errorCode |= ERROR_CODE_EMPTY;
+        }
         //print_r($aFlights);
+        if($errorCode > 0)
+        {
+            return $errorCode;
+        }
+        else
+        {
+            return $flights;
+        }
 
-
-        return $flights;
 
     }
 
