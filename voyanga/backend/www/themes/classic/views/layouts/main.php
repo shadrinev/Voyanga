@@ -1,3 +1,5 @@
+<?php $additionalItems = isset(Yii::app()->getModule("admin")->mainMenu) ? Yii::app()->getModule("admin")->mainMenu : array();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,10 +34,12 @@
     'items' => array(
         array(
             'class' => 'bootstrap.widgets.BootMenu',
-            'items' => array(
+            'items' => CMap::mergeArray(array(
                 array('label' => 'Home', 'url' => array('/site/index')),
                 array('label' => 'About', 'url' => array('/site/page', 'view' => 'about')),
                 array('label' => 'Contact', 'url' => array('/site/contact')),
+                ),
+                $additionalItems
             ),
         ),
         array(

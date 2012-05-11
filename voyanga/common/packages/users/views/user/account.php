@@ -8,9 +8,9 @@
         "user" => $model
     ));
     ?>
-    <h1>Your Account</h1>
+    <h1>Твоя учётная запись</h1>
 
-    <p>Your account details:</p>
+    <p>Информация:</p>
     <?php
     $this->endWidget();
     ?>
