@@ -129,8 +129,8 @@ class GDSNemo extends CComponent
         //real request
 
         $soapResponse = self::request('Search', $params, $bCache = FALSE, $iExpiration = 0);
-        print_r($soapResponse);
-        return;
+        //print_r($soapResponse);
+        //return;
 
         //processing response
 
@@ -138,31 +138,35 @@ class GDSNemo extends CComponent
         //print_r( $oSoapResponse );
         Yii::beginProfile('processingSoap');
         $flights = array();
-        UtilsHelper::soapObjectsArray($soapResponse->Response->SearchFlights->Flights->Flight);
-        foreach ($soapResponse->Response->SearchFlights->Flights->Flight as $oSoapFlight)
+        Yii::log(print_r($soapResponse,true),'info');
+        UtilsHelper::soapObjectsArray($soapResponse->SearchResult->SearchResult->Flights->Flight);
+        foreach ($soapResponse->SearchResult->SearchResult->Flights->Flight as $oSoapFlight)
         {
             $aParts = array();
             Yii::beginProfile('processingSegments');
             UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
-            foreach ($oSoapFlight->Segments->Segment as $oSegment)
+            foreach ($oSoapFlight->Segments->Segment as $arrKey=>$oSegment)
             {
                 $oPart = new stdClass();
-                Yii::beginProfile('laodAirportData');
-                $oPart->departure_airport = Airport::getAirportByCode($oSegment->DepAirp->_);
+                Yii::beginProfile('loadAirportData');
+                if(!isset($oSegment->DepAirp)){
+                    Yii::log(print_r($oSegment,true).'|||'.$arrKey,'info');
+                }
+                $oPart->departure_airport = Airport::getAirportByCode($oSegment->DepAirp);
                 //Yii::endProfile('laodAirportData');
                 $oPart->departure_city = $oPart->departure_airport->city;
                 //Yii::beginProfile('laodAirportData');
-                $oPart->arrival_airport = Airport::getAirportByCode($oSegment->ArrAirp->_);
+                $oPart->arrival_airport = Airport::getAirportByCode($oSegment->ArrAirp);
 
                 $oPart->arrival_city = $oPart->arrival_airport->city;
-                Yii::endProfile('laodAirportData');
-                $oPart->departure_terminal_code = $oSegment->DepTerminal;
-                $oPart->arrival_terminal_code = $oSegment->ArrTerminal;
+                Yii::endProfile('loadAirportData');
+                $oPart->departure_terminal_code = isset($oSegment->DepTerminal)? $oSegment->DepTerminal : '';
+                $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal)? $oSegment->ArrTerminal : '';
                 $oPart->airline = Airline::getAirlineByCode($oSegment->MarkAirline);
                 $oPart->code = $oSegment->FlightNumber;
                 $oPart->duration = $oSegment->FlightTime * 60;
-                $oPart->datetime_begin = $oSegment->DepDateTime->_;
-                $oPart->datetime_end = $oSegment->DepDateTime->_;
+                $oPart->datetime_begin = $oSegment->DepDateTime;
+                $oPart->datetime_end = $oSegment->ArrDateTime;
                 $oPart->aircraft_code = $oSegment->AircraftType;
                 $oPart->transport_airline = Airline::getAirlineByCode($oSegment->OpAirline);
                 $oPart->aTariffs = array();
@@ -188,20 +192,36 @@ class GDSNemo extends CComponent
                 $aPassengers[$sType]['base_fare'] = $oFare->BaseFare->Amount;
                 $aPassengers[$sType]['total_fare'] = $oFare->TotalFare->Amount;
                 $full_sum += ($oFare->TotalFare->Amount * $oFare->Quantity);
-                $aPassengers[$sType]['LastTicketDateTime'] = $oFare->LastTicketDateTime;
-                $aPassengers[$sType]['aTaxes'] = array();
-                UtilsHelper::soapObjectsArray($oFare->Taxes->Tax);
-                foreach ($oFare->Taxes->Tax as $oTax)
+                if(isset($oFare->LastTicketDateTime))
                 {
-                    if ($oTax->CurCode == 'RUB')
+                    $aPassengers[$sType]['LastTicketDateTime'] = $oFare->LastTicketDateTime;
+                }
+                else
+                {
+                    Yii::log('!!DONT have LastTicketDate flight:'.$oSoapFlight->FlightId,'info');
+                }
+                $aPassengers[$sType]['aTaxes'] = array();
+                if(isset($oFare->Taxes->Tax))
+                {
+                    UtilsHelper::soapObjectsArray($oFare->Taxes->Tax);
+                    foreach ($oFare->Taxes->Tax as $oTax)
                     {
-                        $aPassengers[$sType]['aTaxes'][$oTax->TaxCode] = $oTax->Amount;
-                    } else
-                    {
-                        throw new CException(Yii::t('application', 'Valute code unexpected. Code: {code}. Expected RUB', array(
-                            '{code}' => $oTax->CurCode
-                        )));
+                        if (isset($oTax->CurCode) == 'RUB')
+                        {
+                            $aPassengers[$sType]['aTaxes'][$oTax->TaxCode] = $oTax->Amount;
+                        }
+                        else
+                        {
+                            Yii::log(print_r($oTax,true).'!!!'.$oSoapFlight->FlightId,'info');
+                            throw new CException(Yii::t('application', 'Valute code unexpected. Code: {code}. Expected RUB', array(
+                                '{code}' => $oTax->CurCode
+                            )));
+                        }
                     }
+                }
+                else
+                {
+                    Yii::log('Flight dont have Taxes. FlightId:'.$oSoapFlight->FlightId,'info');
                 }
                 UtilsHelper::soapObjectsArray($oFare->Tariffs->Tariff);
                 foreach ($oFare->Tariffs->Tariff as $oTariff)
@@ -221,7 +241,7 @@ class GDSNemo extends CComponent
                 {
                     $aSubParts[] = $oPart;
                     $aCities[] = $oPart->arrival_city->code;
-                    if ($route->arrival_city->code === $oPart->arrival_city->code)
+                    if ($route->arrivalCity->code === $oPart->arrival_city->code)
                     {
                         $oPart = next($aParts);
                         break;
@@ -232,10 +252,10 @@ class GDSNemo extends CComponent
                 {
                     $oPart = end($aParts);
 
-                    if ($route->arrival_city->code !== $oPart->arrival_city->code)
+                    if ($route->arrivalCity->code !== $oPart->arrival_city->code)
                     {
                         throw new CException(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}', array(
-                            '{code}' => $route->arrival_city->code,
+                            '{code}' => $route->arrivalCity->code,
                             '{codes}' => implode(', ', $aCities)
                         )));
                     }
@@ -346,15 +366,12 @@ class GDSNemo extends CComponent
     {
         $aParams = array(
             'Request' => array(
+                'Requisites' => array('Login' => Yii::app()->params['GDSNemo']['login'], 'Password' => Yii::app()->params['GDSNemo']['password']),
+                'RequestType'=>'U',
+                'UserID' => Yii::app()->params['GDSNemo']['userId'],
                 'GetAirRules' => array(
-                    'FlightId' => 534733
+                    'FlightId' => '89487'
                 ),
-                'Source' => array(
-                    'ClientId' => 102,
-                    'APIKey' => '7F48365D42B73307C99C12A578E92B36',
-                    'Language' => 'UA',
-                    'Currency' => 'RUB'
-                )
             )
         );
 

@@ -42,7 +42,7 @@ class FlightVoyage
                     $this->flights[$iGroupId]->addPart($oPart);
                     if (!$this->airlineCode)
                     {
-                        $this->airlineCode = $oPart->airline_id;
+                        $this->airlineCode = $oPart->airlineCode;
                     }
                 }
             }

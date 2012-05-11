@@ -57,11 +57,14 @@ class GDSNemoSoapClient extends SoapClient
         }
         else
         {
-            //echo VarDumper::xmlDump($request);
+            Yii::log('Request xml:'.$request,'info');
             //die();
 
-            //$sXML = $this->makeSoapRequest($request, $location, $action, $version);
-            $sXML = parent::__doRequest($request, $location, $action, $version);
+            $sXML = $this->makeSoapRequest($request, $location, $action, $version);
+            if(!$sXML){
+                throw new CException( Yii::t( 'application', 'Error on soap recuest. Curl description: {curl_desc}. Last headers: {last_headers}.', array('{curl_desc}'=>GDSNemoSoapClient::$lastCurlError,'{last_headers}'=>GDSNemoSoapClient::$lastHeaders)) );
+            }
+            //$sXML = parent::__doRequest($request, $location, $action, $version);
             //echo VarDumper::xmlDump($sXML);
             //die();
         }
@@ -94,11 +97,11 @@ class GDSNemoSoapClient extends SoapClient
             {
                 list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
             }
-            //AlpOnline_SoapClient::$sLastHeaders = $sHeaders;
+            GDSNemoSoapClient::$lastHeaders = $sHeaders;
         }
         else
         {
-            //AlpOnline_SoapClient::$sLastCurlError = curl_error ($rCh);
+            GDSNemoSoapClient::$lastCurlError = curl_error ($rCh);
         }
 
         return $sData;
