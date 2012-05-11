@@ -57,8 +57,6 @@ return CMap::mergeArray(
                 ),
             ),
 
-            'gds',
-
             'admin' => array(
                 'class' => 'application.modules.admin.AAdminModule',
                 'modules' => array(

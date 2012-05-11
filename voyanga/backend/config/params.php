@@ -11,12 +11,5 @@ $commonParams = require_once ('common/config/params.php');
 return CMap::mergeArray (
     $commonParams,
     CMap::mergeArray (array(
-        'GDSNemo' => array(
-            'wsdlUri' => 'http://109.120.157.20:10002/Flights.asmx?wsdl',
-            'uri' => 'http://109.120.157.20:10002/Flights.asmx',
-            'trace'   => (int)(defined(YII_DEBUG)),
-            'login' => 'webdev012',
-            'password' => 'HHFJGYU3*^H',
-            'userId' => 15
-        ),
+
     ), CMap::mergeArray (require_once (dirname(__FILE__).'/environments/params-'.$commonParams['env.code'].'.php'), $frontendParamsLocal)));

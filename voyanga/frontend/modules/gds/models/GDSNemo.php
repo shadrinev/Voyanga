@@ -148,7 +148,7 @@ class GDSNemo extends CComponent
             foreach ($soapResponse->SearchResult->SearchResult->Flights->Flight as $oSoapFlight)
             {
                 $aParts = array();
-                Yii::beginProfile('processingSegments');
+                //Yii::beginProfile('processingSegments');
                 UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
                 foreach ($oSoapFlight->Segments->Segment as $arrKey=>$oSegment)
                 {
@@ -184,11 +184,11 @@ class GDSNemo extends CComponent
                     }
                     $aParts[$oSegment->SegNum] = $oPart;
                 }
-                Yii::endProfile('processingSegments');
+                //Yii::endProfile('processingSegments');
                 $full_sum = 0;
                 $aPassengers = array();
                 $aTariffs = array();
-                Yii::beginProfile('processingPassengers');
+                //Yii::beginProfile('processingPassengers');
                 UtilsHelper::soapObjectsArray($oSoapFlight->PricingInfo->PassengerFare);
                 foreach ($oSoapFlight->PricingInfo->PassengerFare as $oFare)
                 {
@@ -234,7 +234,7 @@ class GDSNemo extends CComponent
                         $aParts[$oTariff->SegNum]->aTariffs[$oTariff->Code] = $oTariff->Code;
                     }
                 }
-                Yii::endProfile('processingPassengers');
+                //Yii::endProfile('processingPassengers');
                 $aNewParts = array();
                 //print_r($aParts);
                 $oPart = reset($aParts);

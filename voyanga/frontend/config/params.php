@@ -19,5 +19,13 @@ return CMap::mergeArray(
         'flight_price_factor' => 100,
         //Time factor for flight optimal
         'flight_time_factor' => 70,
-        'aPassegerTypes' => array(1 => 'ADT', 2 => 'CNN', 3 => 'INN')
+        'aPassegerTypes' => array(1 => 'ADT', 2 => 'CNN', 3 => 'INN'),
+        'GDSNemo' => array(
+            'wsdlUri' => 'http://109.120.157.20:10002/Flights.asmx?wsdl',
+            'uri' => 'http://109.120.157.20:10002/Flights.asmx',
+            'trace'   => (int)(defined(YII_DEBUG)),
+            'login' => 'webdev012',
+            'password' => 'HHFJGYU3*^H',
+            'userId' => 15
+        )
     ), CMap::mergeArray(require_once (dirname(__FILE__) . '/environments/params-' . $commonParams['env.code'] . '.php'), $frontendParamsLocal)));
