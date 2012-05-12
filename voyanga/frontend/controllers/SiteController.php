@@ -222,6 +222,7 @@ class SiteController extends Controller
                 'arrival_city_id' => $model->arrivalCityId,
                 'departure_date' => $model->departureDate
             ));
+            $form->attributes = $model->attributes;
             /*$flightSearchParams->addRoute(array(
                 'adult_count' => 1,
                 'child_count' => 0,

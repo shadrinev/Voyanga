@@ -6,7 +6,6 @@ return array(
         'departureCityId'=>array(
             'id'=>'departureCityId',
             'type'=>'text',
-            'value'=>'4466',
             'maxlength'=>32,
         ),
         'departureCity'=>array(
@@ -28,7 +27,6 @@ return array(
         'arrivalCityId'=>array(
             'id'=>'arrivalCityId',
             'type'=>'text',
-            'value'=>'5754',
             'maxlength'=>32,
         ),
         'arrivalCity'=>array(
@@ -48,12 +46,10 @@ return array(
         ),
         'departureDate'=>array(
             'type'=>'text',
-            'value'=>'12.07.2012',
             'maxlength'=>32,
         ),
         'adultCount'=>array(
             'type'=>'dropdownlist',
-            'val'=>1,
             'items'=>array(0,1,2,3,4,5,6,7),
         ),
         'childCount'=>array(

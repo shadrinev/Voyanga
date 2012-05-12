@@ -8,16 +8,16 @@
  */
 class FlightSearchForm extends CFormModel
 {
-    public $departureCityId;
+    public $departureCityId = 4466;
     public $departureCity;
     public $departureAirportCode;
-    public $arrivalCityId;
+    public $arrivalCityId = 5754;
     public $arrivalCity;
     public $arrivalAirportCode;
     public $adultCount = 1;
     public $childCount;
     public $infantCount;
-    public $departureDate;
+    public $departureDate = '12.07.2012';
 
     /**
      * Declares the validation rules.
