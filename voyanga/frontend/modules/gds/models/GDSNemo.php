@@ -22,8 +22,24 @@ class GDSNemo extends CComponent
         //VarDumper::dump($client->__getTypes());
         //$params = array('Search'=>$params);
         //$soapRequest = $client->async->$methodName($params);
+        $key = $methodName.md5(serialize($params));
+        if($cache)
+        {
+            $ret = Yii::app()->cache->get($key);
+            if($ret)
+            {
+                return $ret;
+            }
+        }
         Yii::beginProfile('processingSoap'.$methodName);
         $ret = $client->$methodName($params);
+        if($expiration)
+        {
+            if($ret)
+            {
+                Yii::app()->cache->set($key,$ret,$expiration);
+            }
+        }
         Yii::endProfile('processingSoap'.$methodName);
         return $ret;
     }
@@ -130,7 +146,7 @@ class GDSNemo extends CComponent
 
         //real request
 
-        $soapResponse = self::request('Search', $params, $bCache = FALSE, $iExpiration = 0);
+        $soapResponse = self::request('Search', $params, $bCache = TRUE, $iExpiration = 3000);
         //print_r($soapResponse);
         //return;
 
@@ -423,12 +439,6 @@ class GDSNemo extends CComponent
                     'Commision' => array(
                         'Percent' => '2'
                     )
-                ),
-                'Source' => array(
-                    'ClientId' => 102,
-                    'APIKey' => '7F48365D42B73307C99C12A578E92B36',
-                    'Language' => 'UA',
-                    'Currency' => 'RUB'
                 )
             )
         );

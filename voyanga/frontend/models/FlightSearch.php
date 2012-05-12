@@ -87,7 +87,7 @@ class FlightSearch extends CActiveRecord {
                 throw new CException( Yii::t( 'application', 'Data in oFlightSearchParams not valid' ) );
             }
         }else{
-            throw new CException( Yii::t( 'application', 'Parametr oFlightSearchParams not type of FlightSearchParams' ) );
+            throw new CException( Yii::t( 'application', 'Parameter oFlightSearchParams not type of FlightSearchParams' ) );
         }
     }
     

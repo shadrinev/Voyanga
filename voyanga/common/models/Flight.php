@@ -52,6 +52,7 @@ class Flight extends CComponent
             if (!$this->departureCity) throw new CException(Yii::t('application', 'Departure city not found. City with id {city_id} not set in db.', array(
                 '{city_id}' => $this->departureCityId)));
         }
+        return $this->departureCity;
     }
 
     public function getArrivalCity()
@@ -62,6 +63,7 @@ class Flight extends CComponent
             if (!$this->arrivalCity) throw new CException(Yii::t('application', 'Arrival city not found. City with id {city_id} not set in db.', array(
                 '{city_id}' => $this->arrivalCityId)));
         }
+        return $this->arrivalCity;
     }
 
 }

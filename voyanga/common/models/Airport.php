@@ -44,6 +44,7 @@ class Airport extends CActiveRecord
             {
                 //throw new CException( Yii::t( 'application', 'Airport with code {code} not found', array(
                 //        '{code}' => $sCode ) ) );
+                //todo: write to log info about not found airport
                 $airport = new Airport();
                 $city = City::model()->findByAttributes( array(
                 'code' => $sCode ) );
@@ -52,6 +53,7 @@ class Airport extends CActiveRecord
                     $city1 = $airport->city;
                 }
                 Airport::$airports[$sCode] = $airport;
+                Yii::endProfile( 'laodAirportFromDB' );
                 return Airport::$airports[$sCode];
             }
         

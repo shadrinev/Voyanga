@@ -7,11 +7,24 @@ class SiteController extends Controller
      */
     public function actions()
     {
+
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page
             'captcha' => array(
                 'class' => 'CCaptchaAction',
                 'backColor' => 0xFFFFFF
+            ),
+            'cityAutocomplete'=>array(
+                'class'=>'application.actions.AAutoCompleteAction',
+                'modelClass'=>'City',
+                'cache'=>true,
+                'cacheExpire'=>1800,
+                'attributes'=>array('localRu','localEn','code:='),
+                'labelTemplate'=>'{localRu}, {country.localRu}, {code}',
+                'valueTemplate'=>'{localRu}',
+                'criteria'=>array('with'=>'country'),
+
+
             ),
             // page action renders "static" pages stored under 'protected/views/site/pages'
             // They can be accessed via: index.php?r=site/page&view=FileName
@@ -187,6 +200,60 @@ class SiteController extends Controller
             'sText' => 'hh' . print_r(Yii::app()->gdsAdapter),
             'flightStack' => $fs->oFlightVoyageStack
         ));
+    }
+
+
+
+    public function actionFlightSearch()
+    {
+        $model = new FlightSearchForm();
+        $form = new CForm('application.views.site.flightSearchForm', $model);
+        if ($form->submitted('smb') && $form->validate())
+        {
+            Yii::import('application.modules.gds.models.*');
+            $nemo = new GDSNemo();
+            $flightSearchParams = new FlightSearchParams();
+            $flightSearchParams->addRoute(array(
+                'adult_count' => $model->adultCount,
+                'child_count' => $model->childCount,
+                'infant_count' => $model->infantCount,
+                'departure_city_id' => $model->departureCityId,
+                //'arrival_city_id' => 3654,
+                'arrival_city_id' => $model->arrivalCityId,
+                'departure_date' => $model->departureDate
+            ));
+            /*$flightSearchParams->addRoute(array(
+                'adult_count' => 1,
+                'child_count' => 0,
+                'infant_count' => 0,
+                'departure_city_id' => 4381,
+                'arrival_city_id' => 4931,
+                'departure_date' => '30.05.2012'
+            ));*/
+            $flightSearchParams->flight_class = 'E';
+            //$nemo->FlightTariffRules();
+            $aFlights = $nemo->FlightSearch($flightSearchParams);
+            $aParamsFS['aFlights'] = $aFlights;
+            $oFlightVoyageStack = new FlightVoyageStack($aParamsFS);
+            //print_r($oFlightVoyageStack);
+
+            echo '#####jjjjjj####';
+
+            $this->render('flightResult', array(
+                'form' => $form,
+                'message' => 'all right',
+                'flightStack' => $oFlightVoyageStack
+            ));
+        } else
+        {
+
+            echo '#####kkkjjj####';
+            print_r($model->errors);
+            $this->render('flightResult', array(
+                'form' => $form,
+                'flightStack' => null
+            ));
+        }
     }
 
     public function actionDictionary()
