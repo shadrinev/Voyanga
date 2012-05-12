@@ -31,9 +31,10 @@ class Flight extends CComponent
                 $oLastPart = &$this->flightParts[count($this->flightParts) - 1];
                 $aTransit = array();
                 $aTransit['time_for_transit'] = $oPart->timestampBegin - $oLastPart->timestampEnd;
-                $aTransit['city_id'] = $oPart->departureCityId;
+                $aTransit['cityId'] = $oPart->departureCityId;
+                $aTransit['city'] = City::model()->findByPk($oPart->departureCityId);
                 $this->arrivalCityId = $oPart->arrivalCityId;
-                $this->transits[] = $aTransit;
+                $this->transits[] = (object)$aTransit;
                 $this->flightParts[] = $oPart;
                 $this->fullDuration += $aTransit['time_for_transit'];
             }

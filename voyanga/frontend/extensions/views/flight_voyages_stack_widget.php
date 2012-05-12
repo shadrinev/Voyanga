@@ -23,11 +23,15 @@ Eto flight voyages Stack
                 }*/
 
              ?>
-		    <?php echo $oFlight->departureCity->localRu;?> -- <?php echo $oFlight->arrivalCity->localRu;?>
-			<?php if($oFlight->transits): ?>
-				<?php echo count($oFlight->transits);?> пересадка(и)
-				<?php if($oFlightVoyage['value']->flightKey == '-172'){print_r($oFlight->transits);}?>
-			<?php endif;?>
+		    <?php echo $oFlight->departureCity->localRu;?> -
+            <?php if($oFlight->transits): ?>
+            <?php foreach($oFlight->transits as $transit){
+                echo $transit->city->localRu;
+            };?>
+
+            <?php endif;?>
+            - <?php echo $oFlight->arrivalCity->localRu;?>
+
             <?php /**/?>
 		</div>
 		<?php ?>
