@@ -164,6 +164,8 @@ class GDSNemo extends CComponent
             foreach ($soapResponse->SearchResult->SearchResult->Flights->Flight as $oSoapFlight)
             {
                 $aParts = array();
+                //flag of valid flight
+                $needSave = true;
                 //Yii::beginProfile('processingSegments');
                 UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
                 foreach ($oSoapFlight->Segments->Segment as $arrKey=>$oSegment)
@@ -275,10 +277,16 @@ class GDSNemo extends CComponent
 
                         if ($route->arrivalCity->code !== $oPart->arrival_city->code)
                         {
-                            throw new CException(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}', array(
+                            /*throw new CException(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}', array(
                                 '{code}' => $route->arrivalCity->code,
                                 '{codes}' => implode(', ', $aCities)
-                            )));
+                            )));*/
+                            Yii::log(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}. FlightId: {flightId}', array(
+                                '{code}' => $route->arrivalCity->code,
+                                '{codes}' => implode(', ', $aCities),
+                                '{flightId}' => $oSoapFlight->FlightId
+                            )),'info','nemo');
+                            $needSave = false;
                         }
                     }
                     $aNewParts[] = $aSubParts;
@@ -289,7 +297,11 @@ class GDSNemo extends CComponent
                 $oFlight->commission_price = 0;
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;
-                $flights[] = $oFlight;
+                if($needSave)
+                {
+                    $flights[] = $oFlight;
+                }
+
             }
             Yii::endProfile('processingSoap');
         }
