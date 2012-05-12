@@ -81,11 +81,13 @@ class GDSNemo extends CComponent
                     ),
                     'Restrictions' => array(
                         'ClassPref' => 'All',
+                        'ServiceType'=>'Sirena',
                         'OnlyAvail' => true,
                         'AirVPrefs' => '',
                         'IncludePrivateFare' => false,
                         'CurrencyCode' => 'RUB'
-                    )
+                    ),
+
                 )
             )
         );
@@ -146,7 +148,7 @@ class GDSNemo extends CComponent
 
         //real request
 
-        $soapResponse = self::request('Search', $params, $bCache = TRUE, $iExpiration = 3000);
+        $soapResponse = self::request('Search', $params, $bCache = FALSE, $iExpiration = 3000);
         //print_r($soapResponse);
         //return;
 

@@ -99,7 +99,7 @@ return CMap::mergeArray(
                     array(
                         'class' => 'CFileLogRoute',
                         'levels' => 'trace, info',
-                        'categories' => 'application.*'
+                        'categories' => 'application.*, nemo.*'
                     ),
 
                     array(
