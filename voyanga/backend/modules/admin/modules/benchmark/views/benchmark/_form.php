@@ -9,7 +9,7 @@
     <?php $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'id' => 'abenchmark-form',
     'enableAjaxValidation' => false,
-    'htmlOptions' => array('class' => 'span4 well', 'enctype' => 'multipart/form-data'),
+    'htmlOptions' => array('class' => 'span5 well'),
     'focus' => array($model, 'url'),
 )); ?>
 

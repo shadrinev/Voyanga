@@ -102,7 +102,7 @@ class AArrayInputWidget extends CInputWidget
         $html .= "<thead>\n";
         $html .= "<th>Key</th>\n";
         $html .= "<th>Value</th>\n";
-        $html .= "<th class='actions'><a href='#' class='icon add iconOnly' title='Add'>&nbsp;</a></th>\n";
+        $html .= "<th class='actions'><a href='#' class='icon add iconOnly' title='Add'><i class='icon-plus-sign'></i></a></th>\n";
         $html .= "<th class='actions'><a href='#' class='icon flattenArray iconOnly' title='Flatten this array'>&nbsp;</a></th>\n";
         $html .= "</thead>\n";
         $html .= "<tbody>\n";
