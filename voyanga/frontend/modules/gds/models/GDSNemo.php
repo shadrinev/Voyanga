@@ -149,7 +149,7 @@ class GDSNemo extends CComponent
         //real request
 
         $soapResponse = self::request('Search', $params, $bCache = FALSE, $iExpiration = 3000);
-        //print_r($soapResponse);
+        print_r($soapResponse); die();
         //return;
 
         //processing response

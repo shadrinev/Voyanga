@@ -62,7 +62,10 @@ return CMap::mergeArray(
                 'modules' => array(
                     'users' => array(
                         'class' => 'application.modules.admin.modules.users.AUserAdminModule'
-                    )
+                    ),
+                    'benchmark' => array(
+                        'class' => 'application.modules.admin.modules.benchmark.ABenchmarkModule'
+                    ),
                 )
             )
         ),
@@ -133,6 +136,10 @@ return CMap::mergeArray(
                         'emails' => 'kuklin@voyanga.com'
                     )
                 )
+            ),
+
+            'sysinfo' => array(
+                'class' => 'packages.sysinfo.ASystemInformation'
             ),
 
             'user' => array(

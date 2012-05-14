@@ -79,6 +79,7 @@ class AAdminPortlet extends CPortlet
         $this->renderDecoration();
 
         echo "<div class=\"span10\">\n";
+        echo "<h1>{$this->title}</h1>";
 
         $this->_openTag = ob_get_contents();
         ob_clean();
@@ -105,17 +106,14 @@ class AAdminPortlet extends CPortlet
      */
     protected function renderDecoration()
     {
-        if ($this->title !== null)
-        {
-            echo "<div class=\"{$this->decorationCssClass}\">\n<div class=\"well\">\n";
-            if (!is_array($this->sidebarMenuItems))
-                $this->sidebarMenuItems = array();
-            $menuConfig = $this->sidebarMenuConfig;
-            $menuConfig['items'] = CMap::mergeArray(array(array('label'=>$this->title)),$this->sidebarMenuItems);
-            if (sizeof($this->menuItems)>0)
-                $menuConfig['items'] = CMap::mergeArray($menuConfig['items'], array(array('label'=>'Действия')), $this->menuItems);
-            $this->widget("bootstrap.widgets.BootMenu", $menuConfig);
-            echo "</div>\n</div>\n";
-        }
+        echo "<div class=\"{$this->decorationCssClass}\">\n<div class=\"well\">\n";
+        if (!is_array($this->sidebarMenuItems))
+            $this->sidebarMenuItems = array();
+        $menuConfig = $this->sidebarMenuConfig;
+        $menuConfig['items'] = $this->sidebarMenuItems;
+        if (sizeof($this->menuItems)>0)
+            $menuConfig['items'] = CMap::mergeArray($menuConfig['items'], array(array('label'=>'Действия')), $this->menuItems);
+        $this->widget("bootstrap.widgets.BootMenu", $menuConfig);
+        echo "</div>\n</div>\n";
     }
 }

@@ -8,6 +8,7 @@ Yii::setPathOfAlias('root', $root);
 Yii::setPathOfAlias('common', $root.'/common');
 Yii::setPathOfAlias('frontend', $root.'/frontend');
 Yii::setPathOfAlias('uploads', $root.'/frontend/www/uploads');
+require_once('common/packages/packages.php');
 
 $consoleMainLocal = file_exists('console/config/main-local.php') ? require('console/config/main-local.php') : array ();
 
@@ -35,9 +36,14 @@ return CMap::mergeArray (
 			'class' => 'system.cli.commands.MigrateCommand',
 			'migrationPath' => 'site.common.migrations',
 		),
+        'benchmark' => array(
+            'class' => 'site.backend.modules.admin.modules.benchmark.commands.ABenchmarkCommand'
+        )
      ),
 
 	'components'=>array(
+
+
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
