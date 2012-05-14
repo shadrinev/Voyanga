@@ -81,7 +81,6 @@ class GDSNemo extends CComponent
                     ),
                     'Restrictions' => array(
                         'ClassPref' => 'All',
-                        'ServiceType'=>'Sirena',
                         'OnlyAvail' => true,
                         'AirVPrefs' => '',
                         'IncludePrivateFare' => false,
@@ -148,7 +147,7 @@ class GDSNemo extends CComponent
 
         //real request
 
-        $soapResponse = self::request('Search', $params, $bCache = FALSE, $iExpiration = 3000);
+        $soapResponse = self::request('Search', $params, $bCache = TRUE, $iExpiration = 3000);
         print_r($soapResponse); die();
         //return;
 
@@ -169,6 +168,7 @@ class GDSNemo extends CComponent
                 //flag of valid flight
                 $needSave = true;
                 //Yii::beginProfile('processingSegments');
+                $markAirlineCodes = array();
                 UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
                 foreach ($oSoapFlight->Segments->Segment as $arrKey=>$oSegment)
                 {
@@ -187,7 +187,9 @@ class GDSNemo extends CComponent
                     //Yii::endProfile('loadAirportData');
                     $oPart->departure_terminal_code = isset($oSegment->DepTerminal)? $oSegment->DepTerminal : '';
                     $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal)? $oSegment->ArrTerminal : '';
-                    $oPart->airline = Airline::getAirlineByCode($oSegment->MarkAirline);
+                    $markAirlineCodes[$oSegment->MarkAirline] = $oSegment->MarkAirline;
+                    $oPart->markAirline = Airline::getAirlineByCode($oSegment->MarkAirline);
+                    $oPart->opAirline = Airline::getAirlineByCode($oSegment->OpAirline);
                     $oPart->code = $oSegment->FlightNumber;
                     $oPart->duration = $oSegment->FlightTime * 60;
                     $oPart->datetime_begin = $oSegment->DepDateTime;
@@ -297,8 +299,28 @@ class GDSNemo extends CComponent
                 $oFlight = new stdClass();
                 $oFlight->full_sum = $full_sum;
                 $oFlight->commission_price = 0;
+                if(isset($oSoapFlight->ValCompany))
+                {
+                    $oFlight->valAirline = Airline::getAirlineByCode($oSoapFlight->ValCompany);
+                }
+                else
+                {
+                    if(count($markAirlineCodes) == 1)
+                    {
+                        $oFlight->valAirline = Airline::getAirlineByCode(implode($markAirlineCodes));
+                    }
+                    else
+                    {
+                        Yii::log(Yii::t('application', 'Validation airline not set. Market airlines codes: {codes}. FlightId: {flightId}', array(
+                            '{codes}' => implode(', ', $markAirlineCodes),
+                            '{flightId}' => $oSoapFlight->FlightId
+                        )),'info','nemo');
+                        $needSave = false;
+                    }
+                }
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;
+
                 if($needSave)
                 {
                     $flights[] = $oFlight;

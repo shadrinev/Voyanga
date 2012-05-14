@@ -30,13 +30,13 @@ class Flight extends CComponent
             {
                 $oLastPart = &$this->flightParts[count($this->flightParts) - 1];
                 $aTransit = array();
-                $aTransit['time_for_transit'] = $oPart->timestampBegin - $oLastPart->timestampEnd;
+                $aTransit['timeForTransit'] = $oPart->timestampBegin - $oLastPart->timestampEnd;
                 $aTransit['cityId'] = $oPart->departureCityId;
                 $aTransit['city'] = City::model()->findByPk($oPart->departureCityId);
                 $this->arrivalCityId = $oPart->arrivalCityId;
                 $this->transits[] = (object)$aTransit;
                 $this->flightParts[] = $oPart;
-                $this->fullDuration += $aTransit['time_for_transit'];
+                $this->fullDuration += $aTransit['timeForTransit'];
             }
             $this->fullDuration += $oPart->duration;
         } else
@@ -49,7 +49,7 @@ class Flight extends CComponent
     {
         if (!$this->departureCity)
         {
-            $this->departureCity = City::model()->findByPk($this->departureCityId);
+            $this->departureCity = City::getCityByPk($this->departureCityId);
             if (!$this->departureCity) throw new CException(Yii::t('application', 'Departure city not found. City with id {city_id} not set in db.', array(
                 '{city_id}' => $this->departureCityId)));
         }
@@ -60,7 +60,7 @@ class Flight extends CComponent
     {
         if (!$this->arrivalCity)
         {
-            $this->arrivalCity = City::model()->findByPk($this->arrivalCityId);
+            $this->arrivalCity = City::getCityByPk($this->arrivalCityId);
             if (!$this->arrivalCity) throw new CException(Yii::t('application', 'Arrival city not found. City with id {city_id} not set in db.', array(
                 '{city_id}' => $this->arrivalCityId)));
         }

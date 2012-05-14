@@ -23,7 +23,7 @@ return CMap::mergeArray(
         'basePath' => 'frontend',
         'params'  => $params,
         'language' => 'ru',
-        'theme' => 'greengoblin',
+        'theme' => 'classic',
         'preload' => array(
             'log'
         ),

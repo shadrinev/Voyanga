@@ -238,7 +238,7 @@ class SiteController extends Controller
             $oFlightVoyageStack = new FlightVoyageStack($aParamsFS);
             //print_r($oFlightVoyageStack);
 
-            echo '#####jjjjjj####';
+            //echo '#####jjjjjj####';
 
             $this->render('flightResult', array(
                 'form' => $form,
@@ -248,7 +248,7 @@ class SiteController extends Controller
         } else
         {
 
-            echo '#####kkkjjj####';
+            //echo '#####kkkjjj####';
             print_r($model->errors);
             $this->render('flightResult', array(
                 'form' => $form,

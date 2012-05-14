@@ -10,7 +10,7 @@ class FlightVoyage
     public $price;
     public $taxes;
     public $flightKey;
-    public $airlineCode;
+    public $valAirlineCode;
     public $commission;
     public $flights;
     public $adultPassengerInfo;
@@ -25,6 +25,10 @@ class FlightVoyage
         $this->flightKey = $oParams->flight_key;
         $this->commission = $oParams->commission_price;
         $this->flights = array();
+        if (!$this->valAirlineCode)
+        {
+            $this->valAirlineCode = $oParams->valAirline;
+        }
         $iInd = 0;
         $lastArrTime = 0;
         $lastCityToId = 0;
@@ -40,10 +44,6 @@ class FlightVoyage
                 {
                     $oPart = new FlightPart($oPartParams);
                     $this->flights[$iGroupId]->addPart($oPart);
-                    if (!$this->airlineCode)
-                    {
-                        $this->airlineCode = $oPart->airlineCode;
-                    }
                 }
             }
         } else

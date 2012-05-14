@@ -2,6 +2,7 @@ body
 {
 	margin: 0;
 	padding: 0;
+    height: 100%;
 	color: #555;
 	font: normal 10pt Arial,Helvetica,sans-serif;
 	background: #EFEFEF;
@@ -13,6 +14,8 @@ body
 	margin-bottom: 5px;
 	background: white;
 	border: 1px solid #C9E0ED;
+    height: 100%;
+    display: table;
 }
 
 #header
@@ -226,4 +229,48 @@ div.search-form
 .operations li a:hover
 {
 	background: #80CFFF;
+}
+
+div.ticket
+{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, #FDFDFD), color-stop(1, #E2E2E2) ) !important;
+    background-image: -moz-linear-gradient( center top, #FDFDFD, #E2E2E2 ) !important;
+    background-image: -o-linear-gradient( top, #FDFDFD, #E2E2E2 ) !important;
+    background-image: linear-gradient( center top, #FDFDFD, #E2E2E2 ) !important;
+    background-image: -khtml-linear-gradient( center top, #FDFDFD, #E2E2E2 ) !important;
+    width: 940px;
+    border-collapse: collapse;
+    vertical_align: top;
+    -moz-box-shadow: 0 0 5px #666;
+    -webkit-box-shadow: 0 0 5px#666;
+    -o-box-shadow: 0 0 5px#666;
+    box-shadow: 0 0 5px #666;
+    display: block;
+
+}
+div.ticket-splitter
+{
+    clear: both;
+}
+div.route-point
+{
+    display: block;
+    float: left;
+    height: 100px;
+}
+div.route-flight-info
+{
+    display: block;
+    float: left;
+    height: 100px;
+}
+div.flight-results
+{
+    height: 100px;
+    display: block;
 }

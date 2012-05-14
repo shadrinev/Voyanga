@@ -38,6 +38,23 @@ class UtilsHelper
     }
 
     /**
+     * Function for render duration time interval
+     * @static
+     * @param $sec - number of seconds
+     * @param string $local - Locale for print (ru|en)
+     * @return string - 5 ч 54 мин
+     */
+    public static function durationToTime($sec, $local = 'ru')
+    {
+        $min = (int)($sec / 60);
+        $hour = floor($min / 60);
+        $min = $min % 60;
+        $hourWords = array('ru'=>'ч','en'=>'h');
+        $minuteWords = array('ru'=>'мин','en'=>'min');
+        return "{$hour} {$hourWords[$local]} {$min} {$minuteWords[$local]}";
+    }
+
+    /**
      * Функция которая добавляет правильное окончание к русскому слову использованному после числа.
      * @param $aWords - Массив из трех форм слова: первый элемент для 1, второй для 4, третий для 7, array('год','года','лет')
      * @param $iNum - число
