@@ -18,7 +18,9 @@
  */
 class City extends CActiveRecord
 {
-    
+    private static $cities = array();
+    private static $codeIdMap = array();
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -126,5 +128,52 @@ class City extends CActiveRecord
         
         return new CActiveDataProvider( $this, array(
                 'criteria' => $criteria ) );
+    }
+
+    public static function getCityByPk( $id )
+    {
+        if ( isset( City::$cities[$id] ) )
+        {
+            return City::$cities[$id];
+        }
+        else
+        {
+            $city = City::model()->findByPk($id);
+            if ( $city )
+            {
+                City::$cities[$city->id] = $city;
+                City::$codeIdMap[$city->code] = $city->id;
+                return City::$cities[$id];
+            }
+            else
+            {
+                throw new CException( Yii::t( 'application', 'City with id {id} not found', array(
+                    '{id}' => $id ) ) );
+            }
+        }
+    }
+
+    public static function getCityByCode( $code )
+    {
+        if ( isset( City::$codeIdMap[$code] ) )
+        {
+            return City::$cities[City::$codeIdMap[$code]];
+        }
+        else
+        {
+            $city = City::model()->findByAttributes( array(
+                'code' => $code ) );
+            if ( $city )
+            {
+                City::$cities[$city->id] = $city;
+                City::$codeIdMap[$city->code] = $city->id;
+                return City::$cities[City::$codeIdMap[$code]];
+            }
+            else
+            {
+                throw new CException( Yii::t( 'application', 'City with code {code} not found', array(
+                    '{code}' => $code ) ) );
+            }
+        }
     }
 }

@@ -16,47 +16,59 @@
 class Airport extends CActiveRecord
 {
     private static $airports = array();
+    private static $codeIdMap = array();
     
     public static function model($className = __CLASS__)
     {
         return parent::model( $className );
     }
     
-    public static function getAirportByCode($sCode)
+    public static function getAirportByCode($code)
     {
-        if (isset( Airport::$airports[$sCode] ))
+        if (isset( Airport::$codeIdMap[$code] ))
         {
-            return Airport::$airports[$sCode];
+            return Airport::$airports[Airport::$codeIdMap[$code]];
         }
         else
         {
-            Yii::beginProfile( 'laodAirportFromDB' );
-            $oAirport = Airport::model()->findByAttributes( array(
-                    'code' => $sCode ) );
-            if ($oAirport)
+            $airport = Airport::model()->findByAttributes( array(
+                    'code' => $code ) );
+            if ($airport)
             {
-                $city = $oAirport->city;
-                Airport::$airports[$oAirport->code] = $oAirport;
-                Yii::endProfile( 'laodAirportFromDB' );
-                return Airport::$airports[$sCode];
+                $city = $airport->city;
+                Airport::$airports[$airport->id] = $airport;
+                Airport::$codeIdMap[$airport->code] = $airport->id;
+                return Airport::$airports[Airport::$codeIdMap[$code]];
             }
             else
             {
-                //throw new CException( Yii::t( 'application', 'Airport with code {code} not found', array(
-                //        '{code}' => $sCode ) ) );
-                //todo: write to log info about not found airport
-                $airport = new Airport();
-                $city = City::model()->findByAttributes( array(
-                'code' => $sCode ) );
-                if($city){
-                    $airport->cityId = $city->id;
-                    $city1 = $airport->city;
-                }
-                Airport::$airports[$sCode] = $airport;
-                Yii::endProfile( 'laodAirportFromDB' );
-                return Airport::$airports[$sCode];
+                throw new CException( Yii::t( 'application', 'City with code {code} not found', array(
+                        '{code}' => $code ) ) );
             }
-        
+        }
+    }
+
+    public static function getAirportByPk($id)
+    {
+        if (isset( Airport::$airports[$id] ))
+        {
+            return Airport::$airports[$id];
+        }
+        else
+        {
+            $airport = Airport::model()->findByPk( $id );
+            if ($airport)
+            {
+                $city = $airport->city;
+                Airport::$airports[$airport->id] = $airport;
+                Airport::$codeIdMap[$airport->code] = $airport->id;
+                return Airport::$airports[$id];
+            }
+            else
+            {
+                throw new CException( Yii::t( 'application', 'City with id {id} not found', array(
+                    '{id}' => $id ) ) );
+            }
         }
     }
     
@@ -131,5 +143,16 @@ class Airport extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function getCity()
+    {
+        if (isset( $this->city ))
+        {
+            return $this->city;
+        }else{
+            $this->city = City::getCityByPk($this->cityId);
+            return $this->city;
+        }
     }
 }

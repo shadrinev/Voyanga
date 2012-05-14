@@ -13,6 +13,7 @@ class Airline extends CActiveRecord
 {
     
     private static $airlines = array();
+    private static $codeIdMap = array();
     
     public static function model( $className = __CLASS__ )
     {
@@ -70,12 +71,35 @@ class Airline extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    public static function getAirlineByPk( $id )
+    {
+        if ( isset( Airline::$airlines[$id] ) )
+        {
+            return Airline::$airlines[$id];
+        }
+        else
+        {
+            $airline = Airline::model()->findByPk($id);
+            if ( $airline )
+            {
+                Airline::$airlines[$airline->id] = $airline;
+                Airline::$codeIdMap[$airline->code] = $airline->id;
+                return Airline::$airlines[$id];
+            }
+            else
+            {
+                throw new CException( Yii::t( 'application', 'Airline with id {id} not found', array(
+                    '{id}' => $id ) ) );
+            }
+        }
+    }
     
     public static function getAirlineByCode( $code )
     {
-        if ( isset( Airline::$airlines[$code] ) )
+        if ( isset( Airline::$codeIdMap[$code] ) )
         {
-            return Airline::$airlines[$code];
+            return Airline::$airlines[Airline::$codeIdMap[$code]];
         }
         else
         {
@@ -83,8 +107,9 @@ class Airline extends CActiveRecord
                     'code' => $code ) );
             if ( $airline )
             {
-                Airline::$airlines[$airline->code] = $airline;
-                return Airline::$airlines[$code];
+                Airline::$airlines[$airline->id] = $airline;
+                Airline::$codeIdMap[$airline->code] = $airline->id;
+                return Airline::$airlines[Airline::$codeIdMap[$code]];
             }
             else
             {
