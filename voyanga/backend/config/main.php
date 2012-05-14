@@ -137,7 +137,8 @@ return CMap::mergeArray(
 
             'user' => array(
                 // enable cookie-based authentication
-                'allowAutoLogin' => true
+                'allowAutoLogin' => true,
+                'loginUrl' => '/users/user/login',
             ),
 
             'urlManager' => array(

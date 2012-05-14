@@ -52,6 +52,8 @@ class AAdminModule extends CWebModule
      */
     public function beforeControllerAction($controller, $action)
     {
+        if (Yii::app()->user->isGuest)
+            Yii::app()->user->loginRequired();
         return parent::beforeControllerAction($controller, $action);
     }
 
