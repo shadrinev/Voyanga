@@ -287,6 +287,11 @@ class Bootstrap extends CApplicationComponent
 	public function registerDatepicker($selector = null, $options = array())
 	{
 		$this->registerPlugin(self::PLUGIN_DATEPICKER, $selector, $options);
+        if (Yii::app()->language!='en')
+        {
+            $cs = Yii::app()->getClientScript();
+            $cs->registerScriptFile($this->getAssetsUrl().'/js/locales/bootstrap-datepicker.'.Yii::app()->language.'.js', CClientScript::POS_HEAD);
+        }
 	}
 
 	/**

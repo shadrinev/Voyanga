@@ -52,7 +52,7 @@
                     array('label'=>Yii::t('admin','Зарегистрироваться'), 'url'=>'/users/user/register'),
                 )),
             ),
-            'visible' => !Yii::app()->user->isGuest
+            'visible' => Yii::app()->user->isGuest
         ),
         array(
             'class'=>'bootstrap.widgets.BootButton',

@@ -74,7 +74,7 @@ class Event extends FrontendActiveRecord
         // will receive user inputs.
         return array(
             array('cityId, status', 'numerical', 'integerOnly'=>true),
-            array('address, contact', 'length', 'max'=>255),
+            array('title, address, contact', 'length', 'max'=>255),
             array('startDate, endDate, preview, description', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -111,6 +111,7 @@ class Event extends FrontendActiveRecord
             'status' => 'Статус',
             'preview' => 'Анонс',
             'description' => 'Описание',
+            'title' => 'Название',
         );
     }
 

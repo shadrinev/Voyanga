@@ -14,6 +14,8 @@
  */
 class BootDatepicker extends CInputWidget
 {
+    public $form;
+
 	/**
 	 * @var array the options for the Bootstrap JavaScript plugin.
 	 */
@@ -32,12 +34,12 @@ class BootDatepicker extends CInputWidget
 	 */
 	public function init()
 	{
-		if (!isset($this->htmlOptions['id']))
-			$this->htmlOptions['id'] = $this->getId();
-
 		$this->htmlOptions['type'] = 'text';
 
-		if (!isset($this->options['format']))
+        if (!isset($this->options['language']))
+            $this->options['language'] = Yii::app()->language;
+
+        if (!isset($this->options['format']))
 			$this->options['format'] = 'mm/dd/yyyy';
 
 		if (!isset($this->options['weekStart']))
@@ -54,7 +56,9 @@ class BootDatepicker extends CInputWidget
 		list($name, $id) = $this->resolveNameID();
 
 		if ($this->hasModel())
-			echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
+        {
+            echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
+        }
 		else
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 

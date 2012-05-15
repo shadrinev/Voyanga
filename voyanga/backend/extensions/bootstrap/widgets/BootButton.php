@@ -103,6 +103,8 @@ class BootButton extends CWidget
 	 */
 	public $dropdownOptions = array();
 
+    public $visible = true;
+
 	/**
 	 * Initializes the widget.
 	 */
@@ -178,6 +180,9 @@ class BootButton extends CWidget
 	 */
 	public function run()
 	{
+        if (!$this->visible)
+            return;
+
 		echo $this->createButton();
 
 		if ($this->hasDropdown())

@@ -248,6 +248,7 @@ class BootInputHorizontal extends BootInput
 			'options'=>isset($options) ? $options : array(),
 			'events'=>isset($events) ? $events : array(),
 			'htmlOptions'=>$this->htmlOptions,
+            'form'=>$this->form
 		));
 		echo $this->getError().$this->getHint();
 		echo '</div>';
