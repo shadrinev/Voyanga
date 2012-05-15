@@ -4,19 +4,6 @@ $this->breadcrumbs=array(
     'Управление',
 );
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){ 
-    $('.search-form').toggle(); 
-    return false; 
-}); 
-$('.search-form form').submit(function(){ 
-    $.fn.yiiGridView.update('event-category-grid', { 
-        data: $(this).serialize() 
-    }); 
-    return false; 
-}); 
-");
-
 $this->beginWidget("AAdminPortlet", array(
     "menuItems" => array(
         array(

@@ -23,11 +23,11 @@ class EventAdminModule extends ABaseAdminModule
             "items" => array(
                 array(
                     "label" => "События",
-                    "url" => array("/admin/events/event/index"),
+                    "url" => array("/admin/events/event/admin"),
                 ),
                 array(
                     "label" => "Категориии",
-                    "url" => array("/admin/events/eventCategory/"),
+                    "url" => array("/admin/events/eventCategory/admin"),
                 ),
             )
         )

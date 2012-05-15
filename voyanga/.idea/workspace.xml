@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/bg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/bg_toolbar.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/close.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/avi.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/csv.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/doc.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/gif.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/html.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/jpg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/mov.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/other.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/pdf.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/png.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/ppt.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/rar.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/rtf.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/txt.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/xls.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons/zip.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/fileicons" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/hover.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/icons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/resizer.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/resizer.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/separator.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i/video_box.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/i" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/langs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/plugins" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/toolbars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_search.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/admin.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/create.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/update.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120515_093841_add_event_table.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120515_113639_alter_event_category_table.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/models/Event.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/models/EventLink.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/EImperaviRedactorWidget.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/css/blank.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/css/editor.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/css/redactor.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/css/writer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/css/wym.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/editor.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/langs/en.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/langs/fr.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/langs/lv.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/langs/pl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/langs/pt_br.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/langs/ru.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/langs/ua.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/plugins/file.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/plugins/file_edit.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/plugins/image.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/plugins/image_edit.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/plugins/link.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/plugins/table.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/plugins/video.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/redactor.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/redactor.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/toolbars/air.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/toolbars/classic.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/toolbars/custom.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/toolbars/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/toolbars/mini.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/toolbars/original.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/changelog.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/readme_en.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/imperaviRedactor/readme_ru.txt" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootActiveForm.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootAlert.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootBadge.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootBaseMenu.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootBreadcrumbs.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootButton.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootButtonColumn.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootButtonGroup.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootCarousel.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootDataColumn.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootDetailView.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootDropdown.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootGridView.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootHero.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootLabel.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootListView.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootMenu.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootModal.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootNavbar.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootPager.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootProgress.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootTabbable.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootThumbnails.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\BootTypeahead.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\input\BootInput.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\input\BootInputHorizontal.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\input\BootInputInline.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\input\BootInputSearch.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\input\BootInputVertical.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets\input" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/EventAdminModule.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/EventAdminModule.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/eventCategory/admin.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/eventCategory/admin.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/migrations/m120515_075518_add_event_category_table.php" afterPath="$PROJECT_DIR$/common/migrations/m120515_075518_add_event_category_table.php" />
+    </list>
+    <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/console/runtime" />
+    </list>
+    <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
+    <list id="19d274ec-55f5-4904-ad7f-809886508d2e" name="no need it" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/voyanga.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/php.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
+    <ignored path="original.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="original" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="admin.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/admin.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="15" selection-start="72" selection-end="72" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/create.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="15" selection-start="72" selection-end="72" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="update.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/update.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="17" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="17" selection-start="742" selection-end="742" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="10" selection-start="1261" selection-end="1261" vertical-scroll-proportion="-19.423077">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="editor.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/editor.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bootstrap.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/components/Bootstrap.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CInputWidget.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/web/widgets/CInputWidget.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="15" selection-start="795" selection-end="795" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="update.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/eventCategory/update.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/EventAdminModule.php" />
+        <option value="$PROJECT_DIR$/common/migrations/m120515_093841_add_event_table.php" />
+        <option value="$PROJECT_DIR$/common/migrations/m120515_075518_add_event_category_table.php" />
+        <option value="$PROJECT_DIR$/common/models/EventLink.php" />
+        <option value="$PROJECT_DIR$/common/models/Event.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
+        <option value="$PROJECT_DIR$/common/migrations/m120515_113639_alter_event_category_table.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/eventCategory/admin.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/admin.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/create.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/update.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
+        <option value="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootActiveForm.php" />
+        <option value="$PROJECT_DIR$/common/widgets/imperaviRedactor/EImperaviRedactorWidget.php" />
+        <option value="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootDatepicker.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
+      </list>
+    </option>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="php 5.3" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>CSS</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="false" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="2" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents ProjectPane="true" />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="console" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imperaviRedactor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imperaviRedactor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bootstrap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bootstrap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="227" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="209" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="46" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="228" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="195" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="194" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="195" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="869" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="195" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="194" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="229" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="903" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
+    <property name="options.lastSelected" value="preferences.fileTypes" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="options.searchVisible" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\common\widgets\imperaviRedactor\assets" />
+      <recent name="C:\WebServers\home\voyanga\common\widgets" />
+      <recent name="C:\WebServers\home\voyanga\backend\extensions" />
+      <recent name="C:\WebServers\home\voyanga\common\extensions\yiiext\behaviors\model\trees" />
+      <recent name="C:\WebServers\home\voyanga\common\packages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\events\views\eventCategory" />
+      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules" />
+      <recent name="C:\WebServers\home\voyanga\backend\www\themes\classic\views\layouts" />
+      <recent name="C:\WebServers\home\voyanga\backend\www\themes\classic\views" />
+      <recent name="C:\WebServers\home\voyanga\backend\views" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method>
+        <option name="PhingTarget" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method>
+        <option name="PhingTarget" enabled="false" />
+      </method>
+    </configuration>
+    <list size="0" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="true">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <configuration useDefault="false">C:\Users\Kuklin\AppData\Roaming\Subversion</configuration>
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="C:\WebServers\home\voyanga" />
+          <option name="myCopyRoot" value="C:\WebServers\home\voyanga" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="C:\WebServers\home\voyanga" />
+          <option name="myCopyRoot" value="C:\WebServers\home\voyanga" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="" />
+      <changelist id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
+      <changelist id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="" />
+      <changelist id="19d274ec-55f5-4904-ad7f-809886508d2e" name="no need it" comment="" />
+      <created>1336136205614</created>
+      <updated>1336136205614</updated>
+    </task>
+    <task id="LOCAL-00001" summary="remove framwork from old position">
+      <created>1336136462106</created>
+      <updated>1336136462106</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added new applications">
+      <created>1336136592107</created>
+      <updated>1336136592107</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added new applications">
+      <created>1336136704106</created>
+      <updated>1336136704106</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added new applications">
+      <created>1336136760364</created>
+      <updated>1336136760364</updated>
+    </task>
+    <task id="LOCAL-00005" summary="common, console and backend added">
+      <created>1336137355108</created>
+      <updated>1336137355108</updated>
+    </task>
+    <task id="LOCAL-00006" summary="rename frontend">
+      <created>1336137404106</created>
+      <updated>1336137404106</updated>
+    </task>
+    <task id="LOCAL-00007" summary="www to correct place">
+      <created>1336137434107</created>
+      <updated>1336137434107</updated>
+    </task>
+    <task id="LOCAL-00008" summary="deal with yiic">
+      <created>1336137483106</created>
+      <updated>1336137483106</updated>
+    </task>
+    <task id="LOCAL-00009" summary="cleanup config">
+      <created>1336137531106</created>
+      <updated>1336137531106</updated>
+    </task>
+    <task id="LOCAL-00010" summary="new configs">
+      <created>1336137553105</created>
+      <updated>1336137553105</updated>
+    </task>
+    <task id="LOCAL-00011" summary="runtime removed">
+      <created>1336137580106</created>
+      <updated>1336137580106</updated>
+    </task>
+    <task id="LOCAL-00012" summary="work with routes">
+      <created>1336137701106</created>
+      <updated>1336137701106</updated>
+    </task>
+    <task id="LOCAL-00013" summary="work with params">
+      <created>1336137945106</created>
+      <updated>1336137945106</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix some bootstrap files">
+      <created>1336139027124</created>
+      <updated>1336139027124</updated>
+    </task>
+    <task id="LOCAL-00015" summary="correct place of config">
+      <created>1336140127108</created>
+      <updated>1336140127108</updated>
+    </task>
+    <task id="LOCAL-00016" summary="backend/frontend works">
+      <created>1336143420107</created>
+      <updated>1336143420107</updated>
+    </task>
+    <task id="LOCAL-00017" summary="change for gds">
+      <created>1336205803107</created>
+      <updated>1336205803107</updated>
+    </task>
+    <task id="LOCAL-00018" summary="change for gds">
+      <created>1336211441107</created>
+      <updated>1336211441107</updated>
+    </task>
+    <task id="LOCAL-00019" summary="change for gds">
+      <created>1336226115107</created>
+      <updated>1336226115107</updated>
+    </task>
+    <task id="LOCAL-00020" summary="gds going to DklabSoapClient">
+      <created>1336630865106</created>
+      <updated>1336630865106</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Yii-bootstrap included">
+      <created>1336633435107</created>
+      <updated>1336633435107</updated>
+    </task>
+    <task id="LOCAL-00022" summary="start work on Yii-blocks user">
+      <created>1336654725107</created>
+      <updated>1336654725107</updated>
+    </task>
+    <task id="LOCAL-00023" summary="start work on Yii-blocks user">
+      <created>1336654785106</created>
+      <updated>1336654785106</updated>
+    </task>
+    <task id="LOCAL-00024" summary="start work on Yii-blocks user">
+      <created>1336655672485</created>
+      <updated>1336655672485</updated>
+    </task>
+    <task id="LOCAL-00025" summary="start work on Yii-blocks user">
+      <created>1336656159109</created>
+      <updated>1336656159109</updated>
+    </task>
+    <task id="LOCAL-00027" summary="start work on Yii-blocks user">
+      <created>1336659610110</created>
+      <updated>1336659610110</updated>
+    </task>
+    <task id="LOCAL-00028" summary="stuff with user">
+      <created>1336661270105</created>
+      <updated>1336661270106</updated>
+    </task>
+    <task id="LOCAL-00029" summary="rename">
+      <created>1336661320107</created>
+      <updated>1336661320107</updated>
+    </task>
+    <task id="LOCAL-00030" summary="rename">
+      <created>1336661376109</created>
+      <updated>1336661376109</updated>
+    </task>
+    <task id="LOCAL-00031" summary="work with users">
+      <created>1336663041110</created>
+      <updated>1336663041110</updated>
+    </task>
+    <task id="LOCAL-00032" summary="work with emails module">
+      <created>1336664491108</created>
+      <updated>1336664491108</updated>
+    </task>
+    <task id="LOCAL-00033" summary="email sending added">
+      <created>1336666801119</created>
+      <updated>1336666801119</updated>
+    </task>
+    <task id="LOCAL-00034" summary="new password done">
+      <created>1336667840116</created>
+      <updated>1336667840116</updated>
+    </task>
+    <task id="LOCAL-00035" summary="1. email about reset password - ok now&#10;2. sign in after registration">
+      <created>1336719686103</created>
+      <updated>1336719686103</updated>
+    </task>
+    <task id="LOCAL-00036" summary="work with user admin module">
+      <created>1336722610106</created>
+      <updated>1336722610106</updated>
+    </task>
+    <task id="LOCAL-00037" summary="resourse work added">
+      <created>1336746318107</created>
+      <updated>1336746318107</updated>
+    </task>
+    <task id="LOCAL-00039" summary="added login to get access to admin module">
+      <created>1336982057126</created>
+      <updated>1336982057126</updated>
+    </task>
+    <task id="LOCAL-00040" summary="benchmark module added">
+      <created>1337004539110</created>
+      <updated>1337004539110</updated>
+    </task>
+    <task id="LOCAL-00041" summary="array input widget modified">
+      <created>1337004646106</created>
+      <updated>1337004646106</updated>
+    </task>
+    <task id="LOCAL-00042" summary="fix for icons of benchmark module">
+      <created>1337005787103</created>
+      <updated>1337005787103</updated>
+    </task>
+    <task id="LOCAL-00043" summary="added work with tree events category">
+      <created>1337074826110</created>
+      <updated>1337074826110</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3344017" sideWeight="0.6707589" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3325893" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="upgrading bootstrap" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="runtime removed" />
+    <MESSAGE value="work with routes" />
+    <MESSAGE value="work with params" />
+    <MESSAGE value="fix some bootstrap files" />
+    <MESSAGE value="correct place of config" />
+    <MESSAGE value="backend/frontend works" />
+    <MESSAGE value="change for gds" />
+    <MESSAGE value="gds going to DklabSoapClient" />
+    <MESSAGE value="Yii-bootstrap included" />
+    <MESSAGE value="start work on Yii-blocks user" />
+    <MESSAGE value="stuff with user" />
+    <MESSAGE value="rename" />
+    <MESSAGE value="work with users" />
+    <MESSAGE value="work with emails module" />
+    <MESSAGE value="email sending added" />
+    <MESSAGE value="new password done" />
+    <MESSAGE value="1. email about reset password - ok now&#10;2. sign in after registration" />
+    <MESSAGE value="work with user admin module" />
+    <MESSAGE value="resourse work added" />
+    <MESSAGE value="added login to get access to admin module" />
+    <MESSAGE value="benchmark module added" />
+    <MESSAGE value="array input widget modified" />
+    <MESSAGE value="fix for icons of benchmark module" />
+    <MESSAGE value="added work with tree events category" />
+    <MESSAGE value="upgrading bootstrap" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/eventCategory/_form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/eventCategory/create.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="2" selection-start="93" selection-end="204" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/eventCategory/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/css/blank.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/imperaviRedactor/EImperaviRedactorWidget.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="70" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.40070504" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="15" selection-start="72" selection-end="72" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/create.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="15" selection-start="72" selection-end="72" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/update.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="17" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="17" selection-start="742" selection-end="742" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/components/Bootstrap.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/web/widgets/CInputWidget.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="15" selection-start="795" selection-end="795" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/eventCategory/update.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="10" selection-start="1261" selection-end="1261" vertical-scroll-proportion="-19.423077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/imperaviRedactor/assets/editor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+
