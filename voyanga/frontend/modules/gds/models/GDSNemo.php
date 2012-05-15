@@ -340,11 +340,11 @@ class GDSNemo extends CComponent
         //print_r($aFlights);
         if($errorCode > 0)
         {
-            return $errorCode;
+            return array('flights'=>array(),'errorCode'=>$errorCode,'errorDescription'=>'');
         }
         else
         {
-            return $flights;
+            return array('flights'=>$flights,'errorCode'=>0,'errorDescription'=>'');
         }
 
 

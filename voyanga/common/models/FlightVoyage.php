@@ -63,5 +63,24 @@ class FlightVoyage
         return $iFullDuration;
     }
 
+    public function getFlightCodes()
+    {
+        $flightCodes = array();
+        foreach ($this->flights as $flight)
+        {
+            foreach ($flight->flightParts as $part)
+            {
+                $flightCodes[] = $part->code;
+            }
+        }
+        return $flightCodes;
+    }
+
+    public function setPriceInfo($priceInfo)
+    {
+        $this->fullPrice = $priceInfo['fullPrice'];
+        $this->commissionPrice = $priceInfo['commissionPrice'];
+        $this->profitPrice = $priceInfo['profitPrice'];
+    }
 
 }

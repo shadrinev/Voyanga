@@ -41,14 +41,33 @@ class FlightVoyageStack
             if ($params['aFlights'])
             {
                 $bParamsNeedInit = true;
+                $flightsCodes = array();
                 foreach ($params['aFlights'] as $oFlightParams)
                 {
                     $oFlightVoyage = new FlightVoyage($oFlightParams);
                     $bNeedSave = TRUE;
+
+                    $priceInfo = FlightPricing::getPriceInfo($oFlightVoyage);
+
+                    $flightCodes = implode(',',$oFlightVoyage->getFlightCodes());
+                    //If already have same flight select cheaper flight
+                    if(isset($flightsCodes[$flightCodes])){
+                        if($priceInfo['fullPrice'] < $this->flightVoyages[$flightsCodes[$flightCodes]]->fullPrice){
+                            $oFlightVoyage->setPriceInfo($priceInfo);
+                            //replace already saved flight voyage
+                            $this->flightVoyages[$flightsCodes[$flightCodes]] = $oFlightVoyage;
+                            //exclude current voyage because it already saved
+                            $bNeedSave = FALSE;
+                        }
+                    }
+
                     if ($bNeedSave)
                     {
                         //If Voyage don't filtered, add to stack
                         $this->flightVoyages[] = $oFlightVoyage;
+
+                        $flightsCodes[$flightCodes] = count($this->flightVoyages) - 1;
+
 
                         $iFullDuration = $oFlightVoyage->getFullDuration();
                         if ($bParamsNeedInit)
