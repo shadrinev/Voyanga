@@ -106,6 +106,11 @@ class AAdminPortlet extends CPortlet
      */
     protected function renderDecoration()
     {
+        if ((!is_array($this->sidebarMenuItems)) && (sizeof($this->menuItems)==0))
+        {
+            echo "<div class=\"{$this->decorationCssClass}\">&nbsp;\n</div>\n";
+            return;
+        }
         echo "<div class=\"{$this->decorationCssClass}\">\n<div class=\"well\">\n";
         if (!is_array($this->sidebarMenuItems))
             $this->sidebarMenuItems = array();

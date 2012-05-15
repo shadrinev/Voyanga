@@ -14,11 +14,11 @@ class AUserAdminModule extends ABaseAdminModule
      */
     protected $_menuItems = array(
         array(
-            "label" => "Работа с пользователями",
+            "label" => "Пользователи",
             "url" => "#",
-/*            "linkOptions" => array(
-                "class" => "user icon",
-            ),*/
+            "linkOptions" => array(
+                "icon" => "icon-user",
+            ),
             "items" => array(
                 array(
                     "label" => "Пользователи",

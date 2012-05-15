@@ -1,1 +1,1 @@
-<?php phpinfo() ?><h1>Hi, I am BACKEND</h1>
+<h1>Hi, I am BACKEND</h1>

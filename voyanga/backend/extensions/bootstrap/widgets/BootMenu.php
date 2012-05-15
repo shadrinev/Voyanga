@@ -156,6 +156,11 @@ class BootMenu extends BootBaseMenu
 			$item['linkOptions']['data-toggle'] = 'dropdown';
 			$item['label'] .= ' <span class="caret"></span>';
 		}
+        if (isset($item['linkOptions']['icon']))
+        {
+            $item['label'] = "<i class='".$item['linkOptions']['icon']." icon-white"."'></i> ".$item['label'];
+            unset($item['linkOptions']['icon']);
+        }
 
 		return parent::renderItem($item);
 	}

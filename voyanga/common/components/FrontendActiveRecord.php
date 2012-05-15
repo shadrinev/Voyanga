@@ -7,7 +7,7 @@
  */
 class FrontendActiveRecord extends CActiveRecord
 {
-    public $db=null;
+    public static $db=null;
 
     function getDbConnection()
     {

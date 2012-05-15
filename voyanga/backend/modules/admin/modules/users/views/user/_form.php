@@ -28,6 +28,8 @@
         <?php echo $form->error($model, 'requireNewPassword'); ?>
     </div>-->
 
-    <br><?php $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit', 'icon' => 'ok', 'label' => Yii::t('admin', $model->isNewRecord ? 'Зарегистрировать' : 'Сохранить'))); ?>
+    <div class="form-actions">
+        <?php $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit', 'icon' => 'ok', 'label' => Yii::t('admin', $model->isNewRecord ? 'Зарегистрировать' : 'Сохранить'))); ?>
+    </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->

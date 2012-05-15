@@ -63,6 +63,9 @@ return CMap::mergeArray(
                     'users' => array(
                         'class' => 'application.modules.admin.modules.users.AUserAdminModule'
                     ),
+                    'events' => array(
+                        'class' => 'application.modules.admin.modules.events.EventAdminModule'
+                    ),
                     'benchmark' => array(
                         'class' => 'application.modules.admin.modules.benchmark.ABenchmarkModule'
                     ),
