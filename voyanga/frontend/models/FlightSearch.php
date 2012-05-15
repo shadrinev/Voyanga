@@ -8,7 +8,7 @@
 class FlightSearch extends CActiveRecord {
     public $id;
     public $timestamp;
-    public $request_id;
+    public $requestId;
     public $status;
     public $key;
     public $data;
@@ -47,7 +47,7 @@ class FlightSearch extends CActiveRecord {
                     $this->timestamp = $sameFlightSearch->timestamp;
                     $this->data = $sameFlightSearch->data;
                     echo "from cache";
-                    $this->request_id = $sameFlightSearch->request_id;
+                    $this->requestId = $sameFlightSearch->request_id;
                     $this->_aRoutes = Route::model()->findAll( '`search_id`=:SEARCH_ID', array(
                             ':SEARCH_ID' => $this->id ) );
                 } else {
@@ -58,14 +58,14 @@ class FlightSearch extends CActiveRecord {
                     //request_id
                     $sJdata = Yii::app()->gdsAdapter->FlightSearch( $oFlightSearchParams );
                     if ( $sJdata ) {
-                        $aParamsFS['aFlights'] = $sJdata->section->variants;
+                        $aParamsFS['aFlights'] = $sJdata;
                         $oFlightVoyageStack = new FlightVoyageStack( $aParamsFS );
                         
                         $this->oFlightVoyageStack = $oFlightVoyageStack;
                         
                         $this->status = 1;
                         $this->data = json_encode($this->oFlightVoyageStack);
-                        $this->request_id = '1';
+                        $this->requestId = '1';
                     } else
                         $this->status = 2;
                     echo "before saving";
@@ -73,13 +73,13 @@ class FlightSearch extends CActiveRecord {
                     
                     if($this->oFlightVoyageStack){
                         //saving best data to FlightCache
-                        $aAttrs = array(
-                                'adult_count' => $oFlightSearchParams->adult_count, 
-                                'child_count' => $oFlightSearchParams->child_count, 
-                                'infant_count' => $oFlightSearchParams->infant_count,
+                        $attributes = array(
+                                'adult_count' => $oFlightSearchParams->adultCount,
+                                'child_count' => $oFlightSearchParams->childCount,
+                                'infant_count' => $oFlightSearchParams->infantCount,
                                 'flight_search_id'=>$this->id
                         );
-                        $this->oFlightVoyageStack->setAttributes($aAttrs);
+                        $this->oFlightVoyageStack->setAttributes($attributes);
                         FlightCache::addCacheFromStack($this->oFlightVoyageStack);
                     }
                 }
@@ -101,14 +101,14 @@ class FlightSearch extends CActiveRecord {
     
     public function save( $runValidation = true, $attributes = null ) {
         if ( $runValidation ) {
-            if ( $this->_aRoutes ) { 
+            if ( $this->_aRoutes ) {
                 //check valid of Rotes
                 //TODO: check good save
-                parent::save(); 
+                parent::save();
                 $this->id = $this->getPrimaryKey();
                 $this->timestamp = date( 'Y-m-d H:i:s' );
                 foreach( $this->_aRoutes as $oRoute ) {
-                    $oRoute->search_id = $this->id;
+                    $oRoute->searchId = $this->id;
                     $oRoute->save();
                     $oRoute->id = $oRoute->getPrimaryKey();
                 }

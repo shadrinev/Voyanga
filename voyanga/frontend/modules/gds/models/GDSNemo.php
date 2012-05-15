@@ -148,7 +148,7 @@ class GDSNemo extends CComponent
         //real request
 
         $soapResponse = self::request('Search', $params, $bCache = TRUE, $iExpiration = 3000);
-        print_r($soapResponse); die();
+
         //return;
 
         //processing response
@@ -157,7 +157,7 @@ class GDSNemo extends CComponent
         //print_r( $oSoapResponse );
 
         $flights = array();
-        Yii::log(print_r($soapResponse,true),'info');
+        Yii::log(print_r($soapResponse,true),'info','nemo');
         $errorCode = 0;
         if($soapResponse->SearchResult->SearchResult->Flights->Flight){
             Yii::beginProfile('processingSoap');
@@ -187,7 +187,11 @@ class GDSNemo extends CComponent
                     //Yii::endProfile('loadAirportData');
                     $oPart->departure_terminal_code = isset($oSegment->DepTerminal)? $oSegment->DepTerminal : '';
                     $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal)? $oSegment->ArrTerminal : '';
-                    $markAirlineCodes[$oSegment->MarkAirline] = $oSegment->MarkAirline;
+                    if(!$markAirlineCodes)
+                    {
+                        $markAirlineCodes[$oSegment->MarkAirline] = $oSegment->MarkAirline;
+                    }
+
                     $oPart->markAirline = Airline::getAirlineByCode($oSegment->MarkAirline);
                     $oPart->opAirline = Airline::getAirlineByCode($oSegment->OpAirline);
                     $oPart->code = $oSegment->FlightNumber;

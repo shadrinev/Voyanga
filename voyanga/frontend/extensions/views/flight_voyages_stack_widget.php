@@ -2,7 +2,7 @@
 <?php echo $this->data;?>
 <div class="flight-results">
 <?php foreach ($this->data as $oFlightVoyageStack):?>
-	<?php $oFlightVoyage = each($oFlightVoyageStack->aFlightVoyages);?>
+	<?php $oFlightVoyage = each($oFlightVoyageStack->flightVoyages);?>
     <div class="ticket-splitter"><br /></div>
 	<div class="ticket">
 	    Цена билета: <?php echo $oFlightVoyage['value']->price;?>

@@ -5,7 +5,6 @@ class FlightSearchParams {
     public $adultCount;
     public $childCount;
     public $infantCount;
-    private $key;
     
     public function addRoute( $aRouteParams ) {
         $oRoute = new Route();

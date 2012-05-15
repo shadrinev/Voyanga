@@ -91,15 +91,20 @@ return CMap::mergeArray(
                 'routes' => array(
                     array(
                         'class' => 'CWebLogRoute',
-                        'levels' => 'error, warning',
-                        'categories' => 'application',
+                        'categories' => 'application, nemo',
                         'levels' => 'error, warning, trace, profile, info'
                     ),
 
                     array(
                         'class' => 'CFileLogRoute',
                         'levels' => 'trace, info',
-                        'categories' => 'application.*, nemo.*'
+                        'categories' => 'application'
+                    ),
+                    array(
+                        'class' => 'CFileLogRoute',
+                        'levels' => 'trace, info',
+                        'categories' => 'nemo',
+                        'logFile' => 'nemo.log'
                     ),
 
                     array(

@@ -10,7 +10,7 @@ class FlightVoyage
     public $price;
     public $taxes;
     public $flightKey;
-    public $valAirlineCode;
+    public $valAirline;
     public $commission;
     public $flights;
     public $adultPassengerInfo;
@@ -25,9 +25,9 @@ class FlightVoyage
         $this->flightKey = $oParams->flight_key;
         $this->commission = $oParams->commission_price;
         $this->flights = array();
-        if (!$this->valAirlineCode)
+        if (!$this->valAirline)
         {
-            $this->valAirlineCode = $oParams->valAirline;
+            $this->valAirline = $oParams->valAirline;
         }
         $iInd = 0;
         $lastArrTime = 0;

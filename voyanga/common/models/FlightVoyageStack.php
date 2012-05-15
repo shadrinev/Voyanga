@@ -8,6 +8,7 @@
 class FlightVoyageStack
 {
     public $flightVoyages = array();
+    //public $flightVoyages;
     public $filterValues = array();
     public static $toTop;
 
@@ -47,7 +48,7 @@ class FlightVoyageStack
                     if ($bNeedSave)
                     {
                         //If Voyage don't filtered, add to stack
-                        $this->aFlightVoyages[] = $oFlightVoyage;
+                        $this->flightVoyages[] = $oFlightVoyage;
 
                         $iFullDuration = $oFlightVoyage->getFullDuration();
                         if ($bParamsNeedInit)
@@ -56,27 +57,27 @@ class FlightVoyageStack
                             $bParamsNeedInit = false;
                             $this->bestPrice = $oFlightVoyage->price;
                             $this->bestTime = $iFullDuration;
-                            $this->iBestTimeInd = count($this->aFlightVoyages) - 1;
+                            $this->iBestTimeInd = count($this->flightVoyages) - 1;
                             $this->iBestPriceInd = $this->iBestTimeInd;
                         }
                         if ($this->bestPrice > $oFlightVoyage->price)
                         {
                             //update best price params 
                             $this->bestPrice = $oFlightVoyage->price;
-                            $this->iBestPriceInd = count($this->aFlightVoyages) - 1;
+                            $this->iBestPriceInd = count($this->flightVoyages) - 1;
                         }
                         if ($this->bestTime > $iFullDuration)
                         {
                             //update best time params
                             $this->bestTime = $iFullDuration;
-                            $this->iBestTimeInd = count($this->aFlightVoyages) - 1;
+                            $this->iBestTimeInd = count($this->flightVoyages) - 1;
                         }
                     }
                 }
 
                 $bParamsNeedInit = true;
                 //find best pricetime params
-                foreach ($this->aFlightVoyages as $iInd => $oFlightVoyage)
+                foreach ($this->flightVoyages as $iInd => $oFlightVoyage)
                 {
                     $iFullDuration = $oFlightVoyage->getFullDuration();
                     $iParamsFactor = intval(($oFlightVoyage->price / $this->bestPrice) * Yii::app()->params['flight_price_factor']) + intval(($iFullDuration / $this->bestTime) * Yii::app()->params['flight_time_factor']);
@@ -103,7 +104,7 @@ class FlightVoyageStack
      */
     public function addFlightVoyage(FlightVoyage $oFlightVoyage)
     {
-        $this->aFlightVoyages[] = $oFlightVoyage;
+        $this->flightVoyages[] = $oFlightVoyage;
         $this->bestMask |= $oFlightVoyage->bestMask;
     }
 
@@ -145,7 +146,7 @@ class FlightVoyageStack
     {
         $aVariantsStacks = array();
 
-        foreach ($this->aFlightVoyages as $oFlihtVoyage)
+        foreach ($this->flightVoyages as $oFlihtVoyage)
         {
             switch ($sKey)
             {

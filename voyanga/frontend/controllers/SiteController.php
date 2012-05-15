@@ -178,7 +178,7 @@ class SiteController extends Controller
         $oFlightSearchParams->flight_class = 'E';
         $fs = new FlightSearch();
         $fs->status = 1;
-        $fs->request_id = '1';
+        $fs->requestId = '1';
         $fs->data = '{}';
         $fs->sendRequest($oFlightSearchParams);
         echo get_class($fs->oFlightVoyageStack->aFlightVoyages[0]);
@@ -233,9 +233,15 @@ class SiteController extends Controller
             ));*/
             $flightSearchParams->flight_class = 'E';
             //$nemo->FlightTariffRules();
-            $aFlights = $nemo->FlightSearch($flightSearchParams);
-            $aParamsFS['aFlights'] = $aFlights;
-            $oFlightVoyageStack = new FlightVoyageStack($aParamsFS);
+            $fs = new FlightSearch();
+            $fs->status = 1;
+            $fs->requestId = '1';
+            $fs->data = '{}';
+            $fs->sendRequest($flightSearchParams);
+
+            //$aFlights = $nemo->FlightSearch($flightSearchParams);
+            //$aParamsFS['aFlights'] = $aFlights;
+            //$oFlightVoyageStack = new FlightVoyageStack($aParamsFS);
             //print_r($oFlightVoyageStack);
 
             //echo '#####jjjjjj####';
@@ -243,7 +249,7 @@ class SiteController extends Controller
             $this->render('flightResult', array(
                 'form' => $form,
                 'message' => 'all right',
-                'flightStack' => $oFlightVoyageStack
+                'flightStack' => $fs->oFlightVoyageStack
             ));
         } else
         {
