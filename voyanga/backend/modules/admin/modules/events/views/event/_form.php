@@ -1,7 +1,6 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
 	'id'=>'event-form',
 	'enableAjaxValidation'=>false,
-    'focus'=>array($model,'startDate_date')
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
@@ -11,36 +10,31 @@
         'startDate',
         array(
             'date'=>array(
-                'htmlOptions'=>array(
-                    'class'=>'span12'
-                ),
-                'options'=> array(
-                    'weekStart'=>1,
-                    'format'=>'dd.mm.yyyy'
-                ),
                 'events'=> array(
-                    'changeDate'=>'js:function(ev){$(this).datepicker("hide"); $("#Event_startDate_time").focus()}'
+                    'changeDate'=>'js:function(ev){$(this).datepicker("hide"); $("#Event_endDate_date").focus()}'
                 )
             ),
             'time'=>array(
                 'htmlOptions'=>array(
-                    'class'=>'span12',
+                    'value'=>$model->isNewRecord?'00:00':false,
                 ),
             )
         )
     );?>
 
-    <?php echo $form->datepickerRow(
+    <?php echo $form->dateTimepickerRow(
         $model,
         'endDate',
         array(
-            'class'=>'span2',
-            'options'=> array(
-                'weekStart'=>1,
-                'format'=>'dd.mm.yyyy'
+            'date'=>array(
+                'events'=> array(
+                    'changeDate'=>'js:function(ev){$(this).datepicker("hide"); $("#Event_title").focus()}'
+                )
             ),
-            'events'=> array(
-                'changeDate'=>'js:function(ev){$(this).datepicker("hide"); $("#Event_title").focus()}'
+            'time'=>array(
+                'htmlOptions'=>array(
+                    'value'=>$model->isNewRecord?'23:59':false,
+                ),
             )
         )
     );?>
@@ -61,11 +55,12 @@
                 'method' => "get",
                 'loadingClass' => "loading-circle",
             ),
-            'onselect'=>'js:function(val){}',
+            'onselect'=>'js:function(res){$("#Event_cityId").val(res.id)}',
             'matcher'=>'js: function(){return true}',
         ),
         'htmlOptions'=>array(
-            'class'=>'span5'
+            'class'=>'span5',
+            'value'=>$model->city->localRu
         )
     )); ?>
 
@@ -83,6 +78,7 @@
         'attribute'=>'description',
         'options'   => array(
             'toolbar' => 'main',
+            'focus' => false,
         ),
         'htmlOptions' => array('rows' => 20,'cols' => 4)
     ));
@@ -97,3 +93,4 @@
 	</div>
 
 <?php $this->endWidget(); ?>
+<?php Yii::app()->clientScript->registerScript('focus','setTimeout(function(){$("#Event_startDate_date").focus();$("#Event_startDate_date").focus()}, 300)', CClientScript::POS_READY); ?>

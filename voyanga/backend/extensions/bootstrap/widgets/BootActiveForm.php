@@ -258,13 +258,41 @@ class BootActiveForm extends CActiveForm
         $name=CHtml::activeName($model,$attribute);
         $id=CHtml::getIdByName($name);
 
-        $date = date('dd.mm.yy',strtotime($model->$attribute));
-        $options['date']['htmlOptions']['name']  = $id.'_date';
-        $options['date']['htmlOptions']['value'] = $date;
+        echo $this->hiddenField($model, $attribute);
 
-        $time = date('h:i',strtotime($model->$attribute));
+        Yii::app()->clientScript->registerScript($id.'_event', "
+            $('#".$id."_date,#".$id."_time').on('change', function(){
+                var date = $('#".$id."_date').val(),
+                    dateArr,
+                    dateTime;
+                dateArr = date.split('.');
+                dateTime = dateArr[2] + '-' + dateArr[1] + '-' + dateArr[0] + ' ' + $('#".$id."_time').val()+':00';
+                console.log(dateTime);
+                $('#".$id."').val(dateTime);
+            });
+        ", CClientScript::POS_READY);
+
+        $date = date('dd.mm.yy',strtotime($model->$attribute));
+        $options['date']['htmlOptions'] = array(
+            'name'  => $id.'_date',
+            'value' => $date,
+            'class' => 'span12',
+            'autocomplete'=>'off'
+        );
+        $options['date']['options'] = array(
+            'weekStart'=>1,
+            'format'=>'dd.mm.yyyy'
+        );
+
         $options['time']['htmlOptions']['name']  = $id.'_time';
-        $options['time']['htmlOptions']['value'] = $time;
+        $options['time']['htmlOptions']['class'] = 'span12';
+        $options['time']['htmlOptions']['autocomplete'] = 'off';
+        if ((!isset($options['time']['htmlOptions']['value'])) || (!$options['time']['htmlOptions']['value']))
+        {
+            $time = date('h:i',strtotime($model->$attribute));
+            $options['time']['htmlOptions']['value'] = $time;
+        }
+        $options['time']['options']['defaultTime'] = $options['time']['htmlOptions']['value'];
 
         echo $this->labelEx($model, $attribute);
 

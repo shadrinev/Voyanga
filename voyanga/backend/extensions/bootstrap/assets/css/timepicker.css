@@ -5,6 +5,8 @@
     margin-top: 1px;
     padding: 4px;
     top: 0;
+    min-height: 50px;
+    min-width: 50px;
 }
 .bootstrap-timepicker.dropdown-menu.open {
     display: inline-block;
@@ -31,14 +33,14 @@
     margin-left: -100px;
     margin-top: 0;
     top: 30%;
-    width: 200px;
+    width: 100px;
 }
 .bootstrap-timepicker.modal .modal-content {
     padding: 0;
 }
 .bootstrap-timepicker table {
     margin: 0;
-    width: 100%;
+    width: 50%;
 }
 .bootstrap-timepicker td, .bootstrap-timepicker th {
     border-radius: 4px 4px 4px 4px;
