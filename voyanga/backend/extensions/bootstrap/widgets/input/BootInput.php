@@ -28,6 +28,7 @@ abstract class BootInput extends CInputWidget
 	const TYPE_CAPTCHA = 'captcha';
 	const TYPE_UNEDITABLE = 'uneditable';
 	const TYPE_DATEPICKER = 'datepicker';
+    const TYPE_TIMEPICKER = 'timepicker';
 
 	/**
 	 * @var BootActiveForm the associated form widget.
@@ -136,6 +137,10 @@ abstract class BootInput extends CInputWidget
 			case self::TYPE_DATEPICKER:
 				$this->datepickerField();
 				break;
+
+            case self::TYPE_TIMEPICKER:
+                $this->timepickerField();
+                break;
 
 			default:
 				throw new CException(__CLASS__.': Failed to run widget! Type is invalid.');
@@ -378,4 +383,11 @@ abstract class BootInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function datepickerField();
+
+    /**
+     * Renders a datepicker field.
+     * @return string the rendered content
+     * @abstract
+     */
+    abstract protected function timepickerField();
 }

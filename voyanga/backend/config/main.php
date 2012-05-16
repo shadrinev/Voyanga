@@ -79,6 +79,7 @@ return CMap::mergeArray(
             'bootstrap' => array(
                 'class' => 'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
                 'responsiveCss' => true,
+                'debug' => true
             ),
 
             'cache' => array(

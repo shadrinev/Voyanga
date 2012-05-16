@@ -253,4 +253,36 @@ class BootInputHorizontal extends BootInput
 		echo $this->getError().$this->getHint();
 		echo '</div>';
 	}
+
+    /**
+     * Renders a datepicker field.
+     * @return string the rendered content
+     */
+    protected function timepickerField()
+    {
+        if (isset($this->htmlOptions['options']))
+        {
+            $options = $this->htmlOptions['options'];
+            unset($this->htmlOptions['options']);
+        }
+
+        if (isset($this->htmlOptions['events']))
+        {
+            $events = $this->htmlOptions['events'];
+            unset($this->htmlOptions['events']);
+        }
+
+        echo $this->getLabel();
+        echo '<div class="controls">';
+        $this->widget('bootstrap.widgets.BootTimepicker', array(
+            'model'=>$this->model,
+            'attribute'=>$this->attribute,
+            'options'=>isset($options) ? $options : array(),
+            'events'=>isset($events) ? $events : array(),
+            'htmlOptions'=>$this->htmlOptions,
+            'form'=>$this->form
+        ));
+        echo $this->getError().$this->getHint();
+        echo '</div>';
+    }
 }

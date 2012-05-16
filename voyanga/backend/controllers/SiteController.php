@@ -3,6 +3,26 @@
 class SiteController extends Controller
 {
     /**
+     * Declares class-based actions.
+     */
+    public function actions()
+    {
+
+        return array(
+            'cityAutocomplete'=>array(
+                'class'=>'site.frontend.actions.AAutoCompleteAction',
+                'modelClass'=>'City',
+                'cache'=>true,
+                'cacheExpire'=>1800,
+                'attributes'=>array('localRu','localEn','code:='),
+                'labelTemplate'=>'{localRu}, {country.localRu}, {code}',
+                'valueTemplate'=>'{localRu}',
+                'criteria'=>array('with'=>'country'),
+                'paramName' => 'query'
+            ));
+    }
+
+    /**
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */

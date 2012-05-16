@@ -232,6 +232,59 @@ class BootActiveForm extends CActiveForm
 		return $this->inputRow(BootInput::TYPE_DATEPICKER, $model, $attribute, null, $htmlOptions);
 	}
 
+    /**
+     * Renders a timepicker field row.
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @param array $htmlOptions additional HTML attributes
+     * @return string the generated row
+     * @since 0.10.0
+     */
+    public function timepickerRow($model, $attribute, $htmlOptions = array())
+    {
+        return $this->inputRow(BootInput::TYPE_TIMEPICKER, $model, $attribute, null, $htmlOptions);
+    }
+
+    /**
+     * Renders a timepicker field row.
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @param array $options additional HTML attributes
+     * @return string the generated row
+     * @since 0.10.0
+     */
+    public function dateTimepickerRow($model, $attribute, $options = array())
+    {
+        $name=CHtml::activeName($model,$attribute);
+        $id=CHtml::getIdByName($name);
+
+        $date = date('dd.mm.yy',strtotime($model->$attribute));
+        $options['date']['htmlOptions']['name']  = $id.'_date';
+        $options['date']['htmlOptions']['value'] = $date;
+
+        $time = date('h:i',strtotime($model->$attribute));
+        $options['time']['htmlOptions']['name']  = $id.'_time';
+        $options['time']['htmlOptions']['value'] = $time;
+
+        echo $this->labelEx($model, $attribute);
+
+        echo '<div class="row-fluid"><div class="span2">';
+        echo '<div class="span8">';
+        $this->widget('bootstrap.widgets.BootDatepicker', array(
+            'htmlOptions'=>$options['date']['htmlOptions'],
+            'options'=>isset($options['date']['options'])?$options['date']['options']:array(),
+            'events'=>$options['date']['events']
+        ));
+        echo '</div>';
+        echo '<div class="span4">';
+        $this->widget('bootstrap.widgets.BootTimepicker', array(
+            'htmlOptions'=>$options['time']['htmlOptions'],
+            'options'=>isset($options['time']['options'])?$options['time']['options']:array(),
+            'events'=>isset($options['time']['events'])?$options['time']['events']:array()
+        ));
+        echo '</div></div></div>';
+    }
+
 	/**
 	 * Renders a checkbox list for a model attribute.
 	 * This method is a wrapper of {@link CHtml::activeCheckBoxList}.

@@ -20,7 +20,7 @@ $this->beginWidget("AAdminPortlet", array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'startDate:date',
+		'startDate',
 		'endDate',
 		'cityId',
 		'address',

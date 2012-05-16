@@ -27,6 +27,7 @@ class Bootstrap extends CApplicationComponent
 	const PLUGIN_TRANSITION = 'transition';
 	const PLUGIN_TYPEAHEAD = 'typeahead';
 	const PLUGIN_DATEPICKER = 'datepicker';
+    const PLUGIN_TIMEPICKER = 'timepicker';
 
 	/**
 	 * @var boolean whether to register the Bootstrap core CSS (bootstrap.min.css).
@@ -142,6 +143,7 @@ class Bootstrap extends CApplicationComponent
 		$cs->registerCoreScript('jquery');
 		$cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap.min.js', $position);
 		$cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap-datepicker.js', $position);
+        $cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap-typeahead.js', $position);
 	}
 
 	/**
@@ -293,6 +295,21 @@ class Bootstrap extends CApplicationComponent
             $cs->registerScriptFile($this->getAssetsUrl().'/js/locales/bootstrap-datepicker.'.Yii::app()->language.'.js', CClientScript::POS_HEAD);
         }
 	}
+
+    /**
+     * Registers the Bootstrap timepicker plugin.
+     * @param string $selector the CSS selector
+     * @param array $options the plugin options
+     * @see http://www.eyecon.ro/bootstrap-datepicker/
+     * @since 0.10.0
+     */
+    public function registerTimepicker($selector = null, $options = array())
+    {
+        $cs = Yii::app()->getClientScript();
+        $cs->registerCssFile($this->getAssetsUrl().'/css/timepicker.css', CClientScript::POS_HEAD);
+        $cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap-timepicker.js', CClientScript::POS_HEAD);
+        $this->registerPlugin(self::PLUGIN_TIMEPICKER, $selector, $options);
+    }
 
 	/**
 	 * Sets the target element for the scrollspy.
