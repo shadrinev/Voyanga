@@ -31,6 +31,7 @@ class BootTypeahead extends CWidget
 			$this->htmlOptions['id'] = $this->getId();
 
 		$this->htmlOptions['type'] = 'text';
+        $this->htmlOptions['autocomplete'] = 'off';
 		$this->htmlOptions['data-provide'] = 'typeahead';
 	}
 

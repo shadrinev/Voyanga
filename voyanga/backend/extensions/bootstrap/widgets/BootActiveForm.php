@@ -261,18 +261,20 @@ class BootActiveForm extends CActiveForm
         echo $this->hiddenField($model, $attribute);
 
         Yii::app()->clientScript->registerScript($id.'_event', "
-            $('#".$id."_date,#".$id."_time').on('change', function(){
+            $('#".$id."_date').add('#".$id."_time').on('blur change changeDate', function(){
                 var date = $('#".$id."_date').val(),
                     dateArr,
                     dateTime;
                 dateArr = date.split('.');
                 dateTime = dateArr[2] + '-' + dateArr[1] + '-' + dateArr[0] + ' ' + $('#".$id."_time').val()+':00';
-                console.log(dateTime);
                 $('#".$id."').val(dateTime);
             });
         ", CClientScript::POS_READY);
 
-        $date = date('dd.mm.yy',strtotime($model->$attribute));
+        if ($model->isNewRecord)
+            $date = date('d.m.Y',time());
+        else
+            $date = date('d.m.Y',strtotime($model->$attribute));
         $options['date']['htmlOptions'] = array(
             'name'  => $id.'_date',
             'value' => $date,
@@ -289,7 +291,7 @@ class BootActiveForm extends CActiveForm
         $options['time']['htmlOptions']['autocomplete'] = 'off';
         if ((!isset($options['time']['htmlOptions']['value'])) || (!$options['time']['htmlOptions']['value']))
         {
-            $time = date('h:i',strtotime($model->$attribute));
+            $time = date('H:i',strtotime($model->$attribute));
             $options['time']['htmlOptions']['value'] = $time;
         }
         $options['time']['options']['defaultTime'] = $options['time']['htmlOptions']['value'];
@@ -301,14 +303,16 @@ class BootActiveForm extends CActiveForm
         $this->widget('bootstrap.widgets.BootDatepicker', array(
             'htmlOptions'=>$options['date']['htmlOptions'],
             'options'=>isset($options['date']['options'])?$options['date']['options']:array(),
-            'events'=>$options['date']['events']
+            'events'=>$options['date']['events'],
+            'value'=>$options['date']['htmlOptions']['value']
         ));
         echo '</div>';
         echo '<div class="span4">';
         $this->widget('bootstrap.widgets.BootTimepicker', array(
             'htmlOptions'=>$options['time']['htmlOptions'],
             'options'=>isset($options['time']['options'])?$options['time']['options']:array(),
-            'events'=>isset($options['time']['events'])?$options['time']['events']:array()
+            'events'=>isset($options['time']['events'])?$options['time']['events']:array(),
+            'value'=>$options['time']['htmlOptions']['value']
         ));
         echo '</div></div></div>';
     }

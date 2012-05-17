@@ -17,6 +17,7 @@
             'time'=>array(
                 'htmlOptions'=>array(
                     'value'=>$model->isNewRecord?'00:00':false,
+                    'tabindex'=>1
                 ),
             )
         )
@@ -34,6 +35,7 @@
             'time'=>array(
                 'htmlOptions'=>array(
                     'value'=>$model->isNewRecord?'23:59':false,
+                    'tabindex'=>2
                 ),
             )
         )
@@ -60,7 +62,7 @@
         ),
         'htmlOptions'=>array(
             'class'=>'span5',
-            'value'=>$model->city->localRu
+            'value'=>$model->isNewRecord?'':$model->city->localRu
         )
     )); ?>
 

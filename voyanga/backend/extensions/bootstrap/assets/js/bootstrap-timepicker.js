@@ -44,7 +44,7 @@
         , init: function () {
 
             this.$element
-                .on('click', $.proxy(this.show, this))
+                .on('click focus', $.proxy(this.show, this))
                 .on('keyup', $.proxy(this.updateFromElementVal, this))
             ;
             
@@ -59,6 +59,7 @@
 
             this.$widget.on('click', $.proxy(this.click, this));
             $('html').on('click.timepicker.data-api', $.proxy(this.hide, this));
+            $('input').not(this.$element).on('click.timepicker.data-api', $.proxy(this.hide, this));
 
             this.setDefaultTime(this.options.defaultTime || this.defaultTime);
         }
@@ -185,6 +186,7 @@
             var time = this.getTime();
 
             this.$element.val(time);
+            this.$element.trigger('change');
         }
 
         , updateWidget: function() {
@@ -253,7 +255,7 @@
         }
 
         , decrementMinute: function() {
-            var newVal = this.minute - this.minuteStep;
+            var newVal = (this.minute % this.minuteStep > 0) ? this.minute - this.minute % this.minuteStep : this.minute - this.minuteStep;
             if (newVal < 0) {
                 this.decrementHour();
                 this.minute = newVal + 60;

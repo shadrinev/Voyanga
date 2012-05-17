@@ -306,7 +306,7 @@ class Bootstrap extends CApplicationComponent
     public function registerTimepicker($selector = null, $options = array())
     {
         $cs = Yii::app()->getClientScript();
-        $cs->registerCssFile($this->getAssetsUrl().'/css/timepicker.css', CClientScript::POS_HEAD);
+        $cs->registerCssFile($this->getAssetsUrl().'/css/timepicker.css');
         $cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap-timepicker.js', CClientScript::POS_HEAD);
         $this->registerPlugin(self::PLUGIN_TIMEPICKER, $selector, $options);
     }

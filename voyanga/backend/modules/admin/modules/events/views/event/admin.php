@@ -22,8 +22,12 @@ $this->beginWidget("AAdminPortlet", array(
 	'columns'=>array(
 		'startDate',
 		'endDate',
-		'cityId',
-		'address',
+        'title',
+        array(
+            'header'=>'Город',
+            'value'=>'$data->city->localRu'
+        ),
+		/*'address',
 		'contact',
 		/*
 		'status',
