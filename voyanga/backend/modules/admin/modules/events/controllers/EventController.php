@@ -57,6 +57,8 @@ class EventController extends Controller
 			$model->attributes=$_POST['Event'];
             $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
             $model->categories = $categories;
+            if ($pictureSmall=CUploadedFile::getInstance($model, 'pictureSmall'))
+                $model->pictureSmall = $pictureSmall;
             if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

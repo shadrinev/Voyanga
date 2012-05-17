@@ -119,7 +119,8 @@ class Event extends FrontendActiveRecord
             'preview' => 'Анонс',
             'description' => 'Описание',
             'title' => 'Название',
-            'categories' => 'Категории'
+            'categories' => 'Категории',
+            'pictureSmall' => 'Картинка-превью'
         );
     }
 

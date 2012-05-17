@@ -25,6 +25,11 @@ $this->beginWidget("AAdminPortlet", array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
+        array(
+            'name'=>'pictureSmall',
+            'value'=>isset($model->pictureSmall) ? CHtml::image($model->pictureSmall->url, $model->title) : '',
+            'type'=>'raw'
+        ),
 		'startDate',
 		'endDate',
         'title',

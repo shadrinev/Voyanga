@@ -1,6 +1,9 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
 	'id'=>'event-form',
 	'enableAjaxValidation'=>false,
+    'htmlOptions'=>array(
+        'enctype' => 'multipart/form-data'
+    )
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
@@ -90,6 +93,8 @@
         'htmlOptions' => array('rows' => 20,'cols' => 4)
     ));
     ?>
+
+    <?php echo $form->fileFieldRow($model,'pictureSmall',array('class'=>'span5')); ?>
 
     <?php echo $form->dropDownListRow($model,'status',$model->getPossibleStatus(),array('class'=>'span5')); ?>
 
