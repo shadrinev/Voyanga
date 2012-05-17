@@ -45,7 +45,10 @@ class EventController extends Controller
             if ($pictureBig=CUploadedFile::getInstance($model, 'pictureBig'))
                 $model->pictureBig = $pictureBig;
             if($model->save())
+            {
+                $model->setTags($_POST['Event']['tagsString'])->save();
                 $this->redirect(array('view','id'=>$model->id));
+            }
         }
     }
 

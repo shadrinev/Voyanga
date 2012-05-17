@@ -122,6 +122,8 @@
               )
     )); ?>
 
+    <?php echo $form->textFieldRow($model,'tagsString',array('class'=>'span5')); ?>
+
     <?php echo $form->dropDownListRow($model,'status',$model->getPossibleStatus(),array('class'=>'span5')); ?>
 
 	<div class="form-actions">

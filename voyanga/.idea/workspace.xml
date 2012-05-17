@@ -2,9 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/EARTaggableBehavior.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/ETagListWidget.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/ETaggableBehavior.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/changelog.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/license.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/readme_en.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/readme_ru.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/schema.sql" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120517_140432_add_tags_for_event.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootCarousel.php" afterPath="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootCarousel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/widgets/Gallery.php" afterPath="$PROJECT_DIR$/common/widgets/Gallery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/Event.php" afterPath="$PROJECT_DIR$/common/models/Event.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -31,10 +44,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="124" column="53" selection-start="4569" selection-end="4579" vertical-scroll-proportion="-13.076923">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="EventController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="154" column="38" selection-start="4183" selection-end="4183" vertical-scroll-proportion="0.0">
+            <state line="48" column="62" selection-start="1377" selection-end="1377" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="21" selection-start="804" selection-end="804" vertical-scroll-proportion="0.51079136">
               <folding />
             </state>
           </provider>
@@ -43,72 +74,7 @@
       <file leaf-file-name="Event.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/models/Event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="125" column="33" selection-start="3973" selection-end="3973" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="108" selection-start="3603" selection-end="3603" vertical-scroll-proportion="-7.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gallery.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/widgets/Gallery.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="53" selection-start="560" selection-end="572" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fileuploader.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/assets/fileuploader.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="56" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BootCarousel.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootCarousel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="57" selection-start="1852" selection-end="1852" vertical-scroll-proportion="0.3467626">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EAjaxUploadAction.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/EAjaxUploadAction.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EAjaxUpload.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/EAjaxUpload.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#6#234#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fileuploader.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/assets/fileuploader.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="159" column="33" selection-start="5273" selection-end="5273" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -124,22 +90,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/frontend/controllers/SiteController.php" />
         <option value="$PROJECT_DIR$/frontend/views/site/flightBooking.php" />
         <option value="$PROJECT_DIR$/frontend/views/site/bookingForm.php" />
         <option value="$PROJECT_DIR$/frontend/models/EForm.php" />
         <option value="$PROJECT_DIR$/frontend/models/BookingForm.php" />
         <option value="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootActiveForm.php" />
-        <option value="$PROJECT_DIR$/common/models/Event.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
         <option value="$PROJECT_DIR$/common/components/MUploadedFile.php" />
         <option value="$PROJECT_DIR$/common/packages/resources/components/AResource.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
         <option value="$PROJECT_DIR$/common/extensions/EAjaxUpload/EAjaxUpload.php" />
         <option value="$PROJECT_DIR$/common/extensions/EAjaxUpload/assets/fileuploader.css" />
         <option value="$PROJECT_DIR$/common/widgets/Gallery.php" />
         <option value="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootCarousel.php" />
+        <option value="$PROJECT_DIR$/common/migrations/m120517_140432_add_tags_for_event.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
+        <option value="$PROJECT_DIR$/common/models/Event.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
       </list>
     </option>
   </component>
@@ -266,6 +232,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="backend" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -285,6 +269,190 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -335,11 +503,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\common\widgets" />
+      <recent name="C:\WebServers\home\voyanga\common\extensions\yiiext\behaviors\model\taggable" />
       <recent name="C:\WebServers\home\voyanga\common\extensions" />
       <recent name="C:\WebServers\home\voyanga\common\components" />
       <recent name="C:\WebServers\home\voyanga\backend\extensions\bootstrap\widgets" />
-      <recent name="C:\WebServers\home\voyanga\backend\extensions\bootstrap\lib" />
-      <recent name="C:\WebServers\home\voyanga\backend\extensions\bootstrap\assets\js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\events\views\eventCategory" />
@@ -625,12 +793,16 @@
       <created>1337262522107</created>
       <updated>1337262522107</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="gallery improved">
+      <created>1337263212105</created>
+      <updated>1337263212105</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -638,7 +810,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19642857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3514957" sideWeight="0.8035714" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3514957" sideWeight="0.8035714" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -690,7 +862,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="gallery enabled" />
+    <option name="LAST_COMMIT_MESSAGE" value="gallery improved" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -703,7 +875,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="rename" />
     <MESSAGE value="work with users" />
     <MESSAGE value="work with emails module" />
     <MESSAGE value="email sending added" />
@@ -728,90 +899,12 @@
     <MESSAGE value="work with bic picture" />
     <MESSAGE value="other stuff" />
     <MESSAGE value="gallery enabled" />
+    <MESSAGE value="gallery improved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_5.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="659" column="9" selection-start="19916" selection-end="19916" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_4.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="742" column="52" selection-start="24988" selection-end="24997" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/packages/resources/components/AResourceful.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="168.8">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/web/CUploadedFile.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="20" selection-start="6452" selection-end="6452" vertical-scroll-proportion="5.24">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/packages/resources/components/AResource.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="13" selection-start="4369" selection-end="4369" vertical-scroll-proportion="0.16">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="139" selection-start="1384" selection-end="1384" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="33" selection-start="3973" selection-end="3973" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/qqFileUploader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="9" selection-start="4413" selection-end="4771" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/EAjaxUploadAction.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/EAjaxUpload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#6#234#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/assets/fileuploader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/assets/fileuploader.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="56" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0">
@@ -819,23 +912,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="154" column="38" selection-start="4183" selection-end="4183" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="108" selection-start="3603" selection-end="3603" vertical-scroll-proportion="-7.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/widgets/Gallery.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="53" selection-start="560" selection-end="572" vertical-scroll-proportion="0.0">
+        <state line="25" column="53" selection-start="560" selection-end="572" vertical-scroll-proportion="0.6115108">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -843,6 +929,62 @@
     <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootCarousel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="74" column="57" selection-start="1852" selection-end="1852" vertical-scroll-proportion="0.3467626">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/ETaggableBehavior.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/migrations/m120517_140432_add_tags_for_event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="20" selection-start="514" selection-end="514" vertical-scroll-proportion="0.5136691">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/EARTaggableBehavior.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="29" selection-start="444" selection-end="444" vertical-scroll-proportion="0.56258994">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/readme_en.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-3.5956833">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/models/Event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="159" column="33" selection-start="5273" selection-end="5273" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="124" column="53" selection-start="4569" selection-end="4579" vertical-scroll-proportion="-13.076923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="62" selection-start="1377" selection-end="1377" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="21" selection-start="804" selection-end="804" vertical-scroll-proportion="0.51079136">
           <folding />
         </state>
       </provider>

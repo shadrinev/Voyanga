@@ -50,7 +50,40 @@ class Event extends FrontendActiveRecord
         $behaviors['EAdvancedArBehavior'] = array(
             'class' => 'common.components.EAdvancedArBehavior'
         );
+        $behaviors['tags'] = array(
+            'class' => 'common.extensions.yiiext.behaviors.model.taggable.ETaggableBehavior',
+            // Table where tags are stored
+            'tagTable' => 'event_tag',
+            // Cross-table that stores tag-model connections.
+            // By default it's your_model_tableTag
+            'tagBindingTable' => 'event_has_tag',
+            // Foreign key in cross-table.
+            // By default it's your_model_tableId
+            'modelTableFk' => 'eventId',
+            // Tag table PK field
+            'tagTablePk' => 'id',
+            // Tag name field
+            'tagTableName' => 'name',
+            // Tag counter field
+            // if null (default) does not write tag counts to DB
+            'tagTableCount' => null,
+            // Tag binding table tag ID
+            'tagBindingTableTagId' => 'eventTagId',
+            // Caching component ID. If false don't use cache.
+            // Defaults to false.
+            'cacheID' => 'cache',
+
+            // Save nonexisting tags.
+            // When false, throws exception when saving nonexisting tag.
+            'createTagsAutomatically' => true,
+        );
+
         return $behaviors;
+    }
+
+    public function getTagsString()
+    {
+        return $this->tags->toString();
     }
 
     /**
@@ -124,6 +157,7 @@ class Event extends FrontendActiveRecord
             'pictureSmall' => 'Картинка-превью',
             'pictureBig' => 'Картинка полноразмерная',
             'pictures' => 'Галерея',
+            'tagsString' => 'Теги'
         );
     }
 

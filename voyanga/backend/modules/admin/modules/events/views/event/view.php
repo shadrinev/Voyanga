@@ -36,6 +36,7 @@ $this->beginWidget("AAdminPortlet", array(
 		'contact',
 		'statusName',
 		'preview',
+        'tagsString',
 		'description:raw',
         array(
             'name'=>'pictureSmall',
