@@ -139,4 +139,29 @@ class EventController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+    public function actionUploadToGallery($id, $qqfile)
+    {
+        $name = $qqfile;
+        $tempName= md5(time());
+        $dir = Yii::getPathOfAlias('application.runtime');
+        $fullTempName = $dir . DIRECTORY_SEPARATOR . $tempName;
+        $file = fopen($fullTempName,'w');
+        fwrite($file, $GLOBALS['HTTP_RAW_POST_DATA']);
+        fclose($file);
+        $type=mime_content_type($fullTempName);
+        $size=filesize($fullTempName);
+        $error=UPLOAD_ERR_OK;
+        $uploadedFile = new CUploadedFile($name, $fullTempName, $type, $size, $error);
+        $model = $this->loadModel($id);
+        $model->pictures = $uploadedFile;
+        if ($model->save()){
+            $result = array('success'=>true,'filename'=>$uploadedFile->name);
+        } else {
+            $result = array('error'=> 'Could not save uploaded file.' .
+                'The upload was cancelled, or server error encountered');
+        }
+        $result=htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+        echo $result;
+    }
 }

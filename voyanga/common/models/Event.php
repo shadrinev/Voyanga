@@ -123,6 +123,7 @@ class Event extends FrontendActiveRecord
             'categories' => 'Категории',
             'pictureSmall' => 'Картинка-превью',
             'pictureBig' => 'Картинка полноразмерная',
+            'pictures' => 'Галерея',
         );
     }
 

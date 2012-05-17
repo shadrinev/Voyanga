@@ -47,6 +47,11 @@ $this->beginWidget("AAdminPortlet", array(
             'value'=>isset($model->pictureBig) ? CHtml::image($model->pictureBig->url, $model->title) : '',
             'type'=>'raw'
         ),
+        array(
+            'name'=>'pictures',
+            'value'=>isset($model->pictures) ? $this->widget('common.widgets.Gallery',array('model'=>$model, 'attribute'=>'pictures'), true) : '',
+            'type'=>'raw'
+        ),
 	),
 )); ?>
 

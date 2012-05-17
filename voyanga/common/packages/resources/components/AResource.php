@@ -140,7 +140,10 @@ class AResource extends UserActiveRecord
     {
         if (is_object($this->_uploadedFile))
         {
-            $this->_uploadedFile->saveAs($this->fullPath);
+            if (!$this->_uploadedFile->saveAs($this->fullPath))
+            {
+                rename($this->_uploadedFile->tempName, $this->fullPath);
+            }
         }
         elseif ($this->_content !== null)
         {
