@@ -308,10 +308,10 @@ class SiteController extends Controller
             //}
             $passports[$i] = $modelPassport;
             //$forms['passport'.$i] = $form;
-            print_r($passportConfig);
+            //print_r($passportConfig);
             $form_passport = new EForm($passportConfig, $passports[$i], $mainForm['passports'], $i);
         }
-        print_r($configArray);
+        //print_r($configArray);
 
         /*foreach($passports as $fieldName=>$passport)
         {
@@ -329,7 +329,7 @@ class SiteController extends Controller
         else
         {
             $this->render('flightBooking', array(
-                'form' => $mainForm,
+                'form' => $bookForm->getForm(),
                 'flightStack' => null
             ));
         }

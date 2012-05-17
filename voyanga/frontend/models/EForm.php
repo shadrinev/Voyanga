@@ -70,7 +70,7 @@ class EForm extends CForm
             else
                 $element = $e;
         }
-        if ($element->getVisible())
+        if (true)
         {
             if ($element instanceof CFormInputElement)
             {
@@ -83,9 +83,13 @@ class EForm extends CForm
                 }
             }
             elseif ($element instanceof CFormButtonElement)
+            {
                 return $element->render() . "\n";
+            }
             else
+            {
                 return $element->render();
+            }
         }
         return '';
     }

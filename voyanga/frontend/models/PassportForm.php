@@ -16,6 +16,8 @@ class PassportForm extends CFormModel
     public $documentTypeId;
     public $countryId;
     public $genderId;
+    public $parameterName = 'Name Of Param';
+    public $parameterUnits = 'Unit';
 
     /**
      * Declares the validation rules.
@@ -55,38 +57,38 @@ class PassportForm extends CFormModel
     public function getForm($parent) {
         return new EForm(array(
             'elements' => array(
-                "[{$this->parameterId}]firstName"=>array(
+                "[{$this->id}]firstName"=>array(
                     'type'=>'text',
                     'label' => $this->parameterName,
                     'after' => $this->parameterUnits,
                     'maxlength'=>32,
                 ),
-                "[{$this->parameterId}]lastName"=>array(
+                "[{$this->id}]lastName"=>array(
                     'type'=>'text',
                     'maxlength'=>32,
                     'label' => $this->parameterName,
                     'after' => $this->parameterUnits,
                 ),
-                "[{$this->parameterId}]number"=>array(
+                "[{$this->id}]number"=>array(
                     'type'=>'text',
                     'maxlength'=>32,
                     'label' => $this->parameterName,
                     'after' => $this->parameterUnits,
                 ),
-                "[{$this->parameterId}]birthday"=>array(
+                "[{$this->id}]birthday"=>array(
                     'type'=>'text',
                     'maxlength'=>32,
                     'label' => $this->parameterName,
                     'after' => $this->parameterUnits,
                 ),
-                "[{$this->parameterId}]documentTypeId"=>array(
+                "[{$this->id}]documentTypeId"=>array(
                     'type'=>'dropdownlist',
                     'items'=>array(1=>'Пасспорт РФ',2=>'Загран паспорт', 3=>'св-во о рожд'),
                     'prompt'=>'Тип документа:',
                     'label' => $this->parameterName,
                     'after' => $this->parameterUnits,
                 ),
-                "[{$this->parameterId}]genderId"=>array(
+                "[{$this->id}]genderId"=>array(
                     'type'=>'dropdownlist',
                     'items'=>array(1=>'Мужской',2=>'Женский'),
                     'prompt'=>'Пол:',
@@ -95,6 +97,6 @@ class PassportForm extends CFormModel
                 ),
 
             )
-        ), $this, $parent, $this->parameterId);
+        ), $this, $parent, $this->id);
     }
 }

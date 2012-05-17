@@ -9,10 +9,7 @@ class BookingForm extends CFormModel
 {
     public $firstName;
     public $contactPhone;
-    public $passport0;
-    public $passport1;
-    public $passport2;
-    public $passports;
+    //public $passports;
 
     /**
      * Declares the validation rules.
@@ -23,9 +20,9 @@ class BookingForm extends CFormModel
             // first_name, last_name, number, birthday, document_type_id, gender_id are required
             array(
                 'contactPhone, firstName',
-                'required'),
-            array('passport0, passport1, passport2','safe')
-            );
+                'required',
+            ),
+        );
 
 
     }
@@ -50,6 +47,29 @@ class BookingForm extends CFormModel
     }
 
     public function getForm() {
+        $form = new EForm(require(Yii::getPathOfAlias('application.views.site.bookingForm').'.php'), $this);
+        $elements = $form->getElements();
+
+        $subForm = new EForm(array('elements' => array()), null, $form); // Sub-form to act as a container for the parameter forms.
+        $subForm->visible = true;
+        $subForm->title = 'Passports';// Title to make it a fieldset
+        $subFormElements = $subForm->getElements();
+
+        $passportForm = new PassportForm();
+        $passportForm->id = 1;
+        $ourForm = $passportForm->getForm($subForm);
+        $subFormElements->add('passport1', $ourForm);
+        $subFormElements->add('passport2', $ourForm);
+
+
+        //VarDumper::dump($elements);
+        $elements->add('passports', $subForm);
+        //VarDumper::dump($elements);
+
+        return $form;
+    }
+
+    /*public function getForm() {
         $form = new CForm($this->_form, $this);
         $elements = $form->getElements();
 
@@ -64,5 +84,5 @@ class BookingForm extends CFormModel
         $elements->add('passports', $subForm);
 
         return $form;
-    }
+    }*/
 }
