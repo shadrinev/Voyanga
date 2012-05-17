@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootActiveForm.php" afterPath="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootActiveForm.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/Event.php" afterPath="$PROJECT_DIR$/common/models/Event.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
@@ -36,7 +36,7 @@
       <file leaf-file-name="EventController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="22" selection-start="431" selection-end="431" vertical-scroll-proportion="0.0">
+            <state line="63" column="38" selection-start="1778" selection-end="1778" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -45,25 +45,34 @@
       <file leaf-file-name="Event.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/models/Event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="123" column="54" selection-start="3863" selection-end="3863" vertical-scroll-proportion="0.0">
+            <state line="81" column="26" selection-start="2189" selection-end="2189" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="_form.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="25" selection-start="1436" selection-end="1436" vertical-scroll-proportion="9.153846">
+            <state line="111" column="58" selection-start="3739" selection-end="3739" vertical-scroll-proportion="0.69822484">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BootActiveForm.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootActiveForm.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="317" column="46" selection-start="11036" selection-end="11036" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="10" selection-start="1197" selection-end="1197" vertical-scroll-proportion="0.9368542">
+            <state line="48" column="10" selection-start="1197" selection-end="1197" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -79,7 +88,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_view.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/admin.php" />
         <option value="$PROJECT_DIR$/common/widgets/treeLeafSelector/treeLeafSelector.php" />
         <option value="$PROJECT_DIR$/common/widgets/treeLeafSelector/TreeLeafSelector.php" />
@@ -91,10 +99,11 @@
         <option value="$PROJECT_DIR$/frontend/views/site/bookingForm.php" />
         <option value="$PROJECT_DIR$/frontend/models/EForm.php" />
         <option value="$PROJECT_DIR$/frontend/models/BookingForm.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
+        <option value="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootActiveForm.php" />
         <option value="$PROJECT_DIR$/common/models/Event.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
       </list>
     </option>
   </component>
@@ -394,6 +403,72 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bootstrap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bootstrap" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -722,7 +797,11 @@
       <created>1337254970165</created>
       <updated>1337254970165</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="work with bic picture">
+      <created>1337255367105</created>
+      <updated>1337255367105</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -787,7 +866,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="work with subforms" />
+    <option name="LAST_COMMIT_MESSAGE" value="work with bic picture" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -800,7 +879,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Yii-bootstrap included" />
     <MESSAGE value="start work on Yii-blocks user" />
     <MESSAGE value="stuff with user" />
     <MESSAGE value="rename" />
@@ -825,16 +903,12 @@
     <MESSAGE value="categories work" />
     <MESSAGE value="preview done" />
     <MESSAGE value="work with subforms" />
+    <MESSAGE value="work with bic picture" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/packages/users/widgets/AUserImageWidget.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="92" selection-start="1633" selection-end="1708" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/web/form/CFormInputElement.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="252" column="53" selection-start="9127" selection-end="9127" vertical-scroll-proportion="0.0">
@@ -912,30 +986,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Event.php">
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="54" selection-start="3863" selection-end="3863" vertical-scroll-proportion="0.0">
+        <state line="48" column="10" selection-start="1197" selection-end="1197" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="22" selection-start="431" selection-end="431" vertical-scroll-proportion="0.0">
+        <state line="63" column="38" selection-start="1778" selection-end="1778" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootActiveForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="317" column="46" selection-start="11036" selection-end="11036" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/models/Event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="26" selection-start="2189" selection-end="2189" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="25" selection-start="1436" selection-end="1436" vertical-scroll-proportion="9.153846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="10" selection-start="1197" selection-end="1197" vertical-scroll-proportion="0.9368542">
+        <state line="111" column="58" selection-start="3739" selection-end="3739" vertical-scroll-proportion="0.69822484">
           <folding />
         </state>
       </provider>

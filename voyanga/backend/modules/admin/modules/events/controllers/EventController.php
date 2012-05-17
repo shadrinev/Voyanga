@@ -25,20 +25,29 @@ class EventController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Event']))
-		{
-			$model->attributes=$_POST['Event'];
-            $categories = EventCategory::model()->findAllByPk($_POST['category']);
-            $model->categories = $categories;
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+		$this->createOrUpdate($model);
 
 		$this->render('create',array(
 			'model'=>$model,
             'attribute'=>'categories'
 		));
 	}
+
+    protected function createOrUpdate($model)
+    {
+        if(isset($_POST['Event']))
+        {
+            $model->attributes=$_POST['Event'];
+            $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
+            $model->categories = $categories;
+            if ($pictureSmall=CUploadedFile::getInstance($model, 'pictureSmall'))
+                $model->pictureSmall = $pictureSmall;
+            if ($pictureBig=CUploadedFile::getInstance($model, 'pictureBig'))
+                $model->pictureBig = $pictureBig;
+            if($model->save())
+                $this->redirect(array('view','id'=>$model->id));
+        }
+    }
 
 	/**
 	 * Updates a particular model.
@@ -52,18 +61,7 @@ class EventController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Event']))
-		{
-			$model->attributes=$_POST['Event'];
-            $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
-            $model->categories = $categories;
-            if ($pictureSmall=CUploadedFile::getInstance($model, 'pictureSmall'))
-                $model->pictureSmall = $pictureSmall;
-            if ($pictureBig=CUploadedFile::getInstance($model, 'pictureBig'))
-                $model->pictureBig = $pictureBig;
-            if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+        $this->createOrUpdate($model);
 
 		$this->render('update',array(
 			'model'=>$model,

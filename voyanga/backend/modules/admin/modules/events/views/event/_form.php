@@ -76,6 +76,8 @@
         )
     )); ?>
 
+    <?php echo $form->error($model, 'cityId'); ?>
+
 	<?php echo $form->textFieldRow($model,'address',array('class'=>'span5','maxlength'=>255)); ?>
 
 	<?php echo $form->textFieldRow($model,'contact',array('class'=>'span5','maxlength'=>255)); ?>
@@ -107,7 +109,7 @@
 			'label'=>$model->isNewRecord ? 'Добавить' : 'Сохранить',
 		)); ?>
         <?php $this->widget('bootstrap.widgets.BootButton', array(
-            'url'=>array('view','id'=>$model->id),
+            'url'=>$model->isNewRecord ? array('admin') : array('view','id'=>$model->id),
             'label'=>'Отмена',
         )); ?>
 	</div>

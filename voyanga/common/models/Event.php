@@ -79,6 +79,7 @@ class Event extends FrontendActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
+            array('title, cityId, startDate, endDate, status', 'required'),
             array('cityId, status', 'numerical', 'integerOnly'=>true),
             array('title, address, contact', 'length', 'max'=>255),
             array('startDate, endDate, preview, description', 'safe'),

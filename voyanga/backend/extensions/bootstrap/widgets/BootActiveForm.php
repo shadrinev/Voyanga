@@ -315,6 +315,7 @@ class BootActiveForm extends CActiveForm
             'value'=>$options['time']['htmlOptions']['value']
         ));
         echo '</div></div></div>';
+        echo $this->error($model, $attribute);
     }
 
 	/**
