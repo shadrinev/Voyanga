@@ -40,12 +40,12 @@ class EventController extends Controller
             $model->attributes=$_POST['Event'];
             $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
             $model->categories = $categories;
-            if ($pictureSmall=CUploadedFile::getInstance($model, 'pictureSmall'))
-                $model->pictureSmall = $pictureSmall;
-            if ($pictureBig=CUploadedFile::getInstance($model, 'pictureBig'))
-                $model->pictureBig = $pictureBig;
             if($model->save())
             {
+                if ($pictureSmall=CUploadedFile::getInstance($model, 'pictureSmall'))
+                    $model->pictureSmall = $pictureSmall;
+                if ($pictureBig=CUploadedFile::getInstance($model, 'pictureBig'))
+                    $model->pictureBig = $pictureBig;
                 $model->setTags($_POST['Event']['tagsString'])->save();
                 $this->redirect(array('view','id'=>$model->id));
             }

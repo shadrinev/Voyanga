@@ -50,7 +50,7 @@ $this->beginWidget("AAdminPortlet", array(
         ),
         array(
             'name'=>'pictures',
-            'value'=>isset($model->pictures) ? $this->widget('common.widgets.Gallery',array('model'=>$model, 'attribute'=>'pictures'), true) : '',
+            'value'=>!empty($model->pictures)  ? $this->widget('common.widgets.Gallery',array('model'=>$model, 'attribute'=>'pictures'), true) : '',
             'type'=>'raw'
         ),
 	),
