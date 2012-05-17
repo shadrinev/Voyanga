@@ -14,15 +14,16 @@ class Gallery extends CWidget
     public function run()
     {
         $items = array();
+        $i = 1;
         foreach ($this->model->{$this->attribute} as $picture)
         {
             $item = array(
                 'image' => $picture->url,
-                'label' => $picture->name
+                'label' => '#'.$i++.' '.$picture->name
             );
             $items[] = $item;
         }
-        $this->widget('bootstrap.widgets.BootCarousel', array('items'=>$items));
+        $this->widget('bootstrap.widgets.BootCarousel', array('items'=>$items,'options'=>array('interval'=>false)));
     }
 
 }
