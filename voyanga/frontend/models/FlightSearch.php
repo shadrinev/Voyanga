@@ -35,11 +35,24 @@ class FlightSearch extends CActiveRecord {
                 $this->_aRoutes = $oFlightSearchParams->routes;
                 $this->flight_class = $oFlightSearchParams->flight_class;
                 $this->key = $oFlightSearchParams->key;
-                
+
+                if($fs = Yii::app()->cache->get('flightSearch'.$this->key)){
+                    $this->_aRoutes = $fs->_aRoutes;
+                    $this->flight_class = $fs->flight_class;
+                    $this->key = $fs->key;
+                    $this->id = $fs->id;
+                    $this->timestamp = $fs->timestamp;
+                    $this->data = $fs->data;
+                    $this->requestId = $fs->requestId;
+                    $this->oFlightVoyageStack = $fs->oFlightVoyageStack;
+                    $this->status = $fs->status;
+
+                    return;
+                }
                 $timestamp = date( 'Y-m-d H:i:s', time() - Yii::app()->params['fligh_search_cache_time'] );
-                $sameFlightSearch = FlightSearch::model()->find( '`key`=:KEY AND timestamp>=:TIMESTAMP AND status=1', array(
-                        ':KEY' => $this->key, 
-                        ':TIMESTAMP' => $timestamp ) );
+                //$sameFlightSearch = FlightSearch::model()->find( '`key`=:KEY AND timestamp>=:TIMESTAMP AND status=1', array(
+                //        ':KEY' => $this->key,
+                //        ':TIMESTAMP' => $timestamp ) );
                 $sameFlightSearch = false;
                 
                 if ( $sameFlightSearch ) {
@@ -62,7 +75,8 @@ class FlightSearch extends CActiveRecord {
                         $oFlightVoyageStack = new FlightVoyageStack( $aParamsFS );
                         
                         $this->oFlightVoyageStack = $oFlightVoyageStack;
-                        
+                        Yii::app()->cache->set('flightSearch'.$this->key,$this,Yii::app()->params['fligh_search_cache_time']);
+
                         $this->status = 1;
                         $this->data = json_encode($this->oFlightVoyageStack);
                         $this->requestId = '1';

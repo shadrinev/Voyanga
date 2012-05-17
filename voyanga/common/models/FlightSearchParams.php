@@ -57,7 +57,13 @@ class FlightSearchParams {
     
     public function __get( $name ) {
         if ( $name === 'key' ) {
-            $sKey = $this->flight_class . json_encode( $this->routes );
+            $attributes = array();
+            foreach($this->routes as $route)
+            {
+                $attributes[] = $route->attributes;
+            }
+
+            $sKey = $this->flight_class . json_encode( $attributes );
             return md5( $sKey );
         } else {
             return $this->$name;

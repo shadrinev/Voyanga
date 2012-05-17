@@ -6,9 +6,7 @@ class EFlightVoageStackWidget extends CWidget
 	public $viewName;
 	
 	public function init(){
-		//echo "init my widget";
-		//$this->data = 'JJJ';
-		//$this->FlightVoyageStrategy = 'zz nazad z';
+
 	}
 	
 	
@@ -17,6 +15,6 @@ class EFlightVoageStackWidget extends CWidget
 		if(!$this->viewName){
 			$this->viewName = 'kg_am';
 		}
-		$this->render($this->viewName);
+		$this->render($this->viewName,array('flightSearchKey'=>$this->flightSearchKey));
 	}
 }

@@ -222,6 +222,7 @@ class SiteController extends Controller
                 'arrival_city_id' => $model->arrivalCityId,
                 'departure_date' => $model->departureDate
             ));
+
             $form->attributes = $model->attributes;
             /*$flightSearchParams->addRoute(array(
                 'adult_count' => 1,
@@ -237,6 +238,7 @@ class SiteController extends Controller
             $fs->status = 1;
             $fs->requestId = '1';
             $fs->data = '{}';
+            //echo $flightSearchParams->key;
             $fs->sendRequest($flightSearchParams);
 
             //$aFlights = $nemo->FlightSearch($flightSearchParams);
@@ -249,6 +251,7 @@ class SiteController extends Controller
             $this->render('flightResult', array(
                 'form' => $form,
                 'message' => 'all right',
+                'flightSearchKey' => $fs->key,
                 'flightStack' => $fs->oFlightVoyageStack
             ));
         } else
@@ -261,6 +264,77 @@ class SiteController extends Controller
                 'flightStack' => null
             ));
         }
+    }
+
+    public function actionFlightBooking($fskey,$id)
+    {
+        $fs = Yii::app()->cache->get('flightSearch'.$fskey);
+        echo "FlightBooking key:{$fskey}";
+
+        $flightVoyage = $fs->oFlightVoyageStack->getFlightById($id);
+
+        $route = $fs->aRoutes[0];
+        $countPassengers = $route->adultCount + $route->childCount + $route->infantCount;
+        $passports = array();
+        $forms = array();
+
+
+
+
+
+        $bookForm = new BookingForm();
+        $configArray = require(Yii::getPathOfAlias('application.views.site.bookingForm').'.php');
+        $passportArray = require(Yii::getPathOfAlias('application.views.site.passportForm').'.php');
+        $configArray['elements']['passports'] = array('type'=>'form','elements'=>array());
+        $mainForm = new EForm($configArray,$bookForm);
+
+        for($i=0;$i<$countPassengers;$i++)
+        {
+            $modelPassport = new PassportForm();
+            $passportConfig = array();
+            $passportConfig['elements'] = array();
+            $passportConfig['title'] = 'subform'.$i;
+            foreach($passportArray['elements'] as $elementName=>$elementOptions)
+            {
+                $passportConfig['elements']["[{$i}]$elementName"] = $elementOptions;
+                //$configArray['elements']['passport'.$i]['elements'][$elementName]['name'] = 'p'.$i.'['.$elementName.']';
+            }
+            //$form = new EForm('application.views.site.passportForm', $model);
+            //$configArray['elements']['passports'] = array('type'=>'form','elements'=>$passportArray['elements']);
+            //foreach($passportArray['elements'] as $elementName=>$elementOptions)
+            //{
+            //    $configArray['elements']['passport'.$i]['elements'][$elementName] = $elementOptions;
+            //    $configArray['elements']['passport'.$i]['elements'][$elementName]['name'] = 'p'.$i.'['.$elementName.']';
+            //}
+            $passports[$i] = $modelPassport;
+            //$forms['passport'.$i] = $form;
+            print_r($passportConfig);
+            $form_passport = new EForm($passportConfig, $passports[$i], $mainForm['passports'], $i);
+        }
+        print_r($configArray);
+
+        /*foreach($passports as $fieldName=>$passport)
+        {
+            $mainForm['passports']->models = $passport;
+        }*/
+        //$mainForm['passports'][0]->model = $passports['passport0'];
+        //$mainForm['passports'][1]->model = $passports['passport0'];
+        //$mainForm['passports'][2]->model = $passports['passport0'];
+        /**/
+        //$mainForm[$passports]->models = $passports;
+        if ($mainForm->submitted('smb') && $mainForm->validate())
+        {
+
+        }
+        else
+        {
+            $this->render('flightBooking', array(
+                'form' => $mainForm,
+                'flightStack' => null
+            ));
+        }
+
+
     }
 
     public function actionDictionary()

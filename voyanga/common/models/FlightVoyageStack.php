@@ -127,6 +127,16 @@ class FlightVoyageStack
         $this->bestMask |= $oFlightVoyage->bestMask;
     }
 
+    public function getFlightById($id)
+    {
+        foreach($this->flightVoyages as $flightVoyage){
+            if($flightVoyage->flightKey == $id){
+                return $flightVoyage;
+            }
+        }
+        return false;
+    }
+
     public function setAttributes($values)
     {
         foreach ($values as $name => $value)

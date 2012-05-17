@@ -9,6 +9,7 @@ if($flightStack)
     $stack->attachBehavior('price',array(
         'class'=>'ext.FlightStackStrategyPrice',
         'sortKey'=>'price',
+        'flightSearchKey'=>$flightSearchKey
     ));
     $stack->setFlightStack($flightStack);
     $this->endWidget();

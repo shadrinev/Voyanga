@@ -7,6 +7,7 @@
 	<div class="ticket">
 	    Цена билета: <?php echo $oFlightVoyage['value']->price;?>
 	    ID:<?php echo $oFlightVoyage['value']->flightKey;?>
+        <a href="/site/flightbooking/fskey/<?php echo $flightSearchKey;?>/id/<?php echo $oFlightVoyage['value']->flightKey;?>">выбрать</a>
 	    <?php foreach ($oFlightVoyage['value']->flights as $flight):?>
 	    	<div class="route">
                 <?php $flightPart = each($flight->flightParts);?>

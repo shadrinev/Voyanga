@@ -3,11 +3,11 @@ return array(
     'title'=>'Пожалуйста, представьтесь',
  
     'elements'=>array(
-        'first_name'=>array(
+        'firstName'=>array(
             'type'=>'text',
             'maxlength'=>32,
         ),
-        'last_name'=>array(
+        'lastName'=>array(
             'type'=>'text',
             'maxlength'=>32,
         ),
@@ -19,12 +19,12 @@ return array(
             'type'=>'text',
             'maxlength'=>32,
         ),
-        'document_type_id'=>array(
+        'documentTypeId'=>array(
             'type'=>'dropdownlist',
             'items'=>array(1=>'Пасспорт РФ',2=>'Загран паспорт', 3=>'св-во о рожд'),
     		'prompt'=>'Тип документа:',
         ),
-        'gender_id'=>array(
+        'genderId'=>array(
             'type'=>'dropdownlist',
             'items'=>array(1=>'Мужской',2=>'Женский'),
     		'prompt'=>'Пол:',

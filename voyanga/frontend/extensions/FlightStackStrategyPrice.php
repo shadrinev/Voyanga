@@ -2,7 +2,7 @@
 class FlightStackStrategyPrice extends CBehavior
 {
 	public $sortKey;
-
+    public $flightSearchKey;
 	public function setFlightStack($oFlightVoyageStack){
 		if($oFlightVoyageStack instanceof FlightVoyageStack){
 			$this->owner->data = $oFlightVoyageStack->groupBy($this->sortKey);
