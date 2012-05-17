@@ -37,13 +37,17 @@ class TreeLeafSelector extends CWidget
 
             $id = 0;
             $tmp = $root->title;
+            if ($root->isLeaf())
+            {
+                $this->_elements[$root->id] = $tmp;
+                continue;
+            }
             foreach ($this->_tree[$root->id] as $children)
             {
                 $tmp .= ' -> ' . $children->title;
                 $id = $children->id;
                 if ($children->isLeaf())
                 {
-                    $this->_elements[$id] = $tmp;
                     $this->_elements[$id] = $tmp;
                     $tmp = $root->title;
                 }
