@@ -9,7 +9,7 @@ class BookingForm extends CFormModel
 {
     public $firstName;
     public $contactPhone;
-    //public $passports;
+    public $passports;
 
     /**
      * Declares the validation rules.
@@ -19,7 +19,7 @@ class BookingForm extends CFormModel
         return array(
             // first_name, last_name, number, birthday, document_type_id, gender_id are required
             array(
-                'contactPhone, firstName',
+                'contactPhone, firstName, passports',
                 'required',
             ),
         );
@@ -55,16 +55,15 @@ class BookingForm extends CFormModel
         $subForm->title = 'Passports';// Title to make it a fieldset
         $subFormElements = $subForm->getElements();
 
-        $passportForm = new PassportForm();
-        $passportForm->id = 1;
-        $ourForm = $passportForm->getForm($subForm);
-        $subFormElements->add('passport1', $ourForm);
-        $subFormElements->add('passport2', $ourForm);
+        if($this->passports)
+        {
+            foreach ($this->passports as $parameterId => $parameter)
+            {
+                $subFormElements->add($parameterId, $parameter->getForm($subForm));
+            }
+        }
 
-
-        //VarDumper::dump($elements);
         $elements->add('passports', $subForm);
-        //VarDumper::dump($elements);
 
         return $form;
     }

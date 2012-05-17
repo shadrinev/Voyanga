@@ -276,52 +276,22 @@ class SiteController extends Controller
         $route = $fs->aRoutes[0];
         $countPassengers = $route->adultCount + $route->childCount + $route->infantCount;
         $passports = array();
-        $forms = array();
-
-
-
-
 
         $bookForm = new BookingForm();
         $configArray = require(Yii::getPathOfAlias('application.views.site.bookingForm').'.php');
-        $passportArray = require(Yii::getPathOfAlias('application.views.site.passportForm').'.php');
+
         $configArray['elements']['passports'] = array('type'=>'form','elements'=>array());
         $mainForm = new EForm($configArray,$bookForm);
 
         for($i=0;$i<$countPassengers;$i++)
         {
             $modelPassport = new PassportForm();
-            $passportConfig = array();
-            $passportConfig['elements'] = array();
-            $passportConfig['title'] = 'subform'.$i;
-            foreach($passportArray['elements'] as $elementName=>$elementOptions)
-            {
-                $passportConfig['elements']["[{$i}]$elementName"] = $elementOptions;
-                //$configArray['elements']['passport'.$i]['elements'][$elementName]['name'] = 'p'.$i.'['.$elementName.']';
-            }
-            //$form = new EForm('application.views.site.passportForm', $model);
-            //$configArray['elements']['passports'] = array('type'=>'form','elements'=>$passportArray['elements']);
-            //foreach($passportArray['elements'] as $elementName=>$elementOptions)
-            //{
-            //    $configArray['elements']['passport'.$i]['elements'][$elementName] = $elementOptions;
-            //    $configArray['elements']['passport'.$i]['elements'][$elementName]['name'] = 'p'.$i.'['.$elementName.']';
-            //}
-            $passports[$i] = $modelPassport;
-            //$forms['passport'.$i] = $form;
-            //print_r($passportConfig);
-            $form_passport = new EForm($passportConfig, $passports[$i], $mainForm['passports'], $i);
-        }
-        //print_r($configArray);
+            $modelPassport->id = $i;
+            $passports['passport'.$i] = $modelPassport;
 
-        /*foreach($passports as $fieldName=>$passport)
-        {
-            $mainForm['passports']->models = $passport;
-        }*/
-        //$mainForm['passports'][0]->model = $passports['passport0'];
-        //$mainForm['passports'][1]->model = $passports['passport0'];
-        //$mainForm['passports'][2]->model = $passports['passport0'];
-        /**/
-        //$mainForm[$passports]->models = $passports;
+        }
+        $bookForm->passports = $passports;
+
         if ($mainForm->submitted('smb') && $mainForm->validate())
         {
 

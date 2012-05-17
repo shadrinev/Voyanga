@@ -94,6 +94,12 @@ class EForm extends CForm
         return '';
     }
 
+    public function setFormElement()
+    {
+        $collection=$this->getElements();
+
+    }
+
     public function isAttributeRequired($attribute) {
         return parent::isAttributeRequired(preg_replace('/(\[\w+\])?(\w+)/', '$2', $attribute));
     }

@@ -44,8 +44,8 @@ class PassportForm extends CFormModel
     {
         return array(
             'verifyCode' => 'Verification Code',
-            'first_name' => 'Имя',
-            'last_name' => 'Фамилия',
+            'firstName' => 'Имя',
+            'lastName' => 'Фамилия',
             'number' => 'Номер документа',
             'birthday' => 'Дата рождения',
             'document_type_id' => 'Тип документа',
@@ -59,40 +59,40 @@ class PassportForm extends CFormModel
             'elements' => array(
                 "[{$this->id}]firstName"=>array(
                     'type'=>'text',
-                    'label' => $this->parameterName,
+                    'label' => 'Имя',
                     'after' => $this->parameterUnits,
                     'maxlength'=>32,
                 ),
                 "[{$this->id}]lastName"=>array(
                     'type'=>'text',
                     'maxlength'=>32,
-                    'label' => $this->parameterName,
+                    'label' => 'Фамилия',
                     'after' => $this->parameterUnits,
                 ),
                 "[{$this->id}]number"=>array(
                     'type'=>'text',
                     'maxlength'=>32,
-                    'label' => $this->parameterName,
+                    'label' => 'Номер документа',
                     'after' => $this->parameterUnits,
                 ),
                 "[{$this->id}]birthday"=>array(
                     'type'=>'text',
                     'maxlength'=>32,
-                    'label' => $this->parameterName,
+                    'label' => 'Дата рождения',
                     'after' => $this->parameterUnits,
                 ),
                 "[{$this->id}]documentTypeId"=>array(
                     'type'=>'dropdownlist',
                     'items'=>array(1=>'Пасспорт РФ',2=>'Загран паспорт', 3=>'св-во о рожд'),
                     'prompt'=>'Тип документа:',
-                    'label' => $this->parameterName,
+                    'label' => 'Тип документа',
                     'after' => $this->parameterUnits,
                 ),
                 "[{$this->id}]genderId"=>array(
                     'type'=>'dropdownlist',
                     'items'=>array(1=>'Мужской',2=>'Женский'),
                     'prompt'=>'Пол:',
-                    'label' => $this->parameterName,
+                    'label' => 'Пол',
                     'after' => $this->parameterUnits,
                 ),
 
