@@ -18,7 +18,7 @@ $this->beginWidget("AAdminPortlet", array(
 <?php $this->widget('bootstrap.widgets.BootGridView',array(
 	'id'=>'event-grid',
 	'dataProvider'=>$model->search(),
-	'filter'=>$model,
+	//'filter'=>$model,
 	'columns'=>array(
 		'startDate',
 		'endDate',

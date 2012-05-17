@@ -20,6 +20,7 @@ class EventController extends Controller
 	public function actionCreate()
 	{
 		$model=new Event;
+        $eventCategory = new EventCategory;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -27,12 +28,15 @@ class EventController extends Controller
 		if(isset($_POST['Event']))
 		{
 			$model->attributes=$_POST['Event'];
+            $categories = EventCategory::model()->findAllByPk($_POST['category']);
+            $model->categories = $categories;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+            'attribute'=>'categories'
 		));
 	}
 
@@ -51,7 +55,9 @@ class EventController extends Controller
 		if(isset($_POST['Event']))
 		{
 			$model->attributes=$_POST['Event'];
-			if($model->save())
+            $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
+            $model->categories = $categories;
+            if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 

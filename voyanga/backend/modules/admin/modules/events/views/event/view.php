@@ -4,16 +4,22 @@ $this->breadcrumbs=array(
 	$model->title,
 );
 
-$this->menu=array(
-	array('label'=>'List Event','url'=>array('index')),
-	array('label'=>'Create Event','url'=>array('create')),
-	array('label'=>'Update Event','url'=>array('update','id'=>$model->id)),
-	array('label'=>'Delete Event','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Event','url'=>array('admin')),
-);
+$this->beginWidget("AAdminPortlet", array(
+    "menuItems" => array(
+        array(
+            "label" => "Создать",
+            "url" => array("create"),
+        ),
+    ),
+    "sidebarMenuItems" => array(
+        array(
+            "label" => "Редактировать",
+            "url" => array("update", 'id'=>$model->id),
+        ),
+    ),
+    "title" => "Просмотр события \"".$model->title."\""
+));
 ?>
-
-<h1>View Event #<?php echo $model->id; ?></h1>
 
 <?php $this->widget('bootstrap.widgets.BootDetailView',array(
 	'data'=>$model,
@@ -21,11 +27,17 @@ $this->menu=array(
 		'id',
 		'startDate',
 		'endDate',
-		'cityId',
+        'title',
+		array(
+            'label' =>'Город',
+            'value'=>$model->city->localRu
+        ),
 		'address',
 		'contact',
-		'status',
+		'statusName',
 		'preview',
-		'description',
+		'description:raw',
 	),
 )); ?>
+
+<?php $this->endWidget(); ?>

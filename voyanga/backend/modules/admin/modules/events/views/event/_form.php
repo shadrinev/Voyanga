@@ -43,6 +43,13 @@
 
     <?php echo $form->textFieldRow($model,'title',array('class'=>'span5')); ?>
 
+    <?php echo $form->labelEx($model,'categories'); ?>
+    <?php $this->widget('common.widgets.treeLeafSelector.treeLeafSelector', array(
+        'model'=>$model,
+        'attribute'=>'categories',
+        'form' => $form
+    )); ?>
+
 	<?php echo $form->hiddenField($model,'cityId'); ?>
 
     <?php echo $form->labelEx($model,'cityId'); ?>
@@ -70,8 +77,6 @@
 
 	<?php echo $form->textFieldRow($model,'contact',array('class'=>'span5','maxlength'=>255)); ?>
 
-	<?php echo $form->textFieldRow($model,'status',array('class'=>'span5')); ?>
-
 	<?php echo $form->textAreaRow($model,'preview',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 
     <?php $this->widget('site.common.widgets.imperaviRedactor.EImperaviRedactorWidget',array(
@@ -86,13 +91,22 @@
     ));
     ?>
 
+    <?php echo $form->dropDownListRow($model,'status',$model->getPossibleStatus(),array('class'=>'span5')); ?>
+
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.BootButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Добавить' : 'Сохранить',
 		)); ?>
+        <?php $this->widget('bootstrap.widgets.BootButton', array(
+            'url'=>array('view','id'=>$model->id),
+            'label'=>'Отмена',
+        )); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
-<?php Yii::app()->clientScript->registerScript('focus','setTimeout(function(){$("#Event_startDate_date").focus();$("#Event_startDate_date").focus()}, 300)', CClientScript::POS_READY); ?>
+<?php
+    if ($model->isNewRecord)
+        Yii::app()->clientScript->registerScript('focus','setTimeout(function(){$("#Event_startDate_date").focus();}, 300)', CClientScript::POS_READY);
+?>

@@ -22,6 +22,9 @@
  */
 class Event extends FrontendActiveRecord
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+
     /**
      * The behaviors associated with the user model.
      * @see CActiveRecord::behaviors()
@@ -43,6 +46,9 @@ class Event extends FrontendActiveRecord
                     'multiple' => true
                 ),
             )
+        );
+        $behaviors['EAdvancedArBehavior'] = array(
+            'class' => 'common.components.EAdvancedArBehavior'
         );
         return $behaviors;
     }
@@ -109,9 +115,11 @@ class Event extends FrontendActiveRecord
             'address' => 'Адрес',
             'contact' => 'Контакты',
             'status' => 'Статус',
+            'statusName' => 'Статус',
             'preview' => 'Анонс',
             'description' => 'Описание',
             'title' => 'Название',
+            'categories' => 'Категории'
         );
     }
 
@@ -139,5 +147,21 @@ class Event extends FrontendActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function getPossibleStatus()
+    {
+        return array(
+            self::STATUS_INACTIVE => 'Не активно',
+            self::STATUS_ACTIVE => 'Активно',
+        );
+    }
+
+    public function getStatusName()
+    {
+        $statuses = $this->getPossibleStatus();
+        if (isset($statuses[$this->status]))
+            return $statuses[$this->status];
+        throw new Exception('No such status for event');
     }
 }

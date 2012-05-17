@@ -13,7 +13,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('cityId')); ?>:</b>
-	<?php echo CHtml::encode($data->cityId); ?>
+	<?php echo CHtml::encode($data->city->localRu); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('address')); ?>:</b>
