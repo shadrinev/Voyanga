@@ -120,7 +120,8 @@ class Event extends FrontendActiveRecord
             'description' => 'Описание',
             'title' => 'Название',
             'categories' => 'Категории',
-            'pictureSmall' => 'Картинка-превью'
+            'pictureSmall' => 'Картинка-превью',
+            'pictureBig' => 'Картинка полноразмерная',
         );
     }
 

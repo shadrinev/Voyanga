@@ -47,7 +47,7 @@
     <?php echo $form->textFieldRow($model,'title',array('class'=>'span5')); ?>
 
     <?php echo $form->labelEx($model,'categories'); ?>
-    <?php $this->widget('common.widgets.treeLeafSelector.treeLeafSelector', array(
+    <?php $this->widget('common.widgets.treeLeafSelector.TreeLeafSelector', array(
         'model'=>$model,
         'attribute'=>'categories',
         'form' => $form
@@ -95,6 +95,8 @@
     ?>
 
     <?php echo $form->fileFieldRow($model,'pictureSmall',array('class'=>'span5')); ?>
+
+    <?php echo $form->fileFieldRow($model,'pictureBig',array('class'=>'span5')); ?>
 
     <?php echo $form->dropDownListRow($model,'status',$model->getPossibleStatus(),array('class'=>'span5')); ?>
 
