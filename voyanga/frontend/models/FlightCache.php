@@ -135,27 +135,27 @@ class FlightCache extends CActiveRecord {
                 'infantCount' => $oFlightVoyageStack->infant_count,
                 'flightSearchId' => $oFlightVoyageStack->flight_search_id
         );
-        echo "Try save all cache data";
+        //echo "Try save all cache data";
         if ( $oFlightVoyageStack->iBestPriceInd !== false ) {
-            echo "Best price ind: {$oFlightVoyageStack->iBestPriceInd}";
+            //echo "Best price ind: {$oFlightVoyageStack->iBestPriceInd}";
             //print_r($oFlightVoyageStack);
             //saving to cache FlightVoyage with best price
-            try {echo "innnn";
+            try {//echo "innnn";
                 $oFlightCache = new FlightCache();
                 $oFlightCache->setAttributes($attributes, false);
                 $oFlightCache->setFromFlightVoyage($oFlightVoyageStack->flightVoyages[$oFlightVoyageStack->iBestPriceInd]);
                 $oFlightCache->cacheType = 1;
                 //echo "Try save ".print_r($oFlightCache,true);
                 $oFlightCache->validate();
-                echo CHtml::errorSummary($oFlightCache);
+                //echo CHtml::errorSummary($oFlightCache);
                 $oFlightCache->save();
-            } catch (Exception $e) {echo "innnn333".$e->getMessage();
+            } catch (Exception $e) {//echo "innnn333".$e->getMessage();
                 new CException( Yii::t( 'application', 'Cant save FlightCache with best price: '.$e->getMessage() ) );
             }
             
         } elseif( ($oFlightVoyageStack->iBestTimeInd !== false) && ($oFlightVoyageStack->iBestTimeInd !== $oFlightVoyageStack->iBestPriceInd) ) {
             //saving to cache FlightVoyage with best time
-            echo "Best time ind: {$oFlightVoyageStack->iBestTimeInd}";
+            //echo "Best time ind: {$oFlightVoyageStack->iBestTimeInd}";
             try {
                 $oFlightCache = new FlightCache();
                 $oFlightCache->setAttributes($attributes,false);

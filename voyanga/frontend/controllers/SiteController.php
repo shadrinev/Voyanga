@@ -384,4 +384,24 @@ class SiteController extends Controller
 		$result = count($aJData);
 		$this->render('dictionary',array('results'=>$result));*/
     }
+
+    public function actionGetOptimalPrice($from, $to, $dateStart, $dateEnd)
+    {
+        $dateStart = date('d.m.Y', strtotime($dateStart)-24*3600);
+        $priceTo = MFlightSearch::getOptimalPrice($from, $to, $dateStart);
+
+        $dateEnd = date('d.m.Y', strtotime($dateEnd)+24*3600);
+        $priceBack = MFlightSearch::getOptimalPrice($to, $from, $dateEnd);
+
+        $priceToBack = MFlightSearch::getOptimalPrice($from, $to, $dateStart, $dateEnd);
+        header('Content-type: application/json');
+        if ($_GET['callback']) {
+            print $_GET['callback']."(";
+        }
+        echo json_encode(array('priceTo'=>$priceTo, 'priceBack'=>$priceBack, 'priceToBack'=>$priceToBack));
+        if ($_GET['callback']) {
+            print ")";
+        }
+        die();
+    }
 }

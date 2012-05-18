@@ -147,7 +147,7 @@ class GDSNemo extends CComponent
 
         //real request
 
-        $soapResponse = self::request('Search', $params, $bCache = TRUE, $iExpiration = 3000);
+        $soapResponse = self::request('Search', $params, $bCache = false, $iExpiration = 3000);
 
         //return;
 
@@ -439,7 +439,7 @@ class GDSNemo extends CComponent
         {
             throw new CException(Yii::t('application', 'Data in parameter oFlightBookingParams not valid'));
         }
-        print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
+        //print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
     }
 
     public function FlightTariffRules()
@@ -455,7 +455,7 @@ class GDSNemo extends CComponent
             )
         );
 
-        print_r(self::request('GetAirRules', $aParams, $bCache = FALSE, $iExpiration = 0));
+        //print_r(self::request('GetAirRules', $aParams, $bCache = FALSE, $iExpiration = 0));
     }
 
     public function checkFlight()
@@ -474,7 +474,7 @@ class GDSNemo extends CComponent
             )
         );
 
-        print_r(self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0));
+        //print_r(self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0));
     }
 
     public function FlightTicketing()
@@ -491,7 +491,7 @@ class GDSNemo extends CComponent
             )
         );
 
-        print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
+        //print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
 
     }
 
@@ -511,7 +511,7 @@ class GDSNemo extends CComponent
             )
         );
 
-        print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
+        //print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
     }
 }
 

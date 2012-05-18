@@ -138,10 +138,32 @@
             'url'=>$model->isNewRecord ? array('admin') : array('view','id'=>$model->id),
             'label'=>'Отмена',
         )); ?>
+        <?php $this->widget('bootstrap.widgets.BootButton', array(
+        'buttonType'=>'submit',
+        'type'=>'mini',
+        'label'=>'Запросить цену',
+        'htmlOptions'=>array('id'=>'getPrice'),
+        'loadingText'=>'Запрос цены...',
+    )); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
 <?php
     if ($model->isNewRecord)
         Yii::app()->clientScript->registerScript('focus','setTimeout(function(){$("#Event_startDate_date").focus();}, 300)', CClientScript::POS_READY);
+    Yii::app()->clientScript->registerScript('getPrice','
+    $("#getPrice").on("click",function(){
+        var btn = $(this),
+            from = 4466,
+            to = $("#Event_cityId").val(),
+            dateStart = $("#Event_startDate_date").val(),
+            dateEnd = $("#Event_endDate_date").val();
+            btn.button("loading");
+        $.getJSON("http://frontend.misha.voyanga/site/GetOptimalPrice/from/"+from+"/to/"+to+"/dateStart/"+dateStart+"/dateEnd/"+dateEnd+"?callback=?",function(data){
+            console.log(data);
+            btn.button("reset");
+        });
+        return false;
+    });
+    ', CClientScript::POS_READY);
 ?>

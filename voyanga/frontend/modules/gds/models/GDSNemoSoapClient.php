@@ -10,11 +10,11 @@ class GDSNemoSoapClient extends SoapClient
 
     public function __doRequest($request, $location, $action, $version, $oneWay = 0)
     {
-        echo $action;
+        //echo $action;
 
         if ( strpos($action,'Search11') !== FALSE )
         {
-            echo $action.'||||';
+            //echo $action.'||||';
             $request = '<?xml version="1.0" encoding="UTF-8"?>
 <env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
   <env:Body>

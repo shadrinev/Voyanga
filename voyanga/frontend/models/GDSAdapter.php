@@ -7,6 +7,11 @@
  */
 class GDSAdapter extends CApplicationComponent
 {
+    public function init()
+    {
+        Yii::import('frontend.modules.gds.models.*');
+    }
+
     public function flightSearch($flightSearchParams)
     {
         $nemo = new GDSNemo();

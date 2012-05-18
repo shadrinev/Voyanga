@@ -113,6 +113,7 @@ class Event extends FrontendActiveRecord
         // will receive user inputs.
         return array(
             array('links','checkLinks'),
+            array('startDate','checkDates'),
             array('title, cityId, startDate, endDate, status', 'required'),
             array('cityId, status', 'numerical', 'integerOnly'=>true),
             array('title, address, contact', 'length', 'max'=>255),
@@ -121,6 +122,12 @@ class Event extends FrontendActiveRecord
             // Please remove those attributes that should not be searched.
             array('id, startDate, endDate, cityId, address, contact, status, preview, description', 'safe', 'on'=>'search'),
         );
+    }
+
+    public function checkDates()
+    {
+        if (strtotime($this->startDate)>=strtotime($this->endDate))
+            $this->addError('startDate', 'Дата начала события позже чем дата его завершения. Проверьте даты события.');
     }
 
     public function checkLinks($attribute)
