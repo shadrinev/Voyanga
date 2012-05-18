@@ -213,6 +213,7 @@ class SiteController extends Controller
             Yii::import('application.modules.gds.models.*');
             $nemo = new GDSNemo();
             $flightSearchParams = new FlightSearchParams();
+
             $flightSearchParams->addRoute(array(
                 'adult_count' => $model->adultCount,
                 'child_count' => $model->childCount,
@@ -222,6 +223,18 @@ class SiteController extends Controller
                 'arrival_city_id' => $model->arrivalCityId,
                 'departure_date' => $model->departureDate
             ));
+            if($model->returnDate)
+            {
+                $flightSearchParams->addRoute(array(
+                    'adult_count' => $model->adultCount,
+                    'child_count' => $model->childCount,
+                    'infant_count' => $model->infantCount,
+                    'departure_city_id' => $model->arrivalCityId,
+                    //'arrival_city_id' => 3654,
+                    'arrival_city_id' => $model->departureCityId,
+                    'departure_date' => $model->returnDate
+                ));
+            }
 
             $form->attributes = $model->attributes;
             /*$flightSearchParams->addRoute(array(

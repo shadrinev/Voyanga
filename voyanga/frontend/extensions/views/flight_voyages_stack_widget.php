@@ -10,7 +10,7 @@
         <a href="/site/flightbooking/fskey/<?php echo $flightSearchKey;?>/id/<?php echo $oFlightVoyage['value']->flightKey;?>">выбрать</a>
 	    <?php foreach ($oFlightVoyage['value']->flights as $flight):?>
 	    	<div class="route">
-                <?php $flightPart = each($flight->flightParts);?>
+                <?php reset($flight->flightParts);$flightPart = each($flight->flightParts);?>
                 <div class="route-point">
 	    	        <div class="route-point-city"><?php echo $flight->departureCity->localRu;?></div>
                     <div class="route-point-airport-code"><?php echo $flightPart['value']->departureAirport->code;?></div>

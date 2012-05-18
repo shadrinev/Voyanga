@@ -48,6 +48,10 @@ return array(
             'type'=>'text',
             'maxlength'=>32,
         ),
+        'returnDate'=>array(
+            'type'=>'text',
+            'maxlength'=>32,
+        ),
         'adultCount'=>array(
             'type'=>'dropdownlist',
             'items'=>array(0,1,2,3,4,5,6,7),

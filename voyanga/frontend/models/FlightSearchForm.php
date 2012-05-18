@@ -18,6 +18,7 @@ class FlightSearchForm extends CFormModel
     public $childCount;
     public $infantCount;
     public $departureDate = '12.07.2012';
+    public $returnDate;
 
     /**
      * Declares the validation rules.
@@ -31,9 +32,9 @@ class FlightSearchForm extends CFormModel
                 'required'),
             // email has to be a valid birthday format
             array(
-                'departureDate',
+                'departureDate, returnDate',
                 'date', 'format' => 'dd.MM.yyyy'),
-            array('adultCount, childCount, infantCount, departureCity, arrivalCity','safe')
+            array('adultCount, childCount, infantCount, departureCity, arrivalCity, returnDate','safe')
         );
     }
 
