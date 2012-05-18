@@ -91,6 +91,29 @@ class EventController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
+    public function actionDeleteResource($id, $attribute, $name=null)
+    {
+        $model = $this->loadModel($id);
+        if ($model)
+        {
+            if (isset($model->$attribute))
+            {
+                if ($name==null)
+                    $model->$attribute = null;
+                else
+                    foreach ($model->$attribute as $one)
+                    {
+                        if ($one->name==$name)
+                        {
+                            $one->delete();
+                        }
+                    }
+            }
+
+        }
+        $this->redirect(array('view','id'=>$model->id));
+    }
+
 	/**
 	 * Lists all models.
 	 */

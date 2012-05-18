@@ -148,7 +148,10 @@ class AResourceful extends CActiveRecordBehavior
     {
         if (isset($this->attributes[$name]))
         {
-            return $this->attributes[$name]->add($value);
+            if ($value == null)
+                return $this->attributes[$name]->delete();
+            else
+                return $this->attributes[$name]->add($value);
         }
         return parent::__set($name, $value);
     }

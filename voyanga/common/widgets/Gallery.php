@@ -7,6 +7,8 @@
  */
 class Gallery extends CWidget
 {
+    public $id;
+
     public $model;
 
     public $attribute;
@@ -15,15 +17,22 @@ class Gallery extends CWidget
     {
         $items = array();
         $i = 1;
+        $total = count($this->model->{$this->attribute});
         foreach ($this->model->{$this->attribute} as $picture)
         {
             $item = array(
                 'image' => $picture->url,
-                'label' => '#'.$i++.' '.$picture->name
+                'alt'   => $picture->name,
+                'label' => '#'.$i++.' / '.$total.' '.$picture->name
             );
             $items[] = $item;
         }
-        $this->widget('bootstrap.widgets.BootCarousel', array('items'=>$items,'options'=>array('interval'=>false)));
+        $this->widget('bootstrap.widgets.BootCarousel', array(
+            'id' => $this->id == null ? null : $this->id,
+            'items'=>$items,
+            'options'=>array('interval'=>false),
+         )
+        );
     }
 
 }
