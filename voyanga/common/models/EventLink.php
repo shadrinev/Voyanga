@@ -31,6 +31,12 @@ class EventLink extends FrontendActiveRecord
         return 'event_link';
     }
 
+    public function __toString()
+    {
+        $text = strlen($this->title)>0 ? $this->title : $this->url;
+        return CHtml::link($text, $this->url);
+    }
+
     /**
      * @return array validation rules for model attributes.
      */
@@ -39,6 +45,7 @@ class EventLink extends FrontendActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
+            array('url','url', 'allowEmpty'=>false),
             array('eventId', 'numerical', 'integerOnly'=>true),
             array('url, title', 'length', 'max'=>255),
             // The following rule is used by search().
@@ -67,8 +74,8 @@ class EventLink extends FrontendActiveRecord
         return array(
             'id' => 'ID',
             'eventId' => 'Event',
-            'url' => 'Url',
-            'title' => 'Title',
+            'url' => 'URL',
+            'title' => 'Текст ссылки',
         );
     }
 

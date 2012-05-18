@@ -39,6 +39,11 @@ $this->beginWidget("AAdminPortlet", array(
         'tagsString',
 		'description:raw',
         array(
+            'label' => 'Ссылки',
+            'value' => implode(', ', $model->links),
+            'type'  => 'raw'
+        ),
+        array(
             'name'=>'pictureSmall',
             'value'=>isset($model->pictureSmall) ? CHtml::image($model->pictureSmall->url, $model->title).'<br><br>'.
                     $this->widget('BootButton', array(

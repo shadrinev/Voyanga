@@ -39,7 +39,21 @@ class EventController extends Controller
         {
             $model->attributes=$_POST['Event'];
             $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
+            $links = array();
+            if (!$model->isNewRecord)
+                EventLink::model()->deleteAllByAttributes(array('eventId'=>$model->id));
+            if (isset($_POST['EventLink']))
+            {
+                foreach ($_POST['EventLink'] as $i=>$info)
+                {
+                    $link = new EventLink;
+                    $link->attributes = $info;
+                    if (strlen($link->url)>0)
+                        $links[] = $link;
+                }
+            }
             $model->categories = $categories;
+            $model->links = $links;
             if($model->save())
             {
                 if ($pictureSmall=CUploadedFile::getInstance($model, 'pictureSmall'))

@@ -36,7 +36,7 @@ class EAdvancedArBehavior extends CActiveRecordBehavior
         foreach ($owner->relations() as $key => $relation)
         {
             /* $key         -> relation name
-* $relation[1] -> related table
+            * $relation[1] -> related table
             * $relation[2] -> foreignkey field
             */
             if ($relation['0'] == CActiveRecord::BELONGS_TO) // ['0'] equals relationType
@@ -61,7 +61,7 @@ class EAdvancedArBehavior extends CActiveRecordBehavior
         foreach ($owner->relations() as $key => $relation)
         {
             /* $key         -> relation name
-* $relation[1] -> related table
+            * $relation[1] -> related table
             * $relation[2] -> foreignkey field
             */
             if (!isset($this->relations) || in_array($key, $this->relations))
@@ -292,6 +292,7 @@ class EAdvancedArBehavior extends CActiveRecordBehavior
                     $this->owner->{$this->owner->tableSchema->primaryKey}, array()));
             }
         }
+        return parent::beforeDelete($event);
     }
 
     public function ignoreRelationsExcept($relations = array())

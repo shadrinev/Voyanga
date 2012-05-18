@@ -124,6 +124,8 @@
 
     <?php echo $form->textFieldRow($model,'tagsString',array('class'=>'span5')); ?>
 
+    <?php $this->widget('common.widgets.attachedLinks.AttachedLinks', array('model' => $model, 'attribute'=>'links', 'form'=>$form)); ?>
+
     <?php echo $form->dropDownListRow($model,'status',$model->getPossibleStatus(),array('class'=>'span5')); ?>
 
 	<div class="form-actions">

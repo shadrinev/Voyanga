@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/attachedLinks/assets" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/attachedLinks/views" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/attachedLinks" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/attachedLinks/AttachedLinks.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/attachedLinks/assets/attachedLinks.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/attachedLinks/views/_template.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/attachedLinks/views/jsTemplate.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/attachedLinks/views/template.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/packages/resources/components/AResourceful.php" afterPath="$PROJECT_DIR$/common/packages/resources/components/AResourceful.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/widgets/Gallery.php" afterPath="$PROJECT_DIR$/common/widgets/Gallery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/EAdvancedArBehavior.php" afterPath="$PROJECT_DIR$/common/components/EAdvancedArBehavior.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/Event.php" afterPath="$PROJECT_DIR$/common/models/Event.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/EventLink.php" afterPath="$PROJECT_DIR$/common/models/EventLink.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -36,8 +46,10 @@
       <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="135" column="89" selection-start="5009" selection-end="5086" vertical-scroll-proportion="-15.923077">
-              <folding />
+            <state line="126" column="130" selection-start="4741" selection-end="4741" vertical-scroll-proportion="-17.461538">
+              <folding>
+                <marker date="1337332961363" expanded="true" signature="4887:4910" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -45,52 +57,61 @@
       <file leaf-file-name="EventController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="113" column="8" selection-start="3215" selection-end="3215" vertical-scroll-proportion="0.0">
+            <state line="51" column="24" selection-start="1412" selection-end="1412" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="view.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="84" selection-start="2897" selection-end="2897" vertical-scroll-proportion="0.0">
+            <state line="42" column="34" selection-start="908" selection-end="908" vertical-scroll-proportion="0.78205127">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Gallery.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/widgets/Gallery.php">
+      <file leaf-file-name="AttachedLinks.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/AttachedLinks.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="53" selection-start="580" selection-end="580" vertical-scroll-proportion="0.0">
+            <state line="26" column="98" selection-start="667" selection-end="667" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BootCarousel.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootCarousel.php">
+      <file leaf-file-name="template.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/views/template.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="6" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0">
+            <state line="8" column="99" selection-start="416" selection-end="416" vertical-scroll-proportion="-5.230769">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/gii/bootstrap/templates/default/_form.php">
+      <file leaf-file-name="EventLink.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/models/EventLink.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="23" selection-start="760" selection-end="770" vertical-scroll-proportion="-16.346153">
+            <state line="36" column="46" selection-start="962" selection-end="962" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BootButton.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootButton.php">
+      <file leaf-file-name="_template.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/views/_template.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="18" selection-start="333" selection-end="334" vertical-scroll-proportion="137.76">
+            <state line="9" column="21" selection-start="461" selection-end="461" vertical-scroll-proportion="-5.8846154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attachedLinks.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/assets/attachedLinks.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="22" selection-start="767" selection-end="767" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -99,25 +120,7 @@
       <file leaf-file-name="Event.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/models/Event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="32" selection-start="800" selection-end="812" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AResourceful.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/common/packages/resources/components/AResourceful.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="270" column="5" selection-start="7418" selection-end="7418" vertical-scroll-proportion="0.33283582">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AResource.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/packages/resources/components/AResource.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="155" column="48" selection-start="4682" selection-end="4686" vertical-scroll-proportion="-8.92">
+            <state line="127" column="22" selection-start="4097" selection-end="4097" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -133,22 +136,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/frontend/models/BookingForm.php" />
-        <option value="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootActiveForm.php" />
-        <option value="$PROJECT_DIR$/common/components/MUploadedFile.php" />
-        <option value="$PROJECT_DIR$/common/packages/resources/components/AResource.php" />
-        <option value="$PROJECT_DIR$/common/extensions/EAjaxUpload/EAjaxUpload.php" />
-        <option value="$PROJECT_DIR$/common/extensions/EAjaxUpload/assets/fileuploader.css" />
-        <option value="$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootCarousel.php" />
         <option value="$PROJECT_DIR$/common/migrations/m120517_140432_add_tags_for_event.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
         <option value="$PROJECT_DIR$/backend/extensions/bootstrap/assets/js/bootstrap-typeahead.js" />
         <option value="$PROJECT_DIR$/common/widgets/treeLeafSelector/TreeLeafSelector.php" />
-        <option value="$PROJECT_DIR$/common/models/Event.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
         <option value="$PROJECT_DIR$/common/widgets/Gallery.php" />
         <option value="$PROJECT_DIR$/common/packages/resources/components/AResourceful.php" />
+        <option value="$PROJECT_DIR$/common/components/EAdvancedArBehavior.php" />
+        <option value="$PROJECT_DIR$/common/widgets/attachedLinks/AttachedLinks.php" />
+        <option value="$PROJECT_DIR$/common/widgets/attachedLinks/views/jsTemplate.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
+        <option value="$PROJECT_DIR$/common/widgets/attachedLinks/views/_template.php" />
+        <option value="$PROJECT_DIR$/common/widgets/attachedLinks/assets/attachedLinks.js" />
+        <option value="$PROJECT_DIR$/common/widgets/attachedLinks/views/template.php" />
+        <option value="$PROJECT_DIR$/common/models/Event.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php" />
+        <option value="$PROJECT_DIR$/common/models/EventLink.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php" />
       </list>
     </option>
   </component>
@@ -229,7 +232,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="console" />
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -248,6 +255,110 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imperaviRedactor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imperaviRedactor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="attachedLinks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="attachedLinks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="attachedLinks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -444,106 +555,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="event" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bootstrap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bootstrap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -900,7 +911,11 @@
       <created>1337272775108</created>
       <updated>1337272775108</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="added remove buttons for resource image files">
+      <created>1337328668106</created>
+      <updated>1337328668106</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -911,7 +926,7 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19642857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19642857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3514957" sideWeight="0.8035714" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -965,7 +980,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix for image upload" />
+    <option name="LAST_COMMIT_MESSAGE" value="added remove buttons for resource image files" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -978,7 +993,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="new password done" />
     <MESSAGE value="1. email about reset password - ok now&#10;2. sign in after registration" />
     <MESSAGE value="work with user admin module" />
     <MESSAGE value="resourse work added" />
@@ -1003,76 +1017,12 @@
     <MESSAGE value="tags for event" />
     <MESSAGE value="fixed tree" />
     <MESSAGE value="fix for image upload" />
+    <MESSAGE value="added remove buttons for resource image files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/ETaggableBehavior.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/migrations/m120517_140432_add_tags_for_event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="20" selection-start="514" selection-end="514" vertical-scroll-proportion="0.5136691">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/EARTaggableBehavior.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="29" selection-start="444" selection-end="444" vertical-scroll-proportion="0.56258994">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/yiiext/behaviors/model/taggable/readme_en.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-3.5956833">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/assets/js/bootstrap-typeahead.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="0" selection-start="2573" selection-end="2573" vertical-scroll-proportion="-21.84">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/widgets/treeLeafSelector/TreeLeafSelector.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="25" selection-start="1064" selection-end="1064" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/gii/bootstrap/templates/default/_form.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="23" selection-start="760" selection-end="770" vertical-scroll-proportion="-16.346153">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="32" selection-start="800" selection-end="812" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/packages/resources/components/AResource.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="155" column="48" selection-start="4682" selection-end="4686" vertical-scroll-proportion="-8.92">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootCarousel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="6" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0">
@@ -1080,30 +1030,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/resources/components/AResourceful.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="89" selection-start="5009" selection-end="5086" vertical-scroll-proportion="-15.923077">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootButton.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="18" selection-start="333" selection-end="334" vertical-scroll-proportion="137.76">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="84" selection-start="2897" selection-end="2897" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="8" selection-start="3215" selection-end="3215" vertical-scroll-proportion="0.0">
+        <state line="270" column="5" selection-start="7418" selection-end="7418" vertical-scroll-proportion="0.37706855">
           <folding />
         </state>
       </provider>
@@ -1115,9 +1044,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/packages/resources/components/AResourceful.php">
+    <entry file="file://$PROJECT_DIR$/common/components/EAdvancedArBehavior.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="270" column="5" selection-start="7418" selection-end="7418" vertical-scroll-proportion="0.33283582">
+        <state line="294" column="44" selection-start="12044" selection-end="12044" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/imperaviRedactor/EImperaviRedactorWidget.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="99" selection-start="1735" selection-end="1804" vertical-scroll-proportion="0.695752">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/views/jsTemplate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="78" selection-start="111" selection-end="133" vertical-scroll-proportion="0.025411062">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootButton.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="6" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/views/_template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="21" selection-start="461" selection-end="461" vertical-scroll-proportion="-5.8846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/assets/attachedLinks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="22" selection-start="767" selection-end="767" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="130" selection-start="4741" selection-end="4741" vertical-scroll-proportion="-17.461538">
+          <folding>
+            <marker date="1337332961363" expanded="true" signature="4887:4910" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/models/Event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="127" column="22" selection-start="4097" selection-end="4097" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/controllers/EventController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="24" selection-start="1412" selection-end="1412" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/models/EventLink.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="46" selection-start="962" selection-end="962" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/views/template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="99" selection-start="416" selection-end="416" vertical-scroll-proportion="-5.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/AttachedLinks.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="98" selection-start="667" selection-end="667" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="34" selection-start="908" selection-end="908" vertical-scroll-proportion="0.78205127">
           <folding />
         </state>
       </provider>
