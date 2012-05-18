@@ -5,6 +5,7 @@ class EForm extends CForm
      * @var boolean the key to fetch when the form is used for tabular input
      */
     private $_key;
+    //protected $_model;
 
     /**
      * Constructor.
@@ -23,28 +24,47 @@ class EForm extends CForm
      */
     public function loadData()
     {
-        if ($this->_model !== null)
+        echo "load data";
+        //VarDumper::dump($this);
+        //print_r($this);
+        if(isset($this->_model))
         {
-            $class = get_class($this->_model);
-            if (strcasecmp($this->getRoot()->method, 'get') && isset($_POST[$class]))
+            echo "model_exists";
+            if ($this->_model !== null)
             {
-                if ($this->isTabular())
-                    $this->_model->setAttributes($_POST[$class][$this->_key]);
-                else
-                    $this->_model->setAttributes($_POST[$class]);
-            }
-            elseif (isset($_GET[$class]))
-            {
-                if ($this->isTabular())
-                    $this->_model->setAttributes($_GET[$class][$this->_key]);
-                else
-                    $this->_model->setAttributes($_GET[$class]);
+                $class = get_class($this->_model);
+                echo "in feel";
+                if (strcasecmp($this->getRoot()->method, 'get') && isset($_POST[$class]))
+                {
+                    echo 'in post';
+                    if ($this->isTabular())
+                    {
+                        echo 'tabular';
+                        $this->_model->setAttributes($_POST[$class][$this->_key]);
+                    }
+                    else{
+                        echo 'notabular';
+                        $this->_model->setAttributes($_POST[$class]);
+                    }
+
+                }
+                elseif (isset($_GET[$class]))
+                {
+                    echo 'in get';
+                    if ($this->isTabular())
+                        $this->_model->setAttributes($_GET[$class][$this->_key]);
+                    else
+                        $this->_model->setAttributes($_GET[$class]);
+                }
             }
         }
         foreach ($this->getElements() as $element)
         {
-            if ($element instanceof self)
+            if ($element instanceof self){
+                //echo 'Self instance'.get_class(self::);
+                VarDumper::dump($element->getElements());
                 $element->loadData();
+            }
         }
     }
 

@@ -167,6 +167,7 @@ class GDSNemo extends CComponent
                 $aParts = array();
                 //flag of valid flight
                 $needSave = true;
+                $eTicket = true;
                 //Yii::beginProfile('processingSegments');
                 $markAirlineCodes = array();
                 UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
@@ -209,6 +210,7 @@ class GDSNemo extends CComponent
                         $oPart->aBookingCodes[] = $sBookingCode;
                     }
                     $aParts[$oSegment->SegNum] = $oPart;
+                    $eTicket = $eTicket && $oSegment->ETicket;
                 }
                 //Yii::endProfile('processingSegments');
                 $full_sum = 0;
@@ -324,6 +326,12 @@ class GDSNemo extends CComponent
                 }
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;
+
+                if(!$eTicket)
+                {
+                    Yii::log(Yii::t('application','One or more segments dont have eticketing. FlightId:{flightId}',array('{flightId}' => $oSoapFlight->FlightId)));
+                    $needSave = $needSave && $eTicket;
+                }
 
                 if($needSave)
                 {

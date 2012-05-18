@@ -276,8 +276,52 @@ class SiteController extends Controller
         $route = $fs->aRoutes[0];
         $countPassengers = $route->adultCount + $route->childCount + $route->infantCount;
         $passports = array();
+        $valid = TRUE;
 
-        $bookForm = new BookingForm();
+        $booking = new BookingForm();
+
+        $countries = Country::model()->findAll(array('order'=>'position desc'));
+        $countriesList = array();
+        foreach($countries as $country)
+        {
+            $countriesList[$country->id] = $country->localRu;
+        }
+
+            if(isset($_POST['BookingForm']))
+            {
+                $booking->attributes=$_POST['BookingForm'];
+                $valid=$booking->validate() && $valid;
+            }
+
+            for($i=0;$i<$countPassengers;$i++)
+            {
+                $modelPassport = new PassportForm();
+                $passports[$i] = $modelPassport;
+
+                if(isset($_POST['PassportForm'][$i]))
+                {
+                    $passports[$i]->attributes=$_POST['PassportForm'][$i];
+                    if(!$passports[$i]->validate()){
+                        echo 'PassportForm id:'.$i.' dont valid';
+                    }
+                    $valid=$passports[$i]->validate() && $valid;
+                }
+            }
+
+
+        if($valid)
+        {
+            echo 'all right';
+        }
+        else
+        {
+            echo 'all left';
+        }
+
+        $this->render('flightBooking', array('passports'=>$passports,'booking'=>$booking,'countriesList'=>$countriesList));
+
+
+        /*$bookForm = new BookingForm();
         $configArray = require(Yii::getPathOfAlias('application.views.site.bookingForm').'.php');
 
         $configArray['elements']['passports'] = array('type'=>'form','elements'=>array());
@@ -294,7 +338,7 @@ class SiteController extends Controller
 
         if ($mainForm->submitted('smb') && $mainForm->validate())
         {
-
+            echo 'dsfsdfdsf';
         }
         else
         {
@@ -302,7 +346,7 @@ class SiteController extends Controller
                 'form' => $bookForm->getForm(),
                 'flightStack' => null
             ));
-        }
+        }*/
 
 
     }

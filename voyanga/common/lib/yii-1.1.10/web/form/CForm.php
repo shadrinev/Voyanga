@@ -125,7 +125,7 @@ class CForm extends CFormElement implements ArrayAccess
 	 */
 	public $activeForm=array('class'=>'CActiveForm');
 
-	private $_model;
+	protected $_model;
 	private $_elements;
 	private $_buttons;
 	private $_activeForm;

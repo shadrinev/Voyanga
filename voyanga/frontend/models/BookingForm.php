@@ -7,9 +7,8 @@
  */
 class BookingForm extends CFormModel
 {
-    public $firstName;
+    public $contactEmail;
     public $contactPhone;
-    public $passports;
 
     /**
      * Declares the validation rules.
@@ -19,7 +18,7 @@ class BookingForm extends CFormModel
         return array(
             // first_name, last_name, number, birthday, document_type_id, gender_id are required
             array(
-                'contactPhone, firstName, passports',
+                'contactPhone, contactEmail',
                 'required',
             ),
         );
@@ -35,22 +34,16 @@ class BookingForm extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'verifyCode' => 'Verification Code',
-            'first_name' => 'Имя',
-            'last_name' => 'Фамилия',
-            'number' => 'Номер документа',
-            'birthday' => 'Дата рождения',
-            'document_type_id' => 'Тип документа',
-            'gender_id' => 'Пол',
-            'series' => 'Серия документа',
-            'country_id' => 'Гражданство');
+            'contactEmail' => 'Контактный email',
+            'contactPhone' => 'Контактный телефон',
+        );
     }
 
     public function getForm() {
         $form = new EForm(require(Yii::getPathOfAlias('application.views.site.bookingForm').'.php'), $this);
         $elements = $form->getElements();
 
-        $subForm = new EForm(array('elements' => array()), null, $form); // Sub-form to act as a container for the parameter forms.
+        $subForm = new EForm(array('elements' => array()), new PassportForm(), $form); // Sub-form to act as a container for the parameter forms.
         $subForm->visible = true;
         $subForm->title = 'Passports';// Title to make it a fieldset
         $subFormElements = $subForm->getElements();
@@ -59,6 +52,7 @@ class BookingForm extends CFormModel
         {
             foreach ($this->passports as $parameterId => $parameter)
             {
+                //VarDumper::dump($parameter->getForm($subForm));
                 $subFormElements->add($parameterId, $parameter->getForm($subForm));
             }
         }
@@ -67,21 +61,4 @@ class BookingForm extends CFormModel
 
         return $form;
     }
-
-    /*public function getForm() {
-        $form = new CForm($this->_form, $this);
-        $elements = $form->getElements();
-
-        $subForm = new CForm(array('elements' => array()), null, $form); // Sub-form to act as a container for the parameter forms.
-        $subForm->title = 'Parameters';// Title to make it a fieldset
-        $subFormElements = $subForm->getElements();
-
-        // NOTE:: parameters were set earlier as related models to the product
-        foreach ($this->passports as $parameterId => $parameter)
-            $subFormElements->add($parameterId, $parameter->getForm($subForm));
-
-        $elements->add('passports', $subForm);
-
-        return $form;
-    }*/
 }

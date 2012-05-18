@@ -27,12 +27,15 @@ class PassportForm extends CFormModel
         return array(
             // first_name, last_name, number, birthday, document_type_id, gender_id are required
             array(
-                'firstName, lastName, number, birthday, documentTypeId, genderId',
+                'firstName, lastName, number, birthday, documentTypeId, genderId, countryId',
                 'required'),
             // email has to be a valid birthday format
             array(
                 'birthday',
-                'date', 'format' => 'dd.MM.yyyy'));
+                'date', 'format' => 'dd.MM.yyyy'),
+            array(
+                'series',
+                'safe'));
     }
 
     /**
