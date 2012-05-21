@@ -19,7 +19,8 @@
  * @property integer $flightSearchId
  * @property integer $withReturn
  */
-class FlightCache extends CActiveRecord {
+class FlightCache extends CActiveRecord
+{
 
 
     /**
@@ -27,7 +28,7 @@ class FlightCache extends CActiveRecord {
      * @param string $className active record class name.
      * @return FlightCache the static model class
      */
-    public static function model($className=__CLASS__)
+    public static function model($className = __CLASS__)
     {
         return parent::model($className);
     }
@@ -48,12 +49,12 @@ class FlightCache extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('departureCityId, arrivalCityId, adultCount, childCount, infantCount, cacheType, price, validationAirline, duration, flightSearchId, withReturn', 'numerical', 'integerOnly'=>true),
-            array('transportAirlines', 'length', 'max'=>45),
+            array('departureCityId, arrivalCityId, adultCount, childCount, infantCount, cacheType, price, validationAirline, duration, flightSearchId, withReturn', 'numerical', 'integerOnly' => true),
+            array('transportAirlines', 'length', 'max' => 45),
             array('timestamp, departureDate', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, timestamp, departureCityId, arrivalCityId, departureDate, adultCount, childCount, infantCount, cacheType, price, transportAirlines, validationAirline, duration, flightSearchId, withReturn', 'safe', 'on'=>'search'),
+            array('id, timestamp, departureCityId, arrivalCityId, departureDate, returnDate, adultCount, childCount, infantCount, cacheType, price, transportAirlines, validationAirline, duration, flightSearchId, withReturn', 'safe', 'on' => 'search'),
         );
     }
 
@@ -101,46 +102,50 @@ class FlightCache extends CActiveRecord {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('timestamp',$this->timestamp,true);
-        $criteria->compare('departureCityId',$this->departureCityId);
-        $criteria->compare('arrivalCityId',$this->arrivalCityId);
-        $criteria->compare('departureDate',$this->departureDate,true);
-        $criteria->compare('adultCount',$this->adultCount);
-        $criteria->compare('childCount',$this->childCount);
-        $criteria->compare('infantCount',$this->infantCount);
-        $criteria->compare('cacheType',$this->cacheType);
-        $criteria->compare('price',$this->price);
-        $criteria->compare('transportAirlines',$this->transportAirlines,true);
-        $criteria->compare('validationAirline',$this->validationAirline);
-        $criteria->compare('duration',$this->duration);
-        $criteria->compare('flightSearchId',$this->flightSearchId);
-        $criteria->compare('withReturn',$this->withReturn);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('timestamp', $this->timestamp, true);
+        $criteria->compare('departureCityId', $this->departureCityId);
+        $criteria->compare('arrivalCityId', $this->arrivalCityId);
+        $criteria->compare('departureDate', $this->departureDate, true);
+        $criteria->compare('adultCount', $this->adultCount);
+        $criteria->compare('childCount', $this->childCount);
+        $criteria->compare('infantCount', $this->infantCount);
+        $criteria->compare('cacheType', $this->cacheType);
+        $criteria->compare('price', $this->price);
+        $criteria->compare('transportAirlines', $this->transportAirlines, true);
+        $criteria->compare('validationAirline', $this->validationAirline);
+        $criteria->compare('duration', $this->duration);
+        $criteria->compare('flightSearchId', $this->flightSearchId);
+        $criteria->compare('withReturn', $this->withReturn);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
+
     /**
      * addCacheFromStack
      * Adding caches into db, flights with best paraments(price,time,pricetime)
      * @param FlightVoyageStack $oFlightVoyageStack
      */
-    public static function addCacheFromStack(FlightVoyageStack $oFlightVoyageStack) {
+    public static function addCacheFromStack(FlightVoyageStack $oFlightVoyageStack)
+    {
         $attributes = array(
-                'adultCount' => $oFlightVoyageStack->adult_count,
-                'childCount' => $oFlightVoyageStack->child_count,
-                'infantCount' => $oFlightVoyageStack->infant_count,
-                'flightSearchId' => $oFlightVoyageStack->flight_search_id
+            'adultCount' => $oFlightVoyageStack->adult_count,
+            'childCount' => $oFlightVoyageStack->child_count,
+            'infantCount' => $oFlightVoyageStack->infant_count,
+            'flightSearchId' => $oFlightVoyageStack->flight_search_id
         );
         //echo "Try save all cache data";
-        if ( $oFlightVoyageStack->iBestPriceInd !== false ) {
+        if ($oFlightVoyageStack->iBestPriceInd !== false)
+        {
             //echo "Best price ind: {$oFlightVoyageStack->iBestPriceInd}";
             //print_r($oFlightVoyageStack);
             //saving to cache FlightVoyage with best price
-            try {//echo "innnn";
+            try
+            { //echo "innnn";
                 $oFlightCache = new FlightCache();
                 $oFlightCache->setAttributes($attributes, false);
                 $oFlightCache->setFromFlightVoyage($oFlightVoyageStack->flightVoyages[$oFlightVoyageStack->iBestPriceInd]);
@@ -149,44 +154,58 @@ class FlightCache extends CActiveRecord {
                 $oFlightCache->validate();
                 //echo CHtml::errorSummary($oFlightCache);
                 $oFlightCache->save();
-            } catch (Exception $e) {//echo "innnn333".$e->getMessage();
-                new CException( Yii::t( 'application', 'Cant save FlightCache with best price: '.$e->getMessage() ) );
             }
-            
-        } elseif( ($oFlightVoyageStack->iBestTimeInd !== false) && ($oFlightVoyageStack->iBestTimeInd !== $oFlightVoyageStack->iBestPriceInd) ) {
+            catch (Exception $e)
+            { //echo "innnn333".$e->getMessage();
+                new CException(Yii::t('application', 'Cant save FlightCache with best price: ' . $e->getMessage()));
+            }
+
+        }
+        elseif (($oFlightVoyageStack->iBestTimeInd !== false) && ($oFlightVoyageStack->iBestTimeInd !== $oFlightVoyageStack->iBestPriceInd))
+        {
             //saving to cache FlightVoyage with best time
             //echo "Best time ind: {$oFlightVoyageStack->iBestTimeInd}";
-            try {
+            try
+            {
                 $oFlightCache = new FlightCache();
-                $oFlightCache->setAttributes($attributes,false);
+                $oFlightCache->setAttributes($attributes, false);
                 $oFlightCache->setFromFlightVoyage($oFlightVoyageStack->flightVoyages[$oFlightVoyageStack->iBestTimeInd]);
                 $oFlightCache->cacheType = 2;
                 $oFlightCache->save();
-            } catch (Exception $e) {
-                new CException( Yii::t( 'application', 'Cant save FlightCache with best time: '.$e->getMessage() ) );
             }
-        } elseif( ($oFlightVoyageStack->iBestPriceTimeInd !== false) && ($oFlightVoyageStack->iBestTimeInd !== $oFlightVoyageStack->iBestPriceInd) ) {
+            catch (Exception $e)
+            {
+                new CException(Yii::t('application', 'Cant save FlightCache with best time: ' . $e->getMessage()));
+            }
+        }
+        elseif (($oFlightVoyageStack->iBestPriceTimeInd !== false) && ($oFlightVoyageStack->iBestTimeInd !== $oFlightVoyageStack->iBestPriceInd))
+        {
             //saving to cache FlightVoyage with best pricetime
-            try {
+            try
+            {
                 $oFlightCache = new FlightCache();
-                $oFlightCache->setAttributes($attributes,false);
+                $oFlightCache->setAttributes($attributes, false);
                 $oFlightCache->setFromFlightVoyage($oFlightVoyageStack->flightVoyages[$oFlightVoyageStack->iBestTimeInd]);
                 $oFlightCache->cacheType = 3;
                 $oFlightCache->save();
-            } catch (Exception $e) {
-                new CException( Yii::t( 'application', 'Cant save FlightCachewith best pricetime: '.$e->getMessage() ) );
+            }
+            catch (Exception $e)
+            {
+                new CException(Yii::t('application', 'Cant save FlightCachewith best pricetime: ' . $e->getMessage()));
             }
         }
     }
-    
+
     /**
-     * 
+     *
      * Set data from FlightVoyage object
      * @param FlightVoyage $oFlightVoyage
      * @throws CException
      */
-    public function setFromFlightVoyage(FlightVoyage $oFlightVoyage) {
-        if($oFlightVoyage instanceof FlightVoyage) {
+    public function setFromFlightVoyage(FlightVoyage $oFlightVoyage)
+    {
+        if ($oFlightVoyage instanceof FlightVoyage)
+        {
             $this->departureCityId = $oFlightVoyage->flights[0]->departureCityId;
             $this->arrivalCityId = $oFlightVoyage->flights[0]->arrivalCityId;
             $this->departureDate = $oFlightVoyage->flights[0]->departureDate;
@@ -194,12 +213,16 @@ class FlightCache extends CActiveRecord {
             //$this->validationAirline = $oFlightVoyage->valAirlineCode;
             $this->price = $oFlightVoyage->price;
             $this->duration = $oFlightVoyage->getFullDuration();
-            $this->withReturn = (count($oFlightVoyage->flights) == 2)? 1 : 0;
-        } else {
-            throw new CException( Yii::t( 'application', 'Required param type FlightVoyage' ) );
+            $this->withReturn = (count($oFlightVoyage->flights) == 2) ? 1 : 0;
+            if ($this->withReturn)
+                $this->returnDate = $oFlightVoyage->flights[1]->departureDate;
+        }
+        else
+        {
+            throw new CException(Yii::t('application', 'Required param type FlightVoyage'));
         }
     }
-    
+
     /*public function __get( $name ) {
         if ( $name == 'departureCity' || $name == 'arrivalCity' ) {
             if ( !$this->$name ) {

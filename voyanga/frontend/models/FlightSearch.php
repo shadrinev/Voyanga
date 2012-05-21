@@ -43,7 +43,7 @@ class FlightSearch extends CActiveRecord
                 $this->flight_class = $oFlightSearchParams->flight_class;
                 $this->key = $oFlightSearchParams->key;
 
-                if ($fs = Yii::app()->cache->get('flightSearch' . $this->key))
+                if (false)//$fs = Yii::app()->cache->get('flightSearch' . $this->key))
                 {
                     $this->_aRoutes = $fs->_aRoutes;
                     $this->flight_class = $fs->flight_class;
@@ -54,7 +54,6 @@ class FlightSearch extends CActiveRecord
                     $this->requestId = $fs->requestId;
                     $this->oFlightVoyageStack = $fs->oFlightVoyageStack;
                     $this->status = $fs->status;
-
                     return;
                 }
                 $timestamp = date('Y-m-d H:i:s', time() - Yii::app()->params['fligh_search_cache_time']);

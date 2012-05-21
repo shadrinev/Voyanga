@@ -37,10 +37,15 @@ class MFlightSearch extends CComponent
         $fs->requestId = '1';
         $fs->data = '{}';
         $fs->sendRequest($flightSearchParams);
-        $criteria = array('departureCityId'=>$fromCityId, 'arrivalCityId'=>$toCityId, 'departureDate'=>date('Y-m-d', strtotime($date)));
+        $criteria = new CDbCriteria();
+        $criteria->addColumnCondition(array('departureCityId'=>$fromCityId, 'arrivalCityId'=>$toCityId));
+        $criteria->addCondition('departureDate BETWEEN STR_TO_DATE("'.$date.' 00:00:00", "%d.%m.%Y %H:%i:%s") and STR_TO_DATE("'.$date.' 23:59:59", "%d.%m.%Y %H:%i:%s")');
         if ($returnDate)
-            $criteria['withReturn']=1;
-        $result = FlightCache::model()->findByAttributes($criteria);
+        {
+            $criteria->addCondition('returnDate BETWEEN STR_TO_DATE("'.$returnDate.' 00:00:00", "%d.%m.%Y %H:%i:%s") and STR_TO_DATE("'.$returnDate.' 23:59:59", "%d.%m.%Y %H:%i:%s")');
+            $criteria->addSearchCondition('withReturn', 1);
+        }
+        $result = FlightCache::model()->find($criteria);
         if ($result)
         {
             return (int)$result->price;
