@@ -224,4 +224,47 @@ class Event extends FrontendActiveRecord
             return $statuses[$this->status];
         throw new Exception('No such status for event');
     }
+
+    public static function getFlightFromDate($startDate)
+    {
+        return date('d.m.Y', strtotime($startDate)-24*3600);
+    }
+
+    public static function getFlightToDate($endDate)
+    {
+        return date('d.m.Y', strtotime($endDate)+24*3600);
+    }
+
+    private function getPriceForCity($cityCode, $forceUpdate)
+    {
+        try
+        {
+            $from = City::getCityByCode($cityCode)->id;
+            $to = $this->cityId;
+
+            $dateStart = self::getFlightFromDate($this->startDate);
+            $priceTo = FlightSearcher::getOptimalPrice($from, $to, $dateStart, false, $forceUpdate);
+
+            $dateEnd =self::getFlightToDate($this->endDate);
+            $priceBack = FlightSearcher::getOptimalPrice($to, $from, $dateEnd, false, $forceUpdate);
+
+            $priceToBack = FlightSearcher::getOptimalPrice($from, $to, $dateStart, $dateEnd, $forceUpdate);
+
+            return min($priceTo+$priceBack, $priceToBack);
+        }
+        catch (Exception $e)
+        {
+            return 'N/A';
+        }
+    }
+
+    public function getPriceMoscow($forceUpdate = false)
+    {
+        return $this->getPriceForCity('MOW', $forceUpdate);
+    }
+
+    public function getPricePiter($forceUpdate = false)
+    {
+        return $this->getPriceForCity('LED', $forceUpdate);
+    }
 }

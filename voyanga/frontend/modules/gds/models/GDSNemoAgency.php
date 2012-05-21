@@ -15,32 +15,32 @@ class GDSNemoAgency extends CComponent
      */
     private static function request($methodName, $params, $cache = FALSE, $expiration = 0)
     {
-        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'],'exceptions'=>true,
+        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'], 'exceptions' => true,
         ));
 
         //VarDumper::dump($client->__getFunctions());
         //VarDumper::dump($client->__getTypes());
         //$params = array('Search'=>$params);
         //$soapRequest = $client->async->$methodName($params);
-        $key = $methodName.md5(serialize($params));
-        if($cache)
+        $key = $methodName . md5(serialize($params));
+        if ($cache)
         {
             $ret = Yii::app()->cache->get($key);
-            if($ret)
+            if ($ret)
             {
                 return $ret;
             }
         }
-        Yii::beginProfile('processingSoap'.$methodName);
+        Yii::beginProfile('processingSoap' . $methodName);
         $ret = $client->$methodName($params);
-        if($expiration)
+        if ($expiration)
         {
-            if($ret)
+            if ($ret)
             {
-                Yii::app()->cache->set($key,$ret,$expiration);
+                Yii::app()->cache->set($key, $ret, $expiration);
             }
         }
-        Yii::endProfile('processingSoap'.$methodName);
+        Yii::endProfile('processingSoap' . $methodName);
         return $ret;
     }
 
@@ -63,7 +63,7 @@ class GDSNemoAgency extends CComponent
                         'ODPair' => array(
                             'DepDate' => '2012-06-13T00:00:00',
                             'DepAirp' => 'MOW',
-                            'ArrAirp' =>  'IJK'
+                            'ArrAirp' => 'IJK'
 
                         )
                     ),
@@ -98,7 +98,7 @@ class GDSNemoAgency extends CComponent
             //todo: think how to name it
             $ODPair = array();
             $ODPair['DepDate'] = $route->departureDate . 'T00:00:00';
-            $ODPair['DepAirp'] =  $route->departureCity->code;
+            $ODPair['DepAirp'] = $route->departureCity->code;
             $ODPair['ArrAirp'] = $route->arrivalCity->code;
             $pairs[] = $ODPair;
         }
@@ -110,11 +110,13 @@ class GDSNemoAgency extends CComponent
             if ($equalFrom && $equalTo)
             {
                 $flightType = 'RT';
-            } else
+            }
+            else
             {
                 $flightType = 'CR';
             }
-        } elseif (count($flightSearchParams->routes) > 2)
+        }
+        elseif (count($flightSearchParams->routes) > 2)
         {
             $flightType = 'CR';
         }
@@ -156,13 +158,17 @@ class GDSNemoAgency extends CComponent
 
         //processing response
 
-
+        if (!isset($soapResponse->Response->SearchFlights->Flights->Flight))
+        {
+            throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
+        }
         //print_r($soapResponse );die();
 
         $flights = array();
-        Yii::log(print_r($soapResponse,true),'info','nemo');
+        Yii::log(print_r($soapResponse, true), 'info', 'nemo');
         $errorCode = 0;
-        if($soapResponse->Response->SearchFlights->Flights->Flight){
+        if ($soapResponse->Response->SearchFlights->Flights->Flight)
+        {
             Yii::beginProfile('processingSoap');
             UtilsHelper::soapObjectsArray($soapResponse->Response->SearchFlights->Flights->Flight);
             foreach ($soapResponse->Response->SearchFlights->Flights->Flight as $oSoapFlight)
@@ -174,12 +180,13 @@ class GDSNemoAgency extends CComponent
                 //Yii::beginProfile('processingSegments');
                 $markAirlineCodes = array();
                 UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
-                foreach ($oSoapFlight->Segments->Segment as $arrKey=>$oSegment)
+                foreach ($oSoapFlight->Segments->Segment as $arrKey => $oSegment)
                 {
                     $oPart = new stdClass();
                     //Yii::beginProfile('loadAirportData');
-                    if(!isset($oSegment->DepAirp)){
-                        Yii::log(print_r($oSegment,true).'|||'.$arrKey,'info');
+                    if (!isset($oSegment->DepAirp))
+                    {
+                        Yii::log(print_r($oSegment, true) . '|||' . $arrKey, 'info');
                     }
                     $oPart->departure_airport = Airport::getAirportByCode(UtilsHelper::soapElementValue($oSegment->DepAirp));
                     //Yii::endProfile('laodAirportData');
@@ -189,15 +196,16 @@ class GDSNemoAgency extends CComponent
 
                     $oPart->arrival_city = $oPart->arrival_airport->city;
                     //Yii::endProfile('loadAirportData');
-                    $oPart->departure_terminal_code = isset($oSegment->DepTerminal)? UtilsHelper::soapElementValue($oSegment->DepTerminal) : '';
-                    $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal)? UtilsHelper::soapElementValue($oSegment->ArrTerminal) : '';
-                    if(!$markAirlineCodes)
+                    $oPart->departure_terminal_code = isset($oSegment->DepTerminal) ? UtilsHelper::soapElementValue($oSegment->DepTerminal) : '';
+                    $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal) ? UtilsHelper::soapElementValue($oSegment->ArrTerminal) : '';
+                    if (!$markAirlineCodes)
                     {
                         $markAirlineCodes[$oSegment->MarkAirline] = $oSegment->MarkAirline;
                     }
 
                     $oPart->markAirline = Airline::getAirlineByCode($oSegment->MarkAirline);
-                    if($oSegment->OpAirline == '**'){
+                    if ($oSegment->OpAirline == '**')
+                    {
                         $oPart->opAirline = $oPart->markAirline;
                         $oPart->transport_airline = $oPart->markAirline;
                     }
@@ -236,16 +244,16 @@ class GDSNemoAgency extends CComponent
                     $aPassengers[$sType]['base_fare'] = $oFare->BaseFare->Amount;
                     $aPassengers[$sType]['total_fare'] = $oFare->TotalFare->Amount;
                     $full_sum += ($oFare->TotalFare->Amount * $oFare->Quantity);
-                    if(isset($oFare->LastTicketDateTime))
+                    if (isset($oFare->LastTicketDateTime))
                     {
                         $aPassengers[$sType]['LastTicketDateTime'] = $oFare->LastTicketDateTime;
                     }
                     else
                     {
-                        Yii::log('!!DONT have LastTicketDate flight:'.$oSoapFlight->FlightId,'info');
+                        Yii::log('!!DONT have LastTicketDate flight:' . $oSoapFlight->FlightId, 'info');
                     }
                     $aPassengers[$sType]['aTaxes'] = array();
-                    if(isset($oFare->Taxes->Tax))
+                    if (isset($oFare->Taxes->Tax))
                     {
                         UtilsHelper::soapObjectsArray($oFare->Taxes->Tax);
                         foreach ($oFare->Taxes->Tax as $oTax)
@@ -256,7 +264,7 @@ class GDSNemoAgency extends CComponent
                             }
                             else
                             {
-                                Yii::log(print_r($oTax,true).'!!!'.$oSoapFlight->FlightId,'info');
+                                Yii::log(print_r($oTax, true) . '!!!' . $oSoapFlight->FlightId, 'info');
                                 throw new CException(Yii::t('application', 'Valute code unexpected. Code: {code}. Expected RUB', array(
                                     '{code}' => $oTax->CurCode
                                 )));
@@ -265,10 +273,10 @@ class GDSNemoAgency extends CComponent
                     }
                     else
                     {
-                        Yii::log('Flight dont have Taxes. FlightId:'.$oSoapFlight->FlightId,'info');
+                        Yii::log('Flight dont have Taxes. FlightId:' . $oSoapFlight->FlightId, 'info');
                     }
                     //VarDumper::dump($oSoapFlight);die();
-                    if(isset($oFare->Tariffs->Tariff))
+                    if (isset($oFare->Tariffs->Tariff))
                     {
                         UtilsHelper::soapObjectsArray($oFare->Tariffs->Tariff);
                         foreach ($oFare->Tariffs->Tariff as $oTariff)
@@ -311,7 +319,7 @@ class GDSNemoAgency extends CComponent
                                 '{code}' => $route->arrivalCity->code,
                                 '{codes}' => implode(', ', $aCities),
                                 '{flightId}' => $oSoapFlight->FlightId
-                            )),'info','nemo');
+                            )), 'info', 'nemo');
                             $needSave = false;
                         }
                     }
@@ -322,13 +330,13 @@ class GDSNemoAgency extends CComponent
                 $oFlight->full_sum = $full_sum;
                 $oFlight->full_sum = UtilsHelper::soapElementValue($oSoapFlight->TotalPrice);
                 $oFlight->commission_price = UtilsHelper::soapElementValue($oSoapFlight->Commission);
-                if(isset($oSoapFlight->ValCompany))
+                if (isset($oSoapFlight->ValCompany))
                 {
                     $oFlight->valAirline = Airline::getAirlineByCode($oSoapFlight->ValCompany);
                 }
                 else
                 {
-                    if(count($markAirlineCodes) == 1)
+                    if (count($markAirlineCodes) == 1)
                     {
                         $oFlight->valAirline = Airline::getAirlineByCode(implode($markAirlineCodes));
                     }
@@ -337,20 +345,20 @@ class GDSNemoAgency extends CComponent
                         Yii::log(Yii::t('application', 'Validation airline not set. Market airlines codes: {codes}. FlightId: {flightId}', array(
                             '{codes}' => implode(', ', $markAirlineCodes),
                             '{flightId}' => $oSoapFlight->FlightId
-                        )),'info','nemo');
+                        )), 'info', 'nemo');
                         $needSave = false;
                     }
                 }
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;
 
-                if(!$eTicket)
+                if (!$eTicket)
                 {
-                    Yii::log(Yii::t('application','One or more segments dont have eticketing. FlightId:{flightId}',array('{flightId}' => $oSoapFlight->FlightId)));
+                    Yii::log(Yii::t('application', 'One or more segments dont have eticketing. FlightId:{flightId}', array('{flightId}' => $oSoapFlight->FlightId)));
                     $needSave = $needSave && $eTicket;
                 }
 
-                if($needSave)
+                if ($needSave)
                 {
                     $flights[] = $oFlight;
                 }
@@ -363,13 +371,13 @@ class GDSNemoAgency extends CComponent
             $errorCode |= ERROR_CODE_EMPTY;
         }
         //print_r($aFlights);
-        if($errorCode > 0)
+        if ($errorCode > 0)
         {
-            return array('flights'=>array(),'errorCode'=>$errorCode,'errorDescription'=>'');
+            return array('flights' => array(), 'errorCode' => $errorCode, 'errorDescription' => '');
         }
         else
         {
-            return array('flights'=>$flights,'errorCode'=>0,'errorDescription'=>'');
+            return array('flights' => $flights, 'errorCode' => 0, 'errorDescription' => '');
         }
 
 
@@ -452,7 +460,8 @@ class GDSNemoAgency extends CComponent
                 $oTraveller['DocumentInfo']['CountryCode'] = Country::model()->findByPk($passenger->oPassport->country_id)->code;
                 $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->oPassport->expiration);
             }
-        } else
+        }
+        else
         {
             throw new CException(Yii::t('application', 'Data in parameter oFlightBookingParams not valid'));
         }
@@ -464,7 +473,7 @@ class GDSNemoAgency extends CComponent
         $aParams = array(
             'Request' => array(
                 'Requisites' => array('Login' => Yii::app()->params['GDSNemo']['login'], 'Password' => Yii::app()->params['GDSNemo']['password']),
-                'RequestType'=>'U',
+                'RequestType' => 'U',
                 'UserID' => Yii::app()->params['GDSNemo']['userId'],
                 'GetAirRules' => array(
                     'FlightId' => '89487'

@@ -7,24 +7,23 @@
  */
 class AjaxController extends Controller
 {
-    public function actionGetOptimalPrice($from, $to, $dateStart, $dateEnd)
+    public function actionGetOptimalPrice($from, $to, $dateStart, $dateEnd, $forceUpdate=true)
     {
         try
         {
-            $url = "http://frontend.misha.voyanga/site/getOptimalPrice/from/$from/to/$to/dateStart/$dateStart/dateEnd/$dateEnd";
+            $dateStart = Event::getFlightFromDate($dateStart);
+            $dateEnd = Event::getFlightToDate($dateEnd);
 
+            $fromTo = FlightSearcher::getOptimalPrice($from, $to, $dateStart, false, $forceUpdate);
+            $toFrom = FlightSearcher::getOptimalPrice($to, $from, $dateEnd, false, $forceUpdate);
+            $fromBack = FlightSearcher::getOptimalPrice($from, $to, $dateStart, $dateEnd, $forceUpdate);
+            $response = array(
+                'priceTo' => (int)$fromTo,
+                'priceBack' => (int)$toFrom,
+                'priceToBack' => (int)$fromBack
+            );
             header('Content-type: application/json');
-            $ch = curl_init();
-            $headers["User-Agent"] = "Curl/1.0";
-
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch,CURLOPT_TIMEOUT,1000);
-            $response = curl_exec($ch);
-            curl_close($ch);
-            echo $response;
+            echo json_encode($response);
         }
         catch (Exception $e)
         {

@@ -138,11 +138,13 @@
             'url'=>$model->isNewRecord ? array('admin') : array('view','id'=>$model->id),
             'label'=>'Отмена',
         )); ?>
-        <br><br>
+        <br>
+        <?php echo (!$model->isNewRecord) ? ('<br>Из Москвы: '.$model->priceMoscow." руб., из Питера: ".$model->pricePiter." руб.<br>") : '' ?>
+        <br>
         <?php $this->widget('bootstrap.widgets.BootButton', array(
         'buttonType'=>'submit',
         'type'=>'warning',
-        'label'=>'Запросить цену для Москвы',
+        'label'=>($model->isNewRecord)?'Запросить цену для Москвы':'Уточнить цену для Москвы',
         'htmlOptions'=>array('id'=>'getPrice'),
         'loadingText'=>'Запрос цены...',
          )); ?>
@@ -150,7 +152,7 @@
         <?php $this->widget('bootstrap.widgets.BootButton', array(
         'buttonType'=>'submit',
         'type'=>'warning',
-        'label'=>'Запросить цену для Питера',
+        'label'=>($model->isNewRecord)?'Запросить цену для Питера':'Уточнить цену для Питера',
         'htmlOptions'=>array('id'=>'getPiterPrice'),
         'loadingText'=>'Запрос цены...',
     )); ?>

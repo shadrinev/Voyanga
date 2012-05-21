@@ -7,7 +7,7 @@
  */
 class MFlightSearch extends CComponent
 {
-    public static function getOptimalPrice($fromCityId, $toCityId, $date, $returnDate=false)
+    public static function getOptimalPrice($fromCityId, $toCityId, $date, $returnDate=false, $forceUpdate = false)
     {
         $flightSearchParams = new FlightSearchParams();
         $departureDate = date('d.m.Y', strtotime($date));
@@ -44,8 +44,11 @@ class MFlightSearch extends CComponent
             $criteria->addCondition('returnDate BETWEEN STR_TO_DATE("'.$returnDate.' 00:00:00", "%d.%m.%Y %H:%i:%s") and STR_TO_DATE("'.$returnDate.' 23:59:59", "%d.%m.%Y %H:%i:%s")');
             $criteria->addSearchCondition('withReturn', 1);
         }
-        $result = FlightCache::model()->deleteAll($criteria);
-        $fs->sendRequest($flightSearchParams);
+        if ($forceUpdate)
+        {
+            $result = FlightCache::model()->deleteAll($criteria);
+            $fs->sendRequest($flightSearchParams);
+        }
         $result = FlightCache::model()->find($criteria);
         if ($result)
         {
