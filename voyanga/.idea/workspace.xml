@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="fix for buttons">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120521_073815_alter_flight_cache_table.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120521_085052_alter_flight_cache_table.php" />
+    <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/controllers/AjaxController.php" afterPath="$PROJECT_DIR$/backend/controllers/AjaxController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/MFlightSearch.php" afterPath="$PROJECT_DIR$/frontend/components/MFlightSearch.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/models/FlightCache.php" afterPath="$PROJECT_DIR$/frontend/models/FlightCache.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/models/FlightSearch.php" afterPath="$PROJECT_DIR$/frontend/models/FlightSearch.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/gds/models/GDSNemo.php" afterPath="$PROJECT_DIR$/frontend/modules/gds/models/GDSNemo.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -37,10 +30,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AjaxController.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AjaxController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/controllers/AjaxController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="12" selection-start="405" selection-end="405" vertical-scroll-proportion="0.4586331">
+            <state line="15" column="12" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -49,7 +42,7 @@
       <file leaf-file-name="FlightCache.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/models/FlightCache.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="229" column="87" selection-start="9367" selection-end="9370" vertical-scroll-proportion="-21.64">
+            <state line="176" column="13" selection-start="7030" selection-end="7030" vertical-scroll-proportion="-16.2">
               <folding />
             </state>
           </provider>
@@ -64,10 +57,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MFlightSearch.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="MFlightSearch.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/components/MFlightSearch.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="38" selection-start="1698" selection-end="1703" vertical-scroll-proportion="0.0">
+            <state line="48" column="44" selection-start="2021" selection-end="2021" vertical-scroll-proportion="0.75656325">
               <folding />
             </state>
           </provider>
@@ -149,10 +142,10 @@
         <option value="$PROJECT_DIR$/frontend/controllers/SiteController.php" />
         <option value="$PROJECT_DIR$/frontend/models/FlightSearch.php" />
         <option value="$PROJECT_DIR$/frontend/models/FlightCache.php" />
-        <option value="$PROJECT_DIR$/frontend/components/MFlightSearch.php" />
         <option value="$PROJECT_DIR$/frontend/modules/gds/models/GDSNemo.php" />
         <option value="$PROJECT_DIR$/common/migrations/m120521_085052_alter_flight_cache_table.php" />
         <option value="$PROJECT_DIR$/backend/controllers/AjaxController.php" />
+        <option value="$PROJECT_DIR$/frontend/components/MFlightSearch.php" />
       </list>
     </option>
   </component>
@@ -834,7 +827,11 @@
       <created>1337585729105</created>
       <updated>1337585729105</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="fix for buttons">
+      <created>1337590465106</created>
+      <updated>1337590465106</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -852,7 +849,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924107" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1004,13 +1001,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/models/FlightCache.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="229" column="87" selection-start="9367" selection-end="9370" vertical-scroll-proportion="-21.64">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/models/FlightSearch.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="104" column="32" selection-start="3882" selection-end="3884" vertical-scroll-proportion="-11.0">
@@ -1053,16 +1043,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/components/MFlightSearch.php">
+    <entry file="file://$PROJECT_DIR$/backend/controllers/AjaxController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="38" selection-start="1698" selection-end="1703" vertical-scroll-proportion="0.0">
+        <state line="15" column="12" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/controllers/AjaxController.php">
+    <entry file="file://$PROJECT_DIR$/frontend/models/FlightCache.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="12" selection-start="405" selection-end="405" vertical-scroll-proportion="0.4586331">
+        <state line="176" column="13" selection-start="7030" selection-end="7030" vertical-scroll-proportion="-16.2">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/MFlightSearch.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="44" selection-start="2021" selection-end="2021" vertical-scroll-proportion="0.75656325">
           <folding />
         </state>
       </provider>
