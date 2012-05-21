@@ -154,7 +154,10 @@ class GDSNemo extends CComponent
         //processing response
 
 
-        //print_r( $oSoapResponse );
+        //print_r( $soapResponse );
+
+        if (!isset($soapResponse->SearchResult->SearchResult->Flights->Flight))
+            throw new CException('Bad soap response'.chr(13).CVarDumper::dumpAsString($soapResponse));
 
         $flights = array();
         Yii::log(print_r($soapResponse,true),'info','nemo');

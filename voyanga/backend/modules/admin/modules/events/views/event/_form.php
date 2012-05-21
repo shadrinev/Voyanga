@@ -138,11 +138,20 @@
             'url'=>$model->isNewRecord ? array('admin') : array('view','id'=>$model->id),
             'label'=>'Отмена',
         )); ?>
+        <br><br>
         <?php $this->widget('bootstrap.widgets.BootButton', array(
         'buttonType'=>'submit',
-        'type'=>'mini',
-        'label'=>'Запросить цену',
+        'type'=>'warning',
+        'label'=>'Запросить цену для Москвы',
         'htmlOptions'=>array('id'=>'getPrice'),
+        'loadingText'=>'Запрос цены...',
+         )); ?>
+        <br><br>
+        <?php $this->widget('bootstrap.widgets.BootButton', array(
+        'buttonType'=>'submit',
+        'type'=>'warning',
+        'label'=>'Запросить цену для Питера',
+        'htmlOptions'=>array('id'=>'getPiterPrice'),
         'loadingText'=>'Запрос цены...',
     )); ?>
 	</div>
@@ -159,9 +168,38 @@
             dateStart = $("#Event_startDate_date").val(),
             dateEnd = $("#Event_endDate_date").val();
             btn.button("loading");
-        $.getJSON("http://frontend.misha.voyanga/site/GetOptimalPrice/from/"+from+"/to/"+to+"/dateStart/"+dateStart+"/dateEnd/"+dateEnd+"?callback=?",function(data){
+            $.get("/ajax/GetOptimalPrice/from/"+from+"/to/"+to+"/dateStart/"+dateStart+"/dateEnd/"+dateEnd)
+            .done(function(data){
+                console.log(data);
+                btn.button("reset");
+                var two = data.priceTo + data.priceBack;
+                btn.append("&nbsp; <b>Цена: </b>"+Math.min(data.priceTo + data.priceBack, data.priceToBack) + " руб. (2 билета = " + two + " руб., туда-обратно = " + data.priceToBack + " руб.)");
+            })
+            .fail(function(data){
+                btn.button("reset");
+                btn.html("Произошёл сбой");
+                btn.addClass("disabled");
+            });
+        return false;
+    });
+    $("#getPiterPrice").on("click",function(e){
+        var btn = $(this),
+            from = 5185,
+            to = $("#Event_cityId").val(),
+            dateStart = $("#Event_startDate_date").val(),
+            dateEnd = $("#Event_endDate_date").val();
+            btn.button("loading");
+        $.get("/ajax/GetOptimalPrice/from/"+from+"/to/"+to+"/dateStart/"+dateStart+"/dateEnd/"+dateEnd)
+        .done(function(data){
             console.log(data);
             btn.button("reset");
+            var two = data.priceTo + data.priceBack;
+            btn.append("&nbsp; <b>Цена: </b>"+Math.min(data.priceTo + data.priceBack, data.priceToBack) + " руб. (2 билета = " + two + " руб., туда-обратно = " + data.priceToBack + " руб.)");
+        })
+        .fail(function(data){
+            btn.button("reset");
+            btn.html("Произошёл сбой");
+            e.preventDefault();
         });
         return false;
     });

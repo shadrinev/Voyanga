@@ -395,13 +395,7 @@ class SiteController extends Controller
 
         $priceToBack = MFlightSearch::getOptimalPrice($from, $to, $dateStart, $dateEnd);
         header('Content-type: application/json');
-        if ($_GET['callback']) {
-            print $_GET['callback']."(";
-        }
         echo json_encode(array('priceTo'=>$priceTo, 'priceBack'=>$priceBack, 'priceToBack'=>$priceToBack));
-        if ($_GET['callback']) {
-            print ")";
-        }
         die();
     }
 }
