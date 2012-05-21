@@ -143,6 +143,17 @@ class CMemCache extends CCache
 		return $this->_cache->get($key);
 	}
 
+    /**
+     * Retrieves a incremented value from cache with a specified key.
+     * This is the implementation of the method declared in the parent class.
+     * @param string $key a unique key identifying the cached value
+     * @return int the value incremented stored in cache, false if the value is not in the cache or expired.
+     */
+    public function increment($key)
+    {
+        return $this->_cache->increment($key);
+    }
+
 	/**
 	 * Retrieves multiple values from cache with the specified keys.
 	 * @param array $keys a list of keys identifying the cached values

@@ -26,6 +26,9 @@ return CMap::mergeArray(
             'trace'   => (int)(defined(YII_DEBUG)),
             'login' => 'webdev012',
             'password' => 'HHFJGYU3*^H',
-            'userId' => 15
+            'userId' => 15,
+            'agencyWsdlUri' => 'http://sys.nemo-ibe.com/nemoflights/wsdl.php?for=SearchFlights',
+            'agencyId' => '120',
+            'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD'
         )
     ), CMap::mergeArray(require_once (dirname(__FILE__) . '/environments/params-' . $commonParams['env.code'] . '.php'), $frontendParamsLocal)));

@@ -32,6 +32,21 @@ class UtilsHelper
         }
     }
 
+    /**
+     * Return real value of soap element.
+     * @static
+     * @param $element
+     * @return mixed
+     */
+    public static function soapElementValue($element){
+        if(is_object($element))
+        {
+            return $element->_;
+        }else{
+            return $element;
+        }
+    }
+
     public static function dateToPointDate($sDate)
     {
         return $sDate;
