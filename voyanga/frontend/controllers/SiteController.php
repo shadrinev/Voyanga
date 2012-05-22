@@ -384,4 +384,30 @@ class SiteController extends Controller
 		$result = count($aJData);
 		$this->render('dictionary',array('results'=>$result));*/
     }
+
+    function randomAlphaNum($length)
+    {
+
+        $rangeMin = pow(36, $length-1); //smallest number to give length digits in base 36
+        $rangeMax = pow(36, $length-1); //largest number to give length digits in base 36
+        $base10Rand = mt_rand($rangeMin, $rangeMax); //get the random number
+        $newRand = base_convert($base10Rand, 10, 36); //convert it
+
+        return $newRand; //spit it out
+
+    }
+
+    public function actionTestWrite()
+    {
+        $writer = Yii::app()->sharedMemory;
+        $writer->erase();
+        for ($i=0; $i<1000000; $i++)
+            $writer->write($i);
+    }
+
+    public function actionTestRead()
+    {
+        $reader = Yii::app()->sharedMemory;
+
+    }
 }

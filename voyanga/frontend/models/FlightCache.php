@@ -125,6 +125,15 @@ class FlightCache extends CActiveRecord
         ));
     }
 
+    public function beforeSave()
+    {
+        parent::beforeSave();
+        $dumper = new FlightCacheDumper();
+        $dumper->model = $this;
+        $dumper->save();
+        return false;
+    }
+
     /**
      * addCacheFromStack
      * Adding caches into db, flights with best paraments(price,time,pricetime)

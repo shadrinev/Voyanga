@@ -86,6 +86,11 @@ return CMap::mergeArray(
                 'errorAction' => 'site/error'
             ),
 
+            'sharedMemory' => array(
+                'class' => 'application.components.SharedMemory',
+                'maxSize' => 1024,
+            ),
+
             'log' => array(
                 'class' => 'CLogRouter',
                 'routes' => array(
