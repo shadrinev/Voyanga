@@ -93,7 +93,7 @@ class SharedMemory extends Component
     public function flushToFile()
     {
         $file = fopen($this->fileName, 'a');
-        $value = shmop_read($this->shmId, $this->startData, $this->maxSize-$this->startData);
+        $value = shmop_read($this->shmId, $this->startData, $this->offsetWrite - $this->startData);
         fwrite($file, $value);
         fclose($file);
         chmod($this->fileName, 0777);

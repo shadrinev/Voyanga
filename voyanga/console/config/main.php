@@ -43,7 +43,15 @@ return CMap::mergeArray (
 
 	'components'=>array(
 
-
+        'syncCacheExecuter' => array(
+            'class'=>'application.components.SyncCacheExecuter',
+            'frontends' => array(
+                array(
+                    'url' => 'http://frontend.misha.voyanga/sync/get',
+                    'key' => '12345'
+                )
+            )
+        ),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

@@ -30,5 +30,9 @@ return CMap::mergeArray(
             'agencyWsdlUri' => 'http://sys.nemo-ibe.com/nemoflights/wsdl.php?for=SearchFlights',
             'agencyId' => '120',
             'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD'
+        ),
+        'sharedMemory' => array(
+            'flushDirectory' => 'application.runtime.cache',
+            'flushExtension' => 'dump',
         )
     ), CMap::mergeArray(require_once (dirname(__FILE__) . '/environments/params-' . $commonParams['env.code'] . '.php'), $frontendParamsLocal)));

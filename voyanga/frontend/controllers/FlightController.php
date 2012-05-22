@@ -21,7 +21,7 @@ class FlightController extends ApiController
         }
     }
 
-    public function actionGetPrice($from, $to, $dateStart, $dateEnd, $forceUpdate)
+    public function actionFullCache()
     {
         try
         {
@@ -29,7 +29,6 @@ class FlightController extends ApiController
             $cache = FlightCache::model()->findAll();
             foreach ($cache as $c)
                 $c->save();
-            //$price = MFlightSearch::getOptimalPrice($from, $to, $dateStart, $dateEnd, $forceUpdate);
             $result = Yii::app()->sharedMemory->read(true);
         }
         catch (Exception $e)

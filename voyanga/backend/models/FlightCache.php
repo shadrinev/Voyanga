@@ -34,6 +34,7 @@ class FlightCache extends CommonFlightCache
         return parent::model($className);
     }
 
+
     public function beforeSave()
     {
         return parent::beforeSave();
