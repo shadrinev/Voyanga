@@ -14,6 +14,10 @@ class FlightVoyageStack
 
     public $bestMask = 0; // bitwise mask 0b001 - Best price, 0b010 - best recommended, 0b100 best speed
 
+    public $bestPriceTimeInd;
+    public $bestTimeInd;
+    public $bestPriceInd;
+
 
     public function __construct($params = NULL)
     {
@@ -65,10 +69,7 @@ class FlightVoyageStack
                     {
                         //If Voyage don't filtered, add to stack
                         $this->flightVoyages[] = $oFlightVoyage;
-
                         $flightsCodes[$flightCodes] = count($this->flightVoyages) - 1;
-
-
                         $iFullDuration = $oFlightVoyage->getFullDuration();
                         if ($bParamsNeedInit)
                         {
@@ -76,20 +77,20 @@ class FlightVoyageStack
                             $bParamsNeedInit = false;
                             $this->bestPrice = $oFlightVoyage->price;
                             $this->bestTime = $iFullDuration;
-                            $this->iBestTimeInd = count($this->flightVoyages) - 1;
-                            $this->iBestPriceInd = $this->iBestTimeInd;
+                            $this->bestTimeInd = count($this->flightVoyages) - 1;
+                            $this->bestPriceInd = $this->bestTimeInd;
                         }
                         if ($this->bestPrice > $oFlightVoyage->price)
                         {
                             //update best price params 
                             $this->bestPrice = $oFlightVoyage->price;
-                            $this->iBestPriceInd = count($this->flightVoyages) - 1;
+                            $this->bestPriceInd = count($this->flightVoyages) - 1;
                         }
                         if ($this->bestTime > $iFullDuration)
                         {
                             //update best time params
                             $this->bestTime = $iFullDuration;
-                            $this->iBestTimeInd = count($this->flightVoyages) - 1;
+                            $this->bestTimeInd = count($this->flightVoyages) - 1;
                         }
                     }
                 }
@@ -109,7 +110,7 @@ class FlightVoyageStack
                     if ($this->bestPriceTime > $iParamsFactor)
                     {
                         $this->bestPriceTime = $iParamsFactor;
-                        $this->iBestPriceTimeInd = $iInd;
+                        $this->bestPriceTimeInd = $iInd;
                     }
                 }
             }

@@ -11,7 +11,9 @@
  * @property integer $adultCount
  * @property integer $childCount
  * @property integer $infantCount
- * @property integer $cacheType
+ * @property integer $isBestPrice
+ * @property integer $isBestTime
+ * @property integer $isOptimal
  * @property integer $price
  * @property string $transportAirlines
  * @property integer $validationAirline
@@ -49,12 +51,12 @@ class FlightCache extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('departureCityId, arrivalCityId, adultCount, childCount, infantCount, cacheType, price, validationAirline, duration, flightSearchId, withReturn', 'numerical', 'integerOnly' => true),
+            array('departureCityId, arrivalCityId, adultCount, childCount, infantCount, isBestTime, isBestPrice, isOptimal, price, validationAirline, duration, flightSearchId, withReturn', 'numerical', 'integerOnly' => true),
             array('transportAirlines', 'length', 'max' => 45),
             array('timestamp, departureDate', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, timestamp, departureCityId, arrivalCityId, departureDate, returnDate, adultCount, childCount, infantCount, cacheType, price, transportAirlines, validationAirline, duration, flightSearchId, withReturn', 'safe', 'on' => 'search'),
+            array('id, timestamp, departureCityId, arrivalCityId, departureDate, returnDate, adultCount, childCount, infantCount, isBestTime, isBestPrice, isOptimal, price, transportAirlines, validationAirline, duration, flightSearchId, withReturn', 'safe', 'on' => 'search'),
         );
     }
 
@@ -83,7 +85,6 @@ class FlightCache extends CActiveRecord
             'adultCount' => 'Adult Count',
             'childCount' => 'Child Count',
             'infantCount' => 'Infant Count',
-            'cacheType' => 'Cache Type',
             'price' => 'Price',
             'transportAirlines' => 'Transport Airlines',
             'validationAirline' => 'Validation Airline',
@@ -112,7 +113,6 @@ class FlightCache extends CActiveRecord
         $criteria->compare('adultCount', $this->adultCount);
         $criteria->compare('childCount', $this->childCount);
         $criteria->compare('infantCount', $this->infantCount);
-        $criteria->compare('cacheType', $this->cacheType);
         $criteria->compare('price', $this->price);
         $criteria->compare('transportAirlines', $this->transportAirlines, true);
         $criteria->compare('validationAirline', $this->validationAirline);
@@ -128,70 +128,39 @@ class FlightCache extends CActiveRecord
     /**
      * addCacheFromStack
      * Adding caches into db, flights with best paraments(price,time,pricetime)
-     * @param FlightVoyageStack $oFlightVoyageStack
+     * @param FlightVoyageStack $flightVoyageStack
      */
-    public static function addCacheFromStack(FlightVoyageStack $oFlightVoyageStack)
+    public static function addCacheFromStack(FlightVoyageStack $flightVoyageStack)
     {
         $attributes = array(
-            'adultCount' => $oFlightVoyageStack->adult_count,
-            'childCount' => $oFlightVoyageStack->child_count,
-            'infantCount' => $oFlightVoyageStack->infant_count,
-            'flightSearchId' => $oFlightVoyageStack->flight_search_id
+            'adultCount' => $flightVoyageStack->adult_count,
+            'childCount' => $flightVoyageStack->child_count,
+            'infantCount' => $flightVoyageStack->infant_count,
+            'flightSearchId' => $flightVoyageStack->flight_search_id
         );
-        //echo "Try save all cache data";
-        if ($oFlightVoyageStack->iBestPriceInd !== false)
+        $ind = array_unique(array($flightVoyageStack->bestPriceInd, $flightVoyageStack->bestTimeInd, $flightVoyageStack->bestPriceTimeInd));
+        foreach ($ind as $i)
         {
-            //echo "Best price ind: {$oFlightVoyageStack->iBestPriceInd}";
-            //print_r($oFlightVoyageStack);
-            //saving to cache FlightVoyage with best price
-            try
-            { //echo "innnn";
-                $oFlightCache = new FlightCache();
-                $oFlightCache->setAttributes($attributes, false);
-                $oFlightCache->setFromFlightVoyage($oFlightVoyageStack->flightVoyages[$oFlightVoyageStack->iBestPriceInd]);
-                $oFlightCache->cacheType = 1;
-                //echo "Try save ".print_r($oFlightCache,true);
-                $oFlightCache->validate();
-                //echo CHtml::errorSummary($oFlightCache);
-                $oFlightCache->save();
-            }
-            catch (Exception $e)
-            { //echo "innnn333".$e->getMessage();
-                new CException(Yii::t('application', 'Cant save FlightCache with best price: ' . $e->getMessage()));
-            }
+            if ($i !== null)
+            {
+                $flightCache = new FlightCache();
+                $flightCache->setAttributes($attributes, false);
+                $flightCache->setFromFlightVoyage($flightVoyageStack->flightVoyages[$i]);
 
-        }
-        elseif (($oFlightVoyageStack->iBestTimeInd !== false) && ($oFlightVoyageStack->iBestTimeInd !== $oFlightVoyageStack->iBestPriceInd))
-        {
-            //saving to cache FlightVoyage with best time
-            //echo "Best time ind: {$oFlightVoyageStack->iBestTimeInd}";
-            try
-            {
-                $oFlightCache = new FlightCache();
-                $oFlightCache->setAttributes($attributes, false);
-                $oFlightCache->setFromFlightVoyage($oFlightVoyageStack->flightVoyages[$oFlightVoyageStack->iBestTimeInd]);
-                $oFlightCache->cacheType = 2;
-                $oFlightCache->save();
-            }
-            catch (Exception $e)
-            {
-                new CException(Yii::t('application', 'Cant save FlightCache with best time: ' . $e->getMessage()));
-            }
-        }
-        elseif (($oFlightVoyageStack->iBestPriceTimeInd !== false) && ($oFlightVoyageStack->iBestTimeInd !== $oFlightVoyageStack->iBestPriceInd))
-        {
-            //saving to cache FlightVoyage with best pricetime
-            try
-            {
-                $oFlightCache = new FlightCache();
-                $oFlightCache->setAttributes($attributes, false);
-                $oFlightCache->setFromFlightVoyage($oFlightVoyageStack->flightVoyages[$oFlightVoyageStack->iBestTimeInd]);
-                $oFlightCache->cacheType = 3;
-                $oFlightCache->save();
-            }
-            catch (Exception $e)
-            {
-                new CException(Yii::t('application', 'Cant save FlightCachewith best pricetime: ' . $e->getMessage()));
+                if ($flightVoyageStack->bestPriceInd == $i)
+                     $flightCache->isBestPrice = 1;
+
+                if ($flightVoyageStack->bestTimeInd == $i)
+                    $flightCache->isBestTime = 1;
+
+                if ($flightVoyageStack->bestPriceTimeInd == $i)
+                    $flightCache->isOptimal = 1;
+
+                if (!$flightCache->validate())
+                {
+                    throw new CException("Can't save fligh cache item.".CVarDumper::dump($flightCache->errors));
+                }
+                $flightCache->save();
             }
         }
     }
@@ -210,7 +179,6 @@ class FlightCache extends CActiveRecord
             $this->arrivalCityId = $oFlightVoyage->flights[0]->arrivalCityId;
             $this->departureDate = $oFlightVoyage->flights[0]->departureDate;
             $this->validationAirline = $oFlightVoyage->valAirline->id;
-            //$this->validationAirline = $oFlightVoyage->valAirlineCode;
             $this->price = $oFlightVoyage->price;
             $this->duration = $oFlightVoyage->getFullDuration();
             $this->withReturn = (count($oFlightVoyage->flights) == 2) ? 1 : 0;
@@ -222,19 +190,4 @@ class FlightCache extends CActiveRecord
             throw new CException(Yii::t('application', 'Required param type FlightVoyage'));
         }
     }
-
-    /*public function __get( $name ) {
-        if ( $name == 'departureCity' || $name == 'arrivalCity' ) {
-            if ( !$this->$name ) {
-                $this->$name = City::model()->findByPk( $this->{$name . '_id'} );
-                if ( !$this->$name ) throw new CException( Yii::t( 'application', '{var_name} not found. City with id {city_id} not set in db.', array(
-                        '{var_name}' => $name, 
-                        '{city_id}' => $this->{$name . '_id'} ) ) );
-            }
-            return $this->$name;
-        } else {
-            return $this->$name;
-        }
-    }*/
-
 }
