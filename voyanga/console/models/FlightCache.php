@@ -25,11 +25,7 @@ class FlightCache extends CommonFlightCache
 {
     public function beforeSave()
     {
-        parent::beforeSave();
-        $dumper = new FlightCacheDumper();
-        $dumper->model = $this;
-        $dumper->save();
-        return false;
+        return parent::beforeSave();
     }
 
 }
