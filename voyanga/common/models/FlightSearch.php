@@ -108,7 +108,7 @@ class FlightSearch extends CActiveRecord
                             'flight_search_id' => $this->id
                         );
                         $this->oFlightVoyageStack->setAttributes($attributes);
-                        FlightCache::addCacheFromStack($this->oFlightVoyageStack);
+                        return FlightCache::addCacheFromStack($this->oFlightVoyageStack);
                     }
                 }
             }

@@ -9,7 +9,7 @@ class GDSAdapter extends CApplicationComponent
 {
     public function init()
     {
-        Yii::import('frontend.modules.gds.models.*');
+        Yii::import('site.common.modules.gds.models.*');
     }
 
     public function flightSearch($flightSearchParams)

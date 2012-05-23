@@ -73,19 +73,19 @@ class SyncCacheExecuter extends Component
             $item = unserialize($cache);
             if (!$item instanceof FlightCacheDump)
                 continue;
-            $hash = $item->from.'_'.$item->to.'_'.$item->isOptimal.'_'.$item->isBestPrice.'_'.$item->isBestTime;
+            $hash = $item->from.'_'.$item->to.'_'.$item->dateFrom.'_'.$item->dateBack;
             $flag = isset($result[$hash]);
             if ($flag)
             {
-                if ($item->dateTime > $result[$hash]['time'])
+                if ($item->createdAt > $result[$hash]['time'])
                 {
-                    $result[$hash]['time'] = $item->dateTime;
+                    $result[$hash]['time'] = $item->createdAt;
                     $result[$hash]['attr'] = $item->attributes;
                 }
             }
             else
             {
-                $result[$hash]['time'] = $item->dateTime;
+                $result[$hash]['time'] = $item->createdAt;
                 $result[$hash]['attr'] = $item->attributes;
             }
         }
@@ -101,7 +101,6 @@ class SyncCacheExecuter extends Component
             CVarDumper::dump($hash);
             echo ":";
             CVarDumper::dump($value['time']);
-
             echo "\n";
         }
     }

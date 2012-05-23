@@ -50,7 +50,9 @@ return CMap::mergeArray(
                     '::1'
                 )
             ),
-            'gds'
+            'gds' => array(
+                'class' => 'site.common.modules.gds.GdsModule',
+            )
         ),
 
         // application components

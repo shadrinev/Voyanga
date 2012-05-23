@@ -37,22 +37,30 @@ class MFlightSearch extends CComponent
         $fs->requestId = '1';
         $fs->data = '{}';
         $criteria = new CDbCriteria();
-        $criteria->addColumnCondition(array('departureCityId'=>$fromCityId, 'arrivalCityId'=>$toCityId, 'isOptimal'=>1));
-        $criteria->addCondition('departureDate BETWEEN STR_TO_DATE("'.$date.' 00:00:00", "%d.%m.%Y %H:%i:%s") and STR_TO_DATE("'.$date.' 23:59:59", "%d.%m.%Y %H:%i:%s")');
+        $criteria->addColumnCondition(array('from'=>$fromCityId, 'to'=>$toCityId));
+        $criteria->addCondition('dateFrom = STR_TO_DATE("'.$date.'", "%d.%m.%Y")');
         if ($returnDate)
         {
-            $criteria->addCondition('returnDate BETWEEN STR_TO_DATE("'.$returnDate.' 00:00:00", "%d.%m.%Y %H:%i:%s") and STR_TO_DATE("'.$returnDate.' 23:59:59", "%d.%m.%Y %H:%i:%s")');
-            $criteria->addSearchCondition('withReturn', 1);
+            $criteria->addCondition('dateBack = STR_TO_DATE("'.$returnDate.'", "%d.%m.%Y")');
+        }
+        else
+        {
+            $criteria->addCondition('dateBack is NULL');
         }
         if ($forceUpdate)
         {
-            //$result = FlightCache::model()->deleteAll($criteria);
-            $fs->sendRequest($flightSearchParams);
+            $result = $fs->sendRequest($flightSearchParams);
         }
-        $result = FlightCache::model()->find($criteria);
+        else
+        {
+            $result = FlightCache::model()->find($criteria);
+        }
         if ($result)
         {
-            return (int)$result->price;
+            $return = (int)$result->priceBestPriceTime;
+            if ($return == 0)
+                $return = (int)$result->priceBestPrice;
+            return $return;
         }
         else
             throw new CException('Can\'t get best pricetime');

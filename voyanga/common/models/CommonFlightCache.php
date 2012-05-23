@@ -43,10 +43,10 @@ class CommonFlightCache extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('from, to, priceBestPrice, durationBestPrice, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'numerical', 'integerOnly'=>true),
+            array('from, to, priceBestPrice, durationBestPrice, priceBestTime, durationBestTime, priceBestPriceTime, durationBestPriceTime', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('from, to, dateFrom, dateBack, priceBestPrice, durationBestPrice, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'safe', 'on'=>'search'),
+            array('from, to, dateFrom, dateBack, priceBestPrice, durationBestPrice,  validatorBestPrice, transportBestPrice,  validatorBestPriceTime, transportBestPriceTime, validatorBestTime, transportBestTime, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'safe', 'on'=>'search'),
         );
     }
 
@@ -138,8 +138,8 @@ class CommonFlightCache extends CActiveRecord
             $flightCache->dateBack = $firstVoyage->flights[1]->departureDate;
 
         //working on from and to cities
-        $flightCache->from = $firstVoyage->getDepartureCityId();
-        $flightCache->to   = $firstVoyage->getArrivalCityId();
+        $flightCache->from = $firstVoyage->getDepartureCity()->id;
+        $flightCache->to   = $firstVoyage->getArrivalCity()->id;
 
         if ($flightVoyageStack->bestPriceInd !== null)
         {
@@ -164,6 +164,7 @@ class CommonFlightCache extends CActiveRecord
             throw new CException("Can't save fligh cache item.".CVarDumper::dump($flightCache->errors));
         }
         $flightCache->save();
+        return $flightCache;
     }
 
     /**

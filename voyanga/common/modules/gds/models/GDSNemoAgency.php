@@ -13,7 +13,7 @@ class GDSNemoAgency extends CComponent
      * @param int $expiration expiration time in seconds
      * @return mixed
      */
-    private static function request($methodName, $params, $cache = FALSE, $expiration = 0)
+    private static function request($methodName, $params, $cache = true, $expiration = 120)
     {
         $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'], 'exceptions' => true,
         ));

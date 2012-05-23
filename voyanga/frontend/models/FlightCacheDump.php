@@ -7,12 +7,11 @@
  */
 class FlightCacheDump extends Component
 {
-    public $dateTime;
+    public $createdAt;
     public $from;
     public $to;
-    public $isBestTime;
-    public $isBestPrice;
-    public $isOptimal;
+    public $dateFrom;
+    public $dateBack;
     public $attributes;
 
     /**
@@ -20,12 +19,11 @@ class FlightCacheDump extends Component
      */
     public function setModel($value)
     {
-        $this->dateTime = strtotime($value->timestamp);
-        $this->from = $value->departureCityId;
-        $this->to = $value->arrivalCityId;
-        $this->isBestPrice = $value->isBestPrice;
-        $this->isBestTime = $value->isBestTime;
-        $this->isOptimal = $value->isOptimal;
+        $this->createdAt = time();
+        $this->from = $value->from;
+        $this->to = $value->to;
+        $this->dateFrom = $value->dateFrom;
+        $this->dateBack = $value->dateBack;
         $this->attributes = serialize($value->attributes);
     }
 }
