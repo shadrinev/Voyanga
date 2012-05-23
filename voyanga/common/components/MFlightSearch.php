@@ -37,15 +37,15 @@ class MFlightSearch extends CComponent
         $fs->requestId = '1';
         $fs->data = '{}';
         $criteria = new CDbCriteria();
-        $criteria->addColumnCondition(array('from'=>$fromCityId, 'to'=>$toCityId));
-        $criteria->addCondition('dateFrom = STR_TO_DATE("'.$date.'", "%d.%m.%Y")');
+        $criteria->addColumnCondition(array('`from`'=>$fromCityId, '`to`'=>$toCityId));
+        $criteria->addCondition('`dateFrom` = STR_TO_DATE("'.$date.'", "%d.%m.%Y")');
         if ($returnDate)
         {
-            $criteria->addCondition('dateBack = STR_TO_DATE("'.$returnDate.'", "%d.%m.%Y")');
+            $criteria->addCondition('`dateBack` = STR_TO_DATE("'.$returnDate.'", "%d.%m.%Y")');
         }
         else
         {
-            $criteria->addCondition('dateBack is NULL');
+            $criteria->addCondition('`dateBack` = "0000-00-00"');
         }
         if ($forceUpdate)
         {
