@@ -6,9 +6,13 @@
  * @property integer $id
  * @property integer $position
  * @property string $code
+ * @property string $icaoCode
  * @property string $localRu
  * @property string $localEn
  * @property integer $cityId
+ * @property real $latitude
+ * @property real $longitude
+ * @property string $site
  *
  * The followings are the available model relations:
  * @property City $city
@@ -87,11 +91,11 @@ class Airport extends CActiveRecord
         return array(
             array('position, code, cityId', 'required'),
             array('position, cityId', 'numerical', 'integerOnly'=>true),
-            array('code', 'length', 'max'=>5),
-            array('localRu, localEn', 'length', 'max'=>45),
+            array('code, icaoCode', 'length', 'max'=>5),
+            array('localRu, localEn, site', 'length', 'max'=>45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, position, code, localRu, localEn, cityId', 'safe', 'on'=>'search'),
+            array('id, position, code, localRu, localEn, cityId, latitude, longitude', 'safe', 'on'=>'search'),
         );
     }
 

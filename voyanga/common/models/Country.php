@@ -14,6 +14,9 @@
  */
 class Country extends CActiveRecord
 {
+    private static $counries = array();
+    private static $codeIdMap = array();
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -95,5 +98,52 @@ class Country extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public static function getCountryByPk( $id )
+    {
+        if ( isset( Country::$counries[$id] ) )
+        {
+            return Country::$counries[$id];
+        }
+        else
+        {
+            $Country = Country::model()->findByPk($id);
+            if ( $Country )
+            {
+                Country::$counries[$Country->id] = $Country;
+                Country::$codeIdMap[$Country->code] = $Country->id;
+                return Country::$counries[$id];
+            }
+            else
+            {
+                throw new CException( Yii::t( 'application', 'Country with id {id} not found', array(
+                    '{id}' => $id ) ) );
+            }
+        }
+    }
+
+    public static function getCountryByCode( $code )
+    {
+        if ( isset( Country::$codeIdMap[$code] ) )
+        {
+            return Country::$counries[Country::$codeIdMap[$code]];
+        }
+        else
+        {
+            $Country = Country::model()->findByAttributes( array(
+                'code' => $code ) );
+            if ( $Country )
+            {
+                Country::$counries[$Country->id] = $Country;
+                Country::$codeIdMap[$Country->code] = $Country->id;
+                return Country::$counries[Country::$codeIdMap[$code]];
+            }
+            else
+            {
+                throw new CException( Yii::t( 'application', 'Country with code {code} not found', array(
+                    '{code}' => $code ) ) );
+            }
+        }
     }
 }
