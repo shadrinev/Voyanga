@@ -5,7 +5,8 @@
  * @author oleg
  *
  */
-class FlightPart {
+class FlightPart
+{
     public $departureCityId;
     public $arrivalCityId;
     public $opAirlineCode;
@@ -17,7 +18,7 @@ class FlightPart {
     public $arrivalAirport;
     public $aircraftName;
     public $aircraftCode;
-    
+
     public $distance;
     public $duration;
     public $timestampBegin;
@@ -29,12 +30,13 @@ class FlightPart {
     public $weekDays;
     public $code;
     public $tariffs = array();
-    
-    public function __construct( $oParams ) {
+
+    public function __construct($oParams)
+    {
         $this->departureCityId = $oParams->departure_city->id;
         $this->arrivalCityId = $oParams->arrival_city->id;
-        $this->timestampBegin = strtotime( $oParams->datetime_begin );
-        $this->timestampEnd = strtotime( $oParams->datetime_end );
+        $this->timestampBegin = strtotime($oParams->datetime_begin);
+        $this->timestampEnd = strtotime($oParams->datetime_end);
         $this->datetimeBegin = $oParams->datetime_begin;
         $this->datetimeEnd = $oParams->datetime_end;
         $this->code = $oParams->code;
@@ -50,7 +52,7 @@ class FlightPart {
         $this->arrivalAirportId = $oParams->arrival_airport->id;
         $this->departureAirport = $oParams->departure_airport;
         $this->arrivalAirport = $oParams->arrival_airport;
-    
+
     }
 
 }

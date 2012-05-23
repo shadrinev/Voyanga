@@ -1,25 +1,24 @@
 <?php
 /**
- * This is the model class for table "flight_cache". Class with information about one flight
+ * This is the model class for table "flight_cache".
  *
  * The followings are the available columns in table 'flight_cache':
- * @property integer $id
- * @property string $timestamp
- * @property integer $departureCityId
- * @property integer $arrivalCityId
- * @property string $departureDate
- * @property integer $adultCount
- * @property integer $childCount
- * @property integer $infantCount
- * @property integer $isBestPrice
- * @property integer $isBestTime
- * @property integer $isOptimal
- * @property integer $price
- * @property string $transportAirlines
- * @property integer $validationAirline
- * @property integer $duration
- * @property integer $flightSearchId
- * @property integer $withReturn
+ * @property integer $from
+ * @property integer $to
+ * @property string $dateFrom
+ * @property string $dateBack
+ * @property integer $priceBestPrice
+ * @property integer $durationBestPrice
+ * @property integer $validatorBestPrice
+ * @property integer $transportBestPrice
+ * @property integer $priceBestTime
+ * @property integer $durationBestTime
+ * @property integer $validatorBestTime
+ * @property integer $transportBestTime
+ * @property integer $priceBestPriceTime
+ * @property integer $durationBestPriceTime
+ * @property integer $validatorBestPriceTime
+ * @property integer $transportBestPriceTime
  */
 class CommonFlightCache extends CActiveRecord
 {
@@ -44,12 +43,10 @@ class CommonFlightCache extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('departureCityId, arrivalCityId, adultCount, childCount, infantCount, isBestTime, isBestPrice, isOptimal, price, validationAirline, duration, flightSearchId, withReturn', 'numerical', 'integerOnly' => true),
-            array('transportAirlines', 'length', 'max' => 45),
-            array('timestamp, departureDate', 'safe'),
+            array('from, to, priceBestPrice, durationBestPrice, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, timestamp, departureCityId, arrivalCityId, departureDate, returnDate, adultCount, childCount, infantCount, isBestTime, isBestPrice, isOptimal, price, transportAirlines, validationAirline, duration, flightSearchId, withReturn', 'safe', 'on' => 'search'),
+            array('from, to, dateFrom, dateBack, priceBestPrice, durationBestPrice, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'safe', 'on'=>'search'),
         );
     }
 
@@ -125,58 +122,69 @@ class CommonFlightCache extends CActiveRecord
      */
     public static function addCacheFromStack(FlightVoyageStack $flightVoyageStack)
     {
-        $attributes = array(
-            'adultCount' => $flightVoyageStack->adult_count,
-            'childCount' => $flightVoyageStack->child_count,
-            'infantCount' => $flightVoyageStack->infant_count,
-            'flightSearchId' => $flightVoyageStack->flight_search_id
-        );
-        $ind = array_unique(array($flightVoyageStack->bestPriceInd, $flightVoyageStack->bestTimeInd, $flightVoyageStack->bestPriceTimeInd));
-        foreach ($ind as $i)
+        $flightCache = new FlightCache;
+
+        $firstVoyage = $flightVoyageStack->flightVoyages[0];
+
+        //we aren't saving complex voyage
+        if ($firstVoyage->isComplex())
+            return;
+
+        $withReturn = (count($firstVoyage->flights) == 2);
+
+        //working on dates
+        $flightCache->dateFrom = $firstVoyage->flights[0]->departureDate;
+        if ($withReturn)
+            $flightCache->dateBack = $firstVoyage->flights[1]->departureDate;
+
+        //working on from and to cities
+        $flightCache->from = $firstVoyage->getDepartureCityId();
+        $flightCache->to   = $firstVoyage->getArrivalCityId();
+
+        if ($flightVoyageStack->bestPriceInd !== null)
         {
-            if ($i !== null)
-            {
-                $flightCache = new FlightCache();
-                $flightCache->setAttributes($attributes, false);
-                $flightCache->setFromFlightVoyage($flightVoyageStack->flightVoyages[$i]);
-
-                if ($flightVoyageStack->bestPriceInd == $i)
-                     $flightCache->isBestPrice = 1;
-
-                if ($flightVoyageStack->bestTimeInd == $i)
-                    $flightCache->isBestTime = 1;
-
-                if ($flightVoyageStack->bestPriceTimeInd == $i)
-                    $flightCache->isOptimal = 1;
-
-                if (!$flightCache->validate())
-                {
-                    throw new CException("Can't save fligh cache item.".CVarDumper::dump($flightCache->errors));
-                }
-                $flightCache->save();
-            }
+            $voyage = $flightVoyageStack->flightVoyages[$flightVoyageStack->bestPriceInd];
+            $flightCache->setFromFlightVoyage($voyage, 'BestPrice');
         }
+
+        if ($flightVoyageStack->bestTimeInd !== null)
+        {
+            $voyage = $flightVoyageStack->flightVoyages[$flightVoyageStack->bestPriceInd];
+            $flightCache->setFromFlightVoyage($voyage, 'BestTime');
+        }
+
+        if ($flightVoyageStack->bestPriceTimeInd !== null)
+        {
+            $voyage = $flightVoyageStack->flightVoyages[$flightVoyageStack->bestPriceInd];
+            $flightCache->setFromFlightVoyage($voyage, 'BestPriceTime');
+        }
+
+        if (!$flightCache->validate())
+        {
+            throw new CException("Can't save fligh cache item.".CVarDumper::dump($flightCache->errors));
+        }
+        $flightCache->save();
     }
 
     /**
      *
      * Set data from FlightVoyage object
-     * @param FlightVoyage $oFlightVoyage
+     * @param FlightVoyage $flightVoyage
      * @throws CException
      */
-    public function setFromFlightVoyage(FlightVoyage $oFlightVoyage)
+    public function setFromFlightVoyage(FlightVoyage $flightVoyage, $suffix)
     {
-        if ($oFlightVoyage instanceof FlightVoyage)
+        if ($flightVoyage instanceof FlightVoyage)
         {
-            $this->departureCityId = $oFlightVoyage->flights[0]->departureCityId;
-            $this->arrivalCityId = $oFlightVoyage->flights[0]->arrivalCityId;
-            $this->departureDate = $oFlightVoyage->flights[0]->departureDate;
-            $this->validationAirline = $oFlightVoyage->valAirline->id;
-            $this->price = $oFlightVoyage->price;
-            $this->duration = $oFlightVoyage->getFullDuration();
-            $this->withReturn = (count($oFlightVoyage->flights) == 2) ? 1 : 0;
-            if ($this->withReturn)
-                $this->returnDate = $oFlightVoyage->flights[1]->departureDate;
+            $priceAttribute = "price".$suffix;
+            $transportAttribute = "transport".$suffix;
+            $validatorAttribute = "validator".$suffix;
+            $durationAttribute = "duration".$suffix;
+
+            $this->$priceAttribute = $flightVoyage->price;
+            $this->$transportAttribute = $flightVoyage->getTransportAirlines();
+            $this->$validatorAttribute = $flightVoyage->valAirline->code;
+            $this->$durationAttribute = $flightVoyage->getFullDuration();
         }
         else
         {

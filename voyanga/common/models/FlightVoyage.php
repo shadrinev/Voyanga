@@ -83,4 +83,41 @@ class FlightVoyage
         $this->profitPrice = $priceInfo['profitPrice'];
     }
 
+    public function getDepartureCityId()
+    {
+        return $this->flights[0]->getDepartureCity();
+    }
+
+    public function getArrivalCityId()
+    {
+        return $this->flights[0]->getArrivalCity();
+    }
+
+    public function isComplex()
+    {
+        $countFlights = count($this->flights);
+        if ($countFlights > 2)
+            return true;
+        if ($countFlights==2)
+        {
+            $condition = ($this->flights[0]->getDepartuteCity() == $this->flights[1]->getArrivalCity());
+            if (!$condition)
+                return true;
+        }
+        return false;
+    }
+
+    public function getTransportAirlines()
+    {
+        $airlines = array();
+        foreach ($this->flights as $flight)
+        {
+            foreach ($flight->flightParts as $part)
+            {
+                $airlines[$part->opAirlineCode] = $part->opAirlineCode;
+            }
+        }
+        $return = implode(",", $airlines);
+        return $return;
+    }
 }
