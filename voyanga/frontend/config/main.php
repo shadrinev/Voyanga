@@ -90,7 +90,7 @@ return CMap::mergeArray(
 
             'sharedMemory' => array(
                 'class' => 'application.components.SharedMemory',
-                'maxSize' => 2048,
+                'maxSize' => 2*1024*1024,
             ),
 
             'log' => array(

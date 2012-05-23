@@ -7,7 +7,11 @@
  */
 class SyncCacheExecuter extends Component
 {
-    public $frontends;
+    public $maxQuerySize = 10240; //10kb
+
+    public $maxFilesPerOnce = 100;
+
+    public $frontends = array();
 
     private $totalCache;
 
@@ -26,15 +30,18 @@ class SyncCacheExecuter extends Component
         foreach ($this->frontends as $frontend)
         {
             $url = $this->buildUrl($frontend);
+            $counter = 0;
             //todo: change to while
-            if($cache = $this->getCacheFile($url))
+            while($cache = $this->getCacheFile($url) and ($counter<$this->maxFilesPerOnce))
             {
+                $counter++;
                 $cache = explode('##',$cache);
                 $this->totalCache = array_merge($this->totalCache, $cache);
                 unset($cache);
             }
         }
-        if ($n=sizeof($this->totalCache)>0)
+        $n=sizeof($this->totalCache);
+        if ($n>0)
         {
             echo "Syncing with $n incoming items\n";
             $this->merge();
@@ -56,7 +63,7 @@ class SyncCacheExecuter extends Component
 
     public function getCacheFile($url)
     {
-        echo "trying to get file from ".$url."\n";
+        //echo "trying to get file from ".$url."\n";
         $result = file_get_contents($url);
         return $result;
     }
@@ -90,18 +97,35 @@ class SyncCacheExecuter extends Component
             }
         }
         $this->totalCache = $result;
+        $n = sizeof($this->totalCache);
+        echo "Unique $n incoming items\n";
     }
 
     public function batchInsert()
     {
-        echo "batch insert incoming items\n";
+        echo "Batch insert incoming items\n";
+        $query = '';
+        $totalSize = 0;
         foreach ($this->totalCache as $hash=>$value)
         {
-            $attr = $value['attr'];
-            CVarDumper::dump($hash);
-            echo ":";
-            CVarDumper::dump($value['time']);
-            echo "\n";
+            $attr = unserialize($value['attr']);
+            $flightCache = new FlightCache;
+            $flightCache->setAttributes($attr, false);
+            $part = $flightCache->buildQuery()."\n";
+            $totalSize += strlen($part);
+            if ($totalSize>$this->maxQuerySize)
+            {
+                Yii::app()->db->createCommand($query)->execute();
+                $totalSize = 0;
+                $query = '';
+            }
+            else
+            {
+                $query .= $part;
+            }
+            unset($flightCache);
         }
+        if ($totalSize>0)
+            Yii::app()->db->createCommand($query)->execute();
     }
 }

@@ -19,7 +19,4 @@ class FlightCache extends CommonFlightCache
         $dumper->save();
         return false;
     }
-
-
-
 }

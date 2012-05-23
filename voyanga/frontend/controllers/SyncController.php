@@ -7,6 +7,7 @@
  */
 class SyncController extends Controller
 {
+    const CHUNK_SIZE = 100000;
 
     public function actionGet()
     {
@@ -16,10 +17,33 @@ class SyncController extends Controller
         {
             $size = filesize($files[0]);
             $file = fopen($files[0], 'r');
-            $content = fread($file, $size);
+            $descriptor = $files[0].".descr";
+            if (is_file($descriptor))
+            {
+                $descr = fopen($descriptor, "r");
+                $pos = fread($descr, filesize($descriptor));
+                fclose($descr);
+            }
+            else
+            {
+                $pos = 0;
+            }
+//            echo $pos;
+            fseek($file, $pos);
+            $content = fread($file, self::CHUNK_SIZE);
+            $position = strrpos($content, '##')+2;
+            $pos += $position;
+            echo substr($content, 0, $position);
             fclose($file);
-            echo $content;
-            //unlink($files[0]);
+
+            $descr = fopen($descriptor, "w");
+            fwrite($descr, $pos);
+            fclose($descr);
+            if ($pos>=$size)
+            {
+                unlink($files[0]);
+                unlink($descriptor);
+            }
             Yii::app()->end();
         }
     }

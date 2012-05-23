@@ -25,10 +25,13 @@ class FlightController extends ApiController
     {
         try
         {
-            Yii::app()->sharedMemory->erase();
+            //Yii::app()->sharedMemory->erase();
             $cache = FlightCache::model()->findAll();
-            foreach ($cache as $c)
-                $c->save();
+            for($i=0; $i<1000; $i++)
+            {
+                foreach ($cache as $c)
+                    $c->save();
+            }
             $result = Yii::app()->sharedMemory->read(true);
         }
         catch (Exception $e)

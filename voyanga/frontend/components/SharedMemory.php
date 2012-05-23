@@ -32,8 +32,10 @@ class SharedMemory extends Component
 
         $this->fileName = $dir.DIRECTORY_SEPARATOR.'cache_'.$project.".dump";
 
+        echo $project;
+
         $shmKey = ftok(__FILE__, $project);
-        $this->shmId = shmop_open($shmKey, "c", 0644, $this->maxSize);
+        $this->shmId = @shmop_open($shmKey, "c", 0644, $this->maxSize);
         $try = @unserialize(shmop_read($this->shmId, 0, 0));
         $this->offsetWrite = (int)$try;
         if ($this->offsetWrite == 0)
@@ -88,12 +90,11 @@ class SharedMemory extends Component
         $this->saveOffsetWrite();
     }
 
-
-
     public function flushToFile()
     {
         $file = fopen($this->fileName, 'a');
-        $value = shmop_read($this->shmId, $this->startData, $this->offsetWrite - $this->startData);
+        $size = $this->offsetWrite - $this->startData;
+        $value = shmop_read($this->shmId, $this->startData, $size);
         fwrite($file, $value);
         fclose($file);
         chmod($this->fileName, 0777);
@@ -117,5 +118,4 @@ class SharedMemory extends Component
     {
         shmop_close($this->shmId);
     }
-
 }
