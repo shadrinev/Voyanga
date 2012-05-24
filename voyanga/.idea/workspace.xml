@@ -3,14 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/models/FlightCache.php" afterPath="$PROJECT_DIR$/backend/models/FlightCache.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/CommonFlightCache.php" afterPath="$PROJECT_DIR$/common/models/CommonFlightCache.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/console/components/SyncCacheExecuter.php" afterPath="$PROJECT_DIR$/console/components/SyncCacheExecuter.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/console/config/main.php" afterPath="$PROJECT_DIR$/console/config/main.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/SharedMemory.php" afterPath="$PROJECT_DIR$/frontend/components/SharedMemory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/config/main.php" afterPath="$PROJECT_DIR$/frontend/config/main.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/controllers/FlightController.php" afterPath="$PROJECT_DIR$/frontend/controllers/FlightController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/controllers/SyncController.php" afterPath="$PROJECT_DIR$/frontend/controllers/SyncController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/models/FlightCache.php" afterPath="$PROJECT_DIR$/frontend/models/FlightCache.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -37,73 +35,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FlightCache.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/models/FlightCache.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="30" selection-start="36" selection-end="36" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SyncCacheExecuter.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/console/components/SyncCacheExecuter.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="12" selection-start="1103" selection-end="1103" vertical-scroll-proportion="0.66360503">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FlightCache.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/models/FlightCache.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="33" selection-start="449" selection-end="449" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FlightCacheDumper.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/components/FlightCacheDumper.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="6" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SyncController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/controllers/SyncController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="2" selection-start="899" selection-end="899" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommonFlightCache.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/CommonFlightCache.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="221" column="36" selection-start="8656" selection-end="8656" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/config/main.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="40" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SharedMemory.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/components/SharedMemory.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="96" column="67" selection-start="2485" selection-end="2485" vertical-scroll-proportion="0.0">
+            <state line="108" column="10" selection-start="3216" selection-end="3216" vertical-scroll-proportion="0.7352246">
               <folding />
             </state>
           </provider>
@@ -112,7 +47,43 @@
       <file leaf-file-name="FlightController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/controllers/FlightController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="20" selection-start="833" selection-end="833" vertical-scroll-proportion="0.0">
+            <state line="67" column="0" selection-start="1733" selection-end="1733" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SyncController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/controllers/SyncController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="26" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/console/config/main.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="71" column="43" selection-start="2187" selection-end="2187" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlightCache.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/models/FlightCache.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="36" selection-start="42" selection-end="42" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CommonFlightCache.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/models/CommonFlightCache.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="242" column="20" selection-start="9707" selection-end="9707" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -128,7 +99,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/common/models/FlightVoyage.php" />
         <option value="$PROJECT_DIR$/frontend/modules/gds/models/GDSNemoAgency.php" />
         <option value="$PROJECT_DIR$/frontend/components/MFlightSearch.php" />
         <option value="$PROJECT_DIR$/common/components/FlightSearcher.php" />
@@ -137,13 +107,14 @@
         <option value="$PROJECT_DIR$/common/config/params.php" />
         <option value="$PROJECT_DIR$/common/components/MFlightSearch.php" />
         <option value="$PROJECT_DIR$/backend/models/FlightCache.php" />
-        <option value="$PROJECT_DIR$/common/models/CommonFlightCache.php" />
         <option value="$PROJECT_DIR$/frontend/models/FlightCache.php" />
         <option value="$PROJECT_DIR$/frontend/config/main.php" />
-        <option value="$PROJECT_DIR$/frontend/controllers/FlightController.php" />
-        <option value="$PROJECT_DIR$/frontend/controllers/SyncController.php" />
-        <option value="$PROJECT_DIR$/console/components/SyncCacheExecuter.php" />
         <option value="$PROJECT_DIR$/frontend/components/SharedMemory.php" />
+        <option value="$PROJECT_DIR$/common/models/CommonFlightCache.php" />
+        <option value="$PROJECT_DIR$/console/config/main.php" />
+        <option value="$PROJECT_DIR$/frontend/controllers/SyncController.php" />
+        <option value="$PROJECT_DIR$/frontend/controllers/FlightController.php" />
+        <option value="$PROJECT_DIR$/console/components/SyncCacheExecuter.php" />
       </list>
     </option>
   </component>
@@ -260,24 +231,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="components" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -306,7 +259,39 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -835,7 +820,11 @@
       <created>1337769411108</created>
       <updated>1337769411108</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="new forced cache is working">
+      <created>1337782091211</created>
+      <updated>1337782091211</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -943,69 +932,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/modules/gds/models/GDSNemoAgency.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="64" selection-start="548" selection-end="548" vertical-scroll-proportion="0.26906475">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="248" column="46" selection-start="8098" selection-end="8098" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/FlightSearcher.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="39" selection-start="294" selection-end="294" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/MFlightSearch.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="9" selection-start="1865" selection-end="1865" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_9.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="816" column="9" selection-start="26124" selection-end="26124" vertical-scroll-proportion="0.33295062">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_5.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="411" column="9" selection-start="11477" selection-end="11477" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="25" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.21584386">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/models/FlightCache.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="33" selection-start="449" selection-end="449" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/models/FlightCache.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="30" selection-start="36" selection-end="36" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/components/FlightCacheDumper.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="6" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
@@ -1013,44 +939,107 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/controllers/FlightController.php">
+    <entry file="file://$PROJECT_DIR$/frontend/components/SharedMemory.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="20" selection-start="833" selection-end="833" vertical-scroll-proportion="0.0">
+        <state line="34" column="23" selection-start="700" selection-end="700" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/config/main.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_3.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="40" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0">
+        <state line="785" column="9" selection-start="20245" selection-end="20245" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/models/FlightCache.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="36" selection-start="42" selection-end="42" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/models/CommonFlightCache.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="221" column="36" selection-start="8656" selection-end="8656" vertical-scroll-proportion="0.0">
+        <state line="242" column="20" selection-start="9707" selection-end="9707" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console/config/environments/params-prod.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/config/environments/params-private.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="377" selection-end="377" vertical-scroll-proportion="0.27324915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console/config/environments/params-private.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console/config/environments/main-prod.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console/config/environments/main-private.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console/config/params.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/config/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/console/config/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="43" selection-start="2187" selection-end="2187" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/controllers/SyncController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="2" selection-start="899" selection-end="899" vertical-scroll-proportion="0.0">
+        <state line="9" column="26" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/components/SharedMemory.php">
+    <entry file="file://$PROJECT_DIR$/frontend/controllers/FlightController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="67" selection-start="2485" selection-end="2485" vertical-scroll-proportion="0.0">
+        <state line="67" column="0" selection-start="1733" selection-end="1733" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/console/components/SyncCacheExecuter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="12" selection-start="1103" selection-end="1103" vertical-scroll-proportion="0.66360503">
+        <state line="108" column="10" selection-start="3216" selection-end="3216" vertical-scroll-proportion="0.7352246">
           <folding />
         </state>
       </provider>

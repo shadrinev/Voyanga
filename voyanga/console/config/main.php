@@ -69,6 +69,7 @@ return CMap::mergeArray (
 			'password' => $params['db.password'],
 			'charset' => 'utf8',
 			'enableParamLogging' => YII_DEBUG,
+            'enableProfiling' => YII_DEBUG,
 			'emulatePrepare'=>true,
         ),
 		'urlManager' => array(

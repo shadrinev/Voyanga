@@ -31,15 +31,21 @@ class SharedMemory extends Component
             mkdir($dir);
 
         $this->fileName = $dir.DIRECTORY_SEPARATOR.'cache_'.$project.".dump";
-
-        echo $project;
-
         $shmKey = ftok(__FILE__, $project);
-        $this->shmId = @shmop_open($shmKey, "c", 0644, $this->maxSize);
+        $this->shmId = shmop_open($shmKey, "c", 0644, $this->maxSize);
         $try = @unserialize(shmop_read($this->shmId, 0, 0));
         $this->offsetWrite = (int)$try;
         if ($this->offsetWrite == 0)
             $this->saveOffsetWrite(true);
+        else
+            $this->detectStart();
+    }
+
+    private function detectStart()
+    {
+        $len = strlen((string)$this->maxSize);
+        $string = sprintf('%0'.$len.'u', $this->offsetWrite);
+        $this->startData = strlen(serialize($string));
     }
 
     public function erase()
@@ -95,6 +101,8 @@ class SharedMemory extends Component
         $file = fopen($this->fileName, 'a');
         $size = $this->offsetWrite - $this->startData;
         $value = shmop_read($this->shmId, $this->startData, $size);
+/*        echo $this->startData.":::";
+        echo $value;*/
         fwrite($file, $value);
         fclose($file);
         chmod($this->fileName, 0777);

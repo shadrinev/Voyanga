@@ -236,6 +236,13 @@ class CommonFlightCache extends CActiveRecord
         return $query;
     }
 
+    public function buildRow()
+    {
+        $attributes = $this->attributes;
+        $row = implode(',', $attributes)."\n";
+        return $row;
+    }
+
     public function forceSave()
     {
         $query = $this->buildQuery();

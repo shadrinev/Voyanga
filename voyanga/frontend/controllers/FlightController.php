@@ -39,4 +39,29 @@ class FlightController extends ApiController
             $this->sendError(500, $e->getMessage());
         }
     }
+
+    public function actionFullCache2()
+    {
+        try
+        {
+            //Yii::app()->sharedMemory->erase();
+            $cache = FlightCache::model()->findAll(array('limit'=>100));
+            for($i=0; $i<20; $i++)
+            {
+                foreach ($cache as $c)
+                {
+                    $from = rand(1, 6000);
+                    $to = rand(1, 6000);
+                    $c->from = $from;
+                    $c->to = $to;
+                    $c->save();
+                }
+            }
+            $result = Yii::app()->sharedMemory->read(true);
+        }
+        catch (Exception $e)
+        {
+            $this->sendError(500, $e->getMessage());
+        }
+    }
 }

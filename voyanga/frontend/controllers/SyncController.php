@@ -7,7 +7,7 @@
  */
 class SyncController extends Controller
 {
-    const CHUNK_SIZE = 100000;
+    const CHUNK_SIZE = 1e6;
 
     public function actionGet()
     {
