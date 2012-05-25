@@ -52,7 +52,7 @@ return array(
             'username' => $params['userDb.username'],
             'password' => $params['userDb.password'],
             'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
-            'enableParamLogging' => YII_DEBUG,
+            'enableParamLogging' => true,
             'charset' => 'utf8',
         ),
 

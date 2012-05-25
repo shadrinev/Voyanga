@@ -1,6 +1,7 @@
 <?php
 return array(
     'title'=>'Параметры поиска',
+    'action'=>'/site/flightsearch',
 
     'elements'=>array(
         'departureCityId'=>array(

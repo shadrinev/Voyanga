@@ -49,7 +49,7 @@ class UtilsHelper
 
     public static function dateToPointDate($sDate)
     {
-        return $sDate;
+        return date('d.m.Y',strtotime($sDate));
     }
 
     /**

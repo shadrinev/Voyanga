@@ -17,7 +17,7 @@ class FlightSearchForm extends CFormModel
     public $adultCount = 1;
     public $childCount;
     public $infantCount;
-    public $departureDate = '12.07.2012';
+    public $departureDate = '13.06.2012';
     public $returnDate;
 
     /**

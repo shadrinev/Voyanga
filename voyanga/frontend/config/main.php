@@ -47,6 +47,7 @@ return CMap::mergeArray(
                 'ipFilters' => array(
                     '192.168.0.74',
                     '192.168.0.8',
+                    '*',
                     '::1'
                 )
             ),
