@@ -5,7 +5,7 @@
  * @author oleg
  *
  */
-class FlightSearch extends CActiveRecord
+class FlightSearch extends CActiveRecord implements IStatisticItem
 {
     public $id;
     public $timestamp;
@@ -14,8 +14,8 @@ class FlightSearch extends CActiveRecord
     public $key;
     public $data;
     public $flight_class;
-    public $oFlightVoyageStack;
-    private $_aRoutes;
+    public $flightVoyageStack;
+    private $_routes;
 
     public function __construct($scenario = 'insert')
     {
@@ -33,83 +33,65 @@ class FlightSearch extends CActiveRecord
         return 'flight_search';
     }
 
-    public function sendRequest(FlightSearchParams $oFlightSearchParams)
+    public function sendRequest(FlightSearchParams $flightSearchParams)
     {
-        if ($oFlightSearchParams instanceof FlightSearchParams)
+        if ($flightSearchParams instanceof FlightSearchParams)
         {
-            if ($oFlightSearchParams->checkValid())
+            if ($flightSearchParams->checkValid())
             {
-                $this->_aRoutes = $oFlightSearchParams->routes;
-                $this->flight_class = $oFlightSearchParams->flight_class;
-                $this->key = $oFlightSearchParams->key;
-
-                if (false)//$fs = Yii::app()->cache->get('flightSearch' . $this->key))
+                $this->_routes = $flightSearchParams->routes;
+                $this->flight_class = $flightSearchParams->flight_class;
+                $this->key = $flightSearchParams->key;
+                if ($fs = Yii::app()->cache->get('flightSearch' . $this->key))
                 {
-                    $this->_aRoutes = $fs->_aRoutes;
+                    $this->_routes = $fs->_aRoutes;
                     $this->flight_class = $fs->flight_class;
                     $this->key = $fs->key;
                     $this->id = $fs->id;
                     $this->timestamp = $fs->timestamp;
                     $this->data = $fs->data;
                     $this->requestId = $fs->requestId;
-                    $this->oFlightVoyageStack = $fs->oFlightVoyageStack;
+                    $this->flightVoyageStack = $fs->oFlightVoyageStack;
                     $this->status = $fs->status;
-                    return;
+                    $this->afterSave();
+                    return FlightCache::addCacheFromStack($this->flightVoyageStack);
                 }
-                $timestamp = date('Y-m-d H:i:s', time() - Yii::app()->params['fligh_search_cache_time']);
-                //$sameFlightSearch = FlightSearch::model()->find( '`key`=:KEY AND timestamp>=:TIMESTAMP AND status=1', array(
-                //        ':KEY' => $this->key,
-                //        ':TIMESTAMP' => $timestamp ) );
-                $sameFlightSearch = false;
 
-                if ($sameFlightSearch)
+                //TODO: Making request to GDS
+                //fill fields of object:
+                //data
+                //status
+                //request_id
+                $sJdata = Yii::app()->gdsAdapter->FlightSearch($flightSearchParams);
+                if ($sJdata)
                 {
-                    $this->id = $sameFlightSearch->id;
-                    $this->timestamp = $sameFlightSearch->timestamp;
-                    $this->data = $sameFlightSearch->data;
-                    //echo "from cache";
-                    $this->requestId = $sameFlightSearch->request_id;
-                    $this->_aRoutes = Route::model()->findAll('`search_id`=:SEARCH_ID', array(
-                        ':SEARCH_ID' => $this->id
-                    ));
+                    $paramsFs['aFlights'] = $sJdata;
+                    $flightVoyageStack = new FlightVoyageStack($paramsFs);
+
+                    $this->flightVoyageStack = $flightVoyageStack;
+                    Yii::app()->cache->set('flightSearch' . $this->key, $this, Yii::app()->params['fligh_search_cache_time']);
+
+                    $this->status = 1;
+                    $this->data = json_encode($this->flightVoyageStack);
+                    $this->requestId = '1';
                 }
                 else
+                    $this->status = 2;
+
+                //$this->save();
+
+                if ($this->flightVoyageStack)
                 {
-                    //TODO: Making request to GDS
-                    //fill fields of object:
-                    //data
-                    //status
-                    //request_id
-                    $sJdata = Yii::app()->gdsAdapter->FlightSearch($oFlightSearchParams);
-                    if ($sJdata)
-                    {
-                        $aParamsFS['aFlights'] = $sJdata;
-                        $oFlightVoyageStack = new FlightVoyageStack($aParamsFS);
-
-                        $this->oFlightVoyageStack = $oFlightVoyageStack;
-                        Yii::app()->cache->set('flightSearch' . $this->key, $this, Yii::app()->params['fligh_search_cache_time']);
-
-                        $this->status = 1;
-                        $this->data = json_encode($this->oFlightVoyageStack);
-                        $this->requestId = '1';
-                    }
-                    else
-                        $this->status = 2;
-                    //echo "before saving";
-                    $this->save();
-
-                    if ($this->oFlightVoyageStack)
-                    {
-                        //saving best data to FlightCache
-                        $attributes = array(
-                            'adult_count' => $oFlightSearchParams->adultCount,
-                            'child_count' => $oFlightSearchParams->childCount,
-                            'infant_count' => $oFlightSearchParams->infantCount,
-                            'flight_search_id' => $this->id
-                        );
-                        $this->oFlightVoyageStack->setAttributes($attributes);
-                        return FlightCache::addCacheFromStack($this->oFlightVoyageStack);
-                    }
+                    //saving best data to FlightCache
+                    $attributes = array(
+                        'adult_count' => $flightSearchParams->adultCount,
+                        'child_count' => $flightSearchParams->childCount,
+                        'infant_count' => $flightSearchParams->infantCount,
+                        'flight_search_id' => $this->id
+                    );
+                    $this->flightVoyageStack->setAttributes($attributes);
+                    $this->afterSave();
+                    return FlightCache::addCacheFromStack($this->flightVoyageStack);
                 }
             }
             else
@@ -127,7 +109,7 @@ class FlightSearch extends CActiveRecord
     {
         if ($name === 'aRoutes')
         {
-            return $this->_aRoutes;
+            return $this->_routes;
         }
         else
         {
@@ -139,18 +121,18 @@ class FlightSearch extends CActiveRecord
     {
         if ($runValidation)
         {
-            if ($this->_aRoutes)
+            if ($this->_routes)
             {
                 //check valid of Rotes
                 //TODO: check good save
                 parent::save();
                 $this->id = $this->getPrimaryKey();
                 $this->timestamp = date('Y-m-d H:i:s');
-                foreach ($this->_aRoutes as $oRoute)
+                foreach ($this->_routes as $route)
                 {
-                    $oRoute->searchId = $this->id;
-                    $oRoute->save();
-                    $oRoute->id = $oRoute->getPrimaryKey();
+                    $route->searchId = $this->id;
+                    $route->save();
+                    $route->id = $route->getPrimaryKey();
                 }
             }
             else
@@ -158,5 +140,12 @@ class FlightSearch extends CActiveRecord
                 throw new CException(Yii::t('application', 'Cant save FlightSearch without Routes'));
             }
         }
+    }
+
+    public function getStatisticData()
+    {
+        return array(
+            ''
+        );
     }
 }

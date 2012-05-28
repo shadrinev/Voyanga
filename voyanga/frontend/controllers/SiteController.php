@@ -181,7 +181,7 @@ class SiteController extends Controller
         $fs->requestId = '1';
         $fs->data = '{}';
         $fs->sendRequest($oFlightSearchParams);
-        echo get_class($fs->oFlightVoyageStack->aFlightVoyages[0]);
+        echo get_class($fs->flightVoyageStack->aFlightVoyages[0]);
         //echo json_encode($fs->oFlightVoyageStack);
         //$fs->save();
         //$fs = FlightSearch::model()->find('id=:ID', array(':ID'=>2));
@@ -198,7 +198,7 @@ class SiteController extends Controller
 
         $this->render('test', array(
             'sText' => 'hh' . print_r(Yii::app()->gdsAdapter),
-            'flightStack' => $fs->oFlightVoyageStack
+            'flightStack' => $fs->flightVoyageStack
         ));
     }
 
@@ -265,7 +265,7 @@ class SiteController extends Controller
                 'form' => $form,
                 'message' => 'all right',
                 'flightSearchKey' => $fs->key,
-                'flightStack' => $fs->oFlightVoyageStack
+                'flightStack' => $fs->flightVoyageStack
             ));
         } else
         {
@@ -384,7 +384,7 @@ class SiteController extends Controller
                 'form' => $form,
                 'message' => 'all right',
                 'flightSearchKey' => $fs->key,
-                'flightStack' => $fs->oFlightVoyageStack
+                'flightStack' => $fs->flightVoyageStack
             ));
         } else
         {

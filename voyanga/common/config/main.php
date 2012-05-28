@@ -8,7 +8,18 @@
  * For all applications around Voyanga
  */
 return array(
+    'import' => array(
+        'site.common.extensions.YiiMongoDbSuite.*',
+    ),
     'components'=>array(
+        'mongodb' => array(
+            'class'             => 'EMongoDB',
+            'connectionString'  => 'mongodb://localhost',
+            'dbName'            => 'voyanga',
+            'fsyncFlag'         => false,
+            'safeFlag'          => false,
+            'useCursor'         => false,
+        ),
         'configManager' => array (
             'class' => 'ConfigurationManager',
         ),

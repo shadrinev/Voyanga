@@ -9,6 +9,7 @@ class AdminController extends Controller
 {
     public function actionIndex()
     {
+        VarDumper::dump(Yii::app()->mongodb); die();
         $this->render('index');
     }
 }
