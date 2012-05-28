@@ -7,38 +7,60 @@
  */
 class Statisticable extends CActiveRecordBehavior
 {
+    private $_modelName;
+    private $_modelId;
+
+    private function getRow()
+    {
+        $row = new Statistic;
+        $row->modelName = $this->getModelName();
+        $row->modelId = $this->getModelId();
+        $row->dateCreate = date('Y-m-d h:i:s', time());
+        return $row;
+    }
+
+    public function getModelName()
+    {
+        if ($this->_modelName==null)
+            $this->_modelName=get_class($this->getOwner());
+        return $this->_modelName;
+    }
+
+    public function getModelId()
+    {
+        if ($this->_modelId==null)
+            $this->_modelId=$this->getOwner()->getPrimaryKey();
+        return $this->_modelId;
+    }
+
     public function afterSave($event)
     {
-        $isMultiple = $this->getOwner()->isMultiple();
+        $row = $this->getRow();
         $attributes = $this->getOwner()->getStatisticData();
-        if ($isMultiple)
+        if (isset($attributes[0]) and (is_array($attributes[0])))
         {
-            foreach ($attributes as $i=>$row)
-                foreach ($row as $attr)
+            foreach ($attributes as $attr)
+            {
+                $keys = array_keys($attr);
+                $row->initSoftAttributes($keys);
+                foreach ($attr as $key=>$value)
                 {
-                    $row = new Statistic;
-                    $row->modelName = get_class($this->getOwner());
-                    $row->modelId = $this->getOwner()->getPrimaryKey();
-                    $row->initSoftAttributes(array_keys($attr));
-                    foreach ($attributes as $key=>$value)
-                    {
-                        $row->$key = $value;
-                    }
-                    $row->save();
+                    $row->$key = $value;
                 }
+                $row->save();
+                $row = $this->getRow();
+            }
         }
         else
         {
-            $row = new Statistic;
-            $row->modelName = get_class($this->getOwner());
-            $row->modelId = $this->getOwner()->getPrimaryKey();
-            $attributes = $this->getOwner()->getStatisticData();
-            $row->initSoftAttributes(array_keys($attributes));
-            foreach ($attributes as $key=>$value)
+            $attr = array_keys($attributes);
+            $row->initSoftAttributes($attr);
+            foreach ($attr as $key=>$value)
             {
                 $row->$key = $value;
             }
             $row->save();
         }
+        return true;
     }
 }

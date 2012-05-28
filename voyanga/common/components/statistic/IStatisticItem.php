@@ -12,10 +12,4 @@ interface IStatisticItem
      * @return array Data to save into statistic
      */
     public function getStatisticData();
-
-    /**
-     * @abstract
-     * @return boolean do we need to insert multiple rows
-     */
-    public function isMultiple();
 }

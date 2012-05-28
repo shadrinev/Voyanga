@@ -10,6 +10,7 @@
 return array(
     'import' => array(
         'site.common.extensions.YiiMongoDbSuite.*',
+        'site.common.components.statistic.*',
     ),
     'components'=>array(
         'mongodb' => array(

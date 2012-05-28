@@ -7,35 +7,35 @@ class FlightSearchParams
     public $childCount;
     public $infantCount;
 
-    public function addRoute($aRouteParams)
+    public function addRoute($routeParams)
     {
-        $oRoute = new Route();
-        if ($aRouteParams['departure_city_id'])
+        $route = new Route();
+        if ($routeParams['departure_city_id'])
         {
-            $oRoute->departureCityId = $aRouteParams['departure_city_id'];
+            $route->departureCityId = $routeParams['departure_city_id'];
         }
         else
         {
             throw new CException(Yii::t('application', 'Required param departure_city_id not set'));
         }
 
-        if ($aRouteParams['departure_city_id'])
+        if ($routeParams['departure_city_id'])
         {
-            $oRoute->arrivalCityId = $aRouteParams['arrival_city_id'];
+            $route->arrivalCityId = $routeParams['arrival_city_id'];
         }
         else
         {
             throw new CException(Yii::t('application', 'Required param arrival_city_id not set'));
         }
-        if ($aRouteParams['departure_date'])
+        if ($routeParams['departure_date'])
         {
-            if (strpos($aRouteParams['departure_date'], '.') !== false)
+            if (strpos($routeParams['departure_date'], '.') !== false)
             {
-                list($dd, $mm, $yy) = explode('.', $aRouteParams['departure_date']);
+                list($dd, $mm, $yy) = explode('.', $routeParams['departure_date']);
             }
-            elseif (strpos($aRouteParams['departure_date'], '-') !== false)
+            elseif (strpos($routeParams['departure_date'], '-') !== false)
             {
-                list($yy, $mm, $dd) = explode('.', $aRouteParams['departure_date']);
+                list($yy, $mm, $dd) = explode('.', $routeParams['departure_date']);
             }
             else
             {
@@ -45,36 +45,36 @@ class FlightSearchParams
             {
                 throw new CException(Yii::t('application', 'departure_date parametr - date incorrect '));
             }
-            if ($aRouteParams['adult_count'])
+            if ($routeParams['adult_count'])
             {
-                $oRoute->adultCount = intval($aRouteParams['adult_count']);
-                $this->adultCount = $oRoute->adultCount;
+                $route->adultCount = intval($routeParams['adult_count']);
+                $this->adultCount = $route->adultCount;
             }
-            if ($aRouteParams['child_count'])
+            if ($routeParams['child_count'])
             {
-                $oRoute->childCount = intval($aRouteParams['child_count']);
-                $this->childCount = $oRoute->childCount;
+                $route->childCount = intval($routeParams['child_count']);
+                $this->childCount = $route->childCount;
             }
-            if ($aRouteParams['infant_count'])
+            if ($routeParams['infant_count'])
             {
-                $oRoute->infantCount = intval($aRouteParams['infant_count']);
-                $this->infantCount = $oRoute->infantCount;
+                $route->infantCount = intval($routeParams['infant_count']);
+                $this->infantCount = $route->infantCount;
             }
-            $oRoute->departureDate = "{$yy}-{$mm}-{$dd}";
+            $route->departureDate = "{$yy}-{$mm}-{$dd}";
         }
         else
         {
             throw new CException(Yii::t('application', 'Required param departure_date not set'));
         }
-        if (($oRoute->adultCount + $oRoute->childCount) <= 0)
+        if (($route->adultCount + $route->childCount) <= 0)
         {
             throw new CException(Yii::t('application', 'Passengers count must be more then zero'));
         }
-        if (($oRoute->adultCount + $oRoute->childCount) < $oRoute->infantCount)
+        if (($route->adultCount + $route->childCount) < $route->infantCount)
         {
             throw new CException(Yii::t('application', 'Infants count must be equal or less then (adult + child) count'));
         }
-        $this->routes[] = $oRoute;
+        $this->routes[] = $route;
     }
 
     public function __get($name)

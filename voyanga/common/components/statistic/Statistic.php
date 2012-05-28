@@ -21,6 +21,4 @@ class Statistic extends EMongoSoftDocument
     {
         return parent::model($className);
     }
-
-
 }

@@ -17,6 +17,15 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
     public $flightVoyageStack;
     private $_routes;
 
+    public function behaviors()
+    {
+        return array(
+            'statisticable' => array(
+                'class' => 'site.common.components.statistic.Statisticable',
+            )
+        );
+    }
+
     public function __construct($scenario = 'insert')
     {
         parent::__construct($scenario);
@@ -42,9 +51,9 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
                 $this->_routes = $flightSearchParams->routes;
                 $this->flight_class = $flightSearchParams->flight_class;
                 $this->key = $flightSearchParams->key;
-                if ($fs = Yii::app()->cache->get('flightSearch' . $this->key))
+                if (false) //$fs = Yii::app()->cache->get('flightSearch' . $this->key))
                 {
-                    $this->_routes = $fs->_aRoutes;
+                    $this->_routes = $fs->routes;
                     $this->flight_class = $fs->flight_class;
                     $this->key = $fs->key;
                     $this->id = $fs->id;
@@ -105,16 +114,9 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
         }
     }
 
-    public function __get($name)
+    public function getRoutes()
     {
-        if ($name === 'aRoutes')
-        {
-            return $this->_routes;
-        }
-        else
-        {
-            return parent::__get($name);
-        }
+        return $this->_routes;
     }
 
     public function save($runValidation = true, $attributes = null)
@@ -142,10 +144,23 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
         }
     }
 
+    protected function createRow(Route $route)
+    {
+        return $route->attributes;
+    }
+
     public function getStatisticData()
     {
-        return array(
-            ''
-        );
+        $id = uniqid();
+        $rows = array();
+        foreach ($this->_routes as $route)
+        {
+            $element = array();
+            $element = $this->createRow($route);
+            $element['isComplex'] = sizeof($this->_routes)>1;
+            $element['searchId'] = $id;
+            $rows[] = $element;
+        }
+        return $rows;
     }
 }
