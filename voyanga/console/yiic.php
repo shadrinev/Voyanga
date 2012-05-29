@@ -3,7 +3,7 @@ defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
 
 defined('YII_DEBUG') or define('YII_DEBUG', (@$argv == 'index')? false : true);
 
-date_default_timezone_set('UTC'); 
+date_default_timezone_set('Europe/Moscow');
 
 $root=dirname(__FILE__);
 require_once('common/components/Yii.php');
