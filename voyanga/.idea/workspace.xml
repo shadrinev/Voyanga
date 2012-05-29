@@ -2,36 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/search" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/StatisticAdminModule.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/SearchController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/_form.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/_search.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/_view.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/admin.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/create.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/index.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/update.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/view.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/_form.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/_search.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/_view.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/admin.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/create.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/index.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/update.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/view.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/search/flight.php" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\components\statistic\etst.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory\_form.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory\_search.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory\_view.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory\admin.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory\create.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory\index.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory\update.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory\view.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event\_form.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event\_search.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event\_view.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event\admin.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event\create.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event\index.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event\update.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event\view.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\eventCategory" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\event" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/config/main.php" afterPath="$PROJECT_DIR$/backend/config/main.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/statistic/ReportExecuter.php" afterPath="$PROJECT_DIR$/common/components/statistic/ReportExecuter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php" afterPath="$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -85,19 +74,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AmountOfFlightSearch.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AmountOfFlightSearch.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="11" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/admin.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="36" column="26" selection-start="996" selection-end="996" vertical-scroll-proportion="0.65625">
               <folding />
             </state>
           </provider>
@@ -470,78 +450,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="search" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statistic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statistic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="event" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1245,7 +1153,11 @@
       <created>1338272871108</created>
       <updated>1338272871108</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="statistics of flight">
+      <created>1338280654104</created>
+      <updated>1338280654104</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1453,14 +1365,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="11" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/admin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="36" column="26" selection-start="996" selection-end="996" vertical-scroll-proportion="0.65625">
           <folding />
         </state>
       </provider>
