@@ -5,13 +5,13 @@
  * Date: 29.05.12
  * Time: 10:21
  */
-class PopularityOfDepartureCitySearch extends Report
+class PopularityOfFlightsSearch extends Report
 {
     private $result;
 
     public function __construct()
     {
-        $this->result = new PopularityOfDepartureCitySearchResult;
+        $this->result = new PopularityOfFlightsSearchResult;
     }
 
     public function getMongoCommand()
@@ -52,7 +52,7 @@ class PopularityOfDepartureCitySearch extends Report
     }
 }
 
-class PopularityOfDepartureCitySearchResult extends ReportResult
+class PopularityOfFlightsSearchResult extends ReportResult
 {
     private $departureCity;
     private $arrivalCity;

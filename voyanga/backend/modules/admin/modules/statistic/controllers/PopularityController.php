@@ -9,11 +9,11 @@ class PopularityController extends Controller
 {
     public function actionFlights()
     {
-        $report = new PopularityOfDepartureCitySearch();
+        $report = new PopularityOfFlightsSearch();
         $model = ReportExecuter::run($report);
         $model->scenario = 'search';
-        if(isset($_GET['PopularityOfDepartureCitySearchResult']))
-            $model->attributes=$_GET['PopularityOfDepartureCitySearchResult'];
+        if(isset($_GET['PopularityOfFlightsSearchResult']))
+            $model->attributes=$_GET['PopularityOfFlightsSearchResult'];
         $this->render('flights', array('model'=>$model));
     }
 }
