@@ -259,18 +259,17 @@ div.ticket-splitter
 }
 div.route-point
 {
-    display: block;
-    float: left;
+    display: inline-block;
+
     height: 100px;
 }
 div.route-flight-info
 {
-    display: block;
-    float: left;
+    display: inline-block;
+
     height: 100px;
 }
 div.flight-results
 {
-    height: 100px;
     display: block;
 }

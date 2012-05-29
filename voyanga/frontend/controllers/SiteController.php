@@ -576,4 +576,56 @@ class SiteController extends Controller
         $reader = Yii::app()->sharedMemory;
 
     }
+
+    public function actionTestMongo()
+    {
+        //$mdb = Yii::app()->mongodb->
+        /*$gdsReq = new GdsRequest();
+        $gdsReq->_id = 'dsfhkjhwiur32423';
+        $gdsReq->requestNum = '124';
+        $gdsReq->requestXml = '<xml></xml>';
+        $gdsReq->validate();
+        print_r($gdsReq->getErrors());
+        $gdsReq->save();
+
+        $loadReq = GdsRequest::model()->findAll();
+        foreach($loadReq as $req){
+            //echo $req->_id;
+            print_r($req);
+        }*/
+
+        $key = substr(md5('gdsRequestCounter'), 0, -8);
+        echo $key;
+        $pk = new MongoID($key);//4fc47ecc7ae3c8fa2700000d
+                                                        //f918ee7492ed68dc1fa4117bb7d5dc32
+        //print_r($pk);
+        $counter = MongoKeyValue::model()->findByPk($pk);
+        if(!$counter)
+        {
+            echo "inIF";
+            $counter = new MongoKeyValue();
+            $counter->value = time();
+            $counter->_id = new MongoID($key);
+            $counter->key = 'gdsRequestCounter';
+            $counter->save();
+        }
+        $modifier = new EMongoModifier();
+        $modifier->addModifier('value', 'inc', 1);
+
+        $criteria = new EMongoCriteria();
+        $criteria->addCond('_id','==', $pk);
+        //print_r( $criteria->getConditions());
+
+        // update all matched documents using the modifiers
+        //$status = MongoKeyValue::model()->updateAll($modifier, $criteria);
+        echo ';;;;;'.date("H:i:s");
+        //print_r($status);/**/
+        //echo $counter->value;
+
+        //$counter->update($modifier);
+        //echo $counter->value;
+        print_r($counter);
+
+
+    }
 }

@@ -821,6 +821,7 @@ abstract class EMongoDocument extends EMongoEmbeddedDocument
 		if($this->beforeFind())
 		{
 			$this->applyScopes($criteria);
+            print_r( $criteria->getConditions());print_r($criteria->getSelect());
 
 			$doc = $this->getCollection()->findOne($criteria->getConditions(), $criteria->getSelect());
 

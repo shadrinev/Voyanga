@@ -8,7 +8,7 @@ if(YII_DEBUG) {
     ini_set('display_errors', true);
 }
 
-date_default_timezone_set('UTC');
+date_default_timezone_set('Europe/Moscow');
 
 chdir(dirname(__FILE__).'/../../');
 
