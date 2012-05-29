@@ -2,63 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/statistic/reports" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoCRUD" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoModel/templates/default" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoModel" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/statistic/Report.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/statistic/ReportExecuter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/statistic/ReportResult.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/statistic/etst.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.data-provider.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.gridfs.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.indexing.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.named-scopes.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.partial-batch-update.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.partial-update.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.primary-key.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.relations.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.soft-models.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/advanced.write-flags.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/basic.arrays.embedded-documents.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/basic.arrays.simple.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/basic.arrays.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/basic.embedded-documents.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/basic.simple-embedded-document.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/basic.simple-model.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/basic.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/changelog.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/gii.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/introduction.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/querying.criteria-object.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/querying.simple-queries.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/querying.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/setup.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/special.multimodel.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/input/en/special.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/output/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/settings.ini" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/doc/sort_hints.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/examples/MongoImage.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/examples/User.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/examples/UserAddress.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/extra/EEmbeddedArraysBehavior.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/extra/EMongoPartialDocument.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/extra/EMongoUniqueValidator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoCRUD/MongoCRUDCode.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoCRUD/MongoCRUDGenerator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoModel/MongoModelCode.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoModel/MongoModelGenerator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoModel/templates/default/model.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/gii/mongoModel/views/index.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/test/EMongoDbFixtureManager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/test/EMongoDbTestCase.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/test/README.mkd" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/tests/README.mkd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/search" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/StatisticAdminModule.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/SearchController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/_form.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/_search.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/_view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/admin.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/create.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/update.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/eventCategory/view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/_form.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/_search.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/_view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/admin.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/create.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/update.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/search/flight.php" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\components\statistic\etst.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/config/main.php" afterPath="$PROJECT_DIR$/backend/config/main.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/statistic/ReportExecuter.php" afterPath="$PROJECT_DIR$/common/components/statistic/ReportExecuter.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php" afterPath="$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -85,46 +58,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FlightSearchParams.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/FlightSearchParams.php">
+      <file leaf-file-name="SearchController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/SearchController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="47" selection-start="336" selection-end="336" vertical-scroll-proportion="0.0">
+            <state line="12" column="46" selection-start="292" selection-end="292" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SiteController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/controllers/SiteController.php">
+      <file leaf-file-name="CDataProvider.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/web/CDataProvider.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="182" column="19" selection-start="5567" selection-end="5567" vertical-scroll-proportion="0.0">
+            <state line="39" column="41" selection-start="1632" selection-end="1641" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/config/main.php">
+      <file leaf-file-name="flight.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/search/flight.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="27" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
+            <state line="23" column="39" selection-start="515" selection-end="515" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IStatisticItem.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/IStatisticItem.php">
+      <file leaf-file-name="AmountOfFlightSearch.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="39" selection-start="265" selection-end="265" vertical-scroll-proportion="0.0">
+            <state line="33" column="11" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Statisticable.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/Statisticable.php">
+      <file leaf-file-name="admin.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/admin.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="44" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -133,34 +106,25 @@
       <file leaf-file-name="ReportResult.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/components/statistic/ReportResult.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="9" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0">
+            <state line="7" column="46" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReportExecuter.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/ReportExecuter.php">
+      <file leaf-file-name="EMongoSoftDocument.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoSoftDocument.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="35" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
+            <state line="122" column="47" selection-start="3061" selection-end="3061" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Report.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/Report.php">
+      <file leaf-file-name="IStatisticItem.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/statistic/IStatisticItem.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="9" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AmountOfFlightSearch.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="205" selection-end="205" vertical-scroll-proportion="0.21469575">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -169,7 +133,7 @@
       <file leaf-file-name="Statistic.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/components/statistic/Statistic.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="5" selection-start="234" selection-end="501" vertical-scroll-proportion="0.0">
+            <state line="16" column="32" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -185,13 +149,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/console/commands/CacheCommand.php" />
-        <option value="$PROJECT_DIR$/common/extensions/statistic/IStatisticItem.php" />
-        <option value="$PROJECT_DIR$/common/components/statistic/IStatisticItem.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/controllers/AdminController.php" />
-        <option value="$PROJECT_DIR$/common/config/main.php" />
-        <option value="$PROJECT_DIR$/common/models/FlightSearchParams.php" />
-        <option value="$PROJECT_DIR$/common/models/FlightSearch.php" />
         <option value="$PROJECT_DIR$/common/components/statistic/Statistic.php" />
         <option value="$PROJECT_DIR$/common/components/statistic/Statisticable.php" />
         <option value="$PROJECT_DIR$/common/components/statistic/etst.js" />
@@ -200,6 +157,13 @@
         <option value="$PROJECT_DIR$/common/components/statistic/reports/ReportResult.php" />
         <option value="$PROJECT_DIR$/common/components/statistic/reports/Report.php" />
         <option value="$PROJECT_DIR$/common/components/statistic/reports/ReportExecuter.php" />
+        <option value="$PROJECT_DIR$/backend/config/main.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/StatisticAdminModule.php" />
+        <option value="$PROJECT_DIR$/common/components/statistic/ReportExecuter.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/flight/admin.php" />
+        <option value="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoDocumentDataProvider.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/SearchController.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/search/flight.php" />
         <option value="$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php" />
       </list>
     </option>
@@ -312,208 +276,6 @@
               <option name="myItemId" value="extensions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YiiMongoDbSuite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YiiMongoDbSuite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YiiMongoDbSuite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YiiMongoDbSuite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gii" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mongoModel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YiiMongoDbSuite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gii" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mongoModel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YiiMongoDbSuite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gii" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mongoModel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="default" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YiiMongoDbSuite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gii" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -543,7 +305,393 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statistic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statistic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reports" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statistic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statistic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="search" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statistic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statistic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statistic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -584,11 +732,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views" />
+      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic" />
       <recent name="C:\WebServers\home\voyanga\backend\models" />
       <recent name="C:\WebServers\home\voyanga\frontend\models" />
       <recent name="C:\WebServers\home\voyanga\common\widgets" />
-      <recent name="C:\WebServers\home\voyanga\common\extensions\yiiext\behaviors\model\taggable" />
-      <recent name="C:\WebServers\home\voyanga\common\extensions" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\WebServers\home\voyanga\common\components\statistic" />
@@ -1093,20 +1241,24 @@
       <created>1338214308106</created>
       <updated>1338214308106</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="mongo full">
+      <created>1338272871108</created>
+      <updated>1338272871108</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19642857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19391026" sideWeight="0.8035714" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19391026" sideWeight="0.6707589" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -1158,7 +1310,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="save statistic to mongo" />
+    <option name="LAST_COMMIT_MESSAGE" value="statistics of flight" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1171,8 +1323,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="work with subforms" />
-    <MESSAGE value="work with bic picture" />
     <MESSAGE value="other stuff" />
     <MESSAGE value="gallery enabled" />
     <MESSAGE value="gallery improved" />
@@ -1196,63 +1346,30 @@
     <MESSAGE value="cache cleaner" />
     <MESSAGE value="mongo included" />
     <MESSAGE value="save statistic to mongo" />
+    <MESSAGE value="mongo full" />
+    <MESSAGE value="statistics of flight" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/components/UtilsHelper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/CommonFlightCache.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="27" selection-start="4699" selection-end="4699" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/modules/admin/controllers/AdminController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/MFlightSearch.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="39" selection-start="826" selection-end="826" vertical-scroll-proportion="0.0">
+        <state line="7" column="6" selection-start="123" selection-end="123" vertical-scroll-proportion="0.13662457">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/models/FlightSearch.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="60" selection-start="5166" selection-end="5166" vertical-scroll-proportion="-26.36">
+        <state line="23" column="74" selection-start="549" selection-end="562" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/FlightSearchParams.php">
+    <entry file="file://$PROJECT_DIR$/backend/config/main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="47" selection-start="336" selection-end="336" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/IStatisticItem.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="39" selection-start="265" selection-end="265" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/config/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="27" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
+        <state line="69" column="79" selection-start="2628" selection-end="2628" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1264,51 +1381,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/etst.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="230" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/controllers/SiteController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="19" selection-start="5567" selection-end="5567" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/Statistic.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="5" selection-start="234" selection-end="501" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/components/statistic/ReportExecuter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="35" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
+        <state line="18" column="33" selection-start="471" selection-end="480" vertical-scroll-proportion="0.35957697">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/StatisticAdminModule.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="13" selection-start="217" selection-end="217" vertical-scroll-proportion="0.21974148">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/components/statistic/ReportResult.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="9" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0">
+        <state line="7" column="46" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/Report.php">
+    <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoSoftDocument.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="9" selection-start="126" selection-end="126" vertical-scroll-proportion="0.0">
+        <state line="122" column="47" selection-start="3061" selection-end="3061" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/statistic/IStatisticItem.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/statistic/Statistic.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="32" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoDocumentDataProvider.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="0" selection-start="1075" selection-end="1075" vertical-scroll-proportion="-0.4101655">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/web/CDataProvider.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="41" selection-start="1632" selection-end="1641" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/SearchController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="46" selection-start="292" selection-end="292" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/search/flight.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="39" selection-start="515" selection-end="515" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="205" selection-end="205" vertical-scroll-proportion="0.21469575">
+        <state line="33" column="11" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/event/admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

@@ -9,6 +9,13 @@ class ReportExecuter
 {
     public static function run(Report $report)
     {
-        $report->getMongoCommand();
+        $commands = $report->getMongoCommand();
+        $db = Yii::app()->mongodb->getDbInstance();
+        foreach ($commands as $stage=>$command)
+        {
+            $result = $db->command($command);
+            //VarDumper::dump($result);
+        }
+        return $report->getResult();
     }
 }
