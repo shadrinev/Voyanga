@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'События'=>array('admin'),
-	'Управление',
+	'Статистика'=>array('admin'),
+	'Из города',
 );
 
 $this->beginWidget("AAdminPortlet", array(
@@ -11,7 +11,7 @@ $this->beginWidget("AAdminPortlet", array(
             "url" => array("flights"),
         ),
     ),
-    "title" => "Статистика поисков перелётов"
+    "title" => "Статистика поисков перелётов из города ".$report->fromCity->localRu
 ));
 ?>
 
@@ -23,8 +23,7 @@ $this->beginWidget("AAdminPortlet", array(
 	'columns'=>array(
         array(
             'header'=>'Откуда',
-            'value'=>'CHtml::link($data->departureCity->localRu,array("/admin/statistic/popularity/directions", "cityId"=>$data->departureCity->id))',
-            'type'=>'html'
+            'value'=>'$data->departureCity->localRu'
         ),
         array(
             'header'=>'Куда',

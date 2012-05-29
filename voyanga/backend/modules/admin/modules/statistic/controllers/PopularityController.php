@@ -16,4 +16,14 @@ class PopularityController extends Controller
             $model->attributes=$_GET['PopularityOfFlightsSearchResult'];
         $this->render('flights', array('model'=>$model));
     }
+
+    public function actionDirections($cityId)
+    {
+        $report = new PopularityDirectionsFromCity($cityId);
+        $model = ReportExecuter::run($report);
+        $model->scenario = 'search';
+        if(isset($_GET['PopularityDirectionsFromCityResult']))
+            $model->attributes=$_GET['PopularityDirectionsFromCityResult'];
+        $this->render('directions', array('model'=>$model, 'report'=>$report));
+    }
 }

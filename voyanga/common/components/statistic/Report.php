@@ -5,7 +5,7 @@
  * Date: 29.05.12
  * Time: 10:13
  */
-abstract class Report
+abstract class Report extends CComponent
 {
     abstract public function getMongoCommand();
 }
