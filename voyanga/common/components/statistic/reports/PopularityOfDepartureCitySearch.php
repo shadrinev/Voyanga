@@ -32,10 +32,14 @@ class PopularityOfDepartureCitySearch extends Report
                 return {count: sum};
             };
         ");
+        $finalize = new MongoCode("function (key, value) {
+            return value['count']
+        }");
         $commands['mapreduce1'] = array(
             "mapreduce" => Statistic::model()->getCollectionName(),
             "map" => $map,
             "reduce" => $reduce,
+            "finalize" => $finalize,
             "query" => array("modelName" => "FlightSearch"),
             "out" =>$this->result->getCollectionName()
         );
@@ -52,7 +56,6 @@ class PopularityOfDepartureCitySearchResult extends ReportResult
 {
     private $departureCity;
     private $arrivalCity;
-
 
     public function getDepartureCity()
     {
@@ -83,9 +86,9 @@ class PopularityOfDepartureCitySearchResult extends ReportResult
         return parent::search($caseSensitive, array(
             'keyField' => 'primaryKey',
             'sort'=>array(
-                'defaultOrder'=>'value.count desc',
+                'defaultOrder'=>'value desc',
                 'attributes'=>array(
-                    'count' => array('asc'=>'value.count asc', 'desc'=>'value.count desc')
+                    'value' => array('asc'=>'value asc', 'desc'=>'value desc')
         ))));
     }
 }

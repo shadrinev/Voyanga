@@ -19,6 +19,7 @@ $this->beginWidget("AAdminPortlet", array(
 	'id'=>'event-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+    'ajaxUpdate'=>true,
 	'columns'=>array(
         array(
             'header'=>'Откуда',
@@ -29,9 +30,9 @@ $this->beginWidget("AAdminPortlet", array(
             'value'=>'$data->arrivalCity->localRu'
         ),
         array(
-            'name'=>'value["count"]',
+            'name'=>'value',
             'header'=>'Число поисков',
-            'value'=>'$data->value["count"]'
+            'value'=>'$data->value'
         ),
 	),
 )); ?>

@@ -11,7 +11,9 @@ class PopularityController extends Controller
     {
         $report = new PopularityOfDepartureCitySearch();
         $model = ReportExecuter::run($report);
-
+        $model->scenario = 'search';
+        if(isset($_GET['PopularityOfDepartureCitySearchResult']))
+            $model->attributes=$_GET['PopularityOfDepartureCitySearchResult'];
         $this->render('flights', array('model'=>$model));
     }
 }

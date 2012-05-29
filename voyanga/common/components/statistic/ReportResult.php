@@ -10,6 +10,13 @@ abstract class ReportResult extends EMongoDocument
     public $_id;
     public $value;
 
+    public function rules()
+    {
+        return array(
+            array('value', 'safe', 'on'=>'search')
+        );
+    }
+
     abstract function getReportName();
 
     public function getPrimaryKey()
@@ -26,13 +33,16 @@ abstract class ReportResult extends EMongoDocument
     public function search($caseSensitive = false, $config = array())
     {
         $criteria = $this->getDbCriteria();
-
         foreach($this->getSafeAttributeNames() as $attribute)
         {
             if($this->$attribute !== null && $this->$attribute !== '')
             {
+                if (is_numeric($this->$attribute))
+                    $this->$attribute = '='.$this->$attribute;
                 if(is_array($this->$attribute) || is_object($this->$attribute))
+                {
                     $criteria->$attribute = $this->$attribute;
+                }
                 else if(preg_match('/^(?:\s*(<>|<=|>=|<|>|=|!=|==))?(.*)$/',$this->$attribute,$matches))
                 {
                     $op = $matches[1];
