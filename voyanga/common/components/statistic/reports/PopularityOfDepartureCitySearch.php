@@ -5,13 +5,13 @@
  * Date: 29.05.12
  * Time: 10:21
  */
-class AmountOfFlightSearch extends Report
+class PopularityOfDepartureCitySearch extends Report
 {
     private $result;
 
     public function __construct()
     {
-        $this->result = new AmountOfFlightSearchResult;
+        $this->result = new PopularityOfDepartureCitySearchResult;
     }
 
     public function getMongoCommand()
@@ -20,7 +20,7 @@ class AmountOfFlightSearch extends Report
         $map = new MongoCode("
             function() {
                 var date = ISODate(this.dateCreate);
-                var key = {date: date, searchId: this.searchId};
+                var key = {departureCityId: this.departureCityId, arrivalCityId: this.arrivalCityId };
                 emit(key, {count: 1});
             };
         ");
@@ -39,31 +39,35 @@ class AmountOfFlightSearch extends Report
             "query" => array("modelName" => "FlightSearch"),
             "out" =>$this->result->getCollectionName()
         );
-        $map = new MongoCode("
-            function() {
-                var key = {year: this._id['date'].getFullYear(), month: this._id['date'].getMonth()+1, day: this._id['date'].getDate()};
-                emit(key, {count: 1});
-            };
-        ");
-        $commands['mapreduce2'] = array(
-            "mapreduce" => $this->result->getCollectionName(),
-            "map" => $map,
-            "reduce" => $reduce,
-            //"query" => array("modelName" => "FlightSearch"),
-            "out" => $this->result->getCollectionName()
-        );
         return $commands;
     }
 
     public function getResult()
     {
-        $result = AmountOfFlightSearchResult::model();
-        return $result;
+        return $this->result;
     }
 }
 
-class AmountOfFlightSearchResult extends ReportResult
+class PopularityOfDepartureCitySearchResult extends ReportResult
 {
+    private $departureCity;
+    private $arrivalCity;
+
+
+    public function getDepartureCity()
+    {
+        if ($this->departureCity==null)
+            $this->departureCity = City::model()->findByPk($this->_id['departureCityId']);
+        return $this->departureCity;
+    }
+
+    public function getArrivalCity()
+    {
+        if ($this->arrivalCity==null)
+            $this->arrivalCity = City::model()->findByPk($this->_id['arrivalCityId']);
+        return $this->arrivalCity;
+    }
+
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
@@ -71,6 +75,17 @@ class AmountOfFlightSearchResult extends ReportResult
 
     public function getReportName()
     {
-        return 'amount_of_flight_search';
+        return 'popularity_of_flight_search';
+    }
+
+    public function search($caseSensitive = false, $config=array())
+    {
+        return parent::search($caseSensitive, array(
+            'keyField' => 'primaryKey',
+            'sort'=>array(
+                'defaultOrder'=>'value.count desc',
+                'attributes'=>array(
+                    'count' => array('asc'=>'value.count asc', 'desc'=>'value.count desc')
+        ))));
     }
 }

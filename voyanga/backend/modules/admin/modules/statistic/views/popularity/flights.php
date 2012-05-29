@@ -8,7 +8,7 @@ $this->beginWidget("AAdminPortlet", array(
     "menuItems" => array(
         array(
             "label" => "Обновить",
-            "url" => array("flight"),
+            "url" => array("flights"),
         ),
     ),
     "title" => "Статистика поисков перелётов"
@@ -17,14 +17,19 @@ $this->beginWidget("AAdminPortlet", array(
 
 <?php $this->widget('bootstrap.widgets.BootGridView',array(
 	'id'=>'event-grid',
-	'dataProvider'=>$dataProvider,
-	//'filter'=>$model,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
 	'columns'=>array(
         array(
-            'header'=>'Дата',
-            'value'=>'$data->primaryKey'
+            'header'=>'Откуда',
+            'value'=>'$data->departureCity->localRu'
         ),
         array(
+            'header'=>'Куда',
+            'value'=>'$data->arrivalCity->localRu'
+        ),
+        array(
+            'name'=>'value["count"]',
             'header'=>'Число поисков',
             'value'=>'$data->value["count"]'
         ),

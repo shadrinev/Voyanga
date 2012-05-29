@@ -30,6 +30,10 @@ class StatisticAdminModule extends ABaseAdminModule
                     "label" => "Поиски перелётов",
                     "url" => array("/admin/statistic/search/flight"),
                 ),
+                array(
+                    "label" => "Популярность рейсов",
+                    "url" => array("/admin/statistic/popularity/flights"),
+                ),
             )
         )
     );
