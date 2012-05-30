@@ -72,6 +72,9 @@ return CMap::mergeArray(
                     'benchmark' => array(
                         'class' => 'application.modules.admin.modules.benchmark.ABenchmarkModule'
                     ),
+                    'rbac' => array(
+                        'class' => 'packages.rbac.ARbacModule'
+                    ),
                 )
             )
         ),

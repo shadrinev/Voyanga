@@ -2,11 +2,51 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/components" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/controllers" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/models" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/operation" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/rbac" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/role" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/task" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/slug" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120530_093522_create_tables_for_rbac.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120530_112010_alter_tables_for_rbac.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/ARbacModule.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/components/ARbacFilter.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/controllers/OperationController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/controllers/RbacController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/controllers/RoleController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/controllers/TaskController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/models/AAuthAssignment.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/models/AAuthItem.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/models/AAuthItemChild.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/models/AAuthOperation.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/models/AAuthRole.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/models/AAuthTask.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/operation/_form.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/operation/create.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/operation/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/operation/update.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/operation/view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/rbac/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/role/_form.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/role/create.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/role/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/role/update.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/role/view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/task/_form.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/task/create.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/task/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/task/update.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/rbac/views/task/view.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/slug/ASlugCommand.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/packages/slug/ASluggable.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/directions.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/directions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/flights.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/flights.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/statistic/ReportResult.php" afterPath="$PROJECT_DIR$/common/components/statistic/ReportResult.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/statistic/reports/PopularityDirectionsFromCity.php" afterPath="$PROJECT_DIR$/common/components/statistic/reports/PopularityDirectionsFromCity.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/config/main.php" afterPath="$PROJECT_DIR$/backend/config/main.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/components/ABaseAdminModule.php" afterPath="$PROJECT_DIR$/backend/modules/admin/components/ABaseAdminModule.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -33,73 +73,96 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PopularityController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/PopularityController.php">
+      <file leaf-file-name="create.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/task/create.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="36" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0">
+            <state line="13" column="40" selection-start="326" selection-end="326" vertical-scroll-proportion="-6.5384617">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PopularityDirectionsFromCity.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/PopularityDirectionsFromCity.php">
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/role/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="0" selection-start="606" selection-end="606" vertical-scroll-proportion="-16.44">
+            <state line="29" column="38" selection-start="834" selection-end="834" vertical-scroll-proportion="-16.26923">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Report.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/Report.php">
+      <file leaf-file-name="AAuthAssignment.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/models/AAuthAssignment.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="40" selection-start="157" selection-end="157" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="directions.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/directions.php">
+      <file leaf-file-name="AAuthItem.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/models/AAuthItem.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="71" selection-start="332" selection-end="332" vertical-scroll-proportion="0.22104019">
+            <state line="139" column="29" selection-start="4834" selection-end="4834" vertical-scroll-proportion="-1.5165467">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReportResult.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/ReportResult.php">
+      <file leaf-file-name="ARbacFilter.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/components/ARbacFilter.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="10" selection-start="1977" selection-end="1977" vertical-scroll-proportion="0.0">
+            <state line="56" column="57" selection-start="1661" selection-end="1661" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EMongoDocumentDataProvider.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoDocumentDataProvider.php">
+      <file leaf-file-name="m120530_112010_alter_tables_for_rbac.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/migrations/m120530_112010_alter_tables_for_rbac.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="35" selection-start="2273" selection-end="2273" vertical-scroll-proportion="-21.2">
+            <state line="6" column="52" selection-start="150" selection-end="150" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EMongoCriteria.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoCriteria.php">
+      <file leaf-file-name="create.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/role/create.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="229" column="0" selection-start="6275" selection-end="6275" vertical-scroll-proportion="0.0">
+            <state line="13" column="26" selection-start="310" selection-end="310" vertical-scroll-proportion="-6.5384617">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="flights.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/flights.php">
+      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/operation/_form.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="35" selection-start="229" selection-end="236" vertical-scroll-proportion="0.0">
+            <state line="27" column="8" selection-start="642" selection-end="762" vertical-scroll-proportion="-6.769231">
+              <folding>
+                <marker date="1338372122410" expanded="true" signature="248:542" placeholder="{...}" />
+                <marker date="1338372122410" expanded="true" signature="290:540" placeholder="{...}" />
+                <marker date="1338372122410" expanded="true" signature="346:535" placeholder="{&quot;type&quot;: &quot;POST&quot;...}" />
+                <marker date="1338372122410" expanded="true" signature="470:531" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/role/_form.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="10" selection-start="141" selection-end="294" vertical-scroll-proportion="-5.230769">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/task/_form.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="33" selection-start="736" selection-end="736" vertical-scroll-proportion="-11.769231">
               <folding />
             </state>
           </provider>
@@ -115,22 +178,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/StatisticAdminModule.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/search/flight.php" />
-        <option value="$PROJECT_DIR$/common/lib/yii-1.1.10/web/CDataProvider.php" />
-        <option value="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoDocumentDataProvider.php" />
-        <option value="$PROJECT_DIR$/common/lib/yii-1.1.10/web/CSort.php" />
-        <option value="$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php" />
-        <option value="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoDocument.php" />
-        <option value="$PROJECT_DIR$/common/components/statistic/reports/PopularityOfDepartureCitySearch.php" />
-        <option value="$PROJECT_DIR$/common/components/statistic/reports/PopularityOfFlightsSearch.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/PopularityController.php" />
-        <option value="$PROJECT_DIR$/common/components/statistic/Report.php" />
-        <option value="$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoCriteria.php" />
-        <option value="$PROJECT_DIR$/common/components/statistic/reports/PopularityDirectionsFromCity.php" />
-        <option value="$PROJECT_DIR$/common/components/statistic/ReportResult.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/flights.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/directions.php" />
+        <option value="$PROJECT_DIR$/backend/config/main.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/components/ARbacFilter.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/operation/index.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/operation/_form.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/ARbacModule.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/components/ABaseAdminModule.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/operation/create.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/operation/update.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/task/index.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/role/_form.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/task/_form.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/task/create.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/role/create.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/views/role/index.php" />
+        <option value="$PROJECT_DIR$/common/packages/rbac/models/AAuthItem.php" />
+        <option value="$PROJECT_DIR$/common/migrations/m120530_112010_alter_tables_for_rbac.php" />
       </list>
     </option>
   </component>
@@ -239,7 +302,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
+              <option name="myItemId" value="packages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -254,6 +317,118 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="packages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rbac" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="packages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rbac" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="packages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rbac" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="role" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="packages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rbac" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="packages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rbac" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -275,37 +450,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statistic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statistic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="reports" />
+              <option name="myItemId" value="migrations" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -338,198 +483,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statistic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statistic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statistic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="popularity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statistic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -588,18 +541,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\common\packages" />
+      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules" />
       <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\popularity" />
       <recent name="C:\WebServers\home\voyanga\common\components\statistic\reports" />
       <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\controllers" />
-      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views" />
-      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\common\packages" />
       <recent name="C:\WebServers\home\voyanga\common\components\statistic" />
       <recent name="C:\WebServers\home\voyanga\common\components\statistic\reports" />
       <recent name="C:\WebServers\home\voyanga\common\components" />
       <recent name="C:\WebServers\home\voyanga\common\models" />
-      <recent name="C:\WebServers\home\voyanga\common\modules" />
     </key>
   </component>
   <component name="RestoreUpdateTree">
@@ -1125,7 +1078,15 @@
       <created>1338302170106</created>
       <updated>1338302170107</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="popularity of flights from city">
+      <created>1338359590107</created>
+      <updated>1338359590107</updated>
+    </task>
+    <task id="LOCAL-00086" summary="flight to">
+      <created>1338361520103</created>
+      <updated>1338361520103</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1136,7 +1097,7 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19642857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19642857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19391026" sideWeight="0.8035714" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1190,7 +1151,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="new report" />
+    <option name="LAST_COMMIT_MESSAGE" value="flight to" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1203,8 +1164,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="fix for image upload" />
-    <MESSAGE value="added remove buttons for resource image files" />
     <MESSAGE value="work on event url done" />
     <MESSAGE value="now we can call price" />
     <MESSAGE value="fix for buttons" />
@@ -1228,121 +1187,126 @@
     <MESSAGE value="report for the most popular flights" />
     <MESSAGE value="refactored" />
     <MESSAGE value="new report" />
+    <MESSAGE value="popularity of flights from city" />
+    <MESSAGE value="flight to" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php">
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/components/ABaseAdminModule.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="1" selection-start="1924" selection-end="1924" vertical-scroll-proportion="1.2686567">
+        <state line="40" column="1" selection-start="1168" selection-end="1168" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Event.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/rbac/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="5" column="10" selection-start="110" selection-end="116" vertical-scroll-proportion="-3.2692308">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoSoftDocument.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/operation/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="49" selection-start="515" selection-end="515" vertical-scroll-proportion="0.0">
+        <state line="7" column="4" selection-start="176" selection-end="176" vertical-scroll-proportion="-2.6153846">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/Statisticable.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/operation/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0787309">
+        <state line="7" column="14" selection-start="189" selection-end="199" vertical-scroll-proportion="-4.576923">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/Statistic.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/operation/update.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="10" column="4" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoDocument.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/task/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="845" column="0" selection-start="25192" selection-end="25192" vertical-scroll-proportion="-7.2">
+        <state line="17" column="34" selection-start="427" selection-end="427" vertical-scroll-proportion="-11.115385">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/operation/_form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="8" selection-start="642" selection-end="762" vertical-scroll-proportion="-6.769231">
           <folding>
-            <marker date="1338299992063" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1338372122410" expanded="true" signature="248:542" placeholder="{...}" />
+            <marker date="1338372122410" expanded="true" signature="290:540" placeholder="{...}" />
+            <marker date="1338372122410" expanded="true" signature="346:535" placeholder="{&quot;type&quot;: &quot;POST&quot;...}" />
+            <marker date="1338372122410" expanded="true" signature="470:531" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/web/CDataProvider.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/task/_form.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="30" selection-start="2807" selection-end="2810" vertical-scroll-proportion="-5.56">
+        <state line="21" column="33" selection-start="736" selection-end="736" vertical-scroll-proportion="-11.769231">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoDocumentDataProvider.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/task/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="35" selection-start="2273" selection-end="2273" vertical-scroll-proportion="-21.2">
+        <state line="13" column="40" selection-start="326" selection-end="326" vertical-scroll-proportion="-6.5384617">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoCriteria.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/role/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="229" column="0" selection-start="6275" selection-end="6275" vertical-scroll-proportion="0.0">
+        <state line="13" column="26" selection-start="310" selection-end="310" vertical-scroll-proportion="-6.5384617">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/Report.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/role/_form.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="40" selection-start="157" selection-end="157" vertical-scroll-proportion="0.0">
+        <state line="11" column="10" selection-start="141" selection-end="294" vertical-scroll-proportion="-5.230769">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/PopularityOfFlightsSearch.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/models/AAuthAssignment.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="25" selection-start="142" selection-end="142" vertical-scroll-proportion="-0.33180252">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/PopularityController.php">
+    <entry file="file://$PROJECT_DIR$/common/migrations/m120530_112010_alter_tables_for_rbac.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="36" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0">
+        <state line="6" column="52" selection-start="150" selection-end="150" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/ReportResult.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/components/ARbacFilter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="10" selection-start="1977" selection-end="1977" vertical-scroll-proportion="0.0">
+        <state line="56" column="57" selection-start="1661" selection-end="1661" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/PopularityDirectionsFromCity.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/role/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="606" selection-end="606" vertical-scroll-proportion="-16.44">
+        <state line="29" column="38" selection-start="834" selection-end="834" vertical-scroll-proportion="-16.26923">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/flights.php">
+    <entry file="file://$PROJECT_DIR$/common/packages/rbac/models/AAuthItem.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="35" selection-start="229" selection-end="236" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/views/popularity/directions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="71" selection-start="332" selection-end="332" vertical-scroll-proportion="0.22104019">
+        <state line="139" column="29" selection-start="4834" selection-end="4834" vertical-scroll-proportion="-1.5165467">
           <folding />
         </state>
       </provider>

@@ -4,7 +4,7 @@
  * @author Charles Pick
  * @package packages.admin.components
  */
-abstract class ABaseAdminModule extends CWebModule
+abstract class  ABaseAdminModule extends CWebModule
 {
     /**
      * Holds the menu items to show for this module.
