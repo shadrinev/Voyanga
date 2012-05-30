@@ -19,11 +19,21 @@ class PopularityController extends Controller
 
     public function actionDirections($cityId)
     {
-        $report = new PopularityDirectionsFromCity($cityId);
+        $report = new PopularityDirectionsCity($cityId);
         $model = ReportExecuter::run($report);
         $model->scenario = 'search';
-        if(isset($_GET['PopularityDirectionsFromCityResult']))
-            $model->attributes=$_GET['PopularityDirectionsFromCityResult'];
+        if(isset($_GET['PopularityDirectionsCityResult']))
+            $model->attributes=$_GET['PopularityDirectionsCityResult'];
         $this->render('directions', array('model'=>$model, 'report'=>$report));
+    }
+
+    public function actionDirectionsTo($cityId)
+    {
+        $report = new PopularityDirectionsCity($cityId, false);
+        $model = ReportExecuter::run($report);
+        $model->scenario = 'search';
+        if(isset($_GET['PopularityDirectionsCityResult']))
+            $model->attributes=$_GET['PopularityDirectionsCityResult'];
+        $this->render('directionsTo', array('model'=>$model, 'report'=>$report));
     }
 }

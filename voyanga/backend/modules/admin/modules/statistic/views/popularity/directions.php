@@ -28,7 +28,8 @@ $this->beginWidget("AAdminPortlet", array(
         ),
         array(
             'header'=>'Куда',
-            'value'=>'$data->arrivalCity->localRu'
+            'value'=>'CHtml::link($data->arrivalCity->localRu,array("/admin/statistic/popularity/directionsTo", "cityId"=>$data->arrivalCity->id))',
+            'type'=>'html'
         ),
         array(
             'name'=>'value',

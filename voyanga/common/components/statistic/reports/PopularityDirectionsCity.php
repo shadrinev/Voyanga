@@ -5,11 +5,12 @@
  * Date: 29.05.12
  * Time: 10:21
  */
-class PopularityDirectionsFromCity extends Report
+class PopularityDirectionsCity extends Report
 {
     private $result;
     private $fromCityId;
     private $_fromCity;
+    private $mode;
 
     public function getFromCity()
     {
@@ -18,10 +19,11 @@ class PopularityDirectionsFromCity extends Report
         return $this->_fromCity;
     }
 
-    public function __construct($fromCityId)
+    public function __construct($fromCityId, $isFrom = true)
     {
         $this->fromCityId = $fromCityId;
-        $this->result = new PopularityDirectionsFromCityResult($fromCityId);
+        $this->mode = $isFrom; // true = search popularity by from, false = search popularity by to
+        $this->result = new PopularityDirectionsFromCityResult($fromCityId, $this->mode);
     }
 
     public function getMongoCommand()
@@ -67,9 +69,11 @@ class PopularityDirectionsFromCityResult extends ReportResult
     private $departureCity;
     private $arrivalCity;
     private $cityId;
+    private $mode;
 
-    public function __construct($cityId)
+    public function __construct($cityId, $mode = true)
     {
+        $this->mode = $mode; // true = search popularity by from, false = search popularity by to
         $this->cityId = $cityId;
     }
 
@@ -102,9 +106,8 @@ class PopularityDirectionsFromCityResult extends ReportResult
         return parent::search($caseSensitive, array(
             'keyField' => 'primaryKey',
             'criteria' => array(
-                'conditions' => array(
-                    '_id.departureCityId' => array('equals' => $this->cityId),
-            )),
+                'conditions' => ($this->mode) ? array('_id.departureCityId' => array('equals' => $this->cityId)) : array('_id.arrivalCityId' => array('equals' => $this->cityId))
+            ),
             'sort'=>array(
                 'defaultOrder'=>'value desc',
                 'attributes'=>array(
