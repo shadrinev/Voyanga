@@ -9,7 +9,8 @@
  *
  * Can be used with non-AR models.
  */
-class ECartPositionBehaviour extends CActiveRecordBehavior {
+class ECartPositionBehaviour extends CActiveRecordBehavior
+{
 
     /**
      * Positions number
@@ -34,10 +35,11 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
      * @return float
      *
      */
-    public function getSumPrice($withDiscount = true) {
+    public function getSumPrice($withDiscount = true)
+    {
         $fullSum = $this->getOwner()->getPrice() * $this->quantity;
-        if($withDiscount)
-            $fullSum -=  $this->discountPrice;
+        if ($withDiscount)
+            $fullSum -= $this->discountPrice;
         return $fullSum;
     }
 
@@ -45,7 +47,8 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
      * Returns quantity.
      * @return int
      */
-    public function getQuantity() {
+    public function getQuantity()
+    {
         return $this->quantity;
     }
 
@@ -54,14 +57,16 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
      *
      * @param int quantity
      */
-    public function setQuantity($newVal) {
+    public function setQuantity($newVal)
+    {
         $this->quantity = $newVal;
     }
 
     /**
      * Magic method. Called on session restore.
      */
-    public function __wakeup() {
+    public function __wakeup()
+    {
         if ($this->refresh === true)
             $this->getOwner()->refresh();
     }
@@ -71,7 +76,8 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
      * Default is true.
      * @param boolean $refresh
      */
-    public function setRefresh($refresh) {
+    public function setRefresh($refresh)
+    {
         $this->refresh = $refresh;
     }
 
@@ -80,7 +86,8 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
      * @param float $price
      * @return void
      */
-    public function addDiscountPrice($price) {
+    public function addDiscountPrice($price)
+    {
         $this->discountPrice += $price;
     }
 
@@ -89,7 +96,8 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
      * @param float $price
      * @return void
      */
-    public function setDiscountPrice($price) {
+    public function setDiscountPrice($price)
+    {
         $this->discountPrice = $price;
     }
 }

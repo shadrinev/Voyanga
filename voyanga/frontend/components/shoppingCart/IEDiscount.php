@@ -7,11 +7,13 @@
  * @package ShoppingCart
  *
  */
-abstract class IEDiscount {
+abstract class IEDiscount
+{
 
     protected $shoppingCart;
 
-    public function setShoppingCart(EShoppingCart $shoppingCart) {
+    public function setShoppingCart(EShoppingCart $shoppingCart)
+    {
         $this->shoppingCart = $shoppingCart;
     }
 

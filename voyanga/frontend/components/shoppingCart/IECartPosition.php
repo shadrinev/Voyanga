@@ -7,11 +7,13 @@
  * @version 0.9
  * @package ShoppingCart
  */
-interface IECartPosition {
+interface IECartPosition
+{
     /**
      * @return mixed id
      */
     public function getId();
+
     /**
      * @return float price
      */
