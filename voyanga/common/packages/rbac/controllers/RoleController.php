@@ -63,7 +63,7 @@ class RoleController extends ABaseAdminController
             if ($model->save())
             {
                 Yii::app()->user->setFlash("success", "<h3>Role updated successfully</h3>");
-                $this->redirect($model->createUrl());
+                $this->redirect(array("view", "slug" => $model->slug));
             }
         }
         $this->render("update", array("model" => $model));

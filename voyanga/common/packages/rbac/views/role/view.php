@@ -14,6 +14,12 @@ $this->beginWidget("AAdminPortlet",
     array(
 
         "title" => "Authorisation Role: " . $model->name,
+        "sidebarMenuItems" => array(
+            array(
+                "label" => "Create",
+                "url" => array("/admin/rbac/role/create"),
+            ),
+        ),
         "menuItems" => array(
             array(
                 "label" => "Edit",

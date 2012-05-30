@@ -27,7 +27,7 @@ $this->beginWidget("AAdminPortlet", array(
     'columns' => array(
         array(
             "name" => "name",
-            "value" => '$data->createLink()',
+            "value" => '$data->createLink(null, "/admin/rbac/role/view")',
             "type" => "raw",
         ),
         'description',
