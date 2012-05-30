@@ -36,7 +36,8 @@ return CMap::mergeArray(
             'application.components.*',
             'application.controllers.*',
             'application.models.*',
-            'application.helpers.*'
+            'application.helpers.*',
+            'application.components.shoppingCart.*'
         ),
 
         'modules' => array(
@@ -92,6 +93,10 @@ return CMap::mergeArray(
             'sharedMemory' => array(
                 'class' => 'application.components.SharedMemory',
                 'maxSize' => 2*1024*1024,
+            ),
+
+            'shoppingCart' => array(
+                    'class' => 'application.components.shoppingCart.EShoppingCart',
             ),
 
             'log' => array(
