@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'События'=>array('admin'),
-	'Управление',
+    'Статистика'=>array('admin'),
+    'Рейсы'
 );
 
 $this->beginWidget("AAdminPortlet", array(

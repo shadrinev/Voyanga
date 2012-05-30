@@ -1,14 +1,15 @@
 <?php
 $this->breadcrumbs=array(
 	'Статистика'=>array('admin'),
-	'Из города',
+    'Рейсы' => array('flights'),
+	'Из города '.$report->fromCity->localRu,
 );
 
 $this->beginWidget("AAdminPortlet", array(
     "menuItems" => array(
         array(
             "label" => "Обновить",
-            "url" => array("flights"),
+            "url" => array("directions","cityId"=>$report->fromCity->id),
         ),
     ),
     "title" => "Статистика поисков перелётов из города ".$report->fromCity->localRu

@@ -21,7 +21,7 @@ class PopularityDirectionsFromCity extends Report
     public function __construct($fromCityId)
     {
         $this->fromCityId = $fromCityId;
-        $this->result = new PopularityDirectionsFromCityResult;
+        $this->result = new PopularityDirectionsFromCityResult($fromCityId);
     }
 
     public function getMongoCommand()
@@ -66,6 +66,12 @@ class PopularityDirectionsFromCityResult extends ReportResult
 {
     private $departureCity;
     private $arrivalCity;
+    private $cityId;
+
+    public function __construct($cityId)
+    {
+        $this->cityId = $cityId;
+    }
 
     public function getDepartureCity()
     {
@@ -95,6 +101,10 @@ class PopularityDirectionsFromCityResult extends ReportResult
     {
         return parent::search($caseSensitive, array(
             'keyField' => 'primaryKey',
+            'criteria' => array(
+                'conditions' => array(
+                    '_id.departureCityId' => array('equals' => $this->cityId),
+            )),
             'sort'=>array(
                 'defaultOrder'=>'value desc',
                 'attributes'=>array(
