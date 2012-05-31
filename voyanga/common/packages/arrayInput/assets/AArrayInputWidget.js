@@ -31,7 +31,7 @@
             row = $("<tr></tr>");
             row.append("<th class='" + base.options.keyClass + "'><input type='text' /></th>");
             row.append("<td class='" + base.options.valueClass + "'><input type='text' name='" + prefix + "[]' /></td>");
-            row.append("<th class='actions'><a href='#' class='icon delete iconOnly' title='Delete'>&nbsp;</a></th>");
+            row.append("<th class='actions'><a href='#' class='icon delete iconOnly' title='Delete'><i class='icon-minus-sign'>&nbsp;</i></a></th>");
             row.append("<th class='actions'><a href='#' class='icon convertArray iconOnly' title='Convert to array'>&nbsp;</a></th>");
             $(table).append(row);
             if (!$(table).find("td.empty").first().hasClass("hidden")) {
@@ -103,7 +103,7 @@
                     row = $("<tr></tr>");
                     row.append("<th class='" + base.options.keyClass + "'><input type='text' /></th>");
                     row.append("<td class='" + base.options.valueClass + "'><input type='text' name='" + element.attr("name") + "[]' value='" + values[i] + "' /></td>");
-                    row.append("<th class='actions'><a href='#' class='icon delete iconOnly' title='Delete'>&nbsp;</a></th>");
+                    row.append("<th class='actions'><a href='#' class='icon delete iconOnly' title='Delete'><i class='icon-minus-sign'>&nbsp;</i></a></th>");
                     row.append("<th class='actions'><a href='#' class='icon convertArray iconOnly' title='Convert to array'>&nbsp;</a></th>");
                     tbody.append(row);
                     hide = true;

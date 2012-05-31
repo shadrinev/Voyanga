@@ -129,7 +129,7 @@ class AArrayInputWidget extends CInputWidget
             }
             $html .= "</td>\n";
 
-            $html .= "<th class='actions'><a href='#' class='icon delete iconOnly' title='Delete'>&nbsp;</a></th>\n";
+            $html .= "<th class='actions'><a href='#' class='icon delete iconOnly' title='Delete'><i class='icon-minus-sign'></i></a></th>\n";
             if (!is_array($value))
             {
                 $html .= "<th class='actions'><a href='#' class='icon convertArray iconOnly' title='Convert to array'>&nbsp;</a></th>\n";
