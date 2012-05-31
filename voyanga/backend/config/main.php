@@ -75,6 +75,9 @@ return CMap::mergeArray(
                     'rbac' => array(
                         'class' => 'packages.rbac.ARbacModule'
                     ),
+                    'logging' => array(
+                        'class' => 'application.modules.admin.modules.logging.LoggingAdminModule'
+                    ),
                 )
             )
         ),

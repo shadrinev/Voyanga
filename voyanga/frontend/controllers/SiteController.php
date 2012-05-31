@@ -600,6 +600,7 @@ class SiteController extends Controller
                                                         //f918ee7492ed68dc1fa4117bb7d5dc32
         //print_r($pk);
         $counter = MongoKeyValue::model()->findByPk($pk);
+        MongoKeyValue::model()->findAll($pk);
         if(!$counter)
         {
             echo "inIF";
@@ -607,6 +608,8 @@ class SiteController extends Controller
             $counter->value = time();
             $counter->_id = new MongoID($key);
             $counter->key = 'gdsRequestCounter';
+            $counter->save();
+            $counter->value = time().'wer';
             $counter->save();
         }
         $modifier = new EMongoModifier();

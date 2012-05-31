@@ -9,9 +9,12 @@
 class GdsRequest extends EMongoDocument // Notice: We extend EMongoDocument class instead of CActiveRecord
 {
     public $requestNum;
+    public $methodName;
+    public $requestDescription;
     public $requestXml;
     public $responseXml;
     public $timestamp;
+    public $executionTime;
     public $errorDescription;
 
     /**
@@ -28,18 +31,8 @@ class GdsRequest extends EMongoDocument // Notice: We extend EMongoDocument clas
     {
         return array(
             array('requestXml', 'required'),
+            array('requestNum, methodName, timestamp', 'safe'),
             //array('requestNum', 'numeric', 'integerOnly' => true),
-        );
-    }
-
-    // the same with attribute names
-    public function attributeNames()
-    {
-        return array(
-            'requestXml' => 'requestXml',
-            'requestNum' => 'requestNum',
-            'responseXml' => 'responseXml',
-            'errorDescription' => 'errorDescription',
         );
     }
 

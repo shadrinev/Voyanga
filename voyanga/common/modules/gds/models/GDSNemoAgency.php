@@ -2,6 +2,7 @@
 class GDSNemoAgency extends CComponent
 {
     public $wsdlUri = null;
+    public static $lastRequestDescription = '';
     const ERROR_CODE_EMPTY = 1;
     const ERROR_CODE_INVALID = 2;
 
@@ -23,6 +24,7 @@ class GDSNemoAgency extends CComponent
         //$params = array('Search'=>$params);
         //$soapRequest = $client->async->$methodName($params);
         $key = $methodName . md5(serialize($params));
+        $mongoKey = substr(md5($methodName . uniqid('',true)),0,10);
         if ($cache)
         {
             $ret = Yii::app()->cache->get($key);
@@ -31,6 +33,12 @@ class GDSNemoAgency extends CComponent
                 return $ret;
             }
         }
+        $gdsRequest = new GdsRequest();
+        $gdsRequest->requestNum = $mongoKey;
+        $gdsRequest->timestamp = time();
+        $gdsRequest->methodName = $methodName;
+        $gdsRequest->requestDescription = self::$lastRequestDescription;
+        $client->gdsRequest = $gdsRequest;
         Yii::beginProfile('processingSoap' . $methodName);
         $ret = $client->$methodName($params);
         if ($expiration)
@@ -92,6 +100,7 @@ class GDSNemoAgency extends CComponent
                 'Currency' => 'RUB'
             )
         );
+        self::$lastRequestDescription = '';
         $pairs = array();
         foreach ($flightSearchParams->routes as $route)
         {
@@ -100,6 +109,7 @@ class GDSNemoAgency extends CComponent
             $ODPair['DepDate'] = $route->departureDate . 'T00:00:00';
             $ODPair['DepAirp'] = $route->departureCity->code;
             $ODPair['ArrAirp'] = $route->arrivalCity->code;
+            self::$lastRequestDescription .= "{$route->departureDate}: {$route->departureCity->code} - {$route->arrivalCity->code}; ";
             $pairs[] = $ODPair;
         }
         $flightType = 'OW';
@@ -131,6 +141,7 @@ class GDSNemoAgency extends CComponent
                 'Type' => 'ADT',
                 'Count' => $flightSearchParams->adultCount
             );
+            self::$lastRequestDescription .= "ADT: {$flightSearchParams->adultCount}; ";
         }
         if ($flightSearchParams->childCount > 0)
         {
@@ -138,6 +149,7 @@ class GDSNemoAgency extends CComponent
                 'Type' => 'CNN',
                 'Count' => $flightSearchParams->childCount
             );
+            self::$lastRequestDescription .= "CNN: {$flightSearchParams->childCount}; ";
         }
         if ($flightSearchParams->infantCount > 0)
         {
@@ -145,6 +157,7 @@ class GDSNemoAgency extends CComponent
                 'Type' => 'INF',
                 'Count' => $flightSearchParams->infantCount
             );
+            self::$lastRequestDescription .= "INF: {$flightSearchParams->infantCount}; ";
         }
         $params['Request']['SearchFlights']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($traveller);
         unset($traveller);

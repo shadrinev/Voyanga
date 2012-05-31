@@ -17,6 +17,18 @@ class UtilsHelper
         }
     }
 
+    public static function formatXML($xml)
+    {
+        $oDM = new DOMDocument();
+        $oDM->loadXML ($xml);
+        if($oDM){
+            $oDM->formatOutput = true;
+            $oDM->normalize();
+            $xml = $oDM->saveXML();
+        }
+        return $xml;
+    }
+
     /**
      * Modify incoming parameter to array(wrap to array), incoming parameter is object
      * @param unknown_type $oSoapArray

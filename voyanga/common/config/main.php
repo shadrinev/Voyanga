@@ -24,6 +24,9 @@ return array(
         'configManager' => array (
             'class' => 'ConfigurationManager',
         ),
+        'format' => array(
+            'numberFormat' => array('decimals'=>2, 'decimalSeparator'=>'.', 'thousandSeparator'=>' ')
+        ),
         'db'=>array(
             'class' => 'CDbConnection',
             'pdoClass' => 'NestedPDO',
