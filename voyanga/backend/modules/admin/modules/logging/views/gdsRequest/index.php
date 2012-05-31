@@ -58,7 +58,7 @@ $this->menu=array(
 </div>
 
 <div class="modal-body">
-    <p>One fine body...</p>
+    <p>Идет запрос данных...</p>
 </div>
 
 <div class="modal-footer">
@@ -75,6 +75,7 @@ $this->menu=array(
 Yii::app()->clientScript->registerScript('loadRequestInfo','
     document.showRequestInfo = function (id){
     id = id.substr(1);
+    $(\'#popupInfo .modal-body\').html("<p>Идет запрос данных...</p>");
     $(\'#popupInfo\').modal(\'show\');
         $.getJSON("/admin/logging/gdsRequest/getInfo/id/"+id)
         .done(function(data){

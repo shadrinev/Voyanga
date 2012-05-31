@@ -178,7 +178,6 @@ class GDSNemoAgency extends CComponent
         //print_r($soapResponse );die();
 
         $flights = array();
-        Yii::log(print_r($soapResponse, true), 'info', 'nemo');
         $errorCode = 0;
         if ($soapResponse->Response->SearchFlights->Flights->Flight)
         {

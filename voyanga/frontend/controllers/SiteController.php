@@ -22,7 +22,7 @@ class SiteController extends Controller
                 'attributes'=>array('localRu','localEn','code:='),
                 'labelTemplate'=>'{localRu}, {country.localRu}, {code}',
                 'valueTemplate'=>'{localRu}',
-                'criteria'=>array('with'=>'country'),
+                'criteria'=>array('with'=>'country','condition'=>'countAirports!=0'),
 
 
             ),

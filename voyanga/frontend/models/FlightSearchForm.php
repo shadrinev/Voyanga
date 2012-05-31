@@ -11,7 +11,7 @@ class FlightSearchForm extends CFormModel
     public $departureCityId = 4466;
     public $departureCity;
     public $departureAirportCode;
-    public $arrivalCityId = 5754;
+    public $arrivalCityId = 5185;
     public $arrivalCity;
     public $arrivalAirportCode;
     public $adultCount = 1;

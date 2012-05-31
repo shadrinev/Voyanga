@@ -58,7 +58,7 @@ class GDSNemoSoapClient extends SoapClient
         }
         else
         {
-            Yii::log('Request xml:'.$request,'info','nemo');
+
             //die();
             $this->gdsRequest->requestXml = UtilsHelper::formatXML($request);
             $this->gdsRequest->save();
@@ -73,7 +73,6 @@ class GDSNemoSoapClient extends SoapClient
                 $this->gdsRequest->save();
                 throw new CException( Yii::t( 'application', 'Error on soap request. Curl description: {curl_desc}. Last headers: {last_headers}.', array('{curl_desc}'=>GDSNemoSoapClient::$lastCurlError,'{last_headers}'=>GDSNemoSoapClient::$lastHeaders)) );
             }
-            Yii::log('Response xml:'.$sXML,'info','nemo');
             //$sXML = parent::__doRequest($request, $location, $action, $version);
             //echo VarDumper::xmlDump($sXML);
             //die();

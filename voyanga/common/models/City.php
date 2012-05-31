@@ -48,7 +48,7 @@ class City extends CActiveRecord
         // will receive user inputs.
         return array(
                 array(
-                        'position, countryId', 
+                        'position, countryId, countAirports',
                         'numerical', 
                         'integerOnly' => true ), 
                 array(
@@ -62,7 +62,7 @@ class City extends CActiveRecord
                 // The following rule is used by search().
                 // Please remove those attributes that should not be searched.
                 array(
-                        'id, position, countryId, code, localRu, localEn', 
+                        'id, position, countryId, code, localRu, localEn, countAirports',
                         'safe', 
                         'on' => 'search' ) );
     }
@@ -104,7 +104,8 @@ class City extends CActiveRecord
                 'countryId' => 'Country', 
                 'code' => 'Code', 
                 'localRu' => 'Local Ru', 
-                'localEn' => 'Local En' );
+                'localEn' => 'Local En',
+                'countAirports' => 'Count Airports');
     }
     
     /**
@@ -125,6 +126,7 @@ class City extends CActiveRecord
         $criteria->compare( 'code', $this->code, true );
         $criteria->compare( 'localRu', $this->localRu, true );
         $criteria->compare( 'localEn', $this->localEn, true );
+        $criteria->compare( 'countAirports', $this->countAirports);
         
         return new CActiveDataProvider( $this, array(
                 'criteria' => $criteria ) );
