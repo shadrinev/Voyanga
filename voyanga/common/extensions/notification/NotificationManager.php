@@ -12,25 +12,24 @@ class NotificationManager extends CComponent
     private $notificationObject;
     private $key;
 
+    private $category;
+
     public function add($user, $notificationType, $notificationObject, $time)
     {
-        $notificatonType = new $notificationType;
-        foreach($notificationType->getNotifications() as $type=>$params)
-            Yii::app()->cron->addTask('notification.'.$notificationType, $this->getKey(), $type, $params, $time);
+        foreach($this->getNotificationType->getNotifications() as $type=>$params)
+            Yii::app()->cron->addTask($this->getCategory(), $this->getKey(), $type, $params, $time);
     }
 
     public function edit($user, $notificationType, $notificationObject, $time)
     {
-        $notificatonType = new $notificationType;
-        foreach($notificationType->getNotifications() as $type=>$params)
-            Yii::app()->cron->editTask('notification.'.$notificationType, $this->getKey(), $type, $params, $time);
+        foreach($this->getNotificationType->getNotifications() as $type=>$params)
+            Yii::app()->cron->editTask($this->getCategory(), $this->getKey(), $type, $params, $time);
     }
 
     public function delete($user, $notificationType, $notificationObject)
     {
-        $notificatonType = new $notificationType;
-        foreach($notificationType->getNotifications() as $type=>$params)
-            Yii::app()->cron->deleteTask('notification.'.$notificationType, $this->getKey());
+        foreach($this->getNotificationType->getNotifications() as $type=>$params)
+            Yii::app()->cron->deleteTask($this->getCategory(), $this->getKey());
     }
 
     public function getKey()
@@ -50,7 +49,8 @@ class NotificationManager extends CComponent
 
     public function setNotificationType($value)
     {
-        $this->notificationType = $value;
+        $this->category = $value;
+        $this->notificationType = new $value;
     }
 
     public function getNotificationObject()
@@ -71,5 +71,10 @@ class NotificationManager extends CComponent
     public function setUser($value)
     {
         $this->user = $value;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

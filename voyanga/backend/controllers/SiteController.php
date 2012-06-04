@@ -47,7 +47,7 @@ class SiteController extends Controller
 
     public function actionTest()
     {
-        Yii::app()->observer->notify('onBeforeFlightSearch', $this);
+        Yii::app()->observer->notify('onBeforeFlightSearch', $user);
         Yii::app()->observer->notify('onAfterFlightSearch', $this);
     }
 }
