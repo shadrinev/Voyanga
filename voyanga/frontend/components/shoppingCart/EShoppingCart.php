@@ -26,6 +26,8 @@ class EShoppingCart extends CMap
      */
     protected $discountPrice = 0.0;
 
+    public $orderComponent;
+
     public function init()
     {
         $this->restoreFromSession();
@@ -128,6 +130,19 @@ class EShoppingCart extends CMap
     protected function saveState()
     {
         Yii::app()->getUser()->setState($this->cartId, serialize($this->toArray()));
+    }
+
+    /**
+     * Saves the state of the object to the db
+     * @return void
+     */
+    protected function saveToOrderDb()
+    {
+        if ($this->orderComponent)
+        {
+            $userId = Yii::app()->user->isGuest ? 0 : Yii::app()->user->id;
+            Yii::app()->{$this->orderComponent}->create($userId, $this->toArray());
+        }
     }
 
     /**

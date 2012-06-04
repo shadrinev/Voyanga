@@ -96,7 +96,8 @@ return CMap::mergeArray(
             ),
 
             'shoppingCart' => array(
-                    'class' => 'application.components.shoppingCart.EShoppingCart',
+                'class' => 'application.components.shoppingCart.EShoppingCart',
+                'orderComponent' => 'order'
             ),
 
             'log' => array(

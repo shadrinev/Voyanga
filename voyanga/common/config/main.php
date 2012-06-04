@@ -17,6 +17,7 @@ return array(
         'site.common.components.statistic.*',
     ),
     'components'=>array(
+
         'observer' => array(
             'class' => 'site.common.extensions.observer.ObserverComponent',
             'observers' => array(
@@ -34,6 +35,10 @@ return array(
                     'Notification'
                 )
             )
+        ),
+
+        'order' => array(
+            'class' => 'site.common.extensions.order.OrderComponent'
         ),
 
         'notification' => array(
