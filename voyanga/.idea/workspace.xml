@@ -2,30 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/cron" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/email" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/notification/type" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/src" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/test/Notification" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/test" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/sms" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/notification/NotificationManager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/notification/NotificationType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/notification/type/OnFlightBooking.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/Dispatcher.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/Event.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/ObserverComponent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/StaticDispatcher.php" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\notification\EmailNotification.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\notification\NotificationComponent.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\notification\SmsNotification.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\.empty" afterPath="" />
-      <change type="MOVED" beforePath="C:\WebServers\home\voyanga\common\components\notification\Notification.php" afterPath="$PROJECT_DIR$/common/extensions/notification/Notification.php" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\observer\src" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\observer\test\Notification" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\observer\test" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/controllers/SiteController.php" afterPath="$PROJECT_DIR$/backend/controllers/SiteController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/config/main.php" afterPath="$PROJECT_DIR$/common/config/main.php" />
-      <change type="MOVED" beforePath="C:\WebServers\home\voyanga\common\components\notification" afterPath="$PROJECT_DIR$/common/extensions/notification" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -55,7 +35,7 @@
       <file leaf-file-name="Notification.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common/extensions/notification/Notification.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="1" selection-start="350" selection-end="350" vertical-scroll-proportion="0.5872727">
+            <state line="19" column="1" selection-start="350" selection-end="350" vertical-scroll-proportion="0.38224852">
               <folding />
             </state>
           </provider>
@@ -305,32 +285,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="observer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="observer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -881,14 +835,18 @@
       <created>1338476585107</created>
       <updated>1338476585107</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="notification system and observer attached">
+      <created>1338808957122</created>
+      <updated>1338808957122</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1070,7 +1028,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/common/extensions/notification/Notification.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="1" selection-start="350" selection-end="350" vertical-scroll-proportion="0.5872727">
+        <state line="19" column="1" selection-start="350" selection-end="350" vertical-scroll-proportion="0.38224852">
           <folding />
         </state>
       </provider>
