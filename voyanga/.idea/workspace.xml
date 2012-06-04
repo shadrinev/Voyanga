@@ -2,14 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/notification" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/notification/EmailNotification.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/notification/Notification.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/notification/NotificationComponent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/notification/SmsNotification.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/cron" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/email" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/notification/type" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/src" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/test/Notification" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/test" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/sms" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/notification/NotificationManager.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/notification/NotificationType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/notification/type/OnFlightBooking.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/Dispatcher.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/Event.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/ObserverComponent.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/observer/StaticDispatcher.php" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\notification\EmailNotification.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\notification\NotificationComponent.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\notification\SmsNotification.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\extensions\.empty" afterPath="" />
+      <change type="MOVED" beforePath="C:\WebServers\home\voyanga\common\components\notification\Notification.php" afterPath="$PROJECT_DIR$/common/extensions/notification/Notification.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/packages/arrayInput/AArrayInputWidget.php" afterPath="$PROJECT_DIR$/common/packages/arrayInput/AArrayInputWidget.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/packages/arrayInput/assets/AArrayInputWidget.js" afterPath="$PROJECT_DIR$/common/packages/arrayInput/assets/AArrayInputWidget.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/controllers/SiteController.php" afterPath="$PROJECT_DIR$/backend/controllers/SiteController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/config/main.php" afterPath="$PROJECT_DIR$/common/config/main.php" />
+      <change type="MOVED" beforePath="C:\WebServers\home\voyanga\common\components\notification" afterPath="$PROJECT_DIR$/common/extensions/notification" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -36,85 +52,58 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Notification.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/notification/Notification.php">
+      <file leaf-file-name="Notification.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/extensions/notification/Notification.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="26" selection-start="507" selection-end="507" vertical-scroll-proportion="-10.692307">
+            <state line="19" column="1" selection-start="350" selection-end="350" vertical-scroll-proportion="0.5872727">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CActiveRecord.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/db/ar/CActiveRecord.php">
+      <file leaf-file-name="Event.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/extensions/observer/Event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="562" column="20" selection-start="21541" selection-end="21541" vertical-scroll-proportion="-8.730769">
+            <state line="10" column="17" selection-start="166" selection-end="166" vertical-scroll-proportion="-6.5384617">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EmailNotification.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/notification/EmailNotification.php">
+      <file leaf-file-name="main.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/config/main.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="0" selection-start="220" selection-end="220" vertical-scroll-proportion="-8.5">
+            <state line="24" column="54" selection-start="657" selection-end="657" vertical-scroll-proportion="-11.115385">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NotificationComponent.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/notification/NotificationComponent.php">
+      <file leaf-file-name="ObserverComponent.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/extensions/observer/ObserverComponent.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="39" selection-start="156" selection-end="156" vertical-scroll-proportion="-4.576923">
+            <state line="58" column="44" selection-start="1423" selection-end="1423" vertical-scroll-proportion="-26.153847">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CComponent.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/base/CComponent.php">
+      <file leaf-file-name="YiiBase.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/YiiBase.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="6" selection-start="3777" selection-end="3777" vertical-scroll-proportion="-11.153846">
+            <state line="264" column="27" selection-start="9937" selection-end="9937" vertical-scroll-proportion="32.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CApplicationComponent.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/base/CApplicationComponent.php">
+      <file leaf-file-name="Dispatcher.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/extensions/observer/Dispatcher.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="32" selection-start="1806" selection-end="1806" vertical-scroll-proportion="-20.73077">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AArrayInputWidget.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/common/packages/arrayInput/AArrayInputWidget.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="7" selection-start="412" selection-end="412" vertical-scroll-proportion="0.55636364">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AArrayInputWidget.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/packages/arrayInput/assets/AArrayInputWidget.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="141" selection-start="5226" selection-end="5226" vertical-scroll-proportion="0.0">
+            <state line="194" column="34" selection-start="5655" selection-end="5655" vertical-scroll-proportion="-4.6862745">
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#6#549#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/benchmark/views/benchmark/_form.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="39" selection-start="724" selection-end="724" vertical-scroll-proportion="-13.076923">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -129,22 +118,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/common/packages/rbac/views/task/create.php" />
-        <option value="$PROJECT_DIR$/common/packages/rbac/views/role/create.php" />
-        <option value="$PROJECT_DIR$/common/packages/rbac/models/AAuthItem.php" />
-        <option value="$PROJECT_DIR$/common/migrations/m120530_112010_alter_tables_for_rbac.php" />
-        <option value="$PROJECT_DIR$/common/packages/rbac/views/role/index.php" />
-        <option value="$PROJECT_DIR$/common/packages/rbac/controllers/RoleController.php" />
-        <option value="$PROJECT_DIR$/common/packages/rbac/views/role/view.php" />
-        <option value="$PROJECT_DIR$/frontend/config/main.php" />
-        <option value="$PROJECT_DIR$/frontend/components/shoppingCart/EShoppingCart.php" />
-        <option value="$PROJECT_DIR$/backend/config/main.php" />
-        <option value="$PROJECT_DIR$/common/config/main.php" />
-        <option value="$PROJECT_DIR$/common/components/notification/SmsNotification.php" />
-        <option value="$PROJECT_DIR$/common/components/notification/Notification.php" />
-        <option value="$PROJECT_DIR$/common/components/notification/EmailNotification.php" />
-        <option value="$PROJECT_DIR$/common/packages/arrayInput/AArrayInputWidget.php" />
         <option value="$PROJECT_DIR$/common/packages/arrayInput/assets/AArrayInputWidget.js" />
+        <option value="$PROJECT_DIR$/common/extensions/notification/NotificationType.php" />
+        <option value="$PROJECT_DIR$/common/extensions/notification/NotificationCollection.php" />
+        <option value="$PROJECT_DIR$/common/extensions/notification/type/OnFlightBooking.php" />
+        <option value="$PROJECT_DIR$/common/extensions/notification/NotificationManager.php" />
+        <option value="$PROJECT_DIR$/common/extensions/snotifications/SNotificationsComponent.php" />
+        <option value="$PROJECT_DIR$/common/extensions/observer/Message.php" />
+        <option value="$PROJECT_DIR$/common/extensions/notification/NotificationComponent.php" />
+        <option value="$PROJECT_DIR$/common/extensions/observer/StaticDispatcher.php" />
+        <option value="$PROJECT_DIR$/common/config/main.php" />
+        <option value="$PROJECT_DIR$/backend/controllers/SiteController.php" />
+        <option value="$PROJECT_DIR$/common/extensions/observer/Handler.php" />
+        <option value="$PROJECT_DIR$/common/extensions/observer/Event.php" />
+        <option value="$PROJECT_DIR$/common/extensions/observer/Dispatcher.php" />
+        <option value="$PROJECT_DIR$/common/extensions/observer/ObserverComponent.php" />
+        <option value="$PROJECT_DIR$/common/extensions/notification/Notification.php" />
       </list>
     </option>
   </component>
@@ -253,7 +242,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="packages" />
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -271,37 +260,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="packages" />
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="arrayInput" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="packages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="arrayInput" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
+              <option name="myItemId" value="yii-1.1.10" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -320,6 +283,126 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="observer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="observer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="notification" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -360,155 +443,19 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\common\extensions" />
       <recent name="C:\WebServers\home\voyanga\frontend\components" />
       <recent name="C:\WebServers\home\voyanga\common\packages" />
       <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules" />
       <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\statistic\views\popularity" />
-      <recent name="C:\WebServers\home\voyanga\common\components\statistic\reports" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\common\extensions\observer" />
+      <recent name="C:\WebServers\home\voyanga\common\extensions\notification" />
+      <recent name="C:\WebServers\home\voyanga\common\extensions" />
       <recent name="C:\WebServers\home\voyanga\common\packages" />
       <recent name="C:\WebServers\home\voyanga\common\components\statistic" />
-      <recent name="C:\WebServers\home\voyanga\common\components\statistic\reports" />
-      <recent name="C:\WebServers\home\voyanga\common\components" />
-      <recent name="C:\WebServers\home\voyanga\common\models" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree">
-    <UpdateInfo date="Moments ago" ActionInfo="_Update">
-      <UpdatedFiles>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated from server" />
-          <option name="myStatusName" value="Changed on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CHANGED_ON_SERVER" />
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Updated" />
-            <option name="myStatusName" value="Changed" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="UPDATED" />
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\config\main.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\www\index.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\components\UtilsHelper.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\extensions\YiiMongoDbSuite\EMongoDocument.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\models\City.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\modules\gds\models\GDSNemoSoapClient.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\modules\gds\models\GDSNemoAgency.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\frontend\controllers\SiteController.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\frontend\models\FlightSearchForm.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\frontend\www\themes\classic\css\main.css</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\frontend\www\index.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\frontend\views\site\flightResult.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\console\yiic.php</PATH>
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Created" />
-            <option name="myStatusName" value="Created" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="CREATED" />
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\modules\admin\modules\logging</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\modules\admin\modules\logging\controllers</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\modules\admin\modules\logging\controllers\GdsRequestController.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\modules\admin\modules\logging\LoggingAdminModule.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\modules\admin\modules\logging\views</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\modules\admin\modules\logging\views\gdsRequest</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\modules\admin\modules\logging\views\gdsRequest\_view.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\backend\modules\admin\modules\logging\views\gdsRequest\index.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\models\MongoKeyValue.php</PATH>
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\models\GdsRequest.php</PATH>
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Deleted" />
-            <option name="myStatusName" value="Deleted" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="true" />
-            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Restored" />
-            <option name="myStatusName" value="Will be restored" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="RESTORED" />
-            <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\extensions\.empty</PATH>
-          </FILE-GROUP>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Modified" />
-          <option name="myStatusName" value="Modified" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MODIFIED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Skipped" />
-          <option name="myStatusName" value="Skipped" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SKIPPED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with conflicts" />
-          <option name="myStatusName" value="Will be merged with conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_CONFLICTS" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with tree conflicts" />
-          <option name="myStatusName" value="Merged with tree conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged" />
-          <option name="myStatusName" value="Will be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED" />
-          <PATH vcs="svn" revision="174">C:\WebServers\home\voyanga\common\config\main.php</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Not in repository" />
-          <option name="myStatusName" value="Not in repository" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally added" />
-          <option name="myStatusName" value="Locally added" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_ADDED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed" />
-          <option name="myStatusName" value="Locally removed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Switched" />
-          <option name="myStatusName" value="Switched" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SWITCHED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with property conflicts" />
-          <option name="myStatusName" value="Will be merged with property conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-        </FILE-GROUP>
-      </UpdatedFiles>
-    </UpdateInfo>
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -930,29 +877,33 @@
       <created>1338382367140</created>
       <updated>1338382367141</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="added notification component">
+      <created>1338476585107</created>
+      <updated>1338476585107</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19642857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19583778" sideWeight="0.6707589" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20010673" sideWeight="0.6707589" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924107" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19642857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -995,7 +946,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="added notification component" />
+    <option name="LAST_COMMIT_MESSAGE" value="notification system and observer attached" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1008,7 +959,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="very big architecture update about getting price" />
     <MESSAGE value="refactoring and work on caching for flight_cache" />
     <MESSAGE value="save flight cache to shared memory" />
     <MESSAGE value="playing with flight cache" />
@@ -1033,121 +983,94 @@
     <MESSAGE value="rbac modified" />
     <MESSAGE value="Added shopping cart" />
     <MESSAGE value="added notification component" />
+    <MESSAGE value="notification system and observer attached" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/backend/config/main.php">
+    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/collections/CTypedList.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="10" selection-start="3002" selection-end="3002" vertical-scroll-proportion="-20.26923">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Booking.php">
+    <entry file="file://$PROJECT_DIR$/common/extensions/notification/NotificationType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="100" selection-start="1802" selection-end="1802" vertical-scroll-proportion="0.7040359">
+        <state line="9" column="48" selection-start="199" selection-end="199" vertical-scroll-proportion="-5.8846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/notification/type/OnFlightBooking.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="5" selection-start="495" selection-end="495" vertical-scroll-proportion="-13.076923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/notification/NotificationManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="32" selection-start="246" selection-end="246" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/YiiBase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="264" column="27" selection-start="9937" selection-end="9937" vertical-scroll-proportion="32.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/observer/StaticDispatcher.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="550" selection-end="550" vertical-scroll-proportion="-1.3076923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/controllers/SiteController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="66" selection-start="1452" selection-end="1452" vertical-scroll-proportion="0.8189349">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/observer/Event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="17" selection-start="166" selection-end="166" vertical-scroll-proportion="-6.5384617">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/observer/Dispatcher.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="194" column="34" selection-start="5655" selection-end="5655" vertical-scroll-proportion="-4.6862745">
+          <folding>
+            <element signature="e#6#549#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/observer/ObserverComponent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="44" selection-start="1423" selection-end="1423" vertical-scroll-proportion="-26.153847">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/config/main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="81" selection-start="709" selection-end="709" vertical-scroll-proportion="-11.115385">
+        <state line="24" column="54" selection-start="657" selection-end="657" vertical-scroll-proportion="-11.115385">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/notification/SmsNotification.php">
+    <entry file="file://$PROJECT_DIR$/common/extensions/notification/Notification.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="42" selection-start="159" selection-end="159" vertical-scroll-proportion="-4.576923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/base/CModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="40" selection-start="1480" selection-end="1491" vertical-scroll-proportion="-8.529411">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/db/ar/CActiveRecord.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="562" column="20" selection-start="21541" selection-end="21541" vertical-scroll-proportion="-8.730769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/notification/Notification.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="26" selection-start="507" selection-end="507" vertical-scroll-proportion="-10.692307">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/notification/EmailNotification.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="220" selection-end="220" vertical-scroll-proportion="-8.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/notification/NotificationComponent.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="39" selection-start="156" selection-end="156" vertical-scroll-proportion="-4.576923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/base/CComponent.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="6" selection-start="3777" selection-end="3777" vertical-scroll-proportion="-11.153846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/EAjaxUpload/EAjaxUpload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.24142012">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/benchmark/views/benchmark/_form.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="39" selection-start="724" selection-end="724" vertical-scroll-proportion="-13.076923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/views/_template.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="17" selection-start="338" selection-end="338" vertical-scroll-proportion="-3.2692308">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/base/CApplicationComponent.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="32" selection-start="1806" selection-end="1806" vertical-scroll-proportion="-20.73077">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/packages/arrayInput/assets/AArrayInputWidget.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="141" selection-start="5226" selection-end="5226" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/packages/arrayInput/AArrayInputWidget.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="7" selection-start="412" selection-end="412" vertical-scroll-proportion="0.55636364">
+        <state line="19" column="1" selection-start="350" selection-end="350" vertical-scroll-proportion="0.5872727">
           <folding />
         </state>
       </provider>

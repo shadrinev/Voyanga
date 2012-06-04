@@ -8,11 +8,38 @@
  * For all applications around Voyanga
  */
 return array(
+    'preload' => array(
+        'notification'
+    ),
+
     'import' => array(
         'site.common.extensions.YiiMongoDbSuite.*',
         'site.common.components.statistic.*',
     ),
     'components'=>array(
+        'observer' => array(
+            'class' => 'site.common.extensions.observer.ObserverComponent',
+            'observers' => array(
+                'onBeforeFlightSearch'=>array(
+                    'Notification',
+                    array('Notification', 'handleBest')
+                ),
+                'onAfterFlightSearch'=>array(
+                    'Notification'
+                ),
+                'onBeforeFlightBooking'=>array(
+                    'Notification'
+                ),
+                'onAfterFlightBooking'=>array(
+                    'Notification'
+                )
+            )
+        ),
+
+        'notification' => array(
+            'class' => 'site.common.extensions.notification.Notification'
+        ),
+
         'mongodb' => array(
             'class'             => 'EMongoDB',
             'connectionString'  => 'mongodb://localhost',

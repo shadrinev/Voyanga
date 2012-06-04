@@ -44,4 +44,10 @@ class SiteController extends Controller
             else $this->render('error', $error);
         }
     }
+
+    public function actionTest()
+    {
+        Yii::app()->observer->notify('onBeforeFlightSearch', $this);
+        Yii::app()->observer->notify('onAfterFlightSearch', $this);
+    }
 }

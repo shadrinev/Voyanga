@@ -2,10 +2,11 @@
 /**
  * User: Kuklin Mikhail (kuklin@voyanga.com)
  * Company: Easytrip LLC
- * Date: 31.05.12
- * Time: 13:22
+ * Date: 04.06.12
+ * Time: 14:56
  */
-class NotificationComponent extends CComponent
+class Event
 {
-
+    public $name;
+    public $args;
 }
