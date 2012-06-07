@@ -24,9 +24,7 @@ return CMap::mergeArray(
         'params' => $params,
         'language' => 'ru',
         'theme' => 'classic',
-        //enable gzip caching
-        'onBeginRequest'=>create_function('$event', 'return ob_start("ob_gzhandler");'),
-        'onEndRequest'=>create_function('$event', 'return ob_end_flush();'),
+
         'preload' => array(
             'log',
             'bootstrap'

@@ -18,7 +18,7 @@ class OrderComponent extends CApplicationComponent
         return $order->id;
     }
 
-    public function save($id, $userId, $items)
+    public function update($id, $userId, $items)
     {
         $order = Order::model()->findByPk($id);
         if ($order)
