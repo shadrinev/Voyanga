@@ -5,7 +5,7 @@
  * @author oleg
  *
  */
-class FlightVoyage extends CComponent implements IECartPosition
+class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
 {
     public $price;
     public $taxes;
@@ -33,6 +33,17 @@ class FlightVoyage extends CComponent implements IECartPosition
     public function getPrice()
     {
         return $this->price;
+    }
+
+    public function getIsValid()
+    {
+        //todo: enable check for availability here
+        return true;
+    }
+
+    public function getIsPayable()
+    {
+        return true;
     }
 
     public function __construct($oParams)
