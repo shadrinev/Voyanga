@@ -43,7 +43,7 @@ class CommonFlightCache extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('from, to, priceBestPrice, durationBestPrice, priceBestTime, durationBestTime, priceBestPriceTime, durationBestPriceTime', 'numerical', 'integerOnly'=>true),
+            array('from, to, priceBestPrice, durationBestPrice, priceBestTime, durationBestTime, priceBestPriceTime, durationBestPriceTime', 'numerical', 'integerOnly'=>false),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('from, to, dateFrom, dateBack, priceBestPrice, durationBestPrice,  validatorBestPrice, transportBestPrice,  validatorBestPriceTime, transportBestPriceTime, validatorBestTime, transportBestTime, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'safe', 'on'=>'search'),

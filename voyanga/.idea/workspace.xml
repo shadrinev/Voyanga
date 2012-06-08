@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\ExtendedClientScript\ExtendedClientScript.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\ExtendedClientScript\cssmin\cssmin.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\ExtendedClientScript\jsmin\JSMin.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\ExtendedClientScript\cssmin" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\ExtendedClientScript\jsmin" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\backend\extensions\ExtendedClientScript" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/config/main.php" afterPath="$PROJECT_DIR$/backend/config/main.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/www/index.php" afterPath="$PROJECT_DIR$/backend/www/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/extensions/order/OrderComponent.php" afterPath="$PROJECT_DIR$/common/extensions/order/OrderComponent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/CommonFlightCache.php" afterPath="$PROJECT_DIR$/common/models/CommonFlightCache.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/FlightVoyage.php" afterPath="$PROJECT_DIR$/common/models/FlightVoyage.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -38,95 +32,82 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PopularityDirectionsCity.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/PopularityDirectionsCity.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="26" selection-start="3191" selection-end="3191" vertical-scroll-proportion="-22.692308">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/config/main.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="55" selection-start="659" selection-end="659" vertical-scroll-proportion="31.384615">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/www/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="20" selection-start="246" selection-end="246" vertical-scroll-proportion="-6.5384617">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AmountOfFlightSearch.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="27.884615">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PopularityController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/PopularityController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="59" selection-start="401" selection-end="401" vertical-scroll-proportion="-9.153846">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/config/main.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="1023" selection-end="1023" vertical-scroll-proportion="-1.7647059">
-              <folding>
-                <element signature="e#1593#2058#1" expanded="false" />
-                <element signature="e#2084#3153#1" expanded="false" />
-                <element signature="e#3496#3786#1" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OrderComponent.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="OrderComponent.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/extensions/order/OrderComponent.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="5" selection-start="527" selection-end="527" vertical-scroll-proportion="0.4224852">
+            <state line="21" column="5" selection-start="527" selection-end="527" vertical-scroll-proportion="-13.730769">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Order.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/extensions/order/Order.php">
+      <file leaf-file-name="FlightVoyage.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/models/FlightVoyage.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="38" selection-start="137" selection-end="155" vertical-scroll-proportion="-4.576923">
+            <state line="26" column="48" selection-start="535" selection-end="535" vertical-scroll-proportion="0.52307695">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/www/index.php">
+      <file leaf-file-name="Booking.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/models/Booking.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="48" selection-start="105" selection-end="105" vertical-scroll-proportion="-1.3076923">
+            <state line="68" column="31" selection-start="1907" selection-end="1907" vertical-scroll-proportion="-13.076923">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SearchController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/SearchController.php">
+      <file leaf-file-name="IECartPosition.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/IECartPosition.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="10" selection-start="412" selection-end="412" vertical-scroll-proportion="-9.807693">
+            <state line="11" column="4" selection-start="149" selection-end="289" vertical-scroll-proportion="-7.1923075">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IEDiscount.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/IEDiscount.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="readme_en.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/readme_en.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="79" column="8" selection-start="1793" selection-end="1793" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ECartPositionBehaviour.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/ECartPositionBehaviour.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="7" selection-start="313" selection-end="313" vertical-scroll-proportion="-11.769231">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EShoppingCart.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/EShoppingCart.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="111" column="27" selection-start="2844" selection-end="2844" vertical-scroll-proportion="-16.692308">
               <folding />
             </state>
           </provider>
@@ -142,8 +123,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/common/extensions/observer/Handler.php" />
-        <option value="$PROJECT_DIR$/common/extensions/observer/Event.php" />
         <option value="$PROJECT_DIR$/common/extensions/observer/Dispatcher.php" />
         <option value="$PROJECT_DIR$/common/extensions/observer/ObserverComponent.php" />
         <option value="$PROJECT_DIR$/common/extensions/notification/Notification.php" />
@@ -158,6 +137,8 @@
         <option value="$PROJECT_DIR$/backend/www/index.php" />
         <option value="$PROJECT_DIR$/backend/config/main.php" />
         <option value="$PROJECT_DIR$/common/extensions/order/OrderComponent.php" />
+        <option value="$PROJECT_DIR$/common/models/CommonFlightCache.php" />
+        <option value="$PROJECT_DIR$/common/models/FlightVoyage.php" />
       </list>
     </option>
   </component>
@@ -251,8 +232,22 @@
               <option name="myItemId" value="frontend" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -269,6 +264,14 @@
               <option name="myItemId" value="frontend" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shoppingCart" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -281,6 +284,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -783,7 +822,11 @@
       <created>1338897788113</created>
       <updated>1338897788113</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="basket of orders">
+      <created>1339060233167</created>
+      <updated>1339060233167</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -801,7 +844,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20010673" sideWeight="0.6707589" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20010673" sideWeight="0.8035714" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -848,7 +891,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="added extended client script" />
+    <option name="LAST_COMMIT_MESSAGE" value="basket of orders" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -861,7 +904,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="moving flight search to common zone" />
     <MESSAGE value="new forced cache is working" />
     <MESSAGE value="working cache" />
     <MESSAGE value="cache cleaner" />
@@ -886,125 +928,120 @@
     <MESSAGE value="work on order" />
     <MESSAGE value="shoppingCart get ability to save to persistent storage" />
     <MESSAGE value="added extended client script" />
+    <MESSAGE value="basket of orders" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/IStatisticItem.php">
+    <entry file="file://$PROJECT_DIR$/common/models/FlightBookingParams.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="1" selection-start="117" selection-end="267" vertical-scroll-proportion="-9.153846">
+        <state line="4" column="25" selection-start="84" selection-end="84" vertical-scroll-proportion="-2.6153846">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/YiiMongoDbSuite/EMongoDocument.php">
+    <entry file="file://$PROJECT_DIR$/common/models/Flight.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#6#406#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/extensions/QTreeGridView/CQTreeGridView.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="29" selection-start="224" selection-end="244" vertical-scroll-proportion="17.038462">
+        <state line="14" column="24" selection-start="285" selection-end="297" vertical-scroll-proportion="-1.3076923">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/Statisticable.php">
+    <entry file="file://$PROJECT_DIR$/common/models/FlightSearchParams.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/config/main.php">
+    <entry file="file://$PROJECT_DIR$/common/modules/gds/models/GDSNemo.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="42" selection-start="3314" selection-end="3314" vertical-scroll-proportion="-17.653847">
+        <state line="322" column="21" selection-start="14071" selection-end="14071" vertical-scroll-proportion="-19.346153">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/FlightSearch.php">
+    <entry file="file://$PROJECT_DIR$/backend/models/FlightCache.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="148" column="33" selection-start="4851" selection-end="4869" vertical-scroll-proportion="-10.692307">
+        <state line="1" column="32" selection-start="38" selection-end="38" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/AmountOfFlightSearch.php">
+    <entry file="file://$PROJECT_DIR$/common/models/CommonFlightCache.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="27.884615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/SearchController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="10" selection-start="412" selection-end="412" vertical-scroll-proportion="-9.807693">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/statistic/controllers/PopularityController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="59" selection-start="401" selection-end="401" vertical-scroll-proportion="-9.153846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/www/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="48" selection-start="105" selection-end="105" vertical-scroll-proportion="-1.3076923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/config/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="1023" selection-end="1023" vertical-scroll-proportion="-1.7647059">
-          <folding>
-            <element signature="e#1593#2058#1" expanded="false" />
-            <element signature="e#2084#3153#1" expanded="false" />
-            <element signature="e#3496#3786#1" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/order/Order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="38" selection-start="137" selection-end="155" vertical-scroll-proportion="-4.576923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/statistic/reports/PopularityDirectionsCity.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="26" selection-start="3191" selection-end="3191" vertical-scroll-proportion="-22.692308">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/config/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="55" selection-start="659" selection-end="659" vertical-scroll-proportion="31.384615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/www/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="20" selection-start="246" selection-end="246" vertical-scroll-proportion="-6.5384617">
+        <state line="45" column="174" selection-start="1435" selection-end="1435" vertical-scroll-proportion="-21.76923">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/extensions/order/OrderComponent.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="5" selection-start="527" selection-end="527" vertical-scroll-proportion="0.4224852">
+        <state line="21" column="5" selection-start="527" selection-end="527" vertical-scroll-proportion="-13.730769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/ECartPositionBehaviour.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="7" selection-start="313" selection-end="313" vertical-scroll-proportion="-11.769231">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/readme_en.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="8" selection-start="1793" selection-end="1793" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/models/Booking.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="31" selection-start="1907" selection-end="1907" vertical-scroll-proportion="-13.076923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/IECartPosition.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="4" selection-start="149" selection-end="289" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/IEDiscount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/collections/CMap.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="134" column="20" selection-start="3662" selection-end="3662" vertical-scroll-proportion="0.34319526">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/shoppingCart/EShoppingCart.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="27" selection-start="2844" selection-end="2844" vertical-scroll-proportion="-16.692308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/models/FlightVoyage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="48" selection-start="535" selection-end="535" vertical-scroll-proportion="0.52307695">
           <folding />
         </state>
       </provider>

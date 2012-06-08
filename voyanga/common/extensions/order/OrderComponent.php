@@ -32,5 +32,4 @@ class OrderComponent extends CApplicationComponent
         }
         return $order->id;
     }
-
 }

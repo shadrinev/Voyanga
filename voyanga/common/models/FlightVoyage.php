@@ -5,7 +5,7 @@
  * @author oleg
  *
  */
-class FlightVoyage
+class FlightVoyage extends CComponent implements IECartPosition
 {
     public $price;
     public $taxes;
@@ -17,6 +17,23 @@ class FlightVoyage
     public $childPassengerInfo;
     public $infantPassengerInfo;
     public $bestMask = 0;
+
+
+    /**
+     * @return mixed id
+     */
+    public function getId()
+    {
+        return 'flight_voyage_'.$this->flightKey;
+    }
+
+    /**
+     * @return float price
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
 
     public function __construct($oParams)
     {
