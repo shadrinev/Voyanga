@@ -10,6 +10,7 @@ class FlightVoyageStack
     public $flightVoyages = array();
     //public $flightVoyages;
     public $filterValues = array();
+    public $searchId;
     public static $toTop;
 
     public $bestMask = 0; // bitwise mask 0b001 - Best price, 0b010 - best recommended, 0b100 best speed
@@ -40,13 +41,14 @@ class FlightVoyageStack
             $this->bestTime = 0;
             $this->bestPrice = 0;
             $this->bestPriceTime = 0;
+            $this->searchId = $params['searchId'];
 
             //todo: refactor here
-            if ($params['aFlights'])
+            if ($params['flights'])
             {
                 $bParamsNeedInit = true;
                 $flightsCodes = array();
-                foreach ($params['aFlights'] as $oFlightParams)
+                foreach ($params['flights'] as $oFlightParams)
                 {
                     $oFlightVoyage = new FlightVoyage($oFlightParams);
                     $bNeedSave = TRUE;
@@ -196,5 +198,15 @@ class FlightVoyageStack
         reset($aVariantsStacks);
         $aEach = each($aVariantsStacks);
         return $aVariantsStacks;
+    }
+
+    public function getAsJson()
+    {
+        $ret = array('searchId'=>$this->searchId,'flightVoyages'=>array());
+        foreach($this->flightVoyages as $flightVoyage)
+        {
+            $ret['flightVoyages'][] = $flightVoyage->getJsonObject();
+        }
+        return json_encode($ret);
     }
 }

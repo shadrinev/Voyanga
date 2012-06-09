@@ -55,4 +55,10 @@ class FlightPart
 
     }
 
+    public function getJsonObject()
+    {
+        $ret = array();
+
+    }
+
 }

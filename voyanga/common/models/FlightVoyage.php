@@ -7,7 +7,6 @@
  */
 class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
 {
-    public $searchKey;
     public $price;
     public $taxes;
     public $flightKey;
@@ -67,7 +66,7 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
         $this->flightKey = $oParams->flight_key;
         $this->commission = $oParams->commission_price;
         $this->flights = array();
-        $this->searchKey = $oParams->searchId;
+        //$this->searchKey = $oParams->searchId;
         if (!$this->valAirline)
         {
             $this->valAirline = $oParams->valAirline;
@@ -167,5 +166,29 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
         }
         $return = implode(",", $airlines);
         return $return;
+    }
+
+    public function getJsonObject()
+    {
+        /*
+         * public $price;
+    public $taxes;
+    public $flightKey;
+    public $valAirline;
+    public $commission;
+    public $flights;
+    public $adultPassengerInfo;
+    public $childPassengerInfo;
+    public $infantPassengerInfo;
+    public $bestMask = 0;
+         */
+        $ret = array('flightKey'=>$this->flightKey,'price'=>$this->price,'commission'=>$this->commission,'taxes'=>$this->taxes,
+            'valCompany'=>$this->valAirline->code,
+        'bestMask'=>$this->bestMask,'flights'=>array()
+        );
+        foreach($this->flights as $flight){
+            $ret['flights'][] = $flight->getJsonObject();
+        }
+        return $ret;
     }
 }

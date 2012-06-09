@@ -179,6 +179,11 @@ class GDSNemoAgency extends CComponent
 
         $flights = array();
         $errorCode = 0;
+        $searchId = '';
+        if (isset($soapResponse->Response->SearchFlights->Flights))
+        {
+            $searchId = $soapResponse->Response->SearchFlights->Flights->SearchId;
+        }
         if ($soapResponse->Response->SearchFlights->Flights->Flight)
         {
             Yii::beginProfile('processingSoap');
@@ -363,6 +368,7 @@ class GDSNemoAgency extends CComponent
                 }
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;
+                //$oFlight->searchId = $searchId;
 
                 if (!$eTicket)
                 {
@@ -385,11 +391,11 @@ class GDSNemoAgency extends CComponent
         //print_r($aFlights);
         if ($errorCode > 0)
         {
-            return array('flights' => array(), 'errorCode' => $errorCode, 'errorDescription' => '');
+            return array('flights' => array(),'searchId'=>'', 'errorCode' => $errorCode, 'errorDescription' => '');
         }
         else
         {
-            return array('flights' => $flights, 'errorCode' => 0, 'errorDescription' => '');
+            return array('flights' => $flights,'searchId'=>$searchId, 'errorCode' => 0, 'errorDescription' => '');
         }
 
 

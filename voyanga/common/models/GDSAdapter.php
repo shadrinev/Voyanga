@@ -17,7 +17,7 @@ class GDSAdapter extends CApplicationComponent
         $nemo = new GDSNemoAgency();
         $response = $nemo->FlightSearch($flightSearchParams);
 
-        return $response['flights'];
+        return $response;
     }
 
     public function flightBooking()

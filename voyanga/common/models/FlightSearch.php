@@ -74,8 +74,9 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
                 $sJdata = Yii::app()->gdsAdapter->FlightSearch($flightSearchParams);
                 if ($sJdata)
                 {
-                    $paramsFs['aFlights'] = $sJdata;
+                    $paramsFs = $sJdata;
                     $flightVoyageStack = new FlightVoyageStack($paramsFs);
+                    echo $flightVoyageStack->getAsJson();
 
                     $this->flightVoyageStack = $flightVoyageStack;
                     Yii::app()->cache->set('flightSearch' . $this->key, $this, Yii::app()->params['fligh_search_cache_time']);
