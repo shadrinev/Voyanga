@@ -404,9 +404,9 @@ class SiteController extends Controller
         $fs = Yii::app()->cache->get('flightSearch'.$fskey);
         echo "FlightBooking key:{$fskey}";
 
-        $flightVoyage = $fs->oFlightVoyageStack->getFlightById($id);
+        $flightVoyage = $fs->flightVoyageStack->getFlightById($id);
 
-        $route = $fs->aRoutes[0];
+        $route = $fs->routes[0];
         $countPassengers = $route->adultCount + $route->childCount + $route->infantCount;
         $passports = array();
         $valid = TRUE;
@@ -474,6 +474,7 @@ class SiteController extends Controller
                 //print_r($bookingAr);
                 if($bookingAr->validate())
                 {
+
                     $bookingAr->save();//die();
                     $bookingAr->id = $bookingAr->getPrimaryKey();
                     $this->render('flightTicketing', array('booking'=>$bookingAr,'voyage'=>$flightVoyage));
@@ -577,7 +578,39 @@ class SiteController extends Controller
 
     }
 
-    public function actionTestMongo()
+    public function actionTestHotel()
+    {
+        Yii::import('site.common.modules.hotel.models.*');
+
+        $HotelClient = new HotelBookClient();
+        //$HotelClient->synchronize();
+        $russia = Country::getCountryByCode('US');
+        print_r($HotelClient->getCities($russia->hotelbookId));
+        //print_r($HotelClient->hotelSearch($russia->hotelbookId));
+
+    }
+
+    public function actionTestmb()
+    {
+
+        //echo
+        $criteria=new CDbCriteria;
+        $criteria->condition='hotelbookId IS NOT NULL';
+        //$criteria->params=array(':postID'=>10);
+
+        $countries = Country::model()->findAll($criteria);
+        foreach($countries as $country)
+        {
+            echo "unzip -n {$country->code}.zip<br>";
+        }
+        foreach($countries as $country)
+        {
+            echo "<a href='http://download.geonames.org/export/dump/{$country->code}.zip'>{$country->code} - {$country->localRu}</a><br>";
+        }
+
+    }
+
+    public function actionTestMongo($cityname = 'Saint',$country = 'US')
     {
         //$mdb = Yii::app()->mongodb->
         /*$gdsReq = new GdsRequest();
@@ -594,39 +627,46 @@ class SiteController extends Controller
             print_r($req);
         }*/
 
-        $key = substr(md5('gdsRequestCounter'), 0, -8);
-        echo $key;
-        $pk = new MongoID($key);//4fc47ecc7ae3c8fa2700000d
-                                                        //f918ee7492ed68dc1fa4117bb7d5dc32
-        //print_r($pk);
-        $counter = MongoKeyValue::model()->findByPk($pk);
-        MongoKeyValue::model()->findAll($pk);
-        if(!$counter)
+        if(UtilsHelper::countRussianCharacters($cityname) > 0)
         {
-            echo "inIF";
-            $counter = new MongoKeyValue();
-            $counter->value = time();
-            $counter->_id = new MongoID($key);
-            $counter->key = 'gdsRequestCounter';
-            $counter->save();
-            $counter->value = time().'wer';
-            $counter->save();
+            $nameRu = $cityname;
+            $soundexRu = UtilsHelper::soundex($nameRu,'RU');
+            $nameEn = UtilsHelper::str_to_translit($nameRu);
+            $soundexEn = UtilsHelper::soundex($nameEn,'EN');
+
+            //$nameEn = UtilsHelper::cityNameToRus(
+        }else{
+            $nameEn = $cityname;
+            $soundexEn = UtilsHelper::soundex($nameEn,'EN');
+            $nameRu = UtilsHelper::cityNameToRus($cityname,$country);
+            $soundexRu = UtilsHelper::ruSoundex($nameRu);
         }
-        $modifier = new EMongoModifier();
-        $modifier->addModifier('value', 'inc', 1);
+        $metaphoneRu = UtilsHelper::ruMetaphone($nameRu);
+        echo "nameEn: {$nameEn} nameRu: {$nameRu} <br>soundexEn: {$soundexEn} soundexRu: {$soundexRu} meta: {$metaphoneRu}<br>";
+        $criteria = new EMongoCriteria(array('conditions'=>array('countryCode'=>array('equals'=>$country),'soundexEn'=>array('equals'=>$soundexEn)) ));
+        $count = GeoNames::model()->count($criteria);
+        echo 'Found by EN:'.$count.'<br>';
+        if($count){
+            //$criteria = new EMongoCriteria(array('conditions'=>array('countryCode'=>array('equals'=>$country),'soundexEn'=>array('equals'=>$soundexEn)) ));
+            //$criteria->limit = 1;
+            $find = GeoNames::model()->find($criteria);
+            VarDumper::dump($find);
+        }
+        $criteria = new EMongoCriteria(array('conditions'=>array('countryCode'=>array('equals'=>$country),'metaphoneRu'=>array('equals'=>$metaphoneRu)) ));
+        $count = GeoNames::model()->count($criteria);
+        echo 'Found by Ru:'.$count.'<br>';
+        if($count){
+            //$criteria->limit = 1;
+            VarDumper::dump(GeoNames::model()->find($criteria));
+        }
+        $criteria = new EMongoCriteria(array('conditions'=>array('countryCode'=>array('equals'=>$country),'metaphoneRu'=>array('equals'=>$metaphoneRu),'soundexEn'=>array('equals'=>$soundexEn)) ));
+        $count = GeoNames::model()->count($criteria);
+        echo 'Found by Both:'.$count.'<br>';
+        if($count){
+            //$criteria->limit = 1;
+            VarDumper::dump(GeoNames::model()->findAll($criteria));
+        }
 
-        $criteria = new EMongoCriteria();
-        $criteria->addCond('_id','==', $pk);
-        //print_r( $criteria->getConditions());
 
-        // update all matched documents using the modifiers
-        //$status = MongoKeyValue::model()->updateAll($modifier, $criteria);
-        echo ';;;;;'.date("H:i:s");
-        //print_r($status);/**/
-        //echo $counter->value;
-
-        //$counter->update($modifier);
-        //echo $counter->value;
-        print_r($counter);
     }
 }

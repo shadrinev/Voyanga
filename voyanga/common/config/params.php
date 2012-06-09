@@ -35,6 +35,11 @@ return CMap::mergeArray(array(
         'agencyId' => '120',
         'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD'
     ),
+    'HotelBook' => array(
+        'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
+        'login' => 'test',
+        'password' => 'test',
+    ),
 
     'cache.core'=>extension_loaded('apc') ?
 		array(

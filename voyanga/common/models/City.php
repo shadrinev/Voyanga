@@ -9,7 +9,11 @@
  * @property string $code
  * @property string $localRu
  * @property string $localEn
- *
+ * @property real $latitude
+ * @property real $longitude
+ * @property integer $hotelbookId
+ * @property string $metaphoneRu
+ * @property string $stateCode
  * The followings are the available model relations:
  * @property Airport[] $airports
  * @property Country $country
@@ -62,7 +66,7 @@ class City extends CActiveRecord
                 // The following rule is used by search().
                 // Please remove those attributes that should not be searched.
                 array(
-                        'id, position, countryId, code, localRu, localEn, countAirports',
+                        'id, position, countryId, code, localRu, localEn, countAirports, latitude, longitude, hotelbookId, metaphoneRu, stateCode',
                         'safe', 
                         'on' => 'search' ) );
     }
@@ -127,6 +131,8 @@ class City extends CActiveRecord
         $criteria->compare( 'localRu', $this->localRu, true );
         $criteria->compare( 'localEn', $this->localEn, true );
         $criteria->compare( 'countAirports', $this->countAirports);
+        $criteria->compare( 'metaphoneRu', $this->metaphoneRu, true );
+        $criteria->compare( 'metaphoneRu', $this->stateCode, true );
         
         return new CActiveDataProvider( $this, array(
                 'criteria' => $criteria ) );

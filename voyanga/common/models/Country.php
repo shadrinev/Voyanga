@@ -8,14 +8,16 @@
  * @property string $code
  * @property string $localRu
  * @property string $localEn
+ * @property string $hotelbookId
  *
  * The followings are the available model relations:
  * @property City[] $cities
  */
 class Country extends CActiveRecord
 {
-    private static $counries = array();
+    private static $countries = array();
     private static $codeIdMap = array();
+    private static $idHotelbookIdMap = array();
 
     /**
      * Returns the static model of the specified AR class.
@@ -43,12 +45,12 @@ class Country extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('position', 'numerical', 'integerOnly'=>true),
+            array('position, hotelbookId', 'numerical', 'integerOnly'=>true),
             array('code', 'length', 'max'=>5),
             array('localRu, localEn', 'length', 'max'=>45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, position, code, localRu, localEn', 'safe', 'on'=>'search'),
+            array('id, position, code, localRu, localEn, hotelbookId', 'safe', 'on'=>'search'),
         );
     }
 
@@ -94,6 +96,7 @@ class Country extends CActiveRecord
         $criteria->compare('code',$this->code,true);
         $criteria->compare('localRu',$this->localRu,true);
         $criteria->compare('localEn',$this->localEn,true);
+        $criteria->compare('hotelbookId',$this->hotelbookId);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
@@ -102,18 +105,18 @@ class Country extends CActiveRecord
 
     public static function getCountryByPk( $id )
     {
-        if ( isset( Country::$counries[$id] ) )
+        if ( isset( Country::$countries[$id] ) )
         {
-            return Country::$counries[$id];
+            return Country::$countries[$id];
         }
         else
         {
             $Country = Country::model()->findByPk($id);
             if ( $Country )
             {
-                Country::$counries[$Country->id] = $Country;
+                Country::$countries[$Country->id] = $Country;
                 Country::$codeIdMap[$Country->code] = $Country->id;
-                return Country::$counries[$id];
+                return Country::$countries[$id];
             }
             else
             {
@@ -127,7 +130,7 @@ class Country extends CActiveRecord
     {
         if ( isset( Country::$codeIdMap[$code] ) )
         {
-            return Country::$counries[Country::$codeIdMap[$code]];
+            return Country::$countries[Country::$codeIdMap[$code]];
         }
         else
         {
@@ -135,9 +138,9 @@ class Country extends CActiveRecord
                 'code' => $code ) );
             if ( $Country )
             {
-                Country::$counries[$Country->id] = $Country;
+                Country::$countries[$Country->id] = $Country;
                 Country::$codeIdMap[$Country->code] = $Country->id;
-                return Country::$counries[Country::$codeIdMap[$code]];
+                return Country::$countries[Country::$codeIdMap[$code]];
             }
             else
             {

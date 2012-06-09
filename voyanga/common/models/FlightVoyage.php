@@ -62,7 +62,7 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
 
     public function __construct($oParams)
     {
-        $this->price = $oParams->full_sum;
+        $this->price = ceil($oParams->full_sum);
         $this->taxes = $oParams->commission_price;
         $this->flightKey = $oParams->flight_key;
         $this->commission = $oParams->commission_price;

@@ -25,6 +25,10 @@ class LoggingAdminModule extends ABaseAdminModule
                     "label" => "GDS Запросы",
                     "url" => array("/admin/logging/gdsRequest"),
                 ),
+                array(
+                    "label" => "GeoNames",
+                    "url" => array("/admin/logging/geoNames"),
+                ),
             )
         )
     );

@@ -161,7 +161,7 @@ class CommonFlightCache extends CActiveRecord
 
         if (!$flightCache->validate())
         {
-            throw new CException("Can't save fligh cache item.".CVarDumper::dump($flightCache->errors));
+            throw new CException("Can't save flight cache item.".print_r($flightCache->errors,true).print_r($flightCache->attributes,true));
         }
         $flightCache->save();
         return $flightCache;
