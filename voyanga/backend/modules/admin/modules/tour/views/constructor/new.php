@@ -31,4 +31,4 @@ $this->beginWidget("AAdminPortlet",
 <?php echo $this->renderPartial('_tour'); ?>
 <?php
 $this->endWidget(); ?>
-<?php $this->render('_flight_search_result'); ?>
+<?php $this->renderPartial('_flight_search_result'); ?>

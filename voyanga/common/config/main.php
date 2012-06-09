@@ -38,7 +38,7 @@ return array(
         ),
 
         'shoppingCart' => array(
-            'class' => 'application.components.shoppingCart.EShoppingCart',
+            'class' => 'site.common.components.shoppingCart.EShoppingCart',
             'orderComponent' => 'order'
         ),
 
