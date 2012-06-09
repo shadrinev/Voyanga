@@ -7,6 +7,7 @@
  */
 class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
 {
+    public $searchKey;
     public $price;
     public $taxes;
     public $flightKey;
@@ -18,13 +19,12 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
     public $infantPassengerInfo;
     public $bestMask = 0;
 
-
     /**
      * @return mixed id
      */
     public function getId()
     {
-        return 'flight_voyage_'.$this->flightKey;
+        return 'flight_voyage_'.$this->searchKey."_".$this->flightKey;
     }
 
     /**
@@ -46,6 +46,20 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
         return true;
     }
 
+    public function saveToOrderDb()
+    {
+        $key = $this->getId();
+        $order = OrderFlightVoyage::model()->findByAttributes(array('key'=>$key));
+        if (!$order)
+            $order = new OrderFlightVoyage();
+        $order->key = $key;
+        $order->departureCity = $this->getDepartureCity();
+        $order->arrivalCity = $this->getArrivalCity();
+        $order->departureDate = $this->getDeparturDate();
+        $order->object = serialize($this);
+        return $order->save();
+    }
+
     public function __construct($oParams)
     {
         $this->price = $oParams->full_sum;
@@ -53,6 +67,7 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
         $this->flightKey = $oParams->flight_key;
         $this->commission = $oParams->commission_price;
         $this->flights = array();
+        $this->searchKey = $oParams->searchId;
         if (!$this->valAirline)
         {
             $this->valAirline = $oParams->valAirline;
@@ -114,6 +129,11 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
     public function getDepartureCity()
     {
         return $this->flights[0]->getDepartureCity();
+    }
+
+    public function getDepartureDate()
+    {
+        return $this->flights[0]->departureDate;
     }
 
     public function getArrivalCity()

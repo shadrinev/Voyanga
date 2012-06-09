@@ -95,11 +95,6 @@ return CMap::mergeArray(
                 'maxSize' => 2*1024*1024,
             ),
 
-            'shoppingCart' => array(
-                'class' => 'application.components.shoppingCart.EShoppingCart',
-                'orderComponent' => 'order'
-            ),
-
             'log' => array(
                 'class' => 'CLogRouter',
                 'routes' => array(

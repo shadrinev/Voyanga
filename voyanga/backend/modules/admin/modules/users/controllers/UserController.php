@@ -5,7 +5,6 @@
  */
 class UserController extends ABaseAdminController
 {
-
     /**
      * Displays a particular user.
      * @param integer $id the ID of the model to be displayed

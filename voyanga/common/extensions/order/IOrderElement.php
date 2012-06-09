@@ -18,4 +18,12 @@ interface IOrderElement
      * @return boolean is this element should be paid
      */
     public function getIsPayable();
+
+    /**
+     * Function to save this item to persistent storage
+     *
+     * @abstract
+     * @return boolean is saving ok
+     */
+    public function saveToOrderDb();
 }

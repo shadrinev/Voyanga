@@ -37,6 +37,11 @@ return array(
             )
         ),
 
+        'shoppingCart' => array(
+            'class' => 'application.components.shoppingCart.EShoppingCart',
+            'orderComponent' => 'order'
+        ),
+
         'order' => array(
             'class' => 'site.common.extensions.order.OrderComponent'
         ),

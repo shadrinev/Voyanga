@@ -165,6 +165,11 @@ class GDSNemo extends CComponent
         $flights = array();
         Yii::log(print_r($soapResponse,true),'info','nemo');
         $errorCode = 0;
+        $searchId = '';
+        if ($soapResponse->SearchResult->SearchResult->Flights)
+        {
+            $searchId = $soapResponse->SearchResult->SearchResult->Flights->SearchId;
+        }
         if($soapResponse->SearchResult->SearchResult->Flights->Flight){
             Yii::beginProfile('processingSoap');
             UtilsHelper::soapObjectsArray($soapResponse->SearchResult->SearchResult->Flights->Flight);
@@ -332,6 +337,7 @@ class GDSNemo extends CComponent
                 }
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;
+                $oFlight->searchId = $searchId;
 
                 if(!$eTicket)
                 {

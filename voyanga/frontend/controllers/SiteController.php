@@ -628,7 +628,5 @@ class SiteController extends Controller
         //$counter->update($modifier);
         //echo $counter->value;
         print_r($counter);
-
-
     }
 }

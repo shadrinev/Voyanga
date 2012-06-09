@@ -67,6 +67,9 @@ return CMap::mergeArray(
                     'events' => array(
                         'class' => 'application.modules.admin.modules.events.EventAdminModule'
                     ),
+                    'tour' => array(
+                        'class' => 'application.modules.admin.modules.tour.TourAdminModule'
+                    ),
                     'statistic' => array(
                         'class' => 'application.modules.admin.modules.statistic.StatisticAdminModule'
                     ),

@@ -229,6 +229,10 @@ class BootActiveForm extends CActiveForm
 	 */
 	public function datepickerRow($model, $attribute, $htmlOptions = array())
 	{
+        if (!isset($htmlOptions['options']['weekstart']))
+            $htmlOptions['options']['weekStart'] = 1;
+        if (!isset($htmlOptions['options']['format']))
+            $htmlOptions['options']['format'] = 'dd.mm.yyyy';
 		return $this->inputRow(BootInput::TYPE_DATEPICKER, $model, $attribute, null, $htmlOptions);
 	}
 
