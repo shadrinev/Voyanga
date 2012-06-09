@@ -37,7 +37,8 @@ return CMap::mergeArray(
             'application.controllers.*',
             'application.models.*',
             'application.helpers.*',
-            'site.common.components.shoppingCart.*'
+            'site.common.components.shoppingCart.*',
+            'site.common.components.order.*'
         ),
 
         'modules' => array(
