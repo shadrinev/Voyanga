@@ -71,7 +71,7 @@
       <file leaf-file-name="main.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/config/main.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="41" selection-start="1535" selection-end="1535" vertical-scroll-proportion="0.86397606">
+            <state line="40" column="35" selection-start="1529" selection-end="1529" vertical-scroll-proportion="0.86397606">
               <folding />
             </state>
           </provider>
@@ -841,7 +841,11 @@
       <created>1339248836106</created>
       <updated>1339248836106</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="fix for config">
+      <created>1339248914106</created>
+      <updated>1339248914106</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1058,7 +1062,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/config/main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="41" selection-start="1535" selection-end="1535" vertical-scroll-proportion="0.86397606">
+        <state line="40" column="35" selection-start="1529" selection-end="1529" vertical-scroll-proportion="0.86397606">
           <folding />
         </state>
       </provider>
