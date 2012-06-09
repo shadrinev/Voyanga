@@ -7,7 +7,7 @@
  */
 class MFlightSearch extends CComponent
 {
-    public static function getOptimalPrice($fromCityId, $toCityId, $date, $returnDate=false, $forceUpdate = false)
+    private static function buildSearchParams($fromCityId, $toCityId, $date, $returnDate=false, $flightClass = 'E')
     {
         $flightSearchParams = new FlightSearchParams();
         $departureDate = date('d.m.Y', strtotime($date));
@@ -31,7 +31,25 @@ class MFlightSearch extends CComponent
                 'departure_date' => $returnDate
             ));
         }
-        $flightSearchParams->flight_class = 'E';
+        $flightSearchParams->flight_class = $flightClass;
+        return $flightSearchParams;
+    }
+
+    public static function getAllPricesAsJson($fromCityId, $toCityId, $date, $returnDate=false)
+    {
+        $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate);
+        $fs = new FlightSearch();
+        $fs->status = 1;
+        $fs->requestId = '1';
+        $fs->data = '{}';
+        $result = $fs->sendRequest($flightSearchParams);
+        $variants = new FlightVoyageStack($result);
+        $json = $variants->getAsJson();
+    }
+
+    public static function getOptimalPrice($fromCityId, $toCityId, $date, $returnDate=false, $forceUpdate = false)
+    {
+        $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate);
         $fs = new FlightSearch();
         $fs->status = 1;
         $fs->requestId = '1';
