@@ -57,7 +57,18 @@ class FlightPart
 
     public function getJsonObject()
     {
-        $ret = array();
+        $ret = array('transportAirline'=>$this->transportAirlineCode,
+            'departureCity'=>City::getCityByPk($this->departureCityId)->localRu,
+            'arrivalCity'=>City::getCityByPk($this->arrivalCityId)->localRu,
+            'datetimeBegin'=>Yii::app()->format->formatDatetime($this->timestampBegin),
+            'datetimeEnd'=>Yii::app()->format->formatDatetime($this->timestampEnd),
+            'flightCode'=>$this->code,
+            'duration'=>$this->duration,
+            'departureAirport'=>$this->departureAirport->localRu,
+            'arrivalAirport'=>$this->arrivalAirport->localRu,
+
+        );
+        return $ret;
 
     }
 

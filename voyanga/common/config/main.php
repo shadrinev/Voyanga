@@ -62,7 +62,8 @@ return array(
             'class' => 'ConfigurationManager',
         ),
         'format' => array(
-            'numberFormat' => array('decimals'=>2, 'decimalSeparator'=>'.', 'thousandSeparator'=>' ')
+            'numberFormat' => array('decimals'=>2, 'decimalSeparator'=>'.', 'thousandSeparator'=>' '),
+            'datetimeFormat' => 'd.m.Y H:i'
         ),
         'db'=>array(
             'class' => 'CDbConnection',
