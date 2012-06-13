@@ -16,9 +16,23 @@ class BasketController extends ABaseAdminController
                 Yii::app()->shoppingCart->put($item);
                 break;
         }
+    }
+
+    public function actionDelete($key)
+    {
+        Yii::app()->shoppingCart->remove($key);
+        $this->actionShow();
+    }
+
+    public function actionShow()
+    {
         $positions = Yii::app()->shoppingCart->getPositions();
-        foreach($positions as $position) {
-            $result[$position->getId()] = $position->getAsArray();
+        foreach($positions as $position)
+        {
+            $element = $position->getJsonObject();
+            $element['key'] = $position->getId();
+            $result['items'][] = $element;
+            unset($element);
         }
         echo json_encode($result);
     }

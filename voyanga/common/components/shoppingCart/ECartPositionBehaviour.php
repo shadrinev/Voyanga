@@ -9,7 +9,7 @@
  *
  * Can be used with non-AR models.
  */
-class ECartPositionBehaviour extends CModelBehavior
+class ECartPositionBehaviour extends CBehavior
 {
     /**
      * Positions number

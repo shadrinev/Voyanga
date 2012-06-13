@@ -2,12 +2,12 @@
 <div class="entry">
     <h1>{{title}}</h1>
 
-    <table class="table-striped" width="100%">
+    <table class="table table-striped" width="100%">
         <thead>
             <tr>
-                <td>Авиакомпания</td>
-                <td>Цена</td>
-                <td></td>
+                <th>Авиакомпания</th>
+                <th>Цена</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>

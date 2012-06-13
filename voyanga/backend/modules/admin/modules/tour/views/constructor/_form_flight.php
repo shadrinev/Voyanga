@@ -112,6 +112,14 @@
                     .done(function(data){
                         console.log(data)
                     });
+                $.getJSON('/admin/tour/basket/show')
+                    .done(function(data) {
+                        var html = handlebarTour(data);
+                        $('#tour-output').html(html);
+                    })
+                    .fail(function(data){
+                        $('#tour-output').html(data);
+                    });
                 $('#popupInfo').modal('hide');
             });
         })

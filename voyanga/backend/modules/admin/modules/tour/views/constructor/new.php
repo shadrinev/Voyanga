@@ -23,11 +23,11 @@ $this->beginWidget("AAdminPortlet",
 <h3>Добавьте перелёт:</h3>
 <?php echo $this->renderPartial('_form_flight', array('model'=>$flightForm)); ?>
 
-<p class='info box'>Добавьте отель:</p>
+<h3>Добавьте отель:</h3>
 <?php echo $this->renderPartial('_form_hotel'); ?>
 
 <hr>
-<p class='info box'>Результат:</p>
+<h3>Результат:</h3>
 <?php echo $this->renderPartial('_tour'); ?>
 <?php
 $this->endWidget(); ?>
