@@ -14,7 +14,7 @@ class EShoppingCart extends CMap
      * Update the model on session restore?
      * @var boolean
      */
-    public $refresh = true;
+    public $refresh = false;
 
     public $discounts = array();
 

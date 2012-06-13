@@ -108,7 +108,11 @@
             $('.chooseFlight').on('click',function(){
                 var key1 = $('#searchId').data('searchid');
                 var key2 = $(this).data('searchkey');
-                console.log(key1+'_'+key2);
+                $.getJSON('/admin/tour/basket/add/type/".FlightVoyage::TYPE."/key/'+key1+'/searchId/'+key2)
+                    .done(function(data){
+                        console.log(data)
+                    });
+                $('#popupInfo').modal('hide');
             });
         })
         .fail(function(data){

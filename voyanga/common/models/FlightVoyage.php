@@ -5,8 +5,10 @@
  * @author oleg
  *
  */
-class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
+class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrderElement
 {
+    const TYPE = 1;
+
     public $price;
     public $taxes;
     public $flightKey;
@@ -17,6 +19,7 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
     public $childPassengerInfo;
     public $infantPassengerInfo;
     public $bestMask = 0;
+    public $searchKey;
 
     /**
      * @return mixed id
@@ -59,6 +62,14 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
         return $order->save();
     }
 
+    public static function getFromCache($key, $searchId)
+    {
+        $fs = Yii::app()->cache->get('flightSearch'.$key);
+        $item = $fs->flightVoyageStack->getFlightById($searchId);
+        $item->searchKey = $key;
+        return $item;
+    }
+
     public function __construct($oParams)
     {
         $this->price = ceil($oParams->full_sum);
@@ -92,7 +103,6 @@ class FlightVoyage extends CComponent implements IECartPosition, IOrderElement
         {
             throw new CException(Yii::t('application', 'Required param $oParams->parts not set.'));
         }
-
     }
 
     public function getFullDuration()

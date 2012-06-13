@@ -9,7 +9,7 @@
  *
  * Can be used with non-AR models.
  */
-class ECartPositionBehaviour extends CActiveRecordBehavior
+class ECartPositionBehaviour extends CModelBehavior
 {
     /**
      * Positions number
@@ -20,7 +20,7 @@ class ECartPositionBehaviour extends CActiveRecordBehavior
      * Update model on session restore?
      * @var boolean
      */
-    private $refresh = true;
+    private $refresh = false;
 
     /**
      * Position discount sum
@@ -66,8 +66,8 @@ class ECartPositionBehaviour extends CActiveRecordBehavior
      */
     public function __wakeup()
     {
-        if ($this->refresh === true)
-            $this->getOwner()->refresh();
+        //if ($this->refresh === true)
+            //$this->getOwner()->refresh();
     }
 
     /**
