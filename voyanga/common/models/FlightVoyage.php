@@ -26,7 +26,7 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
      */
     public function getId()
     {
-        return 'flight_voyage_'.$this->searchKey."_".$this->flightKey;
+        return 'flight_voyage_' . $this->searchKey . "_" . $this->flightKey;
     }
 
     /**
@@ -48,12 +48,13 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         return true;
     }
 
-    public function saveToOrderDb()
+    public function saveToOrderDb($orderId)
     {
         $key = $this->getId();
-        $order = OrderFlightVoyage::model()->findByAttributes(array('key'=>$key));
+        $order = OrderFlightVoyage::model()->findByAttributes(array('key' => $key));
         if (!$order)
             $order = new OrderFlightVoyage();
+        $order->orderId = $orderId;
         $order->key = $key;
         $order->departureCity = $this->getDepartureCity();
         $order->arrivalCity = $this->getArrivalCity();
@@ -64,7 +65,7 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
 
     public static function getFromCache($key, $searchId)
     {
-        $fs = Yii::app()->cache->get('flightSearch'.$key);
+        $fs = Yii::app()->cache->get('flightSearch' . $key);
         $item = $fs->flightVoyageStack->getFlightById($searchId);
         $item->searchKey = $key;
         return $item;
@@ -99,7 +100,8 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
                     $this->flights[$iGroupId]->addPart($oPart);
                 }
             }
-        } else
+        }
+        else
         {
             throw new CException(Yii::t('application', 'Required param $oParams->parts not set.'));
         }
@@ -155,7 +157,7 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         $countFlights = count($this->flights);
         if ($countFlights > 2)
             return true;
-        if ($countFlights==2)
+        if ($countFlights == 2)
         {
             $condition = ($this->flights[0]->getDepartureCity()->id == $this->flights[1]->getArrivalCity()->id);
             if (!$condition)
@@ -192,13 +194,23 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
     public $infantPassengerInfo;
     public $bestMask = 0;
          */
-        $ret = array('flightKey'=>$this->flightKey,'price'=>$this->price,'commission'=>$this->commission,'taxes'=>$this->taxes,
-            'valCompany'=>$this->valAirline->code,
-        'bestMask'=>$this->bestMask,'flights'=>array()
+        $ret = array('flightKey' => $this->flightKey,
+            'price' => $this->price,
+            'commission' => $this->commission,
+            'taxes' => $this->taxes,
+            'valCompany' => $this->valAirline->code,
+            'bestMask' => $this->bestMask,
+            'flights' => array()
         );
-        foreach($this->flights as $flight){
+        foreach ($this->flights as $flight)
+        {
             $ret['flights'][] = $flight->getJsonObject();
         }
         return $ret;
+    }
+
+    public function getTime()
+    {
+        return $this->flights[0]->flightParts[0]->timestampBegin;
     }
 }

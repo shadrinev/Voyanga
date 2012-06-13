@@ -20,10 +20,19 @@ interface IOrderElement
     public function getIsPayable();
 
     /**
-     * Function to save this item to persistent storage
+     *
+     * Function to save this item to persistent storage associated with $orderId
      *
      * @abstract
      * @return boolean is saving ok
      */
-    public function saveToOrderDb();
+    public function saveToOrderDb($orderId);
+
+    /**
+     * Function to get start time of event to sort it in chronological order
+     *
+     * @abstract
+     * @return integer timestamp
+     */
+    public function getTime();
 }

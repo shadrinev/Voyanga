@@ -5,7 +5,7 @@
  */
 
 $this->breadcrumbs = array(
-    'Пользователь' => array('index'),
+    'Тур' => array('index'),
     'Создание',
 );
 
