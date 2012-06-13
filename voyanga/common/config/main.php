@@ -15,6 +15,8 @@ return array(
     'import' => array(
         'site.common.extensions.YiiMongoDbSuite.*',
         'site.common.components.statistic.*',
+        'site.common.components.shoppingCart.*',
+        'site.common.extensions.order.*'
     ),
     'components'=>array(
 

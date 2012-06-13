@@ -17,6 +17,7 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
     public $flightVoyageStack;
     private $_routes;
 
+
     public function behaviors()
     {
         return array(
@@ -42,7 +43,7 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
         return 'flight_search';
     }
 
-    public function sendRequest(FlightSearchParams $flightSearchParams)
+    public function sendRequest(FlightSearchParams $flightSearchParams, $returnCacheRecord = true)
     {
         if ($flightSearchParams instanceof FlightSearchParams)
         {
@@ -78,7 +79,7 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
                     $paramsFs['fsKey'] = $this->key;
                     $flightVoyageStack = new FlightVoyageStack($paramsFs);
 
-                    echo $flightVoyageStack->getAsJson();
+                    //echo $flightVoyageStack->getAsJson();
 
                     $this->flightVoyageStack = $flightVoyageStack;
                     Yii::app()->cache->set('flightSearch' . $this->key, $this, Yii::app()->params['fligh_search_cache_time']);
@@ -103,7 +104,10 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
                     );
                     $this->flightVoyageStack->setAttributes($attributes);
                     $this->afterSave();
-                    return FlightCache::addCacheFromStack($this->flightVoyageStack);
+                    if ($returnCacheRecord)
+                        return FlightCache::addCacheFromStack($this->flightVoyageStack);
+                    else
+                        return $this->flightVoyageStack;
                 }
             }
             else

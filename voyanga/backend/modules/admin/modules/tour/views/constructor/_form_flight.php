@@ -12,7 +12,7 @@
         'departureDate',
         array(
             'events'=> array(
-                'changeDate'=>'js:function(ev){$(this).datepicker("hide"); $("#Event_endDate_date").focus()}'
+                'changeDate'=>'js:function(ev){$(this).datepicker("hide")}'
             )
         )
     );?>
@@ -65,10 +65,54 @@
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.BootButton', array(
-            'buttonType'=>'submit',
+            'url'=>'#popupInfo',
             'type'=>'primary',
             'label'=>'Поиск перелёта',
+            'htmlOptions'=>array('id'=>'searchFlight', 'data-toggle'=>'modal')
         )); ?>
     </div>
 
 <?php $this->endWidget(); ?>
+
+<?php $this->beginWidget('bootstrap.widgets.BootModal', array('id'=>'popupInfo')); ?>
+
+<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Результат запроса</h3>
+</div>
+
+<div class="modal-body" id='flight-search-result'>
+    <p>Идет запрос данных...</p>
+</div>
+
+<div class="modal-footer">
+    <?php $this->widget('bootstrap.widgets.BootButton', array(
+    'label'=>'Close',
+    'url'=>'#',
+    'htmlOptions'=>array('data-dismiss'=>'modal'),
+)); ?>
+</div>
+
+<?php $this->endWidget(); ?>
+
+<?php $templateVariable = 'flightSearchResult';
+    $this->renderPartial('_flight_search_result', array('variable'=>$templateVariable)); ?>
+
+<?php Yii::app()->clientScript->registerScript('flight-search', "
+    $('#searchFlight').on('click', function(){
+        $('#flight-search-result').html('Поиск перелёта...');
+        $.getJSON('/admin/tour/constructor/flightSearch', $('#flight-form').serialize())
+        .done(function(data) {
+            var html = {$templateVariable}(data);
+            $('#flight-search-result').html(html);
+            $('.chooseFlight').on('click',function(){
+                var key1 = $('#searchId').data('searchid');
+                var key2 = $(this).data('searchkey');
+                console.log(key1+'_'+key2);
+            });
+        })
+        .fail(function(data){
+            $('#flight-search-result').html(data);
+        });
+    });
+", CClientScript::POS_READY); ?>

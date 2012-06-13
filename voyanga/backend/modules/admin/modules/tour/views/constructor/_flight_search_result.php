@@ -1,10 +1,25 @@
-<?php $this->beginWidget('common.extensions.handlebars.HandlebarsWidget', array('id'=>'flight-search', 'compileVariable' => 'result')) ?>
-<h3>Результаты поиска {{name}} {{surname}}</h3>
-<?php $this->endWidget(); ?>
+<?php $this->beginWidget('common.extensions.handlebars.HandlebarsWidget', array('id'=>'flight-search', 'compileVariable' => $variable)) ?>
+<div class="entry">
+    <h1>{{title}}</h1>
 
-<!-- example of usage
-<script type="text/javascript">
-    var context = <?php echo json_encode(array('name'=>'Mikhail', 'surname'=> 'Kuklin')) ?>;
-</script>
-<?php //$this->widget('common.extensions.handlebars.HandlebarsOutput', array('id'=>'flight-search-result', 'compileVariable' => 'result', 'contextVariable' => 'context')) ?>
--->
+    <table class="table-striped" width="100%">
+        <thead>
+            <tr>
+                <td>Авиакомпания</td>
+                <td>Цена</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+        {{#each flightVoyages}}
+        <tr>
+            <td><img src='http://frontend.oleg.voyanga/themes/classic/images/airlines/{{valCompany}}.png'></td>
+            <td>{{price}} руб.</td></li>
+            <td><a class='btn btn-mini chooseFlight' data-searchkey='{{flightKey}}'>Выбрать</a></td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    <span id='searchId' data-searchId='{{searchId}}'></span>
+</div>
+<?php $this->endWidget(); ?>

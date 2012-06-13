@@ -11,6 +11,14 @@ class FlightForm extends CFormModel
     public $departureDate;
     public $arrivalCityId;
 
+    public function rules()
+    {
+        return array(
+            array('departureCityId, arrivalCityId', 'numerical', 'integerOnly'=>true),
+            array('departureDate', 'safe')
+        );
+    }
+
     public function attributeLabels()
     {
         return array(

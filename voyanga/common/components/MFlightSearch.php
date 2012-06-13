@@ -42,9 +42,9 @@ class MFlightSearch extends CComponent
         $fs->status = 1;
         $fs->requestId = '1';
         $fs->data = '{}';
-        $result = $fs->sendRequest($flightSearchParams);
-        $variants = new FlightVoyageStack($result);
+        $variants = $fs->sendRequest($flightSearchParams, false);
         $json = $variants->getAsJson();
+        return $json;
     }
 
     public static function getOptimalPrice($fromCityId, $toCityId, $date, $returnDate=false, $forceUpdate = false)
