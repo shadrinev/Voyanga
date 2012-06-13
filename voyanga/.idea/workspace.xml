@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120613_133131_create_order_table.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120613_134241_alter_order_flight_voyage_table.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120613_134357_alter_order_flight_voyage_table.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120613_143921_use_many_to_many_link_order_and_order_voyage.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/models/OrderHasFlightVoyage.php" />
+      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\common\migrations\m120613_134357_alter_order_flight_voyage_table.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/BasketController.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/BasketController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_tour.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_tour.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/new.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/new.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/extensions/order/IOrderElement.php" afterPath="$PROJECT_DIR$/common/extensions/order/IOrderElement.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/extensions/order/Order.php" afterPath="$PROJECT_DIR$/common/extensions/order/Order.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/extensions/order/OrderComponent.php" afterPath="$PROJECT_DIR$/common/extensions/order/OrderComponent.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/FlightVoyage.php" afterPath="$PROJECT_DIR$/common/models/FlightVoyage.php" />
     </list>
@@ -41,7 +42,7 @@
       <file leaf-file-name="Order.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/extensions/order/Order.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="41" selection-start="532" selection-end="532" vertical-scroll-proportion="-0.0">
+            <state line="18" column="41" selection-start="532" selection-end="532" vertical-scroll-proportion="-11.769231">
               <folding />
             </state>
           </provider>
@@ -50,34 +51,7 @@
       <file leaf-file-name="OrderComponent.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/extensions/order/OrderComponent.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="1" selection-start="169" selection-end="169" vertical-scroll-proportion="-5.230769">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FlightVoyage.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/FlightVoyage.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="35" selection-start="1211" selection-end="1211" vertical-scroll-proportion="-22.884615">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="m120613_134241_alter_order_flight_voyage_table.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/migrations/m120613_134241_alter_order_flight_voyage_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="67" selection-start="175" selection-end="175" vertical-scroll-proportion="-3.9230769">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="m120613_134357_alter_order_flight_voyage_table.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/common/migrations/m120613_134357_alter_order_flight_voyage_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="49" column="69" selection-start="1499" selection-end="1499" vertical-scroll-proportion="-19.423077">
               <folding />
             </state>
           </provider>
@@ -86,14 +60,14 @@
       <file leaf-file-name="IOrderElement.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/extensions/order/IOrderElement.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="6" selection-start="502" selection-end="502" vertical-scroll-proportion="-15.692307">
+            <state line="23" column="55" selection-start="470" selection-end="470" vertical-scroll-proportion="-15.038462">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Flight.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/Flight.php">
+      <file leaf-file-name="OrderHasFlightVoyage.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/models/OrderHasFlightVoyage.php">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
@@ -101,19 +75,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FlightPart.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/FlightPart.php">
+      <file leaf-file-name="BasketController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/BasketController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="26" selection-start="490" selection-end="504" vertical-scroll-proportion="-11.115385">
+            <state line="37" column="27" selection-start="833" selection-end="833" vertical-scroll-proportion="-24.192308">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ECartPositionBehaviour.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/components/shoppingCart/ECartPositionBehaviour.php">
+      <file leaf-file-name="m120613_143921_use_many_to_many_link_order_and_order_voyage.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/migrations/m120613_143921_use_many_to_many_link_order_and_order_voyage.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="38" selection-start="200" selection-end="200" vertical-scroll-proportion="-3.6666667">
+            <state line="11" column="57" selection-start="387" selection-end="387" vertical-scroll-proportion="-7.1923075">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_tour.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_tour.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="122" column="93" selection-start="4571" selection-end="4629" vertical-scroll-proportion="-24.538462">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_flight_search_result.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_flight_search_result.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form_flight.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="125" column="123" selection-start="4455" selection-end="4455" vertical-scroll-proportion="0.8557576">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlightVoyage.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/models/FlightVoyage.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="63" column="21" selection-start="1496" selection-end="1496" vertical-scroll-proportion="-14.461538">
               <folding />
             </state>
           </provider>
@@ -129,22 +139,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/common/components/MFlightSearch.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/ConstructorController.php" />
-        <option value="$PROJECT_DIR$/backend/www/index.php" />
         <option value="$PROJECT_DIR$/common/components/shoppingCart/EShoppingCart.php" />
         <option value="$PROJECT_DIR$/common/components/shoppingCart/ECartPositionBehaviour.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_flight_search_result.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_tour.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/new.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/BasketController.php" />
         <option value="$PROJECT_DIR$/common/migrations/m120613_133131_create_order_table.php" />
-        <option value="$PROJECT_DIR$/common/extensions/order/OrderComponent.php" />
-        <option value="$PROJECT_DIR$/common/extensions/order/IOrderElement.php" />
-        <option value="$PROJECT_DIR$/common/models/FlightVoyage.php" />
         <option value="$PROJECT_DIR$/common/migrations/m120613_134241_alter_order_flight_voyage_table.php" />
         <option value="$PROJECT_DIR$/common/extensions/order/Order.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_tour.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/ConstructorController.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/BasketController.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/new.php" />
+        <option value="$PROJECT_DIR$/common/migrations/m120613_143921_use_many_to_many_link_order_and_order_voyage.php" />
+        <option value="$PROJECT_DIR$/common/models/OrderHasFlightVoyage.php" />
+        <option value="$PROJECT_DIR$/common/extensions/order/IOrderElement.php" />
+        <option value="$PROJECT_DIR$/common/models/FlightVoyage.php" />
+        <option value="$PROJECT_DIR$/common/extensions/order/OrderComponent.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php" />
       </list>
     </option>
   </component>
@@ -268,82 +278,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="migrations" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="order" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1200,12 +1134,16 @@
       <created>1339592979107</created>
       <updated>1339592979107</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="save order to mysql instead of mongo">
+      <created>1339595174105</created>
+      <updated>1339595174105</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1218,7 +1156,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22785486" sideWeight="0.54241073" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22785486" sideWeight="0.54241073" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1265,7 +1203,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="tour system" />
+    <option name="LAST_COMMIT_MESSAGE" value="save order to mysql instead of mongo" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1278,7 +1216,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="refactored" />
     <MESSAGE value="new report" />
     <MESSAGE value="popularity of flights from city" />
     <MESSAGE value="flight to" />
@@ -1303,58 +1240,22 @@
     <MESSAGE value="you can choose option now" />
     <MESSAGE value="fix for ECartPosition" />
     <MESSAGE value="tour system" />
+    <MESSAGE value="save order to mysql instead of mongo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_flight_search_result.php">
+    <entry file="file://$PROJECT_DIR$/common/migrations/m120613_133131_create_order_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="24" selection-start="207" selection-end="207" vertical-scroll-proportion="-2.6153846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_tour.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="21" selection-start="412" selection-end="412" vertical-scroll-proportion="-7.1923075">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="49" selection-start="3413" selection-end="3413" vertical-scroll-proportion="-13.730769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/new.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="5" selection-start="730" selection-end="730" vertical-scroll-proportion="-20.26923">
-          <folding>
-            <element signature="e#6#112#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/BasketController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="645" selection-end="645" vertical-scroll-proportion="-18.307692">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/shoppingCart/ECartPositionBehaviour.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="38" selection-start="200" selection-end="200" vertical-scroll-proportion="-3.6666667">
+        <state line="10" column="34" selection-start="264" selection-end="264" vertical-scroll-proportion="0.2060606">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/models/FlightPart.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="26" selection-start="490" selection-end="504" vertical-scroll-proportion="-11.115385">
+        <state line="23" column="26" selection-start="490" selection-end="504" vertical-scroll-proportion="0.34201184">
           <folding />
         </state>
       </provider>
@@ -1366,58 +1267,95 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/common/migrations/m120613_134241_alter_order_flight_voyage_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="67" selection-start="175" selection-end="175" vertical-scroll-proportion="0.12071006">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/ConstructorController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="322" selection-end="322" vertical-scroll-proportion="-9.153846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/new.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="56" selection-start="382" selection-end="382" vertical-scroll-proportion="-10.461538">
+          <folding>
+            <element signature="e#6#112#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/migrations/m120613_143921_use_many_to_many_link_order_and_order_voyage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="57" selection-start="387" selection-end="387" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/BasketController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="27" selection-start="833" selection-end="833" vertical-scroll-proportion="-24.192308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/common/extensions/order/IOrderElement.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="6" selection-start="502" selection-end="502" vertical-scroll-proportion="-15.692307">
+        <state line="23" column="55" selection-start="470" selection-end="470" vertical-scroll-proportion="-15.038462">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/FlightVoyage.php">
+    <entry file="file://$PROJECT_DIR$/common/models/OrderHasFlightVoyage.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="35" selection-start="1211" selection-end="1211" vertical-scroll-proportion="-22.884615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/migrations/m120609_091015_create_order_flight_voyage_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="47" selection-start="137" selection-end="156" vertical-scroll-proportion="0.123636365">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/migrations/m120613_133131_create_order_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="34" selection-start="264" selection-end="264" vertical-scroll-proportion="0.2060606">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/extensions/order/OrderComponent.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="1" selection-start="169" selection-end="169" vertical-scroll-proportion="-5.230769">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common/extensions/order/Order.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="41" selection-start="532" selection-end="532" vertical-scroll-proportion="0.0">
+        <state line="18" column="41" selection-start="532" selection-end="532" vertical-scroll-proportion="-11.769231">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/migrations/m120613_134241_alter_order_flight_voyage_table.php">
+    <entry file="file://$PROJECT_DIR$/common/models/FlightVoyage.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="67" selection-start="175" selection-end="175" vertical-scroll-proportion="-3.9230769">
+        <state line="63" column="21" selection-start="1496" selection-end="1496" vertical-scroll-proportion="-14.461538">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/migrations/m120613_134357_alter_order_flight_voyage_table.php">
+    <entry file="file://$PROJECT_DIR$/common/extensions/order/OrderComponent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="69" selection-start="1499" selection-end="1499" vertical-scroll-proportion="-19.423077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_flight_search_result.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_tour.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="122" column="93" selection-start="4571" selection-end="4629" vertical-scroll-proportion="-24.538462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="125" column="123" selection-start="4455" selection-end="4455" vertical-scroll-proportion="0.8557576">
           <folding />
         </state>
       </provider>

@@ -48,19 +48,20 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         return true;
     }
 
-    public function saveToOrderDb($orderId)
+    public function saveToOrderDb()
     {
         $key = $this->getId();
         $order = OrderFlightVoyage::model()->findByAttributes(array('key' => $key));
         if (!$order)
             $order = new OrderFlightVoyage();
-        $order->orderId = $orderId;
         $order->key = $key;
-        $order->departureCity = $this->getDepartureCity();
-        $order->arrivalCity = $this->getArrivalCity();
-        $order->departureDate = $this->getDeparturDate();
+        $order->departureCity = $this->getDepartureCity()->id;
+        $order->arrivalCity = $this->getArrivalCity()->id;
+        $order->departureDate = $this->getDepartureDate();
         $order->object = serialize($this);
-        return $order->save();
+        if ($order->save())
+            return $order;
+        return false;
     }
 
     public static function getFromCache($key, $searchId)

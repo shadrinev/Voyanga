@@ -28,4 +28,16 @@ class BasketController extends ABaseAdminController
     {
         echo Yii::app()->order->getPositions();
     }
+
+    public function actionSave($name)
+    {
+        $order = new OrderComponent;
+        $order->create($name);
+    }
+
+    public function actionClear()
+    {
+        Yii::app()->shoppingCart->clear();
+        $this->redirect('/admin/tour/constructor/new');
+    }
 }

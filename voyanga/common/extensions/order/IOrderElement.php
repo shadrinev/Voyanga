@@ -21,12 +21,12 @@ interface IOrderElement
 
     /**
      *
-     * Function to save this item to persistent storage associated with $orderId
+     * Function to save this item to persistent storage
      *
      * @abstract
      * @return boolean is saving ok
      */
-    public function saveToOrderDb($orderId);
+    public function saveToOrderDb();
 
     /**
      * Function to get start time of event to sort it in chronological order

@@ -110,21 +110,20 @@
                 var key2 = $(this).data('searchkey');
                 $.getJSON('/admin/tour/basket/add/type/".FlightVoyage::TYPE."/key/'+key1+'/searchId/'+key2)
                     .done(function(data){
-                        console.log(data)
+                        $.getJSON('/admin/tour/basket/show')
+                            .done(function(data) {
+                                var html = handlebarTour(data);
+                                $('#tour-output').html(html);
+                            })
+                            .fail(function(data){
+                                $('#tour-output').html(data);
+                            });
+                        $('#popupInfo').modal('hide');
                     });
-                $.getJSON('/admin/tour/basket/show')
-                    .done(function(data) {
-                        var html = handlebarTour(data);
-                        $('#tour-output').html(html);
-                    })
-                    .fail(function(data){
-                        $('#tour-output').html(data);
-                    });
-                $('#popupInfo').modal('hide');
             });
         })
         .fail(function(data){
-            $('#flight-search-result').html(data);
+            $('#flight-search-result').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте повторить поиск.</div>');
         });
     });
 ", CClientScript::POS_READY); ?>

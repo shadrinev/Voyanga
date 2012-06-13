@@ -14,7 +14,7 @@ $this->beginWidget("AAdminPortlet",
         "menuItems" => array(
             array(
                 "label" => "Очистить",
-                "url" => array("/admin/tour/constructor/drop"),
+                "url" => array("/admin/tour/basket/clear"),
             ),
         ),
         "title" => "Создание нового тура"

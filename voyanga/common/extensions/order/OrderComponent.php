@@ -12,9 +12,17 @@ class OrderComponent extends CApplicationComponent
         $positions = Yii::app()->shoppingCart->getPositions();
         foreach($positions as $position)
         {
-            $element = $position->getJsonObject();
+            if ($asJson)
+            {
+                $element = $position->getJsonObject();
+            }
+            else
+            {
+                $element = $position;
+            }
             $time[] = $position->getTime();
-            $element['key'] = $position->getId();
+            if ($asJson)
+                $element['key'] = $position->getId();
             $result['items'][] = $element;
             unset($element);
         }
@@ -32,25 +40,24 @@ class OrderComponent extends CApplicationComponent
         $order->name = $name;
         if ($result = $order->save())
         {
-            $items = $this->getPositions();
-            foreach ($items as $item)
-                $result  = $result and $item->saveToDb($order->id);
+            $items = $this->getPositions(false);
+            foreach ($items['items'] as $item)
+            {
+                if ($saved = $item->saveToOrderDb())
+                {
+                    $orderHasFlightVoyage = new OrderHasFlightVoyage();
+                    $orderHasFlightVoyage->orderId = $order->id;
+                    $orderHasFlightVoyage->orderFlightVoyage = $saved->id;
+                    $orderHasFlightVoyage->save();
+                }
+                else
+                {
+                    $result = false;
+                    break;
+                }
+            }
+
         }
         echo json_encode(array('result'=>$result));
-    }
-
-    public function update($id, $userId, $items)
-    {
-        $order = Order::model()->findByPk($id);
-        if ($order)
-        {
-            $order = new Order;
-            $order->userId = $userId;
-            $order->initSoftAttributes(array_keys($items));
-            foreach ($items as $name=>$value)
-                $order->name = $value;
-            $order->save();
-        }
-        return $order->id;
     }
 }

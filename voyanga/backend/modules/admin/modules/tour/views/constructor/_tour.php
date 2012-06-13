@@ -45,7 +45,29 @@
     </td>
     {{/each}}
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" style="text-align: right">
+                <a class="btn btn-success" id='saveTour'>Сохранить тур</a>
+            </td>
+        </tr>
+    </tfoot>
 </table>
+<div class="modal hide" id="tourSaveModal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Введите название тура</h3>
+    </div>
+    <div class="modal-body">
+        <form class="well form-search" id='saveTourForm'>
+            <input type="text" class="input-xlarge" id='tourName'>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Отменить</a>
+        <a href="#" class="btn btn-primary" id='saveTourButton'>Сохранить тур</a>
+    </div>
+</div>
 <?php $this->endWidget(); ?>
 <?php Yii::app()->clientScript->registerScript('tour-basket', "
     Handlebars.registerHelper('humanTime', function(duration) {
@@ -82,5 +104,25 @@
             .fail(function(data){
                 $('#tour-output').html(data);
             });
+    });
+
+    $('#saveTour').live('click', function() {
+        $('#tourSaveModal').modal('show');
+        $('#tourName').focus();
+    });
+
+    $('#saveTourButton').live('click',function() {
+        var tourName = $('#tourName').val();
+        $.getJSON('/admin/tour/basket/save/name/'+tourName, function(data){
+            var outputElement = $('#tourSaveModal .modal-body');
+            $('#tourSaveModal .modal-footer').hide();
+            outputElement.hide();
+            if (data.result)
+                outputElement.html('<div class=\"alert alert-success\">Тур сохранён</div>');
+            else
+                outputElement.html('<div class=\"alert alert-error\">Произошла ошибка!</div>');
+            outputElement.show();
+        });
+        return false;
     });
 ", CClientScript::POS_READY); ?>
