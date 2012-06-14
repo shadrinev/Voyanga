@@ -21,10 +21,12 @@
         <td><img src='http://frontend.oleg.voyanga/themes/classic/images/airlines/{{valCompany}}.png'></td>
         <td>{{price}} руб.</td>
         <td><a class="btn btn-info detail-view" data-key='{{key}}'>Подробнее</a>
+            <?php if ((!isset($showDelete)) or ($showDelete===true)): ?>
             <a class="btn btn-mini btn-danger delete" data-key='{{key}}'>Удалить</a></td>
+            <?php endif; ?>
     </tr>
     <td colspan="6">
-        <table class="table table-bordered" id='detail-{{key}}' style='display: none'>
+        <table class="table table-bordered" id='detail-{{key}}' style='display: none; background-color: #f0f0f0'>
             <thead>
                 <th>Вылет</th>
                 <th>Прилёт</th>
@@ -45,6 +47,7 @@
     </td>
     {{/each}}
     </tbody>
+    <?php if ((!isset($showSaveTour)) or ($showSaveTour===true)): ?>
     <tfoot>
         <tr>
             <td colspan="6" style="text-align: right">
@@ -52,6 +55,7 @@
             </td>
         </tr>
     </tfoot>
+    <?php endif; ?>
 </table>
 <div class="modal hide" id="tourSaveModal">
     <div class="modal-header">

@@ -7,8 +7,10 @@
  */
 class ConstructorController extends ABaseAdminController
 {
-    public function actionNew()
+    public function actionNew($clear=false)
     {
+        if ($clear)
+            Yii::app()->shoppingCart->clear();
         $flightForm = new FlightForm;
         $this->render('new', array('flightForm'=>$flightForm));
     }
