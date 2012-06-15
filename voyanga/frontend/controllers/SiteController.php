@@ -585,8 +585,12 @@ class SiteController extends Controller
         $HotelClient = new HotelBookClient();
         //$HotelClient->synchronize();
         $russia = Country::getCountryByCode('US');
-        print_r($HotelClient->getCities($russia->hotelbookId));
-        //print_r($HotelClient->hotelSearch($russia->hotelbookId));
+        $city = City::getCityByCode('LED');
+        //print_r($HotelClient->getCities($russia->hotelbookId));
+        $params = array('cityId'=>$city->hotelbookId);
+        $params['rooms'] = array();
+        $params['rooms'][] = array('roomSizeId'=>2,'child'=>1,'roomNumber'=>1,'ChildAge'=>6);
+        VarDumper::dump($HotelClient->hotelSearch($params));
 
     }
 

@@ -127,6 +127,88 @@ class HotelBookClient
         return $return;
     }
 
+    private function getHotelFromSXE($hotelSXE)
+    {
+        $hotelAttrMap = array(
+            'hotelId','resultId','confirmation','price','currency','comparePrice','specialOffer','providerId','providerHotelCode',
+            'categoryId'=>'hotelCatId',
+            'categoryName'=>'hotelCatName',
+            'address'=>'hotelAddress',
+            'latitude'=>'hotelLatitude',
+            'longitude'=>'hotelLongitude',
+            'rubPrice'=>'comparePrice'
+        );
+        $roomAttrMap = array(
+            'mealId','mealName','mealBreakfastId','mealBreakfastName','sharingBedding',
+            'sizeId'=>'roomSizeId',
+            'sizeName'=>'roomSizeName',
+            'typeId'=>'roomTypeId',
+            'typeName'=>'roomTypeName',
+            'viewId'=>'roomViewId',
+            'viewName'=>'roomViewName',
+            'cotsCount'=>'cots',
+        );
+
+
+        $hotelParams = array();
+        //$hotelParams['searchId'] = $searchId;
+        foreach($hotelAttrMap as $paramKey=>$itemKey)
+        {
+            if(isset($hotelSXE[$itemKey]))
+            {
+                if(is_numeric($paramKey))
+                {
+                    $hotelParams[$itemKey] = (string)$hotelSXE[$itemKey];
+                }
+                else
+                {
+                    $hotelParams[$paramKey] = (string)$hotelSXE[$itemKey];
+                }
+            }
+        }
+        if(isset($hotelSXE->Rooms->Room))
+        {
+            $hotelParams['rooms'] = array();
+            UtilsHelper::soapObjectsArray($hotelSXE->Rooms->Room);
+            foreach($hotelSXE->Rooms->Room as $roomSXE)
+            {
+                $roomParams = array();
+                foreach($roomAttrMap as $paramKey=>$itemKey)
+                {
+                    if(isset($roomSXE[$itemKey]))
+                    {
+                        if(is_numeric($paramKey))
+                        {
+                            $roomParams[$itemKey] = (string)$roomSXE[$itemKey];
+                        }
+                        else
+                        {
+                            $roomParams[$paramKey] = (string)$roomSXE[$itemKey];
+                        }
+                    }
+                }
+                if(isset($roomSXE->ChildAge))
+                {
+                    UtilsHelper::soapObjectsArray($roomSXE->ChildAge);
+                    $childAges = array();
+                    foreach($roomSXE->ChildAge as $childAge)
+                    {
+                        $childAges[] = (string)$childAge;
+                    }
+                    $roomParams['childAges'] = $childAges;
+                    $roomParams['childCount'] = count($childAges);
+                }
+                $hotelParams['rooms'][] = $roomParams;
+            }
+        }
+
+        $hotel = new Hotel($hotelParams);
+        unset($hotelParams);
+        unset($hotelAttrMap);
+        unset($roomAttrMap);
+        return $hotel;
+    }
+
     public function hotelSearch($params)
     {
         $this->synchronize();
@@ -144,22 +226,104 @@ class HotelBookClient
         </Room>
     </Rooms>
 </HotelSearchRequest>';
+
         /*if($countryId)
         {
             $getData['country_id'] = $countryId;
         }*/
+        $requestObject = simplexml_load_string($xml);
+        if(isset($params['cityId'])){
+            $requestObject->Request['cityId'] = $params['cityId'];
+        }
+        if(isset($params['checkIn'])){
+            $requestObject->Request['checkIn'] = $params['checkIn'];
+        }
+        if(isset($params['duration'])){
+            $requestObject->Request['duration'] = $params['duration'];
+        }
+        if(isset($params['checkIn'])){
+            $requestObject->Request['checkIn'] = $params['checkIn'];
+        }
+        if(isset($params['hotelId'])){
+            $requestObject->Request['hotelId'] = $params['hotelId'];
+        }
+        if(isset($params['confirmation'])){
+            $requestObject->Request['confirmation'] = $params['confirmation'];
+        }
+        if(isset($params['hotelName'])){
+            $requestObject->Request['hotelName'] = $params['hotelName'];
+        }
+        /*if(isset($params['duration'])){
+            $requestObject->HotelSearchRequest->Request['duration'] = $params['duration'];
+        }
+        if(isset($params['duration'])){
+            $requestObject->HotelSearchRequest->Request['duration'] = $params['duration'];
+        }*/
+        if(isset($params['hotelItems'])){
+            $hotelItems = $requestObject->Rooms->addChild('HotelItems');
+            foreach($params['hotelItems'] as $item){
+                $hotelItems->addChild('HotelItem',$item);
+            }
+        }
+        if(isset($params['rooms'])){
+
+            unset($requestObject->Rooms->Room);
+
+            foreach($params['rooms'] as $room){
+                //print_r($requestObject->Request);die();
+                $newRoom = $requestObject->Rooms->addChild('Room');
+                foreach($room as $attrName=>$attrVal){
+                    if($attrName !== 'ChildAge'){
+                        $newRoom->addAttribute($attrName, $attrVal);
+                    }else{
+                        $newRoom->addChild($attrName,$attrVal);
+                    }
+                }
+
+                //$requestObject->Request->Rooms;
+            }
+        }
+
+        VarDumper::dump($requestObject);
+        $xml = $requestObject->asXML();
         $hotelsXml = $this->request(Yii::app()->params['HotelBook']['uri'].'hotel_search',$getData,array('request'=>$xml));
         echo $hotelsXml;
         $hotelsObject = simplexml_load_string($hotelsXml);
-        VarDumper::dump($hotelsObject);
-        /*$return = array();
-        foreach($citiesObject->Cities->City as $city)
+        $response = new HotelSearchResponse();
+        $searchId = (string)$hotelsObject->HotelSearch['searchId'];
+        $response->searchId = $searchId;
+        $response->timestamp = time();
+        if(isset($hotelsObject->Hotels->Hotel))
         {
-            $id = intval($city['id']);
-            $name = trim((string)$city);
-            $country_id = intval($city['country']);
-            $return[$id] = array('id'=>$id,'nameEn'=>$name,'countryId'=>$country_id);
-        }*/
+            UtilsHelper::soapObjectsArray($hotelsObject->Hotels->Hotel);
+            foreach($hotelsObject->Hotels->Hotel as $hotelItem)
+            {
+                $hotel = $this->getHotelFromSXE($hotelItem);
+                $hotel->searchId = $searchId;
+                $response->hotels[] = $hotel;
+            }
+        }
+        if(isset($hotelsObject->Errors->Error))
+        {
+            UtilsHelper::soapObjectsArray($hotelsObject->Errors->Error);
+            foreach($hotelsObject->Errors->Error as $errorItem)
+            {
+                $response->errorsDescriptions[] = array('code'=>(string)$errorItem['code'],'description'=>(string)$errorItem['description'] );
+            }
+        }
+        if($response->hotels && $response->errorsDescriptions)
+        {
+            $response->errorStatus = 1;
+        }
+        elseif($response->hotels)
+        {
+            $response->errorStatus = 0;
+        }
+        else
+        {
+            $response->errorStatus = 2;
+        }
+        return $response;
     }
 
     public function synchronize()
