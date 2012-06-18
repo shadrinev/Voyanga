@@ -590,7 +590,11 @@ class SiteController extends Controller
         $params = array('cityId'=>$city->hotelbookId);
         $params['rooms'] = array();
         $params['rooms'][] = array('roomSizeId'=>2,'child'=>1,'roomNumber'=>1,'ChildAge'=>6);
-        VarDumper::dump($HotelClient->hotelSearch($params));
+        $resultSearch = $HotelClient->hotelSearch($params);
+        VarDumper::dump($resultSearch);
+        $HotelClient->hotelSearchDetails($resultSearch->hotels[0]);
+        VarDumper::dump($resultSearch->hotels[0]);
+
 
     }
 

@@ -180,12 +180,12 @@ class FlightVoyageStack
     {
         $aVariantsStacks = array();
 
-        foreach ($this->flightVoyages as $oFlihtVoyage)
+        foreach ($this->flightVoyages as $oFlightVoyage)
         {
             switch ($sKey)
             {
                 case "price":
-                    $sVal = intval($oFlihtVoyage->price);
+                    $sVal = intval($oFlightVoyage->price);
                     break;
             }
 
@@ -194,7 +194,7 @@ class FlightVoyageStack
                 $aVariantsStacks[$sVal] = new FlightVoyageStack();
 
             }
-            $aVariantsStacks[$sVal]->addFlightVoyage($oFlihtVoyage);
+            $aVariantsStacks[$sVal]->addFlightVoyage($oFlightVoyage);
         }
         uksort($aVariantsStacks, 'FlightVoyageStack::compare_array'); //sort array by key
         reset($aVariantsStacks);
