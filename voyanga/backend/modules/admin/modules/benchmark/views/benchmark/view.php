@@ -33,7 +33,7 @@ $this->beginWidget("AAdminPortlet", array(
 ?>
 
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php $this->widget('bootstrap.widgets.BootDetailView', array(
     'data' => $model,
     'attributes' => array(
         'url',
@@ -118,8 +118,9 @@ $this->widget("packages.plotcharts.APlotChartWidget",
         )
     ));
 
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.BootGridView', array(
     'id' => 'abenchmark-result-grid',
+    'type' => 'striped',
     'dataProvider' => $dataProvider,
     'columns' => array(
 
