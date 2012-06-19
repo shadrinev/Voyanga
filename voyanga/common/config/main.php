@@ -16,12 +16,12 @@ return array(
         'site.common.extensions.YiiMongoDbSuite.*',
         'site.common.components.statistic.*',
         'site.common.components.shoppingCart.*',
-        'site.common.extensions.order.*'
+        'site.common.components.order.*'
     ),
-    'components'=>array(
 
+    'components'=>array(
         'observer' => array(
-            'class' => 'site.common.extensions.observer.ObserverComponent',
+            'class' => 'site.common.components.observer.ObserverComponent',
             'observers' => array(
                 'onBeforeFlightSearch'=>array(
                     'Notification',
@@ -45,11 +45,11 @@ return array(
         ),
 
         'order' => array(
-            'class' => 'site.common.extensions.order.OrderComponent'
+            'class' => 'site.common.components.order.OrderComponent'
         ),
 
         'notification' => array(
-            'class' => 'site.common.extensions.notification.Notification'
+            'class' => 'site.common.components.notification.Notification'
         ),
 
         'mongodb' => array(
@@ -60,13 +60,16 @@ return array(
             'safeFlag'          => false,
             'useCursor'         => false,
         ),
+
         'configManager' => array (
             'class' => 'ConfigurationManager',
         ),
+
         'format' => array(
             'numberFormat' => array('decimals'=>2, 'decimalSeparator'=>'.', 'thousandSeparator'=>' '),
             'datetimeFormat' => 'd.m.Y H:i'
         ),
+
         'db'=>array(
             'class' => 'CDbConnection',
             'pdoClass' => 'NestedPDO',
