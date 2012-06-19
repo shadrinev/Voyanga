@@ -16,10 +16,15 @@ return array(
         'site.common.extensions.YiiMongoDbSuite.*',
         'site.common.components.statistic.*',
         'site.common.components.shoppingCart.*',
-        'site.common.components.order.*'
+        'site.common.components.order.*',
+        'site.common.extensions.simpleWorkflow.*',
     ),
 
     'components'=>array(
+
+        'flightBooker' => array(
+            'class'=>'site.common.components.flightBooker.FlightBookerComponent',
+        ),
 
         'workflow'=> array(
 		    'class'=>'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',

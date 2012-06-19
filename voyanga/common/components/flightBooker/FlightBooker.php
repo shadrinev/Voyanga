@@ -12,6 +12,8 @@
  */
 class FlightBooker extends FrontendActiveRecord
 {
+    private $_flightVoyage;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -20,6 +22,16 @@ class FlightBooker extends FrontendActiveRecord
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
+    }
+
+    public function behaviors()
+    {
+        return array(
+            'workflow'=>array(
+                'class' => 'site.common.extensions.simpleWorkflow.SWActiveRecordBehavior',
+                'workflowSourceComponent' => 'workflow',
+            ),
+        );
     }
 
     /**
@@ -41,6 +53,7 @@ class FlightBooker extends FrontendActiveRecord
             array('status', 'numerical', 'integerOnly'=>true),
             array('pnr', 'length', 'max'=>255),
             array('timeout, flight_voyage', 'safe'),
+            array('status', 'SWValidator'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, status, pnr, timeout, flight_voyage', 'safe', 'on'=>'search'),
@@ -92,5 +105,29 @@ class FlightBooker extends FrontendActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function getFlightVoyage()
+    {
+        if ($this->_flightVoyage==null)
+        {
+            if ($this->isNewRecord)
+            {
+                return null;
+            }
+            else
+            {
+                $element = unserialize($this->flight_voyage);
+                $this->_flightVoyage = $element;
+            }
+        }
+        return $this->_flightVoyage;
+    }
+
+    public function setFlightVoyage($value)
+    {
+        $element = serialize($value);
+        $this->_flightVoyage = $value;
+        $this->flight_voyage = $element;
     }
 }

@@ -1,6 +1,6 @@
 <span id='tour-output'></span>
 <?php $templateVariable = 'handlebarTour'; ?>
-<?php $this->beginWidget('common.extensions.handlebars.HandlebarsWidget', array('id'=>'tour', 'compileVariable' => $templateVariable)) ?>
+<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'tour', 'compileVariable' => $templateVariable)) ?>
 <table class="table" width="100%">
     <thead>
     <tr>

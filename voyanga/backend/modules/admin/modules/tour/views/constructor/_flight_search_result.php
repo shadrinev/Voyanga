@@ -1,4 +1,4 @@
-<?php $this->beginWidget('common.extensions.handlebars.HandlebarsWidget', array('id'=>'flight-search', 'compileVariable' => $variable)) ?>
+<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'flight-search', 'compileVariable' => $variable)) ?>
 <div class="entry">
     <h1>{{title}}</h1>
 
