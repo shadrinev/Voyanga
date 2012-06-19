@@ -20,6 +20,11 @@ return array(
     ),
 
     'components'=>array(
+
+        'workflow'=> array(
+		    'class'=>'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',
+	    ),
+
         'observer' => array(
             'class' => 'site.common.components.observer.ObserverComponent',
             'observers' => array(

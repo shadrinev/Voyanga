@@ -2,23 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/flightBooker" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/flightBooker/FlightBookerComponent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWActiveRecord.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWActiveRecordBehavior.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWComponent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWException.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWHelper.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWNode.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWPhpWorkflowSource.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWValidator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWWorkflowSource.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/extensions/simpleWorkflow/changes.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/migrations/m120619_071619_add_flight_booker_table.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/models/FlightBooker.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/flightBooker/workflows" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/flightBooker/workflows/FlightBookerWorkflow.php" />
+      <change type="MOVED" beforePath="C:\WebServers\home\voyanga\common\models\FlightBooker.php" afterPath="$PROJECT_DIR$/common/components/flightBooker/FlightBooker.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/config/main.php" afterPath="$PROJECT_DIR$/common/config/main.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -63,10 +51,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FlightBooker.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/common/models/FlightBooker.php">
+      <file leaf-file-name="FlightBooker.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBooker.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="59" selection-start="846" selection-end="846" vertical-scroll-proportion="0.6639053">
+            <state line="33" column="59" selection-start="846" selection-end="846" vertical-scroll-proportion="-5.8846154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/config/main.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="0" selection-start="472" selection-end="472" vertical-scroll-proportion="-5.230769">
+              <folding>
+                <element signature="e#1942#2006#1" expanded="false" />
+                <element signature="e#2029#2192#1" expanded="false" />
+                <element signature="e#2209#2629#1" expanded="false" />
+                <element signature="e#2649#3069#1" expanded="false" />
+                <element signature="e#3093#3534#1" expanded="false" />
+                <element signature="e#3555#3982#1" expanded="false" />
+                <element signature="e#4001#4243#1" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlightBookerWorkflow.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/components/flightBooker/workflows/FlightBookerWorkflow.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="0" selection-start="149" selection-end="149" vertical-scroll-proportion="0.22130178">
               <folding />
             </state>
           </provider>
@@ -130,10 +144,10 @@
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_flight_search_result.php" />
         <option value="$PROJECT_DIR$/common/extensions/order/Order.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/benchmark/views/benchmark/view.php" />
-        <option value="$PROJECT_DIR$/common/config/main.php" />
         <option value="$PROJECT_DIR$/common/components/flightBooker/FlightBookerComponent.php" />
         <option value="$PROJECT_DIR$/common/migrations/m120619_071619_add_flight_booker_table.php" />
         <option value="$PROJECT_DIR$/common/models/FlightBooker.php" />
+        <option value="$PROJECT_DIR$/common/config/main.php" />
       </list>
     </option>
   </component>
@@ -242,24 +256,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="components" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -283,6 +279,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="flightBooker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flightBooker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workflows" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -344,11 +366,11 @@
       <recent name="C:\WebServers\home\voyanga\common\packages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\common\components\flightBooker" />
       <recent name="C:\WebServers\home\voyanga\common\components" />
       <recent name="C:\WebServers\home\voyanga\common\extensions\handlebars\assets" />
       <recent name="C:\WebServers\home\voyanga\common\extensions" />
       <recent name="C:\WebServers\home\voyanga\frontend\extensions\order" />
-      <recent name="C:\WebServers\home\voyanga\common\extensions\observer" />
     </key>
   </component>
   <component name="RestoreUpdateTree">
@@ -987,7 +1009,11 @@
       <created>1340087456104</created>
       <updated>1340087456104</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="start work on flight booking workflow">
+      <created>1340090911106</created>
+      <updated>1340090911106</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1052,7 +1078,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="moving components to proper place and fix config" />
+    <option name="LAST_COMMIT_MESSAGE" value="start work on flight booking workflow" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1065,7 +1091,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="rbac modified" />
     <MESSAGE value="Added shopping cart" />
     <MESSAGE value="added notification component" />
     <MESSAGE value="notification system and observer attached" />
@@ -1090,18 +1115,12 @@
     <MESSAGE value="viewer of tours" />
     <MESSAGE value="fix visualization for benchmark" />
     <MESSAGE value="moving components to proper place and fix config" />
+    <MESSAGE value="start work on flight booking workflow" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/admin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="51" selection-start="307" selection-end="337" vertical-scroll-proportion="0.46388444">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/benchmark/views/benchmark/update.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.1187801">
@@ -1157,26 +1176,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/config/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="24" selection-start="471" selection-end="471" vertical-scroll-proportion="0.1364366">
-          <folding>
-            <element signature="e#494#1094#1" expanded="false" />
-            <element signature="e#1123#1255#1" expanded="false" />
-            <element signature="e#1277#1362#1" expanded="false" />
-            <element signature="e#1391#1481#1" expanded="false" />
-            <element signature="e#1505#1798#1" expanded="false" />
-            <element signature="e#1828#1892#1" expanded="false" />
-            <element signature="e#1915#2078#1" expanded="false" />
-            <element signature="e#2095#2515#1" expanded="false" />
-            <element signature="e#2535#2955#1" expanded="false" />
-            <element signature="e#2979#3420#1" expanded="false" />
-            <element signature="e#3441#3868#1" expanded="false" />
-            <element signature="e#3887#4129#1" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/models/Booking.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="26" selection-start="318" selection-end="318" vertical-scroll-proportion="-7.8461537">
@@ -1219,9 +1218,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/FlightBooker.php">
+    <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBooker.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="59" selection-start="846" selection-end="846" vertical-scroll-proportion="0.6639053">
+        <state line="33" column="59" selection-start="846" selection-end="846" vertical-scroll-proportion="-5.8846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/config/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="0" selection-start="472" selection-end="472" vertical-scroll-proportion="-5.230769">
+          <folding>
+            <element signature="e#1942#2006#1" expanded="false" />
+            <element signature="e#2029#2192#1" expanded="false" />
+            <element signature="e#2209#2629#1" expanded="false" />
+            <element signature="e#2649#3069#1" expanded="false" />
+            <element signature="e#3093#3534#1" expanded="false" />
+            <element signature="e#3555#3982#1" expanded="false" />
+            <element signature="e#4001#4243#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/flightBooker/workflows/FlightBookerWorkflow.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="149" selection-end="149" vertical-scroll-proportion="0.22130178">
           <folding />
         </state>
       </provider>
