@@ -25,4 +25,9 @@ class Notification extends CApplicationComponent
         $manager = new NotificationManager;
         $manager->add($user, $notificationType, $notificationObject, $time);
     }
+
+    public function redirectToEnterCredentials()
+    {
+        Yii::app()->request->redirect(Yii::app()->createUrl('site/enterCredentials'));
+    }
 }

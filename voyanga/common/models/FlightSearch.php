@@ -7,6 +7,9 @@
  */
 class FlightSearch extends CActiveRecord implements IStatisticItem
 {
+    const STATUS_SUCCESS = 1;
+    const STATUS_ERROR = 2;
+
     public $id;
     public $timestamp;
     public $requestId;
@@ -84,12 +87,12 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
                     $this->flightVoyageStack = $flightVoyageStack;
                     Yii::app()->cache->set('flightSearch' . $this->key, $this, Yii::app()->params['fligh_search_cache_time']);
 
-                    $this->status = 1;
+                    $this->status = FlightSearch::STATUS_SUCCESS;
                     $this->data = json_encode($this->flightVoyageStack);
                     $this->requestId = '1';
                 }
                 else
-                    $this->status = 2;
+                    $this->status = FlightSearch::STATUS_ERROR;
 
                 //$this->save();
 

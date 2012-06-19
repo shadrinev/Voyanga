@@ -17,6 +17,7 @@ return array(
         'site.common.components.statistic.*',
         'site.common.components.shoppingCart.*',
         'site.common.components.order.*',
+        'site.common.components.flightBooker.*',
         'site.common.extensions.simpleWorkflow.*',
     ),
 
@@ -33,6 +34,9 @@ return array(
         'observer' => array(
             'class' => 'site.common.components.observer.ObserverComponent',
             'observers' => array(
+                'onEnterCredentials' => array(
+                    array('Notification', 'redirectToEnterCredentials')
+                ),
                 'onBeforeFlightSearch'=>array(
                     'Notification',
                     array('Notification', 'handleBest')

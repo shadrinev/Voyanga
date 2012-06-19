@@ -31,6 +31,11 @@ class FlightBooker extends FrontendActiveRecord
                 'class' => 'site.common.extensions.simpleWorkflow.SWActiveRecordBehavior',
                 'workflowSourceComponent' => 'workflow',
             ),
+            'CTimestampBehavior' => array(
+                'class' => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute' => 'created_at',
+                'updateAttribute' => 'updated_at',
+            )
         );
     }
 
