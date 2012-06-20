@@ -26,11 +26,12 @@ $this->beginWidget("AAdminPortlet",
     )
 )); ?>
 
+<?php echo $form->textFieldRow($passport,'firstName');?>
+<?php echo $form->textFieldRow($passport,'lastName');?>
+
 <?php echo $form->textFieldRow($booking,'contactPhone');?>
 <?php echo $form->textFieldRow($booking,'contactEmail');?>
 
-<?php echo $form->textFieldRow($passport,'firstName');?>
-<?php echo $form->textFieldRow($passport,'lastName');?>
 <?php echo $form->textFieldRow($passport,'birthday');?>
 <?php echo $form->dropDownListRow($passport,'genderId', Passport::getPossibleGenders());?>
 <?php echo $form->dropDownListRow($passport,'countryId', Country::getPossibleCountries());?>
@@ -41,10 +42,9 @@ $this->beginWidget("AAdminPortlet",
 
 <div class="form-actions">
     <?php $this->widget('bootstrap.widgets.BootButton', array(
-    'url'=>'#popupInfo',
+    'buttonType'=>'submit',
     'type'=>'primary',
     'label'=>'Продолжить',
-    'htmlOptions'=>array('id'=>'searchFlight', 'data-toggle'=>'modal')
 )); ?>
 </div>
 

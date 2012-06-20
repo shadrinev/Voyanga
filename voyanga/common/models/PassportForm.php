@@ -50,7 +50,7 @@ class PassportForm extends CFormModel
             'firstName' => 'Имя',
             'lastName' => 'Фамилия',
             'number' => 'Номер документа',
-            'birthday' => 'Дата рождения',
+            'birthday' => 'Дата рождения (ДД.ММ.ГГГГ)',
             'documentTypeId' => 'Тип документа',
             'genderId' => 'Пол',
             'series' => 'Серия документа',
