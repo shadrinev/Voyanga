@@ -32,7 +32,7 @@ class ObserverComponent extends CApplicationComponent
 
     public function init()
     {
-        Yii::import('site.common.extensions.observer.*');
+        Yii::import('site.common.components.observer.*');
     }
 
     /**

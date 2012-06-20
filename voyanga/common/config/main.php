@@ -35,7 +35,6 @@ return array(
             'class' => 'site.common.components.observer.ObserverComponent',
             'observers' => array(
                 'onEnterCredentials' => array(
-                    array('Notification', 'redirectToEnterCredentials')
                 ),
                 'onBeforeFlightSearch'=>array(
                     'Notification',

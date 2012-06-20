@@ -55,7 +55,6 @@ class FlightBooker extends FrontendActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('status', 'numerical', 'integerOnly'=>true),
             array('pnr', 'length', 'max'=>255),
             array('timeout, flight_voyage', 'safe'),
             array('status', 'SWValidator'),
