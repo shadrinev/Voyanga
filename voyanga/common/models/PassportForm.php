@@ -51,10 +51,10 @@ class PassportForm extends CFormModel
             'lastName' => 'Фамилия',
             'number' => 'Номер документа',
             'birthday' => 'Дата рождения',
-            'document_type_id' => 'Тип документа',
-            'gender_id' => 'Пол',
+            'documentTypeId' => 'Тип документа',
+            'genderId' => 'Пол',
             'series' => 'Серия документа',
-            'country_id' => 'Гражданство');
+            'countryId' => 'Гражданство');
     }
 
     public function getForm($parent) {

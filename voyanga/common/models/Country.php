@@ -149,4 +149,13 @@ class Country extends CActiveRecord
             }
         }
     }
+
+    public static function  getPossibleCountries()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->select = 'id, localRu';
+        $criteria->order = 'priority desc, localRu';
+        $countries = self::model()->findAll($criteria);
+        return CHtml::listData($countries, 'id', 'localRu');
+    }
 }

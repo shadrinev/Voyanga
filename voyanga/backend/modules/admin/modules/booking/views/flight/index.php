@@ -6,7 +6,8 @@
 
 $this->breadcrumbs = array(
     'Бронирование'=>array('/admin/booking/'),
-    'Перелёт',
+    'Перелёт'=>array('/admin/booking/flight'),
+    'Поиск'
 );
 
 $this->beginWidget("AAdminPortlet",

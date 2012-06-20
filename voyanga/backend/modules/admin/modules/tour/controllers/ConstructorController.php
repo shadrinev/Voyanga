@@ -35,7 +35,7 @@ class ConstructorController extends ABaseAdminController
         if ($a[3] == $b[3]) {
             return 0;
         }
-        return ($a[3] < $b[3]) ? -1 : 1;
+        return ($a[3] > $b[3]) ? -1 : 1;
     }
 
     private function storeSearches($from, $to, $date)
@@ -44,8 +44,8 @@ class ConstructorController extends ABaseAdminController
         $element = array($from, $to, $date, time());
         $elements = Yii::app()->user->getState('lastSearches');
         $elements[$hash] = $element;
-        $last = array_splice($elements, 0, 5);
         uasort($elements, array($this, 'compareByTime'));
+        $last = array_splice($elements, 0, 10);
         Yii::app()->user->setState('lastSearches', $last);
     }
 }

@@ -35,6 +35,10 @@ class Passport extends CActiveRecord
     const TYPE_RF = 1;
     const TYPE_OTHER = 2;
     const TYPE_INTERNATIONAL = 3;
+    const TYPE_BIRTH_CERT = 4;
+
+    const GENDER_M = 1;
+    const GENDER_F = 2;
 
     //public $expiration;
     //public $gender_id;
@@ -61,5 +65,23 @@ class Passport extends CActiveRecord
     public function checkValid()
     {
         return true;
+    }
+
+    public static  function getPossibleTypes()
+    {
+        return array(
+            self::TYPE_RF => 'Паспорт РФ',
+            self::TYPE_INTERNATIONAL => 'Загран. паспорт',
+            self::TYPE_OTHER => 'Паспорт другой страны',
+            self::TYPE_BIRTH_CERT => 'Свидетельство о рождении'
+        );
+    }
+
+    public static  function getPossibleGenders()
+    {
+        return array(
+            self::GENDER_M => 'Мужской',
+            self::GENDER_F => 'Женский',
+        );
     }
 }
