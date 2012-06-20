@@ -19,10 +19,7 @@
         <td><img src='http://frontend.oleg.voyanga/themes/classic/images/airlines/{{valCompany}}.png'></td>
         <td>{{price}} руб.</td>
         <td><a class="btn btn-info detail-view" data-key='{{flightKey}}'>Подробнее</a>
-            <?php if ((!isset($showDelete)) or ($showDelete===true)): ?>
-                <a class="btn btn-mini btn-danger delete" data-key='{{flightKey}}'>Удалить</a></td>
-            <?php endif; ?>
-            <a class="btn btn-mini btn-success buy" href='/admin/booking/flight/buy/key/{{flightKey}}'>Купить</a></td>
+            <a class="btn btn-mini btn-success buy" href='/admin/booking/flight/buy/key/{{../searchId}}_{{flightKey}}'>Купить</a></td>
     </tr>
     <td colspan="6">
         <table class="table table-bordered" id='detail-{{flightKey}}' style='display: none; background-color: #f0f0f0'>
@@ -46,16 +43,8 @@
     </td>
     {{/each}}
     </tbody>
-    <?php if ((!isset($showSaveTour)) or ($showSaveTour===true)): ?>
-    <tfoot>
-        <tr>
-            <td colspan="6" style="text-align: right">
-                <a class="btn btn-success" id='saveTour'>Сохранить тур</a>
-            </td>
-        </tr>
-    </tfoot>
-    <?php endif; ?>
 </table>
+<span id='searchKey' data-key='{{searchId}}'></span>
 <?php $this->endWidget(); ?>
 <?php Yii::app()->clientScript->registerScript('tour-basket', "
     Handlebars.registerHelper('humanTime', function(duration) {
@@ -72,10 +61,5 @@
         var openElement = $('#detail-' + $(this).data('key'));
         console.log(openElement);
         openElement.toggle();
-    });
-
-    $('#saveTour').live('click', function() {
-        $('#tourSaveModal').modal('show');
-        $('#tourName').focus();
     });
 ", CClientScript::POS_READY); ?>

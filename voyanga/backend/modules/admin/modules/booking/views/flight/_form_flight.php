@@ -35,8 +35,8 @@
             'matcher'=>'js: function(){return true}',
         ),
         'htmlOptions'=>array(
-            'class'=>'span5',
-            'value'=>''
+            'class'=>'span5 fromField',
+            'value'=>'',
         )
     )); ?>
 
@@ -58,8 +58,8 @@
             'matcher'=>'js: function(){return true}',
         ),
         'htmlOptions'=>array(
-            'class'=>'span5',
-            'value'=>''
+            'class'=>'span5 toField',
+            'value'=>'',
         )
     )); ?>
 
@@ -104,6 +104,7 @@
         $.getJSON('/admin/tour/constructor/flightSearch', $('#flight-form').serialize())
         .done(function(data) {
             var html = {$templateVariable}(data);
+            console.log(data);
             $('#flight-search-result').html(html);
             $('#popupInfo').modal('hide');
         })
@@ -112,3 +113,13 @@
         });
     });
 ", CClientScript::POS_READY); ?>
+
+<?php if (isset($autosearch) and ($autosearch))
+{
+    Yii::app()->clientScript->registerScript('flight-search-autostart',
+        '$("#searchFlight").trigger("click");
+         $(".fromField").val("'.$fromCityName.'");
+         $(".toField").val("'.$toCityName.'");',
+    CClientScript::POS_READY);
+}
+?>
