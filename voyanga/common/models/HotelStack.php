@@ -32,7 +32,8 @@ class HotelStack
                     //TODO: check filters and save only needed hotels
                     if($bNeedSave)
                     {
-                        $this->hotels[] = $hotel;
+                        $hotelKey = $hotel->key;
+                        $this->hotels[$hotelKey] = $hotel;
                         if ($bParamsNeedInit)
                         {
                             //initializing best params
@@ -53,13 +54,14 @@ class HotelStack
     }
 
     /**
-     * addFlightVoyage
-     * Add FlightVoyage object to this FlightVoyageStack
-     * @param FlightVoyage $oFlightVoyage
+     * addHotel
+     * Add Hotel object to this HotelStack
+     * @param Hotel $hotel
      */
     public function addHotel(Hotel $hotel)
     {
-        $this->hotels[] = $hotel;
+        $hotelKey = $hotel->key;
+        $this->hotels[$hotelKey] = $hotel;
         $this->bestMask |= $hotel->bestMask;
     }
 
@@ -114,5 +116,15 @@ class HotelStack
         reset($aHotelsStacks);
         $aEach = each($aHotelsStacks);
         return $aHotelsStacks;
+    }
+
+    public function getAsJson()
+    {
+        $ret = array('hotels'=>array());
+        foreach($this->hotels as $hotel)
+        {
+            $ret['hotels'][] = $hotel->getJsonObject();
+        }
+        return json_encode($ret);
     }
 }

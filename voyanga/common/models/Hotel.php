@@ -79,7 +79,55 @@ class Hotel extends CApplicationComponent
                 $this->cancelCharges[] = $params;
             }
         }
+    }
 
+    public function getKey()
+    {
+        $sKey = $this->hotelId.'|'.$this->categoryId.'|'.$this->price.$this->currency.'|'.$this->providerId;
+        foreach($this->rooms as $room)
+            $sKey .= '|'.$room->key;
+
+        return md5($sKey);
+    }
+
+    public function getJsonObject()
+    {
+        /*
+        public $searchId;
+        public $hotelId;
+        public $resultId;
+        public $categoryId;
+        public $checkIn;
+        public $duration;
+        public $categoryName;
+        public $address;
+        public $confirmation;
+        public $price;
+        public $currency;
+        public $rubPrice;
+        public $comparePrice;
+        public $specialOffer;
+        public $providerId;
+        public $providerHotelCode;
+        public $cancelCharges;
+        public $cancelExpiration;
+        */
+        $ret = array('hotelId' => $this->hotelId,
+            'searchId'=>$this->searchId,
+            'resultId'=>$this->resultId,
+            'category'=>$this->categoryName,
+            'price' => $this->price,
+            'currency' => $this->currency,
+            'rubPrice' => $this->rubPrice,
+            'bestMask' => $this->bestMask,
+            'rooms' => array()
+        );
+
+        foreach ($this->rooms as $room)
+        {
+            $ret['rooms'][] = $room->getJsonObject();
+        }
+        return $ret;
     }
 
 }

@@ -584,16 +584,39 @@ class SiteController extends Controller
 
         $HotelClient = new HotelBookClient();
         //$HotelClient->synchronize();
-        $russia = Country::getCountryByCode('US');
-        $city = City::getCityByCode('LED');
+        //$russia = Country::getCountryByCode('US');
+        $city = City::getCityByCode('PAR');
+        $city = City::getCityByCode('LON');
+        $hotelSearchParams = new HotelSearchParams();
+        $hotelSearchParams->checkIn = '2012-09-17';
+        $hotelSearchParams->duration = '7';
+        $hotelSearchParams->cityId = $city->hotelbookId;
+        $hotelSearchParams->addRoom(2);
+        $hotelSearchParams->addRoom(2);
+        //$hotelSearchParams->addRoom(2,1);
+        //$hotelSearchParams->addRoom(1);
+        //$hotelSearchParams->addRoom(3);
+        $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
+        $hotelStack = new HotelStack($resultSearch);
+        echo '<br>'.count($hotelStack->hotels);
+
         //print_r($HotelClient->getCities($russia->hotelbookId));
-        $params = array('cityId'=>$city->hotelbookId);
+        /*$params = array('cityId'=>$city->hotelbookId,'checkIn'=>'2012-09-17','duration'=>'7');
         $params['rooms'] = array();
-        $params['rooms'][] = array('roomSizeId'=>2,'child'=>1,'roomNumber'=>1,'ChildAge'=>6);
-        $resultSearch = $HotelClient->hotelSearch($params);
-        VarDumper::dump($resultSearch);
-        $HotelClient->hotelSearchDetails($resultSearch->hotels[0]);
-        VarDumper::dump($resultSearch->hotels[0]);
+        $params['rooms'][] = array('roomSizeId'=>2,'child'=>0,'roomNumber'=>1);
+        //$params['rooms'][] = array('roomSizeId'=>1,'child'=>0,'roomNumber'=>1);
+        $resultSearch = $HotelClient->hotelSearch($params, true);
+        $params['rooms'][0]['roomSizeId'] = 3;
+        $resultSearch = $HotelClient->hotelSearch($params, true);
+        $params['rooms'][0]['roomSizeId'] = 5;
+        //$resultSearch = $HotelClient->hotelSearch($params, true);
+
+        $HotelClient->processAsyncRequests();
+
+
+        VarDumper::dump($HotelClient->requests);*/
+        //$HotelClient->hotelSearchDetails($resultSearch->hotels[0]);
+        //VarDumper::dump($resultSearch->hotels[0]);
 
 
     }

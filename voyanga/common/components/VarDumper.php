@@ -25,7 +25,10 @@ class VarDumper extends CVarDumper
             $oDM->formatOutput = true;
             $oDM->normalize();
             $var = $oDM->saveXML();
-            echo self::dumpAsString($var, 10, true);
+            $widget = new CTextHighlighter();
+            $widget->language = 'xml';
+
+            echo $widget->highlight($$var);
         }
     }
 }

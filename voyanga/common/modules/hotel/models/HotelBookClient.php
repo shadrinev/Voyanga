@@ -4,8 +4,11 @@ class HotelBookClient
     public $differenceTimestamp = 0;
     public $isSynchronized = false;
     public $lastHeaders;
+    public $multiCurl;
+    public static $roomSizeRoomTypesMap = array(1=>array(1),2=>array(2,3),3=>array(5),4=>array(6));
+    public $requests;
 
-    public function request($url, $getData = null, $postData = null)
+    public function request($url, $getData = null, $postData = null, $asyncParams = null)
     {
         $rCh = curl_init();
 
@@ -43,23 +46,89 @@ class HotelBookClient
 
 
         curl_setopt($rCh, CURLOPT_URL, $url);
-        $sData = curl_exec($rCh);
-        //Biletoid_Utils::addLogMessage($sData, '/tmp/curl_response.txt');
-        if ($sData !== FALSE)
+        if($asyncParams === null)
         {
-            list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
-            if (strpos($sHeaders, 'Continue') !== FALSE)
+            $sData = curl_exec($rCh);
+            //Biletoid_Utils::addLogMessage($sData, '/tmp/curl_response.txt');
+            if ($sData !== FALSE)
             {
                 list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
+                if (strpos($sHeaders, 'Continue') !== FALSE)
+                {
+                    list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
+                }
+                $this->lastHeaders = $sHeaders;
             }
-            $this->lastHeaders = $sHeaders;
+            else
+            {
+                $this->lastCurlError = curl_error ($rCh);
+            }
+
+            return $sData;
         }
         else
         {
-            $this->lastCurlError = curl_error ($rCh);
-        }
+            curl_setopt($rCh, CURLOPT_HEADER, false);
+            if(!$this->multiCurl)
+            {
+                $this->multiCurl = curl_multi_init();
+            }
 
-        return $sData;
+            $this->requests[] = array('curlHandle'=>$rCh,'completed'=>false);
+
+            $id = count($this->requests) - 1;
+            curl_multi_add_handle($this->multiCurl,$this->requests[$id]['curlHandle']);
+            $this->requests[$id]['id'] = $id;
+            $this->requests[$id] = array_merge($this->requests[$id],$asyncParams);
+            return $id;
+        }
+    }
+
+    public function processAsyncRequests()
+    {
+        if($this->multiCurl)
+        {
+            do {
+                $status = curl_multi_exec($this->multiCurl, $active);
+                $info = curl_multi_info_read($this->multiCurl);
+                if (false !== $info) {
+                    //var_dump($info);
+                    //echo  curl_multi_getcontent($info['handle']);
+                    //TODO: partitial processing
+                }
+            } while ($status === CURLM_CALL_MULTI_PERFORM || $active);
+
+            foreach ($this->requests as $i => $requestInfo) {
+                if(!$requestInfo['completed'])
+                {
+                    $result = curl_multi_getcontent($requestInfo['curlHandle']);
+                    curl_close($requestInfo['curlHandle']);
+                    if(isset($requestInfo['function']))
+                    {
+                        $params = array($result);
+                        if($requestInfo['params'])
+                        {
+                            foreach($requestInfo['params'] as $param)
+                            {
+                                $params[] = $param;
+                            }
+                        }
+                        $this->requests[$i]['result'] = call_user_func_array($requestInfo['function'],$params);
+                        unset($this->requests[$i]['function']);
+
+                    }
+                    else
+                    {
+                        $this->requests[$i]['result'] = $result;
+                    }
+                    $this->requests[$i]['completed'] = true;
+                }
+                //$res[$i] = curl_multi_getcontent($conn[$i]);
+
+            }
+            curl_multi_close($this->multiCurl);
+            $this->multiCurl = null;
+        }
     }
 
     private function getChecksum($time)
@@ -198,7 +267,10 @@ class HotelBookClient
                     $roomParams['childAges'] = $childAges;
                     $roomParams['childCount'] = count($childAges);
                 }
-                $hotelParams['rooms'][] = $roomParams;
+                $k = intval((string)$roomSXE['roomNumber']);
+                for($i=0;$i<$k;$i++)
+                    $hotelParams['rooms'][] = $roomParams;
+
             }
         }
 
@@ -209,18 +281,14 @@ class HotelBookClient
         return $hotel;
     }
 
-    public function hotelSearch($params)
+    private function prepareHotelSearchRequest($params)
     {
-        $this->synchronize();
-        $time = time() + $this->differenceTimestamp;
-        $getData = array('login'=>Yii::app()->params['HotelBook']['login'],'time'=>$time,'checksum'=>$this->getChecksum($time));
-
         $xml = '<?xml version="1.0" encoding="utf-8"?>
 <HotelSearchRequest>
     <Request
         cityId="6788"
         checkIn="2012-09-17"
-        duration="7" confirmation="all"/>
+        duration="7" confirmation="online"/>
     <Rooms>
         <Room roomSizeId="8" child="0" roomNumber="1" >
         </Room>
@@ -241,9 +309,6 @@ class HotelBookClient
         if(isset($params['duration'])){
             $requestObject->Request['duration'] = $params['duration'];
         }
-        if(isset($params['checkIn'])){
-            $requestObject->Request['checkIn'] = $params['checkIn'];
-        }
         if(isset($params['hotelId'])){
             $requestObject->Request['hotelId'] = $params['hotelId'];
         }
@@ -253,12 +318,7 @@ class HotelBookClient
         if(isset($params['hotelName'])){
             $requestObject->Request['hotelName'] = $params['hotelName'];
         }
-        /*if(isset($params['duration'])){
-            $requestObject->HotelSearchRequest->Request['duration'] = $params['duration'];
-        }
-        if(isset($params['duration'])){
-            $requestObject->HotelSearchRequest->Request['duration'] = $params['duration'];
-        }*/
+
         if(isset($params['hotelItems'])){
             $hotelItems = $requestObject->Rooms->addChild('HotelItems');
             foreach($params['hotelItems'] as $item){
@@ -276,7 +336,11 @@ class HotelBookClient
                     if($attrName !== 'ChildAge'){
                         $newRoom->addAttribute($attrName, $attrVal);
                     }else{
-                        $newRoom->addChild($attrName,$attrVal);
+                        if(intval($room['child']) > 0)
+                        {
+                            echo "MMMMMM||";
+                            $newRoom->addChild($attrName,$attrVal);
+                        }
                     }
                 }
 
@@ -286,10 +350,13 @@ class HotelBookClient
 
         VarDumper::dump($requestObject);
         $xml = $requestObject->asXML();
-        $hotelsXml = $this->request(Yii::app()->params['HotelBook']['uri'].'hotel_search',$getData,array('request'=>$xml));
+        return $xml;
+    }
 
+    private function processHotelSearchResponse($hotelsXml,$checkIn,$duration)
+    {
         $hotelsObject = simplexml_load_string($hotelsXml);
-        VarDumper::dump($hotelsObject);
+        //VarDumper::dump($hotelsObject);
         $response = new HotelSearchResponse();
         $searchId = (string)$hotelsObject->HotelSearch['searchId'];
         $response->searchId = $searchId;
@@ -301,8 +368,8 @@ class HotelBookClient
             {
                 $hotel = $this->getHotelFromSXE($hotelItem);
                 $hotel->searchId = $searchId;
-                $hotel->checkIn = (string)$requestObject->Request['checkIn'];
-                $hotel->duration = (string)$requestObject->Request['duration'];
+                $hotel->checkIn = $checkIn;
+                $hotel->duration = $duration;
                 $response->hotels[] = $hotel;
             }
         }
@@ -327,6 +394,224 @@ class HotelBookClient
             $response->errorStatus = 2;
         }
         return $response;
+    }
+
+    public function hotelSearch($params, $async = false)
+    {
+        $this->synchronize();
+        $time = time() + $this->differenceTimestamp;
+        $getData = array('login'=>Yii::app()->params['HotelBook']['login'],'time'=>$time,'checksum'=>$this->getChecksum($time));
+        if($async)
+        {
+            $asyncParams = array('function'=>array($this,'processHotelSearchResponse'),'params'=>array($params['checkIn'], $params['duration']) );
+            //$asyncParams = array();
+            return $this->request(Yii::app()->params['HotelBook']['uri'].'hotel_search',$getData,array('request'=>$this->prepareHotelSearchRequest($params)),$asyncParams);
+
+        }else{
+            $path = Yii::getPathOfAlias('application.runtime');
+            file_put_contents($path.'/request_'.date('Y-m-d_H_i_s').'.txt',$this->prepareHotelSearchRequest($params));
+            $hotelsXml = $this->request(Yii::app()->params['HotelBook']['uri'].'hotel_search',$getData,array('request'=>$this->prepareHotelSearchRequest($params)));
+
+            //CTextHighlighter::registerCssFile();
+            file_put_contents($path.'/response_'.date('Y-m-d_H_i_s').'.txt',$hotelsXml);
+
+
+            //echo $hotelsXml;
+            //die();
+            //VarDumper::xmlDump($hotelsXml);
+            //die();
+            return (array)$this->processHotelSearchResponse($hotelsXml,$params['checkIn'],$params['duration']);
+        }
+    }
+
+    /**
+     * Function for sorting by uasort
+     * @param $a
+     * @param $b
+     */
+    private static function compareArrayAdultCount($a, $b)
+    {
+        if ($a['adultCount'] < $b['adultCount'])
+        {
+            return -1;
+        } elseif ($a['adultCount'] > $b['adultCount'])
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * Do HotelSearch requests with all combinations of room types,
+     * @param HotelSearchParams $hotelSearchParams
+     */
+    public function fullHotelSearch(HotelSearchParams $hotelSearchParams)
+    {
+        $rooms = $hotelSearchParams->rooms;
+        //Make combinations to combinations Array
+        uasort($rooms,'HotelBookClient::compareArrayAdultCount');
+        $combinations = array();
+        foreach($rooms as $key=>$room)
+        {
+            $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesMap[$room['adultCount']]);
+            $rooms[$key]['sizeIndex'] = 0;
+
+        }
+        $allCombined = false;
+        // Make ALL possible combinations
+        while(!$allCombined)
+        {
+            $combination = array();
+            $allCombined = true;
+            foreach($rooms as $key=>$room)
+            {
+
+                if($room['sizeCount'] !== ($room['sizeIndex'] + 1)) $allCombined = false;
+                $rooms[$key]['roomSizeId'] = self::$roomSizeRoomTypesMap[$room['adultCount']][$room['sizeIndex']];
+                $combination[] = array('roomSizeId'=>$rooms[$key]['roomSizeId'],'child'=>$rooms[$key]['childCount'],'cots'=>$rooms[$key]['cots'],'ChildAge'=>$rooms[$key]['childAge']);
+            }
+            sort($combination);
+            $combinations[] = $combination;
+            if(!$allCombined)
+            {
+                //next possible state
+                $overflow = false;
+                $iterationComplete = false;
+                foreach($rooms as $key=>$room)
+                {
+                    if($room['sizeCount'] == 1){
+                        continue;
+                    }
+                    if($iterationComplete)
+                    {
+                        if($overflow)
+                        {
+                            if($room['sizeCount'] == ($room['sizeIndex'] + 1) )
+                            {
+                                $rooms[$key]['sizeIndex'] = 0;
+                            }
+                            else
+                            {
+                                $rooms[$key]['sizeIndex']++;
+                                $overflow = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if($room['sizeCount'] == ($room['sizeIndex'] + 1) )
+                        {
+                            $rooms[$key]['sizeIndex'] = 0;
+                            $iterationComplete = true;
+                            $overflow = true;
+                        }
+                        else
+                        {
+                            $rooms[$key]['sizeIndex']++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        //delete same combinations
+        sort($combinations);
+        foreach($combinations as $key=>$combination)
+        {
+            if(!isset($prevComb))
+            {
+                $prevComb = $combination;
+                continue;
+            }
+            if($prevComb == $combination)
+            {
+                unset($combinations[$key]);
+            }
+
+            $prevComb = $combination;
+        }
+        unset($prevComb);
+        unset($combination);
+        //add requests to queue
+        $params = array('cityId'=>$hotelSearchParams->cityId,'checkIn'=>$hotelSearchParams->checkIn,'duration'=>$hotelSearchParams->duration);
+        foreach($combinations as $key=>$combination)
+        {
+            $params['rooms'] = array();
+            foreach($combination as $i=>$room)
+            {
+                if(!isset($prevInd))
+                {
+                    $prevInd = $i;
+                    $roomNumber = 1;
+                    continue;
+                }
+                if($combination[$i] === $combination[$prevInd])
+                {
+                    $roomNumber++;
+                    continue;
+                }
+                else
+                {
+                    $combination[$prevInd]['roomNumber'] = $roomNumber;
+                    $params['rooms'][] = $combination[$prevInd];
+                    $prevInd = $i;
+                    $roomNumber = 1;
+                }
+            }
+            $combination[$prevInd]['roomNumber'] = $roomNumber;
+            $params['rooms'][] = $combination[$prevInd];
+            //print_r($params);
+            unset($prevInd);
+            $this->hotelSearch($params, true);
+        }
+        //run all requests
+        $this->processAsyncRequests();
+        $hotels = array();
+        $errorDescriptions = array();
+        foreach($this->requests as $request)
+        {
+            echo count($request['result']->hotels).'<br>';
+            foreach($request['result']->hotels as $hotel)
+            {
+                $key = $hotel->key;
+                if(isset($hotels[$key]))
+                {
+                    echo '--duplicate';
+                    //echo 'have:';
+                    //VarDumper::dump($hotels[$key]);
+                    //echo 'new:';
+                    //VarDumper::dump($hotel);
+                }
+                $hotels[$key] = $hotel;
+            }
+            foreach($request['result']->errorsDescriptions as $desc)
+            {
+                $errorDescriptions[] = $desc;
+            }
+        }
+
+        if($hotels && $errorDescriptions)
+        {
+            $errorStatus = 1;
+        }
+        elseif($hotels)
+        {
+            $errorStatus = 0;
+        }
+        else
+        {
+            $errorStatus = 2;
+        }
+
+        print_r($combinations);
+        print_r(count($hotels));
+        print_r($errorDescriptions);
+        return array('hotels'=>$hotels,'errorsDescriptions'=>$errorDescriptions,'errorStatus'=>$errorStatus);
     }
 
     /**

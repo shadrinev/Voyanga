@@ -56,4 +56,9 @@ class HotelRoom extends CApplicationComponent
         }
     }
 
+    public function getKey()
+    {
+        return $this->sizeId.'|'.$this->typeId.'|'.$this->viewId.'|'.$this->mealId.'|'.$this->mealBreakfastId.'|'.$this->sharingBedding.'|'.$this->childCount.'|'.$this->cotsCount;
+    }
+
 }
