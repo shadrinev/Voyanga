@@ -61,4 +61,34 @@ class HotelRoom extends CApplicationComponent
         return $this->sizeId.'|'.$this->typeId.'|'.$this->viewId.'|'.$this->mealId.'|'.$this->mealBreakfastId.'|'.$this->sharingBedding.'|'.$this->childCount.'|'.$this->cotsCount;
     }
 
+    public function getJsonObject()
+    {
+        /*
+        public $sizeId;
+        public $sizeName;
+        public $typeId;
+        public $typeName;
+        public $viewId;
+        public $viewName;
+        public $mealId;
+        public $mealName;
+        public $mealBreakfastId;
+        public $mealBreakfastName;
+        public $sharingBedding;
+        public $cotsCount;
+        public $childCount;
+        public $childAges = array();
+       */
+        $ret = array('size' => $this->sizeName,
+            'type'=>$this->typeName,
+            'view'=>$this->viewName,
+            'meal'=>$this->mealName,
+            'mealBreakfast' => $this->mealBreakfastName,
+            'cotsCount' => $this->cotsCount,
+            'childCount' => $this->childCount,
+            'childAges' => $this->childAges
+        );
+
+        return $ret;
+    }
 }
