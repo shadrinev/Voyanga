@@ -82,6 +82,9 @@ return CMap::mergeArray(
                     'logging' => array(
                         'class' => 'application.modules.admin.modules.logging.LoggingAdminModule'
                     ),
+                    'booking' => array(
+                        'class' => 'application.modules.admin.modules.booking.BookingAdminModule'
+                    ),
                 )
             )
         ),
