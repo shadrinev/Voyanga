@@ -17,7 +17,7 @@ $this->beginWidget("AAdminPortlet",
 
 <?php echo $this->renderPartial('_form_flight', array('model'=>$flightForm)); ?>
 
-<div id='results'>Результат:</div>
+<span id='flight-search-result'></span>
 
 <?php
 $this->endWidget(); ?>

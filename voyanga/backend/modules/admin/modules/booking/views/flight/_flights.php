@@ -1,6 +1,4 @@
-<span id='tour-output'></span>
-<?php $templateVariable = 'handlebarTour'; ?>
-<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'tour', 'compileVariable' => $templateVariable)) ?>
+<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'tour', 'compileVariable' => $variable)) ?>
 <table class="table" width="100%">
     <thead>
     <tr>
@@ -13,20 +11,21 @@
     </tr>
     </thead>
     <tbody>
-    {{#each items}}
+    {{#each flightVoyages}}
     <tr>
         <td>{{flights.0.flightParts.0.datetimeBegin}}</td>
         <td>{{flights.0.departureCity}}</td>
         <td>{{flights.0.arrivalCity}}</td>
         <td><img src='http://frontend.oleg.voyanga/themes/classic/images/airlines/{{valCompany}}.png'></td>
         <td>{{price}} руб.</td>
-        <td><a class="btn btn-info detail-view" data-key='{{key}}'>Подробнее</a>
+        <td><a class="btn btn-info detail-view" data-key='{{flightKey}}'>Подробнее</a>
             <?php if ((!isset($showDelete)) or ($showDelete===true)): ?>
-            <a class="btn btn-mini btn-danger delete" data-key='{{key}}'>Удалить</a></td>
+                <a class="btn btn-mini btn-danger delete" data-key='{{flightKey}}'>Удалить</a></td>
             <?php endif; ?>
+            <a class="btn btn-mini btn-success buy" href='/admin/booking/flight/buy/key/{{flightKey}}'>Купить</a></td>
     </tr>
     <td colspan="6">
-        <table class="table table-bordered" id='detail-{{key}}' style='display: none; background-color: #f0f0f0'>
+        <table class="table table-bordered" id='detail-{{flightKey}}' style='display: none; background-color: #f0f0f0'>
             <thead>
                 <th>Вылет</th>
                 <th>Прилёт</th>
@@ -57,21 +56,6 @@
     </tfoot>
     <?php endif; ?>
 </table>
-<div class="modal hide" id="tourSaveModal">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Введите название тура</h3>
-    </div>
-    <div class="modal-body">
-        <form class="well form-search" id='saveTourForm'>
-            <input type="text" class="input-xlarge" id='tourName'>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Отменить</a>
-        <a href="#" class="btn btn-primary" id='saveTourButton'>Сохранить тур</a>
-    </div>
-</div>
 <?php $this->endWidget(); ?>
 <?php Yii::app()->clientScript->registerScript('tour-basket', "
     Handlebars.registerHelper('humanTime', function(duration) {
@@ -84,49 +68,14 @@
             return result;
     });
 
-    $.getJSON('/admin/tour/basket/show')
-        .done(function(data) {
-            var html = {$templateVariable}(data);
-            $('#tour-output').html(html);
-        })
-        .fail(function(data){
-            $('#tour-output').html(data);
-        });
-
     $('.detail-view').live('click', function() {
         var openElement = $('#detail-' + $(this).data('key'));
         console.log(openElement);
         openElement.toggle();
     });
 
-    $('.delete').live('click', function() {
-         $.getJSON('/admin/tour/basket/delete/key/'+$(this).data('key'))
-            .done(function(data){
-                var html = {$templateVariable}(data);
-                $('#tour-output').html(html);
-            })
-            .fail(function(data){
-                $('#tour-output').html(data);
-            });
-    });
-
     $('#saveTour').live('click', function() {
         $('#tourSaveModal').modal('show');
         $('#tourName').focus();
-    });
-
-    $('#saveTourButton').live('click',function() {
-        var tourName = $('#tourName').val();
-        $.getJSON('/admin/tour/basket/save/name/'+tourName, function(data){
-            var outputElement = $('#tourSaveModal .modal-body');
-            $('#tourSaveModal .modal-footer').hide();
-            outputElement.hide();
-            if (data.result)
-                outputElement.html('<div class=\"alert alert-success\">Тур сохранён</div>');
-            else
-                outputElement.html('<div class=\"alert alert-error\">Произошла ошибка!</div>');
-            outputElement.show();
-        });
-        return false;
     });
 ", CClientScript::POS_READY); ?>

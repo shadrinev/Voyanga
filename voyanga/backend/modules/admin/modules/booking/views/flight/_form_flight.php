@@ -81,7 +81,7 @@
     <h3>Результат запроса</h3>
 </div>
 
-<div class="modal-body" id='flight-search-result'>
+<div class="modal-body" id='modalText'>
     <p>Идет запрос данных...</p>
 </div>
 
@@ -96,34 +96,19 @@
 <?php $this->endWidget(); ?>
 
 <?php $templateVariable = 'flightSearchResult';
-    $this->renderPartial('_flight_search_result', array('variable'=>$templateVariable)); ?>
+    $this->renderPartial('_flights', array('variable'=>$templateVariable,'showSaveTour'=>false, 'showDelete'=>false)); ?>
 
 <?php Yii::app()->clientScript->registerScript('flight-search', "
     $('#searchFlight,#repeatFlightSearch').live('click', function(){
-        $('#flight-search-result').html('Поиск перелёта...');
+        $('#modalText').html('Поиск перелёта...');
         $.getJSON('/admin/tour/constructor/flightSearch', $('#flight-form').serialize())
         .done(function(data) {
             var html = {$templateVariable}(data);
             $('#flight-search-result').html(html);
-            $('.chooseFlight').on('click',function(){
-                var key1 = $('#searchId').data('searchid');
-                var key2 = $(this).data('searchkey');
-                $.getJSON('/admin/tour/basket/add/type/".FlightVoyage::TYPE."/key/'+key1+'/searchId/'+key2)
-                    .done(function(data){
-                        $.getJSON('/admin/tour/basket/show')
-                            .done(function(data) {
-                                var html = handlebarTour(data);
-                                $('#tour-output').html(html);
-                            })
-                            .fail(function(data){
-                                $('#tour-output').html(data);
-                            });
-                        $('#popupInfo').modal('hide');
-                    });
-            });
+            $('#popupInfo').modal('hide');
         })
         .fail(function(data){
-            $('#flight-search-result').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.</div>');
+            $('#modalText').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.</div>');
         });
     });
 ", CClientScript::POS_READY); ?>
