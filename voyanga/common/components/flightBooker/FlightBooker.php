@@ -10,9 +10,10 @@
  * @property string $timeout
  * @property string $flight_voyage
  */
-class FlightBooker extends FrontendActiveRecord
+class FlightBooker extends SWActiveRecord
 {
     private $_flightVoyage;
+    public $bookingId;
 
     /**
      * Returns the static model of the specified AR class.
@@ -22,6 +23,26 @@ class FlightBooker extends FrontendActiveRecord
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
+    }
+
+    public function beforeTransition($event)
+    {
+        Yii::app()->observer->notify('onAfter'.ucfirst($event->source->getId()), $this);
+        parent::beforeTransition($event);
+    }
+
+    public function afterTransition($event)
+    {
+        $stage = $event->destination->getId();
+        Yii::app()->observer->notify('onBefore'.ucfirst($stage), $this);
+        parent::afterTransition($event);
+        $method = 'stage'.$stage;
+        if (method_exists($this, $method))
+        {
+            $this->$method();
+        }
+        //else
+           // Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
     }
 
     public function behaviors()

@@ -37,17 +37,12 @@ return array(
                 'onEnterCredentials' => array(
                 ),
                 'onBeforeFlightSearch'=>array(
-                    'Notification',
-                    array('Notification', 'handleBest')
                 ),
                 'onAfterFlightSearch'=>array(
-                    'Notification'
                 ),
                 'onBeforeFlightBooking'=>array(
-                    'Notification'
                 ),
                 'onAfterFlightBooking'=>array(
-                    'Notification'
                 )
             )
         ),

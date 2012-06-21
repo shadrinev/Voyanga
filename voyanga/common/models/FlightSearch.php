@@ -48,6 +48,7 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
 
     public function sendRequest(FlightSearchParams $flightSearchParams, $returnCacheRecord = true)
     {
+        Yii::app()->observer->notify('onBeforeFlightSearch', $this);
         if ($flightSearchParams instanceof FlightSearchParams)
         {
             if ($flightSearchParams->checkValid())
@@ -107,6 +108,7 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
                     );
                     $this->flightVoyageStack->setAttributes($attributes);
                     $this->afterSave();
+                    Yii::app()->observer->notify('onAfterFlightSearch', $this);
                     if ($returnCacheRecord)
                         return FlightCache::addCacheFromStack($this->flightVoyageStack);
                     else

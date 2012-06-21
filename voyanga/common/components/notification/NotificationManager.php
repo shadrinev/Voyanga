@@ -14,7 +14,7 @@ class NotificationManager extends CComponent
 
     private $category;
 
-    public function add($user, $notificationType, $notificationObject, $time)
+    public function add($time)
     {
         foreach($this->getNotificationType->getNotifications() as $type=>$params)
             Yii::app()->cron->addTask($this->getCategory(), $this->getKey(), $type, $params, $time);

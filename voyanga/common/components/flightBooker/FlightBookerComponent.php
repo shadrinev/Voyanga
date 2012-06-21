@@ -8,6 +8,27 @@
 class FlightBookerComponent extends CApplicationComponent
 {
     private $flightBooker;
+    private $flightVoyage;
+
+    public function setFlightVoyage($value)
+    {
+        $this->flightVoyage = $value;
+    }
+
+    private function loadModel()
+    {
+        if ($this->flightBooker==null)
+        {
+            $id = Yii::app()->user->getState('flightVoyageId');
+            $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$id));
+        }
+        return $this->flightBooker;
+    }
+
+    public function getCurrent()
+    {
+        return $this->loadModel();
+    }
 
     public function getStatus()
     {
@@ -16,126 +37,111 @@ class FlightBookerComponent extends CApplicationComponent
         return 'search';
     }
 
-    //todo: should be moveed to correct place
-    public function proccessSearch(FlightSearchParams $params)
+    public function book()
     {
-        Yii::app()->observer->notify('onBeforeFlightSearch', $this);
-        Yii::app()->observer->notify('onAfterFlightSearch', $this);
-    }
-
-    public function book(FlightVoyage $flightVoyage)
-    {
-        $this->flightBooker = new FlightBooker();
-        $this->flightBooker->flightVoyage = $flightVoyage;
+        if ($this->getCurrent()==null || ($this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId()))
+        {
+            if ($this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId())
+            {
+                $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->flightVoyage->getId()));
+            }
+            if ($this->flightBooker == null)
+            {
+                $this->flightBooker = new FlightBooker();
+                $this->flightBooker->flightVoyageId = $this->flightVoyage->getId();
+                $this->flightBooker->flightVoyage = $this->flightVoyage;
+            }
+        }
         $this->flightBooker->status = 'enterCredentials';
         $this->flightBooker->save();
-        Yii::app()->user->setState('flightBookerId', $this->flightBooker->id);
+        Yii::app()->user->setState('flightVoyageId', $this->flightBooker->flightVoyage->id);
     }
 
-    public function bookById($id)
+    public function status($newStatus)
     {
-        $this->flightBooker = FlightBooker::model()->findByPk($id);
+        $this->flightBooker->status = $newStatus;
+        $this->flightBooker->save();
     }
 
-    public function proccessEnterCredentials()
+    public function stageBooking()
     {
-        Yii::app()->observer->notify('onEnterCredentials', $this);
+        //getting pnr and other stuff
+        $this->status('waitingForPayment');
     }
 
-    public function proccessBooking()
+    public function stageWaitingForPayment()
     {
-        Yii::app()->observer->notify('onBeforeFlightBooking', $this);
-        Yii::app()->observer->notify('onAfterFlightBooking', $this);
+        //maybe we need to remove it?
+        $this->status('payment');
     }
 
-    public function proccessWaitingForPayment()
+    public function stageBookingError()
     {
-        Yii::app()->observer->notify('onBeforeWaitingForPayment', $this);
-        Yii::app()->observer->notify('onAfterWaitingForPayment', $this);
+
     }
 
-    public function proccessPayment()
+    public function stageBookingTimeLimitError()
     {
-        Yii::app()->observer->notify('onBeforePayment', $this);
-        Yii::app()->observer->notify('onAfterPayment', $this);
+
     }
 
-    public function proccessBookingError()
+    public function stageTicketing()
     {
-        Yii::app()->observer->notify('onBookingError', $this);
+
     }
 
-    public function proccessBookingTimeLimitError()
+    public function stageTicketReady()
     {
-        Yii::app()->observer->notify('onBookingTimeLimitError', $this);
+
     }
 
-    public function proccessTicketing()
+    public function stageTicketingRepeat()
     {
-        Yii::app()->observer->notify('onBeforeTicketing', $this);
-        Yii::app()->observer->notify('onAfterTicketing', $this);
+
     }
 
-    public function proccessTicketReady()
+    public function stageManualProccessing()
     {
-        Yii::app()->observer->notify('onBeforeTicketReady', $this);
-        Yii::app()->observer->notify('onAfterTicketReady', $this);
+
     }
 
-    public function proccessTicketingRepeat()
+    public function stageManualTicketing()
     {
-        Yii::app()->observer->notify('onBeforeTicketingRepeat', $this);
-        Yii::app()->observer->notify('onAfterTicketingRepeat', $this);
+
     }
 
-    public function proccessManualProccessing()
+    public function stageTicketingError()
     {
-        Yii::app()->observer->notify('onBeforeManualProccessing', $this);
-        Yii::app()->observer->notify('onAfterManualProccessing', $this);
+
     }
 
-    public function proccessManualTicketing()
+    public function stageManualError()
     {
-        Yii::app()->observer->notify('onBeforeManualTicketing', $this);
-        Yii::app()->observer->notify('onAfterManualTicketing', $this);
+
     }
 
-    public function proccessTicketingError()
+    public function stageMoneyReturn()
     {
-        Yii::app()->observer->notify('onBeforeTicketingError', $this);
-        Yii::app()->observer->notify('onAfterTicketingError', $this);
+
     }
 
-    public function proccessManualError()
+    public function stageManualSuccess()
     {
-        Yii::app()->observer->notify('onBeforeManualError', $this);
-        Yii::app()->observer->notify('onAfterManualError', $this);
+
     }
 
-    public function proccessMoneyReturn()
+    public function stageBspTransfer()
     {
-        Yii::app()->observer->notify('onMoneyReturn', $this);
+
     }
 
-    public function proccessManualSuccess()
+    public function stageDone()
     {
-        Yii::app()->observer->notify('onBeforeManualSuccess', $this);
-        Yii::app()->observer->notify('onAfterManualSuccess', $this);
+
     }
 
-    public function proccessBspTransfer()
+    public function stageError()
     {
-        Yii::app()->observer->notify('onBeforeBspTransfer', $this);
-        Yii::app()->observer->notify('onAfterBspTransfer', $this);
-    }
 
-    public function proccessDone()
-    {
-        Yii::app()->observer->notify('onFlightBookingDone', $this);
-    }
-
-    public function proccessError()
-    {
-        Yii::app()->observer->notify('onFlightBookingError', $this);
     }
 }

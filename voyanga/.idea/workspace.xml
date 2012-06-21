@@ -2,9 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/payment.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/enterCredentials.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/enterCredentials.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/PassportForm.php" afterPath="$PROJECT_DIR$/common/models/PassportForm.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/flightBooker/FlightBooker.php" afterPath="$PROJECT_DIR$/common/components/flightBooker/FlightBooker.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/flightBooker/FlightBookerComponent.php" afterPath="$PROJECT_DIR$/common/components/flightBooker/FlightBookerComponent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/flightBooker/FlightBookerWorkflow.php" afterPath="$PROJECT_DIR$/common/components/flightBooker/FlightBookerWorkflow.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/notification/Notification.php" afterPath="$PROJECT_DIR$/common/components/notification/Notification.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/notification/NotificationManager.php" afterPath="$PROJECT_DIR$/common/components/notification/NotificationManager.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/observer/ObserverComponent.php" afterPath="$PROJECT_DIR$/common/components/observer/ObserverComponent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/config/main.php" afterPath="$PROJECT_DIR$/common/config/main.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/FlightSearch.php" afterPath="$PROJECT_DIR$/common/models/FlightSearch.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -31,84 +39,96 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FlightController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php">
+      <file leaf-file-name="FlightBookerComponent.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBookerComponent.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="97" selection-start="3522" selection-end="3522" vertical-scroll-proportion="-30.076923">
+            <state line="75" column="5" selection-start="2171" selection-end="2171" vertical-scroll-proportion="1.9452736">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="enterCredentials.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/enterCredentials.php">
+      <file leaf-file-name="FlightController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="0" selection-start="726" selection-end="726" vertical-scroll-proportion="0.26484752">
+            <state line="114" column="49" selection-start="3966" selection-end="3966" vertical-scroll-proportion="-14.692307">
               <folding>
-                <element signature="e#6#112#0" expanded="true" />
+                <element signature="n#actionIndex#0;n#FlightController#0;n#!!top" expanded="false" />
+                <element signature="n#actionSearch#0;n#FlightController#0;n#!!top" expanded="false" />
+                <element signature="n#stageEnterCredentials#0;n#FlightController#0;n#!!top" expanded="false" />
+                <element signature="n#generateItems#0;n#FlightController#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/gii/bootstrap/templates/default/admin.php">
+      <file leaf-file-name="payment.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/payment.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="40" selection-start="1811" selection-end="1811" vertical-scroll-proportion="-18.423077">
+            <state line="5" column="0" selection-start="142" selection-end="142" vertical-scroll-proportion="-3.2692308">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_form_flight.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php">
+      <file leaf-file-name="FlightBooker.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBooker.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="47" selection-start="2146" selection-end="2146" vertical-scroll-proportion="-8.307693">
+            <state line="43" column="10" selection-start="1212" selection-end="1212" vertical-scroll-proportion="-16.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BootButton.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootButton.php">
+      <file leaf-file-name="enterCredentials.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/enterCredentials.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="208" column="36" selection-start="4985" selection-end="4998" vertical-scroll-proportion="-4.901961">
+            <state line="50" column="28" selection-start="1291" selection-end="1502" vertical-scroll-proportion="-17.423077">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Country.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/Country.php">
+      <file leaf-file-name="FlightBookerWorkflow.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBookerWorkflow.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="41" selection-start="4841" selection-end="4841" vertical-scroll-proportion="-26.615385">
+            <state line="10" column="72" selection-start="626" selection-end="635" vertical-scroll-proportion="-6.5384617">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PassportForm.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/PassportForm.php">
+      <file leaf-file-name="SWActiveRecord.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/extensions/simpleWorkflow/SWActiveRecord.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="53" selection-start="1484" selection-end="1484" vertical-scroll-proportion="-14.192307">
+            <state line="43" column="5" selection-start="1204" selection-end="1204" vertical-scroll-proportion="-17.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Passport.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/Passport.php">
+      <file leaf-file-name="ObserverComponent.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/observer/ObserverComponent.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="59" selection-start="1759" selection-end="1759" vertical-scroll-proportion="-31.192308">
+            <state line="72" column="16" selection-start="1822" selection-end="1822" vertical-scroll-proportion="-47.076923">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BookingForm.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/BookingForm.php">
+      <file leaf-file-name="SWNode.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/extensions/simpleWorkflow/SWNode.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="37" selection-start="833" selection-end="833" vertical-scroll-proportion="-23.538462">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="133.38461">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Event.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/observer/Event.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="14" selection-start="163" selection-end="163" vertical-scroll-proportion="-6.5384617">
               <folding />
             </state>
           </provider>
@@ -124,22 +144,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/frontend/controllers/BookerController.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/TourController.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/BookingAdminModule.php" />
-        <option value="$PROJECT_DIR$/backend/config/main.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/_flights.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/_form_flight.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/components/AAdminPortlet.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/tour/controllers/ConstructorController.php" />
-        <option value="$PROJECT_DIR$/backend/models/workflows/swFlightBooker.php" />
-        <option value="$PROJECT_DIR$/frontend/models/workflows/swFlightBooker.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/index.php" />
         <option value="$PROJECT_DIR$/common/models/Country.php" />
         <option value="$PROJECT_DIR$/common/models/Passport.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/enterCredentials.php" />
         <option value="$PROJECT_DIR$/common/models/PassportForm.php" />
+        <option value="$PROJECT_DIR$/common/models/FlightSearch.php" />
+        <option value="$PROJECT_DIR$/common/components/notification/NotificationManager.php" />
+        <option value="$PROJECT_DIR$/common/components/notification/Notification.php" />
+        <option value="$PROJECT_DIR$/common/config/main.php" />
+        <option value="$PROJECT_DIR$/common/components/flightBooker/FlightBookerWorkflow.php" />
+        <option value="$PROJECT_DIR$/common/components/observer/ObserverComponent.php" />
+        <option value="$PROJECT_DIR$/common/components/flightBooker/FlightBookerComponent.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/payment.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php" />
+        <option value="$PROJECT_DIR$/common/extensions/simpleWorkflow/SWActiveRecord.php" />
+        <option value="$PROJECT_DIR$/common/components/flightBooker/FlightBooker.php" />
       </list>
     </option>
   </component>
@@ -220,7 +240,137 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="observer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flightBooker" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -278,6 +428,168 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flight" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope">
@@ -297,15 +609,15 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="209" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="46" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="228" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="196" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="194" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="195" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="869" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="196" />
@@ -895,20 +1207,23 @@
       <created>1340200238104</created>
       <updated>1340200238104</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="enter credentials for booking">
+      <created>1340200561104</created>
+      <updated>1340200561104</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24776785" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23585913" sideWeight="0.75223213" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23852721" sideWeight="0.75223213" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -918,6 +1233,7 @@
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1003,117 +1319,118 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBookerWorkflow.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/_form_flight.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="4153" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="46" selection-start="192" selection-end="234" vertical-scroll-proportion="-3.2692308">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Booking.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="54" selection-start="1503" selection-end="1503" vertical-scroll-proportion="-33.03846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/BookingPassport.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="6" selection-start="637" selection-end="637" vertical-scroll-proportion="0.33491126">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/controllers/SiteController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="468" column="59" selection-start="16633" selection-end="16672" vertical-scroll-proportion="-8.153846">
+        <state line="19" column="15" selection-start="539" selection-end="539" vertical-scroll-proportion="-6.970492" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/models/FlightVoyage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="21" selection-start="255" selection-end="264" vertical-scroll-proportion="-0.34201184">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/BookingForm.php">
+    <entry file="file://$PROJECT_DIR$/backend/controllers/SiteController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="37" selection-start="833" selection-end="833" vertical-scroll-proportion="-23.538462">
+        <state line="51" column="5" selection-start="1528" selection-end="1528" vertical-scroll-proportion="0.85917157">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Country.php">
+    <entry file="file://$PROJECT_DIR$/common/lib/yii-1.1.10/web/CController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="41" selection-start="4841" selection-end="4841" vertical-scroll-proportion="-26.615385">
+        <state line="257" column="20" selection-start="9898" selection-end="9898" vertical-scroll-proportion="0.52426034">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php">
+    <entry file="file://$PROJECT_DIR$/common/extensions/simpleWorkflow/SWHelper.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="97" selection-start="3522" selection-end="3522" vertical-scroll-proportion="-30.076923">
+        <state line="26" column="28" selection-start="967" selection-end="967" vertical-scroll-proportion="-8.307693">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/Passport.php">
+    <entry file="file://$PROJECT_DIR$/common/config/main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="59" selection-start="1759" selection-end="1759" vertical-scroll-proportion="-31.192308">
+        <state line="45" column="0" selection-start="1264" selection-end="1264" vertical-scroll-proportion="-8.5">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/widgets/BootButton.php">
+    <entry file="file://$PROJECT_DIR$/common/components/observer/Event.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="208" column="36" selection-start="4985" selection-end="4998" vertical-scroll-proportion="-4.901961">
+        <state line="10" column="14" selection-start="163" selection-end="163" vertical-scroll-proportion="-6.5384617">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/extensions/bootstrap/gii/bootstrap/templates/default/admin.php">
+    <entry file="file://$PROJECT_DIR$/common/extensions/simpleWorkflow/SWNode.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="40" selection-start="1811" selection-end="1811" vertical-scroll-proportion="-18.423077">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/packages/rbac/views/role/_form.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="0" selection-start="1029" selection-end="1087" vertical-scroll-proportion="0.65489566">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/tour/views/constructor/_form_flight.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="47" selection-start="2146" selection-end="2146" vertical-scroll-proportion="-8.307693">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/models/PassportForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="53" selection-start="1484" selection-end="1484" vertical-scroll-proportion="-14.192307">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="133.38461">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/enterCredentials.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="726" selection-end="726" vertical-scroll-proportion="0.26484752">
+        <state line="50" column="28" selection-start="1291" selection-end="1502" vertical-scroll-proportion="-17.423077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/flight/payment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="142" selection-end="142" vertical-scroll-proportion="-3.2692308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/observer/ObserverComponent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="16" selection-start="1822" selection-end="1822" vertical-scroll-proportion="-47.076923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBookerWorkflow.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="72" selection-start="626" selection-end="635" vertical-scroll-proportion="-6.5384617">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/extensions/simpleWorkflow/SWActiveRecord.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="5" selection-start="1204" selection-end="1204" vertical-scroll-proportion="-17.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBooker.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="10" selection-start="1212" selection-end="1212" vertical-scroll-proportion="-16.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="49" selection-start="3966" selection-end="3966" vertical-scroll-proportion="-14.692307">
           <folding>
-            <element signature="e#6#112#0" expanded="true" />
+            <element signature="n#actionIndex#0;n#FlightController#0;n#!!top" expanded="false" />
+            <element signature="n#actionSearch#0;n#FlightController#0;n#!!top" expanded="false" />
+            <element signature="n#stageEnterCredentials#0;n#FlightController#0;n#!!top" expanded="false" />
+            <element signature="n#generateItems#0;n#FlightController#0;n#!!top" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/flightBooker/FlightBookerComponent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="5" selection-start="2171" selection-end="2171" vertical-scroll-proportion="1.9452736">
+          <folding />
         </state>
       </provider>
     </entry>

@@ -38,15 +38,17 @@ class FlightController extends ABaseAdminController
         $searchKey = $parts[0];
         $searchId = $parts[1];
         $flightVoyage = FlightVoyage::getFromCache($searchKey, $searchId);
-        Yii::app()->flightBooker->book($flightVoyage);
-        $this->loadModel();
-        $status = $this->flightBooker->swGetStatus()->toString();
-        $parts = explode('/', $status);
-        $action = $parts[1];
-        $this->run($action);
+        Yii::app()->flightBooker->flightVoyage = $flightVoyage;
+        Yii::app()->flightBooker->book();
+        $status = Yii::app()->flightBooker->current->swGetStatus()->getId();
+        $action = 'stage'.ucfirst($status);
+        if (method_exists($this, $action))
+            $this->$action();
+        else
+            Yii::app()->flightBooker->$action();
     }
 
-    public function actionEnterCredentials()
+    public function stageEnterCredentials()
     {
         $valid = true;
         $booking = new BookingForm();
@@ -74,8 +76,10 @@ class FlightController extends ABaseAdminController
 
             $bookingAr->email = $booking->contactEmail;
             $bookingAr->phone = $booking->contactPhone;
-            $bookingPassports = array();
+            if (!Yii::app()->user->isGuest)
+                $bookingAr->userId = Yii::app()->user->id;
 
+            $bookingPassports = array();
             $bookingPassport = new BookingPassport();
             $bookingPassport->birthday = $passport->birthday;
             $bookingPassport->firstName = $passport->firstName;
@@ -88,11 +92,12 @@ class FlightController extends ABaseAdminController
             $bookingPassports[] = $bookingPassport;
 
             $bookingAr->bookingPassports = $bookingPassports;
-            $bookingAr->flightId = $this->flightBooker->flightVoyage->flightKey;
+            $bookingAr->flightId = Yii::app()->flightBooker->current->flightVoyage->flightKey;
 
             if($bookingAr->save())
             {
-                Yii::app()->flightBooker->ticket($bookingAr);
+                Yii::app()->flightBooker->current->bookingId = $bookingAr->id;
+                Yii::app()->flightBooker->status('booking');
                 $this->refresh();
             }
             else
@@ -104,14 +109,11 @@ class FlightController extends ABaseAdminController
             $this->render('enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
     }
 
-    private function loadModel()
+    public function stagePayment()
     {
-        if ($this->flightBooker==null)
-        {
-            $id = Yii::app()->user->getState('flightBookerId');
-            $this->flightBooker = FlightBooker::model()->findByPk($id);
-        }
-        return $this->flightBooker;
+        if (isset($_POST['submit']))
+            Yii::app()->flightBooker->status('ticketing');
+        $this->render('payment');
     }
 
     public function generateItems()

@@ -2,10 +2,8 @@
 return array(
     'initial' => 'search',
     'node' => array(
-        array('id'=>'search',                   'transition'=> array(
-                'enterCredentials' => 'Yii::app()->flightBooker->proccessEnterCredentials()'
-        )),
-        array('id'=>'enterCredentials',         'transition'=>'booking'),
+        array('id'=>'search',                   'transition'=> 'enterCredentials'),
+        array('id'=>'enterCredentials',         'transition'=> 'booking'),
         array('id'=>'booking',                  'transition'=>'waitingForPayment,bookingError'),
         array('id'=>'bookingError',             'transition'=>'error'),
         array('id'=>'waitingForPayment',        'transition'=>'payment,bookingTimeLimitError'),
