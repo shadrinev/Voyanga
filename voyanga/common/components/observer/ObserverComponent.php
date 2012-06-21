@@ -70,7 +70,7 @@ class ObserverComponent extends CApplicationComponent
 
     public function notify($event, $args = null)
     {
-        Yii::log('Event occured: '.$event);
+        Yii::log('Event occured: '.$event, 'notification');
         $this->getDefault()->notify($event, $args);
     }
 }

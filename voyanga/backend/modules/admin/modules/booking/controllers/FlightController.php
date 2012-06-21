@@ -39,7 +39,8 @@ class FlightController extends ABaseAdminController
         $searchId = $parts[1];
         $flightVoyage = FlightVoyage::getFromCache($searchKey, $searchId);
         Yii::app()->flightBooker->flightVoyage = $flightVoyage;
-        Yii::app()->flightBooker->book();
+        if (Yii::app()->flightBooker->getCurrent()==null)
+            Yii::app()->flightBooker->book();
         $status = Yii::app()->flightBooker->current->swGetStatus()->getId();
         $action = 'stage'.ucfirst($status);
         if (method_exists($this, $action))
@@ -113,7 +114,8 @@ class FlightController extends ABaseAdminController
     {
         if (isset($_POST['submit']))
             Yii::app()->flightBooker->status('ticketing');
-        $this->render('payment');
+        else
+            $this->render('payment');
     }
 
     public function generateItems()

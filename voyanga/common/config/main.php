@@ -23,6 +23,12 @@ return array(
 
     'components'=>array(
 
+        'session'=>array(
+            'class'=>'site.common.extensions.EMongoDbHttpSession.EMongoDbHttpSession',
+            'dbName' => 'voyanga',
+            'collectionName' => 'session',
+        ),
+
         'flightBooker' => array(
             'class'=>'site.common.components.flightBooker.FlightBookerComponent',
         ),
@@ -129,7 +135,18 @@ return array(
                     'class' => 'packages.users.behaviors.AUserBehavior'
                 )
             )
-        )
+        ),
+
+        'log' => array(
+            'class' => 'CLogRouter',
+            'routes' => array(
+                array(
+                    'class' => 'CFileLogRoute',
+                    'logFile' => 'notification',
+                    'levels' => 'notification',
+                    'categories' => 'application'
+                ),
+        ))
     ),
 
     'modules'=>array(

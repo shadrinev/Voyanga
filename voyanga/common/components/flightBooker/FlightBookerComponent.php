@@ -41,7 +41,7 @@ class FlightBookerComponent extends CApplicationComponent
     {
         if ($this->getCurrent()==null || ($this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId()))
         {
-            if ($this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId())
+            if (($this->getCurrent()!=null) and $this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId())
             {
                 $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->flightVoyage->getId()));
             }
@@ -87,12 +87,12 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageTicketing()
     {
-
+        $this->status('ticketReady');
     }
 
     public function stageTicketReady()
     {
-
+        $this->status('done');
     }
 
     public function stageTicketingRepeat()

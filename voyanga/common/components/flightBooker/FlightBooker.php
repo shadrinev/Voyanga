@@ -14,6 +14,7 @@ class FlightBooker extends SWActiveRecord
 {
     private $_flightVoyage;
     public $bookingId;
+    private $statusChanged = false;
 
     /**
      * Returns the static model of the specified AR class.
@@ -35,14 +36,21 @@ class FlightBooker extends SWActiveRecord
     {
         $stage = $event->destination->getId();
         Yii::app()->observer->notify('onBefore'.ucfirst($stage), $this);
+        $this->statusChanged = true;
         parent::afterTransition($event);
-        $method = 'stage'.$stage;
-        if (method_exists($this, $method))
+    }
+
+    public function afterSave()
+    {
+        if (!$this->statusChanged)
+            return parent::afterSave();
+        $method = 'stage'.$this->swGetStatus()->getId();
+        if (method_exists(Yii::app()->flightBooker, $method))
         {
-            $this->$method();
+            Yii::app()->flightBooker->$method();
         }
-        //else
-           // Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+        else
+            Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
     }
 
     public function behaviors()
