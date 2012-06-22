@@ -17,9 +17,20 @@ class SiteController extends Controller
                 'attributes'=>array('localRu','localEn','code:='),
                 'labelTemplate'=>'{localRu}, {country.localRu}, {code}',
                 'valueTemplate'=>'{localRu}',
-                'criteria'=>array('with'=>'country'),
+                'criteria'=>array('with'=>'country','condition'=>'countAirports!=0'),
                 'paramName' => 'query'
-            ));
+            ),
+            'cityAutocompleteForHotel'=>array(
+                'class'=>'site.frontend.actions.AAutoCompleteAction',
+                'modelClass'=>'City',
+                'cache'=>true,
+                'cacheExpire'=>1800,
+                'attributes'=>array('localRu','localEn','code:='),
+                'labelTemplate'=>'{localRu}, {country.localRu}, {code}',
+                'valueTemplate'=>'{localRu}',
+                'criteria'=>array('with'=>'country'),
+            ),
+        );
     }
 
     /**

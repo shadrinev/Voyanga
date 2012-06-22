@@ -9,7 +9,10 @@ class HotelForm extends CFormModel
 {
     public $cityId;
     public $fromDate;
-    public $duration;
+    public $duration=1;
+    /**
+     * @var HotelBookRoom[]
+     */
     public $rooms=array();
 
     public function rules()
@@ -17,7 +20,7 @@ class HotelForm extends CFormModel
         return array(
             array('cityId, duration, fromDate', 'required'),
             array('cityId, duration', 'numerical', 'integerOnly'=>true),
-            array('fromDate, rooms', 'safe')
+            array('fromDate, rooms, duration', 'safe')
         );
     }
 

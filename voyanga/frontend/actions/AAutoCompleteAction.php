@@ -83,6 +83,8 @@ class AAutoCompleteAction extends CAction {
 	 * @var integer
 	 */
 	public $minLength = 2;
+
+    public $withHotels = false;
 	
 	/**
 	 * The named scopes that should be applied, in order, when 
@@ -119,6 +121,9 @@ class AAutoCompleteAction extends CAction {
 	 * Runs the widget and displays the JSON for the auto complete
 	 */
 	public function run() {
+
+        $this->withHotels = (isset($_GET['withHotels']) and ($_GET['withHotels']==1)) ? true : false;
+
 		if (count($this->attributes) == 0) {
 			throw new CException("No attributes specified for auto complete");
 		}
@@ -174,6 +179,8 @@ class AAutoCompleteAction extends CAction {
 
 		}
 		$criteria->addCondition(implode(" OR ",$conditions));
+        if ($this->withHotels)
+            $criteria->addCondition('t.hotelbookId IS NOT NULL');
 		foreach($model->findAll($criteria) as $result) {
 			$item = array();
 			$item['id'] = $result->primaryKey;

@@ -1,4 +1,3 @@
-<a href='#' id='search-param-show' style='display: none'>Развернуть параметры поиска</a>
 <?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
     //'type' =>'search',
     'id'=>'hotel-form',
@@ -16,7 +15,7 @@
         'options'=>array(
             'items'=>10,
             'ajax' => array(
-                'url' => "/site/cityAutocomplete",
+                'url' => "/site/cityAutocompleteForHotel/withHotels/1",
                 'timeout' => 500,
                 'displayField' => "label",
                 'triggerLength' => 2,
@@ -28,7 +27,7 @@
         ),
         'htmlOptions'=>array(
             'class'=>'span5 fromField',
-            'value'=>'',
+            'value'=>$cityName,
         )
     )); ?>
     <?php echo $form->error($model, 'cityId'); ?>
@@ -45,7 +44,7 @@
 
     <?php echo $form->hiddenField($model,'cityId'); ?>
 
-    <?php echo $form->dropDownListRow($model, 'duration', range(1,31)); ?>
+    <?php echo $form->dropDownListRow($model, 'duration', range(0,31)); ?>
 
     <?php $this->widget('common.widgets.rooms.Rooms', array('model' => $model, 'attribute'=>'rooms', 'form'=>$form)); ?>
 

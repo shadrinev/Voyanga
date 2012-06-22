@@ -17,9 +17,8 @@ $this->beginWidget("AAdminPortlet",
     ));
 ?>
 
-<?php echo $this->renderPartial('_form_hotel', array('model'=>$hotelForm, 'autosearch'=>$autosearch, 'cityName'=>$cityName, 'fromDate'=>$fromDate, 'duration'=>$duration)); ?>
+<?php echo $this->renderPartial('_form_hotel', array('model'=>$hotelForm, 'autosearch'=>$autosearch, 'cityName'=>$cityName, 'duration'=>$duration)); ?>
 
-<span id='hotel-search-result'></span>
 
 <?php
 $this->endWidget(); ?>
