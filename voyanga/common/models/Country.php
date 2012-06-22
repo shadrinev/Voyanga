@@ -116,6 +116,7 @@ class Country extends CActiveRecord
             {
                 Country::$countries[$Country->id] = $Country;
                 Country::$codeIdMap[$Country->code] = $Country->id;
+                Country::$idHotelbookIdMap[$Country->hotelbookId] = $Country->id;
                 return Country::$countries[$id];
             }
             else
@@ -140,12 +141,38 @@ class Country extends CActiveRecord
             {
                 Country::$countries[$Country->id] = $Country;
                 Country::$codeIdMap[$Country->code] = $Country->id;
+                Country::$idHotelbookIdMap[$Country->hotelbookId] = $Country->id;
                 return Country::$countries[Country::$codeIdMap[$code]];
             }
             else
             {
                 throw new CException( Yii::t( 'application', 'Country with code {code} not found', array(
                     '{code}' => $code ) ) );
+            }
+        }
+    }
+
+    public static function getCountryByHotelbookId( $hotelbookId )
+    {
+        if ( isset( Country::$idHotelbookIdMap[$hotelbookId] ) )
+        {
+            return Country::$countries[Country::$idHotelbookIdMap[$hotelbookId]];
+        }
+        else
+        {
+            $Country = Country::model()->findByAttributes( array(
+                'hotelbookId' => $hotelbookId ) );
+            if ( $Country )
+            {
+                Country::$countries[$Country->id] = $Country;
+                Country::$codeIdMap[$Country->code] = $Country->id;
+                Country::$idHotelbookIdMap[$Country->hotelbookId] = $Country->id;
+                return Country::$countries[Country::$idHotelbookIdMap[$hotelbookId]];
+            }
+            else
+            {
+                throw new CException( Yii::t( 'application', 'Country with code {code} not found', array(
+                    '{code}' => $hotelbookId ) ) );
             }
         }
     }

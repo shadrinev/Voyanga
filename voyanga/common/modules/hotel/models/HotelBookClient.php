@@ -6,6 +6,10 @@ class HotelBookClient
     public $lastHeaders;
     public $multiCurl;
     public static $roomSizeRoomTypesMap = array(1=>array(1),2=>array(2,3),3=>array(5),4=>array(6));
+    public static $roomSizeIdNamesMap = array(1=>'SGL',2=>'DBL',3=>'TWN',4=>'TWNSU',5=>'TRLP',6=>'QUAD',7=>'DBLSU');
+    public static $lastRequestMethod;
+    public static $lastRequestDescription;
+    public static $groupId;
     public $requests;
 
     public function request($url, $getData = null, $postData = null, $asyncParams = null)
@@ -46,9 +50,29 @@ class HotelBookClient
 
 
         curl_setopt($rCh, CURLOPT_URL, $url);
+        $key = $url . md5(serialize($postData));
+        $mongoKey = substr(md5($key. uniqid('',true)),0,10);
+
+        $hotelRequest = new HotelRequest();
+        $hotelRequest->requestNum = $mongoKey;
+        $hotelRequest->timestamp = time();
+        $hotelRequest->methodName = self::$lastRequestMethod;
+        $hotelRequest->requestUrl = $url;
+        if(self::$groupId)
+        {
+            $hotelRequest->groupId = self::$groupId;
+        }
+        $hotelRequest->requestDescription = self::$lastRequestDescription;
+        $hotelRequest->requestXml = isset($postData['request']) ? $postData['request'] : '';
+        $hotelRequest->save();
+
+
         if($asyncParams === null)
         {
+            $startTime = microtime(true);
             $sData = curl_exec($rCh);
+            $endTime = microtime(true);
+
             //Biletoid_Utils::addLogMessage($sData, '/tmp/curl_response.txt');
             if ($sData !== FALSE)
             {
@@ -58,10 +82,16 @@ class HotelBookClient
                     list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
                 }
                 $this->lastHeaders = $sHeaders;
+
+                $hotelRequest->executionTime = ($endTime - $startTime);
+                $hotelRequest->responseXml = UtilsHelper::formatXML($sData);
+                $hotelRequest->save();
             }
             else
             {
                 $this->lastCurlError = curl_error ($rCh);
+                $hotelRequest->errorDescription = $this->lastCurlError;
+                $hotelRequest->save();
             }
 
             return $sData;
@@ -74,7 +104,7 @@ class HotelBookClient
                 $this->multiCurl = curl_multi_init();
             }
 
-            $this->requests[] = array('curlHandle'=>$rCh,'completed'=>false);
+            $this->requests[] = array('curlHandle'=>$rCh,'completed'=>false,'hotelRequestLog'=>$hotelRequest);
 
             $id = count($this->requests) - 1;
             curl_multi_add_handle($this->multiCurl,$this->requests[$id]['curlHandle']);
@@ -88,6 +118,7 @@ class HotelBookClient
     {
         if($this->multiCurl)
         {
+            $startTime = microtime(true);
             do {
                 $status = curl_multi_exec($this->multiCurl, $active);
                 $info = curl_multi_info_read($this->multiCurl);
@@ -95,9 +126,45 @@ class HotelBookClient
                     //var_dump($info);
                     //echo  curl_multi_getcontent($info['handle']);
                     //TODO: partitial processing
+                    $endTime = microtime(true);
+                    foreach ($this->requests as $i => $requestInfo) {
+                        if(!$requestInfo['completed'])
+                        {
+                            if($requestInfo['curlHandle'] == $info['handle'])
+                            {
+                                //Process response
+                                $result = curl_multi_getcontent($requestInfo['curlHandle']);
+                                curl_close($requestInfo['curlHandle']);
+
+                                $requestInfo['hotelRequestLog']->executionTime = ($endTime - $startTime);
+                                $requestInfo['hotelRequestLog']->responseXml = UtilsHelper::formatXML($result);
+                                $requestInfo['hotelRequestLog']->save();
+                                if(isset($requestInfo['function']))
+                                {
+                                    $params = array($result);
+                                    if($requestInfo['params'])
+                                    {
+                                        foreach($requestInfo['params'] as $param)
+                                        {
+                                            $params[] = $param;
+                                        }
+                                    }
+                                    $this->requests[$i]['result'] = call_user_func_array($requestInfo['function'],$params);
+                                    unset($this->requests[$i]['function']);
+
+                                }
+                                else
+                                {
+                                    $this->requests[$i]['result'] = $result;
+                                }
+                                $this->requests[$i]['completed'] = true;
+                            }
+                        }
+                    }
                 }
             } while ($status === CURLM_CALL_MULTI_PERFORM || $active);
 
+            /*
             foreach ($this->requests as $i => $requestInfo) {
                 if(!$requestInfo['completed'])
                 {
@@ -125,10 +192,12 @@ class HotelBookClient
                 }
                 //$res[$i] = curl_multi_getcontent($conn[$i]);
 
-            }
+            }*/
+
             curl_multi_close($this->multiCurl);
             $this->multiCurl = null;
         }
+
     }
 
     private function getChecksum($time)
@@ -142,6 +211,8 @@ class HotelBookClient
         echo "iNN";
         $time = time() + $this->differenceTimestamp;
         $getData = array('login'=>Yii::app()->params['HotelBook']['login'],'time'=>$time,'checksum'=>$this->getChecksum($time));
+        self::$lastRequestMethod = 'Countries';
+        self::$lastRequestDescription = '';
         $countries = $this->request(Yii::app()->params['HotelBook']['uri'].'countries',$getData);
         $countriesObject = simplexml_load_string($countries);
         $return = array();
@@ -169,9 +240,12 @@ class HotelBookClient
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
         $getData = array('login'=>Yii::app()->params['HotelBook']['login'],'time'=>$time,'checksum'=>$this->getChecksum($time));
+        self::$lastRequestMethod = 'Cities';
+        self::$lastRequestDescription = '';
         if($countryId)
         {
             $getData['country_id'] = $countryId;
+            self::$lastRequestDescription = Country::getCountryByHotelbookId($countryId)->code;
         }
         $cities = $this->request(Yii::app()->params['HotelBook']['uri'].'cities',$getData);
         $citiesObject = simplexml_load_string($cities);
@@ -401,6 +475,12 @@ class HotelBookClient
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
         $getData = array('login'=>Yii::app()->params['HotelBook']['login'],'time'=>$time,'checksum'=>$this->getChecksum($time));
+        self::$lastRequestMethod = 'HotelSearch';
+        self::$lastRequestDescription = '';
+        foreach($params['rooms'] as $room)
+        {
+            self::$lastRequestDescription .= (self::$lastRequestDescription ? ' & ' : '').self::$roomSizeIdNamesMap[$room['roomSizeId']].($room['cots'] ? $room['cots'].'COTS' : '' ).($room['child'] ? 'CHLD'.$room['ChildAge'].'AGE' : '' ).(isset($room['roomNumber']) ? ($room['roomNumber'] > 1 ? 'x'.$room['roomNumber'] : '' ) : '' );
+        }
         if($async)
         {
             $asyncParams = array('function'=>array($this,'processHotelSearchResponse'),'params'=>array($params['checkIn'], $params['duration']) );
@@ -538,6 +618,7 @@ class HotelBookClient
         unset($prevComb);
         unset($combination);
         //add requests to queue
+        self::$groupId = substr(md5(uniqid('',true)),0,10);
         $params = array('cityId'=>$hotelSearchParams->city->hotelbookId,'checkIn'=>$hotelSearchParams->checkIn,'duration'=>$hotelSearchParams->duration);
         foreach($combinations as $key=>$combination)
         {
@@ -571,6 +652,7 @@ class HotelBookClient
         }
         //run all requests
         $this->processAsyncRequests();
+        self::$groupId = null;
         $hotels = array();
         $errorDescriptions = array();
         foreach($this->requests as $request)
@@ -623,6 +705,9 @@ class HotelBookClient
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
         $getData = array('login'=>Yii::app()->params['HotelBook']['login'],'time'=>$time,'checksum'=>$this->getChecksum($time));
+
+        self::$lastRequestMethod = 'HotelSearchDetails';
+        self::$lastRequestDescription = "SID:{$hotel->searchId} RID: {$hotel->resultId} HID: {$hotel->hotelId}";
 
         $xml = '<?xml version="1.0" encoding="utf-8"?>
 <HotelSearchDetailsRequest>

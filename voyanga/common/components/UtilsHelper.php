@@ -23,13 +23,18 @@ class UtilsHelper
 
     public static function formatXML($xml)
     {
+        libxml_use_internal_errors(true);
         $oDM = new DOMDocument();
-        $oDM->loadXML($xml);
-        if ($oDM)
-        {
-            $oDM->formatOutput = true;
-            $oDM->normalize();
-            $xml = $oDM->saveXML();
+        try {
+            $oDM->loadXML($xml);
+            if ($oDM)
+            {
+                $oDM->formatOutput = true;
+                $oDM->normalize();
+                $xml = $oDM->saveXML();
+            }
+        }catch (Exeption $e ){
+
         }
         return $xml;
     }
