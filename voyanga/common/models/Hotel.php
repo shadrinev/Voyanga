@@ -5,6 +5,7 @@ class Hotel extends CApplicationComponent
     public static $categories = array(1=>'5*',2=>'3*',3=>'4*',4=>'2*',5=>'1*',6=>'-');
     public $searchId;
     public $hotelId;
+    public $hotelName;
     public $resultId;
     public $categoryId;
     public $checkIn;
@@ -21,6 +22,7 @@ class Hotel extends CApplicationComponent
     public $providerHotelCode;
     public $cancelCharges;
     public $cancelExpiration;
+    public $bestMask = 0;
 
 
     public $rooms;
@@ -90,6 +92,55 @@ class Hotel extends CApplicationComponent
         return md5($sKey);
     }
 
+    public function getValueOfParam($paramName)
+    {
+        switch ($paramName)
+        {
+            case "price":
+                $sVal = intval($this->price);
+                break;
+            case "hotelId":
+                $sVal = intval($this->hotelId);
+                break;
+            case "categoryId":
+                $sVal = intval($this->categoryId);
+                break;
+            case "providerId":
+                $sVal = intval($this->providerId);
+                break;
+            case "rubPrice":
+                $sVal = intval($this->rubPrice);
+                break;
+            case "roomSizeId":
+                $sVal = intval($this->getRoomsAttributeForSort('sizeId'));
+                break;
+            case "roomTypeId":
+                $sVal = intval($this->getRoomsAttributeForSort('typeId'));
+                break;
+            case "roomViewId":
+                $sVal = intval($this->getRoomsAttributeForSort('viewId'));
+                break;
+            case "roomMealId":
+                $sVal = intval($this->getRoomsAttributeForSort('mealId'));
+                break;
+        }
+        return $sVal;
+    }
+
+    /**
+     * Function need for sorting hotels by room attributes
+     * @param $attrName
+     */
+    public function getRoomsAttributeForSort($attrName)
+    {
+        $ret = '';
+        foreach($this->rooms as $room)
+        {
+            $ret .= $room->{$attrName}.'0';
+        }
+        return $ret;
+    }
+
     public function getJsonObject()
     {
         /*
@@ -113,6 +164,7 @@ class Hotel extends CApplicationComponent
         public $cancelExpiration;
         */
         $ret = array('hotelId' => $this->hotelId,
+            'hotelName' => $this->hotelName,
             'searchId'=>$this->searchId,
             'resultId'=>$this->resultId,
             'category'=>$this->categoryName,

@@ -199,7 +199,7 @@ class HotelBookClient
     private function getHotelFromSXE($hotelSXE)
     {
         $hotelAttrMap = array(
-            'hotelId','resultId','confirmation','price','currency','comparePrice','specialOffer','providerId','providerHotelCode',
+            'hotelId','hotelName','resultId','confirmation','price','currency','comparePrice','specialOffer','providerId','providerHotelCode',
             'categoryId'=>'hotelCatId',
             'categoryName'=>'hotelCatName',
             'address'=>'hotelAddress',
@@ -538,7 +538,7 @@ class HotelBookClient
         unset($prevComb);
         unset($combination);
         //add requests to queue
-        $params = array('cityId'=>$hotelSearchParams->cityId,'checkIn'=>$hotelSearchParams->checkIn,'duration'=>$hotelSearchParams->duration);
+        $params = array('cityId'=>$hotelSearchParams->city->hotelbookId,'checkIn'=>$hotelSearchParams->checkIn,'duration'=>$hotelSearchParams->duration);
         foreach($combinations as $key=>$combination)
         {
             $params['rooms'] = array();

@@ -8,11 +8,18 @@
  */
 class HotelStack
 {
-    public $hotels;
+    public $_hotels;
+    /**
+     * @var HotelStack[]
+     */
+    public $hotelStacks;
     public $filterValues = array();
     public $searchId;
     public $fsKey;
+    public $groupKey;
     public static $toTop;
+    public static $sortParam;
+
 
     public $bestMask = 0; // bitwise mask 0b001 - Best price, 0b010 - best recommended, 0b100 best speed
 
@@ -33,19 +40,27 @@ class HotelStack
                     if($bNeedSave)
                     {
                         $hotelKey = $hotel->key;
-                        $this->hotels[$hotelKey] = $hotel;
+                        $this->_hotels[$hotelKey] = $hotel;
                         if ($bParamsNeedInit)
                         {
                             //initializing best params
                             $bParamsNeedInit = false;
                             $this->bestPrice = $hotel->price;
-                            $this->bestPriceInd = count($this->hotels) - 1;
+                            $this->bestPriceInd = count($this->_hotels) - 1;
                         }
                         if($this->bestPrice > $hotel->price)
                         {
                             $this->bestPrice = $hotel->price;
-                            $this->bestPriceInd = count($this->hotels) - 1;
+                            $this->bestPriceInd = count($this->_hotels) - 1;
                         }
+                    }
+                }
+
+                foreach ($this->_hotels as $iInd => $hotel)
+                {
+                    if($this->_hotels[$iInd]->price == $this->bestPrice)
+                    {
+                        $this->_hotels[$iInd]->bestMask |= 1;
                     }
                 }
 
@@ -61,13 +76,13 @@ class HotelStack
     public function addHotel(Hotel $hotel)
     {
         $hotelKey = $hotel->key;
-        $this->hotels[$hotelKey] = $hotel;
+        $this->_hotels[$hotelKey] = $hotel;
         $this->bestMask |= $hotel->bestMask;
     }
 
     public function getHotelById($id)
     {
-        foreach($this->hotels as $hotel){
+        foreach($this->_hotels as $hotel){
             if($hotel->hotelKey == $id){
                 return $hotel;
             }
@@ -95,36 +110,176 @@ class HotelStack
 
     public function groupBy($sKey, $iToTop = NULL)
     {
-        $aHotelsStacks = array();
-
-        foreach ($this->hotels as $hotel)
+        if($this->_hotels)
         {
-            switch ($sKey)
-            {
-                case "price":
-                    $sVal = intval($hotel->price);
-                    break;
-            }
+            //$aHotelsStacks = array();
+            $this->hotelStacks = array();
 
-            if (!isset($aHotelsStacks[$sVal]))
+            /** @var Hotel $hotel */
+            foreach ($this->_hotels as $hotel)
             {
-                $aHotelsStacks[$sVal] = new HotelStack();
+
+                $sVal = $hotel->getValueOfParam($sKey);
+
+                if (!isset($aHotelsStacks[$sVal]))
+                {
+                    $this->hotelStacks[$sVal] = new HotelStack();
+                }
+                $this->hotelStacks[$sVal]->addHotel($hotel);
             }
-            $aHotelsStacks[$sVal]->addHotel($hotel);
+            $this->_hotels = null;
+            uksort($this->hotelStacks, 'HotelStack::compare_array'); //sort array by key
+            reset($this->hotelStacks);
+            $this->groupKey = $sKey;
+            //$aEach = each($aHotelsStacks);
+        }elseif($this->hotelStacks){
+            foreach ($this->hotelStacks as $i=>$hotelStack)
+            {
+                $this->hotelStacks[$i]->groupBy($sKey, $iToTop);
+            }
         }
-        uksort($aHotelsStacks, 'HotelStack::compare_array'); //sort array by key
-        reset($aHotelsStacks);
-        $aEach = each($aHotelsStacks);
-        return $aHotelsStacks;
+
+        return $this->hotelStacks;
     }
 
-    public function getAsJson()
+    /**
+     * Function for sorting by uasort
+     * @param HotelStack $a
+     * @param HotelStack $b
+     */
+    private static function compareStacksByHotelsParams($a, $b)
+    {
+
+        $valA = $a->getHotel()->getValueOfParam(self::$sortParam);
+        $valB = $b->getHotel()->getValueOfParam(self::$sortParam);
+        //echo "Comparing ".$a->getHotel()->hotelId.' vs '.$b->getHotel()->hotelId." values: $valA vs $valB<br>";
+        if ($valA < $valB)
+        {
+            return -1;
+        } elseif ($valA > $valB)
+        {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Function for sorting by uasort
+     * @param Hotel $a
+     * @param Hotel $b
+     */
+    private static function compareHotelsByHotelsParams($a, $b)
+    {
+        $valA = $a->getValueOfParam(self::$sortParam);
+        $valB = $b->getValueOfParam(self::$sortParam);
+        if ($valA < $valB)
+        {
+            return -1;
+        } elseif ($valA > $valB)
+        {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    public function sortBy($sKey = '',$deep = 0)
+    {
+        if($sKey) self::$sortParam = $sKey;
+        if(self::$sortParam != $this->groupKey)
+        {
+            if($this->_hotels)
+            {
+                uasort($this->_hotels,'HotelStack::compareHotelsByHotelsParams');
+            }
+            else
+            {
+                if($deep != 0)
+                {
+                    foreach($this->hotelStacks as $i=>$hotelStack)
+                    {
+                        $this->hotelStacks[$i]->sortBy('', $deep -1);
+                    }
+                }
+                echo "sorting hotelStacks<br>";
+                uasort($this->hotelStacks,'HotelStack::compareStacksByHotelsParams');
+            }
+        }
+        //if($deep == 0) self::$sortParam = null;
+    }
+
+
+    public function getHotels($deep = 0)
+    {
+        if($this->_hotels){
+            return $this->_hotels;
+        }else{
+            $hotels = array();
+            foreach ($this->hotelStacks as $i=>$hotelStack)
+            {
+                if($deep){
+                    $stackHotels = $this->hotelStacks[$i]->getHotels($deep - 1);
+                    foreach($stackHotels as $hotel)
+                    {
+                        $hotels[] = $hotel;
+                    }
+                }
+                else
+                {
+                    $stackHotels = $this->hotelStacks[$i]->getHotels();
+                    foreach($stackHotels as $hotel)
+                    {
+                        $hotels[] = $hotel;
+                        break;
+                    }
+                }
+            }
+            return $hotels;
+        }
+    }
+
+    /**
+     * Function for get first Hotel from HotelStack
+     * @return Hotel
+     */
+    public function getHotel(){
+        if($this->_hotels){
+            foreach($this->_hotels as $hotel)
+            {
+                return $hotel;
+            }
+        }
+        else
+        {
+            foreach($this->hotelStacks as $hotelStack)
+            {
+                return $hotelStack->getHotel();
+            }
+        }
+    }
+
+    public function getAsJson($deep = 0)
+    {
+        return json_encode($this->getJsonObject($deep));
+    }
+
+    public function getJsonObject($deep = 0)
     {
         $ret = array('hotels'=>array());
-        foreach($this->hotels as $hotel)
+        $hotels = $this->getHotels($deep);
+        foreach($hotels as $hotel)
         {
             $ret['hotels'][] = $hotel->getJsonObject();
         }
-        return json_encode($ret);
+        return $ret;
+    }
+
+    public function printStack()
+    {
+        foreach($this->hotelStacks as $key=>$hotelStack)
+        {
+            echo "key: $key <br>";
+        }
     }
 }

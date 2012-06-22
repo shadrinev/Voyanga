@@ -10,7 +10,7 @@ class HotelSearchParams
 {
     public $checkIn;
     public $duration;
-    public $cityId;
+    public $city;
     public $rooms;
 
 

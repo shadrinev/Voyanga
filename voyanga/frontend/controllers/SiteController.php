@@ -531,6 +531,14 @@ class SiteController extends Controller
 
     }
 
+    public function actionHotelSearch()
+    {
+        //dynamic number of rooms per page
+        $countRooms = count($_POST['rooms']['adultCount']);
+
+
+    }
+
     public function actionDictionary()
     {
         $sDType = 'airports';
@@ -586,11 +594,11 @@ class SiteController extends Controller
         //$HotelClient->synchronize();
         //$russia = Country::getCountryByCode('US');
         $city = City::getCityByCode('PAR');
-        $city = City::getCityByCode('LON');
+        $city = City::getCityByCode('MOW');
         $hotelSearchParams = new HotelSearchParams();
         $hotelSearchParams->checkIn = '2012-09-17';
         $hotelSearchParams->duration = '7';
-        $hotelSearchParams->cityId = $city->hotelbookId;
+        $hotelSearchParams->city = $city;
         $hotelSearchParams->addRoom(2);
         $hotelSearchParams->addRoom(2);
         //$hotelSearchParams->addRoom(2,1);
@@ -598,7 +606,14 @@ class SiteController extends Controller
         //$hotelSearchParams->addRoom(3);
         $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
         $hotelStack = new HotelStack($resultSearch);
-        echo '<br>'.count($hotelStack->hotels);
+        //echo '<br>'.count($hotelStack->_hotels);
+        $hotelStack->groupBy('hotelId');
+        $hotelStack->groupBy('roomSizeId');
+        $hotelStack->groupBy('rubPrice');
+        $hotelStack->printStack();
+        $hotelStack->sortBy('rubPrice',2);
+        $hotelStack->printStack();
+        VarDumper::dump($hotelStack->getJsonObject());
 
         //print_r($HotelClient->getCities($russia->hotelbookId));
         /*$params = array('cityId'=>$city->hotelbookId,'checkIn'=>'2012-09-17','duration'=>'7');
