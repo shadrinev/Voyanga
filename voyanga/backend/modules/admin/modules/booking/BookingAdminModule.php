@@ -8,7 +8,7 @@ class BookingAdminModule extends ABaseAdminModule
 {
     public function init()
     {
-        Yii::import('site.backend.modules.admin.modules.tour.models.*');
+        Yii::import('site.backend.modules.admin.modules.booking.models.*');
     }
 
     /**
