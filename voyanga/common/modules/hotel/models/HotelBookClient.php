@@ -348,7 +348,7 @@ class HotelBookClient
             }
         }
 
-        VarDumper::dump($requestObject);
+        //VarDumper::dump($requestObject);
         $xml = $requestObject->asXML();
         return $xml;
     }
@@ -575,13 +575,13 @@ class HotelBookClient
         $errorDescriptions = array();
         foreach($this->requests as $request)
         {
-            echo count($request['result']->hotels).'<br>';
+            //echo count($request['result']->hotels).'<br>';
             foreach($request['result']->hotels as $hotel)
             {
                 $key = $hotel->key;
                 if(isset($hotels[$key]))
                 {
-                    echo '--duplicate';
+                    //echo '--duplicate';
                     //echo 'have:';
                     //VarDumper::dump($hotels[$key]);
                     //echo 'new:';
@@ -608,9 +608,9 @@ class HotelBookClient
             $errorStatus = 2;
         }
 
-        print_r($combinations);
+/*        //print_r($combinations);
         print_r(count($hotels));
-        print_r($errorDescriptions);
+        print_r($errorDescriptions);*/
         return array('hotels'=>$hotels,'errorsDescriptions'=>$errorDescriptions,'errorStatus'=>$errorStatus);
     }
 
@@ -656,7 +656,7 @@ class HotelBookClient
                 $hotel->addCancelCharge($cancelParams);
             }
         }
-        VarDumper::dump($hotelObject);
+        //VarDumper::dump($hotelObject);
         //echo $hotelsXml;
     }
 

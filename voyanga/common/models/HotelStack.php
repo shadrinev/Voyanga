@@ -139,7 +139,7 @@ class HotelStack
             }
         }
 
-        return $this->hotelStacks;
+        return $this;
     }
 
     /**
@@ -202,11 +202,11 @@ class HotelStack
                         $this->hotelStacks[$i]->sortBy('', $deep -1);
                     }
                 }
-                echo "sorting hotelStacks<br>";
+                //echo "sorting hotelStacks<br>";
                 uasort($this->hotelStacks,'HotelStack::compareStacksByHotelsParams');
             }
         }
-        //if($deep == 0) self::$sortParam = null;
+        return $this;
     }
 
 
