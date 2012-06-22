@@ -693,6 +693,48 @@ class HotelBookClient
 /*        //print_r($combinations);
         print_r(count($hotels));
         print_r($errorDescriptions);*/
+        if($hotels)
+        {
+            if(count($hotelSearchParams->rooms) == 1)
+            {
+                foreach($hotelSearchParams->rooms as $room) break;
+                if( ($room['adultCount'] == 2) && ($room['childCount'] == 0) && ($room['cots'] == 0))
+                {
+                    $hotelStack = new HotelStack(array('hotels'=>$hotels));
+                    $hotelStack->groupBy('categoryId')->groupBy('roomSizeId')->groupBy('roomTypeId')->groupBy('rubPrice');
+                    if(isset($hotelStack->hotelStacks[2]))
+                    {
+                        $hotelStack = $hotelStack->hotelStacks[2];
+                        $haveStack = false;
+                        foreach($hotelStack->hotelStacks as $i=>$hotelStackSize)
+                        {
+                            if(($i != 20) || ($i != 30))
+                            {
+                                unset($hotelStack->hotelStacks[$i]);
+                            }
+                            else
+                            {
+                                foreach($hotelStack->hotelStacks[$i] as $j=>$hotelStackType)
+                                {
+                                    if(($i != 10) || ($i != 12900))
+                                    {
+                                        unset($hotelStack->hotelStacks[$i]);
+                                    }
+                                    else
+                                    {
+                                        $haveStack = true;
+                                    }
+                                }
+                            }
+                        }
+                        if($haveStack)
+                        {
+                            VarDumper::dump($hotelStack->sortBy('rubPrice')->getHotel()->getJsonObject());
+                        }
+                    }
+                }
+            }
+        }
         return array('hotels'=>$hotels,'errorsDescriptions'=>$errorDescriptions,'errorStatus'=>$errorStatus);
     }
 
