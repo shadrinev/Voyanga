@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-    'GdsRequests',
+    'HotelRequests',
 );
 
 $this->menu=array(
@@ -9,7 +9,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Requests</h1>
+<h1>Hotel Requests</h1>
 
 <?php $this->widget('bootstrap.widgets.BootGridView',array(
     'id'=>'event-grid',
@@ -19,6 +19,10 @@ $this->menu=array(
         array(
             'header'=>'Ключ',
             'value'=>'$data->requestNum'
+        ),
+        array(
+            'header'=>'Группа',
+            'value'=>'$data->groupId'
         ),
         array(
             'header'=>'Метод',
@@ -77,7 +81,7 @@ Yii::app()->clientScript->registerScript('loadRequestInfo','
     id = id.substr(1);
     $(\'#popupInfo .modal-body\').html("<p>Идет запрос данных...</p>");
     $(\'#popupInfo\').modal(\'show\');
-        $.getJSON("/admin/logging/gdsRequest/getInfo/id/"+id)
+        $.getJSON("/admin/logging/hotelRequest/getInfo/id/"+id)
         .done(function(data){
             console.log(data);
             textHtml = "";

@@ -32,7 +32,7 @@ class HotelRequestController extends Controller
 
     public function actionGetInfo($id)
     {
-        $model = GdsRequest::model()->findByPk(new MongoID($id));
+        $model = HotelRequest::model()->findByPk(new MongoID($id));
         $retArr = array();
         $widget = new CTextHighlighter();
         $widget->language = 'xml';
