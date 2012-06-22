@@ -8,10 +8,27 @@
  */
 class HotelSearchParams
 {
+    /**
+     * @var string Date in format Y-m-d
+     */
     public $checkIn;
+    /**
+     * @var string Duration in days
+     */
     public $duration;
+    /**
+     * @var City City object for search
+     */
     public $city;
+    /**
+     * @var Array Array of rooms in format array('adultCount'=>$adultCount,'cots'=>$cots,'childAge'=>$childAge,'childCount'=> $childAge === false ? 0 : 1,'roomCount'=>1);
+     * integer adultCount Amount of adults in one room
+     * integer cots Amount cots for infants in one room (need to validate : 0 .. 2)
+     * integer childAge Age of a child in room (need to validate : 0 .. 21)
+     * integer childCount  Amount of children in one room. possible values 0 or 1
+     */
     public $rooms;
+
 
 
     public function addRoom($adultCount, $cots = 0, $childAge = false)
