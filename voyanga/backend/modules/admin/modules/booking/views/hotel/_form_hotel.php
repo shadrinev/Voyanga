@@ -42,7 +42,7 @@
 
     <?php echo $form->textFieldRow($model, 'duration'); ?>
 
-    <?php $this->widget('common.widgets.rooms.Rooms', array('model' => $model, 'attribute'=>'links', 'form'=>$form)); ?>
+    <?php $this->widget('common.widgets.rooms.Rooms', array('model' => $model, 'attribute'=>'rooms', 'form'=>$form)); ?>
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.BootButton', array(

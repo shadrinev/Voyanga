@@ -10,7 +10,7 @@ class HotelForm extends CFormModel
     public $cityId;
     public $fromDate;
     public $duration;
-    public $rooms;
+    public $rooms=array();
 
     public function rules()
     {

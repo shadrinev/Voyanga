@@ -24,6 +24,6 @@ class Rooms extends CWidget
 
     public function run()
     {
-        $this->render('template', array('links'=>$this->model->{$this->attribute}, 'form'=>$this->form));
+        $this->render('template', array('rooms'=>$this->model->{$this->attribute}, 'form'=>$this->form));
     }
 }

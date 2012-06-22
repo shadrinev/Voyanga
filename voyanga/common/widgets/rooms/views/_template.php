@@ -1,4 +1,4 @@
-<div class="form-horizontal" id="link<?php echo $i; ?>">
+<div class="form-horizontal well" id="link<?php echo $i; ?>">
     <?php echo $form->textFieldRow($model, "[$i]adultCount", array('class'=>'span3')); ?>
     <?php echo $form->textFieldRow($model, "[$i]childCount", array('class'=>'span3')); ?>
     <?php echo $form->textFieldRow($model, "[$i]cots", array('class'=>'span3')); ?>

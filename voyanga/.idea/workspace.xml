@@ -2,21 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/rooms/assets" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/rooms/views" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/rooms" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelForm.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_form_hotel.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_hotels.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/index.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/rooms/Rooms.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/rooms/assets/attachedRooms.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/rooms/views/_template.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/rooms/views/jsTemplate.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/widgets/rooms/views/template.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelRoomForm.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/booking/BookingAdminModule.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/BookingAdminModule.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/HotelController.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/HotelController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelForm.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelForm.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_form_hotel.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_form_hotel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/widgets/rooms/Rooms.php" afterPath="$PROJECT_DIR$/common/widgets/rooms/Rooms.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/widgets/rooms/assets/attachedRooms.js" afterPath="$PROJECT_DIR$/common/widgets/rooms/assets/attachedRooms.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/widgets/rooms/views/_template.php" afterPath="$PROJECT_DIR$/common/widgets/rooms/views/_template.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/widgets/rooms/views/jsTemplate.php" afterPath="$PROJECT_DIR$/common/widgets/rooms/views/jsTemplate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/widgets/rooms/views/template.php" afterPath="$PROJECT_DIR$/common/widgets/rooms/views/template.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -43,28 +37,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="HotelController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/HotelController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="24" selection-start="669" selection-end="669" vertical-scroll-proportion="-17.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Rooms.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Rooms.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/widgets/rooms/Rooms.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="25" selection-start="554" selection-end="554" vertical-scroll-proportion="0.65489566">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="attachedRooms.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/widgets/rooms/assets/attachedRooms.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="42" selection-start="515" selection-end="515" vertical-scroll-proportion="0.0">
+            <state line="26" column="46" selection-start="607" selection-end="607" vertical-scroll-proportion="-17.0">
               <folding />
             </state>
           </provider>
@@ -73,7 +49,43 @@
       <file leaf-file-name="_template.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/widgets/rooms/views/_template.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="34" selection-start="694" selection-end="694" vertical-scroll-proportion="-7.8461537">
+            <state line="14" column="6" selection-start="719" selection-end="719" vertical-scroll-proportion="-9.153846">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attachedRooms.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common/widgets/rooms/assets/attachedRooms.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="12" selection-start="724" selection-end="724" vertical-scroll-proportion="0.49768874">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jsTemplate.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/widgets/rooms/views/jsTemplate.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="82" selection-start="137" selection-end="137" vertical-scroll-proportion="-0.65384614">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HotelRoomForm.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelRoomForm.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="42" selection-start="665" selection-end="665" vertical-scroll-proportion="-17.653847">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HotelForm.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelForm.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="25" selection-start="243" selection-end="243" vertical-scroll-proportion="-7.8461537">
               <folding />
             </state>
           </provider>
@@ -82,7 +94,7 @@
       <file leaf-file-name="template.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/widgets/rooms/views/template.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="19" selection-start="129" selection-end="129" vertical-scroll-proportion="-1.9615384">
+            <state line="12" column="28" selection-start="546" selection-end="546" vertical-scroll-proportion="-7.8461537">
               <folding />
             </state>
           </provider>
@@ -91,16 +103,7 @@
       <file leaf-file-name="AttachedLinks.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/AttachedLinks.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="19" selection-start="123" selection-end="136" vertical-scroll-proportion="-4.576923">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_form.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="126" column="136" selection-start="4615" selection-end="4747" vertical-scroll-proportion="-8.153846">
+            <state line="26" column="78" selection-start="640" selection-end="647" vertical-scroll-proportion="-17.0">
               <folding />
             </state>
           </provider>
@@ -115,19 +118,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="168" selection-start="554" selection-end="554" vertical-scroll-proportion="-10.461538">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="_form_hotel.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_form_hotel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="47" selection-start="1358" selection-end="1358" vertical-scroll-proportion="-4.576923">
+            <state line="44" column="98" selection-start="1409" selection-end="1409" vertical-scroll-proportion="-4.576923">
               <folding />
             </state>
           </provider>
@@ -143,22 +137,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/common/components/flightBooker/FlightBookerWorkflow.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php" />
-        <option value="$PROJECT_DIR$/common/config/main.php" />
-        <option value="$PROJECT_DIR$/frontend/controllers/SiteController.php" />
         <option value="$PROJECT_DIR$/common/models/HotelStack.php" />
         <option value="$PROJECT_DIR$/common/modules/hotel/models/HotelBookClient.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/index.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelForm.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/BookingAdminModule.php" />
         <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/HotelController.php" />
         <option value="$PROJECT_DIR$/common/widgets/rooms/AttachedLinks.php" />
         <option value="$PROJECT_DIR$/common/widgets/rooms/assets/attachedLinks.js" />
-        <option value="$PROJECT_DIR$/common/widgets/rooms/views/_template.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_form_hotel.php" />
+        <option value="$PROJECT_DIR$/common/widgets/rooms/views/jsTemplate.php" />
         <option value="$PROJECT_DIR$/common/widgets/rooms/views/template.php" />
         <option value="$PROJECT_DIR$/common/widgets/rooms/Rooms.php" />
-        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_form_hotel.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelForm.php" />
+        <option value="$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelRoomForm.php" />
+        <option value="$PROJECT_DIR$/common/widgets/rooms/views/_template.php" />
+        <option value="$PROJECT_DIR$/common/widgets/rooms/assets/attachedRooms.js" />
       </list>
     </option>
   </component>
@@ -266,6 +260,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rooms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="voyanga" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rooms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -576,9 +596,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\booking\models" />
       <recent name="C:\WebServers\home\voyanga\common\widgets" />
       <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\booking\views\hotel" />
-      <recent name="C:\WebServers\home\voyanga\backend\modules\admin\modules\booking\models" />
       <recent name="C:\WebServers\home\voyanga\common\extensions" />
       <recent name="C:\WebServers\home\voyanga\backend\models" />
     </key>
@@ -1274,7 +1294,11 @@
       <created>1340359597107</created>
       <updated>1340359597107</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="added rooms">
+      <created>1340363904109</created>
+      <updated>1340363904109</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1339,7 +1363,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix unneedable echo" />
+    <option name="LAST_COMMIT_MESSAGE" value="added rooms" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1352,7 +1376,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="start work on tour constructor" />
     <MESSAGE value="add handlebars" />
     <MESSAGE value="move handlebars to extension" />
     <MESSAGE value="move handlebars to extension and fix" />
@@ -1377,42 +1400,12 @@
     <MESSAGE value="run workflow" />
     <MESSAGE value="workflow majority done" />
     <MESSAGE value="fix unneedable echo" />
+    <MESSAGE value="added rooms" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/models/HotelStack.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="283" column="5" selection-start="7499" selection-end="7499" vertical-scroll-proportion="-28.26923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="5" selection-start="238" selection-end="238" vertical-scroll-proportion="-7.8461537">
-          <folding>
-            <element signature="n#actionSearch#0;n#FlightController#0;n#!!top" expanded="false" />
-            <element signature="n#stageEnterCredentials#0;n#FlightController#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="6" selection-start="123" selection-end="123" vertical-scroll-proportion="0.1408284">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/BookingAdminModule.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="17" selection-start="455" selection-end="455" vertical-scroll-proportion="0.34201184">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/models/FlightForm.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1427,51 +1420,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/AttachedLinks.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="19" selection-start="123" selection-end="136" vertical-scroll-proportion="-4.576923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="126" column="136" selection-start="4615" selection-end="4747" vertical-scroll-proportion="-8.153846">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/widgets/rooms/views/template.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="19" selection-start="129" selection-end="129" vertical-scroll-proportion="-1.9615384">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/HotelController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="24" selection-start="669" selection-end="669" vertical-scroll-proportion="-17.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/widgets/rooms/assets/attachedRooms.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="42" selection-start="515" selection-end="515" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/widgets/rooms/views/_template.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="34" selection-start="694" selection-end="694" vertical-scroll-proportion="-7.8461537">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_form_hotel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="47" selection-start="1358" selection-end="1358" vertical-scroll-proportion="-4.576923">
           <folding />
         </state>
       </provider>
@@ -1490,9 +1441,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/events/views/event/_form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="114" selection-start="4720" selection-end="4725" vertical-scroll-proportion="0.34754097">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/attachedLinks/AttachedLinks.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="78" selection-start="640" selection-end="647" vertical-scroll-proportion="-17.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/views/hotel/_form_hotel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="98" selection-start="1409" selection-end="1409" vertical-scroll-proportion="-4.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/models/HotelRoom.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="20" selection-start="1495" selection-end="1495" vertical-scroll-proportion="0.48154092">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/common/widgets/rooms/Rooms.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="25" selection-start="554" selection-end="554" vertical-scroll-proportion="0.65489566">
+        <state line="26" column="46" selection-start="607" selection-end="607" vertical-scroll-proportion="-17.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/rooms/views/jsTemplate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="82" selection-start="137" selection-end="137" vertical-scroll-proportion="-0.65384614">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelRoomForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="42" selection-start="665" selection-end="665" vertical-scroll-proportion="-17.653847">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/modules/admin/modules/booking/models/HotelForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="25" selection-start="243" selection-end="243" vertical-scroll-proportion="-7.8461537">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/rooms/views/template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="28" selection-start="546" selection-end="546" vertical-scroll-proportion="-7.8461537">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/rooms/views/_template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="6" selection-start="719" selection-end="719" vertical-scroll-proportion="-9.153846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/widgets/rooms/assets/attachedRooms.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="12" selection-start="724" selection-end="724" vertical-scroll-proportion="0.49768874">
           <folding />
         </state>
       </provider>
