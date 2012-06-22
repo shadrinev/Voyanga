@@ -7,15 +7,16 @@
  */
 class HotelRoomForm extends CFormModel
 {
-    public $adultCount;
-    public $childCount;
-    public $cots;
-    public $childAge;
+    public $adultCount=2;
+    public $childCount=0;
+    public $cots=0;
+    public $childAge=0;
 
     public function rules()
     {
         return array(
             array('adultCount, childCount, cots, childAge', 'numerical', 'integerOnly'=>true),
+            array('adultCount', 'required'),
         );
     }
 

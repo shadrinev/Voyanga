@@ -10,6 +10,11 @@ class HotelController extends ABaseAdminController
     public function actionIndex()
     {
         $hotelForm = new HotelForm;
+        if(isset($_POST['ajax']) && $_POST['ajax']==='hotel-form')
+        {
+            echo CActiveForm::validate($hotelForm);
+            Yii::app()->end();
+        }
         $this->render('index', array(
             'items'=>$this->generateItems(),
             'hotelForm'=>$hotelForm,

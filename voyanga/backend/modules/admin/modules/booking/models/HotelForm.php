@@ -15,6 +15,7 @@ class HotelForm extends CFormModel
     public function rules()
     {
         return array(
+            array('cityId, duration, fromDate', 'required'),
             array('cityId, duration', 'numerical', 'integerOnly'=>true),
             array('fromDate, rooms', 'safe')
         );
