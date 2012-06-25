@@ -608,7 +608,7 @@ class SiteController extends Controller
         $hotelSearchParams->duration = '7';
         $hotelSearchParams->city = $city;
         $hotelSearchParams->addRoom(2);
-        $hotelSearchParams->addRoom(2);
+       // $hotelSearchParams->addRoom(2);
         //$hotelSearchParams->addRoom(2,1);
         //$hotelSearchParams->addRoom(1);
         //$hotelSearchParams->addRoom(3);

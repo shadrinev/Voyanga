@@ -708,17 +708,17 @@ class HotelBookClient
                         $haveStack = false;
                         foreach($hotelStack->hotelStacks as $i=>$hotelStackSize)
                         {
-                            if(($i != 20) || ($i != 30))
+                            if(($i != 20) && ($i != 30))
                             {
                                 unset($hotelStack->hotelStacks[$i]);
                             }
                             else
                             {
-                                foreach($hotelStack->hotelStacks[$i] as $j=>$hotelStackType)
+                                foreach($hotelStack->hotelStacks[$i]->hotelStacks as $j=>$hotelStackType)
                                 {
-                                    if(($i != 10) || ($i != 12900))
+                                    if(($j != 10) && ($j != 12900))
                                     {
-                                        unset($hotelStack->hotelStacks[$i]);
+                                        unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]);
                                     }
                                     else
                                     {
