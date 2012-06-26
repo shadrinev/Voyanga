@@ -598,6 +598,8 @@ class SiteController extends Controller
     {
         Yii::import('site.common.modules.hotel.models.*');
 
+        //echo "mow - led ".UtilsHelper::calculateTheDistance(55.7522,37.6156,59.8944,30.2642).' meters';die();
+
         $HotelClient = new HotelBookClient();
         //$HotelClient->synchronize();
         //$russia = Country::getCountryByCode('US');

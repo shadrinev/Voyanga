@@ -19,6 +19,9 @@ class Hotel extends CApplicationComponent
     public $comparePrice;
     public $specialOffer;
     public $providerId;
+    public $centerDistance  = PHP_INT_MAX;
+    public $latitude;
+    public $longitude;
     public $providerHotelCode;
     public $cancelCharges;
     public $cancelExpiration;
@@ -123,6 +126,9 @@ class Hotel extends CApplicationComponent
             case "roomMealId":
                 $sVal = intval($this->getRoomsAttributeForSort('mealId'));
                 break;
+            case "centerDistance":
+                $sVal = intval($this->centerDistance);
+                break;
         }
         return $sVal;
     }
@@ -169,6 +175,9 @@ class Hotel extends CApplicationComponent
             'resultId'=>$this->resultId,
             'category'=>$this->categoryName,
             'price' => $this->price,
+            'centerDistance' => $this->centerDistance,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
             'currency' => $this->currency,
             'rubPrice' => $this->rubPrice,
             'bestMask' => $this->bestMask,

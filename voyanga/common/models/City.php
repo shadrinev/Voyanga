@@ -24,6 +24,7 @@ class City extends CActiveRecord
 {
     private static $cities = array();
     private static $codeIdMap = array();
+    private static $idHotelbookIdMap = array();
 
     /**
      * Returns the static model of the specified AR class.
@@ -150,7 +151,14 @@ class City extends CActiveRecord
             if ( $city )
             {
                 City::$cities[$city->id] = $city;
-                City::$codeIdMap[$city->code] = $city->id;
+                if($city->code)
+                {
+                    City::$codeIdMap[$city->code] = $city->id;
+                }
+                if($city->hotelbookId)
+                {
+                    City::$idHotelbookIdMap[$city->hotelbookId] = $city->id;
+                }
                 return City::$cities[$id];
             }
             else
@@ -175,12 +183,47 @@ class City extends CActiveRecord
             {
                 City::$cities[$city->id] = $city;
                 City::$codeIdMap[$city->code] = $city->id;
+                if($city->hotelbookId)
+                {
+                    City::$idHotelbookIdMap[$city->hotelbookId] = $city->id;
+                }
                 return City::$cities[City::$codeIdMap[$code]];
             }
             else
             {
                 throw new CException( Yii::t( 'application', 'City with code {code} not found', array(
                     '{code}' => $code ) ) );
+            }
+        }
+    }
+
+    public static function getCityByHotelbookId( $hotelbookId )
+    {
+        if ( isset( City::$idHotelbookIdMap[$hotelbookId] ) )
+        {
+            return City::$cities[City::$idHotelbookIdMap[$hotelbookId]];
+        }
+        else
+        {
+            $city = City::model()->findByAttributes( array(
+                'hotelbookId' => $hotelbookId ) );
+            if ( $city )
+            {
+                City::$cities[$city->id] = $city;
+                if($city->code)
+                {
+                    City::$codeIdMap[$city->code] = $city->id;
+                }
+                if($city->hotelbookId)
+                {
+                    City::$idHotelbookIdMap[$city->hotelbookId] = $city->id;
+                }
+                return City::$cities[City::$idHotelbookIdMap[$hotelbookId]];
+            }
+            else
+            {
+                throw new CException( Yii::t( 'application', 'City with hoteldookId {code} not found', array(
+                    '{code}' => $hotelbookId ) ) );
             }
         }
     }

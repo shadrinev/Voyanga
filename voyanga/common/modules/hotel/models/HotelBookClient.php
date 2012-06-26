@@ -8,6 +8,9 @@ class HotelBookClient
     public static $roomSizeRoomTypesMap = array(1=>array(1),2=>array(2,3),3=>array(5),4=>array(6));
     public static $roomSizeIdNamesMap = array(1=>'SGL',2=>'DBL',3=>'TWN',4=>'TWNSU',5=>'TRLP',6=>'QUAD',7=>'DBLSU');
     public static $lastRequestMethod;
+    /** @var City lastRequestCity */
+    public static $lastRequestCity;
+    public static $lastRequestCityHaveCoordinates;
     public static $lastRequestDescription;
     public static $groupId;
     public $requests;
@@ -349,6 +352,17 @@ class HotelBookClient
         }
 
         $hotel = new Hotel($hotelParams);
+        if(self::$lastRequestCityHaveCoordinates)
+        {
+            if(($hotel->latitude !== null) && ($hotel->longitude !== null))
+            {
+                $hotel->centerDistance = intval(UtilsHelper::calculateTheDistance(self::$lastRequestCity->latitude,self::$lastRequestCity->longitude,$hotel->latitude,$hotel->longitude));
+                if($hotel->centerDistance > 100000)
+                {
+                    $hotel->centerDistance = PHP_INT_MAX;
+                }
+            }
+        }
         unset($hotelParams);
         unset($hotelAttrMap);
         unset($roomAttrMap);
@@ -477,6 +491,8 @@ class HotelBookClient
         $getData = array('login'=>Yii::app()->params['HotelBook']['login'],'time'=>$time,'checksum'=>$this->getChecksum($time));
         self::$lastRequestMethod = 'HotelSearch';
         self::$lastRequestDescription = '';
+        self::$lastRequestCity = City::getCityByHotelbookId($params['cityId']);
+        self::$lastRequestCityHaveCoordinates = (self::$lastRequestCity->latitude !== null) && (self::$lastRequestCity->longitude !== null);
         foreach($params['rooms'] as $room)
         {
             self::$lastRequestDescription .= (self::$lastRequestDescription ? ' & ' : '').self::$roomSizeIdNamesMap[$room['roomSizeId']].($room['cots'] ? $room['cots'].'COTS' : '' ).($room['child'] ? 'CHLD'.$room['ChildAge'].'AGE' : '' ).(isset($room['roomNumber']) ? ($room['roomNumber'] > 1 ? 'x'.$room['roomNumber'] : '' ) : '' );
@@ -700,38 +716,60 @@ class HotelBookClient
                 foreach($hotelSearchParams->rooms as $room) break;
                 if( ($room['adultCount'] == 2) && ($room['childCount'] == 0) && ($room['cots'] == 0))
                 {
-                    $hotelStack = new HotelStack(array('hotels'=>$hotels));
-                    $hotelStack->groupBy('categoryId')->groupBy('roomSizeId')->groupBy('roomTypeId')->groupBy('rubPrice');
-                    if(isset($hotelStack->hotelStacks[2]))
+                    $allHotelStack = new HotelStack(array('hotels'=>$hotels));
+                    $allHotelStack->groupBy('categoryId')->groupBy('roomSizeId')->groupBy('roomTypeId')->groupBy('centerDistance')->groupBy('rubPrice');
+                    //VarDumper::dump($hotelStack->hotelStacks);
+                    foreach($allHotelStack as $categoryId=>$hotelStack)
                     {
-                        $hotelStack = $hotelStack->hotelStacks[2];
-                        $haveStack = false;
-                        foreach($hotelStack->hotelStacks as $i=>$hotelStackSize)
+                        if(($categoryId == 2) || ($categoryId == 1) || ($categoryId == 3) )
                         {
-                            if(($i != 20) && ($i != 30))
+
+                            $haveStack = false;
+                            foreach($hotelStack->hotelStacks as $i=>$hotelStackSize)
                             {
-                                unset($hotelStack->hotelStacks[$i]);
-                            }
-                            else
-                            {
-                                foreach($hotelStack->hotelStacks[$i]->hotelStacks as $j=>$hotelStackType)
+                                if(($i != 20) && ($i != 30))
                                 {
-                                    if(($j != 10) && ($j != 12900))
+                                    unset($hotelStack->hotelStacks[$i]);
+                                }
+                                else
+                                {
+                                    //echo "in 2";
+                                    foreach($hotelStack->hotelStacks[$i]->hotelStacks as $j=>$hotelStackType)
                                     {
-                                        unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]);
-                                    }
-                                    else
-                                    {
-                                        $haveStack = true;
+                                        if(($j != 10) && ($j != 12900))
+                                        {
+                                            unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]);
+                                        }
+                                        else
+                                        {
+                                            //echo "in 3";
+                                            foreach($hotelStack->hotelStacks[$i]->hotelStacks[$j]->hotelStacks as $k=>$hotelStackDistance)
+                                            {
+                                                if(($k > 5000))
+                                                {
+                                                    //echo "out $k";
+                                                    unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]->hotelStacks[$k]);
+                                                }
+                                                else
+                                                {
+                                                    //echo "in 4";
+                                                    $haveStack = true;
+                                                }
+                                            }
+
+                                        }
                                     }
                                 }
                             }
-                        }
-                        if($haveStack)
-                        {
-                            VarDumper::dump($hotelStack->sortBy('rubPrice')->getHotel()->getJsonObject());
+                            if($haveStack)
+                            {
+                                VarDumper::dump($hotelStack->sortBy('rubPrice')->getHotel()->getJsonObject());
+                            }else{
+                                VarDumper::dump($hotelStack->getJsonObject(5));
+                            }
                         }
                     }
+
                 }
             }
         }
@@ -785,6 +823,11 @@ class HotelBookClient
         }
         //VarDumper::dump($hotelObject);
         //echo $hotelsXml;
+    }
+
+    public function hotelSearchFullDetails()
+    {
+
     }
 
     public function synchronize()

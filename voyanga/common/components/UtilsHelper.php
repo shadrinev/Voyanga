@@ -635,4 +635,41 @@ class UtilsHelper
     }
 
 
+
+    /*
+    * Расстояние между двумя точками
+    * $latitude1, $longitude1 - широта, долгота 1-й точки,
+    * $latitude2, $longitude2 - широта, долгота 2-й точки
+    * Написано по мотивам http://gis-lab.info/qa/great-circles.html
+    * Михаил Кобзарев <kobzarev@inforos.ru>
+    *
+    */
+    public static function calculateTheDistance($latitude1, $longitude1, $latitude2, $longitude2)
+    {
+
+        // перевести координаты в радианы
+        $lat1 = $latitude1 * M_PI / 180;
+        $lat2 = $latitude2 * M_PI / 180;
+        $long1 = $longitude1 * M_PI / 180;
+        $long2 = $longitude2 * M_PI / 180;
+
+        // косинусы и синусы широт и разницы долгот
+        $cl1 = cos($lat1);
+        $cl2 = cos($lat2);
+        $sl1 = sin($lat1);
+        $sl2 = sin($lat2);
+        $delta = $long2 - $long1;
+        $cdelta = cos($delta);
+        $sdelta = sin($delta);
+
+        // вычисления длины большого круга
+        $y = sqrt(pow($cl2 * $sdelta, 2) + pow($cl1 * $sl2 - $sl1 * $cl2 * $cdelta, 2));
+        $x = $sl1 * $sl2 + $cl1 * $cl2 * $cdelta;
+
+        //
+        $ad = atan2($y, $x);
+        $dist = $ad * 6372795; //6372795 - Earth radius
+
+        return $dist;
+    }
 }
