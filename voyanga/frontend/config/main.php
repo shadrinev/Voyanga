@@ -55,6 +55,9 @@ return CMap::mergeArray(
             ),
             'gds' => array(
                 'class' => 'site.common.modules.gds.GdsModule',
+            ),
+            'tour' => array(
+
             )
         ),
 
