@@ -25,7 +25,8 @@ return CMap::mergeArray(
         'language' => 'ru',
         'theme' => 'classic',
         'preload' => array(
-            'log'
+            'log',
+            'bootstrap'
         ),
 
         // autoloading model and component classes
@@ -38,7 +39,8 @@ return CMap::mergeArray(
             'application.models.*',
             'application.helpers.*',
             'site.common.components.shoppingCart.*',
-            'site.common.extensions.order.*'
+            'site.common.extensions.order.*',
+            'site.backend.extensions.bootstrap.widgets.*'
         ),
 
         'modules' => array(
@@ -56,13 +58,19 @@ return CMap::mergeArray(
             'gds' => array(
                 'class' => 'site.common.modules.gds.GdsModule',
             ),
-            'tour' => array(
+            'booking' => array(
 
             )
         ),
 
         // application components
         'components' => array(
+            'bootstrap' => array(
+                'class' => 'site.backend.extensions.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
+                'responsiveCss' => true,
+                'debug' => true
+            ),
+
             'user' => array(
                 // enable cookie-based authentication
                 'allowAutoLogin' => true

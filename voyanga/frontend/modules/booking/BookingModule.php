@@ -4,9 +4,9 @@
  * @author Charles Pick
  * @package packages.users.admin
  */
-class BookingModule extends CModule
+class BookingModule extends CWebModule
 {
-    public $defaulController = 'hotel';
+    public $defaultController = 'hotel';
 
     public function init()
     {

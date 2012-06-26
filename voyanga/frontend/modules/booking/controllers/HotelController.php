@@ -5,7 +5,7 @@
  * Date: 20.06.12
  * Time: 13:00
  */
-class HotelController extends ABaseAdminController
+class HotelController extends Controller
 {
     public function actionIndex()
     {
