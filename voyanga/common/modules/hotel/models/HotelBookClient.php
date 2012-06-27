@@ -734,20 +734,25 @@ class HotelBookClient
         {
             if (count($hotelSearchParams->rooms) == 1)
             {
+                // O_o
                 foreach ($hotelSearchParams->rooms as $room) break;
                 if (($room['adultCount'] == 2) && ($room['childCount'] == 0) && ($room['cots'] == 0))
                 {
                     $allHotelStack = new HotelStack(array('hotels' => $hotels));
                     $allHotelStack->groupBy('categoryId')->groupBy('roomSizeId')->groupBy('roomTypeId')->groupBy('centerDistance')->groupBy('rubPrice');
                     //VarDumper::dump($hotelStack->hotelStacks);
-                    foreach ($allHotelStack as $categoryId => $hotelStack)
+                    foreach ($allHotelStack->hotelStacks as $categoryId => $hotelStack)
                     {
                         //categoryId - star rating (we need 3..5 stars)
                         if (($categoryId == Hotel::STARS_THREE) || ($categoryId == Hotel::STARS_FOUR) || ($categoryId == Hotel::STARS_FIVE))
                         {
+                            echo "category: $categoryId<br>";
+                            VarDumper::dump($hotelStack); die();
                             $haveStack = false;
                             foreach ($hotelStack->hotelStacks as $i => $hotelStackSize)
                             {
+                                //VarDumper::dump($i);
+                                echo "roomSizeId: $i<br>";
                                 //todo: move to room class
                                 if (!in_array($i, array(appParams('HotelBook.room.DBL')), appParams('HotelBook.room.TWIN')))
                                 {
@@ -758,6 +763,7 @@ class HotelBookClient
                                     //echo "in 2";
                                     foreach ($hotelStack->hotelStacks[$i]->hotelStacks as $j => $hotelStackType)
                                     {
+                                        echo "roomTypeId: $j<br>";
                                         if (!in_array($j, appParams('HotelBook.room.STD')))
                                         {
                                             unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]);
