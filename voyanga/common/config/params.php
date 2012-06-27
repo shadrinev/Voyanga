@@ -39,6 +39,12 @@ return CMap::mergeArray(array(
         'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
         'login' => 'test',
         'password' => 'test',
+        'room' => array(
+            'DBL' => 10,
+            'TWIN' => 20,
+            'STD' => array(10, 12900),
+        ),
+        'distanceFromCityCenter' => 5000
     ),
 
     'cache.core'=>extension_loaded('apc') ?

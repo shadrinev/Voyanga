@@ -1,4 +1,5 @@
 <?php
+//todo: move to widgets
 class EFlightVoageStackWidget extends CWidget
 {
 	public $FlightVoyageStrategy;

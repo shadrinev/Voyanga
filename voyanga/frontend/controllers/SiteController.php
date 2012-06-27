@@ -717,7 +717,10 @@ class SiteController extends Controller
             //$criteria->limit = 1;
             VarDumper::dump(GeoNames::model()->findAll($criteria));
         }
+    }
 
-
+    public function actionTestParams()
+    {
+        print_r(appParams('HotelBook.room.DBL'));
     }
 }

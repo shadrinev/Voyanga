@@ -742,13 +742,14 @@ class HotelBookClient
                     //VarDumper::dump($hotelStack->hotelStacks);
                     foreach ($allHotelStack as $categoryId => $hotelStack)
                     {
-                        if (($categoryId == 2) || ($categoryId == 1) || ($categoryId == 3))
+                        //categoryId - star rating (we need 3..5 stars)
+                        if (($categoryId == Hotel::STARS_THREE) || ($categoryId == Hotel::STARS_FOUR) || ($categoryId == Hotel::STARS_FIVE))
                         {
-
                             $haveStack = false;
                             foreach ($hotelStack->hotelStacks as $i => $hotelStackSize)
                             {
-                                if (($i != 20) && ($i != 30))
+                                //todo: move to room class
+                                if (!in_array($i, array(appParams('HotelBook.room.DBL')), appParams('HotelBook.room.TWIN')))
                                 {
                                     unset($hotelStack->hotelStacks[$i]);
                                 }
@@ -757,7 +758,7 @@ class HotelBookClient
                                     //echo "in 2";
                                     foreach ($hotelStack->hotelStacks[$i]->hotelStacks as $j => $hotelStackType)
                                     {
-                                        if (($j != 10) && ($j != 12900))
+                                        if (!in_array($j, appParams('HotelBook.room.STD')))
                                         {
                                             unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]);
                                         }
@@ -766,7 +767,7 @@ class HotelBookClient
                                             //echo "in 3";
                                             foreach ($hotelStack->hotelStacks[$i]->hotelStacks[$j]->hotelStacks as $k => $hotelStackDistance)
                                             {
-                                                if (($k > 5000))
+                                                if (($k > appParams('HotelBook.distanceFromCityCenter')))
                                                 {
                                                     //echo "out $k";
                                                     unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]->hotelStacks[$k]);
@@ -777,7 +778,6 @@ class HotelBookClient
                                                     $haveStack = true;
                                                 }
                                             }
-
                                         }
                                     }
                                 }

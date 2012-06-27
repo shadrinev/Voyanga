@@ -2,39 +2,96 @@
 
 class Hotel extends CApplicationComponent
 {
-    public static $categories = array(1=>'5*',2=>'3*',3=>'4*',4=>'2*',5=>'1*',6=>'-');
+    const STARS_ONE = 1;
+    const STARS_TWO = 2;
+    const STARS_THREE = 3;
+    const STARS_FOUR = 4;
+    const STARS_FIVE = 5;
+    const STARS_UNDEFINDED = 0;
+
+    public static $categoryIdHotelbook = array(1=>'5*',2=>'3*',3=>'4*',4=>'2*',5=>'1*',6=>'-');
+    public static $categoryIdMapHotelbook = array(6=>0,5=>1,4=>2,2=>3,3=>4,1=>5);
+
+    /** @var string hotelBook search identifier */
     public $searchId;
+
+    /** @var int unique hotel id */
     public $hotelId;
+
+    /** @var string hotel name */
     public $hotelName;
+
+    /** @var string one hotel search result among whole search request */
     public $resultId;
+
+    /** @var int one of STARS_* - star rating of hotel */
     public $categoryId;
+
+    /** @var string date of hotel check in (should be 'Y-m-d') */
     public $checkIn;
+
+    /** @var int count of nights inside hotel */
     public $duration;
+
+    /** @var string human readable star rating */
     public $categoryName;
+
+    /** @var string hotel address */
     public $address;
+
+    /** @var string type of confirmation. We use only online confirmation now. */
     public $confirmation;
+
+    /** @var float whole cost in local currency */
     public $price;
+
+    /** @var string local hotel currency */
     public $currency;
+
+    /** @var float cost of whole booking into RUR */
     public $rubPrice;
+
+    /** @var float cost of whole booking into RUR */
     public $comparePrice;
+
+    /** @var int is it special offer */
     public $specialOffer;
+
+    /** @var string internal provider of that hotel */
     public $providerId;
+
+    /** @var int default distance from city center */
     public $centerDistance  = PHP_INT_MAX;
+
+    /** @var float hotel latitude */
     public $latitude;
+
+    /** @var float hotel longtitude */
     public $longitude;
+
+    /** @var string internal hotel code unique for each hotel provider */
     public $providerHotelCode;
+
+    //todo: convert it to class
+    /** @var array charges that we get cancelling hotel*/
     public $cancelCharges;
+
+    /** @var int timestamp when first charge applied */
     public $cancelExpiration;
+
+    /** @var int bitmask for hotel (1st bit for the best price) */
     public $bestMask = 0;
 
-
+    /** @var HotelRoom[] */
     public $rooms;
 
     public function __construct($params)
     {
         $attrs = get_object_vars($this);
-        foreach($attrs as $attrName=>$attrVal){
-            if($attrName !== 'rooms')
+        $exclude = array('rooms', 'categoryId');
+        foreach($attrs as $attrName=>$attrVal)
+        {
+            if(!in_array($attrName, $exclude))
             {
                 if(isset($params[$attrName])){
                     $this->{$attrName} = $params[$attrName];
@@ -47,6 +104,10 @@ class Hotel extends CApplicationComponent
             {
                 $this->rooms[] = new HotelRoom($roomParams);
             }
+        }
+        if(isset($params['categoryId']))
+        {
+            $this->categoryId = isset(self::$categoryIdMapHotelbook[intval($params['categoryId'])]) ? self::$categoryIdMapHotelbook[intval($params['categoryId'])]  : self::STARS_UNDEFINDED;
         }
     }
 
