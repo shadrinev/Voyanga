@@ -617,7 +617,9 @@ class SiteController extends Controller
         $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
         $hotelStack = new HotelStack($resultSearch);
         //echo '<br>'.count($hotelStack->_hotels);
-        echo $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+        $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2);
+
+        VarDumper::dump($HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelStack->getHotel()->hotelId));
         //VarDumper::dump($hotelStack->getJsonObject());
 
         //print_r($HotelClient->getCities($russia->hotelbookId));

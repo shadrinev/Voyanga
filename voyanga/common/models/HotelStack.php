@@ -8,17 +8,19 @@
  */
 class HotelStack
 {
-    public $_hotels;
-    /**
-     * @var HotelStack[]
-     */
-    public $hotelStacks;
     public $filterValues = array();
     public $searchId;
     public $fsKey;
     public $groupKey;
     public static $toTop;
     public static $sortParam;
+
+    /** @var Hotel[] */
+    public $_hotels;
+    /**
+     * @var HotelStack[]
+     */
+    public $hotelStacks;
 
 
     public $bestMask = 0; // bitwise mask 0b001 - Best price, 0b010 - best recommended, 0b100 best speed
@@ -76,8 +78,16 @@ class HotelStack
     public function addHotel(Hotel $hotel)
     {
         $hotelKey = $hotel->key;
-        $this->_hotels[$hotelKey] = $hotel;
-        $this->bestMask |= $hotel->bestMask;
+
+        if(isset($this->_hotels[$hotelKey]))
+        {
+            $this->_hotels[$hotelKey]->countNumbers++;
+        }
+        else
+        {
+            $this->_hotels[$hotelKey] = $hotel;
+            $this->bestMask |= $hotel->bestMask;
+        }
     }
 
     public function getHotelById($id)
@@ -121,7 +131,7 @@ class HotelStack
 
                 $sVal = $hotel->getValueOfParam($sKey);
 
-                if (!isset($aHotelsStacks[$sVal]))
+                if (!isset($this->hotelStacks[$sVal]))
                 {
                     $this->hotelStacks[$sVal] = new HotelStack();
                 }

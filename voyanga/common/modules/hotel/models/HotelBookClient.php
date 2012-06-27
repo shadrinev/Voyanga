@@ -739,22 +739,24 @@ class HotelBookClient
                 if (($room['adultCount'] == 2) && ($room['childCount'] == 0) && ($room['cots'] == 0))
                 {
                     $allHotelStack = new HotelStack(array('hotels' => $hotels));
+                    //VarDumper::dump($allHotelStack);die();
                     $allHotelStack->groupBy('categoryId')->groupBy('roomSizeId')->groupBy('roomTypeId')->groupBy('centerDistance')->groupBy('rubPrice');
+                    //VarDumper::dump($allHotelStack);die();
                     //VarDumper::dump($hotelStack->hotelStacks);
                     foreach ($allHotelStack->hotelStacks as $categoryId => $hotelStack)
                     {
                         //categoryId - star rating (we need 3..5 stars)
                         if (($categoryId == Hotel::STARS_THREE) || ($categoryId == Hotel::STARS_FOUR) || ($categoryId == Hotel::STARS_FIVE))
                         {
-                            echo "category: $categoryId<br>";
-                            VarDumper::dump($hotelStack); die();
+                            //echo "category: $categoryId<br>";
+                            //VarDumper::dump($hotelStack); die();
                             $haveStack = false;
                             foreach ($hotelStack->hotelStacks as $i => $hotelStackSize)
                             {
                                 //VarDumper::dump($i);
-                                echo "roomSizeId: $i<br>";
+                                //echo "roomSizeId: $i<br>";
                                 //todo: move to room class
-                                if (!in_array($i, array(appParams('HotelBook.room.DBL')), appParams('HotelBook.room.TWIN')))
+                                if (!in_array($i, array(appParams('HotelBook.room.DBL'), appParams('HotelBook.room.TWIN')) ) )
                                 {
                                     unset($hotelStack->hotelStacks[$i]);
                                 }
@@ -763,7 +765,7 @@ class HotelBookClient
                                     //echo "in 2";
                                     foreach ($hotelStack->hotelStacks[$i]->hotelStacks as $j => $hotelStackType)
                                     {
-                                        echo "roomTypeId: $j<br>";
+                                        //echo "roomTypeId: $j<br>";
                                         if (!in_array($j, appParams('HotelBook.room.STD')))
                                         {
                                             unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]);
@@ -773,6 +775,7 @@ class HotelBookClient
                                             //echo "in 3";
                                             foreach ($hotelStack->hotelStacks[$i]->hotelStacks[$j]->hotelStacks as $k => $hotelStackDistance)
                                             {
+                                                //echo "distance: $k";
                                                 if (($k > appParams('HotelBook.distanceFromCityCenter')))
                                                 {
                                                     //echo "out $k";
@@ -790,11 +793,13 @@ class HotelBookClient
                             }
                             if ($haveStack)
                             {
-                                VarDumper::dump($hotelStack->sortBy('rubPrice',5)->getHotel()->getJsonObject());
+                                //echo "have";
+                                //VarDumper::dump($hotelStack->sortBy('rubPrice',5)->getHotel()->getJsonObject());
                             }
                             else
                             {
-                                VarDumper::dump($hotelStack->getJsonObject(5));
+                                //echo "havent";
+                                //VarDumper::dump($hotelStack->getJsonObject(5));
                             }
                         }
                     }
@@ -858,8 +863,76 @@ class HotelBookClient
         //echo $hotelsXml;
     }
 
-    public function hotelSearchFullDetails()
+    public function hotelSearchFullDetails(HotelSearchParams $hotelSearchParams,$hotelId,$hotels = null)
     {
+        $rooms = $hotelSearchParams->rooms;
+        //Make combinations to combinations Array
+        //uasort($rooms,'HotelBookClient::compareArrayAdultCount');
+        $maxAdultCount = 0;
+        foreach($rooms as $room)
+        {
+            $count = $room['adultCount'] + $room['childCount'];
+            if($count > $maxAdultCount)
+            {
+                $maxAdultCount = $count;
+            }
+        }
+        if($maxAdultCount > 4) $maxAdultCount = 4;
+
+        self::$groupId = substr(md5(uniqid('',true)),0,10);
+        $i = 1;
+        $j = 0;
+        $end = false;
+        $reqs = array();
+        while(!$end)
+        {
+            $params = array('cityId'=>$hotelSearchParams->city->hotelbookId,'checkIn'=>$hotelSearchParams->checkIn,'duration'=>$hotelSearchParams->duration, 'hotelId'=>$hotelId);
+            $params['rooms'] = array();
+            $params['rooms'][] = array('roomSizeId'=>self::$roomSizeRoomTypesMap[$i][$j], 'child'=>0, 'cots'=>0, 'roomNumber'=>1);
+            $reqs[] = self::hotelSearch($params, true);
+            if(count(self::$roomSizeRoomTypesMap[$i]) > ($j+1))
+            {
+                $j++;
+            }
+            elseif($i < $maxAdultCount)
+            {
+                $i++;
+                $j = 0;
+            }
+            else
+            {
+                $end = true;
+            }
+        }
+
+        //run all requests
+        $this->processAsyncRequests();
+
+        //$hotelStacks = array();
+        $hotels = array();
+
+        foreach($reqs as $requestId)
+        {
+            $hotelStack = new HotelStack();
+
+            if($this->requests[$requestId]['result']->hotels)
+            {
+                //print_r($this->requests[$requestId]['result']);die();
+                foreach($this->requests[$requestId]['result']->hotels as $hotel)
+                {
+                    $hotelStack->addHotel($hotel);
+                }
+                foreach($hotelStack->_hotels as $key=>$hotel)
+                {
+                    if(!isset($hotels[$key]))
+                    {
+                        $hotels[$key] = $hotel;
+                    }
+                }
+            }
+            //$hotelStacks[] = $hotelStack;
+        }
+        return $hotels;
 
     }
 

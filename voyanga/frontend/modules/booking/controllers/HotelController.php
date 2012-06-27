@@ -46,6 +46,21 @@ class HotelController extends Controller
                 }
                 $HotelClient = new HotelBookClient();
                 $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
+                $cacheId = substr(md5(uniqid('', true)), 0, 10);
+                //
+                Yii::app()->cache->set('hotelResult'.$cacheId, $resultSearch,appParams('hotel_search_cache_time'));
+                Yii::app()->cache->set('hotelSearchParams'.$cacheId, $hotelSearchParams,appParams('hotel_search_cache_time'));
+                Yii::app()->cache->set('hotelForm'.$cacheId, $hotelForm,appParams('hotel_search_cache_time'));
+                //echo $cacheId.'||||'.appParams('hotel_search_cache_time');
+                //VarDumper::dump(Yii::app()->cache);
+                //VarDumper::dump(Yii::app()->cache->set('testCache',123, 1800));
+                //VarDumper::dump(Yii::app()->cache->get('testCache'));
+                //VarDumper::dump(Yii::app()->cache->get('hotelResult'.$cacheId));
+                //VarDumper::dump(Yii::app()->cache->get('hotelSearchParams'.$cacheId));
+                //
+                //VarDumper::dump(Yii::app()->cache->get('hotelForm'.$cacheId));
+                //die();
+                $this->redirect('/booking/hotel/result/cacheId/'.$cacheId);
                 $hotelStack = new HotelStack($resultSearch);
                 $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
                 $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm));
@@ -61,6 +76,34 @@ class HotelController extends Controller
                 'duration'=>1
             ));
         }
+    }
+
+    public function actionResult($cacheId)
+    {
+        Yii::import('site.common.modules.hotel.models.*');
+        $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
+        $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);
+        $hotelForm = Yii::app()->cache->get('hotelForm'.$cacheId);
+        //VarDumper::dump($hotelForm);die();
+
+        $hotelStack = new HotelStack($resultSearch);
+        $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+        $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm,'cacheId'=>$cacheId));
+    }
+
+    public function actionInfo($cacheId,$hotelId)
+    {
+        Yii::import('site.common.modules.hotel.models.*');
+        $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);
+        $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
+        $hotelStack = new HotelStack($resultSearch);
+        $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+        $resultsRecommended = $hotelStack->hotelStacks[$hotelId]->getAsJson();
+        $HotelClient = new HotelBookClient();
+        $hotels = $HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelId);
+        $hotelStackFull = new HotelStack(array('hotels'=>$hotels));
+        $resultsAll = $hotelStackFull->getAsJson();
+        $this->render('resultInfo', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'resultsRecommended'=>$resultsRecommended, 'resultsAll'=>$resultsAll,'cacheId'=>$cacheId));
     }
 
     public function actionSearch()

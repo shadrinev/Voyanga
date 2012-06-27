@@ -51,6 +51,8 @@ class Hotel extends CApplicationComponent
     /** @var float cost of whole booking into RUR */
     public $rubPrice;
 
+    public $countNumbers = 1;
+
     /** @var float cost of whole booking into RUR */
     public $comparePrice;
 
@@ -234,6 +236,7 @@ class Hotel extends CApplicationComponent
             'hotelName' => $this->hotelName,
             'searchId'=>$this->searchId,
             'resultId'=>$this->resultId,
+            'countNumbers'=>$this->countNumbers,
             'category'=>$this->categoryName,
             'price' => $this->price,
             'centerDistance' => $this->centerDistance,

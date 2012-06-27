@@ -35,6 +35,7 @@ return CMap::mergeArray(array(
         'agencyId' => '120',
         'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD'
     ),
+    'hotel_search_cache_time' => 3600 * 5,
     'HotelBook' => array(
         'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
         'login' => 'test',
@@ -44,7 +45,8 @@ return CMap::mergeArray(array(
             'TWIN' => 20,
             'STD' => array(10, 12900),
         ),
-        'distanceFromCityCenter' => 5000
+        'distanceFromCityCenter' => 5000,
+
     ),
 
     'cache.core'=>extension_loaded('apc') ?
