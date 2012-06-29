@@ -99,7 +99,7 @@ class SyncCacheExecuter extends Component
         $queryHotel = "
             LOAD DATA INFILE '".$this->fullHotelPath."'
             REPLACE
-            INTO TABLE `".FlightCache::model()->tableName()."`
+            INTO TABLE `".HotelCache::model()->tableName()."`
             FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'";
         Yii::app()->db->createCommand($queryHotel)->execute();
 
@@ -110,7 +110,7 @@ class SyncCacheExecuter extends Component
 
         /*$query = "ALTER TABLE `".FlightCache::model()->tableName()."` ENABLE KEYS";
         Yii::app()->db->createCommand($query)->execute();*/
-        echo "Executing queries end\n";
+        echo "Executing queries end\n\n";
         echo "Before flights: $beforeFlights\n";
         echo "After flights: $afterFlights \n";
         echo "Inserted flights: ".($afterFlights-$beforeFlights)."\n\n";
@@ -123,7 +123,8 @@ class SyncCacheExecuter extends Component
         //echo "Speed: ".($counter/$stat[1])."\n";
         CVarDumper::dump($stat);
         echo "\n";
-        unlink($this->fullPath);
+        unlink($this->fullFlightPath);
+        echo $this->fullHotelPath;
         //echo "Total queries: ".$counter."\n";
     }
 
@@ -201,7 +202,8 @@ class SyncCacheExecuter extends Component
                     if (!is_array($attr))
                         continue;
                     $result[$hash]['time'] = $item->createdAt;
-                    $hotelCache = new FlightCache;
+                    $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
+                    $hotelCache = new HotelCache;
                     $hotelCache->setAttributes($attr, false);
                     $part = $hotelCache->buildRow();
                     $counter++;

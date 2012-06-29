@@ -28,7 +28,6 @@ class SyncController extends Controller
             {
                 $pos = 0;
             }
-//            echo $pos;
             fseek($file, $pos);
             $content = fread($file, self::CHUNK_SIZE);
             $position = strrpos($content, '##')+2;
@@ -39,11 +38,11 @@ class SyncController extends Controller
             $descr = fopen($descriptor, "w");
             fwrite($descr, $pos);
             fclose($descr);
-            if ($pos>=$size)
+            /*if ($pos>=$size)
             {
                 unlink($files[0]);
                 unlink($descriptor);
-            }
+            }*/
             Yii::app()->end();
         }
     }

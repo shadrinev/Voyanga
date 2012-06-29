@@ -33,16 +33,6 @@ class CommonHotelCache extends CActiveRecord
         return 'hotel_cache';
     }
 
-    public function behaviors(){
-        return array(
-            'CTimestampBehavior' => array(
-                'class' => 'zii.behaviors.CTimestampBehavior',
-                'createAttribute' => 'createdAt',
-                'updateAttribute' => 'updatedAt',
-            )
-        );
-    }
-
     /**
      * @return array validation rules for model attributes.
      */
@@ -119,6 +109,7 @@ class CommonHotelCache extends CActiveRecord
     public function buildRow()
     {
         $attributes = $this->attributes;
+        CVarDumper::dump($attributes);
         $row = implode(',', $attributes)."\n";
         return $row;
     }
@@ -128,12 +119,11 @@ class CommonHotelCache extends CActiveRecord
      */
     public function populateFromJsonObject($hotelBook)
     {
-        VarDumper::dump($hotelBook);
         $this->cityId = $hotelBook['cityId'];
         $this->dateFrom = $hotelBook['dateFrom'];
         $this->dateTo = $hotelBook['dateTo'];
         $this->stars = $hotelBook['categoryId'];
-        $this->price = $hotelBook['price'];
+        $this->price = $hotelBook['rubPrice'];
         $this->hotelId = $hotelBook['hotelId'];
         $this->hotelName = $hotelBook['hotelName'];
     }

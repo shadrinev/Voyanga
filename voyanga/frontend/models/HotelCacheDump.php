@@ -11,11 +11,8 @@ class HotelCacheDump extends Component
     public $dateFrom;
     public $dateTo;
     public $stars;
-    public $price;
-    public $hotelId;
-    public $hotelName;
     public $createdAt;
-    public $updatedAt;
+    public $attributes;
 
     /**
      * @param $value HotelCache

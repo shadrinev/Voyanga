@@ -17,6 +17,10 @@ class CacheCommand extends CConsoleCommand
     {
         $query = "DELETE FROM ".FlightCache::model()->tableName()." WHERE `dateFrom` < STR_TO_DATE('".date("d.m.Y", time())."', '%d.%m.%Y');";
         $deleted = Yii::app()->db->createCommand($query)->execute();
-        echo "Deleted rows: ".$deleted."\n";
+        echo "Deleted flight rows: ".$deleted."\n";
+
+        $query = "DELETE FROM ".HotelCache::model()->tableName()." WHERE `dateFrom` < STR_TO_DATE('".date("d.m.Y", time())."', '%d.%m.%Y');";
+        $deleted = Yii::app()->db->createCommand($query)->execute();
+        echo "Deleted hotel rows: ".$deleted."\n";
     }
 }
