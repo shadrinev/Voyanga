@@ -9,6 +9,15 @@ class FlightController extends ABaseAdminController
 {
     private $flightBooker;
 
+    public function actions()
+    {
+        return array(
+            'buy' => array(
+                'class'=>
+            )
+        );
+    }
+
     public function actionIndex()
     {
         $flightForm = new FlightForm;

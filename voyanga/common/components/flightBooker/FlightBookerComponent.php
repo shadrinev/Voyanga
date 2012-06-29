@@ -39,8 +39,10 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function book()
     {
+        //if we don't have a flight OR we moved to another flight
         if ($this->getCurrent()==null || ($this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId()))
         {
+            //if we don't have a flight AND we moved to another flight
             if (($this->getCurrent()!=null) and $this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId())
             {
                 $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->flightVoyage->getId()));
