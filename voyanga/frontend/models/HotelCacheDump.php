@@ -26,9 +26,7 @@ class HotelCacheDump extends Component
         $this->dateFrom = $value->dateFrom;
         $this->dateTo = $value->dateTo;
         $this->stars = $value->stars;
-        $this->price = $value->price;
-        $this->hotelId = $value->hotelId;
-        $this->hotelName = $value->hotelName;
         $this->createdAt = time();
+        $this->attributes = serialize($value->attributes);
     }
 }

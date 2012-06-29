@@ -116,6 +116,13 @@ class CommonHotelCache extends CActiveRecord
         ));
     }
 
+    public function buildRow()
+    {
+        $attributes = $this->attributes;
+        $row = implode(',', $attributes)."\n";
+        return $row;
+    }
+
     /**
      * @param $hotelBook array
      */

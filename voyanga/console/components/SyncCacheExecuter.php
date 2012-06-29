@@ -15,7 +15,8 @@ class SyncCacheExecuter extends Component
 
     private $totalCache;
 
-    private $fullPath;
+    private $fullHotelPath;
+    private $fullFlightPath;
 
     public function init()
     {
@@ -25,12 +26,12 @@ class SyncCacheExecuter extends Component
     public function run()
     {
         $timeStart = time();
-        $this->syncFlightCache();
+        $this->syncCache();
         $timeEnd = time();
         echo "Takes time: ".($timeEnd-$timeStart)." s.\n";
     }
 
-    public function syncFlightCache()
+    public function syncCache()
     {
         foreach ($this->frontends as $frontend)
         {
@@ -83,24 +84,41 @@ class SyncCacheExecuter extends Component
         Yii::app()->db->createCommand($query)->execute();*/
 
         $query = "SELECT COUNT(*) FROM `".FlightCache::model()->tableName()."`";
-        $before = Yii::app()->db->createCommand($query)->queryScalar();
+        $beforeFlights = Yii::app()->db->createCommand($query)->queryScalar();
 
-        $query = "
-            LOAD DATA INFILE '".$this->fullPath."'
+        $query = "SELECT COUNT(*) FROM `".HotelCache::model()->tableName()."`";
+        $beforeHotels = Yii::app()->db->createCommand($query)->queryScalar();
+
+        $queryFlight = "
+            LOAD DATA INFILE '".$this->fullFlightPath."'
             REPLACE
             INTO TABLE `".FlightCache::model()->tableName()."`
             FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'";
-        Yii::app()->db->createCommand($query)->execute();
+        Yii::app()->db->createCommand($queryFlight)->execute();
+
+        $queryHotel = "
+            LOAD DATA INFILE '".$this->fullHotelPath."'
+            REPLACE
+            INTO TABLE `".FlightCache::model()->tableName()."`
+            FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'";
+        Yii::app()->db->createCommand($queryHotel)->execute();
 
         $query = "SELECT COUNT(*) FROM `".FlightCache::model()->tableName()."`";
-        $after = Yii::app()->db->createCommand($query)->queryScalar();
+        $afterFlights = Yii::app()->db->createCommand($query)->queryScalar();
+        $query = "SELECT COUNT(*) FROM `".HotelCache::model()->tableName()."`";
+        $afterHotels = Yii::app()->db->createCommand($query)->queryScalar();
 
         /*$query = "ALTER TABLE `".FlightCache::model()->tableName()."` ENABLE KEYS";
         Yii::app()->db->createCommand($query)->execute();*/
-        echo "Executing query end\n";
-        echo "Before: $before\n";
-        echo "End: $after \n";
-        echo "Inserted: ".($after-$before)."\n";
+        echo "Executing queries end\n";
+        echo "Before flights: $beforeFlights\n";
+        echo "After flights: $afterFlights \n";
+        echo "Inserted flights: ".($afterFlights-$beforeFlights)."\n\n";
+
+        echo "Before hotels: $beforeHotels\n";
+        echo "After hotels: $afterHotels \n";
+        echo "Inserted hotels: ".($afterHotels-$beforeHotels)."\n\n";
+
         $stat = Yii::app()->db->getStats();
         //echo "Speed: ".($counter/$stat[1])."\n";
         CVarDumper::dump($stat);
@@ -113,46 +131,86 @@ class SyncCacheExecuter extends Component
     {
         echo "Batch insert incoming items\n";
         $dir = Yii::getPathOfAlias('application.runtime');
-        $fileName = "query_".time().".batch";
-        $this->fullPath = $dir.DIRECTORY_SEPARATOR.$fileName;
+        $fileFlightName = "query_flight_".time().".batch";
+        $fileHotelName = "query_hotel_".time().".batch";
+        $this->fullFlightPath = $dir.DIRECTORY_SEPARATOR.$fileFlightName;
+        $this->fullHotelPath = $dir.DIRECTORY_SEPARATOR.$fileHotelName;
         $counter = 0;
-        $file = fopen($this->fullPath, 'w');
+        $fileFlight = fopen($this->fullFlightPath, 'w');
+        $fileHotel = fopen($this->fullHotelPath, 'w');
         foreach ($this->totalCache as $cache)
         {
             $item = @unserialize($cache);
-            if (!$item instanceof FlightCacheDump)
+            if ((!$item instanceof FlightCacheDump) and (!$item instanceof HotelCacheDump))
                 continue;
-            $hash = $item->from.'_'.$item->to.'_'.$item->dateFrom.'_'.$item->dateBack;
-            $flag = isset($result[$hash]);
-            if ($flag)
+            if ($item instanceof FlightCacheDump)
             {
-                if ($item->createdAt > $result[$hash]['time'])
+                $hash = $item->from.'_'.$item->to.'_'.$item->dateFrom.'_'.$item->dateBack;
+                $flag = isset($result[$hash]);
+                if ($flag)
+                {
+                    if ($item->createdAt > $result[$hash]['time'])
+                    {
+                        $attr = @unserialize($item->attributes);
+                        if (!is_array($attr))
+                            continue;
+                        $flightCache = new FlightCache;
+                        $result[$hash]['time'] = $item->createdAt;
+                        $flightCache->setAttributes($attr, false);
+                        $part = $flightCache->buildRow();
+                        fwrite($fileFlight, $part);
+                        unset($flightCache);
+                    }
+                }
+                else
                 {
                     $attr = @unserialize($item->attributes);
                     if (!is_array($attr))
                         continue;
-                    $flightCache = new FlightCache;
                     $result[$hash]['time'] = $item->createdAt;
+                    $flightCache = new FlightCache;
                     $flightCache->setAttributes($attr, false);
                     $part = $flightCache->buildRow();
-                    fwrite($file, $part);
+                    $counter++;
+                    fwrite($fileFlight, $part);
                     unset($flightCache);
                 }
             }
-            else
+            elseif ($item instanceof HotelCacheDump)
             {
-                $attr = @unserialize($item->attributes);
-                if (!is_array($attr))
-                    continue;
-                $result[$hash]['time'] = $item->createdAt;
-                $flightCache = new FlightCache;
-                $flightCache->setAttributes($attr, false);
-                $part = $flightCache->buildRow();
-                $counter++;
-                fwrite($file, $part);
-                unset($flightCache);
+                $hash = $item->cityId.'_'.$item->dateFrom.'_'.$item->dateTo.'_'.$item->stars;
+                $flag = isset($result[$hash]);
+                if ($flag)
+                {
+                    if ($item->createdAt > $result[$hash]['time'])
+                    {
+                        $attr = @unserialize($item->attributes);
+                        if (!is_array($attr))
+                            continue;
+                        $hotelCache = new HotelCache;
+                        $result[$hash]['time'] = $item->createdAt;
+                        $hotelCache->setAttributes($attr, false);
+                        $part = $hotelCache->buildRow();
+                        fwrite($fileHotel, $part);
+                        unset($hotelCache);
+                    }
+                }
+                else
+                {
+                    $attr = @unserialize($item->attributes);
+                    if (!is_array($attr))
+                        continue;
+                    $result[$hash]['time'] = $item->createdAt;
+                    $hotelCache = new FlightCache;
+                    $hotelCache->setAttributes($attr, false);
+                    $part = $hotelCache->buildRow();
+                    $counter++;
+                    fwrite($fileHotel, $part);
+                    unset($hotelCache);
+                }
             }
         }
-        fclose($file);
+        fclose($fileFlight);
+        fclose($fileHotel);
     }
 }
