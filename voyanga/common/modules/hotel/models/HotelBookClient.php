@@ -793,8 +793,14 @@ class HotelBookClient
                             }
                             if ($haveStack)
                             {
-                                //echo "have";
-                                //VarDumper::dump($hotelStack->sortBy('rubPrice',5)->getHotel()->getJsonObject());
+                                $jsonObject = $hotelStack->sortBy('rubPrice',5)->getHotel()->getJsonObject();
+                                $jsonObject['cityId'] = $hotelSearchParams->city->id;
+                                $jsonObject['dateFrom'] = $hotelSearchParams->checkIn;
+                                $from = DateTime::createFromFormat('Y-m-d', $hotelSearchParams->checkIn);
+                                $jsonObject['dateTo'] = $from->add(new DateInterval('P'.$hotelSearchParams->duration.'D'))->format('Y-m-d');
+                                $hotelCache = new HotelCache();
+                                $hotelCache->populateFromJsonObject($jsonObject);
+                                $hotelCache->save();
                             }
                             else
                             {

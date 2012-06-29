@@ -51,6 +51,7 @@ class Hotel extends CApplicationComponent
     /** @var float cost of whole booking into RUR */
     public $rubPrice;
 
+    /** @var int amount of apartment with same type */
     public $countNumbers = 1;
 
     /** @var float cost of whole booking into RUR */
@@ -232,7 +233,8 @@ class Hotel extends CApplicationComponent
         public $cancelCharges;
         public $cancelExpiration;
         */
-        $ret = array('hotelId' => $this->hotelId,
+        $ret = array(
+            'hotelId' => $this->hotelId,
             'hotelName' => $this->hotelName,
             'searchId'=>$this->searchId,
             'resultId'=>$this->resultId,
@@ -245,6 +247,7 @@ class Hotel extends CApplicationComponent
             'currency' => $this->currency,
             'rubPrice' => $this->rubPrice,
             'bestMask' => $this->bestMask,
+            'categoryId' => $this->categoryId,
             'rooms' => array()
         );
 
