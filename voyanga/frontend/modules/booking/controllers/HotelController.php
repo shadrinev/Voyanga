@@ -103,6 +103,7 @@ class HotelController extends Controller
         $hotels = $HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelId);
         $hotelStackFull = new HotelStack(array('hotels'=>$hotels));
         $resultsAll = $hotelStackFull->getAsJson();
+        $HotelClient->hotelDetail($hotelId);
         $this->render('resultInfo', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'resultsRecommended'=>$resultsRecommended, 'resultsAll'=>$resultsAll,'cacheId'=>$cacheId));
     }
 

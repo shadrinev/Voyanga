@@ -942,6 +942,182 @@ class HotelBookClient
 
     }
 
+    public function processHotelDetail($hotelDetailXml)
+    {
+        $hotelObject = simplexml_load_string($hotelDetailXml);
+        //VarDumper::dump($hotelsObject);
+        $hotelSXE = $hotelObject->HotelDetail;
+
+
+        /*
+         * <RoomService24h>круглосуточное обслуживание</RoomService24h>
+        <PorterageFrom>начало работы носильщиков</PorterageFrom>
+        <PorterageTo>окончание работы носильщиков</PorterageTo>
+        <Porterage24h>круглосуточная работа носильщиков</Porterage24h>
+        <IndoorPool>закрытые бассейны</IndoorPool>
+        <OutdoorPool>открытые бассейны</OutdoorPool>
+        <ChildrensPool>детские бассейны</ChildrensPool>
+        <Description>описание отеля</Description>
+        <Distances>расстояния</Distances>
+        <HotelFacility>
+            <Facility id="...">услуга</Facility> - список услуг отеля
+        </HotelFacility>
+        <RoomAmenity>
+            <Amenity id="...">удобство</Amenity> - список удобств номера
+        </RoomAmenity>
+        <HotelType>
+            <Type id="..">тип отеля</Type>
+        </HotelType>
+        <Images> - список фотографий отеля и его внутренних помещений
+            <Image>
+                <Info>описание фотографии</Info>
+                <Small width="..." height="...">url фотографии маленького размера</Small>
+                <Large width="..." height="...">url фотографии большого размера</Large>
+            </Image>
+        </Images>
+        <GTAHotelCode>код отеля</GTAHotelCode>
+        <GTACityCode>код города</GTACityCode>
+        <Updated>дата обновления</Updated>
+         */
+        $hotelAttrMap = array(
+            'address' => 'Address',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
+            'phone' => 'Phone',
+            'fax' => 'Fax',
+            'email' => 'Email',
+            'site' => 'WWW',
+            'builtIn' => 'BuiltIn',
+            'buildingType' => 'BuildingType',
+            'numberLifts' => 'NumberLifts',
+            'numberFloors' => 'NumberFloors',
+            'conference' => 'Conference',
+            'voltage' => 'Voltage',
+            'childAgeFrom' => 'ChildAgeFrom',
+            'childAgeTo' => 'ChildAgeTo',
+            'classification' => 'Classification',
+            'earliestCheckInTime' => 'EarlestCheckInTime',
+            'roomServiceFrom' => 'RoomServiceFrom',
+            'roomServiceTo' => 'RoomServiceTo',
+            'roomService24h' => 'RoomService24h',
+            'porterageFrom' => 'PorterageFrom',
+            'porterageTo' => 'PorterageTo',
+            'porterage24h' => 'Porterage24h',
+            'indoorPool' => 'IndoorPool',
+            'outdoorPool' => 'OutdoorPool',
+            'childrenPool' => 'ChildrensPool',
+            'description' => 'Description',
+            'distances' => 'Distances',
+            'gtaHotelCode' => 'GTAHotelCode',
+            'gtaCityCode' => 'GTACityCode',
+            'updated' => 'Updated'
+        );
+        $roomAttrMap = array(
+            'mealId', 'mealName', 'mealBreakfastId', 'mealBreakfastName', 'sharingBedding',
+            'sizeId' => 'roomSizeId',
+            'sizeName' => 'roomSizeName',
+            'typeId' => 'roomTypeId',
+            'typeName' => 'roomTypeName',
+            'viewId' => 'roomViewId',
+            'viewName' => 'roomViewName',
+            'cotsCount' => 'cots',
+        );
+
+
+        $hotelParams = array();
+        //$hotelParams['searchId'] = $searchId;
+        foreach ($hotelAttrMap as $paramKey => $itemKey)
+        {
+            if (isset($hotelSXE[$itemKey]))
+            {
+
+                $hotelParams[$paramKey] = (string)$hotelSXE[$itemKey];
+            }
+            elseif(isset($hotelSXE->{$itemKey}))
+            {
+                $hotelParams[$paramKey] = (string)$hotelSXE->{$itemKey};
+            }
+        }
+        if (isset($hotelSXE->Images->Image))
+        {
+            $hotelParams['images'] = array();
+            UtilsHelper::soapObjectsArray($hotelSXE->Images->Image);
+            foreach ($hotelSXE->Images->Image as $imageSXE)
+            {
+                if((int)$imageSXE->Small['width'])
+                {
+                    $hotelParams['images'][] = array('description'=>(string)$imageSXE->Info, 'smallUrl'=>(string)$imageSXE->Small, 'largeUrl'=>(string)$imageSXE->Large);
+                }
+            }
+        }
+        if (isset($hotelSXE->HotelFacility->Facility))
+        {
+            $hotelParams['facilities'] = array();
+            UtilsHelper::soapObjectsArray($hotelSXE->HotelFacility->Facility);
+            foreach ($hotelSXE->HotelFacility->Facility as $facilitySXE)
+            {
+                $hotelParams['facilities'][] = (string)$facilitySXE;
+            }
+        }
+        if (isset($hotelSXE->RoomAmenity->Amenity))
+        {
+            $hotelParams['roomAmenities'] = array();
+            UtilsHelper::soapObjectsArray($hotelSXE->HotelFacility->Facility);
+            foreach ($hotelSXE->RoomAmenity->Amenity as $amenitySXE)
+            {
+                $hotelParams['roomAmenities'][] = (string)$amenitySXE;
+            }
+        }
+        if ($hotelSXE->Cat['id'])
+        {
+            $categoryId = (int)$hotelSXE->Cat['id'];
+            $hotelParams['categoryId'] = isset(Hotel::$categoryIdMapHotelbook[$categoryId]) ? Hotel::$categoryIdMapHotelbook[$categoryId]  : Hotel::STARS_UNDEFINDED;
+        }
+        if ($hotelSXE->City['id'])
+        {
+
+            $hotelParams['city'] = City::getCityByHotelbookId((string)$hotelSXE->City['id']);
+        }
+        //VarDumper::dump($hotelSXE);
+        //VarDumper::dump($hotelParams);
+        return new HotelInfo($hotelParams);
+    }
+
+    public function hotelDetail($hotelId, $async = false)
+    {
+        $this->synchronize();
+        $time = time() + $this->differenceTimestamp;
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time), 'hotel_id' => $hotelId);
+        self::$lastRequestMethod = 'HotelDetail';
+        self::$lastRequestDescription = $hotelId;
+        if ($async)
+        {
+            $asyncParams = array('function' => array($this, 'processHotelDetail'));
+            return $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_detail', $getData, null, $asyncParams);
+
+        }
+        else
+        {
+
+
+            $hotelDetailXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_detail', $getData);
+
+            //CTextHighlighter::registerCssFile();
+
+
+            //echo $hotelsXml;
+            //die();
+            //VarDumper::xmlDump($hotelsXml);
+            //die();
+            return $this->processHotelDetail($hotelDetailXml);
+        }
+    }
+
+    public function addOrder($hotelOrderParams)
+    {
+
+    }
+
     public function synchronize()
     {
         if (!$this->isSynchronized)

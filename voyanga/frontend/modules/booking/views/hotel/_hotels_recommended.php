@@ -2,19 +2,37 @@
 <table class="table" width="100%">
     <thead>
     <tr>
-        <th>Название отеля</th>
-        <th>Категория отеля</th>
         <th>Цена</th>
+        <th>Номера</th>
         <th>Действие</th>
     </tr>
     </thead>
     <tbody>
     {{#each hotels}}
     <tr>
-        <td>{{hotelName}}</td>
-        <td>{{category}}</td>
         <td>{{rubPrice}} руб.</td>
-        <td><a href="/booking/hotel/info/cacheId/<?php echo $cacheId?>/hotelId/{{hotelId}}">выбрать</a></td>
+        <td>
+            {{#each rooms}}
+            {{size}}
+            {{/each}}
+        </td>
+        <td><a class="btn" href="/booking/hotel/info/cacheId/<?php echo $cacheId?>/hotelId/{{hotelId}}">выбрать</a></td>
+    </tr>
+    <tr>
+        <td colspan="3" style="padding-left: 25px;">
+            <table class="table" width="100%">
+                <tbody>
+                {{#each rooms}}
+                <tr>
+                    <td>{{size}}</td>
+                    <td>{{type}}</td>
+                    <td>{{view}}</td>
+                    <td>{{meal}}</td>
+                    <td>{{mealBreakfast}}</td>
+                </tbody>
+                {{/each}}
+            </table>
+        </td>
     </tr>
     {{/each}}
     </tbody>

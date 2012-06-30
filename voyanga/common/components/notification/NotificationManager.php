@@ -16,19 +16,19 @@ class NotificationManager extends CComponent
 
     public function add($time)
     {
-        foreach($this->getNotificationType->getNotifications() as $type=>$params)
+        foreach($this->getNotificationType()->getNotifications() as $type=>$params)
             Yii::app()->cron->addTask($this->getCategory(), $this->getKey(), $type, $params, $time);
     }
 
     public function edit($user, $notificationType, $notificationObject, $time)
     {
-        foreach($this->getNotificationType->getNotifications() as $type=>$params)
+        foreach($this->getNotificationType()->getNotifications() as $type=>$params)
             Yii::app()->cron->editTask($this->getCategory(), $this->getKey(), $type, $params, $time);
     }
 
     public function delete($user, $notificationType, $notificationObject)
     {
-        foreach($this->getNotificationType->getNotifications() as $type=>$params)
+        foreach($this->getNotificationType()->getNotifications() as $type=>$params)
             Yii::app()->cron->deleteTask($this->getCategory(), $this->getKey());
     }
 
