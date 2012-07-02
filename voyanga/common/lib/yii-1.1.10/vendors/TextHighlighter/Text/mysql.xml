@@ -51,7 +51,7 @@
 
   <keywords name="reserved" inherits="identifier" innerClass="reserved" 
             case="no">
-    <keyword match="action" />
+    <keyword match="actionName" />
     <keyword match="add" />
     <keyword match="aggregate" />
     <keyword match="all" />

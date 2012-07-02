@@ -7,32 +7,29 @@
  */
 class BookerController extends Controller
 {
-    public $flightBooker;
 
-    public function actionFlight()
+
+    public function actions()
     {
-        if (!$this->loadModel())
-        {
-            $orderFlightVoyage = OrderFlightVoyage::model()->findByPk(21);
-            $flightVoyage = unserialize($orderFlightVoyage->object);
-            Yii::app()->flightBooker->book($flightVoyage);
-            $this->run('Status');
-        }
-        else
-        {
-            $action = explode('/', $this->flightBooker->status);
-            $action = $action[1];
-            //$this->run($action);
-            $this->run('Status');
-        }
+        return array(
+            'buyFlight' => array(
+                'class' => 'common.components.flightBooker.actions.Engine',
+            ),
+            'stageEnterCredentials' => array(
+                'class' => 'common.components.flightBooker.actions.EnterCredentials',
+            )
+        );
     }
 
-    public function actionEnterCredentials()
+    public function behaviors()
     {
-
+        return array('flightBookerBehavior' => array(
+            'class' => 'common.components.flightBooker.FlightBookerBehavior'
+        ));
     }
 
-    public function actionStatus($status=0)
+
+    public function actionStatus($status = 0)
     {
         $this->loadModel();
         if ($this and is_string($status))
@@ -40,20 +37,20 @@ class BookerController extends Controller
             $this->flightBooker->status = $status;
             $this->flightBooker->save();
         }
-        echo 'You current status now: '.$this->flightBooker->swGetStatus();
-        echo '<br>Your booker id = '.Yii::app()->user->getState('flightBookerId');
+        echo 'You current status now: ' . $this->flightBooker->swGetStatus();
+        echo '<br>Your booker id = ' . Yii::app()->user->getState('flightBookerId');
         echo '<br><br>';
         $items = SWHelper::nextStatuslistData($this->flightBooker, false);
-        if (count($items)>0)
+        if (count($items) > 0)
         {
             echo 'Next possible statuses:';
             echo '<ul>';
         }
-        foreach ($items as $item=>$name)
+        foreach ($items as $item => $name)
         {
-            echo '<li>'.CHtml::link($name, array('booker/status','status'=>$name)).'</li>';
+            echo '<li>' . CHtml::link($name, array('booker/status', 'status' => $name)) . '</li>';
         }
-        if (count($items)>0)
+        if (count($items) > 0)
             echo '</ul>';
         if ($this->flightBooker->swIsFinalStatus())
         {
@@ -63,13 +60,5 @@ class BookerController extends Controller
         }
     }
 
-    private function loadModel()
-    {
-        if ($this->flightBooker==null)
-        {
-            $id = Yii::app()->user->getState('flightBookerId');
-            $this->flightBooker = FlightBooker::model()->findByPk($id);
-        }
-        return $this->flightBooker;
-    }
+
 }

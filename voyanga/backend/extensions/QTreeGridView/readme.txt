@@ -26,7 +26,7 @@ CQTreeGridView - расширение для стандартного CGridView,
 [code=php]
     public $CQtreeGreedView  = array (
         'modelClassName' => 'Page2', //название класса
-        'adminAction' => 'admin' //action, где выводится QTreeGridView. Сюда будет идти редирект с других действий.
+        'adminAction' => 'admin' //actionName, где выводится QTreeGridView. Сюда будет идти редирект с других действий.
     );
 [/code]
 - добавить типовые действия в контроллер:

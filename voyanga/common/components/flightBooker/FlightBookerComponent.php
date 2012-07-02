@@ -10,6 +10,13 @@ class FlightBookerComponent extends CApplicationComponent
     private $flightBooker;
     private $flightVoyage;
 
+    public function init()
+    {
+        Yii::setPathOfAlias('flightBooker', realpath(dirname(__FILE__)));
+        Yii::import('flightBooker.actions.*');
+        Yii::import('flightBooker.*');
+    }
+
     public function setFlightVoyage($value)
     {
         $this->flightVoyage = $value;
