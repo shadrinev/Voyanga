@@ -86,9 +86,16 @@ class HotelController extends Controller
         $hotelForm = Yii::app()->cache->get('hotelForm'.$cacheId);
         //VarDumper::dump($hotelForm);die();
 
-        $hotelStack = new HotelStack($resultSearch);
-        $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
-        $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm,'cacheId'=>$cacheId));
+        if($resultSearch)
+        {
+            $hotelStack = new HotelStack($resultSearch);
+            $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+            $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm,'cacheId'=>$cacheId));
+        }
+        else
+        {
+            $this->redirect('/booking/hotel/');
+        }
     }
 
     public function actionInfo($cacheId,$hotelId)
@@ -96,15 +103,22 @@ class HotelController extends Controller
         Yii::import('site.common.modules.hotel.models.*');
         $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);
         $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
-        $hotelStack = new HotelStack($resultSearch);
-        $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
-        $resultsRecommended = $hotelStack->hotelStacks[$hotelId]->getAsJson();
-        $HotelClient = new HotelBookClient();
-        $hotels = $HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelId);
-        $hotelStackFull = new HotelStack(array('hotels'=>$hotels));
-        $resultsAll = $hotelStackFull->getAsJson();
-        $HotelClient->hotelDetail($hotelId);
-        $this->render('resultInfo', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'resultsRecommended'=>$resultsRecommended, 'resultsAll'=>$resultsAll,'cacheId'=>$cacheId));
+        if($resultSearch)
+        {
+            $hotelStack = new HotelStack($resultSearch);
+            $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+            $resultsRecommended = $hotelStack->hotelStacks[$hotelId]->getAsJson();
+            $HotelClient = new HotelBookClient();
+            $hotels = $HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelId);
+            $hotelStackFull = new HotelStack(array('hotels'=>$hotels));
+            $resultsAll = $hotelStackFull->getAsJson();
+            $HotelClient->hotelDetail($hotelId);
+            $this->render('resultInfo', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'resultsRecommended'=>$resultsRecommended, 'resultsAll'=>$resultsAll,'cacheId'=>$cacheId));
+        }
+        else
+        {
+            $this->redirect('/booking/hotel/');
+        }
     }
 
     public function actionSearch()
