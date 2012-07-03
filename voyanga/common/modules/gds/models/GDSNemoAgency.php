@@ -16,7 +16,7 @@ class GDSNemoAgency extends CComponent
      */
     private static function request($methodName, $params, $cache = true, $expiration = 120)
     {
-        $methodMap = array('Search'=>'SearchFlights','BookFlight'=>'BookFlight');
+        $methodMap = array('Search'=>'SearchFlights','BookFlight'=>'BookFlight','Ticketing'=>'Ticketing');
         $wsdl = $methodMap[$methodName];
         $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'].$wsdl, array('trace' => Yii::app()->params['GDSNemo']['trace'], 'exceptions' => true,
         ));
@@ -404,6 +404,11 @@ class GDSNemoAgency extends CComponent
 
     }
 
+    /**
+     * @param FlightBookingParams $oFlightBookingParams
+     * @return FlightBookingResponse
+     * @throws CException
+     */
     public function FlightBooking(FlightBookingParams $oFlightBookingParams)
     {
         if (!($oFlightBookingParams instanceof FlightBookingParams))
@@ -413,7 +418,7 @@ class GDSNemoAgency extends CComponent
         $aParams = array(
             'Request' => array(
                 'BookFlight' => array(
-                    'FlightId' => 534733,
+                    'FlightId' => $oFlightBookingParams->flightId,
                     'BookingCodes' => array(
                         'BookingCode' => array(
                             'Code' => 'Q',
@@ -493,7 +498,24 @@ class GDSNemoAgency extends CComponent
             throw new CException(Yii::t('application', 'Data in parameter oFlightBookingParams not valid'));
         }
         VarDumper::dump($aParams);
-        print_r(self::request('BookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
+        $response = self::request('BookFlight', $aParams, $bCache = FALSE, $iExpiration = 0);
+
+        $status  = $response->BookFlight->Status;
+
+        $flightBookingResponse = new FlightBookingResponse();
+        if($status == 'booked')
+        {
+
+            $flightBookingResponse->pnr = $response->BookFlight->Code;
+            $flightBookingResponse->expiration = strtotime($response->BookFlight->Flight->PricingInfo->PassengerFare->LastTicketDateTime);
+            $flightBookingResponse->nemoBookId = $response->BookFlight->ID;
+            $flightBookingResponse->status = 1;
+        }
+        else
+        {
+            $flightBookingResponse->status = 2;
+        }
+        return $flightBookingResponse;
     }
 
     public function FlightTariffRules()
@@ -531,21 +553,46 @@ class GDSNemoAgency extends CComponent
         print_r(self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0));
     }
 
-    public function FlightTicketing()
+    public function FlightTicketing(FlightTicketingParams $flightTicketingRequest)
     {
         $aParams = array(
             'Request' => array(
                 'Ticketing' => array(
-                    'BookID' => 534733,
+                    'BookID' => $flightTicketingRequest->nemoBookId,
                     'ValCompany' => '',
                     'Commision' => array(
                         'Percent' => '2'
                     )
                 )
+            ),
+            'Source' => array(
+                'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
+                'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                'Language' => 'RU',
+                'Currency' => 'RUB'
             )
         );
 
-        print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
+        $response = self::request('Ticketing', $aParams, $bCache = FALSE, $iExpiration = 0);
+        $flightTicketingResponse = new FlightTicketingResponse();
+        $status = $response->BookFlight->Status;
+
+        if($status == 'ticket')
+        {
+            $flightTicketingResponse->status = 1;
+            UtilsHelper::soapObjectsArray($response->BookFlight->Travellers->Traveller);
+            foreach($response->BookFlight->Travellers->Traveller as $traveller)
+            {
+                $ticket = array('ticketNumber'=>$traveller->Ticket->TickectNum,'documentNumber'=>$traveller->DocumentInfo->DocNum);
+
+                $flightTicketingResponse->tickets[] = $ticket;
+            }
+        }
+        else
+        {
+            $flightTicketingResponse->status = 2;
+        }
+        return $flightTicketingResponse;
 
     }
 
