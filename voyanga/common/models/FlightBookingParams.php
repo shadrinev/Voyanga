@@ -5,6 +5,7 @@ class FlightBookingParams
     public $contactEmail;
     public $flightId;
     public $flightClass;
+    /** @var Passenger[] */
     public $passengers;
 
     public function addPassenger($oPassenger)

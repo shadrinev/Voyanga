@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
     'Ввод данных'
 );
 
-$this->beginWidget("AAdminPortlet",
+$this->beginWidget("site.backend.modules.admin.components.AAdminPortlet",
     array(
         "title" => "Ввод данных"
     ));

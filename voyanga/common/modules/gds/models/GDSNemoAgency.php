@@ -16,13 +16,16 @@ class GDSNemoAgency extends CComponent
      */
     private static function request($methodName, $params, $cache = true, $expiration = 120)
     {
-        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'], array('trace' => Yii::app()->params['GDSNemo']['trace'], 'exceptions' => true,
+        $methodMap = array('Search'=>'SearchFlights','BookFlight'=>'BookFlight');
+        $wsdl = $methodMap[$methodName];
+        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'].$wsdl, array('trace' => Yii::app()->params['GDSNemo']['trace'], 'exceptions' => true,
         ));
 
-        //VarDumper::dump($client->__getFunctions());
+        //VarDumper::dump($client->__getFunctions());die();
         //VarDumper::dump($client->__getTypes());
         //$params = array('Search'=>$params);
         //$soapRequest = $client->async->$methodName($params);
+        //VarDumper::dump($client->getMethods());
         $key = $methodName . md5(serialize($params));
         $mongoKey = substr(md5($methodName . uniqid('',true)),0,10);
         if ($cache)
@@ -419,6 +422,9 @@ class GDSNemoAgency extends CComponent
                     ),
                     'Agency' => array(
                         'Name' => 'Easy',
+                        'Telephone' => array(
+                            'PhoneNumber' => '78125559944'
+                        ),
                         'Address' => array(
                             'City' => 'Saint-Petersburg'
                         )
@@ -448,13 +454,13 @@ class GDSNemoAgency extends CComponent
                             )
                         )
                     )
-                ),
-                'Source' => array(
-                    'ClientId' => 102,
-                    'APIKey' => '7F48365D42B73307C99C12A578E92B36',
-                    'Language' => 'UA',
-                    'Currency' => 'RUB'
                 )
+            ),
+            'Source' => array(
+                'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
+                'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                'Language' => 'RU',
+                'Currency' => 'RUB'
             )
         );
         if ($oFlightBookingParams->checkValid())
@@ -464,26 +470,30 @@ class GDSNemoAgency extends CComponent
             foreach ($oFlightBookingParams->passengers as $passenger)
             {
                 $oTraveller = array();
-                $oTraveller['Type'] = Yii::app()->params['aPassegerTypes'][$passenger->iType];
+                $oTraveller['Type'] = Yii::app()->params['aPassegerTypes'][$passenger->type];
                 $oTraveller['Num'] = $iNum;
                 $oTraveller['PersonalInfo'] = array();
-                $oTraveller['PersonalInfo']['DateOfBirth'] = UtilsHelper::dateToPointDate($passenger->oPassport->birthday);
-                $oTraveller['PersonalInfo']['Nationality'] = Country::model()->findByPk($passenger->oPassport->country_id)->code;
-                $oTraveller['PersonalInfo']['Gender'] = $passenger->oPassport->gender_id == 1 ? 'M' : 'F';
-                $oTraveller['PersonalInfo']['FirstName'] = $passenger->oPassport->first_name;
-                $oTraveller['PersonalInfo']['LastName'] = $passenger->oPassport->last_name;
+                $oTraveller['PersonalInfo']['DateOfBirth'] = UtilsHelper::dateToPointDate($passenger->passport->birthday);
+                $oTraveller['PersonalInfo']['Nationality'] = Country::getCountryByPk($passenger->passport->countryId)->code;
+                $oTraveller['PersonalInfo']['Gender'] = $passenger->passport->genderId == 1 ? 'M' : 'F';
+                $oTraveller['PersonalInfo']['FirstName'] = $passenger->passport->firstName;
+                $oTraveller['PersonalInfo']['LastName'] = $passenger->passport->lastName;
                 $oTraveller['DocumentInfo'] = array();
-                $oTraveller['DocumentInfo']['DocType'] = $passenger->oPassport->document_type_id;
-                $oTraveller['DocumentInfo']['DocNum'] = $passenger->oPassport->number;
-                $oTraveller['DocumentInfo']['CountryCode'] = Country::model()->findByPk($passenger->oPassport->country_id)->code;
-                $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->oPassport->expiration);
+                $oTraveller['DocumentInfo']['DocType'] = $passenger->passport->documentTypeId;
+                $oTraveller['DocumentInfo']['DocNum'] = $passenger->passport->number;
+                $oTraveller['DocumentInfo']['CountryCode'] = Country::getCountryByPk($passenger->passport->countryId)->code;
+                $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->passport->expiration);
+                $aTraveler[] = $oTraveller;
             }
+            $aParams['Request']['BookFlight']['Travellers']['Traveller'] = $aTraveler;
+            $aParams['Request']['BookFlight']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($aParams['Request']['BookFlight']['Travellers']['Traveller'] );
         }
         else
         {
             throw new CException(Yii::t('application', 'Data in parameter oFlightBookingParams not valid'));
         }
-        print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
+        VarDumper::dump($aParams);
+        print_r(self::request('BookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
     }
 
     public function FlightTariffRules()

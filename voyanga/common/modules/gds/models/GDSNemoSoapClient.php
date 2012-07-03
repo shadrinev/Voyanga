@@ -12,6 +12,7 @@ class GDSNemoSoapClient extends SoapClient
     public function __doRequest($request, $location, $action, $version, $oneWay = 0)
     {
         //echo $action;
+        echo '???';
 
         if ( strpos($action,'Search11') !== FALSE )
         {
@@ -56,12 +57,23 @@ class GDSNemoSoapClient extends SoapClient
             //echo VarDumper::xmlDump($sXML);
             //die();
         }
+        elseif( strpos($action,'bookFlight') !== FALSE)
+        {
+            $this->gdsRequest->requestXml = UtilsHelper::formatXML($request);
+
+            $this->gdsRequest->save();
+            echo '???';
+            VarDumper::dump($request);
+            return "";
+        }
         else
         {
 
             //die();
             $this->gdsRequest->requestXml = UtilsHelper::formatXML($request);
             $this->gdsRequest->save();
+            //VarDumper::dump($request);
+            //die();
             $startTime = microtime(true);
             $sXML = $this->makeSoapRequest($request, $location, $action, $version);
             $endTime = microtime(true);

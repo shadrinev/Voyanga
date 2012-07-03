@@ -18,6 +18,7 @@
  * @property string $series
  * @property integer $documentTypeId
  * @property integer $countryId
+ * @property integer $genderId
  */
 
 //todo: alter birthday to date
@@ -53,7 +54,7 @@ class Passport extends CActiveRecord
         return array(
             // name, email, subject and body are required
             array(
-                'first_name, last_name, number, birthday, document_type_id, gender_id',
+                'firstName, lastName, number, birthday, documentTypeId, genderId',
                 'required'));
     }
 

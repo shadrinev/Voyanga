@@ -7,13 +7,14 @@
  * @property integer $id
  * @property integer $status
  * @property string $pnr
+ * @property Booking $booking
+ * @property integer $bookingId
  * @property string $timeout
  * @property string $flight_voyage
  */
 class FlightBooker extends SWActiveRecord
 {
     private $_flightVoyage;
-    public $bookingId;
     private $statusChanged = false;
 
     /**
@@ -85,7 +86,7 @@ class FlightBooker extends SWActiveRecord
         // will receive user inputs.
         return array(
             array('pnr', 'length', 'max'=>255),
-            array('timeout, flight_voyage', 'safe'),
+            array('timeout, flight_voyage, bookingId', 'safe'),
             array('status', 'SWValidator'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -101,6 +102,7 @@ class FlightBooker extends SWActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'booking'=>array(self::BELONGS_TO, 'Booking', 'bookingId')
         );
     }
 

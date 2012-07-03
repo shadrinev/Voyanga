@@ -7,7 +7,9 @@
  */
 class FlightBookerComponent extends CApplicationComponent
 {
+    /** @var FlightBooker */
     private $flightBooker;
+    /** @var FlightVoyage */
     private $flightVoyage;
 
     public function init()
@@ -75,6 +77,26 @@ class FlightBookerComponent extends CApplicationComponent
     public function stageBooking()
     {
         //getting pnr and other stuff
+
+        //$this->flightBooker->booking->bookingPassports;
+        $flightBookingParams = new FlightBookingParams();
+
+        //VarDumper::dump($this->flightBooker->booking);die();
+        $flightBookingParams->contactEmail = $this->flightBooker->booking->email;
+        $flightBookingParams->phoneNumber = $this->flightBooker->booking->phone;
+        $flightBookingParams->flightId = $this->flightVoyage->flightKey;
+
+        foreach($this->flightBooker->booking->bookingPassports as $passport)
+        {
+            $passenger = new Passenger();
+            $passenger->type = Passenger::TYPE_ADULT;
+            $passenger->passport = $passport;
+            $flightBookingParams->addPassenger($passenger);
+        }
+        //$flightBookingParams->addPassenger();
+        //echo 123;//die();
+        Yii::app()->gdsAdapter->FlightBooking($flightBookingParams);
+        //die();
         $this->status('waitingForPayment');
     }
 

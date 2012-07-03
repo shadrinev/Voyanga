@@ -62,10 +62,10 @@ class EnterCredentials extends StageAction
             }
             else
             {
-                $this->getController()->render('enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
+                $this->getController()->render('flightBooker.views.enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
             }
         }
         else
-            $this->getController()->render('enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
+            $this->getController()->render('flightBooker.views.enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
     }
 }

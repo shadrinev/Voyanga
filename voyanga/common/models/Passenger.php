@@ -6,6 +6,7 @@ class Passenger
     const TYPE_INFANT = 3;
 
     public $type;
+    /** @var Passport */
     public $passport;
 
     public function checkValid()

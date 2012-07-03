@@ -49,6 +49,9 @@ return array(
                 'onBeforeFlightBooking'=>array(
                 ),
                 'onAfterFlightBooking'=>array(
+                ),
+                'onBeforeBookingTimeLimitError'=>array(
+
                 )
             )
         ),
