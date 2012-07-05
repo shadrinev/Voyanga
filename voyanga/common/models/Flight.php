@@ -1,6 +1,6 @@
 <?php
 /**
- * Flight class
+ * Flight class. Flight with transits.
  * Class with one element of marchroute
  * @author oleg
  *
