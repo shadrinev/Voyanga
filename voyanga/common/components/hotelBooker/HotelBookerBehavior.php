@@ -6,7 +6,7 @@
  * Time: 18:37
  * To change this template use File | Settings | File Templates.
  */
-class FlightBookerBehavior extends CBehavior
+class HotelBookerBehavior extends CBehavior
 {
     private $flightBooker;
 

@@ -1,21 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "flight_booker".
+ * This is the model class for table "hotel_booking".
  *
- * The followings are the available columns in table 'flight_booker':
+ * The followings are the available columns in table 'hotel_booking':
  * @property integer $id
- * @property integer $status
- * @property string $pnr
- * @property Booking $booking
- * @property integer $bookingId
- * @property integer $nemoBookId
- * @property string $timeout
- * @property string $flight_voyage
+ * @property string $status
+ * @property string $expiration
+ * @property string $hotelInfo
+ * @property string $updated
+ * @property integer $orderBookingId
+ * @property string $orderId
+ * @property string $timestamp
+ *
+ * The followings are the available model relations:
+ * @property Booking $orderBooking
+ * @property HotelBookingPassport[] $hotelBookingPassports
  */
-class FlightBooker extends SWActiveRecord
+class hotelBooker extends SWActiveRecord
 {
-    private $_flightVoyage;
+    private $_Hotel;
     private $statusChanged = false;
 
     /**
@@ -47,9 +51,9 @@ class FlightBooker extends SWActiveRecord
         if (!$this->statusChanged)
             return parent::afterSave();
         $method = 'stage'.$this->swGetStatus()->getId();
-        if (method_exists(Yii::app()->flightBooker, $method))
+        if (method_exists(Yii::app()->hotelBooker, $method))
         {
-            Yii::app()->flightBooker->$method();
+            Yii::app()->hotelBooker->$method();
         }
         else
             Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
@@ -64,8 +68,8 @@ class FlightBooker extends SWActiveRecord
             ),
             'CTimestampBehavior' => array(
                 'class' => 'zii.behaviors.CTimestampBehavior',
-                'createAttribute' => 'created_at',
-                'updateAttribute' => 'updated_at',
+                'createAttribute' => 'timestamp',
+                'updateAttribute' => 'updated',
             )
         );
     }
@@ -75,7 +79,7 @@ class FlightBooker extends SWActiveRecord
      */
     public function tableName()
     {
-        return 'flight_booker';
+        return 'hotel_booking';
     }
 
     /**
@@ -86,14 +90,17 @@ class FlightBooker extends SWActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('pnr', 'length', 'max'=>255),
-            array('timeout, flight_voyage, bookingId, nemoBookId', 'safe'),
+            array('id', 'required'),
+            array('id, orderBookingId', 'numerical', 'integerOnly'=>true),
+            array('orderId', 'length', 'max'=>45),
             array('status', 'SWValidator'),
+            array('expiration, hotelInfo, updated, timestamp', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, status, pnr, timeout, flight_voyage', 'safe', 'on'=>'search'),
+            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp', 'safe', 'on'=>'search'),
         );
     }
+
 
     /**
      * @return array relational rules.
@@ -103,7 +110,8 @@ class FlightBooker extends SWActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'booking'=>array(self::BELONGS_TO, 'Booking', 'bookingId')
+            'orderBooking' => array(self::BELONGS_TO, 'OrderBooking', 'orderBookingId'),
+            'hotelBookingPassports' => array(self::HAS_MANY, 'HotelBookingPassport', 'hotelBookingId'),
         );
     }
 
@@ -115,9 +123,12 @@ class FlightBooker extends SWActiveRecord
         return array(
             'id' => 'ID',
             'status' => 'Status',
-            'pnr' => 'Pnr',
-            'timeout' => 'Timeout',
-            'flight_voyage' => 'Flight Voyage',
+            'expiration' => 'Expiration',
+            'hotelInfo' => 'Hotel Info',
+            'updated' => 'Updated',
+            'orderBookingId' => 'Order Booking',
+            'orderId' => 'Order',
+            'timestamp' => 'Timestamp',
         );
     }
 
@@ -133,19 +144,22 @@ class FlightBooker extends SWActiveRecord
         $criteria=new CDbCriteria;
 
         $criteria->compare('id',$this->id);
-        $criteria->compare('status',$this->status);
-        $criteria->compare('pnr',$this->pnr,true);
-        $criteria->compare('timeout',$this->timeout,true);
-        $criteria->compare('flight_voyage',$this->flight_voyage,true);
+        $criteria->compare('status',$this->status,true);
+        $criteria->compare('expiration',$this->expiration,true);
+        $criteria->compare('hotelInfo',$this->hotelInfo,true);
+        $criteria->compare('updated',$this->updated,true);
+        $criteria->compare('orderBookingId',$this->orderBookingId);
+        $criteria->compare('orderId',$this->orderId,true);
+        $criteria->compare('timestamp',$this->timestamp,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
     }
 
-    public function getFlightVoyage()
+    public function getHotel()
     {
-        if ($this->_flightVoyage==null)
+        if ($this->_Hotel==null)
         {
             if ($this->isNewRecord)
             {
@@ -153,17 +167,17 @@ class FlightBooker extends SWActiveRecord
             }
             else
             {
-                $element = unserialize($this->flight_voyage);
-                $this->_flightVoyage = $element;
+                $element = unserialize($this->hotel);
+                $this->_Hotel = $element;
             }
         }
-        return $this->_flightVoyage;
+        return $this->_Hotel;
     }
 
-    public function setFlightVoyage($value)
+    public function setHotel($value)
     {
         $element = serialize($value);
-        $this->_flightVoyage = $value;
-        $this->flight_voyage = $element;
+        $this->_Hotel = $value;
+        $this->hotel = $element;
     }
 }
