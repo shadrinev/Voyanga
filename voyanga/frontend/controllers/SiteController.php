@@ -725,4 +725,13 @@ class SiteController extends Controller
     {
         print_r(appParams('HotelBook.room.DBL'));
     }
+
+    public function actionCron()
+    {
+        $cron = Yii::app()->cron;
+        $jobId = $cron->add('06.07.2012 11:55', 'cache', 'clean');
+        VarDumper::dump($jobId);
+        VarDumper::dump($cron->add('yesterday 11:55', 'cache', 'clean'));
+        VarDumper::dump($cron->delete($jobId));
+    }
 }

@@ -23,6 +23,10 @@ return array(
 
     'components'=>array(
 
+        'cron'=>array(
+            'class'=>'site.common.components.cron.CronComponent'
+        ),
+
         'session'=>array(
             'class'=>'site.common.extensions.EMongoDbHttpSession.EMongoDbHttpSession',
             'dbName' => 'voyanga',
@@ -148,6 +152,12 @@ return array(
                     'logFile' => 'notification',
                     'levels' => 'notification',
                     'categories' => 'application'
+                ),
+                array(
+                    'class' => 'CFileLogRoute',
+                    'logFile' => 'cron.at.log',
+                    'levels' => 'at',
+                    'categories' => 'cron'
                 ),
         ))
     ),
