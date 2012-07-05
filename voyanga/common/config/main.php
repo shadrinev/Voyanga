@@ -19,6 +19,7 @@ return array(
         'site.common.components.order.*',
         'site.common.components.flightBooker.*',
         'site.common.extensions.simpleWorkflow.*',
+        'site.common.models.apiParams.*',
     ),
 
     'components'=>array(
