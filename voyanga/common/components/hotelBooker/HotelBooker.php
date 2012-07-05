@@ -178,6 +178,6 @@ class HotelBooker extends SWActiveRecord
     {
         $element = serialize($value);
         $this->_hotel = $value;
-        $this->hotel = $element;
+        $this->hotelInfo = $element;
     }
 }

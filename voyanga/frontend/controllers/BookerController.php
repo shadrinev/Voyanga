@@ -28,7 +28,6 @@ class BookerController extends Controller
         ));
     }
 
-
     public function actionStatus($status = 0)
     {
         $this->loadModel();
@@ -59,6 +58,4 @@ class BookerController extends Controller
             echo CHtml::link('Start again', array('booker/flight'));
         }
     }
-
-
 }

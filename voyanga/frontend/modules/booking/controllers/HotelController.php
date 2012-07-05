@@ -5,8 +5,10 @@
  * Date: 20.06.12
  * Time: 13:00
  */
-class HotelController extends Controller
+class HotelController extends FrontendController
 {
+    public $tab = 'hotel';
+
     public function actionIndex()
     {
         Yii::import('site.common.modules.hotel.models.*');
