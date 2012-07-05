@@ -571,7 +571,6 @@ class HotelBookClient
         {
             $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesMap[$room['adultCount']]);
             $rooms[$key]['sizeIndex'] = 0;
-
         }
         $allCombined = false;
         // Make ALL possible combinations
@@ -1113,9 +1112,88 @@ class HotelBookClient
         }
     }
 
-    public function addOrder($hotelOrderParams)
+    public function addOrder(HotelOrderParams $hotelOrderParams)
     {
+        $this->synchronize();
+        $time = time() + $this->differenceTimestamp;
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time));
+        self::$lastRequestMethod = 'HotelOrder';
 
+        $xml = '<?xml version="1.0" encoding="utf-8"?>
+<AddOrderRequest>
+  <ContactInfo>
+    <Name>'.$hotelOrderParams->contactName.'</Name>
+    <Email>'.$hotelOrderParams->contactEmail.'</Email>
+    <Phone>'.$hotelOrderParams->contactPhone.'</Phone>
+    <Comment>'.$hotelOrderParams->contactComment.'</Comment>
+  </ContactInfo>
+  <Items>
+    <HotelItem>
+      <Search resultId="'.$hotelOrderParams->hotel->resultId.'" searchId="'.$hotelOrderParams->hotel->searchId.'" />
+      <Rooms>
+      </Rooms>
+    </HotelItem>
+  </Items>
+</AddOrderRequest>';
+
+        $requestObject = simplexml_load_string($xml);
+
+        if (isset($hotelOrderParams->roomers))
+        {
+
+            $lastRoomId = null;
+
+            foreach ($hotelOrderParams->roomers as $roomer)
+            {
+                if($lastRoomId !== $roomer->roomId)
+                {
+                    $roomItem = $requestObject->Items->HotelItem->Rooms->addChild('Room');
+                }
+
+                $roomPax = $roomItem->addChild('RoomPax');
+                if($roomer->age)
+                {
+                    $roomPax->addAttribute('child', 'true');
+                    $roomPax->addAttribute('age', $roomer->age);
+                    $roomPax->addChild('Title','Chld');
+                }
+                else
+                {
+                    $roomPax->addAttribute('child', 'false');
+                    $roomPax->addChild('Title',($roomer->genderId == Passport::GENDER_M ? 'Mr' : 'Ms'));
+                }
+                $roomPax->addChild('FirstName',$roomer->firstName);
+                $roomPax->addChild('LastName',$roomer->lastName);
+                $roomPax->addChild('FullName',$roomer->fullName);
+
+            }
+
+        }
+        $xml = $requestObject->asXML();
+
+        self::$lastRequestDescription = '';
+
+        foreach ($hotelOrderParams->hotel->rooms as $room)
+        {
+            self::$lastRequestDescription .= (self::$lastRequestDescription ? ' & ' : '') . self::$roomSizeIdNamesMap[$room['roomSizeId']] . ($room['cots'] ? $room['cots'] . 'COTS' : '') . ($room['child'] ? 'CHLD' . $room['ChildAge'] . 'AGE' : '') . (isset($room['roomNumber']) ? ($room['roomNumber'] > 1 ? 'x' . $room['roomNumber'] : '') : '');
+        }
+
+        $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_order', $getData, array('request' => $xml));
+        $responseObject = simplexml_load_string($response);
+        $hotelOrderResponse = new HotelOrderResponse();
+        if(isset($responseObject->OrderId))
+        {
+            $hotelOrderResponse->orderId = (string)$responseObject->OrderId;
+        }
+        if($hotelOrderResponse->orderId)
+        {
+            $hotelOrderResponse->error = 0;
+        }
+        else
+        {
+            $hotelOrderResponse->error = 1;
+        }
+        return $hotelOrderResponse;
     }
 
     public function synchronize()
