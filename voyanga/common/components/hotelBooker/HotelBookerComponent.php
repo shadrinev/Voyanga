@@ -5,33 +5,33 @@
  * Date: 19.06.12
  * Time: 10:42
  */
-class FlightBookerComponent extends CApplicationComponent
+class HotelBookerComponent extends CApplicationComponent
 {
-    /** @var FlightBooker */
-    private $flightBooker;
-    /** @var FlightVoyage */
-    private $flightVoyage;
+    /** @var HotelBooker */
+    private $hotelBooker;
+    /** @var Hotel */
+    private $hotel;
 
     public function init()
     {
-        Yii::setPathOfAlias('flightBooker', realpath(dirname(__FILE__)));
-        Yii::import('flightBooker.actions.*');
-        Yii::import('flightBooker.*');
+        Yii::setPathOfAlias('hotelBooker', realpath(dirname(__FILE__)));
+        Yii::import('hotelBooker.actions.*');
+        Yii::import('hotelBooker.*');
     }
 
-    public function setFlightVoyage($value)
+    public function setHotel($value)
     {
-        $this->flightVoyage = $value;
+        $this->hotel = $value;
     }
 
     private function loadModel()
     {
-        if ($this->flightBooker==null)
+        if ($this->hotelBooker==null)
         {
             $id = Yii::app()->user->getState('flightVoyageId');
-            $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$id));
+            $this->hotelBooker = HotelBooker::model()->findByAttributes(array('flightVoyageId'=>$id));
         }
-        return $this->flightBooker;
+        return $this->hotelBooker;
     }
 
     public function getCurrent()
@@ -41,37 +41,37 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function getStatus()
     {
-        if ($this->flightBooker!=null)
-            return $this->flightBooker->status;
+        if ($this->hotelBooker!=null)
+            return $this->hotelBooker->status;
         return 'search';
     }
 
     public function book()
     {
         //if we don't have a flight OR we moved to another flight
-        if ($this->getCurrent()==null || ($this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId()))
+        if ($this->getCurrent()==null || ($this->getCurrent()->flightVoyage->id != $this->hotel->getId()))
         {
             //if we don't have a flight AND we moved to another flight
-            if (($this->getCurrent()!=null) and $this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId())
+            if (($this->getCurrent()!=null) and $this->getCurrent()->flightVoyage->id != $this->hotel->getId())
             {
-                $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->flightVoyage->getId()));
+                $this->hotelBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->hotel->getId()));
             }
-            if ($this->flightBooker == null)
+            if ($this->hotelBooker == null)
             {
-                $this->flightBooker = new FlightBooker();
-                $this->flightBooker->flightVoyageId = $this->flightVoyage->getId();
-                $this->flightBooker->flightVoyage = $this->flightVoyage;
+                $this->hotelBooker = new FlightBooker();
+                $this->hotelBooker->flightVoyageId = $this->hotel->getId();
+                $this->hotelBooker->flightVoyage = $this->hotel;
             }
         }
-        $this->flightBooker->status = 'enterCredentials';
-        $this->flightBooker->save();
-        Yii::app()->user->setState('flightVoyageId', $this->flightBooker->flightVoyage->id);
+        $this->hotelBooker->status = 'enterCredentials';
+        $this->hotelBooker->save();
+        Yii::app()->user->setState('flightVoyageId', $this->hotelBooker->flightVoyage->id);
     }
 
     public function status($newStatus)
     {
-        $this->flightBooker->status = $newStatus;
-        $this->flightBooker->save();
+        $this->hotelBooker->status = $newStatus;
+        $this->hotelBooker->save();
     }
 
     public function stageBooking()
@@ -82,11 +82,11 @@ class FlightBookerComponent extends CApplicationComponent
         $flightBookingParams = new FlightBookingParams();
 
         //VarDumper::dump($this->flightBooker->booking);die();
-        $flightBookingParams->contactEmail = $this->flightBooker->booking->email;
-        $flightBookingParams->phoneNumber = $this->flightBooker->booking->phone;
-        $flightBookingParams->flightId = $this->flightVoyage->flightKey;
+        $flightBookingParams->contactEmail = $this->hotelBooker->booking->email;
+        $flightBookingParams->phoneNumber = $this->hotelBooker->booking->phone;
+        $flightBookingParams->flightId = $this->hotel->flightKey;
 
-        foreach($this->flightBooker->booking->bookingPassports as $passport)
+        foreach($this->hotelBooker->booking->bookingPassports as $passport)
         {
             $passenger = new Passenger();
             $passenger->type = Passenger::TYPE_ADULT;
@@ -99,9 +99,9 @@ class FlightBookerComponent extends CApplicationComponent
         $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams);
         if($flightBookingResponse->status == 1)
         {
-            $this->flightBooker->nemoBookId = $flightBookingResponse->nemoBookId;
-            $this->flightBooker->pnr = $flightBookingResponse->status;
-            $this->flightBooker->timeout = $flightBookingResponse->expiration;
+            $this->hotelBooker->nemoBookId = $flightBookingResponse->nemoBookId;
+            $this->hotelBooker->pnr = $flightBookingResponse->status;
+            $this->hotelBooker->timeout = $flightBookingResponse->expiration;
         }
         //die();
         $this->status('waitingForPayment');
@@ -134,8 +134,8 @@ class FlightBookerComponent extends CApplicationComponent
     {
         /** @var FlightBookingResponse $flightBookingResponse  */
         $flightTicketingParams = new FlightTicketingParams();
-        $flightTicketingParams->nemoBookId = $this->flightBooker->nemoBookId;
-        $flightTicketingParams->pnr = $this->flightBooker->pnr;
+        $flightTicketingParams->nemoBookId = $this->hotelBooker->nemoBookId;
+        $flightTicketingParams->pnr = $this->hotelBooker->pnr;
         $flightTicketingResponse = Yii::app()->gdsAdapter->FlightTicketing($flightTicketingParams);
         if($flightTicketingResponse->status == 1)
         {

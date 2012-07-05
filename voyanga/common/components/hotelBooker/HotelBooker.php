@@ -17,9 +17,9 @@
  * @property Booking $orderBooking
  * @property HotelBookingPassport[] $hotelBookingPassports
  */
-class hotelBooker extends SWActiveRecord
+class HotelBooker extends SWActiveRecord
 {
-    private $_Hotel;
+    private $_hotel;
     private $statusChanged = false;
 
     /**
@@ -159,7 +159,7 @@ class hotelBooker extends SWActiveRecord
 
     public function getHotel()
     {
-        if ($this->_Hotel==null)
+        if ($this->_hotel==null)
         {
             if ($this->isNewRecord)
             {
@@ -168,16 +168,16 @@ class hotelBooker extends SWActiveRecord
             else
             {
                 $element = unserialize($this->hotel);
-                $this->_Hotel = $element;
+                $this->_hotel = $element;
             }
         }
-        return $this->_Hotel;
+        return $this->_hotel;
     }
 
     public function setHotel($value)
     {
         $element = serialize($value);
-        $this->_Hotel = $value;
+        $this->_hotel = $value;
         $this->hotel = $element;
     }
 }
