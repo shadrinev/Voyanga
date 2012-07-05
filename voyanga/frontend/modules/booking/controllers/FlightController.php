@@ -5,14 +5,16 @@
  * Date: 20.06.12
  * Time: 13:00
  */
-class FlightController extends ABaseAdminController
+class FlightController extends FrontendController
 {
+    public $tab = 'avia';
+
     private $flightBooker;
 
     public function actionIndex()
     {
         $flightForm = new FlightForm;
-        $this->render('index', array('items'=>$this->generateItems(), 'flightForm'=>$flightForm, 'autosearch'=>false, 'fromCityName'=>'', 'toCityName'=>''));
+        $this->render('index', array('items'=>$this->generateItems(), 'flightForm'=>$flightForm, 'autosearch'=>false, 'fromCityName'=>'', 'toCityName'=>''), true);
     }
 
     public function actionSearch($from, $to, $date)

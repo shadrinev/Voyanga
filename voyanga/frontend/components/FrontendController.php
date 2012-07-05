@@ -7,24 +7,67 @@
  */
 class FrontendController extends Controller
 {
+    public $allTabs = array(
+        'avia'=>array(
+            'module'=>'booking',
+            'controller'=>'Flight',
+            'action'=>'index'
+        ),
+        'hotel'=>array(
+            'module'=>'booking',
+            'controller'=>'Hotel',
+            'action'=>'index'
+        ),
+        'tour'=>array(
+            'module'=>'booking',
+            'controller'=>'Tour',
+            'action'=>'index'
+        ),
+        'other'=>array()
+    );
+
+    public $output;
+
     public $tab = 'other';
+
+    public function fillTabs()
+    {
+        foreach ($this->allTabs as $tabName => $tabInfo)
+        {
+            if ($tabName==$this->tab)
+                continue;
+            if (!isset($tabInfo['module']))
+            {
+                $this->output[$tabName] = '';
+                continue;
+            }
+            $moduleName = $tabInfo['module'];
+            $controllerName = $tabInfo['controller'];
+            $actionName = $tabInfo['action'];
+            $controller = Yii::app()->createController($moduleName.'/'.$controllerName);
+            $action = $controller[0]->createAction($actionName);
+            $this->output[$tabName] = $action->run();
+        }
+    }
 
     public function render($view,$data=null,$return=false)
     {
+        if (!$return)
+            $this->fillTabs();
         if($this->beforeRender($view))
         {
-            $output[$this->tab]=$this->renderPartial($view,$data,true);
+            $this->output[$this->tab]=$this->renderPartial($view,$data,true);
             if(($layoutFile=$this->getLayoutFile($this->layout))!==false)
-                $output=$this->renderFile($layoutFile,array('content'=>$output,'active'=>$this->tab),true);
+                $output=$this->renderFile($layoutFile,array('content'=>$this->output,'active'=>$this->tab),true);
 
             $this->afterRender($view,$output);
 
-            $output=$this->processOutput($output);
+            $this->output=$this->processOutput($output);
 
             if($return)
-                return $output;
+                return $this->output;
             else
-                echo $output;
+                echo $this->output;
         }
     }
 

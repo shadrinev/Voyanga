@@ -7,9 +7,10 @@
  */
 class FlightController extends ABaseAdminController
 {
+    public $tab = 'tour';
+
     public function index()
     {
 
     }
-
 }
