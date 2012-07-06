@@ -7,15 +7,20 @@
  */
 class ConstructorController extends FrontendController
 {
+    public $tab='tour';
+
+    public $defaultAction = 'new';
+
     public function actionNew($clear=false, $isTab=false)
     {
         if ($clear)
             Yii::app()->shoppingCart->clear();
         $flightForm = new FlightForm;
+        $hotelForm = new HotelForm;
         if ($isTab)
             $this->renderPartial('new', array('flightForm'=>$flightForm));
         else
-            $this->render('new', array('flightForm'=>$flightForm));
+            $this->render('new', array('flightForm'=>$flightForm, 'hotelForm'=>$hotelForm,'autosearch'=>false, 'cityName'=>'', 'duration'=>1));
     }
 
     public function actionFlightSearch()
