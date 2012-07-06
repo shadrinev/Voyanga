@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/modules/tour/models/HotelForm.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/modules/tour/models/HotelRoomForm.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_flights.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/config/main.php" afterPath="$PROJECT_DIR$/frontend/config/main.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/tour/TourModule.php" afterPath="$PROJECT_DIR$/frontend/modules/tour/TourModule.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/order/OrderComponent.php" afterPath="$PROJECT_DIR$/common/components/order/OrderComponent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/booking/controllers/FlightController.php" afterPath="$PROJECT_DIR$/frontend/modules/booking/controllers/FlightController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/booking/models/FlightForm.php" afterPath="$PROJECT_DIR$/frontend/modules/booking/models/FlightForm.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/booking/views/flight/_form_flight.php" afterPath="$PROJECT_DIR$/frontend/modules/booking/views/flight/_form_flight.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/tour/controllers/ConstructorController.php" afterPath="$PROJECT_DIR$/frontend/modules/tour/controllers/ConstructorController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/tour/models/FlightForm.php" afterPath="$PROJECT_DIR$/frontend/modules/tour/models/FlightForm.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_flight.php" afterPath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_flight.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_hotel.php" afterPath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_hotel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/new.php" afterPath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/new.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_tour.php" afterPath="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_tour.php" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -38,28 +37,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ConstructorController.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="TourModule.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/modules/tour/TourModule.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="34" selection-start="78" selection-end="78" vertical-scroll-proportion="-1.9615384">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlightController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/modules/booking/controllers/FlightController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="127" column="57" selection-start="4438" selection-end="4438" vertical-scroll-proportion="-83.03846">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConstructorController.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/modules/tour/controllers/ConstructorController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="140" selection-start="688" selection-end="688" vertical-scroll-proportion="-14.384615">
+            <state line="20" column="143" selection-start="603" selection-end="603" vertical-scroll-proportion="0.30016053">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HotelForm.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/modules/tour/models/HotelForm.php">
+      <file leaf-file-name="HotelController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/modules/booking/controllers/HotelController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="19" column="9" selection-start="351" selection-end="512" vertical-scroll-proportion="-12.423077">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HotelRoomForm.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/modules/tour/models/HotelRoomForm.php">
+      <file leaf-file-name="_form_flight.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/modules/booking/views/flight/_form_flight.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="69" column="30" selection-start="2284" selection-end="2284" vertical-scroll-proportion="-7.1153846">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlightForm.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/modules/tour/models/FlightForm.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="75" selection-start="457" selection-end="457" vertical-scroll-proportion="-11.115385">
               <folding />
             </state>
           </provider>
@@ -68,7 +94,25 @@
       <file leaf-file-name="_form_flight.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_flight.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="27.461538">
+            <state line="19" column="88" selection-start="563" selection-end="563" vertical-scroll-proportion="-8.5">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_tour.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_tour.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="86" column="15" selection-start="3358" selection-end="3358" vertical-scroll-proportion="-10.230769">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderComponent.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/order/OrderComponent.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="28" selection-start="815" selection-end="815" vertical-scroll-proportion="-18.307692">
               <folding />
             </state>
           </provider>
@@ -78,51 +122,6 @@
         <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_hotel.php">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/modules/booking/views/hotel/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="0" selection-start="255" selection-end="406" vertical-scroll-proportion="-5.8846154">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_flights.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_flights.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.4093098">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="new.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/new.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="151" selection-start="487" selection-end="487" vertical-scroll-proportion="-8.5">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HotelController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/modules/booking/controllers/HotelController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="20" selection-start="3335" selection-end="3350" vertical-scroll-proportion="-7.1923075">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TourModule.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/modules/tour/TourModule.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="34" selection-start="78" selection-end="78" vertical-scroll-proportion="-1.9615384">
               <folding />
             </state>
           </provider>
@@ -138,21 +137,21 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/frontend/modules/booking/controllers/TourController.php" />
-        <option value="$PROJECT_DIR$/common/lib/yii-1.1.10/web/CController.php" />
-        <option value="$PROJECT_DIR$/frontend/controllers/SiteController.php" />
-        <option value="$PROJECT_DIR$/frontend/actions/AAutoCompleteAction.php" />
         <option value="$PROJECT_DIR$/frontend/modules/booking/controllers/HotelController.php" />
-        <option value="$PROJECT_DIR$/frontend/modules/booking/controllers/FlightController.php" />
         <option value="$PROJECT_DIR$/frontend/modules/tour/controllers/BasketController.php" />
         <option value="$PROJECT_DIR$/frontend/modules/tour/controllers/ViewerController.php" />
         <option value="$PROJECT_DIR$/common/modules/gds/models/GDSNemoAgency.php" />
-        <option value="$PROJECT_DIR$/frontend/modules/booking/views/flight/_form_flight.php" />
         <option value="$PROJECT_DIR$/frontend/components/FrontendController.php" />
-        <option value="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_flight.php" />
         <option value="$PROJECT_DIR$/frontend/config/main.php" />
         <option value="$PROJECT_DIR$/frontend/modules/tour/TourModule.php" />
         <option value="$PROJECT_DIR$/frontend/modules/tour/views/constructor/new.php" />
+        <option value="$PROJECT_DIR$/frontend/modules/booking/models/FlightForm.php" />
+        <option value="$PROJECT_DIR$/frontend/modules/booking/controllers/FlightController.php" />
+        <option value="$PROJECT_DIR$/frontend/modules/booking/views/flight/_form_flight.php" />
+        <option value="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_tour.php" />
+        <option value="$PROJECT_DIR$/common/components/order/OrderComponent.php" />
+        <option value="$PROJECT_DIR$/frontend/modules/tour/models/FlightForm.php" />
+        <option value="$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_flight.php" />
         <option value="$PROJECT_DIR$/frontend/modules/tour/controllers/ConstructorController.php" />
       </list>
     </option>
@@ -255,118 +254,6 @@
               <option name="myItemId" value="modules" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tour" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tour" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tour" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="constructor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tour" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tour" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -426,63 +313,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="booking" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="booking" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voyanga" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="frontend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1329,12 +1160,16 @@
       <created>1341561405108</created>
       <updated>1341561405108</updated>
     </task>
-    <option name="localTasksCounter" value="145" />
+    <task id="LOCAL-00145" summary="improve constructor">
+      <created>1341562471103</created>
+      <updated>1341562471104</updated>
+    </task>
+    <option name="localTasksCounter" value="146" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1342,7 +1177,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24776785" sideWeight="0.49786553" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25186765" sideWeight="0.75223213" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25186765" sideWeight="0.75223213" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24776785" sideWeight="0.49839914" order="8" side_tool="true" content_ui="tabs" />
@@ -1394,7 +1229,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="work on frontend" />
+    <option name="LAST_COMMIT_MESSAGE" value="improve constructor" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1407,7 +1242,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="added workflow to flight booker" />
     <MESSAGE value="start implementing workflow" />
     <MESSAGE value="test workflows" />
     <MESSAGE value="working on test of avia workflow" />
@@ -1432,28 +1266,15 @@
     <MESSAGE value="add cron job component" />
     <MESSAGE value="start work on frontend ui" />
     <MESSAGE value="work on frontend" />
+    <MESSAGE value="improve constructor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/modules/gds/models/GDSNemoAgency.php">
+    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/models/HotelForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="33" selection-start="6758" selection-end="6758" vertical-scroll-proportion="-6.901961">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/controllers/BasketController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="49" selection-start="148" selection-end="166" vertical-scroll-proportion="-4.576923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/BookingModule.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="5" selection-start="228" selection-end="228" vertical-scroll-proportion="-7.1923075">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1465,44 +1286,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/config/main.php">
+    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/new.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="36" selection-start="1066" selection-end="1066" vertical-scroll-proportion="-12.423077">
+        <state line="12" column="26" selection-start="228" selection-end="228" vertical-scroll-proportion="-5.8846154">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/components/FrontendController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="30" selection-start="1586" selection-end="1586" vertical-scroll-proportion="-16.346153">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_flight.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="27.461538">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_hotel.php">
+    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/views/flight/_flights.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/views/hotel/index.php">
+    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/models/HotelForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="255" selection-end="406" vertical-scroll-proportion="-5.8846154">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/new.php">
+    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_hotel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="151" selection-start="487" selection-end="487" vertical-scroll-proportion="-8.5">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/models/FlightForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="42" selection-start="537" selection-end="537" vertical-scroll-proportion="0.5184591">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/controllers/HotelController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="9" selection-start="351" selection-end="512" vertical-scroll-proportion="-12.423077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/views/flight/_form_flight.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="30" selection-start="2284" selection-end="2284" vertical-scroll-proportion="-7.1153846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/models/FlightForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="75" selection-start="457" selection-end="457" vertical-scroll-proportion="-11.115385">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_form_flight.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="88" selection-start="563" selection-end="563" vertical-scroll-proportion="-8.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_tour.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="15" selection-start="3358" selection-end="3358" vertical-scroll-proportion="-10.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/order/OrderComponent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="28" selection-start="815" selection-end="815" vertical-scroll-proportion="-18.307692">
           <folding />
         </state>
       </provider>
@@ -1514,37 +1370,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/controllers/HotelController.php">
+    <entry file="file://$PROJECT_DIR$/frontend/modules/booking/controllers/FlightController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="20" selection-start="3335" selection-end="3350" vertical-scroll-proportion="-7.1923075">
+        <state line="127" column="57" selection-start="4438" selection-end="4438" vertical-scroll-proportion="-83.03846">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/modules/tour/controllers/ConstructorController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="140" selection-start="688" selection-end="688" vertical-scroll-proportion="-14.384615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/models/HotelForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/models/HotelRoomForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/modules/tour/views/constructor/_flights.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.4093098">
+        <state line="20" column="143" selection-start="603" selection-end="603" vertical-scroll-proportion="0.30016053">
           <folding />
         </state>
       </provider>

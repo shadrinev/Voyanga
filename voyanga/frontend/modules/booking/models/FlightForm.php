@@ -15,6 +15,8 @@ class FlightForm extends CFormModel
     {
         return array(
             array('departureCityId, arrivalCityId', 'numerical', 'integerOnly'=>true),
+            array('departureCityId, arrivalCityId', 'required'),
+            array('departureDate', 'required'),
             array('departureDate', 'safe')
         );
     }

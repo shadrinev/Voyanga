@@ -1,7 +1,7 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
     //'type' =>'search',
     'id'=>'flight-form',
-    'enableAjaxValidation'=>false,
+    'enableAjaxValidation'=>true,
     'htmlOptions'=>array(
         'enctype' => 'multipart/form-data'
     )
@@ -66,6 +66,7 @@
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.BootButton', array(
             'url'=>'#popupInfo',
+            'buttonType'=>'submit',
             'type'=>'primary',
             'label'=>'Поиск перелёта',
             'htmlOptions'=>array('id'=>'searchFlight', 'data-toggle'=>'modal')
@@ -112,6 +113,7 @@
             console.log(data);
             $('#modalText').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.Текст ошибки:'+data.responseText+'</div>');
         });
+        return false;
     });
 ", CClientScript::POS_READY); ?>
 

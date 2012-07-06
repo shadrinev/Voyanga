@@ -1,7 +1,7 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
     //'type' =>'search',
     'id'=>'flight-form',
-    'enableAjaxValidation'=>false,
+    'enableClientValidation'=>true,
     'htmlOptions'=>array(
         'enctype' => 'multipart/form-data'
     )
@@ -17,7 +17,7 @@
         )
     );?>
 
-    <?php echo $form->hiddenField($model,'departureCityId'); ?>
+    <?php echo $form->hiddenField($model,'departureCityId', array('validateOnType'=>true)); ?>
 
     <?php echo $form->labelEx($model,'departureCityId'); ?>
     <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
@@ -39,6 +39,7 @@
             'value'=>'',
         )
     )); ?>
+    <?php echo $form->error($model, 'departureCityId'); ?>
 
     <?php echo $form->hiddenField($model,'arrivalCityId'); ?>
 

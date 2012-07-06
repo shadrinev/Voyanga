@@ -10,6 +10,8 @@ class OrderComponent extends CApplicationComponent
     public function getPositions($asJson = true)
     {
         $positions = Yii::app()->shoppingCart->getPositions();
+        $result = array();
+        $time = array();
         foreach($positions as $position)
         {
             if ($asJson)
@@ -26,7 +28,10 @@ class OrderComponent extends CApplicationComponent
             $result['items'][] = $element;
             unset($element);
         }
-        array_multisort($time, SORT_ASC, SORT_NUMERIC, $result['items']);
+        if (sizeof($time)>0)
+        {
+            array_multisort($time, SORT_ASC, SORT_NUMERIC, $result['items']);
+        }
         if ($asJson)
             return json_encode($result);
         else

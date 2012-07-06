@@ -125,6 +125,7 @@ class FlightController extends FrontendController
 
     public function generateItems()
     {
+        Yii::app()->user->setState('lastSearches', null);
         $elements = Yii::app()->user->getState('lastSearches');
         $items = array();
         if (!is_array($elements))
