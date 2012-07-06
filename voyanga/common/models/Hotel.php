@@ -30,6 +30,9 @@ class Hotel extends CApplicationComponent
     /** @var string date of hotel check in (should be 'Y-m-d') */
     public $checkIn;
 
+    /** @var int */
+    public $cityId;
+
     /** @var int count of nights inside hotel */
     public $duration;
 

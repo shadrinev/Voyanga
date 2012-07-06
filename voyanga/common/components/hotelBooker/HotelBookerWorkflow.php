@@ -7,7 +7,7 @@ return array(
         array('id'=>'booking',                  'transition'=>'softWaitingForPayment,bookingError'),
         array('id'=>'bookingError',             'transition'=>'error'),
         array('id'=>'softWaitingForPayment',    'transition'=>'bookingTimeLimitError,softStartPayment'),//???
-        array('id'=>'softStartPayment',         'transition'=>'bookingTimeLimitError,moneyTransfer'),
+        array('id'=>'softStartPayment',         'transition'=>'bookingTimeLimitError,softWaitingForPayment,moneyTransfer'),
         array('id'=>'hardWaitingForPayment',    'transition'=>'checkingAvailability'),
         array('id'=>'checkingAvailability',     'transition'=>'availabilityError,hardStartPayment'),
         array('id'=>'availabilityError',        'transition'=>'error'),

@@ -81,22 +81,54 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageAnalyzing()
     {
-
+        $hotelBookClient = new HotelBookClient();
+        $hotelBookClient->hotelSearchDetails($this->hotel);
+        $this->hotelBooker->hotel = $this->hotel;
+        if(($this->hotel->cancelExpiration - time()) > (appParams('hotel_payment_time')*2) )
+        {
+            $this->status('booking');
+        }
+        else
+        {
+            $this->status('hardWaitingForPayment');
+        }
     }
 
     public function stageHardWaitingForPayment()
     {
-
+        $this->status('checkingAvailability');
     }
 
     public function stageBooking()
     {
+        //TODO: подгрузить паспорта из HotelBooker
+        $hotelOrderParams = new HotelOrderParams();
+        $hotelOrderParams->hotel = $this->hotel;
+        $hotelBookClient = new HotelBookClient();
+        $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
+        if($orderInfo->orderId)
+        {
+            $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
+            if(!$orderInfo->error)
+            {
+                //TODO: добавить задание на переход в состояние bookingTimeLimitError
+                $this->status('softWaitingForPayment');
+            }
+            else
+            {
+                $this->status('bookingError');
+            }
 
+        }
+        else
+        {
+            $this->status('bookingError');
+        }
     }
 
     public function stageSoftWaitingForPayment()
     {
-
+        //переход в SoftStartPayment, если достаточно времени.
     }
 
     public function stageBookingError()
@@ -106,7 +138,7 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageSoftStartPayment()
     {
-
+        //TODO: добавить задание на переход в состояние softWaitingForPayment
     }
 
     public function stageBookingTimeLimitError()
@@ -116,37 +148,124 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageMoneyTransfer()
     {
+        //TODO: получение информации о ваучере и отправка денег
+        //$vaucher =
 
     }
 
     public function stageCheckingAvailability()
     {
+        $hotelBookClient = new HotelBookClient();
+        $searchParams = array();
+        $hotelKey = $this->hotel->key;
+        $searchParams['cityId'] = $this->hotel->cityId;
+        $searchParams['rooms'] = array();
+        foreach($this->hotel->rooms as $room)
+        {
+            $searchParams['rooms'][] = array('roomSizeId' => $room->sizeId, 'child' => $room->childCount, 'cots' => $room->cotsCount, 'ChildAge' => $room->childAges[0]);
+        }
+        $hotelSearchResponse = $hotelBookClient->hotelSearch($searchParams);
+        $find = false;
+        if($hotelSearchResponse['hotels'])
+        {
+            foreach($hotelSearchResponse['hotels'] as $hotel)
+            {
+                if($hotel->key == $hotelKey){
+                    $this->hotel = $hotel;
+                    $find = true;
+                    $this->hotelBooker->hotel = $this->hotel;
+                    break;
+                }
+            }
+        }
+
+        if($find)
+        {
+            $this->status('hardStartPayment');
+        }
+        else
+        {
+            $this->status('availabilityError');
+        }
 
     }
 
     public function stageAvailabilityError()
     {
-
+        $this->status('error');
     }
 
     public function stageHardStartPayment()
     {
+        //TODO: поставить в очередь hardWaitingForPayment
 
     }
 
     public function stageTicketing()
     {
+        $hotelOrderParams = new HotelOrderParams();
+        //TODO: подгрузить паспорта из HotelBooker
+        $hotelOrderParams->hotel = $this->hotel;
+        $hotelBookClient = new HotelBookClient();
+        $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
+        if($orderInfo->orderId)
+        {
+            $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
+            if(!$orderInfo->error)
+            {
+                //TODO: добавить задание на переход в состояние bookingTimeLimitError
+                $this->status('ticketReady');
+            }
+            else
+            {
+                $this->status('ticketingRepeat');
+            }
 
+        }
+        else
+        {
+            //TODO: переставить стутус через время T
+            $this->status('ticketingRepeat');
+        }
     }
 
     public function stageTicketReady()
     {
-
+        //TODO: ваучер
     }
 
     public function stageTicketingRepeat()
     {
+        $this->hotelBooker->tryCount++;
+        $this->hotelBooker->save();
+        if($this->hotelBooker->tryCount > 3)
+        {
+            $this->status('moneyReturn');
+        }
+        $hotelOrderParams = new HotelOrderParams();
+        //TODO: подгрузить паспорта из HotelBooker
+        $hotelOrderParams->hotel = $this->hotel;
+        $hotelBookClient = new HotelBookClient();
+        $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
+        if($orderInfo->orderId)
+        {
+            $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
+            if(!$orderInfo->error)
+            {
+                //TODO: добавить задание на переход в состояние bookingTimeLimitError
+                $this->status('ticketReady');
+            }
+            else
+            {
+                $this->status('ticketingRepeat');
+            }
 
+        }
+        else
+        {
+            //TODO: переставить стутус через время T + считать количество раз.
+            $this->status('ticketingRepeat');
+        }
     }
 
     public function stageManualProcessing()
@@ -171,7 +290,7 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageMoneyReturn()
     {
-
+        //TODO: Процедура разморозки платежа
     }
 
     public function stageManualError()

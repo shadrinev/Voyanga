@@ -36,6 +36,7 @@ return CMap::mergeArray(array(
         'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD'
     ),
     'hotel_search_cache_time' => 3600 * 5,
+    'hotel_payment_time' => 600,
     'HotelBook' => array(
         'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
         'login' => 'test',

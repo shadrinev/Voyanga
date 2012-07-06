@@ -11,5 +11,6 @@ class HotelOrderConfirmResponse
     public $orderState;
     public $tag;
     public $orderId;
+    public $error;
 
 }

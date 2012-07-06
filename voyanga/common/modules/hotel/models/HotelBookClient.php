@@ -475,6 +475,7 @@ class HotelBookClient
                 $hotel->searchId = $searchId;
                 $hotel->checkIn = $checkIn;
                 $hotel->duration = $duration;
+                $hotel->cityId = (string)$hotelsObject->HotelSearch['cityId'];
                 $response->hotels[] = $hotel;
             }
         }
@@ -501,6 +502,11 @@ class HotelBookClient
         return $response;
     }
 
+    /**
+     * @param $params
+     * @param bool $async
+     * @return array|int|mixed
+     */
     public function hotelSearch($params, $async = false)
     {
         $this->synchronize();
@@ -1112,6 +1118,10 @@ class HotelBookClient
         }
     }
 
+    /**
+     * @param HotelOrderParams $hotelOrderParams
+     * @return HotelOrderResponse
+     */
     public function addOrder(HotelOrderParams $hotelOrderParams)
     {
         $this->synchronize();
@@ -1209,6 +1219,10 @@ class HotelBookClient
         $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order->Id;
         $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
         $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
+        $hotelOrderConfirmResponse->error = 0;
+        if(isset($responseObject->Errors->Error)){
+            $hotelOrderConfirmResponse->error = 1;
+        }
 
         return $hotelOrderConfirmResponse;
     }
