@@ -74,48 +74,37 @@ class HotelBookerComponent extends CApplicationComponent
         $this->hotelBooker->save();
     }
 
-    public function stageBooking()
+    public function stageEnterCredentials()
     {
-        //getting pnr and other stuff
 
-        //$this->flightBooker->booking->bookingPassports;
-        $flightBookingParams = new FlightBookingParams();
-
-        //VarDumper::dump($this->flightBooker->booking);die();
-        $flightBookingParams->contactEmail = $this->hotelBooker->booking->email;
-        $flightBookingParams->phoneNumber = $this->hotelBooker->booking->phone;
-        $flightBookingParams->flightId = $this->hotel->flightKey;
-
-        foreach($this->hotelBooker->booking->bookingPassports as $passport)
-        {
-            $passenger = new Passenger();
-            $passenger->type = Passenger::TYPE_ADULT;
-            $passenger->passport = $passport;
-            $flightBookingParams->addPassenger($passenger);
-        }
-        //$flightBookingParams->addPassenger();
-        //echo 123;//die();
-        /** @var FlightBookingResponse $flightBookingResponse  */
-        $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams);
-        if($flightBookingResponse->status == 1)
-        {
-            $this->hotelBooker->nemoBookId = $flightBookingResponse->nemoBookId;
-            $this->hotelBooker->pnr = $flightBookingResponse->status;
-            $this->hotelBooker->timeout = $flightBookingResponse->expiration;
-        }
-        //die();
-        $this->status('waitingForPayment');
     }
 
-    public function stageWaitingForPayment()
+    public function stageAnalyzing()
     {
-        //maybe we need to remove it?
-        //TODO: ставим таймер на отмену приема платежа
-        //переход в состояние payment должен быть инициализирован из вне
-        //$this->status('payment');
+
+    }
+
+    public function stageHardWaitingForPayment()
+    {
+
+    }
+
+    public function stageBooking()
+    {
+
+    }
+
+    public function stageSoftWaitingForPayment()
+    {
+
     }
 
     public function stageBookingError()
+    {
+
+    }
+
+    public function stageSoftStartPayment()
     {
 
     }
@@ -125,31 +114,34 @@ class HotelBookerComponent extends CApplicationComponent
 
     }
 
-    public function stagePayment()
+    public function stageMoneyTransfer()
+    {
+
+    }
+
+    public function stageCheckingAvailability()
+    {
+
+    }
+
+    public function stageAvailabilityError()
+    {
+
+    }
+
+    public function stageHardStartPayment()
     {
 
     }
 
     public function stageTicketing()
     {
-        /** @var FlightBookingResponse $flightBookingResponse  */
-        $flightTicketingParams = new FlightTicketingParams();
-        $flightTicketingParams->nemoBookId = $this->hotelBooker->nemoBookId;
-        $flightTicketingParams->pnr = $this->hotelBooker->pnr;
-        $flightTicketingResponse = Yii::app()->gdsAdapter->FlightTicketing($flightTicketingParams);
-        if($flightTicketingResponse->status == 1)
-        {
-            //TODO: need save tickets numbers to DB
-            foreach($flightTicketingResponse->tickets as $ticketInfo){
 
-            }
-        }
-        $this->status('ticketReady');
     }
 
     public function stageTicketReady()
     {
-        $this->status('done');
+
     }
 
     public function stageTicketingRepeat()
@@ -157,12 +149,7 @@ class HotelBookerComponent extends CApplicationComponent
 
     }
 
-    public function stageManualProccessing()
-    {
-
-    }
-
-    public function stageManualTicketing()
+    public function stageManualProcessing()
     {
 
     }
@@ -172,12 +159,7 @@ class HotelBookerComponent extends CApplicationComponent
 
     }
 
-    public function stageManualError()
-    {
-
-    }
-
-    public function stageMoneyReturn()
+    public function stageManualTicketing()
     {
 
     }
@@ -187,7 +169,12 @@ class HotelBookerComponent extends CApplicationComponent
 
     }
 
-    public function stageBspTransfer()
+    public function stageMoneyReturn()
+    {
+
+    }
+
+    public function stageManualError()
     {
 
     }

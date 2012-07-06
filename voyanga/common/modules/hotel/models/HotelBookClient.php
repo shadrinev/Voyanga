@@ -1196,6 +1196,23 @@ class HotelBookClient
         return $hotelOrderResponse;
     }
 
+    public function confirmOrder($orderId)
+    {
+        $this->synchronize();
+        $time = time() + $this->differenceTimestamp;
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time),'order_id'=>$orderId);
+        self::$lastRequestMethod = 'confirmOrder';
+        self::$lastRequestDescription = (string)$orderId;
+        $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'confirm_order', $getData);
+        $responseObject = simplexml_load_string($response);
+        $hotelOrderConfirmResponse = new HotelOrderConfirmResponse();
+        $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order->Id;
+        $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
+        $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
+
+        return $hotelOrderConfirmResponse;
+    }
+
     public function synchronize()
     {
         if (!$this->isSynchronized)
