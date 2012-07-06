@@ -5,12 +5,12 @@
  * Date: 20.06.12
  * Time: 13:00
  */
-class FlightController extends ABaseAdminController
+class TourController extends FrontendController
 {
     public $tab = 'tour';
 
-    public function index()
+    public function actionIndex()
     {
-
+        echo 'Tour rocks here!';
     }
 }

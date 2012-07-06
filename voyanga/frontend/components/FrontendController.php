@@ -19,9 +19,9 @@ class FrontendController extends Controller
             'action'=>'index'
         ),
         'tour'=>array(
-            'module'=>'booking',
-            'controller'=>'Tour',
-            'action'=>'index'
+            'module'=>'tour',
+            'controller'=>'Constructor',
+            'action'=>'new'
         ),
         'other'=>array()
     );
@@ -41,12 +41,15 @@ class FrontendController extends Controller
                 $this->output[$tabName] = '';
                 continue;
             }
+            ob_start();
             $moduleName = $tabInfo['module'];
             $controllerName = $tabInfo['controller'];
             $actionName = $tabInfo['action'];
             $controller = Yii::app()->createController($moduleName.'/'.$controllerName);
             $action = $controller[0]->createAction($actionName);
-            $this->output[$tabName] = $action->run();
+            $action->runWithParams(array('isTab'=>true));
+            $this->output[$tabName] = ob_get_contents();
+            ob_end_clean();
         }
     }
 

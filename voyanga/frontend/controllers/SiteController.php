@@ -17,22 +17,24 @@ class SiteController extends Controller
             'cityAutocomplete'=>array(
                 'class'=>'application.actions.AAutoCompleteAction',
                 'modelClass'=>'City',
-                'cache'=>true,
+                'cache'=>false,
                 'cacheExpire'=>1800,
                 'attributes'=>array('localRu','localEn','code:='),
                 'labelTemplate'=>'{localRu}, {country.localRu}, {code}',
                 'valueTemplate'=>'{localRu}',
                 'criteria'=>array('with'=>'country','condition'=>'countAirports!=0'),
+                'paramName'=>'query'
             ),
             'cityAutocompleteForHotel'=>array(
                 'class'=>'application.actions.AAutoCompleteAction',
                 'modelClass'=>'City',
-                'cache'=>true,
+                'cache'=>false,
                 'cacheExpire'=>1800,
                 'attributes'=>array('localRu','localEn','code:='),
                 'labelTemplate'=>'{localRu}, {country.localRu}, {code}',
                 'valueTemplate'=>'{localRu}',
                 'criteria'=>array('with'=>'country'),
+                'paramName'=>'query'
             ),
             // page action renders "static" pages stored under 'protected/views/site/pages'
             // They can be accessed via: index.php?r=site/page&view=FileName

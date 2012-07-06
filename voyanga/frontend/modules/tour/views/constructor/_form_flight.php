@@ -35,8 +35,8 @@
             'matcher'=>'js: function(){return true}',
         ),
         'htmlOptions'=>array(
-            'class'=>'span5 fromField',
-            'value'=>'',
+            'class'=>'span5',
+            'value'=>''
         )
     )); ?>
 
@@ -58,8 +58,8 @@
             'matcher'=>'js: function(){return true}',
         ),
         'htmlOptions'=>array(
-            'class'=>'span5 toField',
-            'value'=>'',
+            'class'=>'span5',
+            'value'=>''
         )
     )); ?>
 
@@ -81,7 +81,7 @@
     <h3>Результат запроса</h3>
 </div>
 
-<div class="modal-body" id='modalText'>
+<div class="modal-body" id='flight-search-result'>
     <p>Идет запрос данных...</p>
 </div>
 
@@ -96,31 +96,34 @@
 <?php $this->endWidget(); ?>
 
 <?php $templateVariable = 'flightSearchResult';
-    $this->renderPartial('_flights', array('variable'=>$templateVariable,'showSaveTour'=>false, 'showDelete'=>false)); ?>
+    $this->renderPartial('_flight_search_result', array('variable'=>$templateVariable)); ?>
 
 <?php Yii::app()->clientScript->registerScript('flight-search', "
-    $('#searchFlight,#repeatFlightSearch').live('click', function(){
-        $('#modalText').html('Поиск перелёта...');
-        $.getJSON('/tour/constructor/flightSearch', $('#flight-form').serialize())
+    $('#searchFlight').on('click', function(){
+        $('#flight-search-result').html('Поиск перелёта...');
+        $.getJSON('/admin/tour/constructor/flightSearch', $('#flight-form').serialize())
         .done(function(data) {
             var html = {$templateVariable}(data);
-            console.log(data);
             $('#flight-search-result').html(html);
-            $('#popupInfo').modal('hide');
+            $('.chooseFlight').on('click',function(){
+                var key1 = $('#searchId').data('searchid');
+                var key2 = $(this).data('searchkey');
+                $.getJSON('/admin/tour/basket/add/type/".FlightVoyage::TYPE."/key/'+key1+'/searchId/'+key2)
+                    .done(function(data){
+                        $.getJSON('/admin/tour/basket/show')
+                            .done(function(data) {
+                                var html = handlebarTour(data);
+                                $('#tour-output').html(html);
+                            })
+                            .fail(function(data){
+                                $('#tour-output').html(data);
+                            });
+                        $('#popupInfo').modal('hide');
+                    });
+            });
         })
         .fail(function(data){
-            console.log(data);
-            $('#modalText').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.Текст ошибки:'+data.responseText+'</div>');
+            $('#flight-search-result').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте повторить поиск.</div>');
         });
     });
 ", CClientScript::POS_READY); ?>
-
-<?php if (isset($autosearch) and ($autosearch))
-{
-    Yii::app()->clientScript->registerScript('flight-search-autostart',
-        '$("#searchFlight").trigger("click");
-         $(".fromField").val("'.$fromCityName.'");
-         $(".toField").val("'.$toCityName.'");',
-    CClientScript::POS_READY);
-}
-?>

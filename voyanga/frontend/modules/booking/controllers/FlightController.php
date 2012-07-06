@@ -11,10 +11,13 @@ class FlightController extends FrontendController
 
     private $flightBooker;
 
-    public function actionIndex()
+    public function actionIndex($isTab=false)
     {
         $flightForm = new FlightForm;
-        $this->render('index', array('items'=>$this->generateItems(), 'flightForm'=>$flightForm, 'autosearch'=>false, 'fromCityName'=>'', 'toCityName'=>''), true);
+        if ($isTab)
+            $this->renderPartial('index', array('items'=>$this->generateItems(), 'flightForm'=>$flightForm, 'autosearch'=>false, 'fromCityName'=>'', 'toCityName'=>''));
+        else
+            $this->render('index', array('items'=>$this->generateItems(), 'flightForm'=>$flightForm, 'autosearch'=>false, 'fromCityName'=>'', 'toCityName'=>''));
     }
 
     public function actionSearch($from, $to, $date)

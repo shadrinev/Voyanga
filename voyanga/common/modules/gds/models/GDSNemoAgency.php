@@ -176,6 +176,7 @@ class GDSNemoAgency extends CComponent
 
         if (!isset($soapResponse->Response->SearchFlights->Flights->Flight))
         {
+            $soapResponse = $this->humanReadable($soapResponse);
             throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
         }
         //print_r($soapResponse );die();
@@ -532,6 +533,16 @@ class GDSNemoAgency extends CComponent
         );
 
         print_r(self::request('GetAirRules', $aParams, $bCache = FALSE, $iExpiration = 0));
+    }
+
+    public function humanReadable($soapResponse)
+    {
+        VarDumper::dump($soapResponse->Response->SearchFlights->Flights);
+        if (isset($soapResponse->Response->SearchFlights->Flights->ResultURL))
+        {
+            $soapResponse->Response->SearchFlights->Flights->ResultURL = urldecode($soapResponse->Response->SearchFlights->Flights->ResultURL);
+        }
+        return $soapResponse;
     }
 
     public function checkFlight()

@@ -1,13 +1,3 @@
-<?php function getTab($content,$name)
-{
-    if (isset($content[$name]))
-    {
-
-        return $content[$name];
-    }
-    return '';
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,10 +29,10 @@
         <?php $this->widget('bootstrap.widgets.BootTabbable', array(
         'type'=>'tabs', // 'tabs' or 'pills'
         'tabs'=>array(
-            array('label'=>'Конструктор', 'content'=>getTab($content,'tour'), 'active'=>($active=='tour')),
-            array('label'=>'Авиа', 'content'=>getTab($content,'avia'), 'active'=>($active=='avia')),
-            array('label'=>'Отели', 'content'=>getTab($content,'hotel'), 'active'=>($active=='hotel')),
-            array('label'=>'Остальное', 'content'=>getTab($content,'other'), 'active'=>($active=='other')),
+            array('label'=>'Конструктор', 'content'=>$content['tour'], 'active'=>($active=='tour')),
+            array('label'=>'Авиа', 'content'=>$content['avia'], 'active'=>($active=='avia')),
+            array('label'=>'Отели', 'content'=>$content['hotel'], 'active'=>($active=='hotel')),
+            array('label'=>'Остальное', 'content'=>$content['other'], 'active'=>($active=='other')),
             ),
         )); ?>
     </div>

@@ -24,6 +24,7 @@ return CMap::mergeArray(
         'params'  => $params,
         'language' => 'ru',
         'theme' => 'v1',
+        'defaultController' => 'booking',
         'preload' => array(
             'log',
             'bootstrap'
@@ -58,9 +59,8 @@ return CMap::mergeArray(
             'gds' => array(
                 'class' => 'site.common.modules.gds.GdsModule',
             ),
-            'booking' => array(
-
-            )
+            'booking' => array(),
+            'tour' => array(),
         ),
 
         // application components

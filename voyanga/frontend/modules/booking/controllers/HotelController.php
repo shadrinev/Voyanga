@@ -9,7 +9,7 @@ class HotelController extends FrontendController
 {
     public $tab = 'hotel';
 
-    public function actionIndex()
+    public function actionIndex($isTab=false)
     {
         Yii::import('site.common.modules.hotel.models.*');
         $hotelForm = new HotelForm;
@@ -49,34 +49,36 @@ class HotelController extends FrontendController
                 $HotelClient = new HotelBookClient();
                 $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
                 $cacheId = substr(md5(uniqid('', true)), 0, 10);
-                //
                 Yii::app()->cache->set('hotelResult'.$cacheId, $resultSearch,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelSearchParams'.$cacheId, $hotelSearchParams,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelForm'.$cacheId, $hotelForm,appParams('hotel_search_cache_time'));
-                //echo $cacheId.'||||'.appParams('hotel_search_cache_time');
-                //VarDumper::dump(Yii::app()->cache);
-                //VarDumper::dump(Yii::app()->cache->set('testCache',123, 1800));
-                //VarDumper::dump(Yii::app()->cache->get('testCache'));
-                //VarDumper::dump(Yii::app()->cache->get('hotelResult'.$cacheId));
-                //VarDumper::dump(Yii::app()->cache->get('hotelSearchParams'.$cacheId));
-                //
-                //VarDumper::dump(Yii::app()->cache->get('hotelForm'.$cacheId));
-                //die();
                 $this->redirect('/booking/hotel/result/cacheId/'.$cacheId);
                 $hotelStack = new HotelStack($resultSearch);
                 $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
-                $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm));
+                if ($isTab)
+                    $this->renderPartial('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm));
+                else
+                    $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm));
             }
         }
         else
         {
-            $this->render('index', array(
-                'items'=>$this->generateItems(),
-                'hotelForm'=>$hotelForm,
-                'autosearch'=>false,
-                'cityName'=>'',
-                'duration'=>1
-            ));
+            if ($isTab)
+                $this->renderPartial('index', array(
+                    'items'=>$this->generateItems(),
+                    'hotelForm'=>$hotelForm,
+                    'autosearch'=>false,
+                    'cityName'=>'',
+                    'duration'=>1
+                ));
+            else
+                $this->render('index', array(
+                    'items'=>$this->generateItems(),
+                    'hotelForm'=>$hotelForm,
+                    'autosearch'=>false,
+                    'cityName'=>'',
+                    'duration'=>1
+                ));
         }
     }
 

@@ -9,17 +9,8 @@ $this->breadcrumbs = array(
     'Перелёт'=>array('/admin/booking/flight'),
     'Поиск'
 );
-
-$this->beginWidget("AAdminPortlet",
-    array(
-        "sidebarMenuItems" => $items,
-        "title" => "Поиск перелёта"
-    ));
 ?>
 
 <?php echo $this->renderPartial('_form_flight', array('model'=>$flightForm, 'autosearch'=>$autosearch, 'fromCityName'=>$fromCityName, 'toCityName'=>$toCityName)); ?>
 
 <span id='flight-search-result'></span>
-
-<?php
-$this->endWidget(); ?>
