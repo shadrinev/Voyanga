@@ -102,8 +102,15 @@ class HotelBookerComponent extends CApplicationComponent
     public function stageBooking()
     {
         //TODO: подгрузить паспорта из HotelBooker
+
         $hotelOrderParams = new HotelOrderParams();
         $hotelOrderParams->hotel = $this->hotel;
+        foreach($this->hotelBooker->hotelBookingPassports as $passport)
+        {
+            $hotelOrderParams->roomers = $passport;
+        }
+        $hotelOrderParams->contactPhone = $this->hotelBooker->orderBooking->phone;
+        $hotelOrderParams->contactEmail = $this->hotelBooker->orderBooking->email;
         $hotelBookClient = new HotelBookClient();
         $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
         if($orderInfo->orderId)
