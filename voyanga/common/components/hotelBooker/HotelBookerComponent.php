@@ -332,4 +332,9 @@ class HotelBookerComponent extends CApplicationComponent
         $this->hotelBooker = HotelBooker::model()->findByPk($hotelBookerId);
         if(!$this->hotelBooker) throw new CException('HotelBooker with id '.$hotelBookerId.' not found');
     }
+
+    public function getHotelBookerId()
+    {
+        return $this->hotelBooker->id;
+    }
 }

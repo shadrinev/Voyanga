@@ -59,9 +59,12 @@ EOD;
             /** @var HotelBookerComponent $hotelBookerComponent  */
             $hotelBookerComponent = Yii::app()->hotelBooker;
             $hotelBookerComponent->setHotelBookerFromId($hotelBookerId);
+            echo "HotelBookerId ".$hotelBookerComponent->getHotelBookerId()."\n";
+
             if($newState)
             {
                 $hotelBookerComponent->status($newState);
+                echo "changed\n";
             }
         }
         else
