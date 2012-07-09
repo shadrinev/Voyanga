@@ -146,6 +146,18 @@ class HotelBookerComponent extends CApplicationComponent
     public function stageSoftStartPayment()
     {
         //TODO: добавить задание на переход в состояние softWaitingForPayment
+        if(($this->hotel->cancelExpiration - time()) > appParams('hotel_payment_time'))
+        {
+            $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooker','ChangeState',array('hotelBookerId'=>$this->hotelBooker->id,'state'=>'softWaitingForPayment'));
+            if($res)
+            {
+                return true;
+            }
+        }
+
+        return false;
+
+
     }
 
     public function stageBookingTimeLimitError()
@@ -313,5 +325,11 @@ class HotelBookerComponent extends CApplicationComponent
     public function stageError()
     {
 
+    }
+
+    public function setHotelBookerFromId($hotelBookerId)
+    {
+        $this->hotelBooker = HotelBooker::model()->findByPk($hotelBookerId);
+        if(!$this->hotelBooker) throw new CException('HotelBooker with id '.$hotelBookerId.' not found');
     }
 }

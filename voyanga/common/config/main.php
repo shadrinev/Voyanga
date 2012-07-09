@@ -38,6 +38,10 @@ return array(
             'class'=>'site.common.components.flightBooker.FlightBookerComponent',
         ),
 
+        'hotelBooker' => array(
+            'class'=>'site.common.components.hotelBooker.HotelBookerComponent',
+        ),
+
         'workflow'=> array(
 		    'class'=>'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',
 	    ),
