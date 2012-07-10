@@ -113,6 +113,12 @@ class FlightBookerComponent extends CApplicationComponent
         //TODO: ставим таймер на отмену приема платежа
         //переход в состояние payment должен быть инициализирован из вне
         //$this->status('payment');
+        $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooker','ChangeState',array('hotelBookerId'=>$this->hotelBooker->id,'newState'=>'softWaitingForPayment'));
+        if($res)
+        {
+            $this->hotelBooker->saveTaskInfo('paymentTimeLimit',$res);
+            return true;
+        }
     }
 
     public function stageBookingError()
@@ -200,5 +206,16 @@ class FlightBookerComponent extends CApplicationComponent
     public function stageError()
     {
 
+    }
+
+    public function setFlightBookerFromId($flightBookerId)
+    {
+        $this->flightBooker = FlightBooker::model()->findByPk($flightBookerId);
+        if(!$this->flightBooker) throw new CException('FlightBooker with id '.$flightBookerId.' not found');
+    }
+
+    public function getFlightBookerId()
+    {
+        return $this->flightBooker->id;
     }
 }
