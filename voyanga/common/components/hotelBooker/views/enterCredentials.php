@@ -26,18 +26,19 @@ $this->beginWidget("site.backend.modules.admin.components.AAdminPortlet",
     )
 )); ?>
 
-<?php echo $form->textFieldRow($passport,'firstName');?>
-<?php echo $form->textFieldRow($passport,'lastName');?>
+<?php echo $form->textFieldRow($model->bookingForm,'contactEmail');?>
+<?php echo $form->textFieldRow($model->bookingForm,'contactPhone');?>
 
-<?php echo $form->textFieldRow($booking,'contactPhone');?>
-<?php echo $form->textFieldRow($booking,'contactEmail');?>
-
-<?php echo $form->textFieldRow($passport,'birthday');?>
-<?php echo $form->dropDownListRow($passport,'genderId', Passport::getPossibleGenders());?>
-<?php echo $form->dropDownListRow($passport,'countryId', Country::getPossibleCountries());?>
-<?php echo $form->dropDownListRow($passport,'documentTypeId', Passport::getPossibleTypes());?>
-<?php echo $form->textFieldRow($passport,'series');?>
-<?php echo $form->textFieldRow($passport,'number');?>
+<?php foreach ($model->roomsPassports as $i=> $roomPassport): ?>
+    <?php foreach ($roomPassport->adultsPassports as $j=>$adultPassport): ?>
+        <?php echo $form->textFieldRow($adultPassport,"[$i][$j]firstName");?>
+        <?php echo $form->textFieldRow($adultPassport,"[$i][$j]lastName");?>
+    <?php endforeach; ?>
+    <?php foreach ($roomPassport->childrenPassports as $j=>$childPassport): ?>
+        <?php echo $form->textFieldRow($childPassport,"[$i][$j]firstName");?>
+        <?php echo $form->textFieldRow($childPassport,"[$i][$j]lastName");?>
+    <?php endforeach; ?>
+<?php endforeach; ?>
 
 
 <div class="form-actions">

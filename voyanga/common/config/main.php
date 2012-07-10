@@ -20,6 +20,7 @@ return array(
         'site.common.components.flightBooker.*',
         'site.common.extensions.simpleWorkflow.*',
         'site.common.models.apiModels.*',
+        'site.common.models.formModels.*',
     ),
 
     'components'=>array(

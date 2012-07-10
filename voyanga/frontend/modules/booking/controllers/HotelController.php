@@ -9,6 +9,18 @@ class HotelController extends FrontendController
 {
     public $tab = 'hotel';
 
+    public function actions()
+    {
+        return array(
+            'buy' => array(
+                'class' => 'common.components.hotelBooker.actions.Engine',
+            ),
+            'stageEnterCredentials' => array(
+                'class' => 'common.components.hotelBooker.actions.EnterCredentials',
+            )
+        );
+    }
+
     public function actionIndex($isTab=false)
     {
         Yii::import('site.common.modules.hotel.models.*');
@@ -102,7 +114,7 @@ class HotelController extends FrontendController
         }
     }
 
-    public function actionInfo($cacheId,$hotelId)
+    public function actionInfo($cacheId, $hotelId)
     {
         Yii::import('site.common.modules.hotel.models.*');
         $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);

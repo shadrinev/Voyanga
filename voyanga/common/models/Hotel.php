@@ -91,6 +91,14 @@ class Hotel extends CApplicationComponent
     /** @var HotelRoom[] */
     public $rooms;
 
+    /** @var where do we get if from */
+    public $cacheId;
+
+    public function getId()
+    {
+        return 'hotel_key_'.$this->cacheId.'_'.$this->searchId.'_'.$this->resultId;
+    }
+
     public function __construct($params)
     {
         $attrs = get_object_vars($this);

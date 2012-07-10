@@ -127,7 +127,7 @@ class SiteController extends Controller
 
     public function actionPassport()
     {
-        $model = new PassportForm();
+        $model = new AviaPassportForm();
         $form = new CForm('application.views.site.passportForm', $model);
         if ($form->submitted('smb') && $form->validate())
         {
@@ -439,7 +439,7 @@ class SiteController extends Controller
 
                 for($i=0;$i<$countPassengers;$i++)
                 {
-                    $modelPassport = new PassportForm();
+                    $modelPassport = new AviaPassportForm();
                     $passports[$i] = $modelPassport;
 
                     if(isset($_POST['PassportForm'][$i]))

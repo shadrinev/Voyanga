@@ -18,5 +18,34 @@ $this->breadcrumbs = array(
 <?php echo $this->renderPartial('_hotels', array('results'=>$results, 'variable'=>'hotelResults','cacheId'=>$cacheId)); ?>
 
 <?php Yii::app()->clientScript->registerScript('smooth-scroll', "
-$('.result-hotel-link').trigger('click');
+var Utils = new Object();
+Utils.scrollToInfo = new Object();
+Utils.scrollToInfo.duration = 10;
+Utils.scrollToInfo.startPos = 0;
+Utils.scrollToInfo.endPos = 0;
+Utils.scrollToInfo.currentPos = 0;
+Utils.scrollToInfo.Interval = 0;
+Utils.scrollToIteration = function(){
+
+ var delta = (Utils.scrollToInfo.endPos - Utils.scrollToInfo.startPos) / 24;
+ Utils.scrollToInfo.currentPos = Utils.scrollToInfo.currentPos + delta;
+ $(window).scrollTop(Utils.scrollToInfo.currentPos);
+ if(Math.abs(Utils.scrollToInfo.currentPos - Utils.scrollToInfo.endPos) < Math.abs(delta+1)){
+  window.clearInterval(Utils.scrollToInfo.Interval);
+ }
+}
+Utils.scrollTo = function(selector) {
+ if(typeof(selector) == 'string'){
+  var oPos = $(selector).offset();
+ }else{
+  var oPos = new Object();
+  oPos.top = selector;
+ }
+    var oDocumentTop = $(document).scrollTop();
+    Utils.scrollToInfo.endPos = oPos.top
+    Utils.scrollToInfo.startPos = oDocumentTop;
+    Utils.scrollToInfo.currentPos = Utils.scrollToInfo.startPos;
+    Utils.scrollToInfo.Interval = window.setInterval(Utils.scrollToIteration,Utils.scrollToInfo.duration);
+}
+Utils.scrollTo('#result');
 ", CClientScript::POS_READY); ?>

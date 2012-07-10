@@ -1,0 +1,1 @@
+<?php return require_once(Yii::getPathOfAlias('site.common.components.hotelBooker') . DIRECTORY_SEPARATOR . 'HotelBookerWorkflow.php') ;?>

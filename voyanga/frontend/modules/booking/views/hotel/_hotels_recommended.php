@@ -16,7 +16,7 @@
             {{size}}
             {{/each}}
         </td>
-        <td><a class="btn" href="/booking/hotel/info/cacheId/<?php echo $cacheId?>/hotelId/{{hotelId}}">выбрать</a></td>
+        <td><a class="btn" href="/booking/hotel/buy/key/<?php echo $cacheId?>_{{hotelId}}_{{resultId}}">выбрать</a></td>
     </tr>
     <tr>
         <td colspan="3" style="padding-left: 25px;">

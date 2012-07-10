@@ -11,61 +11,16 @@ class EnterCredentials extends StageAction
     public function execute()
     {
         $valid = true;
-        $booking = new BookingForm();
-        if(isset($_POST['BookingForm']))
+        $rooms = Yii::app()->hotelBooker->getCurrent()->hotel->rooms;
+        $form = new HotelPassportForm();
+        foreach ($rooms as $room)
         {
-            $booking->attributes=$_POST['BookingForm'];
-            $valid = $booking->validate() && $valid;
+            $form->addRoom($room->adults, $room->childCount);
         }
-        else
+       /* if (isset($_POST['HotelPassportForm']))
         {
-            $valid = false;
-        }
-
-        $passport = new PassportForm();
-        if(isset($_POST['PassportForm']))
-        {
-            $passport->attributes=$_POST['PassportForm'];
-            $valid = $valid && $passport->validate();
-        }
-
-        if($valid)
-        {
-            //saving data to objects
-            $bookingAr = new Booking();
-
-            $bookingAr->email = $booking->contactEmail;
-            $bookingAr->phone = $booking->contactPhone;
-            if (!Yii::app()->user->isGuest)
-                $bookingAr->userId = Yii::app()->user->id;
-
-            $bookingPassports = array();
-            $bookingPassport = new BookingPassport();
-            $bookingPassport->birthday = $passport->birthday;
-            $bookingPassport->firstName = $passport->firstName;
-            $bookingPassport->lastName = $passport->lastName;
-            $bookingPassport->countryId = $passport->countryId;
-            $bookingPassport->number = $passport->number;
-            $bookingPassport->series = $passport->series;
-            $bookingPassport->genderId = $passport->genderId;
-            $bookingPassport->documentTypeId = $passport->documentTypeId;
-            $bookingPassports[] = $bookingPassport;
-
-            $bookingAr->bookingPassports = $bookingPassports;
-            $bookingAr->flightId = Yii::app()->flightBooker->current->flightVoyage->flightKey;
-
-            if($bookingAr->save())
-            {
-                Yii::app()->flightBooker->current->bookingId = $bookingAr->id;
-                Yii::app()->flightBooker->status('booking');
-                $this->getController()->refresh();
-            }
-            else
-            {
-                $this->getController()->render('flightBooker.views.enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
-            }
-        }
-        else
-            $this->getController()->render('flightBooker.views.enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
+            $form->attributes =
+        }*/
+        $this->getController()->render('hotelBooker.views.enterCredentials', array('model'=>$form));
     }
 }

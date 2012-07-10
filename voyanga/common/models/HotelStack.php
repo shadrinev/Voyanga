@@ -28,6 +28,7 @@ class HotelStack
     public $bestRatingInd;
     public $bestPriceInd;
 
+    //todo: add filters here
     public function __construct($params = NULL)
     {
         if ($params)

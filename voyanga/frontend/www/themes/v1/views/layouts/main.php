@@ -1,3 +1,4 @@
+<?php if (!isset($active)) $active = 'other'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

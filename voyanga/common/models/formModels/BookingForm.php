@@ -43,7 +43,7 @@ class BookingForm extends CFormModel
         $form = new EForm(require(Yii::getPathOfAlias('application.views.site.bookingForm').'.php'), $this);
         $elements = $form->getElements();
 
-        $subForm = new EForm(array('elements' => array()), new PassportForm(), $form); // Sub-form to act as a container for the parameter forms.
+        $subForm = new EForm(array('elements' => array()), new AviaPassportForm(), $form); // Sub-form to act as a container for the parameter forms.
         $subForm->visible = true;
         $subForm->title = 'Passports';// Title to make it a fieldset
         $subFormElements = $subForm->getElements();

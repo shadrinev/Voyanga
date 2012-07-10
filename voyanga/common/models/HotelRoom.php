@@ -31,6 +31,9 @@ class HotelRoom extends CApplicationComponent
                         [ChildAge] => '6'
                     )
      */
+    public static $roomSizeRoomTypesMap = array(1 => array(1), 2 => array(2, 3), 3 => array(5), 4 => array(6));
+    /** @var array mapping from Hotel Book size id to amount of adults into apt */
+    public static $roomSizeIdCountMap = array(1=>1,2=>2,3=>2,4=>1,5=>3,6=>4,7=>1,8=>2);
     public $sizeId;
     public $sizeName;
     public $typeId;
@@ -54,6 +57,11 @@ class HotelRoom extends CApplicationComponent
                 $this->{$attrName} = $params[$attrName];
             }
         }
+    }
+
+    public function getAdults()
+    {
+        return self::$roomSizeIdCountMap[$this->sizeId];
     }
 
     public function getKey()

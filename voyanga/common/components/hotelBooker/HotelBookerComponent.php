@@ -16,6 +16,7 @@ class HotelBookerComponent extends CApplicationComponent
     {
         Yii::setPathOfAlias('hotelBooker', realpath(dirname(__FILE__)));
         Yii::import('hotelBooker.actions.*');
+        Yii::import('hotelBooker.models.*');
         Yii::import('hotelBooker.*');
     }
 
@@ -28,8 +29,8 @@ class HotelBookerComponent extends CApplicationComponent
     {
         if ($this->hotelBooker==null)
         {
-            $id = Yii::app()->user->getState('flightVoyageId');
-            $this->hotelBooker = HotelBooker::model()->findByAttributes(array('flightVoyageId'=>$id));
+            $id = Yii::app()->user->getState('hotelResultKey');
+            $this->hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey'=>$id));
         }
         return $this->hotelBooker;
     }
@@ -48,24 +49,24 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function book()
     {
-        //if we don't have a flight OR we moved to another flight
-        if ($this->getCurrent()==null || ($this->getCurrent()->flightVoyage->id != $this->hotel->getId()))
+        //if we don't have a hotel OR we moved to another hotel
+        if ($this->getCurrent()==null || ($this->getCurrent()->hotel->id != $this->hotel->getId()))
         {
-            //if we don't have a flight AND we moved to another flight
-            if (($this->getCurrent()!=null) and $this->getCurrent()->flightVoyage->id != $this->hotel->getId())
+            //if we don't have a hotel AND we moved to another hotel
+            if (($this->getCurrent()!=null) and $this->getCurrent()->hotel->id != $this->hotel->getId())
             {
-                $this->hotelBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->hotel->getId()));
+                $this->hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey'=>$this->hotel->getId()));
             }
             if ($this->hotelBooker == null)
             {
-                $this->hotelBooker = new FlightBooker();
-                $this->hotelBooker->flightVoyageId = $this->hotel->getId();
-                $this->hotelBooker->flightVoyage = $this->hotel;
+                $this->hotelBooker = new HotelBooker();
+                $this->hotelBooker->hotelResultKey = $this->hotel->getId();
+                $this->hotelBooker->hotel = $this->hotel;
             }
         }
         $this->hotelBooker->status = 'enterCredentials';
         $this->hotelBooker->save();
-        Yii::app()->user->setState('flightVoyageId', $this->hotelBooker->flightVoyage->id);
+        Yii::app()->user->setState('hotelResultKey', $this->hotelBooker->hotel->id);
     }
 
     public function status($newStatus)

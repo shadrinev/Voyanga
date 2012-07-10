@@ -11,28 +11,46 @@ class Engine extends CAction
     public function run($key)
     {
         $parts = explode('_', $key);
-        $searchKey = $parts[0];
+        $cacheId = $parts[0];
         $searchId = $parts[1];
-        $flightVoyage = FlightVoyage::getFromCache($searchKey, $searchId);
-        if(!$flightVoyage)
+        $resultId = $parts[2];
+        $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
+        if (!$resultSearch)
+            throw new CHttpException(500, 'You request expired');
+        $foundedHotel = null;
+        foreach ($resultSearch['hotels'] as $hotel)
         {
-            $flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>'flight_voyage_'.$key));
-            if($flightBooker)
+            if ($hotel->resultId == $resultId)
             {
-                $flightVoyage = unserialize($flightBooker->flight_voyage);
+                $foundedHotel = $hotel;
+                $foundedHotel->cacheId = $cacheId;
+                break;
             }
         }
+
+        if(!$foundedHotel)
+        {
+            $hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey'=>'hotel_key_'.$key));
+            if($hotelBooker)
+            {
+                $foundedHotel = unserialize($hotelBooker->hotelInfo);
+                $foundedHotel->cacheId = $cacheId;
+            }
+        }
+
         //VarDumper::dump($flightVoyage);die();
-        Yii::app()->flightBooker->flightVoyage = $flightVoyage;
-        if (Yii::app()->flightBooker->getCurrent()==null)
-            Yii::app()->flightBooker->book();
-        $status = Yii::app()->flightBooker->current->swGetStatus()->getId();
+        Yii::app()->hotelBooker->hotel = $foundedHotel;
+
+        if (Yii::app()->hotelBooker->getCurrent()==null)
+            Yii::app()->hotelBooker->book();
+
+        $status = Yii::app()->hotelBooker->current->swGetStatus()->getId();
         $actionName = 'stage'.ucfirst($status);
         if ($action = $this->getController()->createAction($actionName))
         {
             $action->execute();
         }
         else
-            Yii::app()->flightBooker->$actionName();
+            Yii::app()->hotelBooker->$actionName();
     }
 }

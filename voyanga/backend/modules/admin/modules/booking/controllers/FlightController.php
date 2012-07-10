@@ -63,7 +63,7 @@ class FlightController extends ABaseAdminController
             $valid = false;
         }
 
-        $passport = new PassportForm();
+        $passport = new AviaPassportForm();
         if(isset($_POST['PassportForm']))
         {
             $passport->attributes=$_POST['PassportForm'];
