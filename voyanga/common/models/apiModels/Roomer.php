@@ -13,6 +13,7 @@ class Roomer
     public $lastName;
     public $fullName;
     public $age;
+    /** @var unique id of room among whole request */
     public $roomId;
 
     public function setFromHotelBookingPassport(HotelBookingPassport $passport)
