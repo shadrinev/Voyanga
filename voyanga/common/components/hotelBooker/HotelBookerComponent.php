@@ -101,13 +101,14 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageBooking()
     {
-        //TODO: подгрузить паспорта из HotelBooker
 
         $hotelOrderParams = new HotelOrderParams();
         $hotelOrderParams->hotel = $this->hotel;
         foreach($this->hotelBooker->hotelBookingPassports as $passport)
         {
-            $hotelOrderParams->roomers = $passport;
+            $roomer = new Roomer();
+            $roomer->setFromHotelBookingPassport($passport);
+            $hotelOrderParams->roomers[] = $roomer;
         }
         $hotelOrderParams->contactPhone = $this->hotelBooker->orderBooking->phone;
         $hotelOrderParams->contactEmail = $this->hotelBooker->orderBooking->email;
@@ -118,7 +119,12 @@ class HotelBookerComponent extends CApplicationComponent
             $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
             if(!$orderInfo->error)
             {
-                //TODO: добавить задание на переход в состояние bookingTimeLimitError
+
+                $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooking','ChangeState',array('hotelBookerId'=>$this->hotelBooker->id,'newState'=>'bookingTimeLimitError'));
+                $this->hotelBooker->saveTaskInfo('timeLimitError',$res);
+
+
+
                 $this->status('softWaitingForPayment');
             }
             else
@@ -136,6 +142,7 @@ class HotelBookerComponent extends CApplicationComponent
     public function stageSoftWaitingForPayment()
     {
         //переход в SoftStartPayment, если достаточно времени.
+        //Написать aciton клика по кнопке и там проверки условия для перехода
     }
 
     public function stageBookingError()
@@ -145,12 +152,12 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageSoftStartPayment()
     {
-        //TODO: добавить задание на переход в состояние softWaitingForPayment
         if(($this->hotel->cancelExpiration - time()) > appParams('hotel_payment_time'))
         {
-            $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooker','ChangeState',array('hotelBookerId'=>$this->hotelBooker->id,'state'=>'softWaitingForPayment'));
+            $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooker','ChangeState',array('hotelBookerId'=>$this->hotelBooker->id,'newState'=>'softWaitingForPayment'));
             if($res)
             {
+                $this->hotelBooker->saveTaskInfo('paymentTimeLimit',$res);
                 return true;
             }
         }
@@ -216,21 +223,31 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageHardStartPayment()
     {
-        //TODO: поставить в очередь hardWaitingForPayment
+        $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooking','ChangeState',array('hotelBookerId'=>$this->hotelBooker->id,'newState'=>'hardWaitingForPayment'));
+        if($res)
+        {
+            $this->hotelBooker->saveTaskInfo('hardPaymentTimeLimit',$res);
+        }
 
     }
 
     public function stageTicketing()
     {
         $hotelOrderParams = new HotelOrderParams();
-        //TODO: подгрузить паспорта из HotelBooker
+
         $hotelOrderParams->hotel = $this->hotel;
+        foreach($this->hotelBooker->hotelBookingPassports as $passport)
+        {
+            $roomer = new Roomer();
+            $roomer->setFromHotelBookingPassport($passport);
+            $hotelOrderParams->roomers[] = $roomer;
+        }
         $hotelBookClient = new HotelBookClient();
         $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
         if($orderInfo->orderId)
         {
             $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
-            if(!$orderInfo->error)
+            if(!$confirmInfo->error)
             {
                 //TODO: добавить задание на переход в состояние bookingTimeLimitError
                 $this->status('ticketReady');
@@ -310,6 +327,7 @@ class HotelBookerComponent extends CApplicationComponent
     public function stageMoneyReturn()
     {
         //TODO: Процедура разморозки платежа
+        //
     }
 
     public function stageManualError()

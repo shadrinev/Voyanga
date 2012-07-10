@@ -14,4 +14,16 @@ class Roomer
     public $fullName;
     public $age;
     public $roomId;
+
+    public function setFromHotelBookingPassport(HotelBookingPassport $passport)
+    {
+        $this->firstName = $passport->firstName;
+        $this->lastName = $passport->lastName;
+        $bd=new DateTime($passport->birthday);
+        $dnow=new DateTime();
+        $diff=$dnow->diff($bd);
+        $this->age = $diff['y'];
+        $this->genderId = $passport->genderId;
+
+    }
 }

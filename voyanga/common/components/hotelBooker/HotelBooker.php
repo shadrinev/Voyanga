@@ -70,7 +70,10 @@ class HotelBooker extends SWActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'timestamp',
                 'updateAttribute' => 'updated',
-            )
+            ),
+            'CronTask'=>array(
+                'class' => 'site.common.components.cron.CronTaskBehavior',
+            ),
         );
     }
 

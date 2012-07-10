@@ -16,7 +16,7 @@ class GDSNemoAgency extends CComponent
      */
     private static function request($methodName, $params, $cache = true, $expiration = 120)
     {
-        $methodMap = array('Search'=>'SearchFlights','BookFlight'=>'BookFlight','Ticketing'=>'Ticketing');
+        $methodMap = array('Search'=>'SearchFlights','BookFlight'=>'BookFlight','Ticketing'=>'Ticketing','AirAvail'=>'AirAvail');
         $wsdl = $methodMap[$methodName];
         $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'].$wsdl, array('trace' => Yii::app()->params['GDSNemo']['trace'], 'exceptions' => true,
         ));
@@ -545,23 +545,42 @@ class GDSNemoAgency extends CComponent
         return $soapResponse;
     }
 
-    public function checkFlight()
+    /**
+     * Function return true if Flight with $flightId is available or false if unavailable. Null if undefined.
+     * что возвращать когда результат неизвестен? null?
+     * @return boolean
+     *
+     */
+    public function checkFlight($flightId)
     {
-        $aParams = array(
-            'Request' => array(
-                'AirAvail' => array(
-                    'FlightId' => 534733
+        if($flightId)
+        {
+            $aParams = array(
+                'Request' => array(
+                    'AirAvail' => array(
+                        'FlightId' => $flightId
+                    ),
+
                 ),
                 'Source' => array(
-                    'ClientId' => 102,
-                    'APIKey' => '7F48365D42B73307C99C12A578E92B36',
-                    'Language' => 'UA',
+                    'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
+                    'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                    'Language' => 'RU',
                     'Currency' => 'RUB'
                 )
-            )
-        );
+            );
 
-        print_r(self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0));
+            $response = self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0);
+            if(isset($response->AirAvail->IsAvail) )
+            {
+                return $response->AirAvail->IsAvail;
+            }
+            else
+            {
+                return null;
+            }
+
+        }else return null;
     }
 
     public function FlightTicketing(FlightTicketingParams $flightTicketingRequest)
