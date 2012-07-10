@@ -17,10 +17,22 @@ class EnterCredentials extends StageAction
         {
             $form->addRoom($room->adults, $room->childCount);
         }
-       /* if (isset($_POST['HotelPassportForm']))
+        if (isset($_POST['BookingForm']))
         {
-            $form->attributes =
-        }*/
+            $form->bookingForm->attributes = $_POST['BookingForm'];
+        }
+        if (isset($_POST['HotelAdultPassportForm']))
+        {
+            foreach($_POST['HotelAdultPassportForm'] as $i=>$adults)
+            {
+                foreach ($adults as $j=>$adultInfo)
+                {
+                    $form->roomsPassports[$i]->adultsPassports[$j]->attributes = $adultInfo;
+                }
+            }
+
+        }
+        VarDumper::dump($form);
         $this->getController()->render('hotelBooker.views.enterCredentials', array('model'=>$form));
     }
 }

@@ -2,42 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="24678fe3-150a-4276-951e-cd23ef51001e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/hotelBooker/models" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/models/formModels" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/hotelBooker/models/HotelPassportForm.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/components/hotelBooker/models/RoomPassportForm.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/models/formModels/BasePassportForm.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/models/formModels/HotelAdultPassportForm.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/models/formModels/HotelChildPassportForm.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/models/workflows/swHotelBooker.php" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\frontend\modules\booking\controllers\TourController.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\public_html\branches" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\public_html\tags" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\public_html\trunk" afterPath="" />
-      <change type="DELETED" beforePath="C:\WebServers\home\voyanga\public_html" afterPath="" />
-      <change type="MOVED" beforePath="C:\WebServers\home\voyanga\common\models\BookingForm.php" afterPath="$PROJECT_DIR$/common/models/formModels/BookingForm.php" />
-      <change type="MOVED" beforePath="C:\WebServers\home\voyanga\common\models\PassportForm.php" afterPath="$PROJECT_DIR$/common/models/formModels/AviaPassportForm.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php" afterPath="$PROJECT_DIR$/backend/modules/admin/modules/booking/controllers/FlightController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/flightBooker/FlightBookerBehavior.php" afterPath="$PROJECT_DIR$/common/components/flightBooker/FlightBookerBehavior.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/flightBooker/actions/EnterCredentials.php" afterPath="$PROJECT_DIR$/common/components/flightBooker/actions/EnterCredentials.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/hotelBooker/HotelBookerComponent.php" afterPath="$PROJECT_DIR$/common/components/hotelBooker/HotelBookerComponent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/hotelBooker/actions/Engine.php" afterPath="$PROJECT_DIR$/common/components/hotelBooker/actions/Engine.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/hotelBooker/actions/EnterCredentials.php" afterPath="$PROJECT_DIR$/common/components/hotelBooker/actions/EnterCredentials.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/components/hotelBooker/views/enterCredentials.php" afterPath="$PROJECT_DIR$/common/components/hotelBooker/views/enterCredentials.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/config/main.php" afterPath="$PROJECT_DIR$/common/config/main.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/Hotel.php" afterPath="$PROJECT_DIR$/common/models/Hotel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/HotelRoom.php" afterPath="$PROJECT_DIR$/common/models/HotelRoom.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/HotelStack.php" afterPath="$PROJECT_DIR$/common/models/HotelStack.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/controllers/SiteController.php" afterPath="$PROJECT_DIR$/frontend/controllers/SiteController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/booking/controllers/FlightController.php" afterPath="$PROJECT_DIR$/frontend/modules/booking/controllers/FlightController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/booking/controllers/HotelController.php" afterPath="$PROJECT_DIR$/frontend/modules/booking/controllers/HotelController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/booking/views/hotel/_hotels_recommended.php" afterPath="$PROJECT_DIR$/frontend/modules/booking/views/hotel/_hotels_recommended.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/booking/views/hotel/result.php" afterPath="$PROJECT_DIR$/frontend/modules/booking/views/hotel/result.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/modules/tour/controllers/ConstructorController.php" afterPath="$PROJECT_DIR$/frontend/modules/tour/controllers/ConstructorController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/www/themes/v1/views/layouts/main.php" afterPath="$PROJECT_DIR$/frontend/www/themes/v1/views/layouts/main.php" />
-      <change type="MOVED" beforePath="C:\WebServers\home\voyanga\common\new_voyanga.mwb" afterPath="$PROJECT_DIR$/db/new_voyanga.mwb" />
     </list>
     <list id="d9f9346d-f8e1-4fb2-9226-eca39bb92aa6" name="Failed commit: Default" comment="start work on Yii-blocks user" />
     <list id="1d114c77-db57-4b00-9eae-8d472cf4d129" name="Revert: start work on Yii-blocks user" comment="Revert: start work on Yii-blocks user" />
@@ -64,10 +30,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EnterCredentials.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="EnterCredentials.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/EnterCredentials.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="49" selection-start="540" selection-end="540" vertical-scroll-proportion="-4.25">
+            <state line="30" column="17" selection-start="947" selection-end="947" vertical-scroll-proportion="0.65806454">
               <folding />
             </state>
           </provider>
@@ -82,10 +48,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Engine.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Engine.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/Engine.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="55" selection-start="1538" selection-end="1538" vertical-scroll-proportion="0.7115151">
+            <state line="48" column="55" selection-start="1538" selection-end="1538" vertical-scroll-proportion="-22.576923">
               <folding />
             </state>
           </provider>
@@ -94,7 +60,7 @@
       <file leaf-file-name="enterCredentials.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/views/enterCredentials.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="53" selection-start="1324" selection-end="1324" vertical-scroll-proportion="-22.884615">
+            <state line="28" column="44" selection-start="695" selection-end="695" vertical-scroll-proportion="-16.346153">
               <folding />
             </state>
           </provider>
@@ -139,7 +105,7 @@
       <file leaf-file-name="HotelPassportForm.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/models/HotelPassportForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="29" selection-start="511" selection-end="511" vertical-scroll-proportion="-15.038462">
+            <state line="9" column="18" selection-start="180" selection-end="180" vertical-scroll-proportion="-5.8846154">
               <folding />
             </state>
           </provider>
@@ -148,7 +114,7 @@
       <file leaf-file-name="RoomPassportForm.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/models/RoomPassportForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="19" selection-start="180" selection-end="180" vertical-scroll-proportion="-5.8846154">
+            <state line="7" column="6" selection-start="123" selection-end="123" vertical-scroll-proportion="-4.576923">
               <folding />
             </state>
           </provider>
@@ -1372,7 +1338,11 @@
       <created>1341564865106</created>
       <updated>1341564865106</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="work on UI for avia wf">
+      <created>1341915028106</created>
+      <updated>1341915028106</updated>
+    </task>
+    <option name="localTasksCounter" value="148" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1437,7 +1407,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="improve frontend" />
+    <option name="LAST_COMMIT_MESSAGE" value="work on UI for avia wf" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1450,7 +1420,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="test workflows" />
     <MESSAGE value="working on test of avia workflow" />
     <MESSAGE value="working on booking from admin zone" />
     <MESSAGE value="search flight" />
@@ -1475,6 +1444,7 @@
     <MESSAGE value="work on frontend" />
     <MESSAGE value="improve constructor" />
     <MESSAGE value="improve frontend" />
+    <MESSAGE value="work on UI for avia wf" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1548,20 +1518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/models/HotelPassportForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="29" selection-start="511" selection-end="511" vertical-scroll-proportion="-15.038462">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/models/RoomPassportForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="19" selection-start="180" selection-end="180" vertical-scroll-proportion="-5.8846154">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/models/formModels/HotelChildPassportForm.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="16" selection-start="124" selection-end="124" vertical-scroll-proportion="-4.576923">
@@ -1569,16 +1525,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/views/enterCredentials.php">
+    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/Engine.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="53" selection-start="1324" selection-end="1324" vertical-scroll-proportion="-22.884615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/EnterCredentials.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="49" selection-start="540" selection-end="540" vertical-scroll-proportion="-4.25">
+        <state line="48" column="55" selection-start="1538" selection-end="1538" vertical-scroll-proportion="-22.576923">
           <folding />
         </state>
       </provider>
@@ -1590,9 +1539,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/Engine.php">
+    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/views/enterCredentials.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="55" selection-start="1538" selection-end="1538" vertical-scroll-proportion="0.7115151">
+        <state line="28" column="44" selection-start="695" selection-end="695" vertical-scroll-proportion="-16.346153">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/models/RoomPassportForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="6" selection-start="123" selection-end="123" vertical-scroll-proportion="-4.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/models/HotelPassportForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="18" selection-start="180" selection-end="180" vertical-scroll-proportion="-5.8846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/EnterCredentials.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="17" selection-start="947" selection-end="947" vertical-scroll-proportion="0.65806454">
           <folding />
         </state>
       </provider>
