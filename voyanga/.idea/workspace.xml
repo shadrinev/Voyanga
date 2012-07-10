@@ -33,7 +33,16 @@
       <file leaf-file-name="EnterCredentials.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/EnterCredentials.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="17" selection-start="947" selection-end="947" vertical-scroll-proportion="0.65806454">
+            <state line="45" column="43" selection-start="1441" selection-end="1441" vertical-scroll-proportion="0.80258065">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SoftStartPaymentAction.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/SoftStartPaymentAction.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="45" selection-start="357" selection-end="357" vertical-scroll-proportion="-9.153846">
               <folding />
             </state>
           </provider>
@@ -79,15 +88,6 @@
         <entry file="file://$PROJECT_DIR$/common/models/HotelStack.php">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="5.8846154">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AviaPassportForm.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/models/formModels/AviaPassportForm.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="55" selection-start="1278" selection-end="1321" vertical-scroll-proportion="-23.23077">
               <folding />
             </state>
           </provider>
@@ -1342,7 +1342,11 @@
       <created>1341915028106</created>
       <updated>1341915028106</updated>
     </task>
-    <option name="localTasksCounter" value="148" />
+    <task id="LOCAL-00148" summary="work on UI for avia wf">
+      <created>1341915581106</created>
+      <updated>1341915581106</updated>
+    </task>
+    <option name="localTasksCounter" value="149" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1450,13 +1454,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/config/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="32" selection-start="614" selection-end="614" vertical-scroll-proportion="-9.807693">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/models/formModels/BasePassportForm.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="0" selection-start="861" selection-end="861" vertical-scroll-proportion="-23.538462">
@@ -1560,9 +1557,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/SoftStartPaymentAction.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="45" selection-start="357" selection-end="357" vertical-scroll-proportion="-9.153846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/common/components/hotelBooker/actions/EnterCredentials.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="17" selection-start="947" selection-end="947" vertical-scroll-proportion="0.65806454">
+        <state line="45" column="43" selection-start="1441" selection-end="1441" vertical-scroll-proportion="0.80258065">
           <folding />
         </state>
       </provider>

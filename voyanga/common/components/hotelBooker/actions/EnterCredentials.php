@@ -20,6 +20,7 @@ class EnterCredentials extends StageAction
         if (isset($_POST['BookingForm']))
         {
             $form->bookingForm->attributes = $_POST['BookingForm'];
+            $valid = $valid & $form->bookingForm->validate();
         }
         if (isset($_POST['HotelAdultPassportForm']))
         {
@@ -32,7 +33,17 @@ class EnterCredentials extends StageAction
             }
 
         }
-        VarDumper::dump($form);
+        if (isset($_POST['HotelChildPassportForm']))
+        {
+            foreach($_POST['HotelChildPassportForm'] as $i=>$children)
+            {
+                foreach ($children as $j=>$childrenInfo)
+                {
+                    $form->roomsPassports[$i]->childrenPassports[$j]->attributes = $childrenInfo;
+                }
+            }
+        }
+        VarDumper::dump($form->attributes);
         $this->getController()->render('hotelBooker.views.enterCredentials', array('model'=>$form));
     }
 }
