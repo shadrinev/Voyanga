@@ -24,7 +24,7 @@ return CMap::mergeArray(
         'params'  => $params,
         'language' => 'ru',
         'theme' => 'v1',
-        'defaultController' => 'tour',
+        'defaultController' => 'booking',
         'preload' => array(
             'log',
             'bootstrap'

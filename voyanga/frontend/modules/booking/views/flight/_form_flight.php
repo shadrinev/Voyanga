@@ -69,7 +69,7 @@
             'buttonType'=>'submit',
             'type'=>'primary',
             'label'=>'Поиск перелёта',
-            'htmlOptions'=>array('id'=>'searchFlight', 'data-toggle'=>'modal')
+            'htmlOptions'=>array('id'=>'searchFlight')
         )); ?>
     </div>
 
@@ -101,6 +101,7 @@
 
 <?php Yii::app()->clientScript->registerScript('flight-search', "
     $('#searchFlight,#repeatFlightSearch').live('click', function(){
+        $('#popupInfo').modal('show');
         $('#modalText').html('Поиск перелёта...');
         $.getJSON('/tour/constructor/flightSearch', $('#flight-form').serialize())
         .done(function(data) {
@@ -111,7 +112,7 @@
         })
         .fail(function(data){
             console.log(data);
-            $('#modalText').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.Текст ошибки:'+data.responseText+'</div>');
+            $('#modalText').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.<br>Текст ошибки:<br>'+data.responseText+'</div>');
         });
         return false;
     });

@@ -1,6 +1,6 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
     //'type' =>'search',
-    'id'=>'hotel-form',
+    'id'=>'constructor-hotel-form',
     'clientOptions' => array(
         'validateOnSubmit' => true,
     ),

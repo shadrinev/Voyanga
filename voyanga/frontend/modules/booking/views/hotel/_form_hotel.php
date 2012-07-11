@@ -1,3 +1,4 @@
+<?php $prefix = $this->getModule()->getId().'_';?>
 <?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
     //'type' =>'search',
     'id'=>'hotel-form',

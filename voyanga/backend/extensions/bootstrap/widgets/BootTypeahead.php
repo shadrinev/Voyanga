@@ -40,7 +40,7 @@ class BootTypeahead extends CWidget
 	 */
 	public function run()
 	{
-		$id = $this->id;
+		$id = $this->htmlOptions['id'];
 
 		echo CHtml::tag('input', $this->htmlOptions);
 
