@@ -42,4 +42,9 @@ class GDSAdapter extends CApplicationComponent
     {
 
     }
+
+    public function cancelBooking($bookingId)
+    {
+
+    }
 }

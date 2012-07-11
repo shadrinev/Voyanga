@@ -64,7 +64,8 @@ EOD;
             if($newState)
             {
                 $hotelBookerComponent->status($newState);
-                echo "changed\n";
+
+                echo "Status is ".$hotelBookerComponent->getStatus()."\n";
             }
         }
         else

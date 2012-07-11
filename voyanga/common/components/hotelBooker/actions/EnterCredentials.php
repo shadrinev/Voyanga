@@ -10,7 +10,7 @@ class EnterCredentials extends StageAction
 {
     public function execute()
     {
-        $valid = true;
+        $valid = false;
         $rooms = Yii::app()->hotelBooker->getCurrent()->hotel->rooms;
         $form = new HotelPassportForm();
         foreach ($rooms as $room)
@@ -19,6 +19,7 @@ class EnterCredentials extends StageAction
         }
         if (isset($_POST['BookingForm']))
         {
+            $valid = true;
             $form->bookingForm->attributes = $_POST['BookingForm'];
             $valid = $valid & $form->bookingForm->validate();
         }
@@ -44,6 +45,29 @@ class EnterCredentials extends StageAction
             }
         }
         VarDumper::dump($form->attributes);
+        if($valid)
+        {
+            /** @var HotelBookerComponent $hotelBookerComponent  */
+            $hotelBookerComponent = Yii::app()->hotelBooker;
+            $hotelBookerComponent->book();
+            $hotelBookerId = $hotelBookerComponent->getHotelBookerId();
+            foreach($form->attributes['roomsPassports'] as $i=>$room)
+            {
+                foreach($form->attributes['roomsPassports'][$i]['adultsPassports'] as $adultInfo)
+                {
+                    $hotelPassport = new HotelBookingPassport();
+                    //VarDumper::dump($adultInfo);die();
+                    $hotelPassport->attributes = $adultInfo->attributes;
+                    $hotelPassport->hotelBookingId = $hotelBookerId;
+                    $hotelPassport->roomKey = $i;
+                    $hotelPassport->save();
+
+                }
+            }
+
+
+        }
+
         $this->getController()->render('hotelBooker.views.enterCredentials', array('model'=>$form));
     }
 }

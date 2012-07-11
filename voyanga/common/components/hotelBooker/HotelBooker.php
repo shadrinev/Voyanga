@@ -93,7 +93,7 @@ class HotelBooker extends SWActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id', 'required'),
+            //array('id', 'required'),
             array('id, orderBookingId', 'numerical', 'integerOnly'=>true),
             array('orderId', 'length', 'max'=>45),
             array('status', 'SWValidator'),

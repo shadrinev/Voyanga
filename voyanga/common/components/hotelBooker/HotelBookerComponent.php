@@ -18,6 +18,7 @@ class HotelBookerComponent extends CApplicationComponent
         Yii::import('hotelBooker.actions.*');
         Yii::import('hotelBooker.models.*');
         Yii::import('hotelBooker.*');
+        Yii::import('site.common.modules.hotel.models.*');
     }
 
     public function setHotel($value)
@@ -66,6 +67,11 @@ class HotelBookerComponent extends CApplicationComponent
         }
         $this->hotelBooker->status = 'enterCredentials';
         $this->hotelBooker->save();
+        VarDumper::dump($this->hotelBooker->getErrors());
+        if(!$this->hotelBooker->id)
+        {
+            $this->hotelBooker->id = $this->hotelBooker->primaryKey;
+        }
         Yii::app()->user->setState('hotelResultKey', $this->hotelBooker->hotel->id);
     }
 
@@ -83,7 +89,9 @@ class HotelBookerComponent extends CApplicationComponent
     public function stageAnalyzing()
     {
         $hotelBookClient = new HotelBookClient();
+
         $hotelBookClient->hotelSearchDetails($this->hotel);
+        print_r($this->hotel);
         $this->hotelBooker->hotel = $this->hotel;
         if(($this->hotel->cancelExpiration - time()) > (appParams('hotel_payment_time')*2) )
         {
@@ -350,6 +358,7 @@ class HotelBookerComponent extends CApplicationComponent
     {
         $this->hotelBooker = HotelBooker::model()->findByPk($hotelBookerId);
         if(!$this->hotelBooker) throw new CException('HotelBooker with id '.$hotelBookerId.' not found');
+        $this->hotel = unserialize($this->hotelBooker->hotelInfo);
     }
 
     public function getHotelBookerId()

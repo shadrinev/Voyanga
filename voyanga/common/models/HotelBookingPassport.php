@@ -11,6 +11,7 @@
  * @property integer $hotelBookingId
  * @property integer $countryId
  * @property integer $genderId
+ * @property integer $roomKey
  * @property string $timestamp
  *
  * The followings are the available model relations:
@@ -45,7 +46,7 @@ class HotelBookingPassport extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('hotelBookingId, countryId, genderId', 'numerical', 'integerOnly'=>true),
+            array('hotelBookingId, countryId, genderId, roomKey', 'numerical', 'integerOnly'=>true),
             array('firstName, lastName, birthday', 'length', 'max'=>45),
             array('timestamp', 'safe'),
             // The following rule is used by search().
@@ -102,6 +103,7 @@ class HotelBookingPassport extends CActiveRecord
         $criteria->compare('hotelBookingId',$this->hotelBookingId);
         $criteria->compare('countryId',$this->countryId);
         $criteria->compare('genderId',$this->genderId);
+        $criteria->compare('roomKey',$this->genderId);
         $criteria->compare('timestamp',$this->timestamp,true);
 
         return new CActiveDataProvider($this, array(
