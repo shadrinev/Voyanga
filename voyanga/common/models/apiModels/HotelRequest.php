@@ -32,7 +32,7 @@ class HotelRequest extends EMongoDocument // Notice: We extend EMongoDocument cl
     public function rules()
     {
         return array(
-            array('requestXml', 'required'),
+            array('requestUrl', 'required'),
             array('requestNum, methodName, timestamp', 'safe'),
             //array('requestNum', 'numeric', 'integerOnly' => true),
         );

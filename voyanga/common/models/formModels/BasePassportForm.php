@@ -7,7 +7,6 @@
  */
 class BasePassportForm extends CFormModel
 {
-    public $id;
     public $firstName;
     public $lastName;
 

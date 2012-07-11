@@ -6,9 +6,9 @@
  * Time: 17:16
  * To change this template use File | Settings | File Templates.
  */
-class SoftStartPaymentAction extends CAction
+class SoftStartPaymentAction extends StageAction
 {
-    public function run()
+    public function execute()
     {
         //TODO: need testing possibility go to state startPaymentAction
 

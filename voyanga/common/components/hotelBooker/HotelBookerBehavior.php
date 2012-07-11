@@ -40,6 +40,7 @@ class HotelBookerBehavior extends CBehavior
         $parts = explode('_', $key);
         $searchKey = $parts[0];
         $searchId = $parts[1];
+        echo "INNN BUY";die();
         $flightVoyage = FlightVoyage::getFromCache($searchKey, $searchId);
         Yii::app()->flightBooker->flightVoyage = $flightVoyage;
         if (Yii::app()->flightBooker->getCurrent()==null)

@@ -14,7 +14,7 @@
  * @property string $timestamp
  *
  * The followings are the available model relations:
- * @property Booking $orderBooking
+ * @property OrderBooking $orderBooking
  * @property HotelBookingPassport[] $hotelBookingPassports
  */
 class HotelBooker extends SWActiveRecord
@@ -170,7 +170,7 @@ class HotelBooker extends SWActiveRecord
             }
             else
             {
-                $element = unserialize($this->hotel);
+                $element = unserialize($this->hotelInfo);
                 $this->_hotel = $element;
             }
         }

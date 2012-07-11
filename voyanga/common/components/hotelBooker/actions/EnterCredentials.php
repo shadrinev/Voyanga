@@ -12,6 +12,7 @@ class EnterCredentials extends StageAction
     {
         $valid = false;
         $rooms = Yii::app()->hotelBooker->getCurrent()->hotel->rooms;
+        VarDumper::dump($rooms);
         $form = new HotelPassportForm();
         foreach ($rooms as $room)
         {
@@ -64,6 +65,7 @@ class EnterCredentials extends StageAction
 
                 }
             }
+
 
 
         }

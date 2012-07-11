@@ -17,6 +17,9 @@ class HotelController extends FrontendController
             ),
             'stageEnterCredentials' => array(
                 'class' => 'common.components.hotelBooker.actions.EnterCredentials',
+            ),
+            'stageSoftWaitingForPayment' => array(
+                'class' => 'common.components.hotelBooker.actions.SoftWaitingForPayment',
             )
         );
     }
@@ -24,6 +27,7 @@ class HotelController extends FrontendController
     public function actionIndex($isTab=false)
     {
         Yii::import('site.common.modules.hotel.models.*');
+
         $hotelForm = new HotelForm;
         if(isset($_POST['ajax']) && $_POST['ajax']==='hotel-form')
         {

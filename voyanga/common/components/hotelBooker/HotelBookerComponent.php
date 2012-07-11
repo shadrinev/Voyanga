@@ -44,7 +44,7 @@ class HotelBookerComponent extends CApplicationComponent
     public function getStatus()
     {
         if ($this->hotelBooker!=null)
-            return $this->hotelBooker->status;
+            return $this->hotelBooker->swGetStatus();
         return 'search';
     }
 
@@ -78,7 +78,8 @@ class HotelBookerComponent extends CApplicationComponent
     public function status($newStatus)
     {
         $this->hotelBooker->status = $newStatus;
-        $this->hotelBooker->save();
+
+        return $this->hotelBooker->save();
     }
 
     public function stageEnterCredentials()
@@ -110,41 +111,63 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageBooking()
     {
-
+        echo "innn booking";
         $hotelOrderParams = new HotelOrderParams();
         $hotelOrderParams->hotel = $this->hotel;
+        $contactName = '';
         foreach($this->hotelBooker->hotelBookingPassports as $passport)
         {
             $roomer = new Roomer();
             $roomer->setFromHotelBookingPassport($passport);
+            $roomer->roomId = $passport->roomKey;
+            if(!$contactName)
+                $contactName = $roomer->fullName;
             $hotelOrderParams->roomers[] = $roomer;
         }
         $hotelOrderParams->contactPhone = $this->hotelBooker->orderBooking->phone;
         $hotelOrderParams->contactEmail = $this->hotelBooker->orderBooking->email;
+        $hotelOrderParams->contactName = $contactName;
         $hotelBookClient = new HotelBookClient();
-        $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
+        if($this->hotelBooker->orderId){
+            $orderInfo = new HotelOrderResponse();
+            $orderInfo->orderId = $this->hotelBooker->orderId;
+        }else{
+            $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
+        }
+
+
+
         if($orderInfo->orderId)
         {
+            $this->hotelBooker->orderId = $orderInfo->orderId;
+            //$this->hotelBooker->save();
             $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
+            CVarDumper::dump($confirmInfo);
             if(!$orderInfo->error)
             {
 
                 $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooking','ChangeState',array('hotelBookerId'=>$this->hotelBooker->id,'newState'=>'bookingTimeLimitError'));
                 $this->hotelBooker->saveTaskInfo('timeLimitError',$res);
 
+                $waitStatus = $this->status('softWaitingForPayment');
 
-
-                $this->status('softWaitingForPayment');
+                echo "wait";CVarDumper::dump($waitStatus);
+                if(!$waitStatus)
+                {
+                    CVarDumper::dump($this->hotelBooker->getErrors());
+                }
             }
             else
             {
                 $this->status('bookingError');
+                echo "error";
             }
 
         }
         else
         {
             $this->status('bookingError');
+            echo "error2";
         }
     }
 

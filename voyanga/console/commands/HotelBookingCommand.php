@@ -63,7 +63,8 @@ EOD;
 
             if($newState)
             {
-                $hotelBookerComponent->status($newState);
+                $res = $hotelBookerComponent->status($newState);
+                if(!$res) CVarDumper::dump($hotelBookerComponent->getCurrent()->getErrors());
 
                 echo "Status is ".$hotelBookerComponent->getStatus()."\n";
             }

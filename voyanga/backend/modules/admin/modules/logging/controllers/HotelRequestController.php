@@ -39,6 +39,7 @@ class HotelRequestController extends Controller
         $retArr['methodName'] = $model->methodName;
         $retArr['requestXml'] = $widget->highlight($model->requestXml);
         $retArr['responseXml'] = $widget->highlight($model->responseXml);
+        $retArr['requestUrl'] = $model->requestUrl;
         $retArr['timestamp'] = date("Y-m-d H:i:s",$model->timestamp);
         $retArr['executionTime'] = Yii::app()->format->formatNumber($model->executionTime);
         $retArr['errorDescription'] = $model->errorDescription;

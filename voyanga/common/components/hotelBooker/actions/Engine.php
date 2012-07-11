@@ -10,13 +10,17 @@ class Engine extends CAction
 {
     public function run($key)
     {
+        //echo "INNN runnn";
         $parts = explode('_', $key);
         $cacheId = $parts[0];
         $searchId = $parts[1];
         $resultId = $parts[2];
         $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
+        //TODO: need working without cache, if state more then enterCredentials
+
         if (!$resultSearch)
             throw new CHttpException(500, 'You request expired');
+
         $foundedHotel = null;
         foreach ($resultSearch['hotels'] as $hotel)
         {
@@ -38,6 +42,7 @@ class Engine extends CAction
             }
         }
 
+
         //VarDumper::dump($flightVoyage);die();
         Yii::app()->hotelBooker->hotel = $foundedHotel;
 
@@ -46,6 +51,8 @@ class Engine extends CAction
 
         $status = Yii::app()->hotelBooker->current->swGetStatus()->getId();
         $actionName = 'stage'.ucfirst($status);
+        //VarDumper::dump($actionName);//echo "INN";die();
+        //VarDumper::dump($this->getController());
         if ($action = $this->getController()->createAction($actionName))
         {
             $action->execute();

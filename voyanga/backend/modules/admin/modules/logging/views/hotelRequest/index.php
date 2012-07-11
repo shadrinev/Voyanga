@@ -86,6 +86,7 @@ Yii::app()->clientScript->registerScript('loadRequestInfo','
             console.log(data);
             textHtml = "";
             textHtml = textHtml + "<p>Метод:"+data.methodName+"</p>";
+            textHtml = textHtml + "<p>Url запроса:"+data.requestUrl+"</p>";
             textHtml = textHtml + "<p>Время отправки запроса:"+data.timestamp+"</p>";
             textHtml = textHtml + "<p>XML запроса:</p>";
             textHtml = textHtml + data.requestXml;

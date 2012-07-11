@@ -21,6 +21,7 @@ if(isset($config))
 else
 	$app=Yii::createConsoleApplication(array('basePath'=>dirname(__FILE__).'/cli'));
 
+require_once('common/components/shortcuts.php');
 $app->run();
 /* Below - the old version of this file*/
 /*

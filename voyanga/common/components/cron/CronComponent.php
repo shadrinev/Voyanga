@@ -10,6 +10,12 @@ class CronComponent extends CApplicationComponent
     public $executor = 'yiic';
     public $executorPath = '/srv/www/misha.voyanga/public_html/';
 
+    public function init()
+    {
+        Yii::setPathOfAlias('cron', realpath(dirname(__FILE__)));
+        Yii::import('cron.*');
+    }
+
     /**
      * @param $time
      * @param $command

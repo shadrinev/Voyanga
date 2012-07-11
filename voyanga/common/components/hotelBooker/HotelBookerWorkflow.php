@@ -3,7 +3,7 @@ return array(
     'initial' => 'enterCredentials',
     'node' => array(
         array('id'=>'enterCredentials',         'transition'=> 'analyzing'),
-        array('id'=>'analyzing',                'transition'=>'hardWaitingForPayment,booking'),
+        array('id'=>'analyzing',                'transition'=>'analyzing,hardWaitingForPayment,booking'),
         array('id'=>'booking',                  'transition'=>'softWaitingForPayment,bookingError'),
         array('id'=>'bookingError',             'transition'=>'error'),
         array('id'=>'softWaitingForPayment',    'transition'=>'bookingTimeLimitError,softStartPayment'),//???
@@ -12,7 +12,6 @@ return array(
         array('id'=>'checkingAvailability',     'transition'=>'availabilityError,hardStartPayment'),
         array('id'=>'availabilityError',        'transition'=>'error'),
         array('id'=>'hardStartPayment',         'transition'=>'ticketing,hardWaitingForPayment'),
-        array('id'=>'booking',                  'transition'=>'waitingForPayment,bookingError'),
 
         array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat'),
         array('id'=>'ticketReady',              'transition'=>'moneyTransfer,done'),

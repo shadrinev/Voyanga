@@ -613,6 +613,7 @@ class SWActiveRecordBehavior extends CBehavior
             }
             if ($this->swIsNextStatus($value) == false and $swNode->equals($this->swGetStatus()) == false)
             {
+                //CVarDumper::dump($this->swGetAllStatus());
                 $this->getOwner()->addError($attribute, Yii::t(self::SW_I8N_CATEGORY, 'not a valid next status'));
             }
             else

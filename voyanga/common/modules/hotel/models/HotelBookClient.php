@@ -6,7 +6,7 @@ class HotelBookClient
     public $lastHeaders;
     public $multiCurl;
     public static $roomSizeRoomTypesMap = array(1 => array(1), 2 => array(2, 3), 3 => array(5), 4 => array(6));
-    public static $roomSizeIdNamesMap = array(1 => 'SGL', 2 => 'DBL', 3 => 'TWN', 4 => 'TWNSU', 5 => 'TRLP', 6 => 'QUAD', 7 => 'DBLSU');
+    public static $roomSizeIdNamesMap = array(1 => 'SGL', 2 => 'DBL', 3 => 'TWN', 4 => 'TWNSU', 5 => 'TRLP', 6 => 'QUAD', 7 => 'DBLSU', 8 => 'DBLORTWIN');
     public static $lastRequestMethod;
     /** @var City lastRequestCity */
     public static $lastRequestCity;
@@ -59,6 +59,7 @@ class HotelBookClient
         $hotelRequest = new HotelRequest();
         $hotelRequest->requestNum = $mongoKey;
         $hotelRequest->timestamp = time();
+        echo 'send req: '.self::$lastRequestMethod."\n";
         $hotelRequest->methodName = self::$lastRequestMethod;
         $hotelRequest->requestUrl = $url;
         if (self::$groupId)
@@ -67,7 +68,9 @@ class HotelBookClient
         }
         $hotelRequest->requestDescription = self::$lastRequestDescription;
         $hotelRequest->requestXml = isset($postData['request']) ? $postData['request'] : '';
-        $hotelRequest->save();
+        $valid = $hotelRequest->save();
+        if(!$valid) CVarDumper::dump($hotelRequest->getErrors());
+
 
 
         if ($asyncParams === null)
@@ -130,7 +133,7 @@ class HotelBookClient
                 {
                     //var_dump($info);
                     //echo  curl_multi_getcontent($info['handle']);
-                    //TODO: partitial processing
+                    //partial processing
                     $endTime = microtime(true);
                     foreach ($this->requests as $i => $requestInfo)
                     {
@@ -169,36 +172,6 @@ class HotelBookClient
                     }
                 }
             } while ($status === CURLM_CALL_MULTI_PERFORM || $active);
-
-            /*
-            foreach ($this->requests as $i => $requestInfo) {
-                if(!$requestInfo['completed'])
-                {
-                    $result = curl_multi_getcontent($requestInfo['curlHandle']);
-                    curl_close($requestInfo['curlHandle']);
-                    if(isset($requestInfo['function']))
-                    {
-                        $params = array($result);
-                        if($requestInfo['params'])
-                        {
-                            foreach($requestInfo['params'] as $param)
-                            {
-                                $params[] = $param;
-                            }
-                        }
-                        $this->requests[$i]['result'] = call_user_func_array($requestInfo['function'],$params);
-                        unset($this->requests[$i]['function']);
-
-                    }
-                    else
-                    {
-                        $this->requests[$i]['result'] = $result;
-                    }
-                    $this->requests[$i]['completed'] = true;
-                }
-                //$res[$i] = curl_multi_getcontent($conn[$i]);
-
-            }*/
 
             curl_multi_close($this->multiCurl);
             $this->multiCurl = null;
@@ -1175,6 +1148,7 @@ class HotelBookClient
                 $roomPax->addChild('FirstName',$roomer->firstName);
                 $roomPax->addChild('LastName',$roomer->lastName);
                 $roomPax->addChild('FullName',$roomer->fullName);
+                $lastRoomId = $roomer->roomId;
 
             }
 
@@ -1185,10 +1159,10 @@ class HotelBookClient
 
         foreach ($hotelOrderParams->hotel->rooms as $room)
         {
-            self::$lastRequestDescription .= (self::$lastRequestDescription ? ' & ' : '') . self::$roomSizeIdNamesMap[$room['roomSizeId']] . ($room['cots'] ? $room['cots'] . 'COTS' : '') . ($room['child'] ? 'CHLD' . $room['ChildAge'] . 'AGE' : '') . (isset($room['roomNumber']) ? ($room['roomNumber'] > 1 ? 'x' . $room['roomNumber'] : '') : '');
+            self::$lastRequestDescription .= (self::$lastRequestDescription ? ' & ' : '') . self::$roomSizeIdNamesMap[$room->sizeId] . ($room->cotsCount ? $room->cotsCount . 'COTS' : '') . ($room->childCount ? 'CHLD' . $room->childAges[0] . 'AGE' : '');
         }
 
-        $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_order', $getData, array('request' => $xml));
+        $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'add_order', $getData, array('request' => $xml));
         $responseObject = simplexml_load_string($response);
         $hotelOrderResponse = new HotelOrderResponse();
         if(isset($responseObject->OrderId))
@@ -1221,6 +1195,46 @@ class HotelBookClient
         $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
         $hotelOrderConfirmResponse->error = 0;
         if(isset($responseObject->Errors->Error)){
+            CVarDumper::dump($responseObject->Errors);
+            if(isset($responseObject->Errors->Error['code']))
+            {
+                if((string)$responseObject->Errors->Error['code'] == 'E1')
+                {
+                    return $this->OrderInfo($orderId);
+                }
+                else
+                {
+                    $hotelOrderConfirmResponse->error = 1;
+                }
+
+
+            }
+            else
+            {
+                $hotelOrderConfirmResponse->error = 1;
+            }
+
+
+        }
+
+        return $hotelOrderConfirmResponse;
+    }
+
+    public function OrderInfo($orderId)
+    {
+        $this->synchronize();
+        $time = time() + $this->differenceTimestamp;
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time),'order_id'=>$orderId);
+        self::$lastRequestMethod = 'OrderInfo';
+        self::$lastRequestDescription = (string)$orderId;
+        $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'order_info', $getData);
+        $responseObject = simplexml_load_string($response);
+        $hotelOrderConfirmResponse = new HotelOrderConfirmResponse();
+        $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order->Id;
+        $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
+        $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
+        $hotelOrderConfirmResponse->error = 0;
+        if(isset($responseObject->Errors->Error)){
             $hotelOrderConfirmResponse->error = 1;
         }
 
@@ -1231,6 +1245,7 @@ class HotelBookClient
     {
         if (!$this->isSynchronized)
         {
+            self::$lastRequestMethod = 'unixtime';
             $unixtime = $this->request(Yii::app()->params['HotelBook']['uri'] . 'unix_time');
 
             $diff = Yii::app()->cache->get('hotelbookDifferenceTimestamp');
