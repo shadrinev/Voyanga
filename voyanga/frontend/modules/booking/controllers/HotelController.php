@@ -68,6 +68,7 @@ class HotelController extends FrontendController
                 Yii::app()->cache->set('hotelResult'.$cacheId, $resultSearch,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelSearchParams'.$cacheId, $hotelSearchParams,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelForm'.$cacheId, $hotelForm,appParams('hotel_search_cache_time'));
+                Yii::app()->user->setState('avia.cacheId', $cacheId);
                 $this->redirect('/booking/hotel/result/cacheId/'.$cacheId);
             }
         }
@@ -98,7 +99,6 @@ class HotelController extends FrontendController
         $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
         $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);
         $hotelForm = Yii::app()->cache->get('hotelForm'.$cacheId);
-        //VarDumper::dump($hotelForm);die();
 
         if($resultSearch)
         {

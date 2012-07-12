@@ -154,6 +154,7 @@ return CMap::mergeArray(
                         'class'=>'XWebDebugRouter',
                         'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
                         'levels'=>'error, warning, trace, profile, info',
+                        //'categories' => 'HotelBookerComponent.*, application.simpleWorkflow',
                         'allowedIPs'=>array('192.168.0.8','192.168.0.74'),
                     ),
                 )

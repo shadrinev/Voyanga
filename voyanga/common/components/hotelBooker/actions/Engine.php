@@ -42,8 +42,6 @@ class Engine extends CAction
             }
         }
 
-
-        //VarDumper::dump($flightVoyage);die();
         Yii::app()->hotelBooker->hotel = $foundedHotel;
 
         if (Yii::app()->hotelBooker->getCurrent()==null)
@@ -51,8 +49,7 @@ class Engine extends CAction
 
         $status = Yii::app()->hotelBooker->current->swGetStatus()->getId();
         $actionName = 'stage'.ucfirst($status);
-        //VarDumper::dump($actionName);//echo "INN";die();
-        //VarDumper::dump($this->getController());
+
         if ($action = $this->getController()->createAction($actionName))
         {
             $action->execute();

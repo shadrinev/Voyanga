@@ -53,6 +53,7 @@ class EnterCredentials extends StageAction
             $hotelBookerComponent = Yii::app()->hotelBooker;
             $hotelBookerComponent->book();
             $hotelBookerId = $hotelBookerComponent->getHotelBookerId();
+            $validSaving = true;
             foreach($form->roomsPassports as $i => $roomPassport)
             {
                 foreach($roomPassport->adultsPassports as $adultInfo)
@@ -62,7 +63,7 @@ class EnterCredentials extends StageAction
                     $hotelPassport->attributes = $adultInfo->attributes;
                     $hotelPassport->hotelBookingId = $hotelBookerId;
                     $hotelPassport->roomKey = $i;
-                    $hotelPassport->save();
+                    $validSaving = $validSaving and $hotelPassport->save();
                 }
                 foreach($roomPassport->childrenPassports as $childInfo)
                 {
@@ -71,8 +72,16 @@ class EnterCredentials extends StageAction
                     $hotelPassport->attributes = $childInfo->attributes;
                     $hotelPassport->hotelBookingId = $hotelBookerId;
                     $hotelPassport->roomKey = $i;
-                    $hotelPassport->save();
+                    $validSaving = $validSaving and $hotelPassport->save();
                 }
+            }
+            if ($validSaving)
+            {
+                $hotelBookerComponent->status('analyzing');
+            }
+            else
+            {
+                throw new CHttpException(500, 'Couldn\'t save passport records to db');
             }
         }
 
