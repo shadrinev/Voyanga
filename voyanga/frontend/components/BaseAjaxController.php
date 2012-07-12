@@ -18,10 +18,22 @@ class BaseAjaxController extends Controller
         return array_merge($_GET, $_POST);
     }
 
+    /**
+     * @param int $val custom status code
+     */
     public function setStatusCode($val)
     {
         $this->_statusCode = $val;
-        $this->_statusText = $this->_getStatusCodeMessage($this->_statusCode);
+        if ($this->_statusText == null)
+            $this->_statusText = $this->_getStatusCodeMessage($this->_statusCode);
+    }
+
+    /**
+     * @param string $val custom text
+     */
+    public function setStatusText($val)
+    {
+        $this->_statusText = $val;
     }
 
     public function getStatusCode()
@@ -62,25 +74,47 @@ class BaseAjaxController extends Controller
             echo json_encode($response);
     }
 
+    /**
+     * Send normal response to client
+     * @param mixed $data any data to send to client
+     * @param bool $raw true = no json_ecode for $data | false = json_encode($data)
+     */
     public function send($data, $raw=false)
     {
         $this->data = $data;
         $this->_sendResponse($raw);
     }
 
+    /**
+     * Sends error to client
+     * @param $errorCode
+     * @param bool $errorText
+     */
     public function sendError($errorCode, $errorText=false)
     {
         $this->statusCode = $errorCode;
         if ($errorText)
-            $this->_statusCode = $errorText;
+        {
+            $this->_statusText = $errorText;
+        }
         else
-            $this->_statusCode = $this->_getStatusCodeMessage($errorCode);
-
+        {
+            $this->_statusText = $this->_getStatusCodeMessage($errorCode);
+        }
         $this->_sendResponse();
     }
 
+    /**
+     * Send any file as binary string with correct mime-type. If file not found it sends 404 error.
+     * @param $fileName
+     */
     public function sendAsset($fileName)
     {
+        if (!is_file($fileName))
+        {
+            $this->sendError(404);
+            return;
+        }
         $mime = CFileHelper::getMimeType($fileName);
         $status = $this->_statusCode;
         $contentType = $this->_contentType;
