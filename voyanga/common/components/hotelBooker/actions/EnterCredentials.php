@@ -12,7 +12,6 @@ class EnterCredentials extends StageAction
     {
         $valid = false;
         $rooms = Yii::app()->hotelBooker->getCurrent()->hotel->rooms;
-        VarDumper::dump($rooms);
         $form = new HotelPassportForm();
         foreach ($rooms as $room)
         {
@@ -31,6 +30,7 @@ class EnterCredentials extends StageAction
                 foreach ($adults as $j=>$adultInfo)
                 {
                     $form->roomsPassports[$i]->adultsPassports[$j]->attributes = $adultInfo;
+                    $valid = $valid & $form->roomsPassports[$i]->adultsPassports[$j]->validate();
                 }
             }
 
@@ -42,32 +42,38 @@ class EnterCredentials extends StageAction
                 foreach ($children as $j=>$childrenInfo)
                 {
                     $form->roomsPassports[$i]->childrenPassports[$j]->attributes = $childrenInfo;
+                    $valid = $valid & $form->roomsPassports[$i]->childrenPassports[$j]->validate();
                 }
             }
         }
-        VarDumper::dump($form->attributes);
+
         if($valid)
         {
             /** @var HotelBookerComponent $hotelBookerComponent  */
             $hotelBookerComponent = Yii::app()->hotelBooker;
             $hotelBookerComponent->book();
             $hotelBookerId = $hotelBookerComponent->getHotelBookerId();
-            foreach($form->attributes['roomsPassports'] as $i=>$room)
+            foreach($form->roomsPassports as $i => $roomPassport)
             {
-                foreach($form->attributes['roomsPassports'][$i]['adultsPassports'] as $adultInfo)
+                foreach($roomPassport->adultsPassports as $adultInfo)
                 {
                     $hotelPassport = new HotelBookingPassport();
-                    //VarDumper::dump($adultInfo);die();
+                    $hotelPassport->scenario = 'adult';
                     $hotelPassport->attributes = $adultInfo->attributes;
                     $hotelPassport->hotelBookingId = $hotelBookerId;
                     $hotelPassport->roomKey = $i;
                     $hotelPassport->save();
-
+                }
+                foreach($roomPassport->childrenPassports as $childInfo)
+                {
+                    $hotelPassport = new HotelBookingPassport();
+                    $hotelPassport->scenario = 'child';
+                    $hotelPassport->attributes = $childInfo->attributes;
+                    $hotelPassport->hotelBookingId = $hotelBookerId;
+                    $hotelPassport->roomKey = $i;
+                    $hotelPassport->save();
                 }
             }
-
-
-
         }
 
         $this->getController()->render('hotelBooker.views.enterCredentials', array('model'=>$form));

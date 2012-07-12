@@ -7,6 +7,9 @@
  */
 class HotelAdultPassportForm extends BasePassportForm
 {
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+
     public $genderId;
 
     /**
@@ -17,8 +20,7 @@ class HotelAdultPassportForm extends BasePassportForm
         return CMap::mergeArray(parent::rules(), array(
             // first_name, last_name, number, birthday, document_type_id, gender_id are required
             array(
-                'genderId',
-                'required'
+                'genderId', 'required'
             ),
         ));
     }
@@ -33,6 +35,14 @@ class HotelAdultPassportForm extends BasePassportForm
         return CMap::mergeArray(parent::attributeLabels(), array(
             'genderId' => 'Пол',
             )
+        );
+    }
+
+    public function getPossibleGenders()
+    {
+        return array(
+            self::GENDER_MALE => 'Муж',
+            self::GENDER_FEMALE => 'Жен'
         );
     }
 }

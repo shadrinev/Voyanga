@@ -46,8 +46,11 @@ class HotelBookingPassport extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('hotelBookingId, countryId, genderId, roomKey', 'numerical', 'integerOnly'=>true),
-            array('firstName, lastName, birthday', 'length', 'max'=>45),
+            array('hotelBookingId, countryId, roomKey', 'numerical', 'integerOnly'=>true),
+            array('firstName, lastName', 'length', 'max'=>45),
+            array('birthday', 'required', 'on'=>'child'),
+            array('genderId', 'required', 'on'=>'adult'),
+            array('genderId', 'numerical', 'integerOnly'=>true, 'on'=>'adult'),
             array('timestamp', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
