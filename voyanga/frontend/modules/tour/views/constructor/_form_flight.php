@@ -17,7 +17,7 @@
         )
     );?>
 
-    <?php echo $form->hiddenField($model,'departureCityId', array('validateOnType'=>true, 'id'=>$form->getId().'departureCityId')); ?>
+    <?php echo $form->hiddenField($model,'departureCityId', array('validateOnType'=>true, 'id'=>$form->getId().'-departureCityId')); ?>
 
     <?php echo $form->labelEx($model,'departureCityId'); ?>
     <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
@@ -31,7 +31,7 @@
                 'method' => "get",
                 'loadingClass' => "loading-circle",
             ),
-            'onselect'=>'js:function(res){$("'.$form->getId().'departureCityId'.'").val(res.id)}',
+            'onselect'=>'js:function(res){$("#'.$form->getId().'-departureCityId'.'").val(res.id)}',
             'matcher'=>'js: function(){return true}',
         ),
         'htmlOptions'=>array(
@@ -42,7 +42,7 @@
     )); ?>
     <?php echo $form->error($model, 'departureCityId'); ?>
 
-    <?php echo $form->hiddenField($model,'arrivalCityId', array('id'=>$form->getId().'arrivalCityId')); ?>
+    <?php echo $form->hiddenField($model,'arrivalCityId', array('id'=>$form->getId().'-arrivalCityId')); ?>
 
     <?php echo $form->labelEx($model,'arrivalCityId'); ?>
     <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
@@ -56,7 +56,7 @@
                 'method' => "get",
                 'loadingClass' => "loading-circle",
             ),
-            'onselect'=>'js:function(res){$("'.$form->getId().'arrivalCityId'.'").val(res.id)}',
+            'onselect'=>'js:function(res){$("#'.$form->getId().'-arrivalCityId'.'").val(res.id)}',
             'matcher'=>'js: function(){return true}',
         ),
         'htmlOptions'=>array(
@@ -70,7 +70,7 @@
             'url'=>'#popupInfo',
             'type'=>'primary',
             'label'=>'Поиск перелёта',
-            'htmlOptions'=>array('id'=>'searchFlightConstructor', 'data-toggle'=>'modal')
+            'htmlOptions'=>array('id'=>'searchFlightConstructor')
         )); ?>
     </div>
 
@@ -103,7 +103,8 @@
 <?php Yii::app()->clientScript->registerScript('constructor-flight-search', "
     $('#searchFlightConstructor,#constructor-repeatFlightSearch').live('click', function(){
         $('#constructor-modalText').html('Поиск перелёта...');
-        $.getJSON('/tour/constructor/flightSearch', $('#flight-form').serialize())
+        $('#constructor-popupInfo').modal('show');
+        $.getJSON('/tour/constructor/flightSearch', $('#constructor-flight-form').serialize())
         .done(function(data) {
             var html = {$templateVariable}(data);
             console.log(data);

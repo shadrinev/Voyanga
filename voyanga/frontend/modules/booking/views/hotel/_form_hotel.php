@@ -11,6 +11,8 @@
     )
 )); ?>
 
+    <?php echo $form->hiddenField($model,'cityId',array('id'=>'hotel-form-HotelForm_cityId')); ?>
+
     <?php echo $form->labelEx($model,'cityId'); ?>
     <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
         'options'=>array(
@@ -23,7 +25,7 @@
                 'method' => "get",
                 'loadingClass' => "loading-circle",
             ),
-            'onselect'=>'js:function(res){$("#HotelForm_cityId").val(res.id)}',
+            'onselect'=>'js:function(res){$("#hotel-form-HotelForm_cityId").val(res.id)}',
             'matcher'=>'js: function(){return true}',
         ),
         'htmlOptions'=>array(
@@ -42,8 +44,6 @@
             )
         )
     );?>
-
-    <?php echo $form->hiddenField($model,'cityId'); ?>
 
     <?php echo $form->dropDownListRow($model, 'duration', range(0,31)); ?>
 

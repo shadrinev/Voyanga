@@ -17,7 +17,7 @@
                 $addLink = $('.addRoom'),
                 counter = $addLink.data('counter'),
                 $deleting = $('#'+$this.data('del'));
-
+            
             if (counter==1)
                 return false;
             $deleting.remove();
