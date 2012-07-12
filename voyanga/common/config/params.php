@@ -49,6 +49,8 @@ return CMap::mergeArray(array(
         'distanceFromCityCenter' => 5000,
 
     ),
+    'autocompleteLimit' => 10,
+    'autocompleteCacheTime' => 3600,
 
     'cache.core'=>extension_loaded('apc') ?
 		array(

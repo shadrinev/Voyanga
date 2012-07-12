@@ -62,6 +62,19 @@ class AAutoCompleteAction extends CAction
      */
     public $valueTemplate;
 
+    /**
+     * The template that should be used to create the hidden additional helper data.
+     * Attribute names enclosed in {brackets} will be replaced with the
+     * attribute value.
+     * e.g.
+     * <pre>
+     * $action->hiddenTemplate = "{cityAitaCode}";
+     * </pre>
+     * If this value is null, the attributes named in $this->attributes will be used instead
+     * @var string
+     */
+    public $hiddenTemplate;
+
 
     /**
      * The CDbCriteria configuration that should be used when
@@ -195,6 +208,7 @@ class AAutoCompleteAction extends CAction
             $item['id'] = $result->primaryKey;
             $item['label'] = $this->parseTemplate($this->labelTemplate, $result);
             $item['value'] = $this->parseTemplate($this->valueTemplate, $result);
+            $item['hidden'] = $this->parseTemplate($this->hiddenTemplate, $result);
             $response[] = $item;
         }
         header("Content-type: application/json");

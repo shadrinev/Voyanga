@@ -18,7 +18,7 @@
         'options'=>array(
             'items'=>10,
             'ajax' => array(
-                'url' => "/site/cityAutocompleteForHotel/withHotels/1",
+                'url' => "/ajax/cityForHotel",
                 'timeout' => 500,
                 'displayField' => "label",
                 'triggerLength' => 2,

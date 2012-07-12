@@ -137,5 +137,45 @@ class BaseAjaxController extends Controller
     {
         return parent::init();
     }
+
+    /**
+     * Parses a template and replaces the list of attribute names with their values.
+     * If the given template is null, a list of attribute names from $this->attributes will
+     * be used instead.
+     * @param string $template The template to use
+     * @param Traversable $model The model that contains the
+     * @return string The template with attribute names replaced by their values
+     */
+    protected function parseTemplate($template, Traversable $model)
+    {
+        $replacements = array();
+        if ($template === null)
+        {
+            $template = array();
+            foreach ($this->attributes as $attribute)
+            {
+                $template[] = "{$attribute}";
+            }
+            $template = implode(" ", $template);
+        }
+        preg_match_all('|\{(.+?)\}|is', $template, $matches);
+        foreach ($matches[1] as $property)
+        {
+            if (strpos($property, '.'))
+            {
+                $path = explode('.', $property);
+                $replacements['{' . $property . '}'] = $model->{$path[0]}->{$path[1]};
+            }
+            else
+            {
+                $replacements['{' . $property . '}'] = $model->{$property};
+            }
+        }
+        ;
+        /*		foreach($model as $attribute => $value) {
+              $replacements['{'.$attribute.'}'] = $value;
+          }*/
+        return strtr($template, $replacements);
+    }
 }
 ?>
