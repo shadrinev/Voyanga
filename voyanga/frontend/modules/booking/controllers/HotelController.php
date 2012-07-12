@@ -122,6 +122,7 @@ class HotelController extends FrontendController
     public function actionInfo($cacheId, $hotelId)
     {
         Yii::import('site.common.modules.hotel.models.*');
+        Yii::trace('my great message here', 'hotelController');
         $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);
         $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
         if($resultSearch)

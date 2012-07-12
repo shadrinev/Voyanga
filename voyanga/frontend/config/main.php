@@ -41,7 +41,8 @@ return CMap::mergeArray(
             'application.helpers.*',
             'site.common.components.shoppingCart.*',
             'site.common.extensions.order.*',
-            'site.backend.extensions.bootstrap.widgets.*'
+            'site.backend.extensions.bootstrap.widgets.*',
+            'site.common.extensions.yiidebugtb.*', //our extension
         ),
 
         'modules' => array(
@@ -147,7 +148,14 @@ return CMap::mergeArray(
                         'class' => 'CEmailLogRoute',
                         'levels' => 'error, warning',
                         'emails' => 'maximov@danechka.com'
-                    )
+                    ),
+
+                    array( // configuration for the toolbar
+                        'class'=>'XWebDebugRouter',
+                        'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
+                        'levels'=>'error, warning, trace, profile, info',
+                        'allowedIPs'=>array('192.168.0.8','192.168.0.74'),
+                    ),
                 )
             )
         ),

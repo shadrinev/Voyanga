@@ -59,7 +59,7 @@ class HotelBookClient
         $hotelRequest = new HotelRequest();
         $hotelRequest->requestNum = $mongoKey;
         $hotelRequest->timestamp = time();
-        echo 'send req: '.self::$lastRequestMethod."\n";
+        //echo 'send req: '.self::$lastRequestMethod."\n";
         $hotelRequest->methodName = self::$lastRequestMethod;
         $hotelRequest->requestUrl = $url;
         if (self::$groupId)
@@ -187,7 +187,7 @@ class HotelBookClient
     public function getCountries()
     {
         $this->synchronize();
-        echo "iNN";
+        //echo "iNN";
         $time = time() + $this->differenceTimestamp;
         $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time));
         self::$lastRequestMethod = 'Countries';
@@ -416,7 +416,7 @@ class HotelBookClient
                     {
                         if (intval($room['child']) > 0)
                         {
-                            echo "MMMMMM||";
+                            //echo "MMMMMM||";
                             $newRoom->addChild($attrName, $attrVal);
                         }
                     }
