@@ -673,22 +673,28 @@ class HotelBookClient
         foreach ($this->requests as $request)
         {
             //echo count($request['result']->hotels).'<br>';
-            foreach ($request['result']->hotels as $hotel)
+            if($request['result']->hotels)
             {
-                $key = $hotel->key;
-                if (isset($hotels[$key]))
+                foreach ($request['result']->hotels as $hotel)
                 {
-                    //echo '--duplicate';
-                    //echo 'have:';
-                    //VarDumper::dump($hotels[$key]);
-                    //echo 'new:';
-                    //VarDumper::dump($hotel);
+                    $key = $hotel->key;
+                    if (isset($hotels[$key]))
+                    {
+                        //echo '--duplicate';
+                        //echo 'have:';
+                        //VarDumper::dump($hotels[$key]);
+                        //echo 'new:';
+                        //VarDumper::dump($hotel);
+                    }
+                    $hotels[$key] = $hotel;
                 }
-                $hotels[$key] = $hotel;
             }
-            foreach ($request['result']->errorsDescriptions as $desc)
+            if($request['result']->errorsDescriptions)
             {
-                $errorDescriptions[] = $desc;
+                foreach ($request['result']->errorsDescriptions as $desc)
+                {
+                    $errorDescriptions[] = $desc;
+                }
             }
         }
 
