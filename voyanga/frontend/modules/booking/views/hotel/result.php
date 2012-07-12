@@ -15,7 +15,11 @@ $this->breadcrumbs = array(
 <a href='#result' class="result-hotel-link" style="display: none">Результаты поиска</a>
 
 <h3 id='result'>Результаты поиска</h3>
-<?php echo $this->renderPartial('_hotels', array('results'=>$results, 'variable'=>'hotelResults','cacheId'=>$cacheId)); ?>
+<?php if ($results): ?>
+    <?php echo $this->renderPartial('_hotels', array('results'=>$results, 'variable'=>'hotelResults','cacheId'=>$cacheId)); ?>
+<?php else: ?>
+    <?php echo $this->renderPartial('_hotels_empty', array('cacheId'=>$cacheId)); ?>
+<?php endif ?>
 
 <?php Yii::app()->clientScript->registerScript('smooth-scroll', "
 var Utils = new Object();

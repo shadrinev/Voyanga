@@ -6,7 +6,6 @@ class BaseAjaxController extends Controller
     private $_statusText;
     private $_contentType = 'application/json';
 
-
     public $data = array();
 
     /**
