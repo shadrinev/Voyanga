@@ -19,7 +19,7 @@
             'items'=>10,
             'ajax' => array(
                 'url' => "/ajax/cityForHotel",
-                'timeout' => 500,
+                'timeout' => 5,
                 'displayField' => "label",
                 'triggerLength' => 2,
                 'method' => "get",

@@ -47,13 +47,26 @@ class EnterCredentials extends StageAction
             }
         }
 
-        if($valid)
+        if ($valid)
         {
             /** @var HotelBookerComponent $hotelBookerComponent  */
             $hotelBookerComponent = Yii::app()->hotelBooker;
             $hotelBookerComponent->book();
             $hotelBookerId = $hotelBookerComponent->getHotelBookerId();
-            $validSaving = true;
+            //saving booking data
+            /** @var BookingForm  */
+            $bookingForm = $form->bookingForm;
+            $bookingModel = new OrderBooking();
+            $bookingModel->email = $bookingForm->contactEmail;
+            $bookingModel->phone = $bookingForm->contactPhone;
+            $bookingModel->timestamp = new CDbExpression('NOW()');
+            $validSaving = $bookingModel->save();
+            Yii::trace(CVarDumper::dumpAsString($bookingModel->errors), 'HotelBooker.EnterCredentials.bookingModel');
+            if ($validSaving)
+            {
+                $hotelBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
+                $hotelBookerComponent->getCurrent()->save();
+            }
             foreach($form->roomsPassports as $i => $roomPassport)
             {
                 foreach($roomPassport->adultsPassports as $adultInfo)
@@ -64,6 +77,7 @@ class EnterCredentials extends StageAction
                     $hotelPassport->hotelBookingId = $hotelBookerId;
                     $hotelPassport->roomKey = $i;
                     $validSaving = $validSaving and $hotelPassport->save();
+                    Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.adultPassport');
                 }
                 foreach($roomPassport->childrenPassports as $childInfo)
                 {
@@ -73,6 +87,7 @@ class EnterCredentials extends StageAction
                     $hotelPassport->hotelBookingId = $hotelBookerId;
                     $hotelPassport->roomKey = $i;
                     $validSaving = $validSaving and $hotelPassport->save();
+                    Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.childPassport');
                 }
             }
             if ($validSaving)

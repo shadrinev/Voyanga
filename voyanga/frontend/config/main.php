@@ -150,7 +150,7 @@ return CMap::mergeArray(
                         'emails' => 'maximov@danechka.com'
                     ),
 
-                    array( // configuration for the toolbar
+                   array( // configuration for the toolbar
                         'class'=>'XWebDebugRouter',
                         'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
                         'levels'=>'error, warning, trace, profile, info',

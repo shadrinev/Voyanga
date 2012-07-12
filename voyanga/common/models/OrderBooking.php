@@ -64,6 +64,7 @@ class OrderBooking extends CActiveRecord
         );
     }
 
+
     /**
      * @return array relational rules.
      */

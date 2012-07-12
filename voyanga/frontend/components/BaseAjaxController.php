@@ -2,12 +2,20 @@
 
 class BaseAjaxController extends Controller
 {
+    private $forceAjax = true;
+
     private $_statusCode = 200;
     private $_statusText;
     private $_contentType = 'application/json';
 
     public $data = array();
 
+    public function beforeAction($action)
+    {
+        if ($this->forceAjax)
+            $_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest';
+        return parent::beforeAction($action);
+    }
     /**
      * @return array combine all GET and POST params to one array to give ability to write
      * function actionName($param1, param2), where e.g. $param1 from GET and param2 from POST

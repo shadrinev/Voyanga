@@ -9,6 +9,7 @@ class HotelBookerComponent extends CApplicationComponent
 {
     /** @var HotelBooker */
     private $hotelBooker;
+
     /** @var Hotel */
     private $hotel;
 
@@ -67,6 +68,7 @@ class HotelBookerComponent extends CApplicationComponent
         }
         $this->hotelBooker->status = 'enterCredentials';
         $this->hotelBooker->save();
+
         Yii::trace(CVarDumper::dumpAsString($this->hotelBooker->getErrors()), 'HotelBookerComponent.book');
         if (!$this->hotelBooker->id)
         {
@@ -78,7 +80,6 @@ class HotelBookerComponent extends CApplicationComponent
     public function status($newStatus)
     {
         $this->hotelBooker->status = $newStatus;
-
         return $this->hotelBooker->save();
     }
 
@@ -226,7 +227,7 @@ class HotelBookerComponent extends CApplicationComponent
         {
             $searchParams['rooms'][] = array(
                 'roomSizeId' => $room->sizeId,
-                'child' => $room->childCount,
+                'child' => $room->childCount ? $room->childCount : 0,
                 'cots' => $room->cotsCount,
                 'ChildAge' => isset($room->childAges[0]) ? $room->childAges[0] : 0
             );
