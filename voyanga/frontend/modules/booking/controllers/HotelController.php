@@ -69,12 +69,12 @@ class HotelController extends FrontendController
                 Yii::app()->cache->set('hotelSearchParams'.$cacheId, $hotelSearchParams,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelForm'.$cacheId, $hotelForm,appParams('hotel_search_cache_time'));
                 $this->redirect('/booking/hotel/result/cacheId/'.$cacheId);
-                $hotelStack = new HotelStack($resultSearch);
+                /*$hotelStack = new HotelStack($resultSearch);
                 $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
                 if ($isTab)
                     $this->renderPartial('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm));
                 else
-                    $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm));
+                    $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm));*/
             }
         }
         else
@@ -108,9 +108,16 @@ class HotelController extends FrontendController
 
         if($resultSearch)
         {
-            $hotelStack = new HotelStack($resultSearch);
-            $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
-            $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm,'cacheId'=>$cacheId));
+            if($resultSearch['hotels'])
+            {
+                $hotelStack = new HotelStack($resultSearch);
+                $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+                $this->render('result', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu, 'results'=>$results, 'hotelForm'=>$hotelForm,'cacheId'=>$cacheId));
+            }
+            else
+            {
+                //TODO: another template with message 'results is empty'
+            }
         }
         else
         {

@@ -204,7 +204,7 @@ class HotelStack
             {
                 uasort($this->_hotels,'HotelStack::compareHotelsByHotelsParams');
             }
-            else
+            elseif($this->hotelStacks)
             {
                 if($deep != 0)
                 {
@@ -216,6 +216,10 @@ class HotelStack
                 //echo "sorting hotelStacks<br>";
                 uasort($this->hotelStacks,'HotelStack::compareStacksByHotelsParams');
             }
+            else
+            {
+                return false;
+            }
         }
         return $this;
     }
@@ -225,7 +229,7 @@ class HotelStack
     {
         if($this->_hotels){
             return $this->_hotels;
-        }else{
+        }elseif($this->hotelStacks){
             $hotels = array();
             foreach ($this->hotelStacks as $i=>$hotelStack)
             {
@@ -247,6 +251,8 @@ class HotelStack
                 }
             }
             return $hotels;
+        }else{
+            return false;
         }
     }
 
