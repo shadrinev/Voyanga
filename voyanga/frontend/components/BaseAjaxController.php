@@ -3,13 +3,15 @@
 class BaseAjaxController extends Controller
 {
     private $_statusCode = 200;
-    private $_statusText = "OK";
+    private $_statusText;
     private $_contentType = 'application/json';
+
+
     public $data = array();
 
     /**
      * @return array combine all GET and POST params to one array to give ability to write
-     * function action($param1, param2)
+     * function actionName($param1, param2), where e.g. $param1 from GET and param2 from POST
      */
     public function getActionParams()
     {
@@ -39,7 +41,7 @@ class BaseAjaxController extends Controller
             500 => 'Internal Server Error',
             501 => 'Not Implemented',
         );
-        return (isset($codes[$status])) ? $codes[$status] : '';
+        return (isset($codes[$status])) ? $codes[$status] : 'Unknown error';
     }
 
     private function _sendResponse($raw=false)
@@ -66,9 +68,14 @@ class BaseAjaxController extends Controller
         $this->_sendResponse($raw);
     }
 
-    public function sendError($errorCode)
+    public function sendError($errorCode, $errorText=false)
     {
         $this->statusCode = $errorCode;
+        if ($errorText)
+            $this->_statusCode = $errorText;
+        else
+            $this->_statusCode = $this->_getStatusCodeMessage($errorCode);
+
         $this->_sendResponse();
     }
 
