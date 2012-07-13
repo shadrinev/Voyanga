@@ -6,7 +6,7 @@
  * Time: 11:14
  * To change this template use File | Settings | File Templates.
  */
-class Engine extends CAction
+class FlightEngineAction extends CAction
 {
     public function run($key)
     {

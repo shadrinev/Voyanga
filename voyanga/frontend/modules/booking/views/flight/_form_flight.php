@@ -47,7 +47,7 @@
         'options'=>array(
             'items'=>10,
             'ajax' => array(
-                'url' => "/site/cityAutocomplete",
+                'url' => "/ajax/cityForFlight",
                 'timeout' => 500,
                 'displayField' => "label",
                 'triggerLength' => 2,

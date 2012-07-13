@@ -12,7 +12,6 @@ class GDSNemoSoapClient extends SoapClient
     public function __doRequest($request, $location, $action, $version, $oneWay = 0)
     {
         //echo $action;
-        echo '???';
 
         if ( strpos($action,'Search11') !== FALSE )
         {

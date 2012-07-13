@@ -66,7 +66,13 @@ class FlightBooker extends SWActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
-            )
+            ),
+            'EAdvancedArBehavior' => array(
+                'class' => 'common.components.EAdvancedArBehavior'
+            ),
+            'CronTask'=>array(
+                'class' => 'site.common.components.cron.CronTaskBehavior',
+            ),
         );
     }
 
@@ -103,7 +109,8 @@ class FlightBooker extends SWActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'booking'=>array(self::BELONGS_TO, 'Booking', 'bookingId')
+            'booking'=>array(self::BELONGS_TO, 'Booking', 'bookingId'),
+            'flightBookingPassports' => array(self::HAS_MANY, 'FlightBookingPassport', 'flightBookingId'),
         );
     }
 

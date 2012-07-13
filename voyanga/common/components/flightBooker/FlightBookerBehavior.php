@@ -37,6 +37,7 @@ class FlightBookerBehavior extends CBehavior
 
     public function actionBuy($key)
     {
+        die();
         $parts = explode('_', $key);
         $searchKey = $parts[0];
         $searchId = $parts[1];

@@ -1252,11 +1252,12 @@ class HotelBookClient
         if (!$this->isSynchronized)
         {
             self::$lastRequestMethod = 'unixtime';
-            $unixtime = $this->request(Yii::app()->params['HotelBook']['uri'] . 'unix_time');
+
 
             $diff = Yii::app()->cache->get('hotelbookDifferenceTimestamp');
             if ($diff === false)
             {
+                $unixtime = $this->request(Yii::app()->params['HotelBook']['uri'] . 'unix_time');
                 $this->differenceTimestamp = $unixtime - time();
                 Yii::app()->cache->set('hotelbookDifferenceTimestamp', $this->differenceTimestamp);
             }

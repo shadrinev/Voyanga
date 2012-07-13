@@ -176,17 +176,18 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageTicketingError()
     {
-
+        $this->status('error');
     }
 
     public function stageManualError()
     {
-
+        $this->status('error');
     }
 
     public function stageMoneyReturn()
     {
-
+        //TODO: return money function
+        $this->status('error');
     }
 
     public function stageManualSuccess()
@@ -196,7 +197,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBspTransfer()
     {
-
+        //TODO: send money to BSP gate
     }
 
     public function stageDone()

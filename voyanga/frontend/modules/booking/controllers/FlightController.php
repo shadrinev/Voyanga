@@ -11,6 +11,19 @@ class FlightController extends FrontendController
 
     private $flightBooker;
 
+    public function actions()
+    {
+        return array(
+            'buy' => array(
+                'class' => 'common.components.flightBooker.actions.FlightEngineAction',
+            ),
+            'stageEnterCredentials' => array(
+                'class' => 'common.components.flightBooker.actions.FlightEnterCredentialsAction',
+            ),
+        );
+    }
+
+
     public function actionIndex($isTab=false)
     {
         $flightForm = new FlightForm;
@@ -37,8 +50,9 @@ class FlightController extends FrontendController
         ));
     }
 
-    public function actionBuy($key)
+    /*public function actionBuy($key)
     {
+        die();
         $parts = explode('_', $key);
         $searchKey = $parts[0];
         $searchId = $parts[1];
@@ -52,7 +66,7 @@ class FlightController extends FrontendController
             $this->$action();
         else
             Yii::app()->flightBooker->$action();
-    }
+    }*/
 
     public function stageEnterCredentials()
     {

@@ -6,11 +6,12 @@
  * Time: 11:13
  * To change this template use File | Settings | File Templates.
  */
-class EnterCredentials extends StageAction
+class FlightEnterCredentialsAction extends StageAction
 {
     public function execute()
     {
         $valid = true;
+
         $booking = new BookingForm();
         if(isset($_POST['BookingForm']))
         {
@@ -32,6 +33,11 @@ class EnterCredentials extends StageAction
         if($valid)
         {
             //saving data to objects
+            //TODO: link to OrderBooking object
+            $flightBookerComponent = Yii::app()->flightBooker;
+            $flightBookerComponent->book();
+
+            $flightBookerId = $flightBookerComponent->getCurrent()->id;
             $bookingAr = new Booking();
 
             $bookingAr->email = $booking->contactEmail;
@@ -62,10 +68,15 @@ class EnterCredentials extends StageAction
             }
             else
             {
+
                 $this->getController()->render('flightBooker.views.enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
             }
         }
         else
+        {
+            //die();
             $this->getController()->render('flightBooker.views.enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
+        }
+
     }
 }

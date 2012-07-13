@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
     'Поиск'=>array(),
     'Ввод данных'
 );
-
+//echo Yii::getPathOfAlias("site.backend.modules.admin.components.AAdminPortlet");die();
 $this->beginWidget("site.backend.modules.admin.components.AAdminPortlet",
     array(
         "title" => "Ввод данных"
