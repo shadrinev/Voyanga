@@ -19,7 +19,7 @@
  * @property OrderBooking $orderBooking
  * @property FlightBookingPassport[] $flightBookingPassports
  */
-class FlightBooking extends CActiveRecord
+class FlightBooker extends CActiveRecord
 {
     private $_flightVoyage;
     private $statusChanged = false;
@@ -27,7 +27,7 @@ class FlightBooking extends CActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return FlightBooking the static model class
+     * @return FlightBooker the static model class
      */
     public static function model($className=__CLASS__)
     {

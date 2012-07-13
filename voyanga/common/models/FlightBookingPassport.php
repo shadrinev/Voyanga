@@ -18,7 +18,7 @@
  * @property string $timestamp
  *
  * The followings are the available model relations:
- * @property FlightBooking $flightBooking
+ * @property FlightBooker $flightBooking
  * @property Country $country
  */
 class FlightBookingPassport extends CActiveRecord
