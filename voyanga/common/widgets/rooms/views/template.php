@@ -2,7 +2,7 @@
 <?php $i=0; ?>
 <fieldset>
     <legend>Комнаты</legend>
-<div id='linksArea'>
+<div class='linksArea'>
     <?php foreach ($rooms as $room): ?>
         <?php $this->render('_template', array('model'=>$room, 'i'=>$i++, 'form'=>$form)); ?>
     <?php endforeach ?>

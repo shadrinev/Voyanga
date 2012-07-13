@@ -20,6 +20,9 @@ class HotelController extends FrontendController
             ),
             'stageSoftWaitingForPayment' => array(
                 'class' => 'common.components.hotelBooker.actions.SoftWaitingForPayment',
+            ),
+            'stageHardWaitingForPayment' => array(
+                'class' => 'common.components.hotelBooker.actions.HardWaitingForPayment',
             )
         );
     }

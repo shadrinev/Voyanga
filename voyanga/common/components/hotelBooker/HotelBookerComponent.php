@@ -46,7 +46,7 @@ class HotelBookerComponent extends CApplicationComponent
     {
         if ($this->hotelBooker != null)
             return $this->hotelBooker->swGetStatus();
-        return 'search';
+        return 'enterCredentials';
     }
 
     public function book()
@@ -57,17 +57,23 @@ class HotelBookerComponent extends CApplicationComponent
             //if we don't have a hotel AND we moved to another hotel
             if (($this->getCurrent() != null) and $this->getCurrent()->hotel->id != $this->hotel->getId())
             {
+                Yii::trace('Trying to restore hotelBooker from db', 'HotelBookerComponent.book');
                 $this->hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey' => $this->hotel->getId()));
+                if ($this->hotelBooker)
+                    Yii::trace('Done', 'HotelBookerComponent.book');
+                else
+                    Yii::trace('No such record', 'HotelBookerComponent.book');
             }
             if ($this->hotelBooker == null)
             {
+                Yii::trace('New hotelBooker to db', 'HotelBookerComponent.book');
                 $this->hotelBooker = new HotelBooker();
                 $this->hotelBooker->hotelResultKey = $this->hotel->getId();
                 $this->hotelBooker->hotel = $this->hotel;
+                $this->hotelBooker->status = 'enterCredentials';
+                $this->hotelBooker->save();
             }
         }
-        $this->hotelBooker->status = 'enterCredentials';
-        $this->hotelBooker->save();
 
         Yii::trace(CVarDumper::dumpAsString($this->hotelBooker->getErrors()), 'HotelBookerComponent.book');
         if (!$this->hotelBooker->id)
@@ -91,9 +97,7 @@ class HotelBookerComponent extends CApplicationComponent
     public function stageAnalyzing()
     {
         $hotelBookClient = new HotelBookClient();
-
         $hotelBookClient->hotelSearchDetails($this->hotel);
-        print_r($this->hotel);
         $this->hotelBooker->hotel = $this->hotel;
         if (($this->hotel->cancelExpiration - time()) > (appParams('hotel_payment_time') * 2))
         {
@@ -103,11 +107,6 @@ class HotelBookerComponent extends CApplicationComponent
         {
             $this->status('hardWaitingForPayment');
         }
-    }
-
-    public function stageHardWaitingForPayment()
-    {
-        $this->status('checkingAvailability');
     }
 
     public function stageBooking()
@@ -229,7 +228,8 @@ class HotelBookerComponent extends CApplicationComponent
                 'roomSizeId' => $room->sizeId,
                 'child' => $room->childCount ? $room->childCount : 0,
                 'cots' => $room->cotsCount,
-                'ChildAge' => isset($room->childAges[0]) ? $room->childAges[0] : 0
+                'ChildAge' => isset($room->childAges[0]) ? $room->childAges[0] : 0,
+                'roomNumber'=>1
             );
         }
         $hotelSearchResponse = $hotelBookClient->hotelSearch($searchParams);
@@ -271,7 +271,6 @@ class HotelBookerComponent extends CApplicationComponent
         {
             $this->hotelBooker->saveTaskInfo('hardPaymentTimeLimit', $res);
         }
-
     }
 
     public function stageTicketing()

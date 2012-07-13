@@ -6,7 +6,7 @@
  */
 class BookingModule extends CWebModule
 {
-    public $defaultController = 'flight';
+    public $defaultController = 'hotel';
 
     public function init()
     {

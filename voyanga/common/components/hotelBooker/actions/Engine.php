@@ -42,15 +42,13 @@ class Engine extends CAction
             }
         }
 
-        //$newHotel = (Yii::app()->user->getState('hotelResultKey') != $foundedHotel->getId());
 
         Yii::app()->hotelBooker->hotel = $foundedHotel;
         Yii::app()->hotelBooker->book();
 
-        $status = Yii::app()->hotelBooker->current->swGetStatus()->getId();
+        $status1 = Yii::app()->hotelBooker->current->swGetStatus()->getId();
 
-        $actionName = 'stage'.ucfirst($status);
-        VarDumper::dump($actionName);
+        $actionName = 'stage'.ucfirst($status1);
 
         if ($action = $this->getController()->createAction($actionName))
         {

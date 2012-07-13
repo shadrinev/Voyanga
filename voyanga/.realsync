@@ -29,7 +29,8 @@ exclude = .cache
 exclude = .idea
 exclude = nbproject
 exclude = runtime
-exclude = assets
+exclude = frontend/www/assets
+exclude = backend/www/assets
 
 # To turn off "synchronization ding" sound, set the following to 1.
 nosound = 0
