@@ -17,7 +17,7 @@ class CronComponent extends CApplicationComponent
     }
 
     /**
-     * @param $time
+     * @param string|integer $time timestamp or parsable through strtotime string
      * @param $command
      * @param string $action
      * @param array $params
@@ -83,7 +83,10 @@ class CronComponent extends CApplicationComponent
     {
         $paramsPrepared = $this->prepareParams($params);
         $command = $this->executorPath.$this->executor.' '.$component.' '.$action.' '.$paramsPrepared;
-        $time = date('h:i A d.m.Y', strtotime($time));
+        if (is_numeric($time))
+            $time = date('h:i A d.m.Y', $time);
+        else
+            $time = date('h:i A d.m.Y', strtotime($time));
         $commandAt = $command.' | at '.$time;
         return $commandAt;
     }

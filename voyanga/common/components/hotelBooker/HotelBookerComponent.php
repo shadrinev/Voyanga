@@ -172,11 +172,12 @@ class HotelBookerComponent extends CApplicationComponent
         }
     }
 
-    public function stageSoftWaitingForPayment()
+    // this is action
+    /*public function stageSoftWaitingForPayment()
     {
         //переход в SoftStartPayment, если достаточно времени.
         //Написать aciton клика по кнопке и там проверки условия для перехода
-    }
+    }*/
 
     public function stageBookingError()
     {
@@ -187,7 +188,7 @@ class HotelBookerComponent extends CApplicationComponent
     {
         if (($this->hotel->cancelExpiration - time()) > appParams('hotel_payment_time'))
         {
-            $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooker', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'softWaitingForPayment'));
+            $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'HotelBooker', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'softWaitingForPayment'));
             if ($res)
             {
                 $this->hotelBooker->saveTaskInfo('paymentTimeLimit', $res);
@@ -196,8 +197,6 @@ class HotelBookerComponent extends CApplicationComponent
         }
 
         return false;
-
-
     }
 
     public function stageBookingTimeLimitError()
@@ -266,10 +265,14 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageHardStartPayment()
     {
-        $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'hardWaitingForPayment'));
+        $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'HotelBooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'hardWaitingForPayment'));
         if ($res)
         {
             $this->hotelBooker->saveTaskInfo('hardPaymentTimeLimit', $res);
+        }
+        else
+        {
+            $this->status('error');
         }
     }
 
