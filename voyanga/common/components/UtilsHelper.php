@@ -26,8 +26,8 @@ class UtilsHelper
         libxml_use_internal_errors(true);
         $oDM = new DOMDocument();
         try {
-            $oDM->loadXML($xml);
-            if ($oDM)
+            $load = $oDM->loadXML($xml);
+            if ($load)
             {
                 $oDM->formatOutput = true;
                 $oDM->normalize();

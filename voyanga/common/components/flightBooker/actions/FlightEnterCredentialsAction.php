@@ -29,6 +29,7 @@ class FlightEnterCredentialsAction extends StageAction
             $passport->attributes=$_POST['PassportForm'];
             $valid = $valid && $passport->validate();
         }
+        $passports[] = $passport;
 
         if($valid)
         {
@@ -38,7 +39,7 @@ class FlightEnterCredentialsAction extends StageAction
             $flightBookerComponent->book();
 
             $flightBookerId = $flightBookerComponent->getCurrent()->id;
-            $bookingAr = new Booking();
+            $bookingAr = new OrderBooking();
 
             $bookingAr->email = $booking->contactEmail;
             $bookingAr->phone = $booking->contactPhone;
@@ -46,23 +47,30 @@ class FlightEnterCredentialsAction extends StageAction
                 $bookingAr->userId = Yii::app()->user->id;
 
             $bookingPassports = array();
-            $bookingPassport = new BookingPassport();
-            $bookingPassport->birthday = $passport->birthday;
-            $bookingPassport->firstName = $passport->firstName;
-            $bookingPassport->lastName = $passport->lastName;
-            $bookingPassport->countryId = $passport->countryId;
-            $bookingPassport->number = $passport->number;
-            $bookingPassport->series = $passport->series;
-            $bookingPassport->genderId = $passport->genderId;
-            $bookingPassport->documentTypeId = $passport->documentTypeId;
-            $bookingPassports[] = $bookingPassport;
+            foreach($passports as $passport)
+            {
+                $bookingPassport = new FlightBookingPassport();
+                $bookingPassport->birthday = $passport->birthday;
+                $bookingPassport->firstName = $passport->firstName;
+                $bookingPassport->lastName = $passport->lastName;
+                $bookingPassport->countryId = $passport->countryId;
+                $bookingPassport->number = $passport->number;
+                $bookingPassport->series = $passport->series;
+                $bookingPassport->genderId = $passport->genderId;
+                $bookingPassport->documentTypeId = $passport->documentTypeId;
+                $bookingPassport->flightBookingId = $flightBookerId;
+                $bookingPassport->save();
 
-            $bookingAr->bookingPassports = $bookingPassports;
-            $bookingAr->flightId = Yii::app()->flightBooker->current->flightVoyage->flightKey;
+                $bookingPassports[] = $bookingPassport;
+            }
+
+
+            //$bookingAr->bookingPassports = $bookingPassports;
+            //$bookingAr->flightId = Yii::app()->flightBooker->current->flightVoyage->flightKey;
 
             if($bookingAr->save())
             {
-                Yii::app()->flightBooker->current->bookingId = $bookingAr->id;
+                Yii::app()->flightBooker->getCurrent->bookingId = $bookingAr->id;
                 Yii::app()->flightBooker->status('booking');
                 $this->getController()->refresh();
             }

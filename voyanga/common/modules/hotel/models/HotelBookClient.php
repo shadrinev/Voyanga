@@ -160,7 +160,6 @@ class HotelBookClient
                                     }
                                     $this->requests[$i]['result'] = call_user_func_array($requestInfo['function'], $params);
                                     unset($this->requests[$i]['function']);
-
                                 }
                                 else
                                 {

@@ -82,11 +82,12 @@ class FlightBookerComponent extends CApplicationComponent
         $flightBookingParams = new FlightBookingParams();
 
         //VarDumper::dump($this->flightBooker->booking);die();
-        $flightBookingParams->contactEmail = $this->flightBooker->booking->email;
-        $flightBookingParams->phoneNumber = $this->flightBooker->booking->phone;
-        $flightBookingParams->flightId = $this->flightVoyage->flightKey;
+        $orderBooking = $this->flightBooker->orderBooking;
+        $flightBookingParams->contactEmail = $orderBooking->email;
+        $flightBookingParams->phoneNumber = $orderBooking->phone;
+        $flightBookingParams->flightId = $this->flightBooker->flightVoyage->flightKey;
 
-        foreach($this->flightBooker->booking->bookingPassports as $passport)
+        foreach($this->flightBooker->flightBookingPassports as $passport)
         {
             $passenger = new Passenger();
             $passenger->type = Passenger::TYPE_ADULT;
@@ -113,7 +114,7 @@ class FlightBookerComponent extends CApplicationComponent
         //TODO: ставим таймер на отмену приема платежа
         //переход в состояние payment должен быть инициализирован из вне
         //$this->status('payment');
-        $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->hotelBooker->id,'newState'=>'bookingTimeLimitError'));
+        $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
         if($res)
         {
             $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
