@@ -19,7 +19,7 @@
  * @property OrderBooking $orderBooking
  * @property FlightBookingPassport[] $flightBookingPassports
  */
-class FlightBooker extends SWActiveRecord
+class FlightBooker extends SWLogActiveRecord
 {
     private $_flightVoyage;
     private $statusChanged = false;

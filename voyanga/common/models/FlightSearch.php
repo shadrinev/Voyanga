@@ -82,6 +82,7 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
                     $paramsFs = $sJdata;
                     $paramsFs['fsKey'] = $this->key;
                     $flightVoyageStack = new FlightVoyageStack($paramsFs);
+                    //VarDumper::dump($flightVoyageStack);die();
 
                     //echo $flightVoyageStack->getAsJson();
 
