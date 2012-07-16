@@ -11,8 +11,11 @@ class FlightEnterCredentialsAction extends StageAction
     public function execute()
     {
         $valid = true;
-
         $booking = new BookingForm();
+
+        $adults = Yii::app()->flightBooker->getCurrent()->FlightVoyage;
+        VarDumper::dump($adults); die();
+
         if(isset($_POST['BookingForm']))
         {
             $booking->attributes=$_POST['BookingForm'];
@@ -23,10 +26,9 @@ class FlightEnterCredentialsAction extends StageAction
             $valid = false;
         }
 
-        $passport = new AviaPassportForm();
-        if(isset($_POST['AviaPassportForm']))
+        $passport = new FlightPassportForm();
+        if(isset($_POST['FlightPassportForm']))
         {
-            VarDumper::dump($_POST['AviaPassportForm']);//die();
             $passport->attributes=$_POST['AviaPassportForm'][1];
             $valid = $valid && $passport->validate();
         }

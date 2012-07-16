@@ -66,6 +66,10 @@
         )
     )); ?>
 
+    <?php echo $form->dropDownListRow($model, 'adultCount', $model->getPossibleAdultCount()); ?>
+    <?php echo $form->dropDownListRow($model, 'childCount', $model->getPossibleChildCount()); ?>
+    <?php echo $form->dropDownListRow($model, 'infantCount', $model->getPossibleInfantCount()); ?>
+
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.BootButton', array(
             'url'=>'#popupInfo',

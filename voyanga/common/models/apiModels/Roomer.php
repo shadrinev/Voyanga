@@ -23,7 +23,6 @@ class Roomer
         $bd=new DateTime($passport->birthday);
         $dnow=new DateTime();
         $diff=$dnow->diff($bd);
-        CVarDumper::dump($diff);
         $this->age = $diff->y;
         $this->genderId = $passport->genderId;
         $this->fullName = $this->firstName.' '.$this->lastName;

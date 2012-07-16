@@ -29,9 +29,16 @@ class ConstructorController extends FrontendController
         if (isset($_GET['FlightForm']))
         {
             $flightForm->attributes = $_GET['FlightForm'];
-            $this->storeSearches($flightForm->departureCityId, $flightForm->arrivalCityId, $flightForm->departureDate);
-            $result = MFlightSearch::getAllPricesAsJson($flightForm->departureCityId, $flightForm->arrivalCityId, $flightForm->departureDate);
-            echo $result;
+            if ($flightForm->validate())
+            {
+                $this->storeSearches($flightForm->departureCityId, $flightForm->arrivalCityId, $flightForm->departureDate, $flightForm->adultCount, $flightForm->childCount, $flightForm->infantCount);
+                $result = MFlightSearch::getAllPricesAsJson($flightForm->departureCityId, $flightForm->arrivalCityId, $flightForm->departureDate, false, $flightForm->adultCount, $flightForm->childCount, $flightForm->infantCount);
+                echo $result;
+            }
+            else
+            {
+                throw new CHttpException(500, CHtml::errorSummary($flightForm));
+            }
             Yii::app()->end();
         }
         else
@@ -46,10 +53,10 @@ class ConstructorController extends FrontendController
         return ($a[3] > $b[3]) ? -1 : 1;
     }
 
-    private function storeSearches($from, $to, $date)
+    private function storeSearches($from, $to, $date, $adultCount, $childCount, $infantCount)
     {
         $hash = $from.$to.$date;
-        $element = array($from, $to, $date, time());
+        $element = array($from, $to, $date, time(), $adultCount, $childCount, $infantCount);
         $elements = Yii::app()->user->getState('lastSearches');
         $elements[$hash] = $element;
         uasort($elements, array($this, 'compareByTime'));

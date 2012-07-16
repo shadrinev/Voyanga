@@ -13,19 +13,27 @@ class FlightEngineAction extends CAction
         $parts = explode('_', $key);
         $searchKey = $parts[0];
         $searchId = $parts[1];
-        $flightVoyage = FlightVoyage::getFromCache($searchKey, $searchId);
+
+        $flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>'flight_voyage_'.$key));
+        if($flightBooker)
+        {
+            $flightVoyage = unserialize($flightBooker->flight_voyage);
+        }
+        else
+        {
+            $flightVoyage = FlightVoyage::getFromCache($searchKey, $searchId);
+            if ($flightVoyage)
+                Yii::app()->flightBooker->flightVoyage = $flightVoyage;
+        }
+
         if(!$flightVoyage)
         {
-            $flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>'flight_voyage_'.$key));
-            if($flightBooker)
-            {
-                $flightVoyage = unserialize($flightBooker->flight_voyage);
-            }
+            throw new CHttpException(500, 'Your exception expired');
+
         }
-        //oleg: look at hotel engine. incorrect here.
-        Yii::app()->flightBooker->flightVoyage = $flightVoyage;
-        if (Yii::app()->flightBooker->getCurrent()==null)
-            Yii::app()->flightBooker->book();
+
+        Yii::app()->flightBooker->book();
+
         $status = Yii::app()->flightBooker->current->swGetStatus()->getId();
         $actionName = 'stage'.ucfirst($status);
         if ($action = $this->getController()->createAction($actionName))

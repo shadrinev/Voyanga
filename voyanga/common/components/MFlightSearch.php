@@ -7,14 +7,14 @@
  */
 class MFlightSearch extends CComponent
 {
-    private static function buildSearchParams($fromCityId, $toCityId, $date, $returnDate=false, $flightClass = 'E')
+    private static function buildSearchParams($fromCityId, $toCityId, $date, $returnDate=false, $flightClass = 'E', $adultCount, $childCount, $infantCount)
     {
         $flightSearchParams = new FlightSearchParams();
         $departureDate = date('d.m.Y', strtotime($date));
         $flightSearchParams->addRoute(array(
-            'adult_count' => 1,
-            'child_count' => 0,
-            'infant_count' => 0,
+            'adult_count' => $adultCount,
+            'child_count' => $childCount,
+            'infant_count' => $infantCount,
             'departure_city_id' => $fromCityId,
             'arrival_city_id' => $toCityId,
             'departure_date' => $departureDate,
@@ -23,9 +23,9 @@ class MFlightSearch extends CComponent
         {
             $returnDate = date('d.m.Y', strtotime($returnDate));
             $flightSearchParams->addRoute(array(
-                'adult_count' => 1,
-                'child_count' => 0,
-                'infant_count' => 0,
+                'adult_count' => $adultCount,
+                'child_count' => $childCount,
+                'infant_count' => $infantCount,
                 'departure_city_id' => $toCityId,
                 'arrival_city_id' => $fromCityId,
                 'departure_date' => $returnDate
@@ -35,9 +35,9 @@ class MFlightSearch extends CComponent
         return $flightSearchParams;
     }
 
-    public static function getAllPricesAsJson($fromCityId, $toCityId, $date, $returnDate=false)
+    public static function getAllPricesAsJson($fromCityId, $toCityId, $date, $returnDate=false, $adultCount, $childCount, $infantCount)
     {
-        $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate);
+        $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate, 'E', $adultCount, $childCount, $infantCount);
         $fs = new FlightSearch();
         $fs->status = 1;
         $fs->requestId = '1';

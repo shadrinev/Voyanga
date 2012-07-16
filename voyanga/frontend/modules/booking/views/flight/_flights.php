@@ -19,10 +19,10 @@
         <td><img src='/img/airlines/{{valCompany}}.png'></td>
         <td>{{price}} руб.</td>
         <td><a class="btn btn-info detail-view" data-key='{{flightKey}}'>Подробнее</a>
-            <a class="btn btn-mini btn-success buy" href='/admin/booking/flight/buy/key/{{../searchId}}_{{flightKey}}'>Купить</a></td>
+            <a class="btn btn-mini btn-success buy" href='/booking/flight/buy/key/{{../searchId}}_{{flightKey}}'>Купить</a></td>
     </tr>
     <td colspan="6">
-        <table class="table table-bordered" id='detail-{{flightKey}}' style='display: none; background-color: #f0f0f0'>
+        <table class="table table-bordered" id='flight-detail-{{flightKey}}' style='display: none; background-color: #f0f0f0'>
             <thead>
                 <th>Вылет</th>
                 <th>Прилёт</th>
@@ -58,7 +58,7 @@
     });
 
     $('.detail-view').live('click', function() {
-        var openElement = $('#detail-' + $(this).data('key'));
+        var openElement = $('#flight-detail-' + $(this).data('key'));
         console.log(openElement);
         openElement.toggle();
     });
