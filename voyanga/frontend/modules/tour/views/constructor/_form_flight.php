@@ -104,7 +104,12 @@
     $('#searchFlightConstructor,#constructor-repeatFlightSearch').live('click', function(){
         $('#constructor-modalText').html('Поиск перелёта...');
         $('#constructor-popupInfo').modal('show');
-        $.getJSON('/tour/constructor/flightSearch', $('#constructor-flight-form').serialize())
+        $.ajax({
+          url: '/tour/constructor/flightSearch',
+          dataType: 'json',
+          data: $('#constructor-flight-form').serialize(),
+          timeout: 90000
+        })
         .done(function(data) {
             var html = {$templateVariable}(data);
             console.log(data);
@@ -113,6 +118,8 @@
         })
         .fail(function(data){
             console.log(data);
+            if (data.statusText=='timeout')
+                data.responseText = 'Время ожидания запроса превышено.';
             $('#constructor-modalText').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"constructor-repeatFlightSearch\" href=\"#\">повторить поиск</a>.<br>Текст ошибки:<br>'+data.responseText+'</div>');
         });
     });
