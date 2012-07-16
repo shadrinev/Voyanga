@@ -13,7 +13,7 @@ class BaseAjaxController extends Controller
     public function beforeAction($action)
     {
         if ($this->forceAjax)
-            $_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest';
+            $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         return parent::beforeAction($action);
     }
     /**

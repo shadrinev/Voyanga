@@ -33,7 +33,9 @@
             ),
             'onselect'=>'js:function(res){$("#FlightForm_departureCityId").val(res.id)}',
             'matcher'=>'js: function(){return true}',
+            'sorter'=>'js:function(items){return items;}',
         ),
+
         'htmlOptions'=>array(
             'class'=>'span5 fromField',
             'value'=>'',
@@ -56,6 +58,7 @@
             ),
             'onselect'=>'js:function(res){$("#FlightForm_arrivalCityId").val(res.id)}',
             'matcher'=>'js: function(){return true}',
+            'sorter'=>'js:function(items){return items;}',
         ),
         'htmlOptions'=>array(
             'class'=>'span5 toField',
