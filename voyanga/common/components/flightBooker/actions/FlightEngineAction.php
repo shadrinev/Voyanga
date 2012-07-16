@@ -17,19 +17,20 @@ class FlightEngineAction extends CAction
         $flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>'flight_voyage_'.$key));
         if($flightBooker)
         {
-            $flightVoyage = unserialize($flightBooker->flight_voyage);
+            $flightVoyage = $flightBooker->flightVoyage;
         }
         else
         {
             $flightVoyage = FlightVoyage::getFromCache($searchKey, $searchId);
             if ($flightVoyage)
+            {
                 Yii::app()->flightBooker->flightVoyage = $flightVoyage;
+            }
         }
 
         if(!$flightVoyage)
         {
-            throw new CHttpException(500, 'Your exception expired');
-
+            throw new CHttpException(500, 'Your request expired');
         }
 
         Yii::app()->flightBooker->book();

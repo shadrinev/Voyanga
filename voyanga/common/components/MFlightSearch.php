@@ -49,7 +49,7 @@ class MFlightSearch extends CComponent
 
     public static function getOptimalPrice($fromCityId, $toCityId, $date, $returnDate=false, $forceUpdate = false)
     {
-        $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate);
+        $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate, 1, 0, 0);
         $fs = new FlightSearch();
         $fs->status = 1;
         $fs->requestId = '1';

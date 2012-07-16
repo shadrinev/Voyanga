@@ -46,6 +46,7 @@ class FlightBookerComponent extends CApplicationComponent
         return 'search';
     }
 
+
     public function book()
     {
         //if we don't have a flight OR we moved to another flight
@@ -58,6 +59,7 @@ class FlightBookerComponent extends CApplicationComponent
             }
             if ($this->flightBooker == null)
             {
+                Yii::trace('New flightBooker to db', 'FlightBookerComponent.book');
                 $this->flightBooker = new FlightBooker();
                 $this->flightBooker->flightVoyageId = $this->flightVoyage->getId();
                 $this->flightBooker->flightVoyage = $this->flightVoyage;
@@ -68,6 +70,12 @@ class FlightBookerComponent extends CApplicationComponent
                 }
             }
 
+        }
+
+        Yii::trace(CVarDumper::dumpAsString($this->flightBooker->getErrors()), 'FlightBookerComponent.book');
+        if (!$this->flightBooker->id)
+        {
+            $this->flightBooker->id = $this->flightBooker->primaryKey;
         }
 
         Yii::app()->user->setState('flightVoyageId', $this->flightBooker->flightVoyage->id);
