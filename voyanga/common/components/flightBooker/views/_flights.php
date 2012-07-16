@@ -16,7 +16,7 @@
         <td>{{flights.0.flightParts.0.datetimeBegin}}</td>
         <td>{{flights.0.departureCity}}</td>
         <td>{{flights.0.arrivalCity}}</td>
-        <td><img src='http://frontend.oleg.voyanga/themes/classic/images/airlines/{{valCompany}}.png'></td>
+        <td><img src='/img/airlines/{{valCompany}}.png'></td>
         <td>{{price}} руб.</td>
         <td><a class="btn btn-info detail-view" data-key='{{flightKey}}'>Подробнее</a>
             <a class="btn btn-mini btn-success buy" href='/admin/booking/flight/buy/key/{{../searchId}}_{{flightKey}}'>Купить</a></td>
@@ -34,7 +34,7 @@
                 <tr>
                     <td>{{datetimeBegin}}, {{departureCity}}, {{departureAirport}}</td>
                     <td>{{datetimeEnd}}, {{arrivalCity}}, {{arrivalAirport}}</td>
-                    <td><img src='http://frontend.oleg.voyanga/themes/classic/images/airlines/{{transportAirline}}.png'></td>
+                    <td><img src='/img/airlines/{{transportAirline}}.png'></td>
                     <td>{{humanTime duration}}</td>
                 </tr>
                 {{/each}}

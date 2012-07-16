@@ -83,7 +83,7 @@
     <h3>Результат запроса</h3>
 </div>
 
-<div class="modal-body" id='constructor-modalText'>
+<div class="modal-body" id='constructor-flight-search-result'>
     <p>Идет запрос данных...</p>
 </div>
 
@@ -97,8 +97,9 @@
 
 <?php $this->endWidget(); ?>
 
-<?php $templateVariable = 'tourFlightSearchResult';
-    $this->renderPartial('_flights', array('variable'=>$templateVariable,'showSaveTour'=>false, 'showDelete'=>false)); ?>
+<?php $templateFlightSearchVariable = 'tourFlightsSearchResult';
+    $this->renderPartial('_flight_search_result', array('variable'=>$templateFlightSearchVariable,'showSaveTour'=>false, 'showDelete'=>false)); ?>
+
 
 <?php Yii::app()->clientScript->registerScript('constructor-flight-search', "
     $('#searchFlightConstructor,#constructor-repeatFlightSearch').live('click', function(){
@@ -111,10 +112,9 @@
           timeout: 90000
         })
         .done(function(data) {
-            var html = {$templateVariable}(data);
+            var html = {$templateFlightSearchVariable}(data);
             console.log(data);
-            $('#flight-search-result').html(html);
-            $('#constructor-popupInfo').modal('hide');
+            $('#constructor-flight-search-result').html(html);
         })
         .fail(function(data){
             console.log(data);

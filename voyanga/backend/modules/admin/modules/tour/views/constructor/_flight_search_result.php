@@ -13,7 +13,7 @@
         <tbody>
         {{#each flightVoyages}}
         <tr>
-            <td><img src='http://frontend.oleg.voyanga/themes/classic/images/airlines/{{valCompany}}.png'></td>
+            <td><img src='/img/airlines/{{valCompany}}.png'></td>
             <td>{{price}} руб.</td></li>
             <td><a class='btn btn-mini chooseFlight' data-searchkey='{{flightKey}}'>Выбрать</a></td>
         </tr>
