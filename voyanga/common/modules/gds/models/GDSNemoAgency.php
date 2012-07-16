@@ -3,6 +3,7 @@ class GDSNemoAgency extends CComponent
 {
     public $wsdlUri = null;
     public static $lastRequestDescription = '';
+    public static $passportTypesMap = array(1=>'C',2=>'A',3=>'V');
     const ERROR_CODE_EMPTY = 1;
     const ERROR_CODE_INVALID = 2;
 
@@ -416,6 +417,7 @@ class GDSNemoAgency extends CComponent
         {
             throw new CException(Yii::t('application', 'Parameter oFlightBookingParams not type of FlightBookingParams'));
         }
+
         $aParams = array(
             'Request' => array(
                 'BookFlight' => array(
@@ -429,7 +431,8 @@ class GDSNemoAgency extends CComponent
                     'Agency' => array(
                         'Name' => 'Easy',
                         'Telephone' => array(
-                            'PhoneNumber' => '78125559944'
+                            'Type' => 'A',
+                            'PhoneNumber' => '5745698'
                         ),
                         'Address' => array(
                             'City' => 'Saint-Petersburg'
@@ -475,20 +478,28 @@ class GDSNemoAgency extends CComponent
             $iNum = 1;
             foreach ($oFlightBookingParams->passengers as $passenger)
             {
-                $oTraveller = array();
+                //VarDumper::dump($passenger);die();
+                //$oTraveller = array();
                 $oTraveller['Type'] = Yii::app()->params['aPassegerTypes'][$passenger->type];
                 $oTraveller['Num'] = $iNum;
+                $oTraveller['IsContact'] = 'true';
                 $oTraveller['PersonalInfo'] = array();
-                $oTraveller['PersonalInfo']['DateOfBirth'] = UtilsHelper::dateToPointDate($passenger->passport->birthday);
+                $oTraveller['PersonalInfo']['DateOfBirth'] = $passenger->passport->birthday;
                 $oTraveller['PersonalInfo']['Nationality'] = Country::getCountryByPk($passenger->passport->countryId)->code;
                 $oTraveller['PersonalInfo']['Gender'] = $passenger->passport->genderId == 1 ? 'M' : 'F';
                 $oTraveller['PersonalInfo']['FirstName'] = $passenger->passport->firstName;
                 $oTraveller['PersonalInfo']['LastName'] = $passenger->passport->lastName;
                 $oTraveller['DocumentInfo'] = array();
-                $oTraveller['DocumentInfo']['DocType'] = $passenger->passport->documentTypeId;
+                $oTraveller['DocumentInfo']['DocType'] = isset(self::$passportTypesMap[$passenger->passport->documentTypeId]) ? self::$passportTypesMap[$passenger->passport->documentTypeId] : 'P';
                 $oTraveller['DocumentInfo']['DocNum'] = $passenger->passport->number;
                 $oTraveller['DocumentInfo']['CountryCode'] = Country::getCountryByPk($passenger->passport->countryId)->code;
                 $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->passport->expiration);
+                $oTraveller['ContactInfo'] = array();
+                $oTraveller['ContactInfo']['EmailID'] = 'test@test.ru';
+                $oTraveller['ContactInfo']['Telephone'] = array();
+                $oTraveller['ContactInfo']['Telephone']['Type'] = 'M';
+                $oTraveller['ContactInfo']['Telephone']['PhoneNumber'] = '9125556699';
+
                 $aTraveler[] = $oTraveller;
             }
             $aParams['Request']['BookFlight']['Travellers']['Traveller'] = $aTraveler;
@@ -498,12 +509,25 @@ class GDSNemoAgency extends CComponent
         {
             throw new CException(Yii::t('application', 'Data in parameter oFlightBookingParams not valid'));
         }
-        VarDumper::dump($aParams);
+        //VarDumper::dump($aParams);
         $response = self::request('BookFlight', $aParams, $bCache = FALSE, $iExpiration = 0);
+        VarDumper::dump($response);die();
 
-        $status  = $response->BookFlight->Status;
 
         $flightBookingResponse = new FlightBookingResponse();
+        if(isset($response->Error))
+        {
+            $status = 'error';
+            $flightBookingResponse->status = 2;
+        }
+        else
+        {
+            $status  = $response->BookFlight->Status;
+        }
+
+
+
+
         if($status == 'booked')
         {
 
@@ -517,6 +541,7 @@ class GDSNemoAgency extends CComponent
             $flightBookingResponse->status = 2;
         }
         return $flightBookingResponse;
+
     }
 
     public function FlightTariffRules()

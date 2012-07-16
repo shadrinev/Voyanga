@@ -49,6 +49,7 @@ class FlightBookingPassport extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
+            array('firstName', 'required'),
             array('flightBookingId, documentTypeId, countryId, genderId', 'numerical', 'integerOnly'=>true),
             array('firstName, lastName, birthday, series, number', 'length', 'max'=>45),
             array('expiration, timestamp', 'safe'),

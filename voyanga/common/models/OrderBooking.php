@@ -56,7 +56,7 @@ class OrderBooking extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('timestamp', 'required'),
+            //array('timestamp', 'required'),
             array('email, phone, userId, flightId, hotelId', 'length', 'max'=>45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.

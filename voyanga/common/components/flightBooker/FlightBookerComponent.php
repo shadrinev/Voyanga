@@ -61,10 +61,15 @@ class FlightBookerComponent extends CApplicationComponent
                 $this->flightBooker = new FlightBooker();
                 $this->flightBooker->flightVoyageId = $this->flightVoyage->getId();
                 $this->flightBooker->flightVoyage = $this->flightVoyage;
+                $this->flightBooker->status = 'enterCredentials';
+                if(!$this->flightBooker->save())
+                {
+                    VarDumper::dump($this->flightBooker->getErrors());
+                }
             }
+
         }
-        $this->flightBooker->status = 'enterCredentials';
-        $this->flightBooker->save();
+
         Yii::app()->user->setState('flightVoyageId', $this->flightBooker->flightVoyage->id);
     }
 
@@ -104,7 +109,7 @@ class FlightBookerComponent extends CApplicationComponent
             $this->flightBooker->pnr = $flightBookingResponse->status;
             $this->flightBooker->timeout = $flightBookingResponse->expiration;
         }
-        //die();
+        die();
         $this->status('waitingForPayment');
     }
 

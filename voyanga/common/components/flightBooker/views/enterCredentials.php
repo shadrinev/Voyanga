@@ -26,18 +26,18 @@ $this->beginWidget("site.backend.modules.admin.components.AAdminPortlet",
     )
 )); ?>
 
-<?php echo $form->textFieldRow($passport,'firstName');?>
-<?php echo $form->textFieldRow($passport,'lastName');?>
+<?php echo $form->textFieldRow($passport,'[1]firstName');?>
+<?php echo $form->textFieldRow($passport,'[1]lastName');?>
 
 <?php echo $form->textFieldRow($booking,'contactPhone');?>
 <?php echo $form->textFieldRow($booking,'contactEmail');?>
 
-<?php echo $form->textFieldRow($passport,'birthday');?>
-<?php echo $form->dropDownListRow($passport,'genderId', Passport::getPossibleGenders());?>
-<?php echo $form->dropDownListRow($passport,'countryId', Country::getPossibleCountries());?>
-<?php echo $form->dropDownListRow($passport,'documentTypeId', Passport::getPossibleTypes());?>
-<?php echo $form->textFieldRow($passport,'series');?>
-<?php echo $form->textFieldRow($passport,'number');?>
+<?php echo $form->textFieldRow($passport,'[1]birthday');?>
+<?php echo $form->dropDownListRow($passport,'[1]genderId', Passport::getPossibleGenders());?>
+<?php echo $form->dropDownListRow($passport,'[1]countryId', Country::getPossibleCountries());?>
+<?php echo $form->dropDownListRow($passport,'[1]documentTypeId', Passport::getPossibleTypes());?>
+<?php echo $form->textFieldRow($passport,'[1]series');?>
+<?php echo $form->textFieldRow($passport,'[1]number');?>
 
 
 <div class="form-actions">

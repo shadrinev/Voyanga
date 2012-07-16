@@ -8,7 +8,7 @@
  * @property string $status
  * @property string $pnr
  * @property string $timeout
- * @property string $flightVoyage
+ * @property string $flightVoyageInfo
  * @property string $updated
  * @property string $flightVoyageId
  * @property integer $orderBookingId
@@ -77,14 +77,14 @@ class FlightBooker extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id', 'required'),
+            //array('id', 'required'),
             array('id, orderBookingId, nemoBookId', 'numerical', 'integerOnly'=>true),
-            array('status, flightVoyageId', 'length', 'max'=>45),
+            array('status, flightVoyageId', 'length', 'max'=>60),
             array('pnr', 'length', 'max'=>10),
-            array('timeout, flightVoyage, updated, timestamp', 'safe'),
+            array('timeout, flightVoyageInfo, updated, timestamp', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, status, pnr, timeout, flightVoyage, updated, flightVoyageId, orderBookingId, nemoBookId, timestamp', 'safe', 'on'=>'search'),
+            array('id, status, pnr, timeout, flightVoyageInfo, updated, flightVoyageId, orderBookingId, nemoBookId, timestamp', 'safe', 'on'=>'search'),
         );
     }
 
@@ -97,8 +97,8 @@ class FlightBooker extends CActiveRecord
             ),
             'CTimestampBehavior' => array(
                 'class' => 'zii.behaviors.CTimestampBehavior',
-                'createAttribute' => 'created_at',
-                'updateAttribute' => 'updated_at',
+                'createAttribute' => 'timestamp',
+                'updateAttribute' => null,
             ),
             'EAdvancedArBehavior' => array(
                 'class' => 'common.components.EAdvancedArBehavior'
@@ -178,7 +178,7 @@ class FlightBooker extends CActiveRecord
             }
             else
             {
-                $element = unserialize($this->flight_voyage);
+                $element = unserialize($this->flightVoyageInfo);
                 $this->_flightVoyage = $element;
             }
         }
@@ -189,6 +189,6 @@ class FlightBooker extends CActiveRecord
     {
         $element = serialize($value);
         $this->_flightVoyage = $value;
-        $this->flight_voyage = $element;
+        $this->flightVoyageInfo = $element;
     }
 }

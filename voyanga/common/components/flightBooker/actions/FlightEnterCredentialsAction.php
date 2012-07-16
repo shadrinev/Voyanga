@@ -24,9 +24,10 @@ class FlightEnterCredentialsAction extends StageAction
         }
 
         $passport = new AviaPassportForm();
-        if(isset($_POST['PassportForm']))
+        if(isset($_POST['AviaPassportForm']))
         {
-            $passport->attributes=$_POST['PassportForm'];
+            VarDumper::dump($_POST['AviaPassportForm']);//die();
+            $passport->attributes=$_POST['AviaPassportForm'][1];
             $valid = $valid && $passport->validate();
         }
         $passports[] = $passport;
@@ -38,7 +39,7 @@ class FlightEnterCredentialsAction extends StageAction
             $flightBookerComponent = Yii::app()->flightBooker;
             $flightBookerComponent->book();
 
-            $flightBookerId = $flightBookerComponent->getCurrent()->id;
+            $flightBookerId = $flightBookerComponent->getCurrent()->primaryKey;
             $bookingAr = new OrderBooking();
 
             $bookingAr->email = $booking->contactEmail;
@@ -59,7 +60,12 @@ class FlightEnterCredentialsAction extends StageAction
                 $bookingPassport->genderId = $passport->genderId;
                 $bookingPassport->documentTypeId = $passport->documentTypeId;
                 $bookingPassport->flightBookingId = $flightBookerId;
-                $bookingPassport->save();
+                if(!$bookingPassport->save())
+                {
+                    VarDumper::dump($bookingPassport->getErrors());
+                    die();
+
+                }
 
                 $bookingPassports[] = $bookingPassport;
             }
@@ -70,13 +76,14 @@ class FlightEnterCredentialsAction extends StageAction
 
             if($bookingAr->save())
             {
-                Yii::app()->flightBooker->getCurrent->bookingId = $bookingAr->id;
+                Yii::app()->flightBooker->getCurrent()->orderBookingId = $bookingAr->id;
                 Yii::app()->flightBooker->status('booking');
                 $this->getController()->refresh();
             }
             else
             {
-
+                VarDumper::dump($bookingAr->getErrors());
+                //echo "error on save()";
                 $this->getController()->render('flightBooker.views.enterCredentials', array('passport'=>$passport, 'booking'=>$booking));
             }
         }

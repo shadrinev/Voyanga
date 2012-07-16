@@ -56,7 +56,7 @@ class GDSNemoSoapClient extends SoapClient
             //echo VarDumper::xmlDump($sXML);
             //die();
         }
-        elseif( strpos($action,'bookFlight') !== FALSE)
+        elseif( strpos($action,'bookFlight1') !== FALSE)
         {
             $this->gdsRequest->requestXml = UtilsHelper::formatXML($request);
 
