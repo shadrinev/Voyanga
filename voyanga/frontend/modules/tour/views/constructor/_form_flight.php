@@ -97,7 +97,7 @@
 
 <?php $this->endWidget(); ?>
 
-<?php $templateVariable = 'flightSearchResult';
+<?php $templateVariable = 'tourFlightSearchResult';
     $this->renderPartial('_flights', array('variable'=>$templateVariable,'showSaveTour'=>false, 'showDelete'=>false)); ?>
 
 <?php Yii::app()->clientScript->registerScript('constructor-flight-search', "

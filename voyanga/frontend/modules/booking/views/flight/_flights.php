@@ -1,4 +1,4 @@
-<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'tour', 'compileVariable' => $variable)) ?>
+<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'flight', 'compileVariable' => $variable)) ?>
 <table class="table" width="100%">
     <thead>
     <tr>
@@ -46,7 +46,7 @@
 </table>
 <span id='searchKey' data-key='{{searchId}}'></span>
 <?php $this->endWidget(); ?>
-<?php Yii::app()->clientScript->registerScript('tour-basket', "
+<?php Yii::app()->clientScript->registerScript('flight-tab', "
     Handlebars.registerHelper('humanTime', function(duration) {
         var hours = Math.floor(duration / 3600),
             min = Math.floor((duration - hours * 3600) / 60),
