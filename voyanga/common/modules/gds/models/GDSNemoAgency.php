@@ -141,7 +141,7 @@ class GDSNemoAgency extends CComponent
         $traveller = array();
         if ($flightSearchParams->adultCount > 0)
         {
-            $traveller = array(
+            $traveller[] = array(
                 'Type' => 'ADT',
                 'Count' => $flightSearchParams->adultCount
             );
@@ -149,7 +149,7 @@ class GDSNemoAgency extends CComponent
         }
         if ($flightSearchParams->childCount > 0)
         {
-            $traveller = array(
+            $traveller[] = array(
                 'Type' => 'CNN',
                 'Count' => $flightSearchParams->childCount
             );
@@ -157,7 +157,7 @@ class GDSNemoAgency extends CComponent
         }
         if ($flightSearchParams->infantCount > 0)
         {
-            $traveller = array(
+            $traveller[] = array(
                 'Type' => 'INF',
                 'Count' => $flightSearchParams->infantCount
             );
@@ -303,7 +303,7 @@ class GDSNemoAgency extends CComponent
                         UtilsHelper::soapObjectsArray($oFare->Tariffs->Tariff);
                         foreach ($oFare->Tariffs->Tariff as $oTariff)
                         {
-                            //VarDumper::dump($oTariff);die();
+                            //VarDumper::dump($oTariff);die();SEARCH_WITHOUT_ADULTS_BANNED
                             $aParts[$oTariff->SegNum]->aTariffs[$oTariff->Code] = $oTariff->Code;
                         }
                     }
