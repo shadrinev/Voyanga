@@ -373,6 +373,7 @@ class GDSNemoAgency extends CComponent
                 }
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;
+                $oFlight->passengersInfo = $aPassengers;
                 //$oFlight->searchId = $searchId;
 
                 if (!$eTicket)

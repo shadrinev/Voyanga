@@ -92,6 +92,24 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         $lastArrTime = 0;
         $lastCityToId = 0;
         $bStart = true;
+        if(isset($oParams->passengersInfo))
+        {
+            foreach($oParams->passengersInfo as $passengerType=>$passengerParams)
+            {
+                switch($passengerType)
+                {
+                    case 'ADT':
+                        $this->adultPassengerInfo = new PassengerInfo($passengerParams);
+                        break;
+                    case 'CNN':
+                        $this->childPassengerInfo = new PassengerInfo($passengerParams);
+                        break;
+                    case 'INF':
+                        $this->infantPassengerInfo = new PassengerInfo($passengerParams);
+                        break;
+                }
+            }
+        }
         if ($oParams->parts)
         {
             foreach ($oParams->parts as $iGroupId => $aParts)
