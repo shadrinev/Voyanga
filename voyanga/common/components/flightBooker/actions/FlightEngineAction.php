@@ -22,7 +22,7 @@ class FlightEngineAction extends CAction
                 $flightVoyage = unserialize($flightBooker->flight_voyage);
             }
         }
-        //VarDumper::dump($flightVoyage);die();
+        //oleg: look at hotel engine. incorrect here.
         Yii::app()->flightBooker->flightVoyage = $flightVoyage;
         if (Yii::app()->flightBooker->getCurrent()==null)
             Yii::app()->flightBooker->book();
