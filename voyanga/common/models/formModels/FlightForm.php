@@ -11,9 +11,8 @@ class FlightForm extends CFormModel
     public $errorMaxPassenger;
     public $errorMaxInfantPassenger;
 
-    public $departureCityId;
-    public $departureDate;
-    public $arrivalCityId;
+    /** @var RouteForm[] */
+    public $routes = array();
 
     public $adultCount = 1;
     public $childCount = 0;
@@ -30,10 +29,8 @@ class FlightForm extends CFormModel
     public function rules()
     {
         return array(
-            array('departureCityId, arrivalCityId, adultCount, infantCount, childCount', 'numerical', 'integerOnly'=>true),
-            array('departureCityId, arrivalCityId, adultCount, infantCount, childCount', 'required'),
-            array('departureDate', 'required'),
-            array('departureDate', 'safe'),
+            array('adultCount, infantCount, childCount', 'numerical', 'integerOnly'=>true),
+            array('adultCount, infantCount, childCount', 'required'),
             array('adultCount', 'checkPassengerCount'),
             array('infantCount', 'checkInfantCount'),
             array('infantCount, childCount', 'in', 'range'=>range(0, self::MAX_PASSENGER_NUMBER)),
@@ -44,9 +41,6 @@ class FlightForm extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'departureCityId' => 'Город отправления',
-            'arrivalCityId' => 'Город прибытия',
-            'departureDate' => 'Дата отправления',
             'adultCount' => 'Количество взрослых',
             'childCount' => 'Количество детей старше 2-х лет',
             'infantCount' => 'Количество детей до 2-х лет',

@@ -2,20 +2,20 @@
 <?php $i=0; ?>
 <fieldset>
     <legend>Ссылки</legend>
-<div id='linksArea'>
-    <?php foreach ($links as $link): ?>
-        <?php $this->render('_template', array('model'=>$link, 'i'=>$i++, 'form'=>$form)); ?>
+<div id='routesArea'>
+    <?php foreach ($routes as $route): ?>
+        <?php $this->render('_template', array('model'=>$route, 'i'=>$i++, 'form'=>$form)); ?>
     <?php endforeach ?>
-    <?php if (sizeof($links)==0) $this->render('_template', array('model'=>new EventLink, 'i'=>$i++, 'form'=>$form)); ?>
+    <?php if (sizeof($routes)==0) $this->render('_template', array('model'=>new RouteForm, 'i'=>$i++, 'form'=>$form)); ?>
 </div>
 <br>
 <?php $this->widget('bootstrap.widgets.BootButton', array(
     'buttonType'=>'primary',
     'size'=>'mini',
     'icon'=>'icon-plus',
-    'label'=>'Добавить ссылку',
+    'label'=>'Добавить перелёт',
     'htmlOptions'=>array(
-        'class' => 'addLink',
+        'class' => 'addRoute',
         'data-counter' => $i
     ))
 );

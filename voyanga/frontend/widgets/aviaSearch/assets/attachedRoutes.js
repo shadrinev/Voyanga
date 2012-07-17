@@ -1,10 +1,10 @@
 (function($){
     $(function(){
-        $('html').on('click', '.addLink', function (){
+        $('html').on('click', '.addRoute', function (){
             var $this = $(this),
                 counter = $this.data('counter'),
-                template = $.trim($('#linkItemTemplate').html()),
-                postion = $('#linksArea'),
+                template = $.trim($('#routeItemTemplate').html()),
+                postion = $('#routesArea'),
                 frag;
 
             frag = template.replace( /{{i}}/ig, counter );
@@ -14,13 +14,13 @@
         });
         $('html').on('click', '.deleteLink', function (){
             var $this = $(this),
-                $addLink = $('.addLink'),
-                counter = $addLink.data('counter'),
+                $addRoute = $('.addRoute'),
+                counter = $addRoute.data('counter'),
                 $deleting = $('#'+$this.data('del'));
 
             $deleting.remove();
             counter--;
-            $addLink.data('counter', counter);
+            $addRoute.data('counter', counter);
         });
     })
 })(window.jQuery)
