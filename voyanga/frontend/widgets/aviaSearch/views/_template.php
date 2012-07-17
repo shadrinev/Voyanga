@@ -1,17 +1,18 @@
-<div class="form-horizontal" id="route<?php echo $i; ?>">
+<div class="form-horizontal well" id="route<?php echo $i; ?>">
         <?php echo $form->datepickerRow(
             $model,
-            'departureDate',
+            "[$i]departureDate",
             array(
                 'events'=> array(
                     'changeDate'=>'js:function(ev){$(this).datepicker("hide")}'
-                )
+                ),
+                'class'=>'datepicker'
             )
         );?>
 
-        <?php echo $form->hiddenField($model,'departureCityId'); ?>
+        <?php echo $form->hiddenField($model, "[$i]departureCityId", array('class'=>'departureCity')); ?>
 
-        <?php echo $form->labelEx($model,'departureCityId'); ?>
+        <?php echo $form->labelEx($model, "[$i]departureCityId"); ?>
         <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
             'options'=>array(
                 'items'=>10,
@@ -23,7 +24,6 @@
                     'method' => "get",
                     'loadingClass' => "loading-circle",
                 ),
-                'onselect'=>'js:function(res){$("#FlightForm_departureCityId").val(res.id)}',
                 'matcher'=>'js: function(){return true}',
                 'sorter'=>'js:function(items){return items;}',
             ),
@@ -34,9 +34,9 @@
             )
         )); ?>
 
-        <?php echo $form->hiddenField($model,'arrivalCityId'); ?>
+        <?php echo $form->hiddenField($model, "[$i]arrivalCityId", array('class'=>'arrivalCity')); ?>
 
-        <?php echo $form->labelEx($model,'arrivalCityId'); ?>
+        <?php echo $form->labelEx($model, "[$i]arrivalCityId"); ?>
         <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
         'options'=>array(
             'items'=>10,
@@ -48,7 +48,6 @@
                 'method' => "get",
                 'loadingClass' => "loading-circle",
             ),
-            'onselect'=>'js:function(res){$("#FlightForm_arrivalCityId").val(res.id)}',
             'matcher'=>'js: function(){return true}',
             'sorter'=>'js:function(items){return items;}',
         ),
@@ -62,9 +61,9 @@
         'buttonType'=>'warning',
         'icon'=>'icon-minus',
         'size'=>'mini',
-        'label'=>'Удалить ссылку',
+        'label'=>'Удалить перелёт',
         'htmlOptions'=>array(
             'data-del'=>'route'.$i,
-            'class' => 'deleteLink'
+            'class' => 'deleteRoute'
     ))); ?>
 </div>

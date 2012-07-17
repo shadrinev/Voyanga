@@ -7,7 +7,7 @@
     )
 )); ?>
 
-    <?php echo $form->datepickerRow(
+    <?php /*echo $form->datepickerRow(
         $model,
         'departureDate',
         array(
@@ -15,12 +15,12 @@
                 'changeDate'=>'js:function(ev){$(this).datepicker("hide")}'
             )
         )
-    );?>
+    );*/?><!--
 
-    <?php echo $form->hiddenField($model,'departureCityId', array('validateOnType'=>true, 'id'=>$form->getId().'-departureCityId')); ?>
+    <?php /*echo $form->hiddenField($model,'departureCityId', array('validateOnType'=>true, 'id'=>$form->getId().'-departureCityId')); */?>
 
-    <?php echo $form->labelEx($model,'departureCityId'); ?>
-    <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
+    <?php /*echo $form->labelEx($model,'departureCityId'); */?>
+    <?php /*$this->widget('bootstrap.widgets.BootTypeahead', array(
         'options'=>array(
             'items'=>10,
             'ajax' => array(
@@ -39,13 +39,13 @@
             'value'=>'',
             'id'=>$form->getId().'-departureCityField'
         )
-    )); ?>
-    <?php echo $form->error($model, 'departureCityId'); ?>
+    )); */?>
+    <?php /*echo $form->error($model, 'departureCityId'); */?>
 
-    <?php echo $form->hiddenField($model,'arrivalCityId', array('id'=>$form->getId().'-arrivalCityId')); ?>
+    <?php /*echo $form->hiddenField($model,'arrivalCityId', array('id'=>$form->getId().'-arrivalCityId')); */?>
 
-    <?php echo $form->labelEx($model,'arrivalCityId'); ?>
-    <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
+    <?php /*echo $form->labelEx($model,'arrivalCityId'); */?>
+    --><?php /*$this->widget('bootstrap.widgets.BootTypeahead', array(
         'options'=>array(
             'items'=>10,
             'ajax' => array(
@@ -63,7 +63,7 @@
             'class'=>'span5 toField',
             'value'=>'',
         )
-    )); ?>
+    )); */?>
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.BootButton', array(

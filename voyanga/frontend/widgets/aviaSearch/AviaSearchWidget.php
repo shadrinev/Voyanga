@@ -7,14 +7,10 @@
  */
 class AviaSearchWidget extends CWidget
 {
-
     public $model;
-
     public $attribute;
 
-    public $assetsUrl;
-
-    public $form;
+    private $assetsUrl;
 
     public function init()
     {
@@ -25,7 +21,7 @@ class AviaSearchWidget extends CWidget
 
     public function run()
     {
-        $this->render('template', array('routes'=>$this->model->{$this->attribute}, 'form'=>$this->form));
+        $this->render('template', array('routes'=>$this->model->{$this->attribute}, 'form'=>new BootActiveForm));
     }
 
 }

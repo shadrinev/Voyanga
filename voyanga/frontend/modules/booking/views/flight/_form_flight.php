@@ -7,7 +7,7 @@
     )
 )); ?>
 
-
+    <?php $this->widget('frontend.widgets.aviaSearch.AviaSearchWidget', array('model' => $model, 'attribute'=>'routes')); ?>
 
     <?php echo $form->dropDownListRow($model, 'adultCount', $model->getPossibleAdultCount()); ?>
     <?php echo $form->dropDownListRow($model, 'childCount', $model->getPossibleChildCount()); ?>
