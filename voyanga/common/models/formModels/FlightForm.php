@@ -8,6 +8,13 @@
 class FlightForm extends CFormModel
 {
     const MAX_PASSENGER_NUMBER = 7;
+
+    const CLASS_ECONOM = 'E';
+    const CLASS_BUSINESS = 'B';
+    const CLASS_FIRST = 'F';
+    const CLASS_ANY = 'A';
+    public $flightClass = self::CLASS_ECONOM;
+
     public $errorMaxPassenger;
     public $errorMaxInfantPassenger;
 
@@ -34,7 +41,9 @@ class FlightForm extends CFormModel
             array('adultCount', 'checkPassengerCount'),
             array('infantCount', 'checkInfantCount'),
             array('infantCount, childCount', 'in', 'range'=>range(0, self::MAX_PASSENGER_NUMBER)),
-            array('adultCount', 'in', 'range'=>range(1, self::MAX_PASSENGER_NUMBER))
+            array('adultCount', 'in', 'range'=>range(1, self::MAX_PASSENGER_NUMBER)),
+            array('flightClass', 'in', 'range'=>array_keys($this->getPossibleFlightClasses())),
+            array('routes', 'validateRoutes')
         );
     }
 
@@ -44,6 +53,7 @@ class FlightForm extends CFormModel
             'adultCount' => 'Количество взрослых',
             'childCount' => 'Количество детей старше 2-х лет',
             'infantCount' => 'Количество детей до 2-х лет',
+            'flightClass' => 'Класс перелёта',
         );
     }
 
@@ -83,5 +93,32 @@ class FlightForm extends CFormModel
     {
         $range = range(0, FlightForm::MAX_PASSENGER_NUMBER);
         return array_combine($range, $range);
+    }
+
+    public function getPossibleFlightClasses()
+    {
+        return array(
+            self::CLASS_ECONOM => 'Эконом',
+            self::CLASS_BUSINESS => 'Бизнес',
+            self::CLASS_FIRST => 'Первый',
+            self::CLASS_ANY => 'Любой',
+        );
+    }
+
+    public function validateRoutes($attribute)
+    {
+        if (sizeof($this->routes)==0)
+        {
+            $this->addError('routes', 'Нужно ввести данные о перелётах');
+            return false;
+        }
+        $valid = true;
+        foreach ($this->routes as $route)
+        {
+            $valid = $valid && $route->validate();
+        }
+        if (!$valid)
+            $this->addError('routes', 'Некорректные данные об одном из перелётов');
+        return $valid;
     }
 }

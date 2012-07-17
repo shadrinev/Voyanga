@@ -9,6 +9,7 @@
 
     <?php $this->widget('frontend.widgets.aviaSearch.AviaSearchWidget', array('model' => $model, 'attribute'=>'routes')); ?>
 
+    <?php echo $form->radioButtonListInlineRow($model, 'flightClass', $model->getPossibleFlightClasses()); ?>
     <?php echo $form->dropDownListRow($model, 'adultCount', $model->getPossibleAdultCount()); ?>
     <?php echo $form->dropDownListRow($model, 'childCount', $model->getPossibleChildCount()); ?>
     <?php echo $form->dropDownListRow($model, 'infantCount', $model->getPossibleInfantCount()); ?>

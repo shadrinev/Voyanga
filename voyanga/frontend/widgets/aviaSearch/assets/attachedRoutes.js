@@ -8,8 +8,8 @@
                 frag;
 
             frag = template.replace( /{{i}}/ig, counter );
-            position.append(frag);
-            $('.datepicker').datepicker({'weekStart':1,'format':'dd.mm.yyyy','language':'ru'});
+            var tmp = position.append(frag);
+            $('.datepicker', tmp).datepicker({'weekStart':1,'format':'dd.mm.yyyy','language':'ru'});
             $('.fromField').typeahead({
                 'items':10,
                 'ajax':{
@@ -41,6 +41,12 @@
                 'matcher': function(){return true}
             });
             counter++;
+            if (counter>=1)
+            {
+                $('input.isRoundTrip').removeAttr('checked');
+                $('input.isRoundTrip').attr('disabled', 'disabled');
+                $('span.backdate').hide();
+            }
             $this.data('counter', counter);
         });
         $('html').on('click', '.deleteRoute', function (){
@@ -53,6 +59,10 @@
                 return;
             $deleting.remove();
             counter--;
+            if (counter==1)
+            {
+                $('input.isRoundTrip').removeAttr('disabled');
+            }
             $addRoute.data('counter', counter);
         });
         $('.datepicker').datepicker({'weekStart':1,'format':'dd.mm.yyyy','language':'ru'}).on('changeDate', function(ev){$(this).datepicker("hide")});
@@ -85,6 +95,14 @@
                 this.$element.siblings('input.arrivalCity').val(res.id)
             },
             'matcher': function(){return true}
+        });
+        $('.isRoundTrip').each(function (i, el){
+            var roundTrip = $(el).parent().siblings('span.backdate');
+            $(el).attr('checked') !='checked' ? roundTrip.hide() : roundTrip.show();
+        });
+        $('input.isRoundTrip').change(function(){
+            var roundTrip = $(this).parent().siblings('span.backdate');
+            $(this).attr('checked') != 'checked' ? roundTrip.hide() : roundTrip.show();
         });
     });
 })(window.jQuery)

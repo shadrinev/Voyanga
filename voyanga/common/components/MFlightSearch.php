@@ -7,37 +7,53 @@
  */
 class MFlightSearch extends CComponent
 {
-    private static function buildSearchParams($fromCityId, $toCityId, $date, $returnDate=false, $flightClass = 'E', $adultCount, $childCount, $infantCount)
+    /**
+     * @static
+     * @param FlightForm $flightForm
+     * @return FlightSearchParams
+     */
+    private static function buildSearchParams($flightForm)
     {
         $flightSearchParams = new FlightSearchParams();
-        $departureDate = date('d.m.Y', strtotime($date));
-        $flightSearchParams->addRoute(array(
-            'adult_count' => $adultCount,
-            'child_count' => $childCount,
-            'infant_count' => $infantCount,
-            'departure_city_id' => $fromCityId,
-            'arrival_city_id' => $toCityId,
-            'departure_date' => $departureDate,
-        ));
-        if ($returnDate)
+        foreach ($flightForm->routes as $route)
         {
-            $returnDate = date('d.m.Y', strtotime($returnDate));
+            $departureDate = date('d.m.Y', strtotime($route->departureDate));
             $flightSearchParams->addRoute(array(
-                'adult_count' => $adultCount,
-                'child_count' => $childCount,
-                'infant_count' => $infantCount,
-                'departure_city_id' => $toCityId,
-                'arrival_city_id' => $fromCityId,
-                'departure_date' => $returnDate
+                'adult_count' => $flightForm->adultCount,
+                'child_count' => $flightForm->childCount,
+                'infant_count' => $flightForm->infantCount,
+                'departure_city_id' => $route->departureCityId,
+                'arrival_city_id' => $route->arrivalCityId,
+                'departure_date' => $route->departureDate,
             ));
+            if ($route->isRoundTrip)
+            {
+                $returnDate = date('d.m.Y', strtotime($route->backDate));
+                $flightSearchParams->addRoute(array(
+                    'adult_count' => $flightForm->adultCount,
+                    'child_count' => $flightForm->childCount,
+                    'infant_count' => $flightForm->infantCount,
+                    'departure_city_id' => $route->departureCityId,
+                    'arrival_city_id' => $route->arrivalCityId,
+                    'departure_date' => $returnDate
+                ));
+            }
+            $flightSearchParams->flight_class = $flightForm->flightClass;
         }
-        $flightSearchParams->flight_class = $flightClass;
         return $flightSearchParams;
     }
 
-    public static function getAllPricesAsJson($fromCityId, $toCityId, $date, $returnDate=false, $adultCount=1, $childCount=0, $infantCount=0)
+    /**
+     * @static
+     * @param FlightForm $flightForm
+     * @return mixed
+     */
+    public static function getAllPricesAsJson($flightForm)
     {
-        $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate, 'E', $adultCount, $childCount, $infantCount);
+        if (!$flightForm instanceof FlightForm)
+            throw new CHttpException(500, 'MFlightSearch requires instance of FlightForm as incoming param');
+        $flightSearchParams = self::buildSearchParams($flightForm);
+        VarDumper::dump($flightSearchParams);
         $fs = new FlightSearch();
         $fs->status = 1;
         $fs->requestId = '1';

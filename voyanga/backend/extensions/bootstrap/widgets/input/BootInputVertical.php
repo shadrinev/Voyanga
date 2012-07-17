@@ -24,7 +24,8 @@ class BootInputVertical extends BootInput
 		$attribute = $this->attribute;
 		echo '<label class="checkbox" for="'.$this->getAttributeId($attribute).'">';
 		echo $this->form->checkBox($this->model, $this->attribute, $this->htmlOptions).PHP_EOL;
-		echo $this->model->getAttributeLabel($attribute);
+        $attr = CHtml::resolveName($this->model,$attribute); // strip off square brackets if any
+		echo CHtml::activeLabel($this->model, $attribute);
 		echo $this->getError().$this->getHint();
 		echo '</label>';
 	}

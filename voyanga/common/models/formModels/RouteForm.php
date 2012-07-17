@@ -10,6 +10,7 @@ class RouteForm extends CFormModel
     public $departureDate;
     public $departureCityId;
     public $arrivalCityId;
+    public $backDate;
     public $isRoundTrip = false;
 
     public function rules()
@@ -18,6 +19,8 @@ class RouteForm extends CFormModel
             array('departureCityId, arrivalCityId', 'numerical', 'integerOnly'=>true),
             array('departureCityId, arrivalCityId', 'required'),
             array('departureDate', 'required'),
+            array('isRoundTrip', 'safe'),
+            array('backDate', 'safe'),
         );
     }
 
@@ -26,7 +29,9 @@ class RouteForm extends CFormModel
         return array(
             'departureCityId' => 'Город отправления',
             'arrivalCityId' => 'Город прибытия',
-            'departureDate' => 'Дата отправления',
+            'departureDate' => 'Дата туда',
+            'backDate' => 'Дата назад',
+            'isRoundTrip' => 'Туда-обратно',
         );
     }
 }

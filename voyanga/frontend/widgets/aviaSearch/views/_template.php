@@ -57,6 +57,21 @@
         )
     )); ?>
 
+    <?php echo $form->checkboxRow($model, "[$i]isRoundTrip", array('class'=>'isRoundTrip')); ?>
+
+    <span class="backdate">
+        <?php echo $form->datepickerRow(
+            $model,
+            "[$i]backDate",
+            array(
+                'events'=> array(
+                    'changeDate'=>'js:function(ev){$(this).datepicker("hide")}'
+                ),
+                'class'=>'datepicker',
+            )
+        );?>
+    </span>
+
     <?php $this->widget('bootstrap.widgets.BootButton', array(
         'buttonType'=>'warning',
         'icon'=>'icon-minus',

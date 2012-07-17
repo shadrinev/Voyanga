@@ -29,10 +29,19 @@ class ConstructorController extends FrontendController
         if (isset($_GET['FlightForm']))
         {
             $flightForm->attributes = $_GET['FlightForm'];
+            if (isset($_GET['RouteForm']))
+            {
+                foreach ($_GET['RouteForm'] as $route)
+                {
+                    $newRoute = new RouteForm();
+                    $newRoute->attributes = $route;
+                    $flightForm->routes[] = $newRoute;
+                }
+            }
             if ($flightForm->validate())
             {
-                $this->storeSearches($flightForm->departureCityId, $flightForm->arrivalCityId, $flightForm->departureDate, $flightForm->adultCount, $flightForm->childCount, $flightForm->infantCount);
-                $result = MFlightSearch::getAllPricesAsJson($flightForm->departureCityId, $flightForm->arrivalCityId, $flightForm->departureDate, false, $flightForm->adultCount, $flightForm->childCount, $flightForm->infantCount);
+                //$this->storeSearches($flightForm->departureCityId, $flightForm->arrivalCityId, $flightForm->departureDate, $flightForm->adultCount, $flightForm->childCount, $flightForm->infantCount);
+                $result = MFlightSearch::getAllPricesAsJson($flightForm);
                 echo $result;
             }
             else
