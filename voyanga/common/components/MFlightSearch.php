@@ -35,7 +35,7 @@ class MFlightSearch extends CComponent
         return $flightSearchParams;
     }
 
-    public static function getAllPricesAsJson($fromCityId, $toCityId, $date, $returnDate=false, $adultCount, $childCount, $infantCount)
+    public static function getAllPricesAsJson($fromCityId, $toCityId, $date, $returnDate=false, $adultCount=1, $childCount=0, $infantCount=0)
     {
         $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate, 'E', $adultCount, $childCount, $infantCount);
         $fs = new FlightSearch();
