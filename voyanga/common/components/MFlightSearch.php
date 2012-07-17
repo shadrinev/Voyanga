@@ -33,8 +33,8 @@ class MFlightSearch extends CComponent
                     'adult_count' => $flightForm->adultCount,
                     'child_count' => $flightForm->childCount,
                     'infant_count' => $flightForm->infantCount,
-                    'departure_city_id' => $route->departureCityId,
-                    'arrival_city_id' => $route->arrivalCityId,
+                    'departure_city_id' => $route->arrivalCityId,
+                    'arrival_city_id' => $route->departureCityId,
                     'departure_date' => $returnDate
                 ));
             }
@@ -53,7 +53,6 @@ class MFlightSearch extends CComponent
         if (!$flightForm instanceof FlightForm)
             throw new CHttpException(500, 'MFlightSearch requires instance of FlightForm as incoming param');
         $flightSearchParams = self::buildSearchParams($flightForm);
-        VarDumper::dump($flightSearchParams);
         $fs = new FlightSearch();
         $fs->status = 1;
         $fs->requestId = '1';
