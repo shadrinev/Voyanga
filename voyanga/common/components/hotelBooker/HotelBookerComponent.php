@@ -98,6 +98,8 @@ class HotelBookerComponent extends CApplicationComponent
     {
         $hotelBookClient = new HotelBookClient();
         $hotelBookClient->hotelSearchDetails($this->hotel);
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+        HotelBookClient::$requestIds = array();
         $this->hotelBooker->hotel = $this->hotel;
         if (($this->hotel->cancelExpiration - time()) > (appParams('hotel_payment_time') * 2))
         {
@@ -136,6 +138,8 @@ class HotelBookerComponent extends CApplicationComponent
         else
         {
             $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
+            SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+            HotelBookClient::$requestIds = array();
         }
 
 
@@ -143,6 +147,8 @@ class HotelBookerComponent extends CApplicationComponent
         {
             $this->hotelBooker->orderId = $orderInfo->orderId;
             $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
+            SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+            HotelBookClient::$requestIds = array();
             Yii::trace(VarDumper::dumpAsString($confirmInfo), 'HotelBookerComponent.stageBooking');
             if (!$orderInfo->error)
             {
@@ -232,6 +238,8 @@ class HotelBookerComponent extends CApplicationComponent
             );
         }
         $hotelSearchResponse = $hotelBookClient->hotelSearch($searchParams);
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+        HotelBookClient::$requestIds = array();
         $find = false;
         if ($hotelSearchResponse['hotels'])
         {
@@ -289,9 +297,13 @@ class HotelBookerComponent extends CApplicationComponent
         }
         $hotelBookClient = new HotelBookClient();
         $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+        HotelBookClient::$requestIds = array();
         if ($orderInfo->orderId)
         {
             $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
+            SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+            HotelBookClient::$requestIds = array();
             if (!$confirmInfo->error)
             {
                 //TODO: добавить задание на переход в состояние bookingTimeLimitError
@@ -328,10 +340,14 @@ class HotelBookerComponent extends CApplicationComponent
         $hotelOrderParams->hotel = $this->hotel;
         $hotelBookClient = new HotelBookClient();
         $orderInfo = $hotelBookClient->addOrder($hotelOrderParams);
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+        HotelBookClient::$requestIds = array();
         if ($orderInfo->orderId)
         {
             $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
-            if (!$orderInfo->error)
+            SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+            HotelBookClient::$requestIds = array();
+            if (!$confirmInfo->error)
             {
                 //TODO: добавить задание на переход в состояние bookingTimeLimitError
                 $this->status('ticketReady');

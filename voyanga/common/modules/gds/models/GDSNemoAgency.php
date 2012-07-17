@@ -4,6 +4,7 @@ class GDSNemoAgency extends CComponent
     public $wsdlUri = null;
     public static $lastRequestDescription = '';
     public static $passportTypesMap = array(1=>'C',2=>'A',3=>'V');
+    public static $requestIds = array();
     const ERROR_CODE_EMPTY = 1;
     const ERROR_CODE_INVALID = 2;
 
@@ -17,7 +18,7 @@ class GDSNemoAgency extends CComponent
      */
     private static function request($methodName, $params, $cache = true, $expiration = 120)
     {
-        $methodMap = array('Search'=>'SearchFlights','BookFlight'=>'BookFlight','Ticketing'=>'Ticketing','AirAvail'=>'AirAvail');
+        $methodMap = array('Search'=>'SearchFlights','BookFlight'=>'BookFlight','Ticketing'=>'Ticketing','AirAvail'=>'AirAvail','CancelBook'=>'CancelBook');
         $wsdl = $methodMap[$methodName];
         $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'].$wsdl, array('trace' => Yii::app()->params['GDSNemo']['trace'], 'exceptions' => true,
         ));
@@ -39,6 +40,7 @@ class GDSNemoAgency extends CComponent
         }
         $gdsRequest = new GdsRequest();
         $gdsRequest->requestNum = $mongoKey;
+        self::$requestIds[] = array('key'=>$mongoKey,'class'=>get_class($gdsRequest),'keyName'=>'requestNum');
         $gdsRequest->timestamp = time();
         $gdsRequest->methodName = $methodName;
         $gdsRequest->requestDescription = self::$lastRequestDescription;
@@ -64,6 +66,20 @@ class GDSNemoAgency extends CComponent
         }
         //VarDumper::dump($flightSearchParams);
         //prepare request  structure
+        $flightClass = 'all';
+        switch($flightSearchParams->flight_class)
+        {
+            case 'E':
+                $flightClass = 'economy';
+                break;
+            case 'B':
+                $flightClass = 'business';
+                break;
+            case 'F':
+                $flightClass = 'first';
+                break;
+        }
+
         $params = array(
             'Request' => array(
                 'SearchFlights' => array(
@@ -88,7 +104,7 @@ class GDSNemoAgency extends CComponent
                         )
                     ),
                     'Restrictions' => array(
-                        'ClassPref' => 'all',
+                        'ClassPref' => $flightClass,
                         'OnlyAvail' => true,
                         'AirVPrefs' => '',
                         'IncludePrivateFare' => false,
@@ -597,9 +613,9 @@ class GDSNemoAgency extends CComponent
             );
 
             $response = self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0);
-            if(isset($response->AirAvail->IsAvail) )
+            if(isset($response->CancelBook->Result->Success) )
             {
-                return $response->AirAvail->IsAvail;
+                return $response->CancelBook->Result->Success;
             }
             else
             {
@@ -669,6 +685,38 @@ class GDSNemoAgency extends CComponent
         );
 
         print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
+    }
+
+    public function CancelBooking($bookId)
+    {
+        if($bookId)
+        {
+            $aParams = array(
+                'Request' => array(
+                    'CancelBook' => array(
+                        'BookID' => $bookId
+                    ),
+
+                ),
+                'Source' => array(
+                    'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
+                    'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                    'Language' => 'RU',
+                    'Currency' => 'RUB'
+                )
+            );
+
+            $response = self::request('CancelBook', $aParams, $bCache = FALSE, $iExpiration = 0);
+            if(isset($response->AirAvail->IsAvail) )
+            {
+                return $response->AirAvail->IsAvail;
+            }
+            else
+            {
+                return null;
+            }
+
+        }else return null;
     }
 }
 

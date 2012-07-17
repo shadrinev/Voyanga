@@ -14,7 +14,7 @@ class FlightEnterCredentialsAction extends StageAction
         $booking = new BookingForm();
 
         $adults = Yii::app()->flightBooker->getCurrent()->FlightVoyage;
-        VarDumper::dump($adults); die();
+        //VarDumper::dump($adults); die();
 
         if(isset($_POST['BookingForm']))
         {

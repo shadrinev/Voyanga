@@ -17,7 +17,7 @@
  * @property OrderBooking $orderBooking
  * @property HotelBookingPassport[] $hotelBookingPassports
  */
-class HotelBooker extends SWActiveRecord
+class HotelBooker extends SWLogActiveRecord
 {
     private $_hotel;
     private $statusChanged = false;

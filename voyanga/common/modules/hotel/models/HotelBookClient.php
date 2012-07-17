@@ -13,6 +13,7 @@ class HotelBookClient
     public static $lastRequestCityHaveCoordinates;
     public static $lastRequestDescription;
     public static $groupId;
+    public static $requestIds;
     public $requests;
 
     public function request($url, $getData = null, $postData = null, $asyncParams = null)
@@ -58,6 +59,7 @@ class HotelBookClient
 
         $hotelRequest = new HotelRequest();
         $hotelRequest->requestNum = $mongoKey;
+        self::$requestIds[] = array('key'=>$mongoKey,'class'=>get_class($hotelRequest),'keyName'=>'requestNum');
         $hotelRequest->timestamp = time();
         //echo 'send req: '.self::$lastRequestMethod."\n";
         $hotelRequest->methodName = self::$lastRequestMethod;

@@ -45,6 +45,8 @@ class GDSAdapter extends CApplicationComponent
 
     public function cancelBooking($bookingId)
     {
-
+        $nemo = new GDSNemoAgency();
+        $response = $nemo->CancelBooking($bookingId);
+        return $response;
     }
 }

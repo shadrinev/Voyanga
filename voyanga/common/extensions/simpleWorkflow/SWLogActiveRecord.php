@@ -8,6 +8,8 @@
  */
 class SWLogActiveRecord extends SWActiveRecord
 {
+    public static $requestIds = array();
+
     public function beforeTransition($event)
     {
         //VarDumper::dump($event);
@@ -18,7 +20,10 @@ class SWLogActiveRecord extends SWActiveRecord
         $transition['stateFrom'] = $event->source->getId();
         $transition['stateTo'] = $event->destination->getId();
         $transition['time'] = date('Y-m-d H:i:s');
-        VarDumper::dump($transition);
+        $transition['requestIds'] = SWLogActiveRecord::$requestIds;
+        SWLogActiveRecord::$requestIds = array();
+        //VarDumper::dump($transition);
+        self::$requestIds;
         WorkflowStates::setTransition($transition);
         return parent::beforeTransition($event);
     }
@@ -32,7 +37,9 @@ class SWLogActiveRecord extends SWActiveRecord
         $transition['stateFrom'] = $event->source->getId();
         $transition['stateTo'] = $event->destination->getId();
         $transition['time'] = date('Y-m-d H:i:s');
-        VarDumper::dump($transition);
+        $transition['requestIds'] = SWLogActiveRecord::$requestIds;
+        SWLogActiveRecord::$requestIds = array();
+        //VarDumper::dump($transition);
         WorkflowStates::setTransition($transition);
         return parent::beforeTransition($event);
     }

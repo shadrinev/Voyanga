@@ -117,7 +117,9 @@ class FlightBookerComponent extends CApplicationComponent
             $this->flightBooker->pnr = $flightBookingResponse->status;
             $this->flightBooker->timeout = $flightBookingResponse->expiration;
         }
-        die();
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
+        GDSNemoAgency::$requestIds = array();
+        //die();
         $this->status('waitingForPayment');
     }
 
@@ -128,6 +130,7 @@ class FlightBookerComponent extends CApplicationComponent
         //переход в состояние payment должен быть инициализирован из вне
         //$this->status('payment');
         //oleg: incorrect time assign
+        sleep(10);
         $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
         if($res)
         {
@@ -143,8 +146,11 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBookingTimeLimitError()
     {
-        $bookingId = 123;
+
+        $bookingId = $orderBooking = $this->flightBooker->nemoBookId;
         Yii::app()->gdsAdapter->cancelBooking($bookingId);
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
+        GDSNemoAgency::$requestIds = array();
     }
 
     public function stageStartPayment()
@@ -159,6 +165,8 @@ class FlightBookerComponent extends CApplicationComponent
         $flightTicketingParams->nemoBookId = $this->flightBooker->nemoBookId;
         $flightTicketingParams->pnr = $this->flightBooker->pnr;
         $flightTicketingResponse = Yii::app()->gdsAdapter->FlightTicketing($flightTicketingParams);
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
+        GDSNemoAgency::$requestIds = array();
         if($flightTicketingResponse->status == 1)
         {
             //TODO: need save tickets numbers to DB
