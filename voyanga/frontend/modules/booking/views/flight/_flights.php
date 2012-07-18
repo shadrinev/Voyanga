@@ -13,34 +13,47 @@
     <tbody>
     {{#each flightVoyages}}
     <tr>
-        <td>{{flights.0.flightParts.0.datetimeBegin}}</td>
-        <td>{{flights.0.departureCity}}</td>
-        <td>{{flights.0.arrivalCity}}</td>
-        <td><img src='/img/airlines/{{valCompany}}.png'></td>
-        <td>{{price}} руб.</td>
+        <td colspan="4"></td>
+        <td><b>{{price}} руб.</b></td>
         <td><a class="btn btn-info detail-view" data-key='{{flightKey}}'>Подробнее</a>
             <a class="btn btn-mini btn-success buy" href='/booking/flight/buy/key/{{../searchId}}_{{flightKey}}'>Купить</a></td>
     </tr>
-    <td colspan="6">
-        <table class="table table-bordered" id='flight-detail-{{flightKey}}' style='display: none; background-color: #f0f0f0'>
-            <thead>
-                <th>Вылет</th>
-                <th>Прилёт</th>
-                <th>Авиакомпания</th>
-                <th>Продолжительность полёта</th>
-            </thead>
-            <tbody>
-                {{#each flights.0.flightParts}}
-                <tr>
-                    <td>{{datetimeBegin}}, {{departureCity}}, {{departureAirport}}</td>
-                    <td>{{datetimeEnd}}, {{arrivalCity}}, {{arrivalAirport}}</td>
-                    <td><img src='/img/airlines/{{transportAirline}}.png'></td>
-                    <td>{{humanTime duration}}</td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </td>
+    {{#each flights}}
+    <tr>
+        <td>{{flightParts.0.datetimeBegin}}</td>
+        <td>{{departureCity}}</td>
+        <td>{{arrivalCity}}</td>
+        <td><img src='/img/airlines/{{../valCompany}}.png'></td>
+        <td></td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            <table class="table table-bordered flight-detail-{{../flightKey}}" style='display: none; background-color: #f0f0f0'>
+                <thead>
+                    <th>Вылет</th>
+                    <th>Прилёт</th>
+                    <th>Авиакомпания</th>
+                    <th>Продолжительность полёта</th>
+                </thead>
+                <tbody>
+                    {{#each flightParts}}
+                    <tr>
+                        <td>{{datetimeBegin}}, {{departureCity}}, {{departureAirport}}</td>
+                        <td>{{datetimeEnd}}, {{arrivalCity}}, {{arrivalAirport}}</td>
+                        <td><img src='/img/airlines/{{transportAirline}}.png'></td>
+                        <td>{{humanTime duration}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    {{/each}}
+    <tr>
+        <td colspan="6" style="background-color: #b2e5ff; height: 5px;">&nbsp;</td>
+    </tr>
     {{/each}}
     </tbody>
 </table>
@@ -58,8 +71,7 @@
     });
 
     $('.detail-view').live('click', function() {
-        var openElement = $('#flight-detail-' + $(this).data('key'));
-        console.log(openElement);
+        var openElement = $('.flight-detail-' + $(this).data('key'));
         openElement.toggle();
     });
 ", CClientScript::POS_READY); ?>
