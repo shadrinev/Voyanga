@@ -26,13 +26,17 @@ class FlightEnterCredentialsAction extends StageAction
             $valid = false;
         }
 
-        $passport = new FlightPassportForm();
         if(isset($_POST['FlightPassportForm']))
         {
-            $passport->attributes=$_POST['AviaPassportForm'][1];
-            $valid = $valid && $passport->validate();
+            foreach ($_POST['FlightPassportForm'] as $passportForm)
+            {
+                $passport = new FlightPassportForm();
+                $passport->attributes=$passportForm;
+                $valid = $valid && $passport->validate();
+                if ($valid)
+                    $passports[] = $passport;
+            }
         }
-        $passports[] = $passport;
 
         if($valid)
         {

@@ -98,7 +98,7 @@ class FlightBooker extends SWLogActiveRecord
             'CTimestampBehavior' => array(
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'timestamp',
-                'updateAttribute' => null,
+                'updateAttribute' => 'updated',
             ),
             'EAdvancedArBehavior' => array(
                 'class' => 'common.components.EAdvancedArBehavior'
