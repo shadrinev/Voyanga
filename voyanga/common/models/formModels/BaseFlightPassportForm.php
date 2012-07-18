@@ -40,13 +40,13 @@ class BaseFlightPassportForm extends BasePassportForm
      */
     public function rules()
     {
-        return array(
-            array('type', 'required'),
-            array('type', 'in', 'range'=>array_keys(self::getPossibleTypes())),
-            array('gender', 'in', 'range'=>array_keys(self::getPossibleGenders())),
+        return CMap::mergeArray(parent::rules(), array(
+            array('documentTypeId, series, number, birthday, countryId', 'required'),
+            array('documentTypeId', 'in', 'range'=>array_keys(self::getPossibleTypes())),
+            array('genderId', 'in', 'range'=>array_keys(self::getPossibleGenders())),
             array('birthday', 'date', 'format' => 'dd.MM.yyyy'),
             array('expirationDate', 'date', 'format' => 'dd.MM.yyyy', 'on'=>'type_'.self::TYPE_INTERNATIONAL),
-        );
+        ));
     }
 
     /**

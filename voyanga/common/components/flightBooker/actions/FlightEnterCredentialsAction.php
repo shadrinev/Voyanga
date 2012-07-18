@@ -8,19 +8,19 @@
  */
 class FlightEnterCredentialsAction extends StageAction
 {
-    private function collect($formName, &$passportToFill)
+    private function collect($formName, &$formToFill)
     {
         $valid = false;
         if(isset($_POST[$formName]))
         {
             $valid = true;
-            foreach ($_POST[$formName] as $i => $passportForm)
+            foreach ($_POST[$formName] as $i => $formValue)
             {
-                $passport = new $formName();
-                $passport->attributes=$passportForm;
-                $valid = $valid && $passport->validate();
-                if ($valid)
-                    $passportToFill[$i] = $passport;
+                $form = new $formName();
+                $form->attributes=$formValue;
+                $isOk = $form->validate();
+                $valid = $valid && $isOk;
+                $formToFill[$i] = $form;
             }
         }
         return $valid;
@@ -28,9 +28,16 @@ class FlightEnterCredentialsAction extends StageAction
 
     public function execute()
     {
+        $valid = false;
+
         //collecting booking info for whole ticket
         $booking = new BookingForm();
-        $valid = $this->collect('BookingForm', $booking);
+        if(isset($_POST['BookingForm']))
+        {
+            $valid = true;
+            $booking->attributes=$_POST['BookingForm'];
+            $valid = $valid && $booking->validate();
+        }
 
         //collecting adults passport data
         $adults = Yii::app()->flightBooker->getCurrent()->FlightVoyage->adultPassengerInfo;
@@ -42,7 +49,8 @@ class FlightEnterCredentialsAction extends StageAction
             {
                 $adultPassports[] = new FlightAdultPassportForm();
             }
-            $valid = $valid && $this->collect('FlightAdultPassportForm', $adultPassports);
+            $isOk = $this->collect('FlightAdultPassportForm', $adultPassports);
+            $valid = $valid && $isOk;
         }
 
         //collecting child passport data
@@ -55,7 +63,8 @@ class FlightEnterCredentialsAction extends StageAction
             {
                 $childrenPassports[] = new FlightChildPassportForm();
             }
-            $valid = $valid && $this->collect('FlightChildPassportForm', $childrenPassports);
+            $isOk = $this->collect('FlightChildPassportForm', $childrenPassports);
+            $valid = $valid && $isOk;
         }
 
         //collecting infant passport data
@@ -68,7 +77,8 @@ class FlightEnterCredentialsAction extends StageAction
             {
                 $infantPassports[] = new FlightInfantPassportForm();
             }
-            $valid = $valid && $this->collect('FlightInfantPassportForm', $infantPassports);
+            $isOk = $this->collect('FlightInfantPassportForm', $infantPassports);
+            $valid = $valid && $isOk;
         }
 
         if ($valid)
@@ -85,11 +95,12 @@ class FlightEnterCredentialsAction extends StageAction
                 $bookingAr->userId = Yii::app()->user->id;
 
             $bookingPassports = array();
-            foreach($adultPassports as $passport)
+            $allPassports = array_merge($adultPassports, $childrenPassports, $infantPassports);
+            foreach($allPassports as $passport)
             {
                 $bookingPassport = new FlightBookingPassport();
                 $bookingPassport->populate($passport, $flightBookerId);
-                if(!$bookingPassport->validate())
+                if(!$bookingPassport->save())
                 {
                     VarDumper::dump($bookingPassport->getErrors());
                 }
@@ -98,8 +109,6 @@ class FlightEnterCredentialsAction extends StageAction
                     $bookingPassports[] = $bookingPassport;
                 }
             }
-
-            VarDumper::dump($bookingPassports); die();
 
             if($bookingAr->save())
             {
@@ -115,7 +124,6 @@ class FlightEnterCredentialsAction extends StageAction
         }
         else
         {
-            //die();
             $this->getController()->render('flightBooker.views.enterCredentials',
                 array(
                     'adultPassports' => $adultPassports,

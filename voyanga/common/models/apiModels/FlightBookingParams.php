@@ -6,7 +6,7 @@ class FlightBookingParams
     public $flightId;
     public $flightClass;
     /** @var Passenger[] */
-    public $passengers;
+    public $passengers = array();
 
     public function addPassenger($oPassenger)
     {
@@ -21,9 +21,10 @@ class FlightBookingParams
 
     public function checkValid()
     {
-        $bValid = true;
+        $bValid = false;
         foreach ($this->passengers as $oPassenger)
         {
+            $bValid = true;
             $bValid = $bValid && $oPassenger->checkValid();
         }
         return $bValid;
