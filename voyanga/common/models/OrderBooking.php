@@ -117,4 +117,10 @@ class OrderBooking extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    public function populate(BookingForm $booking)
+    {
+        $this->email = $booking->contactEmail;
+        $this->phone = $booking->contactPhone;
+    }
 }

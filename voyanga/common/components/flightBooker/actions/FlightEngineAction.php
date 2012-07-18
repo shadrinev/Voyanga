@@ -18,6 +18,7 @@ class FlightEngineAction extends CAction
         if($flightBooker)
         {
             $flightVoyage = $flightBooker->flightVoyage;
+            Yii::app()->flightBooker->flightVoyage = $flightVoyage;
         }
         else
         {

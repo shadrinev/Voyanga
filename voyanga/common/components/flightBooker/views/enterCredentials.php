@@ -26,18 +26,24 @@ $this->beginWidget("site.backend.modules.admin.components.AAdminPortlet",
     )
 )); ?>
 
-<?php echo $form->textFieldRow($passport,'[1]firstName');?>
-<?php echo $form->textFieldRow($passport,'[1]lastName');?>
-
 <?php echo $form->textFieldRow($booking,'contactPhone');?>
 <?php echo $form->textFieldRow($booking,'contactEmail');?>
 
-<?php echo $form->textFieldRow($passport,'[1]birthday');?>
-<?php echo $form->dropDownListRow($passport,'[1]genderId', Passport::getPossibleGenders());?>
-<?php echo $form->dropDownListRow($passport,'[1]countryId', Country::getPossibleCountries());?>
-<?php echo $form->dropDownListRow($passport,'[1]documentTypeId', Passport::getPossibleTypes());?>
-<?php echo $form->textFieldRow($passport,'[1]series');?>
-<?php echo $form->textFieldRow($passport,'[1]number');?>
+<h2>Информация о паспортах взрослых</h2>
+<?php foreach ($adultPassports as $i=>$passport): ?>
+    <?php $this->renderPartial('flightBooker.views._adult_passport_form', array('i'=>$i, 'passport'=>$passport, 'form'=>$form)); ?>
+<?php endforeach ?>
+
+<?php if ($childrenPassports): ?><h2>Информация о паспортах детей</h2><?php endif; ?>
+<?php foreach ($childrenPassports as $i=>$passport): ?>
+    <?php $this->renderPartial('flightBooker.views._child_passport_form', array('i'=>$i, 'passport'=>$passport, 'form'=>$form)); ?>
+<?php endforeach ?>
+
+<?php if ($infantPassports): ?><h2>Информация о младенцах</h2><?php endif; ?>
+<?php foreach ($infantPassports as $i=>$passport): ?>
+    <?php $this->renderPartial('flightBooker.views._infant_passport_form', array('i'=>$i, 'passport'=>$passport, 'form'=>$form)); ?>
+<?php endforeach ?>
+
 
 
 <div class="form-actions">

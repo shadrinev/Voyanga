@@ -121,4 +121,17 @@ class FlightBookingPassport extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+    
+    public function populate($passport, $flightBookerId)
+    {
+        $this->birthday = $passport->birthday;
+        $this->firstName = $passport->firstName;
+        $this->lastName = $passport->lastName;
+        $this->countryId = $passport->countryId;
+        $this->number = $passport->number;
+        $this->series = $passport->series;
+        $this->genderId = $passport->genderId;
+        $this->documentTypeId = $passport->documentTypeId;
+        $this->flightBookingId = $flightBookerId;        
+    }
 }

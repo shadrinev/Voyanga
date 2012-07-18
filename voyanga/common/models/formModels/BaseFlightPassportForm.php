@@ -5,7 +5,7 @@
  * @author oleg
  *
  */
-class BaseFlightPassportForm extends CFormModel
+class BaseFlightPassportForm extends BasePassportForm
 {
     /*
     * documentTypeId values:
@@ -17,12 +17,11 @@ class BaseFlightPassportForm extends CFormModel
     const TYPE_OTHER = 2;
     const TYPE_INTERNATIONAL = 3;
     const TYPE_BIRTH_CERT = 4;
+    public $documentTypeId = self::TYPE_RF;
 
-    public $type = self::TYPE_RF;
-
+    /** gender */
     const GENDER_MALE = 1;
     const GENDER_FEMALE = 2;
-
     public $genderId;
 
     /** @var dd.MM.YYYY */
@@ -30,6 +29,11 @@ class BaseFlightPassportForm extends CFormModel
 
     /** @var expritation date for internation passport */
     public $expirationDate;
+
+    public $countryId;
+
+    public $series;
+    public $number;
 
     /**
      * Declares the validation rules.
@@ -52,12 +56,17 @@ class BaseFlightPassportForm extends CFormModel
      */
     public function attributeLabels()
     {
-        return array(
+        return CMap::mergeArray(parent::attributeLabels(), array(
             'type' => 'Тип документа',
             'gender' => 'Пол',
             'birthday' => 'Дата рождения (ДД.ММ.ГГГГ)',
-            'expirationDate' => 'Дата истечения паспорта (ДД.ММ.ГГГГ)'
-        );
+            'expirationDate' => 'Дата истечения паспорта (ДД.ММ.ГГГГ)',
+            'series' => 'Серия',
+            'number' => 'Номер',
+            'documentTypeId' => 'Документ',
+            'genderId' => 'Пол',
+            'countryId' => 'Страна',
+        ));
     }
 
     public static  function getPossibleTypes()
