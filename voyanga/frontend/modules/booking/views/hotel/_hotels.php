@@ -14,7 +14,10 @@
         <td>{{hotelName}}</td>
         <td>{{category}}</td>
         <td>{{rubPrice}} руб.</td>
-        <td><a class='btn btn-success' href="/booking/hotel/info/cacheId/<?php echo $cacheId?>/hotelId/{{hotelId}}">выбрать</a></td>
+        <td>
+            <a class='btn btn-success' href="/booking/hotel/info/cacheId/<?php echo $cacheId?>/hotelId/{{hotelId}}">выбрать</a>
+            <a class='btn btn-info btn-mini' href="/booking/hotel/info/cacheId/<?php echo $cacheId?>/hotelId/{{hotelId}}">добавить в тур</a>
+        </td>
     </tr>
     {{/each}}
     </tbody>

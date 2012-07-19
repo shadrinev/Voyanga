@@ -13,7 +13,8 @@ class BasketController extends FrontendController
         {
             case FlightVoyage::TYPE:
                 $item = FlightVoyage::getFromCache($key, $searchId);
-                Yii::app()->shoppingCart->put($item);
+                if ($item)
+                    Yii::app()->shoppingCart->put($item);
                 break;
         }
     }

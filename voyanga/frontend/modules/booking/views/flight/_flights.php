@@ -15,8 +15,10 @@
     <tr>
         <td colspan="4"></td>
         <td><b>{{price}} руб.</b></td>
-        <td><a class="btn btn-info detail-view" data-key='{{flightKey}}'>Подробнее</a>
-            <a class="btn btn-mini btn-success buy" href='/booking/flight/buy/key/{{../searchId}}_{{flightKey}}'>Купить</a></td>
+        <td><a class="btn btn-warning detail-view" data-key='{{flightKey}}'>Подробнее</a>
+            <a class="btn btn-mini btn-success buy" href='/booking/flight/buy/key/{{../searchId}}_{{flightKey}}'>Купить</a>
+            <a class='btn btn-mini btn-info chooseFlight' data-searchkey='{{flightKey}}'>добавить в конструктор</a>
+        </td>
     </tr>
     {{#each flights}}
     <tr>
@@ -57,7 +59,7 @@
     {{/each}}
     </tbody>
 </table>
-<span id='searchKey' data-key='{{searchId}}'></span>
+<span id='searchId' data-searchid='{{searchId}}'></span>
 <?php $this->endWidget(); ?>
 <?php Yii::app()->clientScript->registerScript('flight-tab', "
     Handlebars.registerHelper('humanTime', function(duration) {
@@ -73,5 +75,26 @@
     $('.detail-view').live('click', function() {
         var openElement = $('.flight-detail-' + $(this).data('key'));
         openElement.toggle();
+    });
+    $('.chooseFlight').live('click',function(){
+        var key1 = $('#searchId').data('searchid'),
+            key2 = $(this).data('searchkey'),
+            btn  = $(this);
+
+        $.getJSON('/tour/basket/add/type/".FlightVoyage::TYPE."/key/'+key1+'/searchId/'+key2)
+            .done(function(data){
+                $.getJSON('/tour/basket/show')
+                    .done(function(data) {
+                        /*var html = handlebarTour(data);
+                        $('#tour-output').html(html);*/
+                        console.log(data);
+                        btn.removeClass('btn-info').removeClass('chooseFlight').addClass('btn-inverse').html('Добавлено');
+                    })
+                    .fail(function(data){
+                        /*$('#tour-output').html(data);*/
+                        btn.removeClass('btn-info').addClass('btn-danger').html('Ошибка!');
+                    });
+                $('#popupInfo').modal('hide');
+            });
     });
 ", CClientScript::POS_READY); ?>

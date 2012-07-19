@@ -74,6 +74,16 @@ class HotelController extends FrontendController
                 Yii::app()->user->setState('avia.cacheId', $cacheId);
                 $this->redirect('/booking/hotel/result/cacheId/'.$cacheId);
             }
+            else
+            {
+                $this->render('index', array(
+                    'items'=>$this->generateItems(),
+                    'hotelForm'=>$hotelForm,
+                    'autosearch'=>false,
+                    'cityName'=>'',
+                    'duration'=>1
+                ));
+            }
         }
         else
         {
