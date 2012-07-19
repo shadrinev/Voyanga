@@ -15,6 +15,8 @@ class BasketController extends FrontendController
                 $item = FlightVoyage::getFromCache($key, $searchId);
                 if ($item)
                     Yii::app()->shoppingCart->put($item);
+                else
+                    throw new CHttpException(404, 'Can\'t found item inside cache');
                 break;
         }
     }
@@ -39,6 +41,9 @@ class BasketController extends FrontendController
     public function actionClear()
     {
         Yii::app()->shoppingCart->clear();
-        $this->redirect('/admin/tour/constructor/new');
+        if (!Yii::app()->request->isAjaxRequest)
+           $this->redirect('/tour/constructor/new');
+        else
+           $this->actionShow();
     }
 }

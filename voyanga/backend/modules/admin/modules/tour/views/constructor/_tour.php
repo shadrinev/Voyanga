@@ -84,7 +84,7 @@
             return result;
     });
 
-    $.getJSON('/admin/tour/basket/show')
+    $.getJSON('/tour/basket/show')
         .done(function(data) {
             var html = {$templateVariable}(data);
             $('#tour-output').html(html);
@@ -100,7 +100,7 @@
     });
 
     $('.delete').live('click', function() {
-         $.getJSON('/admin/tour/basket/delete/key/'+$(this).data('key'))
+         $.getJSON('/tour/basket/delete/key/'+$(this).data('key'))
             .done(function(data){
                 var html = {$templateVariable}(data);
                 $('#tour-output').html(html);
@@ -117,7 +117,7 @@
 
     $('#saveTourButton').live('click',function() {
         var tourName = $('#tourName').val();
-        $.getJSON('/admin/tour/basket/save/name/'+tourName, function(data){
+        $.getJSON('/tour/basket/save/name/'+tourName, function(data){
             var outputElement = $('#tourSaveModal .modal-body');
             $('#tourSaveModal .modal-footer').hide();
             outputElement.hide();

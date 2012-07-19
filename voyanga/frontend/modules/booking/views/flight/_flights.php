@@ -85,8 +85,8 @@
             .done(function(data){
                 $.getJSON('/tour/basket/show')
                     .done(function(data) {
-                        /*var html = handlebarTour(data);
-                        $('#tour-output').html(html);*/
+                        var html = handlebarTour(data);
+                        $('#tour-output').html(html);
                         console.log(data);
                         btn.removeClass('btn-info').removeClass('chooseFlight').addClass('btn-inverse').html('Добавлено');
                     })

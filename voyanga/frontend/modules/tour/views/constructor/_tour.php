@@ -51,6 +51,7 @@
     <tfoot>
         <tr>
             <td colspan="6" style="text-align: right">
+                <a href="#" class="btn btn-danger deleteTourButton">Очистить тур</a>
                 <a class="btn btn-success" id='saveTour'>Сохранить тур</a>
             </td>
         </tr>
@@ -128,5 +129,12 @@
             outputElement.show();
         });
         return false;
+    });
+
+    $('.deleteTourButton').live('click', function(){
+        $.getJSON('/tour/basket/clear', function(data){
+            var html = {$templateVariable}(data);
+            $('#tour-output').html(html);
+        })
     });
 ", CClientScript::POS_READY); ?>
