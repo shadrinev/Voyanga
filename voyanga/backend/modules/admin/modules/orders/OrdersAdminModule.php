@@ -8,10 +8,10 @@
  */
 class OrdersAdminModule extends ABaseAdminModule
 {
-    public function init()
+/*    public function init()
     {
-        Yii::import('site.backend.modules.admin.modules.booking.models.*');
-    }
+        Yii::import('site.backend.modules.admin.modules.orders.models.*');
+    }*/
 
     /**
      * The menu items to show for this module.
@@ -21,7 +21,7 @@ class OrdersAdminModule extends ABaseAdminModule
      */
     protected $_menuItems = array(
         array(
-            "label" => "Бронирование",
+            "label" => "Заказы",
             "url" => "#",
             "linkOptions" => array(
                 "icon" => "icon-user",
@@ -29,15 +29,7 @@ class OrdersAdminModule extends ABaseAdminModule
             "items" => array(
                 array(
                     "label" => "Перелёт",
-                    "url" => array("/admin/orders/"),
-                ),
-                array(
-                    "label" => "Гостиница",
-                    "url" => array("/admin/booking/hotel/"),
-                ),
-                array(
-                    "label" => "Тур",
-                    "url" => array("/admin/booking/tour/"),
+                    "url" => array("/admin/orders/orderBooking/"),
                 ),
             )
         )

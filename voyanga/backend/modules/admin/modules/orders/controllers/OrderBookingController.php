@@ -26,7 +26,7 @@ class OrderBookingController extends Controller
     {
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
-        $dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('countryCode'=>array('equals'=>'PR'),'iataCode'=>array('type'=>2)) )));
+        $dataProvider=new CActiveDataProvider('OrderBooking');
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
         ));
@@ -61,7 +61,7 @@ class OrderBookingController extends Controller
      */
     public function loadModel($id)
     {
-        $model=GeoNames::model()->findByPk(new MongoID($id));
+        $model=OrderBooking::model()->findByPk($id);
 
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');

@@ -9,7 +9,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Hotel Requests</h1>
+<h1>Заказы</h1>
 
 <?php $this->widget('bootstrap.widgets.BootGridView',array(
     'id'=>'event-grid',
@@ -17,28 +17,16 @@ $this->menu=array(
     //'filter'=>$model,
     'columns'=>array(
         array(
-            'header'=>'Ключ',
-            'value'=>'$data->requestNum'
+            'header'=>'Номер',
+            'value'=>'$data->id'
         ),
         array(
-            'header'=>'Группа',
-            'value'=>'$data->groupId'
+            'header'=>'email',
+            'value'=>'$data->email'
         ),
         array(
-            'header'=>'Метод',
-            'value'=>'$data->methodName'
-        ),
-        array(
-            'header'=>'Время запроса',
-            'value'=>'date("Y-m-d H:i:s",$data->timestamp)'
-        ),
-        array(
-            'header'=>'Параметры',
-            'value'=>'$data->requestDescription'
-        ),
-        array(
-            'header'=>'Время обработки',
-            'value'=>'Yii::app()->format->formatNumber($data->executionTime)'
+            'header'=>'Пользователь',
+            'value'=>'$data->userId'
         ),
         array(
             'class'=>'bootstrap.widgets.BootButtonColumn',
@@ -81,7 +69,7 @@ Yii::app()->clientScript->registerScript('loadRequestInfo','
     id = id.substr(1);
     $(\'#popupInfo .modal-body\').html("<p>Идет запрос данных...</p>");
     $(\'#popupInfo\').modal(\'show\');
-        $.getJSON("/admin/logging/hotelRequest/getInfo/id/"+id)
+        $.getJSON("/admin/logging/workflowStates/getInfo/id/"+id)
         .done(function(data){
             console.log(data);
             textHtml = "";
