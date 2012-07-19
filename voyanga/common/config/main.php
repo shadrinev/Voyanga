@@ -81,7 +81,7 @@ return array(
 
         'mongodb' => array(
             'class'             => 'EMongoDB',
-            'connectionString'  => 'mongodb://localhost',
+            'connectionString'  => 'mongodb://192.168.0.55',
             'dbName'            => 'voyanga',
             'fsyncFlag'         => false,
             'safeFlag'          => false,
