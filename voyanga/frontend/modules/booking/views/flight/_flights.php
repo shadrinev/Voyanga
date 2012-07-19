@@ -34,20 +34,20 @@
         <td colspan="6">
             <table class="table table-bordered flight-detail-{{../flightKey}}" style='display: none; background-color: #f0f0f0'>
                 <thead>
-                    <th>Вылет</th>
-                    <th>Прилёт</th>
-                    <th>Авиакомпания</th>
-                    <th>Продолжительность полёта</th>
+                <th>Вылет</th>
+                <th>Прилёт</th>
+                <th>Авиакомпания</th>
+                <th>Продолжительность полёта</th>
                 </thead>
                 <tbody>
-                    {{#each flightParts}}
-                    <tr>
-                        <td>{{datetimeBegin}}, {{departureCity}}, {{departureAirport}}</td>
-                        <td>{{datetimeEnd}}, {{arrivalCity}}, {{arrivalAirport}}</td>
-                        <td><img src='/img/airlines/{{transportAirline}}.png'></td>
-                        <td>{{humanTime duration}}</td>
-                    </tr>
-                    {{/each}}
+                {{#each flightParts}}
+                <tr>
+                    <td>{{datetimeBegin}}, {{departureCity}}, {{departureAirport}}</td>
+                    <td>{{datetimeEnd}}, {{arrivalCity}}, {{arrivalAirport}}</td>
+                    <td><img src='/img/airlines/{{transportAirline}}.png'></td>
+                    <td>{{humanTime duration}}</td>
+                </tr>
+                {{/each}}
                 </tbody>
             </table>
         </td>

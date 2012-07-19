@@ -15,26 +15,32 @@
     <tbody>
     {{#each items}}
     <tr>
-        <td>{{flights.0.flightParts.0.datetimeBegin}}</td>
-        <td>{{flights.0.departureCity}}</td>
-        <td>{{flights.0.arrivalCity}}</td>
-        <td><img src='/img/airlines/{{valCompany}}.png'></td>
-        <td>{{price}} руб.</td>
-        <td><a class="btn btn-info detail-view" data-key='{{key}}'>Подробнее</a>
-            <?php if ((!isset($showDelete)) or ($showDelete===true)): ?>
-            <a class="btn btn-mini btn-danger delete" data-key='{{key}}'>Удалить</a></td>
-            <?php endif; ?>
+        <td colspan="4"></td>
+        <td><b>{{price}} руб.</b></td>
+        <td><a class="btn btn-warning detail-view" data-key='{{flightKey}}'>Подробнее</a>
+        </td>
     </tr>
-    <td colspan="6">
-        <table class="table table-bordered" id='detail-{{key}}' style='display: none; background-color: #f0f0f0'>
-            <thead>
+    {{#each flights}}
+    <tr>
+        <td>{{flightParts.0.datetimeBegin}}</td>
+        <td>{{departureCity}}</td>
+        <td>{{arrivalCity}}</td>
+        <td><img src='/img/airlines/{{../valCompany}}.png'></td>
+        <td></td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            <table class="table table-bordered flight-detail-{{../flightKey}}" style='display: none; background-color: #f0f0f0'>
+                <thead>
                 <th>Вылет</th>
                 <th>Прилёт</th>
                 <th>Авиакомпания</th>
                 <th>Продолжительность полёта</th>
-            </thead>
-            <tbody>
-                {{#each flights.0.flightParts}}
+                </thead>
+                <tbody>
+                {{#each flightParts}}
                 <tr>
                     <td>{{datetimeBegin}}, {{departureCity}}, {{departureAirport}}</td>
                     <td>{{datetimeEnd}}, {{arrivalCity}}, {{arrivalAirport}}</td>
@@ -42,21 +48,16 @@
                     <td>{{humanTime duration}}</td>
                 </tr>
                 {{/each}}
-            </tbody>
-        </table>
-    </td>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    {{/each}}
+    <tr>
+        <td colspan="6" style="background-color: #b2e5ff; height: 5px;">&nbsp;</td>
+    </tr>
     {{/each}}
     </tbody>
-    <?php if ((!isset($showSaveTour)) or ($showSaveTour===true)): ?>
-    <tfoot>
-        <tr>
-            <td colspan="6" style="text-align: right">
-                <a href="#" class="btn btn-danger deleteTourButton">Очистить тур</a>
-                <a class="btn btn-success" id='saveTour'>Сохранить тур</a>
-            </td>
-        </tr>
-    </tfoot>
-    <?php endif; ?>
 </table>
 <div class="modal hide" id="tourSaveModal">
     <div class="modal-header">
