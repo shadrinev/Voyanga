@@ -1098,6 +1098,45 @@ class HotelBookClient
         }
     }
 
+    public function checkHotel($hotel)
+    {
+        $hotelBookClient = $this;
+        $searchParams = array();
+        $hotelKey = $hotel->key;
+        $searchParams['cityId'] = $this->hotel->cityId;
+        $searchParamsFull = Yii::app()->cache->get('hotelSearchParams'.Yii::app()->user->getState('avia.cacheId'));
+        $searchParams['checkIn'] = $searchParamsFull->checkIn;
+        $searchParams['duration'] = $searchParamsFull->duration;
+        $searchParams['rooms'] = array();
+        foreach ($this->hotel->rooms as $room)
+        {
+            $searchParams['rooms'][] = array(
+                'roomSizeId' => $room->sizeId,
+                'child' => $room->childCount ? $room->childCount : 0,
+                'cots' => $room->cotsCount,
+                'ChildAge' => isset($room->childAges[0]) ? $room->childAges[0] : 0,
+                'roomNumber'=>1
+            );
+        }
+        $hotelSearchResponse = $hotelBookClient->hotelSearch($searchParams);
+
+        $find = false;
+        if ($hotelSearchResponse['hotels'])
+        {
+            foreach ($hotelSearchResponse['hotels'] as $hotel)
+            {
+                if ($hotel->key == $hotelKey)
+                {
+                    //$this->hotel = $hotel;
+                    $find = true;
+                    //$this->hotelBooker->hotel = $this->hotel;
+                    break;
+                }
+            }
+        }
+        return $find;
+    }
+
     /**
      * @param HotelOrderParams $hotelOrderParams
      * @return HotelOrderResponse

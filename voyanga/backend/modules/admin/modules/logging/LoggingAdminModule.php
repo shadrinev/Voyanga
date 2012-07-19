@@ -33,6 +33,10 @@ class LoggingAdminModule extends ABaseAdminModule
                     "label" => "GeoNames",
                     "url" => array("/admin/logging/geoNames"),
                 ),
+                array(
+                    "label" => "WorkflowStates",
+                    "url" => array("/admin/logging/workflowStates"),
+                ),
             )
         )
     );

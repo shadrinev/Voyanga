@@ -56,3 +56,9 @@ html, body {
 .userinfo {
     min-height: 200px;
 }
+.odd td{
+    background-color: #F9F9F9;
+}
+.even {
+
+}

@@ -70,6 +70,11 @@ class WorkflowStates extends EMongoDocument // Notice: We extend EMongoDocument 
         $wfStates->save();
     }
 
+    public function getDescription()
+    {
+        return 'my desc';
+    }
+
     /**
      * This method have to be defined in every model, like with normal CActiveRecord
      */

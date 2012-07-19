@@ -81,7 +81,7 @@ Yii::app()->clientScript->registerScript('loadRequestInfo','
     id = id.substr(1);
     $(\'#popupInfo .modal-body\').html("<p>Идет запрос данных...</p>");
     $(\'#popupInfo\').modal(\'show\');
-        $.getJSON("/admin/logging/hotelRequest/getInfo/id/"+id)
+        $.getJSON("/admin/logging/workflowStates/getInfo/id/"+id)
         .done(function(data){
             console.log(data);
             textHtml = "";
