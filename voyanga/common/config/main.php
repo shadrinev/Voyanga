@@ -16,6 +16,8 @@ return array(
         'site.common.extensions.YiiMongoDbSuite.*',
         'site.common.components.statistic.*',
         'site.common.components.shoppingCart.*',
+        'site.common.components.hotelBooker.*',
+        'site.common.components.flightBooker.*',
         'site.common.components.order.*',
         'site.common.components.flightBooker.*',
         'site.common.extensions.simpleWorkflow.*',

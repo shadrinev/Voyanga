@@ -29,7 +29,7 @@ class HandlebarsWidget extends CWidget
         echo $result;
         if ($this->compileVariable !== null)
             Yii::app()->clientScript->registerScript('compile-handlebar-'.$this->id, "
-                var {$this->compileVariable} = Handlebars.compile($('#{$this->id}').html());
+                {$this->compileVariable} = Handlebars.compile($('#{$this->id}').html());
             ", CClientScript::POS_READY);
     }
 }

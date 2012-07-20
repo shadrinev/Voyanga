@@ -6,7 +6,6 @@ return array(
         array('id'=>'booking',                  'transition'=>'waitingForPayment,bookingError'),
         array('id'=>'bookingError',             'transition'=>'error'),
         array('id'=>'waitingForPayment',        'transition'=>'waitingForPayment,startPayment,bookingTimeLimitError'),
-        array('id'=>'bookingError',             'transition'=>'error'),
         array('id'=>'startPayment',             'transition'=>'ticketing,bookingTimeLimitError,waitingForPayment'),
         array('id'=>'bookingTimeLimitError',    'transition'=>'error'),
         array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat'),

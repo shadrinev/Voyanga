@@ -103,8 +103,6 @@ class WorkflowStatesController extends Controller
         $retArr['errorDescription'] = $requestModel->errorDescription;
 
         echo json_encode($retArr);die();
-        //echo $model->requestXml);
-        //echo json_encode($retArr);die();
     }
 
     /**

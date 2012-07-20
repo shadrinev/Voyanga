@@ -26,7 +26,19 @@ $this->menu=array(
         ),
         array(
             'header'=>'Пользователь',
-            'value'=>'$data->userId'
+            'value'=>'$data->userDescription'
+        ),
+        array(
+            'header'=>'Товаров',
+            'value'=>'$data->countBookings'
+        ),
+        array(
+            'header'=>'Общий Статус',
+            'value'=>'$data->orderStatus'
+        ),
+        array(
+            'header'=>'Сумма заказа',
+            'value'=>'$data->fullPrice'
         ),
         array(
             'class'=>'bootstrap.widgets.BootButtonColumn',
@@ -34,7 +46,7 @@ $this->menu=array(
             'template'=>'{view}',
             'viewButtonUrl'=>'"#".$data->primaryKey.""',
             'buttons' => array('view' => array(
-                             'click'=>'js: function () {document.showRequestInfo($(this).attr("href"));}',     // a JS function to be invoked when the button is clicked
+                             'click'=>'js: function () {document.showOrderInfo($(this).attr("href"));}',     // a JS function to be invoked when the button is clicked
                         ),
                 ),
             'viewButtonOptions'=>array('class'=>'view','data-object-id'=>'$data->primaryKey')
@@ -63,41 +75,43 @@ $this->menu=array(
 
 <?php $this->endWidget(); ?>
 
+<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'orderBookingTmpl', 'compileVariable' => 'orderBookingTemplate')) ?>
+<h1>Просмотр заказа</h1>
+
+    <ul>
+        <li>Номер заказа: {{id}}</li>
+        <li>Email: {{email}}</li>
+        <li>Phone: {{phone}}</li>
+        <li>Пользователь: {{userDescription}}</li>
+        <li>Дата создания: {{timestamp}}</li>
+    </ul>
+        Бронирования:
+    <table class="table table-bordered" width="100%">
+        <thead>
+        <tr>
+            <th>Бронирование</th>
+            <th>Описание</th>
+            <th>Состояние</th>
+            <th>Цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each bookings}}
+        <tr>
+            <td>{{type}}</td>
+            <td>{{#each description}} {{this}}<br /> {{/each}}</td>
+            <td>{{status}}</td>
+            <td>{{price}}</td>
+        </tr>
+        {{/each}}
+
+        </tbody>
+    <table>
+
+<?php $this->endWidget(); ?>
 <?php
-Yii::app()->clientScript->registerScript('loadRequestInfo','
-    document.showRequestInfo = function (id){
-    id = id.substr(1);
-    $(\'#popupInfo .modal-body\').html("<p>Идет запрос данных...</p>");
-    $(\'#popupInfo\').modal(\'show\');
-        $.getJSON("/admin/logging/workflowStates/getInfo/id/"+id)
-        .done(function(data){
-            console.log(data);
-            textHtml = "";
-            textHtml = textHtml + "<p>Метод:"+data.methodName+"</p>";
-            textHtml = textHtml + "<p>Url запроса:"+data.requestUrl+"</p>";
-            textHtml = textHtml + "<p>Время отправки запроса:"+data.timestamp+"</p>";
-            textHtml = textHtml + "<p>XML запроса:</p>";
-            textHtml = textHtml + data.requestXml;
-            textHtml = textHtml + "<p>Время ожидания ответа:"+data.executionTime+" сек</p>";
-            if(!jQuery.isEmptyObject(data.errorDescription)){
-                textHtml = textHtml + "<p>Описание ошибки:"+data.errorDescription+"</p>";
-            }
-            if(!jQuery.isEmptyObject(data.responseXml)){
-                textHtml = textHtml + "<p>XML ответа:</p>";
-                textHtml = textHtml + data.responseXml;
-            }
-            $(\'#popupInfo .modal-body\').html(textHtml);
-            //btn.button("reset");
-            //var two = data.priceTo + data.priceBack;
-            //btn.append("&nbsp; <b>Цена: </b>"+Math.min(data.priceTo + data.priceBack, data.priceToBack) + " руб. (2 билета = " + two + " руб., туда-обратно = " + data.priceToBack + " руб.)");
-        })
-        .fail(function(data){
-            $(\'#popupInfo .modal-body\').html("Ошибка сервера");
-            //btn.button("reset");
-            //btn.html("Произошёл сбой");
-            //e.preventDefault();
-        });
-    };
-    ', CClientScript::POS_READY);
+
+
+Yii::app()->clientScript->registerScriptFile('/js/orderBooking.js');
 CTextHighlighter::registerCssFile();
 ?>

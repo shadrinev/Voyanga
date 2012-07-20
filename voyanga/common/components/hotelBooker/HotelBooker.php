@@ -12,6 +12,7 @@
  * @property integer $orderBookingId
  * @property string $orderId
  * @property string $timestamp
+ * @property integer $price
  *
  * The followings are the available model relations:
  * @property OrderBooking $orderBooking
@@ -100,7 +101,7 @@ class HotelBooker extends SWLogActiveRecord
             array('expiration, hotelInfo, updated, timestamp', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp', 'safe', 'on'=>'search'),
+            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp, price', 'safe', 'on'=>'search'),
         );
     }
 
@@ -182,5 +183,36 @@ class HotelBooker extends SWLogActiveRecord
         $element = serialize($value);
         $this->_hotel = $value;
         $this->hotelInfo = $element;
+    }
+
+    public function getFullDescription()
+    {
+        $description = array();
+        if ($this->_hotel==null)
+        {
+            if ($this->isNewRecord)
+            {
+                return null;
+            }
+            else
+            {
+                $element = unserialize($this->hotelInfo);
+                $this->_hotel = $element;
+            }
+        }
+
+        if($this->_hotel)
+        {
+            $city = City::getCityByHotelbookId($this->_hotel->cityId);
+            $description[] = $city->localRu.': '.$this->_hotel->hotelName;
+            if($this->hotelBookingPassports)
+            {
+                foreach($this->hotelBookingPassports as $passport)
+                {
+                    $description[] = $passport->firstName.' '.$passport->lastName;
+                }
+            }
+        }
+        return $description;
     }
 }

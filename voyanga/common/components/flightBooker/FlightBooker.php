@@ -14,6 +14,7 @@
  * @property integer $orderBookingId
  * @property integer $nemoBookId
  * @property string $timestamp
+ * @property integer $price
  *
  * The followings are the available model relations:
  * @property OrderBooking $orderBooking
@@ -84,7 +85,7 @@ class FlightBooker extends SWLogActiveRecord
             array('timeout, flightVoyageInfo, updated, timestamp', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, status, pnr, timeout, flightVoyageInfo, updated, flightVoyageId, orderBookingId, nemoBookId, timestamp', 'safe', 'on'=>'search'),
+            array('id, status, pnr, timeout, flightVoyageInfo, updated, flightVoyageId, orderBookingId, nemoBookId, timestamp, price', 'safe', 'on'=>'search'),
         );
     }
 
@@ -183,6 +184,37 @@ class FlightBooker extends SWLogActiveRecord
             }
         }
         return $this->_flightVoyage;
+    }
+
+    public function getFullDescription()
+    {
+        $description = array();
+        if ($this->_flightVoyage==null)
+        {
+            if ($this->isNewRecord)
+            {
+                return null;
+            }
+            else
+            {
+                $element = unserialize($this->flightVoyageInfo);
+                $this->_flightVoyage = $element;
+            }
+        }
+        /** var Flight $flight */
+        foreach($this->_flightVoyage->flights as $flight)
+        {
+            $description[] = date('d.m.Y',strtotime($flight->departureDate)) .' '.$flight->departureCity->code.' - '.$flight->arrivalCity->code;
+        }
+        if($this->flightBookingPassports)
+        {
+            foreach($this->flightBookingPassports as $passport)
+            {
+                $description[] = $passport->firstName.' '.$passport->lastName.' '.$passport->birthday;
+            }
+        }
+
+        return $description;
     }
 
     public function setFlightVoyage($value)

@@ -13,8 +13,8 @@
  * @property string $timestamp
  *
  * The followings are the available model relations:
- * @property FlightBooker[] $flightBookings
- * @property HotelBooker[] $hotelBookings
+ * @property FlightBooker[] $flightBookers
+ * @property HotelBooker[] $hotelBookers
  */
 class OrderBooking extends CActiveRecord
 {
@@ -122,5 +122,108 @@ class OrderBooking extends CActiveRecord
     {
         $this->email = $booking->contactEmail;
         $this->phone = $booking->contactPhone;
+    }
+
+    public function getUserDescription()
+    {
+        if($this->userId)
+        {
+            $user = User::model()->findByPk($this->userId);
+            if($user)
+            {
+                return $user->name;
+            }
+        }
+        return '';
+    }
+
+    public function getCountBookings()
+    {
+        $n = count($this->flightBookers) + count($this->hotelBookers);
+        return $n;
+    }
+
+    public function getOrderStatus()
+    {
+        $states = array();
+        foreach($this->flightBookers as $flightBooker){
+            $states[$this->stateAdapter($flightBooker->status)] = $this->stateAdapter($flightBooker->status);
+        }
+
+        foreach($this->hotelBookers as $hotelBooker){
+            $states[$this->stateAdapter($hotelBooker->status)] = $this->stateAdapter($hotelBooker->status);
+        }
+        return join(',',$states);
+    }
+
+    public function stateAdapter($state)
+    {
+        if(strpos($state,'/') !== false)
+        {
+            $state = substr($state, strpos($state,'/')+1);
+        }
+        $aStates = array('enterCredentials'=>'Ввод ПД',
+            'booking'=>'Бронирование',
+            'bookingError'=> 'Ошибка бронирования',
+            'waitingForPayment'=>'Ожидание начала оплаты',
+            'startPayment'=>'Оплата начата',
+            'bookingTimeLimitError'=>'Бронь автоматически снята',
+            'ticketing'=>'Выписывание',
+            'ticketReady'=>'Выписка готова',
+            'ticketingRepeat'=>'Повторное выписывание',
+            'manualProcessing'=>'Ручная обработка',
+            'manualTicketing'=>'Ручное выписывание',
+            'ticketingError'=>'Ошибка выписки',
+            'manualError'=>'Ошибка при ручной обработке',
+            'moneyReturn'=>'Возврат денег',
+            'manualSuccess'=>'Обработано вручную',
+            'bspTransfer'=>'Трансфер денег',
+            'done'=>'Заказ оплачен',
+            'error'=>'Ошибка заказа',
+
+            'analyzing'=>'Анализ штрафов',
+
+            'softWaitingForPayment'=>'Ожидание начала оплаты',
+            'softStartPayment'=>'Оплата начата',
+            'hardWaitingForPayment'=>'Ожидание начала оплаты',
+            'checkingAvailability'=>'Проверка доступности',
+            'availabilityError'=>'Недоступен',
+            'hardStartPayment'=>'Оплата начата',
+        );
+        if(isset($aStates[$state])){
+            $state = $aStates[$state];
+        }
+        return $state;
+    }
+
+    public function getFullPrice()
+    {
+        $price = 0;
+        foreach($this->flightBookers as $flightBooker){
+            if($flightBooker->price){
+                $price += $flightBooker->price;
+            }
+            else
+            {
+                if($flightBooker->flightVoyage->price){
+                    $price += $flightBooker->flightVoyage->price;
+                }
+            }
+        }
+
+        foreach($this->hotelBookers as $hotelBooker){
+            if($hotelBooker->price){
+                $price += $hotelBooker->price;
+            }
+            else
+            {
+                if(isset($hotelBooker->hotel)){
+                    if(isset($hotelBooker->hotel->rubPrice)){
+                        $price += $hotelBooker->hotel->rubPrice;
+                    }
+                }
+            }
+        }
+        return $price;
     }
 }
