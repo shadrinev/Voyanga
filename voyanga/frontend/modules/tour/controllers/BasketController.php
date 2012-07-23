@@ -7,7 +7,7 @@
  */
 class BasketController extends FrontendController
 {
-    public function actionAdd($type, $key, $searchId='')
+    public function actionAdd($type, $key, $searchId='', $searchId2='')
     {
         switch ($type)
         {
@@ -19,7 +19,12 @@ class BasketController extends FrontendController
                     throw new CHttpException(404, 'Can\'t found item inside cache');
                 break;
             case Hotel::TYPE:
-                $item = Hotel::getFromCache($key);
+                $item = Hotel::getFromCache($key, $searchId, $searchId2);
+                if ($item)
+                    Yii::app()->shoppingCart->put($item);
+                else
+                    throw new CHttpException(404, 'Can\'t found item inside cache');
+                break;
         }
     }
 

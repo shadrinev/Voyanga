@@ -18,7 +18,7 @@
         </td>
         <td>
             <a class="btn" href="/booking/hotel/buy/key/<?php echo $cacheId?>_{{hotelId}}_{{resultId}}">выбрать</a>
-            <a class='btn btn-info btn-mini' data-searchKey="<?php echo $cacheId?>_{{hotelId}}_{{resultId}}">добавить в тур</a>
+            <a class='btn btn-info btn-mini chooseRoom' data-cacheid="<?php echo $cacheId?>" data-hotelid="{{hotelId}}" data-roomid="{{resultId}}">добавить в тур</a>
         </td>
     </tr>
     <tr>
@@ -46,19 +46,25 @@
     var data = $.parseJSON('".$results."'),
         html = ".$variable."(data);
     $('#hotel-results').html(html);
-    $.getJSON('/tour/basket/add/type/".HotelRoom::TYPE."/key/'+key1+'/searchId/'+key2)
-        .done(function(data) {
-            $.getJSON('/tour/basket/show')
-                .done(function(data) {
-                    var html = handlebarTour(data);
-                    $('#tour-output').html(html);
-                    console.log(data);
-                    btn.removeClass('btn-info').removeClass('chooseFlight').addClass('btn-inverse').html('Добавлено');
-                })
-                .fail(function(data){
-                    /*$('#tour-output').html(data);*/
-                    btn.removeClass('btn-info').addClass('btn-danger').html('Ошибка!');
-                });
-            $('#popupInfo').modal('hide');
-        });
+    $('.chooseRoom').on('click',function(){
+        var key1 = $(this).data('cacheid'),
+            key2 = $(this).data('hotelid'),
+            key3 = $(this).data('roomid'),
+            btn = $(this);
+        $.getJSON('/tour/basket/add/type/".Hotel::TYPE."/key/'+key1+'/searchId/'+key2+'/searchId2/'+key3)
+            .done(function(data) {
+                $.getJSON('/tour/basket/show')
+                    .done(function(data) {
+                        var html = handlebarTour(data);
+                        $('#tour-output').html(html);
+                        console.log(data);
+                        btn.removeClass('btn-info').removeClass('chooseRoom').addClass('btn-inverse').html('Добавлено');
+                    })
+                    .fail(function(data){
+                        /*$('#tour-output').html(data);*/
+                        btn.removeClass('btn-info').addClass('btn-danger').html('Ошибка!');
+                    });
+                $('#popupInfo').modal('hide');
+            });
+    });
 ", CClientScript::POS_READY); ?>
