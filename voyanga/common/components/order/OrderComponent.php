@@ -50,10 +50,7 @@ class OrderComponent extends CApplicationComponent
             {
                 if ($saved = $item->saveToOrderDb())
                 {
-                    $orderHasFlightVoyage = new OrderHasFlightVoyage();
-                    $orderHasFlightVoyage->orderId = $order->id;
-                    $orderHasFlightVoyage->orderFlightVoyage = $saved->id;
-                    $orderHasFlightVoyage->save();
+                    $item->saveReference($order);
                 }
                 else
                 {

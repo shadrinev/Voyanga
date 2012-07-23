@@ -39,8 +39,8 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
 
     public function getIsValid()
     {
-        //todo: enable check for availability here
-        return true;
+        $request = new GDSNemoAgency();
+        return $request->checkFlight($this->flightKey);
     }
 
     public function getIsPayable()
@@ -62,6 +62,14 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         if ($order->save())
             return $order;
         return false;
+    }
+
+    public function saveReference($order)
+    {
+        $orderHasFlightVoyage = new OrderHasFlightVoyage();
+        $orderHasFlightVoyage->orderId = $order->id;
+        $orderHasFlightVoyage->orderFlightVoyage = $this->id;
+        $orderHasFlightVoyage->save();
     }
 
     public static function getFromCache($key, $searchId)

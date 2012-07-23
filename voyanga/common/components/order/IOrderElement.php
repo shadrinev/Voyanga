@@ -35,4 +35,12 @@ interface IOrderElement
      * @return integer timestamp
      */
     public function getTime();
+
+    /**
+     * Function to save reference to order at table
+     *
+     * @abstract
+     * @return mixed
+     */
+    public function saveReference($order);
 }

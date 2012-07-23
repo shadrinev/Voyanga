@@ -1,7 +1,10 @@
 <?php
 
-class Hotel extends CApplicationComponent
+class Hotel extends CApplicationComponent implements IECartPosition, IOrderElement
 {
+    //type for saving to basket
+    const TYPE = 2;
+
     const STARS_ONE = 1;
     const STARS_TWO = 2;
     const STARS_THREE = 3;
@@ -94,9 +97,59 @@ class Hotel extends CApplicationComponent
     /** @var where do we get if from */
     public $cacheId;
 
+    //implementation of ICartPosition
     public function getId()
     {
         return 'hotel_key_'.$this->cacheId.'_'.$this->searchId.'_'.$this->resultId;
+    }
+
+    /**
+     * @return float price
+     */
+    public function getPrice()
+    {
+        return $this->comparePrice;
+    }
+
+    //implementation of IOrderElement
+    public function getIsValid()
+    {
+        $request = new HotelBookClient();
+        return $request->checkHotel($this);
+    }
+
+    public function getIsPayable()
+    {
+        return true;
+    }
+
+    public function saveToOrderDb()
+    {
+        $key = $this->getId();
+        $order = OrderHotel::model()->findByAttributes(array('key' => $key));
+        if (!$order)
+            $order = new OrderFlightVoyage();
+        $order->key = $key;
+        $order->checkIn = $this->checkIn;
+        $order->duration = $this->duration;
+        $order->cityId = $this->cityId;
+        $order->object = serialize($this);
+        if ($order->save())
+            return $order;
+        return false;
+    }
+
+    public function saveReference($order)
+    {
+        $orderHasHotel = new OrderHasHotel();
+        $orderHasHotel->orderId = $order->id;
+        $orderHasHotel->orderHotel = $this->id;
+        $orderHasHotel->save();
+    }
+
+    public function getTime()
+    {
+        return strtotime($this->checkIn);
     }
 
     public function __construct($params)

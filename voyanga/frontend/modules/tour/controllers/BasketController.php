@@ -7,7 +7,7 @@
  */
 class BasketController extends FrontendController
 {
-    public function actionAdd($type, $key, $searchId)
+    public function actionAdd($type, $key, $searchId='')
     {
         switch ($type)
         {
@@ -18,6 +18,8 @@ class BasketController extends FrontendController
                 else
                     throw new CHttpException(404, 'Can\'t found item inside cache');
                 break;
+            case Hotel::TYPE:
+                $item = Hotel::getFromCache($key);
         }
     }
 
