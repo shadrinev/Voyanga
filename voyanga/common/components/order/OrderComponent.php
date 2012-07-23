@@ -65,4 +65,18 @@ class OrderComponent extends CApplicationComponent
         }
         echo json_encode(array('result'=>$result));
     }
+
+    public function forceValidate()
+    {
+        $positions = $this->getPositions(false);
+        $allValid = true;
+        foreach($positions as $position){
+            $valid = $position->getIsValid();
+            if(!$valid)
+            {
+
+            }
+            $allValid &= $valid;
+        }
+    }
 }
