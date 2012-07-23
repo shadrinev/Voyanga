@@ -46,6 +46,8 @@ class OrderBookingController extends Controller
             $booking = array();
             $booking['status'] = $model->stateAdapter($flightBooker->status);
             $booking['type'] = 'Авиа';
+            $booking['className'] = get_class($flightBooker);
+            $booking['modelId'] = $flightBooker->id;
             $booking['description'] = $flightBooker->fullDescription;
 
             if($flightBooker->price){
