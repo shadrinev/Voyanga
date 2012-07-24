@@ -13,7 +13,8 @@ class ConstructorController extends FrontendController
 
     public function actionCreate()
     {
-        $this->render('create');
+        $model = new TourBuilderForm();
+        $this->render('create', array('model'=>$model));
     }
 
     public function actionNew($clear=false, $isTab=false)
