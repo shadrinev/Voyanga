@@ -100,7 +100,7 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
     //implementation of ICartPosition
     public function getId()
     {
-        return 'hotel_key_'.$this->cacheId.'_'.$this->searchId.'_'.$this->resultId;
+        return 'hotel_key'.$this->cacheId.'_'.$this->searchId.'_'.$this->resultId;
     }
 
     /**
@@ -324,6 +324,10 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
             'rubPrice' => $this->rubPrice,
             'bestMask' => $this->bestMask,
             'categoryId' => $this->categoryId,
+            'checkIn' => $this->checkIn,
+            'checkOut' => $this->getCheckOut(),
+            'duration' => $this->duration,
+            'city' => ($city = City::model()->getCityByHotelbookId($this->cityId)) ? $city->localRu : '',
             'rooms' => array()
         );
 
@@ -334,4 +338,14 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
         return $ret;
     }
 
+    public function getCheckOut()
+    {
+        if (!$this->checkIn)
+            return null;
+        if (!$this->duration)
+            return null;
+        $checkInInternal = DateTime::createFromFormat('Y-m-d', $this->checkIn);
+        $checkOutInternal = $checkInInternal->add(new DateInterval('P'.$this->duration.'D'));
+        return $checkOutInternal->format('Y-m-d');
+    }
 }

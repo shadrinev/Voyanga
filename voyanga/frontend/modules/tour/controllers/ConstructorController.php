@@ -11,6 +11,11 @@ class ConstructorController extends FrontendController
 
     public $defaultAction = 'new';
 
+    public function actionCreate()
+    {
+        $this->render('create');
+    }
+
     public function actionNew($clear=false, $isTab=false)
     {
         if ($clear)

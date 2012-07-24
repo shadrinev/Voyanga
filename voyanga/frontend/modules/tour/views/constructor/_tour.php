@@ -1,64 +1,18 @@
 <span id='tour-output'></span>
 <?php $templateVariable = 'handlebarTour'; ?>
 <?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'tour', 'compileVariable' => $templateVariable)) ?>
-<table class="table" width="100%">
-    <thead>
-    <tr>
-        <th>Дата</th>
-        <th>Откуда</th>
-        <th>Куда</th>
-        <th>Авиакомпания</th>
-        <th>Цена</th>
-        <th width="18%"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each items}}
-    <tr>
-        <td colspan="4"></td>
-        <td><b>{{price}} руб.</b></td>
-        <td><a class="btn btn-warning detail-view" data-key='{{flightKey}}'>Подробнее</a>
-        </td>
-    </tr>
-    {{#each flights}}
-    <tr>
-        <td>{{flightParts.0.datetimeBegin}}</td>
-        <td>{{departureCity}}</td>
-        <td>{{arrivalCity}}</td>
-        <td><img src='/img/airlines/{{../valCompany}}.png'></td>
-        <td></td>
-        <td>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="6">
-            <table class="table table-bordered flight-detail-{{../flightKey}}" style='display: none; background-color: #f0f0f0'>
-                <thead>
-                <th>Вылет</th>
-                <th>Прилёт</th>
-                <th>Авиакомпания</th>
-                <th>Продолжительность полёта</th>
-                </thead>
-                <tbody>
-                {{#each flightParts}}
-                <tr>
-                    <td>{{datetimeBegin}}, {{departureCity}}, {{departureAirport}}</td>
-                    <td>{{datetimeEnd}}, {{arrivalCity}}, {{arrivalAirport}}</td>
-                    <td><img src='/img/airlines/{{transportAirline}}.png'></td>
-                    <td>{{humanTime duration}}</td>
-                </tr>
-                {{/each}}
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    {{/each}}
-    <tr>
-        <td colspan="6" style="background-color: #b2e5ff; height: 5px;">&nbsp;</td>
-    </tr>
-    {{/each}}
-    </tbody>
-</table>
+{{#each items}}
+    {{#if isFlight}}
+        <?php $this->renderPartial('_tour_flight'); ?>
+    {{/if}}
+    {{#if isHotel}}
+        <?php $this->renderPartial('_tour_hotel'); ?>
+    {{/if}}
+{{/each}}
+<div class="actions">
+    <a href="#" class="deleteTourButton btn btn-danger">Очистить тур</a>
+    <a href="/tour/constructor/create" class="btn btn-success">Конструктор</a>
+</div>
 <div class="modal hide" id="tourSaveModal">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
@@ -96,7 +50,7 @@
         });
 
     $('.detail-view').live('click', function() {
-        var openElement = $('#detail-' + $(this).data('key'));
+        var openElement = $('.detail-' + $(this).data('key'));
         console.log(openElement);
         openElement.toggle();
     });
@@ -136,6 +90,7 @@
         $.getJSON('/tour/basket/clear', function(data){
             var html = {$templateVariable}(data);
             $('#tour-output').html(html);
-        })
+        });
+        return false;
     });
 ", CClientScript::POS_READY); ?>

@@ -24,7 +24,17 @@ class OrderComponent extends CApplicationComponent
             }
             $time[] = $position->getTime();
             if ($asJson)
+            {
                 $element['key'] = $position->getId();
+                if ($position instanceof FlightVoyage)
+                    $element['isFlight'] = true;
+                if ($position instanceof Hotel)
+                {
+                    $element['isHotel'] = true;
+
+                }
+
+            }
             $result['items'][] = $element;
             unset($element);
         }

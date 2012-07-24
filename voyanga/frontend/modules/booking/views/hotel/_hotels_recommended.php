@@ -13,7 +13,7 @@
         <td>{{rubPrice}} руб.</td>
         <td>
             {{#each rooms}}
-            {{size}}
+                {{size}}
             {{/each}}
         </td>
         <td>
