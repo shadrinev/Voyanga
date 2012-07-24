@@ -16,7 +16,7 @@ class TourBuilderWidget extends CWidget
     {
         if($this->assetsUrl===null)
             $this->assetsUrl = Yii::app()->getAssetManager()->publish(dirname(__FILE__).'/assets',false,-1,YII_DEBUG);
-        Yii::app()->getClientScript()->registerScriptFile($this->assetsUrl.'/'.'attachedtrips.js');
+        Yii::app()->getClientScript()->registerScriptFile($this->assetsUrl.'/'.'attachedTrips.js');
     }
 
     public function run()

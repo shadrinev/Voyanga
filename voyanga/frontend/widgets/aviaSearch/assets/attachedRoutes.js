@@ -65,7 +65,7 @@
             }
             $addRoute.data('counter', counter);
         });
-        $('.datepicker').datepicker({'weekStart':1,'format':'dd.mm.yyyy','language':'ru'}).on('changeDate', function(ev){$(this).datepicker("hide")});
+        $('.datepicker', $('.aviaSearch')).datepicker({'weekStart':1,'format':'dd.mm.yyyy','language':'ru'}).on('changeDate', function(ev){$(this).datepicker("hide")});
         $('.fromField').typeahead({
             'items':10,
             'ajax':{

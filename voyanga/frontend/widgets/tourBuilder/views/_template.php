@@ -1,4 +1,4 @@
-<div class="form-horizontal well" id="trip<?php echo $i; ?>">
+<div class="form-horizontal well tourBuilder" id="trip<?php echo $i; ?>">
         <?php echo $form->hiddenField($model, "[$i]cityId", array('class'=>'tripCity')); ?>
 
         <?php echo $form->labelEx($model, "[$i]cityId"); ?>

@@ -38,4 +38,13 @@ class TripForm extends CFormModel
     {
         $this->cityModel = City::model()->findByAttributes(array('localRu'=>$value));
     }
+
+    public function attributeLabels()
+    {
+        return array(
+            'cityId' => 'Город',
+            'startDate' => 'Начало посещения',
+            'endDate' => 'Окончание посещения',
+        );
+    }
 }

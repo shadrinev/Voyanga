@@ -1,4 +1,4 @@
-<div class="form-horizontal well" id="route<?php echo $i; ?>">
+<div class="form-horizontal well aviaSearch" id="route<?php echo $i; ?>">
         <?php echo $form->datepickerRow(
             $model,
             "[$i]departureDate",

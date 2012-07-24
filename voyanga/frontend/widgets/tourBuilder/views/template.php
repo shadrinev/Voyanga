@@ -1,7 +1,7 @@
 <?php $this->render('jsTemplate', array('model'=>new TripForm, 'form'=>$form)); ?>
 <?php $i=0; ?>
 <fieldset>
-    <legend>Перелёты</legend>
+    <legend>Города</legend>
 <div id='tripsArea'>
     <?php foreach ($trips as $trip): ?>
         <?php $this->render('_template', array('model'=>$trip, 'i'=>$i++, 'form'=>$form)); ?>
@@ -13,9 +13,9 @@
     'buttonType'=>'primary',
     'size'=>'mini',
     'icon'=>'icon-plus',
-    'label'=>'Добавить перелёт',
+    'label'=>'Добавить',
     'htmlOptions'=>array(
-        'class' => 'addtrip',
+        'class' => 'addTrip',
         'data-counter' => $i
     ))
 );
