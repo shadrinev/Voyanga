@@ -77,7 +77,7 @@ class FlightForm extends CFormModel
         return true;
     }
 
-    public function getPossibleAdultCount()
+    public static function getPossibleAdultCount()
     {
         $range = range(1, FlightForm::MAX_PASSENGER_NUMBER);
         return array_combine($range, $range);

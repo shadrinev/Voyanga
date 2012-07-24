@@ -8,5 +8,30 @@
 )); ?>
 
     <?php $this->widget('frontend.widgets.tourBuilder.TourBuilderWidget', array('model' => $model, 'attribute'=>'trips')); ?>
+    <?php echo $form->dropDownListRow($model, 'adultCount', FlightForm::getPossibleAdultCount()); ?>
+
+    <?php echo $form->hiddenField($model, "startCityId", array('class'=>'startCityId')); ?>
+
+    <?php echo $form->labelEx($model, "startCityId"); ?>
+    <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
+        'options'=>array(
+            'items'=>10,
+            'ajax' => array(
+                'url' => "/ajax/cityForFlightOrHotel",
+                'timeout' => 500,
+                'displayField' => "label",
+                'triggerLength' => 2,
+                'method' => "get",
+                'loadingClass' => "loading-circle",
+            ),
+            'matcher'=>'js: function(){return true}',
+            'sorter'=>'js:function(items){return items;}',
+        ),
+
+        'htmlOptions'=>array(
+            'class'=>'span5 tourStartField',
+            'value'=>$model->startCityName,
+        )
+    )); ?>
 
 <?php $this->endWidget(); ?>

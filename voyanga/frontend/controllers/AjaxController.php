@@ -9,7 +9,7 @@
 class AjaxController extends BaseAjaxController
 {
 
-    public function actionCityForFlight($query)
+    public function actionCityForFlight($query, $return = false)
     {
         $currentLimit = appParams('autocompleteLimit');
         $items = Yii::app()->cache->get('autocompleteCityForFlight'.$query);
@@ -115,11 +115,13 @@ class AjaxController extends BaseAjaxController
             }
             Yii::app()->cache->set('autocompleteCityForFlight'.$query,$items,appParams('autocompleteCacheTime'));
         }
-        //VarDumper::dump($items);
-        $this->send($items);
+        if ($return)
+            return $items;
+        else
+            $this->send($items);
     }
 
-    public function actionCityForHotel($query)
+    public function actionCityForHotel($query, $return = false)
     {
         $currentLimit = appParams('autocompleteLimit');
         $items = Yii::app()->cache->get('autocompleteCityForHotel'.$query);
@@ -225,7 +227,35 @@ class AjaxController extends BaseAjaxController
             }
             Yii::app()->cache->set('autocompleteCityForHotel'.$query,$items,appParams('autocompleteCacheTime'));
         }
-        //VarDumper::dump($items);
+        if ($return)
+            return $items;
+        else
+            $this->send($items);
+    }
+
+    public function actionCityForHotelOrFlight($query, $return=false)
+    {
+        $items = $this->actionCityForHotel($query, true);
+        if (sizeof($items)<appParams('autocompleteLimit'))
+        {
+            $hotels = $this->actionCityForFlight($query, true);
+            $j=0;
+            for ($i=sizeof($items); $i<=appParams('autocompleteLimit') and ($i<sizeof($hotels)); $i++)
+                $items[] = $hotels[$j++];
+        }
+        $this->send($items);
+    }
+
+    public function actionCityForFlightOrHotel($query, $return=false)
+    {
+        $items = $this->actionCityForFlight($query, true);
+        if (sizeof($items)<appParams('autocompleteLimit'))
+        {
+            $hotels = $this->actionCityForHotel($query, true);
+            $j=0;
+            for ($i=sizeof($items); $i<=appParams('autocompleteLimit') and ($i<sizeof($hotels)); $i++)
+                $items[] = $hotels[$j++];
+        }
         $this->send($items);
     }
 }

@@ -19,6 +19,11 @@ class TourBuilderForm extends CFormModel
 
     public $startCityModel;
 
+    public function init()
+    {
+        $this->setStartCityName('Санкт-Петербург');
+    }
+
     public function getStartCityId()
     {
         if ($this->startCityModel)
@@ -41,5 +46,13 @@ class TourBuilderForm extends CFormModel
     public function setStartCityName($value)
     {
         $this->startCityModel = City::model()->findByAttributes(array('localRu'=>$value));
+    }
+
+    public function attributeLabels()
+    {
+        return array(
+            'adultCount' => 'Количество взрослых',
+            'startCityId' => 'Начало поездки в городе'
+        );
     }
 }

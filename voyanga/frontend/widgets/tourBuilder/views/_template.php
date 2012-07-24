@@ -6,7 +6,7 @@
             'options'=>array(
                 'items'=>10,
                 'ajax' => array(
-                    'url' => "/ajax/cityForFlight",
+                    'url' => "/ajax/cityForFlightOrHotel",
                     'timeout' => 500,
                     'displayField' => "label",
                     'triggerLength' => 2,
