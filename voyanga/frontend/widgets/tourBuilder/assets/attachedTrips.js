@@ -9,7 +9,6 @@
 
             frag = template.replace( /{{i}}/ig, counter );
             var tmp = position.append(frag);
-            $('.datepicker', tmp).datepicker({'weekStart':1,'format':'dd.mm.yyyy','language':'ru'});
             $('.fromField').typeahead({
                 'items':10,
                 'ajax':{
@@ -40,15 +39,19 @@
                 },
                 'matcher': function(){return true}
             });
-            counter++;
+            //!!changing counter here
+            var $prev = $('#trip'+(counter-1)),
+                $next = $('#trip'+(counter));
+            console.log($prev, $next);
+            counter++
             if (counter>=1)
             {
-                $('input.isRoundTrip').removeAttr('checked');
-                $('input.isRoundTrip').attr('disabled', 'disabled');
-                $('span.backdate').hide();
+                $('.startDate', $next).val($('.endDate', $prev).val());
             }
+            $('.datepicker', tmp).datepicker({'weekStart':1,'format':'dd.mm.yyyy','language':'ru'});
             $this.data('counter', counter);
         });
+
         $('html').on('click', '.deletetrip', function (){
             var $this = $(this),
                 $addtrip = $('.addTrip'),

@@ -30,7 +30,7 @@
             'events'=> array(
                 'changeDate'=>'js:function(ev){$(this).datepicker("hide")}'
             ),
-            'class'=>'datepicker'
+            'class'=>'datepicker startDate'
         )
     );?>
 
@@ -41,7 +41,7 @@
                 'events'=> array(
                     'changeDate'=>'js:function(ev){$(this).datepicker("hide")}'
                 ),
-                'class'=>'datepicker',
+                'class'=>'datepicker endDate',
             )
      );?>
 
