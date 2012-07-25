@@ -97,6 +97,9 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
     /** @var where do we get if from */
     public $cacheId;
 
+    /** @var hotel rating */
+    private $_rating;
+
     //implementation of ICartPosition
     public function getId()
     {
@@ -187,6 +190,10 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
         if(isset($params['categoryId']))
         {
             $this->categoryId = isset(self::$categoryIdMapHotelbook[intval($params['categoryId'])]) ? self::$categoryIdMapHotelbook[intval($params['categoryId'])]  : self::STARS_UNDEFINDED;
+        }
+        if(isset($params['rating']))
+        {
+            $this->_rating = $params['rating'];
         }
     }
 
@@ -328,6 +335,7 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
             'checkOut' => $this->getCheckOut(),
             'duration' => $this->duration,
             'city' => ($city = City::model()->getCityByHotelbookId($this->cityId)) ? $city->localRu : '',
+            'rating' => $this->rating,
             'rooms' => array()
         );
 
@@ -348,4 +356,18 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
         $checkOutInternal = $checkInInternal->add(new DateInterval('P'.$this->duration.'D'));
         return $checkOutInternal->format('Y-m-d');
     }
+}
+    /**
+     * @return float user rating
+     */
+    function getRating()
+    {
+        return $this->_rating?$this->_rating:'-';
+    }
+
+    function setRating($val)
+    {
+        $this->_rating = $val;
+    }
+
 }
