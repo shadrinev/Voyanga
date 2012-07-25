@@ -5,7 +5,7 @@
  * Date: 25.07.12
  * Time: 11:44
  */
-abstract class TripElement extends CModel implements IECartPosition
+abstract class TripElement extends CModel implements IECartPosition, IOrderElement
 {
     const TYPE_FLIGHT = 1;
     const TYPE_HOTEL = 2;

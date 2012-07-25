@@ -84,7 +84,6 @@ class OrderComponent extends CApplicationComponent
             $valid = $position->getIsValid();
             if(!$valid)
             {
-
             }
             $allValid &= $valid;
         }
