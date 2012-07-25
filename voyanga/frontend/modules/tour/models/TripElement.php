@@ -11,4 +11,25 @@ abstract class TripElement extends CModel implements IECartPosition
     const TYPE_HOTEL = 2;
 
     public $type;
+
+    public $entity;
+
+    public function getId()
+    {
+        if (!$this->_id)
+        {
+            $counter = Yii::app()->user->getState('trip.'.__CLASS__.'.counter');
+            if ($counter)
+                $this->setId($counter+1);
+            else
+                $this->setId(1);
+        }
+        return $this->_id;
+    }
+
+    public function setId($val)
+    {
+        $this->_id = $val;
+        Yii::app()->user->setState('trip.'.__CLASS__.'.counter', $this->_id);
+    }
 }

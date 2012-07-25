@@ -14,7 +14,9 @@ class BasketController extends FrontendController
             case FlightVoyage::TYPE:
                 $item = FlightVoyage::getFromCache($key, $searchId);
                 if ($item)
+                {
                     Yii::app()->shoppingCart->put($item);
+                }
                 else
                     throw new CHttpException(404, 'Can\'t found item inside cache');
                 break;
