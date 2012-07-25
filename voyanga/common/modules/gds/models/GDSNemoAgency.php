@@ -46,7 +46,12 @@ class GDSNemoAgency extends CComponent
         $gdsRequest->requestDescription = self::$lastRequestDescription;
         $client->gdsRequest = $gdsRequest;
         Yii::beginProfile('processingSoap' . $methodName);
-        $ret = $client->$methodName($params);
+        try{
+            $ret = $client->$methodName($params);
+        }catch (Exception $e){
+            Yii::log(CVarDumper::dumpAsString($e), 'Gds.GdsNemoAgency.request');;
+            return array();
+        }
         if ($expiration)
         {
             if ($ret)
@@ -194,7 +199,11 @@ class GDSNemoAgency extends CComponent
         if (!isset($soapResponse->Response->SearchFlights->Flights->Flight))
         {
             $soapResponse = $this->humanReadable($soapResponse);
-            throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
+            if($soapResponse)
+            {
+                Yii::trace(CVarDumper::dumpAsString($soapResponse), 'Gds.GdsNemoAgency.request');
+                //throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
+            }
         }
         //print_r($soapResponse );die();
 
@@ -205,7 +214,7 @@ class GDSNemoAgency extends CComponent
         {
             $searchId = $soapResponse->Response->SearchFlights->Flights->SearchId;
         }
-        if ($soapResponse->Response->SearchFlights->Flights->Flight)
+        if (isset($soapResponse->Response->SearchFlights->Flights->Flight))
         {
             Yii::beginProfile('processingSoap');
             UtilsHelper::soapObjectsArray($soapResponse->Response->SearchFlights->Flights->Flight);
@@ -408,7 +417,7 @@ class GDSNemoAgency extends CComponent
         }
         else
         {
-            $errorCode |= ERROR_CODE_EMPTY;
+            $errorCode |= self::ERROR_CODE_EMPTY;
         }
         //print_r($aFlights);
         if ($errorCode > 0)
@@ -579,7 +588,6 @@ class GDSNemoAgency extends CComponent
 
     public function humanReadable($soapResponse)
     {
-        VarDumper::dump($soapResponse->Response->SearchFlights->Flights);
         if (isset($soapResponse->Response->SearchFlights->Flights->ResultURL))
         {
             $soapResponse->Response->SearchFlights->Flights->ResultURL = urldecode($soapResponse->Response->SearchFlights->Flights->ResultURL);

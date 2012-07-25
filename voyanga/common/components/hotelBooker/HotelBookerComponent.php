@@ -413,6 +413,13 @@ class HotelBookerComponent extends CApplicationComponent
         $this->hotel = unserialize($this->hotelBooker->hotelInfo);
     }
 
+    public function setHotelBookerFromHotel(Hotel $hotel)
+    {
+        $this->hotelBooker = new HotelBooker();
+        $this->hotelBooker->hotel = $hotel;
+        $this->hotel = $hotel;
+    }
+
     public function getHotelBookerId()
     {
         return $this->hotelBooker->id;

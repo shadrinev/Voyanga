@@ -221,6 +221,7 @@ class FlightBooker extends SWLogActiveRecord
     {
         $element = serialize($value);
         $this->_flightVoyage = $value;
+        $this->price = $value->price;
         $this->flightVoyageInfo = $element;
     }
 }

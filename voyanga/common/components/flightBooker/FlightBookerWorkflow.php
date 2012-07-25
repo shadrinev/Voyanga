@@ -10,7 +10,7 @@ return array(
         array('id'=>'bookingTimeLimitError',    'transition'=>'error'),
         array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat'),
         array('id'=>'ticketReady',              'transition'=>'bspTransfer, done'),
-        array('id'=>'ticketingRepeat',          'transition'=>'ticketReady,manualProcessing'),
+        array('id'=>'ticketingRepeat',          'transition'=>'ticketingRepeat,ticketingError,ticketReady,manualProcessing'),
         array('id'=>'manualProcessing',         'transition'=>'ticketingError,manualTicketing'),
         array('id'=>'manualTicketing',          'transition'=>'manualSuccess,manualError'),
         array('id'=>'ticketingError',           'transition'=>'moneyReturn'),

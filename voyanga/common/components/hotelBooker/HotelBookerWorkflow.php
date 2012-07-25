@@ -13,9 +13,9 @@ return array(
         array('id'=>'availabilityError',        'transition'=>'error'),
         array('id'=>'hardStartPayment',         'transition'=>'ticketing,hardWaitingForPayment'),
 
-        array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat'),
+        array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat,ticketingError'),
         array('id'=>'ticketReady',              'transition'=>'moneyTransfer,done'),
-        array('id'=>'ticketingRepeat',          'transition'=>'ticketReady,manualProcessing'),
+        array('id'=>'ticketingRepeat',          'transition'=>'ticketingRepeat,ticketReady,manualProcessing'),
         array('id'=>'manualProcessing',         'transition'=>'ticketingError,manualTicketing'),
         array('id'=>'manualTicketing',          'transition'=>'manualSuccess,manualError'),
         array('id'=>'ticketingError',           'transition'=>'moneyReturn'),

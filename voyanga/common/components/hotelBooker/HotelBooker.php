@@ -183,6 +183,7 @@ class HotelBooker extends SWLogActiveRecord
         $element = serialize($value);
         $this->_hotel = $value;
         $this->hotelInfo = $element;
+        $this->price = $element->price;
     }
 
     public function getFullDescription()

@@ -23,6 +23,7 @@ return CMap::mergeArray(array(
     'flight_price_factor' => 100,
     //Time factor for flight optimal
     'flight_time_factor' => 70,
+    'flight_repeat_time' => 120,
     'aPassegerTypes' => array(1 => 'ADT', 2 => 'CNN', 3 => 'INN'),
     'GDSNemo' => array(
         'wsdlUri' => 'http://109.120.157.20:10002/Flights.asmx?wsdl',
@@ -37,6 +38,7 @@ return CMap::mergeArray(array(
     ),
     'hotel_search_cache_time' => 3600 * 5,
     'hotel_payment_time' => 600,
+
     'HotelBook' => array(
         'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
         'login' => 'test',

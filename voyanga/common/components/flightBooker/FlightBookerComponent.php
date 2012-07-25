@@ -111,14 +111,14 @@ class FlightBookerComponent extends CApplicationComponent
         //echo 123;//die();
         /** @var FlightBookingResponse $flightBookingResponse  */
         $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams);
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
+        GDSNemoAgency::$requestIds = array();
         if($flightBookingResponse->status == 1)
         {
             $this->flightBooker->nemoBookId = $flightBookingResponse->nemoBookId;
             $this->flightBooker->pnr = $flightBookingResponse->status;
             $this->flightBooker->timeout = $flightBookingResponse->expiration;
         }
-        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
-        GDSNemoAgency::$requestIds = array();
         //die();
         $this->status('waitingForPayment');
     }
@@ -174,6 +174,10 @@ class FlightBookerComponent extends CApplicationComponent
 
             }
         }
+        else
+        {
+            $this->status('ticketingRepeat');
+        }
         $this->status('ticketReady');
     }
 
@@ -184,7 +188,40 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageTicketingRepeat()
     {
+        $this->flightBooker->tryCount++;
+        $this->flightBooker->save();
+        if ($this->flightBooker->tryCount > 3)
+        {
+            $this->status('ticketingError');
+        }
+        else
+        {
 
+            $flightTicketingParams = new FlightTicketingParams();
+            $flightTicketingParams->nemoBookId = $this->flightBooker->nemoBookId;
+            $flightTicketingParams->pnr = $this->flightBooker->pnr;
+            /** @var FlightTicketingResponse $flightTicketingResponse  */
+            $flightTicketingResponse = Yii::app()->gdsAdapter->FlightTicketing($flightTicketingParams);
+            SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
+            GDSNemoAgency::$requestIds = array();
+
+            if ($flightTicketingResponse->status == 1)
+            {
+
+                    $this->status('ticketReady');
+            }
+            else
+            {
+                //TODO: переставить стутус через время T + считать количество раз.
+                $res = Yii::app()->cron->add(time() + appParams('flight_repeat_time'), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'ticketingRepeat'));
+                if($res)
+                {
+                    $this->flightBooker->saveTaskInfo('ticketingRepeat',$res);
+                    return true;
+                }
+                //$this->status('ticketingRepeat');
+            }
+        }
     }
 
     public function stageManualProcessing()
@@ -199,7 +236,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageTicketingError()
     {
-        $this->status('error');
+        $this->status('moneyReturn');
     }
 
     public function stageManualError()
@@ -215,7 +252,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageManualSuccess()
     {
-
+        $this->status('done');
     }
 
     public function stageBspTransfer()
@@ -237,6 +274,15 @@ class FlightBookerComponent extends CApplicationComponent
     {
         $this->flightBooker = FlightBooker::model()->findByPk($flightBookerId);
         if(!$this->flightBooker) throw new CException('FlightBooker with id '.$flightBookerId.' not found');
+    }
+
+    public function setFlightBookerFromFlightVoyage(FlightVoyage $flightVoyage)
+    {
+        $this->flightBooker = new FlightBooker();
+        $this->flightBooker->flightVoyageInfo = $flightVoyage;
+        //$this->flightBooker->price = $flightVoyage->price;
+
+
     }
 
     public function getFlightBookerId()
