@@ -68,7 +68,7 @@ class RatingSpider(BaseSpider):
             item[prop] = text.strip()
 
 
-        text = hxs.select("//*[contains(@class, 'sprite-ratings')]/@alt").extract()
+        text = hxs.select("//*[@class='sprite-ratings']/@alt").extract()
         if len(text):
             text=text[0]
         else:
