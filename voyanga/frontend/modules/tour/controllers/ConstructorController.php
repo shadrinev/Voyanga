@@ -19,16 +19,20 @@ class ConstructorController extends FrontendController
             $model->attributes = $_POST['TourBuilderForm'];
             if (isset($_POST['TripForm']))
             {
+                $validTrips = true;
                 foreach ($_POST['TripForm'] as $i=>$attributes)
                 {
                     $trip = new TripForm();
                     $trip->attributes = $attributes;
-                    $model->trips[] = $trip;
+                    $validTrips = $validTrips and $trip->validate();
+                    if ($validTrips)
+                        $model->trips[] = $trip;
+                }
+                if ($validTrips and $model->validate())
+                {
+
                 }
             }
-            VarDumper::dump($_POST);
-            VarDumper::dump($model->attributes);
-            die();
         }
         $this->render('create', array('model'=>$model));
     }
