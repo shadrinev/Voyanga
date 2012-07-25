@@ -12,8 +12,6 @@ abstract class TripElement extends CModel implements IECartPosition, IOrderEleme
 
     public $type;
 
-    public $entity;
-
     public function getId()
     {
         if (!$this->_id)
