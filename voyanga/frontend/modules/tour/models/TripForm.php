@@ -15,6 +15,13 @@ class TripForm extends CFormModel
     public $startDate;
     public $endDate;
 
+    public function rules()
+    {
+        return array(
+            array('startDate, endDate, cityId', 'required')
+        );
+    }
+
     public function getCityId()
     {
         if ($this->cityModel)

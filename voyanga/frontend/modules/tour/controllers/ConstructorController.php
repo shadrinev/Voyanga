@@ -14,6 +14,22 @@ class ConstructorController extends FrontendController
     public function actionCreate()
     {
         $model = new TourBuilderForm();
+        if (isset($_POST['TourBuilderForm']))
+        {
+            $model->attributes = $_POST['TourBuilderForm'];
+            if (isset($_POST['TripForm']))
+            {
+                foreach ($_POST['TripForm'] as $i=>$attributes)
+                {
+                    $trip = new TripForm();
+                    $trip->attributes = $attributes;
+                    $model->trips[] = $trip;
+                }
+            }
+            VarDumper::dump($_POST);
+            VarDumper::dump($model->attributes);
+            die();
+        }
         $this->render('create', array('model'=>$model));
     }
 

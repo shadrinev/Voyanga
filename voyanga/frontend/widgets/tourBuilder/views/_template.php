@@ -7,18 +7,19 @@
                 'items'=>10,
                 'ajax' => array(
                     'url' => "/ajax/cityForFlightOrHotel",
-                    'timeout' => 500,
+                    'timeout' => 5,
                     'displayField' => "label",
                     'triggerLength' => 2,
                     'method' => "get",
                     'loadingClass' => "loading-circle",
                 ),
+                'onselect'=>'js:function(res){this.$element.siblings("input.tripCity").val(res.id)}',
                 'matcher'=>'js: function(){return true}',
                 'sorter'=>'js:function(items){return items;}',
             ),
 
             'htmlOptions'=>array(
-                'class'=>'span5 fromField',
+                'class'=>'span5 tripFromField',
                 'value'=>'',
             )
         )); ?>

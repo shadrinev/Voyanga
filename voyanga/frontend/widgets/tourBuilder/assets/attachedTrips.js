@@ -9,7 +9,7 @@
 
             frag = template.replace( /{{i}}/ig, counter );
             var tmp = position.append(frag);
-            $('.fromField').typeahead({
+            $('.tripFromField', tmp).typeahead({
                 'items':10,
                 'ajax':{
                     'url':'/ajax/cityForFlight',
@@ -20,22 +20,7 @@
                     'loadingClass':'loading-circle'
                 },
                 'onselect': function(res){
-                    this.$element.siblings('input.departureCity').val(res.id)
-                },
-                'matcher': function(){return true}
-            });
-            $('.toField').typeahead({
-                'items':10,
-                'ajax':{
-                    'url':'/ajax/cityForFlight',
-                    'timeout':5,
-                    'displayField':'label',
-                    'triggerLength':2,
-                    'method':'get',
-                    'loadingClass':'loading-circle'
-                },
-                'onselect': function(res){
-                    this.$element.siblings('input.arrivalCity').val(res.id)
+                    this.$element.siblings('input.tripCity').val(res.id)
                 },
                 'matcher': function(){return true}
             });
