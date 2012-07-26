@@ -9,7 +9,7 @@ class DumpCitiesCommand extends CConsoleCommand
         $cities = City::model()->findAll("hotelbookid IS NOT NULL");
         foreach($cities as $city)
         {
-            echo $city->localRu;
+            echo $city->localEn;
             echo "\n";
          }
     }
