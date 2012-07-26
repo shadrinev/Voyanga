@@ -356,7 +356,7 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
         $checkOutInternal = $checkInInternal->add(new DateInterval('P'.$this->duration.'D'));
         return $checkOutInternal->format('Y-m-d');
     }
-}
+
     /**
      * @return float user rating
      */
@@ -369,5 +369,4 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
     {
         $this->_rating = $val;
     }
-
 }
