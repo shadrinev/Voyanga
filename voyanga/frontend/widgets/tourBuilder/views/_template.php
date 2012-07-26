@@ -20,7 +20,7 @@
 
             'htmlOptions'=>array(
                 'class'=>'span5 tripFromField',
-                'value'=>'',
+                'value'=>$model->cityName,
             )
         )); ?>
 

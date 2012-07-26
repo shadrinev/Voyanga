@@ -10,6 +10,8 @@ abstract class TripElement extends CModel implements IECartPosition, IOrderEleme
     const TYPE_FLIGHT = 1;
     const TYPE_HOTEL = 2;
 
+    private $_id;
+
     public $type;
 
     public function getId()

@@ -84,4 +84,9 @@ class FlightTripElement extends TripElement
         else
             return strtotime($this->departureDate);
     }
+
+    public function getJsonObject()
+    {
+        return json_encode($this->attributes);
+    }
 }

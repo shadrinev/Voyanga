@@ -13,10 +13,14 @@ class ConstructorController extends FrontendController
 
     public function actionCreate()
     {
-        $model = new TourBuilderForm();
+        if ($res = Yii::app()->user->getState('trip.tour.form'))
+            $model = @unserialize($res);
+        else
+            $model = new TourBuilderForm();
         if (isset($_POST['TourBuilderForm']))
         {
             $model->attributes = $_POST['TourBuilderForm'];
+            $model->trips = array();
             if (isset($_POST['TripForm']))
             {
                 $validTrips = true;
@@ -30,11 +34,41 @@ class ConstructorController extends FrontendController
                 }
                 if ($validTrips and $model->validate())
                 {
-
+                    Yii::app()->user->setState('trip.tour.form', serialize($model));
+                    Yii::app()->shoppingCart->clear();
+                    ConstructorBuilder::build($model);
+                    $this->redirect('showTrip');
                 }
             }
         }
         $this->render('create', array('model'=>$model));
+    }
+
+    public function actionShowTrip()
+    {
+        $trip = Yii::app()->order->getPositions(false);
+        $tabs = array();
+        foreach ($trip['items'] as $item)
+        {
+            if ($item instanceof FlightTripElement)
+            {
+                /** @var $item FlightTripElement */
+                $from = City::model()->findByPk($item->departureCity);
+                $to = City::model()->findByPk($item->arrivalCity);
+                $tab['label'] = '<b>Перелёт</b><br>'.$item->departureDate."<br>".$from->localRu." &mdash; ".$to->localRu;
+                $tabs[] = $tab;
+            }
+            if ($item instanceof HotelTripElement)
+            {
+                /** @var $item HotelTripElement */
+                $from = City::model()->findByPk($item->city);
+                $tab['label'] = '<b>Отель в городе '.$from->localRu.'</b><br>'.$item->checkIn." &mdash; ".$item->checkOut;
+                $tabs[] = $tab;
+            }
+        }
+        if (isset($tabs[0]))
+            $tabs[0]['active'] = true;
+        $this->render('showTrip', array('tabs'=>$tabs));
     }
 
     public function actionNew($clear=false, $isTab=false)

@@ -149,7 +149,8 @@ return array(
                 'AUserBehavior' => array(
                     'class' => 'packages.users.behaviors.AUserBehavior'
                 )
-            )
+            ),
+            'allowAutoLogin'=>true
         ),
 
         'log' => array(

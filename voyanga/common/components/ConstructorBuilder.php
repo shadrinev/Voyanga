@@ -5,9 +5,9 @@
  * Date: 25.07.12
  * Time: 12:52
  */
-class ConstructorBuilder extends CApplicationComponent
+class ConstructorBuilder
 {
-    public function build(TourBuilderForm $form)
+    public static function build(TourBuilderForm $form)
     {
         //we are starting from our city
         $prev = $form->getStartCityId();
