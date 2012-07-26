@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import re
 
 from scrapy.http import Request
@@ -15,12 +17,14 @@ class RatingSpider(BaseSpider):
         Return requests for every city 
         """
         for city in open('data/cities.txt'):
-            yield Request(url="http://www.tripadvisor.ru/Search?q=%s" % city, callback=self.serp)
+            yield Request(url="http://www.tripadvisor.ru/Search?q=%s" % city.strip(), callback=self.serp)
 
     def serp(self, response):
         """
         Handle city search results
         """
+        if u'Не найдено соответствий' in response.body.decode('utf-8'):
+            return
         hxs = HtmlXPathSelector(response)
         href = hxs.select("/html/body/div[3]/div[2]/div/div[3]/div[2]/div[3]/div/div/div[3]/div[2]/div/a/@href").extract()[0]
         if 'Hotels' in href:
