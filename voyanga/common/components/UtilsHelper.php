@@ -672,4 +672,39 @@ class UtilsHelper
 
         return $dist;
     }
+
+
+    /**
+     * Canonize given hotel name
+     *
+     * @param string $name hotel name
+     * @param string $city_name_latin city name for given hotel
+     * @return string canonized hotel name
+     */
+    public static function canonizeHotelName($name, $city_name_latin)
+    {
+        // this could be in russian
+        $name = mb_convert_case($name, MB_CASE_LOWER, "UTF-8");
+        $name = self::str_to_translit($name);
+        $city_name = strtolower($city_name_latin);
+        // words to exclude from canonical name
+        $exclude_words = array("hotel", $city_name);
+        // remove non alnum from name
+        $canonical_name = preg_replace("~[^a-z0-9\s]~", "", $name);
+        // split by spaces
+        $name_parts = preg_split("~[\s]+~", $canonical_name);
+
+        // filter common words
+        $filtered_parts = Array();
+        foreach ($name_parts as $part) {
+            if(in_array($part, $exclude_words))
+                continue;
+            $filtered_parts[]=$part;
+        }
+        // sort alphabetally
+        sort($filtered_parts);
+        // join
+        $canonical_name = implode(" ", $filtered_parts);
+        return trim($canonical_name);
+    }
 }
