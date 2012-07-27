@@ -14,34 +14,34 @@ $consoleMainLocal = file_exists('console/config/main-local.php') ? require('cons
 
 // please notice the order of the merged arrays. It is important, and reflectes an ineritance hirarchy in a sense
 return CMap::mergeArray (
-	require_once ('common/config/main.php'), //currently doesn't exist
-	array(
-	'id'=>'bootstrap.clevertech.com',
-	'name'=>'bootstrap',
-	'basePath'=>'console',
-	'params'=>$params,
-	'preload'=>array('log'),
+    require_once ('common/config/main.php'), //currently doesn't exist
+    array(
+        'id'=>'bootstrap.clevertech.com',
+        'name'=>'bootstrap',
+        'basePath'=>'console',
+        'params'=>$params,
+        'preload'=>array('log'),
 
-	'import'=>array(
-		'site.common.extensions.*',
-		'site.common.components.*',
-		'site.common.models.*',
-		'application.components.*',
-		'application.models.*',
-		'site.frontend.models.*',
-	),
+        'import'=>array(
+                'site.common.extensions.*',
+                'site.common.components.*',
+                'site.common.models.*',
+                'application.components.*',
+                'application.models.*',
+                'site.frontend.models.*',
+        ),
 
-	'commandMap'=>array(
-		'migrate' => array (
-			'class' => 'system.cli.commands.MigrateCommand',
-			'migrationPath' => 'site.common.migrations',
-		),
+        'commandMap'=>array(
+                'migrate' => array (
+                        'class' => 'system.cli.commands.MigrateCommand',
+                        'migrationPath' => 'site.common.migrations',
+                ),
         'benchmark' => array(
             'class' => 'site.backend.modules.admin.modules.benchmark.commands.ABenchmarkCommand'
         )
      ),
 
-	'components'=>array(
+        'components'=>array(
 
         'syncCacheExecuter' => array(
             'class'=>'application.components.SyncCacheExecuter',
@@ -52,33 +52,38 @@ return CMap::mergeArray (
                 )
             )
         ),
-		'log'=>array(
-			'class'=>'CLogRouter',
-			'routes'=>array(
-				'main' => array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
-					'filter'=>'CLogFilter',
-				),
-			),
-		),
-		'db'=>array(
-			'pdoClass' => 'NestedPDO',
-			'connectionString' => $params['db.connectionString'],
-			'username' => $params['db.username'],
-			'password' => $params['db.password'],
-			'charset' => 'utf8',
-			'enableParamLogging' => YII_DEBUG,
-            'enableProfiling' => YII_DEBUG,
-			'emulatePrepare'=>true,
+        'log'=>array(
+            'class'=>'CLogRouter',
+            'routes'=>array(
+                'main' => array(
+                    'class'=>'CFileLogRoute',
+                    'levels'=>'error, warning',
+                    'filter'=>'CLogFilter',
+                ),
+                'console' => array(
+                    'class'=>'StdErrRoute',
+                    'levels'=>'error, warning',
+                    'categories'=>'console.*'
+                ),
+            ),
         ),
-		'urlManager' => array(
-			'urlFormat' => 'path',
-			'showScriptName' => false,
+                'db'=>array(
+                        'pdoClass' => 'NestedPDO',
+                        'connectionString' => $params['db.connectionString'],
+                        'username' => $params['db.username'],
+                        'password' => $params['db.password'],
+                        'charset' => 'utf8',
+                        'enableParamLogging' => YII_DEBUG,
+            'enableProfiling' => YII_DEBUG,
+                        'emulatePrepare'=>true,
+        ),
+                'urlManager' => array(
+                        'urlFormat' => 'path',
+                        'showScriptName' => false,
             'rules' => $params['urlRules'],
             'baseUrl' => '',
-		),
+                ),
 
-		'cache' => $params['cache.core'],
-		'contentCache' => $params['cache.content'],
-	),), CMap::mergeArray (	require_once (dirname(__FILE__).'/environments/main-'.$params['env.code'].'.php'), $consoleMainLocal));
+                'cache' => $params['cache.core'],
+                'contentCache' => $params['cache.content'],
+        ),), CMap::mergeArray (	require_once (dirname(__FILE__).'/environments/main-'.$params['env.code'].'.php'), $consoleMainLocal));

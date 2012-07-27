@@ -251,11 +251,7 @@ class City extends CActiveRecord
                 {
                     foreach($cities as $city)
                     {
-                        $items[] = array(
-                            'id'=>$city->primaryKey,
-                            'label'=>$this->parseTemplate('{localRu}, {country.localRu}, {code}',$city),
-                            'value'=>$this->parseTemplate('{localRu}',$city),
-                        );
+                        $items[] = $city;
                         $cityIds[$city->id] = $city->id;
                     }
                 }
@@ -280,11 +276,7 @@ class City extends CActiveRecord
             {
                 foreach($cities as $city)
                 {
-                    $items[] = array(
-                        'id'=>$city->primaryKey,
-                        'label'=>$this->parseTemplate('{localRu}, {country.localRu}, {code}',$city),
-                        'value'=>$this->parseTemplate('{localRu}',$city),
-                    );
+                    $items[] = $city;
                     $cityIds[$city->id] = $city->id;
                 }
             }
@@ -320,20 +312,15 @@ class City extends CActiveRecord
                     {
                         foreach($cities as $city)
                         {
-                            $items[] = array(
-                                'id'=>$city->primaryKey,
-                                'label'=>$this->parseTemplate('{localRu}, {country.localRu}, {code}',$city),
-                                'value'=>$this->parseTemplate('{localRu}',$city),
-                            );
+                            $items[] = $city;
                             $cityIds[$city->id] = $city->id;
                         }
                     }
                     $currentLimit -= count($items);
                 }
             }
-            Yii::app()->cache->set('autocompleteCityForHotel'.$query,$items,appParams('autocompleteCacheTime'));
         }
 
-            return $items;
+        return $items;
     }
 }

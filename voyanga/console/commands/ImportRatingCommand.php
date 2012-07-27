@@ -17,37 +17,32 @@ EOD;
         if (count($args)==0)
         {
             echo $this->getHelp();
-            exit; //mihan007: better to use Yii::app()->end() to end execution. It'll write all logs, executes any afterRequest events handlers and other useful stuff
+            Yii::app()->end();
         }
 
         if (!is_readable($args[0]))
         {
-            echo $this->getHelp(); //mihan007: maybe should show error or warning here?
-            exit;
+            $this->logError("Given file is not readable by current user or does not exists.");
+            echo $this->getHelp();
+            Yii::app()->end();
         }
 
         Yii::import("common.modules.hotel.models.HotelRating");
-
-        // Precache city name => city id mapping
-        $cityname_to_city = Array(); //mihan007: our code conventions says that we are using camelCaseVariables mainly because of framework internal code style
-        $cities = City::model()->findAll(); //mihan007: do you really need all columns here? maybe City::model()->findAll(array('select'=>'id, localRu, localEn')) only?
-        foreach ($cities as $city)
-        {
-            $cityname_to_city[$city->localRu] = $city;
-        }
 
         $fh = fopen($args[0], 'r');
 
         if($fh===FALSE)
         {
-            echo $this->getHelp(); //mihan007: correct error message should be here
+            // Should never happen in real life
+            $this->logError("File exists and readable, yet i cant open it for reading.");
+            echo $this->getHelp();
             exit;
         }
         // skip und check header
         $line = trim(fgets($fh));
         if($line!="rating,name,locality,url,country,name_alt,address,lat,lng,postal,address_ext")
         {
-            echo "Wrong fingerprint \n"; //mihan007: ok. but why not executing $this->logError?
+            $this->logError("Wrong fingerprint \n");
             echo $this->getHelp();
             exit;
         }
@@ -60,11 +55,14 @@ EOD;
                 $rating = $this->parseRating($data[0]);
                 //! Use english for canonical names
                 $name = ($data[5]=="")?$data[1]:$data[5]; //mihan007: just minor thing.. what is 5 and 1? don't like magic numbers.
-                $city = $cityname_to_city[$data[2]];
-                if(!$city) {
+                $city_name=$data[2];
+                $city = City::model()->guess($city_name);
+                if(count($city)==0) {
                     $this->logError("Problem mapping city " . $data[2]);
+                    continue;
                 }
-                $canonical_name = UtilsHelper::canonizeHotelName($name, $city->localEn); //mihan007: can't find such function. Did you commit that file?
+                $city = $city[0];
+                $canonical_name = UtilsHelper::canonizeHotelName($name, $city->localEn);
                 $this->saveRow($city->id, $canonical_name, $rating, $name);
             }
         }
@@ -87,8 +85,6 @@ EOD;
         return floatval($matches[0]);
     }
 
-
-
     public function saveRow($city_id, $canonical_name, $rating, $name)
     {
         $hr = new HotelRating();
@@ -101,19 +97,11 @@ EOD;
             $this->logError("duplicated canonical_name '"
                             . $canonical_name . " | " . $name .
                             "'");
-
         }
     }
 
     public function logError($msg)
     {
-        //! FIXME there should be built in stuff for that
-        // if not we should implement it as behavior(?)
-
-        //mihan007: usually I use Yii::log($msg, 'error', $category) for this things.
-        //and of course it'll be useful to implement something like class StdOutRoute for such things
-        //(to have ability to print errors to stdout)
-        //more details = http://www.yiiframework.com/forum/index.php/topic/30484-yii-log-to-console-stdout/
-        print "ERROR: " . $msg . "\n";
+        Yii::log($msg, 'error', 'console.importrating');
     }
 }
