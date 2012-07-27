@@ -12,7 +12,7 @@ class MFlightSearch extends CComponent
      * @param FlightForm $flightForm
      * @return FlightSearchParams
      */
-    private static function buildSearchParams($flightForm)
+    private static function buildSearchParams(FlightForm $flightForm)
     {
         $flightSearchParams = new FlightSearchParams();
         foreach ($flightForm->routes as $route)
@@ -64,7 +64,21 @@ class MFlightSearch extends CComponent
 
     public static function getOptimalPrice($fromCityId, $toCityId, $date, $returnDate=false, $forceUpdate = false)
     {
-        $flightSearchParams = self::buildSearchParams($fromCityId, $toCityId, $date, $returnDate, 1, 0, 0);
+        $flightForm = new FlightForm();
+        $flightForm->adultCount = 1;
+        $flightForm->childCount = 0;
+        $flightForm->infantCount = 0;
+        $route = new RouteForm();
+        $route->departureCityId = $fromCityId;
+        $route->arrivalCityId = $toCityId;
+        $route->departureDate = $date;
+        if ($returnDate)
+        {
+            $route->isRoundTrip = true;
+            $route->backDate = $returnDate;
+        }
+        $flightForm->routes[] = $route;
+        $flightSearchParams = self::buildSearchParams($flightForm);
         $fs = new FlightSearch();
         $fs->status = 1;
         $fs->requestId = '1';

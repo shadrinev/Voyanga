@@ -124,6 +124,9 @@ class CommonFlightCache extends CActiveRecord
     {
         $flightCache = new FlightCache;
 
+        if (sizeof($flightVoyageStack->flightVoyages)==0)
+            return false;
+
         $firstVoyage = $flightVoyageStack->flightVoyages[0];
 
         //we aren't saving complex voyage
