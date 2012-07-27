@@ -36,7 +36,7 @@ EOD;
             // Should never happen in real life
             $this->logError("File exists and readable, yet i cant open it for reading.");
             echo $this->getHelp();
-            exit;
+            Yii::app()->end();
         }
         // skip und check header
         $line = trim(fgets($fh));
@@ -44,7 +44,7 @@ EOD;
         {
             $this->logError("Wrong fingerprint \n");
             echo $this->getHelp();
-            exit;
+            Yii::app()->end();
         }
 
         while(!feof($fh))
@@ -55,15 +55,15 @@ EOD;
                 $rating = $this->parseRating($data[0]);
                 //! Use english for canonical names
                 $name = ($data[5]=="")?$data[1]:$data[5]; //mihan007: just minor thing.. what is 5 and 1? don't like magic numbers.
-                $city_name=$data[2];
-                $city = City::model()->guess($city_name);
+                $cityName=$data[2];
+                $city = City::model()->guess($cityName);
                 if(count($city)==0) {
                     $this->logError("Problem mapping city " . $data[2]);
                     continue;
                 }
                 $city = $city[0];
-                $canonical_name = UtilsHelper::canonizeHotelName($name, $city->localEn);
-                $this->saveRow($city->id, $canonical_name, $rating, $name);
+                $canonicalName = UtilsHelper::canonizeHotelName($name, $city->localEn);
+                $this->saveRow($city->id, $canonicalName, $rating, $name);
             }
         }
     }
@@ -71,31 +71,31 @@ EOD;
     /**
      * Parse rating from crawler`s raw data
      *
-     * @param string $raw_rating_string "3.5 из 5"
+     * @param string $rawRatingString "3.5 из 5"
      * @return float float representation of rating 0..5.0
      */
-    public function parseRating($raw_rating_string)
+    public function parseRating($rawRatingString)
     {
         $matches = Array();
-        if(!preg_match("~^\d+(\.\d+)?~", $raw_rating_string, $matches)){
+        if(!preg_match("~^\d+(\.\d+)?~", $rawRatingString, $matches)){
             $this->logError("Cant parse rating string: " .
-                            $raw_rating_string);
+                            $rawRatingString);
             return false;
         };
         return floatval($matches[0]);
     }
 
-    public function saveRow($city_id, $canonical_name, $rating, $name)
+    public function saveRow($cityId, $canonicalName, $rating, $name)
     {
         $hr = new HotelRating();
-        $hr->city_id = $city_id;
-        $hr->canonical_name = $canonical_name;
+        $hr->city_id = $cityId;
+        $hr->canonical_name = $canonicalName;
         $hr->rating = $rating;
         try {
             $hr->save();
         } catch (CDbException $exc) {
             $this->logError("duplicated canonical_name '"
-                            . $canonical_name . " | " . $name .
+                            . $canonicalName . " | " . $name .
                             "'");
         }
     }
