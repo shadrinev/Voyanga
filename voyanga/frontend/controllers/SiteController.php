@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends Controller
+class SiteController extends FrontendController
 {
     /**
      * Declares class-based actions.
@@ -735,5 +735,10 @@ class SiteController extends Controller
         VarDumper::dump($jobId);
         VarDumper::dump($cron->add('yesterday 11:55', 'cache', 'clean'));
         VarDumper::dump($cron->delete($jobId));
+    }
+
+    public function actionCalendar()
+    {
+        $this->render('calendar', array());
     }
 }
