@@ -32,58 +32,57 @@ return CMap::mergeArray (
         ),
 
         'commandMap'=>array(
-                'migrate' => array (
-                        'class' => 'system.cli.commands.MigrateCommand',
-                        'migrationPath' => 'site.common.migrations',
-                ),
-        'benchmark' => array(
-            'class' => 'site.backend.modules.admin.modules.benchmark.commands.ABenchmarkCommand'
-        )
-     ),
-
-        'components'=>array(
-
-        'syncCacheExecuter' => array(
-            'class'=>'application.components.SyncCacheExecuter',
-            'frontends' => array(
-                array(
-                    'url' => 'http://frontend.misha.voyanga/sync/get',
-                    'key' => '12345'
-                )
+            'migrate' => array (
+                'class' => 'system.cli.commands.MigrateCommand',
+                'migrationPath' => 'site.common.migrations',
+            ),
+            'benchmark' => array(
+                'class' => 'site.backend.modules.admin.modules.benchmark.commands.ABenchmarkCommand'
             )
         ),
-        'log'=>array(
-            'class'=>'CLogRouter',
-            'routes'=>array(
-                'main' => array(
-                    'class'=>'CFileLogRoute',
-                    'levels'=>'error, warning',
-                    'filter'=>'CLogFilter',
-                ),
-                'console' => array(
-                    'class'=>'StdErrRoute',
-                    'levels'=>'error, warning',
-                    'categories'=>'console.*'
+
+        'components'=>array(
+            'syncCacheExecuter' => array(
+                'class'=>'application.components.SyncCacheExecuter',
+                'frontends' => array(
+                    array(
+                        'url' => 'http://frontend.misha.voyanga/sync/get',
+                        'key' => '12345'
+                    )
+                )
+            ),
+            'log'=>array(
+                'class'=>'CLogRouter',
+                'routes'=>array(
+                    'main' => array(
+                        'class'=>'CFileLogRoute',
+                        'levels'=>'error, warning',
+                        'filter'=>'CLogFilter',
+                    ),
+                    'console' => array(
+                        'class'=>'StdErrRoute',
+                        'levels'=>'error, warning',
+                        'categories'=>'console.*'
+                    ),
                 ),
             ),
-        ),
-                'db'=>array(
-                        'pdoClass' => 'NestedPDO',
-                        'connectionString' => $params['db.connectionString'],
-                        'username' => $params['db.username'],
-                        'password' => $params['db.password'],
-                        'charset' => 'utf8',
-                        'enableParamLogging' => YII_DEBUG,
-            'enableProfiling' => YII_DEBUG,
-                        'emulatePrepare'=>true,
-        ),
-                'urlManager' => array(
-                        'urlFormat' => 'path',
-                        'showScriptName' => false,
-            'rules' => $params['urlRules'],
-            'baseUrl' => '',
-                ),
+            'db'=>array(
+                'pdoClass' => 'NestedPDO',
+                'connectionString' => $params['db.connectionString'],
+                'username' => $params['db.username'],
+                'password' => $params['db.password'],
+                'charset' => 'utf8',
+                'enableParamLogging' => YII_DEBUG,
+                'enableProfiling' => YII_DEBUG,
+                'emulatePrepare'=>true,
+            ),
+            'urlManager' => array(
+                'urlFormat' => 'path',
+                'showScriptName' => false,
+                'rules' => $params['urlRules'],
+                'baseUrl' => '',
+            ),
 
-                'cache' => $params['cache.core'],
-                'contentCache' => $params['cache.content'],
-        ),), CMap::mergeArray (	require_once (dirname(__FILE__).'/environments/main-'.$params['env.code'].'.php'), $consoleMainLocal));
+            'cache' => $params['cache.core'],
+            'contentCache' => $params['cache.content'],
+        ),), CMap::mergeArray (require_once (dirname(__FILE__).'/environments/main-'.$params['env.code'].'.php'), $consoleMainLocal));
