@@ -230,7 +230,7 @@ class City extends CActiveRecord
 
     public function guess($query){
         $currentLimit = 1;
-        $items = null;//Yii::app()->cache->get('autocompleteCityForHotel'.$query);
+        $items = Array();
         if(!$items)
         {
             $items = array();
@@ -320,7 +320,6 @@ class City extends CActiveRecord
                 }
             }
         }
-
         return $items;
     }
 }

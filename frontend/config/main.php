@@ -108,6 +108,10 @@ return CMap::mergeArray(
                 'maxSize' => 2*1024*1024,
             ),
 
+           'hotelsRating'=>array(
+                'class'=>'HotelsRatingComponent'
+            ),
+
             'log' => array(
                 'class' => 'CLogRouter',
                 'routes' => array(

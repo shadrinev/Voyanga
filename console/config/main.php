@@ -82,7 +82,9 @@ return CMap::mergeArray (
                 'rules' => $params['urlRules'],
                 'baseUrl' => '',
             ),
-
+            'hotelsRating'=>array(
+                'class'=>'HotelsRatingComponent'
+            ),
             'cache' => $params['cache.core'],
             'contentCache' => $params['cache.content'],
         ),), CMap::mergeArray (require_once (dirname(__FILE__).'/environments/main-'.$params['env.code'].'.php'), $consoleMainLocal));

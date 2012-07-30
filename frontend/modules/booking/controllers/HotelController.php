@@ -67,7 +67,7 @@ class HotelController extends FrontendController
                 }
                 $HotelClient = new HotelBookClient();
                 $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
-                $this->injectRating($resultSearch, $hotelSearchParams->city);
+                Yii::app()->hotelsRating->injectRating($resultSearch, $hotelSearchParams->city);
                 $cacheId = substr(md5(uniqid('', true)), 0, 10);
                 Yii::app()->cache->set('hotelResult'.$cacheId, $resultSearch,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelSearchParams'.$cacheId, $hotelSearchParams,appParams('hotel_search_cache_time'));
@@ -193,36 +193,5 @@ class HotelController extends FrontendController
         uasort($elements, array($this, 'compareByTime'));
         $last = array_splice($elements, 0, 10);
         Yii::app()->user->setState('lastSearches', $last);
-    }
-
-
-    /**
-     * Helper method, to inject user rating to search result
-     * where possible
-     * @param mixed &$resultSearch results from booking engine
-     * @param City $city City model instance for this search
-     */
-    private function injectRating(&$resultSearch, $city)
-    {
-        if(!$resultSearch)
-            return;
-        if(!$resultSearch['hotels'])
-            return;
-
-        $hotel_names_to_find = Array();
-        foreach ($resultSearch['hotels'] as $hotel) {
-            $hotel_names_to_find[$hotel->hotelName]=1;
-        }
-        $hotel_names_to_find = array_keys($hotel_names_to_find);
-        $name_to_rating = HotelRating::model()
-            ->findByNames($hotel_names_to_find, $city);
-
-        foreach ($resultSearch['hotels'] as &$hotel) {
-            $hotel_name = $hotel->hotelName;
-            if(isset($name_to_rating[$hotel_name])){
-                $hotel->rating=$name_to_rating[$hotel_name];
-            }
-        }
-
     }
 }
