@@ -82,6 +82,9 @@ return CMap::mergeArray (
                 'rules' => $params['urlRules'],
                 'baseUrl' => '',
             ),
+            'gdsAdapter' => array(
+                'class' => 'GDSAdapter'
+            ),
 
             'cache' => $params['cache.core'],
             'contentCache' => $params['cache.content'],

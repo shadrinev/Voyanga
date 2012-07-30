@@ -49,14 +49,14 @@ EOD;
         }
     }
 
-    public function actionChangeState($hotelBookerId = 0, $newState = '')
+    public function actionChangeState($flightBookerId = 0, $newState = '')
     {
 
-        if($hotelBookerId)
+        if($flightBookerId)
         {
             /** @var FlightBookerComponent $flightBookerComponent  */
             $flightBookerComponent = Yii::app()->flightBooker;
-            $flightBookerComponent->setFlightBookerFromId($hotelBookerId);
+            $flightBookerComponent->setFlightBookerFromId($flightBookerId);
             echo "FlightBookerId ".$flightBookerComponent->getFlightBookerId()."\n";
 
             if($newState)

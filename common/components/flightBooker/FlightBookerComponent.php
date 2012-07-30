@@ -148,11 +148,17 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBookingTimeLimitError()
     {
-
-        $bookingId = $orderBooking = $this->flightBooker->nemoBookId;
-        Yii::app()->gdsAdapter->cancelBooking($bookingId);
+        echo 'Try cancel flight booking';
+        $bookingId = $this->flightBooker->nemoBookId;
+        echo 'Booking id '.$bookingId;
+        $result = Yii::app()->gdsAdapter->cancelBooking($bookingId);
+        CVarDumper::dump($result);
         SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
+        CVarDumper::dump(SWLogActiveRecord::$requestIds);
         GDSNemoAgency::$requestIds = array();
+        if($result){
+            //$this->status('error');
+        }
     }
 
     public function stageStartPayment()

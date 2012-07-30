@@ -49,8 +49,8 @@ class GDSNemoAgency extends CComponent
         try{
             $ret = $client->$methodName($params);
         }catch (Exception $e){
-            Yii::log(CVarDumper::dumpAsString($e), 'Gds.GdsNemoAgency.request');;
-            return array();
+            Yii::log(CVarDumper::dumpAsString($e), 'Gds.GdsNemoAgency.request');
+            return array('errorDescription'=>$e->getMessage());
         }
         if ($expiration)
         {
@@ -191,6 +191,16 @@ class GDSNemoAgency extends CComponent
         //VarDumper::dump($params);die();
 
         $soapResponse = self::request('Search', $params, $bCache = FALSE, $iExpiration = 3000);
+        $errorDescription = '';
+
+        if(!$soapResponse)
+        {
+            $errorCode = self::ERROR_CODE_INVALID;
+            if(GDSNemoSoapClient::$lastCurlError)
+            {
+                $errorDescription = GDSNemoSoapClient::$lastCurlError;
+            }
+        }
 
         //return;
 
@@ -428,8 +438,6 @@ class GDSNemoAgency extends CComponent
         {
             return array('flights' => $flights,'searchId'=>$searchId, 'errorCode' => 0, 'errorDescription' => '');
         }
-
-
     }
 
     /**
@@ -621,6 +629,7 @@ class GDSNemoAgency extends CComponent
             );
 
             $response = self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0);
+
             if(isset($response->CancelBook->Result->Success) )
             {
                 return $response->CancelBook->Result->Success;
@@ -715,9 +724,31 @@ class GDSNemoAgency extends CComponent
             );
 
             $response = self::request('CancelBook', $aParams, $bCache = FALSE, $iExpiration = 0);
-            if(isset($response->AirAvail->IsAvail) )
+            CVarDumper::dump($response);
+
+            if(isset($response->Respone->CancelBook->Result->Success) )
             {
-                return $response->AirAvail->IsAvail;
+                if( ($response->Respone->CancelBook->Result->Success === 'true') || ($response->Respone->CancelBook->Result->Success === true) )
+                {
+                    $result = true;
+                }
+                else
+                {
+                    $result = false;
+                }
+                return $result;
+            }
+            elseif(isset($response['errorDescription']))
+            {
+                if(strpos($response['errorDescription'],'Already Cancelled') !== false)
+                {
+                    $result = true;
+                }
+                else
+                {
+                    $result = false;
+                }
+                return $result;
             }
             else
             {
