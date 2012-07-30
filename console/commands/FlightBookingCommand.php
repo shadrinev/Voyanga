@@ -6,7 +6,7 @@
  * Time: 13:12
  * To change this template use File | Settings | File Templates.
  */
-class HotelBookingCommand extends CConsoleCommand
+class FlightBookingCommand extends CConsoleCommand
 {
 
     public function getHelp()

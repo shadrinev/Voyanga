@@ -10,6 +10,7 @@ class CronTaskBehavior extends CBehavior
 {
     public function saveTaskInfo($taskName,$id)
     {
+        Yii::import('site.common.components.cron.*');
         /** @var CActiveRecord $owner  */
         $owner = $this->getOwner();
         $modelName = get_class($owner);
@@ -22,11 +23,15 @@ class CronTaskBehavior extends CBehavior
             $cronTask->taskName = $taskName;
         }
         $cronTask->taskId = $id;
-        $cronTask->save();
+        $res = $cronTask->save();
+        if(!$res){
+            VarDumper::dump($cronTask->getErrors());
+        }
     }
 
     public function getAllTasks()
     {
+        Yii::import('site.common.components.cron.*');
         /** @var CActiveRecord $owner  */
         $owner = $this->getOwner();
         $modelName = get_class($owner);
@@ -35,6 +40,7 @@ class CronTaskBehavior extends CBehavior
 
     public function getTaskByName($taskName)
     {
+        Yii::import('site.common.components.cron.*');
         /** @var CActiveRecord $owner  */
         $owner = $this->getOwner();
         $modelName = get_class($owner);
