@@ -108,7 +108,13 @@ return CMap::mergeArray(
                 'maxSize' => 2*1024*1024,
             ),
 
-           'hotelsRating'=>array(
+            'payments' => array(
+                'class' => 'common.extensions.payments.PaymentsComponent',
+                'merchantId' => '8234784606-1636',
+                'password' => '9UfgieYI6vuTit12NHp1w5Ld9MSIhIph7gf8pVqrmW9mXx24WLPnJAnW8FmS8YMq2bWaeMtTYvHdfsXM',
+            ),
+
+            'hotelsRating'=>array(
                 'class'=>'HotelsRatingComponent'
             ),
 
@@ -162,6 +168,11 @@ return CMap::mergeArray(
                         'allowedIPs'=>array('192.168.0.8','192.168.0.74'),
                     ),
                 )
+            ), 
+        ),
+        'controllerMap' => array(
+            'payments'=>array(
+                'class'=>'common.extensions.payments.PaymentsTestController'
             )
         ),
     )
