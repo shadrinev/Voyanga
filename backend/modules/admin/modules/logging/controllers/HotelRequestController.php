@@ -33,12 +33,18 @@ class HotelRequestController extends Controller
     public function actionGetInfo($id)
     {
         $model = HotelRequest::model()->findByPk(new MongoID($id));
+        //echo 1;die();
         $retArr = array();
         $widget = new CTextHighlighter();
         $widget->language = 'xml';
         $retArr['methodName'] = $model->methodName;
         $retArr['requestXml'] = $widget->highlight($model->requestXml);
-        $retArr['responseXml'] = $widget->highlight($model->responseXml);
+        if(strlen($model->responseXml) < 15000)
+        {
+            $retArr['responseXml'] = $widget->highlight($model->responseXml);
+        }else{
+            $retArr['responseXml'] = htmlspecialchars($model->responseXml);
+        }
         $retArr['requestUrl'] = $model->requestUrl;
         $retArr['timestamp'] = date("Y-m-d H:i:s",$model->timestamp);
         $retArr['executionTime'] = Yii::app()->format->formatNumber($model->executionTime);

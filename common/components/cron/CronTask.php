@@ -38,7 +38,7 @@ class CronTask extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('timeAdded', 'required'),
+            //array('timeAdded', 'required'),
             array('ownerId, taskId', 'numerical', 'integerOnly'=>true),
             array('ownerModel, taskName', 'length', 'max'=>255),
             // The following rule is used by search().

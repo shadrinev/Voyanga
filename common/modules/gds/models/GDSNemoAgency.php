@@ -537,18 +537,18 @@ class GDSNemoAgency extends CComponent
         }
         //VarDumper::dump($aParams);
         $response = self::request('BookFlight', $aParams, $bCache = FALSE, $iExpiration = 0);
-        VarDumper::dump($response);die();
+        VarDumper::dump($response);//die();
 
 
         $flightBookingResponse = new FlightBookingResponse();
-        if(isset($response->Error))
+        if(isset($response->Response->Error))
         {
             $status = 'error';
             $flightBookingResponse->status = 2;
         }
         else
         {
-            $status  = $response->BookFlight->Status;
+            $status  = $response->Response->BookFlight->Status;
         }
 
 
@@ -557,9 +557,9 @@ class GDSNemoAgency extends CComponent
         if($status == 'booked')
         {
 
-            $flightBookingResponse->pnr = $response->BookFlight->Code;
-            $flightBookingResponse->expiration = strtotime($response->BookFlight->Flight->PricingInfo->PassengerFare->LastTicketDateTime);
-            $flightBookingResponse->nemoBookId = $response->BookFlight->ID;
+            $flightBookingResponse->pnr = $response->Response->BookFlight->Code;
+            $flightBookingResponse->expiration = strtotime($response->Response->BookFlight->Flight->PricingInfo->PassengerFare->LastTicketDateTime->_);
+            $flightBookingResponse->nemoBookId = $response->Response->BookFlight->ID;
             $flightBookingResponse->status = 1;
         }
         else
@@ -653,7 +653,7 @@ class GDSNemoAgency extends CComponent
             )
         );
 
-        $response = self::request('Ticketing', $aParams, $bCache = FALSE, $iExpiration = 0);
+        $response = null;//self::request('Ticketing', $aParams, $bCache = FALSE, $iExpiration = 0);
         $flightTicketingResponse = new FlightTicketingResponse();
         $status = $response->BookFlight->Status;
 

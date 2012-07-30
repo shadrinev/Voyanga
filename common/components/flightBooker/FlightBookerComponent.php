@@ -116,8 +116,8 @@ class FlightBookerComponent extends CApplicationComponent
         if($flightBookingResponse->status == 1)
         {
             $this->flightBooker->nemoBookId = $flightBookingResponse->nemoBookId;
-            $this->flightBooker->pnr = $flightBookingResponse->status;
-            $this->flightBooker->timeout = $flightBookingResponse->expiration;
+            $this->flightBooker->pnr = $flightBookingResponse->pnr;
+            $this->flightBooker->timeout = date('y-m-d H:i:s',$flightBookingResponse->expiration);
         }
         //die();
         $this->status('waitingForPayment');
@@ -130,13 +130,15 @@ class FlightBookerComponent extends CApplicationComponent
         //переход в состояние payment должен быть инициализирован из вне
         //$this->status('payment');
         //oleg: incorrect time assign
-        sleep(10);
-        $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
+        sleep(3);
+        $this->flightBooker->saveTaskInfo('paymentTimeLimit',565657);
+
+        /*$res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
         if($res)
         {
             $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
             return true;
-        }
+        }*/
     }
 
     public function stageBookingError()
