@@ -1,0 +1,4 @@
+.idea/
+/www/assets/
+/protected/runtime/
+/protected/config/local.php
