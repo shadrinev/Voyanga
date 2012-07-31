@@ -43,4 +43,13 @@ interface IOrderElement
      * @return mixed
      */
     public function saveReference($order);
+
+    /**
+     * Return array of passports. If no passport needs so it should return false. If we need passports but they not provided return an empty array.
+     * Array = array of classes derived from BasePassportForm (e.g. BaseFlightPassportForm)
+     *
+     * @abstract
+     * @return mixed false
+     */
+    public function getPassports();
 }
