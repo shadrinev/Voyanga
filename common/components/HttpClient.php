@@ -9,7 +9,7 @@
 class HttpClient extends CApplicationComponent
 {
     /**
-     * Perform get
+     * Perform get request
      *
      * @param string $url where to send request
      */

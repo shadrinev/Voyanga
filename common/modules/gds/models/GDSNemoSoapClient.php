@@ -93,13 +93,13 @@ class GDSNemoSoapClient extends SoapClient
     }
 
     //! FIXME $version is unused
-    private function makeSoapRequest($request, $location, $sction, $version)
+    private function makeSoapRequest($request, $location, $action, $version)
     {
 
         $headersToSend = array();
         $headersToSend[] = "Content-Length: " . strlen($request);
         $headersToSend[] = "Content-Type: text/xml; charset=utf-8";
-        $headersToSend[] = "SOAPAction: \"$sAction\"";
+        $headersToSend[] = "SOAPAction: \"$action\"";
 
         $data = false;
         try {
