@@ -1,6 +1,7 @@
 <?php
 
-class HotelsRatingComponent extends CApplicationComponent {
+class HotelsRatingComponent extends CApplicationComponent
+{
     /**
      * Helper method, to inject user rating to search result
      * where possible
@@ -14,20 +15,19 @@ class HotelsRatingComponent extends CApplicationComponent {
         if(!$resultSearch['hotels'])
             return;
 
-        $hotel_names_to_find = Array();
+        $hotelNamesToFind = Array();
         foreach ($resultSearch['hotels'] as $hotel) {
-            $hotel_names_to_find[$hotel->hotelName]=1;
+            $hotelNamesToFind[$hotel->hotelName]=1;
         }
-        $hotel_names_to_find = array_keys($hotel_names_to_find);
-        $name_to_rating = HotelRating::model()
-            ->findByNames($hotel_names_to_find, $city);
+        $hotelNamesToFind = array_keys($hotelNamesToFind);
+        $nameToRating = HotelRating::model()
+            ->findByNames($hotelNamesToFind, $city);
 
         foreach ($resultSearch['hotels'] as &$hotel) {
-            $hotel_name = $hotel->hotelName;
-            if(isset($name_to_rating[$hotel_name])){
-                $hotel->rating=$name_to_rating[$hotel_name];
+            $hotelName = $hotel->hotelName;
+            if(isset($nameToRating[$hotelName])){
+                $hotel->rating=$nameToRating[$hotelName];
             }
         }
-
     }
 }
