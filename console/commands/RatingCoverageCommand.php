@@ -7,7 +7,7 @@ class RatingCoverageCommand extends FileProcessingCommand
     public function getHelp()
     {
         return <<<EOD
-USAGE ImportRating path/to/cities/list.txt
+USAGE RatingCoverage path/to/cities/list.txt
 
 EOD;
     }
