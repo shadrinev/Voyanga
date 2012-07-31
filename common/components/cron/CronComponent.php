@@ -8,7 +8,7 @@
 class CronComponent extends CApplicationComponent
 {
     public $executor = 'yiic';
-    public $executorPath = '/srv/www/misha.voyanga/public_html/';
+    public $executorPath = '/srv/www/voyanga/public_html/';
 
     public function init()
     {

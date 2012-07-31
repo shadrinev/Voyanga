@@ -21,26 +21,8 @@
  * @property City $departureCity
  * @property City $arrivalCity
  */
-class Route extends CActiveRecord
+class Route extends CModel
 {
-    /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return Route the static model class
-     */
-    public static function model($className=__CLASS__)
-    {
-        return parent::model($className);
-    }
-
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'route';
-    }
-
     /**
      * @return array validation rules for model attributes.
      */
@@ -68,6 +50,26 @@ class Route extends CActiveRecord
             'search' => array(self::BELONGS_TO, 'FlightSearch', 'searchId'),
             'departureCity' => array(self::BELONGS_TO, 'City', 'departureCityId'),
             'arrivalCity' => array(self::BELONGS_TO, 'City', 'arrivalCityId'),
+        );
+    }
+
+    /**
+     * Returns the list of attribute names of the model.
+     * @return array list of attribute names.
+     */
+    public function attributeNames()
+    {
+        return array(
+            'id',
+            'searchId',
+            'departureCityId',
+            'departureAirportId',
+            'departureDate',
+            'arrivalCityId',
+            'arrivalAirportId',
+            'adultCount',
+            'childCount',
+            'infantCount',
         );
     }
 }
