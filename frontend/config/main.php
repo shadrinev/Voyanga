@@ -108,12 +108,6 @@ return CMap::mergeArray(
                 'maxSize' => 2*1024*1024,
             ),
 
-            'payments' => array(
-                'class' => 'common.extensions.payments.PaymentsComponent',
-                'merchantId' => '8234784606-1636',
-                'password' => '9UfgieYI6vuTit12NHp1w5Ld9MSIhIph7gf8pVqrmW9mXx24WLPnJAnW8FmS8YMq2bWaeMtTYvHdfsXM',
-            ),
-
             'log' => array(
                 'class' => 'CLogRouter',
                 'routes' => array(

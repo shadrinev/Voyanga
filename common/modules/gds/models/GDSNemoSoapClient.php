@@ -92,38 +92,26 @@ class GDSNemoSoapClient extends SoapClient
         return $sXML;
     }
 
-    private function makeSoapRequest($sRequest, $sLocation, $sAction, $iVersion)
+    //! FIXME $version is unused
+    private function makeSoapRequest($request, $location, $action, $version)
     {
-        $rCh = curl_init();
 
-        curl_setopt($rCh, CURLOPT_POST, (true));
-        curl_setopt($rCh, CURLOPT_HEADER, true);
-        curl_setopt($rCh, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($rCh, CURLOPT_POSTFIELDS, $sRequest);
-        curl_setopt($rCh, CURLOPT_TIMEOUT, 190);
-        $aHeadersToSend = array();
-        $aHeadersToSend[] = "Content-Length: " . strlen($sRequest);
-        $aHeadersToSend[] = "Content-Type: text/xml; charset=utf-8";
-        $aHeadersToSend[] = "SOAPAction: \"$sAction\"";
+        $headersToSend = array();
+        $headersToSend[] = "Content-Length: " . strlen($request);
+        $headersToSend[] = "Content-Type: text/xml; charset=utf-8";
+        $headersToSend[] = "SOAPAction: \"$action\"";
 
-        curl_setopt($rCh, CURLOPT_HTTPHEADER, $aHeadersToSend);
-        curl_setopt($rCh, CURLOPT_URL, $sLocation);
-        $sData = curl_exec($rCh);
-        //Biletoid_Utils::addLogMessage($sData, '/tmp/curl_response.txt');
-        if ($sData !== FALSE)
-        {
-            list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
-            if (strpos($sHeaders, 'Continue') !== FALSE)
-            {
-                list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
-            }
-            GDSNemoSoapClient::$lastHeaders = $sHeaders;
+        $data = false;
+        try {
+            list($headers, $data) = Yii::app()
+                ->httpClient->post($location,
+                                   $request,
+                                   $headersToSend,
+                                   Array(CURLOPT_TIMEOUT=>190));
+            GDSNemoSoapClient::$lastHeaders = $headers;
+        } catch (HttpClientException $e) {
+            GDSNemoSoapClient::$lastCurlError = $e->getMessage();
         }
-        else
-        {
-            GDSNemoSoapClient::$lastCurlError = curl_error ($rCh);
-        }
-
-        return $sData;
+       return $data;
     }
 }
