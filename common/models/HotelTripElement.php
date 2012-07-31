@@ -97,4 +97,9 @@ class HotelTripElement extends TripElement
     {
         return json_encode($this->attributes);
     }
+
+    public function getPassports()
+    {
+        return $this->hotel->getPassports();
+    }
 }

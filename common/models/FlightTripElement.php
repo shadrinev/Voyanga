@@ -89,4 +89,9 @@ class FlightTripElement extends TripElement
     {
         return json_encode($this->attributes);
     }
+
+    public function getPassports()
+    {
+        return $this->flightVoyage->getPassports();
+    }
 }

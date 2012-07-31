@@ -369,4 +369,30 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
     {
         $this->_rating = $val;
     }
+
+    /**
+     * Return array of passports. If no passport needs so it should return false. If we need passports but they not provided return an empty array.
+     * Array = array of classes derived from BasePassportForm (e.g. BaseFlightPassportForm)
+     *
+     * @return HotelPassportForm
+     */
+    public function getPassports()
+    {
+        // TODO: Implement getPassports() method.
+        $fake = new HotelPassportForm();
+        $fake->addRoom(2,0);
+        $roomPassport = $fake->roomsPassports[0] = new RoomPassportForm();
+        $adult1 = $roomPassport->adultsPassports[0] = new HotelAdultPassportForm();
+        $adult2 = $roomPassport->adultsPassports[1] = new HotelAdultPassportForm();
+
+        $adult1->genderId = HotelAdultPassportForm::GENDER_MALE;
+        $adult1->firstName = 'Иванов';
+        $adult1->lastName = 'Иван';
+
+        $adult2->genderId = HotelAdultPassportForm::GENDER_MALE;
+        $adult2->firstName = 'Семёнов';
+        $adult2->lastName = 'Семён';
+
+        return $fake;
+    }
 }
