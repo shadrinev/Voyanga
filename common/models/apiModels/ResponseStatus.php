@@ -6,22 +6,26 @@
  * Time: 19:37
  * To change this template use File | Settings | File Templates.
  */
-class ResponseStatus
+class ResponseStatus extends CModel
 {
-    public $status = 0;
-    public $errors = array();
     const ERROR_CODE_NO_ERRORS = 0;
     const ERROR_CODE_EMPTY = 1;
-    const ERROR_CODE_INTERNAL = 3;
-    const ERROR_CODE_EXTERNAL = 4;
-    const ERROR_CODE_INVALID = 2;
+    const ERROR_CODE_INTERNAL = 2;
+    const ERROR_CODE_EXTERNAL = 3;
 
-    public function getErrorsDescription()
+    public $unhandledExceptions = array(self::ERROR_CODE_EXTERNAL, self::ERROR_CODE_INTERNAL);
+
+    public $responseStatus = self::ERROR_CODE_NO_ERRORS;
+
+    public function attributeNames()
     {
-        return join(', ', $this->errors);
+        return array('responseStatus');
     }
-    public function addErrorDescription($errorDescription)
+
+    public function hasErrors()
     {
-        $this->errors[] = $errorDescription;
+        if (in_array($this->responseStatus, $this->unhandledExceptions))
+            return true;
+        return false;
     }
 }
