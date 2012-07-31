@@ -114,10 +114,6 @@ return CMap::mergeArray(
                 'password' => '9UfgieYI6vuTit12NHp1w5Ld9MSIhIph7gf8pVqrmW9mXx24WLPnJAnW8FmS8YMq2bWaeMtTYvHdfsXM',
             ),
 
-            'hotelsRating'=>array(
-                'class'=>'HotelsRatingComponent'
-            ),
-
             'log' => array(
                 'class' => 'CLogRouter',
                 'routes' => array(
@@ -168,7 +164,7 @@ return CMap::mergeArray(
                         'allowedIPs'=>array('192.168.0.8','192.168.0.74'),
                     ),
                 )
-            ), 
+            ),
         ),
         'controllerMap' => array(
             'payments'=>array(

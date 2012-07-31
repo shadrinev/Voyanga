@@ -7,7 +7,7 @@ return array(
         array('id'=>'bookingError',             'transition'=>'error'),
         array('id'=>'waitingForPayment',        'transition'=>'waitingForPayment,startPayment,bookingTimeLimitError'),
         array('id'=>'startPayment',             'transition'=>'ticketing,bookingTimeLimitError,waitingForPayment'),
-        array('id'=>'bookingTimeLimitError',    'transition'=>'error'),
+        array('id'=>'bookingTimeLimitError',    'transition'=>'bookingTimeLimitError,error'),
         array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat'),
         array('id'=>'ticketReady',              'transition'=>'bspTransfer, done'),
         array('id'=>'ticketingRepeat',          'transition'=>'ticketingRepeat,ticketingError,ticketReady,manualProcessing'),

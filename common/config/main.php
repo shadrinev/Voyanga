@@ -46,8 +46,8 @@ return array(
         ),
 
         'workflow'=> array(
-		    'class'=>'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',
-	    ),
+                    'class'=>'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',
+            ),
 
         'observer' => array(
             'class' => 'site.common.components.observer.ObserverComponent',
@@ -168,7 +168,11 @@ return array(
                     'levels' => 'at',
                     'categories' => 'cron'
                 ),
-        ))
+            )
+        ),
+        'hotelsRating'=>array(
+            'class'=>'HotelsRatingComponent'
+        ),
     ),
 
     'modules'=>array(

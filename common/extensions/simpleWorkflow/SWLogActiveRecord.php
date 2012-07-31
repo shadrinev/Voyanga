@@ -23,7 +23,7 @@ class SWLogActiveRecord extends SWActiveRecord
         $transition['requestIds'] = SWLogActiveRecord::$requestIds;
         SWLogActiveRecord::$requestIds = array();
         //VarDumper::dump($transition);
-        self::$requestIds;
+        //self::$requestIds;
         WorkflowStates::setTransition($transition);
         return parent::beforeTransition($event);
     }
@@ -42,6 +42,23 @@ class SWLogActiveRecord extends SWActiveRecord
         //VarDumper::dump($transition);
         WorkflowStates::setTransition($transition);
         return parent::beforeTransition($event);
+    }
+
+    public function onAfterSave($event)
+    {
+        //CVarDumper::dump(get_class_vars(get_class($event->sender)));
+        $transition = array();
+        $transition['type'] = 'afterSave';
+        $transition['modelName'] = get_class($event->sender);
+        $transition['modelId'] = $event->sender->primaryKey;
+        $transition['state'] = $event->sender->{$this->statusAttribute};
+        $transition['time'] = date('Y-m-d H:i:s');
+        $transition['requestIds'] = SWLogActiveRecord::$requestIds;
+        SWLogActiveRecord::$requestIds = array();
+        //CVarDumper::dump($transition);
+
+        WorkflowStates::setTransition($transition);
+        //return parent::afterSave();
     }
 
 }
