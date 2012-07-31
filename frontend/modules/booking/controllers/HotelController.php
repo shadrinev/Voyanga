@@ -56,7 +56,7 @@ class HotelController extends FrontendController
             {
                 $hotelSearchParams = new HotelSearchParams();
                 $hotelSearchParams->checkIn = date('Y-m-d', strtotime($hotelForm->fromDate));
-                $hotelSearchParams->city = City::model()->findByPk($hotelForm->cityId);
+                $hotelSearchParams->city = City::getCityByPk($hotelForm->cityId);
                 $hotelSearchParams->duration = $hotelForm->duration;
                 foreach ($hotelForm->rooms as $room)
                 {

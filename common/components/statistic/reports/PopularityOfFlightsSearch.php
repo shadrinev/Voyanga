@@ -60,14 +60,14 @@ class PopularityOfFlightsSearchResult extends ReportResult
     public function getDepartureCity()
     {
         if ($this->departureCity==null)
-            $this->departureCity = City::model()->findByPk($this->_id['departureCityId']);
+            $this->departureCity = City::getCityByPk($this->_id['departureCityId']);
         return $this->departureCity;
     }
 
     public function getArrivalCity()
     {
         if ($this->arrivalCity==null)
-            $this->arrivalCity = City::model()->findByPk($this->_id['arrivalCityId']);
+            $this->arrivalCity = City::getCityByPk($this->_id['arrivalCityId']);
         return $this->arrivalCity;
     }
 

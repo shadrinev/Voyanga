@@ -105,6 +105,7 @@ class EShoppingCart extends CMap
         if (!($position instanceof CComponent))
             throw new InvalidArgumentException('invalid argument 1, product must implement CComponent interface');
 
+        //TODO: Misha, удостовериться что getId вернет то что мы ожидаем.
         $key = $position->getId();
 
         $position->detachBehavior("CartPosition");

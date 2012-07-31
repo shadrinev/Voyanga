@@ -436,42 +436,53 @@ class HotelBookClient
     {
         $hotelsObject = simplexml_load_string($hotelsXml);
         //VarDumper::dump($hotelsObject);
+
         $response = new HotelSearchResponse();
-        $searchId = (string)$hotelsObject->HotelSearch['searchId'];
-        $response->searchId = $searchId;
-        $response->timestamp = time();
-        if (isset($hotelsObject->Hotels->Hotel))
+        if($hotelsObject)
         {
-            UtilsHelper::soapObjectsArray($hotelsObject->Hotels->Hotel);
-            foreach ($hotelsObject->Hotels->Hotel as $hotelItem)
+            $searchId = (string)$hotelsObject->HotelSearch['searchId'];
+            $response->searchId = $searchId;
+            $response->timestamp = time();
+            if (isset($hotelsObject->Hotels->Hotel))
             {
-                $hotel = $this->getHotelFromSXE($hotelItem);
-                $hotel->searchId = $searchId;
-                $hotel->checkIn = $checkIn;
-                $hotel->duration = $duration;
-                $hotel->cityId = (string)$hotelsObject->HotelSearch['cityId'];
-                $response->hotels[] = $hotel;
+                UtilsHelper::soapObjectsArray($hotelsObject->Hotels->Hotel);
+                foreach ($hotelsObject->Hotels->Hotel as $hotelItem)
+                {
+                    $hotel = $this->getHotelFromSXE($hotelItem);
+                    $hotel->searchId = $searchId;
+                    $hotel->checkIn = $checkIn;
+                    $hotel->duration = $duration;
+                    $hotel->cityId = (string)$hotelsObject->HotelSearch['cityId'];
+                    $response->hotels[] = $hotel;
+                }
             }
-        }
-        if (isset($hotelsObject->Errors->Error))
-        {
-            UtilsHelper::soapObjectsArray($hotelsObject->Errors->Error);
-            foreach ($hotelsObject->Errors->Error as $errorItem)
+            if (isset($hotelsObject->Errors->Error))
             {
-                $response->errorsDescriptions[] = array('code' => (string)$errorItem['code'], 'description' => (string)$errorItem['description']);
+                UtilsHelper::soapObjectsArray($hotelsObject->Errors->Error);
+                foreach ($hotelsObject->Errors->Error as $errorItem)
+                {
+                    $response->errorsDescriptions[] = array('code' => (string)$errorItem['code'], 'description' => (string)$errorItem['description']);
+                }
             }
-        }
-        if ($response->hotels && $response->errorsDescriptions)
-        {
-            $response->errorStatus = 1;
-        }
-        elseif ($response->hotels)
-        {
-            $response->errorStatus = 0;
+            if ($response->hotels && $response->errorsDescriptions)
+            {
+                $response->errorStatus = 1;
+            }
+            elseif ($response->hotels)
+            {
+                $response->errorStatus = 0;
+            }
+            else
+            {
+                $response->errorStatus = 2;
+            }
         }
         else
         {
+            $response->searchId = null;
+            $response->timestamp = time();
             $response->errorStatus = 2;
+            $response->errorsDescriptions[] = array('code' => '', 'description' => 'Empty response from remote server');
         }
         return $response;
     }

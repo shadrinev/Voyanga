@@ -26,6 +26,7 @@ return CMap::mergeArray (
                 'site.common.extensions.*',
                 'site.common.components.*',
                 'site.common.models.*',
+                'site.common.components.cron.*',
                 'application.components.*',
                 'application.models.*',
                 'site.frontend.models.*',

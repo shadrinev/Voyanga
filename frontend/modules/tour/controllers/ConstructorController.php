@@ -47,14 +47,16 @@ class ConstructorController extends FrontendController
     public function actionShowTrip()
     {
         $trip = Yii::app()->order->getPositions(false);
+        //VarDumper::dump($trip);
+        //die();
         $tabs = array();
         foreach ($trip['items'] as $item)
         {
             if ($item instanceof FlightTripElement)
             {
                 /** @var $item FlightTripElement */
-                $from = City::model()->findByPk($item->departureCity);
-                $to = City::model()->findByPk($item->arrivalCity);
+                $from = City::getCityByPk($item->departureCity);
+                $to = City::getCityByPk($item->arrivalCity);
                 $tab['label'] = '<b>Перелёт</b><br>'.$item->departureDate."<br>".$from->localRu." &mdash; ".$to->localRu;
                 $tab['content'] = VarDumper::dumpAsString($item->getPassports(), 10, true);
                 $tabs[] = $tab;
@@ -62,7 +64,7 @@ class ConstructorController extends FrontendController
             if ($item instanceof HotelTripElement)
             {
                 /** @var $item HotelTripElement */
-                $from = City::model()->findByPk($item->city);
+                $from = City::getCityByPk($item->city);
                 $tab['label'] = '<b>Отель в городе '.$from->localRu.'</b><br>'.$item->checkIn." &mdash; ".$item->checkOut;
                 $tab['content'] = VarDumper::dumpAsString($item->getPassports(), 10, true);
                 $tabs[] = $tab;
@@ -71,6 +73,22 @@ class ConstructorController extends FrontendController
         if (isset($tabs[0]))
             $tabs[0]['active'] = true;
         $this->render('showTrip', array('tabs'=>$tabs));
+    }
+
+    public function actionMakeBooking()
+    {
+        $trip = Yii::app()->order->getPositions(false);
+
+        foreach($trip as $cartElement)
+        {
+            if($cartElement instanceof FlightTripElement)
+            {
+                $flightSearchParams = new FlightSearchParams();
+                $flightSearchParams->addRoute(array(''));
+            }
+        }
+        VarDumper::dump(Yii::app()->shoppingCart);
+        echo 123;die();
     }
 
     public function actionNew($clear=false, $isTab=false)

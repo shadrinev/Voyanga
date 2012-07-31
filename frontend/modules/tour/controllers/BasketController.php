@@ -12,22 +12,32 @@ class BasketController extends FrontendController
         switch ($type)
         {
             case FlightVoyage::TYPE:
+                /** @var $flight FlightVoyage */
                 $flight = FlightVoyage::getFromCache($key, $searchId);
                 if ($flight)
                 {
                     $item = new FlightTripElement();
                     $item->flightVoyage = $flight;
+                    $item->departureCity = $flight->getDepartureCity()->id;
+                    $item->arrivalCity = $flight->getArrivalCity()->id;
+                    $item->departureDate = date('d.m.Y', strtotime($flight->getDepartureDate()));
                     Yii::app()->shoppingCart->put($item);
                 }
                 else
                     throw new CHttpException(404, 'Can\'t found item inside cache');
                 break;
             case Hotel::TYPE:
+                /** @var $hotel Hotel */
                 $hotel = Hotel::getFromCache($key, $searchId, $searchId2);
                 if ($hotel)
                 {
                     $item = new HotelTripElement();
                     $item->hotel = $hotel;
+
+                    $item->city = City::getCityByHotelbookId($hotel->cityId)->id;
+                    $checkInTimestamp = strtotime($hotel->checkIn);
+                    $item->checkIn = date('d.m.Y',$checkInTimestamp);
+                    $item->checkOut = date('d.m.Y',$checkInTimestamp + $hotel->duration*3600*24);
                     Yii::app()->shoppingCart->put($item);
                 }
                 else

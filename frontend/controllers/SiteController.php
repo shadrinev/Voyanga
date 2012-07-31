@@ -739,6 +739,7 @@ class SiteController extends FrontendController
 
     public function actionCalendar()
     {
+        echo dirname(Yii::app()->basePath);
         $this->render('calendar', array());
     }
 }

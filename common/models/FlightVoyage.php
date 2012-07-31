@@ -168,6 +168,9 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         $this->profitPrice = $priceInfo['profitPrice'];
     }
 
+    /**
+     * @return City
+     */
     public function getDepartureCity()
     {
         return $this->flights[0]->getDepartureCity();
@@ -178,6 +181,9 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         return $this->flights[0]->departureDate;
     }
 
+    /**
+     * @return City
+     */
     public function getArrivalCity()
     {
         return $this->flights[0]->getArrivalCity();

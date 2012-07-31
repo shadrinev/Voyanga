@@ -372,7 +372,6 @@ class OrderComponent extends CApplicationComponent
             }
             $hotelBooker->status = 'transferMoney';
             $hotelBooker->save();
-
         }
     }
 

@@ -133,12 +133,12 @@ class FlightBookerComponent extends CApplicationComponent
         sleep(3);
         $this->flightBooker->saveTaskInfo('paymentTimeLimit',565657);
 
-        /*$res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
+        $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
         if($res)
         {
             $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
             return true;
-        }*/
+        }/**/
     }
 
     public function stageBookingError()

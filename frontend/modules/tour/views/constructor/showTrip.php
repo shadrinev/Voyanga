@@ -7,3 +7,4 @@
 ); ?>
 
 <?php echo CHtml::link('Назад в конструктор', array('create'), array('class'=>'btn')); ?>
+<?php echo CHtml::link('Вперед в будущее', array('makeBooking'), array('class'=>'btn')); ?>

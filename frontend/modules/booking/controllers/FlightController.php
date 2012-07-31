@@ -39,8 +39,8 @@ class FlightController extends FrontendController
         $flightForm->departureCityId = $from;
         $flightForm->arrivalCityId = $to;
         $flightForm->departureDate = $date;
-        $fromCityName = City::model()->findByPk($from)->localRu;
-        $toCityName = City::model()->findByPk($to)->localRu;
+        $fromCityName = City::getCityByPk($from)->localRu;
+        $toCityName = City::getCityByPk($to)->localRu;
         $this->render('index', array(
             'items'=>$this->generateItems(),
             'flightForm'=>$flightForm,

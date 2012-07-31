@@ -7,8 +7,8 @@
  */
 class CronComponent extends CApplicationComponent
 {
-    public $executor = 'yiic';
-    public $executorPath = '/srv/www/voyanga/public_html/';
+    public $executor = 'yiic_cron';
+    public $executorPath = '';
 
     public function init()
     {
@@ -25,7 +25,8 @@ class CronComponent extends CApplicationComponent
      */
     public function add($time, $command, $action='cron', $params=array())
     {
-        $command = $this->buildAddAtCommand($time, $command, $action, $params);
+        $uniqKey = substr(md5('cron'. uniqid('',true)),0,10);
+        $command = $this->buildAddAtCommand($time, $command, $uniqKey, $action, $params);
         $command .= ' 2>&1';
         $out = "Running command: ".$command."\n";
         $result = array ();
@@ -79,10 +80,18 @@ class CronComponent extends CApplicationComponent
         return $command;
     }
 
-    private function buildAddAtCommand($time, $component, $action='cron', $params=array())
+    private function buildAddAtCommand($time, $component, $uniqKey, $action='cron', $params=array())
     {
         $paramsPrepared = $this->prepareParams($params);
-        $command = $this->executorPath.$this->executor.' '.$component.' '.$action.' '.$paramsPrepared;
+        if($this->executorPath)
+        {
+            $executorPath = $this->executorPath;
+        }
+        else
+        {
+            $executorPath = dirname(Yii::app()->basePath).'/';
+        }
+        $command = $executorPath.$this->executor.' '.$uniqKey.' '.$component.' '.$action.' '.$paramsPrepared;
         if (is_numeric($time))
             $time = date('h:i A d.m.Y', $time);
         else
