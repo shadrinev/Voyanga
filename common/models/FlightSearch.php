@@ -51,7 +51,6 @@ class FlightSearch extends CModel implements IStatisticItem
                     $this->requestId = $fs->requestId;
                     $this->flightVoyageStack = $fs->oFlightVoyageStack;
                     $this->status = $fs->status;
-                    $this->afterSave();
                     return FlightCache::addCacheFromStack($this->flightVoyageStack);
                 }
 
@@ -92,7 +91,6 @@ class FlightSearch extends CModel implements IStatisticItem
                         'flight_search_id' => $this->id
                     );
                     $this->flightVoyageStack->setAttributes($attributes);
-                    $this->afterSave();
                     Yii::app()->observer->notify('onAfterFlightSearch', $this);
                     if ($returnCacheRecord)
                         return FlightCache::addCacheFromStack($this->flightVoyageStack);

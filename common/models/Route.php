@@ -38,12 +38,12 @@ class Route extends CModel
     //todo: make flight search working
     public function getDepartureCity()
     {
-
+        return City::model()->getCityByPk($this->departureCityId);
     }
 
     public function getArrivalCity()
     {
-
+        return City::model()->getCityByPk($this->arrivalCityId);
     }
 
     /**
