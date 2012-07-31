@@ -24,7 +24,6 @@ class PaymentWidget extends Widget
         $fields['Subtotal_P']='10.00';
         $fields['URL_RETURN']='http://test.com/payments/result/';
         $fields['Signature']=$this->sign($fields);
-        $fields['Signature']=strtoupper(md5(Yii::app()->payments->merchantId.'1'.'10.00'.''.Yii::app()->payments->password));
 
         $this->render("form", array(
             'fields'=>$fields
@@ -51,7 +50,7 @@ class PaymentWidget extends Widget
         $hash[] = $this->md5ForKey($params, 'IData');
         $hash[] = $this->md5ForKey($params, 'PT_Code');
         //! It should be in CONFEG ??!?!?!?
-        $hash[] = md5(strtolower(Yii::app()->payments->password));
+        $hash[] = md5(Yii::app()->payments->password);
         print_r(Yii::app()->payments->password);
         print_r($hash);
         $hash = implode('&', $hash);
