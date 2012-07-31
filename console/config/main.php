@@ -85,6 +85,9 @@ return CMap::mergeArray (
             'gdsAdapter' => array(
                 'class' => 'GDSAdapter'
             ),
+            'hotelsRating'=>array(
+                'class'=>'HotelsRatingComponent'
+            ),
 
             'cache' => $params['cache.core'],
             'contentCache' => $params['cache.content'],
