@@ -170,9 +170,23 @@ return array(
                 ),
             )
         ),
+
         'hotelsRating'=>array(
             'class'=>'HotelsRatingComponent'
         ),
+
+        'httpClient'=>array(
+            'class'=>'HttpClient'
+        ),
+
+        'payments' => array(
+            'class' => 'common.extensions.payments.PaymentsComponent',
+            'shopId' => '8234784606-1636',
+            'testMode' => true,
+            'login' => '821',
+            'password' => '9UfgieYI6vuTit12NHp1w5Ld9MSIhIph7gf8pVqrmW9mXx24WLPnJAnW8FmS8YMq2bWaeMtTYvHdfsXM',
+        ),
+
     ),
 
     'modules'=>array(
