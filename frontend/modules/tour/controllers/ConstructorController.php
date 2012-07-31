@@ -56,6 +56,7 @@ class ConstructorController extends FrontendController
                 $from = City::model()->findByPk($item->departureCity);
                 $to = City::model()->findByPk($item->arrivalCity);
                 $tab['label'] = '<b>Перелёт</b><br>'.$item->departureDate."<br>".$from->localRu." &mdash; ".$to->localRu;
+                $tab['content'] = VarDumper::dumpAsString($item->getPassports(), 10, true);
                 $tabs[] = $tab;
             }
             if ($item instanceof HotelTripElement)
@@ -63,6 +64,7 @@ class ConstructorController extends FrontendController
                 /** @var $item HotelTripElement */
                 $from = City::model()->findByPk($item->city);
                 $tab['label'] = '<b>Отель в городе '.$from->localRu.'</b><br>'.$item->checkIn." &mdash; ".$item->checkOut;
+                $tab['content'] = VarDumper::dumpAsString($item->getPassports(), 10, true);
                 $tabs[] = $tab;
             }
         }

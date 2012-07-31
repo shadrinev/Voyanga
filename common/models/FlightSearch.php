@@ -5,7 +5,7 @@
  * @author oleg
  *
  */
-class FlightSearch extends CActiveRecord implements IStatisticItem
+class FlightSearch extends CModel implements IStatisticItem
 {
     const STATUS_SUCCESS = 1;
     const STATUS_ERROR = 2;
@@ -28,22 +28,6 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
                 'class' => 'site.common.components.statistic.Statisticable',
             )
         );
-    }
-
-    public function __construct($scenario = 'insert')
-    {
-        parent::__construct($scenario);
-
-    }
-
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
-
-    public function tableName()
-    {
-        return 'flight_search';
     }
 
     public function sendRequest(FlightSearchParams $flightSearchParams, $returnCacheRecord = true)
@@ -175,5 +159,20 @@ class FlightSearch extends CActiveRecord implements IStatisticItem
             $rows[] = $element;
         }
         return $rows;
+    }
+
+    /**
+     * Returns the list of attribute names of the model.
+     * @return array list of attribute names.
+     */
+    public function attributeNames()
+    {
+        return array(
+            'timestamp',
+            'requestId',
+            'status',
+            'key',
+            'data'
+        );
     }
 }

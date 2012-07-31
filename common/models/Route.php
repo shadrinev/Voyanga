@@ -9,7 +9,7 @@
  * @property integer $searchId
  * @property integer $departureCityId
  * @property integer $departureAirportId
- * @property string $departureDate
+ * @property string  $departureDate
  * @property integer $arrivalCityId
  * @property integer $arrivalAirportId
  * @property integer $adultCount
@@ -23,6 +23,29 @@
  */
 class Route extends CModel
 {
+    public $id;
+    public $searchId;
+    public $departureCityId;
+    public $departureAirportId;
+    public $departureDate;
+    public $arrivalCityId;
+    public $arrivalAirportId;
+    public $adultCount;
+    public $childCount;
+    public $infantCount;
+
+
+    //todo: make flight search working
+    public function getDepartureCity()
+    {
+
+    }
+
+    public function getArrivalCity()
+    {
+
+    }
+
     /**
      * @return array validation rules for model attributes.
      */
@@ -39,21 +62,7 @@ class Route extends CModel
         );
     }
 
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
-            'search' => array(self::BELONGS_TO, 'FlightSearch', 'searchId'),
-            'departureCity' => array(self::BELONGS_TO, 'City', 'departureCityId'),
-            'arrivalCity' => array(self::BELONGS_TO, 'City', 'arrivalCityId'),
-        );
-    }
-
-    /**
+     /**
      * Returns the list of attribute names of the model.
      * @return array list of attribute names.
      */

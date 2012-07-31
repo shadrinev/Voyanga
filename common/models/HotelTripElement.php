@@ -100,6 +100,21 @@ class HotelTripElement extends TripElement
 
     public function getPassports()
     {
-        return $this->hotel->getPassports();
+        // TODO: Implement getPassports() method.
+        $fake = new HotelPassportForm();
+        $fake->addRoom(2,0);
+        $roomPassport = $fake->roomsPassports[0] = new RoomPassportForm();
+        $adult1 = $roomPassport->adultsPassports[0] = new HotelAdultPassportForm();
+        $adult2 = $roomPassport->adultsPassports[1] = new HotelAdultPassportForm();
+
+        $adult1->genderId = HotelAdultPassportForm::GENDER_MALE;
+        $adult1->firstName = 'Иванов';
+        $adult1->lastName = 'Иван';
+
+        $adult2->genderId = HotelAdultPassportForm::GENDER_MALE;
+        $adult2->firstName = 'Семёнов';
+        $adult2->lastName = 'Семён';
+
+        return $fake;
     }
 }

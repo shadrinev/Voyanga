@@ -253,19 +253,6 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
      */
     public function getPassports()
     {
-        // TODO: Implement getPassports() method.
-        $fake = new PassengerPassportForm();
-        $adult1 = new FlightAdultPassportForm();
-        $adult1->genderId = FlightAdultPassportForm::GENDER_MALE;
-        $adult1->firstName = 'Иванов';
-        $adult1->lastName = 'Иван';
 
-        $adult2 = new FlightAdultPassportForm();
-        $adult2->genderId = FlightAdultPassportForm::GENDER_MALE;
-        $adult2->firstName = 'Семёнов';
-        $adult2->lastName = 'Семён';
-
-        $fake->adultsPassports = array($adult1, $adult2);
-        return $fake;
     }
 }
