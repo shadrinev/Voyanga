@@ -117,4 +117,9 @@ class HotelTripElement extends TripElement
 
         return $fake;
     }
+
+    public function isLinked()
+    {
+        return $this->hotel !== null;
+    }
 }

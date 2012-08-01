@@ -8,6 +8,7 @@
 )); ?>
 
     <?php $this->widget('site.frontend.widgets.tourBuilder.TourBuilderWidget', array('model' => $model, 'attribute'=>'trips')); ?>
+
     <?php echo $form->dropDownListRow($model, 'adultCount', FlightForm::getPossibleAdultCount()); ?>
 
     <?php echo $form->hiddenField($model, "startCityId", array('class'=>'startCityId')); ?>
@@ -41,6 +42,9 @@
         'label'=>'Поехали!',
         'htmlOptions'=>array('id'=>'searchHotel')
     )); ?>
+
+    <a class="btn btn-primary" href='/tour/constructor/showBasket'>Готовые</a>
+
     </div>
 
 <?php $this->endWidget(); ?>

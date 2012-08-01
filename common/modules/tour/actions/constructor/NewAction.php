@@ -7,8 +7,6 @@
  */
 class NewAction extends CAction
 {
-    public $clear;
-
     public function run($isTab=false, $clear=false)
     {
         if ($clear)

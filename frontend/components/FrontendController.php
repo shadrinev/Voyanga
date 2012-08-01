@@ -21,7 +21,7 @@ class FrontendController extends Controller
         'tour'=>array(
             'module'=>'tour',
             'controller'=>'constructor',
-            'action'=>'new'
+            'action'=>'create'
         ),
         'other'=>array()
     );

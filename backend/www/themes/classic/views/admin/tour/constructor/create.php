@@ -39,8 +39,5 @@
         'buttonType'=>'submit',
         'type'=>'primary',
         'label'=>'Поехали!',
-        'htmlOptions'=>array('id'=>'searchHotel')
     )); ?>
-    </div>
-
 <?php $this->endWidget(); ?>

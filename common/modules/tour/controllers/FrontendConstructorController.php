@@ -10,7 +10,7 @@ class FrontendConstructorController extends FrontendController
 {
     public $tab='tour';
 
-    public $defaultAction = 'new';
+    public $defaultAction = 'create';
 
     public function actions()
     {
@@ -20,6 +20,7 @@ class FrontendConstructorController extends FrontendController
             'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
             'new' => array('class'=>'site.common.modules.tour.actions.constructor.NewAction'),
             'flightSearch' => array('class'=>'site.common.modules.tour.actions.constructor.FlightSearchAction'),
+            'showBasket' => array('class'=>'site.common.modules.tour.actions.constructor.ShowBasketAction'),
         );
     }
 }

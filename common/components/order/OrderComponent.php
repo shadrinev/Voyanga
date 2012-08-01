@@ -28,15 +28,13 @@ class OrderComponent extends CApplicationComponent
             $time[] = $position->getTime();
             if ($asJson)
             {
-                $element['key'] = $position->getId();
-                if ($position instanceof FlightVoyage)
+                if ($position instanceof FlightTripElement)
                     $element['isFlight'] = true;
-                if ($position instanceof Hotel)
+                if ($position instanceof HotelTripElement)
                 {
                     $element['isHotel'] = true;
-
                 }
-
+                $element['isLinked'] = $position->isLinked();
             }
             $result['items'][] = $element;
             unset($element);

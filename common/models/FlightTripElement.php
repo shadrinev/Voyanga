@@ -87,7 +87,9 @@ class FlightTripElement extends TripElement
 
     public function getJsonObject()
     {
-        return json_encode($this->attributes);
+        if ($this->flightVoyage)
+            return $this->flightVoyage->getJsonObject();
+        return $this->attributes;
     }
 
     public function getPassports()
@@ -106,5 +108,17 @@ class FlightTripElement extends TripElement
 
         $fake->adultsPassports = array($adult1, $adult2);
         return $fake;
+    }
+
+    public function getId()
+    {
+        if ($this->flightVoyage)
+            return $this->flightVoyage->getId();
+        return $this->_id;
+    }
+
+    public function isLinked()
+    {
+        return $this->flightVoyage !== null;
     }
 }

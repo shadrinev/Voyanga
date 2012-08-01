@@ -33,10 +33,13 @@ class CreateAction extends CAction
                     Yii::app()->user->setState('trip.tour.form', serialize($model));
                     Yii::app()->shoppingCart->clear();
                     ConstructorBuilder::build($model);
-                    $this->controller->redirect('showTrip');
+                    $this->controller->redirect($this->controller->createUrl('showTrip'));
                 }
             }
         }
-        $this->controller->render('create', array('model'=>$model));
+        if ($isTab)
+            $this->controller->renderPartial('create', array('model'=>$model));
+        else
+            $this->controller->render('create', array('model'=>$model));
     }
 }
