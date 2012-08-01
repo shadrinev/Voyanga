@@ -3,15 +3,15 @@
 <?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'tour', 'compileVariable' => $templateVariable)) ?>
 {{#each items}}
     {{#if isFlight}}
-        <?php $this->renderPartial('_tour_flight'); ?>
+        <?php $this->render('_tour_flight', array('pathToAirlineImg'=>$pathToAirlineImg)); ?>
     {{/if}}
     {{#if isHotel}}
-        <?php $this->renderPartial('_tour_hotel'); ?>
+        <?php $this->render('_tour_hotel'); ?>
     {{/if}}
 {{/each}}
 <div class="actions">
     <a href="#" class="deleteTourButton btn btn-danger">Очистить тур</a>
-    <a href="/tour/constructor/create" class="btn btn-success">Конструктор</a>
+    <a href="<?php echo $urlToConstructor; ?>" class="btn btn-success">Конструктор</a>
 </div>
 <div class="modal hide" id="tourSaveModal">
     <div class="modal-header">
@@ -40,7 +40,7 @@
             return result;
     });
 
-    $.getJSON('/tour/basket/show')
+    $.getJSON('".$urlToBasket."')
         .done(function(data) {
             var html = {$templateVariable}(data);
             $('#tour-output').html(html);
