@@ -182,5 +182,9 @@ return CMap::mergeArray(
                 'rules' => $routes,
             ),
         ),
+
+        'controllerMap' => array(
+            'ajax' => 'site.frontend.controllers.AjaxController',
+        )
     )
 );

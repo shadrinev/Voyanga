@@ -258,4 +258,27 @@ class AjaxController extends BaseAjaxController
         }
         $this->send($items);
     }
+
+    public function actionGetOptimalPrice($from, $to, $dateStart, $dateEnd, $forceUpdate=true)
+    {
+        try
+        {
+            $dateStart = Event::getFlightFromDate($dateStart);
+            $dateEnd = Event::getFlightToDate($dateEnd);
+
+            $fromTo = FlightSearcher::getOptimalPrice($from, $to, $dateStart, false, $forceUpdate);
+            $toFrom = FlightSearcher::getOptimalPrice($to, $from, $dateEnd, false, $forceUpdate);
+            $fromBack = FlightSearcher::getOptimalPrice($from, $to, $dateStart, $dateEnd, $forceUpdate);
+            $response = array(
+                'priceTo' => (int)$fromTo,
+                'priceBack' => (int)$toFrom,
+                'priceToBack' => (int)$fromBack
+            );
+            $this->send($response);
+        }
+        catch (Exception $e)
+        {
+            $this->sendError(500, $e->getMessage());
+        }
+    }
 }
