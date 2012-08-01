@@ -8,15 +8,14 @@
 class NewAction extends CAction
 {
     public $clear;
-    public $isTab;
 
-    public function run()
+    public function run($isTab=false, $clear=false)
     {
-        if ($this->clear)
+        if ($clear)
             Yii::app()->shoppingCart->clear();
         $flightForm = new FlightForm;
         $hotelForm = new HotelForm;
-        if ($this->isTab)
+        if ($isTab)
             $this->controller->renderPartial('new', array('flightForm'=>$flightForm, 'hotelForm'=>$hotelForm,'autosearch'=>false, 'cityName'=>'', 'duration'=>1));
         else
             $this->controller->render('new', array('flightForm'=>$flightForm, 'hotelForm'=>$hotelForm,'autosearch'=>false, 'cityName'=>'', 'duration'=>1));
