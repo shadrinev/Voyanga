@@ -11,7 +11,7 @@
 {{/each}}
 <div class="actions">
     <a href="#" class="deleteTourButton btn btn-danger">Очистить тур</a>
-    <a href="/tour/constructor/create" class="btn btn-success">Конструктор</a>
+    <a href="<?php echo $urlToConstructor; ?>" class="btn btn-success">Конструктор</a>
 </div>
 <div class="modal hide" id="tourSaveModal">
     <div class="modal-header">
