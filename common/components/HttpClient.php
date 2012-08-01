@@ -12,6 +12,7 @@ class HttpClient extends CApplicationComponent
      * Perform get request
      *
      * @param string $url where to send request
+     * @return array [headers, response body]
      */
     public function get($url)
     {
@@ -31,6 +32,7 @@ class HttpClient extends CApplicationComponent
      * @param mixed $post post data
      * @param array $header headers to send with request
      * @param array $curlopts any specific curl options to set
+     * @return array [headers, response body]
      */
     public function post($url, $post, $headers=false, $curlopts=false)
     {
@@ -40,7 +42,7 @@ class HttpClient extends CApplicationComponent
         curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $post);
 
         if($headers)
-            curl_setopt($curlHandler, CURLOPT_HTTPHEADER, $aHeadersToSend);
+            curl_setopt($curlHandler, CURLOPT_HTTPHEADER, $headers);
 
         foreach($curlopts as $key=>$value)
         {
