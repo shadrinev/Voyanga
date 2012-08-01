@@ -8,8 +8,6 @@
  * @property string $email
  * @property string $phone
  * @property string $userId
- * @property string $flightId
- * @property string $hotelId
  * @property string $timestamp
  *
  * The followings are the available model relations:
@@ -57,10 +55,10 @@ class OrderBooking extends CActiveRecord
         // will receive user inputs.
         return array(
             //array('timestamp', 'required'),
-            array('email, phone, userId, flightId, hotelId', 'length', 'max'=>45),
+            array('email, phone, userId', 'length', 'max'=>45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, email, phone, userId, flightId, hotelId, timestamp', 'safe', 'on'=>'search'),
+            array('id, email, phone, userId, timestamp', 'safe', 'on'=>'search'),
         );
     }
 
@@ -88,8 +86,6 @@ class OrderBooking extends CActiveRecord
             'email' => 'Email',
             'phone' => 'Phone',
             'userId' => 'User',
-            'flightId' => 'Flight',
-            'hotelId' => 'Hotel',
             'timestamp' => 'Timestamp',
         );
     }
@@ -109,8 +105,6 @@ class OrderBooking extends CActiveRecord
         $criteria->compare('email',$this->email,true);
         $criteria->compare('phone',$this->phone,true);
         $criteria->compare('userId',$this->userId,true);
-        $criteria->compare('flightId',$this->flightId,true);
-        $criteria->compare('hotelId',$this->hotelId,true);
         $criteria->compare('timestamp',$this->timestamp,true);
 
         return new CActiveDataProvider($this, array(

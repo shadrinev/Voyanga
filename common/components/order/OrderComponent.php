@@ -104,15 +104,21 @@ class OrderComponent extends CApplicationComponent
         if($validSaving)
         {
             $positions = $this->getPositions(false);
-            /** @var FlightVoyage[] $positions */
+            if(isset($positions['items']))
+                $positions = $positions['items'];
+            echo 'before dump';
+            VarDumper::dump($positions);
+            //die();
+
+            /** @var HotelTripElement[] $positions */
             foreach($positions as $position)
             {
                 $passports = $position->getPassports();
-                if($position instanceof HotelBooker)
+                if($position instanceof HotelTripElement)
                 {
                     /** @var HotelBookerComponent $hotelBookerComponent  */
                     $hotelBookerComponent = new HotelBookerComponent();
-                    $hotelBookerComponent->setHotelBookerFromHotel($position);
+                    $hotelBookerComponent->setHotelBookerFromHotel($position->hotel);
 
                     //$hotelBookerComponent->book();
                     $hotelBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
@@ -152,11 +158,11 @@ class OrderComponent extends CApplicationComponent
                         $hotelBookerComponent->status('analyzing');
                     }
                 }
-                elseif($position instanceof FlightBooker)
+                elseif($position instanceof FlightTripElement)
                 {
                     /** @var FlightBookerComponent $flightBookerComponent  */
                     $flightBookerComponent = new FlightBookerComponent();
-                    $flightBookerComponent->setFlightBookerFromFlightVoyage($position);
+                    $flightBookerComponent->setFlightBookerFromFlightVoyage($position->flightVoyage);
 
                     $flightBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
                     $flightBookerComponent->getCurrent()->save();

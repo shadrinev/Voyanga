@@ -12,25 +12,32 @@ class MakeBookingAction extends CAction
         $trip = Yii::app()->order->getPositions(false);
         $valid = true;
 
-        foreach($trip as $cartElement)
-        {
-            if($cartElement instanceof FlightTripElement)
+        if(isset($trip['items'])){
+            foreach($trip['items'] as $cartElement)
             {
-                if(!$cartElement->flightVoyage)
+                if($cartElement instanceof FlightTripElement)
                 {
-                    $valid = false;
+                    if(!$cartElement->flightVoyage)
+                    {
+                        $valid = false;
+                    }
                 }
-            }
-
-            if($cartElement instanceof HotelTripElement)
-            {
-                if(!$cartElement->hotel)
+                elseif($cartElement instanceof HotelTripElement)
+                {
+                    if(!$cartElement->hotel)
+                    {
+                        $valid = false;
+                    }
+                }
+                else
                 {
                     $valid = false;
                 }
             }
         }
         VarDumper::dump(Yii::app()->shoppingCart);
+        VarDumper::dump($valid);
+        VarDumper::dump($trip);
         if($valid)
         {
             Yii::app()->order->booking();
