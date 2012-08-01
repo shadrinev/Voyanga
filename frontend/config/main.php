@@ -64,8 +64,8 @@ return CMap::mergeArray(
             'tour' => array(
                 'controllerMap' => array(
                     'basket' => 'site.common.modules.tour.controllers.BasketController',
-                    'constructor' => 'site.common.modules.tour.controllers.ConstructorController',
-                    'viewer' => 'site.common.modules.tour.controllers.ViewerController',
+                    'constructor' => 'site.common.modules.tour.controllers.FrontendConstructorController',
+                    'viewer' => 'site.common.modules.tour.controllers.FrontendViewerController',
                 )
             ),
         ),

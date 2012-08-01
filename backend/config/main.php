@@ -71,8 +71,8 @@ return CMap::mergeArray(
                         'class' => 'application.modules.admin.modules.tour.TourAdminModule',
                         'controllerMap' => array(
                             'basket' => 'site.common.modules.tour.controllers.BasketController',
-                            'constructor' => 'site.common.modules.tour.controllers.ConstructorController',
-                            'viewer' => 'site.common.modules.tour.controllers.ViewerController',
+                            'constructor' => 'site.common.modules.tour.controllers.BackendConstructorController',
+                            'viewer' => 'site.common.modules.tour.controllers.BackendViewerController',
                         )
                     ),
                     'statistic' => array(

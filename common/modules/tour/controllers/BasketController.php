@@ -6,8 +6,9 @@
  * Date: 13.06.12
  * Time: 14:41
  */
-class BasketController extends BaseExtController
+class BasketController extends Controller
 {
+
     public function actionAdd($type, $key, $searchId='', $searchId2='')
     {
         switch ($type)
