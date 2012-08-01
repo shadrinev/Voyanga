@@ -21,6 +21,6 @@ $this->beginWidget("AAdminPortlet", array(
 ));
 ?>
 
-<?php $this->renderPartial('/constructor/_tour', array('showDelete'=>false, 'showSaveTour'=>false)); ?>
+<?php $this->widget('site.common.widgets.tourViewer.TourViewerWidget',array('urlToBasket'=>$this->createUrl('/tour/basket/show'))); ?>
 
 <?php $this->endWidget(); ?>
