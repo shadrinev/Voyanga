@@ -94,7 +94,7 @@ class FlightBookerComponent extends CApplicationComponent
         //$this->flightBooker->booking->bookingPassports;
         $flightBookingParams = new FlightBookingParams();
 
-        //VarDumper::dump($this->flightBooker->booking);die();
+        //VarDumper::dump($this);die();
         $orderBooking = $this->flightBooker->orderBooking;
         $flightBookingParams->contactEmail = $orderBooking->email;
         $flightBookingParams->phoneNumber = $orderBooking->phone;
@@ -287,8 +287,10 @@ class FlightBookerComponent extends CApplicationComponent
     public function setFlightBookerFromFlightVoyage(FlightVoyage $flightVoyage)
     {
         $this->flightBooker = new FlightBooker();
-        $this->flightBooker->flightVoyageInfo = $flightVoyage;
-        //$this->flightBooker->price = $flightVoyage->price;
+        $this->flightBooker->flightVoyage = $flightVoyage;
+        $this->flightBooker->status = 'enterCredentials';
+        $this->flightBooker->price = $flightVoyage->price;
+        //VarDumper::dump($this);
 
 
     }
