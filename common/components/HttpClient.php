@@ -42,7 +42,7 @@ class HttpClient extends CApplicationComponent
         curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $post);
 
         if($headers)
-            curl_setopt($curlHandler, CURLOPT_HTTPHEADER, $aHeadersToSend);
+            curl_setopt($curlHandler, CURLOPT_HTTPHEADER, $headers);
 
         foreach($curlopts as $key=>$value)
         {
