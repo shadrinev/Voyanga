@@ -545,7 +545,7 @@ class GDSNemoAgency extends CComponent
         }
         //VarDumper::dump($aParams);
         $response = self::request('BookFlight', $aParams, $bCache = FALSE, $iExpiration = 0);
-        VarDumper::dump($response);//die();
+        //VarDumper::dump($response);//die();
 
 
         $flightBookingResponse = new FlightBookingResponse();
@@ -553,10 +553,27 @@ class GDSNemoAgency extends CComponent
         {
             $status = 'error';
             $flightBookingResponse->status = 2;
+            $flightBookingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
+            $flightBookingResponse->addError('error',$response->Response->Error);
         }
         else
         {
-            $status  = $response->Response->BookFlight->Status;
+            if(isset($response->Response->BookFlight->Status))
+            {
+                $status  = $response->Response->BookFlight->Status;
+            }
+            elseif(isset($response->Error->_))
+            {
+                $status = 'error';
+                $flightBookingResponse->addError($response->Error->Code,$response->Error->_);
+            }
+            else
+            {
+                $status = 'error';
+                if(GDSNemoSoapClient::$lastCurlError){
+                    $flightBookingResponse->addError('connection error',GDSNemoSoapClient::$lastCurlError);
+                }
+            }
         }
 
 
@@ -573,6 +590,8 @@ class GDSNemoAgency extends CComponent
         else
         {
             $flightBookingResponse->status = 2;
+            $flightBookingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
+            $flightBookingResponse->addError('error','Status is:'.$status);
         }
         return $flightBookingResponse;
 

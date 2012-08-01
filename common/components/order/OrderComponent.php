@@ -174,27 +174,31 @@ class OrderComponent extends CApplicationComponent
                         foreach ($passports->adultsPassports as $adultInfo)
                         {
                             $flightPassport = new FlightBookingPassport();
-                            $flightPassport->attributes = $adultInfo->attributes;
-                            $flightPassport->flightBookingId = $flightBookerId;
+                            //$flightPassport->attributes = $adultInfo->attributes;
+                            //$flightPassport->flightBookingId = $flightBookerId;
+                            $flightPassport->populate($adultInfo,$flightBookerId);
                             $flightPassport->save();
                         }
                         foreach ($passports->childrenPassports as $childInfo)
                         {
                             $flightPassport = new FlightBookingPassport();
-                            $flightPassport->attributes = $childInfo->attributes;
-                            $flightPassport->flightBookingId = $flightBookerId;
+                            //$flightPassport->attributes = $childInfo->attributes;
+                            //$flightPassport->flightBookingId = $flightBookerId;
+                            $flightPassport->populate($childInfo,$flightBookerId);
                             $flightPassport->save();
                         }
                         foreach ($passports->infantPassports as $infantInfo)
                         {
                             $flightPassport = new FlightBookingPassport();
-                            $flightPassport->attributes = $infantInfo->attributes;
-                            $flightPassport->flightBookingId = $flightBookerId;
+                            //$flightPassport->attributes = $infantInfo->attributes;
+                            //$flightPassport->flightBookingId = $flightBookerId;
+                            $flightPassport->populate($infantInfo,$flightBookerId);
                             $flightPassport->save();
                         }
                         //Yii::trace(CVarDumper::dumpAsString($flightPassport->errors), 'FlightBooker.EnterCredentials.flightPassport');
                     //}
-                    VarDumper::dump($flightBookerComponent);
+                    //VarDumper::dump($flightBookerComponent);
+
                     $flightBookerComponent->status('booking');
                 }
             }

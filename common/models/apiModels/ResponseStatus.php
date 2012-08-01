@@ -22,7 +22,7 @@ class ResponseStatus extends CModel
         return array('responseStatus');
     }
 
-    public function hasErrors()
+    public function hasErrors($attribute=null)
     {
         if (in_array($this->responseStatus, $this->unhandledExceptions))
             return true;

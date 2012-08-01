@@ -24,6 +24,7 @@ class FlightBooker extends SWLogActiveRecord
 {
     private $_flightVoyage;
     private $statusChanged = false;
+    private $flightBookerComponent;
 
     /**
      * Returns the static model of the specified AR class.
@@ -56,8 +57,17 @@ class FlightBooker extends SWLogActiveRecord
         $method = 'stage'.$this->swGetStatus()->getId();
         if (method_exists(Yii::app()->flightBooker, $method))
         {
-            Yii::app()->flightBooker->$method();
-            return parent::afterSave();
+            if($this->flightBookerComponent){
+                $this->flightBookerComponent->$method();
+                return parent::afterSave();
+            }elseif(Yii::app()->flightBooker){
+                Yii::app()->flightBooker->$method();
+                return parent::afterSave();
+            }else{
+                Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+            }
+
+
         }
         else
             Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
@@ -224,5 +234,10 @@ class FlightBooker extends SWLogActiveRecord
         $this->_flightVoyage = $value;
         $this->price = $value->price;
         $this->flightVoyageInfo = $element;
+    }
+
+    public function setFlightBookerComponent(FlightBookerComponent &$flightBookerComponent)
+    {
+        $this->flightBookerComponent = &$flightBookerComponent;
     }
 }

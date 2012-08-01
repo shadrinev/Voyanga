@@ -30,6 +30,7 @@ class FlightBookerComponent extends CApplicationComponent
         {
             $id = Yii::app()->user->getState('flightVoyageId');
             $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$id));
+            $this->flightBooker->setFlightBookerComponent($this);
         }
         return $this->flightBooker;
     }
@@ -56,6 +57,7 @@ class FlightBookerComponent extends CApplicationComponent
             if (($this->getCurrent()!=null) and $this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId())
             {
                 $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->flightVoyage->getId()));
+                $this->flightBooker->setFlightBookerComponent($this);
             }
             if ($this->flightBooker == null)
             {
@@ -64,6 +66,7 @@ class FlightBookerComponent extends CApplicationComponent
                 $this->flightBooker->flightVoyageId = $this->flightVoyage->getId();
                 $this->flightBooker->flightVoyage = $this->flightVoyage;
                 $this->flightBooker->status = 'enterCredentials';
+                $this->flightBooker->setFlightBookerComponent($this);
                 if(!$this->flightBooker->save())
                 {
                     VarDumper::dump($this->flightBooker->getErrors());
@@ -90,6 +93,8 @@ class FlightBookerComponent extends CApplicationComponent
     public function stageBooking()
     {
         //getting pnr and other stuff
+        //VarDumper::dump($this);
+        //return;
 
         //$this->flightBooker->booking->bookingPassports;
         $flightBookingParams = new FlightBookingParams();
@@ -111,16 +116,19 @@ class FlightBookerComponent extends CApplicationComponent
         //echo 123;//die();
         /** @var FlightBookingResponse $flightBookingResponse  */
         $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams);
+
         SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
         GDSNemoAgency::$requestIds = array();
-        if($flightBookingResponse->status == 1)
+
+        if($flightBookingResponse->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
         {
             $this->flightBooker->nemoBookId = $flightBookingResponse->nemoBookId;
             $this->flightBooker->pnr = $flightBookingResponse->pnr;
             $this->flightBooker->timeout = date('y-m-d H:i:s',$flightBookingResponse->expiration);
+            $this->status('waitingForPayment');
         }
         //die();
-        $this->status('waitingForPayment');
+
     }
 
     public function stageWaitingForPayment()
@@ -281,7 +289,9 @@ class FlightBookerComponent extends CApplicationComponent
     public function setFlightBookerFromId($flightBookerId)
     {
         $this->flightBooker = FlightBooker::model()->findByPk($flightBookerId);
+
         if(!$this->flightBooker) throw new CException('FlightBooker with id '.$flightBookerId.' not found');
+        $this->flightBooker->setFlightBookerComponent($this);
     }
 
     public function setFlightBookerFromFlightVoyage(FlightVoyage $flightVoyage)
@@ -290,6 +300,7 @@ class FlightBookerComponent extends CApplicationComponent
         $this->flightBooker->flightVoyage = $flightVoyage;
         $this->flightBooker->status = 'enterCredentials';
         $this->flightBooker->price = $flightVoyage->price;
+        $this->flightBooker->setFlightBookerComponent($this);
         //VarDumper::dump($this);
 
 

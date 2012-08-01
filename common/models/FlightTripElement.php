@@ -96,17 +96,37 @@ class FlightTripElement extends TripElement
     {
         // TODO: Implement getPassports() method.
         $fake = new PassengerPassportForm();
-        $adult1 = new FlightAdultPassportForm();
-        $adult1->genderId = FlightAdultPassportForm::GENDER_MALE;
-        $adult1->firstName = 'Иванов';
-        $adult1->lastName = 'Иван';
+        $fake->adultsPassports = array();
+        $count = 1;
+        if(isset($this->flightVoyage->adultPassengerInfo->count))
+        {
+            $count = $this->flightVoyage->adultPassengerInfo->count;
+        }
+        $lastNames = array('Ivanov','Petrov','Kovalev','Mihailov','Romanov','Matveev','Borisov','Sviridov','Fedorov','Nikitin','Grigoriev','Vasilev');
+        $firstNames = array('Evgeniy','Kirill','Oleg','Mihail','Dmitriy','Roman','Denis','Artem','Danila','Viktor','Nikolay','Aleksey','Ruslan');
 
-        $adult2 = new FlightAdultPassportForm();
-        $adult2->genderId = FlightAdultPassportForm::GENDER_MALE;
-        $adult2->firstName = 'Семёнов';
-        $adult2->lastName = 'Семён';
-
-        $fake->adultsPassports = array($adult1, $adult2);
+        for($i = 0;$i<$count;$i++)
+        {
+            $adult1 = new FlightAdultPassportForm();
+            $adult1->genderId = FlightAdultPassportForm::GENDER_MALE;
+            $randKey = rand(0,(count($firstNames) - 1));
+            $randomFirstName = $firstNames[$randKey];
+            $randKey = rand(0,(count($lastNames) - 1));
+            $randomLastName = $lastNames[$randKey];
+            $randomBirthDay = new DateTime('1971-01-01');
+            $randKey = rand(0,365*20);
+            $interval = new DateInterval('P'.$randKey.'D');
+            $randomBirthDay->add($interval);
+            $adult1->firstName = $randomFirstName;
+            $adult1->lastName = $randomLastName;
+            $adult1->birthday = $randomBirthDay->format('d.m.Y');
+            $randKey = rand(1000,7000);
+            $adult1->series = (string)$randKey;
+            $randKey = rand(100000,999999);
+            $adult1->number = (string)$randKey;
+            $adult1->countryId = 174;
+            $fake->adultsPassports[] = $adult1;
+        }
         return $fake;
     }
 
