@@ -1,3 +1,4 @@
+<?php Yii::import('site.common.modules.tour.models.*'); ?>
 <?php
 /**
  * User: Kuklin Mikhail (kuklin@voyanga.com)
@@ -5,7 +6,7 @@
  * Date: 13.06.12
  * Time: 19:06
  */
-class ViewerController extends FrontendController
+class ViewerController extends BaseExtController
 {
     public function actionIndex()
     {

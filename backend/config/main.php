@@ -68,7 +68,12 @@ return CMap::mergeArray(
                         'class' => 'application.modules.admin.modules.events.EventAdminModule'
                     ),
                     'tour' => array(
-                        'class' => 'application.modules.admin.modules.tour.TourAdminModule'
+                        'class' => 'application.modules.admin.modules.tour.TourAdminModule',
+                        'controllerMap' => array(
+                            'basket' => 'site.common.modules.tour.controllers.BasketController',
+                            'constructor' => 'site.common.modules.tour.controllers.ConstructorController',
+                            'viewer' => 'site.common.modules.tour.controllers.ViewerController',
+                        )
                     ),
                     'statistic' => array(
                         'class' => 'application.modules.admin.modules.statistic.StatisticAdminModule'

@@ -27,7 +27,7 @@ class TourAdminModule extends ABaseAdminModule
             "items" => array(
                 array(
                     "label" => "Конструктор",
-                    "url" => array("/admin/tour/constructor/new"),
+                    "url" => array("/admin/tour/constructor/create"),
                 ),
                 array(
                     "label" => "Готовые",

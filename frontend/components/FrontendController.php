@@ -10,17 +10,17 @@ class FrontendController extends Controller
     public $allTabs = array(
         'avia'=>array(
             'module'=>'booking',
-            'controller'=>'Flight',
+            'controller'=>'flight',
             'action'=>'index'
         ),
         'hotel'=>array(
             'module'=>'booking',
-            'controller'=>'Hotel',
+            'controller'=>'hotel',
             'action'=>'index'
         ),
         'tour'=>array(
             'module'=>'tour',
-            'controller'=>'Constructor',
+            'controller'=>'constructor',
             'action'=>'new'
         ),
         'other'=>array()
@@ -43,9 +43,10 @@ class FrontendController extends Controller
             }
             ob_start();
             $moduleName = $tabInfo['module'];
+            $module = Yii::app()->getModule($moduleName);
             $controllerName = $tabInfo['controller'];
             $actionName = $tabInfo['action'];
-            $controller = Yii::app()->createController($moduleName.'/'.$controllerName);
+            $controller = Yii::app()->createController($controllerName, $module);
             $action = $controller[0]->createAction($actionName);
             $action->runWithParams(array('isTab'=>true));
             $this->output[$tabName] = ob_get_contents();
@@ -57,6 +58,7 @@ class FrontendController extends Controller
     {
         if (!$return)
             $this->fillTabs();
+
         if($this->beforeRender($view))
         {
             $this->output[$this->tab]=$this->renderPartial($view,$data,true);

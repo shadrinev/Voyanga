@@ -1,7 +1,7 @@
 <?php
 class TourModule extends CWebModule
 {
-    public $defaultController = 'Constructor';
+    public $defaultController = 'constructor';
 
     public function init()
     {

@@ -1,3 +1,4 @@
+<?php Yii::import('site.common.modules.tour.models.*'); ?>
 <?php
 /**
  * User: Kuklin Mikhail (kuklin@voyanga.com)
@@ -5,7 +6,7 @@
  * Date: 13.06.12
  * Time: 14:41
  */
-class BasketController extends FrontendController
+class BasketController extends BaseExtController
 {
     public function actionAdd($type, $key, $searchId='', $searchId2='')
     {

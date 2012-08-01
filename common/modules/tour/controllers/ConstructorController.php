@@ -1,3 +1,4 @@
+<?php Yii::import('site.common.modules.tour.models.*'); ?>
 <?php
 /**
  * User: Kuklin Mikhail (kuklin@voyanga.com)
@@ -5,7 +6,7 @@
  * Date: 09.06.12
  * Time: 13:41
  */
-class ConstructorController extends FrontendController
+class ConstructorController extends BaseExtController
 {
     public $tab='tour';
 

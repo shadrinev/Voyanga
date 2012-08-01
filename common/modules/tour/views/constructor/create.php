@@ -7,7 +7,7 @@
     )
 )); ?>
 
-    <?php $this->widget('frontend.widgets.tourBuilder.TourBuilderWidget', array('model' => $model, 'attribute'=>'trips')); ?>
+    <?php $this->widget('site.frontend.widgets.tourBuilder.TourBuilderWidget', array('model' => $model, 'attribute'=>'trips')); ?>
     <?php echo $form->dropDownListRow($model, 'adultCount', FlightForm::getPossibleAdultCount()); ?>
 
     <?php echo $form->hiddenField($model, "startCityId", array('class'=>'startCityId')); ?>
