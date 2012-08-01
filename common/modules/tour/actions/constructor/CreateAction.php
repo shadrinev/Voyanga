@@ -7,7 +7,7 @@
  */
 class CreateAction extends CAction
 {
-    public function run()
+    public function run($isTab=false)
     {
         if ($res = Yii::app()->user->getState('trip.tour.form'))
             $model = @unserialize($res);
