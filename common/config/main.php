@@ -83,8 +83,8 @@ return array(
 
         'mongodb' => array(
             'class'             => 'EMongoDB',
-            'connectionString'  => 'mongodb://192.168.0.55',
-            'dbName'            => 'voyanga',
+            'connectionString'  => $params['mongo.connectionString'],
+            'dbName'            => $params['mongo.dbName'],
             'fsyncFlag'         => false,
             'safeFlag'          => false,
             'useCursor'         => false,
