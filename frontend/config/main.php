@@ -153,7 +153,7 @@ return CMap::mergeArray(
                     array(
                         'class' => 'CEmailLogRoute',
                         'levels' => 'error, warning',
-                        'emails' => 'maximov@danechka.com'
+                        'emails' => 'frontend-reports@voyanga.com'
                     ),
 
                    array( // configuration for the toolbar
