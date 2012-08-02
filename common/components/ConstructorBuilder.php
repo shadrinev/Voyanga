@@ -13,7 +13,7 @@ class ConstructorBuilder
         $prev = $form->getStartCityId();
         $prevDate = $form->trips[0]->startDate;
 
-        //building using scheme flight-hotel-flight
+        //building using scheme home - [flight-hotel-flight]... - home
         /** @var $tripPlan TripForm */
         foreach ($form->trips as $tripPlan)
         {
