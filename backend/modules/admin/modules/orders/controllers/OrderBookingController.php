@@ -59,6 +59,13 @@ class OrderBookingController extends Controller
                     $booking['price'] = $flightBooker->flightVoyage->price;
                 }
             }
+            //! FIXME use YII urlgen
+            $wfStates = WorkflowStates::model()->findByAttributes(array('className'=>'FlightBooker', 'objectId'=>$flightBooker->id));
+            if(count($wfStates)==1)
+            {
+                $booking['wfUrl'] = '/admin/logging/workflowStates#'.$wfStates->_id;
+            }
+
             $retArr['bookings'][] = $booking;
         }
 
@@ -78,6 +85,13 @@ class OrderBookingController extends Controller
                     }
                 }
             }
+            //! FIXME use YII urlgen
+            $wfStates = WorkflowStates::model()->findByAttributes(array('className'=>'HotelBooker', 'objectId'=>$hotelBooker->id));
+            if(count($wfStates)==1)
+            {
+                $booking['wfUrl'] = '/admin/logging/workflowStates#'.$wfStates->_id;
+            }
+
             $retArr['bookings'][] = $booking;
         }
 
