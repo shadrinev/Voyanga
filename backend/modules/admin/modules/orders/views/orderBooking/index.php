@@ -86,13 +86,14 @@ $this->menu=array(
         <li>Дата создания: {{timestamp}}</li>
     </ul>
         Бронирования:
-    <table class="table table-bordered" width="100%">
+    <table class="table table-bordered grid-view" width="100%">
         <thead>
         <tr>
             <th>Бронирование</th>
             <th>Описание</th>
             <th>Состояние</th>
             <th>Цена</th>
+            <th>WF/Логи</th>
         </tr>
         </thead>
         <tbody>
@@ -102,6 +103,7 @@ $this->menu=array(
             <td>{{#each description}} {{this}}<br /> {{/each}}</td>
             <td>{{status}}</td>
             <td>{{price}}</td>
+            <td class="button-column"><a href="{{wfUrl}}" rel="tooltip" title="Просмотреть"><i class="icon-eye-open"></i></a></td>
         </tr>
         {{/each}}
 
