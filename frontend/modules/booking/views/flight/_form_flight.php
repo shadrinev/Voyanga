@@ -62,9 +62,9 @@
         })
         .done(function(data) {
             var html = {$templateVariable}(data);
-            console.log(data);
             $('#flight-search-result').html(html);
             $('#popupInfo').modal('hide');
+            $('#{$templateVariable}Counter').expiredNotification('startTimer');
         })
         .fail(function(data){
             console.log(data);
@@ -85,3 +85,13 @@
     CClientScript::POS_READY);
 }
 ?>
+
+<?php $this->widget('site.common.widgets.expiredNotification.expiredNotificationWidget', array(
+    'id' => $templateVariable.'Counter',
+    'autoStart' => false,
+    'time' => 2,
+    'header' => appParams('flight.expirationTime'),
+    'message' => 'Информация о найденных вами перелётах устарела. <a href="">Выполнить поиск снова</a>',
+    'showCancel' => false,
+    'modalOptions' => array()
+)); ?>

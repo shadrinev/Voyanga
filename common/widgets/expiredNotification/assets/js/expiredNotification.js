@@ -25,11 +25,22 @@
 
         constructor: ExpiredNotification
 
-        , setExpirationTime: function () {
+        , startTimer: function () {
             var that = this
-              , timeout = setTimeout(function () {
+            that.timeout = setTimeout(function () {
                   that.$element.modal('show')
             }, this.time)
+        }
+
+        , stopTimer: function () {
+            var that = this
+            clearTimeout(that.timeout)
+        }
+
+        , resetTimer: function () {
+            var that = this
+            this.stopTimer
+            this.startTimer
         }
     }
 
@@ -38,16 +49,18 @@
      * ======================= */
 
     $.fn.expiredNotification = function (option) {
-        console.log('expiration plugin attached')
         var $this = $(this)
             , options = $.extend({}, $.fn.expiredNotification.defaults, typeof option == 'object' && option)
             , data = new ExpiredNotification(options);
+        if (typeof option == 'string') data[option]()
+        if (options.autoStart)
             data.setExpirationTime()
     }
 
     $.fn.expiredNotification.defaults = {
         time: 60
         , modalId: false
+        , autoStart: true
     }
 
     $.fn.expiredNotification.Constructor = ExpiredNotification

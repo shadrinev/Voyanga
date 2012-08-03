@@ -14,9 +14,10 @@ Copy-paste coding
 )); ?>
 
 With comments coding
------------------
+--------------------
 <?php $this->widget('site.common.widgets.expiredNotification.expiredNotificationWidget', array(
-    'time' => 2, // time before show notification (in seconds)
+    'autoStart' => true, //Should timer start as only script executes? Optional
+    'time' => 2, // time before show notification (in seconds). Required.
     'header' => false, // header of modal to show. Optional.
     'message' => 'Yep! I works! <a href="">Reload me</a>', // message to show. Required
     'showCancel' => false, // ability to close window. Optional.

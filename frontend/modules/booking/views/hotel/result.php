@@ -53,3 +53,11 @@ Utils.scrollTo = function(selector) {
 }
 Utils.scrollTo('#result');
 ", CClientScript::POS_READY); ?>
+
+<?php $this->widget('site.common.widgets.expiredNotification.expiredNotificationWidget', array(
+    'time' => 2,
+    'header' => appParams('hotel.expirationTime'),
+    'message' => 'Информация о найденных вами отелях устарела. <a href="">Выполнить поиск снова</a>',
+    'showCancel' => false,
+    'modalOptions' => array()
+)); ?>

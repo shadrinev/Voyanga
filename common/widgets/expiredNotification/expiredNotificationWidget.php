@@ -18,6 +18,12 @@ class expiredNotificationWidget extends CWidget
     public $header;
 
     /**
+     * Should timer start as only script executes? Optional
+     * @var
+     */
+    public $autoStart = true;
+
+    /**
      * message to show. Required.
      * @var string
      */
@@ -94,6 +100,7 @@ class expiredNotificationWidget extends CWidget
         $options = array(
             'time' => $this->time * 1000, // we need milliseconds for setTimeout
             'modalId' => '#'.$modalId,
+            'autoStart' => $this->autoStart
         );
 
         $id = $this->id;
