@@ -73,6 +73,7 @@ class ShowTripAction extends CAction
                     $tab = array();
                     $tab['label'] = '<b>Перелёт</b>';
                     $tab['info'] = array('type'=>'flight','flights'=>array());
+
                     /** @var $tabItem FlightTripElement[] */
                     foreach($tabItem as $item)
                     {

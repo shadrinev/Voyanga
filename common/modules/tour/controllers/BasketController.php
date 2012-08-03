@@ -18,14 +18,18 @@ class BasketController extends Controller
                 $flight = FlightVoyage::getFromCache($key, $searchId);
                 if ($flight)
                 {
+                    $id = time();
                     //todo: add count of flightVoyageFlights Items
-                    $item = new FlightTripElement();
-                    $item->flightVoyage = $flight;
-                    $item->departureCity = $flight->getDepartureCity()->id;
-                    $item->arrivalCity = $flight->getArrivalCity()->id;
-                    $item->departureDate = date('d.m.Y', strtotime($flight->getDepartureDate()));
-                    $item->id = time();
-                    Yii::app()->shoppingCart->put($item);
+                    foreach($flight->flights as $flightElement){
+                        $item = new FlightTripElement();
+                        $item->flightVoyage = $flight;
+                        $item->departureCity = $flightElement->getDepartureCity()->id;
+                        $item->arrivalCity = $flightElement->getArrivalCity()->id;
+                        $item->departureDate = date('d.m.Y', strtotime($flightElement->departureDate));
+                        $item->groupId = $flight->getId();
+                        $item->id = $id++;
+                        Yii::app()->shoppingCart->put($item);
+                    }
                 }
                 else
                     throw new CHttpException(404, 'Can\'t found item inside cache');
