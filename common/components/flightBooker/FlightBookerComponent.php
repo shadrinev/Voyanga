@@ -56,7 +56,20 @@ class FlightBookerComponent extends CApplicationComponent
             //if we don't have a flight AND we moved to another flight
             if (($this->getCurrent()!=null) and $this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId())
             {
+
                 $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->flightVoyage->getId()));
+                if(!$this->flightBooker)
+                {
+                    $this->flightBooker = new FlightBooker();
+                    $this->flightBooker->flightVoyageId = $this->flightVoyage->getId();
+                    $this->flightBooker->flightVoyage = $this->flightVoyage;
+                    $this->flightBooker->status = 'enterCredentials';
+                    $this->flightBooker->setFlightBookerComponent($this);
+                    if(!$this->flightBooker->save())
+                    {
+                        VarDumper::dump($this->flightBooker->getErrors());
+                    }
+                }
                 $this->flightBooker->setFlightBookerComponent($this);
             }
             if ($this->flightBooker == null)

@@ -72,13 +72,20 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         $orderHasFlightVoyage->save();
     }
 
-    public static function getFromCache($key, $searchId)
+    /**
+     * @static
+     * @param $searchId
+     * @param $key
+     * @return FlightVoyage
+     */
+    public static function getFromCache($searchId, $key)
     {
-        $fs = Yii::app()->cache->get('flightSearch' . $key);
+        //TODO: refactoring place that use this function
+        $fs = Yii::app()->cache->get('flightSearch' . $searchId);
         if($fs)
         {
-            $item = $fs->flightVoyageStack->getFlightById($searchId);
-            $item->searchKey = $key;
+            $item = $fs->flightVoyageStack->getFlightById($key);
+            $item->searchKey = $searchId;
             return $item;
         }
         return false;

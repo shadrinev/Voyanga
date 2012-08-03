@@ -26,7 +26,7 @@
 <?php $this->endWidget(); ?>
 <span id='hotel-results'></span>
 <?php Yii::app()->clientScript->registerScript('hotel-result', "
-    var data = $.parseJSON('".$results."'),
+    var data = ".$results.";
         html = ".$variable."(data);
     $('#hotel-results').html(html);
 ", CClientScript::POS_READY); ?>

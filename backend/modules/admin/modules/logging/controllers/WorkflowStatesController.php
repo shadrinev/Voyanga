@@ -67,6 +67,26 @@ class WorkflowStatesController extends Controller
                 }
                 $stages[] = array('stageName'=>$transition['stateTo'],'requestIds'=>array(),'time'=>$transition['time']);
             }
+            elseif($transition['type'] == 'afterSave')
+            {
+                if(count($stages) == 0)
+                {
+                    $stages[] = array('stageName'=>$transition['state'],'requestIds'=>$transition['requestIds']);
+                }
+                $n = count($stages);
+
+                if(isset($transition['requestIds'])){
+                    if(count($transition['requestIds']) > 0){
+                        $stages[$n - 1]['requestIds'] = $transition['requestIds'];
+                        foreach($stages[$n - 1]['requestIds'] as $j=>$reqId){
+                            $requestModel = EMongoDocument::model($reqId['class'])->findByAttributes(array($reqId['keyName']=>$reqId['key']));
+                            $stages[$n - 1]['requestIds'][$j]['methodName'] = $requestModel->methodName;
+                            $stages[$n - 1]['requestIds'][$j]['description'] = $requestModel->requestDescription;
+                        }
+                    }
+                }
+                //$stages[] = array('stageName'=>$transition['stateTo'],'requestIds'=>array(),'time'=>$transition['time']);
+            }
         }
 
         //VarDumper::dump($stages);

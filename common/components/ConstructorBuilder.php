@@ -13,6 +13,8 @@ class ConstructorBuilder
         $prev = $form->getStartCityId();
         $prevDate = $form->trips[0]->startDate;
 
+        $ind = rand(10,200);
+        $firstGroup = null;
         //building using scheme flight-hotel-flight
         /** @var $tripPlan TripForm */
         foreach ($form->trips as $tripPlan)
@@ -22,12 +24,28 @@ class ConstructorBuilder
             $flight->departureCity = $prev;
             $flight->arrivalCity = $next;
             $flight->departureDate = $tripPlan->startDate;
+            $flight->id = $ind++;
+            $flight->adultCount = $form->adultCount;
+            $flight->childCount = $form->childCount;
+            $flight->infantCount = $form->infantCount;
+            if($firstGroup)
+            {
+                $flight->groupId = substr(md5('group'. uniqid('',true)),0,10);
+            }
+            else
+            {
+                $flight->groupId = $firstGroup = substr(md5('group'. uniqid('',true)),0,10);
+            }
             Yii::app()->shoppingCart->put($flight);
 
             $hotel = new HotelTripElement();
             $hotel->city = $next;
             $hotel->checkIn = $tripPlan->startDate;
             $hotel->checkOut = $tripPlan->endDate;
+            $hotel->adultCount = $form->adultCount;
+            $hotel->childCount = $form->childCount;
+            $hotel->infantCount = $form->infantCount;
+            $hotel->id = $ind++;
             Yii::app()->shoppingCart->put($hotel);
 
             $prev = $next;
@@ -40,6 +58,18 @@ class ConstructorBuilder
         $flight->departureCity = $prev;
         $flight->arrivalCity = $next;
         $flight->departureDate = $prevDate;
+        $flight->adultCount = $form->adultCount;
+        $flight->childCount = $form->childCount;
+        $flight->infantCount = $form->infantCount;
+        $flight->id = $ind++;
+        if(count($form->trips) == 1)
+        {
+            $flight->groupId = $firstGroup;
+        }
+        else
+        {
+            $flight->groupId = $firstGroup = substr(md5('group'. uniqid('',true)),0,10);
+        }
         Yii::app()->shoppingCart->put($flight);
     }
 }

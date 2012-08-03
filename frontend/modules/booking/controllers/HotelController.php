@@ -110,6 +110,7 @@ class HotelController extends FrontendController
     public function actionResult($cacheId)
     {
         $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
+
         $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);
         $hotelForm = Yii::app()->cache->get('hotelForm'.$cacheId);
         if(!$resultSearch)
@@ -121,6 +122,7 @@ class HotelController extends FrontendController
             $hotelStack = new HotelStack($resultSearch);
             $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')
                 ->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+            //VarDumper::dump($hotelStack);die();
         }
         else
         {

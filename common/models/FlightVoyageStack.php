@@ -56,12 +56,14 @@ class FlightVoyageStack
                     $bNeedSave = TRUE;
 
                     $priceInfo = FlightPricing::getPriceInfo($oFlightVoyage);
+                    //$oFlightVoyage->setPriceInfo($priceInfo);
 
                     $flightCodes = implode(',',$oFlightVoyage->getFlightCodes());
                     //If already have same flight select cheaper flight
                     if(isset($flightsCodes[$flightCodes])){
-                        if($priceInfo['fullPrice'] < $this->flightVoyages[$flightsCodes[$flightCodes]]->fullPrice){
-                            $oFlightVoyage->setPriceInfo($priceInfo);
+                        $oldPriceInfo = FlightPricing::getPriceInfo($this->flightVoyages[$flightsCodes[$flightCodes]]);
+                        if($priceInfo['fullPrice'] < $oldPriceInfo['fullPrice']){
+                            //$oFlightVoyage->setPriceInfo($priceInfo);
                             //replace already saved flight voyage
                             $this->flightVoyages[$flightsCodes[$flightCodes]] = $oFlightVoyage;
                             //exclude current voyage because it already saved

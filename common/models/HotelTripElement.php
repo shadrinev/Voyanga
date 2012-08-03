@@ -14,6 +14,9 @@ class HotelTripElement extends TripElement
     public $city;
     public $checkIn;
     public $checkOut;
+    public $adultCount;
+    public $childCount;
+    public $infantCount;
 
     /** @var Hotel */
     public $hotel;
@@ -24,6 +27,9 @@ class HotelTripElement extends TripElement
             'city',
             'checkIn',
             'checkOut',
+            'adultCount',
+            'childCount',
+            'infantCount',
         );
     }
 
@@ -116,6 +122,16 @@ class HotelTripElement extends TripElement
         $adult2->lastName = 'Семён';
 
         return $fake;
+    }
+
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    public function setId($value)
+    {
+        $this->_id = $value;
     }
 
     public function isLinked()

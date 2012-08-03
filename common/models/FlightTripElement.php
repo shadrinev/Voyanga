@@ -14,6 +14,10 @@ class FlightTripElement extends TripElement
     public $departureDate;
     public $departureCity;
     public $arrivalCity;
+    public $groupId;
+    public $adultCount;
+    public $childCount;
+    public $infantCount;
 
     /** @var FlightVoyage */
     public $flightVoyage;
@@ -24,6 +28,9 @@ class FlightTripElement extends TripElement
             'departureDate',
             'departureCity',
             'arrivalCity',
+            'adultCount',
+            'childCount',
+            'infantCount',
         );
     }
 
@@ -34,6 +41,13 @@ class FlightTripElement extends TripElement
             return $this->flightVoyage->rubPrice;
         }
         return 0;
+    }
+
+    public function getGroupId()
+    {
+        if($this->flightVoyage)
+            return $this->flightVoyage->getId();
+        return $this->groupId;
     }
 
     public function saveToOrderDb()
@@ -111,9 +125,14 @@ class FlightTripElement extends TripElement
 
     public function getId()
     {
-        if ($this->flightVoyage)
-            return $this->flightVoyage->getId();
+        //if ($this->flightVoyage)
+        //    return $this->flightVoyage->getId();
         return $this->_id;
+    }
+
+    public function setId($value)
+    {
+        $this->_id = $value;
     }
 
     public function isLinked()
