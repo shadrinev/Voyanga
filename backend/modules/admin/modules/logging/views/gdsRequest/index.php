@@ -105,6 +105,10 @@ Yii::app()->clientScript->registerScript('loadRequestInfo','
             //e.preventDefault();
         });
     };
+    if(window.location.hash){
+        var id = window.location.hash;
+        document.showRequestInfo(id);
+    }
     ', CClientScript::POS_READY);
 CTextHighlighter::registerCssFile();
 ?>

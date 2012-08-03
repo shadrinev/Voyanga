@@ -85,11 +85,14 @@
         createDirIfNotExists(pth($root."backend/runtime"));
 
 		//Setting permissions
-		chmod (pth($root."frontend/runtime"), 02775); //permissions with setguid
-		chmod (pth($root."console/runtime"), 02775);
-		chmod (pth($root."backend/runtime"), 02775);
-		chmod (pth($root."frontend/www/assets"), 02775);
-        chmod (pth($root."backend/www/assets"), 02775);
+		if (!$runningOnWindows)
+		{
+			chmod (pth($root."frontend/runtime"), 02775); //permissions with setguid
+			chmod (pth($root."console/runtime"), 02775);
+			chmod (pth($root."backend/runtime"), 02775);
+			chmod (pth($root."frontend/www/assets"), 02775);
+        	chmod (pth($root."backend/www/assets"), 02775);			
+		}
 
 		//applying migrations
 		//adding in ability to specify to not migrate even when not in local environment. Needed for our newclient script 

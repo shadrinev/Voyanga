@@ -54,6 +54,9 @@ return CMap::mergeArray(array(
     'autocompleteLimit' => 10,
     'autocompleteCacheTime' => 3600,
 
+    'hotel_expirationTime' => 15*60, //seconds before show notification message for hotel page
+    'flight_expirationTime' => 15*60, //seconds before show notification message for flight page
+
     'cache.core'=>extension_loaded('apc') ?
 		array(
 			'class' => 'CApcCache',

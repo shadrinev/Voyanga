@@ -8,6 +8,7 @@
 
 $frontendParamsLocal = file_exists('frontend/config/params-local.php') ? require('frontend/config/params-local.php') : array();
 $commonParams = require_once ('common/config/params.php');
+$environmentParams = require_once (dirname(__FILE__) . '/environments/params-' . $commonParams['env.code'] . '.php');
 return CMap::mergeArray(
     $commonParams,
     CMap::mergeArray(array(
@@ -17,4 +18,4 @@ return CMap::mergeArray(
             'flushDirectory' => 'application.runtime.cache',
             'flushExtension' => 'dump',
         )
-    ), CMap::mergeArray(require_once (dirname(__FILE__) . '/environments/params-' . $commonParams['env.code'] . '.php'), $frontendParamsLocal)));
+    ), CMap::mergeArray($environmentParams, $frontendParamsLocal)));

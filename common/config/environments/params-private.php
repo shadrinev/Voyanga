@@ -28,5 +28,8 @@ return array(
     'log_db.username'=>'oleg',
     'log_db.password'=>'q1w2e3r4',
 
+    'mongo.connectionString' => 'mongodb://192.168.0.55',
+    'mongo.dbName'=> 'voyanga',
+
     'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)'
 );

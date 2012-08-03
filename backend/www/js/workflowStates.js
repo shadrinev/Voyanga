@@ -81,3 +81,9 @@ document.showWfRequestInfo = function (obj,className,keyName,key){
         jObj.parent().find('.symbol').html('+');
     }
 };
+$(function() {
+    if(window.location.hash){
+        var id = window.location.hash;
+        document.showWfInfo(id);
+    }
+});

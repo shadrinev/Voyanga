@@ -21,3 +21,10 @@ document.showOrderInfo = function (id){
             //e.preventDefault();
         });
 };
+
+$(function(){
+    if(window.location.hash){
+	var id = window.location.hash;
+	document.showOrderInfo(id);
+    }
+});
