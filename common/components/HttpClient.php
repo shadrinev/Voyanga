@@ -11,6 +11,7 @@ class HttpClient extends CApplicationComponent
     /**
      * Perform get request
      *
+     * @throws HttpClientException
      * @param string $url where to send request
      * @return array [headers, response body]
      */
@@ -20,14 +21,23 @@ class HttpClient extends CApplicationComponent
         curl_setopt($curlHandler, CURLOPT_URL, $url);
 
         $result = curl_exec($curlHandler);
-        curl_close($curlHandler);
-
-        return $this->parseResult($result);
+        if ($result !== FALSE)
+        {
+            curl_close($curlHandler);
+            return $this->parseResult($result);
+        }
+        else
+        {
+            $error = curl_error($curlHandler);
+            curl_close($curlHandler);
+            throw new HttpClientException($error);
+        }
     }
 
     /**
      * Perform post request
      *
+     * @throws HttpClientException 
      * @param string $url where to send request
      * @param mixed $post post data
      * @param array $header headers to send with request
@@ -50,9 +60,17 @@ class HttpClient extends CApplicationComponent
         }
 
        $result = curl_exec($curlHandler);
-       curl_close($curlHandler);
-
-       return $this->parseResult($result);
+       if ($result !== FALSE)
+        {
+            curl_close($curlHandler);
+            return $this->parseResult($result);
+        }
+        else
+        {
+            $error = curl_error($curlHandler);
+            curl_close($curlHandler);
+            throw new HttpClientException($error);
+        }
     }
 
 
@@ -66,19 +84,12 @@ class HttpClient extends CApplicationComponent
 
     private function parseResult($result)
     {
-        if ($result !== FALSE)
+        list($headers, $result) = explode("\r\n\r\n", $result, 2);
+        if (strpos($headers, 'Continue') !== FALSE)
         {
             list($headers, $result) = explode("\r\n\r\n", $result, 2);
-            if (strpos($headers, 'Continue') !== FALSE)
-            {
-                list($headers, $result) = explode("\r\n\r\n", $result, 2);
-            }
-            return array($headers, $result);
         }
-        else
-        {
-            throw new HttpClientException(curl_error($curlHandler));
-        }
+        return array($headers, $result);
     }
 }
 
