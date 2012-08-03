@@ -15,14 +15,15 @@
     'htmlOptions'=>$modalOptions['htmlOptions']
 )); ?>
 
+<?php if ($header): ?>
 <div class="modal-header">
-    <?php if ($header): ?>
         <?php if ($showCancel): ?>
                 <a class="close" data-dismiss="modal">&times;</a>
         <?php endif ?>
         <h3><?php echo $header ?></h3>
-    <?php endif; ?>
 </div>
+<?php endif; ?>
+
 
 <div class="modal-body">
     <?php if ($message): ?>
@@ -30,14 +31,15 @@
     <?php endif ?>
 </div>
 
-<div class="modal-footer">
-    <?php if ($showCancel): ?>
+<?php if ($showCancel): ?>
+    <div class="modal-footer">
         <?php $this->widget('bootstrap.widgets.BootButton', array(
         'label'=>'Close',
         'url'=>'#',
         'htmlOptions'=>array('data-dismiss'=>'modal'),
         )); ?>
-    <?php endif ?>
-</div>
+    </div>
+<?php endif ?>
+
 
 <?php $this->endWidget(); ?>

@@ -27,6 +27,10 @@ return array(
 
     'components'=>array(
 
+        'assetManager' => array(
+            'forceCopy' => YII_DEBUG
+        ),
+
         'cron'=>array(
             'class'=>'site.common.components.cron.CronComponent'
         ),

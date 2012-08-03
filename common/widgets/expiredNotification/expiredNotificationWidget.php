@@ -6,7 +6,7 @@
 class expiredNotificationWidget extends CWidget
 {
     /**
-     * @var time before show notification
+     * @var time before show notification (in seconds)
      */
     public $time;
 
@@ -39,14 +39,21 @@ class expiredNotificationWidget extends CWidget
     {
         /** @var CAssetManager $am */
         $am = Yii::app()->getAssetManager();
-        $assets = basename(dirname(__FILE__).'/assets/');
-        $path = $am->publish($assets);
+        $assets = realpath(dirname(__FILE__).'/assets/');
+        $path = $am->publish($assets, false, -1, YII_DEBUG);
 
         /** @var CClientScript $cs */
         $cs = Yii::app()->getClientScript();
-        $cs->registerScriptFile($path.'/expiredNotification.js');
+        $cs->registerScriptFile($path.'/js/expiredNotification.js');
 
-        $this->modalOptions['autoOpen'] = false;
+        if (!isset($this->modalOptions['autoOpen']))
+            $this->modalOptions['autoOpen'] = false; //we don't want to show it as only page loads
+
+        if (!isset($this->modalOptions['options']['keyboard']))
+            $this->modalOptions['options']['keyboard'] = false; //we prevent keyboard control
+
+        if (!isset($this->modalOptions['options']['backdrop']))
+            $this->modalOptions['options']['backdrop'] = 'static'; //we prevent keyboard control
 
         if (!isset($this->modalOptions['options']))
             $this->modalOptions['options'] = array();
@@ -62,7 +69,7 @@ class expiredNotificationWidget extends CWidget
 
     public function run()
     {
-        $modalId = $this->id;
+        $modalId = 'modal-'.$this->id;
 
         $this->render('expiredNotification', array(
             'widget' => $this->bootstrapModal,
@@ -71,11 +78,11 @@ class expiredNotificationWidget extends CWidget
             'showCancel' => $this->showCancel,
             'modalOptions' => $this->modalOptions,
             'modalId' => $modalId,
-        ), true);
+        ));
 
         $options = array(
-            'time' => $this->time,
-            'modalId' => '#'.$modalId
+            'time' => $this->time * 1000, // we need milliseconds for setTimeout
+            'modalId' => '#'.$modalId,
         );
 
         $id = $this->id;

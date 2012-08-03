@@ -18,6 +18,7 @@
         this.options = options
         this.$element = $(options.modalId)
         this.time = options.time
+        console.log(this)
     }
 
     ExpiredNotification.prototype = {
@@ -37,15 +38,14 @@
      * ======================= */
 
     $.fn.expiredNotification = function (option) {
-        return this.each(function () {
-            var $this = $(this)
-                , options = $.extend({}, $.fn.modal.defaults, typeof option == 'object' && option)
-                , data = new ExpiredNotification(options);
+        console.log('expiration plugin attached')
+        var $this = $(this)
+            , options = $.extend({}, $.fn.expiredNotification.defaults, typeof option == 'object' && option)
+            , data = new ExpiredNotification(options);
             data.setExpirationTime()
-        })
     }
 
-    $.fn.modal.defaults = {
+    $.fn.expiredNotification.defaults = {
         time: 60
         , modalId: false
     }
