@@ -33,7 +33,7 @@
     }
 
 
-    /* MODAL PLUGIN DEFINITION
+    /* Expired Notification PLUGIN DEFINITION
      * ======================= */
 
     $.fn.expiredNotification = function (option) {

@@ -60,7 +60,9 @@ return CMap::mergeArray(
             'gds' => array(
                 'class' => 'site.common.modules.gds.GdsModule',
             ),
-            'booking' => array(),
+            'booking' => array(
+
+            ),
             'tour' => array(
                 'controllerMap' => array(
                     'basket' => 'site.common.modules.tour.controllers.BasketController',
@@ -68,6 +70,9 @@ return CMap::mergeArray(
                     'viewer' => 'site.common.modules.tour.controllers.FrontendViewerController',
                 )
             ),
+            'sandbox' => array(
+
+            )
         ),
 
         // application components
