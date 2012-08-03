@@ -51,9 +51,10 @@
     $this->renderPartial('_flights', array('variable'=>$templateVariable,'showSaveTour'=>false, 'showDelete'=>false)); ?>
 
 <?php Yii::app()->clientScript->registerScript('flight-search', "
-    $('#searchFlight,#repeatFlightSearch').live('click', function(){
+    $('#searchFlight,.repeatFlightSearch').live('click', function(){
         $('#popupInfo').modal('show');
         $('#modalText').html('Поиск перелёта...');
+        $('#{$templateVariable}Counter').expiredNotification('stopTimer');
         $.ajax({
           url: '/tour/constructor/flightSearch',
           dataType: 'json',
@@ -70,7 +71,7 @@
             console.log(data);
             if (data.statusText=='timeout')
                 data.responseText = 'Время ожидания запроса превышено.';
-            $('#modalText').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.<br>Текст ошибки:<br>'+data.responseText+'</div>');
+            $('#modalText').html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a class=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.<br>Текст ошибки:<br>'+data.responseText+'</div>');
         });
         return false;
     });
@@ -89,9 +90,9 @@
 <?php $this->widget('site.common.widgets.expiredNotification.expiredNotificationWidget', array(
     'id' => $templateVariable.'Counter',
     'autoStart' => false,
-    'time' => 2,
-    'header' => appParams('flight.expirationTime'),
-    'message' => 'Информация о найденных вами перелётах устарела. <a href="">Выполнить поиск снова</a>',
+    'time' => appParams('flight_expirationTime'),
+    'header' => false,
+    'message' => 'Информация о найденных вами перелётах устарела. <a class="repeatFlightSearch" href="#">Выполнить поиск снова</a>',
     'showCancel' => false,
     'modalOptions' => array()
 )); ?>

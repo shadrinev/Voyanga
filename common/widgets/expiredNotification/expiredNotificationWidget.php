@@ -109,6 +109,7 @@ class expiredNotificationWidget extends CWidget
         $cs = Yii::app()->getClientScript();
 
         $options = CJavaScript::encode($options);
+        echo CHtml::tag('span', array('id'=>$id));
         $cs->registerScript(__CLASS__.'#'.$id, "jQuery('#{$id}').expiredNotification({$options});");
     }
 }

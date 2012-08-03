@@ -14,7 +14,7 @@
     /* ExpiredNotification CLASS DEFINITION
      * ====================== */
 
-    var ExpiredNotification = function (options) {
+    var ExpiredNotification = function (content, options) {
         this.options = options
         this.$element = $(options.modalId)
         this.time = options.time
@@ -30,10 +30,13 @@
             that.timeout = setTimeout(function () {
                   that.$element.modal('show')
             }, this.time)
+            console.log('timerStarted')
+            console.log(that)
         }
 
         , stopTimer: function () {
             var that = this
+            that.$element.modal('hide')
             clearTimeout(that.timeout)
         }
 
@@ -50,8 +53,10 @@
 
     $.fn.expiredNotification = function (option) {
         var $this = $(this)
+            , data = $this.data('expiredNotification')
             , options = $.extend({}, $.fn.expiredNotification.defaults, typeof option == 'object' && option)
-            , data = new ExpiredNotification(options);
+        if (!data)
+            $this.data('expiredNotification', (data = new ExpiredNotification(this, options)))
         if (typeof option == 'string') data[option]()
         if (options.autoStart)
             data.startTimer()
@@ -60,7 +65,7 @@
     $.fn.expiredNotification.defaults = {
         time: 60
         , modalId: false
-        , autoStart: true
+        , autoStart: false
     }
 
     $.fn.expiredNotification.Constructor = ExpiredNotification

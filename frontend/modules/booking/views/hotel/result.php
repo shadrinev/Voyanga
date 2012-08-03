@@ -56,7 +56,7 @@ Utils.scrollTo('#result');
 
 <?php $this->widget('site.common.widgets.expiredNotification.expiredNotificationWidget', array(
     'time' => 2,
-    'header' => appParams('hotel.expirationTime'),
+    'header' => appParams('hotel_expirationTime'),
     'message' => 'Информация о найденных вами отелях устарела. <a href="">Выполнить поиск снова</a>',
     'showCancel' => false,
     'modalOptions' => array()
