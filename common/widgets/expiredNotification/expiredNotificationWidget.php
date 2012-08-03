@@ -6,29 +6,34 @@
 class expiredNotificationWidget extends CWidget
 {
     /**
-     * @var time before show notification (in seconds)
+     * time before show notification (in seconds). Required.
+     * @var int
      */
     public $time;
 
     /**
-     * @var header of modal to show
+     * header of modal to show. Optional.
+     * @var string
      */
     public $header;
 
     /**
-     * @var message to show
+     * message to show. Required.
+     * @var string
      */
     public $message;
 
     /**
-     * @var bool ability to close window
+     * ability to close window. Optional.
+     * @var bool
      */
     public $showCancel = false;
 
     /**
-     * @var options for modal window (@link BootModal)
+     * options for modal window (@link BootModal). Optional.
+     * @var array
      */
-    public $modalOptions;
+    public $modalOptions = array();
 
     /**
      * @var string name of modal widget to show (twitter bootstrap widget by default)
@@ -37,6 +42,12 @@ class expiredNotificationWidget extends CWidget
 
     public function init()
     {
+        if ($this->time==null)
+            throw new CHttpException(500, 'Please set time for expire widget');
+
+        if ($this->message==null)
+            throw new CHttpException(500, 'Please set message for expire widget');
+
         /** @var CAssetManager $am */
         $am = Yii::app()->getAssetManager();
         $assets = realpath(dirname(__FILE__).'/assets/');

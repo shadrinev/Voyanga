@@ -18,7 +18,7 @@
         this.options = options
         this.$element = $(options.modalId)
         this.time = options.time
-        console.log(this)
+        this.$element.appendTo($('body'))
     }
 
     ExpiredNotification.prototype = {
