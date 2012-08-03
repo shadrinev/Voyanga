@@ -60,7 +60,9 @@ return CMap::mergeArray(
             'gds' => array(
                 'class' => 'site.common.modules.gds.GdsModule',
             ),
-            'booking' => array(),
+            'booking' => array(
+
+            ),
             'tour' => array(
                 'controllerMap' => array(
                     'basket' => 'site.common.modules.tour.controllers.BasketController',
@@ -68,6 +70,9 @@ return CMap::mergeArray(
                     'viewer' => 'site.common.modules.tour.controllers.FrontendViewerController',
                 )
             ),
+            'sandbox' => array(
+
+            )
         ),
 
         // application components
@@ -161,7 +166,7 @@ return CMap::mergeArray(
                         'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
                         'levels'=>'error, warning, trace, profile, info',
                         //'categories' => 'HotelBookerComponent.*, application.simpleWorkflow',
-                        'allowedIPs'=>array('192.168.0.8','192.168.0.74'),
+                        'allowedIPs'=>array('192.168.0.10','192.168.0.74'),
                     ),
                 )
             ),
