@@ -54,7 +54,7 @@
             , data = new ExpiredNotification(options);
         if (typeof option == 'string') data[option]()
         if (options.autoStart)
-            data.setExpirationTime()
+            data.startTimer()
     }
 
     $.fn.expiredNotification.defaults = {
