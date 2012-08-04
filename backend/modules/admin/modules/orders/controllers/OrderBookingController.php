@@ -15,8 +15,8 @@ class OrderBookingController extends Controller
      */
     public function actionView($id)
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
+        $this->render('item',array(
+            'data'=>$this->getOrderInfo($id),
         ));
     }
 
@@ -95,25 +95,29 @@ class OrderBookingController extends Controller
             $retArr['bookings'][] = $booking;
         }
 
-
-
-       /* $widget = new CTextHighlighter();
-        $widget->language = 'xml';
-        $retArr['methodName'] = $model->methodName;
-        $retArr['requestXml'] = $widget->highlight($model->requestXml);
-        $retArr['responseXml'] = $widget->highlight($model->responseXml);
-        $retArr['timestamp'] = date("Y-m-d H:i:s",$model->timestamp);
-        $retArr['executionTime'] = Yii::app()->format->formatNumber($model->executionTime);
-        $retArr['errorDescription'] = $model->errorDescription;*/
-
-        //$retArr['responseXml'] = $model->responseXml;
-
-
-        //echo $model->requestXml);
-
         echo json_encode($retArr);die();
     }
 
+    private function getOrderInfo($id)
+    {
+        /** @var OrderBooking $model  */
+        $model = $this->loadModel($id);
+
+        $retArr = $model->attributes;
+        $retArr['orderBooking'] = $model;
+        $retArr['userDescription'] = $model->userDescription;
+        $retArr['flightBookings'] = array();
+        $retArr['hotelBookings'] = array();
+
+        foreach($model->flightBookers as $flightBooker) {
+            $retArr['flightBookings'][] = $flightBooker;
+        }
+
+        foreach($model->hotelBookers as $hotelBooker){
+            $retArr['hotelBookings'][] = $hotelBooker;
+        }
+        return $retArr;
+    }
 
 
     /**

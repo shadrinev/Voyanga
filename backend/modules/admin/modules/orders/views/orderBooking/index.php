@@ -116,4 +116,3 @@ $this->menu=array(
 
 Yii::app()->clientScript->registerScriptFile('/js/orderBooking.js');
 CTextHighlighter::registerCssFile();
-?>
