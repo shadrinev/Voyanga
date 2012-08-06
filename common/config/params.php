@@ -17,13 +17,13 @@ return CMap::mergeArray(array(
 	'db.username'=>'',
     'db.password'=>'',
 
-    //Time in secontds for searching results from cache
-    'flight_search_cache_time' => 3600 * 3,
+    'flight_search_cache_time' => 15*60, //seconds before show notification message for flight page + cache expiration time
     //Price factor for flight optimal
     'flight_price_factor' => 100,
     //Time factor for flight optimal
     'flight_time_factor' => 70,
     'flight_repeat_time' => 120,
+
     'aPassegerTypes' => array(1 => 'ADT', 2 => 'CNN', 3 => 'INN'),
     'GDSNemo' => array(
         'wsdlUri' => 'http://109.120.157.20:10002/Flights.asmx?wsdl',
@@ -36,7 +36,7 @@ return CMap::mergeArray(array(
         'agencyId' => '120',
         'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD'
     ),
-    'hotel_search_cache_time' => 3600 * 5,
+    'hotel_search_cache_time' => 15 * 60, //seconds before show notification message for hotel page + cache expiration time
     'hotel_payment_time' => 600,
 
     'HotelBook' => array(
@@ -53,9 +53,6 @@ return CMap::mergeArray(array(
     ),
     'autocompleteLimit' => 10,
     'autocompleteCacheTime' => 3600,
-
-    'hotel_expirationTime' => 15*60, //seconds before show notification message for hotel page
-    'flight_expirationTime' => 15*60, //seconds before show notification message for flight page
 
     'cache.core'=>extension_loaded('apc') ?
 		array(
