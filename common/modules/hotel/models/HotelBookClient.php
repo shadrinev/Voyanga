@@ -435,12 +435,21 @@ class HotelBookClient
     private function processHotelSearchResponse($hotelsXml, $checkIn, $duration)
     {
         $hotelsObject = simplexml_load_string($hotelsXml);
-        //VarDumper::dump($hotelsObject);
-
         $response = new HotelSearchResponse();
         if($hotelsObject)
         {
-            $searchId = (string)$hotelsObject->HotelSearch['searchId'];
+            if (isset($hotelsObject->HotelSearch['searchId']))
+            {
+                $searchId = (string)$hotelsObject->HotelSearch['searchId'];
+            }
+            else
+            {
+                $response->searchId = null;
+                $response->timestamp = time();
+                $response->errorStatus = 2;
+                $response->errorsDescriptions[] = array('code' => '', 'description' => 'Incorrect response from remote server');
+                return $response;
+            }
             $response->searchId = $searchId;
             $response->timestamp = time();
             if (isset($hotelsObject->Hotels->Hotel))
