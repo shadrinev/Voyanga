@@ -12,11 +12,12 @@ class FlightSearch extends CModel implements IStatisticItem
 
     public $id;
     public $timestamp;
-    public $requestId;
-    public $status;
+    public $requestId = '1';
+    public $status = 1;
     public $key;
-    public $data;
+    public $data = '{}';
     public $flight_class;
+    /** @var FlightVoyageStack */
     public $flightVoyageStack;
     private $_routes;
 
@@ -30,6 +31,12 @@ class FlightSearch extends CModel implements IStatisticItem
         );
     }
 
+    /**
+     * @param FlightSearchParams $flightSearchParams
+     * @param bool $returnCacheRecord
+     * @return bool|FlightCache
+     * @throws CException
+     */
     public function sendRequest(FlightSearchParams $flightSearchParams, $returnCacheRecord = true)
     {
         Yii::app()->observer->notify('onBeforeFlightSearch', $this);
