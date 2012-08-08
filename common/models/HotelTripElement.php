@@ -88,7 +88,7 @@ class HotelTripElement extends TripElement
         if ($this->hotel)
             return $this->hotel->getTime();
         else
-            return strtotime($this->checkIn) + (23*3600 + 59 * 60 + 59);
+            return strtotime($this->checkIn);
     }
 
     public function getDuration()
@@ -137,5 +137,10 @@ class HotelTripElement extends TripElement
     public function isLinked()
     {
         return $this->hotel !== null;
+    }
+
+    public function getWeight()
+    {
+        return 2;
     }
 }

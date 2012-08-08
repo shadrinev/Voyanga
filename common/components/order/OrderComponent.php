@@ -15,6 +15,7 @@ class OrderComponent extends CApplicationComponent
         $positions = Yii::app()->{$this->shoppingCartComponent}->getPositions();
         $result = array();
         $time = array();
+        $weight = array();
         foreach($positions as $position)
         {
             if ($asJson)
@@ -26,6 +27,7 @@ class OrderComponent extends CApplicationComponent
                 $element = $position;
             }
             $time[] = $position->getTime();
+            $weight[] = $position->getWeight();
             if ($asJson)
             {
                 if ($position instanceof FlightTripElement)
@@ -41,7 +43,7 @@ class OrderComponent extends CApplicationComponent
         }
         if (sizeof($time)>0)
         {
-            array_multisort($time, SORT_ASC, SORT_NUMERIC, $result['items']);
+            array_multisort($time, SORT_ASC, SORT_NUMERIC, $weight, SORT_ASC, SORT_NUMERIC, $result['items']);
         }
         if ($asJson)
             return json_encode($result);

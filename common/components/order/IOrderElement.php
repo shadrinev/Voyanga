@@ -52,4 +52,12 @@ interface IOrderElement
      * @return mixed false
      */
     public function getPassports();
+
+    /**
+     * Return weight of element among others inside trip constructor. Important when dates are the same. Smaller - higher.
+     *
+     * @abstract
+     * @return mixed
+     */
+    public function getWeight();
 }

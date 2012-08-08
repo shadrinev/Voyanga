@@ -139,4 +139,9 @@ class FlightTripElement extends TripElement
     {
         return $this->flightVoyage !== null;
     }
+
+    public function getWeight()
+    {
+        return 1;
+    }
 }

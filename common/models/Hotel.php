@@ -150,11 +150,6 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
         $orderHasHotel->save();
     }
 
-    public function getTime()
-    {
-        return strtotime($this->checkIn);
-    }
-
     public static function getFromCache($cacheId, $hotelId, $resultId)
     {
         $request = Yii::app()->cache->get('hotelResult'.$cacheId);
@@ -378,5 +373,15 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
      */
     public function getPassports()
     {
+    }
+
+    public function getTime()
+    {
+        return strtotime($this->checkIn);
+    }
+
+    public function getWeight()
+    {
+        return 2;
     }
 }

@@ -255,7 +255,7 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
 
     public function getTime()
     {
-        return $this->flights[0]->flightParts[0]->timestampBegin;
+        return strtotime(date('Y-m-d', $this->flights[0]->flightParts[0]->timestampBegin));
     }
 
     /**
@@ -267,5 +267,10 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
     public function getPassports()
     {
 
+    }
+
+    public function getWeight()
+    {
+        return 1;
     }
 }
