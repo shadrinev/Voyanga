@@ -20,18 +20,24 @@ class SearchController extends ApiController
      * @param int $inf amount of infanties
      * @param string $service_class (A = all | E = economy | B = business)
      */
-    public function actionDefault($destinations, $adt = 1, $chd = 0, $inf = 0, $service_class = 'A')
+    public function actionDefault(array $destinations, $adt = 1, $chd = 0, $inf = 0, $service_class = 'A')
     {
         $flightSearchParams = new FlightSearchParams();
         foreach ($destinations as $route)
         {
             $departureDate = date('d.m.Y', strtotime($route['date']));
+            $departureCity = City::model()->getCityByCode($route['departure']);
+            if (!$departureCity)
+                $this->sendError(400, 'Incorrect IATA code for deparure city');
+            $arrivalCity = City::model()->getCityByCode($route['arrival']);
+            if (!$arrivalCity)
+                $this->sendError(400, 'Incorrect IATA code for arrival city');
             $flightSearchParams->addRoute(array(
                 'adult_count' => $adt,
                 'child_count' => $chd,
                 'infant_count' => $inf,
-                'departure_city_id' => City::model()->getCityByCode($route['departure']),
-                'arrival_city_id' => City::model()->getCityByCode($route['arrival']),
+                'departure_city_id' => $departureCity->id,
+                'arrival_city_id' => $arrivalCity->id,
                 'departure_date' => $departureDate,
             ));
             $flightSearchParams->flight_class = $service_class;

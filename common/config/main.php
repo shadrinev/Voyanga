@@ -191,6 +191,9 @@ return array(
             'password' => '9UfgieYI6vuTit12NHp1w5Ld9MSIhIph7gf8pVqrmW9mXx24WLPnJAnW8FmS8YMq2bWaeMtTYvHdfsXM',
         ),
 
+        'gdsAdapter' => array(
+            'class' => 'GDSAdapter'
+        ),
     ),
 
     'modules'=>array(

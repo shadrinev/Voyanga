@@ -74,13 +74,6 @@ return CMap::mergeArray(
                 'class' => 'CLogRouter',
                 'routes' => array(
                     array(
-                        'class' => 'CWebLogRoute',
-                        'levels' => 'error, warning',
-                        'categories' => 'application',
-                        'levels' => 'error, warning, trace, profile, info'
-                    ),
-
-                    array(
                         'class' => 'CFileLogRoute',
                         'levels' => 'trace, info',
                         'categories' => 'application.*'
