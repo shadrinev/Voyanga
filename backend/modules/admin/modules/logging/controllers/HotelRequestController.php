@@ -39,7 +39,7 @@ class HotelRequestController extends Controller
         $widget->language = 'xml';
         $retArr['methodName'] = $model->methodName;
         $retArr['requestXml'] = $widget->highlight($model->requestXml);
-        if(strlen($model->responseXml) < 15000)
+        if(strlen($model->responseXml) < 7500)
         {
             $retArr['responseXml'] = $widget->highlight($model->responseXml);
         }else{
