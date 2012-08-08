@@ -56,6 +56,7 @@ class TestApiController extends FrontendController
                 'date' => '01.10.2012',
             ))
         );
+        VarDumper::dump($search);
         $fullUrl = $this->buildAviaApiUrl($search);
         $result = file_get_contents($fullUrl);
         return $result;
@@ -81,6 +82,7 @@ class TestApiController extends FrontendController
                     'date' => '20.10.2012',
                 ),
             ));
+        VarDumper::dump($search);
         $fullUrl = $this->buildAviaApiUrl($search);
         $result = file_get_contents($fullUrl);
         return $result;
@@ -101,6 +103,7 @@ class TestApiController extends FrontendController
                     'date' => '15.10.2012',
                 ),
             ));
+        VarDumper::dump($search);
         $fullUrl = $this->buildAviaApiUrl($search);
         $result = file_get_contents($fullUrl);
         return $result;
@@ -127,6 +130,7 @@ class TestApiController extends FrontendController
                     'date' => '20.10.2012',
                 ),
             ));
+        VarDumper::dump($search);
         $fullUrl = $this->buildAviaApiUrl($search);
         $result = file_get_contents($fullUrl);
         return $result;
