@@ -122,10 +122,7 @@ return CMap::mergeArray(
                 'errorAction' => 'site/error'
             ),
 
-            //todo: is it should be inside backend?
-            'gdsAdapter' => array(
-                'class' => 'GDSAdapter'
-            ),
+
 
             'log' => array(
                 'class' => 'CLogRouter',

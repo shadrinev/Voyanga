@@ -88,7 +88,7 @@ class HotelTripElement extends TripElement
         if ($this->hotel)
             return $this->hotel->getTime();
         else
-            return strtotime($this->checkIn)+1;
+            return strtotime($this->checkIn) + (23*3600 + 59 * 60 + 59);
     }
 
     public function getDuration()

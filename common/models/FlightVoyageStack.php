@@ -213,4 +213,14 @@ class FlightVoyageStack
         }
         return json_encode($ret);
     }
+
+    public function getJsonObject()
+    {
+        $ret = array('searchId'=>$this->fsKey,'flightVoyages'=>array());
+        foreach($this->flightVoyages as $flightVoyage)
+        {
+            $ret['flightVoyages'][] = $flightVoyage->getJsonObject();
+        }
+        return $ret;
+    }
 }

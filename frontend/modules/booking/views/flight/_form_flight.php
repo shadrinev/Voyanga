@@ -90,7 +90,7 @@
 <?php $this->widget('site.common.widgets.expiredNotification.expiredNotificationWidget', array(
     'id' => $templateVariable.'Counter',
     'autoStart' => false,
-    'time' => appParams('flight_expirationTime'),
+    'time' => appParams('flight_search_cache_time'),
     'header' => false,
     'message' => 'Информация о найденных вами перелётах устарела. <a class="repeatFlightSearch" href="#">Выполнить поиск снова</a>',
     'showCancel' => false,

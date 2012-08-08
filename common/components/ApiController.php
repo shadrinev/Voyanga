@@ -6,11 +6,6 @@ class ApiController extends Controller
     private $_contentType = 'application/json';
     public $data = array();
 
-    public function getActionParams()
-    {
-        return array_merge($_GET, $_POST);
-    }
-
     public function setStatusCode($val)
     {
         $this->_statusCode = $val;
@@ -37,7 +32,7 @@ class ApiController extends Controller
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
 
-    private function _sendResponse($raw=false)
+    private function _sendResponse($raw=false, $dataType = 'application/json')
     {
         $status = $this->_statusCode;
         $contentType = $this->_contentType;
@@ -59,6 +54,18 @@ class ApiController extends Controller
     {
         $this->data = $data;
         $this->_sendResponse($raw);
+    }
+
+    public function sendJson($data, $raw=false)
+    {
+        $this->data = $data;
+        $this->_sendResponse($raw, 'application/json');
+    }
+
+    public function sendXml($data, $raw=false)
+    {
+        $this->data = $data;
+        $this->_sendResponse($raw, 'application/xml');
     }
 
     public function sendError($errorCode, $errorText='')
