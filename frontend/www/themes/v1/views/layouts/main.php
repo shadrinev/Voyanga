@@ -25,6 +25,10 @@
           href="<?php echo Yii::app()->theme->baseUrl; ?>/images/apple-touch-icon-114x114.png">-->
 </head>
 <body>
+<div id="loadingDiv" class="hide">
+    <img src='/img/spinner_big.gif'>
+</div>
+<div id="errorAjax" class="hide alert alert-error">Server exception</div>
 <div class="wrapper">
     <div class="container">
         <?php $this->widget('bootstrap.widgets.BootTabbable', array(
@@ -44,5 +48,27 @@
     <p>Copyright &copy; <?php echo date('Y'); ?> by Voyanga.com<br/>
       All Rights Reserved.<br/>
 </footer>
+<script type="text/javascript">
+$(function(){
+    $('#loadingDiv')
+        .ajaxStart(function() {
+            $(this).show();
+        })
+        .ajaxStop(function() {
+            $(this).hide();
+        });
+
+    $('#ajaxError')
+        .ajaxError(function() {
+            var that = $(this);
+            that.show();
+            console.log('Error happens');
+            setTimeout(function(){
+                that.hide('fast');
+            }, 1000);
+        });
+
+});
+</script>
 </body>
 </html>

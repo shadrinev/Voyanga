@@ -56,3 +56,15 @@ html, body {
 .userinfo {
     min-height: 200px;
 }
+
+#loadingDiv {
+    position: fixed;
+    top: 50px;
+    left: 20px;
+}
+
+#errorAjax {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+}

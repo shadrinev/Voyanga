@@ -61,7 +61,7 @@ class ShowTripAction extends CAction
                     }
                     else
                     {
-                        $tab['content'] = '123';//VarDumper::dumpAsString($tabItem->getPassports(), 10, true);
+                        $tab['content'] = 'loading...';//VarDumper::dumpAsString($tabItem->getPassports(), 10, true);
                         $tab['itemOptions']['class'] = 'hotel unfill';
                         $tab['fill'] = false;
                     }
