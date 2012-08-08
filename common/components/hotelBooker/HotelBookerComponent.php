@@ -11,7 +11,7 @@ class HotelBookerComponent extends CApplicationComponent
     private $hotelBooker;
 
     /** @var Hotel */
-    private $hotel;
+    public $hotel;
 
     public function init()
     {
@@ -59,6 +59,7 @@ class HotelBookerComponent extends CApplicationComponent
             {
                 Yii::trace('Trying to restore hotelBooker from db', 'HotelBookerComponent.book');
                 $this->hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey' => $this->hotel->getId()));
+                $this->hotelBooker->setHotelBookerComponent($this);
                 if ($this->hotelBooker)
                     Yii::trace('Done', 'HotelBookerComponent.book');
                 else
@@ -71,6 +72,7 @@ class HotelBookerComponent extends CApplicationComponent
                 $this->hotelBooker->hotelResultKey = $this->hotel->getId();
                 $this->hotelBooker->hotel = $this->hotel;
                 $this->hotelBooker->status = 'enterCredentials';
+                $this->hotelBooker->setHotelBookerComponent($this);
                 $this->hotelBooker->save();
             }
         }
@@ -179,11 +181,11 @@ class HotelBookerComponent extends CApplicationComponent
     }
 
     // this is action
-    /*public function stageSoftWaitingForPayment()
+    public function stageSoftWaitingForPayment()
     {
         //переход в SoftStartPayment, если достаточно времени.
         //Написать aciton клика по кнопке и там проверки условия для перехода
-    }*/
+    }
 
     public function stageBookingError()
     {
@@ -410,13 +412,16 @@ class HotelBookerComponent extends CApplicationComponent
     {
         $this->hotelBooker = HotelBooker::model()->findByPk($hotelBookerId);
         if (!$this->hotelBooker) throw new CException('HotelBooker with id ' . $hotelBookerId . ' not found');
+        $this->hotelBooker->setHotelBookerComponent($this);
         $this->hotel = unserialize($this->hotelBooker->hotelInfo);
+        $this->hotelBooker->hotel = $this->hotel;
     }
 
     public function setHotelBookerFromHotel(Hotel $hotel)
     {
         $this->hotelBooker = new HotelBooker();
         $this->hotelBooker->hotel = $hotel;
+        $this->hotelBooker->setHotelBookerComponent($this);
         $this->hotel = $hotel;
     }
 

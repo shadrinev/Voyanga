@@ -55,15 +55,15 @@ class ShowTripAction extends CAction
                     );
                     if($tabItem->hotel)
                     {
-                        $tab['content'] = '123';//VarDumper::dumpAsString($tabItem->hotel, 10, true);
+                        $tab['content'] = $this->controller->renderPartial('_choosed_hotel_precompiled', array('hotel'=>$tabItem->hotel), true);
                         $tab['itemOptions']['class'] = 'hotel fill';
-                        //$tab['fill'] = true;
+                        $tab['fill'] = true;
                     }
                     else
                     {
                         $tab['content'] = '123';//VarDumper::dumpAsString($tabItem->getPassports(), 10, true);
                         $tab['itemOptions']['class'] = 'hotel unfill';
-                        //$tab['fill'] = false;
+                        $tab['fill'] = false;
                     }
 
                     $tabs[] = $tab;

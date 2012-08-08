@@ -92,6 +92,9 @@ class OrderComponent extends CApplicationComponent
 
     public function booking()
     {
+        //$positions = $this->getPositions(false);
+        //VarDumper::dump($positions);die();
+        echo date('Y-m-d H:i:s');
         $bookingModel = new OrderBooking();
         $bookingModel->attributes = ($this->getOrderParams()) ? $this->getOrderParams()->attributes : array();
         $validSaving = $bookingModel->save();
@@ -101,108 +104,140 @@ class OrderComponent extends CApplicationComponent
 
         if($validSaving)
         {
+            echo "processing ".$bookingModel->id;
             $positions = $this->getPositions(false);
             if(isset($positions['items']))
                 $positions = $positions['items'];
 
             //die();
+            $bookedElements = array();
 
             /** @var HotelTripElement[] $positions */
             foreach($positions as $position)
             {
                 $passports = $position->getPassports();
+                //VarDumper::dump($passports);die();
                 if($position instanceof HotelTripElement)
                 {
-                    /** @var HotelBookerComponent $hotelBookerComponent  */
-                    $hotelBookerComponent = new HotelBookerComponent();
-                    $hotelBookerComponent->setHotelBookerFromHotel($position->hotel);
+                    echo "Processing HotelTrip";
+                    $groupId = $position->getId();
+                    if(!isset($bookedElements[$groupId]))
+                    {
+                        /** @var HotelBookerComponent $hotelBookerComponent  */
+                        $hotelBookerComponent = new HotelBookerComponent();
 
-                    //$hotelBookerComponent->book();
-                    $hotelBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
-                    $hotelBookerComponent->getCurrent()->save();
-                    //??
-                    $hotelBookerId = $hotelBookerComponent->getHotelBookerId();
-                    /** @var $passports HotelPassportForm */
-                    foreach($passports->roomsPassports as $roomsPassport)
-                    {
-                        /** @var $roomsPassport RoomPassportForm[] */
-                        foreach ($roomsPassport as $i=>$roomPassport)
+                        $hotelBookerComponent->setHotelBookerFromHotel($position->hotel);
+
+                        $bookedElements[$groupId] = $groupId;
+
+                        //$hotelBookerComponent->book();
+                        $hotelBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
+                        $hotelBookerComponent->getCurrent()->status = 'enterCredentials';
+                        $hotelBookerComponent->getCurrent()->save();
+
+                        if($hotelBookerComponent->getCurrent()->getErrors()){
+                            VarDumper::dump($hotelBookerComponent->getCurrent()->getErrors());
+                        }else
                         {
-                            foreach($roomPassport->adultsPassports as $adultInfo)
-                            {
-                                $hotelPassport = new HotelBookingPassport();
-                                $hotelPassport->scenario = 'adult';
-                                $hotelPassport->attributes = $adultInfo->attributes;
-                                $hotelPassport->hotelBookingId = $hotelBookerId;
-                                $hotelPassport->roomKey = $i;
-                                $validSaving = $validSaving and $hotelPassport->save();
-                                Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.adultPassport');
-                            }
-                            foreach($roomPassport->childrenPassports as $childInfo)
-                            {
-                                $hotelPassport = new HotelBookingPassport();
-                                $hotelPassport->scenario = 'child';
-                                $hotelPassport->attributes = $childInfo->attributes;
-                                $hotelPassport->hotelBookingId = $hotelBookerId;
-                                $hotelPassport->roomKey = $i;
-                                $validSaving = $validSaving and $hotelPassport->save();
-                                Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.childPassport');
-                            }
+                            echo "HotelBooker id :".$hotelBookerComponent->getCurrent()->id;
                         }
-                    }
-                    if ($validSaving)
-                    {
-                        $hotelBookerComponent->status('analyzing');
+                        //die();
+                        //??
+                        $hotelBookerId = $hotelBookerComponent->getHotelBookerId();
+                        /** @var $passports HotelPassportForm */
+                        foreach($passports->roomsPassports as $i=>$roomPassport)
+                        {
+                            //VarDumper::dump($roomsPassport);die();
+                            /** @var $roomsPassport RoomPassportForm[] */
+                            //foreach ($roomsPassport as $i=>$roomPassport)
+                            //{
+                                foreach($roomPassport->adultsPassports as $adultInfo)
+                                {
+                                    $hotelPassport = new HotelBookingPassport();
+                                    $hotelPassport->scenario = 'adult';
+                                    $hotelPassport->attributes = $adultInfo->attributes;
+                                    $hotelPassport->hotelBookingId = $hotelBookerId;
+                                    $hotelPassport->roomKey = $i;
+                                    $validSaving = $validSaving and $hotelPassport->save();
+                                    Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.adultPassport');
+                                }
+                                foreach($roomPassport->childrenPassports as $childInfo)
+                                {
+                                    $hotelPassport = new HotelBookingPassport();
+                                    $hotelPassport->scenario = 'child';
+                                    $hotelPassport->attributes = $childInfo->attributes;
+                                    $hotelPassport->hotelBookingId = $hotelBookerId;
+                                    $hotelPassport->roomKey = $i;
+                                    $validSaving = $validSaving and $hotelPassport->save();
+                                    Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.childPassport');
+                                }
+                            //}
+                        }
+                        if ($validSaving)
+                        {
+                            //VarDumper::dump($hotelBookerComponent->hotel);die();
+                            echo "Go to analyzing";
+                            $hotelBookerComponent->status('analyzing');
+                        }
                     }
                 }
                 elseif($position instanceof FlightTripElement)
                 {
-                    /** @var FlightBookerComponent $flightBookerComponent  */
-                    $flightBookerComponent = new FlightBookerComponent();
-                    $flightBookerComponent->setFlightBookerFromFlightVoyage($position->flightVoyage);
+                    $groupId = $position->getGroupId();
+                    if(!isset($bookedElements[$groupId]))
+                    {
+                        echo "processing Flight";
+                        /** @var FlightBookerComponent $flightBookerComponent  */
+                        $flightBookerComponent = new FlightBookerComponent();
+                        $flightBookerComponent->setFlightBookerFromFlightVoyage($position->flightVoyage);
 
-                    $flightBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
-                    $flightBookerComponent->getCurrent()->save();
-                    VarDumper::dump($flightBookerComponent);
-                    $flightBookerId = $flightBookerComponent->getFlightBookerId();
-                    VarDumper::dump($passports);
-                    //die();
-                    /** @var $passports PassengerPassportForm[] */
-                    //foreach($passports as $passport)
-                    //{
+                        $bookedElements[$groupId] = $groupId;
+                        $flightBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
+                        $flightBookerComponent->getCurrent()->save();
 
-                        foreach ($passports->adultsPassports as $adultInfo)
-                        {
-                            $flightPassport = new FlightBookingPassport();
-                            //$flightPassport->attributes = $adultInfo->attributes;
-                            //$flightPassport->flightBookingId = $flightBookerId;
-                            $flightPassport->populate($adultInfo,$flightBookerId);
-                            $flightPassport->save();
-                        }
-                        foreach ($passports->childrenPassports as $childInfo)
-                        {
-                            $flightPassport = new FlightBookingPassport();
-                            //$flightPassport->attributes = $childInfo->attributes;
-                            //$flightPassport->flightBookingId = $flightBookerId;
-                            $flightPassport->populate($childInfo,$flightBookerId);
-                            $flightPassport->save();
-                        }
-                        foreach ($passports->infantPassports as $infantInfo)
-                        {
-                            $flightPassport = new FlightBookingPassport();
-                            //$flightPassport->attributes = $infantInfo->attributes;
-                            //$flightPassport->flightBookingId = $flightBookerId;
-                            $flightPassport->populate($infantInfo,$flightBookerId);
-                            $flightPassport->save();
-                        }
-                        //Yii::trace(CVarDumper::dumpAsString($flightPassport->errors), 'FlightBooker.EnterCredentials.flightPassport');
-                    //}
-                    //VarDumper::dump($flightBookerComponent);
+                        //VarDumper::dump($flightBookerComponent);
+                        $flightBookerId = $flightBookerComponent->getFlightBookerId();
+                        echo "FlightBookerId : $flightBookerId";
+                        //VarDumper::dump($passports);
+                        //die();
+                        /** @var $passports PassengerPassportForm[] */
+                        //foreach($passports as $passport)
+                        //{
 
-                    $flightBookerComponent->status('booking');
+                            foreach ($passports->adultsPassports as $adultInfo)
+                            {
+                                $flightPassport = new FlightBookingPassport();
+                                //$flightPassport->attributes = $adultInfo->attributes;
+                                //$flightPassport->flightBookingId = $flightBookerId;
+                                $flightPassport->populate($adultInfo,$flightBookerId);
+                                $flightPassport->save();
+                            }
+                            foreach ($passports->childrenPassports as $childInfo)
+                            {
+                                $flightPassport = new FlightBookingPassport();
+                                //$flightPassport->attributes = $childInfo->attributes;
+                                //$flightPassport->flightBookingId = $flightBookerId;
+                                $flightPassport->populate($childInfo,$flightBookerId);
+                                $flightPassport->save();
+                            }
+                            foreach ($passports->infantPassports as $infantInfo)
+                            {
+                                $flightPassport = new FlightBookingPassport();
+                                //$flightPassport->attributes = $infantInfo->attributes;
+                                //$flightPassport->flightBookingId = $flightBookerId;
+                                $flightPassport->populate($infantInfo,$flightBookerId);
+                                $flightPassport->save();
+                            }
+                            //Yii::trace(CVarDumper::dumpAsString($flightPassport->errors), 'FlightBooker.EnterCredentials.flightPassport');
+                        //}
+                        //VarDumper::dump($flightBookerComponent);
+                        echo "GoTo Booking";
+                        $flightBookerComponent->status('booking');
+                    }
                 }
             }
         }
+
     }
 
     public function startPayment()

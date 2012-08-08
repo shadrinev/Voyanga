@@ -109,18 +109,16 @@ class BasketController extends Controller
                     break;
                 case Hotel::TYPE:
                     /** @var $hotel Hotel */
-                    $hotel = Hotel::getFromCache($key, $searchId, $searchId2);
+                    $hotel = Hotel::getFromCache($searchId, null, $key);
                     if ($hotel)
                     {
-                        $item = new HotelTripElement();
-                        $item->hotel = $hotel;
+                        //$needPosition = new HotelTripElement();
+                        $needPosition->hotel = $hotel;
 
-                        $item->city = City::getCityByHotelbookId($hotel->cityId)->id;
-                        $checkInTimestamp = strtotime($hotel->checkIn);
-                        $item->checkIn = date('d.m.Y',$checkInTimestamp);
-                        $item->checkOut = date('d.m.Y',$checkInTimestamp + $hotel->duration*3600*24);
-                        $item->id = time();
-                        Yii::app()->shoppingCart->put($item);
+
+                        Yii::app()->shoppingCart->update($needPosition,1);
+
+                        echo json_encode($hotel->getJsonObject());
                     }
                     else
                         throw new CHttpException(404, 'Can\'t found item inside cache');

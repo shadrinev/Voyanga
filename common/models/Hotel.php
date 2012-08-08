@@ -155,13 +155,13 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
         return strtotime($this->checkIn);
     }
 
-    public static function getFromCache($cacheId, $hotelId, $roomId)
+    public static function getFromCache($cacheId, $hotelId, $resultId)
     {
         $request = Yii::app()->cache->get('hotelResult'.$cacheId);
         $foundHotel = false;
         foreach ($request['hotels'] as $unique=>$hotel)
         {
-            if ($hotel->resultId==$roomId)
+            if ($hotel->resultId==$resultId)
                 $foundHotel = $hotel;
         }
         return $foundHotel;

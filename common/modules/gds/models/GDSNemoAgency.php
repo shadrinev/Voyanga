@@ -516,7 +516,7 @@ class GDSNemoAgency extends CComponent
                 //$oTraveller = array();
                 $oTraveller['Type'] = Yii::app()->params['aPassegerTypes'][$passenger->type];
                 $oTraveller['Num'] = $iNum;
-                $oTraveller['IsContact'] = 'true';
+                $oTraveller['IsContact'] = $iNum == 1 ? true : false;
                 $oTraveller['PersonalInfo'] = array();
                 $oTraveller['PersonalInfo']['DateOfBirth'] = $passenger->passport->birthday;
                 $oTraveller['PersonalInfo']['Nationality'] = Country::getCountryByPk($passenger->passport->countryId)->code;
@@ -535,6 +535,7 @@ class GDSNemoAgency extends CComponent
                 $oTraveller['ContactInfo']['Telephone']['PhoneNumber'] = '9125556699';
 
                 $aTraveler[] = $oTraveller;
+                $iNum++;
             }
             $aParams['Request']['BookFlight']['Travellers']['Traveller'] = $aTraveler;
             $aParams['Request']['BookFlight']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($aParams['Request']['BookFlight']['Travellers']['Traveller'] );
@@ -575,9 +576,6 @@ class GDSNemoAgency extends CComponent
                 }
             }
         }
-
-
-
 
         if($status == 'booked')
         {

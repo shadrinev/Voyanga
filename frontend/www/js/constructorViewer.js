@@ -92,10 +92,84 @@ constructorViewer.init = function(){
         }
         if(tabElem.info.type == 'hotel'){
             console.log('hl');
+            if(tabElem.fill === false)
+            {
+                var requestParams = {HotelRoomForm: new Array(),
+                    HotelForm: {cityId: tabElem.info.cityId, fromDate: tabElem.info.checkIn,duration:1}
+                };
+                var roomParams = new Object();
+                roomParams.adultCount = tabElem.info.adultCount;
+                roomParams.childCount = tabElem.info.childCount;
+                roomParams.infantCount = tabElem.info.infantCount;
+                requestParams.HotelRoomForm.push(roomParams);
+                $.ajax({
+                    url: '/tour/constructor/hotelSearch',
+                    dataType: 'json',
+                    data: requestParams,
+                    context: $('#'+tabElem.id),
+                    timeout: 90000
+                })
+                    .done(function(data) {
+                        console.log(data);
+                        var html = hotelSearchResult(data.hotels);
+                        $(this).html(html);
+
+                        cartElemId = $(this).attr('id');
+                        cartElemId = cartElemId.slice(0,-4);
+
+                        $(this).find('.choose').data('cartElemId',cartElemId);
+                        $(this).find('.choose').data('cacheId',data.cacheId);
+                        $(this).find('.choose').live('click',function(){
+                            var cacheId = $(this).data('cacheId');
+                                //hotelId = $(this).attr('href');
+                            var resultId = $(this).data('resultid');
+                                btn = $(this);
+
+                            cartElemId = $(this).data('cartElemId');
+                            $.getJSON('/tour/basket/fillCartElement/type/'+constructorViewer.hotelTypeConst+'/cartElementId/'+cartElemId+'/key/'+resultId+'/searchId/'+cacheId)
+                                .done(function(data){
+
+                                    console.log(data);
+                                });
+
+                            //console.log(key1);
+                            //console.log(key2);
+                            //console.log(searchId);
+                            return false;
+                        });
+
+
+                    })
+                    .fail(function(data){
+                        console.log(data);
+                        if (data.statusText=='timeout')
+                            data.responseText = 'Время ожидания запроса превышено.';
+                        $(this).html('<div class=\"alert alert-error\">Произошла ошибка! Попробуйте <a id=\"repeatFlightSearch\" href=\"#\">повторить поиск</a>.<br>Текст ошибки:<br>'+data.responseText+'</div>');
+                    });
+            }
+            console.log(tabElem);
         }
     }
 }
 
+/*
+ adultCount: 2
+ checkIn: "13.09.2012"
+ checkOut: "01.10.2012"
+ childCount: 0
+ cityId: "4787"
+ infantCount: 0
+ type: "hotel"
+ HotelForm[cityId] =
+ HotelForm[fromDate] =
+ HotelForm[duration] =
+ HotelRoomForm[0][adultCount]
+ HotelRoomForm[0][childCount]
+ HotelRoomForm[0][infantCount]
+ HotelRoomForm[0][childAge]
+ HotelRoomForm[0][cots]
+
+ */
 $(window).load(function(){
     constructorViewer.init();
 

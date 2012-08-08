@@ -22,6 +22,7 @@ class HotelBooker extends SWLogActiveRecord
 {
     private $_hotel;
     private $statusChanged = false;
+    private $hotelBookerComponent;
 
     /**
      * Returns the static model of the specified AR class.
@@ -52,12 +53,31 @@ class HotelBooker extends SWLogActiveRecord
         if (!$this->statusChanged)
             return parent::afterSave();
         $method = 'stage'.$this->swGetStatus()->getId();
-        if (method_exists(Yii::app()->hotelBooker, $method))
+        if (method_exists(Yii::app()->hotelBooker, $method) or method_exists($this->hotelBookerComponent, $method))
         {
-            Yii::app()->hotelBooker->$method();
+            if($this->hotelBookerComponent)
+            {
+                $this->hotelBookerComponent->$method();
+                return parent::afterSave();
+            }
+            elseif(Yii::app()->hotelBooker)
+            {
+                Yii::app()->hotelBooker->$method();
+                return parent::afterSave();
+            }
+            else
+            {
+
+                Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+            }
+
         }
-        else
-            Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+        else{ echo 'not found  hotelbookerComponent method '.$method;
+            VarDumper::dump(method_exists($this->hotelBookerComponent, $method));
+            VarDumper::dump($this->hotelBookerComponent);
+            //VarDumper::dump(Yii::app()->hotelBooker);
+        }
+            //Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
     }
 
     public function behaviors()
@@ -183,7 +203,7 @@ class HotelBooker extends SWLogActiveRecord
         $element = serialize($value);
         $this->_hotel = $value;
         $this->hotelInfo = $element;
-        $this->price = $element->price;
+        $this->price = $value->price;
     }
 
     public function getFullDescription()
@@ -215,5 +235,10 @@ class HotelBooker extends SWLogActiveRecord
             }
         }
         return $description;
+    }
+
+    public function setHotelBookerComponent(HotelBookerComponent &$hotelBookerComponent)
+    {
+        $this->hotelBookerComponent = &$hotelBookerComponent;
     }
 }

@@ -13,6 +13,7 @@ Yii::app()->clientScript->registerScript('flight-search', 'constructorViewer.tab
 
 <?php $templateVariable = 'flightSearchResult';
 $this->renderPartial('_flights', array('variable'=>$templateVariable,'showSaveTour'=>true, 'showDelete'=>false));
+$this->renderPartial('_hotels', array('variable'=>'hotelSearchResult','showSaveTour'=>true, 'showDelete'=>false));
 $this->renderPartial('_choosed_flight', array('variable'=>'choosedFlight','showSaveTour'=>true, 'showDelete'=>false));
 ?>
 

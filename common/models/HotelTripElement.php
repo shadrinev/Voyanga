@@ -114,12 +114,12 @@ class HotelTripElement extends TripElement
         $adult2 = $roomPassport->adultsPassports[1] = new HotelAdultPassportForm();
 
         $adult1->genderId = HotelAdultPassportForm::GENDER_MALE;
-        $adult1->firstName = 'Иванов';
-        $adult1->lastName = 'Иван';
+        $adult1->firstName = 'Ivanov';
+        $adult1->lastName = 'Egor';
 
         $adult2->genderId = HotelAdultPassportForm::GENDER_MALE;
-        $adult2->firstName = 'Семёнов';
-        $adult2->lastName = 'Семён';
+        $adult2->firstName = 'Semenov';
+        $adult2->lastName = 'Vladimir';
 
         return $fake;
     }

@@ -20,6 +20,7 @@ class FrontendConstructorController extends FrontendController
             'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
             'new' => array('class'=>'site.common.modules.tour.actions.constructor.NewAction'),
             'flightSearch' => array('class'=>'site.common.modules.tour.actions.constructor.FlightSearchAction'),
+            'hotelSearch' => array('class'=>'site.common.modules.tour.actions.constructor.HotelSearchAction'),
             'showBasket' => array('class'=>'site.common.modules.tour.actions.constructor.ShowBasketAction'),
         );
     }

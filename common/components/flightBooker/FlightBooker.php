@@ -57,13 +57,18 @@ class FlightBooker extends SWLogActiveRecord
         $method = 'stage'.$this->swGetStatus()->getId();
         if (method_exists(Yii::app()->flightBooker, $method))
         {
-            if($this->flightBookerComponent){
+            if($this->flightBookerComponent)
+            {
                 $this->flightBookerComponent->$method();
                 return parent::afterSave();
-            }elseif(Yii::app()->flightBooker){
+            }
+            elseif(Yii::app()->flightBooker)
+            {
                 Yii::app()->flightBooker->$method();
                 return parent::afterSave();
-            }else{
+            }
+            else
+            {
                 Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
             }
 

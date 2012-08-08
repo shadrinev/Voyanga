@@ -35,9 +35,9 @@ class MakeBookingAction extends CAction
                 }
             }
         }
-        VarDumper::dump(Yii::app()->shoppingCart);
-        VarDumper::dump($valid);
-        VarDumper::dump($trip);
+        //VarDumper::dump(Yii::app()->shoppingCart);
+        //VarDumper::dump($valid);
+        //VarDumper::dump($trip);
         if($valid)
         {
             Yii::app()->order->booking();

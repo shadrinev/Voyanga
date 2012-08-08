@@ -46,7 +46,7 @@ class WorkflowStates extends EMongoDocument // Notice: We extend EMongoDocument 
     {
         $criteria = new EMongoCriteria(array('conditions'=>array('className'=>array('equals'=>$transitionInfo['modelName']),'objectId'=>array('equals'=>$transitionInfo['modelId']) ) ));
         /** @var WorkflowStates $wfStates  */
-        echo WorkflowStates::model()->count($criteria);
+        //echo WorkflowStates::model()->count($criteria);
         $wfStates = WorkflowStates::model()->find($criteria);
 
         if($wfStates)

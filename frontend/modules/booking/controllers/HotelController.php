@@ -73,6 +73,7 @@ class HotelController extends FrontendController
                 Yii::app()->cache->set('hotelSearchParams'.$cacheId, $hotelSearchParams,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelForm'.$cacheId, $hotelForm,appParams('hotel_search_cache_time'));
                 Yii::app()->user->setState('hotel.cacheId', $cacheId);
+                //die();
                 $this->redirect('/booking/hotel/result/cacheId/'.$cacheId);
             }
             else
