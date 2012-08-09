@@ -19,6 +19,7 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
     public $childPassengerInfo;
     public $infantPassengerInfo;
     public $bestMask = 0;
+    public $webService;
     public $searchKey;
 
     /**
@@ -97,6 +98,7 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         $this->taxes = $oParams->commission_price;
         $this->flightKey = $oParams->flight_key;
         $this->commission = $oParams->commission_price;
+        $this->webService = $oParams->webService;
         $this->flights = array();
         //$this->searchKey = $oParams->searchId;
         if (!$this->valAirline)
