@@ -396,8 +396,8 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
     {
         if (!$this->_city)
         {
-            $this->_city = City::getCityByPk($this->cityId);
-            if (!$this->_city) throw new CException(Yii::t('application', 'Hotel city not found. City with id {city_id} not set in db.', array(
+            $this->_city = City::getCityByHotelbookId($this->cityId);
+            if (!$this->_city) throw new CException(Yii::t('application', 'Hotel city not found. City with hotelbookId {city_id} not set in db.', array(
                 '{city_id}' => $this->cityId)));
         }
         return $this->_city;
