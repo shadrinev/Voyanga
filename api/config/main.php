@@ -39,6 +39,7 @@ return CMap::mergeArray(
             'application.controllers.*',
             'application.models.*',
             'application.helpers.*',
+            'site.common.modules.hotel.models.*'
         ),
 
         'modules' => array(

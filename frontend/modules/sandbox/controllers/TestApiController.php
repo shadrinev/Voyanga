@@ -9,13 +9,15 @@ class TestApiController extends FrontendController
 {
     public $api = 'http://api.misha.voyanga/v1';
     public $avia = 'avia';
+    public $hotel = 'hotel';
     public $search = 'search';
 
     public $tests = array(
-        'aviaSearchSimple',
+/*        'aviaSearchSimple',
         'aviaSearchComplex',
         'aviaSearchRoundTrip',
-        'aviaSearchComplexRoundTrip',
+        'aviaSearchComplexRoundTrip',*/
+        'hotelSearchSimple',
     );
 
     public function actionDefault()
@@ -42,6 +44,13 @@ class TestApiController extends FrontendController
     private function buildAviaApiUrl($params)
     {
         $url = $this->api . '/' . $this->avia . '/' . $this->search;
+        $fullUrl = $url . '?' . http_build_query($params);
+        return $fullUrl;
+    }
+
+    private function buildHotelApiUrl($params)
+    {
+        $url = $this->api . '/' . $this->hotel . '/' . $this->search;
         $fullUrl = $url . '?' . http_build_query($params);
         return $fullUrl;
     }
@@ -132,6 +141,26 @@ class TestApiController extends FrontendController
             ));
         VarDumper::dump($search);
         $fullUrl = $this->buildAviaApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
+    private function hotelSearchSimple()
+    {
+        $search = array(
+            'city' => 'MOW',
+            'checkIn' => '2012-10-01',
+            'duration' => 10,
+            'rooms' => array(
+                array(
+                    'adt' => '2',
+                    'chd' => '0',
+                    'chdAge' => '0',
+                    'cots' => '0',
+                ))
+        );
+        VarDumper::dump($search);
+        $fullUrl = $this->buildHotelApiUrl($search);
         $result = file_get_contents($fullUrl);
         return $result;
     }
