@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-    'HotelRequests',
+    'Orders',
 );
 
 $this->menu=array(

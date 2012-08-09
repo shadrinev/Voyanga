@@ -1,8 +1,17 @@
 <?php
 $this->breadcrumbs=array(
-    'HotelRequests'=>'/admin/orders/orderBooking', 'Order'
+    'Orders'=>'/admin/orders/orderBooking', 'Order'
 );
 ?>
+<!-- HARDCORE -->
+<style>
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+    background-color: white;
+}
+
+</style>
+
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -21,8 +30,8 @@ $this->breadcrumbs=array(
       <td colspan="3">
         <?php if(count($data['flightBookings'])): ?>
         <h3>Авиабилеты</h3>
-        <table class="table table-bordered">
-          <thead>
+        <table class="table table-bordered table-hover">
+          <?php foreach($data['flightBookings'] as $booking) :?>
             <tr>
               <th>Наш номер брони</th>
               <th>Номер брони в Nemo</th>
@@ -36,8 +45,6 @@ $this->breadcrumbs=array(
               <th>Стоимость</th>
               <th>Статус</th>
             </tr>
-          </thead>
-          <?php foreach($data['flightBookings'] as $booking) :?>
           <tr>
             <td>
               <?= $booking->id ?>
@@ -75,7 +82,7 @@ $this->breadcrumbs=array(
           </tr>
           <tr>
             <td colspan="11">
-              Пассажиры
+              <h4>Пассажиры</h4>
               <table class="table-bordered">
                 <thead>
                   <tr>
@@ -94,6 +101,10 @@ $this->breadcrumbs=array(
               </table>
             </td>
           </tr>
+          <tr>
+            <td colspan="11">
+    </td>
+    </tr>
           <?php endforeach; ?>
         </table>
         <?php endif; ?>
