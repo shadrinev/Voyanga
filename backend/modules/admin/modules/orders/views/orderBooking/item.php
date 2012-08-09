@@ -152,7 +152,7 @@ $this->breadcrumbs=array(
           </tr>
           <tr>
             <!-- FIXME copypaste -->
-            <td colspan="11">
+            <td colspan="8">
               Гости отеля
               <table class="table-bordered">
                 <thead>
@@ -170,6 +170,10 @@ $this->breadcrumbs=array(
                 </tr>
                 <?php endforeach; ?>
               </table>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="8">
             </td>
           </tr>
           <?php endforeach; ?>
