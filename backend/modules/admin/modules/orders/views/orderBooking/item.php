@@ -1,3 +1,8 @@
+<?php
+$this->breadcrumbs=array(
+    'HotelRequests'=>'/admin/orders/orderBooking', 'Order'
+);
+?>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -15,7 +20,7 @@
     <tr>
       <td colspan="3">
         <?php if(count($data['flightBookings'])): ?>
-        Авиабилеты
+        <h3>Авиабилеты</h3>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -68,33 +73,34 @@
               <?= $data['orderBooking']->stateAdapter($booking->status); ?>
             </td>
           </tr>
-	  <tr>
-	    <td colspan="11">
-	      Пассажиры
+          <tr>
+            <td colspan="11">
+              Пассажиры
               <table class="table-bordered">
-		<thead>
-		  <tr>
-		    <th>Номер билета</th>
-		    <th>ФИО</th>
-		    <th>Серия/Номер документа</th>
-		  </tr>
-		</thead>
-		<?php foreach($booking->flightBookingPassports as $passport): ?>
-		<tr>
-		  <td>TODO</td>
-		  <td><?= $passport->firstName; ?> <?= $passport->lastName; ?></td>
-		  <td><?= $passport->series; ?>/<?= $passport->number; ?></td>
-		</tr>
-		<?php endforeach; ?>
-	      </table>
-	    </td>
-	  </tr>
+                <thead>
+                  <tr>
+                    <th>Номер билета</th>
+                    <th>ФИО</th>
+                    <th>Серия/Номер документа</th>
+                  </tr>
+                </thead>
+                <?php foreach($booking->flightBookingPassports as $passport): ?>
+                <tr>
+                  <td>TODO</td>
+                  <td><?= $passport->firstName; ?> <?= $passport->lastName; ?></td>
+                  <td><?= $passport->series; ?>/<?= $passport->number; ?></td>
+                </tr>
+                <?php endforeach; ?>
+              </table>
+            </td>
+          </tr>
           <?php endforeach; ?>
         </table>
         <?php endif; ?>
 
         <?php if(count($data['hotelBookings'])): ?>
-	<table class="table table-bordered">
+        <h3>Отели</h3>
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>Наш номер брони</th>
@@ -110,53 +116,53 @@
           <?php foreach($data['hotelBookings'] as $booking) :?>
           <tr>
             <td>
-	      <?= $booking->id; ?>
-	    </td>
-	    <td>
-	      UNIMPLEMENTED
-	    </td>
-	    <td>
-	      <?= $booking->hotel->hotelName; ?>
-	    </td>
-	    <td>
-	      <?= $booking->hotel->cityId; ?>
-	    </td>
-	    <td>
-	      <?= $booking->hotel->checkIn; ?>
-	    </td>
-	    <td>
-	      UNIMPLEMENTED
-	    </td>
-	    <td>
-	      <?= $booking->price; ?>
-	    </td>
-	    <td>
+              <?= $booking->id; ?>
+            </td>
+            <td>
+              UNIMPLEMENTED
+            </td>
+            <td>
+              <?= $booking->hotel->hotelName; ?>
+            </td>
+            <td>
+              <?= $booking->hotel->city->localRu; ?>
+            </td>
+            <td>
+              <?= $booking->hotel->checkIn; ?>
+            </td>
+            <td>
+              UNIMPLEMENTED
+            </td>
+            <td>
+              <?= $booking->price; ?>
+            </td>
+            <td>
               <?= $data['orderBooking']->stateAdapter($booking->status); ?>
-	    </td>
-	  </tr>
-	  <tr>
-	    <!-- FIXME copypaste -->
-	    <td colspan="11">
-	      Гости отеля
+            </td>
+          </tr>
+          <tr>
+            <!-- FIXME copypaste -->
+            <td colspan="11">
+              Гости отеля
               <table class="table-bordered">
-		<thead>
-		  <tr>
-		    <th>Номер билета</th>
-		    <th>ФИО</th>
-		    <th>Серия/Номер документа</th>
-		  </tr>
-		</thead>
-		<?php foreach($booking->hotelBookingPassports as $passport): ?>
-		<tr>
-		  <td>TODO</td>
-		  <td><?= $passport->firstName; ?> <?= $passport->lastName; ?></td>
-		  <td><?= $passport->series; ?>/<?= $passport->number; ?></td>
-		</tr>
-		<?php endforeach; ?>
-	      </table>
-	    </td>
-	  </tr>
-	  <?php endforeach; ?>
+                <thead>
+                  <tr>
+                    <th>Номер билета</th>
+                    <th>ФИО</th>
+                    <th>Серия/Номер документа</th>
+                  </tr>
+                </thead>
+                <?php foreach($booking->hotelBookingPassports as $passport): ?>
+                <tr>
+                  <td>TODO</td>
+                  <td><?= $passport->firstName; ?> <?= $passport->lastName; ?></td>
+                  <td>UNIMPLEMENTED</td>
+                </tr>
+                <?php endforeach; ?>
+              </table>
+            </td>
+          </tr>
+          <?php endforeach; ?>
         <?php endif; ?>
   </tbody>
 </table>
