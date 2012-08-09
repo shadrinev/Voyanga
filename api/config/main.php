@@ -91,7 +91,7 @@ return CMap::mergeArray(
                     array(
                         'class' => 'CProfileLogRoute',
                         'levels' => 'profile',
-                        'enabled' => true
+                        'enabled' => false
                     ),
 
                     array(

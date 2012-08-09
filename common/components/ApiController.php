@@ -32,10 +32,14 @@ class ApiController extends Controller
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
 
-    private function _sendResponse($raw=false, $dataType = 'application/json')
+    private function _sendResponse($raw=false, $dataType = false)
     {
         $status = $this->_statusCode;
-        $contentType = $this->_contentType;
+        if ($dataType === false)
+            $contentType = $this->_contentType;
+        else
+            $contentType = $dataType;
+
         // set the status
         $status_header = 'HTTP/1.1 ' . $status . ' ' . $this->_statusText;
         header($status_header);
@@ -62,10 +66,11 @@ class ApiController extends Controller
         $this->_sendResponse($raw, 'application/json');
     }
 
-    public function sendXml($data, $raw=false)
+    public function sendXml($data, $rootName = 'data')
     {
-        $this->data = $data;
-        $this->_sendResponse($raw, 'application/xml');
+        $xml = new ArrayToXml($rootName);
+        $this->data = $xml->toXml($data);
+        $this->_sendResponse(true, 'application/xml');
     }
 
     public function sendError($errorCode, $errorText='')

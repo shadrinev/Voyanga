@@ -20,7 +20,7 @@ class SearchController extends ApiController
      * @param int $inf amount of infanties
      * @param string $service_class (A = all | E = economy | B = business)
      */
-    public function actionDefault(array $destinations, $adt = 1, $chd = 0, $inf = 0, $service_class = 'A')
+    public function actionDefault(array $destinations, $adt = 1, $chd = 0, $inf = 0, $service_class = 'A', $format='json')
     {
         $flightSearchParams = new FlightSearchParams();
         foreach ($destinations as $route)
@@ -45,6 +45,11 @@ class SearchController extends ApiController
         $fs = new FlightSearch();
         $variants = $fs->sendRequest($flightSearchParams, false);
         $results = $variants->getJsonObject();
-        $this->sendJson($results);
+        if ($format=='json')
+            $this->sendJson($results);
+        elseif ($format=='xml')
+            $this->sendXml($results, 'aviaSearchResults');
+        else
+            $this->sendError(400, 'Incorrect response format');
     }
 }
