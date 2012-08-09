@@ -8,7 +8,7 @@
  */
 class CronTaskBehavior extends CBehavior
 {
-    public function saveTaskInfo($taskName,$id)
+    public function saveTaskInfo($taskName,$addInfo)
     {
         Yii::import('site.common.components.cron.*');
         /** @var CActiveRecord $owner  */
@@ -22,7 +22,12 @@ class CronTaskBehavior extends CBehavior
             $cronTask->ownerId = $owner->primaryKey;
             $cronTask->taskName = $taskName;
         }
-        $cronTask->taskId = $id;
+        else
+        {
+            Yii::app()->cron->delete($cronTask->taskId);
+        }
+        $cronTask->taskId = $addInfo['atId'];
+        $cronTask->uniqKey = $addInfo['uniqKey'];
         $res = $cronTask->save();
         if(!$res){
             VarDumper::dump($cronTask->getErrors());

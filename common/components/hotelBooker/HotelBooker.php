@@ -204,6 +204,10 @@ class HotelBooker extends SWLogActiveRecord
         $this->_hotel = $value;
         $this->hotelInfo = $element;
         $this->price = $value->price;
+        if($value->cancelExpiration)
+        {
+            $this->expiration = date('Y-m-d H:i:s',$value->cancelExpiration);
+        }
     }
 
     public function getFullDescription()

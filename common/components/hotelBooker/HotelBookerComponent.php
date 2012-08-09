@@ -155,7 +155,7 @@ class HotelBookerComponent extends CApplicationComponent
             if (!$orderInfo->error)
             {
 
-                $res = Yii::app()->cron->add(date(time() + appParams('hotel_payment_time')), 'HotelBooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'bookingTimeLimitError'));
+                $res = Yii::app()->cron->add(strtotime($this->hotelBooker->expiration), 'HotelBooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'bookingTimeLimitError'));
                 $this->hotelBooker->saveTaskInfo('timeLimitError', $res);
 
                 $waitStatus = $this->status('softWaitingForPayment');
@@ -185,6 +185,11 @@ class HotelBookerComponent extends CApplicationComponent
     {
         //переход в SoftStartPayment, если достаточно времени.
         //Написать aciton клика по кнопке и там проверки условия для перехода
+    }
+
+    public function stageHardWaitingForPayment()
+    {
+
     }
 
     public function stageBookingError()

@@ -17,6 +17,7 @@ class HotelTripElement extends TripElement
     public $adultCount;
     public $childCount;
     public $infantCount;
+    public $hotelBookerId;
 
     /** @var Hotel */
     public $hotel;

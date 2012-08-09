@@ -39,7 +39,7 @@ class CronComponent extends CApplicationComponent
             $resultString .= $row.' ';
         }
         Yii::log($out, 'at', 'cron');
-        return $this->parseResult($resultString);
+        return array('uniqKey'=>$uniqKey,'atId'=>$this->parseResult($resultString));
     }
 
     public function parseResult($result)

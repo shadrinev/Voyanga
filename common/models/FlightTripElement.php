@@ -18,6 +18,7 @@ class FlightTripElement extends TripElement
     public $adultCount;
     public $childCount;
     public $infantCount;
+    public $flightBookerId;
 
     /** @var FlightVoyage */
     public $flightVoyage;

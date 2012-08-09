@@ -8,6 +8,7 @@
 class OrderComponent extends CApplicationComponent
 {
     public $shoppingCartComponent = 'shoppingCart';
+    public $orderBooking;
     public $isValid;
 
     public function getPositions($asJson = true)
@@ -97,9 +98,56 @@ class OrderComponent extends CApplicationComponent
         //$positions = $this->getPositions(false);
         //VarDumper::dump($positions);die();
         echo date('Y-m-d H:i:s');
-        $bookingModel = new OrderBooking();
-        $bookingModel->attributes = ($this->getOrderParams()) ? $this->getOrderParams()->attributes : array();
-        $validSaving = $bookingModel->save();
+        //find OrderBooking
+        $endSates = array();
+        $positions = $this->getPositions(false);
+        foreach($positions as $item)
+        {
+            if($item instanceof HotelTripElement)
+            {
+                if($item->hotelBookerId)
+                {
+                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
+                    if($hotelBooker)
+                    {
+                        $status = $hotelBooker->status;
+                        $endSates[$status] = $status;
+                        if(!isset($bookingModel)){
+                            $bookingModel = OrderBooking::model()->findByPk($hotelBooker->orderBookingId);
+                            if($bookingModel)
+                            {
+                                //break;
+                            }
+                        }
+                    }
+                }
+            }
+            elseif($item instanceof FlightTripElement)
+            {
+                if($item->flightBookerId)
+                {
+                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
+                    if($flightBooker)
+                    {
+                        $status = $flightBooker->status;
+                        $endSates[$status] = $status;
+                        if(!isset($bookingModel)){
+                            $bookingModel = OrderBooking::model()->findByPk($flightBooker->orderBookingId);
+                            if($bookingModel)
+                            {
+                                //break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(!$bookingModel)
+        {
+            $bookingModel = new OrderBooking();
+            $bookingModel->attributes = ($this->getOrderParams()) ? $this->getOrderParams()->attributes : array();
+            $validSaving = $bookingModel->save();
+        }
 
         if(!$validSaving)
             Yii::trace(CVarDumper::dumpAsString($bookingModel->errors), 'HotelBooker.EnterCredentials.bookingModel');
@@ -123,7 +171,7 @@ class OrderComponent extends CApplicationComponent
                 {
                     echo "Processing HotelTrip";
                     $groupId = $position->getId();
-                    if(!isset($bookedElements[$groupId]))
+                    if(!isset($bookedElements[$groupId]) and (!$position->hotelBookerId))
                     {
                         /** @var HotelBookerComponent $hotelBookerComponent  */
                         $hotelBookerComponent = new HotelBookerComponent();
@@ -136,6 +184,8 @@ class OrderComponent extends CApplicationComponent
                         $hotelBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
                         $hotelBookerComponent->getCurrent()->status = 'enterCredentials';
                         $hotelBookerComponent->getCurrent()->save();
+                        $position->hotelBookerId = $hotelBookerComponent->getCurrent()->getPrimaryKey();
+                        Yii::app()->shoppingCart->update($position,1);
 
                         if($hotelBookerComponent->getCurrent()->getErrors()){
                             VarDumper::dump($hotelBookerComponent->getCurrent()->getErrors());
@@ -180,13 +230,15 @@ class OrderComponent extends CApplicationComponent
                             //VarDumper::dump($hotelBookerComponent->hotel);die();
                             echo "Go to analyzing";
                             $hotelBookerComponent->status('analyzing');
+                            $status = $hotelBookerComponent->getStatus();
+                            $endSates[$status] = $status;
                         }
                     }
                 }
                 elseif($position instanceof FlightTripElement)
                 {
                     $groupId = $position->getGroupId();
-                    if(!isset($bookedElements[$groupId]))
+                    if(!isset($bookedElements[$groupId]) and (!$position->flightBookerId))
                     {
                         echo "processing Flight";
                         /** @var FlightBookerComponent $flightBookerComponent  */
@@ -196,6 +248,8 @@ class OrderComponent extends CApplicationComponent
                         $bookedElements[$groupId] = $groupId;
                         $flightBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
                         $flightBookerComponent->getCurrent()->save();
+                        $position->flightBookerId = $flightBookerComponent->getCurrent()->getPrimaryKey();
+                        Yii::app()->shoppingCart->update($position,1);
 
                         //VarDumper::dump($flightBookerComponent);
                         $flightBookerId = $flightBookerComponent->getFlightBookerId();
@@ -235,6 +289,8 @@ class OrderComponent extends CApplicationComponent
                         //VarDumper::dump($flightBookerComponent);
                         echo "GoTo Booking";
                         $flightBookerComponent->status('booking');
+                        $status = $hotelBookerComponent->getStatus();
+                        $endSates[$status] = $status;
                     }
                 }
             }
@@ -242,15 +298,153 @@ class OrderComponent extends CApplicationComponent
 
     }
 
+
+
     public function startPayment()
     {
+
         // perekluchaem v state startpayment
         // i proveraem
+
+        $endSates = array();
+        $positions = $this->getPositions(false);
+        foreach($positions as $item)
+        {
+            if($item instanceof HotelTripElement)
+            {
+                if($item->hotelBookerId)
+                {
+                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
+                    if($hotelBooker)
+                    {
+                        //$status = $hotelBooker->status;
+                        //$endSates[$status] = $status;
+                        if(!isset($bookingModel)){
+                            $bookingModel = OrderBooking::model()->findByPk($hotelBooker->orderBookingId);
+                            if($bookingModel)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            elseif($item instanceof FlightTripElement)
+            {
+                if($item->flightBookerId)
+                {
+                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
+                    if($flightBooker)
+                    {
+                        //$status = $flightBooker->status;
+                        //$endSates[$status] = $status;
+                        if(!isset($bookingModel)){
+                            $bookingModel = OrderBooking::model()->findByPk($flightBooker->orderBookingId);
+                            if($bookingModel)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //test states and time
+
+
+        //make StartPayment State
+        $validForPayment = true;
+        $nowTime = time();
+        /** @var $bookingModel OrderBooking */
+        if($bookingModel){
+            foreach($bookingModel->flightBookers as $flightBooker)
+            {
+                $flightBookerComponent = new FlightBookerComponent();
+                $flightBookerComponent->setFlightBookerFromId($flightBooker->id);
+                $expiration = strtotime($flightBookerComponent->getCurrent()->timeout);
+                if(appParams('time_for_payment') < ($expiration - $nowTime)){
+                    //next state
+                    $status = strtolower($flightBookerComponent->getStatus());
+                    if(strpos($status,'waitingforpayment') !== false)
+                    {
+                        $flightBookerComponent->status('startPayment');
+                    }else{
+                        $validForPayment = false;
+                    }
+                }else{
+                    $validForPayment = false;
+                }
+
+            }
+            foreach($bookingModel->hotelBookers as $hotelBooker)
+            {
+                $hotelBookerComponent = new HotelBookerComponent();
+                $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
+                $expiration = $hotelBookerComponent->hotel->cancelExpiration;
+                if(appParams('time_for_payment') < ($expiration - $nowTime)){
+                    //next state
+                    $status = $hotelBookerComponent->getStatus();
+                    if(strpos($status,'soft') !== false){
+                        $hotelBookerComponent->status('softStartPayment');
+                    }elseif(strpos($status,'hard') !== false){
+                        $hotelBookerComponent->status('hardStartPayment');
+                    }else{
+                        $validForPayment = false;
+                    }
+
+                }else{
+                    $validForPayment = false;
+                }
+            }
+        }
+        return $validForPayment;
     }
 
     public function getPayment()
     {
-        $bookingModel = new OrderBooking();
+        $positions = $this->getPositions(false);
+        foreach($positions as $item)
+        {
+            if($item instanceof HotelTripElement)
+            {
+                if($item->hotelBookerId)
+                {
+                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
+                    if($hotelBooker)
+                    {
+                        //$status = $hotelBooker->status;
+                        //$endSates[$status] = $status;
+                        if(!isset($bookingModel)){
+                            $bookingModel = OrderBooking::model()->findByPk($hotelBooker->orderBookingId);
+                            if($bookingModel)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            elseif($item instanceof FlightTripElement)
+            {
+                if($item->flightBookerId)
+                {
+                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
+                    if($flightBooker)
+                    {
+                        //$status = $flightBooker->status;
+                        //$endSates[$status] = $status;
+                        if(!isset($bookingModel)){
+                            $bookingModel = OrderBooking::model()->findByPk($flightBooker->orderBookingId);
+                            if($bookingModel)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         $haveStateStartPayment = true;
         $allTicketingValid = true;
@@ -304,11 +498,13 @@ class OrderComponent extends CApplicationComponent
                     $status = substr($status, strpos($status,'/')+1);
                 }
                 if(($status == 'startPayment') and ($allTicketingValid)){
-                    $flightBooker->status = 'ticketing';
-                    $flightBooker->save();
+                    $flightBookerComponent = new FlightBookerComponent();
+                    $flightBookerComponent->setFlightBookerFromId($flightBooker->id);
+                    $flightBookerComponent->status('ticketing');
+
                     //check that status is good
                     //else $allTicketingValid = false;
-                    $newStatus = $flightBooker->status;
+                    $newStatus = $flightBookerComponent->getStatus();
                     if($newStatus == 'ticketingRepeat')
                     {
                         $allTicketingValid = false;
@@ -329,10 +525,12 @@ class OrderComponent extends CApplicationComponent
                 }
                 if(($status == 'hardStartPayment') and ($allTicketingValid))
                 {
-                    $hotelBooker->status = 'ticketing';
-                    $hotelBooker->save();
+                    $hotelBookerComponent = new HotelBookerComponent();
+                    $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
+                    $hotelBookerComponent->status('ticketing');
 
-                    $newStatus = $hotelBooker->status;
+
+                    $newStatus = $hotelBookerComponent->getStatus();
                     if($newStatus == 'ticketingRepeat')
                     {
                         $allTicketingValid = false;
@@ -348,14 +546,16 @@ class OrderComponent extends CApplicationComponent
                 }
                 if(($status == 'softStartPayment') and ($allTicketingValid))
                 {
-                    $hotelBooker->status = 'moneyTransfer';
-                    $hotelBooker->save();
+                    $hotelBookerComponent = new HotelBookerComponent();
+                    $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
+                    //TODO: may be task to cron???
+                    $hotelBookerComponent->status('moneyTransfer');
                 }
             }
 
             if(!$allTicketingValid)
             {
-
+                $this->returnMoney();
             }
         }
 
@@ -374,8 +574,9 @@ class OrderComponent extends CApplicationComponent
             {
                 $status = substr($status, strpos($status,'/')+1);
             }
-            $flightBooker->status = 'moneyReturn';
-            $flightBooker->save();
+            $flightBookerComponent = new FlightBookerComponent();
+            $flightBookerComponent->setFlightBookerFromId($flightBooker->id);
+            $flightBookerComponent->status('moneyReturn');
 
             //$flightBooker->timeout;
         }
@@ -383,14 +584,9 @@ class OrderComponent extends CApplicationComponent
         $hotelBookers = HotelBooker::model()->findAllByAttributes(array('orderBookingId'=>$bookingModel->primaryKey));
         foreach($hotelBookers as $hotelBooker)
         {
-            $status = $hotelBooker->status;
-            if(strpos($status,'/') !== false)
-            {
-                $status = substr($status, strpos($status,'/')+1);
-            }
-            $hotelBooker->status = 'moneyReturn';
-            $hotelBooker->save();
-
+            $hotelBookerComponent = new HotelBookerComponent();
+            $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
+            $hotelBookerComponent->status('moneyReturn');
         }
     }
 
@@ -407,8 +603,9 @@ class OrderComponent extends CApplicationComponent
             {
                 $status = substr($status, strpos($status,'/')+1);
             }
-            $flightBooker->status = 'transferMoney';
-            $flightBooker->save();
+            $flightBookerComponent = new FlightBookerComponent();
+            $flightBookerComponent->setFlightBookerFromId($flightBooker->id);
+            $flightBookerComponent->status('transferMoney');
 
             //$flightBooker->timeout;
         }
@@ -421,8 +618,9 @@ class OrderComponent extends CApplicationComponent
             {
                 $status = substr($status, strpos($status,'/')+1);
             }
-            $hotelBooker->status = 'transferMoney';
-            $hotelBooker->save();
+            $hotelBookerComponent = new HotelBookerComponent();
+            $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
+            $hotelBookerComponent->status('transferMoney');
         }
     }
 
