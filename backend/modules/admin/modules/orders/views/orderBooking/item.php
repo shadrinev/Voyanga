@@ -30,7 +30,7 @@ $this->breadcrumbs=array(
       <td colspan="3">
         <?php if(count($data['flightBookings'])): ?>
         <h3>Авиабилеты</h3>
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered">
           <?php foreach($data['flightBookings'] as $booking) :?>
             <tr>
               <th>Наш номер брони</th>
