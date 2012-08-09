@@ -112,7 +112,7 @@ $this->breadcrumbs=array(
         <?php if(count($data['hotelBookings'])): ?>
         <h3>Отели</h3>
         <table class="table table-bordered">
-          <thead>
+          <?php foreach($data['hotelBookings'] as $booking) :?>
             <tr>
               <th>Наш номер брони</th>
               <th>Поставщик</th>
@@ -123,8 +123,7 @@ $this->breadcrumbs=array(
               <th>Стоимость</th>
               <th>Статус</th>
             </tr>
-          </thead>
-          <?php foreach($data['hotelBookings'] as $booking) :?>
+
           <tr>
             <td>
               <?= $booking->id; ?>
