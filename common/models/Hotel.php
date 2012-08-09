@@ -100,6 +100,9 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
     /** @var hotel rating */
     private $_rating;
 
+    /** @var City */
+    private $_city;
+
     //implementation of ICartPosition
     public function getId()
     {
@@ -383,5 +386,20 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
     public function getWeight()
     {
         return 2;
+    }
+
+    /**
+       Returns City object for given hotel
+       @return City
+     */
+    public function getCity()
+    {
+        if (!$this->_city)
+        {
+            $this->_city = City::getCityByPk($this->cityId);
+            if (!$this->_city) throw new CException(Yii::t('application', 'Hotel city not found. City with id {city_id} not set in db.', array(
+                '{city_id}' => $this->cityId)));
+        }
+        return $this->_city;
     }
 }
