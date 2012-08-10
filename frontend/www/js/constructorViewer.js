@@ -100,7 +100,7 @@ constructorViewer.init = function(){
                 var roomParams = new Object();
                 roomParams.adultCount = tabElem.info.adultCount;
                 roomParams.childCount = tabElem.info.childCount;
-                roomParams.infantCount = tabElem.info.infantCount;
+                roomParams.cots = tabElem.info.infantCount;
 
                 requestParams.HotelRoomForm.push(roomParams);
                 $.ajax({
