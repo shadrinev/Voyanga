@@ -143,11 +143,12 @@ TimelineCalendar.slider.init = function(){
     });
 };
 
+
 /**
  * Event have
  * Event.dayStart
  * Event.dayEnd
- * Event.type
+ * Event.type (flight/hotel)
  * Event.color
  * Event.description
  *
@@ -199,8 +200,33 @@ TimelineCalendar.generateGrid = function (){
     TimelineCalendar.slider.totalLines = lineNumber;
     console.log(TimelineCalendar.slider.totalLines);
 }
+TimelineCalendar.eventsCompareFunction = function(a, b)
+{
+    if(a.dayStart < b.dayStart){
+        return -1;
+    }else if(a.dayStart > b.dayStart){
+        return 1;
+    }else {
+        if((a.type == 'flight') && (b.type == 'hotel')){
+            return -1;
+        }else if((a.type == 'hotel') && (b.type == 'flight')){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+}
+TimelineCalendar.generateEvents = function()
+{
+    for(var i in TimelineCalendar.calendarEvents)
+    {
+
+    }
+
+}
 TimelineCalendar.init = function (){
     TimelineCalendar.jObj = $('#timelineCalendar');
+    TimelineCalendar.calendarEvents.sort(TimelineCalendar.eventsCompareFunction);
     TimelineCalendar.generateGrid();
     TimelineCalendar.slider.init();
 

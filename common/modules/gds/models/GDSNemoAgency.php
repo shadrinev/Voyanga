@@ -387,6 +387,7 @@ class GDSNemoAgency extends CComponent
                 $oFlight->full_sum = $full_sum;
                 $oFlight->full_sum = UtilsHelper::soapElementValue($oSoapFlight->TotalPrice);
                 $oFlight->commission_price = UtilsHelper::soapElementValue($oSoapFlight->Commission);
+                $oFlight->webService = UtilsHelper::soapElementValue($oSoapFlight->WebService);
                 if (isset($oSoapFlight->ValCompany))
                 {
                     $oFlight->valAirline = Airline::getAirlineByCode($oSoapFlight->ValCompany);

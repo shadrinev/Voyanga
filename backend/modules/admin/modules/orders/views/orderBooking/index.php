@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-    'HotelRequests',
+    'Orders',
 );
 
 $this->menu=array(
@@ -18,7 +18,9 @@ $this->menu=array(
     'columns'=>array(
         array(
             'header'=>'Номер',
-            'value'=>'$data->id'
+            'labelExpression'=> '$data->id',
+            'urlExpression'=> '"/admin/orders/orderBooking/view/id/" . $data->id . "/"',
+            'class'=>'CLinkColumn',
         ),
         array(
             'header'=>'email',

@@ -42,7 +42,7 @@ class GdsRequestController extends Controller
         {
             $retArr['responseXml'] = $widget->highlight($model->responseXml);
         }else{
-            $retArr['responseXml'] = htmlspecialchars($model->responseXml);
+            $retArr['responseXml'] = '<pre>'.htmlspecialchars(UtilsHelper::formatXML($model->responseXml)).'</pre>';
         }
         $retArr['timestamp'] = date("Y-m-d H:i:s",$model->timestamp);
         $retArr['executionTime'] = Yii::app()->format->formatNumber($model->executionTime);
