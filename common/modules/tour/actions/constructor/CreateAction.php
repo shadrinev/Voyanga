@@ -15,6 +15,8 @@ class CreateAction extends CAction
             $model = new TourBuilderForm();
         if (isset($_POST['TourBuilderForm']))
         {
+            unset($model);
+            $model = new TourBuilderForm();
             $model->attributes = $_POST['TourBuilderForm'];
             $model->trips = array();
             if (isset($_POST['TripForm']))

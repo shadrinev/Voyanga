@@ -21,7 +21,7 @@ class TourBuilderForm extends CFormModel
     {
         return array(
             array(
-                'adultCount, childCount, infantCount', 'safe'
+                'startDate, endDate, adultCount, childCount, infantCount', 'safe'
             )
         );
     }

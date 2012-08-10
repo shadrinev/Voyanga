@@ -39,7 +39,15 @@ class SearchController extends ApiController
         Yii::import('site.frontend.components.*');
         $HotelClient = new HotelBookClient();
         $variants = $HotelClient->fullHotelSearch($hotelSearchParams);
-        $results = $variants->getJsonObject();
+        if ($variants['errorStatus']==1)
+        {
+            $stack = new HotelStack($variants);
+            $results = $stack->sortBy('rubPrice',5)->getJsonObject();
+        }
+        else
+        {
+            $this->sendError(500, $variants['errorsDescriptions']);
+        }
         if ($format=='json')
             $this->sendJson($results);
         elseif ($format=='xml')
