@@ -115,7 +115,7 @@ return CMap::mergeArray(
             ),
 
             'sharedMemory' => array(
-                'class' => 'application.components.SharedMemory',
+                'class' => 'site.frontend.components.SharedMemory',
                 'maxSize' => 2*1024*1024,
             ),
 
