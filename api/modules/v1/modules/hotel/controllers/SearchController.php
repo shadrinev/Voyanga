@@ -35,6 +35,7 @@ class SearchController extends ApiController
             else
                 $hotelSearchParams->addRoom($room['adt'],  $room['cots'], false);
         }
+        Yii::import('site.frontend.models.*');
         $HotelClient = new HotelBookClient();
         $variants = $HotelClient->fullHotelSearch($hotelSearchParams);
         CVarDumper::dump($variants);
