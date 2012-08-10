@@ -19,6 +19,13 @@ class HotelTripElement extends TripElement
     public $infantCount;
     public $hotelBookerId;
 
+    public function rules()
+    {
+        return array(
+            array('city, checkIn, checkOut, adultCount, childCount, infantCount, hotelBookerId', 'safe'),
+        );
+    }
+
     /** @var Hotel */
     public $hotel;
 
