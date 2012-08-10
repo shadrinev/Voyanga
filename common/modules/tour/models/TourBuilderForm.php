@@ -17,6 +17,15 @@ class TourBuilderForm extends CFormModel
     public $childCount = 0;
     public $infantCount = 0;
 
+    public function rules()
+    {
+        return array(
+            array(
+                'adultCount, childCount, infantCount', 'safe'
+            )
+        );
+    }
+
     public $startCityModel;
 
     public function init()
