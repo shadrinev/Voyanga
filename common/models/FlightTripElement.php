@@ -20,6 +20,13 @@ class FlightTripElement extends TripElement
     public $infantCount;
     public $flightBookerId;
 
+    public function rules()
+    {
+        return array(
+            array('departureDate, departureCity, arrivalCity, groupId, adultCount, childCount, infantCount, flightBookerId', 'safe'),
+        );
+    }
+
     /** @var FlightVoyage */
     public $flightVoyage;
 
