@@ -17,11 +17,14 @@ class TourBuilderForm extends CFormModel
     public $childCount = 0;
     public $infantCount = 0;
 
+    //temp var for no warning
+    public $startCityId;
+
     public function rules()
     {
         return array(
             array(
-                'startDate, endDate, adultCount, childCount, infantCount', 'safe'
+                'startDate, endDate, adultCount, childCount, infantCount, startCityId', 'safe'
             )
         );
     }

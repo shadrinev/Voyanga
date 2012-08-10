@@ -38,10 +38,48 @@ class MakeBookingAction extends CAction
         //VarDumper::dump(Yii::app()->shoppingCart);
         //VarDumper::dump($valid);
         //VarDumper::dump($trip);
+        $validBooking = false;
+        $elements = array();
         if($valid)
         {
-            Yii::app()->order->booking();
+            $validBooking = Yii::app()->order->booking();
+            $positions = Yii::app()->order->getPositions(false);
+
+            foreach($positions['items'] as $item)
+            {
+                if($item instanceof HotelTripElement)
+                {
+                    if($item->hotelBookerId)
+                    {
+                        $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
+                        if($hotelBooker)
+                        {
+                            $status = $hotelBooker->status;
+                            if(strpos($status,'aiting') === false){
+                                $elements[] = array('type'=>'Hotel','id'=>$item->hotelBookerId,'status'=>$status);
+                            }
+
+                        }
+                    }
+                }
+                elseif($item instanceof FlightTripElement)
+                {
+                    if($item->flightBookerId)
+                    {
+                        $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
+                        $groupId = $item->getGroupId();
+                        $bookedElements[$groupId] = $groupId;
+                        if($flightBooker)
+                        {
+                            $status = $flightBooker->status;
+                            if(strpos($status,'aiting') === false){
+                                $elements[] = array('type'=>'Flight','id'=>$item->flightBookerId,'status'=>$status);
+                            }
+                        }
+                    }
+                }
+            }
         }
-        echo 123;die();
+        $this->controller->render('makeBooking', array('validFill'=>$valid,'validBooking'=>$validBooking,'elements'=>$elements));
     }
 }

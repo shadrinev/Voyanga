@@ -201,12 +201,33 @@ class FlightBookerComponent extends CApplicationComponent
         $flightTicketingResponse = Yii::app()->gdsAdapter->FlightTicketing($flightTicketingParams);
         SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
         GDSNemoAgency::$requestIds = array();
-        if($flightTicketingResponse->status == 1)
-        {
-            //TODO: need save tickets numbers to DB
-            foreach($flightTicketingResponse->tickets as $ticketInfo){
 
+        //VarDumper::dump($flightTicketingResponse);
+        //die();
+        if($flightTicketingResponse->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
+        {
+            //saving tickets numbers to DB
+            $flightPassports = FlightBookingPassport::model()->findAllByAttributes(array('flightBookingId'=>$this->flightBooker->id));
+            $docSortPassports = array();
+            if($flightPassports)
+            {
+                foreach($flightPassports as $passport)
+                {
+                    $docNum = $passport->series . $passport->number;
+                    $docSortPassports[$docNum] = $passport;
+                }
+                if($flightTicketingResponse->tickets)
+                {
+                    foreach($flightTicketingResponse->tickets as $ticketInfo){
+                        if(isset($ticketInfo['documentNumber']) and isset($docSortPassports[$ticketInfo['documentNumber']])){
+                            //TODO: add ticketNumber field to DB (FlightBookingPassport) and save it;
+                            //$docSortPassports[$ticketInfo['documentNumber']]->
+                        }
+                    }
+                }
             }
+
+
         }
         else
         {

@@ -530,10 +530,10 @@ class GDSNemoAgency extends CComponent
                 $oTraveller['DocumentInfo']['CountryCode'] = Country::getCountryByPk($passenger->passport->countryId)->code;
                 $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->passport->expiration);
                 $oTraveller['ContactInfo'] = array();
-                $oTraveller['ContactInfo']['EmailID'] = 'test@test.ru';
+                $oTraveller['ContactInfo']['EmailID'] = $oFlightBookingParams->contactEmail;
                 $oTraveller['ContactInfo']['Telephone'] = array();
                 $oTraveller['ContactInfo']['Telephone']['Type'] = 'M';
-                $oTraveller['ContactInfo']['Telephone']['PhoneNumber'] = '9125556699';
+                $oTraveller['ContactInfo']['Telephone']['PhoneNumber'] = $oFlightBookingParams->phoneNumber;
 
                 $aTraveler[] = $oTraveller;
                 $iNum++;
@@ -682,7 +682,33 @@ class GDSNemoAgency extends CComponent
 
         $response = null;//self::request('Ticketing', $aParams, $bCache = FALSE, $iExpiration = 0);
         $flightTicketingResponse = new FlightTicketingResponse();
-        $status = $response->BookFlight->Status;
+
+        if(isset($response->Response->Error))
+        {
+            $status = 'error';
+            $flightTicketingResponse->status = 2;
+            $flightTicketingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
+            $flightTicketingResponse->addError('error',$response->Response->Error);
+        }
+        else
+        {
+            if(isset($response->Response->BookFlight->Status))
+            {
+                $status  = $response->Response->BookFlight->Status;
+            }
+            elseif(isset($response->Error->_))
+            {
+                $status = 'error';
+                $flightTicketingResponse->addError($response->Error->Code,$response->Error->_);
+            }
+            else
+            {
+                $status = 'error';
+                if(GDSNemoSoapClient::$lastCurlError){
+                    $flightTicketingResponse->addError('connection error',GDSNemoSoapClient::$lastCurlError);
+                }
+            }
+        }
 
         if($status == 'ticket')
         {
@@ -697,6 +723,8 @@ class GDSNemoAgency extends CComponent
         }
         else
         {
+            $flightTicketingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
+            $flightTicketingResponse->addError('error','Status is:'.$status);
             $flightTicketingResponse->status = 2;
         }
         return $flightTicketingResponse;

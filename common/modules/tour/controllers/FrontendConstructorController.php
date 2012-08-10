@@ -19,7 +19,7 @@ class FrontendConstructorController extends FrontendController
             'showTrip' => array('class'=>'site.common.modules.tour.actions.constructor.ShowTripAction'),
             'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
             'startPayment' => array('class'=>'site.common.modules.tour.actions.constructor.StartPaymentAction'),
-            'getPayment' => array('class'=>'site.common.modules.tour.actions.constructor.getPaymentAction'),
+            'getPayment' => array('class'=>'site.common.modules.tour.actions.constructor.GetPaymentAction'),
             'new' => array('class'=>'site.common.modules.tour.actions.constructor.NewAction'),
             'flightSearch' => array('class'=>'site.common.modules.tour.actions.constructor.FlightSearchAction'),
             'hotelSearch' => array('class'=>'site.common.modules.tour.actions.constructor.HotelSearchAction'),

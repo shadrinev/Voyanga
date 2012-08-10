@@ -20,6 +20,9 @@ class FlightController extends FrontendController
             'stageEnterCredentials' => array(
                 'class' => 'common.components.flightBooker.actions.FlightEnterCredentialsAction',
             ),
+            'stageWaitingForPayment' => array(
+                'class' => 'common.components.flightBooker.actions.FlightWaitingForPaymentAction',
+            ),
         );
     }
 

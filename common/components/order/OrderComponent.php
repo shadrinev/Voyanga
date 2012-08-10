@@ -150,7 +150,7 @@ class OrderComponent extends CApplicationComponent
         if(!isset($bookingModel))
         {
             $bookingModel = new OrderBooking();
-            $bookingModel->attributes = ($this->getOrderParams()) ? $this->getOrderParams()->attributes : array();
+            $bookingModel->attributes = ($this->getOrderParams()) ? $this->getOrderParams()->attributes : array('email'=>'test@test.ru','phone'=>'9213546576');
             $validSaving = $bookingModel->save();
         }else{
             $validSaving = true;
@@ -237,7 +237,7 @@ class OrderComponent extends CApplicationComponent
                             //VarDumper::dump($hotelBookerComponent->hotel);die();
                             echo "Go to analyzing";
                             $hotelBookerComponent->status('analyzing');
-                            $status = $hotelBookerComponent->getStatus();
+                            $status = $hotelBookerComponent->getCurrent()->status;
                             if($status)
                             {
                                 if(is_string($status)){
@@ -304,7 +304,7 @@ class OrderComponent extends CApplicationComponent
                         //VarDumper::dump($flightBookerComponent);
                         echo "GoTo Booking";
                         $flightBookerComponent->status('booking');
-                        $status = $flightBookerComponent->getStatus();
+                        $status = $flightBookerComponent->getCurrent()->status;
                         if($status)
                         {
                             $endSates[$status] = $status;
@@ -312,7 +312,27 @@ class OrderComponent extends CApplicationComponent
                     }
                 }
             }
+            //VarDumper::dump($endSates);
+            if($endSates)
+            {
+                $validStates = true;
+                foreach($endSates as $stateDesc){
+                    if(strpos($stateDesc,'aiting') === false){
+                        $validStates = false;
+                    }
+                }
+                return $validStates;
+            }
+            else
+            {
+                return false;
+            }
         }
+        else
+        {
+            return false;
+        }
+
 
     }
 
@@ -396,6 +416,7 @@ class OrderComponent extends CApplicationComponent
                 $status = substr($status, strpos($status,'/')+1);
             }
             if($status !== 'startPayment'){
+                echo 'flight';
                 $haveStateStartPayment = false;
             }
 
@@ -410,8 +431,9 @@ class OrderComponent extends CApplicationComponent
             {
                 $status = substr($status, strpos($status,'/')+1);
             }
-            if(($status !== 'softStartPayment') OR ($status !== 'hardStartPayment'))
+            if(($status !== 'softStartPayment') AND ($status !== 'hardStartPayment'))
             {
+                echo 'hotel'.$status;
                 $haveStateStartPayment = false;
             }
         }
@@ -420,10 +442,12 @@ class OrderComponent extends CApplicationComponent
         {
             //TODO: make return money and go to find new objects
             $allTicketingValid = false;
+            echo '=((';
         }
         else
         {
             //TODO: make tiketing
+            echo 'make ticketing';
             /** @var FlightBooker[] $flightBookers  */
 
             $flightBookers = FlightBooker::model()->findAllByAttributes(array('orderBookingId'=>$bookingModel->primaryKey));

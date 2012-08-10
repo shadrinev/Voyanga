@@ -116,18 +116,14 @@ class HotelTripElement extends TripElement
     {
         // TODO: Implement getPassports() method.
         $fake = new HotelPassportForm();
-        $fake->addRoom(2,0);
+        $fake->addRoom($this->adultCount,0);
         $roomPassport = $fake->roomsPassports[0] = new RoomPassportForm();
-        $adult1 = $roomPassport->adultsPassports[0] = new HotelAdultPassportForm();
-        $adult2 = $roomPassport->adultsPassports[1] = new HotelAdultPassportForm();
-
-        $adult1->genderId = HotelAdultPassportForm::GENDER_MALE;
-        $adult1->firstName = 'Ivanov';
-        $adult1->lastName = 'Egor';
-
-        $adult2->genderId = HotelAdultPassportForm::GENDER_MALE;
-        $adult2->firstName = 'Semenov';
-        $adult2->lastName = 'Vladimir';
+        for($i=0;$i<$this->adultCount;$i++)
+        {
+            $roomPassport->adultsPassports[$i] = new HotelAdultPassportForm();
+            $adultForm = FlightAdultPassportForm::fillWithRandomData();
+            $roomPassport->adultsPassports[$i]->attributes = $adultForm->attributes;
+        }
 
         return $fake;
     }
