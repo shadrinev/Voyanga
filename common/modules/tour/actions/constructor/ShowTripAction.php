@@ -48,6 +48,7 @@ class ShowTripAction extends CAction
                         'cityId'=>$tabItem->city,
                         'checkIn'=>$tabItem->checkIn,
                         'checkOut'=>$tabItem->checkOut,
+                        'duration'=>$tabItem->getDuration(),
                         'adultCount'=>$tabItem->adultCount,
                         'childCount'=>$tabItem->childCount,
                         'infantCount'=>$tabItem->infantCount,

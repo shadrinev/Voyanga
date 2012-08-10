@@ -42,6 +42,7 @@ TimelineCalendar = new Object();
 TimelineCalendar.jObj = null;
 TimelineCalendar.weekDays = new Array('Пн','Вт','Ср','Чт','Пт','Сб','Вс');
 TimelineCalendar.monthNames = new Array('янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек');
+TimelineCalendar.dayCellWidth = 110;
 TimelineCalendar.slider = new Object();
 TimelineCalendar.slider.monthArray = new Array();
 TimelineCalendar.slider.totalLines = 1;
@@ -216,11 +217,35 @@ TimelineCalendar.eventsCompareFunction = function(a, b)
         }
     }
 }
+TimelineCalendar.generateHotelDiv = function(HotelEvent)
+{
+    var totalDays = HotelEvent.dayEnd.valueOf() - HotelEvent.dayStart.valueOf();
+    totalDays = Math.round(totalDays/(3600*24*1000));
+
+    if(totalDays == 0){
+        totalDays = 1;
+    }
+    //console.log(totalDays);
+    var dayWidth = TimelineCalendar.dayCellWidth;
+    //console.log(dayWidth);
+    var outHtml = '<div class="calendarHotel '+HotelEvent.color+'" style="width: '+(dayWidth*totalDays)+'px">';
+    outHtml = outHtml + '<div class="leftPartHotel"></div>';
+    outHtml = outHtml + '<div class="rightPartHotel"></div>';
+    outHtml = outHtml + '<div calss="hotelDescription">'+HotelEvent.description+'</div>';
+    outHtml = outHtml + '';
+    outHtml = outHtml + '</div>';
+    return outHtml;
+}
+
 TimelineCalendar.generateEvents = function()
 {
+    TimelineCalendar.dayCellWidth = TimelineCalendar.jObj.find('.dayCell:first').width();
     for(var i in TimelineCalendar.calendarEvents)
     {
-
+        if(TimelineCalendar.calendarEvents[i].tepe == 'hotel')
+        {
+            TimelineCalendar.generateHotelDiv(TimelineCalendar.calendarEvents[i]);
+        }
     }
 
 }
@@ -228,10 +253,22 @@ TimelineCalendar.init = function (){
     TimelineCalendar.jObj = $('#timelineCalendar');
     TimelineCalendar.calendarEvents.sort(TimelineCalendar.eventsCompareFunction);
     TimelineCalendar.generateGrid();
+    TimelineCalendar.generateEvents();
     TimelineCalendar.slider.init();
 
 }
 
 $(document).ready(function(){
+    /**
+     * Event have
+     * Event.dayStart
+     * Event.dayEnd
+     * Event.type (flight/hotel)
+     * Event.color
+     * Event.description
+     *
+     * @type {Array}
+     */
+    TimelineCalendar.calendarEvents = [{dayStart: new Date('2012-09-21'),dayEnd: new Date('2012-09-21'),type:'flight',color:'red',description:'Led - Mow'},{dayStart: new Date('2012-09-21'),dayEnd: new Date('2012-09-23'),type:'hotel',color:'red',description:'Californication Hotel'},{dayStart: new Date('2012-09-23'),dayEnd: new Date('2012-09-23'),type:'flight',color:'red',description:'Mow - Led'}];
     TimelineCalendar.init();
 });

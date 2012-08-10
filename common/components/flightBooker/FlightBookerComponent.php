@@ -187,7 +187,7 @@ class FlightBookerComponent extends CApplicationComponent
         $res = Yii::app()->cron->add(time() + appParams('time_for_payment'), 'FlightBooker', 'ChangeState', array('flightBookerId' => $this->flightBooker->id, 'newState' => 'waitingForPayment'));
         if ($res)
         {
-            $this->hotelBooker->saveTaskInfo('paymentTimeLimit', $res);
+            $this->flightBooker->saveTaskInfo('paymentTimeLimit', $res);
             return true;
         }
     }

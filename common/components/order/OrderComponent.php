@@ -100,8 +100,9 @@ class OrderComponent extends CApplicationComponent
         echo date('Y-m-d H:i:s');
         //find OrderBooking
         $endSates = array();
+        $bookedElements = array();
         $positions = $this->getPositions(false);
-        foreach($positions as $item)
+        foreach($positions['items'] as $item)
         {
             if($item instanceof HotelTripElement)
             {
@@ -127,6 +128,8 @@ class OrderComponent extends CApplicationComponent
                 if($item->flightBookerId)
                 {
                     $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
+                    $groupId = $item->getGroupId();
+                    $bookedElements[$groupId] = $groupId;
                     if($flightBooker)
                     {
                         $status = $flightBooker->status;
@@ -142,11 +145,15 @@ class OrderComponent extends CApplicationComponent
                 }
             }
         }
-        if(!$bookingModel)
+        //echo "processing ".$bookingModel->id;
+        //die();
+        if(!isset($bookingModel))
         {
             $bookingModel = new OrderBooking();
             $bookingModel->attributes = ($this->getOrderParams()) ? $this->getOrderParams()->attributes : array();
             $validSaving = $bookingModel->save();
+        }else{
+            $validSaving = true;
         }
 
         if(!$validSaving)
@@ -160,7 +167,7 @@ class OrderComponent extends CApplicationComponent
                 $positions = $positions['items'];
 
             //die();
-            $bookedElements = array();
+
 
             /** @var HotelTripElement[] $positions */
             foreach($positions as $position)
@@ -231,7 +238,15 @@ class OrderComponent extends CApplicationComponent
                             echo "Go to analyzing";
                             $hotelBookerComponent->status('analyzing');
                             $status = $hotelBookerComponent->getStatus();
-                            $endSates[$status] = $status;
+                            if($status)
+                            {
+                                if(is_string($status)){
+                                    $endSates[$status] = $status;
+                                }else{
+                                    echo "status:";
+                                    VarDumper::dump($status);
+                                }
+                            }
                         }
                     }
                 }
@@ -289,8 +304,11 @@ class OrderComponent extends CApplicationComponent
                         //VarDumper::dump($flightBookerComponent);
                         echo "GoTo Booking";
                         $flightBookerComponent->status('booking');
-                        $status = $hotelBookerComponent->getStatus();
-                        $endSates[$status] = $status;
+                        $status = $flightBookerComponent->getStatus();
+                        if($status)
+                        {
+                            $endSates[$status] = $status;
+                        }
                     }
                 }
             }
@@ -306,49 +324,7 @@ class OrderComponent extends CApplicationComponent
         // perekluchaem v state startpayment
         // i proveraem
 
-        $endSates = array();
-        $positions = $this->getPositions(false);
-        foreach($positions as $item)
-        {
-            if($item instanceof HotelTripElement)
-            {
-                if($item->hotelBookerId)
-                {
-                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
-                    if($hotelBooker)
-                    {
-                        //$status = $hotelBooker->status;
-                        //$endSates[$status] = $status;
-                        if(!isset($bookingModel)){
-                            $bookingModel = OrderBooking::model()->findByPk($hotelBooker->orderBookingId);
-                            if($bookingModel)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            elseif($item instanceof FlightTripElement)
-            {
-                if($item->flightBookerId)
-                {
-                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
-                    if($flightBooker)
-                    {
-                        //$status = $flightBooker->status;
-                        //$endSates[$status] = $status;
-                        if(!isset($bookingModel)){
-                            $bookingModel = OrderBooking::model()->findByPk($flightBooker->orderBookingId);
-                            if($bookingModel)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        $bookingModel = $this->getOrderBooking();
 
         //test states and time
 
@@ -397,54 +373,15 @@ class OrderComponent extends CApplicationComponent
                     $validForPayment = false;
                 }
             }
+        }else{
+            return false;
         }
         return $validForPayment;
     }
 
     public function getPayment()
     {
-        $positions = $this->getPositions(false);
-        foreach($positions as $item)
-        {
-            if($item instanceof HotelTripElement)
-            {
-                if($item->hotelBookerId)
-                {
-                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
-                    if($hotelBooker)
-                    {
-                        //$status = $hotelBooker->status;
-                        //$endSates[$status] = $status;
-                        if(!isset($bookingModel)){
-                            $bookingModel = OrderBooking::model()->findByPk($hotelBooker->orderBookingId);
-                            if($bookingModel)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            elseif($item instanceof FlightTripElement)
-            {
-                if($item->flightBookerId)
-                {
-                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
-                    if($flightBooker)
-                    {
-                        //$status = $flightBooker->status;
-                        //$endSates[$status] = $status;
-                        if(!isset($bookingModel)){
-                            $bookingModel = OrderBooking::model()->findByPk($flightBooker->orderBookingId);
-                            if($bookingModel)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        $bookingModel = $this->getOrderBooking();
 
         $haveStateStartPayment = true;
         $allTicketingValid = true;
@@ -561,9 +498,63 @@ class OrderComponent extends CApplicationComponent
 
     }
 
+    public function getOrderBooking()
+    {
+        $positions = $this->getPositions(false);
+        foreach($positions['items'] as $item)
+        {
+            if($item instanceof HotelTripElement)
+            {
+                if($item->hotelBookerId)
+                {
+                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
+                    if($hotelBooker)
+                    {
+                        //$status = $hotelBooker->status;
+                        //$endSates[$status] = $status;
+                        if(!isset($bookingModel)){
+                            $bookingModel = OrderBooking::model()->findByPk($hotelBooker->orderBookingId);
+                            if($bookingModel)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            elseif($item instanceof FlightTripElement)
+            {
+                if($item->flightBookerId)
+                {
+                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
+                    if($flightBooker)
+                    {
+                        //$status = $flightBooker->status;
+                        //$endSates[$status] = $status;
+                        if(!isset($bookingModel)){
+                            $bookingModel = OrderBooking::model()->findByPk($flightBooker->orderBookingId);
+                            if($bookingModel)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(!isset($bookingModel))
+        {
+            return false;
+        }
+        else
+        {
+            return $bookingModel;
+        }
+    }
+
     public function returnMoney()
     {
-        $bookingModel = new OrderBooking();
+        $bookingModel = $this->getOrderBooking();
 
         /** @var FlightBooker[] $flightBookers  */
         $flightBookers = FlightBooker::model()->findAllByAttributes(array('orderBookingId'=>$bookingModel->primaryKey));
@@ -592,7 +583,7 @@ class OrderComponent extends CApplicationComponent
 
     public function transferMoney()
     {
-        $bookingModel = new OrderBooking();
+        $bookingModel = $this->getOrderBooking();
 
         /** @var FlightBooker[] $flightBookers  */
         $flightBookers = FlightBooker::model()->findAllByAttributes(array('orderBookingId'=>$bookingModel->primaryKey));

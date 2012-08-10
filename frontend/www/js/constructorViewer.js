@@ -95,12 +95,13 @@ constructorViewer.init = function(){
             if(tabElem.fill === false)
             {
                 var requestParams = {HotelRoomForm: new Array(),
-                    HotelForm: {cityId: tabElem.info.cityId, fromDate: tabElem.info.checkIn,duration:1}
+                    HotelForm: {cityId: tabElem.info.cityId, fromDate: tabElem.info.checkIn,duration:tabElem.info.duration}
                 };
                 var roomParams = new Object();
                 roomParams.adultCount = tabElem.info.adultCount;
                 roomParams.childCount = tabElem.info.childCount;
                 roomParams.infantCount = tabElem.info.infantCount;
+
                 requestParams.HotelRoomForm.push(roomParams);
                 $.ajax({
                     url: '/tour/constructor/hotelSearch',
