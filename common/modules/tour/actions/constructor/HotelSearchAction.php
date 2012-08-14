@@ -60,7 +60,8 @@ class HotelSearchAction extends CAction
                 }
                 else
                 {
-                    throw new CHttpException(500, CHtml::errorSummary($hotelForm));
+                    echo json_encode(array('cacheId'=>$cacheId,'hotels'=>array()));
+                    //throw new CHttpException(500, CHtml::errorSummary($hotelForm));
                 }
 
             }

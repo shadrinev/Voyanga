@@ -59,11 +59,15 @@ class HotelBookerComponent extends CApplicationComponent
             {
                 Yii::trace('Trying to restore hotelBooker from db', 'HotelBookerComponent.book');
                 $this->hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey' => $this->hotel->getId()));
-                $this->hotelBooker->setHotelBookerComponent($this);
-                if ($this->hotelBooker)
+
+                if ($this->hotelBooker){
+                    $this->hotelBooker->setHotelBookerComponent($this);
                     Yii::trace('Done', 'HotelBookerComponent.book');
-                else
+                }
+                else{
                     Yii::trace('No such record', 'HotelBookerComponent.book');
+
+                }
             }
             if ($this->hotelBooker == null)
             {

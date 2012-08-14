@@ -43,8 +43,7 @@
 <?php $this->endWidget(); ?>
 <span id='hotel-results'></span>
 <?php Yii::app()->clientScript->registerScript('hotel-result', "
-    var data = ".$results.",
-        html = ".$variable."(data);
+    var html = ".$variable."(data);
     $('#hotel-results').html(html);
     $('.chooseRoom').on('click',function(){
         var key1 = $(this).data('cacheid'),

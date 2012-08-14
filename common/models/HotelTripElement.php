@@ -122,7 +122,9 @@ class HotelTripElement extends TripElement
         {
             $roomPassport->adultsPassports[$i] = new HotelAdultPassportForm();
             $adultForm = FlightAdultPassportForm::fillWithRandomData();
-            $roomPassport->adultsPassports[$i]->attributes = $adultForm->attributes;
+            $roomPassport->adultsPassports[$i]->lastName = $adultForm->lastName;
+            $roomPassport->adultsPassports[$i]->firstName = $adultForm->firstName;
+            $roomPassport->adultsPassports[$i]->genderId = $adultForm->genderId;
         }
 
         return $fake;
