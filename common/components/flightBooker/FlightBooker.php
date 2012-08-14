@@ -55,7 +55,7 @@ class FlightBooker extends SWLogActiveRecord
         if (!$this->statusChanged)
             return parent::afterSave();
         $method = 'stage'.$this->swGetStatus()->getId();
-        if (method_exists(Yii::app()->flightBooker, $method))
+        if (method_exists(Yii::app()->flightBooker, $method) or method_exists($this->flightBookerComponent, $method))
         {
             if($this->flightBookerComponent)
             {
@@ -69,13 +69,16 @@ class FlightBooker extends SWLogActiveRecord
             }
             else
             {
-                Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+                echo 'try redirect - don`t have booker component';
+                //Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
             }
 
 
         }
-        else
-            Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+        else{
+            echo 'Try redirect, don`t have method';
+            //Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+        }
     }
 
     /**
