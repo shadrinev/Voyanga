@@ -75,16 +75,20 @@ SET FOREIGN_KEY_CHECKS=1;
         {
             $limitTables = array();
         }
+
         foreach($tables as $key)
         {
-            $limit = 10000; //all
+            $limit = -1; //all
             if (in_array($key, array_keys($limitTables)))
+            {
                 $limit = $limitTables[$key];
+            }
             if ((isset($excludeTablesData[$db])) and (in_array($key, $excludeTablesData[$db])))
             {
                 $limit = 0;
             }
             $this->dumpTable($db, $key, $limit);
+            echo $key.PHP_EOL;
         }
     }
 
@@ -110,7 +114,7 @@ SET FOREIGN_KEY_CHECKS=1;
 
         if ($limit == 0)
         {
-            echo '-- NO BACKUP DATA FOR THIS TABLE '.$limit.PHP_EOL;
+            echo '-- NO BACKUP DATA FOR THIS TABLE '.PHP_EOL;
             return;
         }
 
