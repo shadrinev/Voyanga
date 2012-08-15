@@ -17,6 +17,7 @@ class HotelTripElement extends TripElement
     public $adultCount;
     public $childCount;
     public $infantCount;
+    public $childAge;
     public $hotelBookerId;
 
     public function rules()
