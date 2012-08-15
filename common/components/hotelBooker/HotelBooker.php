@@ -115,7 +115,7 @@ class HotelBooker extends SWLogActiveRecord
         // will receive user inputs.
         return array(
             //array('id', 'required'),
-            array('id, orderBookingId', 'billId', 'numerical', 'integerOnly'=>true),
+            array('id, orderBookingId', 'numerical', 'integerOnly'=>true),
             array('orderId', 'length', 'max'=>45),
             array('status', 'SWValidator'),
             array('expiration, hotelInfo, updated, timestamp', 'safe'),

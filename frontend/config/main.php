@@ -173,7 +173,7 @@ return CMap::mergeArray(
         ),
         'controllerMap' => array(
             'payments'=>array(
-                'class'=>'common.extensions.payments.PaymentsTestController'
+                'class'=>'common.extensions.payments.PaymentsController'
             )
         ),
     )

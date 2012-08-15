@@ -51,7 +51,7 @@ class PaymentsComponent extends CApplicationComponent
     public function getSignatureFor($channel, $params)
     {
         $credentials = $this->_credentials[$channel];
-        $keys = Array('MerchantId', 'OrderId', 'Amount', 'Currency', 'ValidUntil', 'TransactionId');
+        $keys = Array('MerchantId', 'DateTime', 'TransactionId', 'OrderId', 'Amount', 'Currency', 'ValidUntil', 'TransactionId');
         $values = Array();
         foreach($keys as $key)
         {

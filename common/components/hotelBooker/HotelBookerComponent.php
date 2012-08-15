@@ -16,10 +16,12 @@ class HotelBookerComponent extends CApplicationComponent
     public function init()
     {
         Yii::setPathOfAlias('hotelBooker', realpath(dirname(__FILE__)));
+        Yii::import('common.extensions.payments.models.Bill');
         Yii::import('hotelBooker.actions.*');
         Yii::import('hotelBooker.models.*');
         Yii::import('hotelBooker.*');
         Yii::import('site.common.modules.hotel.models.*');
+
     }
 
     public function setHotel($value)
@@ -58,8 +60,8 @@ class HotelBookerComponent extends CApplicationComponent
             if (($this->getCurrent() != null) and $this->getCurrent()->hotel->id != $this->hotel->getId())
             {
                 Yii::trace('Trying to restore hotelBooker from db', 'HotelBookerComponent.book');
-                $this->hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey' => $this->hotel->getId()));
 
+                $this->hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey' => $this->hotel->getId()));
                 if ($this->hotelBooker){
                     $this->hotelBooker->setHotelBookerComponent($this);
                     Yii::trace('Done', 'HotelBookerComponent.book');
@@ -81,7 +83,7 @@ class HotelBookerComponent extends CApplicationComponent
             }
         }
 
-        Yii::trace(CVarDumper::dumpAsString($this->hotelBooker->getErrors()), 'HotelBookerComponent.book');
+        //        Yii::trace(CVarDumper::dumpAsString($this->hotelBooker->getErrors()), 'HotelBookerComponent.book');
         if (!$this->hotelBooker->id)
         {
             $this->hotelBooker->id = $this->hotelBooker->primaryKey;
@@ -203,6 +205,7 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageSoftStartPayment()
     {
+        //        return;
         if (($this->hotel->cancelExpiration - time()) > appParams('hotel_payment_time'))
         {
             $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'HotelBooker', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'softWaitingForPayment'));
@@ -223,8 +226,11 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageMoneyTransfer()
     {
+        //! FIXME WTF IS ВАУЧЕР
         //TODO: получение информации о ваучере и отправка денег
         //$vaucher =
+        Yii::app()->payments->confirm($this->hotelBooker->bill);
+
 
     }
 
