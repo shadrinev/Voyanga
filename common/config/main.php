@@ -185,10 +185,20 @@ return array(
 
         'payments' => array(
             'class' => 'common.extensions.payments.PaymentsComponent',
-            'shopId' => '8234784606-1636',
-            'testMode' => true,
-            'login' => '821',
-            'password' => '9UfgieYI6vuTit12NHp1w5Ld9MSIhIph7gf8pVqrmW9mXx24WLPnJAnW8FmS8YMq2bWaeMtTYvHdfsXM',
+            'credentials' => array(
+                'long'=> array(
+                    'id' => 9377,
+                    'key' => 'a51dfb8d-6c57-4ad4-a018-27593cfabddb'
+                ),
+                'gds' => array(
+                    'id' => 9378,
+                    'key' => '117869db-6a67-4f89-9753-a2fb7ee9bfc3'
+                ),
+                'ecommerce' => array(
+                    'id' => 9387,
+                    'key' => '71eedb90-01d6-4ba9-b058-d965d98ecc64'
+                )
+            )
         ),
 
         'gdsAdapter' => array(

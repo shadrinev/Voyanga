@@ -115,7 +115,7 @@ class HotelBooker extends SWLogActiveRecord
         // will receive user inputs.
         return array(
             //array('id', 'required'),
-            array('id, orderBookingId', 'numerical', 'integerOnly'=>true),
+            array('id, orderBookingId', 'billId', 'numerical', 'integerOnly'=>true),
             array('orderId', 'length', 'max'=>45),
             array('status', 'SWValidator'),
             array('expiration, hotelInfo, updated, timestamp', 'safe'),
@@ -135,6 +135,7 @@ class HotelBooker extends SWLogActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'orderBooking' => array(self::BELONGS_TO, 'OrderBooking', 'orderBookingId'),
+            'bill' => array(self::BELONGS_TO, 'Bill', 'billId'),
             'hotelBookingPassports' => array(self::HAS_MANY, 'HotelBookingPassport', 'hotelBookingId'),
         );
     }
@@ -203,7 +204,7 @@ class HotelBooker extends SWLogActiveRecord
         $element = serialize($value);
         $this->_hotel = $value;
         $this->hotelInfo = $element;
-        $this->price = $value->price;
+        $this->price = $value->rubPrice;
         if($value->cancelExpiration)
         {
             $this->expiration = date('Y-m-d H:i:s',$value->cancelExpiration);
