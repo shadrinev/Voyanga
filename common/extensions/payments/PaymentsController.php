@@ -8,17 +8,20 @@ class PaymentsController extends CExtController
     public function actionIndex()
     {
         Yii::import("common.extensions.payments.models.Bill");
-        $keys = Array("DateTime", "TransactionId", "OrderId", "Amount", "Currency", "SecurityKey");
+        $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey");
         $params = Array();
         foreach($keys as $key)
         {
             if(!isset($_REQUEST[$key]))
             {
-                throw new Exception("Wrong arguments passed to callback");
+                throw new Exception("Wrong arguments passed to callback $key");
             }
             $params[$key]=$_REQUEST[$key];
         }
-        $bill = Bill::model()->findByPk($params['OrderId']);
+
+        list($__, $billId) = explode('-', $params['OrderId']);
+        $bill = Bill::model()->findByPk($billId);
+
         $sign = Yii::app()->payments->getSignatureFor($bill->channel, $params);
         if($sign!=$params['SecurityKey'])
         {
@@ -27,7 +30,7 @@ class PaymentsController extends CExtController
         //! FIXME handle it better for great good
         if($bill->transactionId)
             throw new Exception("Bill already have transaction id");
-        $bill->transactionId = $params['TransactionId'];
+        $bill->transactionId = $params['TransactionID'];
         $bill->save();
     }
 

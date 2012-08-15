@@ -230,8 +230,10 @@ class HotelBookerComponent extends CApplicationComponent
         //TODO: получение информации о ваучере и отправка денег
         //$vaucher =
         Yii::app()->payments->confirm($this->hotelBooker->bill);
-
-
+        if($this->hotelBooker->bill->status == Bill::STATUS_PAID)
+        {
+            $this->status('done');
+        }
     }
 
     public function stageCheckingAvailability()

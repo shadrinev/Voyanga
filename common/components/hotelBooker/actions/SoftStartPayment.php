@@ -22,7 +22,7 @@ class SoftStartPayment extends StageAction
             if($bill->status == Bill::STATUS_PREAUTH)
             {
                 Yii::app()->hotelBooker->status('moneyTransfer');
-                return;
+                return true;
             }
             //! FIXME: DO WE NEED THIS
             if($bill->status == Bill::STATUS_PAID)
@@ -32,8 +32,11 @@ class SoftStartPayment extends StageAction
                 return;
             }
         }
+        $params = $bill->params;
+        //! FIXME
+        //        $params['ReturnUrl'] = $this->controller->createAbsoluteUrl('/booking/hotel/buy/', Array('key'=>$booker->hotel->id));
         $context = Array('paymentUrl'=>$bill->paymentUrl
-                         ,'params'=>$bill->params);
+                         ,'params'=>$params);
         $this->getController()->render('hotelBooker.views.payment_form', $context);
         return;
         //! FIXME $this->hotel is undefined

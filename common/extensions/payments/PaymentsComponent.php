@@ -51,7 +51,7 @@ class PaymentsComponent extends CApplicationComponent
     public function getSignatureFor($channel, $params)
     {
         $credentials = $this->_credentials[$channel];
-        $keys = Array('MerchantId', 'DateTime', 'TransactionId', 'OrderId', 'Amount', 'Currency', 'ValidUntil', 'TransactionId');
+        $keys = Array('MerchantId', 'DateTime', 'TransactionID', 'OrderId', 'Amount', 'Currency', 'ValidUntil', 'TransactionId');
         $values = Array();
         foreach($keys as $key)
         {
@@ -122,7 +122,7 @@ class PaymentsComponent extends CApplicationComponent
            $result = Array();
            parse_str($data, $result);
            // FIXME check AMOUNT?
-           if($result['Status'] == 'Pending')
+           if($result['Status'] == 'PreAuthorized')
            {
                $bill->status = Bill::STATUS_PREAUTH;
                $bill->save();
@@ -148,13 +148,13 @@ class PaymentsComponent extends CApplicationComponent
        }
        $url .= '?';
        $url.=implode('&', $params);
-       var_dump($url);
+       //       var_dump($url);
        list($code, $data) = Yii::app()->httpClient->get($url);
        if(strlen($data))
        {
            $result = Array();
            parse_str($data, $result);
-           var_dump($result);
+           //           var_dump($result);
            // FIXME check AMOUNT?
            if($result['Result'] == 'Ok')
            {
