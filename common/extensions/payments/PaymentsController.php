@@ -32,6 +32,8 @@ class PaymentsController extends CExtController
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
         $bill->save();
+        echo "<script>window.top.location.reload();</script>";
+        exit;
     }
 
     public function actionResult()
