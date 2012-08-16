@@ -78,7 +78,7 @@ SET FOREIGN_KEY_CHECKS=1;
 
         foreach($tables as $key)
         {
-            $limit = -1; //all
+            $limit = 1e6; //1 mln right now
             if (in_array($key, array_keys($limitTables)))
             {
                 $limit = $limitTables[$key];
