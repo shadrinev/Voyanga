@@ -190,6 +190,7 @@ class HotelBooker extends SWLogActiveRecord
         $criteria->compare('updated',$this->updated,true);
         $criteria->compare('orderBookingId',$this->orderBookingId);
         $criteria->compare('orderId',$this->orderId,true);
+        $criteria->compare('hotelResultKey',$this->orderId,true);
         $criteria->compare('timestamp',$this->timestamp,true);
         $criteria->compare('tryCount',$this->tryCount,true);
 
@@ -220,6 +221,7 @@ class HotelBooker extends SWLogActiveRecord
         $element = serialize($value);
         $this->_hotel = $value;
         $this->hotelInfo = $element;
+        $this->hotelResultKey = $value->getId();
         $this->price = $value->rubPrice;
         if($value->cancelExpiration)
         {
