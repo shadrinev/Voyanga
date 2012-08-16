@@ -256,6 +256,26 @@ TimelineCalendar.generateHotelDiv = function(HotelEvent)
     return outHtml;
 }
 
+TimelineCalendar.generateFlightDiv = function(FlightEvent)
+{
+    var totalDays = FlightEvent.dayEnd.valueOf() - FlightEvent.dayStart.valueOf();
+    totalDays = Math.round(totalDays/(3600*24*1000));
+
+    if(totalDays == 0){
+        totalDays = 1;
+    }
+    //console.log(totalDays);
+    var dayWidth = TimelineCalendar.dayCellWidth;
+    //console.log(dayWidth);
+    var outHtml = '<div class="calendarHotel '+FlightEvent.color+'" style="width: '+(dayWidth*totalDays)+'px"><div class="relHotel">';
+    outHtml = outHtml + '<div class="leftPartHotel"></div>';
+    outHtml = outHtml + '<div class="rightPartHotel"></div>';
+    outHtml = outHtml + '<div class="hotelDescription">'+FlightEvent.description+'</div>';
+    outHtml = outHtml + '';
+    outHtml = outHtml + '</div></div>';
+    return outHtml;
+}
+
 TimelineCalendar.generateEvents = function()
 {
     TimelineCalendar.dayCellWidth = TimelineCalendar.jObj.find('.dayCell:first').width()+2;
@@ -308,10 +328,56 @@ TimelineCalendar.generateEvents = function()
                 weekNum++;
                 weekObj = $('#weekNum-'+weekNum);
             }
+        } else if(TimelineCalendar.calendarEvents[i].type == 'flight'){
+            console.log(TimelineCalendar.calendarEvents[i]);
+            /** @var dt Date */
+            var dt = TimelineCalendar.calendarEvents[i].dayStart;
+            var dateLabel = dt.getFullYear()+'-'+(dt.getMonth()+1) + '-'+ dt.getDate();
+            console.log(dateLabel);
+
+            var weekObj = $('#dayCell-'+dateLabel).parent();
+            var weekNum = weekObj.data('weeknum');
+            //console.log(weekNum);
+            var tmpDate = new Date(dt.toString());
+            console.log(tmpDate);
+            //return;
+            var eventLength = TimelineCalendar.calendarEvents[i].dayEnd.valueOf() - TimelineCalendar.calendarEvents[i].dayStart.valueOf();
+            var flightDiv = TimelineCalendar.generateFlightDiv(TimelineCalendar.calendarEvents[i]);
+            var dayWidth = TimelineCalendar.dayCellWidth;
+
+            eventLength = Math.round(eventLength/(3600*24*1000));
+            var renderedLength = 0;
+            var endDraw = false;
+            var firstTime = true;
+            while(!endDraw)
+            {
+                var newEventElement = $(hotelDiv);
+                if(firstTime){
+                    var numRender = 7 - TimelineCalendar.getDay(tmpDate) - 1;
+                    console.log(TimelineCalendar.getDay(tmpDate));
+                    console.log(numRender);
+                    var leftPos = (7 - numRender)*dayWidth;
+                    console.log(leftPos);
+                    firstTime = false;
+                }else{
+                    var numRender = 7;
+                    var leftPos = -renderedLength*dayWidth;
+                }
+                newEventElement.css('left',leftPos+'px');
+
+                //console.log(newEventElement);
+                weekObj.append(newEventElement);
+                renderedLength = renderedLength + numRender;
+                if(renderedLength >= eventLength){
+                    endDraw = true;
+                }
+                weekNum++;
+                weekObj = $('#weekNum-'+weekNum);
+            }
         }
     }
-
 }
+
 TimelineCalendar.init = function (){
     TimelineCalendar.jObj = $('#timelineCalendar');
     TimelineCalendar.calendarEvents.sort(TimelineCalendar.eventsCompareFunction);

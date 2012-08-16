@@ -29,6 +29,7 @@ class CronComponent extends CApplicationComponent
         $command = $this->buildAddAtCommand($time, $command, $uniqKey, $action, $params);
         $command .= ' 2>&1';
         $out = "Running command: ".$command."\n";
+
         $result = array ();
         exec ($command, $result);
         $out .= "Result is: \n";
@@ -97,7 +98,7 @@ class CronComponent extends CApplicationComponent
         else
             $time = date('h:i A d.m.Y', strtotime($time));
         $commandAt = $command.' | at '.$time;
-        return $commandAt;
+        return 'echo '.$commandAt;
     }
 
     private function prepareParams($params)

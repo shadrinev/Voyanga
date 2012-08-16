@@ -57,6 +57,27 @@ class HotelStack
                             $this->bestPriceInd = count($this->_hotels) - 1;
                         }
                     }
+                    //save all hotels to db
+                    $hotelRoomDb = new HotelRoomDb();
+                    $room = $hotel->rooms[0];
+                    $hotelRoomDb->setAttributes(get_object_vars($room),false);
+
+                    $hotelRoomDb->requestId = $hotel->searchId;
+                    $hotelRoomDb->resultId = $hotel->resultId;
+                    $hotelRoomDb->rubPrice = intval($hotel->rubPrice);
+                    $hotelRoomDb->providerKey = $hotel->providerId;
+                    $hotelRoomDb->hotelId = $hotel->hotelId;
+                    $hotelRoomDb->hotelName = $hotel->hotelName;
+                    $hotelRoomDb->sharingBedding = $hotelRoomDb->sharingBedding ? 1 : 0;
+                    try{
+                        if(!$hotelRoomDb->save()){
+                            VarDumper::dump($hotelRoomDb->getErrors());
+                        }
+                    }catch (CException $e){
+                        VarDumper::dump($e->getMessage());
+                    }
+
+
                 }
 
                 foreach ($this->_hotels as $iInd => $hotel)

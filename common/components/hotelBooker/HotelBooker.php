@@ -11,8 +11,10 @@
  * @property string $updated
  * @property integer $orderBookingId
  * @property string $orderId
+ * @property string $hotelResultKey
  * @property string $timestamp
- * @property integer $price
+ * @property float $price
+ * @property integer $tryCount
  *
  * The followings are the available model relations:
  * @property OrderBooking $orderBooking
@@ -44,8 +46,13 @@ class HotelBooker extends SWLogActiveRecord
     {
         $stage = $event->destination->getId();
         Yii::app()->observer->notify('onBefore'.ucfirst($stage), $this);
-        $this->statusChanged = true;
+        //$this->statusChanged = true;
         parent::afterTransition($event);
+    }
+
+    public function statusChanged()
+    {
+        $this->statusChanged = true;
     }
 
     public function afterSave()
@@ -78,6 +85,12 @@ class HotelBooker extends SWLogActiveRecord
             //VarDumper::dump(Yii::app()->hotelBooker);
         }
             //Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+    }
+
+    public function onlySave()
+    {
+        $this->statusChanged = false;
+        $this->save();
     }
 
     public function behaviors()
@@ -117,11 +130,12 @@ class HotelBooker extends SWLogActiveRecord
             //array('id', 'required'),
             array('id, orderBookingId', 'numerical', 'integerOnly'=>true),
             array('orderId', 'length', 'max'=>45),
+            array('hotelResultKey', 'length', 'max'=>255),
             array('status', 'SWValidator'),
-            array('expiration, hotelInfo, updated, timestamp', 'safe'),
+            array('expiration, hotelInfo, updated, timestamp, hotelResultKey, tryCount', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp, price', 'safe', 'on'=>'search'),
+            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp, price, tryCount, hotelResultKey', 'safe', 'on'=>'search'),
         );
     }
 
@@ -149,6 +163,7 @@ class HotelBooker extends SWLogActiveRecord
             'status' => 'Status',
             'expiration' => 'Expiration',
             'hotelInfo' => 'Hotel Info',
+            'hotelResultKey' => 'Hotel Result Key',
             'updated' => 'Updated',
             'orderBookingId' => 'Order Booking',
             'orderId' => 'Order',
@@ -174,7 +189,9 @@ class HotelBooker extends SWLogActiveRecord
         $criteria->compare('updated',$this->updated,true);
         $criteria->compare('orderBookingId',$this->orderBookingId);
         $criteria->compare('orderId',$this->orderId,true);
+        $criteria->compare('hotelResultKey',$this->orderId,true);
         $criteria->compare('timestamp',$this->timestamp,true);
+        $criteria->compare('tryCount',$this->tryCount,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
@@ -203,6 +220,7 @@ class HotelBooker extends SWLogActiveRecord
         $element = serialize($value);
         $this->_hotel = $value;
         $this->hotelInfo = $element;
+        $this->hotelResultKey = $value->getId();
         $this->price = $value->price;
         if($value->cancelExpiration)
         {

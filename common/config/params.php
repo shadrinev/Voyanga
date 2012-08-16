@@ -39,6 +39,7 @@ return CMap::mergeArray(array(
     'hotel_search_cache_time' => 15 * 60, //seconds before show notification message for hotel page + cache expiration time
     'hotel_payment_time' => 600,
     'time_for_payment' => 600,
+    'hotel_repeat_time' => 120,
 
     'HotelBook' => array(
         'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
