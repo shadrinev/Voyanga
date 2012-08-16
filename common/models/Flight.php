@@ -12,6 +12,7 @@ class Flight extends CComponent
     public $departureCityId;
     public $arrivalCityId;
     public $departureDate;
+    public $arrivalDate;
     public $fullDuration = 0;
     private $departureCity;
     private $arrivalCity;
@@ -26,6 +27,7 @@ class Flight extends CComponent
                 $this->departureCityId = $oPart->departureCityId;
                 $this->arrivalCityId = $oPart->arrivalCityId;
                 $this->departureDate = $oPart->datetimeBegin;
+                $this->arrivalDate = $oPart->datetimeEnd;
             } else
             {
                 $oLastPart = &$this->flightParts[count($this->flightParts) - 1];

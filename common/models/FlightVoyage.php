@@ -198,6 +198,12 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
         return $this->flights[0]->getArrivalCity();
     }
 
+    public function getArrivalDate()
+    {
+        return $this->flights[0]->arrivalDate;
+    }
+
+
     public function isComplex()
     {
         $countFlights = count($this->flights);

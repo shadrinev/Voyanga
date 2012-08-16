@@ -56,7 +56,7 @@ $this->breadcrumbs=array(
               <?= $booking->pnr ?>
             </td>
             <td>
-              <?= "UNIMPLEMENTED" ?>
+              <?= $booking->flightVoyage->webService ?>
             </td>
             <td>
               <?= $booking->flightVoyage->valAirline->localRu; ?>
@@ -71,7 +71,7 @@ $this->breadcrumbs=array(
               <?= $booking->flightVoyage->departureDate; ?>
             </td>
             <td>
-              UNIMPLEMENTED
+              <?= @$booking->flightVoyage->arrivalDate; ?>
             </td>
             <td>
               <?= $booking->price; ?> руб
