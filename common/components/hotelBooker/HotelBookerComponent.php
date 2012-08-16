@@ -98,10 +98,10 @@ class HotelBookerComponent extends CApplicationComponent
         return $this->hotelBooker->save();
     }
 
-    public function stageEnterCredentials()
+   /* public function stageEnterCredentials()
     {
 
-    }
+    }*/
 
     public function stageAnalyzing()
     {
@@ -178,7 +178,6 @@ class HotelBookerComponent extends CApplicationComponent
                 $this->status('bookingError');
                 echo "error";
             }
-
         }
         else
         {
@@ -187,17 +186,17 @@ class HotelBookerComponent extends CApplicationComponent
         }
     }
 
-    // this is action
+    /*// this is action
     public function stageSoftWaitingForPayment()
     {
         //переход в SoftStartPayment, если достаточно времени.
         //Написать aciton клика по кнопке и там проверки условия для перехода
-    }
+    }*/
 
-    public function stageHardWaitingForPayment()
+    /*public function stageHardWaitingForPayment()
     {
 
-    }
+    }*/
 
     public function stageBookingError()
     {

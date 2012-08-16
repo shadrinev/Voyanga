@@ -31,21 +31,21 @@ class HotelBooker extends SWLogActiveRecord
      * @param string $className active record class name.
      * @return FlightBooker the static model class
      */
-    public static function model($className=__CLASS__)
+    public static function model($className = __CLASS__)
     {
         return parent::model($className);
     }
 
     public function beforeTransition($event)
     {
-        Yii::app()->observer->notify('onAfter'.ucfirst($event->source->getId()), $this);
+        Yii::app()->observer->notify('onAfter' . ucfirst($event->source->getId()), $this);
         parent::beforeTransition($event);
     }
 
     public function afterTransition($event)
     {
         $stage = $event->destination->getId();
-        Yii::app()->observer->notify('onBefore'.ucfirst($stage), $this);
+        Yii::app()->observer->notify('onBefore' . ucfirst($stage), $this);
         //$this->statusChanged = true;
         parent::afterTransition($event);
     }
@@ -59,32 +59,28 @@ class HotelBooker extends SWLogActiveRecord
     {
         if (!$this->statusChanged)
             return parent::afterSave();
-        $method = 'stage'.$this->swGetStatus()->getId();
+        $method = 'stage' . $this->swGetStatus()->getId();
         if (method_exists(Yii::app()->hotelBooker, $method) or method_exists($this->hotelBookerComponent, $method))
         {
-            if($this->hotelBookerComponent)
+            if ($this->hotelBookerComponent)
             {
                 $this->hotelBookerComponent->$method();
                 return parent::afterSave();
             }
-            elseif(Yii::app()->hotelBooker)
+            elseif (Yii::app()->hotelBooker)
             {
                 Yii::app()->hotelBooker->$method();
                 return parent::afterSave();
             }
             else
             {
-
                 Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
             }
-
         }
-        else{ echo 'not found  hotelbookerComponent method '.$method;
-            VarDumper::dump(method_exists($this->hotelBookerComponent, $method));
-            VarDumper::dump($this->hotelBookerComponent);
-            //VarDumper::dump(Yii::app()->hotelBooker);
+        else
+        {
+            Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
         }
-            //Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
     }
 
     public function onlySave()
@@ -96,7 +92,7 @@ class HotelBooker extends SWLogActiveRecord
     public function behaviors()
     {
         return array(
-            'workflow'=>array(
+            'workflow' => array(
                 'class' => 'site.common.extensions.simpleWorkflow.SWActiveRecordBehavior',
                 'workflowSourceComponent' => 'workflow',
             ),
@@ -105,7 +101,7 @@ class HotelBooker extends SWLogActiveRecord
                 'createAttribute' => 'timestamp',
                 'updateAttribute' => 'updated',
             ),
-            'CronTask'=>array(
+            'CronTask' => array(
                 'class' => 'site.common.components.cron.CronTaskBehavior',
             ),
         );
@@ -128,14 +124,14 @@ class HotelBooker extends SWLogActiveRecord
         // will receive user inputs.
         return array(
             //array('id', 'required'),
-            array('id, orderBookingId', 'numerical', 'integerOnly'=>true),
-            array('orderId', 'length', 'max'=>45),
-            array('hotelResultKey', 'length', 'max'=>255),
+            array('id, orderBookingId', 'numerical', 'integerOnly' => true),
+            array('orderId', 'length', 'max' => 45),
+            array('hotelResultKey', 'length', 'max' => 255),
             array('status', 'SWValidator'),
             array('expiration, hotelInfo, updated, timestamp, hotelResultKey, tryCount', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp, price, tryCount, hotelResultKey', 'safe', 'on'=>'search'),
+            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp, price, tryCount, hotelResultKey', 'safe', 'on' => 'search'),
         );
     }
 
@@ -181,27 +177,27 @@ class HotelBooker extends SWLogActiveRecord
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('status',$this->status,true);
-        $criteria->compare('expiration',$this->expiration,true);
-        $criteria->compare('hotelInfo',$this->hotelInfo,true);
-        $criteria->compare('updated',$this->updated,true);
-        $criteria->compare('orderBookingId',$this->orderBookingId);
-        $criteria->compare('orderId',$this->orderId,true);
-        $criteria->compare('hotelResultKey',$this->orderId,true);
-        $criteria->compare('timestamp',$this->timestamp,true);
-        $criteria->compare('tryCount',$this->tryCount,true);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('status', $this->status, true);
+        $criteria->compare('expiration', $this->expiration, true);
+        $criteria->compare('hotelInfo', $this->hotelInfo, true);
+        $criteria->compare('updated', $this->updated, true);
+        $criteria->compare('orderBookingId', $this->orderBookingId);
+        $criteria->compare('orderId', $this->orderId, true);
+        $criteria->compare('hotelResultKey', $this->orderId, true);
+        $criteria->compare('timestamp', $this->timestamp, true);
+        $criteria->compare('tryCount', $this->tryCount, true);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
 
     public function getHotel()
     {
-        if ($this->_hotel==null)
+        if ($this->_hotel == null)
         {
             if ($this->isNewRecord)
             {
@@ -223,16 +219,16 @@ class HotelBooker extends SWLogActiveRecord
         $this->hotelInfo = $element;
         $this->hotelResultKey = $value->getId();
         $this->price = $value->rubPrice;
-        if($value->cancelExpiration)
+        if ($value->cancelExpiration)
         {
-            $this->expiration = date('Y-m-d H:i:s',$value->cancelExpiration);
+            $this->expiration = date('Y-m-d H:i:s', $value->cancelExpiration);
         }
     }
 
     public function getFullDescription()
     {
         $description = array();
-        if ($this->_hotel==null)
+        if ($this->_hotel == null)
         {
             if ($this->isNewRecord)
             {
@@ -245,15 +241,15 @@ class HotelBooker extends SWLogActiveRecord
             }
         }
 
-        if($this->_hotel)
+        if ($this->_hotel)
         {
             $city = City::getCityByHotelbookId($this->_hotel->cityId);
-            $description[] = $city->localRu.': '.$this->_hotel->hotelName;
-            if($this->hotelBookingPassports)
+            $description[] = $city->localRu . ': ' . $this->_hotel->hotelName;
+            if ($this->hotelBookingPassports)
             {
-                foreach($this->hotelBookingPassports as $passport)
+                foreach ($this->hotelBookingPassports as $passport)
                 {
-                    $description[] = $passport->firstName.' '.$passport->lastName;
+                    $description[] = $passport->firstName . ' ' . $passport->lastName;
                 }
             }
         }
