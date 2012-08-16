@@ -62,7 +62,7 @@ class HotelRoomDb extends CActiveRecord
             array('sizeName, hotelName', 'length', 'max'=>30),
             array('typeName, viewName, mealName', 'length', 'max'=>35),
             array('mealBreakfastName', 'length', 'max'=>45),
-            array('roomName', 'length', 'max'=>50),
+            array('roomName', 'length', 'max'=>70),
             array('resultId, requestId', 'length', 'max'=>10),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.

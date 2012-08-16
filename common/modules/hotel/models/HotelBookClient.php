@@ -738,6 +738,7 @@ class HotelBookClient
         print_r($errorDescriptions);*/
         if ($hotels)
         {
+
             if (count($hotelSearchParams->rooms) == 1)
             {
                 // O_o
@@ -747,6 +748,9 @@ class HotelBookClient
                     $allHotelStack = new HotelStack(array('hotels' => $hotels));
                     //VarDumper::dump($allHotelStack);die();
                     $allHotelStack->groupBy('categoryId')->groupBy('roomSizeId')->groupBy('roomTypeId')->groupBy('centerDistance')->groupBy('rubPrice');
+                    //$allHotelStack->groupBy('categoryId')->groupBy('centerDistance')->groupBy('rubPrice');
+                    //print_r($allHotelStack);
+                    //die();
                     //VarDumper::dump($allHotelStack);die();
                     //VarDumper::dump($hotelStack->hotelStacks);
                     foreach ($allHotelStack->hotelStacks as $categoryId => $hotelStack)
@@ -764,7 +768,8 @@ class HotelBookClient
                                 //todo: move to room class
                                 if (!in_array($i, array(appParams('HotelBook.room.DBL'), appParams('HotelBook.room.TWIN')) ) )
                                 {
-                                    unset($hotelStack->hotelStacks[$i]);
+                                    $hotelStack->deleteStackWithIndex("$i");
+                                    //unset($hotelStack->hotelStacks[$i]);
                                 }
                                 else
                                 {
@@ -774,7 +779,8 @@ class HotelBookClient
                                         //echo "roomTypeId: $j<br>";
                                         if (!in_array($j, appParams('HotelBook.room.STD')))
                                         {
-                                            unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]);
+                                            $hotelStack->deleteStackWithIndex("{$i},{$j}");
+                                            //unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]);
                                         }
                                         else
                                         {
@@ -785,7 +791,8 @@ class HotelBookClient
                                                 if (($k > appParams('HotelBook.distanceFromCityCenter')))
                                                 {
                                                     //echo "out $k";
-                                                    unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]->hotelStacks[$k]);
+                                                    $hotelStack->deleteStackWithIndex("{$i},{$j},{$k}");
+                                                    //unset($hotelStack->hotelStacks[$i]->hotelStacks[$j]->hotelStacks[$k]);
                                                 }
                                                 else
                                                 {
@@ -799,6 +806,8 @@ class HotelBookClient
                             }
                             if ($haveStack)
                             {
+                                //print_r($hotelStack);
+                                //die();
                                 $jsonObject = $hotelStack->sortBy('rubPrice',5)->getHotel()->getJsonObject();
                                 $jsonObject['cityId'] = $hotelSearchParams->city->id;
                                 $jsonObject['dateFrom'] = $hotelSearchParams->checkIn;

@@ -70,9 +70,9 @@ class HotelStack
                     $hotelRoomDb->hotelName = $hotel->hotelName;
                     $hotelRoomDb->sharingBedding = $hotelRoomDb->sharingBedding ? 1 : 0;
                     try{
-                        if(!$hotelRoomDb->save()){
+                        /*if(!$hotelRoomDb->save()){
                             VarDumper::dump($hotelRoomDb->getErrors());
-                        }
+                        }*/
                     }catch (CException $e){
                         VarDumper::dump($e->getMessage());
                     }
@@ -142,6 +142,8 @@ class HotelStack
 
     public function groupBy($sKey, $iToTop = NULL)
     {
+        $find1 = false;
+        $find2 = false;
         if($this->_hotels)
         {
             //$aHotelsStacks = array();
@@ -153,12 +155,15 @@ class HotelStack
 
                 $sVal = $hotel->getValueOfParam($sKey);
 
+
                 if (!isset($this->hotelStacks[$sVal]))
                 {
                     $this->hotelStacks[$sVal] = new HotelStack();
                 }
                 $this->hotelStacks[$sVal]->addHotel($hotel);
             }
+
+
             $this->_hotels = null;
             uksort($this->hotelStacks, 'HotelStack::compare_array'); //sort array by key
             reset($this->hotelStacks);
@@ -249,7 +254,12 @@ class HotelStack
                         }
                     }
                     //echo "sorting hotelStacks<br>";
-                    uasort($this->hotelStacks,'HotelStack::compareStacksByHotelsParams');
+                    try{
+                        uasort($this->hotelStacks,'HotelStack::compareStacksByHotelsParams');
+                    }catch (CException $e){
+                        echo "group: {$this->groupKey}";
+                        print_r($this->hotelStacks);
+                    }
                 }
                 else
                 {
@@ -333,6 +343,29 @@ class HotelStack
         foreach($this->hotelStacks as $key=>$hotelStack)
         {
             echo "key: $key <br>";
+        }
+    }
+
+    /**
+     * @param $indexes 'ind1,ind2,ind3' example : '4,10,50,77'
+     */
+    public function deleteStackWithIndex($indexes)
+    {
+        $arrIndexes = explode(',',$indexes);
+        $findInd = $arrIndexes[0];
+        if(count($arrIndexes)>1){
+            if(isset($this->hotelStacks[$findInd])){
+                unset($arrIndexes[0]);
+
+                $this->hotelStacks[$findInd]->deleteStackWithIndex(join(',',$arrIndexes));
+                if(!$this->hotelStacks[$findInd]->hotelStacks and !$this->hotelStacks[$findInd]->_hotels){
+                    unset($this->hotelStacks[$findInd]);
+                }
+            }
+        }else{
+            if(isset($this->hotelStacks[$findInd])){
+                unset($this->hotelStacks[$findInd]);
+            }
         }
     }
 }
