@@ -17,7 +17,7 @@
             {{/each}}
         </td>
         <td>
-            <a class="btn" href="/booking/hotel/buy/key/<?php echo $cacheId?>_{{hotelId}}_{{resultId}}">выбрать</a>
+            <a class="btn" href="/booking/hotel/buy/key/<?php echo $cacheId?>_{{searchId}}_{{resultId}}">выбрать</a>
             <a class='btn btn-info btn-mini chooseRoom' data-cacheid="<?php echo $cacheId?>" data-hotelid="{{hotelId}}" data-roomid="{{resultId}}">добавить в тур</a>
         </td>
     </tr>

@@ -33,7 +33,7 @@ EOD;
             if($hotelBookerId)
             {
                 /** @var HotelBookerComponent $hotelBookerComponent  */
-                $hotelBookerComponent = Yii::app()->hotelBooker;
+                $hotelBookerComponent = new HotelBookerComponent();
                 $hotelBookerComponent->setHotelBookerFromId($hotelBookerId);
                 if($newState)
                 {
@@ -57,7 +57,7 @@ EOD;
         if($hotelBookerId)
         {
             /** @var HotelBookerComponent $hotelBookerComponent  */
-            $hotelBookerComponent = Yii::app()->hotelBooker;
+            $hotelBookerComponent = New HotelBookerComponent();
             $hotelBookerComponent->setHotelBookerFromId($hotelBookerId);
             echo "HotelBookerId ".$hotelBookerComponent->getHotelBookerId()."\n";
 
@@ -65,8 +65,8 @@ EOD;
             {
                 $res = $hotelBookerComponent->status($newState);
                 if(!$res) CVarDumper::dump($hotelBookerComponent->getCurrent()->getErrors());
-
-                echo "Status is ".$hotelBookerComponent->getStatus()."\n";
+                $hotelBookerComponent->getCurrent()->onlySave();
+                echo "Status is ".$hotelBookerComponent->getCurrent()->status."\n";
             }
         }
         else

@@ -31,14 +31,17 @@ constructorViewer.init = function(){
                     flightParams.arrivalCityId = flight.cityToId;
                     if(firstElem){
                         firstElem = false;
-                        requestParams.adultCount = flight.adultCount;
-                        requestParams.childCount = flight.childCount;
-                        requestParams.infantCount = flight.infantCount;
+                        //console.log('change counts');
+                        //console.log(flight);
+                        requestParams.FlightForm.adultCount = flight.adultCount;
+                        requestParams.FlightForm.childCount = flight.childCount;
+                        requestParams.FlightForm.infantCount = flight.infantCount;
                     }
-                    console.log(flightParams);
+                    //console.log(flightParams);
                     requestParams.RouteForm.push(flightParams);
                 }
                 console.log(requestParams);
+                //return;
                 //$.getJSON('/tour/constructor/flightSearch',requestParams,function(jData){console.log(jData);});
 
                 $.ajax({

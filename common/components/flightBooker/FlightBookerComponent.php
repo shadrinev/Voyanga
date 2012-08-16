@@ -140,8 +140,10 @@ class FlightBookerComponent extends CApplicationComponent
             $this->flightBooker->timeout = date('y-m-d H:i:s',$flightBookingResponse->expiration);
             $this->status('waitingForPayment');
         }
-        //die();
-
+        else
+        {
+            $this->status('bookingError');
+        }
     }
 
     public function stageWaitingForPayment()
@@ -164,7 +166,8 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBookingError()
     {
-        $this->status('done');
+        echo "Booking error happens!";
+        $this->status('error');
     }
 
     public function stageBookingTimeLimitError()
@@ -322,7 +325,8 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageError()
     {
-
+        Yii::log('Flight booking finsihed with error', CLogger::LEVEL_ERROR);
+        Yii::app()->end();
     }
 
     public function setFlightBookerFromId($flightBookerId)

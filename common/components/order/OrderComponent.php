@@ -477,27 +477,7 @@ class OrderComponent extends CApplicationComponent
 
             /** @var HotelBooker[] $hotelBookers  */
             $hotelBookers = HotelBooker::model()->findAllByAttributes(array('orderBookingId'=>$bookingModel->primaryKey));
-            foreach($hotelBookers as $hotelBooker)
-            {
-                $status = $hotelBooker->status;
-                if(strpos($status,'/') !== false)
-                {
-                    $status = substr($status, strpos($status,'/')+1);
-                }
-                if(($status == 'hardStartPayment') and ($allTicketingValid))
-                {
-                    $hotelBookerComponent = new HotelBookerComponent();
-                    $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
-                    $hotelBookerComponent->status('ticketing');
 
-
-                    $newStatus = $hotelBookerComponent->getStatus();
-                    if($newStatus == 'ticketingRepeat')
-                    {
-                        $allTicketingValid = false;
-                    }
-                }
-            }
             foreach($hotelBookers as $hotelBooker)
             {
                 $status = $hotelBooker->status;
@@ -513,10 +493,57 @@ class OrderComponent extends CApplicationComponent
                     $hotelBookerComponent->status('moneyTransfer');
                 }
             }
+            foreach($hotelBookers as $hotelBooker)
+            {
+                $status = $hotelBooker->status;
+                if(strpos($status,'/') !== false)
+                {
+                    $status = substr($status, strpos($status,'/')+1);
+                }
+                if(($status == 'hardStartPayment') and ($allTicketingValid))
+                {
+                    $hotelBookerComponent = new HotelBookerComponent();
+                    $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
+                    $res = $hotelBookerComponent->checkValid();
+
+
+                    if(!$res){
+                        $allTicketingValid = false;
+                    }
+                }
+            }
+
+            $haveProblems = false;
+            foreach($hotelBookers as $hotelBooker)
+            {
+                $status = $hotelBooker->status;
+                if(strpos($status,'/') !== false)
+                {
+                    $status = substr($status, strpos($status,'/')+1);
+                }
+                if(($status == 'hardStartPayment') and ($allTicketingValid))
+                {
+                    $hotelBookerComponent = new HotelBookerComponent();
+                    $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
+                    $hotelBookerComponent->status('ticketing');
+
+
+                    $newStatus = $hotelBookerComponent->getCurrent()->status;
+                    if(strpos($newStatus,'/') !== false)
+                    {
+                        $newStatus = substr($newStatus, strpos($newStatus,'/')+1);
+                    }
+                    if($newStatus == 'ticketingRepeat')
+                    {
+                        $allTicketingValid = false;
+                        $haveProblems = true;
+                    }
+                }
+            }
 
             if(!$allTicketingValid)
             {
-                $this->returnMoney();
+                $this->returnMoney($haveProblems);
             }
         }
 
@@ -576,7 +603,7 @@ class OrderComponent extends CApplicationComponent
         }
     }
 
-    public function returnMoney()
+    public function returnMoney($haveProblems = false)
     {
         $bookingModel = $this->getOrderBooking();
 

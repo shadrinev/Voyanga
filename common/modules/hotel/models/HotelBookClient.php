@@ -270,6 +270,7 @@ class HotelBookClient
             'viewId' => 'roomViewId',
             'viewName' => 'roomViewName',
             'cotsCount' => 'cots',
+            'roomName' => 'roomName',
         );
 
 
@@ -1123,15 +1124,15 @@ class HotelBookClient
         $hotelBookClient = $this;
         $searchParams = array();
         $hotelKey = $hotel->key;
-        $searchParams['cityId'] = $this->hotel->cityId;
-        $searchParamsFull = Yii::app()->cache->get('hotelSearchParams'.Yii::app()->user->getState('avia.cacheId'));
-        $searchParams['checkIn'] = $searchParamsFull->checkIn;
-        $searchParams['duration'] = $searchParamsFull->duration;
+        $searchParams['cityId'] = $hotel->cityId;
+        //$searchParamsFull = Yii::app()->cache->get('hotelSearchParams'.Yii::app()->user->getState('avia.cacheId'));
+        $searchParams['checkIn'] = $hotel->checkIn;//$searchParamsFull->checkIn;
+        $searchParams['duration'] = $hotel->duration;//$searchParamsFull->duration;
         $searchParams['rooms'] = array();
-        foreach ($this->hotel->rooms as $room)
+        foreach ($hotel->rooms as $room)
         {
             $searchParams['rooms'][] = array(
-                'roomSizeId' => $room->sizeId,
+                'roomSizeId' => $room->sizeId != 8 ? $room->sizeId : 2,
                 'child' => $room->childCount ? $room->childCount : 0,
                 'cots' => $room->cotsCount,
                 'ChildAge' => isset($room->childAges[0]) ? $room->childAges[0] : 0,

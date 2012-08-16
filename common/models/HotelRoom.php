@@ -44,6 +44,7 @@ class HotelRoom extends CApplicationComponent
     public $mealName;
     public $mealBreakfastId;
     public $mealBreakfastName;
+    public $roomName;
     public $sharingBedding;
     public $cotsCount;
     public $childCount;

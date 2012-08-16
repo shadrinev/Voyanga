@@ -240,6 +240,15 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
         return md5($sKey);
     }
 
+    public function getRoomNames()
+    {
+        $roomNames = array();
+        //foreach($this->rooms as $room)
+        //    $sKey .= '|'.$room->key;
+
+        //return md5($sKey);
+    }
+
     public function getValueOfParam($paramName)
     {
         switch ($paramName)

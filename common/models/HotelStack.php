@@ -57,6 +57,27 @@ class HotelStack
                             $this->bestPriceInd = count($this->_hotels) - 1;
                         }
                     }
+                    //save all hotels to db
+                    $hotelRoomDb = new HotelRoomDb();
+                    $room = $hotel->rooms[0];
+                    $hotelRoomDb->setAttributes(get_object_vars($room),false);
+
+                    $hotelRoomDb->requestId = $hotel->searchId;
+                    $hotelRoomDb->resultId = $hotel->resultId;
+                    $hotelRoomDb->rubPrice = intval($hotel->rubPrice);
+                    $hotelRoomDb->providerKey = $hotel->providerId;
+                    $hotelRoomDb->hotelId = $hotel->hotelId;
+                    $hotelRoomDb->hotelName = $hotel->hotelName;
+                    $hotelRoomDb->sharingBedding = $hotelRoomDb->sharingBedding ? 1 : 0;
+                    try{
+                        if(!$hotelRoomDb->save()){
+                            VarDumper::dump($hotelRoomDb->getErrors());
+                        }
+                    }catch (CException $e){
+                        VarDumper::dump($e->getMessage());
+                    }
+
+
                 }
 
                 foreach ($this->_hotels as $iInd => $hotel)
@@ -160,10 +181,22 @@ class HotelStack
      */
     private static function compareStacksByHotelsParams($a, $b)
     {
-
-        $valA = $a->getHotel()->getValueOfParam(self::$sortParam);
-        $valB = $b->getHotel()->getValueOfParam(self::$sortParam);
-        //echo "Comparing ".$a->getHotel()->hotelId.' vs '.$b->getHotel()->hotelId." values: $valA vs $valB<br>";
+        if (is_object($a->getHotel()) and ($a->getHotel() instanceof Hotel))
+        {
+            $valA = $a->getHotel()->getValueOfParam(self::$sortParam);
+        }
+        else
+        {
+            throw new CException ('Incorrect first hotel incoming to compareness: '.VarDumper::dumpAsString($a));
+        }
+        if (is_object($b->getHotel()) and ($b->getHotel() instanceof Hotel))
+        {
+            $valB = $b->getHotel()->getValueOfParam(self::$sortParam);
+        }
+        else
+        {
+            throw new CException ('Incorrect second hotel incoming to compareness: '.VarDumper::dumpAsString($b));
+        }
         if ($valA < $valB)
         {
             return -1;
@@ -197,28 +230,31 @@ class HotelStack
 
     public function sortBy($sKey = '',$deep = 0)
     {
-        if($sKey) self::$sortParam = $sKey;
-        if(self::$sortParam != $this->groupKey)
+        if($sKey)
         {
-            if($this->_hotels)
+            self::$sortParam = $sKey;
+            if(self::$sortParam != $this->groupKey)
             {
-                uasort($this->_hotels,'HotelStack::compareHotelsByHotelsParams');
-            }
-            elseif($this->hotelStacks)
-            {
-                if($deep != 0)
+                if($this->_hotels)
                 {
-                    foreach($this->hotelStacks as $i=>$hotelStack)
-                    {
-                        $this->hotelStacks[$i]->sortBy('', $deep -1);
-                    }
+                    uasort($this->_hotels,'HotelStack::compareHotelsByHotelsParams');
                 }
-                //echo "sorting hotelStacks<br>";
-                uasort($this->hotelStacks,'HotelStack::compareStacksByHotelsParams');
-            }
-            else
-            {
-                return false;
+                elseif($this->hotelStacks)
+                {
+                    if($deep != 0)
+                    {
+                        foreach($this->hotelStacks as $i=>$hotelStack)
+                        {
+                            $this->hotelStacks[$i]->sortBy($sKey, $deep -1);
+                        }
+                    }
+                    //echo "sorting hotelStacks<br>";
+                    uasort($this->hotelStacks,'HotelStack::compareStacksByHotelsParams');
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
         return $this;
