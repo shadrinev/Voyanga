@@ -12,9 +12,13 @@ class DumpDbCommand extends CConsoleCommand
     public function run($args)
     {
         $this->backupFolder = $this->createBackupFolder();
+        //todo: rewrite with mysqldump
         $this->dumpMySql();
         $this->dumpMongo();
         $this->createArchive();
+        //todo: implement this
+        //https://github.com/BenTheDesigner/Dropbox.git
+        $this->uploadToDropbox();
     }
 
     public function dumpMySql()
@@ -65,5 +69,10 @@ class DumpDbCommand extends CConsoleCommand
         exec($command, $results);
         CVarDumper::dump($results);
         echo date('H:i:s Y-m-d').' End packing packing'.PHP_EOL;
+    }
+
+    public function uploadToDropbox()
+    {
+
     }
 }
