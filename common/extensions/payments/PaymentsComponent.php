@@ -10,92 +10,159 @@
 class PaymentsComponent extends CApplicationComponent
 {
     /**
-     * Uniteller shop id
-     * @var int
+     * Array of credentials for different payment scenarios
+     *
+     * @var array
      */
-    private $_shopId;
+    private $_credentials;
+
 
     /**
-     * Uniteller login. Required for some requests.
-     * @var bool
+     *
+     *
+     *
+     *
+     * @return Bill bill for given hotel booker
      */
-    private $_login;
-
-    /**
-     * Salt for request signing
-     * @var string
-     */
-    private $_password;
-
-    /**
-     * Test mode flag, tells us which api endpoints to use.
-     * @var bool
-     */
-    private $_testMode;
-
-    public function createBill ($data)
+    public function getBillForHotelBooker($hotelBooker)
     {
-
-    }
-    public function getFormForBill()
-    {
-
+        Yii::import("common.extensions.payments.models.Bill");
+        if($hotelBooker->billId) {
+            return Bill::model()->findByPk($hotelBooker->billId);
+        }
+        $bill = new Bill();
+        $bill->status = Bill::STATUS_NEW;
+        $bill->amount = $hotelBooker->price;
+        $bill->save();
+        $hotelBooker->billId = $bill->id;
+        $hotelBooker->save();
+        return $bill;
     }
 
-    public function getDataByOrderId($orderId)
+    public function getParamsFor($channel)
     {
-        //! FIXME switch to post here
-        $data = Yii::app()->httpClient->get($this->statusUrl);
-        var_dump($data);
-        return Array();
-    }
-
-    public function setShopId($value)
-    {
-        $this->_shopId = $value;
-    }
-
-    public function getShopId()
-    {
-        return $this->_shopId;
-    }
-
-    public function setPassword($value)
-    {
-        $this->_password = $value;
-    }
-
-    /*    public function getPassword()
-    {
-        return $this->_password;
-        }*/
-
-    public function setTestMode($value)
-    {
-        $this->_testMode = $value;
-    }
-
-    public function setLogin($value)
-    {
-        $this->_login = $value;
-    }
-
-    public function getStatusUrl()
-    {
-        $result = $this->baseUrl . '/results/';
-        $result.= '?Shop_ID='. $this->shopId;
-        $result.= '&Login=' . $this->_login;
-        $result.= '&Password=' . $this->_password;
-        $result.= '&Format=1&Header=1';
+        // FIXME
+        $credentials = $this->_credentials[$channel];
+        $result = Array();
+        $result['MerchantId'] = $credentials['id'];
         return $result;
     }
 
-    public function getBaseUrl()
+    public function getSignatureFor($channel, $params)
     {
-        if($this->_testMode)
+        $credentials = $this->_credentials[$channel];
+        $keys = Array('MerchantId', 'DateTime', 'TransactionID', 'OrderId', 'Amount', 'Currency', 'ValidUntil', 'TransactionId');
+        $values = Array();
+        foreach($keys as $key)
         {
-            return 'https://test.wpay.uniteller.ru';
+            if(isset($params[$key]))
+                $values[]= $key.'='.$params[$key];
         }
-        return 'https://wpay.uniteller.ru';
+        $values[] = 'PrivateSecurityKey='.$credentials['key'];
+        $stringToSign = implode('&', $values);
+        return md5($stringToSign);
     }
+
+    /**
+     * Returns (almost) everything uniteller can tell us about given $billId
+     * @return array
+     */
+    public function getDataByBillId($billId)
+    {
+        //! FIXME switch to post here
+        //! FIXME it could throw exception
+        $data = Yii::app()->httpClient->get(Yii::app()->payments->statusUrl);
+        echo $data[1];
+        $data = new SimpleXmlElement($data[1]);
+        //! FIXME it possibly could be an array
+        // var_dump($data->orders->order);
+        if(count($data->orders->order)!=1)
+            throw new Exception("Whoops");
+        $keys = array("ordernumber",
+                      "response_code",
+                      "billnumber",
+                      "currency",
+                      "status",
+                      "total");
+        $result = array();
+        foreach($keys as $key)
+        {
+            $result[$key]=(string)$data->orders->order[0]->{$key};
+        }
+        return $result;
+    }
+
+   public function setCredentials($value)
+   {
+       $this->_credentials = $value;
+   }
+
+
+   /**
+    * Fetch status from payonline. Update database record.
+    */
+   public function updateBillStatus($bill)
+   {
+       //! FIXME shuld we only accept bills in certain states ?
+       $url = 'https://secure.payonlinesystem.com/payment/search/';
+       $context = $this->getParamsFor($bill->channel);
+       $context['TransactionId'] = $bill->transactionId;
+       $context['ContentType'] = 'text';
+       $context['SecurityKey'] = $this->getSignatureFor($bill->channel, $context);
+       $params = Array();
+       foreach($context as $key=>$value)
+       {
+           $params[]=$key.'='.$value;
+       }
+       $url .= '?';
+       $url.=implode('&', $params);
+       list($code, $data) = Yii::app()->httpClient->get($url);
+       if(strlen($data))
+       {
+           $result = Array();
+           parse_str($data, $result);
+           // FIXME check AMOUNT?
+           if($result['Status'] == 'PreAuthorized')
+           {
+               $bill->status = Bill::STATUS_PREAUTH;
+               $bill->save();
+           }
+       }
+   }
+
+   /*
+    * Confirm preauth
+    */
+   public function confirm($bill)
+   {
+       //! FIXME shuld we only accept bills in certain states ?
+       $url = 'https://secure.payonlinesystem.com/payment/transaction/complete/';
+       $context = $this->getParamsFor($bill->channel);
+       $context['TransactionId'] = $bill->transactionId;
+       $context['ContentType'] = 'text';
+       $context['SecurityKey'] = $this->getSignatureFor($bill->channel, $context);
+       $params = Array();
+       foreach($context as $key=>$value)
+       {
+           $params[]=$key.'='.$value;
+       }
+       $url .= '?';
+       $url.=implode('&', $params);
+       //       var_dump($url);
+       list($code, $data) = Yii::app()->httpClient->get($url);
+       if(strlen($data))
+       {
+           $result = Array();
+           parse_str($data, $result);
+           //           var_dump($result);
+           // FIXME check AMOUNT?
+           if($result['Result'] == 'Ok')
+           {
+               $bill->status = Bill::STATUS_PAID;
+               $bill->save();
+           }
+       }
+
+   }
+
 }

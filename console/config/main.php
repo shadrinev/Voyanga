@@ -67,16 +67,51 @@ return CMap::mergeArray (
                     ),
                 ),
             ),
+
             'db'=>array(
+                'class' => 'CDbConnection',
                 'pdoClass' => 'NestedPDO',
                 'connectionString' => $params['db.connectionString'],
                 'username' => $params['db.username'],
                 'password' => $params['db.password'],
-                'charset' => 'utf8',
+                'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
                 'enableParamLogging' => YII_DEBUG,
-                'enableProfiling' => YII_DEBUG,
-                'emulatePrepare'=>true,
+                'charset' => 'utf8',
             ),
+
+            'logdb'=>array(
+                'class' => 'CDbConnection',
+                'pdoClass' => 'NestedPDO',
+                'connectionString' => $params['db.connectionString'],
+                'username' => $params['db.username'],
+                'password' => $params['db.password'],
+                'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
+                'enableParamLogging' => YII_DEBUG,
+                'charset' => 'utf8',
+            ),
+
+            'backendDb'=>array(
+                'class' => 'CDbConnection',
+                'pdoClass' => 'NestedPDO',
+                'connectionString' => $params['backendDb.connectionString'],
+                'username' => $params['backendDb.username'],
+                'password' => $params['backendDb.password'],
+                'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
+                'enableParamLogging' => YII_DEBUG,
+                'charset' => 'utf8',
+            ),
+
+            'userDb'=>array(
+                'class' => 'CDbConnection',
+                'pdoClass' => 'NestedPDO',
+                'connectionString' => $params['userDb.connectionString'],
+                'username' => $params['userDb.username'],
+                'password' => $params['userDb.password'],
+                'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
+                'enableParamLogging' => true,
+                'charset' => 'utf8',
+            ),
+
             'urlManager' => array(
                 'urlFormat' => 'path',
                 'showScriptName' => false,
