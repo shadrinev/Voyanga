@@ -70,9 +70,9 @@ class HotelStack
                     $hotelRoomDb->hotelName = $hotel->hotelName;
                     $hotelRoomDb->sharingBedding = $hotelRoomDb->sharingBedding ? 1 : 0;
                     try{
-                        /*if(!$hotelRoomDb->save()){
+                        if(!$hotelRoomDb->save()){
                             VarDumper::dump($hotelRoomDb->getErrors());
-                        }*/
+                        }
                     }catch (CException $e){
                         VarDumper::dump($e->getMessage());
                     }
