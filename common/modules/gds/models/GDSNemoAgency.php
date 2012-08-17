@@ -293,6 +293,15 @@ class GDSNemoAgency extends CComponent
                 $aPassengers = array();
                 $aTariffs = array();
                 //Yii::beginProfile('processingPassengers');
+                $refundable = $oSoapFlight->PricingInfo->Refundable;
+                if($refundable == 'true' or $refundable === true)
+                {
+                    $refundable = true;
+                }
+                else
+                {
+                    $refundable = false;
+                }
                 UtilsHelper::soapObjectsArray($oSoapFlight->PricingInfo->PassengerFare);
                 foreach ($oSoapFlight->PricingInfo->PassengerFare as $oFare)
                 {
@@ -410,6 +419,7 @@ class GDSNemoAgency extends CComponent
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;
                 $oFlight->passengersInfo = $aPassengers;
+                $oFlight->refundable = $refundable;
                 //$oFlight->searchId = $searchId;
 
                 if (!$eTicket)
@@ -526,7 +536,7 @@ class GDSNemoAgency extends CComponent
                 $oTraveller['PersonalInfo']['LastName'] = $passenger->passport->lastName;
                 $oTraveller['DocumentInfo'] = array();
                 $oTraveller['DocumentInfo']['DocType'] = isset(self::$passportTypesMap[$passenger->passport->documentTypeId]) ? self::$passportTypesMap[$passenger->passport->documentTypeId] : 'P';
-                $oTraveller['DocumentInfo']['DocNum'] = $passenger->passport->number;
+                $oTraveller['DocumentInfo']['DocNum'] = ($passenger->passport->series ? $passenger->passport->series : '').$passenger->passport->number;
                 $oTraveller['DocumentInfo']['CountryCode'] = Country::getCountryByPk($passenger->passport->countryId)->code;
                 $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->passport->expiration);
                 $oTraveller['ContactInfo'] = array();
