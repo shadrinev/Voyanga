@@ -141,7 +141,7 @@ class BasketController extends Controller
     public function actionSave($name)
     {
         $order = new OrderComponent;
-        $order->create($name);
+        $order->saveOrder($name);
     }
 
     public function actionClear()

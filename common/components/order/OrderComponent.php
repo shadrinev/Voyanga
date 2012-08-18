@@ -7,299 +7,125 @@
  */
 class OrderComponent extends CApplicationComponent
 {
+    /**
+     * Name of shoppingCart application component
+     * @see http://yiiext.github.com/extensions/shopping-cart-component/readme.ru.html
+     * @var string
+     */
     public $shoppingCartComponent = 'shoppingCart';
-    public $orderBooking;
-    public $isValid;
 
-    private $endStatuses = array();
-    private $bookedElements = array();
-    private $bookingModel;
-    private $validSaving;
-    private $flightGroupId;
+    private $sortedItems = array();
+    private $bookedItems = array();
+    private $finalWorkflowStatuses = array();
+    private $bookingContactInfo;
 
-    private $orderPositions;
-
-    public function getPositions($asJson = true)
+    public function init()
     {
-        $this->orderPositions = Yii::app()->{$this->shoppingCartComponent}->getPositions();
-        $result = array();
-        $time = array();
-        $weight = array();
-        foreach ($this->orderPositions as $position)
-        {
-            if ($asJson)
-            {
-                $element = $position->getJsonObject();
-            }
-            else
-            {
-                $element = $position;
-            }
-            $time[] = $position->getTime();
-            $weight[] = $position->getWeight();
-            if ($asJson)
-            {
-                if ($position instanceof FlightTripElement)
-                    $element['isFlight'] = true;
-                if ($position instanceof HotelTripElement)
-                {
-                    $element['isHotel'] = true;
-                }
-                $element['isLinked'] = $position->isLinked();
-            }
-            $result['items'][] = $element;
-            unset($element);
-        }
-        if (sizeof($time) > 0)
-        {
-            array_multisort($time, SORT_ASC, SORT_NUMERIC, $weight, SORT_ASC, SORT_NUMERIC, $result['items']);
-        }
-        if ($asJson)
-            return json_encode($result);
-        else
-            return $result;
+        $this->sortedItems = $this->sortItemsFromCartAndGetThem();
     }
 
-    public function create($name)
+    public function getSortedItemsAsJson()
+    {
+        $items = $this->sortedItems;
+        array_map(function ($item) { return $this->injectAdditionalInfo($item); }, $items);
+        return json_encode($items);
+    }
+
+    private function sortItemsFromCartAndGetThem()
+    {
+        $items = $this->getCartItems();
+        $times = $this->getTimesForCartItems($items);
+        $weights = $this->getWeightsForCartItems($items);
+        return $this->getItemsSortedByTimeAndWeights($items, $times, $weights);
+    }
+
+    private function getCartItems()
+    {
+        return Yii::app()->{$this->shoppingCartComponent}->getPositions();
+    }
+
+    private function getTimesForCartItems($items)
+    {
+        return array_map(function ($item) { return $item->getTime(); }, $items);
+    }
+
+    private function getWeightsForCartItems($items)
+    {
+        return array_map(function ($item) { return $item->getWeight(); }, $items);
+    }
+
+    private function getItemsSortedByTimeAndWeights($items, $time, $weight)
+    {
+        array_multisort($time, SORT_ASC, SORT_NUMERIC, $weight, SORT_ASC, SORT_NUMERIC, $items);
+        return $items;
+    }
+
+    private function injectAdditionalInfo(&$element)
+    {
+        $element['isFlight'] = $element instanceof FlightTripElement;
+        $element['isHotel'] = $element instanceof HotelTripElement;
+        $element['isLinked'] = $element->isLinked();
+    }
+
+    public function saveOrder($name)
+    {
+        $order = $this->createOrderAndSaveIt($name);
+        $this->saveItemsOfOrder($order);
+        echo json_encode(array('result' => true));
+    }
+
+    private function createOrderAndSaveIt($name)
     {
         $order = new Order;
         $order->userId = Yii::app()->user->id;
         $order->name = $name;
-        if ($result = $order->save())
+        if (!$order->save())
         {
-            $items = $this->getPositions(false);
-            foreach ($items['items'] as $item)
-            {
-                if ($saved = $item->saveToOrderDb())
-                {
-                    $item->saveReference($order);
-                }
-                else
-                {
-                    $result = false;
-                    break;
-                }
-            }
-
+            $errMsg = "Could not save named order to database" . PHP_EOL . CVarDumper::dumpAsString($order->getErrors());
+            $this->logAndThrowException($errMsg, 'OrderComponent.saveOrder');
+            return $order;
         }
-        echo json_encode(array('result' => $result));
+        return $order;
     }
 
-    public function forceValidate()
+    private function saveItemsOfOrder($order)
     {
-        $this->orderPositions = $this->getPositions(false);
-        $allValid = true;
-        /** @var FlightVoyage[] $this->orderPositions */
-        foreach ($this->orderPositions as $position)
+        foreach ($this->sortedItems as $item)
         {
-            $valid = $position->getIsValid();
-            if (!$valid)
+            if (!$item->saveToOrderDb())
             {
-                //$position->
+                $errMsg = "Could not save order's item" . PHP_EOL . CVarDumper::dumpAsString($item);
+                $this->logAndThrowException($errMsg, 'OrderComponent.saveOrder');
             }
-            $allValid &= $valid;
+            $item->saveReference($order);
         }
-        $this->isValid = $allValid;
     }
 
-    public function init()
+    public function validateItemsOfOrder()
     {
-        $this->orderPositions = $this->getPositions(false);
+        return array_all($this->sortedItems, array($this, 'isItemValid'));
+    }
+
+    private function isItemValid($item)
+    {
+        return $item->getIsValid();
     }
 
     public function booking()
     {
         Yii::trace("Get all items inside order", "OrderComponent.booking");
-        $orderItems = $this->getOrderItems();
-        Yii::trace("Total: ".sizeof($orderItems)." items", "OrderComponent.booking");
+        Yii::trace("Total: ".sizeof($this->sortedItems)." items", "OrderComponent.booking");
 
         Yii::trace("Analyzing items", "OrderComponent.booking");
-        foreach ($orderItems as $item)
+        foreach ($this->sortedItems as $item)
             $this->analyzeItem($item);
 
         Yii::trace("Saving credentials to db", "OrderComponent.booking");
-        foreach ($orderItems as $item)
+        foreach ($this->sortedItems as $item)
             $this->saveCredentialsForItem($item);
 
         Yii::trace("Check correctness of statuses", "OrderComponent.booking");
         return $this->areAllStatusesCorrect();
-    }
-
-    private function areAllStatusesCorrect()
-    {
-        if ($this->endStatuses)
-        {
-            $validStates = true;
-            foreach ($this->endStatuses as $stateDesc)
-            {
-                if (strpos($stateDesc, 'aiting') === false)
-                {
-                    $validStates = false;
-                }
-            }
-            return $validStates;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public function saveCredentialsForItem($position)
-    {
-        if ($position instanceof HotelTripElement)
-            $this->processHotel($position);
-
-        if ($position instanceof FlightTripElement)
-            $this->saveCredentialsForFlight($position);
-    }
-
-    private function saveCredentialsForFlight($position)
-    {
-        $passports = $position->getPassports();
-        $groupId = $position->getGroupId();
-        if (!isset($this->bookedElements[$groupId]) and (!$position->flightBookerId))
-        {
-            echo "processing Flight";
-            /** @var FlightBookerComponent $flightBookerComponent  */
-            $flightBookerComponent = new FlightBookerComponent();
-            $flightBookerComponent->setFlightBookerFromFlightVoyage($position->flightVoyage);
-
-            $this->bookedElements[$groupId] = $groupId;
-            $flightBookerComponent->getCurrent()->orderBookingId = $this->bookingModel->id;
-            $flightBookerComponent->getCurrent()->save();
-            $position->flightBookerId = $flightBookerComponent->getCurrent()->getPrimaryKey();
-            Yii::app()->shoppingCart->update($position, 1);
-
-            //VarDumper::dump($flightBookerComponent);
-            $flightBookerId = $flightBookerComponent->getFlightBookerId();
-            echo "FlightBookerId : $flightBookerId";
-            //VarDumper::dump($passports);
-            //die();
-            /** @var $passports PassengerPassportForm[] */
-            //foreach($passports as $passport)
-            //{
-
-            foreach ($passports->adultsPassports as $adultInfo)
-            {
-                $flightPassport = new FlightBookingPassport();
-                //$flightPassport->attributes = $adultInfo->attributes;
-                //$flightPassport->flightBookingId = $flightBookerId;
-                $flightPassport->populate($adultInfo, $flightBookerId);
-                $flightPassport->save();
-            }
-            foreach ($passports->childrenPassports as $childInfo)
-            {
-                $flightPassport = new FlightBookingPassport();
-                //$flightPassport->attributes = $childInfo->attributes;
-                //$flightPassport->flightBookingId = $flightBookerId;
-                $flightPassport->populate($childInfo, $flightBookerId);
-                $flightPassport->save();
-            }
-            foreach ($passports->infantPassports as $infantInfo)
-            {
-                $flightPassport = new FlightBookingPassport();
-                //$flightPassport->attributes = $infantInfo->attributes;
-                //$flightPassport->flightBookingId = $flightBookerId;
-                $flightPassport->populate($infantInfo, $flightBookerId);
-                $flightPassport->save();
-            }
-            //Yii::trace(CVarDumper::dumpAsString($flightPassport->errors), 'FlightBooker.EnterCredentials.flightPassport');
-            //}
-            //VarDumper::dump($flightBookerComponent);
-            echo "GoTo Booking";
-            $flightBookerComponent->status('booking');
-            $status = $flightBookerComponent->getCurrent()->status;
-            if ($status)
-            {
-                $this->endStatuses[$status] = $status;
-            }
-        }
-    }
-
-    public function processHotel($position)
-    {
-        Yii::trace("Processing HotelTrip", 'OrderComponent.processHotel');
-        $groupId = $position->getId();
-        if (isset($this->bookedElements[$groupId]) or (!$position->hotelBookerId))
-        {
-            Yii::trace("Already proccessed", 'OrderComponent.processHotel');
-            return;
-        }
-
-        $this->bookedElements[$groupId] = $groupId; //mark as already booked
-
-        Yii::trace("Create hotel booker", 'OrderComponent.proccessHotel');
-        $hotelBookerComponent = $this->createHotelBookerComponent($position, $groupId);
-
-        Yii::trace("Saving credentials for hotel", 'OrderComponent.proccessHotel');
-        $this->saveCredentialsForHotel($position, $hotelBookerComponent);
-
-        Yii::trace("Going to analyzing state", 'OrderComponent.proccessHotel');
-        $hotelBookerComponent->status('analyzing');
-        $status = $hotelBookerComponent->getCurrent()->status;
-
-        $this->endStatuses[$status] = $status; //store info about current state
-        Yii::trace("Processing HotelTrip Successfull", 'OrderComponent.processHotel');
-    }
-
-    private function saveCredentialsForHotel($position, $hotelBookerComponent)
-    {
-        $passports = $position->getPassports();
-        $hotelBookerId = $hotelBookerComponent->getHotelBookerId();
-        /** @var $passports HotelPassportForm */
-        foreach ($passports->roomsPassports as $i => $roomPassport)
-        {
-            foreach ($roomPassport->adultsPassports as $adultInfo)
-            {
-                $hotelPassport = new HotelBookingPassport();
-                $hotelPassport->scenario = 'adult';
-                $hotelPassport->attributes = $adultInfo->attributes;
-                $hotelPassport->hotelBookingId = $hotelBookerId;
-                $hotelPassport->roomKey = $i;
-                $validSaving = $hotelPassport->save();
-                Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.adultPassport');
-            }
-            foreach ($roomPassport->childrenPassports as $childInfo)
-            {
-                $hotelPassport = new HotelBookingPassport();
-                $hotelPassport->scenario = 'child';
-                $hotelPassport->attributes = $childInfo->attributes;
-                $hotelPassport->hotelBookingId = $hotelBookerId;
-                $hotelPassport->roomKey = $i;
-                $validSaving = $hotelPassport->save();
-                Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.childPassport');
-            }
-        }
-        return $validSaving;
-    }
-
-    public function createHotelBookerComponent($position)
-    {
-        /** @var HotelBookerComponent $hotelBookerComponent  */
-        $hotelBookerComponent = new HotelBookerComponent();
-        $hotelBookerComponent->setHotelBookerFromHotel($position->hotel);
-        $hotelBookerComponent->getCurrent()->orderBookingId = $this->bookingModel->id;
-        $hotelBookerComponent->getCurrent()->status = 'enterCredentials';
-        $hotelBookerComponent->getCurrent()->save();
-        $position->hotelBookerId = $hotelBookerComponent->getCurrent()->getPrimaryKey();
-        Yii::app()->shoppingCart->update($position, 1);
-        if ($hotelBookerComponent->getCurrent()->getErrors())
-        {
-            $errorMsg = VarDumper::dumpAsString($hotelBookerComponent->getCurrent()->getErrors());
-            Yii::trace($errorMsg, 'OrderComponent.saveCredentialsForHotel');
-            throw new Exception($errorMsg);
-        }
-        else
-        {
-            Yii::trace("HotelBooker id:" . $hotelBookerComponent->getCurrent()->id, 'OrderComponent.saveCredentialsForHotel');
-        }
-        return $hotelBookerComponent;
-    }
-
-    public function getOrderItems()
-    {
-        return $this->orderPositions['items'];
     }
 
     private function analyzeItem($item)
@@ -316,11 +142,10 @@ class OrderComponent extends CApplicationComponent
         if ($item->flightBookerId)
         {
             $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
-            $this->flightGroupId = $item->getGroupId();
-            $this->bookedElements[$this->flightGroupId] = $this->flightGroupId;
+            $this->bookedItems[$item->getGroupId()] = $item->getGroupId();
             if ($flightBooker)
             {
-                $this->endStatuses[$flightBooker->status] = $flightBooker->status;
+                $this->finalWorkflowStatuses[$flightBooker->status] = $flightBooker->status;
                 $this->createOrderBookingIfNotExist($flightBooker->orderBookingId);
             }
         }
@@ -333,10 +158,187 @@ class OrderComponent extends CApplicationComponent
             $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
             if ($hotelBooker)
             {
-                $this->endStatuses[$hotelBooker->status] = $hotelBooker->status;
+                $this->finalWorkflowStatuses[$hotelBooker->status] = $hotelBooker->status;
                 $this->createOrderBookingIfNotExist($hotelBooker->orderBookingId);
             }
         }
+    }
+
+    public function saveCredentialsForItem($position)
+    {
+        if ($position instanceof HotelTripElement)
+            $this->processHotel($position);
+
+        if ($position instanceof FlightTripElement)
+            $this->saveCredentialsForFlight($position);
+    }
+
+    private function saveCredentialsForFlight($position)
+    {
+        $passports = $position->getPassports();
+        if ($this->isBooked($$position))
+        {
+            Yii::trace("Trying to save credentials for already booked flight", "OrderComponent.saveCredentialsForFlight");
+            return;
+        }
+        Yii::trace("Save credentials for flight", "OrderComponent.saveCredentialsForFlight");
+
+        $flightBookerComponent = new FlightBookerComponent();
+        $flightBookerComponent->setFlightBookerFromFlightVoyage($position->flightVoyage);
+        $this->bookedItems[$position->getGroupId()] = $position->getGroupId();
+        $currentFlightBookerComponent = $flightBookerComponent->getCurrent();
+        $currentFlightBookerComponent->orderBookingId = $this->bookingContactInfo->id;
+        if (!$currentFlightBookerComponent->save())
+        {
+            $errMsg = "Could not save ";
+        }
+        $position->flightBookerId = $currentFlightBookerComponent->getPrimaryKey();
+        $flightBookerId = $flightBookerComponent->getFlightBookerId();
+        echo "FlightBookerId : $flightBookerId";
+
+        foreach ($passports->adultsPassports as $adultInfo)
+        {
+            $flightPassport = new FlightBookingPassport();
+            $flightPassport->populate($adultInfo, $flightBookerId);
+            $flightPassport->save();
+        }
+        foreach ($passports->childrenPassports as $childInfo)
+        {
+            $flightPassport = new FlightBookingPassport();
+            $flightPassport->populate($childInfo, $flightBookerId);
+            $flightPassport->save();
+        }
+        foreach ($passports->infantPassports as $infantInfo)
+        {
+            $flightPassport = new FlightBookingPassport();
+            $flightPassport->populate($infantInfo, $flightBookerId);
+            $flightPassport->save();
+        }
+        echo "GoTo Booking";
+        $flightBookerComponent->status('booking');
+        $status = $flightBookerComponent->getCurrent()->status;
+        if ($status)
+        {
+            $this->finalWorkflowStatuses[$status] = $status;
+        }
+    }
+
+    private function isBooked($position)
+    {
+        return !isset($this->bookedItems[$position->getGroupId]) and (!$position->flightBookerId);
+    }
+
+    private function areAllStatusesCorrect()
+    {
+        return array_all($this->finalWorkflowStatuses, array($this, 'isCorrectState'));
+    }
+
+    private function isCorrectState($state)
+    {
+        return (strpos($state,'aiting') !== false);
+    }
+
+
+    public function processHotel($position)
+    {
+        Yii::trace("Processing HotelTrip", 'OrderComponent.processHotel');
+        $groupId = $position->getId();
+        if (isset($this->bookedItems[$groupId]) or (!$position->hotelBookerId))
+        {
+            Yii::trace("Already proccessed", 'OrderComponent.processHotel');
+            return;
+        }
+
+        $this->bookedItems[$groupId] = $groupId; //mark as already booked
+
+        Yii::trace("Create hotel booker", 'OrderComponent.proccessHotel');
+        $hotelBookerComponent = $this->createHotelBookerComponent($position, $groupId);
+
+        Yii::trace("Saving credentials for hotel", 'OrderComponent.proccessHotel');
+        $this->saveCredentialsForHotel($position, $hotelBookerComponent);
+
+        Yii::trace("Going to analyzing state", 'OrderComponent.proccessHotel');
+        $hotelBookerComponent->status('analyzing');
+        $status = $hotelBookerComponent->getCurrent()->status;
+
+        $this->finalWorkflowStatuses[$status] = $status; //store info about current state
+        Yii::trace("Processing HotelTrip Successfull", 'OrderComponent.processHotel');
+    }
+
+    private function saveCredentialsForHotel($position, $hotelBookerComponent)
+    {
+        $passports = $position->getPassports();
+        $hotelBookerId = $hotelBookerComponent->getHotelBookerId();
+        /** @var $passports HotelPassportForm */
+        foreach ($passports->roomsPassports as $i => $roomPassport)
+        {
+            $this->saveAdultsPassports($i, $roomPassport, $hotelBookerId);
+            $this->saveChildrenPassports($i, $roomPassport, $hotelBookerId);
+        }
+        return true;
+    }
+
+    private function saveChildrenPassports($i, $roomPassport, $hotelBookerId)
+    {
+        foreach ($roomPassport->childrenPassports as $childInfo)
+        {
+            $hotelPassport = new HotelBookingPassport();
+            $hotelPassport->scenario = 'child';
+            $hotelPassport->attributes = $childInfo->attributes;
+            $hotelPassport->hotelBookingId = $hotelBookerId;
+            $hotelPassport->roomKey = $i;
+            if (!$hotelPassport->save())
+            {
+                $errMsg = 'Incorrect child passport data.' . PHP_EOL . CVarDumper::dumpAsString($hotelPassport->errors);
+                Yii::trace($errMsg, 'HotelBooker.EnterCredentials.childPassport');
+                throw new CException($errMsg);
+            }
+        }
+    }
+
+    private function saveAdultsPassports($i, $roomPassport, $hotelBookerId)
+    {
+        foreach ($roomPassport->adultsPassports as $adultInfo)
+        {
+            $hotelPassport = new HotelBookingPassport();
+            $hotelPassport->scenario = 'adult';
+            $hotelPassport->attributes = $adultInfo->attributes;
+            $hotelPassport->hotelBookingId = $hotelBookerId;
+            $hotelPassport->roomKey = $i;
+            if (!$hotelPassport->save())
+            {
+                $errMsg = "Incorrect adult passport parameters" . PHP_EOL . CVarDumper::dumpAsString($hotelPassport->errors);
+                Yii::trace($errMsg, 'HotelBooker.EnterCredentials.adultPassport');
+                throw new CException($errMsg);
+            }
+        }
+        return $hotelPassport;
+    }
+
+    public function createHotelBookerComponent($position)
+    {
+        $hotelBookerComponent = new HotelBookerComponent();
+        $hotelBookerComponent->setHotelBookerFromHotel($position->hotel);
+        $currentHotelBooker = $hotelBookerComponent->getCurrent();
+        $currentHotelBooker->orderBookingId = $this->bookingContactInfo->id;
+        $currentHotelBooker->status = 'enterCredentials';
+        if (!$currentHotelBooker->save())
+        {
+            $errMsg = 'Couldn\'t save hotel booker instanse'.PHP_EOL.CVarDumper::dumpAsString($currentHotelBooker->getErrors());
+            $this->logAndThrowException($errMsg, 'OrderComponent.saveCredentialsForHotel');
+        }
+        else
+        {
+            Yii::trace("HotelBooker successfully saved. It's id:" . $hotelBookerComponent->getCurrent()->id, 'OrderComponent.saveCredentialsForHotel');
+        }
+        $position->hotelBookerId = $currentHotelBooker->getPrimaryKey();
+        return $hotelBookerComponent;
+    }
+
+    public function logAndThrowException($errorMsg, $codePosition)
+    {
+        Yii::log($errorMsg, CLogger::LEVEL_ERROR, $codePosition);
+        throw new Exception($errorMsg);
     }
 
     /**
@@ -350,27 +352,26 @@ class OrderComponent extends CApplicationComponent
      */
     private function createOrderBookingIfNotExist($orderBookingId)
     {
-        if ($this->bookingModel = null)
+        if ($this->bookingContactInfo = null)
         {
-            $orderBooking = OrderBooking::model()->findByPk($orderBookingId);
-            if ($orderBooking)
+            $this->bookingContactInfo = OrderBooking::model()->findByPk($orderBookingId);
+            if (!$this->bookingContactInfo)
             {
-                $this->bookingModel = $orderBooking;
-            }
-            else
-            {
-                $this->bookingModel = new OrderBooking();
-                $this->bookingModel->attributes = ($this->getOrderParams()) ? $this->getOrderParams()->attributes : array('email' => 'test@test.ru', 'phone' => '9213546576');
-                if (!$this->bookingModel->validate())
+                $this->bookingContactInfo = new OrderBooking();
+                $this->bookingContactInfo->attributes = ($orderParams = $this->getOrderParams()) ? $orderParams->attributes : $this->getTestContactData();
+                if (!$this->bookingContactInfo->save())
                 {
-                    $error = 'Validation of order booking fails: '.CVarDumper::dumpAsString($this->bookingModel->errors);
-                    Yii::log($error, CLogger::LEVEL_ERROR, 'OrderComponent.createOrderBookingIfNotExist');
-                    throw new CException($error);
+                    $errMsg = 'Saving of order booking fails: '.CVarDumper::dumpAsString($this->bookingContactInfo->errors);
+                    $this->logAndThrowException($errMsg, 'OrderComponent.createOrderBookingIfNotExist');
                 }
-                $this->bookingModel->save();
             }
         }
-        return $this->bookingModel;
+        return $this->bookingContactInfo;
+    }
+
+    private function getTestContactData()
+    {
+        return array('email' => 'test@test.ru', 'phone' => '9213546576');
     }
 
 
@@ -606,8 +607,7 @@ class OrderComponent extends CApplicationComponent
 
     public function getOrderBooking()
     {
-        $this->orderPositions = $this->getPositions(false);
-        foreach ($this->orderPositions['items'] as $item)
+        foreach ($this->sortedItems as $item)
         {
             if ($item instanceof HotelTripElement)
             {
