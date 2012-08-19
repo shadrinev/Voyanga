@@ -344,9 +344,6 @@ class FlightBookerComponent extends CApplicationComponent
         $this->flightBooker->status = 'enterCredentials';
         $this->flightBooker->price = $flightVoyage->price;
         $this->flightBooker->setFlightBookerComponent($this);
-        //VarDumper::dump($this);
-
-
     }
 
     public function getFlightBookerId()

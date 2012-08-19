@@ -30,7 +30,7 @@ function appParams($param)
  * (that is array_all() will return true only if none of the collection members are false or null.)
  *
  * @param array $arr input array
- * @param function $lambda takes an element, returns a bool (optional)
+ * @param callable|array $lambda takes an element, returns a bool (optional)
  * @return boolean
  */
 function array_all($arr, $lambda = null)

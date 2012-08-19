@@ -23,6 +23,7 @@ return array(
         'site.common.extensions.simpleWorkflow.*',
         'site.common.models.apiModels.*',
         'site.common.models.formModels.*',
+        'site.common.models.order.*',
     ),
 
     'components'=>array(

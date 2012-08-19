@@ -7,8 +7,6 @@
  */
 class HotelTripElement extends TripElement
 {
-    public $type = self::TYPE_FLIGHT;
-
     private $_id;
 
     public $city;
@@ -19,6 +17,7 @@ class HotelTripElement extends TripElement
     public $infantCount;
     public $childAge;
     public $hotelBookerId;
+    public $groupId = false;
 
     public function rules()
     {
@@ -149,5 +148,10 @@ class HotelTripElement extends TripElement
     public function getWeight()
     {
         return 2;
+    }
+
+    public function getType()
+    {
+        return 'Hotel';
     }
 }
