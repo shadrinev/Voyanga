@@ -63,11 +63,15 @@ class TripDataProvider
 
     private function getJsonWithAdditionalInfo($items)
     {
-        array_map(function ($item)
+        $out = array();
+        foreach ($items as $item)
         {
-            return $this->injectAdditionalInfo($item);
-        }, $items);
-        return json_encode($items);
+            $prepared = $item->getJsonObject();
+            $prepared['isLinked'] = $item->isLinked();
+            TripDataProvider::injectAdditionalInfo($prepared);
+            $out[] = $prepared;
+        }
+        return json_encode($out);
     }
 
     private function getItemsOnePerGroup($items)
@@ -106,10 +110,9 @@ class TripDataProvider
         return $items;
     }
 
-    private function injectAdditionalInfo(&$element)
+    public static function injectAdditionalInfo(&$element)
     {
         $element['isFlight'] = $element instanceof FlightTripElement;
         $element['isHotel'] = $element instanceof HotelTripElement;
-        $element['isLinked'] = $element->isLinked();
     }
 }

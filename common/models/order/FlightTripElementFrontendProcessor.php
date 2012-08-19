@@ -20,7 +20,7 @@ class FlightTripElementFrontendProcessor
         if($flight->flightVoyage)
         {
             $controller = Yii::app()->controller;
-            $tab['content'] = $controller->render('//tour/constructor/_chosen_flight_precompiled', array('flight'=>$flight->flightVoyage->getJsonObject()), true);
+            $tab['content'] = $controller->renderPartial('//tour/constructor/_chosen_flight_precompiled', array('flight'=>$flight->flightVoyage->getJsonObject()), true);
             $tab['fill'] = true;
             $tab['itemOptions']['class'] = 'flight fill';
         }

@@ -26,7 +26,7 @@ class HotelTripElementFrontendProcessor
         if($hotel->hotel)
         {
             $controller = Yii::app()->getController();
-            $tab['content'] = $controller->render('//tour/constructor/_chosen_hotel_precompiled', array('hotel'=>$hotel->hotel), true);
+            $tab['content'] = $controller->renderPartial('//tour/constructor/_chosen_hotel_precompiled', array('hotel'=>$hotel->hotel), true);
             $tab['itemOptions']['class'] = 'hotel fill';
             $tab['fill'] = true;
         }

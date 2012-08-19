@@ -43,7 +43,7 @@ class TripElementWorkflow extends CComponent implements ITripElementWorkflow
 
     public function createWorkflowAndLinkItWithItem()
     {
-        throw Exception('You should implement createWorkflowAndLinkItWithItem in derived class');
+        throw new CException('You should implement createWorkflowAndLinkItWithItem in derived class');
     }
 
     public function saveCredentialsForItem()
