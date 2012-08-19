@@ -19,20 +19,16 @@ class OrderComponent extends CApplicationComponent
 
     public function bookAndReturnTripElementWorkflowItems()
     {
-        Yii::trace("Get all items inside order", "OrderComponent.booking");
-        Yii::trace("Total: ".sizeof($this->itemsOnePerGroup)." items", "OrderComponent.booking");
-        Yii::trace("Analyzing items", "OrderComponent.booking");
         $bookedTripElementWorkflow = array();
         foreach ($this->itemsOnePerGroup as $item)
         {
             $tripElementWorkflow = $item->createTripElementWorkflow();
             $tripElementWorkflow->bookItem();
             $this->markItemGroupAsBooked($tripElementWorkflow->getItem());
-            $status = $tripElementWorkflow->executeFromStageAndReturnStatus();
-            $this->saveWorkflowState($status);
+            $tripElementWorkflow->runWorkflowAndSetFinalStatus();
+            $this->saveWorkflowState($tripElementWorkflow->finalStatus);
             $bookedTripElementWorkflow[] = $tripElementWorkflow;
         }
-        Yii::trace("Check correctness of statuses", "OrderComponent.booking");
         if ($this->areAllStatusesCorrect())
         {
             return $bookedTripElementWorkflow;

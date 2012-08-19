@@ -23,8 +23,7 @@ class MakeBookingAction extends CAction
             foreach($tripElementsWorkflow as $tripElementWorkflow)
             {
                 $item = $tripElementWorkflow->item;
-                $workflow = $tripElementWorkflow->workflow;
-                $elements[] = array('type'=>$item->getType(),'id'=>$item->hotelBookerId,'status'=>$workflow->status);
+                $elements[] = array('type'=>$item->getType(),'id'=>$item->getId(),'status'=>$tripElementWorkflow->finalStatus);
             }
             $this->controller->render('makeBooking', array('validFill'=>true,'validBooking'=>true,'elements'=>$elements));
         }

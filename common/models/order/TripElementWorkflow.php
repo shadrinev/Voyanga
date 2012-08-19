@@ -6,6 +6,8 @@
  */
 abstract class TripElementWorkflow extends CComponent implements ITripElementWorkflow
 {
+    public $finalStatus = 'notStarted';
+
     protected $bookingContactInfo;
 
     protected $item;

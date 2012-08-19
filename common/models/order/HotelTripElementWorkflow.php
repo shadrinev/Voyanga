@@ -11,10 +11,10 @@ class HotelTripElementWorkflow extends TripElementWorkflow
         $this->workflow = $this->createHotelBookerComponent();
     }
 
-    public function executeFromStageAndReturnStatus()
+    public function runWorkflowAndSetFinalStatus()
     {
         $this->workflow->status('analyzing');
-        return $this->workflow->getCurrent()->swGetStatus()->toString();
+        $this->finalStatus = $this->workflow->getCurrent()->swGetStatus()->toString();
     }
 
     private function createHotelBookerComponent()

@@ -28,10 +28,10 @@ class FlightTripElementWorkflow extends TripElementWorkflow
         return $flightBookerComponent;
     }
 
-    public function executeFromStageAndReturnStatus()
+    public function runWorkflowAndSetFinalStatus()
     {
         $this->workflow->status('booking');
-        return $this->workflow->getCurrent()->swGetStatus()->toString();
+        $this->finalStatus = $this->workflow->getCurrent()->swGetStatus()->toString();
     }
 
     public function saveCredentialsForItem()
