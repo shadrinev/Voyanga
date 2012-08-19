@@ -6,15 +6,16 @@
  */
 class HotelTripElementWorkflow extends TripElementWorkflow
 {
-    public function createHotelWorkflowAndLinkItWithItem($position)
+    public function createWorkflowAndLinkItWithItem()
     {
-        $hotelBookerComponent = $this->createHotelBookerComponent();
-        $this->saveCredentialsForHotel($position, $hotelBookerComponent);
+        $this->workflow = $this->createHotelBookerComponent();
+        $this->saveCredentialsForItem($this->workflow);
     }
 
-    public function switchToSecondWorkflowStage()
+    public function executeFromStageAndReturnStatus()
     {
         $this->workflow->status('analyzing');
+        return $this->workflow->getCurrent()->swGetStatus()->toString();
     }
 
     private function createHotelBookerComponent()
@@ -34,6 +35,7 @@ class HotelTripElementWorkflow extends TripElementWorkflow
             Yii::trace("HotelBooker successfully saved. It's id:" . $hotelBookerComponent->getCurrent()->id, 'HotelTripElementWorkflow.createWorkflowAndLinkItWithItem');
         }
         $this->item->hotelBookerId = $currentHotelBooker->getPrimaryKey();
+        return $hotelBookerComponent;
     }
 
     public function saveCredentialsForItem()
@@ -49,8 +51,7 @@ class HotelTripElementWorkflow extends TripElementWorkflow
 
     public function createBookingInfoForItem()
     {
-        $hotelBooker = $this->getWorkflow()->hotelBooker;
-        $this->createOrderBookingIfNotExist($hotelBooker->orderBookingId);
+        $this->createOrderBookingIfNotExist();
     }
 
     private function saveAdultsPassports($i, $roomPassport, $hotelBookerId)

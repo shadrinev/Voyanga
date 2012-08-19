@@ -4,13 +4,18 @@
  * Company: Clevertech LLC.
  * Date: 19.08.12 18:37
  */
-class TripElementWorkflow extends CComponent implements ITripElementWorkflow
+abstract class TripElementWorkflow extends CComponent implements ITripElementWorkflow
 {
-    private $bookingContactInfo;
+    protected $bookingContactInfo;
 
-    private $item;
+    protected $item;
 
-    private $workflow;
+    protected $workflow;
+
+    public function __construct($item)
+    {
+        $this->item = $item;
+    }
 
     public function getItem()
     {
@@ -34,47 +39,21 @@ class TripElementWorkflow extends CComponent implements ITripElementWorkflow
 
     public function bookItem()
     {
+        $this->createBookingInfoForItem();
         $this->createWorkflowAndLinkItWithItem();
         $this->saveCredentialsForItem();
-        $this->createBookingInfoForItem();
-        $this->markItemGroupAsBooked();
-        $this->saveWorkflowState();
     }
 
-    public function createWorkflowAndLinkItWithItem()
-    {
-        throw new CException('You should implement createWorkflowAndLinkItWithItem in derived class');
-    }
-
-    public function saveCredentialsForItem()
-    {
-        throw Exception('You should implement saveCredentialsForItem in derived class');
-    }
-
-    public function createBookingInfoForItem()
-    {
-        throw Exception('You should implement createBookingInfoForItem in derived class');
-    }
-
-    public function switchToSecondWorkflowStage()
-    {
-        throw Exception('You should implement switchToSecondWorkflowStage in derived class');
-    }
-
-    private function createOrderBookingIfNotExist($orderBookingId)
+    protected function createOrderBookingIfNotExist()
     {
         if (!$this->bookingContactInfo)
         {
-            $this->bookingContactInfo = OrderBooking::model()->findByPk($orderBookingId);
-            if (!$this->bookingContactInfo)
+            $this->bookingContactInfo = new OrderBooking();
+            $this->bookingContactInfo->attributes = $this->getBookingContactFormData();
+            if (!$this->bookingContactInfo->save())
             {
-                $this->bookingContactInfo = new OrderBooking();
-                $this->bookingContactInfo->attributes = $this->getBookingContactFormData();
-                if (!$this->bookingContactInfo->save())
-                {
-                    $errMsg = 'Saving of order booking fails: '.CVarDumper::dumpAsString($this->bookingContactInfo->errors);
-                    $this->logAndThrowException($errMsg, 'OrderComponent.createOrderBookingIfNotExist');
-                }
+                $errMsg = 'Saving of order booking fails: '.CVarDumper::dumpAsString($this->bookingContactInfo->errors);
+                $this->logAndThrowException($errMsg, 'OrderComponent.createOrderBookingIfNotExist');
             }
         }
         return $this->bookingContactInfo;

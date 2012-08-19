@@ -158,4 +158,9 @@ class HotelTripElement extends TripElement
     {
         return HotelTripElementFrontendProcessor::prepareInfoForTab($this);
     }
+
+    public function createTripElementWorkflow()
+    {
+        return new HotelTripElementWorkflow($this);
+    }
 }

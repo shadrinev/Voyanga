@@ -28,9 +28,10 @@ class FlightTripElementWorkflow extends TripElementWorkflow
         return $flightBookerComponent;
     }
 
-    public function switchToSecondWorkflowStage()
+    public function executeFromStageAndReturnStatus()
     {
         $this->workflow->status('booking');
+        return $this->workflow->getCurrent()->swGetStatus()->toString();
     }
 
     public function saveCredentialsForItem()
@@ -40,12 +41,7 @@ class FlightTripElementWorkflow extends TripElementWorkflow
 
     public function createBookingInfoForItem()
     {
-        if ($this->workflow)
-        {
-            $errMsg = 'Flight item doesn\'t linked to workflow';
-            $this->logAndThrowException($errMsg, 'OrderComponent.createBookingInfoForFlight');
-        }
-        $this->createOrderBookingIfNotExist($this->workflow->orderBookingId);
+        $this->createOrderBookingIfNotExist();
     }
 
     private function savePassports()
@@ -76,7 +72,6 @@ class FlightTripElementWorkflow extends TripElementWorkflow
             $flightPassport->populate($childInfo, $flightBookerId);
             $flightPassport->save();
         }
-        return $flightPassport;
     }
 
     private function saveAdultFlightPassports($passports, $flightBookerId)
@@ -87,6 +82,5 @@ class FlightTripElementWorkflow extends TripElementWorkflow
             $flightPassport->populate($adultInfo, $flightBookerId);
             $flightPassport->save();
         }
-        return $flightPassport;
     }
 }

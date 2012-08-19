@@ -171,4 +171,9 @@ class FlightTripElement extends TripElement
     {
         return FlightTripElementFrontendProcessor::addGroupedInfoToTab($preparedFlight, $this);
     }
+
+    public function createTripElementWorkflow()
+    {
+        return new FlightTripElementWorkflow($this);
+    }
 }

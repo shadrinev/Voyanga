@@ -25,12 +25,11 @@ class OrderComponent extends CApplicationComponent
         $bookedTripElementWorkflow = array();
         foreach ($this->itemsOnePerGroup as $item)
         {
-            $tripElementWorkflow = new TripElementWorkflow();
-            $tripElementWorkflow->item = $item;
+            $tripElementWorkflow = $item->createTripElementWorkflow();
             $tripElementWorkflow->bookItem();
             $this->markItemGroupAsBooked($tripElementWorkflow->getItem());
-            $this->saveWorkflowState($tripElementWorkflow->getWorkflow());
-            $tripElementWorkflow->switchToSecondWorkflowStage();
+            $status = $tripElementWorkflow->executeFromStageAndReturnStatus();
+            $this->saveWorkflowState($status);
             $bookedTripElementWorkflow[] = $tripElementWorkflow;
         }
         Yii::trace("Check correctness of statuses", "OrderComponent.booking");
@@ -40,7 +39,7 @@ class OrderComponent extends CApplicationComponent
         }
         else
         {
-            throw new CException('At least one of workflow status at step 1 is incorrect');
+            throw new CException('At least one of workflow status at step 1 is incorrect:'.CVarDumper::dumpAsString($this->finalWorkflowStatuses));
         }
     }
 
@@ -49,14 +48,14 @@ class OrderComponent extends CApplicationComponent
         return array_all($this->itemsOnePerGroup, array($this, 'isItemValid'));
     }
 
-    private function isItemValid($item)
+    public function isItemValid($item)
     {
         return $item->getIsValid();
     }
 
-    private function saveWorkflowState($workflow)
+    private function saveWorkflowState($status)
     {
-        $this->finalWorkflowStatuses[$workflow->status] = $workflow->status;
+        $this->finalWorkflowStatuses[$status] = $status;
     }
 
     private function markItemGroupAsBooked($item)
@@ -69,9 +68,9 @@ class OrderComponent extends CApplicationComponent
         return array_all($this->finalWorkflowStatuses, array($this, 'isCorrectState'));
     }
 
-    private function isCorrectState($state)
+    public function isCorrectState($state)
     {
-        $validStates = array('booking', 'analyzing');
+        $validStates = array('swFlightBooker/waitingForPayment', 'analyzing');
         return in_array($state, $validStates);
     }
 

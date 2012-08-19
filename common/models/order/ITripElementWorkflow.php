@@ -9,5 +9,5 @@ interface ITripElementWorkflow
     public function createWorkflowAndLinkItWithItem();
     public function saveCredentialsForItem();
     public function createBookingInfoForItem();
-    public function switchToSecondWorkflowStage();
+    public function executeFromStageAndReturnStatus();
 }
