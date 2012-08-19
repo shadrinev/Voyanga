@@ -9,8 +9,6 @@ abstract class TripElement extends CModel implements IECartPosition, IOrderEleme
 {
     private $_id;
 
-    public $groupId = false;
-
     public function getId()
     {
         if (!$this->_id)
@@ -28,5 +26,10 @@ abstract class TripElement extends CModel implements IECartPosition, IOrderEleme
     {
         $this->_id = $val;
         Yii::app()->user->setState('trip.'.__CLASS__.'.counter', $this->_id);
+    }
+
+    public function getGroupId()
+    {
+        return false;
     }
 }

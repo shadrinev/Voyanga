@@ -17,7 +17,6 @@ class HotelTripElement extends TripElement
     public $infantCount;
     public $childAge;
     public $hotelBookerId;
-    public $groupId = false;
 
     public function rules()
     {
@@ -153,5 +152,10 @@ class HotelTripElement extends TripElement
     public function getType()
     {
         return 'Hotel';
+    }
+
+    public function prepareForFrontend()
+    {
+        return HotelTripElementFrontendProcessor::prepareInfoForTab($this);
     }
 }

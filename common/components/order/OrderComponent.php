@@ -7,13 +7,6 @@
  */
 class OrderComponent extends CApplicationComponent
 {
-    /**
-     * Name of shoppingCart application component
-     * @see http://yiiext.github.com/extensions/shopping-cart-component/readme.ru.html
-     * @var string
-     */
-    public $shoppingCartComponent = 'shoppingCart';
-
     private $itemsOnePerGroup = array();
     private $bookedItems = array();
     private $finalWorkflowStatuses = array();

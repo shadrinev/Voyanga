@@ -64,4 +64,6 @@ interface IOrderElement
     public function isLinked();
 
     public function getType();
+
+    public function prepareForFrontend();
 }

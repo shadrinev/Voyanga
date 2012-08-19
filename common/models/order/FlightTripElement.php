@@ -19,6 +19,7 @@ class FlightTripElement extends TripElement
     public $flightBookerId;
 
     private $_id;
+    private $groupId;
 
     public function rules()
     {
@@ -54,6 +55,11 @@ class FlightTripElement extends TripElement
         if($this->flightVoyage)
             return $this->flightVoyage->getId();
         return $this->groupId;
+    }
+
+    public function setGroupId($val)
+    {
+        $this->groupId = $val;
     }
 
     public function saveToOrderDb()
@@ -154,5 +160,15 @@ class FlightTripElement extends TripElement
     public function getType()
     {
         return 'Flight';
+    }
+
+    public function prepareForFrontend()
+    {
+        return FlightTripElementFrontendProcessor::prepareInfoForTab($this);
+    }
+
+    public function addGroupedInfo($preparedFlight)
+    {
+        return FlightTripElementFrontendProcessor::addGroupedInfoToTab($preparedFlight, $this);
     }
 }

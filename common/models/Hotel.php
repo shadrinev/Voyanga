@@ -1,6 +1,6 @@
 <?php
 
-class Hotel extends CApplicationComponent implements IECartPosition, IOrderElement
+class Hotel extends CApplicationComponent
 {
     //type for saving to basket
     const TYPE = 2;

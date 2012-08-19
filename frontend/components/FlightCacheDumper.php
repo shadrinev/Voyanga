@@ -16,7 +16,7 @@ class FlightCacheDumper
     {
         $dump = new FlightCacheDump;
         $dump->model = $this->model;
-        Yii::app()->sharedMemory->write($dump);
+        //Yii::app()->sharedMemory->write($dump);
     }
 
 }

@@ -6,6 +6,8 @@
  */
 class TripDataProvider
 {
+    public $shoppingCartComponent = 'shoppingCart';
+
     private $usedGroups;
     private $sortedCartItems;
     private $sortedCartItemsOnePerGroup;
@@ -20,7 +22,7 @@ class TripDataProvider
         if (!$this->sortedCartItemsOnePerGroup)
         {
             $items = $this->getSortedCartItems();
-            $items->sortedCartItemsOnePerGroup = $this->getItemsOnePerGroup($items);
+            $this->sortedCartItemsOnePerGroup = $this->getItemsOnePerGroup($items);
         }
         return $this->sortedCartItemsOnePerGroup;
     }
@@ -67,8 +69,6 @@ class TripDataProvider
         }, $items);
         return json_encode($items);
     }
-
-
 
     private function getItemsOnePerGroup($items)
     {
