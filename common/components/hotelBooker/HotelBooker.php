@@ -46,7 +46,6 @@ class HotelBooker extends SWLogActiveRecord
     {
         $stage = $event->destination->getId();
         Yii::app()->observer->notify('onBefore' . ucfirst($stage), $this);
-        //$this->statusChanged = true;
         parent::afterTransition($event);
     }
 

@@ -105,14 +105,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBooking()
     {
-        //getting pnr and other stuff
-        //VarDumper::dump($this);
-        //return;
-
-        //$this->flightBooker->booking->bookingPassports;
         $flightBookingParams = new FlightBookingParams();
-
-        //VarDumper::dump($this);die();
         $orderBooking = $this->flightBooker->orderBooking;
         $flightBookingParams->contactEmail = $orderBooking->email;
         $flightBookingParams->phoneNumber = $orderBooking->phone;
@@ -125,9 +118,7 @@ class FlightBookerComponent extends CApplicationComponent
             $passenger->passport = $passport;
             $flightBookingParams->addPassenger($passenger);
         }
-        //$flightBookingParams->addPassenger();
-        //echo 123;//die();
-        /** @var FlightBookingResponse $flightBookingResponse  */
+
         $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams);
 
         SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
@@ -148,20 +139,12 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageWaitingForPayment()
     {
-        //maybe we need to remove it?
-        //TODO: ставим таймер на отмену приема платежа
-        //переход в состояние payment должен быть инициализирован из вне
-        //$this->status('payment');
-        //oleg: incorrect time assign
-        sleep(3);
-        //$this->flightBooker->saveTaskInfo('paymentTimeLimit',565657);
-
         $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
         if($res)
         {
             $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
             return true;
-        }/**/
+        }
     }
 
     public function stageBookingError()

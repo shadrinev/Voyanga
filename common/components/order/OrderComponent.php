@@ -70,7 +70,11 @@ class OrderComponent extends CApplicationComponent
 
     public function isCorrectState($state)
     {
-        $validStates = array('swFlightBooker/waitingForPayment', 'analyzing');
+        $validStates = array(
+            'swFlightBooker/waitingForPayment',
+            'swHotelBooker/softWaitingForPayment',
+            'swHotelBooker/hardWaitingForPayment',
+        );
         return in_array($state, $validStates);
     }
 

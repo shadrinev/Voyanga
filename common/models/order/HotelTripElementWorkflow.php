@@ -9,7 +9,6 @@ class HotelTripElementWorkflow extends TripElementWorkflow
     public function createWorkflowAndLinkItWithItem()
     {
         $this->workflow = $this->createHotelBookerComponent();
-        $this->saveCredentialsForItem($this->workflow);
     }
 
     public function executeFromStageAndReturnStatus()
