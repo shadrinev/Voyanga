@@ -19,24 +19,50 @@ class OrderComponent extends CApplicationComponent
 
     public function bookAndReturnTripElementWorkflowItems()
     {
-        $bookedTripElementWorkflow = array();
-        foreach ($this->itemsOnePerGroup as $item)
+        try
         {
-            $tripElementWorkflow = $item->createTripElementWorkflow();
-            $tripElementWorkflow->bookItem();
-            $this->markItemGroupAsBooked($tripElementWorkflow->getItem());
-            $tripElementWorkflow->runWorkflowAndSetFinalStatus();
-            $this->saveWorkflowState($tripElementWorkflow->finalStatus);
-            $bookedTripElementWorkflow[] = $tripElementWorkflow;
+            $bookedTripElementWorkflow = array();
+            foreach ($this->itemsOnePerGroup as $item)
+            {
+                if ($this->isDoubleRequest($item))
+                    continue;
+                $tripElementWorkflow = $item->createTripElementWorkflow();
+                $tripElementWorkflow->bookItem();
+                $this->markItemGroupAsBooked($tripElementWorkflow->getItem());
+                $tripElementWorkflow->runWorkflowAndSetFinalStatus();
+                $this->saveWorkflowState($tripElementWorkflow->finalStatus);
+                $bookedTripElementWorkflow[] = $tripElementWorkflow;
+            }
+            if ($this->areAllStatusesCorrect())
+            {
+                Yii::app()->user->setState('blockedToBook', null);
+                return $bookedTripElementWorkflow;
+            }
+            else
+            {
+                throw new CException('At least one of workflow status at step 1 is incorrect:'.CVarDumper::dumpAsString($this->finalWorkflowStatuses));
+            }
         }
-        if ($this->areAllStatusesCorrect())
+        catch (Exception $e)
         {
-            return $bookedTripElementWorkflow;
+            Yii::app()->user->setState('blockedToBook', null);
+            throw $e;
         }
-        else
+    }
+
+    public function isDoubleRequest($item)
+    {
+        $itemId = $item->getId();
+        $blocked = Yii::app()->user->getState('blockedToBook');
+        if (!$blocked)
+            $blocked = array();
+        if (in_array($itemId, $blocked))
         {
-            throw new CException('At least one of workflow status at step 1 is incorrect:'.CVarDumper::dumpAsString($this->finalWorkflowStatuses));
+            return true;
         }
+        $blocked[] = $itemId;
+        Yii::app()->user->setState('blockedToBook', $blocked);
+        return false;
     }
 
     public function validateItemsOfOrder()
