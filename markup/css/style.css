@@ -942,7 +942,7 @@
 	width: 782px;
 }
 #content > .title, .hotel-details > .title {
-	padding:0px 60px 0px 11px;
+	padding:0px 60px 0px 0px;
 	position: relative;
 }
 #content > .title h1, .hotel-details > .title h1 {
@@ -988,11 +988,11 @@
 	width: 18px;
 }
 #content > .title > .stars, .hotel-details > .title > .stars {
-	position: absolute; bottom: -7px; left: 11px;
+	position: absolute; bottom: -7px; left: 0px;
 }
 #content .place-buy, .hotel-details .place-buy {
 	overflow: hidden;
-	padding-left: 11px;
+	padding-left: 0px;
 	padding-right: 4px;
 }
 #content .place-buy > .street, .hotel-details .place-buy > .street {
@@ -1105,6 +1105,7 @@ margin-top: 15px;
 	margin-top: 18px;
 	overflow: hidden;
 	margin-bottom: 20px;
+	margin-left: -11px;
 }
 .descr > .left {
 	float: left;
@@ -1150,11 +1151,11 @@ margin-top: 15px;
 }
 .service-in-hotel {
 	margin-bottom: 20px;
-	padding-left: 11px;
+	padding-left: 0px;
 }
 .service-in-room {
 	margin-bottom: 20px;
-	padding-left: 11px;
+	padding-left: 0px;
 }
 .service-in-hotel ul, .service-in-room ul {
 	overflow: hidden;
@@ -1180,7 +1181,7 @@ margin-top: 15px;
 	margin-right: 7px; vertical-align: middle;
 }
 .info-trip {
-	padding-left: 11px;
+	padding-left: 0px;
 }
 .info-trip .date-trip {
 	font-size: 15px;

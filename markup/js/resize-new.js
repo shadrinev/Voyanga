@@ -9,7 +9,7 @@ var var_widthLeftBlockMAX = 295;
 var var_widthLeftBlockMID = 295;
 var var_widthLeftBlockMIN = 255;
 
-var var_widthMiddleBlockOneMAX = 955;
+var var_widthMiddleBlockOneMAX = 935;
 var var_widthMiddleBlockMAX = 855;
 var var_widthMiddleBlockMID = 755;
 var var_widthMiddleBlockMIN = 585;
@@ -211,32 +211,32 @@ function ResizeCenterBlock() {
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockOneMAX;
-				var_margin = Math.floor((widthBlock - (widthMainBlock + widthLeftBlock)) / 2)
+				var_margin = 80;
 				marginRightMainBlock = var_margin;	
 				marginLeftMainBlock = widthLeftBlock + var_margin;
-				marginLeftLeftBlock = var_margin;
+				marginLeftLeftBlock = 0;
 				
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
 				
-				marginLeftContent = 25;
+				marginLeftContent = 0;
 				widthContent = widthMainBlock - marginLeftContent;				
 				marginRightContent = 0;
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
-				widthMainBlock = Math.floor(var_widthMiddleBlockMAX + ((widthBlock - var_widthMID) / 1));
+				widthMainBlock = Math.floor(910 + ( (widthBlock - var_widthMID) / (var_valueMAX / (935 - 910))) );
 				widthLeftBlock = var_widthLeftBlockMID;
-				var_margin = Math.floor((widthBlock - (widthMainBlock + widthLeftBlock)) / 2)
+				var_margin = 80;
 				marginRightMainBlock = var_margin;	
 				marginLeftMainBlock = widthLeftBlock + var_margin;
-				marginLeftLeftBlock = var_margin;
+				marginLeftLeftBlock = 0;
 				
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
 				
-				marginLeftContent = 25;
+				marginLeftContent = 0;
 				widthContent = widthMainBlock - marginLeftContent;				
 				marginRightContent = 0;
 			}
