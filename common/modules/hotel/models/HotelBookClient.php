@@ -59,7 +59,7 @@ class HotelBookClient
 
         $hotelRequest = new HotelRequest();
         $hotelRequest->requestNum = $mongoKey;
-        self::$requestIds[] = array('key'=>$mongoKey,'class'=>get_class($hotelRequest),'keyName'=>'requestNum');
+        self::$requestIds[] = array('key' => $mongoKey, 'class' => get_class($hotelRequest), 'keyName' => 'requestNum');
         $hotelRequest->timestamp = time();
         //echo 'send req: '.self::$lastRequestMethod."\n";
         $hotelRequest->methodName = self::$lastRequestMethod;
@@ -71,8 +71,7 @@ class HotelBookClient
         $hotelRequest->requestDescription = self::$lastRequestDescription;
         $hotelRequest->requestXml = isset($postData['request']) ? $postData['request'] : '';
         $valid = $hotelRequest->save();
-        if(!$valid) CVarDumper::dump($hotelRequest->getErrors());
-
+        if (!$valid) CVarDumper::dump($hotelRequest->getErrors());
 
 
         if ($asyncParams === null)
@@ -437,7 +436,7 @@ class HotelBookClient
     {
         $hotelsObject = simplexml_load_string($hotelsXml);
         $response = new HotelSearchResponse();
-        if($hotelsObject)
+        if ($hotelsObject)
         {
             if (isset($hotelsObject->HotelSearch['searchId']))
             {
@@ -695,7 +694,7 @@ class HotelBookClient
         foreach ($this->requests as $request)
         {
             //echo count($request['result']->hotels).'<br>';
-            if($request['result']->hotels)
+            if ($request['result']->hotels)
             {
                 foreach ($request['result']->hotels as $hotel)
                 {
@@ -711,7 +710,7 @@ class HotelBookClient
                     $hotels[$key] = $hotel;
                 }
             }
-            if($request['result']->errorsDescriptions)
+            if ($request['result']->errorsDescriptions)
             {
                 foreach ($request['result']->errorsDescriptions as $desc)
                 {
@@ -766,7 +765,7 @@ class HotelBookClient
                                 //VarDumper::dump($i);
                                 //echo "roomSizeId: $i<br>";
                                 //todo: move to room class
-                                if (!in_array($i, array(appParams('HotelBook.room.DBL'), appParams('HotelBook.room.TWIN')) ) )
+                                if (!in_array($i, array(appParams('HotelBook.room.DBL'), appParams('HotelBook.room.TWIN'))))
                                 {
                                     $hotelStack->deleteStackWithIndex("$i");
                                     //unset($hotelStack->hotelStacks[$i]);
@@ -808,11 +807,11 @@ class HotelBookClient
                             {
                                 //print_r($hotelStack);
                                 //die();
-                                $jsonObject = $hotelStack->sortBy('rubPrice',5)->getHotel()->getJsonObject();
+                                $jsonObject = $hotelStack->sortBy('rubPrice', 5)->getHotel()->getJsonObject();
                                 $jsonObject['cityId'] = $hotelSearchParams->city->id;
                                 $jsonObject['dateFrom'] = $hotelSearchParams->checkIn;
                                 $from = DateTime::createFromFormat('Y-m-d', $hotelSearchParams->checkIn);
-                                $jsonObject['dateTo'] = $from->add(new DateInterval('P'.$hotelSearchParams->duration.'D'))->format('Y-m-d');
+                                $jsonObject['dateTo'] = $from->add(new DateInterval('P' . $hotelSearchParams->duration . 'D'))->format('Y-m-d');
                                 $hotelCache = new HotelCache();
                                 $hotelCache->populateFromJsonObject($jsonObject);
                                 $hotelCache->save();
@@ -884,38 +883,38 @@ class HotelBookClient
         //echo $hotelsXml;
     }
 
-    public function hotelSearchFullDetails(HotelSearchParams $hotelSearchParams,$hotelId,$hotels = null)
+    public function hotelSearchFullDetails(HotelSearchParams $hotelSearchParams, $hotelId, $hotels = null)
     {
         $rooms = $hotelSearchParams->rooms;
         //Make combinations to combinations Array
         //uasort($rooms,'HotelBookClient::compareArrayAdultCount');
         $maxAdultCount = 0;
-        foreach($rooms as $room)
+        foreach ($rooms as $room)
         {
             $count = $room['adultCount'] + $room['childCount'];
-            if($count > $maxAdultCount)
+            if ($count > $maxAdultCount)
             {
                 $maxAdultCount = $count;
             }
         }
-        if($maxAdultCount > 4) $maxAdultCount = 4;
+        if ($maxAdultCount > 4) $maxAdultCount = 4;
 
-        self::$groupId = substr(md5(uniqid('',true)),0,10);
+        self::$groupId = substr(md5(uniqid('', true)), 0, 10);
         $i = 1;
         $j = 0;
         $end = false;
         $reqs = array();
-        while(!$end)
+        while (!$end)
         {
-            $params = array('cityId'=>$hotelSearchParams->city->hotelbookId,'checkIn'=>$hotelSearchParams->checkIn,'duration'=>$hotelSearchParams->duration, 'hotelId'=>$hotelId);
+            $params = array('cityId' => $hotelSearchParams->city->hotelbookId, 'checkIn' => $hotelSearchParams->checkIn, 'duration' => $hotelSearchParams->duration, 'hotelId' => $hotelId);
             $params['rooms'] = array();
-            $params['rooms'][] = array('roomSizeId'=>self::$roomSizeRoomTypesMap[$i][$j], 'child'=>0, 'cots'=>0, 'roomNumber'=>1);
+            $params['rooms'][] = array('roomSizeId' => self::$roomSizeRoomTypesMap[$i][$j], 'child' => 0, 'cots' => 0, 'roomNumber' => 1);
             $reqs[] = self::hotelSearch($params, true);
-            if(count(self::$roomSizeRoomTypesMap[$i]) > ($j+1))
+            if (count(self::$roomSizeRoomTypesMap[$i]) > ($j + 1))
             {
                 $j++;
             }
-            elseif($i < $maxAdultCount)
+            elseif ($i < $maxAdultCount)
             {
                 $i++;
                 $j = 0;
@@ -932,20 +931,20 @@ class HotelBookClient
         //$hotelStacks = array();
         $hotels = array();
 
-        foreach($reqs as $requestId)
+        foreach ($reqs as $requestId)
         {
             $hotelStack = new HotelStack();
 
-            if($this->requests[$requestId]['result']->hotels)
+            if ($this->requests[$requestId]['result']->hotels)
             {
                 //print_r($this->requests[$requestId]['result']);die();
-                foreach($this->requests[$requestId]['result']->hotels as $hotel)
+                foreach ($this->requests[$requestId]['result']->hotels as $hotel)
                 {
                     $hotelStack->addHotel($hotel);
                 }
-                foreach($hotelStack->_hotels as $key=>$hotel)
+                foreach ($hotelStack->_hotels as $key => $hotel)
                 {
-                    if(!isset($hotels[$key]))
+                    if (!isset($hotels[$key]))
                     {
                         $hotels[$key] = $hotel;
                     }
@@ -1048,7 +1047,7 @@ class HotelBookClient
 
                 $hotelParams[$paramKey] = (string)$hotelSXE[$itemKey];
             }
-            elseif(isset($hotelSXE->{$itemKey}))
+            elseif (isset($hotelSXE->{$itemKey}))
             {
                 $hotelParams[$paramKey] = (string)$hotelSXE->{$itemKey};
             }
@@ -1059,9 +1058,9 @@ class HotelBookClient
             UtilsHelper::soapObjectsArray($hotelSXE->Images->Image);
             foreach ($hotelSXE->Images->Image as $imageSXE)
             {
-                if((int)$imageSXE->Small['width'])
+                if ((int)$imageSXE->Small['width'])
                 {
-                    $hotelParams['images'][] = array('description'=>(string)$imageSXE->Info, 'smallUrl'=>(string)$imageSXE->Small, 'largeUrl'=>(string)$imageSXE->Large);
+                    $hotelParams['images'][] = array('description' => (string)$imageSXE->Info, 'smallUrl' => (string)$imageSXE->Small, 'largeUrl' => (string)$imageSXE->Large);
                 }
             }
         }
@@ -1086,7 +1085,7 @@ class HotelBookClient
         if ($hotelSXE->Cat['id'])
         {
             $categoryId = (int)$hotelSXE->Cat['id'];
-            $hotelParams['categoryId'] = isset(Hotel::$categoryIdMapHotelbook[$categoryId]) ? Hotel::$categoryIdMapHotelbook[$categoryId]  : Hotel::STARS_UNDEFINDED;
+            $hotelParams['categoryId'] = isset(Hotel::$categoryIdMapHotelbook[$categoryId]) ? Hotel::$categoryIdMapHotelbook[$categoryId] : Hotel::STARS_UNDEFINDED;
         }
         if ($hotelSXE->City['id'])
         {
@@ -1135,8 +1134,8 @@ class HotelBookClient
         $hotelKey = $hotel->key;
         $searchParams['cityId'] = $hotel->cityId;
         //$searchParamsFull = Yii::app()->cache->get('hotelSearchParams'.Yii::app()->user->getState('avia.cacheId'));
-        $searchParams['checkIn'] = $hotel->checkIn;//$searchParamsFull->checkIn;
-        $searchParams['duration'] = $hotel->duration;//$searchParamsFull->duration;
+        $searchParams['checkIn'] = $hotel->checkIn; //$searchParamsFull->checkIn;
+        $searchParams['duration'] = $hotel->duration; //$searchParamsFull->duration;
         $searchParams['rooms'] = array();
         foreach ($hotel->rooms as $room)
         {
@@ -1145,7 +1144,7 @@ class HotelBookClient
                 'child' => $room->childCount ? $room->childCount : 0,
                 'cots' => $room->cotsCount,
                 'ChildAge' => isset($room->childAges[0]) ? $room->childAges[0] : 0,
-                'roomNumber'=>1
+                'roomNumber' => 1
             );
         }
         $hotelSearchResponse = $hotelBookClient->hotelSearch($searchParams);
@@ -1181,14 +1180,14 @@ class HotelBookClient
         $xml = '<?xml version="1.0" encoding="utf-8"?>
 <AddOrderRequest>
   <ContactInfo>
-    <Name>'.$hotelOrderParams->contactName.'</Name>
-    <Email>'.$hotelOrderParams->contactEmail.'</Email>
-    <Phone>'.$hotelOrderParams->contactPhone.'</Phone>
-    <Comment>'.$hotelOrderParams->contactComment.'</Comment>
+    <Name>' . $hotelOrderParams->contactName . '</Name>
+    <Email>' . $hotelOrderParams->contactEmail . '</Email>
+    <Phone>' . $hotelOrderParams->contactPhone . '</Phone>
+    <Comment>' . $hotelOrderParams->contactComment . '</Comment>
   </ContactInfo>
   <Items>
     <HotelItem>
-      <Search resultId="'.$hotelOrderParams->hotel->resultId.'" searchId="'.$hotelOrderParams->hotel->searchId.'" />
+      <Search resultId="' . $hotelOrderParams->hotel->resultId . '" searchId="' . $hotelOrderParams->hotel->searchId . '" />
       <Rooms>
       </Rooms>
     </HotelItem>
@@ -1204,26 +1203,26 @@ class HotelBookClient
 
             foreach ($hotelOrderParams->roomers as $roomer)
             {
-                if($lastRoomId !== $roomer->roomId)
+                if ($lastRoomId !== $roomer->roomId)
                 {
                     $roomItem = $requestObject->Items->HotelItem->Rooms->addChild('Room');
                 }
 
                 $roomPax = $roomItem->addChild('RoomPax');
-                if($roomer->age)
+                if ($roomer->age)
                 {
                     $roomPax->addAttribute('child', 'true');
                     $roomPax->addAttribute('age', $roomer->age);
-                    $roomPax->addChild('Title','Chld');
+                    $roomPax->addChild('Title', 'Chld');
                 }
                 else
                 {
                     $roomPax->addAttribute('child', 'false');
-                    $roomPax->addChild('Title',($roomer->genderId == Passport::GENDER_M ? 'Mr' : 'Ms'));
+                    $roomPax->addChild('Title', ($roomer->genderId == Passport::GENDER_M ? 'Mr' : 'Ms'));
                 }
-                $roomPax->addChild('FirstName',$roomer->firstName);
-                $roomPax->addChild('LastName',$roomer->lastName);
-                $roomPax->addChild('FullName',$roomer->fullName);
+                $roomPax->addChild('FirstName', $roomer->firstName);
+                $roomPax->addChild('LastName', $roomer->lastName);
+                $roomPax->addChild('FullName', $roomer->fullName);
                 $lastRoomId = $roomer->roomId;
 
             }
@@ -1241,11 +1240,11 @@ class HotelBookClient
         $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'add_order', $getData, array('request' => $xml));
         $responseObject = simplexml_load_string($response);
         $hotelOrderResponse = new HotelOrderResponse();
-        if(isset($responseObject->OrderId))
+        if (isset($responseObject->OrderId))
         {
             $hotelOrderResponse->orderId = (string)$responseObject->OrderId;
         }
-        if($hotelOrderResponse->orderId)
+        if ($hotelOrderResponse->orderId)
         {
             $hotelOrderResponse->error = 0;
         }
@@ -1260,7 +1259,7 @@ class HotelBookClient
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
-        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time),'order_id'=>$orderId);
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time), 'order_id' => $orderId);
         self::$lastRequestMethod = 'confirmOrder';
         self::$lastRequestDescription = (string)$orderId;
         $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'confirm_order', $getData);
@@ -1270,11 +1269,13 @@ class HotelBookClient
         $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
         $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
         $hotelOrderConfirmResponse->error = 0;
-        if(isset($responseObject->Errors->Error)){
+        if (isset($responseObject->Errors->Error))
+        {
             CVarDumper::dump($responseObject->Errors);
-            if(isset($responseObject->Errors->Error['code']))
+            if (isset($responseObject->Errors->Error['code']))
             {
-                if((string)$responseObject->Errors->Error['code'] == 'E1')
+
+                if ((string)$responseObject->Errors->Error['code'] == 'E1')
                 {
                     return $this->OrderInfo($orderId);
                 }
@@ -1282,17 +1283,12 @@ class HotelBookClient
                 {
                     $hotelOrderConfirmResponse->error = 1;
                 }
-
-
             }
             else
             {
                 $hotelOrderConfirmResponse->error = 1;
             }
-
-
         }
-
         return $hotelOrderConfirmResponse;
     }
 
@@ -1300,7 +1296,7 @@ class HotelBookClient
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
-        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time),'order_id'=>$orderId);
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time), 'order_id' => $orderId);
         self::$lastRequestMethod = 'OrderInfo';
         self::$lastRequestDescription = (string)$orderId;
         $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'order_info', $getData);
@@ -1310,7 +1306,8 @@ class HotelBookClient
         $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
         $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
         $hotelOrderConfirmResponse->error = 0;
-        if(isset($responseObject->Errors->Error)){
+        if (isset($responseObject->Errors->Error))
+        {
             $hotelOrderConfirmResponse->error = 1;
         }
 

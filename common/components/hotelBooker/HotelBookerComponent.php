@@ -145,7 +145,6 @@ class HotelBookerComponent extends CApplicationComponent
             HotelBookClient::$requestIds = array();
         }
 
-
         if ($orderInfo->orderId)
         {
             $this->hotelBooker->orderId = $orderInfo->orderId;
