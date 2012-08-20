@@ -1,0 +1,1763 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Voyanga v.0.1 - Trip Flight Rework</title>
+<link href="css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/popup.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.dotdotdot-1.5.1.js"></script>
+
+
+	
+<script type="text/javascript" src="js/resize-new.js"></script>
+<script type="text/javascript" src="js/slide-mode.js"></script>
+<script type="text/javascript" src="js/panel.js"></script>
+
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/tickets.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+
+
+</head>
+
+<body>
+
+<div class="wrapper">
+	<!-- HEAD -->
+	<div class="head">
+		<!-- CENTER BLOCK -->
+		<div class="center-block">
+		
+			<a href="/" class="logo">Voyanga</a>
+			
+			<a href="/" class="about">О проекте</a>
+			
+			<div class="telefon">
+				<img src="images/tel.png">
+			</div>
+				
+			<div class="slide-turn-mode">
+				<div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
+				<div class="bg-mask"></div>
+				
+				<ul>
+					<li class="planner active btn"><a href="#">Планировщик</a></li>
+					<li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
+					<li class="hotel btn"><a href="#">Отели</a></li>
+					<li class="finish-stages btn"><a href="#">Готовые туры</a></li>
+				</ul>
+			</div>
+			
+			<div class="login-window full">
+				<a href="#">
+					<span class="text">Регистрация и вход</span>
+					<span class="point"></span>
+				</a>
+			</div>
+		</div>
+		<!-- END CENTER BLOCK -->
+	</div>
+	<!-- END HEAD -->
+<!--====**********===-->
+	<!-- SUB HEAD -->
+	<div class="sub-head">
+		<!-- CENTER BLOCK -->
+		<div class="center-block">
+			<!-- PANEL -->
+				<div class="panel">
+					<div class="btn-timeline-and-condition">
+						<a href="#" class="btn-timeline active">Таймлайн</a>
+						<a href="#" class="btn-condition">Условия</a>
+					</div>
+					
+					<div class="slide-tmblr">
+					
+						<div class="timeline">
+						<div class="btn-left"></div>
+						<div class="btn-right"></div>
+						<div class="timedatelineOverflow">
+						<ul class="timedateline" style="width:840px;">
+							<li>
+							<div class="date">14</div>
+							</li>
+							<li>
+							<div class="date">15</div>
+							</li>
+							<li>
+							<div class="trip-fly"></div>
+							<div class="trip-hotel" style="left:18px; width:312px;"></div>
+							<div class="date">16</div>
+							</li>
+							<li>							
+							<div class="date">17</div>
+							</li>
+							<li>
+							<div class="date">18</div>
+							</li>
+							<li>
+							<div class="date">19</div>
+							</li>
+							<li>
+							<div class="date">20</div>
+							</li>
+							<li>
+							<div class="date">21</div>
+							</li>
+							<li>
+							<div class="date">22</div>
+							</li>
+							<li>
+							<div class="date">23</div>
+							</li>
+							<li>
+							<div class="date">24</div>
+							</li>
+							<li>
+							<div class="date">25</div>
+							</li>
+							<li>
+							<div class="trip-fly"></div>
+							<div class="trip-hotel" style="left:18px; width:188px;"></div>
+							<div class="date">26</div>
+							</li>
+							<li>
+							<div class="date">27</div>
+							</li>
+							<li>
+							<div class="date">28</div>
+							</li>
+							<li>
+							<div class="date">29</div>
+							</li>
+							<li>
+							<div class="date">30</div>
+							</li>
+							<li>
+							<div class="date">31</div>
+							</li>
+							<li>
+							<div class="trip-fly"></div>
+							<div class="date">1</div>
+							</li>
+							<li>
+							<div class="date">2</div>
+							</li>
+							<li>
+							<div class="date">3</div>
+							</li>
+							<li>
+							<div class="date">4</div>
+							</li>
+							<li>
+							<div class="date">5</div>
+							</li>
+							<li>
+							<div class="date">6</div>
+							</li>
+							<li>
+							<div class="date">7</div>
+							</li>
+							<li>
+							<div class="date">8</div>
+							</li>
+							<li>
+							<div class="date">9</div>
+							</li>
+						</ul>
+						</div>
+						<div class="left-corners"></div>
+						<div class="right-corners"></div>
+					</div>
+						
+						<div class="condition">
+							<div class="whence date">
+								<input name="name01" type="text" class="input">
+								<a href="#" class="day">
+									<span class="f17">12</span>
+									<br>мая
+								</a>
+							</div>
+							<div class="tumblr">
+								<div class="one active"></div>
+								<div class="two"></div>
+								
+								<div class="switch"></div>
+							</div>
+							<div class="where">
+								<input name="name01" type="text" class="input">
+								<a href="#" class="day">
+									<span class="f17">12</span>
+									<br>мая
+								</a>
+							</div>
+							
+							<div class="how-many-man">
+								<div class="content">
+									<div class="man"></div><div class="child"></div>
+								</div>
+								<div class="btn"></div>
+								
+								<div class="popup">
+									<div class="adults">
+										<input name="adult" type="text" value="1">
+										взрослых
+									</div>
+									<div class="childs">
+										<input name="adult" type="text" value="1">
+										детей до 12 лет
+									</div>
+									<div class="small-childs">
+										<input name="adult" type="text" value="0">
+										детей до 2 лет
+									</div>
+									
+								</div>
+							</div>
+							
+							<a class="btn-find">Найти</a>
+							<div class="clear"></div>
+						</div>
+					
+					</div>
+					
+					<div class="clear"></div>
+					<!-- BTN MINIMIZE -->
+					<a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
+					
+					<div class="minimize-rcomended">
+						<a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+					</div>
+				</div>
+			<!-- END PANEL -->					
+		</div>
+		<!-- END CENTER BLOCK -->
+	</div>	
+	<!-- END SUB HEAD -->
+<!--====**********===-->
+	<!-- ALL CONTENT -->
+	<div class="center-block">
+		
+		<!-- MAIN BLOCK -->
+		<div class="main-block">
+			<div id="content">
+			<!-- DIV RECOMENDED AND GRAFIK -->
+			<h1><span>Выберите авиабилет</span> Санкт-Петербург → Амстердам, 19 мая</h1>
+			<div class="recomended-content">
+
+			<div class="recommended-ticket">
+			<div class="ticket-items">
+				<div class="ribbon-cheapest"></div>
+				<div class="content">
+					<div class="airlines-line">
+						<img src="images/ico-airlline-russia.png"> Россия
+					</div>
+					<div class="date-time-city">
+						<div class="start">
+							<div class="date">
+								28 мая
+							</div>
+							<div class="time">
+								21:20
+							</div>
+							<div class="city">
+								Москва
+							</div>
+							<div class="airport">
+								Домодедово
+							</div>
+						</div>
+						<div class="how-long">
+							<div class="path">
+								В пути
+							</div>
+							<div class="ico-path"></div>
+							<div class="time">
+								3 ч. 30 м.
+							</div>						
+						</div>
+						<div class="finish">
+							<div class="date">
+								29 мая
+							</div>
+							<div class="time">
+								00:50
+							</div>
+							<div class="city">
+								Санкт-Петербург
+							</div>
+							<div class="airport">
+								Пулково
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<!-- END DATE -->
+					
+					<div class="line-two-ticket">
+						<span class="end"></span>
+					</div>
+					<div class="airlines-line">
+						<img src="images/ico-airlline-russia.png"> Россия
+					</div>
+					<div class="date-time-city">
+						<div class="start">
+							<div class="date">
+								28 мая
+							</div>
+							<div class="time">
+								21:20
+							</div>
+							<div class="city">
+								Москва
+							</div>
+							<div class="airport">
+								Домодедово
+							</div>
+						</div>
+						<div class="how-long">
+							<div class="path">
+								В пути
+							</div>
+							<div class="ico-path"></div>
+							<div class="time">
+								3 ч. 30 м.
+							</div>						
+						</div>
+						<div class="finish">
+							<div class="date">
+								29 мая
+							</div>
+							<div class="time">
+								00:50
+							</div>
+							<div class="city">
+								Санкт-Петербург
+							</div>
+							<div class="airport">
+								Пулково
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<!-- END DATE -->
+					
+					<div class="line-dashed-ticket">
+						<span class="end"></span>
+					</div>
+					<div class="details-selecte">
+						<div class="details">
+							<a href="#">Подробнее<br> о перелете</a>
+						</div>
+						<a href="#" class="btn-cost">
+							<span class="l"></span>
+							<span class="text">Выбрать</span>
+							<span class="price">300 250</span>
+							<span class="rur">o</span>
+						</a>
+					</div>
+					
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>				
+		</div>
+		<!-- END TICKET --> 
+			
+			<div class="prices-of-3days">
+				<div class="ticket">
+					<div class="one-way">
+						<ul class="schedule-of-prices">
+							<li>
+								<div class="price"  style="bottom: 80px">-100</div>
+								<div class="chart" style="background-position: center 55px;"></div>
+								<div class="week">пн</div>
+								<div class="date">16</div>
+							</li>
+							<li>
+								<div class="price"  style="bottom: 55px">-100</div>
+								<div class="chart" style="background-position: center 80px;"></div>
+								<div class="week">вт</div>
+								<div class="date">17</div>
+							</li>
+							<li>
+								<div class="price" style="bottom: 75px">-100</div>
+								<div class="chart" style="background-position: center 60px;"></div>
+								<div class="week">ср</div>
+								<div class="date">18</div>
+							</li>
+							<li class="active">
+								<div class="price" style="bottom: 85px">3 250</div>
+								<div class="chart" style="background-position: center 50px;"></div>
+								<div class="week">чт</div>
+								<div class="date">19</div>
+							</li>
+							<li>
+								<div class="price" style="bottom: 75px">-100</div>
+								<div class="chart" style="background-position: center 60px;"></div>
+								<div class="week">пт</div>
+								<div class="date">20</div>
+							</li>
+							<li>
+								<div class="price" style="bottom: 110px">-100</div>
+								<div class="chart" style="background-position: center 25px;"></div>
+								<div class="week">сб</div>
+								<div class="date">21</div>
+							</li>
+							<li>
+								<div class="price" style="top: 45px">-100</div>
+								<div class="chart" style="background-position: center 60px;"></div>
+								<div class="week">вс</div>
+								<div class="date">22</div>
+							</li>
+						</ul>
+						<div class="month">
+							Май
+						</div>
+					</div>
+					<div class="two-way">
+						<ul class="schedule-of-prices">
+							<li>
+								<div class="price"  style="bottom: 80px">-100</div>
+								<div class="chart" style="background-position: center 55px;"></div>
+								<div class="week">пн</div>
+								<div class="date">16</div>
+							</li>
+							<li>
+								<div class="price"  style="bottom: 55px">-100</div>
+								<div class="chart" style="background-position: center 80px;"></div>
+								<div class="week">вт</div>
+								<div class="date">17</div>
+							</li>
+							<li>
+								<div class="price" style="bottom: 75px">-100</div>
+								<div class="chart" style="background-position: center 60px;"></div>
+								<div class="week">ср</div>
+								<div class="date">18</div>
+							</li>
+							<li class="active">
+								<div class="price" style="bottom: 85px">3 250</div>
+								<div class="chart" style="background-position: center 50px;"></div>
+								<div class="week">чт</div>
+								<div class="date">19</div>
+							</li>
+							<li>
+								<div class="price" style="bottom: 75px">-100</div>
+								<div class="chart" style="background-position: center 60px;"></div>
+								<div class="week">пт</div>
+								<div class="date">20</div>
+							</li>
+							<li>
+								<div class="price" style="bottom: 110px">-100</div>
+								<div class="chart" style="background-position: center 25px;"></div>
+								<div class="week">сб</div>
+								<div class="date">21</div>
+							</li>
+							<li>
+								<div class="price" style="top: 45px">-100</div>
+								<div class="chart" style="background-position: center 60px;"></div>
+								<div class="week">вс</div>
+								<div class="date">22</div>
+							</li>
+						</ul>
+						<div class="month">
+							Май
+						</div>
+					</div>
+					
+					<div class="cena">
+						<div class="total-td">
+							<span class="text">Итого</span>
+							<div class="all-price">
+								80 250 <span class="rur">o</span>
+							</div>
+						</div>
+						<div class="look-td">
+							<a href="#" class="btn-look">
+								Посмотреть
+							</a>
+						</div>						
+						<div class="clear"></div>
+					</div>
+					<span class="lt"></span>
+					<span class="rt"></span>
+					<span class="lv"></span>
+					<span class="rv"></span>
+					<span class="th"></span>
+					<span class="bh"></span>
+				</div>
+				
+				<div class="clear"></div>
+			</div>
+			<!-- END RECOMENDED AND GRAFIK -->
+			<div class="clear"></div>
+			</div>
+			<div class="ticket-content">
+				<h2>Все результаты</h2>
+				<div class="order-div">
+					Сортировать по:  <a href="#">цене</a>  <a href="#">времени вылета</a>  <a href="#">времени прилета</a>
+				</div>
+				<div class="clear"></div>
+				<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="cup" style="left: 40%;"></span>
+									<span class="cup" style="left: 65%;"></span>
+									<span class="down"></span>
+								</div>
+								<div class="path">
+									Пересадка в Москве и Ванкувере
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET -->
+			
+			<!-- TICKET -->
+			<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Петропавловск-Ка...
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="down"></span>
+								</div>
+								<div class="path no-wait">
+									Без пересадок
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Петропавловск-Ка...
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET -->
+			
+			<!-- TICKET SMALL -->
+			<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="cup" style="left: 40%;"></span>
+									<span class="cup" style="left: 65%;"></span>
+									<span class="down"></span>
+								</div>
+								<div class="path no-wait">
+									Без пересадок
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET -->
+			
+			<!-- TICKET SMALL -->
+			<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="down"></span>
+								</div>
+								<div class="path no-wait">
+									Без пересадок
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET SMALL -->
+			
+			<!-- TICKET -->
+			<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="down"></span>
+								</div>
+								<div class="path no-wait">
+									Без пересадок
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+						<div class="line-two-ticket">
+							<span class="l"></span>
+							<span class="end"></span>
+							<span class="r"></span>
+						</div>
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="down"></span>
+								</div>
+								<div class="path no-wait">
+									Без пересадок
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET -->
+			
+			<!-- TICKET SMALL -->
+			<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="down"></span>
+								</div>
+								<div class="path no-wait">
+									Без пересадок
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+						<div class="line-two-ticket">
+							<span class="l"></span>
+							<span class="end"></span>
+							<span class="r"></span>
+						</div>
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="down"></span>
+								</div>
+								<div class="path no-wait">
+									Без пересадок
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET SMALL -->
+			
+			<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="cup" style="left: 40%;"></span>
+									<span class="cup" style="left: 65%;"></span>
+									<span class="down"></span>
+								</div>
+								<div class="path">
+									Пересадка в Москве и Ванкувере и Ванкувере и Ванкувере
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+						<div class="other-time">
+							<div class="title">Также вы можете вылететь в</div>
+							<div class="btn-minimize"><a href="#">Списком</a></div>
+							<div class="clear"></div>
+							<ul class="minimize">
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio01" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time hover">
+										<input type="radio" name="radio01" id="name01" checked="checked">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">21:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio01" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+						<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET -->
+			
+			<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="cup" style="left: 40%;"></span>
+									<span class="cup" style="left: 65%;"></span>
+									<span class="down"></span>
+								</div>
+								<div class="path">
+									Пересадка в Москве и Ванкувере и Ванкувере и Ванкувере
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+						<div class="other-time">
+							<div class="title">Также вы можете вылететь в</div>
+							<div class="btn-minimize"><a href="#">Списком</a></div>
+							<div class="clear"></div>
+							<ul class="minimize">
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio02" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time hover">
+										<input type="radio" name="radio02" id="name01" checked="checked">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio02" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio02" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio02" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio02" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio02" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio02" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET -->
+			
+			<div class="ticket-items">
+				<div class="content">
+					<div class="airlines">
+						<div>
+							<img src="images/ico-airlline-russia.png"><br>
+							Россия
+						</div>
+					</div>
+					<!-- END AIRLINES -->
+					<div class="center-ticket">
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="cup" style="left: 40%;"></span>
+									<span class="cup" style="left: 65%;"></span>
+									<span class="down"></span>
+								</div>
+								<div class="path">
+									Пересадка в Москве и Ванкувере и Ванкувере и Ванкувере
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+						<div class="other-time">
+							<div class="title">Также вы можете вылететь в</div>
+							<div class="btn-minimize"><a href="#">Списком</a></div>
+							<div class="clear"></div>
+							<ul class="minimize">
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio03" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time hover">
+										<input type="radio" name="radio03" id="name01" checked="checked">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio03" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio03" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio03" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio03" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio03" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio03" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="line-two-ticket">
+							<span class="l"></span>
+							<span class="end"></span>
+							<span class="r"></span>
+						</div>
+						<div class="date-time-city">
+							<div class="start">
+								<div class="date">
+									28 мая
+								</div>
+								<div class="time">
+									21:20
+								</div>
+								<div class="city">
+									Москва
+								</div>
+								<div class="airport">
+									Домодедово
+								</div>
+							</div>
+							<!-- END START -->
+							<div class="how-long">
+								<div class="time">
+									В пути 8 ч. 30 м.
+								</div>
+								<div class="ico-path">
+									<span class="cup" style="left: 40%;"></span>
+									<span class="cup" style="left: 65%;"></span>
+									<span class="down"></span>
+								</div>
+								<div class="path">
+									Пересадка в Москве и Ванкувере и Ванкувере и Ванкувере
+								</div>
+							</div>
+							<!-- END HOW LONG -->
+							<div class="finish">
+								<div class="date">
+									29 мая
+								</div>
+								<div class="time">
+									00:50
+								</div>
+								<div class="city">
+									Санкт-Петербург
+								</div>
+								<div class="airport">
+									Пулково
+								</div>
+							</div>
+							<!-- END FINISH -->
+							<div class="clear"></div>
+						</div>
+						<!-- END DATE TIME CITY -->
+						<div class="other-time">
+							<div class="title">Также вы можете вылететь в</div>
+							<div class="btn-minimize"><a href="#">Списком</a></div>
+							<div class="clear"></div>
+							<ul class="minimize">
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio04" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time hover">
+										<input type="radio" name="radio04" id="name01" checked="checked">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio04" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio04" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio04" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio04" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio04" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="ico-path-time">
+										<input type="radio" name="radio04" id="name01">
+										<div class="path">
+											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
+											<div class="start">06:10</div>
+											<div class="finish">08:10</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- END CENTER BLOCK -->
+					<div class="buy-ticket">
+						<div class="text">
+							<span>Купить</span>
+							<a href="#" class="btn-cost">
+								<span class="l"></span>
+								<span class="price">3 250</span>
+								<span class="rur">o</span>
+							</a>
+						</div>
+							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+					</div>
+					<!-- END BUY TICKET -->
+					<div class="clear"></div>
+				</div>
+				
+				<span class="lt"></span>
+				<span class="rt"></span>
+				<span class="lv"></span>
+				<span class="rv"></span>
+				<span class="bh"></span>
+			</div>
+			<!-- END TICKET -->
+				
+			</div>
+			<!-- END TICKET CONTENT -->
+
+		</div>
+		<!-- END MAIN BLOCK -->
+		<!-- FILTER BLOCK -->
+		<div class="filter-block">
+			<div class="filter-content">
+				
+				<div class="slide-filter">
+					<img src="images/img-filter-slide01.png">
+				</div>
+				
+				<div class="div-filter">
+
+					<div class="slider-filter">
+						<img src="images/img-filter-slide02.png">
+					</div>	
+	
+					<div class="checkbox"></div> Только короткие пересадки
+					
+				</div>
+				<div class="div-filter">
+					<h4>Время вылета</h4>
+					<div class="slide-filter">
+						<img src="images/img-slide-time01.png">
+					</div>
+					<h4>Время прилета</h4>
+					<div class="slide">
+						<img src="images/img-slide-time02.png">
+					</div>
+				</div>
+				
+				<div class="div-filter">
+					<h4>Москва</h4>
+					<ul>
+						<li><div class="checkbox"></div> Шереметьево</li>
+						<li><div class="checkbox"></div> Внуково-1</li>
+						<li><div class="checkbox"></div> Внуково-2</li>
+					</ul>
+				</div>
+				<div class="div-filter">
+					<h4>Москва <a href="#">Очистить</a></h4>
+					<ul>
+						<li><div class="checkbox"></div> Аэрофлот</li>
+						<li><div class="checkbox"></div> Air Berlin</li>
+						<li><div class="checkbox"></div> Вооруженные силы РФ</li>
+					</ul>
+					<div class="all-list">
+						<a href="#">Все авиакомпании</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END FILTER BLOCK -->
+		<div class="clear"></div>
+	</div>
+	<!-- END ALL CONTENT -->
+</div>
+</body>
+</html>

@@ -28,7 +28,6 @@ function ResizeBox() {
 	var windowHeight = $(window).height();
 	var paddingLeft = (windowWidth - boxPopUpWidth) / 2;
 	var paddingTop = (windowHeight - boxPopUpHeight) / 2;
-	console.log(paddingTop);
 	if (paddingTop < 0) {
 		paddingTop = 0;
 	}

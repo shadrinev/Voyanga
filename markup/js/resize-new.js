@@ -120,6 +120,10 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
+				
+				widthContent = var_widthMainBlockMAX;
+				marginLeftContent = 'auto';
+				marginRightContent = 'auto';
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthMainBlock = Math.floor(var_widthMiddleBlockMID + ((widthBlock - var_widthMID) / 1));
@@ -132,9 +136,13 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
+				
+				widthContent = var_widthMainBlockMAX;
+				marginLeftContent = 'auto';
+				marginRightContent = 'auto';
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
-				widthFilterBlock = var_widthFilterMID;
+				widthFilterBlock = Math.floor(220 + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthFilterMID - 220))) );
 				var_margin = 20;
 				widthMainBlock = Math.floor((widthBlock  - widthFilterBlock) - (var_margin * 2));
 				if (widthMainBlock > var_widthMiddleBlockMID) {
@@ -148,6 +156,10 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
 				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
+				
+				widthContent = var_widthMainBlockMAX;
+				marginLeftContent = 'auto';
+				marginRightContent = 'auto';
 			}
 		}
 		
@@ -267,35 +279,34 @@ function ResizeCenterBlock() {
 		var_slideBlock.css('right', paddingRightSlide +'px');
 		var_leftBlock.find('.left-content').css('margin-left', paddingLeftLogo+'px');
 		var_telefonBlock.css('left', paddingLeftTel+'px');
-		/*
-				
-		if (widthMainBlock < 750) {
-			var var_widthTicket = (widthMainBlock - 55) - var_widthMainBlockMIN;
-			
-			if (var_widthTicket <= 120) {
-				var_ticketsItems.find('.ticket-items').addClass('small');
-			}
-			else {
-				var_ticketsItems.find('.ticket-items').removeClass('small');
-			}
-			
+		
+		if (widthContent < 695) {
+			var mathWidthRicket = Math.floor(253 + ((widthBlock - var_widthMIN) / (var_valueMIN / (318 - 253))) );
+			$('.recommended-ticket').css('width', mathWidthRicket+'px');
+			$('.recommended-ticket').find('.ticket-items').addClass('small');
+			var_content.find('h1').find('span').hide();
+			/*
 			var var_allWidthContent = var_widthMainBlockMIN + var_widthTicket;
 			var_ticketsItems.css('width', var_allWidthContent+'px');
 			var mathWidthRicket = Math.floor(var_widthTicket * 0.393);
 			var_recomendedItems.find('.recommended-ticket').css('width', (253 + mathWidthRicket)+'px');
-			var_recomendedItems.find('.ticket-items').addClass('small');
+
 			var_recomendedItems.css('width', var_allWidthContent+'px');
-			var_recomendedItems.find('h1').find('span').hide();
+			var_recomendedItems.*/
 		}
 		else {
-			var_ticketsItems.find('.ticket-items').removeClass('small');
+			$('.recommended-ticket').find('.ticket-items').removeClass('small');
+			$('.recommended-ticket').css('width', '318px');
+			var_content.find('h1').find('span').show();
+			/*
 			var_ticketsItems.css('width', var_widthMainBlockMAX+'px');			
 			var_recomendedItems.find('.ticket-items').removeClass('small');			
 			var_recomendedItems.find('.recommended-ticket').css('width', '318px');
 			var_recomendedItems.css('width', var_widthMainBlockMAX+'px');
-			var_recomendedItems.find('h1').find('span').show();
+			var_recomendedItems.find('h1').find('span').show();*/
 		}
 		
+		/*
 		if(var_hotelItems.length > 0 && var_hotelItems.is(':visible')) {
 			if (var_ticketsItems.width() < 650) {
 				var_hotelItems.addClass('small');
@@ -304,7 +315,7 @@ function ResizeCenterBlock() {
 				var_hotelItems.removeClass('small');
 			}
 		}
-		
+		*/
 		if (widthBlock <= var_widthMIN) {
 			$('body').css('overflow-x','scroll');
 		}
@@ -312,11 +323,9 @@ function ResizeCenterBlock() {
 			$('body').css('overflow-x', 'hidden');
 			$('body').css('overflow-y', 'hidden');
 		}
-		
+
 		resizeLeftStage();
 		resizeMainStage();
-		*/
-
 	}
 }
 function smallTicketHeight() {
@@ -324,7 +333,7 @@ function smallTicketHeight() {
 		var var_recomendedContent = $('.recomended-content');
 	 	var var_oneHeight = var_recomendedContent.find('.recommended-ticket .ticket-items').height();
 	 	var var_twoHeight = var_recomendedContent.find('.prices-of-3days .ticket').height();
-	 	console.log(var_oneHeight+ ' ' + var_twoHeight);
+	 	
 	 	if ((var_oneHeight - 19)!= var_twoHeight) {			
 			var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items');
 			var heightOneTicket = var_recomendedContent.find('.recommended-ticket')[0].clientHeight;
