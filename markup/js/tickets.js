@@ -205,6 +205,9 @@ function otherTimeSlide() {
 		}
 	});
 }
+
+
+
 function resizeAllWindow() {
 	smallCityName();
 	recalculationPadding();

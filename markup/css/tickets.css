@@ -793,15 +793,17 @@
 }
 
 .description .place .in-the-map {
-	background: url("../images/slice.png") no-repeat scroll -36px -28px transparent;
     display: inline-block;
-    padding-left: 22px;
+    padding-left: 0px;
     margin-left: -2px;
     vertical-align: top;
     font-size: 11px;
 }
-.hotels-tickets .description .place .in-the-map span {
+.hotels-tickets .description .place .in-the-map span.link {
 	border-bottom: 1px dashed;
+}
+.hotels-tickets .description .place .in-the-map .ico-see-map {
+	vertical-align: middle;
 }
 .hotels-tickets .description h2 .gradient, .description .place .street .gradient {
 	display: block;

@@ -169,8 +169,8 @@ function ResizeCenterBlock() {
 				widthMainBlock = var_widthMiddleBlockMAX;
 				widthFilterBlock = var_widthFilterMAX;
 				var_margin = Math.floor((widthBlock - (widthMainBlock + widthFilterBlock + widthLeftBlock)) / 2);
-				marginLeftMainBlock = 'auto';	
-				marginRightMainBlock = 'auto';
+				marginLeftMainBlock = widthLeftBlock;	
+				marginRightMainBlock = widthFilterBlock;
 				marginRightFilterBlock = 0;
 				marginLeftLeftBlock = 0;
 				
@@ -182,8 +182,8 @@ function ResizeCenterBlock() {
 				widthLeftBlock = var_widthLeftBlockMID;
 				widthMainBlock = Math.floor(var_widthMiddleBlockMID + ((widthBlock - var_widthMID) / 1));
 				widthFilterBlock = var_widthFilterMID;
-				marginLeftMainBlock = 'auto';	
-				marginRightMainBlock = 'auto';
+				marginLeftMainBlock = widthLeftBlock;	
+				marginRightMainBlock = widthFilterBlock;
 				marginRightFilterBlock = 0;
 				marginLeftLeftBlock = 0;
 				
