@@ -1271,23 +1271,7 @@ class HotelBookClient
         $hotelOrderConfirmResponse->error = 0;
         if (isset($responseObject->Errors->Error))
         {
-            CVarDumper::dump($responseObject->Errors);
-            if (isset($responseObject->Errors->Error['code']))
-            {
-
-                if ((string)$responseObject->Errors->Error['code'] == 'E1')
-                {
-                    return $this->OrderInfo($orderId);
-                }
-                else
-                {
-                    $hotelOrderConfirmResponse->error = 1;
-                }
-            }
-            else
-            {
-                $hotelOrderConfirmResponse->error = 1;
-            }
+            throw new CException('Internal hotelBook error: '.CVarDumper::dumpAsString($responseObject->Errors));
         }
         return $hotelOrderConfirmResponse;
     }
