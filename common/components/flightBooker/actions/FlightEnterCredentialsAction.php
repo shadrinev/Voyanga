@@ -114,7 +114,6 @@ class FlightEnterCredentialsAction extends StageAction
             {
                 Yii::app()->flightBooker->getCurrent()->orderBookingId = $bookingAr->id;
                 Yii::app()->flightBooker->status('booking');
-                $this->getController()->refresh();
             }
             else
             {

@@ -58,8 +58,12 @@ class HotelBooker extends SWLogActiveRecord
     {
         if (!$this->statusChanged)
             return parent::afterSave();
-        $method = 'stage' . $this->swGetStatus()->getId();
-        if (method_exists(Yii::app()->hotelBooker, $method) or method_exists($this->hotelBookerComponent, $method))
+        $method = 'stage' . ucfirst($this->swGetStatus()->getId());
+        if ($action = Yii::app()->getController()->createAction($method))
+        {
+           $action->execute();
+        }
+        elseif (method_exists(Yii::app()->hotelBooker, $method) or method_exists($this->hotelBookerComponent, $method))
         {
             if ($this->hotelBookerComponent)
             {
@@ -71,14 +75,7 @@ class HotelBooker extends SWLogActiveRecord
                 Yii::app()->hotelBooker->$method();
                 return parent::afterSave();
             }
-            else
-            {
-                Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
-            }
-        }
-        else
-        {
-            Yii::app()->request->redirect(Yii::app()->getRequest()->getUrl());
+            throw new CException('Unknown '.$method.' of FlightBooker');
         }
     }
 

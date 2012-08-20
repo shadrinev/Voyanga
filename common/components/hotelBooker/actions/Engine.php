@@ -10,25 +10,24 @@ class Engine extends CAction
 {
     public function run($key)
     {
-        //echo "INNN runnn";
         $parts = explode('_', $key);
         $cacheId = $parts[0];
         $searchId = $parts[1];
         $resultId = $parts[2];
-        $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
+        $resultSearch = Yii::app()->cache->get('hotelResult' . $cacheId);
         //TODO: need working without cache, if state more then enterCredentials
 
-        if (!$resultSearch){
-            $hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey'=>'hotel_key'.$key));
-            if($hotelBooker)
+        if (!$resultSearch)
+        {
+            $hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey' => 'hotel_key' . $key));
+            if ($hotelBooker)
             {
                 $foundedHotel = unserialize($hotelBooker->hotelInfo);
                 $foundedHotel->cacheId = $cacheId;
             }
-            //throw new CHttpException(500, 'You request expired');
-        }else{
-
-
+        }
+        else
+        {
             $foundedHotel = null;
             foreach ($resultSearch['hotels'] as $hotel)
             {
@@ -39,11 +38,10 @@ class Engine extends CAction
                     break;
                 }
             }
-
-            if(!$foundedHotel)
+            if (!$foundedHotel)
             {
-                $hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey'=>'hotel_key'.$key));
-                if($hotelBooker)
+                $hotelBooker = HotelBooker::model()->findByAttributes(array('hotelResultKey' => 'hotel_key' . $key));
+                if ($hotelBooker)
                 {
                     $foundedHotel = unserialize($hotelBooker->hotelInfo);
                     $foundedHotel->cacheId = $cacheId;
@@ -51,13 +49,14 @@ class Engine extends CAction
             }
         }
 
-        if(isset($foundedHotel) and $foundedHotel){
+        if (isset($foundedHotel) and $foundedHotel)
+        {
             Yii::app()->hotelBooker->hotel = $foundedHotel;
             Yii::app()->hotelBooker->book();
 
             $status1 = Yii::app()->hotelBooker->current->swGetStatus()->getId();
 
-            $actionName = 'stage'.ucfirst($status1);
+            $actionName = 'stage' . ucfirst($status1);
 
             if ($action = $this->getController()->createAction($actionName))
             {
@@ -65,7 +64,8 @@ class Engine extends CAction
             }
             else
                 Yii::app()->hotelBooker->$actionName();
-        }else
+        }
+        else
             throw new CHttpException(500, 'You request expired hotel not found');
     }
 }
