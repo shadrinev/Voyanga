@@ -9,77 +9,28 @@ class MakeBookingAction extends CAction
 {
     public function run()
     {
-        $trip = Yii::app()->order->getPositions(false);
-        $valid = true;
-
-        if(isset($trip['items'])){
-            foreach($trip['items'] as $cartElement)
-            {
-                if($cartElement instanceof FlightTripElement)
-                {
-                    if(!$cartElement->flightVoyage)
-                    {
-                        $valid = false;
-                    }
-                }
-                elseif($cartElement instanceof HotelTripElement)
-                {
-                    if(!$cartElement->hotel)
-                    {
-                        $valid = false;
-                    }
-                }
-                else
-                {
-                    $valid = false;
-                }
-            }
-        }
-        //VarDumper::dump(Yii::app()->shoppingCart);
-        //VarDumper::dump($valid);
-        //VarDumper::dump($trip);
-        $validBooking = false;
+        $dataProvider = new TripDataProvider();
+        $items = $dataProvider->getSortedCartItems();
         $elements = array();
-        if($valid)
+
+        if ($this->areNotAllItemsLinked($items))
         {
-            $validBooking = Yii::app()->order->booking();
-            $positions = Yii::app()->order->getPositions(false);
-
-            foreach($positions['items'] as $item)
-            {
-                if($item instanceof HotelTripElement)
-                {
-                    if($item->hotelBookerId)
-                    {
-                        $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
-                        if($hotelBooker)
-                        {
-                            $status = $hotelBooker->status;
-                            if(strpos($status,'aiting') === false){
-                                $elements[] = array('type'=>'Hotel','id'=>$item->hotelBookerId,'status'=>$status);
-                            }
-
-                        }
-                    }
-                }
-                elseif($item instanceof FlightTripElement)
-                {
-                    if($item->flightBookerId)
-                    {
-                        $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
-                        $groupId = $item->getGroupId();
-                        $bookedElements[$groupId] = $groupId;
-                        if($flightBooker)
-                        {
-                            $status = $flightBooker->status;
-                            if(strpos($status,'aiting') === false){
-                                $elements[] = array('type'=>'Flight','id'=>$item->flightBookerId,'status'=>$status);
-                            }
-                        }
-                    }
-                }
-            }
+            $this->controller->render('makeBooking', array('validFill'=>false,'validBooking'=>false,'elements'=>$elements));
         }
-        $this->controller->render('makeBooking', array('validFill'=>$valid,'validBooking'=>$validBooking,'elements'=>$elements));
+        else
+        {
+            $tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItems();
+            foreach($tripElementsWorkflow as $tripElementWorkflow)
+            {
+                $item = $tripElementWorkflow->item;
+                $elements[] = array('type'=>$item->getType(),'id'=>$item->getId(),'status'=>$tripElementWorkflow->finalStatus);
+            }
+            $this->controller->render('makeBooking', array('validFill'=>true,'validBooking'=>true,'elements'=>$elements));
+        }
+    }
+
+    private function areNotAllItemsLinked($items)
+    {
+        return !array_all($items, function ($item) { return $item->isLinked();} );
     }
 }

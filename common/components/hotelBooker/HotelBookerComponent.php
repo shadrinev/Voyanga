@@ -98,16 +98,11 @@ class HotelBookerComponent extends CApplicationComponent
         return $this->hotelBooker->save();
     }
 
-   /* public function stageEnterCredentials()
-    {
-
-    }*/
-
     public function stageAnalyzing()
     {
         $hotelBookClient = new HotelBookClient();
         $hotelBookClient->hotelSearchDetails($this->hotel);
-        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
+        SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds, HotelBookClient::$requestIds);
         HotelBookClient::$requestIds = array();
         $this->hotelBooker->hotel = $this->hotel;
         if (($this->hotel->cancelExpiration - time()) > (appParams('hotel_payment_time') * 2))
@@ -122,7 +117,6 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageBooking()
     {
-        //echo "innn booking";
         $hotelOrderParams = new HotelOrderParams();
         $hotelOrderParams->hotel = $this->hotel;
         $contactName = '';
@@ -151,7 +145,6 @@ class HotelBookerComponent extends CApplicationComponent
             HotelBookClient::$requestIds = array();
         }
 
-
         if ($orderInfo->orderId)
         {
             $this->hotelBooker->orderId = $orderInfo->orderId;
@@ -176,31 +169,22 @@ class HotelBookerComponent extends CApplicationComponent
             else
             {
                 $this->status('bookingError');
-                echo "error";
             }
         }
         else
         {
             $this->status('bookingError');
-            echo "error2";
         }
     }
 
-    /*// this is action
-    public function stageSoftWaitingForPayment()
-    {
-        //переход в SoftStartPayment, если достаточно времени.
-        //Написать aciton клика по кнопке и там проверки условия для перехода
-    }*/
-
-    /*public function stageHardWaitingForPayment()
-    {
-
-    }*/
-
     public function stageBookingError()
     {
+        $this->status('error');
+    }
 
+    public function stageSoftWaitingForPayment()
+    {
+        //waiting for payment
     }
 
     public function stageSoftStartPayment()

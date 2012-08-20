@@ -60,4 +60,10 @@ interface IOrderElement
      * @return mixed
      */
     public function getWeight();
+
+    public function isLinked();
+
+    public function getType();
+
+    public function prepareForFrontend();
 }

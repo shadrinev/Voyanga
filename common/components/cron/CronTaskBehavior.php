@@ -29,8 +29,9 @@ class CronTaskBehavior extends CBehavior
         $cronTask->taskId = $addInfo['atId'];
         $cronTask->uniqKey = $addInfo['uniqKey'];
         $res = $cronTask->save();
-        if(!$res){
-            VarDumper::dump($cronTask->getErrors());
+        if(!$res)
+        {
+            Yii::log($cronTask->getErrors(), CLogger::LEVEL_ERROR);
         }
     }
 

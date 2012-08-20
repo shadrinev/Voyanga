@@ -10,6 +10,7 @@ class Engine extends CAction
 {
     public function run($key)
     {
+        //echo "INNN runnn";
         $parts = explode('_', $key);
         $cacheId = $parts[0];
         $searchId = $parts[1];

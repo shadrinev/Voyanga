@@ -7,8 +7,6 @@
  */
 class HotelTripElement extends TripElement
 {
-    public $type = self::TYPE_FLIGHT;
-
     private $_id;
 
     public $city;
@@ -19,6 +17,7 @@ class HotelTripElement extends TripElement
     public $infantCount;
     public $childAge;
     public $hotelBookerId;
+    private $passports;
 
     public function rules()
     {
@@ -116,10 +115,12 @@ class HotelTripElement extends TripElement
     public function getPassports()
     {
         // TODO: Implement getPassports() method.
+        if ($this->passports)
+            return $this->passports;
         $fake = new HotelPassportForm();
         $fake->addRoom($this->adultCount,0);
         $roomPassport = $fake->roomsPassports[0] = new RoomPassportForm();
-        for($i=0;$i<$this->adultCount;$i++)
+        for($i=0; $i<$this->adultCount; $i++)
         {
             $roomPassport->adultsPassports[$i] = new HotelAdultPassportForm();
             $adultForm = FlightAdultPassportForm::fillWithRandomData();
@@ -127,7 +128,7 @@ class HotelTripElement extends TripElement
             $roomPassport->adultsPassports[$i]->firstName = $adultForm->firstName;
             $roomPassport->adultsPassports[$i]->genderId = $adultForm->genderId;
         }
-
+        $this->passports = $fake;
         return $fake;
     }
 
@@ -149,5 +150,20 @@ class HotelTripElement extends TripElement
     public function getWeight()
     {
         return 2;
+    }
+
+    public function getType()
+    {
+        return 'Hotel';
+    }
+
+    public function prepareForFrontend()
+    {
+        return HotelTripElementFrontendProcessor::prepareInfoForTab($this);
+    }
+
+    public function createTripElementWorkflow()
+    {
+        return new HotelTripElementWorkflow($this);
     }
 }

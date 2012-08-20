@@ -8,15 +8,12 @@
  */
 class FlightWaitingForPaymentAction extends StageAction
 {
-
     public function execute()
     {
+        $this->getController()->render('flightBooker.views.payment',
+            array(
 
-            $this->getController()->render('flightBooker.views.payment',
-                array(
-
-                )
-            );
-
+            )
+        );
     }
 }

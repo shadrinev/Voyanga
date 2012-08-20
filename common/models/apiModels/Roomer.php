@@ -20,12 +20,11 @@ class Roomer
     {
         $this->firstName = $passport->firstName;
         $this->lastName = $passport->lastName;
-        $bd=new DateTime($passport->birthday);
-        $dnow=new DateTime();
-        $diff=$dnow->diff($bd);
+        $birthday=new DateTime($passport->birthday);
+        $currentTime=new DateTime();
+        $diff=$currentTime->diff($birthday);
         $this->age = $diff->y;
         $this->genderId = $passport->genderId;
         $this->fullName = $this->firstName.' '.$this->lastName;
-
     }
 }

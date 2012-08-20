@@ -9,8 +9,6 @@
  * @property string $taskName
  * @property integer $taskId
  * @property string $timeAdded
- * @property string $uniqKey
- * @property string $executeTimestamp
  * @property string $executeOut
  */
 class CronTask extends CActiveRecord

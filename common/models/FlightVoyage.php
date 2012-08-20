@@ -5,7 +5,7 @@
  * @author oleg
  *
  */
-class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrderElement
+class FlightVoyage extends CApplicationComponent
 {
     const TYPE = 1;
 

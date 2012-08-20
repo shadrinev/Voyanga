@@ -9,7 +9,7 @@
 class BasketController extends Controller
 {
 
-    public function actionAdd($type, $key, $searchId='', $searchId2='')
+    public function actionAdd($type, $key, $searchId = '', $searchId2 = '')
     {
         switch ($type)
         {
@@ -20,7 +20,8 @@ class BasketController extends Controller
                 {
                     $id = time();
                     //todo: add count of flightVoyageFlights Items
-                    foreach($flight->flights as $flightElement){
+                    foreach ($flight->flights as $flightElement)
+                    {
                         $item = new FlightTripElement();
                         $item->flightVoyage = $flight;
                         $item->departureCity = $flightElement->getDepartureCity()->id;
@@ -44,8 +45,8 @@ class BasketController extends Controller
 
                     $item->city = City::getCityByHotelbookId($hotel->cityId)->id;
                     $checkInTimestamp = strtotime($hotel->checkIn);
-                    $item->checkIn = date('d.m.Y',$checkInTimestamp);
-                    $item->checkOut = date('d.m.Y',$checkInTimestamp + $hotel->duration*3600*24);
+                    $item->checkIn = date('d.m.Y', $checkInTimestamp);
+                    $item->checkOut = date('d.m.Y', $checkInTimestamp + $hotel->duration * 3600 * 24);
                     $item->id = time();
                     Yii::app()->shoppingCart->put($item);
                 }
@@ -55,20 +56,20 @@ class BasketController extends Controller
         }
     }
 
-    public function actionFillCartElement($cartElementId,$type, $key, $searchId='', $searchId2='')
+    public function actionFillCartElement($cartElementId, $type, $key, $searchId = '', $searchId2 = '')
     {
-        $allPositions = Yii::app()->order->getPositions(false);
+        $dataProvider = new TripDataProvider();
+        $allPositions = $dataProvider->getSortedCartItems();
         $needPosition = null;
-        //$needPositions = array();
-        foreach($allPositions['items'] as $item)
+        foreach ($allPositions as $item)
         {
-            if($item->getId() == $cartElementId)
+            if ($item->getId() == $cartElementId)
             {
                 $needPosition = $item;
                 break;
             }
         }
-        if($needPosition)
+        if ($needPosition)
         {
             switch ($type)
             {
@@ -76,36 +77,30 @@ class BasketController extends Controller
                     $needPositions = array();
 
                     $groupId = $needPosition->getGroupId();
-                    foreach($allPositions['items'] as $item)
+                    foreach ($allPositions as $item)
                     {
-                        if(method_exists($item,'getGroupId')){
-                            if($item->getGroupId() == $groupId)
+                        if ($item->getGroupId())
+                        {
+                            if ($item->getGroupId() == $groupId)
                             {
                                 $needPositions[] = $item;
                             }
                         }
                     }
                     /** @var $flight FlightVoyage */
-                    $flight = FlightVoyage::getFromCache($searchId,$key);
+                    $flight = FlightVoyage::getFromCache($searchId, $key);
                     if ($flight)
                     {
                         //updating all cartElements
-                        /** @var $needPositions FlightTripElement[] */
-                        foreach($needPositions as $item){
+                        foreach ($needPositions as $item)
+                        {
                             $item->flightVoyage = $flight;
-                            Yii::app()->shoppingCart->update($item,1);
+                            Yii::app()->shoppingCart->update($item, 1);
                         }
-                        /*$item = new FlightTripElement();
-                        $item->flightVoyage = $flight;
-                        $item->departureCity = $flight->getDepartureCity()->id;
-                        $item->arrivalCity = $flight->getArrivalCity()->id;
-                        $item->departureDate = date('d.m.Y', strtotime($flight->getDepartureDate()));
-                        $item->id = time();
-                        Yii::app()->shoppingCart->put($item);*/
                         echo json_encode($flight->getJsonObject());
                     }
                     else
-                        throw new CHttpException(404, 'Can\'t found item inside cache key:'.$key.' searchId:'.$searchId);
+                        throw new CHttpException(404, 'Can\'t found item inside cache key:' . $key . ' searchId:' . $searchId);
                     break;
                 case Hotel::TYPE:
                     /** @var $hotel Hotel */
@@ -114,10 +109,7 @@ class BasketController extends Controller
                     {
                         //$needPosition = new HotelTripElement();
                         $needPosition->hotel = $hotel;
-
-
-                        Yii::app()->shoppingCart->update($needPosition,1);
-
+                        Yii::app()->shoppingCart->update($needPosition, 1);
                         echo json_encode($hotel->getJsonObject());
                     }
                     else
@@ -135,21 +127,22 @@ class BasketController extends Controller
 
     public function actionShow()
     {
-        echo Yii::app()->order->getPositions();
+        $dataProvider = new TripDataProvider();
+        echo $dataProvider->getSortedCartItemsAsJson();
     }
 
     public function actionSave($name)
     {
-        $order = new OrderComponent;
-        $order->create($name);
+        $tripStorage = new TripStorage();
+        $tripStorage->saveOrder($name);
     }
 
     public function actionClear()
     {
         Yii::app()->shoppingCart->clear();
         if (!Yii::app()->request->isAjaxRequest)
-           $this->redirect('/tour/constructor/new');
+            $this->redirect('/tour/constructor/new');
         else
-           $this->actionShow();
+            $this->actionShow();
     }
 }

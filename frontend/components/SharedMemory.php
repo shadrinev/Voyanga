@@ -101,8 +101,6 @@ class SharedMemory extends Component
         $file = fopen($this->fileName, 'a');
         $size = $this->offsetWrite - $this->startData;
         $value = shmop_read($this->shmId, $this->startData, $size);
-/*        echo $this->startData.":::";
-        echo $value;*/
         fwrite($file, $value);
         fclose($file);
         chmod($this->fileName, 0777);

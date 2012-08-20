@@ -7,18 +7,19 @@
  */
 class FlightTripElement extends TripElement
 {
-    public $type = self::TYPE_FLIGHT;
-
-    private $_id;
+    /** @var FlightVoyage */
+    public $flightVoyage;
 
     public $departureDate;
     public $departureCity;
     public $arrivalCity;
-    public $groupId;
     public $adultCount;
     public $childCount;
     public $infantCount;
     public $flightBookerId;
+
+    private $_id;
+    private $groupId;
 
     public function rules()
     {
@@ -27,8 +28,6 @@ class FlightTripElement extends TripElement
         );
     }
 
-    /** @var FlightVoyage */
-    public $flightVoyage;
 
     public function attributeNames()
     {
@@ -56,6 +55,11 @@ class FlightTripElement extends TripElement
         if($this->flightVoyage)
             return $this->flightVoyage->getId();
         return $this->groupId;
+    }
+
+    public function setGroupId($val)
+    {
+        $this->groupId = $val;
     }
 
     public function saveToOrderDb()
@@ -151,5 +155,25 @@ class FlightTripElement extends TripElement
     public function getWeight()
     {
         return 1;
+    }
+
+    public function getType()
+    {
+        return 'Flight';
+    }
+
+    public function prepareForFrontend()
+    {
+        return FlightTripElementFrontendProcessor::prepareInfoForTab($this);
+    }
+
+    public function addGroupedInfo($preparedFlight)
+    {
+        return FlightTripElementFrontendProcessor::addGroupedInfoToTab($preparedFlight, $this);
+    }
+
+    public function createTripElementWorkflow()
+    {
+        return new FlightTripElementWorkflow($this);
     }
 }
