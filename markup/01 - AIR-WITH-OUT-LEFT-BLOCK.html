@@ -13,10 +13,9 @@
 	
 <script type="text/javascript" src="js/resize-new.js"></script>
 <script type="text/javascript" src="js/slide-mode.js"></script>
-<script type="text/javascript" src="js/panel.js"></script>
-
 <script type="text/javascript" src="js/popup.js"></script>
 <script type="text/javascript" src="js/tickets.js"></script>
+<script type="text/javascript" src="js/panel.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 
 
@@ -348,7 +347,7 @@
 					</div>
 					<div class="details-selecte">
 						<div class="details">
-							<a href="#">Подробнее<br> о перелете</a>
+							<a class="tuda-obratno" href="#">Подробнее<br> о перелете</a>
 						</div>
 						<a href="#" class="btn-cost">
 							<span class="l"></span>
@@ -500,7 +499,7 @@
 			<div class="ticket-content">
 				<h2>Все результаты</h2>
 				<div class="order-div">
-					Сортировать по:  <a href="#">цене</a>  <a href="#">времени вылета</a>  <a href="#">времени прилета</a>
+					Сортировать по:  <a href="#" class="order-show">цене</a>  <a href="#start" class="order-hide">времени вылета</a>  <a href="#start" class="order-hide">времени прилета</a>
 				</div>
 				<div class="clear"></div>
 				<div class="ticket-items">
@@ -738,7 +737,7 @@
 								<span class="rur">o</span>
 							</a>
 						</div>
-							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+							<a class="details tuda-wait" href="#">Подробнее <span>о перелете</span></a>
 					</div>
 					<!-- END BUY TICKET -->
 					<div class="clear"></div>
@@ -820,7 +819,7 @@
 								<span class="rur">o</span>
 							</a>
 						</div>
-							<a href="#" class="details">Подробнее <span>о перелете</span></a>
+							<a class="details tuda" href="#">Подробнее <span>о перелете</span></a>
 					</div>
 					<!-- END BUY TICKET -->
 					<div class="clear"></div>
@@ -1758,6 +1757,494 @@
 		<div class="clear"></div>
 	</div>
 	<!-- END ALL CONTENT -->
+</div>
+
+
+
+
+
+<!-- ==== POPUP === -->
+<div id="tuda-obratno" style="display: none;">
+	<div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
+	
+		<div class="top-head-tickets">
+			<div class="date">
+				19 мая, Пн
+			</div>
+			<h3>Туда</h3>
+			<div class="other-time">
+				<div class="variation">
+					<ul class="minimize">
+						<li>
+							Варианты вылета:
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name01" checked="checked">
+							<label for="name01"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li class="active">
+							<input type="radio" name="radio01" id="name03" checked="checked">
+							<label for="name03"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<div class="content">
+			<div class="start-path">
+				<div class="information">
+					<div class="start-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+					<div class="time-fly">
+						<div class="icon wait"></div>
+						<div class="info">
+							Перелет продлится 1 ч. 50 м.
+						</div>
+					</div>
+					<div class="finish-fly no-way">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+				</div>
+				<div class="aviacompany">
+					<img src="images/FV_FNM_20120711.png"><br>
+					AZW1545
+				</div>
+			</div>
+			<div class="transitum">
+				Пересадка: между рейсами 1 ч. 30 м.
+			</div>
+			<div class="end-path">
+				<div class="information">
+					<div class="start-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+					<div class="time-fly">
+						<div class="icon wait"></div>
+						<div class="info">
+							Перелет продлится 1 ч. 50 м.
+						</div>
+					</div>
+					<div class="finish-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+				</div>
+				<div class="aviacompany">
+					<img src="images/FV_FNM_20120711.png"><br>
+					AZW1545
+				</div>
+			</div>
+		</div>
+		<div class="middle-head-tickets">
+			<div class="date">
+				19 мая, Пн
+			</div>
+			<h3>Обратно</h3>
+			<div class="other-time">
+				<div class="variation">
+					<ul class="minimize">
+						<li>
+							Варианты вылета:
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name01" checked="checked">
+							<label for="name01"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li class="active">
+							<input type="radio" name="radio01" id="name03" checked="checked">
+							<label for="name03"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="start-path">
+				<div class="information">
+					<div class="start-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+					<div class="time-fly">
+						<div class="icon wait"></div>
+						<div class="info">
+							Перелет продлится 1 ч. 50 м.
+						</div>
+					</div>
+					<div class="finish-fly no-way">
+						<div class="time">
+							11:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+				</div>
+				<div class="aviacompany">
+					<img src="images/FV_FNM_20120711.png"><br>
+					AZW1545
+				</div>
+			</div>
+			<div class="transitum">
+				Пересадка: между рейсами 1 ч. 30 м.
+			</div>
+			<div class="end-path">
+				<div class="information">
+					<div class="start-fly">
+						<div class="time">
+							12:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+					<div class="time-fly">
+						<div class="icon wait"></div>
+						<div class="info">
+							Перелет продлится 1 ч. 50 м.
+						</div>
+					</div>
+					<div class="finish-fly">
+						<div class="time">
+							15:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+				</div>
+				<div class="aviacompany">
+					<img src="images/FV_FNM_20120711.png"><br>
+					AZW1545
+				</div>
+			</div>
+		</div>
+		<hr class="lines">
+		<div class="yes">
+			<span style="color:#2e333b;" class="f14 bold">Оформить</span>
+			<a class="btn-order" href="#">		
+					<span class="cost">63 502</span> <span class="rur f26">o</span>
+				</a>
+		</div>
+	</div>
+</div>
+<div id="tuda" style="display: none;">
+	<div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
+	
+		<div class="top-head-tickets">
+			<div class="date">
+				19 мая, Пн
+			</div>
+			<h3>Туда</h3>
+			<div class="other-time">
+				<div class="variation">
+					<ul class="minimize">
+						<li>
+							Варианты вылета:
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name01" checked="checked">
+							<label for="name01"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li class="active">
+							<input type="radio" name="radio01" id="name03" checked="checked">
+							<label for="name03"><span>06:10</span></label>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<div class="content">
+			<div class="start-path">
+				<div class="information">
+					<div class="start-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+					<div class="time-fly">
+						<div class="icon wait"></div>
+						<div class="info">
+							Перелет продлится 1 ч. 50 м.
+						</div>
+					</div>
+					<div class="finish-fly">
+						<div class="time">
+							11:50
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Москва,</span> <span class="airport">Домодедово</span>
+						</div>
+					</div>
+				</div>
+				<div class="aviacompany">
+					<img src="images/FV_FNM_20120711.png"><br>
+					AZW1545
+				</div>
+			</div>
+		</div>
+		<hr class="lines">
+		<div class="yes">
+			<span style="color:#2e333b;" class="f14 bold">Оформить</span>
+			<a class="btn-order" href="#">		
+					<span class="cost">63 502</span> <span class="rur f26">o</span>
+				</a>
+		</div>
+	</div>
+</div>
+<div id="tuda-wait" style="display: none;">
+	<div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
+	
+		<div class="top-head-tickets">
+			<div class="date">
+				19 мая, Пн
+			</div>
+			<h3>Туда</h3>
+			<div class="other-time">
+				<div class="variation">
+					<ul class="minimize">
+						<li>
+							Варианты вылета:
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name01" checked="checked">
+							<label for="name01"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+						<li class="active">
+							<input type="radio" name="radio01" id="name03" checked="checked">
+							<label for="name03"><span>06:10</span></label>
+						</li>
+						<li>
+							<input type="radio" name="radio01" id="name02" checked="checked">
+							<label for="name02"><span>06:10</span></label>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="start-path">
+				<div class="information">
+					<div class="start-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+					<div class="time-fly">
+						<div class="icon wait"></div>
+						<div class="info">
+							Перелет продлится 1 ч. 50 м.
+						</div>
+					</div>
+					<div class="finish-fly no-way">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+				</div>
+				<div class="aviacompany">
+					<img src="images/FV_FNM_20120711.png"><br>
+					AZW1545
+				</div>
+			</div>
+			<div class="transitum">
+				Пересадка: между рейсами 1 ч. 30 м.
+			</div>
+			<div class="mid-path">
+				<div class="information">
+					<div class="start-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+					<div class="time-fly">
+						<div class="icon wait"></div>
+						<div class="info">
+							Перелет продлится 1 ч. 50 м.
+						</div>
+					</div>
+					<div class="finish-fly no-way">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+				</div>
+				<div class="aviacompany">
+					<img src="images/FV_FNM_20120711.png"><br>
+					AZW1545
+				</div>
+			</div>
+			<div class="transitum">
+				Пересадка: между рейсами 1 ч. 30 м.
+			</div>
+			<div class="end-path">
+				<div class="information">
+					<div class="start-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+					<div class="time-fly">
+						<div class="icon wait"></div>
+						<div class="info">
+							Перелет продлится 1 ч. 50 м.
+						</div>
+					</div>
+					<div class="finish-fly">
+						<div class="time">
+							9:40
+						</div>
+						<div class="icon jet"></div>
+						<div class="place">
+							<span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+						</div>
+					</div>
+				</div>
+				<div class="aviacompany">
+					<img src="images/FV_FNM_20120711.png"><br>
+					AZW1545
+				</div>
+			</div>
+		</div>
+		<hr class="lines">
+		<div class="yes">
+			<span style="color:#2e333b;" class="f14 bold">Оформить</span>
+			<a class="btn-order" href="#">		
+					<span class="cost">63 502</span> <span class="rur f26">o</span>
+				</a>
+		</div>
+	</div>
 </div>
 </body>
 </html>
