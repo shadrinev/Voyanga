@@ -1,0 +1,537 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Voyanga v.0.1 - Trip Flight Rework</title>
+<link href="css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
+
+<script type="text/javascript" src="js/resize.js"></script>
+<script type="text/javascript" src="js/slide-mode.js"></script>
+<script type="text/javascript" src="js/filter.js"></script>
+<script type="text/javascript" src="js/hotel.js"></script>
+<!--[if lte IE 8]>
+    <link href="css/main_ie.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/curvycorners.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+<div class="wrapper">
+	<!-- HEAD -->
+	<div class="head">
+		<div class="center-block">
+			<a href="/" class="logo">Voyanga</a>
+			<a href="/" class="about">О проекте</a>
+			
+			<div id="telefon">
+				<img src="images/tel.png">
+			</div>
+				
+			<div class="slide-turn-mode">
+				<div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
+				<div class="bg-mask"></div>
+				
+				<div class="planner active btn"><a href="#">Планировщик</a></div>
+				<div class="aviatickets btn"><a href="#">Авиабилеты</a></div>
+				<div class="hotel btn"><a href="#">Отели</a></div>
+				<div class="finish-stages btn"><a href="#">Готовые туры</a></div>
+				</ul>
+			</div>
+			
+			<div class="login-window full">
+				<a href="#">
+					<span class="text">Регистрация и вход</span>
+					<span class="point"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- END HEAD -->
+	<div class="sub-head">
+		<div class="center-block">
+			<br>
+			<div class="a">
+				<div class="none">
+					<div>2&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</div>
+				</div>
+			</div>
+			<br><br>
+		</div>
+	</div>	
+	<!-- ALL MAIN -->
+	<div class="center-block">
+
+
+
+		<div class="main-block">
+			
+			<div class="ticket-content hotels">
+				<h1>Выберите отель в Амстердам, 19-26 мая</h1>
+				<h2>Найдено отелей: 43</h2>
+				<div class="order-div">
+					Сортировать по:  <a href="#">цене</a>  <a href="#">времени вылета</a>  <a href="#">времени прилета</a>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="hotels-tickets">
+					<div class="content">
+						<div class="full-info">
+							<div class="preview-photo">
+								<img src="images/pic-hotels-small.png">
+								<div class="how-much">
+									<a href="#">Фотографий (11)</a>
+								</div>
+							</div>
+							<!-- END PREVIEW PHOTO -->
+							<div class="description">
+								<div class="title">
+									<h2>Рэдиссон Соня Отель <span class="gradient"></span></h2>
+									<div class="stars four"></div>
+								</div>
+								<div class="place">
+									<div class="street">Санкт-Петребург. ул. Морская Набережная, 31/2 <span class="gradient"></span></div>
+									<a href="#" class="in-the-map"><span>На карте</span></a>
+								</div>
+								<div class="text">
+									<div class="inner-text">
+									Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном <br> От отеля можно легко добраться до достопримечательностей города и международного аэропорта Пулково. В 5 минутах ходьбы от Никольского собора.								
+									</div>
+									<span class="gradient"></span>
+								</div>
+							</div>
+							<!-- END DESCRIPTION -->
+							<div class="choose-a-hotel">
+								<div class="rating">
+									<span class="value">4,5</span>
+									<span class="text">рейтинг<br>отеля</span>
+								</div>
+								<a href="#" class="btn-cost"><span class="l"></span><span class="text">Выбрать отель</span></a>
+								<a class="details" href="#">Подробнее об отеле</a>
+							</div>
+							<!-- END CHOOSE A HOTEL -->
+							<div class="clear"></div>
+						</div>
+						<!-- END FULL PHOTO -->
+						<div class="details">
+							<ul>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span> <span class="ico-breakfast"></span> Завтрак<br>
+											<span class="text">Двухместный номер люкс</span>  <span class="ico-breakfast"></span> Завтрак
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em">За оба номера</span>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span>
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+							</ul>
+							<div class="tab-ul">
+								<a href="#">Посмотреть все результаты</a>
+							</div>
+							<span class="lv"></span>
+							<span class="rv"></span>
+						</div>
+					</div>
+					<!-- END CONTENT -->
+					<span class="lt"></span>
+					<span class="rt"></span>
+					<span class="lv"></span>
+					<span class="rv"></span>
+					<span class="bh"></span>
+				</div>
+				<div class="hotels-tickets">
+					<div class="content">
+						<div class="full-info">
+							<div class="preview-photo">
+								<img src="images/pic-hotels-small.png">
+								<div class="how-much">
+									<a href="#">Фотографий (11)</a>
+								</div>
+							</div>
+							<!-- END PREVIEW PHOTO -->
+							<div class="description">
+								<div class="title">
+									<h2>Рэдиссон Соня Отель <span class="gradient"></span></h2>
+									<div class="stars four"></div>
+								</div>
+								<div class="place">
+									<div class="street">Санкт-Петребург. ул. Морская Набережная, 31/2 <span class="gradient"></span></div>
+									<a href="#" class="in-the-map"><span>На карте</span></a>
+								</div>
+								<div class="text">
+									<div class="inner-text">
+									Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном <br> От отеля можно легко добраться до достопримечательностей города и международного аэропорта Пулково. В 5 минутах ходьбы от Никольского собора.								
+									</div>
+									<span class="gradient"></span>
+								</div>
+							</div>
+							<!-- END DESCRIPTION -->
+							<div class="choose-a-hotel">
+								<div class="rating">
+									<span class="value">4,5</span>
+									<span class="text">рейтинг<br>отеля</span>
+								</div>
+								<a href="#" class="btn-cost"><span class="l"></span><span class="text">Выбрать отель</span></a>
+								<a class="details" href="#">Подробнее об отеле</a>
+							</div>
+							<!-- END CHOOSE A HOTEL -->
+							<div class="clear"></div>
+						</div>
+						<!-- END FULL PHOTO -->
+						<div class="details">
+							<ul>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span> <span class="ico-breakfast"></span> Завтрак<br>
+											<span class="text">Двухместный номер люкс</span>  <span class="ico-breakfast"></span> Завтрак
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em">За оба номера</span>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span>
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+							</ul>
+							<div class="tab-ul">
+								<a href="#">Посмотреть все результаты</a>
+							</div>
+							<span class="lv"></span>
+							<span class="rv"></span>
+						</div>
+					</div>
+					<!-- END CONTENT -->
+					<span class="lt"></span>
+					<span class="rt"></span>
+					<span class="lv"></span>
+					<span class="rv"></span>
+					<span class="bh"></span>
+				</div>
+				<div class="hotels-tickets">
+					<div class="content">
+						<div class="full-info">
+							<div class="preview-photo">
+								<img src="images/pic-hotels-small.png">
+								<div class="how-much">
+									<a href="#">Фотографий (11)</a>
+								</div>
+							</div>
+							<!-- END PREVIEW PHOTO -->
+							<div class="description">
+								<div class="title">
+									<h2>Рэдиссон Соня Отель <span class="gradient"></span></h2>
+									<div class="stars four"></div>
+								</div>
+								<div class="place">
+									<div class="street">Санкт-Петребург. ул. Морская Набережная, 31/2 <span class="gradient"></span></div>
+									<a href="#" class="in-the-map"><span>На карте</span></a>
+								</div>
+								<div class="text">
+									<div class="inner-text">
+									Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном <br> От отеля можно легко добраться до достопримечательностей города и международного аэропорта Пулково. В 5 минутах ходьбы от Никольского собора.								
+									</div>
+									<span class="gradient"></span>
+								</div>
+							</div>
+							<!-- END DESCRIPTION -->
+							<div class="choose-a-hotel">
+								<div class="rating">
+									<span class="value">4,5</span>
+									<span class="text">рейтинг<br>отеля</span>
+								</div>
+								<a href="#" class="btn-cost"><span class="l"></span><span class="text">Выбрать отель</span></a>
+								<a class="details" href="#">Подробнее об отеле</a>
+							</div>
+							<!-- END CHOOSE A HOTEL -->
+							<div class="clear"></div>
+						</div>
+						<!-- END FULL PHOTO -->
+						<div class="details">
+							<ul>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span> <span class="ico-breakfast"></span> Завтрак<br>
+											<span class="text">Двухместный номер люкс</span>  <span class="ico-breakfast"></span> Завтрак
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em">За оба номера</span>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span>
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+							</ul>
+							<div class="tab-ul">
+								<a href="#">Посмотреть все результаты</a>
+							</div>
+							<span class="lv"></span>
+							<span class="rv"></span>
+						</div>
+					</div>
+					<!-- END CONTENT -->
+					<span class="lt"></span>
+					<span class="rt"></span>
+					<span class="lv"></span>
+					<span class="rv"></span>
+					<span class="bh"></span>
+				</div>
+				<div class="hotels-tickets">
+					<div class="content">
+						<div class="full-info">
+							<div class="preview-photo">
+								<img src="images/pic-hotels-small.png">
+								<div class="how-much">
+									<a href="#">Фотографий (11)</a>
+								</div>
+							</div>
+							<!-- END PREVIEW PHOTO -->
+							<div class="description">
+								<div class="title">
+									<h2>Рэдиссон Соня Отель <span class="gradient"></span></h2>
+									<div class="stars four"></div>
+								</div>
+								<div class="place">
+									<div class="street">Санкт-Петребург. ул. Морская Набережная, 31/2 <span class="gradient"></span></div>
+									<a href="#" class="in-the-map"><span>На карте</span></a>
+								</div>
+								<div class="text">
+									<div class="inner-text">
+									Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном <br> От отеля можно легко добраться до достопримечательностей города и международного аэропорта Пулково. В 5 минутах ходьбы от Никольского собора.								
+									</div>
+									<span class="gradient"></span>
+								</div>
+							</div>
+							<!-- END DESCRIPTION -->
+							<div class="choose-a-hotel">
+								<div class="rating">
+									<span class="value">4,5</span>
+									<span class="text">рейтинг<br>отеля</span>
+								</div>
+								<a href="#" class="btn-cost"><span class="l"></span><span class="text">Выбрать отель</span></a>
+								<a class="details" href="#">Подробнее об отеле</a>
+							</div>
+							<!-- END CHOOSE A HOTEL -->
+							<div class="clear"></div>
+						</div>
+						<!-- END FULL PHOTO -->
+						<div class="details">
+							<ul>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span> <span class="ico-breakfast"></span> Завтрак<br>
+											<span class="text">Двухместный номер люкс</span>  <span class="ico-breakfast"></span> Завтрак
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em">За оба номера</span>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span>
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+							</ul>
+							<div class="tab-ul">
+								<a href="#">Посмотреть все результаты</a>
+							</div>
+							<span class="lv"></span>
+							<span class="rv"></span>
+						</div>
+					</div>
+					<!-- END CONTENT -->
+					<span class="lt"></span>
+					<span class="rt"></span>
+					<span class="lv"></span>
+					<span class="rv"></span>
+					<span class="bh"></span>
+				</div>
+				<div class="hotels-tickets">
+					<div class="content">
+						<div class="full-info">
+							<div class="preview-photo">
+								<img src="images/pic-hotels-small.png">
+								<div class="how-much">
+									<a href="#">Фотографий (11)</a>
+								</div>
+							</div>
+							<!-- END PREVIEW PHOTO -->
+							<div class="description">
+								<div class="title">
+									<h2>Рэдиссон Соня Отель <span class="gradient"></span></h2>
+									<div class="stars four"></div>
+								</div>
+								<div class="place">
+									<div class="street">Санкт-Петребург. ул. Морская Набережная, 31/2 <span class="gradient"></span></div>
+									<a href="#" class="in-the-map"><span>На карте</span></a>
+								</div>
+								<div class="text">
+									<div class="inner-text">
+									Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном <br> От отеля можно легко добраться до достопримечательностей города и международного аэропорта Пулково. В 5 минутах ходьбы от Никольского собора.								
+									</div>
+									<span class="gradient"></span>
+								</div>
+							</div>
+							<!-- END DESCRIPTION -->
+							<div class="choose-a-hotel">
+								<div class="rating">
+									<span class="value">4,5</span>
+									<span class="text">рейтинг<br>отеля</span>
+								</div>
+								<a href="#" class="btn-cost"><span class="l"></span><span class="text">Выбрать отель</span></a>
+								<a class="details" href="#">Подробнее об отеле</a>
+							</div>
+							<!-- END CHOOSE A HOTEL -->
+							<div class="clear"></div>
+						</div>
+						<!-- END FULL PHOTO -->
+						<div class="details">
+							<ul>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span> <span class="ico-breakfast"></span> Завтрак<br>
+											<span class="text">Двухместный номер люкс</span>  <span class="ico-breakfast"></span> Завтрак
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em">За оба номера</span>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+								<li>
+									<div class="items">
+										<div class="float">
+											<span class="text">Стандартный двухместный номер</span>
+										</div>
+										<div class="how-cost">
+											<span class="cost">14 200</span><span class="rur f21">o</span> / ночь
+										</div>
+										<div class="clear"></div>
+									</div>
+								</li>
+							</ul>
+							<div class="tab-ul">
+								<a href="#">Посмотреть все результаты</a>
+							</div>
+							<span class="lv"></span>
+							<span class="rv"></span>
+						</div>
+					</div>
+					<!-- END CONTENT -->
+					<span class="lt"></span>
+					<span class="rt"></span>
+					<span class="lv"></span>
+					<span class="rv"></span>
+					<span class="bh"></span>
+				</div>
+				
+			</div>
+			<!-- END TICKET CONTENT -->
+		</div>
+		<div class="filter-block">
+			
+			<div class="filter-content">
+				
+				<div class="slide-filter">
+					<img src="images/img-filter-slide01.png">
+				</div>
+				
+				<div class="div-filter">
+
+					<div class="slider-filter">
+						<img src="images/img-filter-slide02.png">
+					</div>	
+	
+					<div class="checkbox"></div> Только короткие пересадки
+					
+				</div>
+				<div class="div-filter">
+					<h4>Время вылета</h4>
+					<div class="slide-filter">
+						<img src="images/img-slide-time01.png">
+					</div>
+					<h4>Время прилета</h4>
+					<div class="slide">
+						<img src="images/img-slide-time02.png">
+					</div>
+				</div>
+				
+				<div class="div-filter">
+					<h4>Москва</h4>
+					<ul>
+						<li><div class="checkbox"></div> Шереметьево</li>
+						<li><div class="checkbox"></div> Внуково-1</li>
+						<li><div class="checkbox"></div> Внуково-2</li>
+					</ul>
+				</div>
+				<div class="div-filter">
+					<h4>Москва <a href="#">Очистить</a></h4>
+					<ul>
+						<li><div class="checkbox"></div> Аэрофлот</li>
+						<li><div class="checkbox"></div> Air Berlin</li>
+						<li><div class="checkbox"></div> Вооруженные силы РФ</li>
+					</ul>
+					<div class="all-list">
+						<a href="#">Все авиакомпании</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!-- END -->
+		<div class="clear"></div>
+	</div>	
+	
+</div>
+
+
+</body>
+</html>
