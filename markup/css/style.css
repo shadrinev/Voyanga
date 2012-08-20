@@ -31,6 +31,7 @@
 }
 #content {
 	padding-top: 35px;
+	padding-bottom: 5px;
 }
 /* LOGO */
 .head .center-block .logo {
@@ -1124,4 +1125,142 @@
 .service-in-hotel ul li .ico-dog,
 .service-in-room ul li .ico-wi-fi, 
 .service-in-room ul li .ico-glass, 
-.service-in-room ul li .ico-dog  {margin-right: 7px; vertical-align: middle;}
+.service-in-room ul li .ico-dog  {
+	margin-right: 7px; vertical-align: middle;
+}
+.info-trip {
+	padding-left: 11px;
+}
+.info-trip .date-trip {
+	font-size: 15px;
+	color: #1d222b;
+	line-height: 22px;
+	margin: 0px 0px 7px 0px;
+}
+.info-trip h2 {
+	color: #1d222b;
+	font-size: 24px;
+	text-shadow: 0px 1px 0px #FFF;
+	line-height: 22px;
+	margin-bottom: 18px;
+}
+.info-trip h3 {
+	color: #4b525c;
+	font-size: 18px;
+	margin: 0px 0px 7px 0px;
+	text-shadow: 0px 1px 0px #FFF;
+	line-height: 18px;
+	margin-bottom: 13px;
+}
+.block-trip {
+	background: #FFF;
+	padding: 10px;
+	border-radius: 6px;
+	box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2);
+	-moz-box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2); /* Для Firefox */
+    -webkit-box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2); /* Для Safari и Chrome */
+    margin-bottom: 25px;
+    color: #535353;
+}
+.block-trip table {
+	width: 100%;
+}
+.block-trip table .button {
+	vertical-align: middle;
+	width: 250px;
+	text-align: right;
+}
+.button .btn-cost .cost {
+	font-size: 24px;
+}
+.button > .btn-cost {
+	padding-left: 6px;
+	padding-right: 10px;
+}
+.button > .btn-cost .text {
+    display: block;
+    float: left;
+    margin-right: 3px;
+    margin-top: -1px;
+    position: relative;
+    z-index: 100;
+}
+.block-trip table ul li {
+	margin-bottom: 3px;
+	margin-top: 3px;
+}
+.block-trip table .name ul li span.text {
+	color: #2174a3;
+	text-shadow: 0px 1px 0px #FFF;
+	font-weight: bold;
+	font-size: 16px;
+	margin-right: 10px;	
+}
+.block-trip table .name a {
+	border-bottom: 1px dashed;
+	font-size: 11px;
+	line-height: 16px;
+}
+.block-trip table .name div.items {
+	border-right: 1px solid #b6bcc4;
+	border-bottom: 1px solid #b6bcc4;
+	padding-bottom: 7px;
+	padding-left: 10px;
+	margin-left: -10px;
+	padding-top: 15px;
+	margin-top: -10px;
+	position: relative;
+}
+.block-trip table .name div.items:last-child {
+	margin-bottom: -10px; border-bottom: none;
+}
+.change-people {
+	position: absolute; right: 10px; top:20px;
+	width: 53px; height: 24px;
+	overflow: hidden;
+}
+.change-people .minus {
+	float: left;
+	cursor: pointer;
+	width: 14px;
+	height: 24px;
+	background: url(../images/slice.png) no-repeat 0px -1200px;
+}
+.change-people .value {
+	background: url(../images/slice.png) no-repeat -13px -1200px;
+	width: 24px;
+	height: 24px;
+	float: left;
+	overflow: hidden;
+}
+.change-people .value input {
+	border: none;
+	text-align: center;
+	font-size: 14px;
+	line-height: 16px;
+	color: #0f0f10;
+	font-weight: bold;
+	width: 23px;
+	background: none;
+}
+
+@-moz-document url-prefix() {
+	.change-people .value input {
+		border: none;
+		text-align: center;
+		font-size: 15px;
+		line-height: 20px;
+		color: #0f0f10;
+		font-weight: bold;
+		width: 26px;
+		background: none;
+	}
+}
+.change-people .plus {
+	float: left;
+	cursor: pointer;
+	width: 14px;
+	height: 24px;
+	background: url(../images/slice.png) no-repeat -37px -1200px;
+}
+
