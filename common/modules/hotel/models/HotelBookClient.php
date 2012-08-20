@@ -1271,12 +1271,12 @@ class HotelBookClient
         $hotelOrderConfirmResponse->error = 0;
         if (isset($responseObject->Errors->Error))
         {
-            throw new CException('Internal hotelBook error: '.CVarDumper::dumpAsString($responseObject->Errors));
+            throw new CException('Internal confirmOrder hotelBook error: '.CVarDumper::dumpAsString($responseObject->Errors));
         }
         return $hotelOrderConfirmResponse;
     }
 
-    public function OrderInfo($orderId)
+    public function orderInfo($orderId)
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
@@ -1292,9 +1292,8 @@ class HotelBookClient
         $hotelOrderConfirmResponse->error = 0;
         if (isset($responseObject->Errors->Error))
         {
-            $hotelOrderConfirmResponse->error = 1;
+            throw new CException('Internal orderInfo hotelBook error: '.CVarDumper::dumpAsString($responseObject->Errors));
         }
-
         return $hotelOrderConfirmResponse;
     }
 
@@ -1303,8 +1302,6 @@ class HotelBookClient
         if (!$this->isSynchronized)
         {
             self::$lastRequestMethod = 'unixtime';
-
-
             $diff = Yii::app()->cache->get('hotelbookDifferenceTimestamp');
             if ($diff === false)
             {
@@ -1318,8 +1315,5 @@ class HotelBookClient
             }
             $this->isSynchronized = true;
         }
-
-        //echo "ts:{$unixtime} NN:".date("Y-m-d H:i:s",$unixtime).' NFT:'.date("Y-m-d H:i:s").' NCC:'.date("Y-m-d H:i:s",(time() + $this->differenceTimestamp));
-
     }
 }
