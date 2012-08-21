@@ -139,7 +139,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageWaitingForPayment()
     {
-        $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
+        $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'flightbooking','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
         if($res)
         {
             $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
@@ -170,7 +170,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageStartPayment()
     {
-        $res = Yii::app()->cron->add(time() + appParams('time_for_payment'), 'FlightBooker', 'ChangeState', array('flightBookerId' => $this->flightBooker->id, 'newState' => 'waitingForPayment'));
+        $res = Yii::app()->cron->add(time() + appParams('time_for_payment'), 'flightbooking', 'ChangeState', array('flightBookerId' => $this->flightBooker->id, 'newState' => 'waitingForPayment'));
         if ($res)
         {
             $this->flightBooker->saveTaskInfo('paymentTimeLimit', $res);
@@ -254,7 +254,7 @@ class FlightBookerComponent extends CApplicationComponent
             else
             {
                 //TODO: переставить стутус через время T + считать количество раз.
-                $res = Yii::app()->cron->add(time() + appParams('flight_repeat_time'), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'ticketingRepeat'));
+                $res = Yii::app()->cron->add(time() + appParams('flight_repeat_time'), 'flightbooking','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'ticketingRepeat'));
                 if($res)
                 {
                     $this->flightBooker->saveTaskInfo('ticketingRepeat',$res);
