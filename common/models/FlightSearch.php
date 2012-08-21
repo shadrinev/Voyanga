@@ -21,6 +21,10 @@ class FlightSearch extends CModel implements IStatisticItem
     public $flightVoyageStack;
     private $_routes;
 
+    public function __construct()
+    {
+        $this->attachBehaviors($this->behaviors());
+    }
 
     public function behaviors()
     {
@@ -64,7 +68,7 @@ class FlightSearch extends CModel implements IStatisticItem
                 else
                     $this->status = FlightSearch::STATUS_ERROR;
 
-                //$this->saveStatistic();
+                $this->saveStatistic();
 
                 if ($this->flightVoyageStack)
                 {
@@ -94,6 +98,7 @@ class FlightSearch extends CModel implements IStatisticItem
         }
     }
 
+
     public function getRoutes()
     {
         return $this->_routes;
@@ -104,13 +109,17 @@ class FlightSearch extends CModel implements IStatisticItem
         return $route->attributes;
     }
 
+    public function getId()
+    {
+        return $this->key;
+    }
+
     public function getStatisticData()
     {
         $id = uniqid();
         $rows = array();
         foreach ($this->_routes as $route)
         {
-            $element = array();
             $element = $this->createRow($route);
             $element['isComplex'] = sizeof($this->_routes)>1;
             $element['searchId'] = $id;

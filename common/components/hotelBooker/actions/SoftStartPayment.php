@@ -13,7 +13,7 @@ class SoftStartPayment extends StageAction
         //TODO: need testing possibility go to state startPaymentAction
         $payments = Yii::app()->payments;
         $booker = Yii::app()->hotelBooker->getCurrent();
-        $bill = $payments->getBillForHotelBooker($booker);
+        $bill = $payments->getBillForBooker($booker);
         if($bill->transactionId)
         {
             Yii::app()->payments->updateBillStatus($bill);
@@ -32,9 +32,8 @@ class SoftStartPayment extends StageAction
                 return;
             }
         }
-        $params = $bill->params;
-        //! FIXME
-        //        $params['ReturnUrl'] = $this->controller->createAbsoluteUrl('/booking/hotel/buy/', Array('key'=>$booker->hotel->id));
+        $params = $payments->getParamsForBillAndBooker($bill, $booker);
+        //        $params['ReturnUrl'] = 'http://ya.ru';// $this->controller->createAbsoluteUrl('/booking/hotel/buy/', Array('key'=>$booker->hotel->id));
         $context = Array('paymentUrl'=>$bill->paymentUrl
                          ,'params'=>$params);
         $this->getController()->render('hotelBooker.views.payment_form', $context);

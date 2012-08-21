@@ -5,7 +5,7 @@
  * Date: 28.05.12
  * Time: 16:21
  */
-class Statisticable extends CActiveRecordBehavior
+class Statisticable extends CBehavior
 {
     private $_modelName;
     private $_modelId;
@@ -60,7 +60,7 @@ class Statisticable extends CActiveRecordBehavior
     private function getModelId()
     {
         if ($this->_modelId==null)
-            $this->_modelId=$this->getOwner()->getPrimaryKey();
+            $this->_modelId=$this->getOwner()->getId();
         return $this->_modelId;
     }
 }

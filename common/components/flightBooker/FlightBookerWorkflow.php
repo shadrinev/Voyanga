@@ -9,7 +9,7 @@ return array(
         array('id'=>'startPayment',             'transition'=>'ticketing,bookingTimeLimitError,waitingForPayment'),
         array('id'=>'bookingTimeLimitError',    'transition'=>'bookingTimeLimitError,error'),
         array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat'),
-        array('id'=>'ticketReady',              'transition'=>'bspTransfer, done'),
+        array('id'=>'ticketReady',              'transition'=>'confirmMoney, done'),
         array('id'=>'ticketingRepeat',          'transition'=>'ticketingRepeat,ticketingError,ticketReady,manualProcessing'),
         array('id'=>'manualProcessing',         'transition'=>'ticketingError,manualTicketing'),
         array('id'=>'manualTicketing',          'transition'=>'manualSuccess,manualError'),
@@ -17,7 +17,7 @@ return array(
         array('id'=>'manualError',              'transition'=>'moneyReturn'),
         array('id'=>'moneyReturn',              'transition'=>'error'),
         array('id'=>'manualSuccess',            'transition'=>'done'),
-        array('id'=>'bspTransfer',              'transition'=>'done'),
+        array('id'=>'confirmMoney',             'transition'=>'done'),
         array('id'=>'done'),
         array('id'=>'error')
     )

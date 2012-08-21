@@ -247,14 +247,6 @@ class SiteController extends FrontendController
             }
 
             $form->attributes = $model->attributes;
-            /*$flightSearchParams->addRoute(array(
-                'adult_count' => 1,
-                'child_count' => 0,
-                'infant_count' => 0,
-                'departure_city_id' => 4381,
-                'arrival_city_id' => 4931,
-                'departure_date' => '30.05.2012'
-            ));*/
             $flightSearchParams->flight_class = 'E';
             //$nemo->FlightTariffRules();
             $fs = new FlightSearch();
