@@ -137,6 +137,7 @@ class FlightBookerComponent extends CApplicationComponent
         }
     }
 
+    //! FIXME: We already have action for this, no ?
     public function stageWaitingForPayment()
     {
         $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'FlightBooker','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
@@ -170,12 +171,13 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageStartPayment()
     {
-        $res = Yii::app()->cron->add(time() + appParams('time_for_payment'), 'FlightBooker', 'ChangeState', array('flightBookerId' => $this->flightBooker->id, 'newState' => 'waitingForPayment'));
+        //! FIXME: do how badly we need this ?
+        /*        $res = Yii::app()->cron->add(time() + appParams('time_for_payment'), 'FlightBooker', 'ChangeState', array('flightBookerId' => $this->flightBooker->id, 'newState' => 'waitingForPayment'));
         if ($res)
         {
             $this->flightBooker->saveTaskInfo('paymentTimeLimit', $res);
             return true;
-        }
+            }*/
     }
 
     public function stageTicketing()
@@ -296,9 +298,9 @@ class FlightBookerComponent extends CApplicationComponent
         $this->status('done');
     }
 
-    public function stageBspTransfer()
+    public function stageConfirmMoney()
     {
-        //TODO: send money to BSP gate
+        Yii::app()->payments->confirm($bill);
     }
 
     public function stageDone()

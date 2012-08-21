@@ -23,6 +23,10 @@ class FlightController extends FrontendController
             'stageWaitingForPayment' => array(
                 'class' => 'common.components.flightBooker.actions.FlightWaitingForPaymentAction',
             ),
+            'stageStartPayment' => array(
+                'class' => 'common.components.flightBooker.actions.StartPaymentAction',
+            ),
+
         );
     }
 
@@ -51,14 +55,6 @@ class FlightController extends FrontendController
             'fromCityName'=>$fromCityName,
             'toCityName'=>$toCityName
         ));
-    }
-
-    public function stagePayment()
-    {
-        if (isset($_POST['submit']))
-            Yii::app()->flightBooker->status('ticketing');
-        else
-            $this->render('payment');
     }
 
     public function generateItems()
