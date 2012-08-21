@@ -7,12 +7,17 @@
  */
 class SearchController extends Controller
 {
+    const PAGE_SIZE = 100;
+
     public function actionFlight()
     {
         $report = new AmountOfFlightSearch;
         $model = ReportExecuter::run($report);
         $dataProvider = new EMongoDocumentDataProvider($model, array(
-            'keyField' => 'primaryKey'
+            'keyField' => 'primaryKey',
+            'pagination' => array(
+                'pageSize' => self::PAGE_SIZE
+            )
         ));
         $this->render('flight', array('dataProvider'=>$dataProvider));
     }

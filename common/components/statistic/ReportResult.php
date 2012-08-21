@@ -59,10 +59,7 @@ abstract class ReportResult extends EMongoDocument
         }
 
         $this->setDbCriteria($criteria);
-
         $provider = new EMongoDocumentDataProvider($this, $config);
-        //VarDumper::dump($config);
-        //VarDumper::dump($provider); die();
         return $provider;
     }
 }

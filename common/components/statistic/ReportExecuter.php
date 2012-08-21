@@ -14,7 +14,6 @@ class ReportExecuter
         foreach ($commands as $stage=>$command)
         {
             $result = $db->command($command);
-            //VarDumper::dump($result);
         }
         return $report->getResult();
     }
