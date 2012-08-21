@@ -1,3 +1,11 @@
+function sliderPhoto(that) {
+	var var_this = $(that);
+	var_this.find('ul').wrap('<div class="slide"></div>');
+	var_this.find('ul li').length;
+}
+$(window).load(function() {
+	sliderPhoto('.photo-slide-hotel');
+});
 function checkUlList() {
 	$('.details').each(function() {
 		console.log($(this).width());

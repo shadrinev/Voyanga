@@ -1,6 +1,7 @@
 var var_marginHowLong = 20;
 var var_marginHowLongSmall = 5;
 var var_paddingDateTime = 15;
+
 function widthHowLong() {
 	$('.date-time-city').each(function() {
 		var var_dataTimeCity = $(this);
@@ -93,7 +94,7 @@ function smallCityName() {
 		if ($('.recommended-ticket .ticket-items').hasClass('small')) {
 			$('.recommended-ticket .ticket-items.small').find('.city').each(function() {
 				var var_smallName = $(this);
-				var var_name = var_smallName.text();
+				var var_name = var_smallName.attr('rel');
 				var_name = var_name.replace(/\s+/g,'');
 				var var_lengthName = var_name.length;
 				if (var_lengthName > var_simbolMax) {

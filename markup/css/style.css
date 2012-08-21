@@ -1128,12 +1128,7 @@
 	overflow: hidden;
 	height: 170px;
 }
-.descr > .left .photo-slide-hotel .slide {
-	overflow: hidden;
-	width: 100%;
-	height: 150px;
-	overflow: hidden;
-}
+
 .descr > .left .descr-text {
 	padding-left: 3px;
 	width: 100%;
@@ -1345,3 +1340,16 @@
 	background: url(../images/slice.png) no-repeat -37px -1200px;
 }
 
+.photo-slide-hotel .slide {
+	overflow: hidden;
+	width: 100%;
+	height: 150px;
+	overflow: hidden;
+}
+.photo-slide-hotel .slide ul {
+	width: 100%;
+}
+.photo-slide-hotel .slide ul li {
+	float: left;
+	margin-right: 1px;
+}
