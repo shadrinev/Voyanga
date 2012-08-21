@@ -25,6 +25,8 @@ class Bill extends CActiveRecord
     const STATUS_PAID = 'PAI';
     const STATUS_FAILED = 'FAI';
 
+    public $channel = 'ecommerce';
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -112,28 +114,10 @@ class Bill extends CActiveRecord
     }
 
 
-    //! FIXME STORE IN DATABASE?
-    private $_channel = 'ecommerce';
 
     //! FIXME MOVE TO COMPONENT
     public function getPaymentUrl()
     {
         return "https://secure.payonlinesystem.com/ru/payment/";
-    }
-
-    public function getParams()
-    {
-        $amount = $this->amount;
-        $params = Yii::app()->payments->getParamsFor($this->channel);
-        $params['Amount'] = sprintf("%.2f" ,$amount);
-        $params['Currency'] = 'RUB';
-        $params['OrderId'] = 'adev-' . $this->id;
-        $params['SecurityKey'] = Yii::app()->payments->getSignatureFor($this->channel, $params);
-        return $params;
-    }
-
-    public function getChannel()
-    {
-        return $this->_channel;
     }
 }

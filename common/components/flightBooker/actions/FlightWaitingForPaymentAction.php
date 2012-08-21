@@ -10,10 +10,11 @@ class FlightWaitingForPaymentAction extends StageAction
 {
     public function execute()
     {
-        $this->getController()->render('flightBooker.views.payment',
-            array(
-
-            )
-        );
+        if(isset($_POST['submit']))
+        {
+            Yii::app()->flightBooker->status('startPayment');
+            return;
+        }
+        $this->getController()->render('flightBooker.views.payment');
     }
 }
