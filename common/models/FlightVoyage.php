@@ -96,7 +96,7 @@ class FlightVoyage extends CApplicationComponent implements IECartPosition, IOrd
 
     public function __construct($oParams)
     {
-        $this->price = ceil($oParams->full_sum);
+        $this->price = $oParams->full_sum;
         $this->taxes = $oParams->commission_price;
         $this->flightKey = $oParams->flight_key;
         $this->commission = $oParams->commission_price;
