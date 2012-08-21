@@ -1,0 +1,18 @@
+.slider-filter { 
+	height: 23px; width: 100%;
+	position: relative;
+	color: #2e333b;
+	margin-bottom: 13px;
+}
+/*--*/
+.slide-filter {
+	margin-bottom: 13px;
+}
+/*--*/
+.checkbox {
+	display: inline-block;
+	background: url(../images/img-checkbox.png) no-repeat 0 0;
+	width: 17px; height: 18px;
+	vertical-align: middle;
+	margin-right: 5px;
+}

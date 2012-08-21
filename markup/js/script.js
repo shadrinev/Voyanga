@@ -38,6 +38,7 @@ $(function() {
 		e.preventDefault();
 		$('.recomended-content').slideUp();
 		$('.minimize-rcomended .btn-minimizeRecomended').animate({top : '0px'}, 500);
+		$(this).fadeOut();
 	});
 	$('.minimize-rcomended .btn-minimizeRecomended').click(function() {
 		$('.recomended-content').slideDown();
@@ -47,6 +48,7 @@ $(function() {
 		otherTimeSlide();
 		widthHowLong();
 		setTimeout(smallTicketHeight, 100);
+		$('.order-hide').fadeIn();
 	});
 	$('.order-show').click(function() {
 		$('.recomended-content').slideDown();

@@ -887,7 +887,8 @@
 	line-height: 25px;
 }
 .all-list {
-	padding-left: 25px;
+	padding-left: 2px;
+	font-size: 11px;
 }
 .ticket-content {
 	color: #3E4C52;
@@ -915,7 +916,6 @@
 }
 .recomended-content {
 	background: url(../images/shadow-ticket.png) no-repeat center bottom;
-	padding-bottom: 43px;
 }
 .hotels { background: none !important}
 .hotels  h1 {text-shadow: #FFF 0px 1px 0px; margin-bottom: 20px; letter-spacing: -0.05em;}
