@@ -7,6 +7,8 @@
  */
 class ARbacModule extends ABaseAdminModule
 {
+    public $enabled = true;
+
     public function init()
     {
         Yii::import('packages.rbac.models.*');

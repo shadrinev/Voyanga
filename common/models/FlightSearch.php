@@ -48,21 +48,12 @@ class FlightSearch extends CModel implements IStatisticItem
                 $this->flight_class = $flightSearchParams->flight_class;
                 $this->key = $flightSearchParams->key;
 
-                //TODO: Making request to GDS
-                //fill fields of object:
-                //data
-                //status
-                //request_id
                 $sJdata = Yii::app()->gdsAdapter->FlightSearch($flightSearchParams);
                 if ($sJdata)
                 {
                     $paramsFs = $sJdata;
                     $paramsFs['fsKey'] = $this->key;
                     $flightVoyageStack = new FlightVoyageStack($paramsFs);
-                    //VarDumper::dump($flightVoyageStack);die();
-
-                    //echo $flightVoyageStack->getAsJson();
-
                     $this->flightVoyageStack = $flightVoyageStack;
                     Yii::app()->cache->set('flightSearch' . $this->key, $this, Yii::app()->params['fligh_search_cache_time']);
 
@@ -73,7 +64,7 @@ class FlightSearch extends CModel implements IStatisticItem
                 else
                     $this->status = FlightSearch::STATUS_ERROR;
 
-                $this->save();
+                //$this->saveStatistic();
 
                 if ($this->flightVoyageStack)
                 {

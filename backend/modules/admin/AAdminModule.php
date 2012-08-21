@@ -22,7 +22,8 @@ class AAdminModule extends CWebModule
         foreach (array_keys($this->getModules()) as $name)
         {
             $module = $this->getModule($name);
-
+            if (isset($module->enabled) and (!$module->enabled))
+                continue;
             if (!isset($module->menuItems))
             {
                 continue;

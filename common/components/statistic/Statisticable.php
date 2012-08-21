@@ -10,30 +10,7 @@ class Statisticable extends CActiveRecordBehavior
     private $_modelName;
     private $_modelId;
 
-    private function getRow()
-    {
-        $row = new Statistic;
-        $row->modelName = $this->getModelName();
-        $row->modelId = $this->getModelId();
-        $row->dateCreate = date('Y-m-d h:i:s', time());
-        return $row;
-    }
-
-    public function getModelName()
-    {
-        if ($this->_modelName==null)
-            $this->_modelName=get_class($this->getOwner());
-        return $this->_modelName;
-    }
-
-    public function getModelId()
-    {
-        if ($this->_modelId==null)
-            $this->_modelId=$this->getOwner()->getPrimaryKey();
-        return $this->_modelId;
-    }
-
-    public function afterSave($event)
+    public function saveStatistic()
     {
         $row = $this->getRow();
         $attributes = $this->getOwner()->getStatisticData();
@@ -62,5 +39,28 @@ class Statisticable extends CActiveRecordBehavior
             $row->save();
         }
         return true;
+    }
+
+    private function getRow()
+    {
+        $row = new Statistic;
+        $row->modelName = $this->getModelName();
+        $row->modelId = $this->getModelId();
+        $row->dateCreate = date('Y-m-d h:i:s', time());
+        return $row;
+    }
+
+    private function getModelName()
+    {
+        if ($this->_modelName==null)
+            $this->_modelName=get_class($this->getOwner());
+        return $this->_modelName;
+    }
+
+    private function getModelId()
+    {
+        if ($this->_modelId==null)
+            $this->_modelId=$this->getOwner()->getPrimaryKey();
+        return $this->_modelId;
     }
 }

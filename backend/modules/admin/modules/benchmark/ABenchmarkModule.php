@@ -15,6 +15,8 @@ Yii::import('packages.plotcharts.*');
  */
 class ABenchmarkModule extends ABaseAdminModule
 {
+    public $enabled = true;
+
     /**
      * The menu items to show for this module.
      * These menu items will be shown in the sidebar in the admin interface

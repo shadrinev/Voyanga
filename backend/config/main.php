@@ -79,10 +79,12 @@ return CMap::mergeArray(
                         'class' => 'application.modules.admin.modules.statistic.StatisticAdminModule'
                     ),
                     'benchmark' => array(
-                        'class' => 'application.modules.admin.modules.benchmark.ABenchmarkModule'
+                        'class' => 'application.modules.admin.modules.benchmark.ABenchmarkModule',
+                        'enabled' => false
                     ),
                     'rbac' => array(
-                        'class' => 'packages.rbac.ARbacModule'
+                        'class' => 'packages.rbac.ARbacModule',
+                        'enabled' => false
                     ),
                     'logging' => array(
                         'class' => 'application.modules.admin.modules.logging.LoggingAdminModule'
