@@ -1,11 +1,12 @@
 <?php
-class FlightSearchParams
+class FlightSearchParams extends CComponent
 {
     public $routes;
     public $flight_class;
     public $adultCount;
     public $childCount;
     public $infantCount;
+    private $key;
 
     public function addRoute($routeParams)
     {
@@ -77,36 +78,24 @@ class FlightSearchParams
         $this->routes[] = $route;
     }
 
-    public function __get($name)
+    public function getKey()
     {
-        if ($name === 'key')
+        if (!$this->key)
         {
             $attributes = array();
             foreach ($this->routes as $route)
             {
                 $attributes[] = $route->attributes;
             }
-
             $sKey = $this->flight_class . json_encode($attributes);
-            return md5($sKey);
+            $this->key = md5($sKey);
         }
-        else
-        {
-            return $this->$name;
-        }
+        return $this->key;
     }
 
     public function checkValid()
     {
-        $bValid = true;
-        if (!$this->flight_class)
-        {
-            $bValid = false;
-        }
-        if (count($this->routes) <= 0)
-        {
-            $bValid = false;
-        }
-        return $bValid;
+        $valid = ($this->flight_class) and (count($this->routes)>0);
+        return $valid;
     }
 }
