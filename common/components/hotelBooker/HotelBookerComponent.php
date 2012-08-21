@@ -155,7 +155,7 @@ class HotelBookerComponent extends CApplicationComponent
             if (!$orderInfo->error)
             {
 
-                $res = Yii::app()->cron->add(strtotime($this->hotelBooker->expiration), 'HotelBooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'bookingTimeLimitError'));
+                $res = Yii::app()->cron->add(strtotime($this->hotelBooker->expiration), 'hotelbooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'bookingTimeLimitError'));
                 $this->hotelBooker->saveTaskInfo('timeLimitError', $res);
 
                 $waitStatus = $this->status('softWaitingForPayment');
@@ -192,7 +192,7 @@ class HotelBookerComponent extends CApplicationComponent
         //        return;
         if (($this->hotel->cancelExpiration - time()) > appParams('hotel_payment_time'))
         {
-            $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'HotelBooker', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'softWaitingForPayment'));
+            $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'hotelbooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'softWaitingForPayment'));
             if ($res)
             {
                 $this->hotelBooker->saveTaskInfo('paymentTimeLimit', $res);
@@ -243,7 +243,7 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageHardStartPayment()
     {
-        $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'HotelBooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'hardWaitingForPayment'));
+        $res = Yii::app()->cron->add(time() + appParams('hotel_payment_time'), 'hotelbooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'hardWaitingForPayment'));
         if ($res)
         {
             $this->hotelBooker->saveTaskInfo('hardPaymentTimeLimit', $res);
@@ -374,7 +374,7 @@ class HotelBookerComponent extends CApplicationComponent
             {
                 echo $this->hotelBooker->id;
 
-                $res = Yii::app()->cron->add(time() + appParams('hotel_repeat_time'), 'HotelBooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'ticketingRepeat'));
+                $res = Yii::app()->cron->add(time() + appParams('hotel_repeat_time'), 'hotelbooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'ticketingRepeat'));
 
                 if ($res)
                 {
@@ -387,7 +387,7 @@ class HotelBookerComponent extends CApplicationComponent
         else
         {
 
-            $res = Yii::app()->cron->add(time() + appParams('hotel_repeat_time'), 'HotelBooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'ticketingRepeat'));
+            $res = Yii::app()->cron->add(time() + appParams('hotel_repeat_time'), 'hotelbooking', 'ChangeState', array('hotelBookerId' => $this->hotelBooker->id, 'newState' => 'ticketingRepeat'));
             if ($res)
             {
                 $this->hotelBooker->saveTaskInfo('repeatTime', $res);
