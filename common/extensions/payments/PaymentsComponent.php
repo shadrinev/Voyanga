@@ -21,17 +21,13 @@ class PaymentsComponent extends CApplicationComponent
      *
      *
      *
-     * @return Bill bill for given hotel booker
+     * @return Bill bill for given booker
      */
-    public function getBillForHotelBooker($hotelBooker)
-    {
-        trigger_error("PaymentsComponent->getBillForHotelBooker is depricated");
-        return $this->getBillForBooker($booker);
-    }
-
     public function getBillForBooker($booker)
     {
-        if($booker instanceof FlightBooker) {
+        $channel = 'ecommerce';
+        if($booker instanceof FlightBooker)
+        {
             if($booker->flightVoyage->webService=='SABRE')
             {
                 $channel = $booker->flightVoyage->valAirline->payableViaSabre?'gds_sabre':'ltr';
@@ -43,7 +39,8 @@ class PaymentsComponent extends CApplicationComponent
 
         }
         Yii::import("common.extensions.payments.models.Bill");
-        if($booker->billId) {
+        if($booker->billId)
+        {
             return Bill::model()->findByPk($booker->billId);
         }
         $bill = new Bill();
@@ -58,7 +55,6 @@ class PaymentsComponent extends CApplicationComponent
 
     public function getParamsForBillAndBooker($bill, $booker)
     {
-        var_dump($this->getIData($booker));
         $credentials = $this->_credentials[$bill->channel];
         $params = Array();
         $params['MerchantId'] = $credentials['id'];
@@ -74,7 +70,6 @@ class PaymentsComponent extends CApplicationComponent
             $params['PNR'] = $booker->pnr;
         }
         $params['SecurityKey'] = $this->getSignatureFor($bill->channel, $params);
-        var_dump($params);
         return $params;
     }
 
@@ -191,13 +186,11 @@ class PaymentsComponent extends CApplicationComponent
        }
        $url .= '?';
        $url.=implode('&', $params);
-       //       var_dump($url);
        list($code, $data) = Yii::app()->httpClient->get($url);
        if(strlen($data))
        {
            $result = Array();
            parse_str($data, $result);
-           //           var_dump($result);
            // FIXME check AMOUNT?
            if($result['Result'] == 'Ok')
            {
