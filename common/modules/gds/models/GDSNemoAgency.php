@@ -3,7 +3,7 @@ class GDSNemoAgency extends CComponent
 {
     public $wsdlUri = null;
     public static $lastRequestDescription = '';
-    public static $passportTypesMap = array(1=>'C',2=>'A',3=>'V');
+    public static $passportTypesMap = array(1 => 'C', 2 => 'A', 3 => 'V');
     public static $requestIds = array();
     const ERROR_CODE_EMPTY = 1;
     const ERROR_CODE_INVALID = 2;
@@ -12,55 +12,67 @@ class GDSNemoAgency extends CComponent
      * @static
      * @param $methodName name of method to call
      * @param $params params for calling method
-     * @param bool $cache is cache it
-     * @param int $expiration expiration time in seconds
+     * @param bool $useCache is cache it
+     * @param int $expirationTimeSeconds expiration time in seconds
      * @return mixed
      */
-    private static function request($methodName, $params, $cache = true, $expiration = 120)
+    private static function request($methodName, $params)
     {
-        $methodMap = array('Search'=>'SearchFlights','BookFlight'=>'BookFlight','Ticketing'=>'Ticketing','AirAvail'=>'AirAvail','CancelBook'=>'CancelBook');
-        $wsdl = $methodMap[$methodName];
-        $client = new GDSNemoSoapClient(Yii::app()->params['GDSNemo']['agencyWsdlUri'].$wsdl, array('trace' => Yii::app()->params['GDSNemo']['trace'], 'exceptions' => true,
-        ));
+        $methodMap = array(
+            'Search' => 'SearchFlights',
+            'BookFlight' => 'BookFlight',
+            'Ticketing' => 'Ticketing',
+            'AirAvail' => 'AirAvail',
+            'CancelBook' => 'CancelBook'
+        );
 
-        //VarDumper::dump($client->__getFunctions());die();
-        //VarDumper::dump($client->__getTypes());
-        //$params = array('Search'=>$params);
-        //$soapRequest = $client->async->$methodName($params);
-        //VarDumper::dump($client->getMethods());
-        $key = $methodName . md5(serialize($params));
-        $mongoKey = substr(md5($methodName . uniqid('',true)),0,10);
-        if ($cache)
+        if (!($wsdl = isset($methodMap[$methodName]) ? $methodMap[$methodName] : false))
         {
-            $ret = Yii::app()->cache->get($key);
-            if ($ret)
-            {
-                return $ret;
-            }
+            throw new CException('Unknown method request');
         }
+
+        $client = new GDSNemoSoapClient(
+            Yii::app()->params['GDSNemo']['agencyWsdlUri'] . $wsdl,
+            array(
+                'trace' => Yii::app()->params['GDSNemo']['trace'],
+                'exceptions' => true,
+            )
+        );
+
+        $mongoKey = substr(md5($methodName . uniqid('', true)), 0, 10);
         $gdsRequest = new GdsRequest();
         $gdsRequest->requestNum = $mongoKey;
-        self::$requestIds[] = array('key'=>$mongoKey,'class'=>get_class($gdsRequest),'keyName'=>'requestNum');
+        self::$requestIds[] = array('key' => $mongoKey, 'class' => get_class($gdsRequest), 'keyName' => 'requestNum');
         $gdsRequest->timestamp = time();
         $gdsRequest->methodName = $methodName;
         $gdsRequest->requestDescription = self::$lastRequestDescription;
         $client->gdsRequest = $gdsRequest;
         Yii::beginProfile('processingSoap' . $methodName);
-        try{
-            $ret = $client->$methodName($params);
-        }catch (Exception $e){
-            Yii::log(CVarDumper::dumpAsString($e), 'Gds.GdsNemoAgency.request');
-            return array('errorDescription'=>$e->getMessage());
-        }
-        if ($expiration)
+        try
         {
-            if ($ret)
-            {
-                Yii::app()->cache->set($key, $ret, $expiration);
-            }
+            $soapResponse = $client->$methodName($params);
+        }
+        catch (Exception $e)
+        {
+            Yii::log(CVarDumper::dumpAsString($e), CLogger::LEVEL_ERROR, 'application.Gds.GdsNemoAgency.request');
+            throw $e;
         }
         Yii::endProfile('processingSoap' . $methodName);
-        return $ret;
+        return $soapResponse;
+    }
+
+    private function cachedRequest($methodName, $params, $expirationTimeInSeconds = 120)
+    {
+        $key = $methodName . md5(serialize($params));
+        if ($soapResponse = Yii::app()->cache->get($key))
+        {
+            return $soapResponse;
+        }
+        $soapResponse = $this->request($methodName, $params);
+        if ($soapResponse)
+        {
+            Yii::app()->cache->set($key, $soapResponse, $expirationTimeInSeconds);
+        }
     }
 
     public function FlightSearch(FlightSearchParams $flightSearchParams)
@@ -72,7 +84,7 @@ class GDSNemoAgency extends CComponent
         //VarDumper::dump($flightSearchParams);
         //prepare request  structure
         $flightClass = 'all';
-        switch($flightSearchParams->flight_class)
+        switch ($flightSearchParams->flight_class)
         {
             case 'E':
                 $flightClass = 'economy';
@@ -187,35 +199,28 @@ class GDSNemoAgency extends CComponent
         $params['Request']['SearchFlights']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($traveller);
         unset($traveller);
 
-        //real request
-        //VarDumper::dump($params);die();
-
-        $soapResponse = self::request('Search', $params, $bCache = FALSE, $iExpiration = 3000);
+        $soapResponse = self::request('Search', $params);
         $errorDescription = '';
 
-        if(!$soapResponse)
+        if (!$soapResponse)
         {
             $errorCode = self::ERROR_CODE_INVALID;
-            if(GDSNemoSoapClient::$lastCurlError)
+            if (GDSNemoSoapClient::$lastCurlError)
             {
                 $errorDescription = GDSNemoSoapClient::$lastCurlError;
             }
         }
 
-        //return;
-
         //processing response
-
         if (!isset($soapResponse->Response->SearchFlights->Flights->Flight))
         {
             $soapResponse = $this->humanReadable($soapResponse);
-            if($soapResponse)
+            if ($soapResponse)
             {
                 Yii::trace(CVarDumper::dumpAsString($soapResponse), 'Gds.GdsNemoAgency.request');
                 //throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
             }
         }
-        //print_r($soapResponse );die();
 
         $flights = array();
         $errorCode = 0;
@@ -294,7 +299,7 @@ class GDSNemoAgency extends CComponent
                 $aTariffs = array();
                 //Yii::beginProfile('processingPassengers');
                 $refundable = $oSoapFlight->PricingInfo->Refundable;
-                if($refundable == 'true' or $refundable === true)
+                if ($refundable == 'true' or $refundable === true)
                 {
                     $refundable = true;
                 }
@@ -443,11 +448,11 @@ class GDSNemoAgency extends CComponent
         //print_r($aFlights);
         if ($errorCode > 0)
         {
-            return array('flights' => array(),'searchId'=>'', 'errorCode' => $errorCode, 'errorDescription' => '');
+            return array('flights' => array(), 'searchId' => '', 'errorCode' => $errorCode, 'errorDescription' => '');
         }
         else
         {
-            return array('flights' => $flights,'searchId'=>$searchId, 'errorCode' => 0, 'errorDescription' => '');
+            return array('flights' => $flights, 'searchId' => $searchId, 'errorCode' => 0, 'errorDescription' => '');
         }
     }
 
@@ -536,7 +541,7 @@ class GDSNemoAgency extends CComponent
                 $oTraveller['PersonalInfo']['LastName'] = $passenger->passport->lastName;
                 $oTraveller['DocumentInfo'] = array();
                 $oTraveller['DocumentInfo']['DocType'] = isset(self::$passportTypesMap[$passenger->passport->documentTypeId]) ? self::$passportTypesMap[$passenger->passport->documentTypeId] : 'P';
-                $oTraveller['DocumentInfo']['DocNum'] = ($passenger->passport->series ? $passenger->passport->series : '').$passenger->passport->number;
+                $oTraveller['DocumentInfo']['DocNum'] = ($passenger->passport->series ? $passenger->passport->series : '') . $passenger->passport->number;
                 $oTraveller['DocumentInfo']['CountryCode'] = Country::getCountryByPk($passenger->passport->countryId)->code;
                 $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->passport->expiration);
                 $oTraveller['ContactInfo'] = array();
@@ -549,46 +554,45 @@ class GDSNemoAgency extends CComponent
                 $iNum++;
             }
             $aParams['Request']['BookFlight']['Travellers']['Traveller'] = $aTraveler;
-            $aParams['Request']['BookFlight']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($aParams['Request']['BookFlight']['Travellers']['Traveller'] );
+            $aParams['Request']['BookFlight']['Travellers']['Traveller'] = UtilsHelper::normalizeArray($aParams['Request']['BookFlight']['Travellers']['Traveller']);
         }
         else
         {
             throw new CException(Yii::t('application', 'Data in parameter oFlightBookingParams not valid'));
         }
-        //VarDumper::dump($aParams);
-        $response = self::request('BookFlight', $aParams, $bCache = FALSE, $iExpiration = 0);
-        //VarDumper::dump($response);//die();
 
+        $response = self::request('BookFlight', $aParams);
 
         $flightBookingResponse = new FlightBookingResponse();
-        if(isset($response->Response->Error))
+        if (isset($response->Response->Error))
         {
             $status = 'error';
             $flightBookingResponse->status = 2;
             $flightBookingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
-            $flightBookingResponse->addError('error',$response->Response->Error);
+            $flightBookingResponse->addError('error', $response->Response->Error);
         }
         else
         {
-            if(isset($response->Response->BookFlight->Status))
+            if (isset($response->Response->BookFlight->Status))
             {
-                $status  = $response->Response->BookFlight->Status;
+                $status = $response->Response->BookFlight->Status;
             }
-            elseif(isset($response->Error->_))
+            elseif (isset($response->Error->_))
             {
                 $status = 'error';
-                $flightBookingResponse->addError($response->Error->Code,$response->Error->_);
+                $flightBookingResponse->addError($response->Error->Code, $response->Error->_);
             }
             else
             {
                 $status = 'error';
-                if(GDSNemoSoapClient::$lastCurlError){
-                    $flightBookingResponse->addError('connection error',GDSNemoSoapClient::$lastCurlError);
+                if (GDSNemoSoapClient::$lastCurlError)
+                {
+                    $flightBookingResponse->addError('connection error', GDSNemoSoapClient::$lastCurlError);
                 }
             }
         }
 
-        if($status == 'booked')
+        if ($status == 'booked')
         {
 
             $flightBookingResponse->pnr = $response->Response->BookFlight->Code;
@@ -600,7 +604,7 @@ class GDSNemoAgency extends CComponent
         {
             $flightBookingResponse->status = 2;
             $flightBookingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
-            $flightBookingResponse->addError('error','Status is:'.$status);
+            $flightBookingResponse->addError('error', 'Status is:' . $status);
         }
         return $flightBookingResponse;
 
@@ -619,7 +623,7 @@ class GDSNemoAgency extends CComponent
             )
         );
 
-        print_r(self::request('GetAirRules', $aParams, $bCache = FALSE, $iExpiration = 0));
+        print_r(self::request('GetAirRules', $aParams));
     }
 
     public function humanReadable($soapResponse)
@@ -639,7 +643,7 @@ class GDSNemoAgency extends CComponent
      */
     public function checkFlight($flightId)
     {
-        if($flightId)
+        if ($flightId)
         {
             $aParams = array(
                 'Request' => array(
@@ -656,9 +660,9 @@ class GDSNemoAgency extends CComponent
                 )
             );
 
-            $response = self::request('AirAvail', $aParams, $bCache = FALSE, $iExpiration = 0);
+            $response = self::request('AirAvail', $aParams);
 
-            if(isset($response->CancelBook->Result->Success) )
+            if (isset($response->CancelBook->Result->Success))
             {
                 return $response->CancelBook->Result->Success;
             }
@@ -667,7 +671,8 @@ class GDSNemoAgency extends CComponent
                 return null;
             }
 
-        }else return null;
+        }
+        else return null;
     }
 
     public function FlightTicketing(FlightTicketingParams $flightTicketingRequest)
@@ -690,43 +695,44 @@ class GDSNemoAgency extends CComponent
             )
         );
 
-        $response = null;//self::request('Ticketing', $aParams, $bCache = FALSE, $iExpiration = 0);
+        $response = null; //self::request('Ticketing', $aParams, $bCache = FALSE, $iExpiration = 0);
         $flightTicketingResponse = new FlightTicketingResponse();
 
-        if(isset($response->Response->Error))
+        if (isset($response->Response->Error))
         {
             $status = 'error';
             $flightTicketingResponse->status = 2;
             $flightTicketingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
-            $flightTicketingResponse->addError('error',$response->Response->Error);
+            $flightTicketingResponse->addError('error', $response->Response->Error);
         }
         else
         {
-            if(isset($response->Response->BookFlight->Status))
+            if (isset($response->Response->BookFlight->Status))
             {
-                $status  = $response->Response->BookFlight->Status;
+                $status = $response->Response->BookFlight->Status;
             }
-            elseif(isset($response->Error->_))
+            elseif (isset($response->Error->_))
             {
                 $status = 'error';
-                $flightTicketingResponse->addError($response->Error->Code,$response->Error->_);
+                $flightTicketingResponse->addError($response->Error->Code, $response->Error->_);
             }
             else
             {
                 $status = 'error';
-                if(GDSNemoSoapClient::$lastCurlError){
-                    $flightTicketingResponse->addError('connection error',GDSNemoSoapClient::$lastCurlError);
+                if (GDSNemoSoapClient::$lastCurlError)
+                {
+                    $flightTicketingResponse->addError('connection error', GDSNemoSoapClient::$lastCurlError);
                 }
             }
         }
 
-        if($status == 'ticket')
+        if ($status == 'ticket')
         {
             $flightTicketingResponse->status = 1;
             UtilsHelper::soapObjectsArray($response->BookFlight->Travellers->Traveller);
-            foreach($response->BookFlight->Travellers->Traveller as $traveller)
+            foreach ($response->BookFlight->Travellers->Traveller as $traveller)
             {
-                $ticket = array('ticketNumber'=>$traveller->Ticket->TickectNum,'documentNumber'=>$traveller->DocumentInfo->DocNum);
+                $ticket = array('ticketNumber' => $traveller->Ticket->TickectNum, 'documentNumber' => $traveller->DocumentInfo->DocNum);
 
                 $flightTicketingResponse->tickets[] = $ticket;
             }
@@ -734,7 +740,7 @@ class GDSNemoAgency extends CComponent
         else
         {
             $flightTicketingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
-            $flightTicketingResponse->addError('error','Status is:'.$status);
+            $flightTicketingResponse->addError('error', 'Status is:' . $status);
             $flightTicketingResponse->status = 2;
         }
         return $flightTicketingResponse;
@@ -757,12 +763,12 @@ class GDSNemoAgency extends CComponent
             )
         );
 
-        print_r(self::request('bookFlight', $aParams, $bCache = FALSE, $iExpiration = 0));
+        print_r(self::request('bookFlight', $aParams));
     }
 
     public function CancelBooking($bookId)
     {
-        if($bookId)
+        if ($bookId)
         {
             $aParams = array(
                 'Request' => array(
@@ -779,12 +785,12 @@ class GDSNemoAgency extends CComponent
                 )
             );
 
-            $response = self::request('CancelBook', $aParams, $bCache = FALSE, $iExpiration = 0);
+            $response = self::request('CancelBook', $aParams);
             CVarDumper::dump($response);
 
-            if(isset($response->Respone->CancelBook->Result->Success) )
+            if (isset($response->Respone->CancelBook->Result->Success))
             {
-                if( ($response->Respone->CancelBook->Result->Success === 'true') || ($response->Respone->CancelBook->Result->Success === true) )
+                if (($response->Respone->CancelBook->Result->Success === 'true') || ($response->Respone->CancelBook->Result->Success === true))
                 {
                     $result = true;
                 }
@@ -794,9 +800,9 @@ class GDSNemoAgency extends CComponent
                 }
                 return $result;
             }
-            elseif(isset($response['errorDescription']))
+            elseif (isset($response['errorDescription']))
             {
-                if(strpos($response['errorDescription'],'Already Cancelled') !== false)
+                if (strpos($response['errorDescription'], 'Already Cancelled') !== false)
                 {
                     $result = true;
                 }
@@ -811,7 +817,8 @@ class GDSNemoAgency extends CComponent
                 return null;
             }
 
-        }else return null;
+        }
+        else return null;
     }
 }
 
