@@ -47,19 +47,6 @@ class FlightSearch extends CModel implements IStatisticItem
                 $this->_routes = $flightSearchParams->routes;
                 $this->flight_class = $flightSearchParams->flight_class;
                 $this->key = $flightSearchParams->key;
-                if (false) //$fs = Yii::app()->cache->get('flightSearch' . $this->key))
-                {
-                    $this->_routes = $fs->routes;
-                    $this->flight_class = $fs->flight_class;
-                    $this->key = $fs->key;
-                    $this->id = $fs->id;
-                    $this->timestamp = $fs->timestamp;
-                    $this->data = $fs->data;
-                    $this->requestId = $fs->requestId;
-                    $this->flightVoyageStack = $fs->oFlightVoyageStack;
-                    $this->status = $fs->status;
-                    return FlightCache::addCacheFromStack($this->flightVoyageStack);
-                }
 
                 //TODO: Making request to GDS
                 //fill fields of object:
@@ -86,7 +73,7 @@ class FlightSearch extends CModel implements IStatisticItem
                 else
                     $this->status = FlightSearch::STATUS_ERROR;
 
-                //$this->save();
+                $this->save();
 
                 if ($this->flightVoyageStack)
                 {
@@ -119,31 +106,6 @@ class FlightSearch extends CModel implements IStatisticItem
     public function getRoutes()
     {
         return $this->_routes;
-    }
-
-    public function save($runValidation = true, $attributes = null)
-    {
-        if ($runValidation)
-        {
-            if ($this->_routes)
-            {
-                //check valid of Rotes
-                //TODO: check good save
-                parent::save();
-                $this->id = $this->getPrimaryKey();
-                $this->timestamp = date('Y-m-d H:i:s');
-                foreach ($this->_routes as $route)
-                {
-                    $route->searchId = $this->id;
-                    $route->save();
-                    $route->id = $route->getPrimaryKey();
-                }
-            }
-            else
-            {
-                throw new CException(Yii::t('application', 'Cant save FlightSearch without Routes'));
-            }
-        }
     }
 
     protected function createRow(Route $route)
