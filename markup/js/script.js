@@ -33,8 +33,6 @@ function checkUlList() {
 }
 $(window).load(checkUlList);
 $(function() {
-	$(".description .text").dotdotdot({watch: 'window'});
-	
 	
 	$('.order-hide').click(function(e){ 
 		e.preventDefault();
@@ -72,5 +70,19 @@ $(function() {
 			$('#'+var_nameBlock).show();
 		}
 	});
-
+	
+	$('.read-more').click(function() {
+		if (! $(this).hasClass('active')) {
+			$(this).prev().css('height', 'auto');
+			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
+			$(this).addClass('active').text('Свернуть');
+		}
+		else {
+			$(this).prev().css('height', '54px');
+			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
+			$(this).removeClass('active').text('Подробнее');
+		}
+		
+		
+	});
 });

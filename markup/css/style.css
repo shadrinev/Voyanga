@@ -868,6 +868,8 @@
 .filter-content {
 	margin-top: 35px;
 	color: #2e333b;
+	margin-right: 15px;
+	margin-left: 5px;
 }
 .filter-content a {
 	color: #1c81bb;
@@ -891,7 +893,6 @@
 	color: #3E4C52;
     margin: 0 auto 60px;
     position: relative;
-    width: 695px;
 }
 .ticket-content.bg-none {
 	margin-top: 0px;
@@ -942,7 +943,7 @@
 	width: 782px;
 }
 #content > .title, .hotel-details > .title {
-	padding:0px 60px 0px 0px;
+	padding:0px 45px 0px 0px;
 	position: relative;
 }
 #content > .title h1, .hotel-details > .title h1 {
@@ -1028,10 +1029,17 @@
 	width: 465px;
 	color: #4b4b4f;
 }
+.description > .left > .read-more {
+	border-bottom: 1px dashed;
+    color: #2174A3;
+    display: inline-block;
+    line-height: 15px;
+    margin-bottom: 14px;
+}
 .hotel-details .description .left .text {
 	color: #1a1b1e;
 	line-height: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 0px;
 }
 .hotel-details .description .right {
 	color: #5D5F63;
@@ -1045,8 +1053,8 @@
 	margin-bottom: 3px;
 }
 .tab .map-big {
-margin-top: 15px;
-	height: 398px;
+	margin-top: 15px;
+	height: 383px;
 }
 .slide-show {
 	margin-left: -21px;
@@ -1109,13 +1117,16 @@ margin-top: 15px;
 }
 .descr > .left {
 	float: left;
-	width: 587px;
+	width: 100%;
 } 
 .descr > .left .photo-slide-hotel {
 	font-size: 11px;
 	line-height: 16px;
 	color: #8f9199;
-	margin-bottom: 16px;
+	margin-bottom: 15px;
+	width: 100%;
+	overflow: hidden;
+	height: 170px;
 }
 .descr > .left .photo-slide-hotel .slide {
 	overflow: hidden;
@@ -1125,18 +1136,27 @@ margin-top: 15px;
 }
 .descr > .left .descr-text {
 	padding-left: 3px;
-	height: 100px;
 	width: 100%;
+}
+.descr > .left .descr-text  a {
+	color: #2174a3;
+	border-bottom: 1px dashed;
+}
+.descr > .left .descr-text .text {
+	height: 54px;
 }
 .descr > .left .descr-text h3 {
 	display: inline-block;
+	margin-right: 10px;
 }
-.descr > .right {
+.descr > .left .right {
 	float: right;
 	width: 312px;
 	color: #5d5f63;
+	margin-bottom: 5px;
+	margin-left: 30px;
 }
-.descr > .right .map-hotel {
+.descr .right .map-hotel {
 	width: 310px;
 	height: 259px;
 	border: 1px solid #c7c7c7;
@@ -1182,6 +1202,8 @@ margin-top: 15px;
 }
 .info-trip {
 	padding-left: 0px;
+	background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
+	padding-top: 30px;
 }
 .info-trip .date-trip {
 	font-size: 15px;
@@ -1266,8 +1288,15 @@ margin-top: 15px;
 .block-trip table .name div.items:last-child {
 	margin-bottom: -10px; border-bottom: none;
 }
+.block-trip table .name div.items ul li table {
+	width: 100%;
+}
+.block-trip table .name div.items ul li table .change {
+	width: 55px;
+	vertical-align: middle;
+	text-align: center;
+}
 .change-people {
-	position: absolute; right: 10px; top:20px;
 	width: 53px; height: 24px;
 	overflow: hidden;
 }
