@@ -27,6 +27,8 @@ function closeHowMany() {
 }
 $(window).load(inputSelectMan);
 $(function() {
+	var var_timeline = $('.timeline');
+	var var_timelineIsset = var_timeline.length > 0 && var_timeline.is(':visible');
 	$('.btn-minimizePanel').click(function() {
 		var var_SubHead = $('.sub-head');
 		var var_speed =  300;
@@ -42,7 +44,13 @@ $(function() {
 			var_SubHead.animate({'margin-top' : '0px'}, var_speed);			
 		}
 	});
-	$('.condition').css('top', '68px');
+	if (var_timelineIsset) {
+		$('.condition').css('top', '68px');	
+	}
+	else {
+		$('.condition').css('top', '0px');
+		$('.btn-timeline-and-condition').hide();
+	}
 	$('.btn-condition').click(function() {
 		if (! $(this).hasClass('active')) {
 			$('.btn-timeline-and-condition a').removeClass('active');

@@ -14,10 +14,11 @@
 <script type="text/javascript" src="js/resize-new.js"></script>
 <script type="text/javascript" src="js/slide-mode.js"></script>
 <script type="text/javascript" src="js/panel.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 <!--<script type="text/javascript" src="js/popup.js"></script>
 <script type="text/javascript" src="js/tickets.js"></script>
 
-<script type="text/javascript" src="js/script.js"></script>
+
 -->
 
 </head>
@@ -237,7 +238,7 @@
 	<!-- END SUB HEAD -->
 <!--====**********===-->
 	<!-- ALL CONTENT -->
-	<div class="center-block" style="height: 900px;">
+	<div class="center-block">
 		<!-- LEFT BLOCK -->
 		<div class="left-block">
 			<!-- LEFT CONTENT -->
@@ -370,7 +371,7 @@
 		<!-- END LEFT BLOCK -->
 <!--====**********===-->
 		<!-- MAIN BLOCK -->
-		<div class="main-block ">
+		<div class="main-block">
 			<div id="content">
 				
 				<div class="title">
@@ -390,8 +391,8 @@
 						Санкт-Петербург, ул. Морская Набережная, д. 31/2
 					</div>
 					<ul class="tmblr">
-						<li class="active"><span class="ico-descr"></span> <a href="#">Описание</a></li>
-						<li><span class="ico-see-map"></span> <a href="#">На карте</a></li>
+						<li class="active"><span class="ico-descr"></span> <a href="#descr">Описание</a></li>
+						<li><span class="ico-see-map"></span> <a href="#map">На карте</a></li>
 					</ul>
 					<div class="book">
 						<div class="how-cost">
@@ -401,7 +402,7 @@
 					</div>
 				</div>
 				<!-- DESCR -->
-				<div class="descr">
+				<div class="descr" id="descr">
 					<div class="left">
 						<div class="photo-slide-hotel">
 							<div class="slide">
@@ -424,6 +425,14 @@
 					</div>
 				</div>
 				<!-- END DESCR -->
+				<!-- MAP -->
+				<div class="descr" id="map">
+					<div class="map-big">
+						<img src="images/pic-big-map.png">
+					</div>
+					Отель расположен в 10 км от центра
+				</div>
+				<!-- END MAP -->
 				<!-- SERVICE -->
 				<div class="service-in-hotel">
 					<h3>Услуги в отеле</h3>
@@ -450,7 +459,80 @@
 				</div>
 				<!-- END SERVICE -->
 				<!-- INFO TRIP -->
-					
+				<div class="info-trip">
+					<div class="date-trip">
+						26 мая - 27 мая
+					</div>
+					<h2>Номера в Рэдиссон Соня Отель</h2>
+					<h3>Рекомендуемые сочетания по вашему запросу</h3>
+					<div class="block-trip">
+						<table>
+							<tbody>
+								<tr>
+									<td class="name">
+										<ul>
+											<li><span class="text">Стандартный двухместный номер</span> <span class="ico-breakfast"></span> Завтрак «шведский стол»</li>
+											<li><span class="text">Двухместный номер люкс</span> <span class="ico-breakfast"></span> Завтрак «шведский стол»</li>
+										</ul>
+										<a href="#">Условия отмены бронирования</a>
+									</td>
+									<td class="button"><a class="btn-cost" href="#"><span class="l"></span><span class="text">Забронировать</span><span class="cost">14 200</span><span class="rur f21">o</span></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<h3>Или подберите свое сочетание из всех возможных вариантов</h3>
+					<div class="block-trip">
+						<table>
+							<tbody>
+								<tr>
+									<td class="name">
+										<div class="items">
+											<ul>
+												<li><span class="text">Трехместный номер люкс</span> <span class="ico-breakfast"></span> Завтрак «шведский стол»</li>
+											</ul>
+											<a href="#">Условия отмены бронирования</a>
+											<div class="change-people">
+												<div class="minus"></div>
+												<div class="value">
+													<input type="text" value="0">
+												</div>
+												<div class="plus"></div>
+											</div>
+										</div>
+										<div class="items">
+											<ul>
+												<li><span class="text">Трехместный номер люкс</span> <span class="ico-breakfast"></span> Завтрак «шведский стол»</li>
+											</ul>
+											<a href="#">Условия отмены бронирования</a>
+											<div class="change-people">
+												<div class="minus"></div>
+												<div class="value">
+													<input type="text" value="0">
+												</div>
+												<div class="plus"></div>
+											</div>
+										</div>
+										<div class="items">
+											<ul>
+												<li><span class="text">Трехместный номер люкс</span> <span class="ico-breakfast"></span> Завтрак «шведский стол»</li>
+											</ul>
+											<a href="#">Условия отмены бронирования</a>
+											<div class="change-people">
+												<div class="minus"></div>
+												<div class="value">
+													<input type="text" value="0">
+												</div>
+												<div class="plus"></div>
+											</div>
+										</div>
+									</td>
+									<td class="button"><a class="btn-cost" href="#"><span class="l"></span><span class="text">Не выбраны номера</span></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 				<!-- END INFO TRIP -->
 			</div>
 		</div>

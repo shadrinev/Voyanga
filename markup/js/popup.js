@@ -28,7 +28,6 @@ function ResizeBox() {
 	var windowHeight = $(window).height();
 	var paddingLeft = (windowWidth - boxPopUpWidth) / 2;
 	var paddingTop = (windowHeight - boxPopUpHeight) / 2;
-	console.log(paddingTop);
 	if (paddingTop < 0) {
 		paddingTop = 0;
 	}
@@ -57,13 +56,29 @@ function CreateBox(textCode) {
 	});
 }
 
-
+function LinkDone() {
+	$('.hotel-details .place-buy .tmblr li a').click(function(e) {
+				e.preventDefault();
+				if (! $(this).hasClass('active')) {
+					var var_nameBlock = $(this).attr('href');
+					var_nameBlock = var_nameBlock.slice(1);
+					$('.place-buy .tmblr li').removeClass('active');
+					$(this).parent().addClass('active');
+					$('.tab').hide();
+					$('#'+var_nameBlock).show();
+				}
+				SizeBox();
+				ResizeBox();
+			});
+}
 
 
 $(document).ready(function() {
 	var text = $('#tuda-obratno').html();
 	var text2 = $('#tuda').html();
 	var text3 = $('#tuda-wait').html();
+	var text4 = $('#popup').html();
+	
 	$('a.tuda-obratno').click(function(e) {
 		e.preventDefault();
 		CreateBox(text); 
@@ -77,6 +92,24 @@ $(document).ready(function() {
 		e.preventDefault();
 		CreateBox(text3); 
 	});
+	
+	$('a#popuphotel').click(function(e) {
+		e.preventDefault();
+		CreateBox(text4); 
+			LinkDone();			
+	});
+	$('a.in-the-map').click(function(e) {
+		e.preventDefault();
+		CreateBox(text4);
+		$('.tab').eq(0).hide();
+		$('.tab').eq(1).show();
+		$('.place-buy .tmblr li').removeClass('active');
+		$('.place-buy .tmblr li').eq(1).addClass('active');
+		SizeBox();
+		ResizeBox(); 
+			LinkDone();			
+	});
+
 	
 	$(window).keyup(function(e) {
   			if (e.keyCode == 27) {
