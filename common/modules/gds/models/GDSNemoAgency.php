@@ -61,7 +61,7 @@ class GDSNemoAgency extends CComponent
         return $soapResponse;
     }
 
-    private function cachedRequest($methodName, $params, $expirationTimeInSeconds = 120)
+    private function requestCached($methodName, $params, $expirationTimeInSeconds = 120)
     {
         $key = $methodName . md5(serialize($params));
         if ($soapResponse = Yii::app()->cache->get($key))
@@ -204,10 +204,10 @@ class GDSNemoAgency extends CComponent
 
         if (!$soapResponse)
         {
-            $errorCode = self::ERROR_CODE_INVALID;
             if (GDSNemoSoapClient::$lastCurlError)
             {
                 $errorDescription = GDSNemoSoapClient::$lastCurlError;
+                throw new CException($errorDescription);
             }
         }
 
@@ -218,7 +218,7 @@ class GDSNemoAgency extends CComponent
             if ($soapResponse)
             {
                 Yii::trace(CVarDumper::dumpAsString($soapResponse), 'Gds.GdsNemoAgency.request');
-                //throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
+                throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
             }
         }
 
