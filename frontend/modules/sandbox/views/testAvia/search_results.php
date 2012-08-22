@@ -460,7 +460,7 @@
     <ul class="minimize" data-bind="foreach: voyages">
         <li>
             <a href="#" class="ico-path-time" data-bind="css: {hover: departureTime() == $parent.departureTime() }, click: $parent.chooseStacked">
-                <input type="radio" name="radio03" id="name01">
+                <input type="radio" data-bind="value: departureTime(), checked: $parent.departureTime()">
 
                 <div class="path">
                     <div class="in-path"><span>В пути </span><span data-bind="text: fullDuration()">9 ч. 20 м.</span></div>
