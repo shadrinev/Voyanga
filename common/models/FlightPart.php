@@ -67,7 +67,7 @@ class FlightPart
             'duration' => $this->duration,
             'departureAirport' => $this->departureAirport->localRu,
             'arrivalAirport' => $this->arrivalAirport->localRu,
-            'aircraftName'=>$this->aircraftName,
+            'aircraftCode'=>$this->aircraftCode,
         );
         return $ret;
 
