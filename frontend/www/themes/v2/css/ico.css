@@ -1,0 +1,40 @@
+.ico-voyasha {
+	display:inline-block;
+	width: 39px; height: 57px;
+	vertical-align: middle;
+	background: url(../images/slice.png) no-repeat 0px -476px;
+}
+.recommended-ticket .ticket .date-time-city .how-long .ico-path {
+	background: url(../images/slice.png) no-repeat -37px -33px;
+	width: 61px; height: 11px;
+}
+.ico-breakfast {
+	background: url(../images/slice.png) no-repeat -106px -768px;
+	width: 16px; height: 10px;
+	display: inline-block;
+}
+.ico-descr {
+	background: url(../images/ico.png) no-repeat -0px -23px;
+	width: 10px; height: 9px;
+	display: inline-block;
+}
+.ico-see-map {
+	background: url(../images/ico.png) no-repeat -0px -0px;
+	width: 16px; height: 11px;
+	display: inline-block;
+}
+.ico-wi-fi {
+	background: url(../images/ico.png) no-repeat -0px -41px;
+	width: 16px; height: 12px;
+	display: inline-block;
+}
+.ico-glass {
+	background: url(../images/ico.png) no-repeat -0px -53px;
+	width: 16px; height: 15px;
+	display: inline-block;
+}
+.ico-dog {
+	background: url(../images/ico.png) no-repeat -0px -68px;
+	width: 16px; height: 13px;
+	display: inline-block;
+}

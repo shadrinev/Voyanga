@@ -1,0 +1,26 @@
+@font-face {font-family: 'ALSRublRegular'; src: url('rouble.eot'); src: local('ALS Rubl'), local('ALSRubl'), url('rouble.woff') format('woff'), url('rouble.ttf') format('truetype'), url('rouble.svg#ALSRubl') format('svg');}
+
+.rur {font-size: inherit; line-height:normal; font-weight: normal; font-family: 'ALSRublRegular', sans-serif;}
+
+.center {margin:0 auto;}
+.float {float:left;}
+.clear {clear:both;}
+.border {outline:#C30 1px solid;}
+.bold {font-weight: bold;}
+.em {font-style: italic;}
+
+.f11 {font-size: 11px;}
+.f14 {font-size: 14px;}
+.f17 {font-size: 17px;}
+.f21 {font-size: 21px;}
+.f22 {font-size: 22px;}
+.f26 {font-size: 26px;}
+
+.rub {background: url(../images/rub.png) no-repeat 0 0; display: inline-block; vertical-align: baseline;}
+
+.hr {border: none; border-bottom: 1px solid #b6bcc4; background: none; margin-left: -32px;}
+
+.inline-block {display: inline-block;}
+
+.grey {color: #777a7f;}
+.bg-none {background: none !important;}
