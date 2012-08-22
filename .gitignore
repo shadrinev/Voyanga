@@ -12,6 +12,6 @@
 /backend/config/params-local.php
 
 # we will need it as only push to prod
-#/common/config/params-local.php
+/common/config/params-local.php
 
 #.DS_Store
