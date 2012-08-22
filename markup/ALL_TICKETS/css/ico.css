@@ -1,0 +1,10 @@
+.ico-voyasha {
+	display:inline-block;
+	width: 39px; height: 57px;
+	vertical-align: middle;
+	background: url(../images/slice.png) no-repeat 0px -476px;
+}
+.recommended-ticket .ticket .date-time-city .how-long .ico-path {
+	background: url(../images/slice.png) no-repeat -37px -33px;
+	width: 61px; height: 11px;
+}

@@ -50,6 +50,7 @@ function ResizeCenterBlock() {
 		var var_ticketsItems = $('.ticket-content');
 		var var_recomendedItems = $('.head-content');
 		var var_hotelItems = $('.hotels-tickets');
+		var var_descrItems = $('#descr');
 		var widthLeftBlock, 
 			widthMainBlock, 
 			widthFilterBlock, 
@@ -67,6 +68,8 @@ function ResizeCenterBlock() {
 			marginRightContent,
 			marginLeftContent,
 			widthContent,
+			var_widthDescrLeft,
+			var_widthStreet,
 			widthLogin;
 			
 		var widthWindow = $(window).width();
@@ -78,6 +81,8 @@ function ResizeCenterBlock() {
 		var var_leftBlockIsset = var_leftBlock.length > 0 && var_leftBlock.is(':visible');
 		var var_mainBlockIsset = var_mainBlock.length > 0 && var_mainBlock.is(':visible');
 		var var_filterBlockIsset = var_filterBlock.length > 0 && var_filterBlock.is(':visible');
+		
+		var var_descrIsset = var_descrItems.length > 0 && var_descrItems.is(':visible');
 		
 		if (! var_leftBlockIsset &&  ! var_filterBlockIsset && var_mainBlockIsset) {
 			if (widthBlock >= var_widthMAX) {
@@ -177,6 +182,8 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
+				
+				widthContent = var_widthMainBlockMAX;
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthLeftBlock = var_widthLeftBlockMID;
@@ -190,6 +197,8 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
+				
+				widthContent = var_widthMainBlockMAX;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
@@ -204,6 +213,8 @@ function ResizeCenterBlock() {
 				marginRightMainBlock = widthFilterBlock;
 				marginRightFilterBlock = 0;
 				marginLeftLeftBlock = 0;
+				
+				widthContent = Math.floor(var_widthMainBlockMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthMainBlockMAX - var_widthMainBlockMIN))) );
 			}
 		}
 		
@@ -223,11 +234,13 @@ function ResizeCenterBlock() {
 				marginLeftContent = 0;
 				widthContent = widthMainBlock - marginLeftContent;				
 				marginRightContent = 0;
+				var_widthDescrLeft = 587;
+				var_widthStreet = 'auto'
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthMainBlock = Math.floor(910 + ( (widthBlock - var_widthMID) / (var_valueMAX / (935 - 910))) );
 				widthLeftBlock = var_widthLeftBlockMID;
-				var_margin = 80;
+				var_margin = Math.floor(30 + ( (widthBlock - var_widthMID) / (var_valueMAX / (80 - 30))) );
 				marginRightMainBlock = var_margin;	
 				marginLeftMainBlock = widthLeftBlock + var_margin;
 				marginLeftLeftBlock = 0;
@@ -235,30 +248,35 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
-				
+			
 				marginLeftContent = 0;
-				widthContent = widthMainBlock - marginLeftContent;				
+				widthContent = widthMainBlock - marginLeftContent;
+							
 				marginRightContent = 0;
+				var_widthDescrLeft = Math.floor(557 + ((widthBlock - var_widthMID) / (var_valueMAX / (587 - 557))) );
+				var_widthStreet = 'auto'
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
 	
-				widthMainBlock = Math.floor((widthBlock  - widthLeftBlock));
-				if (widthMainBlock > var_widthMiddleBlockMAX) {
-					widthMainBlock = var_widthMiddleBlockMAX
-				}
-				var_margin = Math.floor((widthBlock - (widthMainBlock + widthLeftBlock)) / 2);
+				widthMainBlock = Math.floor(685 + ( (widthBlock - var_widthMIN) / (var_valueMIN / (910 - 685))) );
+				
+				var_margin = 30;
 				marginRightMainBlock = var_margin;	
 				marginLeftMainBlock = widthLeftBlock + var_margin;
-				marginLeftLeftBlock = var_margin;
+				marginLeftLeftBlock = 0;
 				
 				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
 				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
 				
-				marginLeftContent = 25;
-				widthContent = widthMainBlock - marginLeftContent;				
+				marginLeftContent = 0;
+				widthContent = widthMainBlock - marginLeftContent;					
 				marginRightContent = 0;
+				
+				var_widthDescrLeft = Math.floor(335 + ((widthBlock - var_widthMIN) / (var_valueMIN / (557 - 335))) );
+				
+				var_widthStreet = '210px';
 			}
 		}
 		
@@ -273,6 +291,15 @@ function ResizeCenterBlock() {
 		if (var_leftBlockIsset) {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock+'px');
 		}
+		if (var_descrIsset) {
+			$('#descr').find('.photo-slide-hotel').css('width', var_widthDescrLeft+'px');
+			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
+			$('#content .place-buy .street').css('width', var_widthStreet);
+			
+		}
+		if ($('.description .text').length > 0 && $('.description .text').is(':visible')) {
+			$(".description .text").dotdotdot({watch: 'window'});	
+		}
 		/*===*/
 		var_logoBlock.css('left', paddingLeftLogo+'px');
 		var_aboutBlock.css('left', (122 + paddingLeftLogo)+'px');
@@ -285,9 +312,8 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').css('width', mathWidthRicket+'px');
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
 			var_content.find('h1').find('span').hide();
+			var_ticketsItems.find('.ticket-items').addClass('small');
 			/*
-			var var_allWidthContent = var_widthMainBlockMIN + var_widthTicket;
-			var_ticketsItems.css('width', var_allWidthContent+'px');
 			var mathWidthRicket = Math.floor(var_widthTicket * 0.393);
 			var_recomendedItems.find('.recommended-ticket').css('width', (253 + mathWidthRicket)+'px');
 
@@ -298,9 +324,8 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').find('.ticket-items').removeClass('small');
 			$('.recommended-ticket').css('width', '318px');
 			var_content.find('h1').find('span').show();
+			var_ticketsItems.find('.ticket-items').removeClass('small');
 			/*
-			var_ticketsItems.css('width', var_widthMainBlockMAX+'px');			
-			var_recomendedItems.find('.ticket-items').removeClass('small');			
 			var_recomendedItems.find('.recommended-ticket').css('width', '318px');
 			var_recomendedItems.css('width', var_widthMainBlockMAX+'px');
 			var_recomendedItems.find('h1').find('span').show();*/

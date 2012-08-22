@@ -1,7 +1,6 @@
 var var_marginHowLong = 20;
 var var_marginHowLongSmall = 5;
 var var_paddingDateTime = 15;
-
 function widthHowLong() {
 	$('.date-time-city').each(function() {
 		var var_dataTimeCity = $(this);
@@ -28,7 +27,6 @@ function recalculationPadding() {
 			var_heightStart = var_start.height();
 			var_widthFinish = var_finish.width();
 			var_this.css('padding-left', (var_widthStart  + var_paddingDateTime) +'px').css('padding-right', (var_widthFinish + var_paddingDateTime) +'px');
-			var_this.find('.how-long').css('width','100%');
 	});
 	$('.ticket-content .ticket-items.small').each(function() {
 		var var_start, var_howLong, var_finish, var_widthStart, var_heightStart, var_widthFinish;
@@ -39,13 +37,11 @@ function recalculationPadding() {
 			var_widthStart = var_start.width();
 			var_heightStart = var_start.height();
 			var_widthFinish = var_finish.width();
-		if ($(this).width() <= 580) {
+		if ($(this).width() < 600) {
 			var_this.css('padding-left', (var_widthStart  + var_paddingDateTime) +'px').css('padding-right', (var_widthFinish + var_paddingDateTime) +'px');
-			var_this.find('.how-long').css('width','100%');
 		}
 		else {
 			var_this.css('padding-left', (var_widthStart + var_marginHowLong + var_paddingDateTime) +'px').css('padding-right', (var_widthFinish + var_marginHowLong + var_paddingDateTime) +'px');
-			var_this.find('.how-long').css('width','100%');
 		}	
 	});
 }
@@ -89,55 +85,34 @@ function minimizeListTime() {
 
 function smallCityName() {
 	var var_simbolMax = 11;
-	var	var_simbolMaxBig = 16;
-	if ($('.recommended-ticket .ticket-items').length > 0 && $('.recommended-ticket .ticket-items').is(':visible')) {
-		if ($('.recommended-ticket .ticket-items').hasClass('small')) {
-			$('.recommended-ticket .ticket-items.small').find('.city').each(function() {
-				var var_smallName = $(this);
-				var var_name = var_smallName.attr('rel');
-				var_name = var_name.replace(/\s+/g,'');
-				var var_lengthName = var_name.length;
-				if (var_lengthName > var_simbolMax) {
-					var_name = var_name.slice(0, var_simbolMax);
-					$(this).text(var_name+'...');
-				}
-			});
-		}
-		else {
-			$('.recommended-ticket .ticket-items').find('.city').each(function() {
-				var var_smallName = $(this);
-				var var_name = var_smallName.attr('rel');
-				var_name = var_name.replace(/\s+/g,'');
-				var var_lengthName = var_name.length;
-				if (var_lengthName > var_simbolMaxBig) {
-					var_name = var_name.slice(0, var_simbolMaxBig);
-					$(this).text(var_name+'...');
-				}
-				else {
-					$(this).text(var_name);
-				}
-			});
-		}
+	if ($('.recommended-ticket .ticket-items.small').length > 0 && $('.recommended-ticket .ticket-items.small').is(':visible')) {
+		$('.recommended-ticket .ticket-items.small').find('.city').each(function() {
+			var var_smallName = $(this);
+			var var_name = var_smallName.text();
+			var_name = var_name.replace(/\s+/g,'');
+			var var_lengthName = var_name.length;
+			if (var_lengthName > var_simbolMax) {
+				var_name = var_name.slice(0, var_simbolMax);
+				$(this).text(var_name+'...');
+			}
+		})
 	}
 }
 // ОТВЕЧАЕТ ЗА СЛАЙДЕР НА МАЛЕНЬКОМ БИЛЕТЕ!
-function inTheTwoLines() {
+function otherTimeSlide() {
 	var var_otherTime = $('.recommended-ticket .ticket-items .other-time');
 	var_otherTime.each(function() {
 		var var_lengthLI = $(this).find('ul.minimize li').length;
 		var var_heightUL = $(this).find('ul.minimize').height();
 		if (var_heightUL > 30 && var_heightUL < 40) {
-			$(this).find('.variation').css('margin-top', '0px');
+			$(this).css('padding', '0px 1px 0px 18px');
 		}
-		else if (var_heightUL > 40) {
-			$(this).find('.variation').css('margin-top', '0px');
+		if (var_heightUL > 40) {
+			$(this).css('padding', '0px 1px 0px 18px');
 			var var_paddingTop = ($(this).height() - 40) / 2;
 			console.log(var_paddingTop);
 			$(this).find('.left').css('top', var_paddingTop+'px');
 			$(this).find('.right').css('top', var_paddingTop+'px');
-		}
-		else {
-			$(this).find('.variation').css('margin-top', '10px');
 		}
 		for (i = 0; i < var_lengthLI; i++) {
 			var var_LI = $(this).find('ul.minimize li').eq(i);
@@ -149,9 +124,6 @@ function inTheTwoLines() {
 			}
 		}
 	});
-}
-function otherTimeSlide() {
-	var var_otherTime = $('.recommended-ticket .ticket-items .other-time');
 	var var_btnLeft = var_otherTime.find('.left');
 	var_btnLeft.click(function(e) {
 		e.preventDefault();
@@ -206,16 +178,10 @@ function otherTimeSlide() {
 		}
 	});
 }
-
-
-
 function resizeAllWindow() {
-	smallCityName();
 	recalculationPadding();
-	inTheTwoLines();	
 }
 $(window).resize(resizeAllWindow);
-$(window).load(inTheTwoLines);
 $(window).load(smallCityName);
 $(window).load(otherTimeSlide);
 $(window).load(widthHowLong);
@@ -224,11 +190,3 @@ $(window).load(minimizeListTime);
 function ResizeTicket() {
 	$(window).resize(centerBuyTikets);
 }
-$(function() {
-	$('.recommended-ticket .ticket-items').find('.city').each(function() {
-		var var_smallName = $(this);
-		var var_name = var_smallName.text();
-			var_name = var_name.replace(/\s+/g,'');
-		$(this).attr('rel', var_name);
-	});
-});

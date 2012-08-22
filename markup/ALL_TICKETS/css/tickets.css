@@ -1,3 +1,4 @@
+
 /* Tickets BIG */
 .ticket-items {
 	background: none repeat scroll 0 0 #F4F7F9;
@@ -48,7 +49,7 @@
 .ticket-items .content {
 	position: relative; z-index: 10;
 	padding: 0 160px 0px 120px;
-	
+	height: 100%;
 }
 .ticket-items .content .airlines {
 	width: 120px; height: 100%;;
@@ -218,12 +219,6 @@
 	color: #787d89;
 	padding-right: 17px;
 	background: url(../images/ico-minimize.png) no-repeat right center;
-	height: 18px;
-    padding-left: 0px;
-    position: relative;
-    right :auto;
-    top: auto;
-    width: auto;
 }
 .ticket-items .content .center-ticket .other-time .btn-minimize.up {
 	background: url(../images/ico-minimize-up.png) no-repeat right center;
@@ -413,8 +408,7 @@
 .recommended-ticket {
 	position: relative;
 	width: 318px;
-	float: left;
-	margin-bottom: 43px;
+	margin-bottom: 21px;
 }
 .recommended-ticket .ticket-items {
 	background: none repeat scroll 0 0 #F4F7F9;
@@ -433,16 +427,15 @@
     z-index: 300;
 }
 .recommended-ticket .ticket-items .content {
-	padding: 15px 20px 0px 20px;
+	padding: 15px 20px;
 }
 .recommended-ticket .ticket-items .content .airlines-line {
 	font-size: 20px;
-	padding-bottom: 10px;
+	margin-bottom: 10px;
 }
 .recommended-ticket .ticket-items .content .date-time-city {
 	position: relative;
 	margin-left: -15px;
-	min-width: 72px;
 }
 .recommended-ticket .ticket-items .content .date-time-city .start .date, .recommended-ticket .ticket-items .content .date-time-city .finish .date, .recommended-ticket .ticket-items .content .date-time-city .start .city, .recommended-ticket .ticket-items .content .date-time-city .finish .city, .recommended-ticket .ticket-items .content .date-time-city .start .airport, .recommended-ticket .ticket-items .content .date-time-city .finish .airport {
 	line-height: 15px;
@@ -450,7 +443,7 @@
 .recommended-ticket .ticket-items .content .how-long {
 	margin-left: 0px;
 	margin-right: 0px;
-	padding-top: 5px;	
+	margin-top: 5px;	
 }
 .recommended-ticket .ticket-items .content .how-long .path, .recommended-ticket .ticket-items .content .how-long .time {
 	text-align: center;
@@ -475,9 +468,9 @@
     background: url("../images/bg-other-time.png") repeat scroll 0 0 transparent;
     border-top: 1px solid #C0C3C6;
     color: #4B525C;
-    height: 40px;
+    min-height: 30px;
     margin: 8px -19px 0px -18px;
-    padding: 0px 1px 0px 18px;
+    padding: 10px 1px 0px 18px;
     position: relative; z-index: 102;
 }
 .recommended-ticket .ticket-items .content .other-time .left {
@@ -513,7 +506,6 @@
 }
 .recommended-ticket .ticket-items .content .other-time .variation {
 	overflow: hidden;
-	margin-top: 10px;
 }
 
 .recommended-ticket .ticket-items .content .other-time ul.minimize {
@@ -578,8 +570,6 @@
     display: block;
     float: left;
     width: 74px;
-    font-size: 11px;
-    line-height: 16px;
 }
 .recommended-ticket .ticket-items .content .details-selecte .details a {
     border-bottom: 1px dashed;
@@ -632,7 +622,7 @@
 	min-width: 250px;
 }
 .recommended-ticket .ticket-items.small .content .how-long {
-	padding-top: 20px;	
+	margin-top: 20px;	
 }
 .recommended-ticket .ticket-items.small  .content .how-long .path, .recommended-ticket .ticket-items.small  .content .how-long .time {
 	display: none;
@@ -642,490 +632,4 @@
 }
 .recommended-ticket .ticket-items.small .content .details-selecte .btn-cost {
 	width: 125px;
-}
-
-/* HOTEL */
-
-.hotels-tickets {
-	background: none repeat scroll 0 0 #F4F7F9;
-    color: #1D222B;
-    position: relative;
-    padding: 0; margin-bottom: 42px;
-    padding-bottom: 3px;
-}
-.hotels-tickets  .lt {
-	background: url(../images/bg-recommended-ticket.png) no-repeat 0 0px;
-	position: absolute; top: 0px; left: 0px;
-	width: 8px; height: 5px;
-	display: block;
-	z-index: 3;
-}
-
-.hotels-tickets  .rt {
-	background: url(../images/bg-recommended-ticket.png) no-repeat -8px 0px;
-	position: absolute; top: 0px; right: 0px;
-	width: 8px; height: 5px;
-	display: block;
-	z-index: 3;
-}
-
-.hotels-tickets  .lv {
-	background: url(../images/bg-recommended-ticket.png) no-repeat 0px bottom;
-	position: absolute; top: 0px; left: 0px;
-	width: 8px; height: 100%;
-	display: block;
-	z-index: 2;
-}
-.hotels-tickets  .rv {
-	background: url(../images/bg-recommended-ticket.png) no-repeat -8px bottom;
-	position: absolute; top: 0px; right: 0px;
-	width: 8px; height: 100%;
-	display: block;
-	z-index: 2;
-}
-.hotels-tickets  .bh {
-	background: url(../images/bg-recommended-ticket-hor.png) repeat-x 0px -8px;
-	position: absolute; bottom: 0px; left: 0px;
-	width: 100%; height: 8px;
-	display: block;
-	z-index: 1;
-}
-.hotels-tickets .content {
-	position: relative; z-index: 10;
-	padding: 10px 0px 8px 0px;
-	height: 100%;
-}
-.hotels-tickets .content .full-info {
-	margin: 0px 18px 8px 12px; padding: 0px 153px 0px 135px;
-	position: relative;
-	min-height: 117px;
-}
-
-.hotels-tickets .content .full-info .preview-photo {
-	width: 117px; height: 117px;
-	overflow: hidden;
-	position: absolute;
-	top: 0px; left: 0px;
-}
-.how-much {
-	background: url("../images/bg-photo-preview.png") no-repeat scroll 0 0 transparent;
-    bottom: 0;
-    color: #FFFFFF;
-    font-size: 11px;
-    height: 23px;
-    left: 0;
-    padding-left: 26px;
-    padding-top: 2px;
-    position: absolute;
-    width: 117px;
-}
-.hotels-tickets .content .full-info .choose-a-hotel {
-	width: 135px; height: 117px;
-	position: absolute;
-	top: 0px; right: 0px;
-	color: #202328;
-	font-size: 11px;
-}
-.hotels-tickets .content .full-info .choose-a-hotel .btn-cost {
-	position: absolute; top: 60px;
-	width: 130px;
-}
-.hotels-tickets .content .full-info .choose-a-hotel .details {
-	display: inline-block;
-	position: absolute;
-	color: #292d34; font-size: 11px;
-	border-bottom: 1px dashed;
-	line-height: 12px; bottom: -1px;
-}
-.hotels-tickets .content .full-info .choose-a-hotel .rating {
-	text-align: right;
-}
-.hotels-tickets .content .full-info .choose-a-hotel .rating .value {
-	display: inline-block;
-	font-size: 20px;
-}
-.hotels-tickets .content .full-info .choose-a-hotel .rating span.text {
-	display: inline-block;
-	line-height: 9px;
-	text-align: left;
-	margin-left: 5px;
-}
-.description .title {
-	line-height: 27px;
-	white-space: nowrap;
-}
-.description .place {
-	line-height: 18px;
-	color: #292d34;
-	font-size: 14px;
-	white-space: nowrap;
-}
-.description .place .street {
-	display: inline-block;
-    height: 17px;
-    max-width: 365px;
-    overflow: hidden;
-    padding-right: 20px;
-    position: relative;
-}
-.description .text {
-	margin-top: 10px;
-	line-height: 20px;
-	color: #676e7e;
-	overflow: hidden;
-	height: 63px;
-	position: relative;
-}
-.description h2 {
-	font-size: 18px;
-	color: #1a1b1e;
-	display: inline-block;
-	margin-right: 5px;
-	position: relative;
-	height: 20px;
-	overflow: hidden;
-    max-width: 365px;
-    padding-right: 20px;
-    margin-bottom: 0px;
-    letter-spacing: normal;
-}
-.description > .title > .stars {
-	margin-left: -8px;
-}
-
-.description .place .in-the-map {
-    display: inline-block;
-    padding-left: 0px;
-    margin-left: -2px;
-    vertical-align: top;
-    font-size: 11px;
-}
-.hotels-tickets .description .place .in-the-map span.link {
-	border-bottom: 1px dashed;
-}
-.hotels-tickets .description .place .in-the-map .ico-see-map {
-	vertical-align: middle;
-}
-.hotels-tickets .description h2 .gradient, .description .place .street .gradient {
-	display: block;
-	width: 46px; height: 100%;
-	position: absolute; right: 0px; top: 0px;
-	z-index: 1;
-	background: url(../images/gradient-hotel-right.png) repeat-y right top;
-}
-.hotels-tickets.small .description h2 .gradient, .hotels-tickets.small .description .place .street .gradient {
-	display: block;
-}
-.description .text .gradient {
-	display: block;
-	width: 100%; height: 16px;
-	position: absolute; left: 0px; bottom: 0px;
-	z-index: 1;
-	background: url(../images/gradient-hotel-bottom.png) repeat-x right bottom;
-}
-.hotels-tickets.small .description h2 {
-	overflow: hidden; width: 185px;
-}
-.hotels-tickets.small .description .place .street {
-	overflow: hidden; width: 185px;
-}
-.hotels-tickets .content > .details {
-	background: url("../images/bg-hotel.png") repeat scroll 0 0 transparent;
-    border-top: 1px solid #AEAEAE;
-    padding: 8px 8px 1px;
-    position: relative;
-}
-.hotels-tickets .content .details .lv {
-	background: url(../images/bg-hotel-ticket.png) no-repeat 0px top;
-	position: absolute; top: 0px; left: 0px;
-	width: 8px; height: 100%;
-	display: block;
-	z-index: 2;
-}
-.hotels-tickets .content .details .rv {
-	background: url(../images/bg-hotel-ticket.png) no-repeat -8px top;
-	position: absolute; top: 0px; right: 0px;
-	width: 8px; height: 100%;
-	display: block;
-	z-index: 2;
-}
-.hotels-tickets .content .details ul li {
-	margin-bottom: 8px;
-}
-.hotels-tickets .content .details ul li .items {
-	background: #fff;
-	border-radius: 5px 5px 5px 5px;
-	box-shadow: 0px 1px 0px #a6a7ab;
-	padding: 5px 9px 2px 9px;
-	line-height: 20px;
-	vertical-align: bottom;
-}
-.hotels-tickets .content .details ul li .items .float {
-	font-size: 11px;
-}
-.hotels-tickets .content .details ul li .items .text {
-	font-size: 16px;
-	font-weight: bold;
-	color: #2174a3;
-	letter-spacing: 0.02em;
-}
-.hotels-tickets .content .details ul li .items .how-cost {
-	float: right;
-	line-height: 19px;
-}
-.hotels-tickets .content .details ul li .items .cost {
-	color: #202328; 
-	font-size: 22px;
-	font-weight: bold;
-}
-.hotels-tickets .content .details ul li .items .ico-breakfast {
-	margin-left: 10px;
-}
-.tab-ul {
-	position: absolute;
-	bottom: -32px; left: 10px;
-	background: url(../images/slice.png) no-repeat 0px -784px;
-	width: 168px;
-	font-size: 11px; text-shadow: 0px 1px 0px #FFF;
-	text-align: center;
-	height: 23px;
-}
-.tab-ul a {
-	letter-spacing: -0.03em;
-	background: url(../images/down-shift.png) no-repeat right -5px;
-	padding-right: 10px;
-}
-.tab-ul a.active {
-	background-position: right -30px;
-}
-/* POP UP */
-.top-head-tickets, .middle-head-tickets  {
-	background: url("../images/bg-popup-fly.png") no-repeat scroll 0 0 transparent;
-    min-height: 34px;
-    overflow: hidden;
-    padding-left: 33px;
-    padding-top: 13px;
-    width: 589px;
-}
-.middle-head-tickets {
-	background: url(../images/bg-popup-fly.png) no-repeat 0 -250px;
-}
-.top-head-tickets .date, .middle-head-tickets .date{
-	float: left;
-	padding-top: -px;
-	font-size: 15px;
-	color: #4e4f54;
-	text-shadow: 0px 1px 0px #FFF;
-	width: 115px;
-}
-.top-head-tickets h3, .middle-head-tickets h3  {
-	float: left;
-	text-shadow: 0px 1px 0px #FFF;
-	color: #1d222b;
-	font-size: 24px;
-}
-.tickets-details .content {
-	padding-top: 23px;
-	padding-bottom: 13px;
-	padding-left: 13px;
-	padding-right: 13px;
-	background: #f4f7f9;
-	overflow: hidden;
-}
-.tickets-details .content .start-path {
-	overflow: hidden;
-}
-.tickets-details .content .end-path {
-	overflow: hidden;
-}
-.tickets-details .content .information {
-	float: left;
-}
-.tickets-details .content .information .start-fly {
-	overflow: hidden;
-	width: 430px;
-	height: 25px;
-}
-.tickets-details .content .information .time {
-	width: 64px;
-	font-size: 20px;
-	color: #111112;
-	padding-right: 28px;
-	float: left;
-	text-align: right;
-}
-.tickets-details .content .information .icon {
-	width: 43px;
-	float: left;
-	height: 35px;
-	background: url(../images/ico-fly-info.png) no-repeat 0px 0px;
-}
-.tickets-details .content .information .icon.jet {
-	background-position: 0px 0px;
-}
-.tickets-details .content .information .place {
-	float: left;
-}
-.tickets-details .content .information .place span.city {
-	font-size: 20px;
-	color: #111112;
-}
-.tickets-details .content .information .place span.airport {
-	font-size: 13px;
-	color: #525559;
-}
-.tickets-details .content .aviacompany {
-	float: right;
-	width: 160px;
-	padding-top: 7px;
-	color: #1d222b;
-}
-.tickets-details .content .information .time-fly {
-	height: 23px;
-	overflow: hidden;
-}
-.tickets-details .content .information .time-fly .icon.wait {
-	margin-left: 92px;
-	width: 43px;
-	float: left;
-	height: 23px;
-	background: url(../images/ico-fly-info.png) no-repeat 0px -30px;
-}
-.tickets-details .content .information .time-fly .info {
-	float: left;
-	color: #aaaeb3;
-	padding-top: 0px;
-}
-.tickets-details .content .information .finish-fly {
-	width: 430px;
-	overflow: hidden;
-	height: 30px;
-}
-.tickets-details .content .information .finish-fly .icon {
-	background-position: 0px -158px;
-}
-.tickets-details .content .information .finish-fly.no-way .time {
-	font-size: 16px;	
-}
-.tickets-details .content .information .finish-fly.no-way .icon {
-	background-position: 0px -46px;
-}
-.tickets-details .content .information .finish-fly.no-way  .place span.city {
-	font-size: 16px;
-}
-
-.tickets-details .content .transitum {
-	height: 22px;
-	border-top:1px solid #b9bbbd;
-	border-bottom:1px solid #b9bbbd;
-	padding-left: 135px;
-	color: #1c81bb;
-	font-size: 12px;
-	background: url(../images/ico-fly-info.png) no-repeat 92px -82px;
-}
-
-.tickets-details .content .end-path .start-fly {
-	padding-top: 6px;
-}
-.tickets-details .content .end-path .start-fly .icon.jet {
-	background-position: 0px -105px;
-	margin-top: -6px;
-}
-.tickets-details .content .end-path .start-fly .time {
-	font-size: 16px;	
-}
-.tickets-details .content .end-path .start-fly  .place span.city {
-	font-size: 16px;
-}
-.tickets-details .content .end-path .finish-fly .icon.jet {
-	background-position: 0px -158px;
-}
-.tickets-details .content .mid-path {
-	overflow: hidden;
-}
-.tickets-details .content .mid-path .start-fly {
-	padding-top: 6px;
-}
-.tickets-details .content .mid-path .start-fly .icon.jet {
-	background-position: 0px -105px;
-	margin-top: -6px;
-}
-.tickets-details .content .mid-path .start-fly .time {
-	font-size: 16px;	
-}
-.tickets-details .content .mid-path .start-fly  .place span.city {
-	font-size: 16px;
-}
-.tickets-details .content .mid-path .finish-fly .icon.jet {
-	background-position: 0px -46px;
-}
-.tickets-details .lines {
-	background: url(../images/dashed-ticket-hor.gif) repeat-x;
-	height: 1px; 
-	border: none;
-	margin: 0px;
-}
-.tickets-details .yes {
-	overflow: hidden;
-	text-align: right;
-	padding: 5px 35px 0px 13px;
-}
-.tickets-details .yes .btn-order {
-	display: inline-block;
-	text-align: left !important;
-	margin-left: 10px;
-	line-height: 15px;
-}
-.tickets-details .other-time {
-	float: left;
-	line-height: 17px;
-	max-width: 350px;
-}
-.tickets-details .other-time .variation {
-   	margin-left: 15px;
-    margin-top: 5px;
-    overflow: hidden;
-}
-.tickets-details .other-time ul.minimize {
-    margin-left: 0;
-    margin-top: 0;
-    overflow: hidden;
-    padding-bottom: 4px;
-}
-.tickets-details .other-time ul.minimize li {
-    background: url("../images/bg-dotted.png") no-repeat scroll right center transparent;
-    float: left;
-    margin-left: -3px;
-    padding-left: 6px;
-    padding-right: 6px;
-}
-.tickets-details .other-time ul.minimize li input {
-    display: none;
-}
-.tickets-details .other-time ul.minimize li label {
-    cursor: pointer;
-    display: block;
-    height: 18px;
-    text-align: center;
-    width: 40px;
-}
-.tickets-details .other-time ul.minimize li label span {
-    background: none repeat scroll 0 0 transparent;
-    border-bottom: 1px dashed;
-    color: #1C81BB;
-    display: inline;
-    font-family: Verdana;
-    position: relative;
-    text-align: left;
-}
-.tickets-details .other-time ul.minimize li:last-child {
-    background: none repeat scroll 0 0 transparent;
-    padding-right: 0;
-}
-.tickets-details .other-time ul.minimize li.active label {
-    background: url("../images/bg-selecte-time.png") no-repeat scroll 0 1px transparent;
-}
-.tickets-details .other-time ul.minimize li.active label span {
-    border: medium none;
-    color: #FFFFFF;
 }

@@ -1,3 +1,50 @@
+function sliderPhoto(that) {
+	var var_this = $(that);
+	var_this.find('ul').wrap('<div class="slide"></div>');
+	var var_len = var_this.find('ul li').length;
+	var_this.find('ul li').eq(0).addClass('active');
+	var var_widthAll = var_this.width();
+	var var_widthUL = (var_this.find('ul li').width() * var_len) + var_len;
+	var_this.find('ul').css('width', var_widthUL+'px');
+	var_this.find('.slide').append('<div class="left-navi"></div><div class="right-navi"></div>');
+	var var_widthULminus = var_widthUL - var_widthAll;
+	$('.right-navi').click(function() {
+		var var_widthOne = (var_this.find('ul .active').width() + 1);
+		var var_margin = var_this.find('ul').css('margin-left');
+		var_margin = Math.abs(parseInt(var_margin.slice(0,-2)));
+		if ((var_margin+var_widthOne) <= var_widthULminus) {
+			var_this.find('ul').animate({'margin-left' : '-='+var_widthOne+'px'}, 500);
+			var_this.find('ul .active').removeClass('active').next().addClass('active');
+		}	
+		else {
+			var var_widthEnd = var_margin - var_widthAll;
+			if ((var_widthEnd + var_margin) == var_widthULminus) {
+				var_this.find('ul').animate({'margin-left' : '-='+var_widthEnd+'px'}, 500);
+				var_this.find('ul li').removeClass('active');
+				var_this.find('ul li').eq(var_len-1).addClass('active');
+			}			
+		}		
+	});
+	$('.left-navi').click(function() {
+		var var_widthOne = (var_this.find('ul .active').width() + 1);
+		var var_margin = var_this.find('ul').css('margin-left');
+		var_margin = Math.abs(parseInt(var_margin.slice(0,-2)));
+		console.log((var_margin-var_widthOne) +' '+ var_widthAll);
+		if ((var_margin-var_widthOne) > 0) {
+			var_this.find('ul').animate({'margin-left' : '+='+var_widthOne+'px'}, 500);
+			var_this.find('ul .active').removeClass('active').prev().addClass('active');
+		}	
+		else {
+			var_this.find('ul').animate({'margin-left' : '0px'}, 500);
+			var_this.find('ul li').removeClass('active');
+			var_this.find('ul li').eq(0).addClass('active');			
+		}	
+		console.log((var_margin-var_widthOne) +' '+ var_widthAll+' '+var_widthOne);	
+	});
+}
+$(window).load(function() {
+	sliderPhoto('.photo-slide-hotel');
+});
 function checkUlList() {
 	$('.details').each(function() {
 		console.log($(this).width());
@@ -33,13 +80,12 @@ function checkUlList() {
 }
 $(window).load(checkUlList);
 $(function() {
-	$(".description .text").dotdotdot({watch: 'window'});
-	
 	
 	$('.order-hide').click(function(e){ 
 		e.preventDefault();
 		$('.recomended-content').slideUp();
 		$('.minimize-rcomended .btn-minimizeRecomended').animate({top : '0px'}, 500);
+		$(this).fadeOut();
 	});
 	$('.minimize-rcomended .btn-minimizeRecomended').click(function() {
 		$('.recomended-content').slideDown();
@@ -49,6 +95,7 @@ $(function() {
 		otherTimeSlide();
 		widthHowLong();
 		setTimeout(smallTicketHeight, 100);
+		$('.order-hide').fadeIn();
 	});
 	$('.order-show').click(function() {
 		$('.recomended-content').slideDown();
@@ -72,5 +119,19 @@ $(function() {
 			$('#'+var_nameBlock).show();
 		}
 	});
-
+	
+	$('.read-more').click(function() {
+		if (! $(this).hasClass('active')) {
+			$(this).prev().css('height', 'auto');
+			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
+			$(this).addClass('active').text('Свернуть');
+		}
+		else {
+			$(this).prev().css('height', '54px');
+			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
+			$(this).removeClass('active').text('Подробнее');
+		}
+		
+		
+	});
 });
