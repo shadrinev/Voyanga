@@ -1,5 +1,5 @@
 <?php
-/* params-private */
+/* params-home */
 
 /**
  * This file contains private application parameters that may vary in different environment.
