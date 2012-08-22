@@ -13,6 +13,7 @@ class DateTimeHelper
             $timestamp = $dateTime;
         else
             $timestamp = strtotime($dateTime);
-        return date('D, d M y H:i:s', $timestamp)." +0000";
+        //2012-08-22T04:06Z
+        return date('Y-m-d', $timestamp).'T'.date('H:i',$timestamp).'Z';
     }
 }
