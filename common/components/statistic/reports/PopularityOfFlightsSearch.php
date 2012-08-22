@@ -54,6 +54,8 @@ class PopularityOfFlightsSearch extends Report
 
 class PopularityOfFlightsSearchResult extends ReportResult
 {
+    const PAGE_SIZE = 100;
+
     private $departureCity;
     private $arrivalCity;
 
@@ -85,6 +87,9 @@ class PopularityOfFlightsSearchResult extends ReportResult
     {
         return parent::search($caseSensitive, array(
             'keyField' => 'primaryKey',
+            'pagination'=>array(
+                'pageSize' => self::PAGE_SIZE
+            ),
             'sort'=>array(
                 'defaultOrder'=>'value desc',
                 'attributes'=>array(

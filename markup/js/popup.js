@@ -96,7 +96,9 @@ $(document).ready(function() {
 	$('a#popuphotel').click(function(e) {
 		e.preventDefault();
 		CreateBox(text4); 
-			LinkDone();			
+			LinkDone();	
+			sliderPhoto('.photo-slide-hotel');
+		
 	});
 	$('a.in-the-map').click(function(e) {
 		e.preventDefault();

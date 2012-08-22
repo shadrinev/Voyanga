@@ -1,0 +1,91 @@
+.btn-selecte {
+	background: url("../images/slice.png") no-repeat 0px -534px;
+	width: 190px; height: 27px;
+	display: inline-block;
+	color: #FFF;
+	font-weight: bold; text-shadow: 0px 1px 0px #0b5b88; font-size: 14px;
+	padding: 10px 0px 0px 14px;
+}
+.btn-selecte .price {
+	margin-left: 8px;
+}
+.btn-selecte .price, .btn-selecte .rur  {
+	font-size: 26px;
+	vertical-align: top;
+}
+.btn-selecte .rur {
+	display: inline-block;
+	margin-top: -2px;
+	margin-left: 5px;
+}
+.btn-order {
+	color: #FFF;
+	width: 130px;
+	height: 30px;
+	background: url(../images/slice.png) no-repeat -211px -534px;
+	display: block;
+	padding-top: 9px;
+	padding-left: 15px;
+	margin-bottom: 7px;
+	text-shadow: 0px 1px 0px #850606;
+	margin-top: 5px;
+}
+.btn-order span {
+	display: inline-block;
+	vertical-align: middle;
+}
+.btn-order .cost {
+	font-size: 26px; 
+	font-weight: bold;
+	margin-left: 0px;
+	margin-right: 5px;	
+}
+.btn-order .rur {
+	height: 21px;
+}
+.btn-order:hover {
+	text-decoration: none;
+}
+.btn-look {
+	background: url(../images/slice.png) no-repeat 0px -612px;
+	width: 117px; height: 26px;
+	cursor: pointer;
+	display: inline-block;
+	text-indent: -9999px;
+}
+
+.btn-cost {
+	background: url("../images/slice.png") no-repeat right -690px;
+	min-width: 110px; height: 26px;
+	display: inline-block;
+	color: #FFF;
+	font-weight: bold; text-shadow: 0px 1px 0px #0b5b88; font-size: 14px;
+	padding: 11px 5px 0px 0px;
+	position: relative;
+	line-height: 16px !important;
+	text-align: center;
+	margin-left: 1px;
+}
+.btn-cost .l {
+	background: url("../images/slice.png") no-repeat scroll left -690px transparent;
+    display: block;
+    height: 37px; width: 10px;
+    left: -3px; top: 0;
+    position: absolute;
+}
+.btn-cost  .price, .btn-cost  .rur  {
+	font-size: 26px;
+	vertical-align: top;
+	position: relative;
+	z-index: 100;
+}
+.btn-cost  .rur {
+	display: inline-block;
+	margin-top: -3px;
+	margin-left: 2px;
+}
+.btn-cost .text {
+	position: relative;
+	z-index: 100;
+	margin-right: 3px;
+}

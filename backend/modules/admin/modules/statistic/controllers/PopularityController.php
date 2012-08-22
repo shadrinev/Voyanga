@@ -7,6 +7,8 @@
  */
 class PopularityController extends Controller
 {
+    const PAGE_SIZE = 100;
+
     public function actionFlights()
     {
         $report = new PopularityOfFlightsSearch();

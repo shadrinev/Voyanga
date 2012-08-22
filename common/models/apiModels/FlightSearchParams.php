@@ -4,8 +4,8 @@ class FlightSearchParams extends CComponent
     public $routes;
     public $flight_class;
     public $adultCount;
-    public $childCount;
-    public $infantCount;
+    public $childCount = 0;
+    public $infantCount = 0;
     private $key;
 
     public function addRoute($routeParams)
@@ -97,5 +97,42 @@ class FlightSearchParams extends CComponent
     {
         $valid = ($this->flight_class) and (count($this->routes)>0);
         return $valid;
+    }
+
+    public function getJsonObject()
+    {
+        $jsonObject = array(
+            'destinations' => $this->getRoutesJsonObject(),
+            'adt' => $this->adultCount,
+            'chd' => $this->childCount,
+            'inf' => $this->infantCount,
+            'serviceClass' => $this->flight_class,
+            'isRoundTrip' => $this->isRoundTrip()
+        );
+        return $jsonObject;
+    }
+
+    private function getRoutesJsonObject()
+    {
+        $routes = array();
+        foreach ($this->routes as $route)
+        {
+            $routes = $route->getJsonObject();
+        }
+        return $routes;
+    }
+
+    private function isRoundTrip()
+    {
+        if (sizeof($this->routes)==2)
+        {
+            $startCityFirst = $this->routes[0]->departureCityId;
+            $endCityFirst = $this->routes[0]->arrivalCityId;
+            $startCityLast = $this->routes[1]->departureCityId;
+            $endCityLast = $this->routes[1]->arrivalCityId;
+            if (($endCityFirst == $startCityLast) and ($endCityLast == $startCityFirst))
+                return true;
+        }
+        return false;
     }
 }

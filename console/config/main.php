@@ -21,6 +21,7 @@ return CMap::mergeArray (
         'basePath'=>'console',
         'params'=>$params,
         'preload'=>array('log'),
+        'language' => 'ru_RU',
 
         'import'=>array(
                 'site.common.extensions.*',
@@ -43,6 +44,9 @@ return CMap::mergeArray (
         ),
 
         'components'=>array(
+            'morphy' => array(
+                'class' => 'application.extensions.phpmorphy.PhpMorphyComponent'
+            ),
             'syncCacheExecuter' => array(
                 'class'=>'application.components.SyncCacheExecuter',
                 'frontends' => array(

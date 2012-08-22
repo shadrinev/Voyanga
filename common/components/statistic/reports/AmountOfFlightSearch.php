@@ -49,7 +49,6 @@ class AmountOfFlightSearch extends Report
             "mapreduce" => $this->result->getCollectionName(),
             "map" => $map,
             "reduce" => $reduce,
-            //"query" => array("modelName" => "FlightSearch"),
             "out" => $this->result->getCollectionName()
         );
         return $commands;

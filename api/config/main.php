@@ -46,7 +46,7 @@ return CMap::mergeArray(
             'v1' => array(
                 'class' => 'application.modules.v1.VersionOneModule',
                 'modules' => array(
-                    'avia',
+                    'flight',
                     'hotel',
                     'tour'
                 )

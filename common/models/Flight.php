@@ -69,23 +69,21 @@ class Flight extends CComponent
         return $this->arrivalCity;
     }
 
+    public function getArrivalDate()
+    {
+        $last = end($this->flightParts);
+        return $last->timestampEnd;
+    }
+
     public function getJsonObject()
     {
-        /**
-         * public $flightParts = array();
-        public $transits = array();
-        public $departureCityId;
-        public $arrivalCityId;
-        public $departureDate;
-        public $fullDuration = 0;
-        private $departureCity;
-        private $arrivalCity;
-         */
-        $ret = array('departureCity'=>$this->getDepartureCity()->localRu,
-            'arrivalCity'=>$this->getArrivalCity()->localRu,
-            'departureDate'=>$this->departureDate,
-            'fullDuration'=>$this->fullDuration,
-            'flightParts'=>array()
+        $ret = array(
+            'departureCity' => $this->getDepartureCity()->localRu,
+            'arrivalCity' => $this->getArrivalCity()->localRu,
+            'departureDate' => DateTimeHelper::formatForJs($this->departureDate),
+            'arrivalDate' => DateTimeHelper::formatForJs($this->getArrivalDate()),
+            'fullDuration' => $this->fullDuration,
+            'flightParts' => array()
         );
         foreach($this->flightParts as $flightPart){
             $ret['flightParts'][] = $flightPart->getJsonObject();

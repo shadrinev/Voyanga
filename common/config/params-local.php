@@ -1,9 +1,9 @@
 <?php
+/* params-private */
+
 /**
- * User: Kuklin Mikhail (kuklin@voyanga.com)
- * Company: Easytrip LLC
- * Date: 04.05.12
- * Time: 16:13
+ * This file contains private application parameters that may vary in different environment.
+ * You may modify this file to fit for your environment.
  */
 return array(
     "env.code" => "private",

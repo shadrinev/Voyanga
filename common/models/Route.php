@@ -81,4 +81,13 @@ class Route extends CModel
             'infantCount',
         );
     }
+
+    public function getJsonObject()
+    {
+        return array(
+            'departure' => $this->departureCity->localRu,
+            'arrival'   => $this->arrivalCity->localRu,
+            'date'      => DateTimeHelper::formatForJs($this->departureDate)
+        );
+    }
 }
