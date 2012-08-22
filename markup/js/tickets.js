@@ -2,6 +2,16 @@ var var_marginHowLong = 20;
 var var_marginHowLongSmall = 5;
 var var_paddingDateTime = 15;
 
+var MAX_BIG_CITY_NAME_SMALL_TICKET = 16;
+var MAX_BIG_CITY_NAME = 16;
+var MAX_BIG_AIRPORT_NAME_SMALL_TICKET = 16;
+var MAX_BIG_AIRPORT_NAME = 16;
+
+var MIN_BIG_CITY_NAME_SMALL_TICKET = 12;
+var MIN_BIG_CITY_NAME = 12;
+var MIN_BIG_AIRPORT_NAME_SMALL_TICKET = 12;
+var MIN_BIG_AIRPORT_NAME = 12;
+
 function widthHowLong() {
 	$('.recommended-ticket .ticket-items').each(function() {
 		var var_dataTimeCity = $(this).find('.date-time-city');
@@ -16,8 +26,8 @@ function widthHowLong() {
 				
 		if (! var_smallTicketsRecIsset) {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(16, var_dataTimeCity.find('.city'));
-			smallCityNames(8, var_dataTimeCity.find('.airport'));
+			smallCityNames(MAX_BIG_CITY_NAME_SMALL_TICKET, var_dataTimeCity.find('.city'));
+			smallCityNames(MAX_BIG_AIRPORT_NAME_SMALL_TICKET, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', var_widthStart + 'px').css('padding-right', var_widthFinish + 'px');
@@ -25,8 +35,8 @@ function widthHowLong() {
 		}
 		else {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(12, var_dataTimeCity.find('.city'));
-			smallCityNames(5, var_dataTimeCity.find('.airport'));
+			smallCityNames(MIN_BIG_CITY_NAME_SMALL_TICKET, var_dataTimeCity.find('.city'));
+			smallCityNames(MIN_BIG_AIRPORT_NAME_SMALL_TICKET, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', var_widthStart + 'px').css('padding-right', var_widthFinish + 'px');
@@ -46,8 +56,8 @@ function widthHowLong() {
 				
 		if (! var_smallTicketsIsset) {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(13, var_dataTimeCity.find('.city'));
-			smallCityNames(8, var_dataTimeCity.find('.airport'));
+			smallCityNames(MAX_BIG_CITY_NAME, var_dataTimeCity.find('.city'));
+			smallCityNames(MAX_BIG_AIRPORT_NAME, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px').css('padding-right', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px');
@@ -55,8 +65,8 @@ function widthHowLong() {
 		}
 		else {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(8, var_dataTimeCity.find('.city'));
-			smallCityNames(5, var_dataTimeCity.find('.airport'));
+			smallCityNames(MIN_BIG_CITY_NAME, var_dataTimeCity.find('.city'));
+			smallCityNames(MIN_BIG_AIRPORT_NAME, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', (var_widthStart+ var_paddingDateTime) + 'px').css('padding-right', (var_widthFinish+ var_paddingDateTime) + 'px');
@@ -65,41 +75,6 @@ function widthHowLong() {
 	});
 
 }
-
-/*
-function recalculationPadding() {
-	$('.recommended-ticket .ticket-items.small').each(function() {
-		var var_start, var_howLong, var_finish, var_widthStart, var_heightStart, var_widthFinish;
-		var var_this = $(this).find('.date-time-city');
-			var_start = var_this.find('.start');
-			var_howLong = var_this.find('.how-long');
-			var_finish = var_this.find('.finish');
-			var_widthStart = var_start.width();
-			var_heightStart = var_start.height();
-			var_widthFinish = var_finish.width();
-			var_this.css('padding-left', (var_widthStart  + var_paddingDateTime) +'px').css('padding-right', (var_widthFinish + var_paddingDateTime) +'px');
-			var_this.find('.how-long').css('width','100%');
-	});
-	$('.ticket-content .ticket-items.small').each(function() {
-		var var_start, var_howLong, var_finish, var_widthStart, var_heightStart, var_widthFinish;
-		var var_this = $(this).find('.date-time-city');
-			var_start = var_this.find('.start');
-			var_howLong = var_this.find('.how-long');
-			var_finish = var_this.find('.finish');
-			var_widthStart = var_start.width();
-			var_heightStart = var_start.height();
-			var_widthFinish = var_finish.width();
-		if ($(this).width() <= 580) {
-			var_this.css('padding-left', (var_widthStart  + var_paddingDateTime) +'px').css('padding-right', (var_widthFinish + var_paddingDateTime) +'px');
-			var_this.find('.how-long').css('width','100%');
-		}
-		else {
-			var_this.css('padding-left', (var_widthStart + var_marginHowLong + var_paddingDateTime) +'px').css('padding-right', (var_widthFinish + var_marginHowLong + var_paddingDateTime) +'px');
-			var_this.find('.how-long').css('width','100%');
-		}	
-	});
-}
-*/
 function centerBuyTikets() {
 	$('.buy-ticket').each(function() {
 		var var_heightAllBlock = $(this).parent().height();
@@ -282,14 +257,11 @@ function otherTimeSlide() {
 
 
 function resizeAllWindow() {
-	//smallCityName();
-	//recalculationPadding();
 	inTheTwoLines();
 	widthHowLong();	
 }
 $(window).resize(resizeAllWindow);
 $(window).load(inTheTwoLines);
-//$(window).load(smallCityName);
 $(window).load(otherTimeSlide);
 $(window).load(widthHowLong);
 $(window).load(centerBuyTikets);
