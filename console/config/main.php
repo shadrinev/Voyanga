@@ -44,6 +44,9 @@ return CMap::mergeArray (
         ),
 
         'components'=>array(
+            'morphy' => array(
+                'class' => 'application.extensions.phpmorphy.PhpMorphyComponent'
+            ),
             'syncCacheExecuter' => array(
                 'class'=>'application.components.SyncCacheExecuter',
                 'frontends' => array(

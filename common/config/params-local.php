@@ -1,10 +1,34 @@
 <?php
+/* params-private */
+
 /**
- * User: Kuklin Mikhail (kuklin@voyanga.com)
- * Company: Easytrip LLC
- * Date: 04.05.12
- * Time: 16:13
+ * This file contains private application parameters that may vary in different environment.
+ * You may modify this file to fit for your environment.
  */
 return array(
     "env.code" => "private",
+
+    'db.name' => 'search',
+    'db.connectionString'=>'mysql:host=localhost;dbname=voyanga_search',
+    'db.username'=>'root',
+    'db.password'=>'',
+
+    'backendDb.connectionString'=>'mysql:host=localhost;dbname=voyanga_backend',
+    'backendDb.username'=>'root',
+    'backendDb.password'=>'',
+
+    'userDb.name' => 'search',
+    'userDb.connectionString'=>'mysql:host=localhost;dbname=voyanga_backend',
+    'userDb.username'=>'root',
+    'userDb.password'=>'',
+
+    'log_db.name' => 'search',
+    'log_db.connectionString'=>'mysql:host=localhost;dbname=voyanga_logdb',
+    'log_db.username'=>'root',
+    'log_db.password'=>'',
+
+    'mongo.connectionString' => 'mongodb://127.0.0.1',
+    'mongo.dbName'=> 'mongo',
+
+    'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)'
 );
