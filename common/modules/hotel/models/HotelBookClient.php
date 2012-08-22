@@ -943,6 +943,7 @@ class HotelBookClient
                 {
                     $hotelStack->addHotel($hotel);
                 }
+                echo "добавлено ".count($hotelStack->_hotels)." из ".count($this->requests[$requestId]['result']->hotels);
                 foreach($hotelStack->_hotels as $key=>$hotel)
                 {
                     if(!isset($hotels[$key]))

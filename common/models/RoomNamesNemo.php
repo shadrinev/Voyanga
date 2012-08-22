@@ -21,6 +21,9 @@
  */
 class RoomNamesNemo extends CActiveRecord
 {
+    private static $roomNames = array();
+    private static $nameIdMap = array();
+    private static $paramsIdMap = array();
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -79,6 +82,76 @@ class RoomNamesNemo extends CActiveRecord
             'roomNameCanonical' => 'Room Name Canonical',
             'roomNameRusId' => 'Room Name Rus',
         );
+    }
+
+    /**
+     * @static
+     * @param $roomNameCanonical
+     * @param null $roomSizeId
+     * @param null $roomTypeId
+     * @return RoomNamesNemo
+     */
+    public static function getNamesByParams($roomNameCanonical,$roomSizeId = null,$roomTypeId = null)
+    {
+        if($roomSizeId and $roomTypeId)
+        {
+            $roomParamsKey = $roomNameCanonical.'|'.$roomSizeId.'|'.$roomTypeId;
+        }
+        else
+        {
+            $roomParamsKey = null;
+        }
+        if($roomParamsKey){
+            if(isset(RoomNamesNemo::$paramsIdMap[$roomParamsKey]))
+            {
+                return RoomNamesNemo::$roomNames[RoomNamesNemo::$paramsIdMap[$roomParamsKey]];
+            }
+            else
+            {
+                $roomNameNemo = RoomNamesNemo::model()->findByAttributes(array(
+                    'roomNameCanonical' => $roomNameCanonical,
+                    'roomSizeId'=> $roomSizeId,
+                    'roomTypeId'=> $roomTypeId
+                ));
+            }
+        }elseif($roomNameCanonical){
+            if(isset(RoomNamesNemo::$nameIdMap[$roomNameCanonical]))
+            {
+                return RoomNamesNemo::$roomNames[RoomNamesNemo::$nameIdMap[$roomNameCanonical]];
+            }
+            else
+            {
+                $roomNameNemo = RoomNamesNemo::model()->findByAttributes(array(
+                    'roomNameCanonical' => $roomNameCanonical
+                ));
+            }
+        }else{
+            return false;
+        }
+
+        if($roomNameNemo)
+        {
+            RoomNamesNemo::$roomNames[$roomNameNemo->id] = $roomNameNemo;
+            $roomParamsKey = $roomNameNemo->roomNameCanonical.'|'.$roomNameNemo->roomSizeId.'|'.$roomNameNemo->roomTypeId;
+            if($roomParamsKey){
+                RoomNamesNemo::$paramsIdMap[$roomParamsKey] = $roomNameNemo->id;
+            }
+            if($roomNameNemo->roomNameCanonical){
+                RoomNamesNemo::$nameIdMap[$roomNameNemo->roomNameCanonical] = $roomNameNemo->id;
+            }
+            return $roomNameNemo;
+        }else{
+            return false;
+        }
+    }
+
+    public function getRusName(){
+        if($this->roomNameRusId){
+            $roomRus = RoomNamesRus::getRoomNameRusByPk($this->roomNameRusId);
+            return $roomRus->roomNameRus;
+        }else{
+            return '';
+        }
     }
 
     /**

@@ -35,6 +35,7 @@ class HotelRoom extends CApplicationComponent
     /** @var array mapping from Hotel Book size id to amount of adults into apt */
     public static $roomSizeIdCountMap = array(1=>1,2=>2,3=>2,4=>1,5=>3,6=>4,7=>1,8=>2);
     public $sizeId;
+    public $sizeIdNemo;
     public $sizeName;
     public $typeId;
     public $typeName;
@@ -48,6 +49,7 @@ class HotelRoom extends CApplicationComponent
     public $sharingBedding;
     public $cotsCount;
     public $childCount;
+    public $showName;
     public $childAges = array();
 
     public function __construct($params)
@@ -58,6 +60,32 @@ class HotelRoom extends CApplicationComponent
                 $this->{$attrName} = $params[$attrName];
             }
         }
+
+        $roomNameCanonical = null;
+        if($this->roomName){
+            $this->showName = $this->roomName;
+            $roomInfo = self::parseRoomName($this->roomName);
+
+            $roomNameCanonical = $roomInfo['roomNameCanonical'];
+        }
+
+        $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical,$this->sizeIdNemo,$this->typeId);
+        if(!$roomNameNemo){
+            if($roomNameCanonical){
+                $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical);
+            }
+        }
+
+        if($roomNameNemo){
+            /** @var RoomNamesNemo */
+            if($roomNameNemo->roomNameRusId){
+                $roomNameRus = RoomNamesRus::getRoomNameRusByPk($roomNameNemo->roomNameRusId);
+                if($roomNameRus){
+                    $this->showName = $roomNameRus->roomNameRus;
+                }
+            }
+        }
+
     }
 
     public function getAdults()
@@ -91,6 +119,7 @@ class HotelRoom extends CApplicationComponent
         $ret = array('size' => $this->sizeName,
             'type'=>$this->typeName,
             'view'=>$this->viewName,
+            'showName'=>$this->showName,
             'meal'=>$this->mealName,
             'mealBreakfast' => $this->mealBreakfastName,
             'cotsCount' => $this->cotsCount,

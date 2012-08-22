@@ -175,4 +175,60 @@ class RoomNamesController extends ABaseAdminController
 
     }
 
+    /**
+     * list all models
+     */
+    public function actionManage($filterName = '',$rusId = 1){
+        //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
+        //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
+        echo "fn:{$filterName}  ri: {$rusId} <br />";
+        if(isset($_POST['roomNameIds']) and $_POST['roomNameIds']){
+        }
+        if(isset($_POST['smbset']) and $_POST['smbset']){
+            echo "smbset<br />";
+            if(isset($_POST['roomNameIds']) and $_POST['roomNameIds']){
+                $updateCriteria = new CDbCriteria();
+                $updateCriteria->addCondition('id IN('.join(',',$_POST['roomNameIds']).')');
+                if(isset($_POST['rusNameId']) and $_POST['rusNameId']){
+                    RoomNamesNemo::model()->updateAll(array('roomNameRusId'=>$_POST['rusNameId']),$updateCriteria);
+                }
+            }
+        }
+        if(isset($_POST['smbunset']) and $_POST['smbunset']){
+            echo "smbunset<br />";
+            if(isset($_POST['roomNameIds']) and $_POST['roomNameIds']){
+                $updateCriteria = new CDbCriteria();
+                $updateCriteria->addCondition('id IN('.join(',',$_POST['roomNameIds']).')');
+                RoomNamesNemo::model()->updateAll(array('roomNameRusId'=>null),$updateCriteria);
+            }
+        }
+        $selectCriteria = new CDbCriteria();
+        if($filterName){
+            $selectCriteria->addSearchCondition('roomNameCanonical', $filterName, false);
+        }
+        if($rusId){
+            switch($rusId){
+                case 2:
+                    //$selectCriteria->addSearchCondition('roomNameCanonical', '%apartment%', false);
+                    $selectCriteria->addCondition('roomNameRusId IS NULL');
+                    break;
+                case 3:
+                    $selectCriteria->addCondition('roomNameRusId IS NOT NULL');
+                    break;
+            }
+        }
+        if(isset($_POST['roomNameIds']) and $_POST['roomNameIds']){
+            //VarDumper::dump($_POST['roomNameIds']);
+            //$selectCriteria->addCondition('id IN('.join(',',$_POST['roomNameIds']).')');
+        }
+
+        $dataProvider=new CActiveDataProvider('RoomNamesNemo',array('criteria'=>$selectCriteria));
+        $this->render('index',array(
+            'dataProvider'=>$dataProvider,
+            'filterName'=>$filterName,
+            'rusId'=>$rusId,
+
+        ));
+    }
+
 }

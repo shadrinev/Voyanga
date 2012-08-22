@@ -18,6 +18,8 @@
  */
 class RoomNamesRus extends CActiveRecord
 {
+    public static $roomNamesRus = array();
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -92,6 +94,29 @@ class RoomNamesRus extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * @static
+     * @param $roomNameRusId
+     * @return RoomNamesRus
+     */
+    public static function getRoomNameRusByPk($roomNameRusId)
+    {
+        if(isset(RoomNamesRus::$roomNamesRus[$roomNameRusId]))
+        {
+            return RoomNamesRus::$roomNamesRus[$roomNameRusId];
+        }
+        else
+        {
+            $roomNameRus = RoomNamesRus::model()->findByPk($roomNameRusId);
+        }
+        if($roomNameRus){
+            RoomNamesRus::$roomNamesRus[$roomNameRusId] = $roomNameRus;
+            return RoomNamesRus::$roomNamesRus[$roomNameRusId];
+        }else{
+            return false;
+        }
     }
 }
 
