@@ -102,11 +102,20 @@
 .date-time-city .start {
 	position: absolute;
 	top:0px; left: 15px;
-	
+	max-width: 106px;
 }
 .date-time-city .finish {
 	position: absolute;
 	top:0px; right: 15px;
+	max-width: 106px;
+}
+.recommended-ticket .ticket-items .date-time-city .start {
+	left: 0px;
+	
+}
+.recommended-ticket .ticket-items .date-time-city .finish {
+	right: 0px;
+	
 }
 .date-time-city .start .date, .date-time-city .finish .date {
     color: #4B525C;
@@ -441,8 +450,8 @@
 }
 .recommended-ticket .ticket-items .content .date-time-city {
 	position: relative;
-	margin-left: -15px;
-	min-width: 72px;
+	
+	min-height: 72px;
 }
 .recommended-ticket .ticket-items .content .date-time-city .start .date, .recommended-ticket .ticket-items .content .date-time-city .finish .date, .recommended-ticket .ticket-items .content .date-time-city .start .city, .recommended-ticket .ticket-items .content .date-time-city .finish .city, .recommended-ticket .ticket-items .content .date-time-city .start .airport, .recommended-ticket .ticket-items .content .date-time-city .finish .airport {
 	line-height: 15px;
