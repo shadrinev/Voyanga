@@ -21,6 +21,7 @@ return CMap::mergeArray (
         'basePath'=>'console',
         'params'=>$params,
         'preload'=>array('log'),
+        'language' => 'ru_RU',
 
         'import'=>array(
                 'site.common.extensions.*',
