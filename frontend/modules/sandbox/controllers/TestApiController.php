@@ -8,15 +8,15 @@
 class TestApiController extends FrontendController
 {
     public $api = 'http://api.misha.voyanga/v1';
-    public $avia = 'avia';
+    public $avia = 'flight';
     public $hotel = 'hotel';
     public $search = 'search';
 
     public $tests = array(
-/*        'aviaSearchSimple',
+        'aviaSearchSimple',
         'aviaSearchComplex',
         'aviaSearchRoundTrip',
-        'aviaSearchComplexRoundTrip',*/
+        'aviaSearchComplexRoundTrip',
         'hotelSearchSimple',
     );
 
@@ -45,6 +45,7 @@ class TestApiController extends FrontendController
     {
         $url = $this->api . '/' . $this->avia . '/' . $this->search;
         $fullUrl = $url . '?' . http_build_query($params);
+        echo "<br>Query: ".$fullUrl."<br>";
         return $fullUrl;
     }
 
@@ -52,6 +53,7 @@ class TestApiController extends FrontendController
     {
         $url = $this->api . '/' . $this->hotel . '/' . $this->search;
         $fullUrl = $url . '?' . http_build_query($params);
+        echo "<br>Query: ".$fullUrl."<br>";
         return $fullUrl;
     }
 
@@ -116,7 +118,6 @@ class TestApiController extends FrontendController
         $fullUrl = $this->buildAviaApiUrl($search);
         $result = file_get_contents($fullUrl);
         return $result;
-        return false;
     }
 
     private function aviaSearchComplexRoundTrip()
@@ -130,11 +131,11 @@ class TestApiController extends FrontendController
                 ),
                 array(
                     'departure' => 'LED',
-                    'arrival' => 'PAR',
+                    'arrival' => 'LON',
                     'date' => '15.10.2012',
                 ),
                 array(
-                    'departure' => 'PAR',
+                    'departure' => 'LON',
                     'arrival' => 'MOW',
                     'date' => '20.10.2012',
                 ),

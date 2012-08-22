@@ -5,7 +5,7 @@
  * Date: 07.08.12
  * Time: 12:08
  */
-class AviaModule extends CWebModule
+class FlightModule extends CWebModule
 {
 
 }

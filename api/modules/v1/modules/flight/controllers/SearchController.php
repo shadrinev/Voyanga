@@ -18,9 +18,34 @@ class SearchController extends ApiController
      * @param int $adt amount of adults
      * @param int $chd amount of childs
      * @param int $inf amount of infanties
-     * @param string $service_class (A = all | E = economy | B = business)
+     * @param string $serviceClass (A = all | E = economy | B = business)
      */
-    public function actionDefault(array $destinations, $adt = 1, $chd = 0, $inf = 0, $service_class = 'A', $format='json')
+    public function actionDefault(array $destinations, $adt = 1, $chd = 0, $inf = 0, $serviceClass = 'A', $format='json')
+    {
+        $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
+        $results = $this->doFlightSearch($flightSearchParams);
+        $this->sendWithCorrectFormat($format, $results);
+    }
+
+    public function actionWithParams(array $destinations, $adt = 1, $chd = 0, $inf = 0, $serviceClass = 'A', $format='json')
+    {
+        $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
+        $results = array(
+            'flights' => $this->doFlightSearch($flightSearchParams),
+            'searchParams' => $flightSearchParams->getJsonObject()
+        );
+        $this->sendWithCorrectFormat($format, $results);
+    }
+
+    private function doFlightSearch($flightSearchParams)
+    {
+        $fs = new FlightSearch();
+        $variants = $fs->sendRequest($flightSearchParams, false);
+        $results = $variants->getJsonObject();
+        return $results;
+    }
+
+    private function buildSearchParams($destinations, $adt, $chd, $inf, $service_class)
     {
         $flightSearchParams = new FlightSearchParams();
         foreach ($destinations as $route)
@@ -42,12 +67,14 @@ class SearchController extends ApiController
             ));
             $flightSearchParams->flight_class = $service_class;
         }
-        $fs = new FlightSearch();
-        $variants = $fs->sendRequest($flightSearchParams, false);
-        $results = $variants->getJsonObject();
-        if ($format=='json')
+        return $flightSearchParams;
+    }
+
+    private function sendWithCorrectFormat($format, $results)
+    {
+        if ($format == 'json')
             $this->sendJson($results);
-        elseif ($format=='xml')
+        elseif ($format == 'xml')
             $this->sendXml($results, 'aviaSearchResults');
         else
             $this->sendError(400, 'Incorrect response format');

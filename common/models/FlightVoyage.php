@@ -83,7 +83,7 @@ class FlightVoyage extends CApplicationComponent
     {
         //TODO: refactoring place that use this function
         $fs = Yii::app()->cache->get('flightSearch' . $searchId);
-        if($fs)
+        if ($fs)
         {
             $item = $fs->flightVoyageStack->getFlightById($key);
             $item->searchKey = $searchId;
@@ -109,11 +109,11 @@ class FlightVoyage extends CApplicationComponent
         $lastArrTime = 0;
         $lastCityToId = 0;
         $bStart = true;
-        if(isset($oParams->passengersInfo))
+        if (isset($oParams->passengersInfo))
         {
-            foreach($oParams->passengersInfo as $passengerType=>$passengerParams)
+            foreach ($oParams->passengersInfo as $passengerType => $passengerParams)
             {
-                switch($passengerType)
+                switch ($passengerType)
                 {
                     case 'ADT':
                         $this->adultPassengerInfo = new PassengerInfo($passengerParams);
@@ -234,19 +234,8 @@ class FlightVoyage extends CApplicationComponent
 
     public function getJsonObject()
     {
-        /*
-         * public $price;
-    public $taxes;
-    public $flightKey;
-    public $valAirline;
-    public $commission;
-    public $flights;
-    public $adultPassengerInfo;
-    public $childPassengerInfo;
-    public $infantPassengerInfo;
-    public $bestMask = 0;
-         */
-        $ret = array('flightKey' => $this->flightKey,
+        $ret = array(
+            'flightKey' => $this->flightKey,
             'price' => $this->price,
             'commission' => $this->commission,
             'taxes' => $this->taxes,

@@ -14,4 +14,4 @@
 # we will need it as only push to prod
 #/common/config/params-local.php
 
-.DS_Store
+#.DS_Store
