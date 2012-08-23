@@ -73,8 +73,8 @@ class DumpDbCommand extends CConsoleCommand
     public function uploadToYandexDisk()
     {
         echo date('H:i:s Y-m-d').' Uploading to yandex disk'.PHP_EOL;
-        $yandexDisk = new YandexDisk();
-        $yandexDisk->uploadFile('user', 'pwd', $this->backupFile);
+        $yandexNarod = new YandexNarod();
+        $yandexNarod->uploadFile('user', 'pwd', $this->backupFile);
         echo date('H:i:s Y-m-d').' End of uploading to yandex disk'.PHP_EOL;
     }
 

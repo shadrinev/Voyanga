@@ -5,7 +5,7 @@
  * Date: 23.08.12
  * Time: 13:36
  */
-class YandexDisk
+class YandexNarod
 {
     function uploadFile($login, $password, $filename)
     {
