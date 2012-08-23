@@ -8,6 +8,7 @@
 class DumpDbCommand extends CConsoleCommand
 {
     private $backupFolder;
+    private $backupFile;
 
     public function run($args)
     {
@@ -18,7 +19,7 @@ class DumpDbCommand extends CConsoleCommand
         $this->createArchive();
         //todo: implement this
         //https://github.com/BenTheDesigner/Dropbox.git
-        //$this->uploadToDropbox();
+        //$this->uploadToYandexDisk();
         $this->deleteBackupSources();
     }
 
@@ -62,15 +63,19 @@ class DumpDbCommand extends CConsoleCommand
     {
         echo date('H:i:s Y-m-d').'Start packing'.PHP_EOL;
         $results = array();
-        $command = 'cd '.$this->backupFolder.DIRECTORY_SEPARATOR.' && tar -zcvf '.realpath($this->backupFolder.'/..').DIRECTORY_SEPARATOR.'dump_'.date('Y-m-d_H_i_s').'.tar.gz `ls`';
+        $this->backupFile = realpath($this->backupFolder.'/..').DIRECTORY_SEPARATOR.'dump_'.date('Y-m-d_H_i_s').'.tar.gz';
+        $command = 'cd '.$this->backupFolder.DIRECTORY_SEPARATOR.' && tar -zcvf '.$this->backupFile.' `ls`';
         echo $command.' performing'.PHP_EOL;
         exec($command, $results);
         echo PHP_EOL.date('H:i:s Y-m-d').' End packing packing'.PHP_EOL;
     }
 
-    public function uploadToDropbox()
+    public function uploadToYandexDisk()
     {
-
+        echo date('H:i:s Y-m-d').' Uploading to yandex disk'.PHP_EOL;
+        $yandexDisk = new YandexDisk();
+        $yandexDisk->uploadFile('user', 'pwd', $this->backupFile);
+        echo date('H:i:s Y-m-d').' End of uploading to yandex disk'.PHP_EOL;
     }
 
     public function deleteBackupSources()
