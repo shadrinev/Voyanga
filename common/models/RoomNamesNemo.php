@@ -24,6 +24,8 @@ class RoomNamesNemo extends CActiveRecord
     private static $roomNames = array();
     private static $nameIdMap = array();
     private static $paramsIdMap = array();
+    public static  $roomSizes = array(1=>'SGL',2=>'DBL',3=>'TWIN',4=>'TWIN for Single use',5=>'TRPL',6=>'QUAD',7=>'DBL for Single use',8=>'DBL OR TWIN');
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -145,10 +147,30 @@ class RoomNamesNemo extends CActiveRecord
         }
     }
 
+    /**
+     * @return string
+     */
     public function getRusName(){
         if($this->roomNameRusId){
             $roomRus = RoomNamesRus::getRoomNameRusByPk($this->roomNameRusId);
             return $roomRus->roomNameRus;
+        }else{
+            return '';
+        }
+    }
+
+
+    public function getRoomSize(){
+        if($this->roomSizeId and isset(self::$roomSizes[$this->roomSizeId])){
+            return self::$roomSizes[$this->roomSizeId];
+        }else{
+            return '';
+        }
+    }
+
+    public function getRoomType(){
+        if($this->roomTypeId){
+            return NemoRoomType::getNemoRoomTypeByPk($this->roomTypeId)->name;
         }else{
             return '';
         }

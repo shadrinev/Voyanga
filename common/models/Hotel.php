@@ -280,6 +280,9 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
             case "roomMealId":
                 $sVal = intval($this->getRoomsAttributeForSort('mealId'));
                 break;
+            case "roomShowName":
+                $sVal = $this->getRoomsAttributeForSort('showName');
+                break;
             case "centerDistance":
                 $sVal = intval($this->centerDistance);
                 break;

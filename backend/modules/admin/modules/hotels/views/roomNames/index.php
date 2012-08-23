@@ -36,11 +36,11 @@ $this->menu=array(
         ),
         array(
             'header'=>'Размер',
-            'value'=>'$data->roomSizeId'
+            'value'=>'$data->roomSize'
         ),
         array(
             'header'=>'Тип',
-            'value'=>'$data->roomTypeId'
+            'value'=>'$data->roomType'
         ),
         array(
             'header'=>'RusId',
@@ -61,7 +61,26 @@ $this->menu=array(
         ),
     ),
 )); ?>
-    <input type="text" name="rusNameId" value="">
+    <input type="text" name="rusNameId" id="rusNameId" value="" placeholder="id" style="width: 30px;">
+    <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
+    'options'=>array(
+        'items'=>10,
+        'ajax' => array(
+            'url' => "/admin/hotels/roomNames/rusRoomNames",
+            'timeout' => 5,
+            'displayField' => "value",
+            'triggerLength' => 2,
+            'method' => "get",
+            'loadingClass' => "loading-circle",
+        ),
+        'onselect'=>'js:function(res){console.log(res);$("#rusNameId").val(res.id);document.idChange();}',
+        'matcher'=>'js:function(){return true}',
+    ),
+    'htmlOptions'=>array(
+        'value'=>'',
+        'id'=>'roomNameRusField'
+    )
+)); ?>
     <input type="submit" name="smbset" value="Ok">
     <input type="submit" name="smbunset" value="убрать привязку">
 </form>

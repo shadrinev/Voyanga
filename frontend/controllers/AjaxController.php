@@ -281,4 +281,49 @@ class AjaxController extends BaseAjaxController
             $this->sendError(500, $e->getMessage());
         }
     }
+
+    public function actionRusRoomNames($query, $return = false)
+    {
+        $currentLimit = appParams('autocompleteLimit');
+        $items = Yii::app()->cache->get('autocompleteRusRoomNames'.$query);
+
+        $items = array();
+        if(!$items)
+        {
+            $items = array();
+            $roomNames = array();
+
+
+            $criteria = new CDbCriteria();
+            $criteria->limit = $currentLimit;
+            $criteria->params[':roomNameRus'] = '%'.$query.'%';
+            //$criteria->params[':localEn'] = $query.'%';
+
+            $criteria->addCondition('t.roomNameRus LIKE :roomNameRus');
+            /** @var  RusNamesRus[] $roomNamesRus  */
+            $roomNamesRus = RoomNamesRus::model()->findAll($criteria);
+
+            if($roomNamesRus)
+            {
+                foreach($roomNamesRus as $roomNameRus)
+                {
+                    $items[] = array(
+                        'id'=>$roomNameRus->primaryKey,
+                        'label'=>$this->parseTemplate('{roomNameRus}, {id}',$roomNameRus),
+                        'value'=>$this->parseTemplate('{roomNameRus}',$roomNameRus),
+                    );
+                    $roomNames[$roomNameRus->id] = $roomNameRus->id;
+                }
+            }
+            $currentLimit -= count($items);
+
+
+            Yii::app()->cache->set('autocompleteRusRoomNames'.$query,$items,appParams('autocompleteCacheTime'));
+        }
+
+        if ($return)
+            return $items;
+        else
+            $this->send($items);
+    }
 }

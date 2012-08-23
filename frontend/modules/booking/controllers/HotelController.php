@@ -128,8 +128,8 @@ class HotelController extends FrontendController
         if($resultSearch['hotels'])
         {
             $hotelStack = new HotelStack($resultSearch);
-            $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')
-                ->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+            $results = $hotelStack->groupBy('hotelId')->groupBy('roomShowName')
+                ->groupBy('rubPrice')->sortBy('rubPrice',3)->getAsJson(1);
             //VarDumper::dump($hotelStack);die();
         }
         else
@@ -160,7 +160,7 @@ class HotelController extends FrontendController
             $resultsRecommended = $hotelStack->hotelStacks[$hotelId]->getAsJson();
             $HotelClient = new HotelBookClient();
             $hotels = $HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelId);
-            echo 'всего отелей'.count($hotels);
+            //echo 'всего отелей'.count($hotels);
             $hotelStackFull = new HotelStack(array('hotels'=>$hotels));
             $resultsAll = $hotelStackFull->getAsJson();
             $hotelInfo = $HotelClient->hotelDetail($hotelId);

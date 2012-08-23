@@ -12,6 +12,7 @@ $this->breadcrumbs = array(
 ?>
 
 <h3 id='result'>Информация об отеле</h3>
+    <?php VarDumper::dump($hotelInfo); ?>
 <h3>Рекомендованные варианты</h3>
 <?php echo $this->renderPartial('_hotels_recommended', array('results'=>$resultsRecommended, 'variable'=>'hotelResults','cacheId'=>$cacheId)); ?>
 

@@ -123,7 +123,7 @@ class RoomNamesController extends ABaseAdminController
         }*/
 
         //studio
-        $criteria = new CDbCriteria();
+        /*$criteria = new CDbCriteria();
         $criteria->addSearchCondition('roomNameCanonical', '%suite%', false);
         $criteria->addSearchCondition('roomSizeId',6);
         //$criteria->group = 'sizeName,typeName,roomNameCanonical';
@@ -135,7 +135,7 @@ class RoomNamesController extends ABaseAdminController
         VarDumper::dump($rusRoomName);
 
         /** @var $rooms RoomNamesNemo[] */
-        foreach($rooms as $room){
+        /*foreach($rooms as $room){
             echo "{$rusRoomName->roomNameRus} {$rusRoomName->id}<br />";
             if($room->roomNameCanonical){
                 echo $room->roomSizeId.' '.$room->roomNameCanonical.' <br />';
@@ -172,6 +172,15 @@ class RoomNamesController extends ABaseAdminController
             echo "{$room->id}&nbsp;&nbsp;{$room->roomNameRus} <br />";
 
         }*/
+        Yii::import('site.common.modules.hotel.models.*');
+        $hbc = new HotelBookClient();
+        $rts = $hbc->getRoomTypes();
+        $roomTypes = array();
+        foreach($rts as $rt){
+            $roomTypes[$rt['id']] = $rt['name'];
+        }
+
+        VarDumper::dump($roomTypes);
 
     }
 
@@ -181,11 +190,11 @@ class RoomNamesController extends ABaseAdminController
     public function actionManage($filterName = '',$rusId = 1){
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
-        echo "fn:{$filterName}  ri: {$rusId} <br />";
+        //echo "fn:{$filterName}  ri: {$rusId} <br />";
         if(isset($_POST['roomNameIds']) and $_POST['roomNameIds']){
         }
         if(isset($_POST['smbset']) and $_POST['smbset']){
-            echo "smbset<br />";
+            //echo "smbset<br />";
             if(isset($_POST['roomNameIds']) and $_POST['roomNameIds']){
                 $updateCriteria = new CDbCriteria();
                 $updateCriteria->addCondition('id IN('.join(',',$_POST['roomNameIds']).')');
@@ -195,7 +204,7 @@ class RoomNamesController extends ABaseAdminController
             }
         }
         if(isset($_POST['smbunset']) and $_POST['smbunset']){
-            echo "smbunset<br />";
+            //echo "smbunset<br />";
             if(isset($_POST['roomNameIds']) and $_POST['roomNameIds']){
                 $updateCriteria = new CDbCriteria();
                 $updateCriteria->addCondition('id IN('.join(',',$_POST['roomNameIds']).')');
@@ -222,13 +231,98 @@ class RoomNamesController extends ABaseAdminController
             //$selectCriteria->addCondition('id IN('.join(',',$_POST['roomNameIds']).')');
         }
 
-        $dataProvider=new CActiveDataProvider('RoomNamesNemo',array('criteria'=>$selectCriteria));
+        $dataProvider=new CActiveDataProvider(
+            'RoomNamesNemo',
+            array(
+                'criteria'=>$selectCriteria,
+                'pagination'=>array(
+                    'pageSize'=>40,
+                )
+            )
+        );
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
             'filterName'=>$filterName,
             'rusId'=>$rusId,
 
         ));
+    }
+
+    public function actionRusNamesManage()
+    {
+
+        if(isset($_POST['smbset']) and $_POST['smbset']){
+            if(isset($_POST['rusNameId']) and $_POST['rusNameId'] and $_POST['roomNameRusField']){
+                $roomNameRus = RoomNamesRus::model()->findByPk($_POST['rusNameId']);
+                if($roomNameRus){
+                    $roomNameRus->roomNameRus = $_POST['roomNameRusField'];
+                    $roomNameRus->save();
+                }
+            }else{
+                $roomNameRus = new RoomNamesRus();
+                if($_POST['roomNameRusField']){
+                    $roomNameRus->roomNameRus = $_POST['roomNameRusField'];
+                    $roomNameRus->save();
+                }
+            }
+        }
+
+        $selectCriteria = new CDbCriteria();
+        $dataProvider=new CActiveDataProvider(
+            'RoomNamesRus',
+            array(
+                'criteria'=>$selectCriteria,
+                'pagination'=>array(
+                    'pageSize'=>40,
+                )
+            )
+        );
+        $this->render('manageRusNames',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
+
+    public function actionRusRoomNames($query, $return = false)
+    {
+        $currentLimit = appParams('autocompleteLimit');
+        $items = Yii::app()->cache->get('autocompleteRusRoomNames'.$query);
+
+        $items = array();
+        if(!$items)
+        {
+            $items = array();
+            $roomNames = array();
+
+
+            $criteria = new CDbCriteria();
+            $criteria->limit = $currentLimit;
+            $criteria->params[':roomNameRus'] = '%'.$query.'%';
+            //$criteria->params[':localEn'] = $query.'%';
+
+            $criteria->addCondition('t.roomNameRus LIKE :roomNameRus');
+            /** @var  RusNamesRus[] $roomNamesRus  */
+            $roomNamesRus = RoomNamesRus::model()->findAll($criteria);
+
+            if($roomNamesRus)
+            {
+                foreach($roomNamesRus as $roomNameRus)
+                {
+                    $items[] = array(
+                        'id'=>$roomNameRus->primaryKey,
+                        'label'=>$roomNameRus->roomNameRus.', '.$roomNameRus->id,
+                        'value'=>$roomNameRus->roomNameRus,
+                    );
+                    $roomNames[$roomNameRus->id] = $roomNameRus->id;
+                }
+            }
+            $currentLimit -= count($items);
+
+
+            Yii::app()->cache->set('autocompleteRusRoomNames'.$query,$items,appParams('autocompleteCacheTime'));
+        }
+        header('Content-type: application/json');
+        echo json_encode($items);
+        die();
     }
 
 }

@@ -69,20 +69,35 @@ class HotelRoom extends CApplicationComponent
             $roomNameCanonical = $roomInfo['roomNameCanonical'];
         }
 
-        $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical,$this->sizeIdNemo,$this->typeId);
+        $needAddToDb = false;
+
+        $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical,$this->sizeId,$this->typeId);
         if(!$roomNameNemo){
+            $needAddToDb = true;
             if($roomNameCanonical){
                 $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical);
             }
         }
 
         if($roomNameNemo){
+            if($needAddToDb){
+                $newRoomNameNemo = new RoomNamesNemo();
+                $newRoomNameNemo->roomNameCanonical = $roomNameCanonical;
+                $newRoomNameNemo->roomSizeId = $this->sizeId;
+                $newRoomNameNemo->roomTypeId = $this->typeId;
+            }
             /** @var RoomNamesNemo */
             if($roomNameNemo->roomNameRusId){
                 $roomNameRus = RoomNamesRus::getRoomNameRusByPk($roomNameNemo->roomNameRusId);
                 if($roomNameRus){
                     $this->showName = $roomNameRus->roomNameRus;
+                    if($needAddToDb){
+                        $newRoomNameNemo->roomNameRusId = $roomNameNemo->roomNameRusId;
+                    }
                 }
+            }
+            if($needAddToDb){
+                $newRoomNameNemo->save();
             }
         }
 

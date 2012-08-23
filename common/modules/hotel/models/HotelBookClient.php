@@ -250,6 +250,28 @@ class HotelBookClient
         return $return;
     }
 
+    public function getRoomTypes()
+    {
+        $this->synchronize();
+        $time = time() + $this->differenceTimestamp;
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time));
+        self::$lastRequestMethod = 'Room Types';
+        self::$lastRequestDescription = '';
+
+        $roomTypes = $this->request(Yii::app()->params['HotelBook']['uri'] . 'room_type', $getData);
+        $roomTypesObject = simplexml_load_string($roomTypes);
+        $return = array();
+        foreach ($roomTypesObject->RoomTypes->RoomType as $roomType)
+        {
+            $id = intval($roomType['id']);
+            $name = trim((string)$roomType['name']);
+            //$country_id = intval($city['country']);
+            $return[$id] = array('id' => $id, 'name' => $name);
+        }
+
+        return $return;
+    }
+
     private function getHotelFromSXE($hotelSXE)
     {
         $hotelAttrMap = array(
@@ -264,6 +286,7 @@ class HotelBookClient
         $roomAttrMap = array(
             'mealId', 'mealName', 'mealBreakfastId', 'mealBreakfastName', 'sharingBedding',
             'sizeId' => 'roomSizeId',
+            'sizeIdNemo' => 'roomSizeId',
             'sizeName' => 'roomSizeName',
             'typeId' => 'roomTypeId',
             'typeName' => 'roomTypeName',
@@ -943,7 +966,7 @@ class HotelBookClient
                 {
                     $hotelStack->addHotel($hotel);
                 }
-                echo "добавлено ".count($hotelStack->_hotels)." из ".count($this->requests[$requestId]['result']->hotels);
+                //echo "добавлено ".count($hotelStack->_hotels)." из ".count($this->requests[$requestId]['result']->hotels);
                 foreach($hotelStack->_hotels as $key=>$hotel)
                 {
                     if(!isset($hotels[$key]))

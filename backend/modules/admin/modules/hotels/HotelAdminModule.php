@@ -23,8 +23,12 @@ class HotelAdminModule extends ABaseAdminModule
             ),
             "items" => array(
                 array(
-                    "label" => "События",
-                    "url" => array("/admin/hotels/roomNames/admin"),
+                    "label" => "Мэппинг названий номеров",
+                    "url" => array("/admin/hotels/roomNames/manage"),
+                ),
+                array(
+                    "label" => "Руссикие названия номеров",
+                    "url" => array("/admin/hotels/roomNames/rusNamesManage"),
                 ),
             )
         )
