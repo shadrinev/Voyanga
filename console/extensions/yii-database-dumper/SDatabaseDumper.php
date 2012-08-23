@@ -24,7 +24,7 @@ class SDatabaseDumper
 	 * Dump all tables
 	 * @return string sql structure and data
 	 */
-	public function getDump()
+	public function getDump($path)
 	{
 		ob_start();
 

@@ -18,19 +18,17 @@ class DumpDbCommand extends CConsoleCommand
         $this->createArchive();
         //todo: implement this
         //https://github.com/BenTheDesigner/Dropbox.git
-        $this->uploadToDropbox();
+        //$this->uploadToDropbox();
+        $this->deleteBackupSources();
     }
 
     public function dumpMySql()
     {
         echo date('H:i:s Y-m-d').' Start backup mysql'.PHP_EOL;
         Yii::import('site.console.extensions.yii-database-dumper.SDatabaseDumper');
-        $dumper = new SDatabaseDumper;
-
-        // Get path to new backup file
-        $file = $this->backupFolder.DIRECTORY_SEPARATOR.'dump_mysql_'.date('Y-m-d_H_i_s').'.sql';
-
-        file_put_contents($file, $dumper->getDump());
+        $dumper = new InternalMysqlDumper();
+        $file = $this->backupFolder.DIRECTORY_SEPARATOR.'dump_mysql_'.date('Y-m-d_H_i_s');
+        $dumper->getDump($file);
         echo date('H:i:s Y-m-d').' End backup mysql'.PHP_EOL.PHP_EOL;
     }
 
@@ -62,17 +60,27 @@ class DumpDbCommand extends CConsoleCommand
 
     public function createArchive()
     {
-        echo 'Start packing'.PHP_EOL;
-        $command = 'tar -zcvf '.realpath($this->backupFolder.'/..').DIRECTORY_SEPARATOR.'dump_'.date('Y-m-d_H_i_s').'.tar.gz '.$this->backupFolder;
-        echo $command.' performing'.PHP_EOL;
+        echo date('H:i:s Y-m-d').'Start packing'.PHP_EOL;
         $results = array();
+        $command = 'cd '.$this->backupFolder.DIRECTORY_SEPARATOR.' && tar -zcvf '.realpath($this->backupFolder.'/..').DIRECTORY_SEPARATOR.'dump_'.date('Y-m-d_H_i_s').'.tar.gz `ls`';
+        echo $command.' performing'.PHP_EOL;
         exec($command, $results);
-        CVarDumper::dump($results);
-        echo date('H:i:s Y-m-d').' End packing packing'.PHP_EOL;
+        echo PHP_EOL.date('H:i:s Y-m-d').' End packing packing'.PHP_EOL;
     }
 
     public function uploadToDropbox()
     {
 
+    }
+
+    public function deleteBackupSources()
+    {
+        echo date('H:i:s Y-m-d').'Removing temporary files'.PHP_EOL;
+        $command = 'rm -rf '.$this->backupFolder;
+        echo $command.' performing'.PHP_EOL;
+        $results = array();
+       // exec($command, $results);
+        CVarDumper::dump($results);
+        echo PHP_EOL.date('H:i:s Y-m-d').' End removing temporary files'.PHP_EOL;
     }
 }
