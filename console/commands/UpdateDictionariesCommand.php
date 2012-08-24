@@ -360,6 +360,106 @@ EOD;
                 echo 'Option --filename cant be empty';
             }
         }
+        if($type == 'airlineWeight' )
+        {
+            echo 'INN';
+            if($filename)
+            {
+                $path = Yii::getPathOfAlias('application.runtime');
+                if(file_exists($filename))
+                {
+                    $airlinessxe = simplexml_load_string(file_get_contents($filename));
+                    foreach($airlinessxe->Item as $item){
+                        $airlineCode = (string)$item['id'];
+                        $modified = false;
+                        try{
+                            $airline = Airline::getAirlineByCode($airlineCode);
+                        }catch (CException $e){
+                            $airline = false;
+                        }
+                        if($airline){
+
+                            $airlineLocalRu = (string)$item['rusname'];
+                            $airlineLocalEn = (string)$item['name'];
+                            if(UtilsHelper::countRussianCharacters($airline->localRu) <= 0){
+                                $airline->localRu = $airlineLocalRu;
+                                $modified = true;
+                            }else{
+                                echo "o_O !!! ".$airline->localRu;
+                            }
+                            if(!$airline->localEn && $airlineLocalEn){
+                                $airline->localEn = $airlineLocalEn;
+                                $modified = true;
+                            }
+
+                            $economFreeWeight = (string)$item->luggage->econom->weight;
+                            if(!$airline->economFreeWeight && $economFreeWeight){
+                                $airline->economFreeWeight = str_replace('kg','',$economFreeWeight);
+                                $modified = true;
+                            }
+                            $businessFreeWeight = (string)$item->luggage->econom->weight;
+                            if(!$airline->businessFreeWeight && $businessFreeWeight){
+                                $airline->businessFreeWeight = str_replace('kg','',$businessFreeWeight);
+                                $modified = true;
+                            }
+                            $economDescription = (string)$item->luggage->econom->description;
+                            if(!$airline->economDescription && $economDescription){
+                                $airline->economDescription = $economDescription;
+                                $modified = true;
+                            }
+                            $businessDescription = (string)$item->luggage->econom->description;
+                            if(!$airline->businessDescription && $businessDescription){
+                                $airline->businessDescription = $businessDescription;
+                                $modified = true;
+                            }
+
+                            if($modified){
+                                $airline->save();
+                            }
+                        }else{
+                            echo "!!!! NOT FOUND {$airlineCode}";
+                            $airline = new Airline();
+                            $airline->code = $airlineCode;
+                            $airlineLocalRu = (string)$item['rusname'];
+                            $airlineLocalEn = (string)$item['name'];
+                            if(UtilsHelper::countRussianCharacters($airline->localRu) <= 0){
+                                $airline->localRu = $airlineLocalRu;
+                                $airline->localEn = $airlineLocalEn;
+                                $modified = true;
+                            }
+
+                            $economFreeWeight = (string)$item->luggage->econom->weight;
+                            if(!$airline->economFreeWeight && $economFreeWeight){
+                                $airline->economFreeWeight = str_replace('kg','',$economFreeWeight);
+                                $modified = true;
+                            }
+                            $businessFreeWeight = (string)$item->luggage->econom->weight;
+                            if(!$airline->businessFreeWeight && $businessFreeWeight){
+                                $airline->businessFreeWeight = str_replace('kg','',$businessFreeWeight);
+                                $modified = true;
+                            }
+                            $economDescription = (string)$item->luggage->econom->description;
+                            if(!$airline->economDescription && $economDescription){
+                                $airline->economDescription = $economDescription;
+                                $modified = true;
+                            }
+                            $businessDescription = (string)$item->luggage->econom->description;
+                            if(!$airline->businessDescription && $businessDescription){
+                                $airline->businessDescription = $businessDescription;
+                                $modified = true;
+                            }
+                            if(!$airline->save()){
+                                CVarDumper::dump($airline->getErrors());
+                            }
+                        }
+                        echo "airline {$airlineCode} {$airlineLocalRu} {$economFreeWeight}\n";
+                    }
+                    echo 'ютф?';
+                    //CVarDumper::dump($airlinessxe);
+                }
+            }
+
+        }
         if($type == 'iconv' )
         {
             if($filename)
