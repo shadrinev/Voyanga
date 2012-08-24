@@ -22,13 +22,3 @@ else
 
 require_once('common/components/shortcuts.php');
 $app->run();
-/* Below - the old version of this file*/
-/*
-defined('YII_DEBUG') or define('YII_DEBUG',true);
-
-$root=dirname(__FILE__);
-$config=$root.'/config/main.php';
-
-require_once($root.'/../common/lib/global.php');
-require_once($root.'/../common/lib/yii-1.1.8/yiic.php');
-*/
