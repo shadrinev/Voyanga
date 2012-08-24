@@ -60,7 +60,9 @@ class FlightPart
         $ret = array(
             'transportAirline' => $this->transportAirlineCode,
             'departureCity' => City::getCityByPk($this->departureCityId)->localRu,
+            'departureCityPre' => City::getCityByPk($this->departureCityId)->casePre,
             'arrivalCity' => City::getCityByPk($this->arrivalCityId)->localRu,
+            'arrivalCityPre' => City::getCityByPk($this->arrivalCityId)->casePre,
             'datetimeBegin' => DateTimeHelper::formatForJs($this->timestampBegin),
             'datetimeEnd' => DateTimeHelper::formatForJs($this->timestampEnd),
             'flightCode' => $this->code,

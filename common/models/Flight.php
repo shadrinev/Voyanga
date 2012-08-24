@@ -79,7 +79,9 @@ class Flight extends CComponent
     {
         $ret = array(
             'departureCity' => $this->getDepartureCity()->localRu,
+            'departureCityPre' => $this->getDepartureCity()->casePre,
             'arrivalCity' => $this->getArrivalCity()->localRu,
+            'arrivalCityPre' => $this->getArrivalCity()->casePre,
             'departureDate' => DateTimeHelper::formatForJs($this->departureDate),
             'arrivalDate' => DateTimeHelper::formatForJs($this->getArrivalDate()),
             'fullDuration' => $this->fullDuration,
