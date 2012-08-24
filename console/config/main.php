@@ -69,6 +69,11 @@ return CMap::mergeArray (
                         'levels'=>'error, warning',
                         'categories'=>'console.*'
                     ),
+                    array(
+                        'class' => 'CEmailLogRoute',
+                        'levels' => 'error, warning',
+                        'emails' => 'kuklin@voyanga.com'
+                    ),
                 ),
             ),
 
