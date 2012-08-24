@@ -1025,9 +1025,13 @@
 	overflow: hidden;
 }
 .hotel-details .description .left {
-	float: left;
-	width: 465px;
 	color: #4b4b4f;
+}
+.hotel-details .description .left .right {
+	margin-left: 20px;
+}
+.hotel-details .description .text {
+	overflow: visible !important;
 }
 .description > .left > .read-more {
 	border-bottom: 1px dashed;
@@ -1054,9 +1058,9 @@
 }
 .tab .map-big {
 	margin-top: 15px;
-	height: 383px;
+	height: 363px;
 }
-.slide-show {
+.tab .photo-slide-hotel {
 	margin-left: -21px;
 	height: 150px;
 	width: 822px;margin-top: 15px;
@@ -1354,13 +1358,28 @@
 	float: left;
 	margin-right: 1px;
 }
+.slide ul li img {
+	height: 150px;
+}
 .slide .left-navi {
 	position: absolute; top:0px; left: 0px;
 	width: 80px; height: 150px; cursor: pointer;
 	background: url(../images/navigation-slide.png) no-repeat left 0;
+	z-index: 900;
 }
 .slide .right-navi {
 	position: absolute; top:0px; right: 0px;
 	width: 80px; height: 150px; cursor: pointer;
 	background: url(../images/navigation-slide.png) no-repeat right 0;
+	z-index: 900;
+}
+.slide .left-opacity {
+	position: absolute; top:0px; left: 0px;
+	width: 40px; height: 150px;
+	z-index: 800;
+}
+.slide .right-opacity {
+	position: absolute; top:0px; right: 0px;
+	width: 40px; height: 150px;
+	z-index: 800;
 }
