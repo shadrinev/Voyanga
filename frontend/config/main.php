@@ -159,7 +159,7 @@ return CMap::mergeArray(
                         'class' => 'CEmailLogRoute',
                         'levels' => 'error, warning',
                         'filter' => 'CLogFilter',
-                        'emails' => 'frontend-reports@voyanga.com,kuklin@voyanga.com'
+                        'emails' => 'reports-frontend@voyanga.com,kuklin@voyanga.com'
                     ),
 
                    array( // configuration for the toolbar

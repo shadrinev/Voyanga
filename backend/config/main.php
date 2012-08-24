@@ -158,7 +158,7 @@ return CMap::mergeArray(
                         'class' => 'CEmailLogRoute',
                         'levels' => 'error, warning',
                         'filter' => 'CLogFilter',
-                        'emails' => 'backend-reports@voyanga.com,kuklin@voyanga.com'
+                        'emails' => 'reports-backend@voyanga.com,kuklin@voyanga.com'
                     )
                 )
             ),
