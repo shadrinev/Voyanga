@@ -5,6 +5,7 @@
         <th>Название отеля</th>
         <th>Категория отеля</th>
         <th>Рейтинг</th>
+        <th>Номер</th>
         <th>Цена</th>
         <th>Действие</th>
     </tr>
@@ -15,6 +16,13 @@
         <td>{{hotelName}}</td>
         <td>{{category}}</td>
         <td>{{rating}}</td>
+
+        <td>
+            {{#each rooms}}
+                <div>{{showName}}</div>
+            {{/each}}
+
+        </td>
         <td>{{rubPrice}} руб.</td>
         <td>
             <a class='btn btn-success' href="/booking/hotel/info/cacheId/<?php echo $cacheId?>/hotelId/{{hotelId}}">выбрать</a>

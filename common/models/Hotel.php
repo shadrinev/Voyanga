@@ -117,6 +117,14 @@ class Hotel extends CApplicationComponent
         return $this->comparePrice;
     }
 
+    /**
+     * @return float price
+     */
+    public function getOriginalPrice()
+    {
+        return $this->rubPrice;
+    }
+
     //implementation of IOrderElement
     public function getIsValid()
     {
@@ -279,6 +287,9 @@ class Hotel extends CApplicationComponent
                 break;
             case "roomMealId":
                 $sVal = intval($this->getRoomsAttributeForSort('mealId'));
+                break;
+            case "roomShowName":
+                $sVal = $this->getRoomsAttributeForSort('showName');
                 break;
             case "centerDistance":
                 $sVal = intval($this->centerDistance);
