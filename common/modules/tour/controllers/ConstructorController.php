@@ -20,20 +20,11 @@ class ConstructorController extends BaseExtController
             $model = new TourBuilderForm();
         if (isset($_POST['TourBuilderForm']))
         {
-            $model->attributes = $_POST['TourBuilderForm'];
-            $model->trips = array();
+            $model->fillCommonData($_POST['TourBuilderForm']);
             if (isset($_POST['TripForm']))
             {
-                $validTrips = true;
-                foreach ($_POST['TripForm'] as $i=>$attributes)
-                {
-                    $trip = new TripForm();
-                    $trip->attributes = $attributes;
-                    $validTrips = $validTrips and $trip->validate();
-                    if ($validTrips)
-                        $model->trips[] = $trip;
-                }
-                if ($validTrips and $model->validate())
+                $model->fillTripData($_POST['TripForm']);
+                if ($model->validate())
                 {
                     Yii::app()->user->setState('trip.tour.form', serialize($model));
                     Yii::app()->shoppingCart->clear();
@@ -48,8 +39,6 @@ class ConstructorController extends BaseExtController
     public function actionShowTrip()
     {
         $trip = Yii::app()->order->getPositions(false);
-        //VarDumper::dump($trip);
-        //die();
         $tabs = array();
         foreach ($trip['items'] as $item)
         {

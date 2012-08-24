@@ -1,10 +1,9 @@
 <?php
 defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
-
 defined('YII_DEBUG') or define('YII_DEBUG', (@$argv == 'index')? false : true);
-
 date_default_timezone_set('Europe/Moscow');
 
+chdir(dirname(__FILE__).'/../');
 $root=dirname(__FILE__);
 require_once('common/components/Yii.php');
 $config='console/config/main.php'; 

@@ -67,4 +67,22 @@ class TourBuilderForm extends CFormModel
             'startCityId' => 'Начало поездки в городе'
         );
     }
+
+    public function fillCommonData($params)
+    {
+        $this->attributes = $params;
+    }
+
+    public function fillTripData($params)
+    {
+        foreach ($params as $i=>$attributes)
+        {
+            $trip = new TripForm();
+            $trip->attributes = $attributes;
+            if ($trip->validate())
+                $this->trips[] = $trip;
+            else
+                $this->addError('Trip['.$i.']', 'Incorrect trip element');
+        }
+    }
 }
