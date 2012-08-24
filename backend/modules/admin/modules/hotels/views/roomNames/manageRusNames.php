@@ -29,11 +29,9 @@ $this->menu=array(
             'class'=>'bootstrap.widgets.BootButtonColumn',
             'template'=>'{update} {delete}',
             'updateButtonUrl'=>'"#".$data->primaryKey."||".$data->roomNameRus',
+            'deleteConfirmation'=>'Вы действительно хотите удалить русское название номера?',
             'buttons' => array('update' => array(
                 'click'=>'js: function () {document.modifyName($(this).attr("href"));}',     // a JS function to be invoked when the button is clicked
-                ),
-                'delete' => array(
-                    'click'=>'js: function () {}',     // a JS function to be invoked when the button is clicked
                 ),
             ),
             'updateButtonOptions'=>array('class'=>'update','data-object-id'=>'$data->primaryKey'),
