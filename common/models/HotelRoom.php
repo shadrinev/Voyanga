@@ -79,13 +79,14 @@ class HotelRoom extends CApplicationComponent
             }
         }
 
+        if($needAddToDb){
+            $newRoomNameNemo = new RoomNamesNemo();
+            $newRoomNameNemo->roomNameCanonical = $roomNameCanonical;
+            $newRoomNameNemo->roomSizeId = $this->sizeId;
+            $newRoomNameNemo->roomTypeId = $this->typeId;
+        }
         if($roomNameNemo){
-            if($needAddToDb){
-                $newRoomNameNemo = new RoomNamesNemo();
-                $newRoomNameNemo->roomNameCanonical = $roomNameCanonical;
-                $newRoomNameNemo->roomSizeId = $this->sizeId;
-                $newRoomNameNemo->roomTypeId = $this->typeId;
-            }
+
             /** @var RoomNamesNemo */
             if($roomNameNemo->roomNameRusId){
                 $roomNameRus = RoomNamesRus::getRoomNameRusByPk($roomNameNemo->roomNameRusId);
@@ -96,8 +97,11 @@ class HotelRoom extends CApplicationComponent
                     }
                 }
             }
-            if($needAddToDb){
-                $newRoomNameNemo->save();
+        }
+        if($needAddToDb){
+            //echo "Try saving!";
+            if(!$newRoomNameNemo->save()){
+                //VarDumper::dump($newRoomNameNemo->getErrors());
             }
         }
 
