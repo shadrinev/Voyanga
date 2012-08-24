@@ -18,6 +18,8 @@ class FlightPart
     public $arrivalAirport;
     public $aircraftName;
     public $aircraftCode;
+    public $stopNum;
+    public $bookingCodes;
 
     public $distance;
     public $duration;
@@ -52,7 +54,8 @@ class FlightPart
         $this->arrivalAirportId = $oParams->arrival_airport->id;
         $this->departureAirport = $oParams->departure_airport;
         $this->arrivalAirport = $oParams->arrival_airport;
-
+        $this->stopNum = $oParams->stopNum;
+        $this->bookingCodes = $oParams->aBookingCodes;
     }
 
     public function getJsonObject()
@@ -70,6 +73,8 @@ class FlightPart
             'departureAirport' => $this->departureAirport->localRu,
             'arrivalAirport' => $this->arrivalAirport->localRu,
             'aircraftCode'=>$this->aircraftCode,
+            'stopNum'=>$this->stopNum,
+            'bookingCode'=>$this->bookingCodes[0],
         );
         return $ret;
 

@@ -280,6 +280,7 @@ class GDSNemoAgency extends CComponent
                     $oPart->duration = $oSegment->FlightTime * 60;
                     $oPart->datetime_begin = UtilsHelper::soapElementValue($oSegment->DepDateTime);
                     $oPart->datetime_end = UtilsHelper::soapElementValue($oSegment->ArrDateTime);
+                    $oPart->stopNum = UtilsHelper::soapElementValue($oSegment->StopNum);
                     $oPart->aircraft_code = $oSegment->AircraftType;
 
                     $oPart->aTariffs = array();
