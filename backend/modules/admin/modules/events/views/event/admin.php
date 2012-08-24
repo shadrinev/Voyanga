@@ -23,17 +23,11 @@ $this->beginWidget("AAdminPortlet", array(
 		'startDate',
 		'endDate',
         'title',
-        array(
-            'header'=>'Город',
-            'value'=>'$data->city->localRu'
-        ),
-		/*'address',
 		'contact',
+        'description:raw',
 		/*
 		'status',
-		'preview',
-		'description',
-		*/
+		'preview',*/
 		array(
 			'class'=>'bootstrap.widgets.BootButtonColumn',
 		),

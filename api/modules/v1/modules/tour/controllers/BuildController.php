@@ -7,5 +7,5 @@
  */
 class BuildController extends ApiController
 {
-    public function
+
 }
