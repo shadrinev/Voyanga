@@ -156,7 +156,8 @@ class HotelController extends FrontendController
         if($resultSearch)
         {
             $hotelStack = new HotelStack($resultSearch);
-            $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+            //$hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2)->getAsJson();
+            $hotelStack->groupBy('hotelId')->groupBy('roomShowName')->groupBy('rubPrice')->sortBy('rubPrice',2);
             $resultsRecommended = $hotelStack->hotelStacks[$hotelId]->getAsJson();
             $HotelClient = new HotelBookClient();
             $hotels = $HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelId);
