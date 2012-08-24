@@ -9,7 +9,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Events</h1>
+<h1>Сопоставление русских названий и названий hotelbook</h1>
 <form method="get">
     <input type="text" name="filterName" value="<?php echo $filterName; ?>">
     <select name="rusId" value="<?php echo $rusId; ?>">

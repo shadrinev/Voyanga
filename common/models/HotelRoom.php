@@ -135,6 +135,7 @@ class HotelRoom extends CApplicationComponent
             'type'=>$this->typeName,
             'view'=>$this->viewName,
             'showName'=>$this->showName,
+            'roomNemoName'=>$this->roomName,
             'meal'=>$this->mealName,
             'mealBreakfast' => $this->mealBreakfastName,
             'cotsCount' => $this->cotsCount,

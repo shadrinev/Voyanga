@@ -27,7 +27,7 @@ class HotelAdminModule extends ABaseAdminModule
                     "url" => array("/admin/hotels/roomNames/manage"),
                 ),
                 array(
-                    "label" => "Руссикие названия номеров",
+                    "label" => "Русские названия номеров",
                     "url" => array("/admin/hotels/roomNames/rusNamesManage"),
                 ),
             )

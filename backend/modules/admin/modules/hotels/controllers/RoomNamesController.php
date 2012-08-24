@@ -282,6 +282,20 @@ class RoomNamesController extends ABaseAdminController
         ));
     }
 
+    public function actionDelete($id){
+        $roomNameRus = RoomNamesRus::model()->findByPk($id);
+        if($roomNameRus){
+            $criteria = new CDbCriteria();
+            $criteria->addCondition('roomNameRusId = :rnri');
+            $criteria->params = array(':rnri'=>$id);
+            RoomNamesNemo::model()->updateAll(array('roomNameRusId'=>null),$criteria);
+            $roomNameRus->delete();
+            $this->redirect('/admin/hotels/roomNames/rusNamesManage');
+        }else{
+            echo "Элемента не найдено!";
+        }
+    }
+
     public function actionRusRoomNames($query, $return = false)
     {
         $currentLimit = appParams('autocompleteLimit');

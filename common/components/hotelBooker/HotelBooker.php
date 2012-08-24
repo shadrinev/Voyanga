@@ -14,6 +14,7 @@
  * @property string $hotelResultKey
  * @property string $timestamp
  * @property float $price
+ * @property float $originalPrice
  * @property integer $tryCount
  *
  * The followings are the available model relations:
@@ -131,7 +132,7 @@ class HotelBooker extends SWLogActiveRecord
             array('expiration, hotelInfo, updated, timestamp, hotelResultKey, tryCount', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp, price, tryCount, hotelResultKey', 'safe', 'on' => 'search'),
+            array('id, status, expiration, hotelInfo, updated, orderBookingId, orderId, timestamp, price, originalPrice, tryCount, hotelResultKey', 'safe', 'on' => 'search'),
         );
     }
 
@@ -218,7 +219,8 @@ class HotelBooker extends SWLogActiveRecord
         $this->_hotel = $value;
         $this->hotelInfo = $element;
         $this->hotelResultKey = $value->getId();
-        $this->price = $value->rubPrice;
+        $this->price = $value->getPrice();
+        $this->originalPrice = $value->getOriginalPrice();
         if ($value->cancelExpiration)
         {
             $this->expiration = date('Y-m-d H:i:s', $value->cancelExpiration);

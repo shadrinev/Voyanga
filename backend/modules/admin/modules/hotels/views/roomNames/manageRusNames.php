@@ -27,14 +27,17 @@ $this->menu=array(
         ),
         array(
             'class'=>'bootstrap.widgets.BootButtonColumn',
-            'updateButtonIcon'=>false,
-            'template'=>'{update}',
+            'template'=>'{update} {delete}',
             'updateButtonUrl'=>'"#".$data->primaryKey."||".$data->roomNameRus',
             'buttons' => array('update' => array(
                 'click'=>'js: function () {document.modifyName($(this).attr("href"));}',     // a JS function to be invoked when the button is clicked
                 ),
+                'delete' => array(
+                    'click'=>'js: function () {}',     // a JS function to be invoked when the button is clicked
+                ),
             ),
-            'updateButtonOptions'=>array('class'=>'update','data-object-id'=>'$data->primaryKey')
+            'updateButtonOptions'=>array('class'=>'update','data-object-id'=>'$data->primaryKey'),
+            'deleteButtonOptions'=>array('class'=>'delete','data-object-id'=>'$data->primaryKey')
         ),
     ),
 )); ?>
@@ -59,7 +62,7 @@ $this->menu=array(
         'name'=>'roomNameRusField'
     )
 )); ?>
-    <input type="submit" name="smbset" id="smbset" value="Ok">
+    <input type="submit" name="smbset" id="smbset" value="Добавить">
 </form>
 <?php
 

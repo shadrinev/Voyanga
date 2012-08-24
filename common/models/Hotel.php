@@ -117,6 +117,14 @@ class Hotel extends CApplicationComponent implements IECartPosition, IOrderEleme
         return $this->comparePrice;
     }
 
+    /**
+     * @return float price
+     */
+    public function getOriginalPrice()
+    {
+        return $this->rubPrice;
+    }
+
     //implementation of IOrderElement
     public function getIsValid()
     {
