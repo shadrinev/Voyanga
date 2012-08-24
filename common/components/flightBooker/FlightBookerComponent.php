@@ -105,6 +105,11 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBooking()
     {
+        //getting pnr and other stuff
+        //VarDumper::dump($this);
+        //return;
+
+        //$this->flightBooker->booking->bookingPassports;
         $flightBookingParams = new FlightBookingParams();
         $orderBooking = $this->flightBooker->orderBooking;
         $flightBookingParams->contactEmail = $orderBooking->email;

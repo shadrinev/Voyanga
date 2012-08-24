@@ -35,6 +35,7 @@ class HotelRoom extends CApplicationComponent
     /** @var array mapping from Hotel Book size id to amount of adults into apt */
     public static $roomSizeIdCountMap = array(1=>1,2=>2,3=>2,4=>1,5=>3,6=>4,7=>1,8=>2);
     public $sizeId;
+    public $sizeIdNemo;
     public $sizeName;
     public $typeId;
     public $typeName;
@@ -48,6 +49,7 @@ class HotelRoom extends CApplicationComponent
     public $sharingBedding;
     public $cotsCount;
     public $childCount;
+    public $showName;
     public $childAges = array();
 
     public function __construct($params)
@@ -58,6 +60,51 @@ class HotelRoom extends CApplicationComponent
                 $this->{$attrName} = $params[$attrName];
             }
         }
+
+        $roomNameCanonical = null;
+        if($this->roomName){
+            $this->showName = $this->roomName;
+            $roomInfo = self::parseRoomName($this->roomName);
+
+            $roomNameCanonical = $roomInfo['roomNameCanonical'];
+        }
+
+        $needAddToDb = false;
+
+        $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical,$this->sizeId,$this->typeId);
+        if(!$roomNameNemo){
+            $needAddToDb = true;
+            if($roomNameCanonical){
+                $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical);
+            }
+        }
+
+        if($needAddToDb){
+            $newRoomNameNemo = new RoomNamesNemo();
+            $newRoomNameNemo->roomNameCanonical = $roomNameCanonical;
+            $newRoomNameNemo->roomSizeId = $this->sizeId;
+            $newRoomNameNemo->roomTypeId = $this->typeId;
+        }
+        if($roomNameNemo){
+
+            /** @var RoomNamesNemo */
+            if($roomNameNemo->roomNameRusId){
+                $roomNameRus = RoomNamesRus::getRoomNameRusByPk($roomNameNemo->roomNameRusId);
+                if($roomNameRus){
+                    $this->showName = $roomNameRus->roomNameRus;
+                    if($needAddToDb){
+                        $newRoomNameNemo->roomNameRusId = $roomNameNemo->roomNameRusId;
+                    }
+                }
+            }
+        }
+        if($needAddToDb){
+            //echo "Try saving!";
+            if(!$newRoomNameNemo->save()){
+                //VarDumper::dump($newRoomNameNemo->getErrors());
+            }
+        }
+
     }
 
     public function getAdults()
@@ -91,6 +138,8 @@ class HotelRoom extends CApplicationComponent
         $ret = array('size' => $this->sizeName,
             'type'=>$this->typeName,
             'view'=>$this->viewName,
+            'showName'=>$this->showName,
+            'roomNemoName'=>$this->roomName,
             'meal'=>$this->mealName,
             'mealBreakfast' => $this->mealBreakfastName,
             'cotsCount' => $this->cotsCount,
@@ -99,5 +148,128 @@ class HotelRoom extends CApplicationComponent
         );
 
         return $ret;
+    }
+
+    /**
+     * @static
+     * @param $str
+     * @param $words
+     * @return bool
+     */
+    public static function stripWords(&$str,$words){
+        //$replaced = false;
+        $startLen = mb_strlen($str);
+
+        $str = str_replace($words,'',$str);
+
+        $endLen = mb_strlen($str);
+
+        return ($endLen < $startLen);
+    }
+
+    /**
+     * @static
+     * @param $str
+     * @param $words
+     * @return bool
+     */
+    public static function findWords($str,$words){
+        $find = false;
+        if(is_array($words))
+        {
+            foreach($words as $word){
+                if(mb_strpos($str,$word) !== false){
+                    $find = true;
+                    break;
+                }
+            }
+        }
+        elseif(is_string($words))
+        {
+            if(mb_strpos($str,$words) !== false){
+                $find = true;
+            }
+        }
+
+        return $find;
+    }
+
+    public static function parseRoomName($roomName){
+        $roomInfo = array(
+            'sizeId'=>null,
+            'typeId'=>null,
+            'typeName'=>null,
+            'view'=>null,
+            'breakfast'=>null,
+            'refundable'=>null,
+            'roomNameCanonical'=>null
+        );
+        /* TODO: функцию можно сильно ускорить если разбить всю roomName на слова,
+         * и вначале проверять на налчие того, или иного слова
+         * */
+        $roomName = mb_convert_case($roomName, MB_CASE_LOWER, "UTF-8");
+        /*if(self::stripWords($roomName,array(' standard','standard'))){
+
+        }*/
+       /* if(self::stripWords($roomName,array(' 1 bedroom',' one bedroom'))){
+
+        }*/
+        self::stripWords($roomName,array(' room'));
+        //self::stripWords($roomName,array(' classic','classic',' offer',' offer-','offer','offer-'));
+
+
+        if(self::findWords($roomName,array(' 2 bedroom',' two bedroom',' 3 bedroom'))){
+            $roomInfo['typeName'] = 'suite senior';
+        }
+        if(self::findWords($roomName,array(' 2 people',' capacity 2',' dbl', ' double','dbl','double',' twin','twin'))){
+            $roomInfo['sizeId'] = 2;
+        }
+        if(self::stripWords($roomName,array(' non refundable',' non-refundable','non refundable','standard-non-refundable','non-refundable','not refundable','not-refundable'))){
+            $roomInfo['refundable'] = false;
+        }
+        if(self::stripWords($roomName,array(' refundable','refundable'))){
+            $roomInfo['refundable'] = true;
+        }
+        $roomName = str_replace('apartments','apartment',$roomName);
+        if(self::findWords($roomName,array('deluxe','de luxe'))){
+            $roomInfo['typeName'] = 'deluxe';
+        }
+        if(self::stripWords($roomName,array(' seaview',' sea view','seaview','sea view'))){
+            $roomInfo['view'] = 'sea';
+        }
+        if(self::findWords($roomName,'view')){
+            $views = array(
+                'ocean',
+                'pyramid',
+                'nile',
+                'city',
+                'canal',
+                'park',
+                'lagoon',
+                'river',
+                'garden',
+                'castle',
+                'pool',
+                'acropolis'
+            );
+            foreach($views as $view){
+                if(self::stripWords($roomName,array(' '.$view.'view',$view.' view'))){
+                    $roomInfo['view'] = $view;
+                    break;
+                }
+            }
+        }
+        if(self::stripWords($roomName,array(' + breakfast',' +breakfast',' with breakfast','+breakfast','breakfast'))){
+            $roomInfo['breakfast'] = 'breakfast';
+        }
+
+        if(self::findWords($roomName,array('studio'))){
+            $roomInfo['typeName'] = 'studio';
+        }
+        if(self::findWords($roomName,'junior suite')){
+            $roomInfo['typeName'] = 'junior suite';
+        }
+        $roomInfo['roomNameCanonical'] = $roomName;
+        return $roomInfo;
     }
 }

@@ -92,6 +92,9 @@ return CMap::mergeArray(
                     'orders' => array(
                         'class' => 'application.modules.admin.modules.orders.OrdersAdminModule'
                     ),
+                    'hotels' => array(
+                        'class' => 'application.modules.admin.modules.hotels.HotelAdminModule'
+                    ),
                 )
             )
         ),

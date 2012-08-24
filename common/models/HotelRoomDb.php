@@ -25,6 +25,7 @@
  * @property string $mealBreakfastName
  * @property integer $sharingBedding
  * @property string $roomName
+ * @property string $roomNameCanonical
  * @property integer $rubPrice
  * @property string $resultId
  * @property string $requestId
@@ -63,10 +64,11 @@ class HotelRoomDb extends CActiveRecord
             array('typeName, viewName, mealName', 'length', 'max'=>35),
             array('mealBreakfastName', 'length', 'max'=>45),
             array('roomName', 'length', 'max'=>70),
+            array('roomNameCanonical', 'length', 'max'=>200),
             array('resultId, requestId', 'length', 'max'=>10),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, hotelId, hotelName, providerKey, sizeName, typeId, typeName, viewId, viewName, mealId, mealName, mealBreakfastId, mealBreakfastName, sharingBedding, roomName, rubPrice, resultId, requestId', 'safe', 'on'=>'search'),
+            array('id, hotelId, hotelName, providerKey, sizeName, typeId, typeName, viewId, viewName, mealId, mealName, mealBreakfastId, mealBreakfastName, sharingBedding, roomName,roomNameCanonical, rubPrice, resultId, requestId', 'safe', 'on'=>'search'),
         );
     }
 
@@ -134,6 +136,7 @@ class HotelRoomDb extends CActiveRecord
         $criteria->compare('mealBreakfastName',$this->mealBreakfastName,true);
         $criteria->compare('sharingBedding',$this->sharingBedding);
         $criteria->compare('roomName',$this->roomName,true);
+        $criteria->compare('roomNameCanonical',$this->roomNameCanonical,true);
         $criteria->compare('rubPrice',$this->rubPrice);
         $criteria->compare('resultId',$this->resultId,true);
         $criteria->compare('requestId',$this->requestId,true);

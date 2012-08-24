@@ -20,6 +20,8 @@ class FlightVoyage extends CApplicationComponent
     public $infantPassengerInfo;
     public $bestMask = 0;
     public $webService;
+    /** @var boolean $refundable */
+    public $refundable;
     public $searchKey;
 
     /**
@@ -99,6 +101,7 @@ class FlightVoyage extends CApplicationComponent
         $this->flightKey = $oParams->flight_key;
         $this->commission = $oParams->commission_price;
         $this->webService = $oParams->webService;
+        $this->refundable = $oParams->refundable;
         $this->flights = array();
         //$this->searchKey = $oParams->searchId;
         if (!$this->valAirline)
