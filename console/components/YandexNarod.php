@@ -29,7 +29,11 @@ class YandexNarod
         $result = curl_exec($ch);
         $info = curl_getinfo($ch);
 
-        if ($info['http_code'] != 200) return false;
+        if ($info['http_code'] != 200)
+        {
+            echo date('H:i:s Y-m-d').' Error while authorization'.PHP_EOL;
+            return false;
+        }
 
         // запрашиваем сервер для загрузки файла
         $url = 'http://narod.yandex.ru/disk/getstorage/?rnd=' . (mt_rand(0, 777777) + 777777);
@@ -48,6 +52,7 @@ class YandexNarod
         }
         else
         {
+            echo date('H:i:s Y-m-d').' Error while getting server to upload to'.PHP_EOL;
             return false;
         }
 
@@ -62,10 +67,12 @@ class YandexNarod
         $result = curl_exec($ch);
         $info = curl_getinfo($ch);
 
-        if ($info['http_code'] != 200) return false;
+        if ($info['http_code'] != 200)
+        {
+            echo date('H:i:s Y-m-d').' Error while uploading files'.PHP_EOL;
+            return false;
+        }
 
-        //   print_r($info);
-        // проверяем прогресс бар
         $url = $purl . '?tid=' . $hash . '&rnd=' . (mt_rand(0, 777777) + 777777);
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -74,6 +81,7 @@ class YandexNarod
 
         if (!preg_match('/"status": "done"/', $result, $m))
         {
+            echo date('H:i:s Y-m-d').' Error checking status'.PHP_EOL;
             return false;
         }
 
@@ -89,6 +97,7 @@ class YandexNarod
             return $fileURL;
         }
 
+        echo date('H:i:s Y-m-d').' Error while determining link'.PHP_EOL;
         return false;
     }
 }

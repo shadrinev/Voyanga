@@ -12,15 +12,18 @@ class DumpDbCommand extends CConsoleCommand
 
     public function run($args)
     {
+        $startTime = time();
+        echo date('H:i:s Y-m-d').' Start of backup'.PHP_EOL;
         $this->backupFolder = $this->createBackupFolder();
-        //todo: rewrite with mysqldump
         $this->dumpMySql();
         $this->dumpMongo();
         $this->createArchive();
-        //todo: implement this
-        //https://github.com/BenTheDesigner/Dropbox.git
-        //$this->uploadToYandexDisk();
+        $this->uploadToYandexDisk();
         $this->deleteBackupSources();
+        $endTime = time();
+        $totalTime = $endTime - $startTime;
+        echo date('H:i:s Y-m-d').' End of backup'.PHP_EOL;
+        echo date('H:i:s Y-m-d').' Total time: '.$totalTime.' seconds'.PHP_EOL;
     }
 
     public function dumpMySql()
@@ -30,7 +33,7 @@ class DumpDbCommand extends CConsoleCommand
         $dumper = new InternalMysqlDumper();
         $file = $this->backupFolder.DIRECTORY_SEPARATOR.'dump_mysql_'.date('Y-m-d_H_i_s');
         $dumper->getDump($file);
-        echo date('H:i:s Y-m-d').' End backup mysql'.PHP_EOL.PHP_EOL;
+        echo date('H:i:s Y-m-d').' End backup mysql'.PHP_EOL;
     }
 
     public function dumpMongo()
@@ -40,8 +43,7 @@ class DumpDbCommand extends CConsoleCommand
         $command = 'mongodump --db voyanga --out '.$path .' > /dev/null';
         $results = array();
         exec($command, $results);
-        CVarDumper::dump($results);
-        echo date('H:i:s Y-m-d').' End backup mongodb'.PHP_EOL.PHP_EOL;
+        echo date('H:i:s Y-m-d').' End backup mongodb'.PHP_EOL;
     }
 
     public function createBackupFolder()
@@ -61,31 +63,30 @@ class DumpDbCommand extends CConsoleCommand
 
     public function createArchive()
     {
-        echo date('H:i:s Y-m-d').'Start packing'.PHP_EOL;
+        echo date('H:i:s Y-m-d').' Start packing'.PHP_EOL;
         $results = array();
         $this->backupFile = realpath($this->backupFolder.'/..').DIRECTORY_SEPARATOR.'dump_'.date('Y-m-d_H_i_s').'.tar.gz';
         $command = 'cd '.$this->backupFolder.DIRECTORY_SEPARATOR.' && tar -zcvf '.$this->backupFile.' `ls`';
         echo $command.' performing'.PHP_EOL;
         exec($command, $results);
-        echo PHP_EOL.date('H:i:s Y-m-d').' End packing packing'.PHP_EOL;
+        echo date('H:i:s Y-m-d').' End packing packing'.PHP_EOL;
     }
 
     public function uploadToYandexDisk()
     {
         echo date('H:i:s Y-m-d').' Uploading to yandex disk'.PHP_EOL;
         $yandexNarod = new YandexNarod();
-        $yandexNarod->uploadFile('user', 'pwd', $this->backupFile);
+        $yandexNarod->uploadFile('great-dbs', 'b4q0DNYN6NePdeVELgWQ', $this->backupFile);
         echo date('H:i:s Y-m-d').' End of uploading to yandex disk'.PHP_EOL;
     }
 
     public function deleteBackupSources()
     {
-        echo date('H:i:s Y-m-d').'Removing temporary files'.PHP_EOL;
+        echo date('H:i:s Y-m-d').' Removing temporary files'.PHP_EOL;
         $command = 'rm -rf '.$this->backupFolder;
         echo $command.' performing'.PHP_EOL;
         $results = array();
-       // exec($command, $results);
-        CVarDumper::dump($results);
-        echo PHP_EOL.date('H:i:s Y-m-d').' End removing temporary files'.PHP_EOL;
+        exec($command, $results);
+        echo date('H:i:s Y-m-d').' End removing temporary files'.PHP_EOL;
     }
 }
