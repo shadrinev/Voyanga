@@ -55,7 +55,7 @@ class FlightBooker extends SWLogActiveRecord
         if (!$this->statusChanged)
             return parent::afterSave();
         $method = 'stage'. ucfirst($this->swGetStatus()->getId());
-        if ($action = Yii::app()->controller->createAction($method))
+        if (isset(Yii::app()->controller) and ($action = Yii::app()->controller->createAction($method)))
         {
             $action->execute();
         }

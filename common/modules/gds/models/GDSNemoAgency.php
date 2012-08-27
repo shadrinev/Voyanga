@@ -787,11 +787,9 @@ class GDSNemoAgency extends CComponent
             );
 
             $response = self::request('CancelBook', $aParams);
-            CVarDumper::dump($response);
-
-            if (isset($response->Respone->CancelBook->Result->Success))
+            if (isset($response->Response->CancelBook->Result->Success))
             {
-                if (($response->Respone->CancelBook->Result->Success === 'true') || ($response->Respone->CancelBook->Result->Success === true))
+                if (($response->Response->CancelBook->Result->Success === 'true') || ($response->Response->CancelBook->Result->Success === true))
                 {
                     $result = true;
                 }

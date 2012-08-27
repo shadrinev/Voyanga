@@ -11,7 +11,8 @@ function sliderPhoto(that) {
 		var_this.find('ul').css('width', var_widthUL+'px');
 		var_this.find('.slide').append('<div class="left-navi"></div><div class="right-navi"></div><div class="left-opacity"></div><div class="right-opacity"></div>');
 		var_this.find('.left-navi').hide();
-		
+	
+	var var_widthULminus = var_widthUL - var_widthAll;	
 	$(window).resize(function() {
 		var var_in = var_this.find('ul .active').index();
 		var_widthAll = var_this.width();
@@ -19,11 +20,10 @@ function sliderPhoto(that) {
 			var var_mar = var_this.find('ul').css('margin-left');
 			var_mar = Math.abs(parseInt(var_mar.slice(0,-2)));
 			var all_var = var_mar + var_widthAll - var_widthUL;
-			var_this.find('ul').css('margin-left', '-'+(var_mar - all_var) +'px');
+			var_this.find('ul').css('margin-left', '-'+((var_mar - all_var)-3) +'px');
 		}
+		var_widthULminus = var_widthUL - var_widthAll;
 	});
-	
-	var var_widthULminus = var_widthUL - var_widthAll;
 	var one_short = false;
 	
 	$('.right-navi').click(function() {
@@ -32,12 +32,9 @@ function sliderPhoto(that) {
 		var_this.find('.left-navi').show();
 		var var_widthOne = (var_this.find('ul .active').width() + 1);
 		var var_margin = var_this.find('ul').css('margin-left');
-		var_margin = Math.abs(parseInt(var_margin.slice(0,-2)));
-
-		var var_index = var_this.find('ul .active').index();
-		
-		var all = var_margin+var_widthOne;
-		
+			var_margin = Math.abs(parseInt(var_margin.slice(0,-2)));
+		var var_index = var_this.find('ul .active').index();		
+		var all = var_margin+var_widthOne;		
 		if (all <= var_widthULminus) {
 			var_this.find('ul').animate({'margin-left' : '-='+var_widthOne+'px'}, 500, function() {
 						one_short = false;
@@ -45,37 +42,15 @@ function sliderPhoto(that) {
 			var_this.find('ul .active').removeClass('active').next().addClass('active');
 		}	
 		else {
-			var_widthOne = (var_this.find('ul li').eq(var_len-1).width() + 1);
-			var var_widthEnd = var_widthOne - (var_widthAll - var_widthOne);
 			$(this).hide();
-
-			if (var_index != (var_len-1)) {
-				
-				if (var_widthEnd > 0) {
-					var_this.find('ul').animate({'margin-left' : '-='+var_widthEnd+'px'}, 500, function() {
+			var_widthOne = (var_this.find('ul li').eq(var_len-1).width() + 1);
+			console.log(var_widthOne +' '+all+' '+var_widthUL+' '+var_widthULminus+' '+var_widthAll);
+			var var_widthEnd = (var_widthUL - var_widthAll) - 3;
+			var_this.find('ul').animate({'margin-left' : '-'+var_widthEnd+'px'}, 500, function() {
 						one_short = false;
 					});
-				}
-				else if (var_widthEnd < 0 && var_widthEnd < '-'+var_widthOne) {
-					var_widthEnd = Math.abs(var_widthEnd + var_widthOne);
-
-					var_widthEnd = var_widthOne - var_widthEnd;
-					if (var_widthEnd < 0) {
-						var_widthEnd = var_widthOne + var_widthEnd;
-					}
-					var_this.find('ul').animate({'margin-left' : '-='+var_widthEnd+'px'}, 500, function() {
-						one_short = false;
-					});
-				}
-				else {
-					var_widthEnd = var_widthOne + var_widthEnd;
-					var_this.find('ul').animate({'margin-left' : '-='+var_widthEnd+'px'}, 500, function() {
-						one_short = false;
-					});
-				}
-				var_this.find('ul li').removeClass('active');
-				var_this.find('ul li').eq(var_len-1).addClass('active');
-			}	
+			var_this.find('ul li').removeClass('active');
+			var_this.find('ul li').eq(var_len-1).addClass('active');
 		}	
 	}
 	});
@@ -86,7 +61,6 @@ function sliderPhoto(that) {
 		var var_widthOne = (var_this.find('ul .active').width() + 1);
 		var var_margin = var_this.find('ul').css('margin-left');
 		var_margin = Math.abs(parseInt(var_margin.slice(0,-2)));
-		
 		if ((var_margin-var_widthOne) > 0) {
 			var_this.find('ul').animate({'margin-left' : '+='+var_widthOne+'px'}, 500, function() {
 						one_short = false;
@@ -189,8 +163,29 @@ $(function() {
 			$(this).prev().css('height', '54px');
 			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
 			$(this).removeClass('active').text('Подробнее');
+		}		
+	});
+	$('.stars-li label').click(function() {
+		var var_index = $(this).parent().index();
+		if (var_index == 0) {
+			$(this).parent().parent().prev().removeClass('one').removeClass('two').removeClass('three').removeClass('four').removeClass('five');
+			$(this).parent().parent().prev().addClass('one');
 		}
-		
-		
+		if (var_index == 1) {
+			$(this).parent().parent().prev().removeClass('one').removeClass('two').removeClass('three').removeClass('four').removeClass('five');
+			$(this).parent().parent().prev().addClass('two');
+		}
+		if (var_index == 2) {
+			$(this).parent().parent().prev().removeClass('one').removeClass('two').removeClass('three').removeClass('four').removeClass('five');
+			$(this).parent().parent().prev().addClass('three');
+		}
+		if (var_index == 3) {
+			$(this).parent().parent().prev().removeClass('one').removeClass('two').removeClass('three').removeClass('four').removeClass('five');
+			$(this).parent().parent().prev().addClass('four');
+		}
+		if (var_index == 4) {
+			$(this).parent().parent().prev().removeClass('one').removeClass('two').removeClass('three').removeClass('four').removeClass('five');
+			$(this).parent().parent().prev().addClass('five');
+		}
 	});
 });

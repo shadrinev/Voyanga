@@ -988,6 +988,60 @@
 .stars.one {
 	width: 18px;
 }
+.stars-select {
+	display: inline-block; width: 89px; height: 16px;
+	background: url(../images/slice.png) no-repeat -127px -768px;
+	vertical-align: top;
+	margin-left: 0px;
+	overflow:hidden;
+	margin-top: 2px;
+}
+.stars-select  .none-select {
+	 width: 89px; height: 16px;
+	 background: url(../images/slice.png) no-repeat -0px -768px;
+}
+.stars-select.five .none-select  {
+	width: 87px;
+}
+.stars-select.four .none-select {
+	width: 71px;
+}
+.stars-select.three .none-select {
+	width: 54px;
+}
+.stars-select.two .none-select {
+	width: 36px;
+}
+.stars-select.one .none-select {
+	width: 18px;
+}
+.stars-li {
+	overflow: hidden;
+	height: 17px;
+    margin-top: -25px;
+    padding-top: 23px; 
+    position: relative; 
+    z-index: 2;}
+.stars-li li {
+	float: left;
+    height: 17px;
+    margin-top: -25px;
+    padding-top: 23px;
+    text-align: center;
+    width: 18px;
+}
+.stars-li li input {
+	display: none;
+}
+.stars-li li label {
+	height: 30px;
+	display: block;
+	width: 18px;
+	text-align: center;
+	margin-top: -25px;
+    padding-top: 25px;
+    cursor: pointer;
+}
 #content > .title > .stars, .hotel-details > .title > .stars {
 	position: absolute; bottom: -7px; left: 0px;
 }
@@ -1249,6 +1303,7 @@
 .button > .btn-cost {
 	padding-left: 6px;
 	padding-right: 10px;
+	width: 215px;
 }
 .button > .btn-cost .text {
     display: block;
@@ -1259,7 +1314,7 @@
     z-index: 100;
 }
 .block-trip table ul li {
-	margin-bottom: 3px;
+	margin-bottom: 1px;
 	margin-top: 3px;
 }
 .block-trip table .name ul li span.text {
@@ -1294,6 +1349,7 @@
 	width: 55px;
 	vertical-align: middle;
 	text-align: center;
+	padding-right: 11px;
 }
 .change-people {
 	width: 53px; height: 24px;
@@ -1382,4 +1438,7 @@
 	position: absolute; top:0px; right: 0px;
 	width: 40px; height: 150px;
 	z-index: 800;
+}
+input.hotel-input {
+	border: none; background: url(../images/bg-search-hotel-filter.png) no-repeat 0px 1px; width: 183px; height: 27px; padding-left: 5px; font-size: 13px;
 }

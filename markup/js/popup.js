@@ -118,6 +118,10 @@ $(document).ready(function() {
 		sliderPhoto('.photo-slide-hotel');
 		SizeBox();
 		$(".description .text").dotdotdot({watch: 'window'});
+		$('a.photo').click(function(e) {
+			e.preventDefault();
+			createPhotoBox(this); 
+		});
 	});
 	$('a.in-the-map').click(function(e) {
 		e.preventDefault();
