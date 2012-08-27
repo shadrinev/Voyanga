@@ -11,11 +11,6 @@ $commonParamsLocal = require('common/config/params-local.php');
 $commonParamsEnv = require('common/config/environments/params-'.$commonParamsLocal['env.code'].'.php');
 
 return CMap::mergeArray(array(
-	// DB connection configurations
-	'db.name' => '',
-	'db.connectionString'=>'mysql:host=127.0.0.1;dbname=',
-	'db.username'=>'',
-    'db.password'=>'',
 
     'flight_search_cache_time' => 15*60, //seconds before show notification message for flight page + cache expiration time
     //Price factor for flight optimal

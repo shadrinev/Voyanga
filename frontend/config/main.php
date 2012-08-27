@@ -23,7 +23,7 @@ return CMap::mergeArray(
         'basePath' => 'frontend',
         'params'  => $params,
         'language' => 'ru',
-        'theme' => 'v1',
+        'theme' => $params['app.theme'],
         'defaultController' => 'booking',
         'preload' => array(
             'log',
@@ -61,7 +61,6 @@ return CMap::mergeArray(
                 'class' => 'site.common.modules.gds.GdsModule',
             ),
             'booking' => array(
-
             ),
             'tour' => array(
                 'controllerMap' => array(
@@ -72,6 +71,9 @@ return CMap::mergeArray(
             ),
             'sandbox' => array(
 
+            ),
+            'v2' => array(
+                'class'=>'ProductionModule'
             )
         ),
 
@@ -177,5 +179,6 @@ return CMap::mergeArray(
                 'class'=>'common.extensions.payments.PaymentsController'
             )
         ),
-    )
+    ),
+    $frontendMainLocal
 );

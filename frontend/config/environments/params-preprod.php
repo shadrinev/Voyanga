@@ -6,5 +6,5 @@
  * You may modify this file to fit for your environment.
  */
 return array(
-    'app.theme'=>'v1'
+    'app.theme'=>'v2'
 );
