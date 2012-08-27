@@ -6,7 +6,7 @@
  * You may modify this file to fit for your environment.
  */
 return array(
-	"env.code" => "private",
+	"env.code" => "preprod",
 
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=localhost;dbname=search',

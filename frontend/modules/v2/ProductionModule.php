@@ -7,5 +7,5 @@
  */
 class ProductionModule extends CWebModule
 {
-
+    public $defaultController = 'default';
 }

@@ -24,7 +24,7 @@ return CMap::mergeArray(
         'params'  => $params,
         'language' => 'ru',
         'theme' => $params['app.theme'],
-        'defaultController' => 'booking',
+        'defaultController' => $params['app.defaultController'],
         'preload' => array(
             'log',
             'bootstrap'
@@ -73,7 +73,7 @@ return CMap::mergeArray(
 
             ),
             'v2' => array(
-                'class'=>'ProductionModule'
+                'class'=>'site.frontend.modules.v2.ProductionModule'
             )
         ),
 
