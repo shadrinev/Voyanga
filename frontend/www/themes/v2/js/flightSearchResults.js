@@ -142,6 +142,8 @@
       this.price = Math.ceil(data.price);
       this._stacked = false;
       this.roundTrip = flights.length === 2;
+      this.visible = ko.observable(true);
+      this.airline = data.valCompany;
       this.activeVoyage = new Voyage(flights[0]);
       if (this.roundTrip) {
         this.activeVoyage.push(new Voyage(flights[1]));
@@ -175,6 +177,36 @@
         })(name);
       }
     }
+
+    Result.prototype.filter = function(filters) {
+      var field, fields, found, match_lines, match_ports, _i, _len;
+      match_ports = true;
+      found = false;
+      fields = ['departureAirport', 'arrivalAirport'];
+      if (this.roundTrip) {
+        fields.push('rtDepartureAirport');
+        fields.push('rtArrivalAirport');
+      }
+      for (_i = 0, _len = fields.length; _i < _len; _i++) {
+        field = fields[_i];
+        if (filters.airports.indexOf(this[field]()) >= 0) {
+          found = true;
+        }
+      }
+      match_ports = found;
+      if (filters.airports.length === 0) {
+        match_ports = true;
+      }
+      found = false;
+      if (filters.airlines.indexOf(this.airline) >= 0) {
+        found = true;
+      }
+      match_lines = found;
+      if (filters.airlines.length === 0) {
+        match_lines = true;
+      }
+      return this.visible(match_ports && match_lines);
+    };
 
     Result.prototype.stacked = function() {
       return this._stacked;
@@ -233,7 +265,8 @@
   ResultSet = (function() {
 
     function ResultSet(rawVoyages) {
-      var flightVoyage, key, result, _i, _j, _len, _len1, _ref, _ref1, _ref2;
+      var flightVoyage, foo, key, result, _airlines, _airports, _i, _j, _len, _len1, _ref, _ref1,
+        _this = this;
       this._results = {};
       for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
         flightVoyage = rawVoyages[_i];
@@ -244,26 +277,101 @@
           this._results[key] = new Result(flightVoyage);
         }
       }
-      this.cheapest = this._results[key];
+      this.cheapest = ko.observable();
+      this.data = [];
+      this.airports = [];
+      this.airlines = [];
+      _airports = {};
+      _airlines = {};
       _ref = this._results;
       for (key in _ref) {
         result = _ref[key];
-        if (result.price < this.cheapest.price) {
-          this.cheapest = result;
+        this.data.push(result);
+        _airlines[result.airline] = 1;
+        _airports[result.departureAirport()] = 1;
+        _airports[result.arrivalAirport()] = 1;
+        if (result.roudTrip) {
+          _airports[result.rtDepartureAirport()] = 1;
+          _airports[result.rtArrivalAirport()] = 1;
         }
       }
-      this.data = [];
-      _ref1 = this._results;
-      for (key in _ref1) {
-        result = _ref1[key];
-        this.data.push(result);
+      for (key in _airports) {
+        foo = _airports[key];
+        this.airports.push({
+          'name': key,
+          'active': ko.observable(0)
+        });
       }
-      _ref2 = this.data;
-      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-        result = _ref2[_j];
+      for (key in _airlines) {
+        foo = _airlines[key];
+        this.airlines.push({
+          'name': key,
+          'active': ko.observable(0)
+        });
+      }
+      this._airportsFilters = ko.computed(function() {
+        var port, _j, _len1, _ref1;
+        result = [];
+        _ref1 = _this.airports;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          port = _ref1[_j];
+          if (port.active()) {
+            result.push(port.name);
+          }
+        }
+        return result;
+      });
+      this._airlinesFilters = ko.computed(function() {
+        var line, _j, _len1, _ref1;
+        result = [];
+        _ref1 = _this.airlines;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          line = _ref1[_j];
+          if (line.active()) {
+            result.push(line.name);
+          }
+        }
+        return result;
+      });
+      this._allFilters = ko.computed(function() {
+        return {
+          'airlines': _this._airlinesFilters(),
+          'airports': _this._airportsFilters()
+        };
+      });
+      this._allFilters.subscribe(function(value) {
+        _.each(_this.data, function(x) {
+          return x.filter(value);
+        });
+        return _this.update_cheapest();
+      });
+      _ref1 = this.data;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        result = _ref1[_j];
         result.sort();
       }
+      this.update_cheapest();
     }
+
+    ResultSet.prototype.update_cheapest = function() {
+      var cheapest_reseted, key, result, _ref;
+      cheapest_reseted = false;
+      _ref = this._results;
+      for (key in _ref) {
+        result = _ref[key];
+        if (result.visible()) {
+          if (!cheapest_reseted) {
+            this.cheapest(result);
+            cheapest_reseted = true;
+            continue;
+          }
+          if (result.price < this.cheapest().price) {
+            this.cheapest(result);
+          }
+        }
+      }
+      return widthHowLong();
+    };
 
     return ResultSet;
 

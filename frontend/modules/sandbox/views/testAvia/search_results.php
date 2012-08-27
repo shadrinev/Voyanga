@@ -134,7 +134,7 @@
         <div class="ribbon-cheapest"></div>
         <div class="content">
             <div class="airlines-line">
-                <img src="/images/ico-airlline-russia.png"> Россия
+                <img src="/images/ico-airlline-russia.png"> <span data-bind="text:airline">Россия</span>
             </div>
             <div class="date-time-city">
                 <div class="start">
@@ -173,25 +173,25 @@
                 <div class="clear"></div>
             </div>
             <!-- END DATE -->
-
-            <div class="line-two-ticket" data-bind="if: roundTrip">
+            <!-- ko if: roundTrip -->
+            <div class="line-two-ticket">
                 <span class="end"></span>
             </div>
-            <div class="airlines-line" data-bind="if: roundTrip">
-                <img src="/images/ico-airlline-russia.png"/> Россия
+            <div class="airlines-line">
+                <img src="/images/ico-airlline-russia.png"/> <span data-bind="text:airline">Россия</span>
             </div>
-            <div class="date-time-city" data-bind="if: roundTrip">
+            <div class="date-time-city">
                 <div class="start">
-                    <div class="date">
+                    <div class="date" data-bind="text: rtDepartureDayMo()">
                         28 мая
                     </div>
-                    <div class="time">
+                    <div class="time" data-bind="text: rtDepartureTime()">
                         21:20
                     </div>
-                    <div class="city">
+                    <div class="city" data-bind="text: rtDepartureCity()">
                         Москва
                     </div>
-                    <div class="airport">
+                    <div class="airport" data-bind="text: rtDepartureAirport()">
                         Домодедово
                     </div>
                 </div>
@@ -200,26 +200,27 @@
                         В пути
                     </div>
                     <div class="ico-path"></div>
-                    <div class="time">
+                    <div class="time" data-bind="text: rtFullDuration()">
                         3 ч. 30 м.
                     </div>
                 </div>
                 <div class="finish">
-                    <div class="date">
+                    <div class="date" data-bind="text: rtArrivalDayMo()">
                         29 мая
                     </div>
-                    <div class="time">
+                    <div class="time" data-bind="text: rtArrivalTime()">
                         00:50
                     </div>
-                    <div class="city">
+                    <div class="city" data-bind="text: rtArrivalCity()">
                         Санкт-Петербург
                     </div>
-                    <div class="airport">
+                    <div class="airport" data-bind="text: rtArrivalAirport()">
                         Пулково
                     </div>
                 </div>
                 <div class="clear"></div>
             </div>
+            <!-- /ko -->
             <!-- END DATE -->
 
             <div class="line-dashed-ticket">
@@ -386,12 +387,12 @@
 <div class="clear"></div>
 
 <!-- ko foreach: results -->
-<div class="ticket-items">
+<div class="ticket-items" data-bind="visible: visible">
 <div class="content">
 <div class="airlines">
     <div>
         <img src="/images/ico-airlline-russia.png"><br>
-        Россия
+        <span data-bind="text:airline">Россия</span>
     </div>
 </div>
 <!-- END AIRLINES -->
@@ -618,18 +619,14 @@
 
         <div class="div-filter">
             <h4>Москва</h4>
-            <ul>
-                <li><input type="checkbox" name="ch01" id="ch01"> <label for="ch01">Шереметьево</label></li>
-                <li><input type="checkbox" name="ch02" id="ch02"> <label for="ch02">Внуково-1</label></li>
-                <li><input type="checkbox" name="ch03" id="ch03"> <label for="ch03">Внуково-2</label></li>
+            <ul data-bind="foreach: results.airports">
+                <li><input type="checkbox" data-bind="checked: active"> <label for="ch01" data-bind="text: name">Шереметьево</label></li>
             </ul>
         </div>
         <div class="div-filter">
             <h4>Москва <a href="#" class="clean">Очистить</a></h4>
-            <ul>
-                <li><input type="checkbox" name="ch04" id="ch04"> <label for="ch04">Аэрофлот</label></li>
-                <li><input type="checkbox" name="ch05" id="ch05"> <label for="ch05">Air Berlin</label></li>
-                <li><input type="checkbox" name="ch06" id="ch06"> <label for="ch06">Вооруженные силы РФ</label></li>
+            <ul data-bind="foreach: results.airlines">
+                <li><input type="checkbox" data-bind="checked: active"> <label for="ch01" data-bind="text: name">Аэрофлот</label></li>
             </ul>
             <div class="all-list">
                 <a href="#">Все авиакомпании</a>
