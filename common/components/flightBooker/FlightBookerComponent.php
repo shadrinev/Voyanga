@@ -47,7 +47,6 @@ class FlightBookerComponent extends CApplicationComponent
         return 'search';
     }
 
-
     public function book()
     {
         //if we don't have a flight OR we moved to another flight
@@ -56,7 +55,6 @@ class FlightBookerComponent extends CApplicationComponent
             //if we don't have a flight AND we moved to another flight
             if (($this->getCurrent()!=null) and $this->getCurrent()->flightVoyage->id != $this->flightVoyage->getId())
             {
-
                 $this->flightBooker = FlightBooker::model()->findByAttributes(array('flightVoyageId'=>$this->flightVoyage->getId()));
                 if(!$this->flightBooker)
                 {
@@ -105,11 +103,6 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBooking()
     {
-        //getting pnr and other stuff
-        //VarDumper::dump($this);
-        //return;
-
-        //$this->flightBooker->booking->bookingPassports;
         $flightBookingParams = new FlightBookingParams();
         $orderBooking = $this->flightBooker->orderBooking;
         $flightBookingParams->contactEmail = $orderBooking->email;
@@ -134,6 +127,11 @@ class FlightBookerComponent extends CApplicationComponent
             $this->flightBooker->nemoBookId = $flightBookingResponse->nemoBookId;
             $this->flightBooker->pnr = $flightBookingResponse->pnr;
             $this->flightBooker->timeout = date('y-m-d H:i:s',$flightBookingResponse->expiration);
+            $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'flightbooking','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
+            if($res)
+            {
+                $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
+            }
             $this->status('waitingForPayment');
         }
         else
@@ -142,15 +140,8 @@ class FlightBookerComponent extends CApplicationComponent
         }
     }
 
-    //! FIXME: We already have action for this, no ?
     public function stageWaitingForPayment()
     {
-        $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'flightbooking','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
-        if($res)
-        {
-            $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
-            return true;
-        }
     }
 
     public function stageBookingError()
