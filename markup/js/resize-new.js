@@ -313,6 +313,7 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
 			var_content.find('h1').find('span').hide();
 			var_ticketsItems.find('.ticket-items').addClass('small');
+			var_hotelItems.addClass('small');
 			/*
 			var mathWidthRicket = Math.floor(var_widthTicket * 0.393);
 			var_recomendedItems.find('.recommended-ticket').css('width', (253 + mathWidthRicket)+'px');
@@ -325,6 +326,7 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').css('width', '318px');
 			var_content.find('h1').find('span').show();
 			var_ticketsItems.find('.ticket-items').removeClass('small');
+			var_hotelItems.removeClass('small');
 			/*
 			var_recomendedItems.find('.recommended-ticket').css('width', '318px');
 			var_recomendedItems.css('width', var_widthMainBlockMAX+'px');

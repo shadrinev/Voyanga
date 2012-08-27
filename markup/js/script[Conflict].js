@@ -171,152 +171,22 @@ $(function() {
 			$(this).next().addClass('active');
 		}
 	});
-	var var_countStars = 0;
 	$('.stars-li label').click(function() {
 		var var_index = $(this).parent().index();
 		if (var_index == 0) {
-			if (var_countStars == 0) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = 0; i <= var_index; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 1;
-			}
-			else if (var_countStars == 1) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-					$('.stars-li li').eq(var_index).find('input').attr('checked','checked');
-					$('.stars-li li').eq(var_index).find('label').addClass('active');
-				var_countStars = 1;
-			}
-			else if (var_index < var_countStars) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = var_index; i < var_countStars; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 1;
-			}	
+			
 		}
 		if (var_index == 1) {
-			if (var_countStars == 0) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = 0; i <= var_index; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 2;
-			}
-			else if (var_countStars == 2) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-					$('.stars-li li').eq(var_index).find('input').attr('checked','checked');
-					$('.stars-li li').eq(var_index).find('label').addClass('active');
-				var_countStars = 2;
-			}
-			else if (var_index < var_countStars) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = var_index; i < var_countStars; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 2;
-			}		
+			
 		}
 		if (var_index == 2) {
-			if (var_countStars == 0) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = 0; i <= var_index; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 3;
-			}
-			else if (var_countStars == 3) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-					$('.stars-li li').eq(var_index).find('input').attr('checked','checked');
-					$('.stars-li li').eq(var_index).find('label').addClass('active');
-				var_countStars = 3;
-			}
-			else if (var_index < var_countStars) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = var_index; i < var_countStars; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 3;
-			}	
+			
 		}
 		if (var_index == 3) {
-			if (var_countStars == 0) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = 0; i <= var_index; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 4;
-			}
-			else if (var_countStars == 4) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-					$('.stars-li li').eq(var_index).find('input').attr('checked','checked');
-					$('.stars-li li').eq(var_index).find('label').addClass('active');
-				var_countStars = 4;
-			}	
-			else if (var_index < var_countStars) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = var_index; i < var_countStars; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 4;
-			}
+			
 		}
 		if (var_index == 4) {
-			if (var_countStars == 0) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = 0; i <= var_index; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 5;
-			}
-			else if (var_countStars == 5) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-					$('.stars-li li').eq(var_index).find('input').attr('checked','checked');
-					$('.stars-li li').eq(var_index).find('label').addClass('active');
-				var_countStars = 5;
-			}
-			else if (var_index == var_countStars) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = var_countStars-1; i <= var_index; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 5;
-			}
-			else if (var_index > var_countStars) {
-				$('.stars-li li').find('input').removeAttr('checked');
-				$('.stars-li li').find('label').removeClass('active');
-				for (i = var_countStars-1; i <= var_index; i++) {
-					$('.stars-li li').eq(i).find('input').attr('checked','checked');
-					$('.stars-li li').eq(i).find('label').addClass('active')
-				}
-				var_countStars = 5;
-			}					
+						
 		}
 	});
 });

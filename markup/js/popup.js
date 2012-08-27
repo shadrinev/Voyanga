@@ -1,4 +1,5 @@
 var box = '<div id="body-popup"><div id="popup"><div><div id="boxTopLeft"></div><div id="boxTopCenter"></div><div id="boxTopRight"></div><div class="clear"></div></div><div><div id="boxMiddleLeft"></div><div id="boxContent"><div id="boxClose"></div></div><div id="boxMiddleRight"></div><div class="clear"></div></div><div><div id="boxBottomLeft"></div><div id="boxBottomCenter"></div><div id="boxBottomRight"></div></div></div></div>';
+var yesClose = true;
 
 function SizeBox() {
 	var popup = $('#popup');
@@ -31,7 +32,7 @@ function ResizeBox() {
 
 function Close() {
 	$('#popupOverlay').remove();	
-	$('#popup').remove();
+	$('#body-popup').remove();
 }
 function CreateBox(textCode) {
 	$('body').prepend('<div id="popupOverlay"></div>');	
@@ -64,6 +65,11 @@ function LinkDone() {
 				$('#boxContent').css('height', 'auto');
 			}
 		}
+		sliderPhoto('.photo-slide-hotel');
+		$('a.photo').click(function(e) {
+			e.preventDefault();
+			createPhotoBox(this); 
+		});
 		SizeBox();
 		$(".description .text").dotdotdot({watch: 'window'});
 	});
@@ -132,13 +138,17 @@ $(document).ready(function() {
 		$('.place-buy .tmblr li').eq(1).addClass('active');
 		SizeBox();
 		LinkDone();		
-		sliderPhoto('.photo-slide-hotel');	
+		sliderPhoto('.photo-slide-hotel');
 		$(".description .text").dotdotdot({watch: 'window'});
+		$('a.photo').click(function(e) {
+			e.preventDefault();
+			createPhotoBox(this); 
+		});
 	});
 
 	
 	$(window).keyup(function(e) {
-  			if (e.keyCode == 27) {
+  			if (e.keyCode == 27 && yesClose == true) {
 				Close();
 			}
 	});

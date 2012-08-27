@@ -995,11 +995,14 @@
 	margin-left: 0px;
 	overflow:hidden;
 	margin-top: 2px;
+	position: relative;
 }
 .stars-select  .none-select {
 	 width: 89px; height: 16px;
-	 background: url(../images/slice.png) no-repeat -0px -768px;
+	 position: absolute;
+	 top:0px;
 }
+
 .stars-select.five .none-select  {
 	width: 87px;
 }
@@ -1041,6 +1044,9 @@
 	margin-top: -25px;
     padding-top: 25px;
     cursor: pointer;
+}
+.stars-li li label.active {
+	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
 }
 #content > .title > .stars, .hotel-details > .title > .stars {
 	position: absolute; bottom: -7px; left: 0px;
