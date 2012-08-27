@@ -3,6 +3,7 @@
 #body-popup {position:fixed; top: 0px; left: 0px; width: 100%; height: 100%; overflow-y: scroll;}
 #popupOverlay {position:fixed; top:0px; left:0px; z-index:999; background:#26292e; opacity:0.81; height:100%; width:100%;}
 #popup {position:absolute; z-index:1000;}
+#popup > div + div {position: relative;}
 #boxContent, #boxTopLeft, #boxTopCenter, #boxTopRight, #boxMiddleLeft, #boxBottomLeft, #boxBottomCenter, #boxBottomRight, #boxMiddleRight  {
 	float:left;
 }

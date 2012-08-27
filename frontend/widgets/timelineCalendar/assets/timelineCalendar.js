@@ -240,6 +240,7 @@ TimelineCalendar.generateHotelDiv = function(HotelEvent)
 {
     var totalDays = HotelEvent.dayEnd.valueOf() - HotelEvent.dayStart.valueOf();
     totalDays = Math.round(totalDays/(3600*24*1000));
+    console.log('generate hotel div');
 
     if(totalDays == 0){
         totalDays = 1;
@@ -260,6 +261,8 @@ TimelineCalendar.generateFlightDiv = function(FlightEvent)
 {
     var totalDays = FlightEvent.dayEnd.valueOf() - FlightEvent.dayStart.valueOf();
     totalDays = Math.round(totalDays/(3600*24*1000));
+    console.log('generate flight div');
+    console.log(FlightEvent);
 
     if(totalDays == 0){
         totalDays = 1;
@@ -328,7 +331,7 @@ TimelineCalendar.generateEvents = function()
                 weekNum++;
                 weekObj = $('#weekNum-'+weekNum);
             }
-        } else if(TimelineCalendar.calendarEvents[i].type == 'flight'){
+        } else if(TimelineCalendar.calendarEvents[i].type == 'flight1'){
             console.log(TimelineCalendar.calendarEvents[i]);
             /** @var dt Date */
             var dt = TimelineCalendar.calendarEvents[i].dayStart;

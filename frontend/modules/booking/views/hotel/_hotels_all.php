@@ -5,6 +5,7 @@
         <th>Цена</th>
         <th>Размер номера</th>
         <th>Тип номера</th>
+        <th>Название</th>
         <th>Количество в наличии</th>
     </tr>
     </thead>
@@ -20,6 +21,11 @@
         <td>
             {{#each rooms}}
             {{type}}
+            {{/each}}
+        </td>
+        <td>
+            {{#each rooms}}
+            {{showName}}
             {{/each}}
         </td>
         <td>{{countNumbers}}</td>
