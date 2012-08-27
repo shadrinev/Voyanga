@@ -32,15 +32,6 @@ function resizeLoad() {
 function resizeImg() {
 	var var_allWinHeight = $(window).height();
 	var var_heightIMG = $('#photoBox img').height();
-	//console.log(var_allWinHeight+' '+var_heightIMG);
-	/*
-if ($('#photoBox img').height() < var_allWinHeight) {
-		$('#photoBox img').css('height', var_allWinHeight+'px').css('width', 'auto');
-	}
-	else {
-		$('#photoBox img').css('height', 'auto').css('width', '850px');
-	}
-*/
 }
 function creatLoad() {
 	$('#popupPhoto').prepend(load);
