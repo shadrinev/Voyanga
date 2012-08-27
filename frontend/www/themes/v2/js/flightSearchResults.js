@@ -3,22 +3,38 @@
   var MONTHS, Result, ResultSet, Voyage,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-  MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентрября', 'ноября', 'декабря'];
+  MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентрября', 'октября', 'ноября', 'декабря'];
 
   Voyage = (function() {
 
-    function Voyage(data, result) {
-      var flights;
-      this.parts = [];
-      flights = data.flights;
-      this.departureDate = new Date(flights[0].departureDate);
-      this.parts = flights[0].flightParts;
+    function Voyage(flight) {
+      this.parts = flight.flightParts;
+      this.direct = this.parts.length === 1;
+      this.departureDate = new Date(flight.departureDate);
       this.arrivalDate = new Date(this.parts[this.parts.length - 1].datetimeEnd);
-      this._duration = flights[0].fullDuration;
+      this._duration = flight.fullDuration;
+      this.departureAirport = this.parts[0].departureAirport;
+      this.arrivalAirport = this.parts[this.parts.length - 1].arrivalAirport;
+      this.departureCity = flight.departureCity;
+      this.arrivalCity = flight.arrivalCity;
+      this._backVoyages = [];
+      this.activeBackVoyage = ko.observable();
     }
 
     Voyage.prototype.departureInt = function() {
       return this.departureDate.getHours() * 60 + this.departureDate.getMinutes();
+    };
+
+    Voyage.prototype.hash = function() {
+      return this.departureTime() + this.arrivalTime();
+    };
+
+    Voyage.prototype.push = function(voyage) {
+      return this._backVoyages.push(voyage);
+    };
+
+    Voyage.prototype.stacked = function() {
+      return this._backVoyages.length > 1;
     };
 
     Voyage.prototype.departureDayMo = function() {
@@ -69,55 +85,18 @@
       return hours + " ч. " + minutes + " м.";
     };
 
-    return Voyage;
-
-  })();
-
-  Result = (function() {
-
-    function Result(data) {
-      this.chooseStacked = __bind(this.chooseStacked, this);
-
-      var flights;
-      flights = data.flights;
-      this.price = Math.ceil(data.price);
-      this._stacked = false;
-      this.roundTrip = flights.length === 2;
-      this.departureCity = data.flights[0].departureCity;
-      if (!this.roundTrip) {
-        this.arrivalCity = data.flights[0].arrivalCity;
-        this.parts = flights[0].flightParts;
-        this.direct = this.parts.length === 1;
-        this.departureAirport = this.parts[0].departureAirport;
-        this.arrivalAirport = this.parts[this.parts.length - 1].arrivalAirport;
+    Voyage.prototype.stopoverText = function() {
+      var part, result, _i, _len, _ref;
+      result = [];
+      _ref = this.parts.slice(0, -1);
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        part = _ref[_i];
+        result.push(part.arrivalCity);
       }
-      this.activeVoyage = new Voyage(data, this);
-      this.voyages = [];
-      this.voyages.push(this.activeVoyage);
-      this.activeVoyage = ko.observable(this.activeVoyage);
-    }
-
-    Result.prototype.departureDayMo = function() {
-      return this.activeVoyage().departureDayMo();
+      return result.join(', ');
     };
 
-    Result.prototype.departureTime = function() {
-      return this.activeVoyage().departureTime();
-    };
-
-    Result.prototype.arrivalDayMo = function() {
-      return this.activeVoyage().arrivalDayMo();
-    };
-
-    Result.prototype.arrivalTime = function() {
-      return this.activeVoyage().arrivalTime();
-    };
-
-    Result.prototype.fullDuration = function() {
-      return this.activeVoyage().fullDuration();
-    };
-
-    Result.prototype.stopsRatio = function() {
+    Voyage.prototype.stopsRatio = function() {
       var data, index, part, result, _i, _j, _len, _len1, _ref;
       result = [];
       if (this.direct) {
@@ -139,34 +118,112 @@
       return result;
     };
 
-    Result.prototype.stopoverText = function() {
-      var part, result, _i, _len, _ref;
-      result = [];
-      _ref = this.parts.slice(0, -1);
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        part = _ref[_i];
-        result.push(part.arrivalCity);
-      }
-      return result.join(', ');
+    Voyage.prototype.sort = function() {
+      this._backVoyages.sort(function(a, b) {
+        return a.departureInt() - b.departureInt();
+      });
+      return this.activeBackVoyage(this._backVoyages[0]);
     };
+
+    return Voyage;
+
+  })();
+
+  Result = (function() {
+
+    function Result(data) {
+      this.chooseRtStacked = __bind(this.chooseRtStacked, this);
+
+      this.chooseStacked = __bind(this.chooseStacked, this);
+
+      var fields, flights, name, rtName, _i, _len,
+        _this = this;
+      flights = data.flights;
+      this.price = Math.ceil(data.price);
+      this._stacked = false;
+      this.roundTrip = flights.length === 2;
+      this.activeVoyage = new Voyage(flights[0]);
+      if (this.roundTrip) {
+        this.activeVoyage.push(new Voyage(flights[1]));
+      }
+      this.voyages = [];
+      this.voyages.push(this.activeVoyage);
+      this.activeVoyage = ko.observable(this.activeVoyage);
+      fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'fullDuration', 'direct', 'stopoverText', 'hash', 'stopsRatio'];
+      for (_i = 0, _len = fields.length; _i < _len; _i++) {
+        name = fields[_i];
+        this[name] = (function(name) {
+          return function() {
+            var field;
+            field = this.activeVoyage()[name];
+            if ((typeof field) === 'function') {
+              return field.apply(this.activeVoyage());
+            }
+            return field;
+          };
+        })(name);
+        rtName = 'rt' + name.charAt(0).toUpperCase() + name.slice(1);
+        this[rtName] = (function(name) {
+          return function() {
+            var field;
+            field = this.activeVoyage().activeBackVoyage()[name];
+            if ((typeof field) === 'function') {
+              return field.apply(this.activeVoyage().activeBackVoyage());
+            }
+            return field;
+          };
+        })(name);
+      }
+    }
 
     Result.prototype.stacked = function() {
       return this._stacked;
     };
 
+    Result.prototype.rtStacked = function() {
+      return this.activeVoyage().stacked();
+    };
+
     Result.prototype.push = function(data) {
+      var backVoyage, newVoyage, result;
       this._stacked = true;
-      return this.voyages.push(new Voyage(data));
+      newVoyage = new Voyage(data.flights[0]);
+      if (this.roundTrip) {
+        backVoyage = new Voyage(data.flights[1]);
+        newVoyage.push(backVoyage);
+        result = _.find(this.voyages, function(voyage) {
+          return voyage.hash() === newVoyage.hash();
+        });
+        if (result) {
+          result.push(backVoyage);
+          return;
+        }
+      }
+      return this.voyages.push(newVoyage);
     };
 
     Result.prototype.chooseStacked = function(voyage) {
       return this.activeVoyage(voyage);
     };
 
+    Result.prototype.chooseRtStacked = function(voyage) {
+      return this.activeVoyage().activeBackVoyage(voyage);
+    };
+
+    Result.prototype.rtVoyages = function() {
+      return this.activeVoyage()._backVoyages;
+    };
+
     Result.prototype.sort = function() {
-      return this.voyages.sort(function(a, b) {
+      this.voyages.sort(function(a, b) {
         return a.departureInt() - b.departureInt();
       });
+      if (this.roundTrip) {
+        _.each(this.voyages, function(x) {
+          return x.sort();
+        });
+      }
+      return this.activeVoyage(this.voyages[0]);
     };
 
     return Result;
