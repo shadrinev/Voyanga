@@ -8,8 +8,10 @@
         <div class="weekDay">Сб</div>
         <div class="weekDay">Вс</div>
     </div>
-    <div class="calendarGrid">
+    <div class="calendarUnscroll">
+        <div class="calendarGrid">
 
+        </div>
     </div>
     <div class="monthLine"><div class="knob" id="timelineCalendarKnob" style="left: 0%;"></div></div>
 

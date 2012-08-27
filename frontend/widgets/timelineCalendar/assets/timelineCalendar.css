@@ -1,16 +1,24 @@
 .weekDays{
-    width: 810px;
+    width: 784px;
 }
 .weekDay{
     width: 110px;
     border: 1px #000 solid;
     display: inline-block;
+    float: left;
 }
 .calendarGrid{
     width: 810px;
     height: 336px;
     overflow-x: hidden;
     overflow-y: auto;
+}
+.calendarUnscroll{
+    width: 784px;
+    height: 336px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    clear: both;
 }
 .calendarLine{
     position: relative;
@@ -22,7 +30,7 @@
     display: inline-block;
 }
 .monthLine{
-    width: 810px;
+    width: 784px;
     height: 30px;
     position: relative;
     background-color: #ccccff;
@@ -82,4 +90,40 @@
     opacity: 0.3;
     height: 30px;
     top: 30px;
+}
+
+.calendarFlight
+{
+    position: absolute;
+    z-index: 8;
+    height: 110px;
+    top: 0;
+}
+
+.calendarFlight .relFlight
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.calendarFlight .fromCity{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: #fff000;
+    opacity: 0.3;
+    height: 30px;
+    bottom: 30px;
+}
+
+.calendarFlight .toCity{
+    position: absolute;
+    right: 0;
+    text-align: right;
+    width: 100%;
+    background-color: #fff000;
+    opacity: 0.3;
+    height: 30px;
+    bottom: 0px;
 }

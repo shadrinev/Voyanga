@@ -52,7 +52,7 @@ TimelineCalendar.slider.width = 0;
 TimelineCalendar.slider.knobSlideAction = false;
 TimelineCalendar.slider.animateScrollAction = false;
 TimelineCalendar.slider.startEvent = function(e,obj){
-    console.log(obj);
+    //console.log(obj);
     if(TimelineCalendar.slider.knobSlideAction){
         obj.data('xStart', e.pageX);
         obj.data('posStart', TimelineCalendar.slider.knobPos);
@@ -123,9 +123,26 @@ TimelineCalendar.slider.scrollEvent = function(e){
     }
 };
 
-TimelineCalendar.slider.mousewheelEvent = function(e){
+/*TimelineCalendar.slider.mousewheelEvent = function(e){
     console.log(e);
-};
+    var rolled = 0;
+    var event = e.originalEvent;
+    if ('wheelDelta' in event) {
+        rolled = event.wheelDelta;
+    }
+    else {  // Firefox
+        // The measurement units of the detail and wheelDelta properties are different.
+        rolled = -40 * event.detail;
+    }
+    //console.log(rolled);
+
+    //var scrollHeight = TimelineCalendar.jObj.find('.calendarGrid').prop('scrollHeight');
+    console.log(TimelineCalendar.jObj.find('.calendarGrid').scrollTop());
+
+    var scrollTop = TimelineCalendar.jObj.find('.calendarGrid').scrollTop() - rolled;
+    TimelineCalendar.jObj.find('.calendarGrid').scrollTop(scrollTop);
+    return false;
+};*/
 TimelineCalendar.slider.init = function(){
     for(var i in TimelineCalendar.slider.monthArray){
         var leftPercent = TimelineCalendar.slider.monthArray[i].line / (TimelineCalendar.slider.totalLines - 3);
@@ -138,7 +155,8 @@ TimelineCalendar.slider.init = function(){
     TimelineCalendar.slider.width = TimelineCalendar.jObj.find('.monthLine').width();
 
     TimelineCalendar.jObj.find('.calendarGrid').on('scroll',TimelineCalendar.slider.scrollEvent);
-    TimelineCalendar.jObj.find('.calendarGrid').on('mousewheel',TimelineCalendar.slider.mousewheelEvent);
+    //TimelineCalendar.jObj.find('.calendarGrid').on('mousewheel',TimelineCalendar.slider.mousewheelEvent);
+    //TimelineCalendar.jObj.find('.calendarGrid').on('DOMMouseScroll',TimelineCalendar.slider.mousewheelEvent);
     TimelineCalendar.jObj.find('.monthLine').mousedown(TimelineCalendar.slider.mouseDown);
     TimelineCalendar.jObj.find('.monthLine').mouseup(TimelineCalendar.slider.mouseUp);
     TimelineCalendar.jObj.find('.monthLine .monthName').mouseup(TimelineCalendar.slider.monthMouseUp);
@@ -179,13 +197,13 @@ TimelineCalendar.generateGrid = function (){
     var tmpDate = new Date(firstDay.toDateString());
     tmpDate.setDate(1);
     var weekDay = TimelineCalendar.getDay(tmpDate);
-    console.log(weekDay);
+    //console.log(weekDay);
     var startDate = firstDay.getDate();
     var startYear = firstDay.getFullYear();
-    console.log(tmpDate);
+    //console.log(tmpDate);
     tmpDate.setDate(-TimelineCalendar.getDay(tmpDate) + 1);
     //tmpDate.setDate(0);
-    console.log(tmpDate);
+    //console.log(tmpDate);
     var needStop = false;
     var lineNumber = 0;
     while(!needStop)
@@ -218,7 +236,7 @@ TimelineCalendar.generateGrid = function (){
     }
     TimelineCalendar.slider.monthArray.pop();
     TimelineCalendar.slider.totalLines = lineNumber;
-    console.log(TimelineCalendar.slider.totalLines);
+    //console.log(TimelineCalendar.slider.totalLines);
 }
 TimelineCalendar.eventsCompareFunction = function(a, b)
 {
@@ -240,7 +258,7 @@ TimelineCalendar.generateHotelDiv = function(HotelEvent)
 {
     var totalDays = HotelEvent.dayEnd.valueOf() - HotelEvent.dayStart.valueOf();
     totalDays = Math.round(totalDays/(3600*24*1000));
-    console.log('generate hotel div');
+    //console.log('generate hotel div');
 
     if(totalDays == 0){
         totalDays = 1;
@@ -260,20 +278,24 @@ TimelineCalendar.generateHotelDiv = function(HotelEvent)
 TimelineCalendar.generateFlightDiv = function(FlightEvent)
 {
     var totalDays = FlightEvent.dayEnd.valueOf() - FlightEvent.dayStart.valueOf();
-    totalDays = Math.round(totalDays/(3600*24*1000));
-    console.log('generate flight div');
-    console.log(FlightEvent);
+    totalDays = Math.floor(totalDays/(3600*24*1000));
+    //console.log('generate flight div');
 
-    if(totalDays == 0){
+    //console.log(FlightEvent);
+    totalDays = totalDays + 1;
+    /*if(totalDays == 0){
         totalDays = 1;
-    }
+    }*/
+    //console.log(totalDays);
     //console.log(totalDays);
     var dayWidth = TimelineCalendar.dayCellWidth;
     //console.log(dayWidth);
-    var outHtml = '<div class="calendarHotel '+FlightEvent.color+'" style="width: '+(dayWidth*totalDays)+'px"><div class="relHotel">';
-    outHtml = outHtml + '<div class="leftPartHotel"></div>';
-    outHtml = outHtml + '<div class="rightPartHotel"></div>';
-    outHtml = outHtml + '<div class="hotelDescription">'+FlightEvent.description+'</div>';
+    var names = FlightEvent.description.split('||');
+
+    var outHtml = '<div class="calendarFlight '+FlightEvent.color+'" style="width: '+(dayWidth*totalDays)+'px"><div class="relFlight">';
+    outHtml = outHtml + '<div class="fromCity">'+names[0]+'</div>';
+    outHtml = outHtml + '<div class="toCity">'+names[1]+'</div>';
+    outHtml = outHtml + '';
     outHtml = outHtml + '';
     outHtml = outHtml + '</div></div>';
     return outHtml;
@@ -286,17 +308,18 @@ TimelineCalendar.generateEvents = function()
     {
         if(TimelineCalendar.calendarEvents[i].type == 'hotel')
         {
-            console.log(TimelineCalendar.calendarEvents[i]);
+
+            //console.log(TimelineCalendar.calendarEvents[i]);
             /** @var dt Date */
             var dt = TimelineCalendar.calendarEvents[i].dayStart;
             var dateLabel = dt.getFullYear()+'-'+(dt.getMonth()+1) + '-'+ dt.getDate();
-            console.log(dateLabel);
+            //console.log(dateLabel);
 
             var weekObj = $('#dayCell-'+dateLabel).parent();
             var weekNum = weekObj.data('weeknum');
             //console.log(weekNum);
             var tmpDate = new Date(dt.toString());
-            console.log(tmpDate);
+            //console.log(tmpDate);
             //return;
             var eventLength = TimelineCalendar.calendarEvents[i].dayEnd.valueOf() - TimelineCalendar.calendarEvents[i].dayStart.valueOf();
             var hotelDiv = TimelineCalendar.generateHotelDiv(TimelineCalendar.calendarEvents[i]);
@@ -311,10 +334,10 @@ TimelineCalendar.generateEvents = function()
                 var newEventElement = $(hotelDiv);
                 if(firstTime){
                     var numRender = 7 - TimelineCalendar.getDay(tmpDate) - 0.5;
-                    console.log(TimelineCalendar.getDay(tmpDate));
-                    console.log(numRender);
+                    //console.log('day:'+TimelineCalendar.getDay(tmpDate));
+                    //console.log(numRender);
                     var leftPos = (7 - numRender)*dayWidth;
-                    console.log(leftPos);
+                    //console.log(leftPos);
                     firstTime = false;
                 }else{
                     var numRender = 7;
@@ -331,21 +354,24 @@ TimelineCalendar.generateEvents = function()
                 weekNum++;
                 weekObj = $('#weekNum-'+weekNum);
             }
-        } else if(TimelineCalendar.calendarEvents[i].type == 'flight1'){
-            console.log(TimelineCalendar.calendarEvents[i]);
+        } else if(TimelineCalendar.calendarEvents[i].type == 'flight'){
+            //console.log(TimelineCalendar.calendarEvents[i]);
             /** @var dt Date */
             var dt = TimelineCalendar.calendarEvents[i].dayStart;
             var dateLabel = dt.getFullYear()+'-'+(dt.getMonth()+1) + '-'+ dt.getDate();
-            console.log(dateLabel);
+            //console.log(dateLabel);
 
             var weekObj = $('#dayCell-'+dateLabel).parent();
             var weekNum = weekObj.data('weeknum');
             //console.log(weekNum);
             var tmpDate = new Date(dt.toString());
-            console.log(tmpDate);
+            //console.log(tmpDate);
             //return;
             var eventLength = TimelineCalendar.calendarEvents[i].dayEnd.valueOf() - TimelineCalendar.calendarEvents[i].dayStart.valueOf();
             var flightDiv = TimelineCalendar.generateFlightDiv(TimelineCalendar.calendarEvents[i]);
+
+
+            //continue;
             var dayWidth = TimelineCalendar.dayCellWidth;
 
             eventLength = Math.round(eventLength/(3600*24*1000));
@@ -354,13 +380,13 @@ TimelineCalendar.generateEvents = function()
             var firstTime = true;
             while(!endDraw)
             {
-                var newEventElement = $(hotelDiv);
+                var newEventElement = $(flightDiv);
                 if(firstTime){
-                    var numRender = 7 - TimelineCalendar.getDay(tmpDate) - 1;
-                    console.log(TimelineCalendar.getDay(tmpDate));
-                    console.log(numRender);
+                    var numRender = 7 - TimelineCalendar.getDay(tmpDate);
+                    //console.log('day:'+TimelineCalendar.getDay(tmpDate));
+                    //console.log(numRender);
                     var leftPos = (7 - numRender)*dayWidth;
-                    console.log(leftPos);
+                    //console.log(leftPos);
                     firstTime = false;
                 }else{
                     var numRender = 7;
@@ -384,6 +410,8 @@ TimelineCalendar.generateEvents = function()
 TimelineCalendar.init = function (){
     TimelineCalendar.jObj = $('#timelineCalendar');
     TimelineCalendar.calendarEvents.sort(TimelineCalendar.eventsCompareFunction);
+    //console.log(TimelineCalendar.calendarEvents);
+    //return true;
     TimelineCalendar.generateGrid();
     TimelineCalendar.generateEvents();
     TimelineCalendar.slider.init();
@@ -401,6 +429,6 @@ $(document).ready(function(){
      *
      * @type {Array}
      */
-    TimelineCalendar.calendarEvents = [{dayStart: new Date('2012-09-21'),dayEnd: new Date('2012-09-21'),type:'flight',color:'red',description:'Led - Mow'},{dayStart: new Date('2012-09-21'),dayEnd: new Date('2012-10-23'),type:'hotel',color:'red',description:'Californication Hotel'},{dayStart: new Date('2012-10-23'),dayEnd: new Date('2012-10-23'),type:'flight',color:'red',description:'Mow - Led'}];
+    TimelineCalendar.calendarEvents = [{dayStart: new Date('2012-09-21'),dayEnd: new Date('2012-09-22'),type:'flight',color:'red',description:'Led || Mow'},{dayStart: new Date('2012-09-21'),dayEnd: new Date('2012-10-23'),type:'hotel',color:'red',description:'Californication Hotel'},{dayStart: new Date('2012-10-23'),dayEnd: new Date('2012-10-23'),type:'flight',color:'red',description:'Mow || Led'}];
     TimelineCalendar.init();
 });
