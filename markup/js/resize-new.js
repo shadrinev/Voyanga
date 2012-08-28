@@ -472,7 +472,6 @@ function AlphaBackground() {
 function ResizeFun() {
 	ResizeCenterBlock();
 	loginResize();
-	//smallTicketHeight();
 	$(window).resize(ResizeCenterBlock);
 	$(window).resize(loginResize);
 }

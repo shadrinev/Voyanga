@@ -14,15 +14,17 @@ function sliderPhoto(that) {
 	
 	var var_widthULminus = var_widthUL - var_widthAll;	
 	$(window).resize(function() {
-		var var_in = var_this.find('ul .active').index();
-		var_widthAll = var_this.width();
-		if (var_in == (var_len-1)) {
-			var var_mar = var_this.find('ul').css('margin-left');
-			var_mar = Math.abs(parseInt(var_mar.slice(0,-2)));
-			var all_var = var_mar + var_widthAll - var_widthUL;
-			var_this.find('ul').css('margin-left', '-'+((var_mar - all_var)-3) +'px');
+		if (var_this.length > 0 && var_this.is(':visible')) {
+			var var_in = var_this.find('ul .active').index();
+			var_widthAll = var_this.width();
+			if (var_in == (var_len-1)) {
+				var var_mar = var_this.find('ul').css('margin-left');
+				var_mar = Math.abs(parseInt(var_mar.slice(0,-2)));
+				var all_var = var_mar + var_widthAll - var_widthUL;
+				var_this.find('ul').css('margin-left', '-'+((var_mar - all_var)-3) +'px');
+			}
+			var_widthULminus = var_widthUL - var_widthAll;
 		}
-		var_widthULminus = var_widthUL - var_widthAll;
 	});
 	var one_short = false;
 	
