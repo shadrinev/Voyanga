@@ -347,12 +347,13 @@
     </ul>
 </div>
 <!-- /ko -->
-<div class="line-two-ticket" data-bind="if: roundTrip">
+<!-- ko if: roundTrip -->
+<div class="line-two-ticket">
     <span class="l"></span>
     <span class="end"></span>
     <span class="r"></span>
 </div>
-<div class="date-time-city" data-bind="if: roundTrip">
+<div class="date-time-city">
     <div class="start">
         <div class="date" data-bind="text: rtDepartureDayMo()">
             28 мая
@@ -411,8 +412,8 @@
     <div class="clear"></div>
 </div>
 <!-- END DATE TIME CITY -->
-<!-- ko if:rtStacked() -->
-<div class="other-time" data-bind="if: roundTrip">
+<!-- ko if:rtStacked -->
+<div class="other-time" >
     <div class="title">Также вы можете вылететь в</div>
     <div class="btn-minimize"><a href="#">Списком</a></div>
     <div class="clear"></div>
@@ -431,6 +432,8 @@
         </ul>
 </div>
 <!-- /ko -->
+<!-- /ko -->
+
 </div>
 <!-- END CENTER BLOCK -->
 <div class="buy-ticket">
