@@ -8,16 +8,20 @@
 class TestApiController extends FrontendController
 {
     public $api = 'http://api.misha.voyanga/v1';
-    public $avia = 'flight';
-    public $hotel = 'hotel';
+
+    public $flightApi = 'flight';
+    public $hotelApi = 'hotel';
+    public $tourApi = 'tour';
+
     public $search = 'search';
 
     public $tests = array(
-        'aviaSearchSimple',
+/*        'aviaSearchSimple',
         'aviaSearchComplex',
         'aviaSearchRoundTrip',
-        'aviaSearchComplexRoundTrip',
+        'aviaSearchComplexRoundTrip',*/
         'hotelSearchSimple',
+//        'tourSearchSimple',
     );
 
     public function actionDefault()
@@ -43,7 +47,7 @@ class TestApiController extends FrontendController
 
     private function buildAviaApiUrl($params)
     {
-        $url = $this->api . '/' . $this->avia . '/' . $this->search;
+        $url = $this->api . '/' . $this->flightApi . '/' . $this->search;
         $fullUrl = $url . '?' . http_build_query($params);
         echo "<br>Query: ".$fullUrl."<br>";
         return $fullUrl;
@@ -51,7 +55,15 @@ class TestApiController extends FrontendController
 
     private function buildHotelApiUrl($params)
     {
-        $url = $this->api . '/' . $this->hotel . '/' . $this->search;
+        $url = $this->api . '/' . $this->hotelApi . '/' . $this->search;
+        $fullUrl = $url . '?' . http_build_query($params);
+        echo "<br>Query: ".$fullUrl."<br>";
+        return $fullUrl;
+    }
+
+    private function buildTourApiUrl($params)
+    {
+        $url = $this->api . '/' . $this->tourApi . '/' . $this->search;
         $fullUrl = $url . '?' . http_build_query($params);
         echo "<br>Query: ".$fullUrl."<br>";
         return $fullUrl;
@@ -165,4 +177,22 @@ class TestApiController extends FrontendController
         $result = file_get_contents($fullUrl);
         return $result;
     }
+
+    private function tourSearchSimple()
+    {
+        $search = array(
+            'start' => 'LED',
+            'destinations' => array(
+                array(
+                    'city' => 'MOW',
+                    'dateFrom' => '01.10.2012',
+                    'dateTo' => '10.10.2012',
+                ))
+        );
+        VarDumper::dump($search);
+        $fullUrl = $this->buildTourApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
 }

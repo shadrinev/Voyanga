@@ -57,7 +57,8 @@ class TourBuilderForm extends CFormModel
 
     public function setStartCityName($value)
     {
-        $this->startCityModel = City::model()->findByAttributes(array('localRu'=>$value));
+        $items = City::model()->guess($value);
+        $this->startCityModel = $items[0];
     }
 
     public function attributeLabels()

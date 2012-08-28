@@ -85,5 +85,8 @@ return CMap::mergeArray(array(
 		//'schools/default/*' => 'companies/default',
 	),
 	
-	'php.exePath' => '/usr/bin/php'
+	'php.exePath' => '/usr/bin/php',
+
+    'app.api.flightSearchUrl' => 'http://api.misha.voyanga/v1/flight/search',
+    'app.api.hotelSearchUrl' => 'http://api.misha.voyanga/v1/hotel/search',
 ), CMap::mergeArray( $commonParamsEnv, $commonParamsLocal));

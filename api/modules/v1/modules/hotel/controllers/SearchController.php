@@ -12,7 +12,7 @@ class SearchController extends ApiController
     /**
      * @param string city
      * @param string checkIn Y-m-d date
-     * @param int duration #of nights inside hotel
+     * @param int duration # of nights inside hotel
      * @param array $rooms
      *  [Х][adt] - amount of adults inside room,
      *  [Х][chd] - amount of childs inside room,
@@ -39,6 +39,7 @@ class SearchController extends ApiController
         Yii::import('site.frontend.components.*');
         $HotelClient = new HotelBookClient();
         $variants = $HotelClient->fullHotelSearch($hotelSearchParams);
+        $results = array();
         if ($variants['errorStatus']==1)
         {
             $stack = new HotelStack($variants);

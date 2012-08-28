@@ -58,6 +58,11 @@ class HotelTripElement extends TripElement
         return false;
     }
 
+    public function getCityModel()
+    {
+        return City::model()->findByPk($this->city);
+    }
+
     public function getPrice()
     {
         if ($this->hotel)
@@ -165,5 +170,31 @@ class HotelTripElement extends TripElement
     public function createTripElementWorkflow()
     {
         return new HotelTripElementWorkflow($this);
+    }
+
+    public function getUrlToAllVariants()
+    {
+        $search = array(
+            'city' => $this->getCityModel()->code,
+            'checkIn' => date('Y-m-d', strtotime($this->checkIn)),
+            'duration' => $this->getDuration(),
+            'rooms' => array(
+                array(
+                    'adt' => $this->adultCount,
+                    'chd' => $this->childCount,
+                    'chdAge' => 0,
+                    'cots' => 0
+                )
+            )
+        );
+        $fullUrl = $this->buildApiUrl($search);
+        return $fullUrl;
+    }
+
+    private function buildApiUrl($params)
+    {
+        $url = Yii::app()->params['app.api.hotelSearchUrl'];
+        $fullUrl = $url . '?' . http_build_query($params);
+        return $fullUrl;
     }
 }
