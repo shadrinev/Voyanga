@@ -173,6 +173,17 @@ return CMap::mergeArray(
                     ),
                 )
             ),
+            'clientScript' => array(
+                'packages' => array(
+                    'everything' => array(
+                        'basePath' => 'frontend.www.themes.v2.assets',
+                        'js' => array("js/jquery-1.7.2.min.js", "js/jquery.dotdotdot-1.5.1.js", "js/knockout-2.1.0.js" ,
+                            'js/underscore.js', "js/resize-new.js", 'js/slide-mode.js', 'js/popup.js', 'js/tickets.js',
+                            'js/panel.js', 'js/script.js', "js/flightSearchResults.js"),
+                        'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css'),
+                    ),
+                ),
+            ),
         ),
         'controllerMap' => array(
             'payments'=>array(
