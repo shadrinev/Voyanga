@@ -1,0 +1,3 @@
+d:\mihan007\webservers\usr\local\mysql-5.1\bin\mysql.exe -udumper -pdumper --host=localhost --database voyanga_backend --execute "\. dump_mysql_2012-08-23_13_31_00_backend.sql"
+d:\mihan007\webservers\usr\local\mysql-5.1\bin\mysql.exe -udumper -pdumper --host=localhost --database voyanga_logdb --execute "\. dump_mysql_2012-08-23_13_31_00_logdb.sql"
+d:\mihan007\webservers\usr\local\mysql-5.1\bin\mysql.exe -udumper -pdumper --host=localhost --database voyanga_search --execute "\. dump_mysql_2012-08-23_13_31_00_search.sql"
