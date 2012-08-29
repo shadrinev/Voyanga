@@ -177,10 +177,17 @@ return CMap::mergeArray(
                 'packages' => array(
                     'everything' => array(
                         'basePath' => 'frontend.www.themes.v2.assets',
-                        'js' => array("js/jquery-1.7.2.min.js", "js/jquery.dotdotdot-1.5.1.js", "js/knockout-2.1.0.js" ,
-                            'js/underscore.js', "js/resize-new.js", 'js/slide-mode.js', 'js/popup.js', 'js/tickets.js',
-                            'js/panel.js', 'js/script.js', "js/flightSearchResults.js", 'js/jquery.slider.min.js', 'js/jquery.slider.js'),
-                        'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css', 'css/jslider.css','css/jslider.round.voyanga.css'),
+                        'js' => array(
+                            //! App supporting vendor modules
+                            'js/vendor/jquery.js', 'js/vendor/knockout-2.1.0.js', 'js/vendor/underscore.js',
+                            'js/vendor/signals.js', 'js/vendor/crossroads.js', 'js/vendor/hasher.js',
+                            //! Markup related scripts and modules
+                            'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js', 'js/slide-mode.js', 'js/popup.js',
+                            'js/tickets.js','js/panel.js', 'js/script.js',
+                            //! Our application logic
+                            'js/app/common/utils.js', 'js/app/common/filters.js',
+                            'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/app.js'),
+                        'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css'),
                     ),
                 ),
             ),
