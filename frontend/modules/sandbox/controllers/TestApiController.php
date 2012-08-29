@@ -16,11 +16,11 @@ class TestApiController extends FrontendController
     public $search = 'search';
 
     public $tests = array(
-        'aviaSearchSimple',
-        'aviaSearchComplex',
-        'aviaSearchRoundTrip',
-        'aviaSearchComplexRoundTrip',
-        'hotelSearchSimple',
+//        'aviaSearchSimple',
+//        'aviaSearchComplex',
+//        'aviaSearchRoundTrip',
+//        'aviaSearchComplexRoundTrip',
+//        'hotelSearchSimple',
         'tourSearchSimple',
     );
 
@@ -56,14 +56,6 @@ class TestApiController extends FrontendController
     private function buildHotelApiUrl($params)
     {
         $url = $this->api . '/' . $this->hotelApi . '/' . $this->search;
-        $fullUrl = $url . '?' . http_build_query($params);
-        echo "<br>Query: ".$fullUrl."<br>";
-        return $fullUrl;
-    }
-
-    private function buildTourApiUrl($params)
-    {
-        $url = $this->api . '/' . $this->tourApi . '/' . $this->search;
         $fullUrl = $url . '?' . http_build_query($params);
         echo "<br>Query: ".$fullUrl."<br>";
         return $fullUrl;
@@ -195,4 +187,11 @@ class TestApiController extends FrontendController
         return $result;
     }
 
+    private function buildTourApiUrl($params)
+    {
+        $url = $this->api . '/' . $this->tourApi . '/' . $this->search;
+        $fullUrl = $url . '?' . http_build_query($params);
+        echo "<br>Query: ".$fullUrl."<br>";
+        return $fullUrl;
+    }
 }

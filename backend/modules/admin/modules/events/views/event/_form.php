@@ -53,31 +53,6 @@
         'form' => $form
     )); ?>
 
-	<?php echo $form->hiddenField($model,'cityId'); ?>
-
-    <?php echo $form->labelEx($model,'cityId'); ?>
-    <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
-        'options'=>array(
-            'items'=>10,
-            'ajax' => array(
-                'url' => "/site/cityAutocomplete",
-                'timeout' => 500,
-                'displayField' => "label",
-                'triggerLength' => 2,
-                'method' => "get",
-                'loadingClass' => "loading-circle",
-            ),
-            'onselect'=>'js:function(res){$("#Event_cityId").val(res.id)}',
-            'matcher'=>'js: function(){return true}',
-        ),
-        'htmlOptions'=>array(
-            'class'=>'span5',
-            'value'=>$model->isNewRecord?'':$model->city->localRu
-        )
-    )); ?>
-
-    <?php echo $form->error($model, 'cityId'); ?>
-
 	<?php echo $form->textFieldRow($model,'address',array('class'=>'span5','maxlength'=>255)); ?>
 
 	<?php echo $form->textFieldRow($model,'contact',array('class'=>'span5','maxlength'=>255)); ?>
@@ -138,24 +113,22 @@
             'url'=>$model->isNewRecord ? array('admin') : array('view','id'=>$model->id),
             'label'=>'Отмена',
         )); ?>
-        <br>
-        <?php echo (!$model->isNewRecord) ? ('<br>Из Москвы: '.$model->priceMoscow." руб., из Питера: ".$model->pricePiter." руб.<br>") : '' ?>
-        <br>
-        <?php $this->widget('bootstrap.widgets.BootButton', array(
-        'buttonType'=>'submit',
-        'type'=>'warning',
-        'label'=>($model->isNewRecord)?'Запросить цену для Москвы':'Уточнить цену для Москвы',
-        'htmlOptions'=>array('id'=>'getPrice'),
-        'loadingText'=>'Запрос цены...',
-         )); ?>
-        <br><br>
-        <?php $this->widget('bootstrap.widgets.BootButton', array(
-        'buttonType'=>'submit',
-        'type'=>'warning',
-        'label'=>($model->isNewRecord)?'Запросить цену для Питера':'Уточнить цену для Питера',
-        'htmlOptions'=>array('id'=>'getPiterPrice'),
-        'loadingText'=>'Запрос цены...',
-    )); ?>
+        <?php foreach ($model->prices as $price): ?>
+            <?php echo '<br>Оптимальная цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestPriceTime ?>
+            <?php echo '<br>Самая низкая цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestPrice ?>
+            <?php echo '<br>Самая "быстрая" цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestTime ?>
+            <?php echo '<br>' ?>
+        <?php endforeach ?>
+        <?php foreach ($startCities as $city): ?>
+            <?php $this->widget('bootstrap.widgets.BootButton', array(
+                'buttonType'=>'submit',
+                'type'=>'warning',
+                'label' => ($model->isNewRecord) ? 'Запросить цену для '.$city->caseGen : 'Уточнить цену для '.$city->caseGen,
+                'htmlOptions'=> array ('class'=>'getPrice', 'data-cityid'=>$city->id, 'data-eventid'=>$model->id),
+                'loadingText'=>'Запрос цены...',
+             ));
+            ?>
+        <?php endforeach ?>
 	</div>
 
 <?php $this->endWidget(); ?>
