@@ -41,8 +41,8 @@ $.widget("ui.VoyangaCalendarKnob",$.ui.mouse, VoyangaCalendarKnob);
 VoyangaCalendar = new Object();
 VoyangaCalendar.jObj = null;
 VoyangaCalendar.weekDays = new Array('Пн','Вт','Ср','Чт','Пт','Сб','Вс');
-VoyangaCalendar.monthNames = new Array('янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек');
-VoyangaCalendar.dayCellWidth = 110;
+VoyangaCalendar.monthNames = new Array('Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь');
+VoyangaCalendar.dayCellWidth = 180;
 VoyangaCalendar.slider = new Object();
 VoyangaCalendar.slider.monthArray = new Array();
 VoyangaCalendar.slider.totalLines = 1;
@@ -212,7 +212,7 @@ VoyangaCalendar.generateGrid = function (){
             tmpDate.setDate(tmpDate.getDate()+1);
         }
         newHtml = newHtml + '</div>';
-        VoyangaCalendar.jObj.find('.calendarGridVoyanga').append(newHtml);
+        VoyangaCalendar.jObj.find('.calendarDIVVoyanga').append(newHtml);
         if(tmpDate.getFullYear() > startYear){
             if(tmpDate.getMonth() >= startMonth ){
                 needStop = true;

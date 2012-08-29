@@ -1,21 +1,36 @@
 .weekDaysVoyanga{
-    width: 784px;
+    width: 100%;
+    overflow: hidden;
 }
 .weekDayVoyanga{
-    width: 110px;
-    border: 1px #000 solid;
+    width: 14.18%;
+    border-right: 1px #d7d7d8 solid;
+    border-bottom: 1px #d7d7d8 solid;
     display: inline-block;
     float: left;
+    background: #e2e5eb;
+    color: #1c1f24;
+    font-size: 13px;
+    font-family: Tahoma;
+    text-align: right;
+    padding-top: 2px;
+    text-transform: lowercase;
+    height: 22px;
+}
+.weekDayVoyanga span {
+	margin-right: 25px;
 }
 .calendarGridVoyanga{
-    width: 810px;
-    height: 336px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    width: 950px;
+    height: 245px;
+    overflow: hidden;
+    overflow-y: visible;
+    color: #1c1f24;
+    text-align: center;
 }
 .calendarUnscrollVoyanga{
-    width: 784px;
-    height: 336px;
+    width: 100%;
+    height: 245px;
     overflow-x: hidden;
     overflow-y: hidden;
     clear: both;
@@ -24,16 +39,21 @@
     position: relative;
 }
 .dayCellVoyanga{
-    width: 110px;
-    height: 110px;
-    border: 1px #000 solid;
+    width: 14.18%;
+    height: 48px;
     display: inline-block;
+    border-right: 1px #d7d7d8 solid;
+    border-bottom: 1px #d7d7d8 solid;
+    background: #f5f5f6;
+    font-size: 17px;
+    font-family: Tahoma;
 }
 .monthLineVoyanga{
-    width: 784px;
-    height: 30px;
+    width: 99.987%;
+    height: 29px;
     position: relative;
-    background-color: #ccccff;
+    background: url(../images/main-avia-route_05.png) repeat-x;
+    font-size: 12px;
 }
 .monthLineVoyanga .monthNameVoyanga{
     position: absolute;
@@ -43,8 +63,8 @@
 .monthLineVoyanga .knobVoyanga{
     position: absolute;
     z-index: 5;
-    opacity: 0.3;
     /*width: 40px;*/
-    height: 30px;
-    background-color: #fff;
+    height: 27px;
+    border-radius: 0px 0px 8px 8px;
+    background: url(../images/main-avia-route_03.png) repeat-x;
 }
