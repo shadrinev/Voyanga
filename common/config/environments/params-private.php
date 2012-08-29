@@ -9,22 +9,22 @@ return array(
 	"env.code" => "private",
 
     'db.name' => 'search',
-    'db.connectionString'=>'mysql:host=localhost;dbname=search',
+    'db.connectionString'=>'mysql:host=192.168.0.55;dbname=search',
     'db.username'=>'oleg',
     'db.password'=>'q1w2e3r4',
 
     'backendDb.name' => 'search',
-    'backendDb.connectionString'=>'mysql:host=localhost;dbname=backend',
+    'backendDb.connectionString'=>'mysql:host=192.168.0.55;dbname=backend',
     'backendDb.username'=>'oleg',
     'backendDb.password'=>'q1w2e3r4',
 
     'userDb.name' => 'search',
-    'userDb.connectionString'=>'mysql:host=localhost;dbname=backend',
+    'userDb.connectionString'=>'mysql:host=192.168.0.55;dbname=backend',
     'userDb.username'=>'oleg',
     'userDb.password'=>'q1w2e3r4',
 
     'log_db.name' => 'search',
-    'log_db.connectionString'=>'mysql:host=localhost;dbname=logdb',
+    'log_db.connectionString'=>'mysql:host=192.168.0.55;dbname=logdb',
     'log_db.username'=>'oleg',
     'log_db.password'=>'q1w2e3r4',
 

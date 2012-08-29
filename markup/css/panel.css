@@ -4,10 +4,17 @@
 	position: relative;
 	padding-top: 5px;
 	height: 54px;
+
+}
+.panel .content {
+	cursor: pointer;
 }
 .path {
 	height: 68px;
-	position: absolute; top:0px;
+	position:relative;
+	width: 920px;
+	margin: 0 auto;
+	margin-top: -5px;
 }
 .path .data {
 	width: 625px;
@@ -133,11 +140,12 @@
 	width: 48px; font-size: 11px; color: #272728; text-shadow: 0px 1px 0px #FFF; line-height: 13px;
 	margin-left: 13px;
 	padding-top: 13px;
+	position: relative;
 }
 .how-many-man  .popup .adults input, .how-many-man  .popup .childs input, .how-many-man  .popup .small-childs input  {
 	background: url("../images/slice.png") no-repeat scroll -264px -941px transparent;
     border: medium none;
-    font-size: 28px;
+    font-size: 25px;
     height: 31px;
     text-align: center;
     width: 48px;
@@ -150,13 +158,39 @@
 .how-many-man  .popup .adults input:focus {
 	background-position: -264px -904px;
 }
+.inputDIV {position: relative;}
+.minusOne {background: url(../images/minuscount.png) no-repeat 0 0;
+    overflow: hidden;
+    cursor: pointer;
+    height: 30px;
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 7px;
+    z-index: 100;
+    display: none;
+    text-indent: -9999px;}
+.plusOne {background: url(../images/pluscount.png) no-repeat 0px 0;
+    overflow: hidden;
+    cursor: pointer;
+    height: 30px;
+    position: absolute;
+    right: 4px;
+    top: 0px;
+    width: 7px;
+    z-index: 100;
+    display: none;
+    text-indent: -9999px;}
+.inputDIV .minusOne.active, .inputDIV .plusOne.active  {
+	background-position: 0px -30px;	
+}
 .btn-find {
 	background: url("../images/slice.png") no-repeat scroll -122px -1014px transparent;
 	float: right;
 	width: 83px; height: 47px;
 	text-indent: -9999px;
 	display: block;
-	margin-top: -6px;
+	margin-top: 10px;
 	cursor: pointer;
 }
 .btn-minimizePanel {

@@ -7,6 +7,10 @@
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <link href="css/panel.css" rel="stylesheet" type="text/css" />
 <link href="css/popup.css" rel="stylesheet" type="text/css" />
+
+<!-- JS SLIDE -->
+<link href="css/jsslidecheck.css" rel="stylesheet" type="text/css" />
+<!-- JS END SLIDE -->
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/jquery.dotdotdot-1.5.1.js"></script>
 
@@ -82,31 +86,38 @@
 						<input class="input-path" type="text" placeholder="Откуда">
 					</div>
 					<div class="how-many-man">
-						<div class="content">
-							<!--
-<div class="man"></div>
-							<div class="count"><span>x</span>3</div>
-							<div class="child"></div>
-							<div class="count"><span>x</span>2</div>
--->
-						</div>
+						<div class="content"></div>
 						<div class="btn"></div>
 						<div class="popup">
 							<div class="adults">
-								<input type="text" value="4" name="adult" class="active">
+								<div class="inputDIV">
+									<input type="text" value="1" name="adult" class="active">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
 								взрослых
 							</div>
 							<div class="childs">
-								<input type="text" value="5" name="adult2" class="active">
+								<div class="inputDIV">
+									<input type="text" value="0" name="adult2">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
 								детей до 12 лет
 							</div>
 							<div class="small-childs">
-								<input type="text" value="1" name="adult3">
+								<div class="inputDIV">
+									<input type="text" value="0" name="adult3">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
 								детей до 2 лет
 							</div>
 							
 						</div>
 					</div>
+					
+						<a class="btn-find">Найти</a>
 				</div>
 			
 			<!-- BTN MINIMIZE -->
@@ -119,8 +130,33 @@
 		<!-- END CENTER BLOCK -->
 	</div>	
 	<!-- END SUB HEAD -->
+</div>
 <!--====**********===-->
-
-</div> 
+<!--====**********===-->
+	<!-- ALL CONTENT -->
+	<div class="center-block">
+<!-- MAIN BLOCK -->
+		<div class="main-block">
+			<div id="content">
+				<div style="width:300px; margin: 0 auto;">
+					
+					<div class="jsslidecheckbox">
+						<div class="slidecheckbox">
+							<ul>
+								<li class="active"><a href="#">Обратно</a></li>
+								<li><a href="#">Туда</a></li>
+							</ul>
+							<div class="switch">
+								<i class="left"></i>
+								<i class="right"></i>
+							</div>
+							<i class="left"></i>
+							<i class="right"></i>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div> 
 </body>
 </html>

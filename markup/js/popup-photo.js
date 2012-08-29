@@ -1,4 +1,4 @@
-var boxPhoto = '<div id="body-popup-Photo"><div id="popupPhoto"><div id="photoBox"><div id="imgContent"></div></div></div></div>';
+var boxPhoto = '<div id="body-popup-Photo"><div id="popupPhoto"><div id="photoBox"><div id="imgContent"></div></div></div><div id="boxClosePhoto">Закрыть Х</div></div>';
 var load = '<div id="load"><img src="images/load.gif"></div>';
 var arr_slideImg = new Array();
 var arr_slideTrue = new Array();
@@ -88,13 +88,14 @@ function createPhotoBox(obj) {
 		
 		clickRight(arr_slideImg, arr_slideTrue);
 		clickLeft(arr_slideImg, arr_slideTrue);
+		clickNext(arr_slideImg, arr_slideTrue);
 		
 		resizePhotoWin();
 		
 		$('#popupOverlayPhoto').click(function() {
 			ClosePhoto();	
 		});
-		$('#boxClose').click(function() {
+		$('#boxClosePhoto').click(function() {
 			ClosePhoto();	
 		});
 		$(window).resize(resizePhotoWin);
@@ -109,6 +110,43 @@ function removeLoad() {
 function clickRight(arr_slideImg, arr_slideTrue) {
 	var count;
 	$('#photoBox').find('.right').click(function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		if (! clickOneShort) {
+			clickOneShort = true;
+			count = (arr_slideTrue.indexOf(true) + 1);
+			if (count > (arr_slideTrue.length - 1)) {
+				arr_slideTrue[count-1] = false;
+				count = 0;
+			}
+			creatLoad();
+			$('#photoBox').find('img').hide();
+			$('#photoBox').find('img').animate({opacity : 0}, 100, function() { 
+				$(this).css('width', 'auto');
+				$('#photoBox img').remove();
+				$('#imgContent').append('<img src="'+arr_slideImg[count]+'" style="opacity:0">');
+				$('#photoBox').find('img').on('load',function() {
+					$(this).show();
+					if ($(this).width() > 850) {
+						$(this).css('width', '850px');
+					}
+					else {
+						$(this).css('width', 'auto');
+					}
+					$(this).animate({opacity : 1}, 200);
+					removeLoad();
+					resizeImg();
+					clickOneShort = false;
+				});
+			});
+			arr_slideTrue[count-1] = false;
+			arr_slideTrue[count] = true;
+		}
+	});
+}
+function clickNext(arr_slideImg, arr_slideTrue) {
+	var count;
+	$('#photoBox').find('#imgContent').click(function(e) {
 		e.stopPropagation();
 		e.preventDefault();
 		if (! clickOneShort) {
