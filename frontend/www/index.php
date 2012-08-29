@@ -22,4 +22,5 @@ require_once('common/lib/global.php');
 require_once('common/packages/packages.php');
 require_once('common/components/shortcuts.php');
 
-Yii::createApplication('WebApplication',$config)->run();
+$app = Yii::createApplication('WebApplication',$config);
+$app->run();

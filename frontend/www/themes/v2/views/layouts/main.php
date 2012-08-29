@@ -159,11 +159,42 @@ Yii::app()->clientScript->registerPackage('everything');
 
                         <div class="slide-filter">
                             <img src="<?= $images ?>/images/img-slide-time01.png">
+                            <br>
+                            <br>
+                            <br>
+                            <div style="width: 200px; margin-left: 0px;">
+                            <input id="departureTimeSlider" type="slider" name="departureTimeSlider" value="480;1020" />
+                            </div>
+                            <script type="text/javascript">
+                                var sl = {
+                                    from: 480,
+                                    to: 1080,
+                                    step: 15,
+                                    dimension: '',
+                                    skin: 'round_voyanga',
+                                    scale: false,
+                                    limits: false,
+                                    minInterval: 60,
+                                    value: "480;1020",
+                                    calculate: function( value ){
+                                        var hours = Math.floor( value / 60 );
+                                        var mins = ( value - hours*60 );
+                                        return (hours < 10 ? "0"+hours : hours) + ":" + ( mins == 0 ? "00" : mins );
+                                    },
+                                    onstatechange: function( value ){
+                                        //console.dir( this );
+                                        //console.log(value);
+                                        return false;
+                                    }
+                                }
+                                jQuery("#departureTimeSlider").slider(sl);
+                            </script>
                         </div>
                         <h4>Время прилета</h4>
 
                         <div class="slide">
                             <img src="<?= $images ?>/images/img-slide-time02.png">
+                            <div></div>
                         </div>
                     </div>
 
