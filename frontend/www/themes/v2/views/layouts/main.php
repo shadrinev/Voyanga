@@ -187,7 +187,7 @@ Yii::app()->clientScript->registerPackage('everything');
                                         return false;
                                     }
                                 }
-                                jQuery("#departureTimeSlider").slider(sl);
+                                $("#departureTimeSlider").slider(sl);
                             </script>
                         </div>
                         <h4>Время прилета</h4>
@@ -195,6 +195,11 @@ Yii::app()->clientScript->registerPackage('everything');
                         <div class="slide">
                             <img src="<?= $images ?>/images/img-slide-time02.png">
                             <div></div>
+
+                            <select id='coolSlider'><option>opt1</option><option>opt2</option></select>
+                            <script type="text/javascript">
+                                $("#coolSlider").selectSlider({am:'kg',kg:'am2'});
+                            </script>
                         </div>
                     </div>
 
