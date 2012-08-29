@@ -11,7 +11,7 @@ class SearchController extends ApiController
 
     /**
      * @param string city
-     * @param string checkIn Y-m-d date
+     * @param string checkIn d.m.Y date
      * @param int duration # of nights inside hotel
      * @param array $rooms
      *  [Х][adt] - amount of adults inside room,
@@ -22,7 +22,7 @@ class SearchController extends ApiController
     public function actionDefault($city, $checkIn, $duration, array $rooms, $format='json')
     {
         $hotelSearchParams = new HotelSearchParams();
-        $hotelSearchParams->checkIn = $checkIn;
+        $hotelSearchParams->checkIn = date('Y-m-d', strtotime($checkIn));
         $possibleCities = City::model()->guess($city);
         if (empty($possibleCities))
             $this->sendError(404, 'Given city not found');
