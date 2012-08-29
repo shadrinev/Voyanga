@@ -1,0 +1,50 @@
+.weekDaysVoyanga{
+    width: 784px;
+}
+.weekDayVoyanga{
+    width: 110px;
+    border: 1px #000 solid;
+    display: inline-block;
+    float: left;
+}
+.calendarGridVoyanga{
+    width: 810px;
+    height: 336px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.calendarUnscrollVoyanga{
+    width: 784px;
+    height: 336px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    clear: both;
+}
+.calendarLineVoyanga{
+    position: relative;
+}
+.dayCellVoyanga{
+    width: 110px;
+    height: 110px;
+    border: 1px #000 solid;
+    display: inline-block;
+}
+.monthLineVoyanga{
+    width: 784px;
+    height: 30px;
+    position: relative;
+    background-color: #ccccff;
+}
+.monthLineVoyanga .monthNameVoyanga{
+    position: absolute;
+    z-index: 10;
+    padding: 5px;
+}
+.monthLineVoyanga .knobVoyanga{
+    position: absolute;
+    z-index: 5;
+    opacity: 0.3;
+    /*width: 40px;*/
+    height: 30px;
+    background-color: #fff;
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Voyanga v.0.1 - Trip Flight Rework</title>
+<link href="css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/panel.css" rel="stylesheet" type="text/css" />
+<link href="css/popup.css" rel="stylesheet" type="text/css" />
+<link href="css/voyanga-calendar.css" rel="stylesheet" type="text/css" />
+
+<!-- JS SLIDE -->
+<link href="css/jsslidecheck.css" rel="stylesheet" type="text/css" />
+<!-- JS END SLIDE -->
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.dotdotdot-1.5.1.js"></script>
+
+
+	
+<script type="text/javascript" src="js/resize-new.js"></script>
+<script type="text/javascript" src="js/slide-mode.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/tickets.js"></script>
+<script type="text/javascript" src="js/panel-new.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/panel-new.js"></script>
+<script type="text/javascript" src="js/voyanga-calendar.js"></script>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+	<!-- HEAD -->
+	<div class="head">
+		<!-- CENTER BLOCK -->
+		<div class="center-block">
+		
+			<a href="/" class="logo">Voyanga</a>
+			
+			<a href="/" class="about">О проекте</a>
+			
+			<div class="telefon">
+				<img src="images/tel.png">
+			</div>
+				
+			<div class="slide-turn-mode">
+				<div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
+				<div class="bg-mask"></div>
+				
+				<ul>
+					<li class="planner active btn"><a href="#">Планировщик</a></li>
+					<li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
+					<li class="hotel btn"><a href="#">Отели</a></li>
+					<li class="finish-stages btn"><a href="#">Готовые туры</a></li>
+				</ul>
+			</div>
+			
+			<div class="login-window full">
+				<a href="#">
+					<span class="text">Регистрация и вход</span>
+					<span class="point"></span>
+				</a>
+			</div>
+		</div>
+		<!-- END CENTER BLOCK -->
+	</div>
+	<!-- END HEAD -->
+<!--====**********===-->
+	<!-- SUB HEAD -->
+	<div class="sub-head">
+		<!-- CENTER BLOCK -->
+		<div class="center-block">
+			<!-- PANEL -->
+			<div class="panel">
+			
+				<div class="path">
+					<div class="data">
+						<input class="input-path" type="text" placeholder="Куда">
+							<div class="tumblr">
+								<label for="there-back">
+									<div class="one"></div>
+									<div class="two"></div>
+									<div class="switch"></div>
+								</label>
+								<input id="there-back" type="checkbox" checked="checked">
+							</div>
+						<input class="input-path" type="text" placeholder="Откуда">
+					</div>
+					<div class="how-many-man">
+						<div class="content"></div>
+						<div class="btn"></div>
+						<div class="popup">
+							<div class="adults">
+								<div class="inputDIV">
+									<input type="text" value="1" name="adult" class="active">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
+								взрослых
+							</div>
+							<div class="childs">
+								<div class="inputDIV">
+									<input type="text" value="0" name="adult2">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
+								детей до 12 лет
+							</div>
+							<div class="small-childs">
+								<div class="inputDIV">
+									<input type="text" value="0" name="adult3">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
+								детей до 2 лет
+							</div>
+							
+						</div>
+					</div>
+					
+						<a class="btn-find">Найти</a>
+				</div>
+			
+			<!-- BTN MINIMIZE -->
+			<a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
+			<div class="minimize-rcomended">
+				<a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+			</div>
+			<!-- END PANEL -->					
+		</div>
+		<!-- END CENTER BLOCK -->
+	</div>	
+	<!-- END SUB HEAD -->
+</div>
+<!--====**********===-->
+<!--====**********===-->
+	<!-- ALL CONTENT -->
+	<div class="center-block">
+<!-- MAIN BLOCK -->
+		<div class="main-block">
+			<div id="content">
+				<div style="width:300px; margin: 0 auto;">
+
+                    <div id='voyanga-calendar'>
+                        <div class="weekDaysVoyanga">
+                            <div class="weekDayVoyanga">Пн</div>
+                            <div class="weekDayVoyanga">Вт</div>
+                            <div class="weekDayVoyanga">Ср</div>
+                            <div class="weekDayVoyanga">Чт</div>
+                            <div class="weekDayVoyanga">Пт</div>
+                            <div class="weekDayVoyanga">Сб</div>
+                            <div class="weekDayVoyanga">Вс</div>
+                        </div>
+                        <div class="calendarUnscrollVoyanga">
+                            <div class="calendarGridVoyanga">
+
+                            </div>
+                        </div>
+                        <div class="monthLineVoyanga"><div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div></div>
+
+                    </div>
+					
+				</div>
+			</div>
+		</div> 
+</body>
+</html>
