@@ -27,16 +27,20 @@ class FlightVoyageStack
         {
             $this->airportsFrom = array(
                 array(),
-                array());
+                array()
+            );
             $this->airportsTo = array(
                 array(),
-                array());
+                array()
+            );
             $this->timePeriodFrom = array(
                 array(),
-                array());
+                array()
+            );
             $this->timePeriodTo = array(
                 array(),
-                array());
+                array()
+            );
             $this->airlines = array();
             $this->transits = array();
             $this->bestTime = 0;
@@ -58,11 +62,13 @@ class FlightVoyageStack
                     $priceInfo = FlightPricing::getPriceInfo($oFlightVoyage);
                     //$oFlightVoyage->setPriceInfo($priceInfo);
 
-                    $flightCodes = implode(',',$oFlightVoyage->getFlightCodes());
+                    $flightCodes = implode(',', $oFlightVoyage->getFlightCodes());
                     //If already have same flight select cheaper flight
-                    if(isset($flightsCodes[$flightCodes])){
+                    if (isset($flightsCodes[$flightCodes]))
+                    {
                         $oldPriceInfo = FlightPricing::getPriceInfo($this->flightVoyages[$flightsCodes[$flightCodes]]);
-                        if($priceInfo['fullPrice'] < $oldPriceInfo['fullPrice']){
+                        if ($priceInfo['fullPrice'] < $oldPriceInfo['fullPrice'])
+                        {
                             //$oFlightVoyage->setPriceInfo($priceInfo);
                             //replace already saved flight voyage
                             $this->flightVoyages[$flightsCodes[$flightCodes]] = $oFlightVoyage;
@@ -102,6 +108,8 @@ class FlightVoyageStack
                 }
 
                 $bParamsNeedInit = true;
+                //todo: is it correct?
+                $this->bestPriceTimeInd = 0;
                 //find best pricetime params
                 foreach ($this->flightVoyages as $iInd => $oFlightVoyage)
                 {
@@ -119,6 +127,10 @@ class FlightVoyageStack
                         $this->bestPriceTimeInd = $iInd;
                     }
                 }
+
+                $this->flightVoyages[$this->bestPriceInd]->bestMask |= FlightVoyage::MASK_BEST_PRICE;
+                $this->flightVoyages[$this->bestTimeInd]->bestMask |= FlightVoyage::MASK_BEST_TIME;
+                $this->flightVoyages[$this->bestPriceTimeInd]->bestMask |= FlightVoyage::MASK_BEST_PRICETIME;
             }
         }
     }
@@ -136,8 +148,10 @@ class FlightVoyageStack
 
     public function getFlightById($id)
     {
-        foreach($this->flightVoyages as $flightVoyage){
-            if($flightVoyage->flightKey == $id){
+        foreach ($this->flightVoyages as $flightVoyage)
+        {
+            if ($flightVoyage->flightKey == $id)
+            {
                 return $flightVoyage;
             }
         }
@@ -162,7 +176,8 @@ class FlightVoyageStack
         if ($a < $b)
         {
             return -1;
-        } elseif ($a > $b)
+        }
+        elseif ($a > $b)
         {
             return 1;
         }
@@ -206,8 +221,8 @@ class FlightVoyageStack
 
     public function getAsJson()
     {
-        $ret = array('searchId'=>$this->fsKey,'flightVoyages'=>array());
-        foreach($this->flightVoyages as $flightVoyage)
+        $ret = array('searchId' => $this->fsKey, 'flightVoyages' => array());
+        foreach ($this->flightVoyages as $flightVoyage)
         {
             $ret['flightVoyages'][] = $flightVoyage->getJsonObject();
         }
@@ -216,8 +231,8 @@ class FlightVoyageStack
 
     public function getJsonObject()
     {
-        $ret = array('searchId'=>$this->fsKey,'flightVoyages'=>array());
-        foreach($this->flightVoyages as $flightVoyage)
+        $ret = array('searchId' => $this->fsKey, 'flightVoyages' => array());
+        foreach ($this->flightVoyages as $flightVoyage)
         {
             $ret['flightVoyages'][] = $flightVoyage->getJsonObject();
         }

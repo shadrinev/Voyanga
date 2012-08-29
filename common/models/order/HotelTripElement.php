@@ -176,7 +176,7 @@ class HotelTripElement extends TripElement
     {
         $search = array(
             'city' => $this->getCityModel()->code,
-            'checkIn' => date('Y-m-d', strtotime($this->checkIn)),
+            'checkIn' => $this->checkIn,
             'duration' => $this->getDuration(),
             'rooms' => array(
                 array(

@@ -61,10 +61,24 @@ class SearchController extends ApiController
     private function searchTourVariants()
     {
         $this->getAllTourVariants();
+        if (!empty($this->errors))
+            return false;
+        $cheapestTour = $this->filterCheapest();
+        $fastestTour = $this->filterFastest();
+        $optimalTour = $this->filterOptimal();
         return array(
-            'cheapest' => $this->filterCheapest(),
-            'fastest'  => $this->filterFastest(),
-            'optimal'  => $this->filterOptimal()
+            'cheapest' => array(
+                'totalPrice' => $this->getTotalPrice($cheapestTour),
+                'tour' => $cheapestTour,
+            ),
+            'fastest'  => array(
+                'totalPrice' => $this->getTotalPrice($fastestTour),
+                'tour' => $fastestTour,
+            ),
+            'optimal'  => array(
+                'totalPrice' => $this->getTotalPrice($optimalTour),
+                'tour' => $optimalTour,
+            ),
         );
     }
 
@@ -93,17 +107,60 @@ class SearchController extends ApiController
 
     private function filterCheapest()
     {
-        return $this->variants[0];
+        return $this->filterByMask(FlightVoyage::MASK_BEST_PRICE);
     }
 
     private function filterFastest()
     {
-        return $this->variants[0];
+        return $this->filterByMask(FlightVoyage::MASK_BEST_TIME);
     }
 
     private function filterOptimal()
     {
-        return $this->variants[0];
+        return $this->filterByMask(FlightVoyage::MASK_BEST_PRICETIME);
+    }
+
+    private function filterByMask($mask)
+    {
+        $current = array();
+        foreach ($this->variants as $variant)
+        {
+            if (isset($variant['flightVoyages']))
+                $current[] = $this->filterFlight($variant, $mask);
+            else
+                $current[] = $this->filterHotel($variant,  $mask);
+        }
+        return $current;
+    }
+
+    private function filterFlight($variants, $mask)
+    {
+        $clone = $variants['flightVoyages'];
+        foreach ($variants['flightVoyages'] as $i => $variant)
+        {
+            if (!($variant['bestMask'] & $mask))
+            {
+                unset($clone[$i]);
+            }
+        }
+        unset ($variants['flightVoyages']);
+        $variants['flight'] = reset($clone);
+        return $variants;
+    }
+
+    private function filterHotel($variants, $mask)
+    {
+        $clone = $variants['hotels'];
+        foreach ($variants['hotels'] as $i => $variant)
+        {
+            if ($i>0)
+            {
+                unset($clone[$i]);
+            }
+        }
+        unset ($variants['hotels']);
+        $variants['hotel'] = reset($clone);
+        return $variants;
     }
 
     private function sendWithCorrectFormat($format, $results)
@@ -114,5 +171,18 @@ class SearchController extends ApiController
             $this->sendXml($results, 'tourSearchResults');
         else
             $this->sendError(400, 'Incorrect response format');
+    }
+
+    private function getTotalPrice($elements)
+    {
+        $total = 0;
+        foreach ($elements as $element)
+        {
+            if (isset($element['flight']))
+                $total += $element['flight']['price'];
+            else
+                $total += $element['hotel']['rubPrice'];
+        }
+        return $total;
     }
 }

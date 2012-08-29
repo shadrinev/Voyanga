@@ -16,12 +16,12 @@ class TestApiController extends FrontendController
     public $search = 'search';
 
     public $tests = array(
-/*        'aviaSearchSimple',
+        'aviaSearchSimple',
         'aviaSearchComplex',
         'aviaSearchRoundTrip',
-        'aviaSearchComplexRoundTrip',*/
+        'aviaSearchComplexRoundTrip',
         'hotelSearchSimple',
-//        'tourSearchSimple',
+        'tourSearchSimple',
     );
 
     public function actionDefault()
