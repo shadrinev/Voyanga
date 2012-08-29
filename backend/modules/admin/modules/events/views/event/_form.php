@@ -136,19 +136,16 @@
     if ($model->isNewRecord)
         Yii::app()->clientScript->registerScript('focus','setTimeout(function(){$("#Event_startDate_date").focus();}, 300)', CClientScript::POS_READY);
     Yii::app()->clientScript->registerScript('getPrice','
-    $("#getPrice").on("click",function(){
+    $(".getPrice").on("click",function(){
         var btn = $(this),
-            from = 4466,
-            to = $("#Event_cityId").val(),
-            dateStart = $("#Event_startDate_date").val(),
-            dateEnd = $("#Event_endDate_date").val();
+            from = btn.data("cityid"),
+            eventId = btn.data("eventid"),
             btn.button("loading");
-            $.get("/ajax/GetOptimalPrice/from/"+from+"/to/"+to+"/dateStart/"+dateStart+"/dateEnd/"+dateEnd)
+            $.get("/admin/event/event/getNewPrices", {id: eventId, startCity: from})
             .done(function(data){
-                console.log(data);
                 btn.button("reset");
                 var two = data.priceTo + data.priceBack;
-                btn.append("&nbsp; <b>Цена: </b>"+Math.min(data.priceTo + data.priceBack, data.priceToBack) + " руб. (2 билета = " + two + " руб., туда-обратно = " + data.priceToBack + " руб.)");
+                btn.append("&nbsp; <b>Цены: </b> оптимальная - " + data.optimal + ", низкая - " + data.cheapest + ", "быстрая" - " + data.fastest + " руб.");
             })
             .fail(function(data){
                 btn.button("reset");
@@ -156,27 +153,6 @@
                 btn.addClass("disabled");
             });
         return false;
-    });
-    $("#getPiterPrice").on("click",function(e){
-        var btn = $(this),
-            from = 5185,
-            to = $("#Event_cityId").val(),
-            dateStart = $("#Event_startDate_date").val(),
-            dateEnd = $("#Event_endDate_date").val();
-            btn.button("loading");
-        $.get("/ajax/GetOptimalPrice/from/"+from+"/to/"+to+"/dateStart/"+dateStart+"/dateEnd/"+dateEnd)
-        .done(function(data){
-            console.log(data);
-            btn.button("reset");
-            var two = data.priceTo + data.priceBack;
-            btn.append("&nbsp; <b>Цена: </b>"+Math.min(data.priceTo + data.priceBack, data.priceToBack) + " руб. (2 билета = " + two + " руб., туда-обратно = " + data.priceToBack + " руб.)");
-        })
-        .fail(function(data){
-            btn.button("reset");
-            btn.html("Произошёл сбой");
-            e.preventDefault();
-        });
-        return false;
-    });
+    })
     ', CClientScript::POS_READY);
 ?>
