@@ -6,6 +6,6 @@
  * You may modify this file to fit for your environment.
  */
 return array(
-    'app.theme'=>'v2',
-    'app.defaultController'=>'v2'
+    'app.theme'=>'v1',
+    'app.defaultController'=>'v1'
 );
