@@ -196,7 +196,7 @@ Yii::app()->clientScript->registerPackage('everything');
                             <img src="<?= $images ?>/images/img-slide-time02.png">
                             <div></div>
 
-                            <select id='coolSlider'><option>opt1</option><option>opt2</option></select>
+                            <select id='coolSlider' class="selectSlider"><option value="12">opt1</option><option value="13" selected="selected">opt2</option><option value="17">opt20</option></select>
                             <script type="text/javascript">
                                 $("#coolSlider").selectSlider({am:'kg',kg:'am2'});
                             </script>
