@@ -9,6 +9,9 @@ class Application
     # register 404 handler
     crossroads.bypassed.add(@http404)
 
+    # FIXME
+    @activeTab = 'avia'
+
   # Register routes from controller
   # 
   # @param prefix url prefix for given controller
@@ -38,3 +41,4 @@ app = new Application()
 app.register 'avia', new AviaController(), true
 $ ->
   app.run()
+  ko.applyBindings(app, $('#header')[0])
