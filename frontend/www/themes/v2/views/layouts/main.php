@@ -130,11 +130,11 @@ Yii::app()->clientScript->registerPackage('everything');
         <!-- MAIN BLOCK -->
         <div class="main-block">
             <div id="content">
-<?php echo $content; ?>
-
+                <?php echo $content; ?>
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
+            <?php if (!$this->nosidebar): ?>
             <div class="filter-block">
                 <div class="filter-content">
 
@@ -220,6 +220,7 @@ Yii::app()->clientScript->registerPackage('everything');
                     </div>
                 </div>
             </div>
+        <?php endif; ?>
             <!-- END FILTER BLOCK -->
             <div class="clear"></div>
         </div>
