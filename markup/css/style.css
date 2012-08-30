@@ -552,6 +552,7 @@
 	background: url(../images/bg-head.png) repeat-x left bottom;
 	width: 100%;
 	min-width: 1000px;
+	z-index: 2;
 }
 /* voyasha-text */
 .voyasha-text {

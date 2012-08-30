@@ -5,8 +5,8 @@
         <div class="weekDayVoyanga"><span>Среда</span></div>
         <div class="weekDayVoyanga"><span>Четверг</span></div>
         <div class="weekDayVoyanga"><span>Пятница</span></div>
-        <div class="weekDayVoyanga"><span>Суббота</span></div>
-        <div class="weekDayVoyanga"><span>Воскресенье</span></div>
+        <div class="weekDayVoyanga weekEnd "><span>Суббота</span></div>
+        <div class="weekDayVoyanga weekEnd "><span>Воскресенье</span></div>
     </div>
     <div class="calendarUnscrollVoyanga">
         <div class="calendarGridVoyanga">

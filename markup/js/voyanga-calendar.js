@@ -199,16 +199,18 @@ VoyangaCalendar.generateGrid = function (){
     {
         var newHtml = '<div class="calendarLineVoyanga" id="weekNum-'+lineNumber+'" data-weeknum="'+lineNumber+'">';
         for(var i=0;i<7;i++){
-            var label = tmpDate.getDate();
-            if(label == 1){
-                label = label + ' ' + VoyangaCalendar.monthNames[tmpDate.getMonth()];
+            var label = '<div class="dayLabel'+((i>=5 && i<7) ? ' weekEnd' : '')+'">'+tmpDate.getDate()+'</div>';
+
+            
+            if(tmpDate.getDate() == 1){
+                label = label + ' <div class="monthLabel">' + VoyangaCalendar.monthNames[tmpDate.getMonth()] +'</div>';
                 var monthObject = new Object();
                 monthObject.line = lineNumber;
                 monthObject.name = VoyangaCalendar.monthNames[tmpDate.getMonth()];
                 VoyangaCalendar.slider.monthArray.push(monthObject);
             }
             var dateLabel = tmpDate.getFullYear()+'-'+(tmpDate.getMonth()+1)+'-'+tmpDate.getDate();
-            newHtml = newHtml + '<div class="dayCellVoyanga" id="dayCell-'+dateLabel+'">'+label+'</div>';
+            newHtml = newHtml + '<div class="dayCellVoyanga" id="dayCell-'+dateLabel+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
             tmpDate.setDate(tmpDate.getDate()+1);
         }
         newHtml = newHtml + '</div>';
