@@ -16,4 +16,9 @@ class DefaultController extends CController
     {
         $this->render('v2.views.hotel_results');
     }
+
+    public function actionSandbox()
+    {
+        $this->render('v2.views.sandbox');
+    }
 }
