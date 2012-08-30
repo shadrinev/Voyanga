@@ -12,17 +12,18 @@
     text-align: center;
     vertical-align: middle;
     width: 900px;}
-#photoBox .left {background: url("../images/navigation-slide.png") no-repeat scroll left 0 transparent;
+#photoBox .left {background: url("../images/navigation-slide-photo.png") no-repeat scroll left  center transparent;
     cursor: pointer;
-    height: 150px;
+    height: 600px;
     left: 0;
     position: absolute;
-    top: 225px;
-    width: 80px;}
-#photoBox .right {background: url("../images/navigation-slide.png") no-repeat scroll right 0 transparent;
+    top: 0;
+    width: 150px;}
+#photoBox .right {background: url("../images/navigation-slide-photo.png") no-repeat scroll right center transparent;
     cursor: pointer;
-    height: 150px;
+    height: 600px;
     position: absolute;
     right: 0;
-    top: 225px;
-    width: 80px; }
+    top: 0;
+    width:150px; }
+#boxClosePhoto {position: absolute; top:20px; right: 15%; z-index: 2100; cursor: pointer;}

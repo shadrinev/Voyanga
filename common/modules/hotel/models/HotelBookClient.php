@@ -472,6 +472,16 @@ class HotelBookClient
                 $response->timestamp = time();
                 $response->errorStatus = 2;
                 $response->errorsDescriptions[] = array('code' => '', 'description' => 'Incorrect response from remote server');
+                if(isset($hotelsObject->Errors->Error)){
+                    if(isset($hotelsObject->Errors->Error['code'])){
+                        $code = (string)$hotelsObject->Errors->Error['code'];
+                        $response->errorsDescriptions[] = array('code' => $code, 'description' => (string)$hotelsObject->Errors->Error);
+                        if($code == 'A4'){
+                            $this->synchronize(true);
+                        }
+                    }
+                }
+
                 return $response;
             }
             $response->searchId = $searchId;
@@ -1321,17 +1331,17 @@ class HotelBookClient
         return $hotelOrderConfirmResponse;
     }
 
-    public function synchronize()
+    public function synchronize($forced = false)
     {
-        if (!$this->isSynchronized)
+        if ((!$this->isSynchronized) or $forced)
         {
             self::$lastRequestMethod = 'unixtime';
             $diff = Yii::app()->cache->get('hotelbookDifferenceTimestamp');
-            if ($diff === false)
+            if (($diff === false) or $forced)
             {
                 $unixtime = $this->request(Yii::app()->params['HotelBook']['uri'] . 'unix_time');
                 $this->differenceTimestamp = $unixtime - time();
-                Yii::app()->cache->set('hotelbookDifferenceTimestamp', $this->differenceTimestamp);
+                Yii::app()->cache->set('hotelbookDifferenceTimestamp', $this->differenceTimestamp, 30*60);
             }
             else
             {

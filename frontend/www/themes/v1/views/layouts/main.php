@@ -23,6 +23,10 @@
           href="<?php echo Yii::app()->theme->baseUrl; ?>/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114"
           href="<?php echo Yii::app()->theme->baseUrl; ?>/images/apple-touch-icon-114x114.png">-->
+    <?php
+    Yii::app()->getClientScript()->registerScriptFile('/js/utils.js');
+    ?>
+?>
 </head>
 <body>
 <div id="loadingDiv" class="hide">

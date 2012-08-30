@@ -269,7 +269,7 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
 				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
-				
+
 				marginLeftContent = 0;
 				widthContent = widthMainBlock - marginLeftContent;					
 				marginRightContent = 0;
@@ -277,6 +277,33 @@ function ResizeCenterBlock() {
 				var_widthDescrLeft = Math.floor(335 + ((widthBlock - var_widthMIN) / (var_valueMIN / (557 - 335))) );
 				
 				var_widthStreet = '210px';
+			}
+		}
+		else {
+			if (widthBlock >= var_widthMAX) {
+
+				
+				paddingLeftLogo = var_paddingLeftMAX;
+				paddingRightSlide = var_paddingRightSlideMAX;
+				paddingLeftTel = var_paddingLeftTelefonMAX;
+				
+			}
+			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
+			
+				
+				paddingLeftLogo = var_paddingLeftMID;
+				paddingRightSlide = var_paddingRightSlideMID;
+				paddingLeftTel = var_paddingLeftTelefonMID;
+			
+			
+			}
+			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
+				
+				
+				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
+				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
+				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
+
 			}
 		}
 		
@@ -313,6 +340,7 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
 			var_content.find('h1').find('span').hide();
 			var_ticketsItems.find('.ticket-items').addClass('small');
+			var_hotelItems.addClass('small');
 			/*
 			var mathWidthRicket = Math.floor(var_widthTicket * 0.393);
 			var_recomendedItems.find('.recommended-ticket').css('width', (253 + mathWidthRicket)+'px');
@@ -325,6 +353,7 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').css('width', '318px');
 			var_content.find('h1').find('span').show();
 			var_ticketsItems.find('.ticket-items').removeClass('small');
+			var_hotelItems.removeClass('small');
 			/*
 			var_recomendedItems.find('.recommended-ticket').css('width', '318px');
 			var_recomendedItems.css('width', var_widthMainBlockMAX+'px');
@@ -470,7 +499,6 @@ function AlphaBackground() {
 function ResizeFun() {
 	ResizeCenterBlock();
 	loginResize();
-	//smallTicketHeight();
 	$(window).resize(ResizeCenterBlock);
 	$(window).resize(loginResize);
 }

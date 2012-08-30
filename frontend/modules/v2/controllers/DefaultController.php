@@ -9,6 +9,6 @@ class DefaultController extends CController
 {
     public function actionIndex()
     {
-        echo "Please use only CHtml::link(), Yii:app()->createAbsoluteLink() and other which uses CUrlManager to create ___ALL__ links. So moving controllers out here bring us less pain.";
+        $this->render('v2.views.search_results');
     }
 }

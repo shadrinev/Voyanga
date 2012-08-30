@@ -1,0 +1,70 @@
+.weekDaysVoyanga{
+    width: 100%;
+    overflow: hidden;
+}
+.weekDayVoyanga{
+    width: 14.18%;
+    border-right: 1px #d7d7d8 solid;
+    border-bottom: 1px #d7d7d8 solid;
+    display: inline-block;
+    float: left;
+    background: #e2e5eb;
+    color: #1c1f24;
+    font-size: 13px;
+    font-family: Tahoma;
+    text-align: right;
+    padding-top: 2px;
+    text-transform: lowercase;
+    height: 22px;
+}
+.weekDayVoyanga span {
+	margin-right: 25px;
+}
+.calendarGridVoyanga{
+    width: 950px;
+    height: 245px;
+    overflow: hidden;
+    overflow-y: visible;
+    color: #1c1f24;
+    text-align: center;
+}
+.calendarUnscrollVoyanga{
+    width: 100%;
+    height: 245px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    clear: both;
+}
+.calendarLineVoyanga{
+    position: relative;
+}
+.dayCellVoyanga{
+    width: 14.18%;
+    height: 48px;
+    display: inline-block;
+    border-right: 1px #d7d7d8 solid;
+    border-bottom: 1px #d7d7d8 solid;
+    background: #f5f5f6;
+    font-size: 17px;
+    font-family: Tahoma;
+}
+.monthLineVoyanga{
+    width: 99.987%;
+    height: 29px;
+    position: relative;
+    background: url(../images/main-avia-route_05.png) repeat-x;
+    font-size: 12px;
+}
+.monthLineVoyanga .monthNameVoyanga{
+    position: absolute;
+    z-index: 10;
+    padding: 5px;
+}
+.monthLineVoyanga .knobVoyanga{
+    position: absolute;
+    z-index: 5;
+    /*width: 40px;*/
+    height: 27px;
+    border-radius: 0px 0px 8px 8px;
+    background: url(../images/main-avia-route_03.png) repeat-x;
+}

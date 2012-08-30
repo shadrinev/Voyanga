@@ -324,11 +324,14 @@ TimelineCalendar.generateEvents = function()
             var eventLength = TimelineCalendar.calendarEvents[i].dayEnd.valueOf() - TimelineCalendar.calendarEvents[i].dayStart.valueOf();
             var hotelDiv = TimelineCalendar.generateHotelDiv(TimelineCalendar.calendarEvents[i]);
             var dayWidth = TimelineCalendar.dayCellWidth;
+            //alert(TimelineCalendar.calendarEvents[i].dayEnd+'???');
 
             eventLength = Math.round(eventLength/(3600*24*1000));
             var renderedLength = 0;
             var endDraw = false;
             var firstTime = true;
+            //alert('numRender:'+numRender+' renderedLength:'+renderedLength+' eventLength:'+eventLength);
+            //continue;
             while(!endDraw)
             {
                 var newEventElement = $(hotelDiv);
@@ -346,6 +349,7 @@ TimelineCalendar.generateEvents = function()
                 newEventElement.css('left',leftPos+'px');
 
                 //console.log(newEventElement);
+                //alert('numRender:'+numRender+' renderedLength:'+renderedLength+' eventLength:'+eventLength);
                 weekObj.append(newEventElement);
                 renderedLength = renderedLength + numRender;
                 if(renderedLength >= eventLength){
@@ -378,6 +382,7 @@ TimelineCalendar.generateEvents = function()
             var renderedLength = 0;
             var endDraw = false;
             var firstTime = true;
+            //continue;
             while(!endDraw)
             {
                 var newEventElement = $(flightDiv);
@@ -408,16 +413,18 @@ TimelineCalendar.generateEvents = function()
 }
 
 TimelineCalendar.init = function (){
+
     TimelineCalendar.jObj = $('#timelineCalendar');
     TimelineCalendar.calendarEvents.sort(TimelineCalendar.eventsCompareFunction);
+
     //console.log(TimelineCalendar.calendarEvents);
     //return true;
     TimelineCalendar.generateGrid();
+    //return true;
     TimelineCalendar.generateEvents();
     TimelineCalendar.slider.init();
 
 }
-
 $(document).ready(function(){
     /**
      * Event have
@@ -429,6 +436,10 @@ $(document).ready(function(){
      *
      * @type {Array}
      */
-    TimelineCalendar.calendarEvents = [{dayStart: new Date('2012-09-21'),dayEnd: new Date('2012-09-22'),type:'flight',color:'red',description:'Led || Mow'},{dayStart: new Date('2012-09-21'),dayEnd: new Date('2012-10-23'),type:'hotel',color:'red',description:'Californication Hotel'},{dayStart: new Date('2012-10-23'),dayEnd: new Date('2012-10-23'),type:'flight',color:'red',description:'Mow || Led'}];
+    //return true;
+    TimelineCalendar.calendarEvents = [{dayStart: Date.fromIso('2012-09-21'),dayEnd: Date.fromIso('2012-09-22'),type:'flight',color:'red',description:'Led || Mow'},{dayStart: Date.fromIso('2012-09-21'),dayEnd: Date.fromIso('2012-10-23'),type:'hotel',color:'red',description:'Californication Hotel'},{dayStart: Date.fromIso('2012-10-23'),dayEnd: Date.fromIso('2012-10-23'),type:'flight',color:'red',description:'Mow || Led'}];
+    var ieDate = Date.fromIso("2012-09-21");
+    //alert(ieDate);
+
     TimelineCalendar.init();
 });

@@ -90,6 +90,16 @@ $(function() {
 			closeHowMany();
 		}
 	});
+	$('.how-many-man').click(function() {
+		console.log(111);
+		if(! $('.how-many-man .btn').hasClass('active')) {
+			$('.how-many-man').find('.popup').addClass('active');
+			$('.how-many-man .btn').addClass('active');
+		}
+		else {
+			closeHowMany();
+		}
+	});
 	var mouse_is_inside = false;
 	$('.how-many-man .popup, .how-many-man .btn').hover(function(){ 
 			mouse_is_inside=true;

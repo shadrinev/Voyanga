@@ -173,6 +173,25 @@ return CMap::mergeArray(
                     ),
                 )
             ),
+            'clientScript' => array(
+                'packages' => array(
+                    'everything' => array(
+                        'basePath' => 'frontend.www.themes.v2.assets',
+                        'js' => array(
+                            //! App supporting vendor modules
+                            'js/vendor/jquery.js', 'js/vendor/knockout-2.1.0.js', 'js/vendor/underscore.js',
+                            'js/vendor/signals.js', 'js/vendor/crossroads.js', 'js/vendor/hasher.js',
+                            //! Markup related scripts and modules
+                            'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js','js/jquery.color.js', 'js/slide-mode.js', 'js/popup.js',
+                            'js/tickets.js','js/panel.js', 'js/script.js','js/jquery.select.slider.js',
+                            'js/jquery.slider.min.js','js/jquery.slider.js',
+                            //! Our application logic
+                            'js/app/common/utils.js', 'js/app/common/filters.js',
+                            'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/app.js'),
+                        'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css','css/jslider.css','css/jsslidecheck.css',),
+                    ),
+                ),
+            ),
         ),
         'controllerMap' => array(
             'payments'=>array(

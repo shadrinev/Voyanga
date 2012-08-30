@@ -1,0 +1,22 @@
+.slider-filter { 
+	height: 23px; width: 100%;
+	position: relative;
+	color: #2e333b;
+	margin-bottom: 11px;
+}
+/*--*/
+.slide-filter {
+	margin-bottom: 13px;
+}
+/*--*/
+.checkbox {
+	background: url("../images/img-checkbox.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 17px;
+}
+
+.div-filter ul li {line-height: 15px; margin-bottom: 0px;}
