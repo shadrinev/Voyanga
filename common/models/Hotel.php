@@ -165,6 +165,8 @@ class Hotel extends CApplicationComponent
     {
         $request = Yii::app()->cache->get('hotelResult'.$cacheId);
         $foundHotel = false;
+        if (!isset($request['hotels']))
+            return false;
         foreach ($request['hotels'] as $unique=>$hotel)
         {
             if ($hotel->resultId==$resultId)

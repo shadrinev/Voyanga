@@ -11,4 +11,9 @@ class DefaultController extends CController
     {
         $this->render('v2.views.search_results');
     }
+
+    public function actionHotels()
+    {
+        $this->render('v2.views.hotel_results');
+    }
 }
