@@ -183,12 +183,12 @@ return CMap::mergeArray(
                             'js/vendor/signals.js', 'js/vendor/crossroads.js', 'js/vendor/hasher.js',
                             //! Markup related scripts and modules
                             'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js','js/jquery.color.js', 'js/slide-mode.js', 'js/popup.js',
-                            'js/tickets.js','js/panel.js', 'js/script.js','js/jquery.select.slider.js',
+                            'js/tickets.js','js/panel-new.js', 'js/script.js','js/jquery.select.slider.js',
                             'js/jquery.slider.min.js','js/jquery.slider.js',
                             //! Our application logic
                             'js/app/common/utils.js', 'js/app/common/filters.js',
                             'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/app.js'),
-                        'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css','css/jslider.css','css/jslider.round.voyanga.css','css/jsslidecheck.css',),
+                        'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css','css/jslider.css','css/jslider.round.voyanga.css','css/jsslidecheck.css','css/panel.css'),
                     ),
                 ),
             ),

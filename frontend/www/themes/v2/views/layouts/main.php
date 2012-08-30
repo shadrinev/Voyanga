@@ -49,76 +49,63 @@ Yii::app()->clientScript->registerPackage('everything');
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <!-- PANEL -->
-            <div class="panel">
-                <div class="btn-timeline-and-condition">
-                    <a href="#" class="btn-timeline active">Таймлайн</a>
-                    <a href="#" class="btn-condition">Условия</a>
-                </div>
-
-                <div class="slide-tmblr">
-
-                    <div class="condition">
-                        <div class="whence date">
-                            <input name="name01" type="text" class="input">
-                            <a href="#" class="day">
-                                <span class="f17">12</span>
-                                <br>мая
-                            </a>
-                        </div>
-                        <div class="tumblr">
-                            <div class="one active"></div>
-                            <div class="two"></div>
-
-                            <div class="switch"></div>
-                        </div>
-                        <div class="where">
-                            <input name="name01" type="text" class="input">
-                            <a href="#" class="day">
-                                <span class="f17">12</span>
-                                <br>мая
-                            </a>
-                        </div>
-
-                        <div class="how-many-man">
-                            <div class="content">
-                                <div class="man"></div>
-                                <div class="child"></div>
-                            </div>
-                            <div class="btn"></div>
-
-                            <div class="popup">
-                                <div class="adults">
-                                    <input name="adult" type="text" value="1">
-                                    взрослых
-                                </div>
-                                <div class="childs">
-                                    <input name="adult" type="text" value="1">
-                                    детей до 12 лет
-                                </div>
-                                <div class="small-childs">
-                                    <input name="adult" type="text" value="0">
-                                    детей до 2 лет
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <a class="btn-find">Найти</a>
-
-                        <div class="clear"></div>
-                    </div>
-
-                </div>
-
-                <div class="clear"></div>
-                <!-- BTN MINIMIZE -->
-                <a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
-
-                <div class="minimize-rcomended">
-                    <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
-                </div>
-            </div>
-            <!-- END PANEL -->
+			<div class="panel">
+			
+				<div class="path">
+					<div class="data">
+						<input class="input-path" type="text" placeholder="Куда">
+							<div class="tumblr">
+								<label for="there-back">
+									<div class="one"></div>
+									<div class="two"></div>
+									<div class="switch"></div>
+								</label>
+								<input id="there-back" type="checkbox" checked="checked">
+							</div>
+						<input class="input-path" type="text" placeholder="Откуда">
+					</div>
+					<div class="how-many-man">
+						<div class="content"></div>
+						<div class="btn"></div>
+						<div class="popup">
+							<div class="adults">
+								<div class="inputDIV">
+									<input type="text" value="1" name="adult" class="active">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
+								взрослых
+							</div>
+							<div class="childs">
+								<div class="inputDIV">
+									<input type="text" value="0" name="adult2">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
+								детей до 12 лет
+							</div>
+							<div class="small-childs">
+								<div class="inputDIV">
+									<input type="text" value="0" name="adult3">
+										<a href="#" class="plusOne">+</a>
+										<a href="#" class="minusOne">-</a>
+								</div>
+								детей до 2 лет
+							</div>
+							
+						</div>
+					</div>
+					
+					<a class="btn-find">Найти</a>
+				</div>
+			
+				<!-- BTN MINIMIZE -->
+				<a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
+				<div class="minimize-rcomended">
+				<a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+				</div>
+			</div>
+			<!-- END PANEL -->	
         </div>
         <!-- END CENTER BLOCK -->
     </div>
