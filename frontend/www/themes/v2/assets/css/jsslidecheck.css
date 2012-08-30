@@ -69,7 +69,12 @@
 	border: none !important;
 	text-shadow: 0px 1px 0px #FFF;
 }
+
 .slidecheckbox ul li.active a {
+	color: #FFF;
+	text-shadow: 0px 1px 0px #0b5b88;
+}
+.slidecheckbox ul li.active a:hover {
 	color: #FFF;
 	text-shadow: 0px 1px 0px #0b5b88;
 }

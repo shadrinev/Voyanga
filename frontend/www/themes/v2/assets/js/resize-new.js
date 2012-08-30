@@ -50,6 +50,7 @@ function ResizeCenterBlock() {
 		var var_ticketsItems = $('.ticket-content');
 		var var_recomendedItems = $('.head-content');
 		var var_hotelItems = $('.hotels-tickets');
+		var var_calendarGridVoyanga = $('.calendarGridVoyanga');
 		var var_descrItems = $('#descr');
 		var widthLeftBlock, 
 			widthMainBlock, 
@@ -81,6 +82,7 @@ function ResizeCenterBlock() {
 		var var_leftBlockIsset = var_leftBlock.length > 0 && var_leftBlock.is(':visible');
 		var var_mainBlockIsset = var_mainBlock.length > 0 && var_mainBlock.is(':visible');
 		var var_filterBlockIsset = var_filterBlock.length > 0 && var_filterBlock.is(':visible');
+		var var_calendarGridVoyangaIsset = var_calendarGridVoyanga.length > 0 && var_calendarGridVoyanga.is(':visible');
 		
 		var var_descrIsset = var_descrItems.length > 0 && var_descrItems.is(':visible');
 		
@@ -318,6 +320,11 @@ function ResizeCenterBlock() {
 		if (var_leftBlockIsset) {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock+'px');
 		}
+		/* CALENDARE RESIZE */
+		if (var_calendarGridVoyangaIsset) {
+			var_calendarGridVoyanga.css('width', (widthMainBlock+15)+'px')
+		}
+		/* END CALENDARE RESIZE */
 		if (var_descrIsset) {
 			$('#descr').find('.photo-slide-hotel').css('width', var_widthDescrLeft+'px');
 			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
