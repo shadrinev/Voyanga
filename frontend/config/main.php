@@ -188,7 +188,7 @@ return CMap::mergeArray(
                             //! Our application logic
                             'js/app/common/utils.js', 'js/app/common/filters.js',
                             'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/app.js'),
-                        'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css','css/jslider.css','css/jsslidecheck.css',),
+                        'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css','css/jslider.css','css/jslider.round.voyanga.css','css/jsslidecheck.css',),
                     ),
                 ),
             ),
