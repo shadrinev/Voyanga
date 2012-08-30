@@ -61,7 +61,7 @@ AviaController = (function() {
       return $.ajax({
         url: sp.url(),
         dataType: 'jsonp',
-        success: handle
+        success: this.handleResults
       });
     }
   };
@@ -72,7 +72,7 @@ AviaController = (function() {
     stacked = new ResultSet(data.flights.flightVoyages);
     return ko.applyBindings({
       'results': stacked
-    });
+    }, $('#content')[0]);
   };
 
   AviaController.prototype.indexAction = function() {

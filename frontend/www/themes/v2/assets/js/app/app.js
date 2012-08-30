@@ -9,6 +9,7 @@ Application = (function() {
     hasher.initialized.add(this.navigate);
     hasher.changed.add(this.navigate);
     crossroads.bypassed.add(this.http404);
+    this.activeTab = 'avia';
   }
 
   Application.prototype.register = function(prefix, controller, isDefault) {
@@ -51,5 +52,6 @@ app = new Application();
 app.register('avia', new AviaController(), true);
 
 $(function() {
-  return app.run();
+  app.run();
+  return ko.applyBindings(app, $('#header')[0]);
 });

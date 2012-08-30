@@ -12,7 +12,7 @@ Yii::app()->clientScript->registerPackage('everything');
 
 <body>
 <div class="wrapper">
-    <div class="head">
+    <div class="head" id="header">
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <a href="/" class="logo">Voyanga</a>
@@ -26,9 +26,9 @@ Yii::app()->clientScript->registerPackage('everything');
                 <div class="bg-mask"></div>
 
                 <ul>
-                    <li class="planner active btn"><a href="#">Планировщик</a></li>
-                    <li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
-                    <li class="hotel btn"><a href="#">Отели</a></li>
+                    <li class="planner btn"><a href="#">Планировщик</a></li>
+                    <li class="aviatickets btn" data-bind="css: {active: activeTab == 'avia'}"><a href="#">Авиабилеты</a></li>
+                    <li class="hotel btn" data-bind="css: {active: activeTab == 'hotel'}"><a href="#">Отели</a></li>
                     <li class="finish-stages btn"><a href="#">Готовые туры</a></li>
                 </ul>
             </div>
