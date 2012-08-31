@@ -69,10 +69,7 @@ AviaController = (function() {
   AviaController.prototype.handleResults = function(data) {
     var stacked;
     sessionStorage.setItem("search_" + sp.key(), JSON.stringify(data));
-    stacked = new ResultSet(data.flights.flightVoyages);
-    return ko.applyBindings({
-      'results': stacked
-    }, $('#content')[0]);
+    return stacked = new ResultSet(data.flights.flightVoyages);
   };
 
   AviaController.prototype.indexAction = function() {

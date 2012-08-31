@@ -190,6 +190,13 @@ class Result
     if @roundTrip
       _.each(@voyages, (x)-> x.sort() )
     @activeVoyage(@voyages[0])
+
+  # Shows popup with detailed info about given result
+  showDetails: =>
+    $('#body-popup').show()
+    SizeBox();
+    ResizeBox();  
+
 #
 # Result container
 # Stacks them by price and company 

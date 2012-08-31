@@ -1,3 +1,6 @@
+<script>
+window.activeModule = 'hotels';
+</script>
 <h1>Выберите отель в Амстердам, 19-26 мая</h1>
 				<!-- HOTELS -->
 				<div class="ticket-content hotels">
@@ -451,3 +454,60 @@
 				<!-- END HOTELS -->
 				<div class="clear"></div>
 			</div>
+
+
+<script type="text/html" id="hotels-panel-template">
+    <div class="path">
+        <div class="data">
+            <input class="input-path" type="text" placeholder="Куда">
+                <div class="tumblr">
+                    <label for="there-back">
+                        <div class="one"></div>
+                        <div class="two"></div>
+                        <div class="switch"></div>
+                    </label>
+                    <input id="there-back" type="checkbox" checked="checked">
+                </div>
+            <input class="input-path" type="text" placeholder="Откуда">
+        </div>
+        <div class="how-many-man">
+            <div class="content"></div>
+                    <div class="btn"></div>
+                    <div class="popup">
+                        <div class="adults">
+                            <div class="inputDIV">
+                                <input type="text" value="1" name="adult" class="active">
+                                    <a href="#" class="plusOne">+</a>
+                                    <a href="#" class="minusOne">-</a>
+                            </div>
+                            взрослых
+                        </div>
+                        <div class="childs">
+                            <div class="inputDIV">
+                                <input type="text" value="0" name="adult2">
+                                    <a href="#" class="plusOne">+</a>
+                                    <a href="#" class="minusOne">-</a>
+                            </div>
+                            детей до 12 лет
+                        </div>
+                        <div class="small-childs">
+                            <div class="inputDIV">
+                                <input type="text" value="0" name="adult3">
+                                        <a href="#" class="plusOne">+</a>
+                                        <a href="#" class="minusOne">-</a>
+                                </div>
+                                детей до 2 лет
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <a class="btn-find">Найти</a>
+                </div>
+            
+                <!-- BTN MINIMIZE -->
+                <a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
+                <div class="minimize-rcomended">
+                <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+                </div>
+</script>

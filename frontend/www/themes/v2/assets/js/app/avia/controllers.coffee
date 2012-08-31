@@ -44,7 +44,6 @@ class AviaController
   handleResults: (data) ->
     sessionStorage.setItem("search_" + sp.key(), JSON.stringify(data))
     stacked = new ResultSet data.flights.flightVoyages
-    ko.applyBindings({'results': stacked}, $('#content')[0])
 
   indexAction : =>
     @searchAction()
