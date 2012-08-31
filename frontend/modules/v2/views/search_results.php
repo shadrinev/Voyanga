@@ -743,21 +743,41 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
             <input class="input-path" type="text" placeholder="Куда">
                 <div class="tumblr">
                     <label for="there-back">
-                        <div class="one"></div>
-                        <div class="two"></div>
+                        <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
+                        <div class="two" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
                         <div class="switch"></div>
                     </label>
-                    <input id="there-back" type="checkbox" checked="checked">
+                    <input id="there-back" type="checkbox" data-bind="checked: rt()">
                 </div>
             <input class="input-path" type="text" placeholder="Откуда">
         </div>
         <div class="how-many-man">
-            <div class="content"></div>
+            <div class="content">
+                <!-- ko if: overall()>5 -->
+                    <!-- ko if: adults()>0 -->
+                    <div class="man"></div>
+                    <!-- ko if: adults()>1 -->
+                        <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: (childs() + infants())>0 -->
+                    <div class="child"></div>
+                    <!-- ko if: (childs() + infants())>1 -->
+                        <div class="count"><span>x</span><i data-bind="text: childs() + infants()"></i></div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko if: overall()<=5 -->
+                    <div class="man" data-bind="repeat: adults()"></div>
+                    <div class="child" data-bind="repeat: childs() + infants()"></div>
+
+                <!-- /ko -->
+                </div>
                     <div class="btn"></div>
                     <div class="popup">
                         <div class="adults">
                             <div class="inputDIV">
-                                <input type="text" value="1" name="adult" class="active">
+                                <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults()">
                                     <a href="#" class="plusOne">+</a>
                                     <a href="#" class="minusOne">-</a>
                             </div>
@@ -765,7 +785,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                         </div>
                         <div class="childs">
                             <div class="inputDIV">
-                                <input type="text" value="0" name="adult2">
+                                <input type="text" name="adult2" data-bind="css: {active: childs() > 0}, value: childs()">
                                     <a href="#" class="plusOne">+</a>
                                     <a href="#" class="minusOne">-</a>
                             </div>
@@ -773,7 +793,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                         </div>
                         <div class="small-childs">
                             <div class="inputDIV">
-                                <input type="text" value="0" name="adult3">
+                                <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants()">
                                         <a href="#" class="plusOne">+</a>
                                         <a href="#" class="minusOne">-</a>
                                 </div>
@@ -787,7 +807,14 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 </div>
             
                 <!-- BTN MINIMIZE -->
-                <a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
+                <a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
+                    <!-- ko if: minimized() -->
+                    <span></span> развернуть
+                    <!-- /ko -->
+                    <!-- ko if: !minimized() -->
+                    <span></span> свернуть
+                    <!-- /ko -->
+                </a>
                 <div class="minimize-rcomended">
                 <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
                 </div>

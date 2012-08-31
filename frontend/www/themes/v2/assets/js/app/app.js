@@ -10,6 +10,11 @@ Application = (function() {
     hasher.changed.add(this.navigate);
     crossroads.bypassed.add(this.http404);
     this.activeModule = ko.observable(window.activeModule || 'avia');
+    if (this.activeModule() === 'avia') {
+      this.panel = ko.observable(new AviaPanel());
+    } else {
+      this.panel = ko.observable(new HotelPanel());
+    }
   }
 
   Application.prototype.register = function(prefix, controller, isDefault) {

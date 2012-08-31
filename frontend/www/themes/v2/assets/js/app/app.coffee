@@ -11,6 +11,11 @@ class Application
 
     # FIXME
     @activeModule = ko.observable window.activeModule || 'avia'
+    # FIXME REFACTOR
+    if @activeModule() == 'avia'
+      @panel = ko.observable(new AviaPanel())
+    else
+      @panel = ko.observable(new HotelPanel())
 
   # Register routes from controller
   # 
