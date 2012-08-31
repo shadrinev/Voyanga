@@ -1,6 +1,9 @@
 function WidthMine() {
 	var var_activeLI = $('.slide-turn-mode ul').find('.active');
 	var var_activeLIindex = var_activeLI.index();
+	if (var_activeLIindex == -1) {
+		var_activeLIindex = 1;
+	}
 	var var_switchSlide = $('.slide-turn-mode').find('.switch');
 	var var_speed = 400;
 	
