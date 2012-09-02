@@ -121,6 +121,8 @@ Voyage = (function() {
 Result = (function() {
 
   function Result(data) {
+    this.showDetails = __bind(this.showDetails, this);
+
     this.chooseRtStacked = __bind(this.chooseRtStacked, this);
 
     this.chooseStacked = __bind(this.chooseStacked, this);
@@ -245,6 +247,12 @@ Result = (function() {
       });
     }
     return this.activeVoyage(this.voyages[0]);
+  };
+
+  Result.prototype.showDetails = function() {
+    $('#body-popup').show();
+    SizeBox();
+    return ResizeBox();
   };
 
   return Result;

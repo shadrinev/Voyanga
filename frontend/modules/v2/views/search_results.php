@@ -1,4 +1,7 @@
-<!-- DIV RECOMENDED AND GRAFIK -->
+<?php 
+$images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+?>
+<script type="text/html" id="avia-content">
 <h1><span>Выберите авиабилет</span> Санкт-Петербург → Амстердам, 19 мая</h1>
 
 <div class="recomended-content" data-bind="with: results.cheapest">
@@ -101,7 +104,7 @@
             </div>
             <div class="details-selecte">
                 <div class="details">
-                    <a class="tuda-obratno" href="#">Подробнее<br> о перелете</a>
+                    <a data-bind="click: showDetails" href="#">Подробнее<br> о перелете</a>
                 </div>
                 <a href="#" class="btn-cost">
                     <span class="l"></span>
@@ -444,7 +447,7 @@
             <span class="rur">o</span>
         </a>
     </div>
-    <a href="#" class="details">Подробнее <span>о перелете</span></a>
+    <a href="#" data-bind="click: showDetails" class="details">Подробнее <span>о перелете</span></a>
 </div>
 <!-- END BUY TICKET -->
 <div class="clear"></div>
@@ -460,3 +463,448 @@
 <!-- /ko -->
 </div>
 <!-- END TICKET CONTENT -->
+<div id="body-popup" style="display:none;">
+    <div id="popup">
+        <div>
+            <div id="boxTopLeft"></div>
+            <div id="boxTopCenter"></div>
+            <div id="boxTopRight"></div>
+            <div class="clear"></div>
+        </div>
+        <div>
+            <div id="boxMiddleLeft"></div>
+            <div id="boxContent">
+                <div id="contentBox">
+                    <div id="avia-ticket-info-popup">
+                        <div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
+                        <div class="top-head-tickets">
+        <div class="date">
+            19 мая, Пн
+        </div>
+        <h3>Туда</h3>
+
+        <div class="other-time">
+            <div class="variation">
+                <ul class="minimize">
+                    <li>
+                        Варианты вылета:
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name01" checked="checked">
+                        <label for="name01"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li class="active">
+                        <input type="radio" name="radio01" id="name03" checked="checked">
+                        <label for="name03"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="content">
+        <div class="start-path">
+            <div class="information">
+                <div class="start-fly">
+                    <div class="time">
+                        9:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+                    </div>
+                </div>
+                <div class="time-fly">
+                    <div class="icon wait"></div>
+                    <div class="info">
+                        Перелет продлится 1 ч. 50 м.
+                    </div>
+                </div>
+                <div class="finish-fly no-way">
+                    <div class="time">
+                        9:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="aviacompany">
+                <img src="<?= $images ?>/images/FV_FNM_20120711.png"><br>
+                AZW1545
+            </div>
+        </div>
+        <div class="transitum">
+            Пересадка: между рейсами 1 ч. 30 м.
+        </div>
+        <div class="end-path">
+            <div class="information">
+                <div class="start-fly">
+                    <div class="time">
+                        9:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+                    </div>
+                </div>
+                <div class="time-fly">
+                    <div class="icon wait"></div>
+                    <div class="info">
+                        Перелет продлится 1 ч. 50 м.
+                    </div>
+                </div>
+                <div class="finish-fly">
+                    <div class="time">
+                        9:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="aviacompany">
+                <img src="<?= $images ?>/images/FV_FNM_20120711.png"><br>
+                AZW1545
+            </div>
+        </div>
+    </div>
+    <div class="middle-head-tickets">
+        <div class="date">
+            19 мая, Пн
+        </div>
+        <h3>Обратно</h3>
+
+        <div class="other-time">
+            <div class="variation">
+                <ul class="minimize">
+                    <li>
+                        Варианты вылета:
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name01" checked="checked">
+                        <label for="name01"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li class="active">
+                        <input type="radio" name="radio01" id="name03" checked="checked">
+                        <label for="name03"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radio01" id="name02" checked="checked">
+                        <label for="name02"><span>06:10</span></label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="start-path">
+            <div class="information">
+                <div class="start-fly">
+                    <div class="time">
+                        9:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+                    </div>
+                </div>
+                <div class="time-fly">
+                    <div class="icon wait"></div>
+                    <div class="info">
+                        Перелет продлится 1 ч. 50 м.
+                    </div>
+                </div>
+                <div class="finish-fly no-way">
+                    <div class="time">
+                        11:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="aviacompany">
+                <img src="<?= $images ?>/images/FV_FNM_20120711.png"><br>
+                AZW1545
+            </div>
+        </div>
+        <div class="transitum">
+            Пересадка: между рейсами 1 ч. 30 м.
+        </div>
+        <div class="end-path">
+            <div class="information">
+                <div class="start-fly">
+                    <div class="time">
+                        12:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+                    </div>
+                </div>
+                <div class="time-fly">
+                    <div class="icon wait"></div>
+                    <div class="info">
+                        Перелет продлится 1 ч. 50 м.
+                    </div>
+                </div>
+                <div class="finish-fly">
+                    <div class="time">
+                        15:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="aviacompany">
+                <img src="<?= $images ?>/images/FV_FNM_20120711.png"><br>
+                AZW1545
+            </div>
+        </div>
+    </div>
+    <hr class="lines">
+    <div class="yes">
+        <span style="color:#2e333b;" class="f14 bold">Оформить</span>
+        <a class="btn-order" href="#">
+            <span class="cost">63 502</span> <span class="rur f26">o</span>
+        </a>
+    </div></div></div>
+<div id="boxClose"></div></div></div><div id="boxMiddleRight"></div><div class="clear"></div></div><div><div id="boxBottomLeft"></div><div id="boxBottomCenter"></div><div id="boxBottomRight"></div></div></div></div>
+</script>
+<script type="text/html" id="avia-panel-template">
+    <div class="path">
+        <div class="data">
+            <input class="input-path" type="text" placeholder="Куда">
+                <div class="tumblr">
+                    <label for="there-back">
+                        <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
+                        <div class="two" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
+                        <div class="switch"></div>
+                    </label>
+                    <input id="there-back" type="checkbox" data-bind="checked: rt()">
+                </div>
+            <input class="input-path" type="text" placeholder="Откуда">
+        </div>
+        <div class="how-many-man">
+            <div class="content">
+                <!-- ko if: overall()>5 -->
+                    <!-- ko if: adults()>0 -->
+                    <div class="man"></div>
+                    <!-- ko if: adults()>1 -->
+                        <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: (childs() + infants())>0 -->
+                    <div class="child"></div>
+                    <!-- ko if: (childs() + infants())>1 -->
+                        <div class="count"><span>x</span><i data-bind="text: childs() + infants()"></i></div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko if: overall()<=5 -->
+                    <div class="man" data-bind="repeat: adults()"></div>
+                    <div class="child" data-bind="repeat: childs() + infants()"></div>
+
+                <!-- /ko -->
+                </div>
+                    <div class="btn"></div>
+                    <div class="popup">
+                        <div class="adults">
+                            <div class="inputDIV">
+                                <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults()">
+                                    <a href="#" class="plusOne">+</a>
+                                    <a href="#" class="minusOne">-</a>
+                            </div>
+                            взрослых
+                        </div>
+                        <div class="childs">
+                            <div class="inputDIV">
+                                <input type="text" name="adult2" data-bind="css: {active: childs() > 0}, value: childs()">
+                                    <a href="#" class="plusOne">+</a>
+                                    <a href="#" class="minusOne">-</a>
+                            </div>
+                            детей до 12 лет
+                        </div>
+                        <div class="small-childs">
+                            <div class="inputDIV">
+                                <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants()">
+                                        <a href="#" class="plusOne">+</a>
+                                        <a href="#" class="minusOne">-</a>
+                                </div>
+                                детей до 2 лет
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <a class="btn-find">Найти</a>
+                </div>
+            
+                <!-- BTN MINIMIZE -->
+                <a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
+                    <!-- ko if: minimized() -->
+                    <span></span> развернуть
+                    <!-- /ko -->
+                    <!-- ko if: !minimized() -->
+                    <span></span> свернуть
+                    <!-- /ko -->
+                </a>
+                <div class="minimize-rcomended">
+                <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+                </div>
+</script>
+<script type="text/html" id="avia-filters">
+                <script type="text/html" id="avia-filters">
+                <div class="filter-content">
+
+                    <div class="slide-filter">
+                        <img src="<?= $images ?>/images/img-filter-slide01.png">
+                    </div>
+
+                    <div class="div-filter">
+
+                        <div class="slider-filter">
+                            <img src="<?= $images ?>/images/img-filter-slide02.png">
+                        </div>
+
+                        <input type="checkbox" name="ch00" id="ch00"> <label for="ch00">Только короткие пересадки</label>
+
+                    </div>
+                    <div class="div-filter">
+                        <div class="slider-filter" style="text-align:center; margin-bottom:18px;">
+                            <img src="<?= $images ?>/images/tuda.png">
+                        </div>
+                        <h4>Время вылета</h4>
+
+                        <div class="slide-filter">
+                            <img src="<?= $images ?>/images/img-slide-time01.png">
+                            <br>
+                            <br>
+                            <br>
+                            <div style="width: 200px; margin-left: 0px;">
+                            <input id="departureTimeSlider" type="slider" name="departureTimeSlider" value="480;1020" />
+                            </div>
+
+                        </div>
+                        <h4>Время прилета</h4>
+
+                        <div class="slide">
+                            <img src="<?= $images ?>/images/img-slide-time02.png">
+                            <div></div>
+
+                            <select id='coolSlider' class="selectSlider"><option value="12">opt1</option><option value="13" selected="selected">opt2</option><option value="17">opt20</option></select>
+                        </div>
+                    </div>
+
+                    <div class="div-filter">
+                        <h4>Москва</h4>
+                        <ul data-bind="foreach: results.airports">
+                            <li><input type="checkbox" data-bind="checked: active"> <label for="ch01" data-bind="text: name">Шереметьево</label></li>
+                        </ul>
+                    </div>
+                    <div class="div-filter">
+                        <h4>Москва <a href="#" class="clean">Очистить</a></h4>
+                        <ul data-bind="foreach: results.airlines">
+                            <li><input type="checkbox" data-bind="checked: active"> <label for="ch01" data-bind="text: name">Аэрофлот</label></li>
+                        </ul>
+                        <div class="all-list">
+                            <a href="#">Все авиакомпании</a>
+                        </div>
+                    </div>
+                </div>
+</script>
+<!-- FIXME! -->
+                            <script type="text/javascript">
+//                                $("#coolSlider").selectSlider({am:'kg',kg:'am2'});
+                            </script>
+
+                            <script type="text/javascript">
+                                var sl = {
+                                    from: 480,
+                                    to: 1080,
+                                    step: 15,
+                                    dimension: '',
+                                    skin: 'round_voyanga',
+                                    scale: false,
+                                    limits: false,
+                                    minInterval: 60,
+                                    value: "480;1020",
+                                    calculate: function( value ){
+                                        var hours = Math.floor( value / 60 );
+                                        var mins = ( value - hours*60 );
+                                        return (hours < 10 ? "0"+hours : hours) + ":" + ( mins == 0 ? "00" : mins );
+                                    },
+                                    onstatechange: function( value ){
+                                        //console.dir( this );
+                                        //console.log(value);
+                                        return false;
+                                    }
+                                }
+//                                $("#departureTimeSlider").slider(sl);
+                            </script>

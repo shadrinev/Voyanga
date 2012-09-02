@@ -544,4 +544,21 @@ $(function() {
 	initPeoplesInputs();
 	inputSelectMan();
 	
+	
+	// HIDE PANEL
+	$('.btn-minimizePanel').click(function() {
+		var var_SubHead = $('.sub-head');
+		var var_speed =  300;
+		var var_heightSubHead = var_SubHead.height();
+		if(! $(this).hasClass('active')) {	
+			$('.btn-minimizePanel').html('<span></span> развернуть');
+			$('.btn-minimizePanel').addClass('active');	
+			var_SubHead.animate({'margin-top' : '-'+(var_heightSubHead-4)+'px'}, var_speed);		
+		}
+		else {
+			$('.btn-minimizePanel').html('<span></span> свернуть');
+			$('.btn-minimizePanel').removeClass('active');
+			var_SubHead.animate({'margin-top' : '0px'}, var_speed);			
+		}
+	});
 });

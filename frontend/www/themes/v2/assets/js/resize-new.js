@@ -50,6 +50,7 @@ function ResizeCenterBlock() {
 		var var_ticketsItems = $('.ticket-content');
 		var var_recomendedItems = $('.head-content');
 		var var_hotelItems = $('.hotels-tickets');
+		var var_calendarGridVoyanga = $('.calendarGridVoyanga');
 		var var_descrItems = $('#descr');
 		var widthLeftBlock, 
 			widthMainBlock, 
@@ -81,6 +82,7 @@ function ResizeCenterBlock() {
 		var var_leftBlockIsset = var_leftBlock.length > 0 && var_leftBlock.is(':visible');
 		var var_mainBlockIsset = var_mainBlock.length > 0 && var_mainBlock.is(':visible');
 		var var_filterBlockIsset = var_filterBlock.length > 0 && var_filterBlock.is(':visible');
+		var var_calendarGridVoyangaIsset = var_calendarGridVoyanga.length > 0 && var_calendarGridVoyanga.is(':visible');
 		
 		var var_descrIsset = var_descrItems.length > 0 && var_descrItems.is(':visible');
 		
@@ -269,7 +271,7 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
 				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
-				
+
 				marginLeftContent = 0;
 				widthContent = widthMainBlock - marginLeftContent;					
 				marginRightContent = 0;
@@ -277,6 +279,33 @@ function ResizeCenterBlock() {
 				var_widthDescrLeft = Math.floor(335 + ((widthBlock - var_widthMIN) / (var_valueMIN / (557 - 335))) );
 				
 				var_widthStreet = '210px';
+			}
+		}
+		else {
+			if (widthBlock >= var_widthMAX) {
+
+				
+				paddingLeftLogo = var_paddingLeftMAX;
+				paddingRightSlide = var_paddingRightSlideMAX;
+				paddingLeftTel = var_paddingLeftTelefonMAX;
+				
+			}
+			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
+			
+				
+				paddingLeftLogo = var_paddingLeftMID;
+				paddingRightSlide = var_paddingRightSlideMID;
+				paddingLeftTel = var_paddingLeftTelefonMID;
+			
+			
+			}
+			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
+				
+				
+				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
+				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
+				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
+
 			}
 		}
 		
@@ -291,6 +320,11 @@ function ResizeCenterBlock() {
 		if (var_leftBlockIsset) {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock+'px');
 		}
+		/* CALENDARE RESIZE */
+		if (var_calendarGridVoyangaIsset) {
+			var_calendarGridVoyanga.css('width', (widthMainBlock+15)+'px')
+		}
+		/* END CALENDARE RESIZE */
 		if (var_descrIsset) {
 			$('#descr').find('.photo-slide-hotel').css('width', var_widthDescrLeft+'px');
 			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});

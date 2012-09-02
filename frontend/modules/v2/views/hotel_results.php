@@ -1,3 +1,6 @@
+<script>
+window.activeModule = 'hotels';
+</script>
 <h1>Выберите отель в Амстердам, 19-26 мая</h1>
 				<!-- HOTELS -->
 				<div class="ticket-content hotels">
@@ -367,8 +370,7 @@
 										<a href="#" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
 									</div>
 									<div class="text">
-										Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном От отеля можно легко добраться до достопримечательностей города и международного аэропорта Пулково. В 5 минутах ходьбы от Никольского собора.								
-										
+										Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном От отеля можно легко добраться до достопримечательностей города и международного аэропорта Пулково. В 5 минутах ходьбы от Никольского собора.		
 									</div>
 								</div>
 								<!-- END DESCRIPTION -->
@@ -451,3 +453,60 @@
 				<!-- END HOTELS -->
 				<div class="clear"></div>
 			</div>
+
+
+<script type="text/html" id="hotels-panel-template">
+    <div class="path">
+        <div class="data">
+            <input class="input-path" type="text" placeholder="Куда">
+                <div class="tumblr">
+                    <label for="there-back">
+                        <div class="one"></div>
+                        <div class="two"></div>
+                        <div class="switch"></div>
+                    </label>
+                    <input id="there-back" type="checkbox" checked="checked">
+                </div>
+            <input class="input-path" type="text" placeholder="Откуда">
+        </div>
+        <div class="how-many-man">
+            <div class="content"></div>
+                    <div class="btn"></div>
+                    <div class="popup">
+                        <div class="adults">
+                            <div class="inputDIV">
+                                <input type="text" value="1" name="adult" class="active">
+                                    <a href="#" class="plusOne">+</a>
+                                    <a href="#" class="minusOne">-</a>
+                            </div>
+                            взрослых
+                        </div>
+                        <div class="childs">
+                            <div class="inputDIV">
+                                <input type="text" value="0" name="adult2">
+                                    <a href="#" class="plusOne">+</a>
+                                    <a href="#" class="minusOne">-</a>
+                            </div>
+                            детей до 12 лет
+                        </div>
+                        <div class="small-childs">
+                            <div class="inputDIV">
+                                <input type="text" value="0" name="adult3">
+                                        <a href="#" class="plusOne">+</a>
+                                        <a href="#" class="minusOne">-</a>
+                                </div>
+                                детей до 2 лет
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <a class="btn-find">Найти</a>
+                </div>
+            
+                <!-- BTN MINIMIZE -->
+                <a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
+                <div class="minimize-rcomended">
+                <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+                </div>
+</script>

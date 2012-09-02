@@ -10,7 +10,12 @@ class Application
     crossroads.bypassed.add(@http404)
 
     # FIXME
-    @activeTab = 'avia'
+    @activeModule = ko.observable window.activeModule || 'avia'
+    # FIXME REFACTOR
+    if @activeModule() == 'avia'
+      @panel = ko.observable(new AviaPanel())
+    else
+      @panel = ko.observable(new HotelPanel())
 
   # Register routes from controller
   # 
@@ -37,8 +42,8 @@ class Application
     alert "Not found"
 
 
-app = new Application()
-app.register 'avia', new AviaController(), true
 $ ->
+  app = new Application()
+  app.register 'avia', new AviaController(), true
   app.run()
-  ko.applyBindings(app, $('#header')[0])
+  ko.applyBindings(app)

@@ -1,0 +1,215 @@
+.panel {
+	margin: 0 auto;
+	padding-bottom: 9px;
+	position: relative;
+	padding-top: 5px;
+	height: 54px;
+
+}
+.panel .content {
+	cursor: pointer;
+}
+.path {
+	height: 68px;
+	position:relative;
+	width: 920px;
+	margin: 0 auto;
+	margin-top: -5px;
+}
+.path .data {
+	width: 625px;
+	position: relative;
+	margin-top: 17px;
+	float: left;
+}
+.path .input-path {
+	border: none;
+	border-radius: 4px;
+	background: url(../images/slice.png) 0px -904px;
+	width: 241px; height: 35px;
+	font-family: Arial; font-size: 19px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.tumblr {
+    background: url("../images/slice.png") no-repeat scroll 0 -1014px transparent;
+    display: inline-block;
+    height: 37px;
+    margin: -3px 10px 0px 10px;
+    position: relative;
+    width: 74px;
+    vertical-align: middle;
+}
+.tumblr input {display: none;}
+.tumblr .one {
+	width: 37px; height: 37px;
+	background: url(../images/slice.png) no-repeat -37px -1086px;
+	position: absolute; top: 0px; left: 0px; z-index: 2;
+	cursor: pointer;
+}
+.tumblr .two {
+	width: 37px; height: 37px;
+	background: url(../images/slice.png) no-repeat -37px -1051px;
+	position: absolute; top: 0px; right: 0px; z-index: 2;
+	cursor: pointer;
+}
+.tumblr .one.active {
+	background-position: 0px -1086px; 
+}
+.tumblr .two.active {
+	background-position: 0px -1051px; 
+}
+.tumblr  .switch {
+	background: url("../images/slice.png") no-repeat scroll -74px -1014px transparent;
+    height: 37px;
+    left: -1px;
+    position: absolute;
+    top: 0;
+    width: 39px;
+    z-index: 1;
+}
+.slide-tmblr {
+	height: 68px;
+    overflow: hidden;
+    width: 839px;
+    position: absolute;
+    left: 106px;
+    top: 0px;
+}
+.input-path:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 15px rgba(82, 168, 236, 0.8);
+    outline: 0 none;
+    color: #16181a !important;
+}
+.how-many-man {
+	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+    float: left;
+    height: 68px;
+    margin-left: 20px;
+    position: relative;
+}
+.how-many-man .btn {
+	width: 16px; height: 68px;
+	background: url("../images/slice.png") no-repeat scroll right -1055px transparent;
+	float: right;
+	margin-left: 8px;
+}
+.how-many-man .btn.active {
+	background-position: right -1125px;
+}
+.how-many-man .content {
+	float: left;
+	padding-left: 8px;
+}
+.how-many-man .popup {
+	position: absolute; bottom: -86px; left: 0px;
+	background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
+	width: 194px; height: 85px;
+	border-right: 1px solid #b7b8bc;
+	border-bottom: 1px solid #76777a;
+	border-left: 1px solid #b7b8bc;
+	display: none;
+	z-index: 900;
+}
+.how-many-man .popup.active {
+	display: block;
+}
+.how-many-man .man {
+	width: 21px; height: 68px; float: left;
+	background: url("../images/bg-man.png") no-repeat scroll center center transparent;
+}
+.how-many-man .count {
+	height: 40px; float: left; padding-top: 28px;
+	padding-right: 8px;
+	padding-left: 4px;
+	font-family: Tahoma; font-size: 20px; color: #e8e8e8; text-shadow: 0px 1px 0px #111419;
+}
+.how-many-man .count span {
+	font-size: 11px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: -6px; margin-right: 4px;
+}
+.how-many-man .child {
+	width: 21px; height: 68px; float: left;
+	background: url("../images/bg-child.png") no-repeat scroll center center transparent;
+}
+.how-many-man  .popup .adults, .how-many-man  .popup .childs, .how-many-man  .popup .small-childs {
+	float: left;
+	width: 48px; font-size: 11px; color: #272728; text-shadow: 0px 1px 0px #FFF; line-height: 13px;
+	margin-left: 13px;
+	padding-top: 13px;
+	position: relative;
+}
+.how-many-man  .popup .adults input, .how-many-man  .popup .childs input, .how-many-man  .popup .small-childs input  {
+	background: url("../images/slice.png") no-repeat scroll -264px -941px transparent;
+    border: medium none;
+    font-size: 25px;
+    height: 31px;
+    text-align: center;
+    width: 48px;
+    color: #8f959c;
+}
+.how-many-man  .popup .adults input.active, .how-many-man  .popup .childs input.active, .how-many-man  .popup .small-childs input.active {
+	background-position: -264px -904px;
+	    color: #272729;
+}
+.how-many-man  .popup .adults input:focus {
+	background-position: -264px -904px;
+}
+.inputDIV {position: relative;}
+.minusOne {background: url(../images/minuscount.png) no-repeat 0 0;
+    overflow: hidden;
+    cursor: pointer;
+    height: 30px;
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 7px;
+    z-index: 100;
+    display: none;
+    text-indent: -9999px;}
+.plusOne {background: url(../images/pluscount.png) no-repeat 0px 0;
+    overflow: hidden;
+    cursor: pointer;
+    height: 30px;
+    position: absolute;
+    right: 4px;
+    top: 0px;
+    width: 7px;
+    z-index: 100;
+    display: none;
+    text-indent: -9999px;}
+.inputDIV .minusOne.active, .inputDIV .plusOne.active  {
+	background-position: 0px -30px;	
+}
+.btn-find {
+	background: url("../images/slice.png") no-repeat scroll -122px -1014px transparent;
+	float: right;
+	width: 83px; height: 47px;
+	text-indent: -9999px;
+	display: block;
+	margin-top: 10px;
+	cursor: pointer;
+}
+.btn-minimizePanel {
+	width: 104px; height: 19px;
+	color: #616770;
+	font-size: 13px;
+	background: url(../images/slice.png) no-repeat 0px -880px;
+	position: absolute;
+	right: 60px;
+	bottom: -19px;
+	text-align: center;
+	line-height: 15px;
+	z-index: 800;
+}
+.btn-minimizePanel span {
+	display: inline-block;
+	width: 12px; height: 6px;
+	background: url(../images/slice.png) no-repeat -72px -35px;
+}
+.btn-minimizePanel.active span {
+	background-position: -84px -35px;
+}

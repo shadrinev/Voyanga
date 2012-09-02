@@ -43,4 +43,5 @@ def: 'easeOutQuad',
 swing: function (x, t, b, c, d) {
 //alert(jQuery.easing.default);
 return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
-},
+}
+});

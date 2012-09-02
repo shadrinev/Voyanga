@@ -27,7 +27,7 @@
 	top: 0px;
 	right: -9px;
 }
-.switch {
+.slidecheckbox > .switch {
 	height: 22px;
     position: absolute;
     width: 50%;
@@ -35,7 +35,7 @@
     background: url(../images/jslider.checkslide.voyanga.png) center -24px;
     cursor: pointer;
 }
-.switch > i.left {
+.slidecheckbox > .switch > i.left {
 	display: block;
 	position: absolute;
 	background: url(../images/jslider.checkslide.voyanga.png) left -24px;
@@ -45,7 +45,7 @@
 	left: -9px;
 	z-index: 2;
 }
-.switch > i.right {
+.slidecheckbox > .switch > i.right {
 	display: block;
 	position: absolute;
 	background: url(../images/jslider.checkslide.voyanga.png) right -24px;
@@ -62,14 +62,19 @@
 	z-index: 3;
 	text-align: center;
 	padding-top: 5px;
-    margin: 0px !important;
+	margin: 0px !important;
 }
 .slidecheckbox ul li a {
 	color: #2e333b;
-    border: none !important;
+	border: none !important;
 	text-shadow: 0px 1px 0px #FFF;
 }
+
 .slidecheckbox ul li.active a {
+	color: #FFF;
+	text-shadow: 0px 1px 0px #0b5b88;
+}
+.slidecheckbox ul li.active a:hover {
 	color: #FFF;
 	text-shadow: 0px 1px 0px #0b5b88;
 }

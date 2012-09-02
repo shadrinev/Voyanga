@@ -7,6 +7,8 @@
  */
 class DefaultController extends CController
 {
+	public $nosidebar = false;
+
     public function actionIndex()
     {
         $this->render('v2.views.search_results');
@@ -15,5 +17,11 @@ class DefaultController extends CController
     public function actionHotels()
     {
         $this->render('v2.views.hotel_results');
+    }
+
+    public function actionSandbox()
+    {
+    	$this->nosidebar = true;
+        $this->render('v2.views.sandbox');
     }
 }

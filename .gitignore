@@ -19,3 +19,7 @@ node_modules
 #/common/config/params-local.php
 
 .DS_Store
+
+.DS_Store
+
+markup/.DS_Store
