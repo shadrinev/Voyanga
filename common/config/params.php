@@ -67,23 +67,6 @@ return CMap::mergeArray(array(
 		'autoCreateCacheTable' => true,
 		'cacheTableName' => 'cache',
 	),
-
-	'urlRules' => array( //URL rules needed by CUrlManager
-		/*
-		"rss.xml" => 'site/feed',
-		"<action:($rootPages)>" => 'site/<action>',
-
-
-		'<controller:\w+>' => '<controller>/index',
-		'<controller:\w+>/<id:\d+>/<name>' => '<controller>/view',
-		'<controller:\w+>/<id:\d+>' => '<controller>/view',
-		'<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-		*/
-		
-		//	an example:
-		//'organizations/default/*' => 'companies/default',
-		//'schools/default/*' => 'companies/default',
-	),
 	
 	'php.exePath' => '/usr/bin/php',
 
