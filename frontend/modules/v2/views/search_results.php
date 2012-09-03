@@ -873,21 +873,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
             <p>First name: <input data-bind="value: firstNameN" /></p>
             <p>Last name: <input data-bind="value: lastNameN" /></p>
             <h2>Hello, <span data-bind="text: fullNameN"> </span>!</h2>
-            <script type="text/javascript">
-                // Here's my data model
-                var ViewModelN = function(first, last) {
-                this.firstNameN = ko.observable(first);
-                this.lastNameN = ko.observable(last);
 
-                this.fullNameN = ko.computed(function() {
-                // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
-                return this.firstNameN() + " " + this.lastNameN();
-                }, this);
-                };
-                //var NVM = new ViewModel('mmm','pie');
-
-                ko.applyBindings(new ViewModelN('mmm','pie')); // This makes Knockout
-            </script>
             </div>
 
             <div class="div-filter">
@@ -907,3 +893,20 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 </div>
             </div>
 </script>
+<!-- FIXME
+                <script type="text/javascript">
+                // Here's my data model
+                var ViewModelN = function(first, last) {
+                this.firstNameN = ko.observable(first);
+                this.lastNameN = ko.observable(last);
+
+                this.fullNameN = ko.computed(function() {
+                // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
+                return this.firstNameN() + " " + this.lastNameN();
+                }, this);
+                };
+                //var NVM = new ViewModel('mmm','pie');
+
+                ko.applyBindings(new ViewModelN('mmm','pie')); // This makes Knockout
+            </script>
+            -->
