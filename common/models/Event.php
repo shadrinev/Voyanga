@@ -13,7 +13,7 @@
  * @property integer $id
  * @property string $startDate
  * @property string $endDate
- * @property integer $cityId
+ * @property string $title
  * @property string $address
  * @property string $contact
  * @property integer $status
@@ -24,6 +24,9 @@ class Event extends FrontendActiveRecord
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+
+    const NEW_EVENT_ITEM = -1;
+    const NO_EVENT_ITEM = 0;
 
     /**
      * The behaviors associated with the user model.
@@ -266,5 +269,18 @@ class Event extends FrontendActiveRecord
     public function getPricePiter($forceUpdate = false)
     {
         return $this->getPriceForCity('LED', $forceUpdate);
+    }
+
+    public static function getPossibleEvents()
+    {
+        $allEvents = Event::model()->findAll();
+        $existingEvents = CHtml::listData($allEvents, 'id', 'title');
+        $newEvent = array(self::NEW_EVENT_ITEM => '..Создать новое событие..');
+        $noEvent = array(self::NO_EVENT_ITEM => 'Не привязывать событие');
+        return CMap::mergeArray(
+            $noEvent,
+            $newEvent,
+            $existingEvents
+        );
     }
 }

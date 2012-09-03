@@ -20,6 +20,11 @@ class TourBuilderForm extends CFormModel
     //temp var for no warning
     public $startCityId;
 
+    //event related fields
+    public $eventId;
+    public $eventStartCityIds;
+    public $eventStartCityNames;
+
     public function rules()
     {
         return array(
@@ -34,6 +39,7 @@ class TourBuilderForm extends CFormModel
     public function init()
     {
         $this->setStartCityName('Санкт-Петербург');
+        $this->setEventStartCities();
     }
 
     public function getStartCityId()
@@ -65,7 +71,9 @@ class TourBuilderForm extends CFormModel
     {
         return array(
             'adultCount' => 'Количество взрослых',
-            'startCityId' => 'Начало поездки в городе'
+            'startCityId' => 'Начало поездки в городе',
+            'eventId' => 'Связать с событием',
+            'eventStartCityIds' => 'На событие стартуем из города'
         );
     }
 
@@ -84,6 +92,16 @@ class TourBuilderForm extends CFormModel
                 $this->trips[] = $trip;
             else
                 $this->addError('Trip['.$i.']', 'Incorrect trip element');
+        }
+    }
+
+    private function setEventStartCities()
+    {
+        $startCities = EventStartCity::model()->with('city')->findAll();
+        foreach ($startCities as $startCity)
+        {
+            $this->eventStartCityIds[] = $startCity->cityId;
+            $this->eventStartCityNames[] = $startCity->city->localRu;
         }
     }
 }

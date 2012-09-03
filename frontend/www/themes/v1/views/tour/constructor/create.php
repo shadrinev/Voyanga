@@ -11,8 +11,9 @@
 
     <?php echo $form->dropDownListRow($model, 'adultCount', FlightForm::getPossibleAdultCount()); ?>
 
-    <?php echo $form->hiddenField($model, "startCityId", array('class'=>'startCityId')); ?>
+    <?php echo $form->dropDownListRow($model, 'eventId', Event::getPossibleEvents()); ?>
 
+    <?php echo $form->hiddenField($model, "startCityId", array('class'=>'startCityId')); ?>
     <?php echo $form->labelEx($model, "startCityId"); ?>
     <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
         'options'=>array(
@@ -34,6 +35,14 @@
             'value'=>$model->startCityName,
         )
     )); ?>
+
+    <div class="eventStartCityIds">
+        <?php $this->widget('site.frontend.widgets.cityList.CityListWidget', array(
+            'model' => $model,
+            'attribute'=>'eventStartCityIds',
+            'attributeReadable'=>'eventStartCityNames'
+        )); ?>
+    </div>
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.BootButton', array(
