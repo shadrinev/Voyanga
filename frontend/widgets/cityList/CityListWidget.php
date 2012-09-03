@@ -9,6 +9,7 @@ class CityListWidget extends CWidget
 {
     public $model;
     public $attribute;
+    public $attributeId;
     public $attributeReadable;
 
     private $items;
@@ -19,29 +20,19 @@ class CityListWidget extends CWidget
         if($this->assetsUrl===null)
             $this->assetsUrl = Yii::app()->getAssetManager()->publish(dirname(__FILE__).'/assets',false,-1,YII_DEBUG);
         Yii::app()->getClientScript()->registerScriptFile($this->assetsUrl.'/'.'attachedItems.js');
-        $this->normalize();
     }
 
     public function run()
     {
-        $newModelClass = get_class($this->model);
+        $newModelClass = 'EventStartCityForm';
         $newModel = new $newModelClass;
         $this->render('template', array(
             'newItem'=>$newModel,
             'model'=>$this->model,
-            'items'=>$this->items,
             'attribute'=>$this->attribute,
+            'attributeId'=>$this->attributeId,
             'attributeReadable'=>$this->attributeReadable,
-            'readableItems'=>$this->model->{$this->attributeReadable},
             'form'=>new BootActiveForm
         ));
-    }
-
-    public function normalize()
-    {
-        if ($this->model->{$this->attribute}==null)
-            $this->items = array();
-        else
-            $this->items = $this->model->{$this->attribute};
     }
 }

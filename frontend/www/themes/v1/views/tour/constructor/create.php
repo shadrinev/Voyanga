@@ -45,8 +45,9 @@
     <div class="eventStartCityIds">
         <?php $this->widget('site.frontend.widgets.cityList.CityListWidget', array(
             'model' => $model,
-            'attribute'=>'eventStartCityIds',
-            'attributeReadable'=>'eventStartCityNames'
+            'attribute'=>'startCities',
+            'attributeId'=>'id',
+            'attributeReadable'=>'name'
         )); ?>
     </div>
 

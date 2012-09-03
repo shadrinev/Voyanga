@@ -22,8 +22,7 @@ class TourBuilderForm extends CFormModel
 
     //event related fields
     public $eventId;
-    public $eventStartCityIds;
-    public $eventStartCityNames;
+    public $startCities=array();
     public $newEventName;
 
     public function rules()
@@ -74,7 +73,6 @@ class TourBuilderForm extends CFormModel
             'adultCount' => 'Количество взрослых',
             'startCityId' => 'Начало поездки в городе',
             'eventId' => 'Связать с событием',
-            'eventStartCityIds' => 'На событие стартуем из города',
             'newEventName' => 'Название нового события',
         );
     }
@@ -102,8 +100,15 @@ class TourBuilderForm extends CFormModel
         $startCities = EventStartCity::model()->with('city')->findAll();
         foreach ($startCities as $startCity)
         {
-            $this->eventStartCityIds[] = $startCity->cityId;
-            $this->eventStartCityNames[] = $startCity->city->localRu;
+            $element = new EventStartCityForm();
+            $element->id = $startCity->cityId;
+            $element->name = $startCity->city->localRu;
+            $this->startCities[] = $element;
         }
+    }
+
+    public function getIsLinkedToEvent()
+    {
+        return ($this->eventId != null);
     }
 }

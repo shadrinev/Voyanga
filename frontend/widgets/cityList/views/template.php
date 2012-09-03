@@ -1,27 +1,30 @@
 <?php $this->render('jsTemplate', array(
+    'newItem'=>true,
     'model'=>$newItem,
     'form'=>$form,
     'attribute'=>$attribute,
+    'attributeId'=>$attributeId,
     'attributeReadable'=>$attributeReadable
 )); ?>
 <?php $i=0; ?>
 <div id='itemsArea'>
-    <?php foreach ($items as $item): ?>
+    <?php foreach ($model->$attribute as $item): ?>
         <?php $this->render('_template', array(
             'newItem'=>false,
-            'model'=>$model,
-            'item'=>$item,
+            'model'=>$item,
             'i'=>$i++,
             'form'=>$form,
-            'attribute'=>$attribute,
+            'attributeId'=>$attributeId,
             'attributeReadable'=>$attributeReadable
     )); ?>
     <?php endforeach ?>
-    <?php if (sizeof($items)==0)
+    <?php if (sizeof($model->$attribute)==0)
         $this->render('_template', array(
+            'newItem'=>true,
             'model'=>$newItem,
-            'i'=>$i++, 'form'=>$form,
-            'attribute'=>$attribute,
+            'i'=>$i++,
+            'form'=>$form,
+            'attributeId'=>$attributeId,
             'attributeReadable'=>$attributeReadable
         )); ?>
 </div>

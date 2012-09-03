@@ -1,19 +1,7 @@
-<?php
-if ($newItem)
-{
-    $valueId = '';
-    $valueReadable = '';
-}
-else
-{
-    $valueId = $model->$attribute; $valueId = $valueId[$i];
-    $valueReadable = $model->$attributeReadable; $valueReadable = $valueReadable[$i];
-}
-?>
 <div class="form-horizontal well" id="item-<?php echo $i; ?>">
-        <?php echo $form->hiddenField($model, "[$i]$attribute", array('class'=>'city', 'value' => $valueId)); ?>
+        <?php echo $form->hiddenField($model, "[$i]$attributeId", array('class'=>'city')); ?>
 
-        <?php echo $form->labelEx($model, "[$i]$attribute"); ?>
+        <?php echo $form->labelEx($model, "[$i]$attributeReadable"); ?>
         <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
             'options'=>array(
                 'items'=>10,
@@ -32,7 +20,7 @@ else
 
             'htmlOptions'=>array(
                 'class'=>'span5 cityId',
-                'value'=> $valueReadable
+                'value'=> ($newItem) ? '' : $model->$attributeReadable
             )
         )); ?>
 

@@ -1,3 +1,12 @@
 <script id='itemTemplate' type='voyanga/template'>
-    <?php $this->render('_template', array('newItem'=>true, 'i'=>"{{i}}",'model'=>$model, 'attribute'=>$attribute, 'attributeReadable'=>$attributeReadable, 'form'=>$form)); ?>
+    <?php $this->render('_template', array(
+        'newItem'=>true,
+        'model' => new EventStartCityForm(),
+        'i'=>"{{i}}",
+        'item'=>new EventStartCityForm(),
+        'attribute'=>$attribute,
+        'attributeId'=>$attributeId,
+        'attributeReadable'=>$attributeReadable,
+        'form'=>$form
+    )); ?>
 </script>
