@@ -184,7 +184,7 @@ return CMap::mergeArray(
                             //! Markup related scripts and modules
                             'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js','js/jquery.color.js', 'js/slide-mode.js', 'js/popup.js',
                             'js/tickets.js','js/panel-new.js', 'js/script.js', 'js/voyanga-calendar.js', 'js/jquery.select.slider.js',
-                            'js/jquery.slider.min.js','js/jquery.slider.js',
+                            'js/jquery.slider.min.js','js/jquery.slider.js','js/avia.filters.js',
                             //! Our application logic
                             'js/app/common/utils.js', 'js/app/common/filters.js', 'js/app/avia/panel.js',
                             'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/app.js'),

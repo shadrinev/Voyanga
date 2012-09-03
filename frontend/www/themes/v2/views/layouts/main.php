@@ -27,8 +27,8 @@ Yii::app()->clientScript->registerPackage('everything');
 
                 <ul>
                     <li class="planner btn"><a href="#">Планировщик</a></li>
-                    <li class="aviatickets btn" data-bind="css: {active: activeModule() == 'avia'}"><a href="#">Авиабилеты</a></li>
-                    <li class="hotel btn" data-bind="css: {active: activeModule() == 'hotel'}"><a href="#">Отели</a></li>
+                    <li class="aviatickets btn" data-bind="css: {active: activeTab == 'avia'}"><a href="#">Авиабилеты</a></li>
+                    <li class="hotel btn" data-bind="css: {active: activeTab == 'hotel'}"><a href="#">Отели</a></li>
                     <li class="finish-stages btn"><a href="#">Готовые туры</a></li>
                 </ul>
             </div>

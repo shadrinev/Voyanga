@@ -799,13 +799,13 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                                 </div>
                                 детей до 2 лет
                             </div>
-                            
+
                         </div>
                     </div>
-                    
+
                     <a class="btn-find">Найти</a>
                 </div>
-            
+
                 <!-- BTN MINIMIZE -->
                 <a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
                     <!-- ko if: minimized() -->
@@ -820,91 +820,91 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 </div>
 </script>
 <script type="text/html" id="avia-filters">
-                <script type="text/html" id="avia-filters">
-                <div class="filter-content">
+    <div class="filter-content">
 
-                    <div class="slide-filter">
-                        <img src="<?= $images ?>/images/img-filter-slide01.png">
-                    </div>
+        <div class="slide-filter">
+            <img src="<?= $images ?>/images/img-filter-slide01.png">
+            <select id='aviaFlightClass' class="selectSlider"><option value="B">Бизнес</option><option value="E" selected="selected">Эконом</option></select>
+        </div>
 
-                    <div class="div-filter">
+        <div class="div-filter">
 
-                        <div class="slider-filter">
-                            <img src="<?= $images ?>/images/img-filter-slide02.png">
-                        </div>
+            <div class="slider-filter">
+                <img src="<?= $images ?>/images/img-filter-slide02.png">
+                <select id='aviaOnlyDirectFlights' class="selectSlider"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
+            </div>
 
-                        <input type="checkbox" name="ch00" id="ch00"> <label for="ch00">Только короткие пересадки</label>
+            <input type="checkbox" name="aviaShortTransits" id="aviaShortTransits"> <label for="aviaShortTransits">Только короткие пересадки</label>
 
-                    </div>
-                    <div class="div-filter">
-                        <div class="slider-filter" style="text-align:center; margin-bottom:18px;">
-                            <img src="<?= $images ?>/images/tuda.png">
-                        </div>
-                        <h4>Время вылета</h4>
-
-                        <div class="slide-filter">
-                            <img src="<?= $images ?>/images/img-slide-time01.png">
-                            <br>
-                            <br>
-                            <br>
-                            <div style="width: 200px; margin-left: 0px;">
-                            <input id="departureTimeSlider" type="slider" name="departureTimeSlider" value="480;1020" />
-                            </div>
-
-                        </div>
-                        <h4>Время прилета</h4>
-
-                        <div class="slide">
-                            <img src="<?= $images ?>/images/img-slide-time02.png">
-                            <div></div>
-
-                            <select id='coolSlider' class="selectSlider"><option value="12">opt1</option><option value="13" selected="selected">opt2</option><option value="17">opt20</option></select>
-                        </div>
-                    </div>
-
-                    <div class="div-filter">
-                        <h4>Москва</h4>
-                        <ul data-bind="foreach: results.airports">
-                            <li><input type="checkbox" data-bind="checked: active"> <label for="ch01" data-bind="text: name">Шереметьево</label></li>
-                        </ul>
-                    </div>
-                    <div class="div-filter">
-                        <h4>Москва <a href="#" class="clean">Очистить</a></h4>
-                        <ul data-bind="foreach: results.airlines">
-                            <li><input type="checkbox" data-bind="checked: active"> <label for="ch01" data-bind="text: name">Аэрофлот</label></li>
-                        </ul>
-                        <div class="all-list">
-                            <a href="#">Все авиакомпании</a>
-                        </div>
-                    </div>
+        </div>
+        <div class="div-filter">
+            <div class="slider-filter" style="text-align:center; margin-bottom:18px;">
+                <img src="<?= $images ?>/images/tuda.png">
+                <br>
+                <div style="width: 200px; margin-left: 0px;">
+                    <select id='aviaShowReturnFilters' class="selectSlider"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
                 </div>
-</script>
-<!-- FIXME! -->
-                            <script type="text/javascript">
-//                                $("#coolSlider").selectSlider({am:'kg',kg:'am2'});
-                            </script>
+                <br>
+                <br>
+            </div>
+            <h4>Время вылета</h4>
 
-                            <script type="text/javascript">
-                                var sl = {
-                                    from: 480,
-                                    to: 1080,
-                                    step: 15,
-                                    dimension: '',
-                                    skin: 'round_voyanga',
-                                    scale: false,
-                                    limits: false,
-                                    minInterval: 60,
-                                    value: "480;1020",
-                                    calculate: function( value ){
-                                        var hours = Math.floor( value / 60 );
-                                        var mins = ( value - hours*60 );
-                                        return (hours < 10 ? "0"+hours : hours) + ":" + ( mins == 0 ? "00" : mins );
-                                    },
-                                    onstatechange: function( value ){
-                                        //console.dir( this );
-                                        //console.log(value);
-                                        return false;
-                                    }
-                                }
-//                                $("#departureTimeSlider").slider(sl);
-                            </script>
+            <div class="slide-filter">
+                <br>
+                <br>
+                <div style="width: 200px; margin-left: 0px;">
+                    <input id="departureTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" />
+                </div>
+                <div style="width: 200px; margin-left: 0px;">
+                    <input id="departureTimeSliderReturn" type="slider" name="departureTimeSlider" value="480;1020" />
+                </div>
+
+            </div>
+            <h4>Время прилета</h4>
+
+            <div class="slide-filter">
+                <br />
+                <div style="width: 200px; margin-left: 0px;">
+                    <input id="arrivalTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" />
+                </div>
+                <div style="width: 200px; margin-left: 0px;">
+                    <input id="arrivalTimeSliderReturn" type="slider" name="departureTimeSlider" value="480;1020" />
+                </div>
+            </div>
+            <p>First name: <input data-bind="value: firstNameN" /></p>
+            <p>Last name: <input data-bind="value: lastNameN" /></p>
+            <h2>Hello, <span data-bind="text: fullNameN"> </span>!</h2>
+            <script type="text/javascript">
+                // Here's my data model
+                var ViewModelN = function(first, last) {
+                this.firstNameN = ko.observable(first);
+                this.lastNameN = ko.observable(last);
+
+                this.fullNameN = ko.computed(function() {
+                // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
+                return this.firstNameN() + " " + this.lastNameN();
+                }, this);
+                };
+                //var NVM = new ViewModel('mmm','pie');
+
+                ko.applyBindings(new ViewModelN('mmm','pie')); // This makes Knockout
+            </script>
+            </div>
+
+            <div class="div-filter">
+                <h4>Москва</h4>
+                <ul data-bind="foreach: results.airports">
+                <li><input type="checkbox" data-bind="checked: active"> <label for="ch01" data-bind="text: name">Шереметьево</label></li>
+                </ul>
+                </div>
+            <div class="div-filter">
+                <h4>Москва <a href="#" class="clean">Очистить</a></h4>
+            <ul data-bind="foreach: results.airlines">
+                <li><input type="checkbox" data-bind="checked: active"> <label data-bind="text: name">Аэрофлот</label></li>
+                </ul>
+            <div class="all-list">
+                <a href="#">Все авиакомпании</a>
+                </div>
+                </div>
+            </div>
+</script>

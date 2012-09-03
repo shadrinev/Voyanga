@@ -311,7 +311,8 @@
         //window.setTimeout(window.resize,1000);
     })(this);
       var self = this;
-      window.setTimeout(function(){self.onresize();},1000);
+      //window.setTimeout(function(){self.onresize();},1000);
+      $(window).load(function(){self.onresize();});
 
   };
   
