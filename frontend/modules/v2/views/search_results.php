@@ -1,4 +1,4 @@
-<?php 
+<?php
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 ?>
 <script type="text/html" id="avia-content">
@@ -760,24 +760,23 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                         <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
                     <!-- /ko -->
                     <!-- /ko -->
-                    <!-- ko if: (childs() + infants())>0 -->
+                    <!-- ko if: (sum_children())>0 -->
                     <div class="child"></div>
-                    <!-- ko if: (childs() + infants())>1 -->
-                        <div class="count"><span>x</span><i data-bind="text: childs() + infants()"></i></div>
+                    <!-- ko if: (sum_children())>1 -->
+                        <div class="count"><span>x</span><i data-bind="text: sum_children()"></i></div>
                     <!-- /ko -->
                     <!-- /ko -->
                 <!-- /ko -->
                 <!-- ko if: overall()<=5 -->
                     <div class="man" data-bind="repeat: adults()"></div>
-                    <div class="child" data-bind="repeat: childs() + infants()"></div>
-
+                    <div class="child" data-bind="repeat: sum_children()"></div>
                 <!-- /ko -->
                 </div>
                     <div class="btn"></div>
                     <div class="popup">
                         <div class="adults">
                             <div class="inputDIV">
-                                <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults()">
+                                <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults">
                                     <a href="#" class="plusOne">+</a>
                                     <a href="#" class="minusOne">-</a>
                             </div>
@@ -785,7 +784,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                         </div>
                         <div class="childs">
                             <div class="inputDIV">
-                                <input type="text" name="adult2" data-bind="css: {active: childs() > 0}, value: childs()">
+                                <input type="text" name="adult2" data-bind="css: {active: children() > 0}, value: children">
                                     <a href="#" class="plusOne">+</a>
                                     <a href="#" class="minusOne">-</a>
                             </div>
@@ -793,7 +792,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                         </div>
                         <div class="small-childs">
                             <div class="inputDIV">
-                                <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants()">
+                                <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants">
                                         <a href="#" class="plusOne">+</a>
                                         <a href="#" class="minusOne">-</a>
                                 </div>

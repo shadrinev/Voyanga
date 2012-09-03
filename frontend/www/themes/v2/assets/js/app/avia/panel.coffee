@@ -1,15 +1,21 @@
+MAX_TRAVELERS = 9
+
 class AviaPanel
   constructor: ->
     @rt = ko.observable false
     @minimized = ko.observable false
 
     # Popup inputs
-    @adults = ko.observable 2
-    @childs = ko.observable 0
-    @infants = ko.observable 4
+    @adults = ko.observable(1).extend({integerOnly: true})
+    @children = ko.observable(0).extend({integerOnly: true})
+    @infants = ko.observable(0).extend({integerOnly: true})
+
+    @sum_children = ko.computed =>
+      # dunno why but we have stange to string casting here
+      @children()*1 + @infants()*1
 
     @overall = ko.computed =>
-      @adults() + @childs() + @infants()
+      @adults()*1 + @children()*1 + @infants()*1
 
     @rt.subscribe (newValue) ->
       if newValue
@@ -20,7 +26,7 @@ class AviaPanel
     @minimized.subscribe (minimized) ->
       speed =  300
       heightSubHead = $('.sub-head').height()
- 
+
       if !minimized
         $('.sub-head').animate {'margin-top' : '0px'}, speed
       else
@@ -34,7 +40,7 @@ class AviaPanel
       , ->
         $(this).parent().find('.plusOne').hide()
         $(this).parent().find('.minusOne').hide()
-  
+
       $('.plusOne').hover ->
         $(this).addClass('active')
         $('.minusOne').addClass('active')
@@ -52,14 +58,20 @@ class AviaPanel
       # Placeholder-like behaviour for inputs
       $('.how-many-man .popup').find('input').focus ->
         $(@).attr 'rel', $(@).val()
-        $(@).val '3'
-        console.log $(@)
-        $(@).trigger 'change'
+        $(@).val('')
 
       $('.how-many-man .popup').find('input').blur ->
         if $(@).val() == ''
-          $(@).val $(@).attr 'rel' 
+          $(@).val $(@).attr 'rel'
         $(@).trigger 'change'
+        # FIXME move to extender ?
+        # FIXME implement better logic depending on which field being edited
+        if _this.adults() == 0
+          _this.adults(1)
+        if _this.overall() > MAX_TRAVELERS
+          _this.adults(MAX_TRAVELERS)
+          _this.children(0)
+          _this.infants(0)
 
   selectOneWay: =>
     @rt(false)
@@ -80,7 +92,6 @@ class AviaPanel
     var_valCount = Math.abs(parseInt( $(this).parent().find('input').val() ));
     var_valCount++;
     $(this).parent().find('input').val(var_valCount);
-    changeAdultsCount();
 
   minusOne: (data)->
     var_valCount = Math.abs(parseInt( $(this).parent().find('input').val() ));
@@ -102,7 +113,7 @@ function initPeoplesInputs() {
   $('.how-many-man .popup').find('input').eq(1).keyup(changeChildCount);
   $('.how-many-man .popup').find('input').eq(2).keyup(changeInfantCount);
 
-  
- 
+
+
 }
 });###
