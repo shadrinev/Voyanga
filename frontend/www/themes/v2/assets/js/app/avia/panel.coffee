@@ -1,3 +1,32 @@
+class SearchParams
+  constructor: ->
+    @dep = ko.observable 'MOW'
+    @arr = ko.observable 'PAR'
+    @date = '02.10.2012'
+    @rt = ko.observable true
+    @rt_date = '12.10.2012'
+
+  url: ->
+    result = 'http://api.misha.voyanga/v1/flight/search/withParams?'
+    params = []
+    params.push 'destinations[0][departure]=' + @dep()
+    params.push 'destinations[0][arrival]=' + @arr()
+    params.push 'destinations[0][date]=' + @date
+    if @rt()
+      params.push 'destinations[1][departure]=' + @arr()
+      params.push 'destinations[1][arrival]=' + @dep()
+      params.push 'destinations[1][date]=' + @rt_date
+    result += params.join "&"
+
+  key: ->
+    key = @dep() + @arr() + @date
+    if @rt
+      key += @rt_date
+    return key
+
+  getHash: ->
+    return 'avia/search/' + @dep() + '/' + @arr() + '/' + @date + '/'
+
 MAX_TRAVELERS = 9
 MAX_CHILDREN = 8
 
@@ -24,8 +53,12 @@ balanceTravelers = (others, model)->
 
 class AviaPanel
   constructor: ->
-    @rt = ko.observable false
     @minimized = ko.observable false
+    @sp = new SearchParams()
+    @departureCity = @sp.dep
+    @arrivalCity = @sp.arr
+
+    @rt = @sp.rt
 
     # Popup inputs
     @adults = ko.observable(5).extend({integerOnly: 'adult'})
@@ -78,7 +111,7 @@ class AviaPanel
         $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
 
     # FIXME:
-    $ ->
+    $ =>
       $('.how-many-man .popup').find('input').hover ->
         $(this).parent().find('.plusOne').show()
         $(this).parent().find('.minusOne').show()
@@ -111,6 +144,12 @@ class AviaPanel
           $(@).val $(@).attr 'rel'
         $(@).trigger 'change'
 
+      #! FIXME we need generic way to defer animation untill template rendering is done
+      @rt !@rt()
+
+  ###
+  # Click handlers
+  ###
   selectOneWay: =>
     @rt(false)
 
@@ -130,7 +169,10 @@ class AviaPanel
 
   minusOne: (model, e)->
     prop = $(e.target).attr("rel")
-    model[prop](model[prop]()-1)
+    model[prop] model[prop]()-1
+
+  navigateToNewSearch: ->
+    hasher.setHash @sp.getHash()
 
 # TODO SIZE OF THE PEPOPLE COUNTER xN
 

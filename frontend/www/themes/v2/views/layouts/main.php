@@ -61,15 +61,14 @@ Yii::app()->clientScript->registerPackage('everything');
     <div class="center-block">
         <!-- MAIN BLOCK -->
         <div class="main-block">
-            <div id="content">
-                <?php echo $content; ?>
+            <div id="content" data-bind="template: {name: activeView(), data: viewData()}">
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
-            <?php if (!$this->nosidebar): ?>
-            <div class="filter-block">
+            <!-- ko if: _sidebar() != 'dummy' -->
+            <div class="filter-block" data-bind="template: {name: activeSidebar(), data: sidebarData()}">
             </div>
-        <?php endif; ?>
+            <!-- /ko -->
             <!-- END FILTER BLOCK -->
             <div class="clear"></div>
         </div>
@@ -79,5 +78,88 @@ Yii::app()->clientScript->registerPackage('everything');
 
     <!-- ==== POPUP === -->
     </div>
+<?php echo $content; ?>
+<script type="text/html" id="avia-index">
+<h1> Hello, INDEX PAGE </h1>
+</script>
+<!-- FIXME include it -->
+<script type="text/html" id="avia-panel-template">
+    <div class="path">
+        <div class="data">
+            <input class="input-path" type="text" placeholder="Куда" data-bind="value: departureCity()">
+                <div class="tumblr">
+                    <label for="there-back">
+                        <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
+                        <div class="two" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
+                        <div class="switch"></div>
+                    </label>
+                    <input id="there-back" type="checkbox" data-bind="checked: rt()">
+                </div>
+            <input class="input-path" type="text" placeholder="Откуда" data-bind="value: arrivalCity()">
+        </div>
+        <div class="how-many-man">
+            <div class="content">
+                <!-- ko if: overall()>5 -->
+                    <!-- ko if: adults()>0 -->
+                    <div class="man"></div>
+                        <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
+                    <!-- /ko -->
+                    <!-- ko if: (sum_children())>0 -->
+                    <div class="child"></div>
+                        <div class="count"><span>x</span><i data-bind="text: sum_children()"></i></div>
+                    <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko if: overall()<=5 -->
+                    <div class="man" data-bind="repeat: adults()"></div>
+                    <div class="child" data-bind="repeat: sum_children()"></div>
+                <!-- /ko -->
+                </div>
+                    <div class="btn"></div>
+                    <div class="popup">
+                        <div class="adults">
+                            <div class="inputDIV">
+                                <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults">
+                                    <a href="#" class="plusOne" data-bind="click: plusOne" rel="adults">+</a>
+                                    <a href="#" class="minusOne" data-bind="click: minusOne" rel="adults">-</a>
+                            </div>
+                            взрослых
+                        </div>
+                        <div class="childs">
+                            <div class="inputDIV">
+                                <input type="text" name="adult2" data-bind="css: {active: children() > 0}, value: children">
+                                    <a href="#" class="plusOne" data-bind="click: plusOne" rel="children">+</a>
+                                    <a href="#" class="minusOne" data-bind="click: minusOne" rel="children">-</a>
+                            </div>
+                            детей до 12 лет
+                        </div>
+                        <div class="small-childs">
+                            <div class="inputDIV">
+                                <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants">
+                                        <a href="#" class="plusOne" data-bind="click: plusOne" rel="infants">+</a>
+                                        <a href="#" class="minusOne" data-bind="click: minusOne" rel="infants">-</a>
+                                </div>
+                                детей до 2 лет
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <a class="btn-find" data-bind="click: navigateToNewSearch">Найти</a>
+                </div>
+
+                <!-- BTN MINIMIZE -->
+                <a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
+                    <!-- ko if: minimized() -->
+                    <span></span> развернуть
+                    <!-- /ko -->
+                    <!-- ko if: !minimized() -->
+                    <span></span> свернуть
+                    <!-- /ko -->
+                </a>
+                <div class="minimize-rcomended">
+                <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+                </div>
+</script>
+
 </body>
 </html>

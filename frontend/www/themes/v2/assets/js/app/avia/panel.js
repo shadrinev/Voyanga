@@ -1,5 +1,47 @@
-var AviaPanel, EXITED, MAX_CHILDREN, MAX_TRAVELERS, balanceTravelers,
+var AviaPanel, EXITED, MAX_CHILDREN, MAX_TRAVELERS, SearchParams, balanceTravelers,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+SearchParams = (function() {
+
+  function SearchParams() {
+    this.dep = ko.observable('MOW');
+    this.arr = ko.observable('PAR');
+    this.date = '02.10.2012';
+    this.rt = ko.observable(true);
+    this.rt_date = '12.10.2012';
+  }
+
+  SearchParams.prototype.url = function() {
+    var params, result;
+    result = 'http://api.misha.voyanga/v1/flight/search/withParams?';
+    params = [];
+    params.push('destinations[0][departure]=' + this.dep());
+    params.push('destinations[0][arrival]=' + this.arr());
+    params.push('destinations[0][date]=' + this.date);
+    if (this.rt()) {
+      params.push('destinations[1][departure]=' + this.arr());
+      params.push('destinations[1][arrival]=' + this.dep());
+      params.push('destinations[1][date]=' + this.rt_date);
+    }
+    return result += params.join("&");
+  };
+
+  SearchParams.prototype.key = function() {
+    var key;
+    key = this.dep() + this.arr() + this.date;
+    if (this.rt) {
+      key += this.rt_date;
+    }
+    return key;
+  };
+
+  SearchParams.prototype.getHash = function() {
+    return 'avia/search/' + this.dep() + '/' + this.arr() + '/' + this.date + '/';
+  };
+
+  return SearchParams;
+
+})();
 
 MAX_TRAVELERS = 9;
 
@@ -39,8 +81,11 @@ AviaPanel = (function() {
     this.selectOneWay = __bind(this.selectOneWay, this);
 
     var _this = this;
-    this.rt = ko.observable(false);
     this.minimized = ko.observable(false);
+    this.sp = new SearchParams();
+    this.departureCity = this.sp.dep;
+    this.arrivalCity = this.sp.arr;
+    this.rt = this.sp.rt;
     this.adults = ko.observable(5).extend({
       integerOnly: 'adult'
     });
@@ -129,14 +174,20 @@ AviaPanel = (function() {
         $(this).attr('rel', $(this).val());
         return $(this).val('');
       });
-      return $('.how-many-man .popup').find('input').blur(function() {
+      $('.how-many-man .popup').find('input').blur(function() {
         if ($(this).val() === '') {
           $(this).val($(this).attr('rel'));
         }
         return $(this).trigger('change');
       });
+      return _this.rt(!_this.rt());
     });
   }
+
+  /*
+    # Click handlers
+  */
+
 
   AviaPanel.prototype.selectOneWay = function() {
     return this.rt(false);
@@ -164,6 +215,10 @@ AviaPanel = (function() {
     var prop;
     prop = $(e.target).attr("rel");
     return model[prop](model[prop]() - 1);
+  };
+
+  AviaPanel.prototype.navigateToNewSearch = function() {
+    return hasher.setHash(this.sp.getHash());
   };
 
   return AviaPanel;
