@@ -756,15 +756,11 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 <!-- ko if: overall()>5 -->
                     <!-- ko if: adults()>0 -->
                     <div class="man"></div>
-                    <!-- ko if: adults()>1 -->
                         <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
-                    <!-- /ko -->
                     <!-- /ko -->
                     <!-- ko if: (sum_children())>0 -->
                     <div class="child"></div>
-                    <!-- ko if: (sum_children())>1 -->
                         <div class="count"><span>x</span><i data-bind="text: sum_children()"></i></div>
-                    <!-- /ko -->
                     <!-- /ko -->
                 <!-- /ko -->
                 <!-- ko if: overall()<=5 -->
