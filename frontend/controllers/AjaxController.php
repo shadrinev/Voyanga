@@ -326,4 +326,22 @@ class AjaxController extends BaseAjaxController
         else
             $this->send($items);
     }
+
+    public function actionStartCityForEvent($eventId)
+    {
+        $event = Event::model()->with('startCity')->findByPk($eventId);
+        if (!$event)
+            $this->sendError(404);
+        $cities = $event->startCity;
+        $response = array();
+        foreach ($cities as $city)
+        {
+            $element = array(
+                'id' => $city->id,
+                'name' => $city->name
+            );
+            $response[] = $element;
+        }
+        $this->send($response);
+    }
 }

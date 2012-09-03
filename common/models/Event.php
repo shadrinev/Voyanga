@@ -158,6 +158,7 @@ class Event extends FrontendActiveRecord
             'price' => array(self::HAS_MANY, 'EventPrice', 'eventId'),
             'categories' => array(self::MANY_MANY, 'EventCategory', 'event_has_category(eventId, eventCategoryId)'),
             'links' => array(self::HAS_MANY, 'EventLink', 'eventId'),
+            'startCities' => array(self::HAS_MANY, 'City', array('cityId'=>'id'), 'through'=>'price')
         );
     }
 

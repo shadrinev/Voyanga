@@ -24,6 +24,7 @@ class TourBuilderForm extends CFormModel
     public $eventId;
     public $eventStartCityIds;
     public $eventStartCityNames;
+    public $newEventName;
 
     public function rules()
     {
@@ -73,7 +74,8 @@ class TourBuilderForm extends CFormModel
             'adultCount' => 'Количество взрослых',
             'startCityId' => 'Начало поездки в городе',
             'eventId' => 'Связать с событием',
-            'eventStartCityIds' => 'На событие стартуем из города'
+            'eventStartCityIds' => 'На событие стартуем из города',
+            'newEventName' => 'Название нового события',
         );
     }
 
