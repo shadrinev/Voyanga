@@ -1,4 +1,26 @@
 MAX_TRAVELERS = 9
+MAX_CHILDREN = 8
+
+# Recursion work around
+EXITED = true
+
+###
+Balances number of travelers, using those which was not affected by most recent user change
+###
+balanceTravelers = (others, model)->
+  if model.overall() > MAX_TRAVELERS && EXITED
+    EXITED = false
+    # How many travelers we need to throw out
+    delta = model.overall() - MAX_TRAVELERS
+    for prop in others
+      if model[prop]() >= delta
+        model[prop] model[prop]() - delta
+        break
+      else
+        delta -= model[prop]()
+        model[prop] 0
+  EXITED = true
+
 
 class AviaPanel
   constructor: ->
@@ -6,9 +28,32 @@ class AviaPanel
     @minimized = ko.observable false
 
     # Popup inputs
-    @adults = ko.observable(1).extend({integerOnly: true})
-    @children = ko.observable(0).extend({integerOnly: true})
-    @infants = ko.observable(0).extend({integerOnly: true})
+    @adults = ko.observable(5).extend({integerOnly: 'adult'})
+    @children = ko.observable(2).extend({integerOnly: true})
+    @infants = ko.observable(2).extend({integerOnly: 'infant'})
+
+    # Travelers constraits
+    @adults.subscribe (newValue) =>
+      if @infants() > @adults()
+        @infants @adults()
+
+      if newValue > MAX_TRAVELERS
+        @adults MAX_TRAVELERS
+
+      balanceTravelers ["children", 'infants'], @
+
+
+    @children.subscribe (newValue) =>
+      if newValue > MAX_TRAVELERS - 1
+        @children MAX_TRAVELERS - 1
+
+      balanceTravelers ["adults", 'infants'], @
+
+    @infants.subscribe (newValue) =>
+      if newValue > @adults()
+        @adults @infants()
+
+      balanceTravelers ["children", 'adults'], @
 
     @sum_children = ko.computed =>
       # dunno why but we have stange to string casting here
@@ -65,14 +110,6 @@ class AviaPanel
         if $(@).val() == ''
           $(@).val $(@).attr 'rel'
         $(@).trigger 'change'
-        # FIXME move to extender ?
-        # FIXME implement better logic depending on which field being edited
-        if _this.adults() == 0
-          _this.adults(1)
-        if _this.overall() > MAX_TRAVELERS
-          _this.adults(MAX_TRAVELERS)
-          _this.children(0)
-          _this.infants(0)
 
   selectOneWay: =>
     @rt(false)
@@ -96,19 +133,4 @@ class AviaPanel
     model[prop](model[prop]()-1)
 
 # TODO SIZE OF THE PEPOPLE COUNTER xN
-# TODO on focus - save and hide current amount of pplz, return it on no/wrong input
-# TODO minimal adults == 1
-# <0 is no good either be it minus click or input!
 
-###
-$(function() {
-
-function initPeoplesInputs() {
-  $('.how-many-man .popup').find('input').eq(0).keyup(changeAdultsCount);
-  $('.how-many-man .popup').find('input').eq(1).keyup(changeChildCount);
-  $('.how-many-man .popup').find('input').eq(2).keyup(changeInfantCount);
-
-
-
-}
-});###

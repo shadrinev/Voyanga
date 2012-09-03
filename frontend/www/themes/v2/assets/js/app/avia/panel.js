@@ -1,7 +1,35 @@
-var AviaPanel, MAX_TRAVELERS,
+var AviaPanel, EXITED, MAX_CHILDREN, MAX_TRAVELERS, balanceTravelers,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 MAX_TRAVELERS = 9;
+
+MAX_CHILDREN = 8;
+
+EXITED = true;
+
+/*
+Balances number of travelers, using those which was not affected by most recent user change
+*/
+
+
+balanceTravelers = function(others, model) {
+  var delta, prop, _i, _len;
+  if (model.overall() > MAX_TRAVELERS && EXITED) {
+    EXITED = false;
+    delta = model.overall() - MAX_TRAVELERS;
+    for (_i = 0, _len = others.length; _i < _len; _i++) {
+      prop = others[_i];
+      if (model[prop]() >= delta) {
+        model[prop](model[prop]() - delta);
+        break;
+      } else {
+        delta -= model[prop]();
+        model[prop](0);
+      }
+    }
+  }
+  return EXITED = true;
+};
 
 AviaPanel = (function() {
 
@@ -13,14 +41,35 @@ AviaPanel = (function() {
     var _this = this;
     this.rt = ko.observable(false);
     this.minimized = ko.observable(false);
-    this.adults = ko.observable(1).extend({
+    this.adults = ko.observable(5).extend({
+      integerOnly: 'adult'
+    });
+    this.children = ko.observable(2).extend({
       integerOnly: true
     });
-    this.children = ko.observable(0).extend({
-      integerOnly: true
+    this.infants = ko.observable(2).extend({
+      integerOnly: 'infant'
     });
-    this.infants = ko.observable(0).extend({
-      integerOnly: true
+    this.adults.subscribe(function(newValue) {
+      if (_this.infants() > _this.adults()) {
+        _this.infants(_this.adults());
+      }
+      if (newValue > MAX_TRAVELERS) {
+        _this.adults(MAX_TRAVELERS);
+      }
+      return balanceTravelers(["children", 'infants'], _this);
+    });
+    this.children.subscribe(function(newValue) {
+      if (newValue > MAX_TRAVELERS - 1) {
+        _this.children(MAX_TRAVELERS - 1);
+      }
+      return balanceTravelers(["adults", 'infants'], _this);
+    });
+    this.infants.subscribe(function(newValue) {
+      if (newValue > _this.adults()) {
+        _this.adults(_this.infants());
+      }
+      return balanceTravelers(["children", 'adults'], _this);
     });
     this.sum_children = ko.computed(function() {
       return _this.children() * 1 + _this.infants() * 1;
@@ -84,15 +133,7 @@ AviaPanel = (function() {
         if ($(this).val() === '') {
           $(this).val($(this).attr('rel'));
         }
-        $(this).trigger('change');
-        if (_this.adults() === 0) {
-          _this.adults(1);
-        }
-        if (_this.overall() > MAX_TRAVELERS) {
-          _this.adults(MAX_TRAVELERS);
-          _this.children(0);
-          return _this.infants(0);
-        }
+        return $(this).trigger('change');
       });
     });
   }
@@ -128,18 +169,3 @@ AviaPanel = (function() {
   return AviaPanel;
 
 })();
-
-/*
-$(function() {
-
-function initPeoplesInputs() {
-  $('.how-many-man .popup').find('input').eq(0).keyup(changeAdultsCount);
-  $('.how-many-man .popup').find('input').eq(1).keyup(changeChildCount);
-  $('.how-many-man .popup').find('input').eq(2).keyup(changeInfantCount);
-
-
-
-}
-});
-*/
-
