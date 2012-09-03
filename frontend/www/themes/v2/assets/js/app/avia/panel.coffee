@@ -37,7 +37,8 @@ class AviaPanel
       $('.how-many-man .popup').find('input').hover ->
         $(this).parent().find('.plusOne').show()
         $(this).parent().find('.minusOne').show()
-      , ->
+
+      $('.adults,.childs,.small-childs').hover null,   ->
         $(this).parent().find('.plusOne').hide()
         $(this).parent().find('.minusOne').hide()
 
@@ -86,19 +87,13 @@ class AviaPanel
     else
       @minimized(true)
 
-  plusOne: (observable)->
-    console.log observable
-    e.preventDefault();
-    var_valCount = Math.abs(parseInt( $(this).parent().find('input').val() ));
-    var_valCount++;
-    $(this).parent().find('input').val(var_valCount);
+  plusOne: (model, e)->
+    prop = $(e.target).attr("rel")
+    model[prop](model[prop]()+1)
 
-  minusOne: (data)->
-    var_valCount = Math.abs(parseInt( $(this).parent().find('input').val() ));
-    var_valCount--;
-    if (var_valCount < 1)
-      var_valCount = 1;
-    $(this).parent().find('input').val(var_valCount);
+  minusOne: (model, e)->
+    prop = $(e.target).attr("rel")
+    model[prop](model[prop]()-1)
 
 # TODO SIZE OF THE PEPOPLE COUNTER xN
 # TODO on focus - save and hide current amount of pplz, return it on no/wrong input
