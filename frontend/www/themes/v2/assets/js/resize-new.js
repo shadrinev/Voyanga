@@ -322,7 +322,9 @@ function ResizeCenterBlock() {
 		}
 		/* CALENDARE RESIZE */
 		if (var_calendarGridVoyangaIsset) {
-			var_calendarGridVoyanga.css('width', (widthMainBlock+15)+'px')
+			$('.innerCalendar, #voyanga-calendar').css('width', widthBlock+'px')
+			var_calendarGridVoyanga.css('width', (widthBlock+18)+'px');
+			$('.weekDaysVoyangaInner').css('width', (widthBlock+18)+'px');
 		}
 		/* END CALENDARE RESIZE */
 		if (var_descrIsset) {

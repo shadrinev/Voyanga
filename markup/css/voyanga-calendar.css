@@ -102,17 +102,37 @@
     z-index: 2;
     font-size: 23px;
 }
-.dayCellVoyanga.selectData.to .innerDayCellVoyanga {
+.dayCellVoyanga.to .innerDayCellVoyanga {
 	background: url("../images/ico-fly-to.png") no-repeat scroll 0 0 #E1E8EC;
 }
-.dayCellVoyanga.selectData.from .innerDayCellVoyanga {
+.dayCellVoyanga.from .innerDayCellVoyanga {
 	background: url("../images/ico-fly-from.png") no-repeat scroll 0 0 #E1E8EC;
+}
+.dayCellVoyanga.to-from .innerDayCellVoyanga {
+	background: url("../images/ico-fly-to-from.png") no-repeat scroll 0 0 #E1E8EC;
 }
 .dayCellVoyanga.selectData .dayLabel {
 	padding-top: 13px;
 	color:  #198ACB !important;
 }
 .dayCellVoyanga.startMonth.selectData .dayLabel {
+	color: #198ACB !important;
+    font-size: 23px;
+    padding-right: 41px;
+    padding-top: 13px;
+}
+.dayCellVoyanga.startMonth.selectDay .monthLabel {
+	background: #E1E8EC;
+    color: #198ACB !important;
+    font-size: 14px;
+    left: auto;
+    overflow: hidden;
+    padding-top: 17px;
+    right: 15px;
+    text-transform: lowercase;
+    width: 21px;
+}
+.dayCellVoyanga.startMonth.selectDay .dayLabel {
 	color: #198ACB !important;
     font-size: 23px;
     padding-right: 41px;

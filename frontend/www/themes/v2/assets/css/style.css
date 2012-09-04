@@ -1324,7 +1324,7 @@ input.hotel-input {
 }
 .scroll-none { overflow: hidden;}
 .panel-index {
-	position: absolute; height: 442px; bottom: 0px;
+	position: absolute; height: 441px; bottom: 0px;
 	width: 100%; z-index: 1;
 	overflow: hidden;
 }

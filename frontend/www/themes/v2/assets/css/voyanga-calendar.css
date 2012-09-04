@@ -1,5 +1,5 @@
 .bg-Calendar {
-	background: url(../images/bg-calendar.png) repeat-x;
+	background: url(../images/bg-calendar.png) repeat-x 0 -1px;
 }
 #voyanga-calendar {
 	margin: 0 auto;
@@ -23,27 +23,29 @@
 	font-family: Arial;
 	margin-bottom: 15px;
 }
-.weekDaysVoyanga{
+.weekDaysVoyanga {
     width: 100%;
     overflow: hidden;
+    height: 22px;
 }
-.weekDaysVoyanga table {
-	width: 100%;
-}
-.weekDaysVoyanga table tr td {
-	width: 14.20%
+.weekDaysVoyanga .weekDaysVoyangaInner {
+	overflow-y: scroll;
+	height: 22px;
+	overflow-x: hidden;
+	border-left: 1px solid #D7D7D8;
 }
 .weekDayVoyanga{
     background: none repeat scroll 0 0 #E2E5EB;
     border-right: 1px solid #D7D7D8;
     color: #1C1F24;
-    font-family: Tahoma;
+    float: left;
+    font-family: Tahoma, Arial;
     font-size: 13px;
     height: 22px;
-    padding-top: 2px;
     text-align: right;
     text-shadow: 0 1px 0 #FFFFFF;
     text-transform: lowercase;
+    width: 14.18%;
 }
 .weekDayVoyanga span {
 	margin-right: 15px;
@@ -61,8 +63,7 @@
     overflow: hidden;
     overflow-y: visible;
     color: #1c1f24;
-    text-align: center;
-    margin-left: -1px;
+    border-left: 1px solid #D7D7D8;
 }
 .calendarUnscrollVoyanga{
     width: 100%;
@@ -82,7 +83,7 @@
     border-bottom: 1px #d7d7d8 solid;
     background: #f5f5f6;
     font-size: 17px;
-    font-family: Tahoma;
+    font-family: Tahoma, Arial;
     position: relative;
 }
 .innerDayCellVoyanga {
