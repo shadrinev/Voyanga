@@ -3,14 +3,14 @@
 	padding-bottom: 9px;
 	position: relative;
 	padding-top: 5px;
-	height: 54px;
+	height: 56px;
 
 }
 .panel .content {
 	cursor: pointer;
 }
 .path {
-	height: 68px;
+	height: 70px;
 	position:relative;
 	width: 920px;
 	margin: 0 auto;
@@ -85,7 +85,7 @@
 .how-many-man {
 	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
     float: left;
-    height: 68px;
+    height: 70px;
     margin-left: 20px;
     position: relative;
 }
@@ -101,9 +101,14 @@
 .how-many-man .content {
 	float: left;
 	padding-left: 8px;
+	position: relative;
+}
+.how-many-man .content + .content, .how-many-man .content + .content  + .content, .how-many-man .content + .content  + .content  {
+	padding-left: 13px;
+	background: url("../images/bg-num-man.png") no-repeat scroll 0 0 transparent;
 }
 .how-many-man .popup {
-	position: absolute; bottom: -86px; left: 0px;
+	position: absolute; bottom: -84px; left: 0px;
 	background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
 	width: 194px; height: 85px;
 	border-right: 1px solid #b7b8bc;
@@ -212,4 +217,63 @@
 }
 .btn-minimizePanel.active span {
 	background-position: -84px -35px;
+}
+/* HOTEL */
+.path .input-path-hotel {
+	border: none;
+	border-radius: 4px;
+	background: url(../images/slice.png) 0px -1296px;
+	width: 391px; height: 35px;
+	font-family: Arial; font-size: 19px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.hotel-table {
+	width: 100%;
+}
+.td-input-hotel {
+	text-align: center;
+}
+.td-input-hotel .how-many-man {
+	float: none;
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: 5px;
+}
+.td-input-hotel .data {
+	float: none;
+	margin-top: auto;
+	display: inline-block;
+	width: 400px;
+}
+.how-many-man .content .num {
+	display: block; position: absolute; top: 0px; left: 4px;
+	color: #0c0c0d; font-size: 11px; text-shadow: 0px 1px 0px #3d424a;
+}
+.how-many-man .content + .content .num, .how-many-man .content + .content  + .content .num, .how-many-man .content + .content  + .content  .num {
+	display: block; position: absolute; top: 0px; left: 11px;
+}
+.hotel-table .how-many-man .popup {
+	height: auto;
+	border: none;
+	background: none;
+	width: 406px;
+}
+.number-hotel {
+	width: 192px;
+	background: url("../images/bg-how-much.png") repeat-x scroll left bottom #F7F9FB;
+	border-right: 1px solid #b7b8bc;
+	border-bottom: 1px solid #76777a;
+	border-left: 1px solid #b7b8bc;
+	overflow: hidden;
+}
+.number-hotel h5 {
+	text-align: left;
+	margin: 0px;
+	color: #303335;
+	font-size: 12px;
+	margin-left: 13px;
+}
+.how-many-man .popup .number-hotel .adults, .how-many-man .popup .number-hotel .childs, .how-many-man .popup .number-hotel .small-childs {
+	padding-top:5px;
 }

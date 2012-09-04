@@ -183,4 +183,10 @@ $(function() {
 		}
 		
 	});
+	var heCal = $('.calendarSlide').height();
+	$('.calendarSlide').css('top','-'+heCal+'px');
+
+	$('.input-path').click(function() {
+		$('.calendarSlide').animate({'top' : '70px'}, 400);
+	});
 });

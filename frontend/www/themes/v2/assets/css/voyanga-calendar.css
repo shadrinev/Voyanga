@@ -1,5 +1,11 @@
+.bg-Calendar {
+	background: url(../images/bg-calendar.png) repeat-x;
+}
+#voyanga-calendar {
+	margin: 0 auto;
+}
 .calendarSlide {
-	background: url("../images/bg-calendarFon.png") repeat scroll 0 0 transparent;
+	background: url("../images/bg-calendare-head.png") repeat-x scroll 0 0 transparent;
     position: absolute;
     top: 106px;
     width: 100%;
@@ -7,8 +13,7 @@
 }
 .innerCalendar {
 	margin: 0 auto;
-	padding-top: 15px;
-	padding-bottom: 10px;
+	padding-top: 12px;
 }
 .innerCalendar h1 {
 	color: #FFF;
