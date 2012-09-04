@@ -20,7 +20,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                     <div class="time" data-bind="text: departureTime()">
                         21:20
                     </div>
-                    <div class="city" data-bind="text: departureCity(), attr:{rel:departureCity()}">Москва</div>
+                    <div class="city" data-bind="text: departureCity()">Москва</div>
                     <div class="airport" data-bind="text: departureAirport()">
                         Домодедово
                     </div>
@@ -41,7 +41,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                     <div class="time" data-bind="text: arrivalTime()">
                         00:50
                     </div>
-                    <div class="city" data-bind="text:arrivalCity(), attr:{rel:arrivalCity()}">Санкт-Петербург</div>
+                    <div class="city" data-bind="text:arrivalCity()">Санкт-Петербург</div>
                     <div class="airport" data-bind="text: arrivalAirport()">
                         Пулково
                     </div>
