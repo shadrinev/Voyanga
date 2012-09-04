@@ -26,8 +26,6 @@ function widthHowLong() {
 
 		if (! var_smallTicketsRecIsset) {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(MAX_BIG_CITY_NAME_SMALL_TICKET, var_dataTimeCity.find('.city'));
-			smallCityNames(MAX_BIG_AIRPORT_NAME_SMALL_TICKET, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', var_widthStart + 'px').css('padding-right', var_widthFinish + 'px');
@@ -35,8 +33,6 @@ function widthHowLong() {
 		}
 		else {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(MIN_BIG_CITY_NAME_SMALL_TICKET, var_dataTimeCity.find('.city'));
-			smallCityNames(MIN_BIG_AIRPORT_NAME_SMALL_TICKET, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', var_widthStart + 'px').css('padding-right', var_widthFinish + 'px');
@@ -56,8 +52,6 @@ function widthHowLong() {
 
 		if (! var_smallTicketsIsset) {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(MAX_BIG_CITY_NAME, var_dataTimeCity.find('.city'));
-			smallCityNames(MAX_BIG_AIRPORT_NAME, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px').css('padding-right', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px');
@@ -65,8 +59,6 @@ function widthHowLong() {
 		}
 		else {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(MIN_BIG_CITY_NAME, var_dataTimeCity.find('.city'));
-			smallCityNames(MIN_BIG_AIRPORT_NAME, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', (var_widthStart+ var_paddingDateTime) + 'px').css('padding-right', (var_widthFinish+ var_paddingDateTime) + 'px');
@@ -113,6 +105,7 @@ function minimizeListTime() {
 	});
 }
 
+/*
 function smallCityName() {
 	var var_simbolMax = 11;
 	var	var_simbolMaxBig = 16;
@@ -146,7 +139,9 @@ function smallCityName() {
 		}
 	}
 }
+*/
 
+/*
 function smallCityNames(simMaxBig, obj) {
     return;
 	var var_name = obj.attr('rel');
@@ -160,6 +155,7 @@ function smallCityNames(simMaxBig, obj) {
 		obj.text(var_name);
 	}
 }
+*/
 function allRememberName(obj) {
 	$(obj).each(function() {
 		var var_smallName = $(this);

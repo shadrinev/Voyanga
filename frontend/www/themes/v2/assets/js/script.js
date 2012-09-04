@@ -126,7 +126,7 @@ $(function() {
 		$('.recomended-content').slideDown();
 		$(this).animate({top : '-19px'}, 500);
 		$(window).load(inTheTwoLines);
-		smallCityName();
+
 		otherTimeSlide();
 		widthHowLong();
 		setTimeout(smallTicketHeight, 100);
@@ -136,7 +136,7 @@ $(function() {
 		$('.recomended-content').slideDown();
 		$('.minimize-rcomended .btn-minimizeRecomended').animate({top : '-19px'}, 500);
 		$(window).load(inTheTwoLines);
-		smallCityName();
+
 		otherTimeSlide();
 		widthHowLong();
 		setTimeout(smallTicketHeight, 100);

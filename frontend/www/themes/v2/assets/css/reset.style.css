@@ -99,3 +99,4 @@ q > q:before {
 content: "\201e";
 }
 :focus {outline:none;}
+i {font-style: normal;}
