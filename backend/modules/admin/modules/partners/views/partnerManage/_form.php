@@ -16,6 +16,8 @@
 
     <?php echo $form->textFieldRow($model, 'name', array('size' => 50, 'maxlength' => 50)); ?>
     <?php echo $form->passwordFieldRow($model, 'password', array('size' => 45, 'maxlength' => 45)); ?>
+    <?php echo CHtml::label('Сгенерировать пароль','genPass'); ?>
+    <?php echo CHtml::checkBox('genPass',false,array()); ?>
     <?php echo $form->textFieldRow($model, 'cookieTime', array('size' => 50, 'maxlength' => 4)); ?>
 
 

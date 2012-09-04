@@ -75,10 +75,21 @@ class PartnerManageController extends ABaseAdminController
 
         if (isset($_POST[$modelClass]))
         {
+            $newPasswordIs = '';
+            if(isset($_POST['genPass']) && $_POST['genPass'] == '1'){
+                $_POST[$modelClass]['password'] = $model->generatePassword();
+            }
+            if(isset($_POST[$modelClass]['password'])){
+                if($_POST[$modelClass]['password'] == ''){
+                    unset($_POST[$modelClass]['password']);
+                }else{
+                    $newPasswordIs = ' Новый пароль: '.$_POST[$modelClass]['password'];
+                }
+            }
             $model->attributes = $_POST[$modelClass];
             if ($model->save())
             {
-                Yii::app()->user->setFlash('success', 'Данные о партнере '.($isCreated ? 'созданы' : 'обновлены'));
+                Yii::app()->user->setFlash('success', 'Данные о партнере '.($isCreated ? 'созданы' : 'обновлены').$newPasswordIs);
                 #$this->redirect(array('view','id'=>$model->id));
             }
         }
@@ -111,6 +122,7 @@ class PartnerManageController extends ABaseAdminController
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'user-form')
         {
             echo CActiveForm::validate($model);
+            echo 'ppp'.$model->password;
             Yii::app()->end();
         }
     }

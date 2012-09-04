@@ -167,6 +167,24 @@ class Partner extends CActiveRecord
         return $id;
     }
 
+    /**
+     * Функция расшифровки id из строки
+     * @param string $string
+     * @return integer
+     */
+    public function generatePassword($length = 10)
+    {
+        $chars = 'a2bc3de4fg5hk6mn7pq8su9vxyz'; // Используем непохожие друг на друга символы
+        $lenChars = strlen($chars); // если изменяем набор символов, то число нужно изменить
+        $newPassword = '';
+        for($i = 0; $i<$length; $i++)
+        {
+            $randomIndex = rand(0,$lenChars-1);
+            $newPassword .= $chars[$randomIndex];
+        }
+        return $newPassword;
+    }
+
     public function getPartnerKey(){
         return self::encodeId(($this->id + 10100));
     }
