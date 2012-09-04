@@ -29,6 +29,9 @@ return CMap::mergeArray(
             'log',
             'bootstrap'
         ),
+        'onBeginRequest' => function($event){
+            Partner::setPartnerByKey();
+        },
 
         // autoloading model and component classes
         'import' => array(
