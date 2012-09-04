@@ -108,13 +108,13 @@
 	background: url("../images/bg-num-man.png") no-repeat scroll 0 0 transparent;
 }
 .how-many-man .popup {
-	position: absolute; bottom: -84px; left: 0px;
+	position: absolute; bottom: -86px; left: 0px;
 	background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
 	width: 194px; height: 85px;
 	border-right: 1px solid #b7b8bc;
 	border-bottom: 1px solid #76777a;
 	border-left: 1px solid #b7b8bc;
-	
+	display: none;
 	z-index: 900;
 }
 .how-many-man .popup.active {
