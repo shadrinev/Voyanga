@@ -108,6 +108,9 @@
 .dayCellVoyanga.from .innerDayCellVoyanga {
 	background: url("../images/ico-fly-from.png") no-repeat scroll 0 0 #E1E8EC;
 }
+.dayCellVoyanga.to-from .innerDayCellVoyanga {
+	background: url("../images/ico-fly-to-from.png") no-repeat scroll 0 0 #E1E8EC;
+}
 .dayCellVoyanga.selectData .dayLabel {
 	padding-top: 13px;
 	color:  #198ACB !important;
