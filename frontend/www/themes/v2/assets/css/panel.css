@@ -9,20 +9,20 @@
 .panel .content {
 	cursor: pointer;
 }
-.path {
+.panel > .path {
 	height: 70px;
 	position:relative;
 	width: 920px;
 	margin: 0 auto;
 	margin-top: -5px;
 }
-.path .data {
+.panel > .path .data {
 	width: 625px;
 	position: relative;
 	margin-top: 17px;
 	float: left;
 }
-.path .input-path {
+.panel > .path .input-path {
 	border: none;
 	border-radius: 4px;
 	background: url(../images/slice.png) 0px -904px;
