@@ -43,7 +43,7 @@
 .tumblr input {display: none;}
 .tumblr .one {
 	width: 37px; height: 37px;
-	background: url(../images/slice.png) no-repeat -37px -1086px;
+	background: url(../images/slice.png) no-repeat -35px -1086px;
 	position: absolute; top: 0px; left: 0px; z-index: 2;
 	cursor: pointer;
 }
@@ -54,7 +54,7 @@
 	cursor: pointer;
 }
 .tumblr .one.active {
-	background-position: 0px -1086px; 
+	background-position: 2px -1086px; 
 }
 .tumblr .two.active {
 	background-position: 0px -1051px; 
@@ -197,6 +197,9 @@
 	display: block;
 	margin-top: 10px;
 	cursor: pointer;
+}
+.btn-find:hover {
+	background-position: -122px -1061px;
 }
 .btn-minimizePanel {
 	width: 104px; height: 19px;

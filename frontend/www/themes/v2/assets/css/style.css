@@ -744,6 +744,7 @@
     font-size: 11px;
     line-height: 13px;
     vertical-align: middle;
+    font-family: Arial;
 }
 .div-filter {
 	background: url(../images/shadow-filter.png) no-repeat left 0px;
@@ -1332,9 +1333,15 @@ input.hotel-input {
 	background: url(../images/navi-index.png) no-repeat 0 0; height: 70px; width: 26px; cursor: pointer;
 	position: absolute; bottom: 43px; left: 0px;
 }
+.navi-l:hover {
+	background-position: 0px -70px;
+}
 .navi-r {
 	background: url(../images/navi-index.png) no-repeat -26px 0; height: 70px; width: 26px; cursor: pointer;
 	position: absolute; bottom: 43px; right: 0px;
+}
+.navi-r:hover {
+	background-position: -26px -70px;
 }
 .fly-ico {
 	position: absolute; left: 26px; bottom: 0px; width: 86px; height: 70px;
