@@ -111,6 +111,7 @@ VoyangaCalendar.slider.monthMouseUp = function(e){
     if(!VoyangaCalendar.slider.knobSlideAction)
     {
         VoyangaCalendar.slider.animateScrollAction = true;
+        $('#voyangaCalendarKnob').stop(true);
         var newPos = $(this).parent().css('left');
         if(newPos.indexOf('px') != -1){
             newPos = newPos.substr(0, newPos.length -2);
