@@ -1,14 +1,14 @@
 # Base class for out application
 # Handles routing, preloader screens(?), filters pane
 # FIXME maybe modules is not that good idea?
-class Application
+class Application extends Backbone.Router
   constructor: ->
     # register url hash changes handler
-    hasher.initialized.add @navigate
-    hasher.changed.add @navigate
+#    hasher.initialized.add @navigate
+#    hasher.changed.add @navigate
 
     # register 404 handler
-    crossroads.bypassed.add(@http404)
+#    crossroads.bypassed.add(@http404)
 
     # FIXME
     @activeModule = ko.observable window.activeModule || 'avia'
@@ -39,32 +39,27 @@ class Application
   # @param controler - controller to register
   register: (prefix, controller, isDefault=false)->
     # Change view when controller wants to
-    controller.viewChanged.add (view, data)=>
+    controller.on "viewChanged", (view, data)=>
       @viewData(data)
       @_view(view)
 
-    controller.sidebarChanged.add (sidebar, data)=>
+    controller.on "sidebarChanged", (sidebar, data)=>
       @sidebarData data
       @_sidebar sidebar
 
 
-    controller.panelChanged.add (panel)=>
+    controller.on "panelChanged", (panel)=>
       @panel panel
 
     for route, action of controller.routes
-      crossroads.addRoute(prefix + route).matched.add(action)
+      @route prefix + route, prefix, action
       # Register appplication-wide default action
       if isDefault && route == ''
-        crossroads.addRoute(route).matched.add(action)
+        @route route, prefix, action
 
   run: ->
     # Start listening to hash changes
-    hasher.init()
-
-  # Changes controller/template when we are going to other page/tab
-  navigate: (newUrl, oldUrl)=>
-    # dispatch request
-    crossroads.parse(newUrl)
+    Backbone.history.start()
 
   # FIXME write better handler
   http404: ->
@@ -72,7 +67,10 @@ class Application
 
 
 $ ->
+  window.VOYANGA_DEBUG = true
+  # FIXME FIXME FIXME
   app = new Application()
   app.register 'avia', new AviaController(), true
   app.run()
   ko.applyBindings(app)
+  window.app = app

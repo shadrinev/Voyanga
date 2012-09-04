@@ -184,8 +184,7 @@ return CMap::mergeArray(
                             //! App supporting vendor modules
                             'js/vendor/jquery.js', 'js/vendor/knockout-2.1.0.js',
                             'js/vendor/knockout-repeat.js', 'js/vendor/underscore.js',
-                            'js/vendor/signals.js', 'js/vendor/crossroads.js',
-                            'js/vendor/hasher.js', 'js/jquery-ui-1.8.22.custom.min.js',
+                            'js/vendor/backbone.js', 'js/jquery-ui-1.8.22.custom.min.js',
                             'js/jquery.easing.1.3.js',
                             //! Markup related scripts and modules
                             'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js',

@@ -1,15 +1,13 @@
 var Application,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-Application = (function() {
+Application = (function(_super) {
+
+  __extends(Application, _super);
 
   function Application() {
-    this.navigate = __bind(this.navigate, this);
-
     var _this = this;
-    hasher.initialized.add(this.navigate);
-    hasher.changed.add(this.navigate);
-    crossroads.bypassed.add(this.http404);
     this.activeModule = ko.observable(window.activeModule || 'avia');
     this.panel = ko.observable({});
     this._view = ko.observable('index');
@@ -30,24 +28,24 @@ Application = (function() {
     if (isDefault == null) {
       isDefault = false;
     }
-    controller.viewChanged.add(function(view, data) {
+    controller.on("viewChanged", function(view, data) {
       _this.viewData(data);
       return _this._view(view);
     });
-    controller.sidebarChanged.add(function(sidebar, data) {
+    controller.on("sidebarChanged", function(sidebar, data) {
       _this.sidebarData(data);
       return _this._sidebar(sidebar);
     });
-    controller.panelChanged.add(function(panel) {
+    controller.on("panelChanged", function(panel) {
       return _this.panel(panel);
     });
     _ref = controller.routes;
     _results = [];
     for (route in _ref) {
       action = _ref[route];
-      crossroads.addRoute(prefix + route).matched.add(action);
+      this.route(prefix + route, prefix, action);
       if (isDefault && route === '') {
-        _results.push(crossroads.addRoute(route).matched.add(action));
+        _results.push(this.route(route, prefix, action));
       } else {
         _results.push(void 0);
       }
@@ -56,11 +54,7 @@ Application = (function() {
   };
 
   Application.prototype.run = function() {
-    return hasher.init();
-  };
-
-  Application.prototype.navigate = function(newUrl, oldUrl) {
-    return crossroads.parse(newUrl);
+    return Backbone.history.start();
   };
 
   Application.prototype.http404 = function() {
@@ -69,12 +63,14 @@ Application = (function() {
 
   return Application;
 
-})();
+})(Backbone.Router);
 
 $(function() {
   var app;
+  window.VOYANGA_DEBUG = true;
   app = new Application();
   app.register('avia', new AviaController(), true);
   app.run();
-  return ko.applyBindings(app);
+  ko.applyBindings(app);
+  return window.app = app;
 });

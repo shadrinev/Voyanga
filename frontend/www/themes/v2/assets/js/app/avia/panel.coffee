@@ -3,6 +3,10 @@ class SearchParams
     @dep = ko.observable 'MOW'
     @arr = ko.observable 'PAR'
     @date = '02.10.2012'
+    @adults = ko.observable(5).extend({integerOnly: 'adult'})
+    @children = ko.observable(2).extend({integerOnly: true})
+    @infants = ko.observable(2).extend({integerOnly: 'infant'})
+
     @rt = ko.observable true
     @rt_date = '12.10.2012'
 
@@ -25,7 +29,11 @@ class SearchParams
     return key
 
   getHash: ->
-    return 'avia/search/' + @dep() + '/' + @arr() + '/' + @date + '/'
+    # FIXME
+    hash = 'avia/search/' + [@dep(), @arr(), @date, @adults(), @children(), @infants()].join('/') + '/'
+    if window.VOYANGA_DEBUG
+      console.log "Generated hash for avia search", hash
+    return hash
 
 MAX_TRAVELERS = 9
 MAX_CHILDREN = 8
@@ -61,9 +69,9 @@ class AviaPanel
     @rt = @sp.rt
 
     # Popup inputs
-    @adults = ko.observable(5).extend({integerOnly: 'adult'})
-    @children = ko.observable(2).extend({integerOnly: true})
-    @infants = ko.observable(2).extend({integerOnly: 'infant'})
+    @adults = @sp.adults
+    @children = @sp.children
+    @infants = @sp.infants
 
     # Travelers constraits
     @adults.subscribe (newValue) =>
@@ -171,8 +179,9 @@ class AviaPanel
     prop = $(e.target).attr("rel")
     model[prop] model[prop]()-1
 
+  # FIXME decouple!
   navigateToNewSearch: ->
-    hasher.setHash @sp.getHash()
+    app.navigate @sp.getHash(), {trigger: true}
 
 # TODO SIZE OF THE PEPOPLE COUNTER xN
 

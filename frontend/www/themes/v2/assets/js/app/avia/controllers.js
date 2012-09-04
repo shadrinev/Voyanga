@@ -10,17 +10,15 @@ AviaController = (function() {
 
     this.searchAction = __bind(this.searchAction, this);
     this.routes = {
-      '/search/{from}/{to}/{when}/': this.searchAction,
+      '/search/:from/:to/:when/:adults/:children/:infants/': this.searchAction,
       '': this.indexAction
     };
-    this.viewChanged = new signals.Signal();
-    this.sidebarChanged = new signals.Signal();
-    this.panelChanged = new signals.Signal();
     this.panel = new AviaPanel();
+    _.extend(this, Backbone.Events);
   }
 
   AviaController.prototype.searchAction = function() {
-    this.panelChanged.dispatch(this.panel);
+    this.trigger("panelChanged", this.panel);
     if (sessionStorage.getItem("search_" + this.panel.sp.key())) {
       return this.handleResults(JSON.parse(sessionStorage.getItem("search_" + this.panel.sp.key())));
     } else {
@@ -39,7 +37,7 @@ AviaController = (function() {
     this.render('results', {
       'results': stacked
     });
-    return this.sidebarChanged.dispatch('filters', {
+    return this.trigger("sidebarChanged", 'filters', {
       'firstNameN': [],
       'lastNameN': [],
       'fullNameN': [],
@@ -52,8 +50,8 @@ AviaController = (function() {
   };
 
   AviaController.prototype.render = function(view, data) {
-    this.panelChanged.dispatch(this.panel);
-    return this.viewChanged.dispatch(view, data);
+    this.trigger("panelChanged", this.panel);
+    return this.trigger("viewChanged", view, data);
   };
 
   return AviaController;

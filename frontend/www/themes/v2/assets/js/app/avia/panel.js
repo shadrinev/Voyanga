@@ -7,6 +7,15 @@ SearchParams = (function() {
     this.dep = ko.observable('MOW');
     this.arr = ko.observable('PAR');
     this.date = '02.10.2012';
+    this.adults = ko.observable(5).extend({
+      integerOnly: 'adult'
+    });
+    this.children = ko.observable(2).extend({
+      integerOnly: true
+    });
+    this.infants = ko.observable(2).extend({
+      integerOnly: 'infant'
+    });
     this.rt = ko.observable(true);
     this.rt_date = '12.10.2012';
   }
@@ -36,7 +45,12 @@ SearchParams = (function() {
   };
 
   SearchParams.prototype.getHash = function() {
-    return 'avia/search/' + this.dep() + '/' + this.arr() + '/' + this.date + '/';
+    var hash;
+    hash = 'avia/search/' + [this.dep(), this.arr(), this.date, this.adults(), this.children(), this.infants()].join('/') + '/';
+    if (window.VOYANGA_DEBUG) {
+      console.log("Generated hash for avia search", hash);
+    }
+    return hash;
   };
 
   return SearchParams;
@@ -86,15 +100,9 @@ AviaPanel = (function() {
     this.departureCity = this.sp.dep;
     this.arrivalCity = this.sp.arr;
     this.rt = this.sp.rt;
-    this.adults = ko.observable(5).extend({
-      integerOnly: 'adult'
-    });
-    this.children = ko.observable(2).extend({
-      integerOnly: true
-    });
-    this.infants = ko.observable(2).extend({
-      integerOnly: 'infant'
-    });
+    this.adults = this.sp.adults;
+    this.children = this.sp.children;
+    this.infants = this.sp.infants;
     this.adults.subscribe(function(newValue) {
       if (_this.infants() > _this.adults()) {
         _this.infants(_this.adults());
@@ -218,7 +226,9 @@ AviaPanel = (function() {
   };
 
   AviaPanel.prototype.navigateToNewSearch = function() {
-    return hasher.setHash(this.sp.getHash());
+    return app.navigate(this.sp.getHash(), {
+      trigger: true
+    });
   };
 
   return AviaPanel;

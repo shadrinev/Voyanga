@@ -24,4 +24,4 @@ node_modules
 
 markup/.DS_Store
 
-vendor
+/vendor
