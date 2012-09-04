@@ -9,14 +9,14 @@
 .panel .content {
 	cursor: pointer;
 }
-.panel > .path {
+.panel .path {
 	height: 70px;
 	position:relative;
 	width: 920px;
 	margin: 0 auto;
 	margin-top: -5px;
 }
-.panel > .path .data {
+.panel .path > .data {
 	width: 625px;
 	position: relative;
 	margin-top: 17px;
@@ -114,7 +114,7 @@
 	border-right: 1px solid #b7b8bc;
 	border-bottom: 1px solid #76777a;
 	border-left: 1px solid #b7b8bc;
-	display: none;
+	
 	z-index: 900;
 }
 .how-many-man .popup.active {
@@ -258,9 +258,11 @@
 	border: none;
 	background: none;
 	width: 406px;
+	bottom: auto;
+	top: 71px;
 }
 .number-hotel {
-	width: 192px;
+	width: 198px;
 	background: url("../images/bg-how-much.png") repeat-x scroll left bottom #F7F9FB;
 	border-right: 1px solid #b7b8bc;
 	border-bottom: 1px solid #76777a;
@@ -274,6 +276,39 @@
 	font-size: 12px;
 	margin-left: 13px;
 }
-.how-many-man .popup .number-hotel .adults, .how-many-man .popup .number-hotel .childs, .how-many-man .popup .number-hotel .small-childs {
-	padding-top:5px;
+.one-str {
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+.how-many-man .popup .one-str .adults, .how-many-man .popup .one-str .childs {
+    color: #272728;
+    float: left;
+    font-size: 11px;
+    line-height: 13px;
+    margin-left: 6px;
+    padding-top: 5px;
+    position: relative;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 60px;
+}
+.one-str .ages {
+	width: 40px;
+	text-align: center;
+	color: #272728;
+	text-shadow: 0px 1px 0px #FFF;
+	float: left;
+	margin-left: 6px;
+	font-size: 11px;
+}
+.one-str .ages:first-child {
+	margin-left: 10px;
+}
+.one-str .ages input {
+	background: url(../images/slice.png) no-repeat -320px -904px;
+	border: none;
+	width: 36px;
+	height: 31px;
+	font-size: 19px;
+	color: #272729;
+	text-align: center;
 }
