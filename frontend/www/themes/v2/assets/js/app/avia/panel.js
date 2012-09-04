@@ -1,61 +1,5 @@
-var AviaPanel, EXITED, MAX_CHILDREN, MAX_TRAVELERS, SearchParams, balanceTravelers,
+var AviaPanel, EXITED, MAX_CHILDREN, MAX_TRAVELERS, balanceTravelers,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-SearchParams = (function() {
-
-  function SearchParams() {
-    this.dep = ko.observable('MOW');
-    this.arr = ko.observable('PAR');
-    this.date = '02.10.2012';
-    this.adults = ko.observable(5).extend({
-      integerOnly: 'adult'
-    });
-    this.children = ko.observable(2).extend({
-      integerOnly: true
-    });
-    this.infants = ko.observable(2).extend({
-      integerOnly: 'infant'
-    });
-    this.rt = ko.observable(true);
-    this.rt_date = '12.10.2012';
-  }
-
-  SearchParams.prototype.url = function() {
-    var params, result;
-    result = 'http://api.misha.voyanga/v1/flight/search/withParams?';
-    params = [];
-    params.push('destinations[0][departure]=' + this.dep());
-    params.push('destinations[0][arrival]=' + this.arr());
-    params.push('destinations[0][date]=' + this.date);
-    if (this.rt()) {
-      params.push('destinations[1][departure]=' + this.arr());
-      params.push('destinations[1][arrival]=' + this.dep());
-      params.push('destinations[1][date]=' + this.rt_date);
-    }
-    return result += params.join("&");
-  };
-
-  SearchParams.prototype.key = function() {
-    var key;
-    key = this.dep() + this.arr() + this.date;
-    if (this.rt) {
-      key += this.rt_date;
-    }
-    return key;
-  };
-
-  SearchParams.prototype.getHash = function() {
-    var hash;
-    hash = 'avia/search/' + [this.dep(), this.arr(), this.date, this.adults(), this.children(), this.infants()].join('/') + '/';
-    if (window.VOYANGA_DEBUG) {
-      console.log("Generated hash for avia search", hash);
-    }
-    return hash;
-  };
-
-  return SearchParams;
-
-})();
 
 MAX_TRAVELERS = 9;
 
@@ -95,6 +39,7 @@ AviaPanel = (function() {
     this.selectOneWay = __bind(this.selectOneWay, this);
 
     var _this = this;
+    window.voyanga_debug("AviaPanel created");
     this.minimized = ko.observable(false);
     this.sp = new SearchParams();
     this.departureCity = this.sp.dep;

@@ -196,7 +196,7 @@ return CMap::mergeArray(
                             'js/avia.filters.js',
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
                             'js/app/common/filters.js', 'js/app/avia/panel.js',
-                            'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/app.js'),
+                            'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/avia/module.js', 'js/app/app.js'),
                         'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css','css/jslider.css','css/jslider.round.voyanga.css','css/jsslidecheck.css','css/panel.css', 'css/voyanga-calendar.css'),
                     ),
                 ),

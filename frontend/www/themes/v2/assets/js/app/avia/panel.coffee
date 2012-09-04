@@ -1,40 +1,3 @@
-class SearchParams
-  constructor: ->
-    @dep = ko.observable 'MOW'
-    @arr = ko.observable 'PAR'
-    @date = '02.10.2012'
-    @adults = ko.observable(5).extend({integerOnly: 'adult'})
-    @children = ko.observable(2).extend({integerOnly: true})
-    @infants = ko.observable(2).extend({integerOnly: 'infant'})
-
-    @rt = ko.observable true
-    @rt_date = '12.10.2012'
-
-  url: ->
-    result = 'http://api.misha.voyanga/v1/flight/search/withParams?'
-    params = []
-    params.push 'destinations[0][departure]=' + @dep()
-    params.push 'destinations[0][arrival]=' + @arr()
-    params.push 'destinations[0][date]=' + @date
-    if @rt()
-      params.push 'destinations[1][departure]=' + @arr()
-      params.push 'destinations[1][arrival]=' + @dep()
-      params.push 'destinations[1][date]=' + @rt_date
-    result += params.join "&"
-
-  key: ->
-    key = @dep() + @arr() + @date
-    if @rt
-      key += @rt_date
-    return key
-
-  getHash: ->
-    # FIXME
-    hash = 'avia/search/' + [@dep(), @arr(), @date, @adults(), @children(), @infants()].join('/') + '/'
-    if window.VOYANGA_DEBUG
-      console.log "Generated hash for avia search", hash
-    return hash
-
 MAX_TRAVELERS = 9
 MAX_CHILDREN = 8
 
@@ -61,6 +24,7 @@ balanceTravelers = (others, model)->
 
 class AviaPanel
   constructor: ->
+    window.voyanga_debug "AviaPanel created"
     @minimized = ko.observable false
     @sp = new SearchParams()
     @departureCity = @sp.dep

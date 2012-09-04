@@ -37,7 +37,8 @@ class Application extends Backbone.Router
   #
   # @param prefix url prefix for given controller
   # @param controler - controller to register
-  register: (prefix, controller, isDefault=false)->
+  register: (prefix, module, isDefault=false)->
+    controller = module.controller
     # Change view when controller wants to
     controller.on "viewChanged", (view, data)=>
       @viewData(data)
@@ -48,14 +49,22 @@ class Application extends Backbone.Router
       @_sidebar sidebar
 
 
-    controller.on "panelChanged", (panel)=>
-      @panel panel
-
     for route, action of controller.routes
+      window.voyanga_debug "APP: registreing route", prefix, route, action
       @route prefix + route, prefix, action
       # Register appplication-wide default action
       if isDefault && route == ''
         @route route, prefix, action
+
+    if isDefault
+     @panel module.panel
+
+    # FIXME extract to method
+    # Handles module switching
+    @on "route:" + prefix, (args...)->
+      if prefix != @activeModule()
+        window.voyanga_debug "APP: switching active module to", prefix
+        @activeModule(prefix)
 
   run: ->
     # Start listening to hash changes
@@ -67,10 +76,12 @@ class Application extends Backbone.Router
 
 
 $ ->
-  window.VOYANGA_DEBUG = true
+  window.voyanga_debug = (args...) ->
+    console.log.apply null, args
   # FIXME FIXME FIXME
   app = new Application()
-  app.register 'avia', new AviaController(), true
+  avia = new AviaModule()
+  app.register 'avia', avia, true
   app.run()
   ko.applyBindings(app)
   window.app = app

@@ -195,11 +195,11 @@ class Result
   showDetails: =>
     $('#body-popup').show()
     SizeBox();
-    ResizeBox();  
+    ResizeBox();
 
 #
 # Result container
-# Stacks them by price and company 
+# Stacks them by price and company
 #
 class ResultSet
   constructor: (rawVoyages) ->
@@ -276,3 +276,60 @@ class ResultSet
           continue
         if result.price < @cheapest().price
           @cheapest(result)
+
+# Model for avia search params,
+# Used in AviaPanel and search controller
+class SearchParams
+  constructor: ->
+    @dep = ko.observable 'MOW'
+    @arr = ko.observable 'PAR'
+    @date = '02.10.2012'
+    @adults = ko.observable(5).extend({integerOnly: 'adult'})
+    @children = ko.observable(2).extend({integerOnly: true})
+    @infants = ko.observable(2).extend({integerOnly: 'infant'})
+
+    @rt = ko.observable false
+    @rt_date = '12.10.2012'
+
+  url: ->
+    result = 'http://api.misha.voyanga/v1/flight/search/withParams?'
+    params = []
+    params.push 'destinations[0][departure]=' + @dep()
+    params.push 'destinations[0][arrival]=' + @arr()
+    params.push 'destinations[0][date]=' + @date
+    if @rt()
+      params.push 'destinations[1][departure]=' + @arr()
+      params.push 'destinations[1][arrival]=' + @dep()
+      params.push 'destinations[1][date]=' + @rt_date
+    params.push 'adt=' + @adults()
+    params.push 'chd=' + @children()
+    params.push 'inf=' + @infants()
+    result += params.join "&"
+    window.voyanga_debug "Generated search url", result
+    return result
+
+
+  key: ->
+    key = @dep() + @arr() + @date
+    if @rt
+      key += @rt_date
+    key += @adults()
+    key += @children()
+    key += @infants()
+    return key
+
+  getHash: ->
+    # FIXME
+    hash = 'avia/search/' + [@dep(), @arr(), @date, @adults(), @children(), @infants()].join('/') + '/'
+    window.voyanga_debug "Generated hash for avia search", hash
+    return hash
+
+
+  fromList: (data)->
+    # FIXME looks too ugly to hit production, yet does not support RT
+    @dep data[0]
+    @arr data[1]
+    @date = data[2]
+    @adults data[3]
+    @children data[4]
+    @infants data[5]
