@@ -142,7 +142,12 @@
 .monthLineVoyanga .monthNameVoyanga{
     position: absolute;
     z-index: 10;
+    text-align: center;
+}
+.monthLineVoyanga .monthNameVoyanga .monthWrapper{
     padding: 5px;
+    cursor: pointer;
+    display: inline-block;
 }
 .monthLineVoyanga .knobVoyanga{
     position: absolute;
