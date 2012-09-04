@@ -13,6 +13,8 @@ Voyage = (function() {
     this.arrivalAirport = this.parts[this.parts.length - 1].arrivalAirport;
     this.departureCity = flight.departureCity;
     this.arrivalCity = flight.arrivalCity;
+    this.departureCityPre = flight.departureCityPre;
+    this.arrivalCityPre = flight.arrivalCityPre;
     this._backVoyages = [];
     this.activeBackVoyage = ko.observable();
   }
@@ -79,7 +81,7 @@ Voyage = (function() {
     _ref = this.parts.slice(0, -1);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
-      result.push(part.arrivalCity);
+      result.push(part.arrivalCityPre);
     }
     return result.join(', ');
   };

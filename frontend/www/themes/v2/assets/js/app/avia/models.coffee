@@ -15,6 +15,10 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     @departureCity = flight.departureCity
     @arrivalCity = flight.arrivalCity
 
+    @departureCityPre = flight.departureCityPre
+    @arrivalCityPre = flight.arrivalCityPre
+
+
     @_backVoyages = []
     @activeBackVoyage = ko.observable()
 
@@ -69,7 +73,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
   stopoverText: ->
     result = []
     for part in @parts[0..-2]
-      result.push part.arrivalCity
+      result.push part.arrivalCityPre
     result.join(', ')
 
   stopsRatio: ->
