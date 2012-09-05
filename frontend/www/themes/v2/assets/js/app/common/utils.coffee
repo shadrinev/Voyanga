@@ -31,7 +31,7 @@ dateUtils=
     result+= minutes
     return result
 
-  # Fixme we should rename container or move this or timeUtils
+  # Fixme we should rename container or move this to timeUtils
   formatDuration: (duration) ->
     # LOL!
     all_minutes = duration / 60
