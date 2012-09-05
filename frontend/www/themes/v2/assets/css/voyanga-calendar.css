@@ -209,3 +209,7 @@
 .weekEnd {
 	color: #e50808;
 }
+.dayCellVoyanga.inactive {
+	background: #e8eaef;
+	color: #898f9a;
+}
