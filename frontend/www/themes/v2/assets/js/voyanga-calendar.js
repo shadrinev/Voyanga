@@ -202,7 +202,7 @@ VoyangaCalendarClass = function(options){
     }
 }
 /**/
-VoyangaCalendarStandart = new VoyangaCalendarClass({jObj:'#voyanga-calendar',values:new Array()});
+VoyangaCalendarStandart = new VoyangaCalendarClass({jObj:'#voyanga-calendar',values:new Array(),twoSelect: false});
 VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
     init: function(){
         //console.log(this.monthArray);
@@ -256,7 +256,11 @@ VoyangaCalendarStandart.onCellOver = function(obj,e){
             if(cellDate < this.values[0]){
                 jCell.addClass('selectData from');
             }else{
-                jCell.addClass('selectData to');
+                if(this.twoSelect){
+                    jCell.addClass('selectData to');
+                }else{
+                    jCell.addClass('selectData from');
+                }
             }
 
         }else{
@@ -275,7 +279,11 @@ VoyangaCalendarStandart.onCellOut = function(obj,e){
             if(cellDate < this.values[0]){
                 jCell.removeClass('selectData from');
             }else{
-                jCell.removeClass('selectData to');
+                if(this.twoSelect){
+                    jCell.removeClass('selectData to');
+                }else{
+                    jCell.removeClass('selectData from');
+                }
             }
 
         }else{
@@ -310,38 +318,44 @@ VoyangaCalendarStandart.onCellClick = function(obj,e){
     var jCell = $(obj);
     if(!jCell.hasClass('inactive')){
         var cellDate = Date.fromIso(jCell.data('cell-date'));
+        if(this.twoSelect){
+            if(this.values.length == 2){
 
-        if(this.values.length == 2){
-
-            this.getCellByDate(this.values[0]).removeClass('selectData from startMonth');
-            var tmpDate = new Date(this.values[0].toDateString());
-            tmpDate.setDate(tmpDate.getDate()+1);
-            while(tmpDate < this.values[1]){
-                this.getCellByDate(tmpDate).removeClass('selectDay');
-                tmpDate.setDate(tmpDate.getDate()+1);
-            }
-
-            this.getCellByDate(this.values[1]).removeClass('selectData to startMonth');
-            this.values = new Array();
-        }else if(this.values.length == 1){
-
-            if(cellDate < this.values[0]){
                 this.getCellByDate(this.values[0]).removeClass('selectData from startMonth');
-                this.values = new Array();
-            }else{
-                this.values.push(cellDate);
-                jCell.addClass('selectData to');
-                if(cellDate.getDate() == 1){
-                    jCell.addClass('startMonth');
-                }
                 var tmpDate = new Date(this.values[0].toDateString());
                 tmpDate.setDate(tmpDate.getDate()+1);
                 while(tmpDate < this.values[1]){
-                    this.getCellByDate(tmpDate).addClass('selectDay');
+                    this.getCellByDate(tmpDate).removeClass('selectDay');
                     tmpDate.setDate(tmpDate.getDate()+1);
                 }
-            }
 
+                this.getCellByDate(this.values[1]).removeClass('selectData to startMonth');
+                this.values = new Array();
+            }else if(this.values.length == 1){
+
+                if(cellDate < this.values[0]){
+                    this.getCellByDate(this.values[0]).removeClass('selectData from startMonth');
+                    this.values = new Array();
+                }else{
+                    this.values.push(cellDate);
+                    jCell.addClass('selectData to');
+                    if(cellDate.getDate() == 1){
+                        jCell.addClass('startMonth');
+                    }
+                    var tmpDate = new Date(this.values[0].toDateString());
+                    tmpDate.setDate(tmpDate.getDate()+1);
+                    while(tmpDate < this.values[1]){
+                        this.getCellByDate(tmpDate).addClass('selectDay');
+                        tmpDate.setDate(tmpDate.getDate()+1);
+                    }
+                }
+
+            }
+        }else{
+            if(this.values.length == 1){
+                this.getCellByDate(this.values[0]).removeClass('selectData from startMonth');
+                this.values = new Array();
+            }
         }
         if(this.values.length == 0){
             this.values.push(cellDate);
