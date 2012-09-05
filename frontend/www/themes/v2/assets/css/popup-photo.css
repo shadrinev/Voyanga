@@ -4,7 +4,7 @@
 #popupOverlayPhoto {position:fixed; top:0px; left:0px; z-index:1999; background:#08090a; opacity:0.96; height:100%; width:100%;}
 #popupPhoto {position:absolute; z-index:2000;}
 #photoBox {position: absolute; left: 555px; top: 201px; padding-left: 50px; padding-right: 50px; width: 900px;}
-#load {position: absolute; z-index: 1999; width: 54px; height: 55px; left: 905px; top: 431px;}}
+
 #photoBox #imgContent img {position: relative; opacity: 0; display: none; vertical-align: middle;}
 #photoBox #imgContent {display: table-cell;
     height: 600px;

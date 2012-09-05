@@ -1324,11 +1324,7 @@ input.hotel-input {
 	position: fixed; width: 100%; height: 100%; overflow: hidden;
 }
 .scroll-none { overflow: hidden;}
-.panel-index {
-	position: absolute; height: 441px; bottom: 0px;
-	width: 100%; z-index: 1;
-	overflow: hidden;
-}
+
 .navi-l {
 	background: url(../images/navi-index.png) no-repeat 0 0; height: 70px; width: 26px; cursor: pointer;
 	position: absolute; bottom: 43px; left: 0px;
@@ -1351,6 +1347,7 @@ input.hotel-input {
 	position: absolute; left: 26px; bottom: 0px; width: 86px; height: 70px;
 	background: url(../images/hotel-ico.png) no-repeat;
 }
+
 .footer {
 	background: url(../images/bg-footer.png) repeat-x;
 	position: absolute; bottom: 0px; width: 100%; height: 31px; left: 0px; z-index: 1;

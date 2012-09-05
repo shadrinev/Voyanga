@@ -24,3 +24,5 @@
 
 .grey {color: #777a7f;}
 .bg-none {background: none !important;}
+
+#load {position: fixed; z-index: 1999; width: 54px; height: 55px; left: 49%; top: 49%; background: url(../images/load.gif) no-repeat;}

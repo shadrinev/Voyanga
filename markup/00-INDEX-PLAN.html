@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Voyanga v.0.1 - Trip Flight Rework</title>
+<link href="../frontend/www/themes/v2/assets/css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/panel.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/popup.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/voyanga-calendar.css" rel="stylesheet" type="text/css" />
+
+<!-- JS SLIDE -->
+<link href="../frontend/www/themes/v2/assets/css/jsslidecheck.css" rel="stylesheet" type="text/css" />
+<!-- JS END SLIDE -->
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/jquery.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-2.1.0.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-repeat.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.dotdotdot-1.5.1.js"></script>
+
+
+	
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/resize-new.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/slide-mode.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/popup.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/tickets.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/app/hotels/panel.js"></script>
+
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/script.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/voyanga-calendar.js"></script>
+
+</head>
+
+<body>
+<div class="wrapper scroll-none">
+	<!-- HEAD -->
+	<div class="head">
+		<!-- CENTER BLOCK -->
+		<div class="center-block">		
+			<a href="/" class="logo">Voyanga</a>			
+			<a href="/" class="about">О проекте</a>
+			<div class="telefon">
+				<img src="images/tel.png">
+			</div>				
+			<div class="slide-turn-mode">
+				<div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
+				<div class="bg-mask"></div>				
+				<ul>
+					<li class="planner active btn"><a href="#">Планировщик</a></li>
+					<li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
+					<li class="hotel btn"><a href="#">Отели</a></li>
+					<li class="finish-stages btn"><a href="#">Готовые туры</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- END CENTER BLOCK -->
+	</div>
+	<!-- END HEAD -->
+<!--====**********===-->
+<!-- PANEL -->
+<div class="panel-index">
+
+	<div class="board" style="height: 140px;">
+	
+		<div class="constructor">	
+		
+			<!-- BOARD CONTENT -->
+			<div class="board-content start">
+				<div class="panel">
+					<table class="panelTable">
+						<tr>
+							<td class="contTD">
+								<div class="cityStart">
+									<div class="to">
+										Старт из:
+										<a href="#"><span>Санкт-Петербург</span></a>
+									</div>
+									<div class="input-to">
+										<input type="text" placeholder="Амстердам" class="input-path" style="width:240px;">
+									</div>
+								</div>
+								<div class="data active">
+									<input type="text" placeholder="Амстердам" class="input-path">
+									<div class="date">
+										<span class="f17">12</span>
+										<br>
+										мая
+									</div>
+									<div class="date">
+										<span class="f26">?</span>
+									</div>
+								</div>
+																												
+								</div>
+							</td>
+							<td class="btnTD">
+								
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!-- END BOARD CONTENT -->
+			<!-- BOARD CONTENT -->
+			<div class="board-content new">
+				<div class="deleteTab"></div>
+				<div class="panel">
+					<table class="panelTable">
+						<tr>
+							<td class="contTD">
+								<div class="cityStart"></div>
+								<div class="data">
+									<input type="text" placeholder="Город" class="input-path">
+									<div class="date">
+										<span class="f17">12</span>
+										<br>
+										мая
+									</div>
+									<div class="date">
+										<span class="f26">?</span>
+									</div>
+								</div>
+								<a href="#" class="add-tour"></a>
+								<div class="how-many-man hotel">
+									<!-- ko foreach: rooms -->
+										<!-- ko foreach: $data -->	
+											<div class="content">
+												<span class="num" data-bind="text: $index() + 1"></span>
+								                <div class="man" data-bind="repeat: adults"></div>
+								                <div class="child" data-bind="repeat: children"></div>
+											</div>	
+										<!-- /ko -->
+									<!-- /ko -->
+									<div class="btn"></div>																						
+								</div>
+							</td>
+							<td class="btnTD">
+								<div class="btn-find"></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!-- END BOARD CONTENT -->
+			
+			<div class="constructor-ico"></div>
+			
+		</div>
+		
+		<div class="leftPageBtn"></div>
+		<div class="rightPageBtn"></div>
+		
+	</div>
+	
+<div class="calenderWindow">	
+	<div class="calendarSlide">
+		<div class="innerCalendar">
+			<h1>Выберите дату перелета Санкт-Петербург → Амстердам</h1>
+		</div>
+		<div class="bg-Calendar">	
+			<div id='voyanga-calendar'>
+			    <div class="weekDaysVoyanga">
+			    	<div class="weekDaysVoyangaInner">
+					    <div class="weekDayVoyanga"><span>Понедельник</span></div>
+					    <div class="weekDayVoyanga"><span>Вторник</span></div>
+					    <div class="weekDayVoyanga"><span>Среда</span></div>
+					    <div class="weekDayVoyanga"><span>Четверг</span></div>
+					    <div class="weekDayVoyanga"><span>Пятница</span></div>
+					    <div class="weekDayVoyanga weekEnd"><span>Суббота</span></div>
+					    <div class="weekDayVoyanga weekEnd"><span>Воскресенье</span></div>
+			    	</div>
+			    </div>
+			    <div class="calendarUnscrollVoyanga">
+			        <div class="calendarGridVoyanga">
+			            <div class="calendarDIVVoyanga"></div>
+			        </div>
+			    </div>
+			    <div class="monthLineVoyanga"><div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div></div>
+			</div>		
+		</div>
+	</div>
+</div>
+	<div class="footer">
+			<ul class="foot-menu">
+				<li><a href="#">О проекте</a></li>
+				<li><a href="#">Вопросы и ответы</a></li>
+				<li><a href="#">Контакты</a></li>
+			</ul>
+	</div>
+</div>
+<!-- END PANEL-->
+<!-- MAPS -->
+<div class="maps">
+	<img src="images/map-index.png" width="100%" height="100%">
+</div>
+<!-- END APS -->
+</div>
+<!-- END WRAPPER -->
+</body>
+</html>
