@@ -53,7 +53,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
   # returns our sort key
   departureInt: ->
-    @departureDate.getHours()*60+@departureDate.getMinutes()
+    @departureDate.getTime()
 
   # Helper function, returns hash to check equality for first flight
   hash: ->

@@ -57,7 +57,7 @@ Voyage = (function() {
   }
 
   Voyage.prototype.departureInt = function() {
-    return this.departureDate.getHours() * 60 + this.departureDate.getMinutes();
+    return this.departureDate.getTime();
   };
 
   Voyage.prototype.hash = function() {

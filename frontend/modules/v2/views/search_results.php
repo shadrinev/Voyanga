@@ -339,7 +339,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     <div class="clear"></div>
     <ul class="minimize" data-bind="foreach: voyages">
         <li>
-            <a href="#" class="ico-path-time" data-bind="css: {hover: departureTime() == $parent.departureTime() }, click: $parent.chooseStacked">
+            <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.hash() }, click: $parent.chooseStacked">
                 <input type="radio" data-bind="value: hash(), checked: $parent.hash()">
 
                 <div class="path">
@@ -424,7 +424,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     <div class="clear"></div>
     <ul class="minimize" data-bind="foreach: rtVoyages()">
             <li>
-                <a href="#" class="ico-path-time" data-bind="css: {hover: departureTime() == $parent.rtDepartureTime() }, click: $parent.chooseRtStacked">
+                <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.rtHash() }, click: $parent.chooseRtStacked">
                     <input type="radio" data-bind="value: hash(), checked: $parent.rtHash()">
 
                     <div class="path">
@@ -654,14 +654,14 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 </script>
 <!-- FIXME -->
 <script id="popup-departure-choices" type="text/html">
-                    <li data-bind="css: {active: departureTime() == $parent.departureTime()}, click: $parent.chooseStacked">
+                    <li data-bind="css: {active: hash() == $parent.hash()}, click: $parent.chooseStacked">
                         <!-- FIXME Why this is radio? -->
                         <input type="radio" name="radio01" id="name01" checked="checked">
                         <label for="name01"><span data-bind="text:departureTime()">06:10</span></label>
                     </li>
 </script>
 <script id="popup-departure-choices-rt" type="text/html">
-                    <li data-bind="css: {active: departureTime() == $parent.rtDepartureTime()}, click: $parent.chooseRtStacked">
+                    <li data-bind="css: {active: hash() == $parent.rtHash()}, click: $parent.chooseRtStacked">
                         <!-- FIXME Why this is radio? -->
                         <input type="radio" name="radio01" id="name01" checked="checked">
                         <label for="name01"><span data-bind="text:departureTime()">06:10</span></label>
