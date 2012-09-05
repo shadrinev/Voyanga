@@ -1,13 +1,50 @@
-var Result, ResultSet, SearchParams, Voyage,
+var FlightPart, Result, ResultSet, SearchParams, Voyage,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+FlightPart = (function() {
+
+  function FlightPart(part) {
+    this.departureDate = new Date(part.datetimeBegin);
+    this.arrivalDate = new Date(part.datetimeEnd);
+    this.departureCity = part.departureCity;
+    this.departureAirport = part.departureAirport;
+    this.arrivalCity = part.arrivalCity;
+    this.arrivalCityPre = part.arrivalCityPre;
+    this.arrivalAirport = part.arrivalAirport;
+    this._duration = part.duration;
+    this.transportAirline = part.transportAirline;
+    this.flightCode = part.transportAirline + ' ' + part.flightCode;
+  }
+
+  FlightPart.prototype.departureTime = function() {
+    return dateUtils.formatTime(this.departureDate);
+  };
+
+  FlightPart.prototype.arrivalTime = function() {
+    return dateUtils.formatTime(this.arrivalDate);
+  };
+
+  FlightPart.prototype.duration = function() {
+    return dateUtils.formatDuration(this._duration);
+  };
+
+  return FlightPart;
+
+})();
 
 Voyage = (function() {
 
   function Voyage(flight) {
-    this.parts = flight.flightParts;
+    var part, _i, _len, _ref;
+    this.parts = [];
+    _ref = flight.flightParts;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      part = _ref[_i];
+      this.parts.push(new FlightPart(part));
+    }
     this.direct = this.parts.length === 1;
     this.departureDate = new Date(flight.departureDate);
-    this.arrivalDate = new Date(this.parts[this.parts.length - 1].datetimeEnd);
+    this.arrivalDate = new Date(this.parts[this.parts.length - 1].arrivalDate);
     this._duration = flight.fullDuration;
     this.departureAirport = this.parts[0].departureAirport;
     this.arrivalAirport = this.parts[this.parts.length - 1].arrivalAirport;
@@ -39,16 +76,12 @@ Voyage = (function() {
     return dateUtils.formatDayMonth(this.departureDate);
   };
 
+  Voyage.prototype.departurePopup = function() {
+    return dateUtils.formatDayMonthWeekday(this.departureDate);
+  };
+
   Voyage.prototype.departureTime = function() {
-    var minutes, result;
-    result = "";
-    result += this.departureDate.getHours();
-    result += ":";
-    minutes = this.departureDate.getMinutes().toString();
-    if (minutes.length === 1) {
-      minutes = "0" + minutes;
-    }
-    return result += minutes;
+    return dateUtils.formatTime(this.departureDate);
   };
 
   Voyage.prototype.arrivalDayMo = function() {
@@ -56,23 +89,11 @@ Voyage = (function() {
   };
 
   Voyage.prototype.arrivalTime = function() {
-    var minutes, result;
-    result = "";
-    result += this.arrivalDate.getHours();
-    result += ":";
-    minutes = this.arrivalDate.getMinutes().toString();
-    if (minutes.length === 1) {
-      minutes = "0" + minutes;
-    }
-    return result += minutes;
+    return dateUtils.formatTime(this.arrivalDate);
   };
 
-  Voyage.prototype.fullDuration = function() {
-    var all_minutes, hours, minutes;
-    all_minutes = this._duration / 60;
-    minutes = all_minutes % 60;
-    hours = (all_minutes - minutes) / 60;
-    return hours + " ч. " + minutes + " м.";
+  Voyage.prototype.duration = function() {
+    return dateUtils.formatDuration(this._duration);
   };
 
   Voyage.prototype.stopoverText = function() {
@@ -122,6 +143,8 @@ Voyage = (function() {
 Result = (function() {
 
   function Result(data) {
+    this.closeDetails = __bind(this.closeDetails, this);
+
     this.showDetails = __bind(this.showDetails, this);
 
     this.chooseRtStacked = __bind(this.chooseRtStacked, this);
@@ -130,6 +153,7 @@ Result = (function() {
 
     var fields, flights, name, rtName, _i, _len,
       _this = this;
+    _.extend(this, Backbone.Events);
     flights = data.flights;
     this.price = Math.ceil(data.price);
     this._stacked = false;
@@ -143,7 +167,7 @@ Result = (function() {
     this.voyages = [];
     this.voyages.push(this.activeVoyage);
     this.activeVoyage = ko.observable(this.activeVoyage);
-    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'fullDuration', 'direct', 'stopoverText', 'hash', 'stopsRatio'];
+    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'hash', 'stopsRatio'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
       this[name] = (function(name) {
@@ -227,10 +251,12 @@ Result = (function() {
   };
 
   Result.prototype.chooseStacked = function(voyage) {
+    window.voyanga_debug("Choosing stacked voyage", voyage);
     return this.activeVoyage(voyage);
   };
 
   Result.prototype.chooseRtStacked = function(voyage) {
+    window.voyanga_debug("Choosing RT stacked voyage", voyage);
     return this.activeVoyage().activeBackVoyage(voyage);
   };
 
@@ -251,9 +277,22 @@ Result = (function() {
   };
 
   Result.prototype.showDetails = function() {
+    var _this = this;
+    window.voyanga_debug("Setting popup result", this);
+    this.trigger("popup", this);
+    $('body').prepend('<div id="popupOverlay"></div>');
     $('#body-popup').show();
     SizeBox();
-    return ResizeBox();
+    ResizeBox();
+    return $('#popupOverlay').click(function() {
+      return _this.closeDetails();
+    });
+  };
+
+  Result.prototype.closeDetails = function() {
+    window.voyanga_debug("Hiding popup");
+    $('#body-popup').hide();
+    return $('#popupOverlay').remove();
   };
 
   return Result;
@@ -272,7 +311,11 @@ ResultSet = (function() {
       if (this._results[key]) {
         this._results[key].push(flightVoyage);
       } else {
-        this._results[key] = new Result(flightVoyage);
+        result = new Result(flightVoyage);
+        this._results[key] = result;
+        result.on("popup", function(data) {
+          return _this.popup(data);
+        });
       }
     }
     this.cheapest = ko.observable();
@@ -349,6 +392,7 @@ ResultSet = (function() {
       result.sort();
     }
     this.update_cheapest();
+    this.popup = ko.observable(this.cheapest());
   }
 
   ResultSet.prototype.update_cheapest = function() {

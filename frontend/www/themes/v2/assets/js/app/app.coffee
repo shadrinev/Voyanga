@@ -77,7 +77,8 @@ class Application extends Backbone.Router
 
 $ ->
   window.voyanga_debug = (args...) ->
-    console.log.apply null, args
+    # Chrome does not likes window context for console, so we pass itself here
+    console.log.apply console, args
   # FIXME FIXME FIXME
   app = new Application()
   avia = new AviaModule()
