@@ -10,7 +10,8 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
         <div class="ribbon-cheapest"></div>
         <div class="content">
             <div class="airlines-line">
-                <img src="/images/ico-airlline-russia.png"> <span data-bind="text:airline">Россия</span>
+                <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
+                <span data-bind="text:airline">Россия</span>
             </div>
             <div class="date-time-city">
                 <div class="start">
@@ -20,7 +21,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                     <div class="time" data-bind="text: departureTime()">
                         21:20
                     </div>
-                    <div class="city" data-bind="text: departureCity(), attr:{rel:departureCity()}">Москва</div>
+                    <div class="city" data-bind="text: departureCity()">Москва</div>
                     <div class="airport" data-bind="text: departureAirport()">
                         Домодедово
                     </div>
@@ -30,7 +31,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                         В пути
                     </div>
                     <div class="ico-path"></div>
-                    <div class="time" data-bind="text: fullDuration()">
+                    <div class="time" data-bind="text: duration()">
                         3 ч. 30 м.
                     </div>
                 </div>
@@ -41,7 +42,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                     <div class="time" data-bind="text: arrivalTime()">
                         00:50
                     </div>
-                    <div class="city" data-bind="text:arrivalCity(), attr:{rel:arrivalCity()}">Санкт-Петербург</div>
+                    <div class="city" data-bind="text:arrivalCity()">Санкт-Петербург</div>
                     <div class="airport" data-bind="text: arrivalAirport()">
                         Пулково
                     </div>
@@ -54,7 +55,8 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 <span class="end"></span>
             </div>
             <div class="airlines-line">
-                <img src="/images/ico-airlline-russia.png"/> <span data-bind="text:airline">Россия</span>
+                <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
+                <span data-bind="text:airline">Россия</span>
             </div>
             <div class="date-time-city">
                 <div class="start">
@@ -76,7 +78,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                         В пути
                     </div>
                     <div class="ico-path"></div>
-                    <div class="time" data-bind="text: rtFullDuration()">
+                    <div class="time" data-bind="text: rtDuration()">
                         3 ч. 30 м.
                     </div>
                 </div>
@@ -263,11 +265,12 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 <div class="clear"></div>
 
 <!-- ko foreach: results -->
-<div class="ticket-items" data-bind="visible: visible">
+<div class="ticket-items" data-bind="visible: visible()">
 <div class="content">
 <div class="airlines">
     <div>
-        <img src="/images/ico-airlline-russia.png"><br>
+        <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
+        <br>
         <span data-bind="text:airline">Россия</span>
     </div>
 </div>
@@ -291,7 +294,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     <!-- END START -->
     <div class="how-long">
         <div class="time">
-            В пути <span data-bind="text: fullDuration()">8 ч. 30 м.</span>
+            В пути <span data-bind="text: duration()">8 ч. 30 м.</span>
         </div>
         <div class="ico-path">
             <!-- ko foreach: stopsRatio() -->
@@ -336,11 +339,11 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     <div class="clear"></div>
     <ul class="minimize" data-bind="foreach: voyages">
         <li>
-            <a href="#" class="ico-path-time" data-bind="css: {hover: departureTime() == $parent.departureTime() }, click: $parent.chooseStacked">
+            <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.hash() }, click: $parent.chooseStacked">
                 <input type="radio" data-bind="value: hash(), checked: $parent.hash()">
 
                 <div class="path">
-                    <div class="in-path"><span>В пути </span><span data-bind="text: fullDuration()">9 ч. 20 м.</span></div>
+                    <div class="in-path"><span>В пути </span><span data-bind="text: duration()">9 ч. 20 м.</span></div>
                     <div class="start" data-bind="text:departureTime()">06:10</div>
                     <div class="finish" data-bind="text:arrivalTime()">08:10</div>
                 </div>
@@ -373,7 +376,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     <!-- END START -->
     <div class="how-long">
         <div class="time">
-            В пути <span data-bind="text: rtFullDuration()">8 ч. 30 м.</span>
+            В пути <span data-bind="text: rtDuration()">8 ч. 30 м.</span>
         </div>
         <div class="ico-path">
             <div class="ico-path">
@@ -421,11 +424,11 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     <div class="clear"></div>
     <ul class="minimize" data-bind="foreach: rtVoyages()">
             <li>
-                <a href="#" class="ico-path-time" data-bind="css: {hover: departureTime() == $parent.rtDepartureTime() }, click: $parent.chooseRtStacked">
+                <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.rtHash() }, click: $parent.chooseRtStacked">
                     <input type="radio" data-bind="value: hash(), checked: $parent.rtHash()">
 
                     <div class="path">
-                        <div class="in-path"><span>В пути </span><span data-bind="text: fullDuration()">9 ч. 20 м.</span></div>
+                        <div class="in-path"><span>В пути </span><span data-bind="text: duration()">9 ч. 20 м.</span></div>
                         <div class="start" data-bind="text:departureTime()">06:10</div>
                         <div class="finish" data-bind="text:arrivalTime()">08:10</div>
                     </div>
@@ -464,7 +467,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 </div>
 <!-- END TICKET CONTENT -->
 <div id="body-popup" style="display:none;">
-    <div id="popup">
+    <div id="popup" data-bind="with: results.popup()">
         <div>
             <div id="boxTopLeft"></div>
             <div id="boxTopCenter"></div>
@@ -477,265 +480,61 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 <div id="contentBox">
                     <div id="avia-ticket-info-popup">
                         <div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
-                        <div class="top-head-tickets">
-        <div class="date">
-            19 мая, Пн
-        </div>
-        <h3>Туда</h3>
+                            <div class="top-head-tickets">
+                               <div class="date" data-bind="text: departurePopup()">
+                                   19 мая, Пн
+                                </div>
+                                <h3>Туда</h3>
 
-        <div class="other-time">
-            <div class="variation">
-                <ul class="minimize">
-                    <li>
-                        Варианты вылета:
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name01" checked="checked">
-                        <label for="name01"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li class="active">
-                        <input type="radio" name="radio01" id="name03" checked="checked">
-                        <label for="name03"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-    <div class="content">
-        <div class="start-path">
-            <div class="information">
-                <div class="start-fly">
-                    <div class="time">
-                        9:40
-                    </div>
-                    <div class="icon jet"></div>
-                    <div class="place">
-                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
-                    </div>
-                </div>
-                <div class="time-fly">
-                    <div class="icon wait"></div>
-                    <div class="info">
-                        Перелет продлится 1 ч. 50 м.
-                    </div>
-                </div>
-                <div class="finish-fly no-way">
-                    <div class="time">
-                        9:40
-                    </div>
-                    <div class="icon jet"></div>
-                    <div class="place">
-                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
-                    </div>
-                </div>
-            </div>
-            <div class="aviacompany">
-                <img src="<?= $images ?>/images/FV_FNM_20120711.png"><br>
-                AZW1545
-            </div>
-        </div>
-        <div class="transitum">
-            Пересадка: между рейсами 1 ч. 30 м.
-        </div>
-        <div class="end-path">
-            <div class="information">
-                <div class="start-fly">
-                    <div class="time">
-                        9:40
-                    </div>
-                    <div class="icon jet"></div>
-                    <div class="place">
-                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
-                    </div>
-                </div>
-                <div class="time-fly">
-                    <div class="icon wait"></div>
-                    <div class="info">
-                        Перелет продлится 1 ч. 50 м.
-                    </div>
-                </div>
-                <div class="finish-fly">
-                    <div class="time">
-                        9:40
-                    </div>
-                    <div class="icon jet"></div>
-                    <div class="place">
-                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
-                    </div>
-                </div>
-            </div>
-            <div class="aviacompany">
-                <img src="<?= $images ?>/images/FV_FNM_20120711.png"><br>
-                AZW1545
-            </div>
-        </div>
-    </div>
+                                <div class="other-time">
+                                    <div class="variation">
+                                    <!-- if: stacked() -->
+                                        <ul class="minimize">
+                                            <li>
+                                                Варианты вылета:
+                                            </li>
+                                        <!-- ko template: {name: 'popup-departure-choices', foreach: voyages} -->
+                                        <!-- /ko -->
+                                        </ul>
+                                    <!-- /ko -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content" data-bind="template: {name: 'avia-popup-flight', foreach: activeVoyage().parts}">
+                            </div>
+    <!-- ko if: roundTrip -->
     <div class="middle-head-tickets">
-        <div class="date">
+        <div class="date" data-bind="text: rtDeparturePopup()">
             19 мая, Пн
         </div>
         <h3>Обратно</h3>
 
         <div class="other-time">
             <div class="variation">
+            <!-- ko if:rtStacked -->
                 <ul class="minimize">
                     <li>
                         Варианты вылета:
                     </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name01" checked="checked">
-                        <label for="name01"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li class="active">
-                        <input type="radio" name="radio01" id="name03" checked="checked">
-                        <label for="name03"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
-                    <li>
-                        <input type="radio" name="radio01" id="name02" checked="checked">
-                        <label for="name02"><span>06:10</span></label>
-                    </li>
+                    <!-- ko template: {name: 'popup-departure-choices-rt', foreach: rtVoyages()} -->
+
+                    <!-- /ko -->
                 </ul>
+            <!-- /ko -->
             </div>
         </div>
     </div>
-    <div class="content">
-        <div class="start-path">
-            <div class="information">
-                <div class="start-fly">
-                    <div class="time">
-                        9:40
-                    </div>
-                    <div class="icon jet"></div>
-                    <div class="place">
-                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
-                    </div>
-                </div>
-                <div class="time-fly">
-                    <div class="icon wait"></div>
-                    <div class="info">
-                        Перелет продлится 1 ч. 50 м.
-                    </div>
-                </div>
-                <div class="finish-fly no-way">
-                    <div class="time">
-                        11:40
-                    </div>
-                    <div class="icon jet"></div>
-                    <div class="place">
-                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
-                    </div>
-                </div>
-            </div>
-            <div class="aviacompany">
-                <img src="<?= $images ?>/images/FV_FNM_20120711.png"><br>
-                AZW1545
-            </div>
-        </div>
-        <div class="transitum">
-            Пересадка: между рейсами 1 ч. 30 м.
-        </div>
-        <div class="end-path">
-            <div class="information">
-                <div class="start-fly">
-                    <div class="time">
-                        12:40
-                    </div>
-                    <div class="icon jet"></div>
-                    <div class="place">
-                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
-                    </div>
-                </div>
-                <div class="time-fly">
-                    <div class="icon wait"></div>
-                    <div class="info">
-                        Перелет продлится 1 ч. 50 м.
-                    </div>
-                </div>
-                <div class="finish-fly">
-                    <div class="time">
-                        15:40
-                    </div>
-                    <div class="icon jet"></div>
-                    <div class="place">
-                        <span class="city">Санкт-Петербург,</span> <span class="airport">Пулково-2</span>
-                    </div>
-                </div>
-            </div>
-            <div class="aviacompany">
-                <img src="<?= $images ?>/images/FV_FNM_20120711.png"><br>
-                AZW1545
-            </div>
-        </div>
+    <div class="content" data-bind="template: {name: 'avia-popup-flight', foreach: activeVoyage().activeBackVoyage().parts}">
     </div>
+    <!-- /ko -->
     <hr class="lines">
     <div class="yes">
         <span style="color:#2e333b;" class="f14 bold">Оформить</span>
         <a class="btn-order" href="#">
-            <span class="cost">63 502</span> <span class="rur f26">o</span>
+            <span class="cost" data-bind="text: price">63 502</span> <span class="rur f26">o</span>
         </a>
     </div></div></div>
-<div id="boxClose"></div></div></div><div id="boxMiddleRight"></div><div class="clear"></div></div><div><div id="boxBottomLeft"></div><div id="boxBottomCenter"></div><div id="boxBottomRight"></div></div></div></div>
+<div id="boxClose" data-bind="click: closeDetails"></div></div></div><div id="boxMiddleRight"></div><div class="clear"></div></div><div><div id="boxBottomLeft"></div><div id="boxBottomCenter"></div><div id="boxBottomRight"></div></div></div></div>
 </script>
 <script type="text/html" id="avia-filters">
     <div class="filter-content">
@@ -812,6 +611,63 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 </div>
             </div>
 </script>
+<script id="avia-popup-flight" type="text/html">
+        <div data-bind="css: {'start-path': $index()==0, 'end-path': $index()==($length()-1)}">
+            <div class="information">
+                <div class="start-fly" data-bind="css: {'no-way': $index()!=0}">
+                    <div class="time" data-bind="text: departureTime()">
+                        9:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city" data-bind="text: departureCity">Санкт-Петербург,</span>,
+                        <span class="airport" data-bind="text: departureAirport">Пулково-2</span>
+                    </div>
+                </div>
+                <div class="time-fly">
+                    <div class="icon wait"></div>
+                    <div class="info">
+                        Перелет продлится <span data-bind="text: duration()">1 ч. 50 м.<span>
+                    </div>
+                </div>
+                <div class="finish-fly" data-bind="css: {'no-way': $index()!=($length()-1)}">
+                    <div class="time" data-bind="text: arrivalTime()">
+                        9:40
+                    </div>
+                    <div class="icon jet"></div>
+                    <div class="place">
+                        <span class="city" data-bind="text: arrivalCity">Санкт-Петербург</span>,
+                        <span class="airport" data-bind="text: arrivalAirport">Пулково-2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="aviacompany">
+                <img data-bind="attr: {'src': '/img/airlines/' + transportAirline +'.png'}" >
+                <span data-bind="text: flightCode"></span>
+            </div>
+        </div>
+        <!-- ko if: $index() < ($length() - 1) -->
+        <div class="transitum">
+            Пересадка: между рейсами  ХЗ СКОЛЬКО 1 ч. 30 м.
+        </div>
+        <!-- /ko -->
+</script>
+<!-- FIXME -->
+<script id="popup-departure-choices" type="text/html">
+                    <li data-bind="css: {active: hash() == $parent.hash()}, click: $parent.chooseStacked">
+                        <!-- FIXME Why this is radio? -->
+                        <input type="radio" name="radio01" id="name01" checked="checked">
+                        <label for="name01"><span data-bind="text:departureTime()">06:10</span></label>
+                    </li>
+</script>
+<script id="popup-departure-choices-rt" type="text/html">
+                    <li data-bind="css: {active: hash() == $parent.rtHash()}, click: $parent.chooseRtStacked">
+                        <!-- FIXME Why this is radio? -->
+                        <input type="radio" name="radio01" id="name01" checked="checked">
+                        <label for="name01"><span data-bind="text:departureTime()">06:10</span></label>
+                    </li>
+</script>
+
 <!-- FIXME
                 <script type="text/javascript">
                 // Here's my data model

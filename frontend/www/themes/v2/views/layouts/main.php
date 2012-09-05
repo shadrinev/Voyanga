@@ -84,20 +84,36 @@ Yii::app()->clientScript->registerPackage('everything');
 </script>
 <!-- FIXME include it -->
 <script type="text/html" id="avia-panel-template">
-    <div class="path">
-        <div class="data">
-            <input class="input-path" type="text" placeholder="Куда" data-bind="value: departureCity()">
-                <div class="tumblr">
-                    <label for="there-back">
-                        <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
-                        <div class="two" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
-                        <div class="switch"></div>
-                    </label>
-                    <input id="there-back" type="checkbox" data-bind="checked: rt()">
-                </div>
-            <input class="input-path" type="text" placeholder="Откуда" data-bind="value: arrivalCity()">
-        </div>
-        <div class="how-many-man">
+<table class="panelTable AVIA">
+	<tr>
+		<td class="contTD">
+				<div class="data">
+					<div class="from">
+						<input class="input-path" type="text" placeholder="Куда" data-bind="value: departureCity()">
+						<div class="date">
+							<span class="f17">12</span>
+							<br>
+							<span class="month">мая</span>
+						</div>
+					</div>
+					<div class="tumblr">
+	                    <label for="there-back">
+	                        <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
+	                        <div class="two" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
+	                        <div class="switch"></div>
+	                    </label>
+	                    <input id="there-back" type="checkbox" data-bind="checked: rt()">
+	                </div>
+					<div class="to">
+						<input class="input-path" type="text" placeholder="Откуда" data-bind="value: arrivalCity()">
+						<div class="date">
+							<span class="f17">12</span>
+							<br>
+							<span class="month">мая</span>
+						</div>
+					</div>
+				</div>								
+			<div class="how-many-man">
             <div class="content">
                 <!-- ko if: overall()>5 -->
                     <!-- ko if: adults()>0 -->
@@ -143,22 +159,26 @@ Yii::app()->clientScript->registerPackage('everything');
 
                         </div>
                     </div>
+		</td>
+		<td class="btnTD">
+			<a class="btn-find" data-bind="click: navigateToNewSearch">Найти</a>
+		</td>
+	</tr>
+</table>
 
-                    <a class="btn-find" data-bind="click: navigateToNewSearch">Найти</a>
-                </div>
-
-                <!-- BTN MINIMIZE -->
-                <a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
-                    <!-- ko if: minimized() -->
-                    <span></span> развернуть
-                    <!-- /ko -->
-                    <!-- ko if: !minimized() -->
-                    <span></span> свернуть
-                    <!-- /ko -->
-                </a>
-                <div class="minimize-rcomended">
-                <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
-                </div>
+<!-- BTN MINIMIZE -->
+<a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
+    <!-- ko if: minimized() -->
+    <span></span> развернуть
+    <!-- /ko -->
+    <!-- ko if: !minimized() -->
+    <span></span> свернуть
+    <!-- /ko -->
+</a>
+<div class="minimize-rcomended">
+	<a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+</div>
+            
 </script>
 
 </body>
