@@ -10,6 +10,7 @@
 	width: 100%; 
 	height: 100%; 
 	min-width: 1000px; 
+	min-height: 600px;
 	overflow-y: scroll;	
 	overflow-x: hidden;
 }
@@ -552,7 +553,7 @@
 	background: url(../images/bg-head.png) repeat-x left bottom;
 	width: 100%;
 	min-width: 1000px;
-	z-index: 2;
+	z-index: 4;
 }
 /* voyasha-text */
 .voyasha-text {
@@ -743,6 +744,7 @@
     font-size: 11px;
     line-height: 13px;
     vertical-align: middle;
+    font-family: Arial;
 }
 .div-filter {
 	background: url(../images/shadow-filter.png) no-repeat left 0px;
@@ -1311,3 +1313,50 @@
 input.hotel-input {
 	border: none; background: url(../images/bg-search-hotel-filter.png) no-repeat 0px 1px; width: 183px; height: 27px; padding-left: 5px; font-size: 13px;
 }
+
+/* MAPS */
+.fly-panel {
+	width: 100%;
+	height: 70px;
+	position: relative;
+}
+.maps {
+	position: fixed; width: 100%; height: 100%; overflow: hidden;
+}
+.scroll-none { overflow: hidden;}
+.panel-index {
+	position: absolute; height: 441px; bottom: 0px;
+	width: 100%; z-index: 1;
+	overflow: hidden;
+}
+.navi-l {
+	background: url(../images/navi-index.png) no-repeat 0 0; height: 70px; width: 26px; cursor: pointer;
+	position: absolute; bottom: 43px; left: 0px;
+}
+.navi-l:hover {
+	background-position: 0px -70px;
+}
+.navi-r {
+	background: url(../images/navi-index.png) no-repeat -26px 0; height: 70px; width: 26px; cursor: pointer;
+	position: absolute; bottom: 43px; right: 0px;
+}
+.navi-r:hover {
+	background-position: -26px -70px;
+}
+.fly-ico {
+	position: absolute; left: 26px; bottom: 0px; width: 86px; height: 70px;
+	background: url(../images/fly-ico.png) no-repeat;
+}
+.hotel-ico {
+	position: absolute; left: 26px; bottom: 0px; width: 86px; height: 70px;
+	background: url(../images/hotel-ico.png) no-repeat;
+}
+.footer {
+	background: url(../images/bg-footer.png) repeat-x;
+	position: absolute; bottom: 0px; width: 100%; height: 31px; left: 0px; z-index: 1;
+}
+.foot-menu {
+	position: absolute; right: 0px; top: 0px; height: 31px;
+}
+.foot-menu li {background: url(../images/hr-hor-footer.png) no-repeat left top; float: left; height: 24px;  padding: 7px 20px; text-shadow: 0px 1px 0px #202226;}
+.foot-menu li a {color: #d7d8dd; text-decoration: underline;}

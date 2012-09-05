@@ -102,12 +102,12 @@
 .date-time-city .start {
 	position: absolute;
 	top:0px; left: 15px;
-	max-width: 106px;
+	max-width: 100px;
 }
 .date-time-city .finish {
 	position: absolute;
 	top:0px; right: 15px;
-	max-width: 106px;
+	max-width: 100px;
 }
 .recommended-ticket .ticket-items .date-time-city .start {
 	left: 0px;
@@ -129,11 +129,18 @@
 .date-time-city .start .city, .date-time-city .finish .city {
     line-height: 20px;
     white-space: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
 }
 .date-time-city .start .airport, .date-time-city .finish .airport {
     color: #879094;
     line-height: 20px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
 }
 /* MARGIN */
 .date-time-city .how-long {

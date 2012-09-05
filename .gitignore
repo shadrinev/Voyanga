@@ -23,3 +23,5 @@ node_modules
 .DS_Store
 
 markup/.DS_Store
+
+/vendor

@@ -1,49 +1,87 @@
 # Base class for out application
 # Handles routing, preloader screens(?), filters pane
-class Application
+# FIXME maybe modules is not that good idea?
+class Application extends Backbone.Router
   constructor: ->
     # register url hash changes handler
-    hasher.initialized.add @navigate
-    hasher.changed.add @navigate
+#    hasher.initialized.add @navigate
+#    hasher.changed.add @navigate
 
     # register 404 handler
-    crossroads.bypassed.add(@http404)
+#    crossroads.bypassed.add(@http404)
 
     # FIXME
     @activeModule = ko.observable window.activeModule || 'avia'
-    # FIXME REFACTOR
-    if @activeModule() == 'avia'
-      @panel = ko.observable(new AviaPanel())
-    else
-      @panel = ko.observable(new HotelPanel())
+
+    @panel = ko.observable {}
+
+    # View currently being active in given module
+    @_view = ko.observable 'index'
+    @_sidebar = ko.observable 'dummy'
+
+    # Full path to view to render
+    @activeView = ko.computed =>
+      @activeModule() + '-' + @_view()
+
+    @activeSidebar = ko.computed =>
+      @activeModule() + '-' + @_sidebar()
+
+
+    # View model for currently active view
+    @viewData = ko.observable {}
+
+    # View model for sidebar
+    @sidebarData = ko.observable {}
 
   # Register routes from controller
-  # 
+  #
   # @param prefix url prefix for given controller
   # @param controler - controller to register
-  register: (prefix, controller, isDefault=false)->
+  register: (prefix, module, isDefault=false)->
+    controller = module.controller
+    # Change view when controller wants to
+    controller.on "viewChanged", (view, data)=>
+      @viewData(data)
+      @_view(view)
+
+    controller.on "sidebarChanged", (sidebar, data)=>
+      @sidebarData data
+      @_sidebar sidebar
+
+
     for route, action of controller.routes
-      crossroads.addRoute(prefix + route).matched.add(action)
+      window.voyanga_debug "APP: registreing route", prefix, route, action
+      @route prefix + route, prefix, action
       # Register appplication-wide default action
       if isDefault && route == ''
-        crossroads.addRoute(route).matched.add(action)
+        @route route, prefix, action
+
+    if isDefault
+     @panel module.panel
+
+    # FIXME extract to method
+    # Handles module switching
+    @on "route:" + prefix, (args...)->
+      if prefix != @activeModule()
+        window.voyanga_debug "APP: switching active module to", prefix
+        @activeModule(prefix)
 
   run: ->
     # Start listening to hash changes
-    hasher.init()
+    Backbone.history.start()
 
-  # Changes controller/template when we are going to other page/tab
-  navigate: (newUrl, oldUrl)=>
-    # dispatch request
-    crossroads.parse(newUrl)
-    
   # FIXME write better handler
   http404: ->
     alert "Not found"
 
 
 $ ->
+  window.voyanga_debug = (args...) ->
+    console.log.apply null, args
+  # FIXME FIXME FIXME
   app = new Application()
-  app.register 'avia', new AviaController(), true
+  avia = new AviaModule()
+  app.register 'avia', avia, true
   app.run()
   ko.applyBindings(app)
+  window.app = app

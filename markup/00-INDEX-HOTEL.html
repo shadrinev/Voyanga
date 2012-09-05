@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Voyanga v.0.1 - Trip Flight Rework</title>
+<link href="../frontend/www/themes/v2/assets/css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/panel.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/popup.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/voyanga-calendar.css" rel="stylesheet" type="text/css" />
+
+<!-- JS SLIDE -->
+<link href="../frontend/www/themes/v2/assets/css/jsslidecheck.css" rel="stylesheet" type="text/css" />
+<!-- JS END SLIDE -->
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/jquery.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-2.1.0.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-repeat.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.dotdotdot-1.5.1.js"></script>
+
+
+	
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/resize-new.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/slide-mode.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/popup.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/tickets.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/app/hotels/panel.js"></script>
+
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/script.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/voyanga-calendar.js"></script>
+
+</head>
+
+<body>
+<div class="wrapper scroll-none">
+	<!-- HEAD -->
+	<div class="head">
+		<!-- CENTER BLOCK -->
+		<div class="center-block">
+		
+			<a href="/" class="logo">Voyanga</a>
+			
+			<a href="/" class="about">О проекте</a>
+			
+			<div class="telefon">
+				<img src="images/tel.png">
+			</div>
+				
+			<div class="slide-turn-mode">
+				<div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
+				<div class="bg-mask"></div>
+				
+				<ul>
+					<li class="planner active btn"><a href="#">Планировщик</a></li>
+					<li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
+					<li class="hotel btn"><a href="#">Отели</a></li>
+					<li class="finish-stages btn"><a href="#">Готовые туры</a></li>
+				</ul>
+			</div>
+			
+			<!--
+<div class="login-window full">
+				<a href="#">
+					<span class="text">Регистрация и вход</span>
+					<span class="point"></span>
+				</a>
+			</div>
+-->
+		</div>
+		<!-- END CENTER BLOCK -->
+	</div>
+	<!-- END HEAD -->
+<!--====**********===-->
+
+<!-- PANEL -->
+<div class="panel-index">
+	<div class="sub-head">
+		<!-- CENTER BLOCK -->
+		<div class="fly-panel">
+			<div class="center-block">
+				<!-- PANEL -->
+				<div class="panel">
+					
+					<div class="path">
+						<table class="hotel-table">
+							<tr>
+								<td class="td-input-hotel">
+									<div class="data">
+										<input class="input-path-hotel" type="text" placeholder="Город">
+									</div>
+									<div class="how-many-man hotel">
+										<!-- ko foreach: rooms -->
+											<!-- ko foreach: $data -->	
+												<div class="content">
+													<span class="num" data-bind="text: $index() + 1"></span>
+									                <div class="man" data-bind="repeat: adults"></div>
+									                <div class="child" data-bind="repeat: children"></div>
+												</div>	
+											<!-- /ko -->
+										<!-- /ko -->
+
+										<div class="btn"></div>
+										<div class="popup">										
+											<!-- ko foreach: rooms -->
+											<div class="float">
+												<!-- ko foreach: $data -->
+												<!-- ko template: {name: 'room-template', data: $data} -->
+												<!-- /ko --> 
+												<!-- /ko -->
+											</div>	
+											<!-- /ko -->	
+											<script type="text/html" id="room-template">
+											
+														<div class="number-hotel">
+															<h5>Номер <span data-bind="text: $index() + 1"></span></h5>
+															<div class="one-str">
+																<div class="adults">
+																	<div class="inputDIV">
+																		<input type="text"  data-bind="value: adults" name="adult" class="active">
+																			<a href="#" class="plusOne">+</a>
+																			<a href="#" class="minusOne">-</a>
+																	</div>
+																	взрослых
+																</div>
+																<div class="childs">
+																	<div class="inputDIV">
+																		<input type="text" data-bind="value: children" name="adult2">
+																			<a href="#" class="plusOne">+</a>
+																			<a href="#" class="minusOne">-</a>
+																	</div>
+																	детей от 12 до 18 лет
+																</div>	
+															</div>
+															<!-- ko if: children > 0 -->
+													        <div class="one-str" data-bind="foreach: ages">
+													        	<div class="ages">
+														        	<input data-bind="value: $data, attr:{name: 'asd'+$index()}" >
+														        	лет
+													        	</div>
+													        </div>
+														    <!-- /ko -->
+													    </div>
+											</script>
+														
+										</div>
+									</div>
+								</td>
+								<td>
+									<a class="btn-find">Найти</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+	
+				</div>
+				<!-- END PANEL -->					
+			</div>
+			<div class="hotel-ico"></div>
+		</div>
+		<!-- END CENTER BLOCK -->
+		<div class="navi-l"></div>
+		<div class="navi-r"></div>
+	</div>	
+	<!-- END SUB HEAD -->
+	
+	
+<div class="calendarSlide">
+<div class="innerCalendar">
+	<h1>Выберите дату перелета Санкт-Петербург → Амстердам</h1>
+</div>
+<div class="bg-Calendar">	
+	<div id='voyanga-calendar'>
+	    <div class="weekDaysVoyanga">
+	    <table>
+	    	<tr>
+	    		<td class="weekDayVoyanga"><span>Понедельник</span></td>
+	    		<td class="weekDayVoyanga"><span>Вторник</span></td>
+	    		<td class="weekDayVoyanga"><span>Среда</span></td>
+	    		<td class="weekDayVoyanga"><span>Четверг</span></td>
+	    		<td class="weekDayVoyanga"><span>Пятница</span></td>
+	    		<td class="weekDayVoyanga weekEnd "><span>Суббота</span></td>
+	    		<td class="weekDayVoyanga weekEnd "><span>Воскресенье</span></td>
+	    	</tr>
+	    </table>
+	    </div>
+	    <div class="calendarUnscrollVoyanga">
+	        <div class="calendarGridVoyanga">
+	            <div class="calendarDIVVoyanga">
+	
+	            </div>
+	        </div>
+	    </div>
+	    <div class="monthLineVoyanga"><div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div></div>
+	</div>
+</div>
+</div>
+
+	
+	<div class="footer">
+			<ul class="foot-menu">
+				<li><a href="#">О проекте</a></li>
+				<li><a href="#">Вопросы и ответы</a></li>
+				<li><a href="#">Контакты</a></li>
+			</ul>
+	</div>
+</div>
+<!-- END PANEL-->
+
+<!-- MAPS -->
+<div class="maps">
+	<img src="images/map-index.png" width="100%" height="100%">
+</div>
+<!-- END APS -->
+</div>
+<!-- END WRAPPER -->
+</body>
+</html>

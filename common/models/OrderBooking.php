@@ -9,6 +9,7 @@
  * @property string $phone
  * @property string $userId
  * @property string $timestamp
+ * @property string $partnerId
  *
  * The followings are the available model relations:
  * @property FlightBooker[] $flightBookers
@@ -55,10 +56,10 @@ class OrderBooking extends CActiveRecord
         // will receive user inputs.
         return array(
             //array('timestamp', 'required'),
-            array('email, phone, userId', 'length', 'max'=>45),
+            array('email, phone, userId, partnerId', 'length', 'max'=>45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, email, phone, userId, timestamp', 'safe', 'on'=>'search'),
+            array('id, email, phone, userId, timestamp, partnerId', 'safe', 'on'=>'search'),
         );
     }
 
@@ -87,6 +88,7 @@ class OrderBooking extends CActiveRecord
             'phone' => 'Phone',
             'userId' => 'User',
             'timestamp' => 'Timestamp',
+            'partnerId' => 'Partner',
         );
     }
 
@@ -106,10 +108,21 @@ class OrderBooking extends CActiveRecord
         $criteria->compare('phone',$this->phone,true);
         $criteria->compare('userId',$this->userId,true);
         $criteria->compare('timestamp',$this->timestamp,true);
+        $criteria->compare('partnerId',$this->partnerId,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function save($runValidation=true,$attributes=null){
+        if($this->isNewRecord){
+            $partner = Partner::getCurrentPartner();
+            if($partner){
+                $this->partnerId = $partner->id;
+            }
+        }
+        parent::save($runValidation=true,$attributes=null);
     }
 
     public function populate(BookingForm $booking)

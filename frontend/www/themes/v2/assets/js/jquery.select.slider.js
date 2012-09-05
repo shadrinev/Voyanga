@@ -62,6 +62,7 @@
                     );
                     //console.log(listElement);
                     selectDiv.data('active',listElement);
+                    _this.change();
                 });
                 /*listElement.bind('mouseenter',function () {
                     $(this).addClass('hover');

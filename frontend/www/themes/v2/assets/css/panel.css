@@ -3,26 +3,26 @@
 	padding-bottom: 9px;
 	position: relative;
 	padding-top: 5px;
-	height: 54px;
+	height: 56px;
 
 }
 .panel .content {
 	cursor: pointer;
 }
-.path {
-	height: 68px;
+.panel .path {
+	height: 70px;
 	position:relative;
 	width: 920px;
 	margin: 0 auto;
 	margin-top: -5px;
 }
-.path .data {
+.panel .path > .data {
 	width: 625px;
 	position: relative;
 	margin-top: 17px;
 	float: left;
 }
-.path .input-path {
+.panel > .path .input-path {
 	border: none;
 	border-radius: 4px;
 	background: url(../images/slice.png) 0px -904px;
@@ -43,7 +43,7 @@
 .tumblr input {display: none;}
 .tumblr .one {
 	width: 37px; height: 37px;
-	background: url(../images/slice.png) no-repeat -37px -1086px;
+	background: url(../images/slice.png) no-repeat -35px -1086px;
 	position: absolute; top: 0px; left: 0px; z-index: 2;
 	cursor: pointer;
 }
@@ -54,7 +54,7 @@
 	cursor: pointer;
 }
 .tumblr .one.active {
-	background-position: 0px -1086px; 
+	background-position: 2px -1086px; 
 }
 .tumblr .two.active {
 	background-position: 0px -1051px; 
@@ -85,7 +85,7 @@
 .how-many-man {
 	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
     float: left;
-    height: 68px;
+    height: 70px;
     margin-left: 20px;
     position: relative;
 }
@@ -101,6 +101,11 @@
 .how-many-man .content {
 	float: left;
 	padding-left: 8px;
+	position: relative;
+}
+.how-many-man .content + .content, .how-many-man .content + .content  + .content, .how-many-man .content + .content  + .content  {
+	padding-left: 13px;
+	background: url("../images/bg-num-man.png") no-repeat scroll 0 0 transparent;
 }
 .how-many-man .popup {
 	position: absolute; bottom: -86px; left: 0px;
@@ -193,6 +198,9 @@
 	margin-top: 10px;
 	cursor: pointer;
 }
+.btn-find:hover {
+	background-position: -122px -1061px;
+}
 .btn-minimizePanel {
 	width: 104px; height: 19px;
 	color: #616770;
@@ -212,4 +220,98 @@
 }
 .btn-minimizePanel.active span {
 	background-position: -84px -35px;
+}
+/* HOTEL */
+.path .input-path-hotel {
+	border: none;
+	border-radius: 4px;
+	background: url(../images/slice.png) 0px -1296px;
+	width: 391px; height: 35px;
+	font-family: Arial; font-size: 19px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.hotel-table {
+	width: 100%;
+}
+.td-input-hotel {
+	text-align: center;
+}
+.td-input-hotel .how-many-man {
+	float: none;
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: 5px;
+}
+.td-input-hotel .data {
+	float: none;
+	margin-top: auto;
+	display: inline-block;
+	width: 400px;
+}
+.how-many-man .content .num {
+	display: block; position: absolute; top: 0px; left: 4px;
+	color: #0c0c0d; font-size: 11px; text-shadow: 0px 1px 0px #3d424a;
+}
+.how-many-man .content + .content .num, .how-many-man .content + .content  + .content .num, .how-many-man .content + .content  + .content  .num {
+	display: block; position: absolute; top: 0px; left: 11px;
+}
+.hotel-table .how-many-man .popup {
+	height: auto;
+	border: none;
+	background: none;
+	width: 406px;
+	bottom: auto;
+	top: 71px;
+}
+.number-hotel {
+	width: 198px;
+	background: url("../images/bg-how-much.png") repeat-x scroll left bottom #F7F9FB;
+	border-right: 1px solid #b7b8bc;
+	border-bottom: 1px solid #76777a;
+	border-left: 1px solid #b7b8bc;
+	overflow: hidden;
+}
+.number-hotel h5 {
+	text-align: left;
+	margin: 0px;
+	color: #303335;
+	font-size: 12px;
+	margin-left: 13px;
+}
+.one-str {
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+.how-many-man .popup .one-str .adults, .how-many-man .popup .one-str .childs {
+    color: #272728;
+    float: left;
+    font-size: 11px;
+    line-height: 13px;
+    margin-left: 6px;
+    padding-top: 5px;
+    position: relative;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 60px;
+}
+.one-str .ages {
+	width: 40px;
+	text-align: center;
+	color: #272728;
+	text-shadow: 0px 1px 0px #FFF;
+	float: left;
+	margin-left: 6px;
+	font-size: 11px;
+}
+.one-str .ages:first-child {
+	margin-left: 10px;
+}
+.one-str .ages input {
+	background: url(../images/slice.png) no-repeat -320px -904px;
+	border: none;
+	width: 36px;
+	height: 31px;
+	font-size: 19px;
+	color: #272729;
+	text-align: center;
 }

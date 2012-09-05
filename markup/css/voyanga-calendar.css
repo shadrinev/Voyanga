@@ -1,5 +1,11 @@
+.bg-Calendar {
+	background: url(../images/bg-calendar.png) repeat-x;
+}
+#voyanga-calendar {
+	margin: 0 auto;
+}
 .calendarSlide {
-	background: url("../images/bg-calendarFon.png") repeat scroll 0 0 transparent;
+	background: url("../images/bg-calendare-head.png") repeat-x scroll 0 0 transparent;
     position: absolute;
     top: 106px;
     width: 100%;
@@ -7,8 +13,7 @@
 }
 .innerCalendar {
 	margin: 0 auto;
-	padding-top: 15px;
-	padding-bottom: 10px;
+	padding-top: 12px;
 }
 .innerCalendar h1 {
 	color: #FFF;
@@ -97,17 +102,37 @@
     z-index: 2;
     font-size: 23px;
 }
-.dayCellVoyanga.selectData.to .innerDayCellVoyanga {
+.dayCellVoyanga.to .innerDayCellVoyanga {
 	background: url("../images/ico-fly-to.png") no-repeat scroll 0 0 #E1E8EC;
 }
-.dayCellVoyanga.selectData.from .innerDayCellVoyanga {
+.dayCellVoyanga.from .innerDayCellVoyanga {
 	background: url("../images/ico-fly-from.png") no-repeat scroll 0 0 #E1E8EC;
+}
+.dayCellVoyanga.to-from .innerDayCellVoyanga {
+	background: url("../images/ico-fly-to-from.png") no-repeat scroll 0 0 #E1E8EC;
 }
 .dayCellVoyanga.selectData .dayLabel {
 	padding-top: 13px;
 	color:  #198ACB !important;
 }
 .dayCellVoyanga.startMonth.selectData .dayLabel {
+	color: #198ACB !important;
+    font-size: 23px;
+    padding-right: 41px;
+    padding-top: 13px;
+}
+.dayCellVoyanga.startMonth.selectDay .monthLabel {
+	background: #E1E8EC;
+    color: #198ACB !important;
+    font-size: 14px;
+    left: auto;
+    overflow: hidden;
+    padding-top: 17px;
+    right: 15px;
+    text-transform: lowercase;
+    width: 21px;
+}
+.dayCellVoyanga.startMonth.selectDay .dayLabel {
 	color: #198ACB !important;
     font-size: 23px;
     padding-right: 41px;
@@ -137,7 +162,12 @@
 .monthLineVoyanga .monthNameVoyanga{
     position: absolute;
     z-index: 10;
+    text-align: center;
+}
+.monthLineVoyanga .monthNameVoyanga .monthWrapper{
     padding: 5px;
+    cursor: pointer;
+    display: inline-block;
 }
 .monthLineVoyanga .knobVoyanga{
     position: absolute;

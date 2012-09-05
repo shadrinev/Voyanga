@@ -1,49 +1,45 @@
-class SearchParams
-  constructor: ->
-    @dep = 'MOW'
-    @arr = 'PAR'
-    @date = '02.10.2012'
-    @rt = false
-    @rt_date = '12.10.2012'
-  
-  url: ->
-    result = 'http://api.misha.voyanga/v1/flight/search/withParams?'
-    params = []
-    params.push 'destinations[0][departure]=' + @dep
-    params.push 'destinations[0][arrival]=' + @arr
-    params.push 'destinations[0][date]=' + @date
-    if @rt
-      params.push 'destinations[1][departure]=' + @arr
-      params.push 'destinations[1][arrival]=' + @dep
-      params.push 'destinations[1][date]=' + @rt_date
-    result += params.join "&"
-
-  key: ->
-    key = @dep + @arr + @date
-    if @rt
-      key += @rt_date
-    return key
-
-sp = new SearchParams
-
+###
+SEARCH controller, should be splitted once we will get more actions here
+###
 class AviaController
-  constructor: ->
-    @routes = 
-      '/search/{from}/{to}/{when}/': @searchAction
+  constructor: (@searchParams)->
+    @routes =
+      '/search/:from/:to/:when/:adults/:children/:infants/': @searchAction
       '': @indexAction
 
-  searchAction: =>
-    if sessionStorage.getItem("search_" + sp.key())
-      @handleResults(JSON.parse(sessionStorage.getItem("search_" + sp.key())))
+    # Mix in events
+    _.extend @, Backbone.Events
+
+  searchAction: (args...)=>
+    window.voyanga_debug "AVIA: Invoking searchAction", args
+    # update search params with values in route
+    @searchParams.fromList(args)
+
+    # temporary development cache
+    key = "search_" + @searchParams.key()
+    if sessionStorage.getItem(key)
+      window.voyanga_debug "AVIA: Getting result from cache"
+      @handleResults(JSON.parse(sessionStorage.getItem(key)))
     else
+      window.voyanga_debug "AVIA: Getting results via JSONP"
       $.ajax
-        url: sp.url()
+        url: @searchParams.url()
         dataType: 'jsonp'
         success: @handleResults
 
-  handleResults: (data) ->
-    sessionStorage.setItem("search_" + sp.key(), JSON.stringify(data))
-    stacked = new ResultSet data.flights.flightVoyages
+  handleResults: (data) =>
+    window.voyanga_debug "searchAction: handling results", data
 
-  indexAction : =>
-    @searchAction()
+    # temporary development cache
+    key = "search_" + @searchParams.key()
+    sessionStorage.setItem(key, JSON.stringify(data))
+    stacked = new ResultSet data.flights.flightVoyages
+    @render 'results', {'results' :stacked}
+    @trigger "sidebarChanged", 'filters', {'firstNameN': [], 'lastNameN': [], 'fullNameN': [], 'results' :stacked}
+
+
+  indexAction: =>
+    @render 'index', {}
+
+  render: (view, data) ->
+    @trigger "viewChanged", view, data

@@ -29,6 +29,9 @@ return CMap::mergeArray(
             'log',
             'bootstrap'
         ),
+        'onBeginRequest' => function($event){
+            Partner::setPartnerByKey();
+        },
 
         // autoloading model and component classes
         'import' => array(
@@ -179,15 +182,21 @@ return CMap::mergeArray(
                         'basePath' => 'frontend.www.themes.v2.assets',
                         'js' => array(
                             //! App supporting vendor modules
-                            'js/vendor/jquery.js', 'js/vendor/knockout-2.1.0.js', 'js/vendor/knockout-repeat.js', 'js/vendor/underscore.js',
-                            'js/vendor/signals.js', 'js/vendor/crossroads.js', 'js/vendor/hasher.js', 'js/jquery-ui-1.8.22.custom.min.js', 'js/jquery.easing.1.3.js',
+                            'js/vendor/jquery.js', 'js/vendor/knockout-2.1.0.js',
+                            'js/vendor/knockout-repeat.js', 'js/vendor/underscore.js',
+                            'js/vendor/backbone.js', 'js/jquery-ui-1.8.22.custom.min.js',
+                            'js/jquery.easing.1.3.js',
                             //! Markup related scripts and modules
-                            'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js','js/jquery.color.js', 'js/slide-mode.js', 'js/popup.js',
-                            'js/tickets.js','js/panel-new.js', 'js/script.js', 'js/voyanga-calendar.js', 'js/jquery.select.slider.js',
+                            'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js',
+                            'js/jquery.color.js', 'js/slide-mode.js', 'js/popup.js',
+                            'js/tickets.js','js/panel-new.js', 'js/script.js',
+                            'js/voyanga-calendar.js', 'js/jquery.select.slider.js',
                             'js/jquery.slider.min.js','js/jquery.slider.js',
                             //! Our application logic
-                            'js/app/common/utils.js', 'js/app/common/filters.js', 'js/app/avia/panel.js',
-                            'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/app.js'),
+                            'js/avia.filters.js',
+                            'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
+                            'js/app/common/filters.js', 'js/app/avia/panel.js',
+                            'js/app/avia/models.js', 'js/app/avia/controllers.js', 'js/app/avia/module.js', 'js/app/app.js'),
                         'css' => array('css/reset.style.css', 'css/style.css', 'css/popup.css','css/jslider.css','css/jslider.round.voyanga.css','css/jsslidecheck.css','css/panel.css', 'css/voyanga-calendar.css'),
                     ),
                 ),

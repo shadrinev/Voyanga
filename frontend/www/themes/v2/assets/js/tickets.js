@@ -23,25 +23,21 @@ function widthHowLong() {
 		var var_widthStart;
 		var var_heightStart = var_start.height();
 		var var_widthFinish;
-				
+
 		if (! var_smallTicketsRecIsset) {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(MAX_BIG_CITY_NAME_SMALL_TICKET, var_dataTimeCity.find('.city'));
-			smallCityNames(MAX_BIG_AIRPORT_NAME_SMALL_TICKET, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', var_widthStart + 'px').css('padding-right', var_widthFinish + 'px');
-			var_dataTimeCity.find('.how-long').css('width', var_dataTimeCity.width()+'px');			
+			var_dataTimeCity.find('.how-long').css('width', var_dataTimeCity.width()+'px');
 		}
 		else {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(MIN_BIG_CITY_NAME_SMALL_TICKET, var_dataTimeCity.find('.city'));
-			smallCityNames(MIN_BIG_AIRPORT_NAME_SMALL_TICKET, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', var_widthStart + 'px').css('padding-right', var_widthFinish + 'px');
-			var_dataTimeCity.find('.how-long').css('width', '100%');	
-		}		
+			var_dataTimeCity.find('.how-long').css('width', '100%');
+		}
 	});
 	$('.ticket-content .ticket-items').each(function() {
 		var var_dataTimeCity = $(this).find('.date-time-city');
@@ -53,25 +49,21 @@ function widthHowLong() {
 		var var_widthStart;
 		var var_heightStart = var_start.height();
 		var var_widthFinish;
-				
+
 		if (! var_smallTicketsIsset) {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(MAX_BIG_CITY_NAME, var_dataTimeCity.find('.city'));
-			smallCityNames(MAX_BIG_AIRPORT_NAME, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px').css('padding-right', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px');
-			var_dataTimeCity.find('.how-long').css('width', var_dataTimeCity.width()+'px');			
+			var_dataTimeCity.find('.how-long').css('width', var_dataTimeCity.width()+'px');
 		}
 		else {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
-			smallCityNames(MIN_BIG_CITY_NAME, var_dataTimeCity.find('.city'));
-			smallCityNames(MIN_BIG_AIRPORT_NAME, var_dataTimeCity.find('.airport'));
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
 			var_dataTimeCity.css('padding-left', (var_widthStart+ var_paddingDateTime) + 'px').css('padding-right', (var_widthFinish+ var_paddingDateTime) + 'px');
-			var_dataTimeCity.find('.how-long').css('width', '100%');	
-		}		
+			var_dataTimeCity.find('.how-long').css('width', '100%');
+		}
 	});
 
 }
@@ -86,7 +78,7 @@ function centerBuyTikets() {
 	});
 	$('.airlines').each(function() {
 		var var_heightAllBlock = $(this).parent().height();
-		
+
 		var var_airlines = $(this).find('div');
 		var var_heightText = var_airlines.height();
 		var var_heightBuyTicket = $(this).height();
@@ -113,6 +105,7 @@ function minimizeListTime() {
 	});
 }
 
+/*
 function smallCityName() {
 	var var_simbolMax = 11;
 	var	var_simbolMaxBig = 16;
@@ -146,8 +139,11 @@ function smallCityName() {
 		}
 	}
 }
+*/
 
+/*
 function smallCityNames(simMaxBig, obj) {
+    return;
 	var var_name = obj.attr('rel');
 	var_name = var_name.replace(/\s+/g,'');
 	var var_lengthName = var_name.length;
@@ -159,6 +155,7 @@ function smallCityNames(simMaxBig, obj) {
 		obj.text(var_name);
 	}
 }
+*/
 function allRememberName(obj) {
 	$(obj).each(function() {
 		var var_smallName = $(this);
@@ -215,7 +212,7 @@ function otherTimeSlide() {
 			if (var_index == 0) {
 				var_index = 1;
 			}
-			var_otherTime2.find('ul.minimize li').eq(var_index).addClass('active').find('input').attr('checked', 'checked');	
+			var_otherTime2.find('ul.minimize li').eq(var_index).addClass('active').find('input').attr('checked', 'checked');
 		}
 	});
 	var var_btnRight = var_otherTime.find('.right');
@@ -233,7 +230,7 @@ function otherTimeSlide() {
 			if (var_index == len) {
 				$(this).addClass('none');
 			}
-			var_otherTime2.find('ul.minimize li').eq(var_index).addClass('active').find('input').attr('checked', 'checked');	
+			var_otherTime2.find('ul.minimize li').eq(var_index).addClass('active').find('input').attr('checked', 'checked');
 		}
 	});
 	var var_btnLabel = var_otherTime.find('ul.minimize li').find('label');
@@ -258,7 +255,7 @@ function otherTimeSlide() {
 
 function resizeAllWindow() {
 	inTheTwoLines();
-	widthHowLong();	
+	widthHowLong();
 }
 $(window).resize(resizeAllWindow);
 $(window).load(inTheTwoLines);

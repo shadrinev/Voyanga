@@ -66,12 +66,18 @@
 	text-align: center;
 	margin-left: 1px;
 }
+.btn-cost:hover {
+	background-position: right -727px;
+}
 .btn-cost .l {
 	background: url("../images/slice.png") no-repeat scroll left -690px transparent;
     display: block;
     height: 37px; width: 10px;
     left: -3px; top: 0;
     position: absolute;
+}
+.btn-cost:hover .l {
+	background-position: left -727px;
 }
 .btn-cost  .price, .btn-cost  .rur  {
 	font-size: 26px;

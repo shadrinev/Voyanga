@@ -1,5 +1,11 @@
+.bg-Calendar {
+	background: url(../images/bg-calendar.png) repeat-x 0 -1px;
+}
+#voyanga-calendar {
+	margin: 0 auto;
+}
 .calendarSlide {
-	background: url("../images/bg-calendarFon.png") repeat scroll 0 0 transparent;
+	background: url("../images/bg-calendare-head.png") repeat-x scroll 0 0 transparent;
     position: absolute;
     top: 106px;
     width: 100%;
@@ -7,8 +13,7 @@
 }
 .innerCalendar {
 	margin: 0 auto;
-	padding-top: 15px;
-	padding-bottom: 10px;
+	padding-top: 12px;
 }
 .innerCalendar h1 {
 	color: #FFF;
@@ -18,27 +23,29 @@
 	font-family: Arial;
 	margin-bottom: 15px;
 }
-.weekDaysVoyanga{
+.weekDaysVoyanga {
     width: 100%;
     overflow: hidden;
+    height: 22px;
 }
-.weekDaysVoyanga table {
-	width: 100%;
-}
-.weekDaysVoyanga table tr td {
-	width: 14.20%
+.weekDaysVoyanga .weekDaysVoyangaInner {
+	overflow-y: scroll;
+	height: 22px;
+	overflow-x: hidden;
+	border-left: 1px solid #D7D7D8;
 }
 .weekDayVoyanga{
     background: none repeat scroll 0 0 #E2E5EB;
     border-right: 1px solid #D7D7D8;
     color: #1C1F24;
-    font-family: Tahoma;
+    float: left;
+    font-family: Tahoma, Arial;
     font-size: 13px;
     height: 22px;
-    padding-top: 2px;
     text-align: right;
     text-shadow: 0 1px 0 #FFFFFF;
     text-transform: lowercase;
+    width: 14.18%;
 }
 .weekDayVoyanga span {
 	margin-right: 15px;
@@ -56,8 +63,7 @@
     overflow: hidden;
     overflow-y: visible;
     color: #1c1f24;
-    text-align: center;
-    margin-left: -1px;
+    border-left: 1px solid #D7D7D8;
 }
 .calendarUnscrollVoyanga{
     width: 100%;
@@ -77,7 +83,7 @@
     border-bottom: 1px #d7d7d8 solid;
     background: #f5f5f6;
     font-size: 17px;
-    font-family: Tahoma;
+    font-family: Tahoma, Arial;
     position: relative;
 }
 .innerDayCellVoyanga {
@@ -97,17 +103,37 @@
     z-index: 2;
     font-size: 23px;
 }
-.dayCellVoyanga.selectData.to .innerDayCellVoyanga {
+.dayCellVoyanga.to .innerDayCellVoyanga {
 	background: url("../images/ico-fly-to.png") no-repeat scroll 0 0 #E1E8EC;
 }
-.dayCellVoyanga.selectData.from .innerDayCellVoyanga {
+.dayCellVoyanga.from .innerDayCellVoyanga {
 	background: url("../images/ico-fly-from.png") no-repeat scroll 0 0 #E1E8EC;
+}
+.dayCellVoyanga.to-from .innerDayCellVoyanga {
+	background: url("../images/ico-fly-to-from.png") no-repeat scroll 0 0 #E1E8EC;
 }
 .dayCellVoyanga.selectData .dayLabel {
 	padding-top: 13px;
 	color:  #198ACB !important;
 }
 .dayCellVoyanga.startMonth.selectData .dayLabel {
+	color: #198ACB !important;
+    font-size: 23px;
+    padding-right: 41px;
+    padding-top: 13px;
+}
+.dayCellVoyanga.startMonth.selectDay .monthLabel {
+	background: #E1E8EC;
+    color: #198ACB !important;
+    font-size: 14px;
+    left: auto;
+    overflow: hidden;
+    padding-top: 17px;
+    right: 15px;
+    text-transform: lowercase;
+    width: 21px;
+}
+.dayCellVoyanga.startMonth.selectDay .dayLabel {
 	color: #198ACB !important;
     font-size: 23px;
     padding-right: 41px;
@@ -137,7 +163,12 @@
 .monthLineVoyanga .monthNameVoyanga{
     position: absolute;
     z-index: 10;
+    text-align: center;
+}
+.monthLineVoyanga .monthNameVoyanga .monthWrapper{
     padding: 5px;
+    cursor: pointer;
+    display: inline-block;
 }
 .monthLineVoyanga .knobVoyanga{
     position: absolute;

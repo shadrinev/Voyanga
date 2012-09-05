@@ -186,7 +186,7 @@ $(function() {
 	var heCal = $('.calendarSlide').height();
 	$('.calendarSlide').css('top','-'+heCal+'px');
 
-	$('.showCal').click(function() {
-		$('.calendarSlide').animate({'top' : '106px'},1400);
+	$('.input-path').click(function() {
+		$('.calendarSlide').animate({'top' : '70px'}, 400);
 	});
 });
