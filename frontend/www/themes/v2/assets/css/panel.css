@@ -1,11 +1,3 @@
-.sub-head .panel {
-	margin: 0 auto;
-	padding-bottom: 9px;
-	position: relative;
-	padding-top: 5px;
-	height: 56px;
-
-}
 .sub-head .panel .content {
 	cursor: pointer;
 }
@@ -35,7 +27,7 @@
     background: url("../images/slice.png") no-repeat scroll 0 -1014px transparent;
     display: inline-block;
     height: 37px;
-    margin: -3px 10px 0px 10px;
+    margin: 0px 10px 0px 10px;
     position: relative;
     width: 74px;
     vertical-align: middle;
@@ -450,7 +442,7 @@
     height: 34px;
     padding-left: 10px;
     padding-right: 10px;
-    width: 321px;
+    width: 270px;
 }
 .panelTable .data.active .input-path {
     background-position: 0 -1260px;
@@ -460,7 +452,7 @@
 .panelTable .data .date {
     display: none;
 }
-.panelTable .data.active .date {
+.panelTable div.active .date {
     background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
     display: inline-block;
     font-size: 11px;
@@ -496,5 +488,21 @@
 .input-to {
     display: none;
 }
+.contTD .data .to, .contTD .data .from {
+	display: inline-block;
+	vertical-align: middle;
+}
+.AVIA .contTD {
+	text-align: left;
+}
+.AVIA .contTD .how-many-man {	
+	margin-left: 10px;
+}
 
-
+.AVIA .contTD div.active .date {
+	background: url("../images/slice.png") no-repeat scroll -225px -977px transparent;
+}
+.AVIA .contTD div.active .input-path {
+	width: 235px;
+	border-radius: 4px 0px 0px 4px;
+}
