@@ -109,9 +109,11 @@ VoyangaCalendarSlider = function(options){
                 if(this.knobPos < 0) this.knobPos = 0;
                 if(this.knobPos > (100 - this.knobWidth)) this.knobPos = (100 - this.knobWidth);
                 this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
+                this.jObj.find('.knobUpAllMonth').css('left',this.knobPos + '%');
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
                 var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
                 this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
+                this.knobMove();
             }
         },
         mouseDown: function(e){
@@ -136,18 +138,43 @@ VoyangaCalendarSlider = function(options){
                 var posLeft = now;
             }
             this.knobPos = posLeft;
+            this.jObj.find('.knobUpAllMonth').css('left',this.knobPos + '%');
             var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
             var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
+            this.knobMove();
+        },
+        getPercent: function (pos){
+            if(pos.indexOf('px') != -1){
+                pos = pos.substr(0, pos.length -2);
+                pos = Math.round((pos / this.width)*10000)/100;
+                pos = pos;
+            }else if(pos.indexOf('%') != -1){
+                pos = pos.substr(0, pos.length -1);
+                pos = Math.round((pos)*100)/100;
+                pos = pos;
+            }
+            return pos;
         },
         knobMove: function(){
             //var xLeft = Math.round(this.jObj.find('.knobVoyanga').offset().left);
             //var xRight = xLeft + Math.round(this.jObj.find('.knobVoyanga').width());
-            var pWidth = this.width;
+            var pWidth = this.knobWidth;
+            //console.log(pWidth);
             var pLeft = this.knobPos;
+            //console.log(pLeft);
+            var pRight = pLeft + pWidth;
+            var self = this;
             this.jObj.find('.monthNameVoyanga').each(function(){
-                var pMonthLeft = $(this).css('left');
+                var pMonthLeft = self.getPercent($(this).css('left'));
+                var pMonthWidth = self.getPercent($(this).css('width'));
+                if( ( (pRight - pMonthLeft) > (pMonthWidth * 0.6) ) && ( (pMonthLeft + pMonthWidth - pLeft) > (pMonthWidth * 0.6) )){
+                    $(this).addClass('highlited');
+                    //console.log((pRight - pMonthLeft));
 
+                }else{
+                    $(this).removeClass('highlited');
+                }
             });
         },
         monthMouseUp: function(obj,e){
@@ -156,11 +183,7 @@ VoyangaCalendarSlider = function(options){
                 this.animateScrollAction = true;
                 this.jObj.find('.knobVoyanga').stop(true);
                 var newPos = $(obj).parent().css('left');
-                if(newPos.indexOf('px') != -1){
-                    newPos = newPos.substr(0, newPos.length -2);
-                    newPos = Math.round((newPos / this.width)*10000)/100;
-                    newPos = newPos + '%';
-                }
+                newPos = this.getPercent(newPos)+'%';
                 //var newPos = $(this).css('left');
                 var self = this;
                 this.jObj.find('.knobVoyanga').animate({
@@ -179,6 +202,8 @@ VoyangaCalendarSlider = function(options){
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
                 this.knobPos = Math.round((this.jObj.find('.calendarGridVoyanga').scrollTop() / scrollHeight)*1000)/10;
                 this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
+                this.jObj.find('.knobUpAllMonth').css('left',this.knobPos + '%');
+                this.knobMove();
             }
         },
 
@@ -239,6 +264,7 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
         }
         this.knobWidth = Math.round((this.linesWidth / this.totalLines)*10000)/100;
         this.jObj.find('.knobVoyanga').css('width',this.knobWidth + '%');
+        this.jObj.find('.knobUpAllMonth').css('width',this.knobWidth + '%');
         //VoyangaCalendar.slider.width = VoyangaCalendar.jObj.find('.monthLineVoyanga').width();
         $(window).on('resize',function(){self.onresize();});
         $(window).load(function(){self.onresize();});
