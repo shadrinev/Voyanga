@@ -2,7 +2,8 @@
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 ?>
 <script type="text/html" id="avia-results">
-<h1><span>Выберите авиабилет</span> Санкт-Петербург → Амстердам, 19 мая</h1>
+<h1><span>Выберите авиабилет</span>
+    <span>Санкт-Петербург</span> → Амстердам, 19 мая</h1>
 
 <div class="recomended-content" data-bind="with: results.cheapest">
 <div class="recommended-ticket">
@@ -10,7 +11,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
         <div class="ribbon-cheapest"></div>
         <div class="content">
             <div class="airlines-line">
-                <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
+                <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
                 <span data-bind="text:airline">Россия</span>
             </div>
             <div class="date-time-city">
@@ -55,7 +56,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 <span class="end"></span>
             </div>
             <div class="airlines-line">
-                <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
+                <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
                 <span data-bind="text:airline">Россия</span>
             </div>
             <div class="date-time-city">
@@ -269,7 +270,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 <div class="content">
 <div class="airlines">
     <div>
-        <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
+        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
         <br>
         <span data-bind="text:airline">Россия</span>
     </div>
