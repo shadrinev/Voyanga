@@ -2,7 +2,8 @@
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 ?>
 <script type="text/html" id="avia-results">
-<h1><span>Выберите авиабилет</span> Санкт-Петербург → Амстердам, 19 мая</h1>
+<h1><span>Выберите авиабилет</span>
+    <span>Санкт-Петербург</span> → Амстердам, 19 мая</h1>
 
 <div class="recomended-content" data-bind="with: results.cheapest">
 <div class="recommended-ticket">
@@ -10,7 +11,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
         <div class="ribbon-cheapest"></div>
         <div class="content">
             <div class="airlines-line">
-                <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
+                <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
                 <span data-bind="text:airline">Россия</span>
             </div>
             <div class="date-time-city">
@@ -55,7 +56,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 <span class="end"></span>
             </div>
             <div class="airlines-line">
-                <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
+                <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
                 <span data-bind="text:airline">Россия</span>
             </div>
             <div class="date-time-city">
@@ -268,11 +269,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 <div class="ticket-items" data-bind="visible: visible()">
 <div class="content">
 <div class="airlines">
-    <div>
-        <img data-bind="attr: {'src': '/img/airlines/' + airline +'.png'}" >
-        <br>
-        <span data-bind="text:airline">Россия</span>
-    </div>
+
 </div>
 <!-- END AIRLINES -->
 <div class="center-ticket">
@@ -330,6 +327,11 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     </div>
     <!-- END FINISH -->
     <div class="clear"></div>
+    <div class="airlinesLogo">
+        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+        <br>
+        <span data-bind="text:airline">Россия</span>
+    </div>
 </div>
 <!-- END DATE TIME CITY -->
 <!-- ko if: stacked() -->
@@ -415,6 +417,12 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     </div>
     <!-- END FINISH -->
     <div class="clear"></div>
+        <div class="airlinesLogo">
+        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+        <br>
+        <span data-bind="text:airline">Россия</span>
+    </div>
+
 </div>
 <!-- END DATE TIME CITY -->
 <!-- ko if:rtStacked -->
@@ -558,6 +566,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
             <div class="slider-filter" style="text-align:center; margin-bottom:18px;">
                 <img src="<?= $images ?>/images/tuda.png">
                 <br>
+                <input type="text" id="megaInput" data-bind="value: testInput">
                 <div style="width: 200px; margin-left: 0px;">
                     <select id='aviaShowReturnFilters' class="selectSlider"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
                 </div>

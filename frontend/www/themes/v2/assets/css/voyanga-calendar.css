@@ -70,7 +70,7 @@
     overflow: hidden;
     overflow-y: visible;
     color: #1c1f24;
-    border-left: 1px solid #D7D7D8;
+    padding-left: 1px;
 }
 .calendarUnscrollVoyanga{
     width: 100%;
@@ -92,6 +92,7 @@
     font-size: 17px;
     font-family: Tahoma, Arial;
     position: relative;
+    cursor: pointer;
 }
 .innerDayCellVoyanga {
 	border: 1px solid #D7D7D8;
@@ -121,7 +122,6 @@
 }
 .dayCellVoyanga.selectData .dayLabel {
 	padding-top: 13px;
-	color:  #198ACB !important;
 }
 .dayCellVoyanga.startMonth.selectData .dayLabel {
 	color: #198ACB !important;
@@ -129,8 +129,8 @@
     padding-right: 41px;
     padding-top: 13px;
 }
-.dayCellVoyanga.startMonth.selectDay .monthLabel {
-	background: #E1E8EC;
+.dayCellVoyanga.startMonth.selectDay .monthLabel, .dayCellVoyanga.startMonth.to .monthLabel, .dayCellVoyanga.startMonth.from .monthLabel {
+	background: none;
     color: #198ACB !important;
     font-size: 14px;
     left: auto;
@@ -140,7 +140,7 @@
     text-transform: lowercase;
     width: 21px;
 }
-.dayCellVoyanga.startMonth.selectDay .dayLabel {
+.dayCellVoyanga.startMonth.selectDay .dayLabel, .dayCellVoyanga.startMonth.to .dayLabel, .dayCellVoyanga.startMonth.from .dayLabel {
 	color: #198ACB !important;
     font-size: 23px;
     padding-right: 41px;
@@ -181,6 +181,7 @@
     position: absolute;
     z-index: 5;
     height: 27px;
+    cursor: pointer;
     border-radius: 0px 0px 8px 8px;
     background: url(../images/main-avia-route_03.png) repeat-x;
 }
@@ -209,7 +210,51 @@
 .weekEnd {
 	color: #e50808;
 }
+.selectData.to .weekEnd, .selectData.from .weekEnd {
+	color: #198ACB !important;
+}
 .dayCellVoyanga.inactive {
 	background: #e8eaef;
 	color: #898f9a;
+}
+
+.knobUpAllMonth {
+	cursor: pointer;
+    height: 27px;
+    position: absolute;
+    width: 9.43%;
+    z-index: 20;
+}
+.monthLineVoyanga .highlited {
+	color: #24272e;
+}
+
+/* HOTEL */
+.hotel .dayCellVoyanga.from .innerDayCellVoyanga, .hotel .dayCellVoyanga.to .innerDayCellVoyanga {
+	background: url("../images/ico-hotel-to.png") no-repeat scroll 0 0 #f5e9e0;
+}
+.hotel .dayCellVoyanga.selectData .innerDayCellVoyanga {
+	border-color: #fb7d20;
+	color: #fb7d20 !important;
+}
+.hotel .dayCellVoyanga.selectDay {
+	background: none repeat scroll 0 0 #f5e9e0;
+}	
+.hotel .dayCellVoyanga.startMonth.selectData .dayLabel, .hotel .dayCellVoyanga.startMonth.selectData .monthLabel {
+	color: #fb7d20 !important;
+}
+.hotel .selectData.to .weekEnd, .hotel .selectData.from .weekEnd {
+	color: #fb7d20 !important;
+}
+.hotel .dayCellVoyanga.startMonth.to .monthLabel, .hotel .dayCellVoyanga.startMonth.from .monthLabel {
+	color: #fb7d20 !important;
+	background: none;
+}
+.hotel .dayCellVoyanga.startMonth.to .dayLabel, .hotel .dayCellVoyanga.startMonth.from .dayLabel {
+	color: #fb7d20 !important;
+}
+/* CONSTRUCTOR */
+.constructor .dayCellVoyanga.from .innerDayCellVoyanga, .constructor .dayCellVoyanga.to .innerDayCellVoyanga {
+	background: url("../images/ico-constructor-to.png") no-repeat scroll 0 0 #E1E8EC;
+	background: none repeat scroll 0 0 #f5e9e0;
 }

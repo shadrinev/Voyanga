@@ -49,7 +49,7 @@ Yii::app()->clientScript->registerPackage('everything');
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <!-- PANEL -->
-            <div class="panel" data-bind="template: {name: activeModule() + '-panel-template', data: panel()}">
+            <div class="panel" data-bind="template: {name: activeModule() + '-panel-template', data: panel(), afterRender: contentRendered}">
 			</div>
 			<!-- END PANEL -->
         </div>
@@ -112,7 +112,7 @@ Yii::app()->clientScript->registerPackage('everything');
 							<span class="month">мая</span>
 						</div>
 					</div>
-				</div>								
+				</div>
 			<div class="how-many-man">
             <div class="content">
                 <!-- ko if: overall()>5 -->
@@ -178,7 +178,7 @@ Yii::app()->clientScript->registerPackage('everything');
 <div class="minimize-rcomended">
 	<a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
 </div>
-            
+
 </script>
 
 </body>

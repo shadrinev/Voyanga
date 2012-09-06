@@ -62,6 +62,7 @@ class FlightPart
     {
         $ret = array(
             'transportAirline' => $this->transportAirlineCode,
+            'transportAirlineName' => Airline::getAirlineByCode($this->transportAirlineCode)->localRu,
             'departureCity' => City::getCityByPk($this->departureCityId)->localRu,
             'departureCityPre' => City::getCityByPk($this->departureCityId)->casePre,
             'arrivalCity' => City::getCityByPk($this->arrivalCityId)->localRu,
