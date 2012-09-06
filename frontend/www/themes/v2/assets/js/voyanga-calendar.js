@@ -146,7 +146,8 @@ VoyangaCalendarSlider = function(options){
             var pWidth = this.width;
             var pLeft = this.knobPos;
             this.jObj.find('.monthNameVoyanga').each(function(){
-                var pMonthLeft = $(this).css('');
+                var pMonthLeft = $(this).css('left');
+
             });
         },
         monthMouseUp: function(obj,e){
@@ -211,7 +212,7 @@ VoyangaCalendarClass = function(options){
     }
 }
 /**/
-VoyangaCalendarStandart = new VoyangaCalendarClass({jObj:'#voyanga-calendar',values:new Array(),twoSelect: false});
+VoyangaCalendarStandart = new VoyangaCalendarClass({jObj:'#voyanga-calendar',values:new Array(),twoSelect: true});
 VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
     init: function(){
         //console.log(this.monthArray);
