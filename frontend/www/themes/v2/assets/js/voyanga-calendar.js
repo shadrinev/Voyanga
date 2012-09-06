@@ -267,7 +267,7 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
         this.jObj.find('.knobUpAllMonth').css('width',this.knobWidth + '%');
         //VoyangaCalendar.slider.width = VoyangaCalendar.jObj.find('.monthLineVoyanga').width();
         $(window).on('resize',function(){self.onresize();});
-        $(window).load(function(){self.onresize();});
+        $(window).load(function(){self.onresize();self.knobMove();});
 
         this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);});
         //VoyangaCalendar.jObj.find('.calendarGrid').on('mousewheel',VoyangaCalendar.slider.mousewheelEvent);
