@@ -264,17 +264,17 @@ VoyangaCalendarStandart.onCellOver = function(obj,e){
         var cellDate = Date.fromIso(jCell.data('cell-date'));
         if(this.values.length == 1){
             if(cellDate < this.values[0]){
-                jCell.addClass('selectDay from');
+                jCell.addClass('from');
             }else{
                 if(this.twoSelect){
-                    jCell.addClass('selectDay to');
+                    jCell.addClass('to');
                 }else{
-                    jCell.addClass('selectDay from');
+                    jCell.addClass('from');
                 }
             }
 
         }else{
-            jCell.addClass('selectDay from');
+            jCell.addClass('from');
         }
         if(cellDate.getDate() == 1){
             jCell.addClass('startMonth');
@@ -287,17 +287,17 @@ VoyangaCalendarStandart.onCellOut = function(obj,e){
         var cellDate = Date.fromIso(jCell.data('cell-date'));
         if(this.values.length == 1){
             if(cellDate < this.values[0]){
-                jCell.removeClass('selectDay from');
+                jCell.removeClass('from');
             }else{
                 if(this.twoSelect){
-                    jCell.removeClass('selectDay to');
+                    jCell.removeClass('to');
                 }else{
-                    jCell.removeClass('selectDay from');
+                    jCell.removeClass('from');
                 }
             }
 
         }else{
-            jCell.removeClass('selectDay from');
+            jCell.removeClass('from');
         }
         if(cellDate.getDate() == 1){
             jCell.removeClass('startMonth');
