@@ -9,6 +9,7 @@ function AviaFilter (options){
     var defaults = {
         visible: true,
         jObj: null,
+        objName: null,
         //onchange: function (){},
         //change: function(){},
         init: function(){}
@@ -32,9 +33,8 @@ AviaFilter.prototype.change = function(value){
 function getAviaFilterTimeSlider(options){
     var defaults = {
         init: function(options){
-            if(typeof this.jObj == 'string'){
-                this.jObj = $(this.jObj);
-            }
+
+            this.jObj = $(this.objName);
             //console.log(this.jObj);
             var fromTime = '0:00';
             var toTime = '23:59';
@@ -85,7 +85,7 @@ function getAviaFilterTimeSlider(options){
         getValue:function(){
             var val = this.jObj.val();
             var times_arr = val.split(';');
-            return {fromTime: this.calculate(times_arr[0]),toTime: this.calculate(times_arr[1])}
+            return {fromTime: times_arr[0],toTime: times_arr[1]}
         },
         hide:function(){
             this.jObj.parent().hide();
@@ -119,6 +119,7 @@ AviaFilters.getValues = function(){
 }
 AviaFilters.init = function(options){
     if(options == undefined) options = {};
+    console.log('start render filters');
     AviaFilters.flightClassFilter.init(options.flightClassFilter);
     AviaFilters.onlyDirectFlightsFilter.init(options.onlyDirectFlightsFilter);
     AviaFilters.showReturnFilters.init();
@@ -144,11 +145,9 @@ AviaFilters.hide = function(){
 
 }
 AviaFilters.flightClassFilter = new AviaFilter({
-    jObj: '#aviaFlightClass',
+    objName: '#aviaFlightClass',
     init: function(options){
-        if(typeof this.jObj == 'string'){
-            this.jObj = $(this.jObj);
-        }
+        this.jObj = $(this.objName);
         if( options != undefined && options.value != undefined ){
             this.jObj.val(options.value);
         }
@@ -158,11 +157,9 @@ AviaFilters.flightClassFilter = new AviaFilter({
     }
 });
 AviaFilters.onlyDirectFlightsFilter = new AviaFilter({
-    jObj: '#aviaOnlyDirectFlights',
+    objName: '#aviaOnlyDirectFlights',
     init: function(options){
-        if(typeof this.jObj == 'string'){
-            this.jObj = $(this.jObj);
-        }
+        this.jObj = $(this.objName);
         if( options != undefined && options.value != undefined ){
             this.jObj.val(options.value);
         }
@@ -173,11 +170,9 @@ AviaFilters.onlyDirectFlightsFilter = new AviaFilter({
 });
 
 AviaFilters.showReturnFilters = new AviaFilter({
-    jObj: '#aviaShowReturnFilters',
+    objName: '#aviaShowReturnFilters',
     init: function(options){
-        if(typeof this.jObj == 'string'){
-            this.jObj = $(this.jObj);
-        }
+        this.jObj = $(this.objName);
         if( options != undefined && options.value != undefined ){
             this.jObj.val(options.value);
         }
@@ -202,13 +197,13 @@ AviaFilters.showReturnFilters = new AviaFilter({
     }
 });
 
-AviaFilters.departureTimeSliderDirect = getAviaFilterTimeSlider({jObj: '#departureTimeSliderDirect'});
+AviaFilters.departureTimeSliderDirect = getAviaFilterTimeSlider({objName: '#departureTimeSliderDirect'});
 
-AviaFilters.arrivalTimeSliderDirect = getAviaFilterTimeSlider({jObj: '#arrivalTimeSliderDirect'});
+AviaFilters.arrivalTimeSliderDirect = getAviaFilterTimeSlider({objName: '#arrivalTimeSliderDirect'});
 
-AviaFilters.departureTimeSliderReturn = getAviaFilterTimeSlider({jObj: '#departureTimeSliderReturn'});
+AviaFilters.departureTimeSliderReturn = getAviaFilterTimeSlider({objName: '#departureTimeSliderReturn'});
 
-AviaFilters.arrivalTimeSliderReturn = getAviaFilterTimeSlider({jObj: '#arrivalTimeSliderReturn'});
+AviaFilters.arrivalTimeSliderReturn = getAviaFilterTimeSlider({objName: '#arrivalTimeSliderReturn'});
 
 
 

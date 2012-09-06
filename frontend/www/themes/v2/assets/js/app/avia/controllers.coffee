@@ -34,8 +34,24 @@ class AviaController
     key = "search_" + @searchParams.key()
     sessionStorage.setItem(key, JSON.stringify(data))
     stacked = new ResultSet data.flights.flightVoyages
+    @myobj = ko.observable true
+    @myobj.subscribe (newValue)->
+      alert(newValue)
+    console.log(@myobj)
+    console.log(data)
+
+    tt = new Object
+
+    tt.fname = ko.observable()
+    tt.lname = ko.observable()
+    tt.funame = ko.computed(
+      ()->
+        return this.fname() + '' + this.lname()
+      ,tt
+    )
     @render 'results', {'results' :stacked}
-    @trigger "sidebarChanged", 'filters', {'firstNameN': [], 'lastNameN': [], 'fullNameN': [], 'results' :stacked}
+    AviaFilters.init({flightClassFilter:{value: 'E'},departureTimeSliderDirect:{fromTime: '8:00',toTime: '21:00'}})
+    @trigger "sidebarChanged", 'filters', {'firstNameN': tt.fname, 'lastNameN': tt.lname, 'fullNameN': tt.funame,'testInput': @myobj, 'results' :stacked}
 
   indexAction: =>
     @render 'index', {}

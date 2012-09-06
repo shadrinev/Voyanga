@@ -566,6 +566,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
             <div class="slider-filter" style="text-align:center; margin-bottom:18px;">
                 <img src="<?= $images ?>/images/tuda.png">
                 <br>
+                <input type="text" id="megaInput" data-bind="value: testInput">
                 <div style="width: 200px; margin-left: 0px;">
                     <select id='aviaShowReturnFilters' class="selectSlider"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
                 </div>

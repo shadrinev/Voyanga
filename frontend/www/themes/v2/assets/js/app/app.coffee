@@ -78,6 +78,7 @@ class Application extends Backbone.Router
 
   contentRendered: ->
     console.log "RENDERED"
+    AviaFilters.init({flightClassFilter:{value: 'E'},departureTimeSliderDirect:{fromTime: '8:00',toTime: '21:00'}})
     setTimeout(ResizeFun, 1000);
 
 $ ->
