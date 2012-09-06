@@ -243,6 +243,7 @@ class FlightVoyage extends CApplicationComponent
             'commission' => $this->commission,
             'taxes' => $this->taxes,
             'valCompany' => $this->valAirline->code,
+            'valCompanyName' => $this->valAirline->localRu,
             'bestMask' => $this->bestMask,
             'flights' => array()
         );
