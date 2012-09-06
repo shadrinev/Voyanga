@@ -224,7 +224,9 @@
     width: 9.43%;
     z-index: 20;
 }
-
+.monthLineVoyanga .highlited {
+	color: #24272e;
+}
 
 /* HOTEL */
 .hotel .dayCellVoyanga.from .innerDayCellVoyanga, .hotel .dayCellVoyanga.to .innerDayCellVoyanga {
