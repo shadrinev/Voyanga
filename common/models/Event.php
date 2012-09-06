@@ -115,12 +115,15 @@ class Event extends FrontendActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('links','checkLinks'),
-            array('startDate','checkDates'),
-            array('title, cityId, startDate, endDate, status', 'required'),
-            array('cityId, status', 'numerical', 'integerOnly'=>true),
-            array('title, address, contact', 'length', 'max'=>255),
-            array('startDate, endDate, preview, description', 'safe'),
+            //for filling out from frontend
+            array('title', 'required', 'on'=>'frontend'),
+
+            array('links','checkLinks', 'on'=>'backend'),
+            array('startDate','checkDates', 'on'=>'backend'),
+            array('title, cityId, startDate, endDate, status', 'required', 'on'=>'backend'),
+            array('cityId, status', 'numerical', 'integerOnly'=>true, 'on'=>'backend'),
+            array('title, address, contact', 'length', 'max'=>255, 'on'=>'backend'),
+            array('startDate, endDate, preview, description', 'safe', 'on'=>'backend'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, startDate, endDate, cityId, address, contact, status, preview, description', 'safe', 'on'=>'search'),

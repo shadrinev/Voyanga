@@ -59,32 +59,36 @@
 <?php $this->endWidget(); ?>
 
 <?php $this->beginWidget('bootstrap.widgets.BootModal', array('id'=>'newEventModal')); ?>
+    <?php $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
+        'id' => 'new-event-form',
+        'enableAjaxValidation' => false,
+    )); ?>
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h4>Новое событие</h4>
+        </div>
 
-<div class="modal-header">
-    <a class="close" data-dismiss="modal">&times;</a>
-    <h4>Новое событие</h4>
-</div>
+        <div class="modal-body">
+            <div id='newEventName'>
+                <?php echo $form->textFieldRow($model, 'newEventName', array('name'=>'title')); ?>
+            </div>
+        </div>
+        <div class="alert alert-error errors hide"></div>
 
-<div class="modal-body">
-    <div id='newEventName'>
-        <?php echo $form->textFieldRow($model, 'newEventName'); ?>
-    </div>
-</div>
-
-<div class="modal-footer">
-    <?php $this->widget('bootstrap.widgets.BootButton', array(
-    'type'=>'primary',
-    'label'=>'Создать',
-    'url'=>'#',
-    'htmlOptions'=>array('data-dismiss'=>'modal'),
-)); ?>
-    <?php $this->widget('bootstrap.widgets.BootButton', array(
-    'label'=>'Отмена',
-    'url'=>'#',
-    'htmlOptions'=>array('data-dismiss'=>'modal'),
-)); ?>
-</div>
-
+        <div class="modal-footer">
+        <?php $this->widget('bootstrap.widgets.BootButton', array(
+            'buttonType' => 'submit',
+            'type'=>'primary',
+            'label'=>'Создать',
+            'url'=>'#'
+        )); ?>
+        <?php $this->widget('bootstrap.widgets.BootButton', array(
+            'label'=>'Отмена',
+            'url'=>'#',
+            'htmlOptions'=>array('data-dismiss'=>'modal'),
+        )); ?>
+        </div>
+    <?php $this->endWidget(); ?>
 <?php $this->endWidget(); ?>
 
 <?php Yii::app()->getClientScript()->registerScript('linkToEvent', "
@@ -92,13 +96,36 @@
         withEvent = $('div.eventStartCityIds'),
         eventSelect = $('#eventId'),
         newEventField = $('#newEventName input'),
-        newEventModal = $('#newEventModal');
+        newEventModal = $('#newEventModal'),
+        newEventForm = $('#new-event-form'),
+        newEventFormErrors = newEventForm.find('.errors'),
+        eventsInformation = false,
+        veryFirstDate = $('.startDate').eq(0);
 
     newEventModal.on('hidden', function () {
          if (eventSelect.val() == '" . Event::NEW_EVENT_ITEM . "')
          {
             eventSelect.val('" . Event::NO_EVENT_ITEM . "');
          }
+    });
+
+    newEventForm.on('submit', function(e) {
+        var data = newEventForm.serialize();
+        e.preventDefault();
+        $.ajax({
+            url: '/event/event/add',
+            type: 'POST',
+            dataType: 'json',
+            data: data
+            })
+        .done(function(response) {
+            newEventFormErrors.addClass('hide');
+            refreshEventsInformation(response.id);
+            newEventModal.modal('hide');
+        })
+        .error(function(response) {
+            newEventFormErrors.html(response.statusText).removeClass('hide');
+        });
     });
 
     function toggleCitiesWidget()
@@ -124,5 +151,45 @@
         }
     }
 
-    eventSelect.change(toggleCitiesWidget).trigger('change');
+    function refreshEventsInformation(newEventId)
+    {
+        $.ajax({
+            url: '/event/event/getAllEvents',
+            dataType: 'json',
+            })
+        .done(function(response) {
+            eventsInformation = response;
+            refreshEventSelector();
+            eventSelect.val(newEventId);
+            changeStartDate();
+        })
+        .error(function(response) {
+            console.log(response);
+        });
+    }
+
+    function refreshEventSelector()
+    {
+        eventSelect.find('option:gt(1)').remove(); // remove old options
+        $.each(eventsInformation, function(key, el) {
+            eventSelect.append($('<option></option>')
+                .attr('value', el.id).data('startdate',el.startDate).text(el.title));
+        });
+    }
+
+    function changeStartDate()
+    {
+        var selectedStartDate = eventSelect.find(':selected').data('startdate');
+        if (veryFirstDate.data('changed')!=1)
+            veryFirstDate.val(selectedStartDate);
+    }
+
+    function handleEventChange()
+    {
+        toggleCitiesWidget();
+        changeStartDate();
+    }
+
+    refreshEventsInformation(" . Event::NO_EVENT_ITEM . ");
+    eventSelect.change(handleEventChange).trigger('change');
 "); ?>

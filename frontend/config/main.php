@@ -72,6 +72,9 @@ return CMap::mergeArray(
                     'viewer' => 'site.common.modules.tour.controllers.FrontendViewerController',
                 )
             ),
+            'event' => array(
+                'class'=>'site.frontend.modules.event.EventModule'
+            ),
             'sandbox' => array(
 
             ),
