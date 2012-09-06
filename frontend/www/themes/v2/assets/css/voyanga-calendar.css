@@ -70,7 +70,7 @@
     overflow: hidden;
     overflow-y: visible;
     color: #1c1f24;
-    border-left: 1px solid #D7D7D8;
+    padding-left: 1px;
 }
 .calendarUnscrollVoyanga{
     width: 100%;
