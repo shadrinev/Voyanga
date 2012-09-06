@@ -69,6 +69,14 @@
 .ticket-items .content .airlines div span {
 	font-size: 12px;
 }
+
+.airlinesLogo {
+	left: -105px;
+    position: absolute;
+    text-align: center;
+    top: 31px;
+    width: 100px;
+}
 .ticket-items .content .buy-ticket {
 	width: 160px; height: 100%;
 	background: url(../images/dashed-ticket.png) repeat-y left top;
@@ -192,15 +200,15 @@
     white-space: nowrap;
 }
 .ticket-items .content .center-ticket .line-two-ticket {
-    background: url("../images/line-two-ticket.png") no-repeat scroll left 0 transparent;
+    background: url("../images/line-two-ticket.png") no-repeat scroll -11px 0 transparent;
     height: 13px;
-    margin-left: -5px;
+    margin-left: -120px;
     margin-right: -5px;
     position: relative;
     z-index: 205;
 }
 .ticket-items .content .center-ticket .line-two-ticket .end {
-    background: url("../images/line-two-ticket.png") no-repeat scroll right 0 transparent;
+   	background: url("../images/line-two-ticket.png") no-repeat scroll right 0 transparent;
     height: 13px;
     position: absolute;
     right: 0;
@@ -218,7 +226,7 @@
 .ticket-items .content .center-ticket .line-two-ticket .l {
 	background: url("../images/line-two-ticket.png") no-repeat scroll 0 -20px transparent;
     height: 13px;
-    left: -115px;
+    left: 0;
     position: absolute;
     top: 0;
     width: 9px;
