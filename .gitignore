@@ -8,10 +8,10 @@
 /protected/config/local.php
 
 # specific config for local development
-/frontend/config/params-local.php
-/frontend/config/main-local.php
-/backend/config/params-local.php
-/common/config/params-local.php
+/frontend/config/*-local.php
+/frontend/config/*-local.php
+/backend/config/*-local.php
+/common/config/*-local.php
 
 node_modules
 
