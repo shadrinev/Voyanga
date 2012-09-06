@@ -269,11 +269,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 <div class="ticket-items" data-bind="visible: visible()">
 <div class="content">
 <div class="airlines">
-    <div>
-        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
-        <br>
-        <span data-bind="text:airline">Россия</span>
-    </div>
+
 </div>
 <!-- END AIRLINES -->
 <div class="center-ticket">
@@ -331,6 +327,11 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     </div>
     <!-- END FINISH -->
     <div class="clear"></div>
+    <div class="airlinesLogo">
+        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+        <br>
+        <span data-bind="text:airline">Россия</span>
+    </div>
 </div>
 <!-- END DATE TIME CITY -->
 <!-- ko if: stacked() -->
@@ -416,6 +417,12 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     </div>
     <!-- END FINISH -->
     <div class="clear"></div>
+        <div class="airlinesLogo">
+        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+        <br>
+        <span data-bind="text:airline">Россия</span>
+    </div>
+
 </div>
 <!-- END DATE TIME CITY -->
 <!-- ko if:rtStacked -->
