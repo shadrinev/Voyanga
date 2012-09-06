@@ -121,7 +121,6 @@
 }
 .dayCellVoyanga.selectData .dayLabel {
 	padding-top: 13px;
-	color:  #198ACB !important;
 }
 .dayCellVoyanga.startMonth.selectData .dayLabel {
 	color: #198ACB !important;
@@ -221,4 +220,14 @@
     position: absolute;
     width: 9.43%;
     z-index: 20;
+}
+
+
+
+#voyanga-calendar.hotel .dayCellVoyanga.from .innerDayCellVoyanga {
+	background: url("../images/ico-hotel-to.png") no-repeat scroll 0 0 #f5e9e0;
+}
+#voyanga-calendar.hotel .dayCellVoyanga.selectData .innerDayCellVoyanga {
+	border-color: #fb7d20;
+	color: #fb7d20 !important;
 }
