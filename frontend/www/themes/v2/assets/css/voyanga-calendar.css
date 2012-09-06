@@ -214,3 +214,11 @@
 	background: #e8eaef;
 	color: #898f9a;
 }
+
+.knobUpAllMonth {
+	cursor: pointer;
+    height: 27px;
+    position: absolute;
+    width: 9.43%;
+    z-index: 20;
+}
