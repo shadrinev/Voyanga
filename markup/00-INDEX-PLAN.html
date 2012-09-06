@@ -37,20 +37,15 @@
 	<!-- HEAD -->
 	<div class="head">
 		<!-- CENTER BLOCK -->
-		<div class="center-block">
-		
-			<a href="/" class="logo">Voyanga</a>
-			
+		<div class="center-block">		
+			<a href="/" class="logo">Voyanga</a>			
 			<a href="/" class="about">О проекте</a>
-			
 			<div class="telefon">
 				<img src="images/tel.png">
-			</div>
-				
+			</div>				
 			<div class="slide-turn-mode">
 				<div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
-				<div class="bg-mask"></div>
-				
+				<div class="bg-mask"></div>				
 				<ul>
 					<li class="planner active btn"><a href="#">Планировщик</a></li>
 					<li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
@@ -58,76 +53,86 @@
 					<li class="finish-stages btn"><a href="#">Готовые туры</a></li>
 				</ul>
 			</div>
-			
-			<!--
-<div class="login-window full">
-				<a href="#">
-					<span class="text">Регистрация и вход</span>
-					<span class="point"></span>
-				</a>
-			</div>
--->
 		</div>
 		<!-- END CENTER BLOCK -->
 	</div>
 	<!-- END HEAD -->
 <!--====**********===-->
-
 <!-- PANEL -->
 <div class="panel-index">
 
-	<div class="board">
+	<div class="board" style="height: 140px;">
+	
+		<div class="constructor">	
 		
-		<div class="constructor">
-		
-		<!-- BOARD CONTENT -->
+			<!-- BOARD CONTENT -->
+			<div class="board-content start">
+				<div class="panel">
+					<table class="panelTable">
+						<tr>
+							<td class="contTD">
+								<div class="cityStart">
+									<div class="to">
+										Старт из:
+										<a href="#"><span>Санкт-Петербург</span></a>
+									</div>
+									<div class="input-to">
+										<input type="text" placeholder="Амстердам" class="input-path" style="width:240px;">
+									</div>
+								</div>
+								<div class="data active">
+									<input type="text" placeholder="Амстердам" class="input-path">
+									<div class="date">
+										<span class="f17">12</span>
+										<br>
+										мая
+									</div>
+									<div class="date">
+										<span class="f26">?</span>
+									</div>
+								</div>
+																												
+								</div>
+							</td>
+							<td class="btnTD">
+								
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!-- END BOARD CONTENT -->
+			<!-- BOARD CONTENT -->
 			<div class="board-content new">
 				<div class="deleteTab"></div>
 				<div class="panel">
 					<table class="panelTable">
 						<tr>
 							<td class="contTD">
-									<div class="data">
-										<input class="input-path" type="text" placeholder="Куда">
-											<div class="tumblr">
-												<label for="there-back">
-													<div class="one"></div>
-													<div class="two"></div>
-													<div class="switch"></div>
-												</label>
-												<input id="there-back" type="checkbox" checked="checked">
-											</div>
-										<input class="input-path" type="text" placeholder="Откуда">
-									</div>								
-								<div class="how-many-man">
-								<div class="content"><div class="man"></div></div>
-								<div class="btn"></div>
-								<div class="popup">
-									<div class="adults">
-										<div class="inputDIV">
-											<input type="text" value="1" name="adult" class="active">
-												<a href="#" class="plusOne">+</a>
-												<a href="#" class="minusOne">-</a>
-										</div>
-										взрослых
+								<div class="cityStart"></div>
+								<div class="data">
+									<input type="text" placeholder="Город" class="input-path">
+									<div class="date">
+										<span class="f17">12</span>
+										<br>
+										мая
 									</div>
-									<div class="childs">
-										<div class="inputDIV">
-											<input type="text" value="0" name="adult2">
-												<a href="#" class="plusOne">+</a>
-												<a href="#" class="minusOne">-</a>
-										</div>
-										детей до 12 лет
+									<div class="date">
+										<span class="f26">?</span>
 									</div>
-									<div class="small-childs">
-										<div class="inputDIV">
-											<input type="text" value="0" name="adult3">
-												<a href="#" class="plusOne">+</a>
-												<a href="#" class="minusOne">-</a>
-										</div>
-										детей до 2 лет
-									</div>
-									
+								</div>
+								<a href="#" class="add-tour"></a>
+								<div class="how-many-man hotel">
+									<!-- ko foreach: rooms -->
+										<!-- ko foreach: $data -->	
+											<div class="content">
+												<span class="num" data-bind="text: $index() + 1"></span>
+								                <div class="man" data-bind="repeat: adults"></div>
+								                <div class="child" data-bind="repeat: children"></div>
+											</div>	
+										<!-- /ko -->
+									<!-- /ko -->
+									<div class="btn"></div>																						
 								</div>
 							</td>
 							<td class="btnTD">
@@ -139,7 +144,7 @@
 			</div>
 			<!-- END BOARD CONTENT -->
 			
-			<div class="fly-ico"></div>
+			<div class="constructor-ico"></div>
 			
 		</div>
 		
@@ -147,78 +152,6 @@
 		<div class="rightPageBtn"></div>
 		
 	</div>
-
-
-
-<!--
-	<div class="sub-head">
-
-		<div class="fly-panel">
-			<div class="center-block">
-
-				<div class="panel">
-				
-					<div class="path">
-					<div class="data">
-						<input class="input-path" type="text" placeholder="Куда">
-							<div class="tumblr">
-								<label for="there-back">
-									<div class="one"></div>
-									<div class="two"></div>
-									<div class="switch"></div>
-								</label>
-								<input id="there-back" type="checkbox" checked="checked">
-							</div>
-						<input class="input-path" type="text" placeholder="Откуда">
-					</div>
-					<div class="how-many-man">
-						<div class="content"></div>
-						<div class="btn"></div>
-						<div class="popup">
-							<div class="adults">
-								<div class="inputDIV">
-									<input type="text" value="1" name="adult" class="active">
-										<a href="#" class="plusOne">+</a>
-										<a href="#" class="minusOne">-</a>
-								</div>
-								взрослых
-							</div>
-							<div class="childs">
-								<div class="inputDIV">
-									<input type="text" value="0" name="adult2">
-										<a href="#" class="plusOne">+</a>
-										<a href="#" class="minusOne">-</a>
-								</div>
-								детей до 12 лет
-							</div>
-							<div class="small-childs">
-								<div class="inputDIV">
-									<input type="text" value="0" name="adult3">
-										<a href="#" class="plusOne">+</a>
-										<a href="#" class="minusOne">-</a>
-								</div>
-								детей до 2 лет
-							</div>
-							
-						</div>
-					</div>
-					
-						<a class="btn-find">Найти</a>
-				</div>
-	
-				</div>
-		
-			</div>
-			<div class="fly-ico"></div>
-		</div>
-
-		
-		<div class="navi-l"></div>
-		<div class="navi-r"></div>
-	</div>	
-
-	
--->
 	
 <div class="calenderWindow">	
 	<div class="calendarSlide">
@@ -248,10 +181,7 @@
 		</div>
 	</div>
 </div>
-
-	
 	<div class="footer">
-
 			<ul class="foot-menu">
 				<li><a href="#">О проекте</a></li>
 				<li><a href="#">Вопросы и ответы</a></li>
@@ -260,7 +190,6 @@
 	</div>
 </div>
 <!-- END PANEL-->
-
 <!-- MAPS -->
 <div class="maps">
 	<img src="images/map-index.png" width="100%" height="100%">

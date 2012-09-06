@@ -1,3 +1,10 @@
+.calenderWindow {
+	overflow: hidden;
+	position: absolute;
+	top: 70px;
+	width: 100%;
+	height: 341px;
+}
 .bg-Calendar {
 	background: url(../images/bg-calendar.png) repeat-x 0 -1px;
 }
@@ -7,7 +14,7 @@
 .calendarSlide {
 	background: url("../images/bg-calendare-head.png") repeat-x scroll 0 0 transparent;
     position: absolute;
-    top: 106px;
+    top: 0px;
     width: 100%;
     z-index: 1;
 }
@@ -104,12 +111,12 @@
     font-size: 23px;
 }
 .dayCellVoyanga.to .innerDayCellVoyanga {
-	background: url("../images/ico-fly-to.png") no-repeat scroll 0 0 #E1E8EC;
-}
-.dayCellVoyanga.from .innerDayCellVoyanga {
 	background: url("../images/ico-fly-from.png") no-repeat scroll 0 0 #E1E8EC;
 }
-.dayCellVoyanga.to-from .innerDayCellVoyanga {
+.dayCellVoyanga.from .innerDayCellVoyanga {
+	background: url("../images/ico-fly-to.png") no-repeat scroll 0 0 #E1E8EC;
+}
+.dayCellVoyanga.from.to .innerDayCellVoyanga {
 	background: url("../images/ico-fly-to-from.png") no-repeat scroll 0 0 #E1E8EC;
 }
 .dayCellVoyanga.selectData .dayLabel {
@@ -201,4 +208,8 @@
 }
 .weekEnd {
 	color: #e50808;
+}
+.dayCellVoyanga.inactive {
+	background: #e8eaef;
+	color: #898f9a;
 }

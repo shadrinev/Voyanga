@@ -95,3 +95,15 @@
 	z-index: 100;
 	margin-right: 3px;
 }
+.btn-find {
+    background: url("../images/slice.png") no-repeat scroll -122px -1014px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 47px;
+    text-indent: -9999px;
+    width: 83px;
+    vertical-align: middle;
+}
+.btn-find:hover {
+	background-position: -122px -1061px;
+}

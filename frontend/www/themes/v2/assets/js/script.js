@@ -187,6 +187,23 @@ $(function() {
 	$('.calendarSlide').css('top','-'+heCal+'px');
 
 	$('.input-path').click(function() {
-		$('.calendarSlide').animate({'top' : '70px'}, 400);
+		$('.calendarSlide').animate({'top' :  '0px'}, 400);
+	});
+	
+	
+	$('.cityStart a').click(function() {
+		$(this).parent().parent().parent().find('.data .input-path').addClass('small').animate({'width' : '100px'},500);
+		$(this).parent().parent().animate({'width' : '267px'},500);
+		$(this).parent().hide();
+		$(this).parent().parent().find('.input-to').show();
+		$(this).parent().parent().find('.input-to').find('input').focus();
+	});
+	$('.board-content.start .data .input-path').click(function() {
+		if($(this).hasClass('small')) {
+			$(this).removeClass('small').animate({'width' : '252px'},500);
+			$(this).parent().parent().find('.cityStart').animate({'width' : '115px'},500);
+			$(this).parent().parent().find('.cityStart').find('.input-to').hide();
+			$(this).parent().parent().find('.cityStart').find('.to').show();
+		}
 	});
 });

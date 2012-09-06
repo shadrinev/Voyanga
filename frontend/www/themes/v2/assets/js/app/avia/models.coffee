@@ -1,11 +1,40 @@
+# FIXME use mixins for most getters(?)
+
+# Atomic journey unit.
+class FlightPart
+  constructor: (part)->
+    @departureDate = new Date(part.datetimeBegin)
+    @arrivalDate = new Date(part.datetimeEnd)
+    @departureCity = part.departureCity
+    @departureAirport = part.departureAirport
+    @arrivalCity = part.arrivalCity
+    @arrivalCityPre = part.arrivalCityPre
+    @arrivalAirport = part.arrivalAirport
+    @_duration = part.duration
+    @transportAirline = part.transportAirline
+    @flightCode = part.transportAirline + ' ' + part.flightCode
+
+  departureTime: ->
+    dateUtils.formatTime @departureDate
+
+  arrivalTime: ->
+    dateUtils.formatTime @arrivalDate
+
+  duration: ->
+    dateUtils.formatDuration @_duration
+
 class Voyage #Voyage Plus loin que la nuit et le jour
   constructor: (flight) ->
-    @parts = flight.flightParts
+    # Wrap flight parts in model
+    @parts = []
+    for part in flight.flightParts
+      @parts.push new FlightPart(part)
+
     @direct = @parts.length == 1
 
     # FIXME is this  utc?
     @departureDate = new Date(flight.departureDate)
-    @arrivalDate = new Date(@parts[@parts.length-1].datetimeEnd)
+    @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
 
     @_duration = flight.fullDuration
 
@@ -15,12 +44,16 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     @departureCity = flight.departureCity
     @arrivalCity = flight.arrivalCity
 
+    @departureCityPre = flight.departureCityPre
+    @arrivalCityPre = flight.arrivalCityPre
+
+
     @_backVoyages = []
     @activeBackVoyage = ko.observable()
 
   # returns our sort key
   departureInt: ->
-    @departureDate.getHours()*60+@departureDate.getMinutes()
+    @departureDate.getTime()
 
   # Helper function, returns hash to check equality for first flight
   hash: ->
@@ -34,42 +67,28 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     @_backVoyages.length > 1
 
   departureDayMo: ->
-    dateUtils.formatDayMonth(@departureDate)
+    dateUtils.formatDayMonth @departureDate
+
+  departurePopup: ->
+    dateUtils.formatDayMonthWeekday @departureDate
 
   departureTime: ->
-    result = ""
-    result+= @departureDate.getHours()
-    result+=":"
-    minutes = @departureDate.getMinutes().toString()
-    if minutes.length == 1
-      minutes = "0" + minutes
-    result+= minutes
+    dateUtils.formatTime @departureDate
 
   arrivalDayMo: ->
-    dateUtils.formatDayMonth(@arrivalDate)
+    dateUtils.formatDayMonth @arrivalDate
 
   arrivalTime: ->
-    result = ""
-    result+= @arrivalDate.getHours()
-    result+=":"
-    minutes = @arrivalDate.getMinutes().toString()
-    if minutes.length == 1
-      minutes = "0" + minutes
-    result+= minutes
+    dateUtils.formatTime @arrivalDate
 
 
-  fullDuration: ->
-    # LOL!
-    all_minutes = @_duration / 60
-    minutes = all_minutes % 60
-    hours = (all_minutes - minutes) / 60
-    hours + " ч. " + minutes + " м."
-
+  duration: ->
+    dateUtils.formatDuration @_duration
 
   stopoverText: ->
     result = []
     for part in @parts[0..-2]
-      result.push part.arrivalCity
+      result.push part.arrivalCityPre
     result.join(', ')
 
   stopsRatio: ->
@@ -95,6 +114,10 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 #
 class Result
   constructor: (data) ->
+    # Mix in events
+    _.extend @, Backbone.Events
+
+
     flights = data.flights
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)
@@ -112,8 +135,8 @@ class Result
     @activeVoyage = ko.observable(@activeVoyage)
 
     # Generate proxy getters
-    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureTime', 'arrivalCity',
-              'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'fullDuration', 'direct', 'stopoverText',
+    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity',
+              'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText',
               'hash', 'stopsRatio']
 
     for name in fields
@@ -177,9 +200,11 @@ class Result
     @voyages.push newVoyage
 
   chooseStacked: (voyage) =>
+    window.voyanga_debug "Choosing stacked voyage", voyage
     @activeVoyage(voyage)
 
   chooseRtStacked: (voyage) =>
+    window.voyanga_debug "Choosing RT stacked voyage", voyage
     @activeVoyage().activeBackVoyage(voyage)
 
   rtVoyages: ->
@@ -193,9 +218,24 @@ class Result
 
   # Shows popup with detailed info about given result
   showDetails: =>
+    window.voyanga_debug "Setting popup result", @
+    @trigger "popup", @
+    $('body').prepend('<div id="popupOverlay"></div>')
+
     $('#body-popup').show()
     SizeBox();
     ResizeBox();
+
+    $('#popupOverlay').click =>
+      @closeDetails()
+
+  # Hide popup with detailed info about given result
+  closeDetails: =>
+    window.voyanga_debug "Hiding popup"
+    $('#body-popup').hide()
+    $('#popupOverlay').remove()
+
+
 
 #
 # Result container
@@ -210,7 +250,10 @@ class ResultSet
       if @_results[key]
         @_results[key].push flightVoyage
       else
-        @_results[key] = new Result flightVoyage
+        result =  new Result flightVoyage
+        @_results[key] = result
+        result.on "popup", (data)=>
+          @popup data
 
     @cheapest = ko.observable()
     # We need array for knockout to work right
@@ -264,6 +307,9 @@ class ResultSet
       result.sort()
 
     @update_cheapest()
+
+    # Flight to show in popup
+    @popup = ko.observable @cheapest()
 
   update_cheapest: ->
     # FIXME 0 items
