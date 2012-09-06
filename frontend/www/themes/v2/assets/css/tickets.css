@@ -64,9 +64,6 @@
 	position: absolute;
 	width: 120px;
 }
-.ticket-items .content .airlines div img {
-	height: 35px;
-}
 .ticket-items .content .airlines div br {
 	display: none;
 }
