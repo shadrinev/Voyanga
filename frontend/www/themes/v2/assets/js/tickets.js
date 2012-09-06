@@ -54,7 +54,7 @@ function widthHowLong() {
 			var_dataTimeCity.css('min-height', var_heightStart+'px');
 			var_widthStart = var_start.width();
 			var_widthFinish = var_finish.width();
-			var_dataTimeCity.css('padding-left', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px').css('padding-right', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px');
+			var_dataTimeCity.css('padding-left', (var_widthStart + var_marginHowLong + var_paddingDateTime) + 'px').css('padding-right', (var_widthFinish + var_marginHowLong + var_paddingDateTime) + 'px');
 			var_dataTimeCity.find('.how-long').css('width', var_dataTimeCity.width()+'px');
 		}
 		else {
@@ -158,14 +158,6 @@ function smallCityNames(simMaxBig, obj) {
 	}
 }
 */
-function allRememberName(obj) {
-	$(obj).each(function() {
-		var var_smallName = $(this);
-		var var_name = var_smallName.text();
-			var_name = var_name.replace(/\s+/g,'');
-		$(this).attr('rel', var_name);
-	});
-}
 // ОТВЕЧАЕТ ЗА СЛАЙДЕР НА МАЛЕНЬКОМ БИЛЕТЕ!
 function inTheTwoLines() {
 	var var_otherTime = $('.recommended-ticket .ticket-items .other-time');
@@ -257,18 +249,14 @@ function otherTimeSlide() {
 
 function resizeAllWindow() {
 	inTheTwoLines();
-	widthHowLong();
+//	widthHowLong();
 }
 $(window).resize(resizeAllWindow);
 $(window).load(inTheTwoLines);
 $(window).load(otherTimeSlide);
-$(window).load(widthHowLong);
+//$(window).load(widthHowLong);
 $(window).load(centerBuyTikets);
 $(window).load(minimizeListTime);
 function ResizeTicket() {
 	$(window).resize(centerBuyTikets);
 }
-$(function() {
-	allRememberName('.city');
-	allRememberName('.airport');
-});

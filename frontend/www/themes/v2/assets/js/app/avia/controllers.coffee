@@ -37,7 +37,6 @@ class AviaController
     @render 'results', {'results' :stacked}
     @trigger "sidebarChanged", 'filters', {'firstNameN': [], 'lastNameN': [], 'fullNameN': [], 'results' :stacked}
 
-
   indexAction: =>
     @render 'index', {}
 

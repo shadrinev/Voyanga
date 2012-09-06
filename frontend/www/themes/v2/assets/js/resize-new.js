@@ -35,6 +35,7 @@ var var_widthMainBlockMIN = 530;
 
 
 function ResizeCenterBlock() {
+    console.log("CENTER")
 	var block = $('.center-block');
 	var isset = block.length;
 	if (isset) {
@@ -52,18 +53,18 @@ function ResizeCenterBlock() {
 		var var_hotelItems = $('.hotels-tickets');
 		var var_calendarGridVoyanga = $('.calendarGridVoyanga');
 		var var_descrItems = $('#descr');
-		var widthLeftBlock, 
-			widthMainBlock, 
-			widthFilterBlock, 
-			paddingLeftLogo = 32, 
-			leftTopPadding, 
-			paddingRightSlide, 
+		var widthLeftBlock,
+			widthMainBlock,
+			widthFilterBlock,
+			paddingLeftLogo = 32,
+			leftTopPadding,
+			paddingRightSlide,
 			paddingLeftTel,
 			marginLeftMain,
 			marginLeftFilter,
 			marginLeftMainBlock,
 			marginRightMainBlock,
-			marginRightFilterBlock, 
+			marginRightFilterBlock,
 			marginLeftLeftBlock,
 			var_margin,
 			marginRightContent,
@@ -72,46 +73,46 @@ function ResizeCenterBlock() {
 			var_widthDescrLeft,
 			var_widthStreet,
 			widthLogin;
-			
+
 		var widthWindow = $(window).width();
 		var heightWindow = $(window).height();
 		var widthBlock = block.width();
 		var heightHead = var_head.height();
 		var pos = block.eq(0).offset();
-		
+
 		var var_leftBlockIsset = var_leftBlock.length > 0 && var_leftBlock.is(':visible');
 		var var_mainBlockIsset = var_mainBlock.length > 0 && var_mainBlock.is(':visible');
 		var var_filterBlockIsset = var_filterBlock.length > 0 && var_filterBlock.is(':visible');
 		var var_calendarGridVoyangaIsset = var_calendarGridVoyanga.length > 0 && var_calendarGridVoyanga.is(':visible');
-		
+
 		var var_descrIsset = var_descrItems.length > 0 && var_descrItems.is(':visible');
-		
+
 		if (! var_leftBlockIsset &&  ! var_filterBlockIsset && var_mainBlockIsset) {
 			if (widthBlock >= var_widthMAX) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
-				marginLeftMainBlock = 'auto';	
+				marginLeftMainBlock = 'auto';
 				marginRightMainBlock = 'auto';
-				
+
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
 			}
-			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) { 
+			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
-				marginLeftMainBlock = 'auto';	
+				marginLeftMainBlock = 'auto';
 				marginRightMainBlock = 'auto';
-				
+
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
-				marginLeftMainBlock = 'auto';	
+				marginLeftMainBlock = 'auto';
 				marginRightMainBlock = 'auto';
-				
-				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
-				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
+
+				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );
+				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
 			}
 		}
@@ -120,14 +121,14 @@ function ResizeCenterBlock() {
 				widthMainBlock = var_widthMiddleBlockMAX;
 				widthFilterBlock = var_widthFilterMAX;
 				var_margin = Math.floor((widthBlock - (widthMainBlock + widthFilterBlock)) / 2)
-				marginLeftMainBlock = var_margin;	
+				marginLeftMainBlock = var_margin;
 				marginRightMainBlock = widthFilterBlock + var_margin;
 				marginRightFilterBlock = var_margin;
-				
+
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
-				
+
 				widthContent = var_widthMainBlockMAX;
 				marginLeftContent = 'auto';
 				marginRightContent = 'auto';
@@ -136,14 +137,14 @@ function ResizeCenterBlock() {
 				widthMainBlock = Math.floor(var_widthMiddleBlockMID + ((widthBlock - var_widthMID) / 1));
 				widthFilterBlock = var_widthFilterMID;
 				var_margin = Math.floor((widthBlock - (widthMainBlock + widthFilterBlock)) / 2)
-				marginLeftMainBlock = var_margin;	
+				marginLeftMainBlock = var_margin;
 				marginRightMainBlock = widthFilterBlock + var_margin;
 				marginRightFilterBlock = var_margin;
-				
+
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
-				
+
 				widthContent = var_widthMainBlockMAX;
 				marginLeftContent = 'auto';
 				marginRightContent = 'auto';
@@ -156,85 +157,85 @@ function ResizeCenterBlock() {
 					widthMainBlock = var_widthMiddleBlockMID
 				}
 				var_margin = Math.floor((widthBlock - (widthMainBlock + widthFilterBlock)) / 2)
-				marginLeftMainBlock = var_margin;	
+				marginLeftMainBlock = var_margin;
 				marginRightMainBlock = widthFilterBlock + var_margin;
 				marginRightFilterBlock = var_margin;
-				
-				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
-				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
+
+				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );
+				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
-				
+
 				widthContent = var_widthMainBlockMAX;
 				marginLeftContent = 'auto';
 				marginRightContent = 'auto';
 			}
 		}
-		
+
 		else if (var_leftBlockIsset &&  var_filterBlockIsset && var_mainBlockIsset) {
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockMAX;
 				widthFilterBlock = var_widthFilterMAX;
 				var_margin = Math.floor((widthBlock - (widthMainBlock + widthFilterBlock + widthLeftBlock)) / 2);
-				marginLeftMainBlock = widthLeftBlock;	
+				marginLeftMainBlock = widthLeftBlock;
 				marginRightMainBlock = widthFilterBlock;
 				marginRightFilterBlock = 0;
 				marginLeftLeftBlock = 0;
-				
+
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
-				
+
 				widthContent = var_widthMainBlockMAX;
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthLeftBlock = var_widthLeftBlockMID;
 				widthMainBlock = Math.floor(var_widthMiddleBlockMID + ((widthBlock - var_widthMID) / 1));
 				widthFilterBlock = var_widthFilterMID;
-				marginLeftMainBlock = widthLeftBlock;	
+				marginLeftMainBlock = widthLeftBlock;
 				marginRightMainBlock = widthFilterBlock;
 				marginRightFilterBlock = 0;
 				marginLeftLeftBlock = 0;
-				
+
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
-				
+
 				widthContent = var_widthMainBlockMAX;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
-				widthMainBlock = Math.floor(var_widthMiddleBlockMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthMiddleBlockMID - var_widthMiddleBlockMIN))) );		
+				widthMainBlock = Math.floor(var_widthMiddleBlockMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthMiddleBlockMID - var_widthMiddleBlockMIN))) );
 				widthFilterBlock = Math.floor(var_widthFilterMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthFilterMID - var_widthFilterMIN))) );
-				
-				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
-				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
+
+				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );
+				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
 
-				marginLeftMainBlock = widthLeftBlock;	
+				marginLeftMainBlock = widthLeftBlock;
 				marginRightMainBlock = widthFilterBlock;
 				marginRightFilterBlock = 0;
 				marginLeftLeftBlock = 0;
-				
+
 				widthContent = Math.floor(var_widthMainBlockMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthMainBlockMAX - var_widthMainBlockMIN))) );
 			}
 		}
-		
+
 		else if (var_leftBlockIsset && var_mainBlockIsset &&  ! var_filterBlockIsset ) {
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockOneMAX;
 				var_margin = 80;
-				marginRightMainBlock = var_margin;	
+				marginRightMainBlock = var_margin;
 				marginLeftMainBlock = widthLeftBlock + var_margin;
 				marginLeftLeftBlock = 0;
-				
+
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
-				
+
 				marginLeftContent = 0;
-				widthContent = widthMainBlock - marginLeftContent;				
+				widthContent = widthMainBlock - marginLeftContent;
 				marginRightContent = 0;
 				var_widthDescrLeft = 587;
 				var_widthStreet = 'auto'
@@ -243,72 +244,72 @@ function ResizeCenterBlock() {
 				widthMainBlock = Math.floor(910 + ( (widthBlock - var_widthMID) / (var_valueMAX / (935 - 910))) );
 				widthLeftBlock = var_widthLeftBlockMID;
 				var_margin = Math.floor(30 + ( (widthBlock - var_widthMID) / (var_valueMAX / (80 - 30))) );
-				marginRightMainBlock = var_margin;	
+				marginRightMainBlock = var_margin;
 				marginLeftMainBlock = widthLeftBlock + var_margin;
 				marginLeftLeftBlock = 0;
-				
+
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
-			
+
 				marginLeftContent = 0;
 				widthContent = widthMainBlock - marginLeftContent;
-							
+
 				marginRightContent = 0;
 				var_widthDescrLeft = Math.floor(557 + ((widthBlock - var_widthMID) / (var_valueMAX / (587 - 557))) );
 				var_widthStreet = 'auto'
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
-	
+
 				widthMainBlock = Math.floor(685 + ( (widthBlock - var_widthMIN) / (var_valueMIN / (910 - 685))) );
-				
+
 				var_margin = 30;
-				marginRightMainBlock = var_margin;	
+				marginRightMainBlock = var_margin;
 				marginLeftMainBlock = widthLeftBlock + var_margin;
 				marginLeftLeftBlock = 0;
-				
-				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
-				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
+
+				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );
+				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
 
 				marginLeftContent = 0;
-				widthContent = widthMainBlock - marginLeftContent;					
+				widthContent = widthMainBlock - marginLeftContent;
 				marginRightContent = 0;
-				
+
 				var_widthDescrLeft = Math.floor(335 + ((widthBlock - var_widthMIN) / (var_valueMIN / (557 - 335))) );
-				
+
 				var_widthStreet = '210px';
 			}
 		}
 		else {
 			if (widthBlock >= var_widthMAX) {
 
-				
+
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
-				
+
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
-			
-				
+
+
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
-			
-			
+
+
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
-				
-				
-				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );	
-				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );		
+
+
+				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );
+				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
 
 			}
 		}
-		
+
 		/*===*/
 		if (var_mainBlockIsset) {
 			var_mainBlock.css('width', widthMainBlock+'px').css('margin-left', marginLeftMainBlock+'px').css('margin-right', marginRightMainBlock+'px');
@@ -331,10 +332,10 @@ function ResizeCenterBlock() {
 			$('#descr').find('.photo-slide-hotel').css('width', var_widthDescrLeft+'px');
 			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
 			$('#content .place-buy .street').css('width', var_widthStreet);
-			
+
 		}
 		if ($('.description .text').length > 0 && $('.description .text').is(':visible')) {
-			$(".description .text").dotdotdot({watch: 'window'});	
+			$(".description .text").dotdotdot({watch: 'window'});
 		}
 		/*===*/
 		var_logoBlock.css('left', paddingLeftLogo+'px');
@@ -342,7 +343,7 @@ function ResizeCenterBlock() {
 		var_slideBlock.css('right', paddingRightSlide +'px');
 		var_leftBlock.find('.left-content').css('margin-left', paddingLeftLogo+'px');
 		var_telefonBlock.css('left', paddingLeftTel+'px');
-		
+
 		if (widthContent < 695) {
 			var mathWidthRicket = Math.floor(253 + ((widthBlock - var_widthMIN) / (var_valueMIN / (318 - 253))) );
 			$('.recommended-ticket').css('width', mathWidthRicket+'px');
@@ -368,7 +369,7 @@ function ResizeCenterBlock() {
 			var_recomendedItems.css('width', var_widthMainBlockMAX+'px');
 			var_recomendedItems.find('h1').find('span').show();*/
 		}
-		
+
 		/*
 		if(var_hotelItems.length > 0 && var_hotelItems.is(':visible')) {
 			if (var_ticketsItems.width() < 650) {
@@ -396,8 +397,8 @@ function smallTicketHeight() {
 		var var_recomendedContent = $('.recomended-content');
 	 	var var_oneHeight = var_recomendedContent.find('.recommended-ticket .ticket-items').height();
 	 	var var_twoHeight = var_recomendedContent.find('.prices-of-3days .ticket').height();
-	 	
-	 	if ((var_oneHeight - 19)!= var_twoHeight) {			
+
+	 	if ((var_oneHeight - 19)!= var_twoHeight) {
 			var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items');
 			var heightOneTicket = var_recomendedContent.find('.recommended-ticket')[0].clientHeight;
 				heightOneTicket += 2;
@@ -409,7 +410,7 @@ function smallTicketHeight() {
 				var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices').css('height', heightTwoTicket +'px');
 				var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li').css('height', heightTwoTicket +'px');
 			var heightGraf = heightTwoTicket - 45;
-			
+
 			if (heightGraf < 100) {
 				var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
 			}
@@ -426,7 +427,7 @@ function loginResize() {
 	else {
 		$('.login-window a .text').hide();
 			$('.login-window').css('width','40px');
-	}	
+	}
 }
 
 
@@ -452,11 +453,11 @@ function resizeLeftStage() {
 	else {
 		leftStage.find('.path').css('width', leftPadding+'px');
 	}
-	
+
 }
 function resizeMainStage() {
 	var var_this = $('.recomended-content').find('.prices-of-3days');
-		
+
 	var var_widthChange = $('.recomended-content').find('.recommended-ticket').width();
 	if (var_widthChange < 318) {
 		var var_widthOneLi = var_widthChange / 7;
@@ -472,12 +473,12 @@ function resizeMainStage() {
 	else {
 		var_this.find('.schedule-of-prices').css('width', '318px');
 		var_this.find('.schedule-of-prices li').css('width', '45px');
-		var_this.css('width', '318px');	
+		var_this.css('width', '318px');
 		var_this.find('.total-td').css('margin-left','0px');
 		var_this.find('.look-td').css('margin-right','0px');
 		var_this.find('.total-td .text').show();
 	}
-	
+
 	if (var_widthChange < 290 && var_widthChange > 280) {
 		var_this.find('.schedule-of-prices li').find('.price').css('left','-1px');
 	}
@@ -508,11 +509,12 @@ function AlphaBackground() {
 function ResizeFun() {
 	ResizeCenterBlock();
 	loginResize();
+    widthHowLong();
 	$(window).resize(ResizeCenterBlock);
 	$(window).resize(loginResize);
 }
 $(window).load(AlphaBackground);
-$(window).load(ResizeFun);
+//$(window).load(ResizeFun);
 
 $(function() {
 	$(window).load(function() {

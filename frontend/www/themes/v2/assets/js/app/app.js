@@ -68,6 +68,11 @@ Application = (function(_super) {
     return alert("Not found");
   };
 
+  Application.prototype.contentRendered = function() {
+    console.log("RENDERED");
+    return setTimeout(ResizeFun, 1000);
+  };
+
   return Application;
 
 })(Backbone.Router);

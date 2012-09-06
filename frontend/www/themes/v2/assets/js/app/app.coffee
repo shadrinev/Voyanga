@@ -44,6 +44,8 @@ class Application extends Backbone.Router
       @viewData(data)
       @_view(view)
 
+
+
     controller.on "sidebarChanged", (sidebar, data)=>
       @sidebarData data
       @_sidebar sidebar
@@ -74,6 +76,9 @@ class Application extends Backbone.Router
   http404: ->
     alert "Not found"
 
+  contentRendered: ->
+    console.log "RENDERED"
+    setTimeout(ResizeFun, 1000);
 
 $ ->
   window.voyanga_debug = (args...) ->
