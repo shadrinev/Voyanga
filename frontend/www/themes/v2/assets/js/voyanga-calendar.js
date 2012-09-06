@@ -140,6 +140,15 @@ VoyangaCalendarSlider = function(options){
             var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
         },
+        knobMove: function(){
+            //var xLeft = Math.round(this.jObj.find('.knobVoyanga').offset().left);
+            //var xRight = xLeft + Math.round(this.jObj.find('.knobVoyanga').width());
+            var pWidth = this.width;
+            var pLeft = this.knobPos;
+            this.jObj.find('.monthNameVoyanga').each(function(){
+                var pMonthLeft = $(this).css('');
+            });
+        },
         monthMouseUp: function(obj,e){
             if(!this.knobSlideAction)
             {
@@ -157,7 +166,7 @@ VoyangaCalendarSlider = function(options){
                         left: [newPos, 'easeOutCubic']
                     },
                     {
-                        duration: 1500,
+                        duration: 800,
                         step: function(now,fx){self.animateStep(now,fx);},
                         easing: 'easeOutCubic',
                         complete: function(){self.animateScrollAction = false;}
@@ -254,17 +263,17 @@ VoyangaCalendarStandart.onCellOver = function(obj,e){
         var cellDate = Date.fromIso(jCell.data('cell-date'));
         if(this.values.length == 1){
             if(cellDate < this.values[0]){
-                jCell.addClass('selectData from');
+                jCell.addClass('selectDay from');
             }else{
                 if(this.twoSelect){
-                    jCell.addClass('selectData to');
+                    jCell.addClass('selectDay to');
                 }else{
-                    jCell.addClass('selectData from');
+                    jCell.addClass('selectDay from');
                 }
             }
 
         }else{
-            jCell.addClass('selectData from');
+            jCell.addClass('selectDay from');
         }
         if(cellDate.getDate() == 1){
             jCell.addClass('startMonth');
@@ -277,17 +286,17 @@ VoyangaCalendarStandart.onCellOut = function(obj,e){
         var cellDate = Date.fromIso(jCell.data('cell-date'));
         if(this.values.length == 1){
             if(cellDate < this.values[0]){
-                jCell.removeClass('selectData from');
+                jCell.removeClass('selectDay from');
             }else{
                 if(this.twoSelect){
-                    jCell.removeClass('selectData to');
+                    jCell.removeClass('selectDay to');
                 }else{
-                    jCell.removeClass('selectData from');
+                    jCell.removeClass('selectDay from');
                 }
             }
 
         }else{
-            jCell.removeClass('selectData from');
+            jCell.removeClass('selectDay from');
         }
         if(cellDate.getDate() == 1){
             jCell.removeClass('startMonth');

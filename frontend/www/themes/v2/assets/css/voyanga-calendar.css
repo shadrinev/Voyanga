@@ -181,6 +181,7 @@
     position: absolute;
     z-index: 5;
     height: 27px;
+    cursor: pointer;
     border-radius: 0px 0px 8px 8px;
     background: url(../images/main-avia-route_03.png) repeat-x;
 }
