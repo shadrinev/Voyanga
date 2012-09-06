@@ -63,12 +63,11 @@
 .ticket-items .content .airlines div {
 	position: absolute;
 	width: 120px;
-}
-.ticket-items .content .airlines div br {
-	display: none;
+	line-height: 13px;
+	margin-top: 31px;
 }
 .ticket-items .content .airlines div span {
-	display: none;
+	font-size: 12px;
 }
 .ticket-items .content .buy-ticket {
 	width: 160px; height: 100%;
@@ -459,10 +458,14 @@
 }
 .recommended-ticket .ticket-items .content .airlines-line {
 	font-size: 20px;
-	padding-bottom: 10px;
+    overflow: hidden;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    width: 94%;
+    position: relative;
 }
 .recommended-ticket .ticket-items .content .airlines-line span {
-	display: none;
+	font-size: 16px;
 }
 .recommended-ticket .ticket-items .content .date-time-city {
 	position: relative;

@@ -76,7 +76,8 @@ function centerBuyTikets() {
 		var var_paddingTopTicket = ((var_heightBuyTicket - var_heightText) - 20) / 2;
 		var_buyTicket.css('margin-top', var_paddingTopTicket+'px');
 	});
-	$('.airlines').each(function() {
+	/*
+$('.airlines').each(function() {
 		var var_heightAllBlock = $(this).parent().height();
 
 		var var_airlines = $(this).find('div');
@@ -85,6 +86,7 @@ function centerBuyTikets() {
 		var var_paddingTopTicket = ((var_heightBuyTicket - var_heightText) ) / 2;
 		var_airlines .css('margin-top', var_paddingTopTicket+'px');
 	});
+*/
 }
 function minimizeListTime() {
 	$('.btn-minimize').click(function(e) {
