@@ -11,8 +11,8 @@ class SearchController extends ApiController
 
     /**
      * @param string city
-     * @param string checkIn Y-m-d date
-     * @param int duration #of nights inside hotel
+     * @param string checkIn d.m.Y date
+     * @param int duration # of nights inside hotel
      * @param array $rooms
      *  [Х][adt] - amount of adults inside room,
      *  [Х][chd] - amount of childs inside room,
@@ -22,7 +22,7 @@ class SearchController extends ApiController
     public function actionDefault($city, $checkIn, $duration, array $rooms, $format='json')
     {
         $hotelSearchParams = new HotelSearchParams();
-        $hotelSearchParams->checkIn = $checkIn;
+        $hotelSearchParams->checkIn = date('Y-m-d', strtotime($checkIn));
         $possibleCities = City::model()->guess($city);
         if (empty($possibleCities))
             $this->sendError(404, 'Given city not found');
@@ -39,6 +39,7 @@ class SearchController extends ApiController
         Yii::import('site.frontend.components.*');
         $HotelClient = new HotelBookClient();
         $variants = $HotelClient->fullHotelSearch($hotelSearchParams);
+        $results = array();
         if ($variants['errorStatus']==1)
         {
             $stack = new HotelStack($variants);

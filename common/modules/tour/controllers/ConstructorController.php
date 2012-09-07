@@ -28,7 +28,7 @@ class ConstructorController extends BaseExtController
                 {
                     Yii::app()->user->setState('trip.tour.form', serialize($model));
                     Yii::app()->shoppingCart->clear();
-                    ConstructorBuilder::build($model);
+                    ConstructorBuilder::buildAndPutToCart($model);
                     $this->redirect('showTrip');
                 }
             }

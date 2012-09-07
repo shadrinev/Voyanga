@@ -7,8 +7,9 @@
  */
 class ConstructorBuilder
 {
-    public static function build(TourBuilderForm $form)
+    public static function buildAndPutToCart(TourBuilderForm $form)
     {
+        Yii::app()->shoppingCart->clear();
         //we are starting from our city
         $prev = $form->getStartCityId();
         $prevDate = $form->trips[0]->startDate;

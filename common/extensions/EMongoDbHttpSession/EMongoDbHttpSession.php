@@ -36,7 +36,7 @@
  * example
    'session'=>array(
       'class'=>'EMongoDbHttpSession',
-      'connectionString' => '192.168.0.55:27017',
+      'connectionString' => 'localhost:27017',
       'dbName' => 'test',
       'collectionName' => 'yiisession',
       'idColumn' => 'id',
@@ -51,7 +51,7 @@ class EMongoDbHttpSession extends CHttpSession
   /**
    * @var string Mongo Db host + port
    */
-  public $connectionString="192.168.0.55:27017";
+  public $connectionString="localhost:27017";
 
   /**
    * @var string Mongo Db Name

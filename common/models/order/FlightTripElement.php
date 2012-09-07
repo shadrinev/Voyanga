@@ -79,6 +79,16 @@ class FlightTripElement extends TripElement
         return false;
     }
 
+    public function getDepartureCityModel()
+    {
+        return City::model()->findByPk($this->departureCity);
+    }
+
+    public function getArrivalCityModel()
+    {
+        return City::model()->findByPk($this->arrivalCity);
+    }
+
     public function getIsValid()
     {
         if ($this->flightVoyage)
@@ -175,5 +185,30 @@ class FlightTripElement extends TripElement
     public function createTripElementWorkflow()
     {
         return new FlightTripElementWorkflow($this);
+    }
+
+    public function getUrlToAllVariants()
+    {
+        $search = array(
+            'destinations' => array(
+                array(
+                    'departure' => $this->getDepartureCityModel()->code,
+                    'arrival' => $this->getArrivalCityModel()->code,
+                    'date' => $this->departureDate,
+                )
+            ),
+            'adt' => $this->adultCount,
+            'chd' => $this->childCount,
+            'inf' => $this->infantCount,
+        );
+        $fullUrl = $this->buildApiUrl($search);
+        return $fullUrl;
+    }
+
+    private function buildApiUrl($params)
+    {
+        $url = Yii::app()->params['app.api.flightSearchUrl'];
+        $fullUrl = $url . '?' . http_build_query($params);
+        return $fullUrl;
     }
 }

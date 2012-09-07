@@ -8,6 +8,9 @@
 class FlightVoyage extends CApplicationComponent
 {
     const TYPE = 1;
+    const MASK_BEST_PRICE = 1;
+    const MASK_BEST_TIME = 4;
+    const MASK_BEST_PRICETIME = 2;
 
     public $price;
     public $taxes;
@@ -18,6 +21,9 @@ class FlightVoyage extends CApplicationComponent
     public $adultPassengerInfo;
     public $childPassengerInfo;
     public $infantPassengerInfo;
+    /**
+     * @var int bitwise mask 0b001 - Best price, 0b010 - best recommended, 0b100 best speed
+     */
     public $bestMask = 0;
     public $webService;
     /** @var boolean $refundable */
