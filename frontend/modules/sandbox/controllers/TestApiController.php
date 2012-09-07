@@ -22,7 +22,7 @@ class TestApiController extends FrontendController
 //        'aviaSearchComplex',
 //        'aviaSearchRoundTrip',
 //        'aviaSearchComplexRoundTrip',
-//        'hotelSearchSimple',
+        'hotelSearchSimple',
 //        'tourSearchSimple',
           'autocompleteSimple',
           'autocompleteAirports',
