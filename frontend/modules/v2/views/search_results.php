@@ -549,17 +549,17 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 
         <div class="slide-filter">
             <img src="<?= $images ?>/images/img-filter-slide01.png">
-            <select id='aviaFlightClass' class="selectSlider"><option value="B">Бизнес</option><option value="E" selected="selected">Эконом</option></select>
+            <select id='aviaFlightClass' class="selectSlider" data-bind="value: results.serviceClassFilter"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
         </div>
 
         <div class="div-filter">
 
             <div class="slider-filter">
                 <img src="<?= $images ?>/images/img-filter-slide02.png">
-                <select id='aviaOnlyDirectFlights' class="selectSlider"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
+                <select id='aviaOnlyDirectFlights' class="selectSlider" data-bind="value: results.onlyDirectFilter"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
             </div>
 
-            <input type="checkbox" name="aviaShortTransits" id="aviaShortTransits"> <label for="aviaShortTransits">Только короткие пересадки</label>
+            <input type="checkbox" name="aviaShortTransits" id="aviaShortTransits" data-bind="checked: results.onlyShortFilter"> <label for="aviaShortTransits">Только короткие пересадки</label>
 
         </div>
         <div class="div-filter">
@@ -579,27 +579,23 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
                 <br>
                 <br>
                 <div style="width: 200px; margin-left: 0px;">
-                    <input id="departureTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" />
+                    <input id="departureTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.departureFromToTimeActive"/>
                 </div>
                 <div style="width: 200px; margin-left: 0px;">
-                    <input id="departureTimeSliderReturn" type="slider" name="departureTimeSlider" value="480;1020" />
+                    <input id="departureTimeSliderReturn" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.departureFromToTimeReturnActive"/>
                 </div>
-
             </div>
             <h4>Время прилета</h4>
 
             <div class="slide-filter">
                 <br />
                 <div style="width: 200px; margin-left: 0px;">
-                    <input id="arrivalTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" />
+                    <input id="arrivalTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.arrivalFromToTimeActive"/>
                 </div>
                 <div style="width: 200px; margin-left: 0px;">
-                    <input id="arrivalTimeSliderReturn" type="slider" name="departureTimeSlider" value="480;1020" />
+                    <input id="arrivalTimeSliderReturn" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.arrivalFromToTimeReturnActive"/>
                 </div>
             </div>
-            <p>First name: <input data-bind="value: firstNameN" /></p>
-            <p>Last name: <input data-bind="value: lastNameN" /></p>
-            <h2>Hello, <span data-bind="text: fullNameN"> </span>!</h2>
 
             </div>
 

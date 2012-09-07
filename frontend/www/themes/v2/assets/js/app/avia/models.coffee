@@ -32,6 +32,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
     @direct = @parts.length == 1
 
+    @serviceClass = 'E'
+
     # FIXME is this  utc?
     @departureDate = new Date(flight.departureDate)
     @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
@@ -50,6 +52,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
     @_backVoyages = []
     @activeBackVoyage = ko.observable()
+    @visible = ko.observable true
 
   # returns our sort key
   departureInt: ->
@@ -75,11 +78,17 @@ class Voyage #Voyage Plus loin que la nuit et le jour
   departureTime: ->
     dateUtils.formatTime @departureDate
 
+  departureTimeNumeric: ->
+    dateUtils.formatTimeInMinutes @departureDate
+
   arrivalDayMo: ->
     dateUtils.formatDayMonth @arrivalDate
 
   arrivalTime: ->
     dateUtils.formatTime @arrivalDate
+
+  arrivalTimeNumeric: ->
+    dateUtils.formatTimeInMinutes @arrivalDate
 
 
   duration: ->
@@ -105,8 +114,43 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     return result
 
   sort: ->
+    #console.log "SORTENG "
     @_backVoyages.sort((a,b) -> a.departureInt() - b.departureInt())
     @activeBackVoyage(@_backVoyages[0])
+
+  filter: (filters)->
+    result = true
+    match_departure_time = false
+    if filters.departureTime.timeFrom <= @departureTimeNumeric() && filters.departureTime.timeTo >= @departureTimeNumeric()
+      match_departure_time = true
+    result = result && match_departure_time
+
+    match_arrival_time = false
+    if filters.arrivalTime.timeFrom <= @arrivalTimeNumeric() && filters.arrivalTime.timeTo >= @arrivalTimeNumeric()
+      match_arrival_time = true
+    result = result && match_arrival_time
+
+    if filters.onlyDirect
+      result = result && @direct
+
+    if filters.serviceClass != 'A'
+      result = result && @serviceClass == filters.serviceClass
+
+    for rtVoyage in @_backVoyages
+      match_departure_time = false
+      if filters.departureTimeReturn.timeFrom <= rtVoyage.departureTimeNumeric() && filters.departureTimeReturn.timeTo >= rtVoyage.departureTimeNumeric()
+        match_departure_time = true
+      result = result && match_departure_time
+
+      if filters.onlyDirect
+        result = result && rtVoyage.direct
+
+      match_arrival_time = false
+      if filters.arrivalTimeReturn.timeFrom <= rtVoyage.arrivalTimeNumeric() && filters.arrivalTimeReturn.timeTo >= rtVoyage.arrivalTimeNumeric()
+        match_arrival_time = true
+      result = result && match_arrival_time
+    @visible(result)
+
 
 
 #
@@ -136,7 +180,7 @@ class Result
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity',
-              'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText',
+              'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric',
               'hash', 'stopsRatio']
 
     for name in fields
@@ -172,6 +216,13 @@ class Result
       if filters.airports.length == 0
         match_ports = true
 
+      some_visible = false
+      for voyage in @voyages
+        voyage.filter(filters)
+        if(!some_visible && voyage.visible())
+          some_visible = true
+          @activeVoyage(voyage)
+
       found = false
       if filters.airlines.indexOf(@airline) >= 0
         found = true
@@ -179,7 +230,7 @@ class Result
       if filters.airlines.length == 0
         match_lines = true
 
-      @visible(match_ports&&match_lines)
+      @visible(match_ports&&match_lines&&some_visible)
 
   stacked: ->
     @_stacked
@@ -262,18 +313,56 @@ class ResultSet
     @airports = []
     @airlines = []
 
+    @timeLimits = {
+      'departureFromTime':1440,
+      'departureToTime':0,
+      'departureFromToTimeActive':ko.observable('0;1440'),
+      'arrivalFromTime':1440,
+      'arrivalToTime':0,
+      'arrivalFromToTimeActive':ko.observable('0;1440'),
+      'departureFromTimeReturn':1440,
+      'departureToTimeReturn':0,
+      'departureFromToTimeReturnActive':ko.observable('0;1440'),
+      'arrivalFromTimeReturn':1440,
+      'arrivalToTimeReturn':0,
+      'arrivalFromToTimeReturnActive':ko.observable('0;1440'),
+    }
+
     # Temporary
     _airports = {}
     _airlines = {}
 
     for key, result of @_results
+      result.sort()
       @data.push result
       _airlines[result.airline] = 1
       _airports[result.departureAirport()]=1
       _airports[result.arrivalAirport()]=1
-      if result.roudTrip
+      #console.log(result.departureTimeNumeric())
+      if result.roundTrip
         _airports[result.rtDepartureAirport()]=1
         _airports[result.rtArrivalAirport()]=1
+      for voyage in result.voyages
+        if voyage.departureTimeNumeric() < @timeLimits.departureFromTime
+          @timeLimits.departureFromTime = voyage.departureTimeNumeric()
+        if voyage.departureTimeNumeric() > @timeLimits.departureToTime
+          @timeLimits.departureToTime = voyage.departureTimeNumeric()
+        if voyage.arrivalTimeNumeric() < @timeLimits.arrivalFromTime
+          @timeLimits.arrivalFromTime = voyage.arrivalTimeNumeric()
+        if voyage.arrivalTimeNumeric() > @timeLimits.arrivalToTime
+          @timeLimits.arrivalToTime = voyage.arrivalTimeNumeric()
+        if result.roundTrip
+          for rtVoyage in voyage._backVoyages
+            if rtVoyage.departureTimeNumeric() < @timeLimits.departureFromTimeReturn
+              @timeLimits.departureFromTimeReturn = rtVoyage.departureTimeNumeric()
+            if rtVoyage.departureTimeNumeric() > @timeLimits.departureToTimeReturn
+              @timeLimits.departureToTimeReturn = rtVoyage.departureTimeNumeric()
+            if rtVoyage.arrivalTimeNumeric() < @timeLimits.arrivalFromTimeReturn
+              @timeLimits.arrivalFromTimeReturn = rtVoyage.arrivalTimeNumeric()
+            if rtVoyage.arrivalTimeNumeric() > @timeLimits.arrivalToTimeReturn
+              @timeLimits.arrivalToTimeReturn = rtVoyage.arrivalTimeNumeric()
+
+
 
     for key, foo of _airports
       @airports.push {'name':key, 'active': ko.observable 0 }
@@ -295,9 +384,49 @@ class ResultSet
           result.push line.name
       return result
 
+    @_departureTimeFilter = ko.computed =>
+      from_to = @timeLimits.departureFromToTimeActive()
+      from_to = from_to.split(';')
+      result = {'timeFrom':from_to[0],'timeTo':from_to[1]}
+      return result
+
+    @_arrivalTimeFilter = ko.computed =>
+      from_to = @timeLimits.arrivalFromToTimeActive()
+      from_to = from_to.split(';')
+      result = {'timeFrom':from_to[0],'timeTo':from_to[1]}
+      return result
+
+    @_departureTimeReturnFilter = ko.computed =>
+      from_to = @timeLimits.departureFromToTimeReturnActive()
+      from_to = from_to.split(';')
+      result = {'timeFrom':from_to[0],'timeTo':from_to[1]}
+      return result
+
+    @_arrivalTimeReturnFilter = ko.computed =>
+      from_to = @timeLimits.arrivalFromToTimeReturnActive()
+      from_to = from_to.split(';')
+      result = {'timeFrom':from_to[0],'timeTo':from_to[1]}
+      return result
+
+    @onlyDirectFilter = ko.observable 0
+
+    @onlyShortFilter = ko.observable 0
+
+    @serviceClassFilter = ko.observable 'A'
+
 
     @_allFilters = ko.computed =>
-      return {'airlines': @_airlinesFilters(), 'airports': @_airportsFilters()}
+      return {
+        'airlines': @_airlinesFilters(),
+        'airports': @_airportsFilters(),
+        'departureTime':@_departureTimeFilter(),
+        'departureTimeReturn':@_departureTimeReturnFilter(),
+        'arrivalTime':@_arrivalTimeFilter(),
+        'arrivalTimeReturn':@_arrivalTimeReturnFilter(),
+        'onlyDirect':@onlyDirectFilter(),
+        'onlyShort': @onlyShortFilter(),
+        'serviceClass': @serviceClassFilter()
+      }
 
     @_allFilters.subscribe (value) =>
       _.each @data, (x)-> x.filter (value)

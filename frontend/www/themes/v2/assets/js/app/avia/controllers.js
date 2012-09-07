@@ -15,6 +15,8 @@ AviaController = (function() {
 
     this.handleResults = __bind(this.handleResults, this);
 
+    this.getFilterLimitValues = __bind(this.getFilterLimitValues, this);
+
     this.searchAction = __bind(this.searchAction, this);
 
     this.routes = {
@@ -43,8 +45,13 @@ AviaController = (function() {
     }
   };
 
+  AviaController.prototype.getFilterLimitValues = function(results) {
+    return console.log(results);
+  };
+
   AviaController.prototype.handleResults = function(data) {
-    var key, stacked, tt;
+    var key, stacked,
+      _this = this;
     window.voyanga_debug("searchAction: handling results", data);
     key = "search_" + this.searchParams.key();
     sessionStorage.setItem(key, JSON.stringify(data));
@@ -55,28 +62,36 @@ AviaController = (function() {
     });
     console.log(this.myobj);
     console.log(data);
-    tt = new Object;
-    tt.fname = ko.observable();
-    tt.lname = ko.observable();
-    tt.funame = ko.computed(function() {
-      return this.fname() + '' + this.lname();
-    }, tt);
+    this.getFilterLimitValues(stacked);
+    this.aviaFiltersInit = {
+      flightClassFilter: {
+        value: data.searchParams.serviceClass
+      },
+      departureTimeSliderDirect: {
+        fromTime: stacked.timeLimits.departureFromTime,
+        toTime: stacked.timeLimits.departureToTime
+      },
+      arrivalTimeSliderDirect: {
+        fromTime: stacked.timeLimits.arrivalFromTime,
+        toTime: stacked.timeLimits.arrivalToTime
+      },
+      departureTimeSliderReturn: {
+        fromTime: stacked.timeLimits.departureFromTimeReturn,
+        toTime: stacked.timeLimits.departureToTimeReturn
+      },
+      arrivalTimeSliderReturn: {
+        fromTime: stacked.timeLimits.arrivalFromTimeReturn,
+        toTime: stacked.timeLimits.arrivalToTimeReturn
+      },
+      rt: data.searchParams.isRoundTrip
+    };
     this.render('results', {
       'results': stacked
     });
-    AviaFilters.init({
-      flightClassFilter: {
-        value: 'E'
-      },
-      departureTimeSliderDirect: {
-        fromTime: '8:00',
-        toTime: '21:00'
-      }
-    });
+    window.setTimeout(function() {
+      return AviaFilters.init(_this.aviaFiltersInit);
+    }, 1000);
     return this.trigger("sidebarChanged", 'filters', {
-      'firstNameN': tt.fname,
-      'lastNameN': tt.lname,
-      'fullNameN': tt.funame,
       'testInput': this.myobj,
       'results': stacked
     });

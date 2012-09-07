@@ -71,15 +71,6 @@ Application = (function(_super) {
 
   Application.prototype.contentRendered = function() {
     console.log("RENDERED");
-    AviaFilters.init({
-      flightClassFilter: {
-        value: 'E'
-      },
-      departureTimeSliderDirect: {
-        fromTime: '8:00',
-        toTime: '21:00'
-      }
-    });
     return setTimeout(ResizeFun, 1000);
   };
 

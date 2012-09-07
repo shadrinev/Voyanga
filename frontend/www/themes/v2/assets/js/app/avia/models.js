@@ -44,6 +44,7 @@ Voyage = (function() {
       this.parts.push(new FlightPart(part));
     }
     this.direct = this.parts.length === 1;
+    this.serviceClass = 'E';
     this.departureDate = new Date(flight.departureDate);
     this.arrivalDate = new Date(this.parts[this.parts.length - 1].arrivalDate);
     this._duration = flight.fullDuration;
@@ -55,6 +56,7 @@ Voyage = (function() {
     this.arrivalCityPre = flight.arrivalCityPre;
     this._backVoyages = [];
     this.activeBackVoyage = ko.observable();
+    this.visible = ko.observable(true);
   }
 
   Voyage.prototype.departureInt = function() {
@@ -85,12 +87,20 @@ Voyage = (function() {
     return dateUtils.formatTime(this.departureDate);
   };
 
+  Voyage.prototype.departureTimeNumeric = function() {
+    return dateUtils.formatTimeInMinutes(this.departureDate);
+  };
+
   Voyage.prototype.arrivalDayMo = function() {
     return dateUtils.formatDayMonth(this.arrivalDate);
   };
 
   Voyage.prototype.arrivalTime = function() {
     return dateUtils.formatTime(this.arrivalDate);
+  };
+
+  Voyage.prototype.arrivalTimeNumeric = function() {
+    return dateUtils.formatTimeInMinutes(this.arrivalDate);
   };
 
   Voyage.prototype.duration = function() {
@@ -137,6 +147,45 @@ Voyage = (function() {
     return this.activeBackVoyage(this._backVoyages[0]);
   };
 
+  Voyage.prototype.filter = function(filters) {
+    var match_arrival_time, match_departure_time, result, rtVoyage, _i, _len, _ref;
+    result = true;
+    match_departure_time = false;
+    if (filters.departureTime.timeFrom <= this.departureTimeNumeric() && filters.departureTime.timeTo >= this.departureTimeNumeric()) {
+      match_departure_time = true;
+    }
+    result = result && match_departure_time;
+    match_arrival_time = false;
+    if (filters.arrivalTime.timeFrom <= this.arrivalTimeNumeric() && filters.arrivalTime.timeTo >= this.arrivalTimeNumeric()) {
+      match_arrival_time = true;
+    }
+    result = result && match_arrival_time;
+    if (filters.onlyDirect) {
+      result = result && this.direct;
+    }
+    if (filters.serviceClass !== 'A') {
+      result = result && this.serviceClass === filters.serviceClass;
+    }
+    _ref = this._backVoyages;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      rtVoyage = _ref[_i];
+      match_departure_time = false;
+      if (filters.departureTimeReturn.timeFrom <= rtVoyage.departureTimeNumeric() && filters.departureTimeReturn.timeTo >= rtVoyage.departureTimeNumeric()) {
+        match_departure_time = true;
+      }
+      result = result && match_departure_time;
+      if (filters.onlyDirect) {
+        result = result && rtVoyage.direct;
+      }
+      match_arrival_time = false;
+      if (filters.arrivalTimeReturn.timeFrom <= rtVoyage.arrivalTimeNumeric() && filters.arrivalTimeReturn.timeTo >= rtVoyage.arrivalTimeNumeric()) {
+        match_arrival_time = true;
+      }
+      result = result && match_arrival_time;
+    }
+    return this.visible(result);
+  };
+
   return Voyage;
 
 })();
@@ -168,7 +217,7 @@ Result = (function() {
     this.voyages = [];
     this.voyages.push(this.activeVoyage);
     this.activeVoyage = ko.observable(this.activeVoyage);
-    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'hash', 'stopsRatio'];
+    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
       this[name] = (function(name) {
@@ -196,7 +245,7 @@ Result = (function() {
   }
 
   Result.prototype.filter = function(filters) {
-    var field, fields, found, match_lines, match_ports, _i, _len;
+    var field, fields, found, match_lines, match_ports, some_visible, voyage, _i, _j, _len, _len1, _ref;
     match_ports = true;
     found = false;
     fields = ['departureAirport', 'arrivalAirport'];
@@ -214,6 +263,16 @@ Result = (function() {
     if (filters.airports.length === 0) {
       match_ports = true;
     }
+    some_visible = false;
+    _ref = this.voyages;
+    for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+      voyage = _ref[_j];
+      voyage.filter(filters);
+      if (!some_visible && voyage.visible()) {
+        some_visible = true;
+        this.activeVoyage(voyage);
+      }
+    }
     found = false;
     if (filters.airlines.indexOf(this.airline) >= 0) {
       found = true;
@@ -222,7 +281,7 @@ Result = (function() {
     if (filters.airlines.length === 0) {
       match_lines = true;
     }
-    return this.visible(match_ports && match_lines);
+    return this.visible(match_ports && match_lines && some_visible);
   };
 
   Result.prototype.stacked = function() {
@@ -303,7 +362,7 @@ Result = (function() {
 ResultSet = (function() {
 
   function ResultSet(rawVoyages) {
-    var flightVoyage, foo, key, result, _airlines, _airports, _i, _j, _len, _len1, _ref, _ref1,
+    var flightVoyage, foo, key, result, rtVoyage, voyage, _airlines, _airports, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3,
       _this = this;
     this._results = {};
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
@@ -323,18 +382,67 @@ ResultSet = (function() {
     this.data = [];
     this.airports = [];
     this.airlines = [];
+    this.timeLimits = {
+      'departureFromTime': 1440,
+      'departureToTime': 0,
+      'departureFromToTimeActive': ko.observable('0;1440'),
+      'arrivalFromTime': 1440,
+      'arrivalToTime': 0,
+      'arrivalFromToTimeActive': ko.observable('0;1440'),
+      'departureFromTimeReturn': 1440,
+      'departureToTimeReturn': 0,
+      'departureFromToTimeReturnActive': ko.observable('0;1440'),
+      'arrivalFromTimeReturn': 1440,
+      'arrivalToTimeReturn': 0,
+      'arrivalFromToTimeReturnActive': ko.observable('0;1440')
+    };
     _airports = {};
     _airlines = {};
     _ref = this._results;
     for (key in _ref) {
       result = _ref[key];
+      result.sort();
       this.data.push(result);
       _airlines[result.airline] = 1;
       _airports[result.departureAirport()] = 1;
       _airports[result.arrivalAirport()] = 1;
-      if (result.roudTrip) {
+      if (result.roundTrip) {
         _airports[result.rtDepartureAirport()] = 1;
         _airports[result.rtArrivalAirport()] = 1;
+      }
+      _ref1 = result.voyages;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        voyage = _ref1[_j];
+        if (voyage.departureTimeNumeric() < this.timeLimits.departureFromTime) {
+          this.timeLimits.departureFromTime = voyage.departureTimeNumeric();
+        }
+        if (voyage.departureTimeNumeric() > this.timeLimits.departureToTime) {
+          this.timeLimits.departureToTime = voyage.departureTimeNumeric();
+        }
+        if (voyage.arrivalTimeNumeric() < this.timeLimits.arrivalFromTime) {
+          this.timeLimits.arrivalFromTime = voyage.arrivalTimeNumeric();
+        }
+        if (voyage.arrivalTimeNumeric() > this.timeLimits.arrivalToTime) {
+          this.timeLimits.arrivalToTime = voyage.arrivalTimeNumeric();
+        }
+        if (result.roundTrip) {
+          _ref2 = voyage._backVoyages;
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            rtVoyage = _ref2[_k];
+            if (rtVoyage.departureTimeNumeric() < this.timeLimits.departureFromTimeReturn) {
+              this.timeLimits.departureFromTimeReturn = rtVoyage.departureTimeNumeric();
+            }
+            if (rtVoyage.departureTimeNumeric() > this.timeLimits.departureToTimeReturn) {
+              this.timeLimits.departureToTimeReturn = rtVoyage.departureTimeNumeric();
+            }
+            if (rtVoyage.arrivalTimeNumeric() < this.timeLimits.arrivalFromTimeReturn) {
+              this.timeLimits.arrivalFromTimeReturn = rtVoyage.arrivalTimeNumeric();
+            }
+            if (rtVoyage.arrivalTimeNumeric() > this.timeLimits.arrivalToTimeReturn) {
+              this.timeLimits.arrivalToTimeReturn = rtVoyage.arrivalTimeNumeric();
+            }
+          }
+        }
       }
     }
     for (key in _airports) {
@@ -352,11 +460,11 @@ ResultSet = (function() {
       });
     }
     this._airportsFilters = ko.computed(function() {
-      var port, _j, _len1, _ref1;
+      var port, _l, _len3, _ref3;
       result = [];
-      _ref1 = _this.airports;
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        port = _ref1[_j];
+      _ref3 = _this.airports;
+      for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+        port = _ref3[_l];
         if (port.active()) {
           result.push(port.name);
         }
@@ -364,21 +472,71 @@ ResultSet = (function() {
       return result;
     });
     this._airlinesFilters = ko.computed(function() {
-      var line, _j, _len1, _ref1;
+      var line, _l, _len3, _ref3;
       result = [];
-      _ref1 = _this.airlines;
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        line = _ref1[_j];
+      _ref3 = _this.airlines;
+      for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+        line = _ref3[_l];
         if (line.active()) {
           result.push(line.name);
         }
       }
       return result;
     });
+    this._departureTimeFilter = ko.computed(function() {
+      var from_to;
+      from_to = _this.timeLimits.departureFromToTimeActive();
+      from_to = from_to.split(';');
+      result = {
+        'timeFrom': from_to[0],
+        'timeTo': from_to[1]
+      };
+      return result;
+    });
+    this._arrivalTimeFilter = ko.computed(function() {
+      var from_to;
+      from_to = _this.timeLimits.arrivalFromToTimeActive();
+      from_to = from_to.split(';');
+      result = {
+        'timeFrom': from_to[0],
+        'timeTo': from_to[1]
+      };
+      return result;
+    });
+    this._departureTimeReturnFilter = ko.computed(function() {
+      var from_to;
+      from_to = _this.timeLimits.departureFromToTimeReturnActive();
+      from_to = from_to.split(';');
+      result = {
+        'timeFrom': from_to[0],
+        'timeTo': from_to[1]
+      };
+      return result;
+    });
+    this._arrivalTimeReturnFilter = ko.computed(function() {
+      var from_to;
+      from_to = _this.timeLimits.arrivalFromToTimeReturnActive();
+      from_to = from_to.split(';');
+      result = {
+        'timeFrom': from_to[0],
+        'timeTo': from_to[1]
+      };
+      return result;
+    });
+    this.onlyDirectFilter = ko.observable(0);
+    this.onlyShortFilter = ko.observable(0);
+    this.serviceClassFilter = ko.observable('A');
     this._allFilters = ko.computed(function() {
       return {
         'airlines': _this._airlinesFilters(),
-        'airports': _this._airportsFilters()
+        'airports': _this._airportsFilters(),
+        'departureTime': _this._departureTimeFilter(),
+        'departureTimeReturn': _this._departureTimeReturnFilter(),
+        'arrivalTime': _this._arrivalTimeFilter(),
+        'arrivalTimeReturn': _this._arrivalTimeReturnFilter(),
+        'onlyDirect': _this.onlyDirectFilter(),
+        'onlyShort': _this.onlyShortFilter(),
+        'serviceClass': _this.serviceClassFilter()
       };
     });
     this._allFilters.subscribe(function(value) {
@@ -387,9 +545,9 @@ ResultSet = (function() {
       });
       return _this.update_cheapest();
     });
-    _ref1 = this.data;
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      result = _ref1[_j];
+    _ref3 = this.data;
+    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+      result = _ref3[_l];
       result.sort();
     }
     this.update_cheapest();

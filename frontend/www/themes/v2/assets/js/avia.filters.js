@@ -12,7 +12,13 @@ function AviaFilter (options){
         objName: null,
         //onchange: function (){},
         //change: function(){},
-        init: function(){}
+        init: function(){},
+        hide:function(){
+            this.jObj.parent().hide();
+        },
+        show: function(){
+            this.jObj.parent().show();
+        }
     };
     options = $.extend({},defaults,options);
     for(key in options){
@@ -33,7 +39,7 @@ AviaFilter.prototype.change = function(value){
 function getAviaFilterTimeSlider(options){
     var defaults = {
         init: function(options){
-
+            var self = this;
             this.jObj = $(this.objName);
             //console.log(this.jObj);
             var fromTime = '0:00';
@@ -44,12 +50,24 @@ function getAviaFilterTimeSlider(options){
             if( options != undefined && options.toTime != undefined ){
                 toTime = options.toTime;
             }
-            var time_arr = fromTime.split(':');
-            var fromVal = time_arr[0]*60 + parseInt(time_arr[1]);
-            time_arr = toTime.split(':');
-            var toVal = time_arr[0]*60 + parseInt(time_arr[1]);
+
+            if(typeof fromTime == 'string' && fromTime.indexOf(':') != -1){
+                var time_arr = fromTime.split(':');
+                var fromVal = time_arr[0]*60 + parseInt(time_arr[1]);
+            }else{
+                var fromVal = fromTime;
+            }
+            if(typeof toTime == 'string' && toTime.indexOf(':') != -1){
+                time_arr = toTime.split(':');
+                var toVal = time_arr[0]*60 + parseInt(time_arr[1]);
+            }else{
+                var toVal = toTime;
+            }
+            if((fromVal - 15) >= 0){fromVal = fromVal - 15;}
+            if((toVal + 15) <= 1440){toVal = toVal + 15;}
+
             this.jObj.val(fromVal+';'+toVal);
-            self = this;
+
             this.jObj.slider({
                 from: fromVal,
                 to: toVal,
@@ -65,7 +83,7 @@ function getAviaFilterTimeSlider(options){
                     //console.log(value);
                     return false;
                 },
-                callback: self.onchange
+                callback: function(){self.onchange();}
             });
             if( options != undefined && options.visible != undefined ){
                 if(options.visible == false){
@@ -81,6 +99,7 @@ function getAviaFilterTimeSlider(options){
         onchange: function (){
             //console.log(this);
             //console.log(this.jObj.val());
+            this.jObj.change();
         },
         getValue:function(){
             var val = this.jObj.val();
@@ -92,6 +111,7 @@ function getAviaFilterTimeSlider(options){
         },
         show: function(){
             this.jObj.parent().show();
+            //console.log(this.jObj.slider());
             this.jObj.slider().onresize();
         }
     };
@@ -120,6 +140,7 @@ AviaFilters.getValues = function(){
 AviaFilters.init = function(options){
     if(options == undefined) options = {};
     console.log('start render filters');
+    console.log(options);
     AviaFilters.flightClassFilter.init(options.flightClassFilter);
     AviaFilters.onlyDirectFlightsFilter.init(options.onlyDirectFlightsFilter);
     AviaFilters.showReturnFilters.init();
@@ -129,13 +150,16 @@ AviaFilters.init = function(options){
     AviaFilters.arrivalTimeSliderReturn.init(options.arrivalTimeSliderReturn);
     if(options.rt == true){
         AviaFilters.rt = true;
-        AviaFilters.departureTimeSliderReturn.show();
-        AviaFilters.arrivalTimeSliderReturn.show();
+        AviaFilters.departureTimeSliderDirect.show();
+        AviaFilters.arrivalTimeSliderDirect.show();
+        AviaFilters.departureTimeSliderReturn.hide();
+        AviaFilters.arrivalTimeSliderReturn.hide();
     }else{
         AviaFilters.rt = false;
         //AviaFilters.showReturnFilters.hide();
         AviaFilters.departureTimeSliderReturn.hide();
         AviaFilters.arrivalTimeSliderReturn.hide();
+        AviaFilters.showReturnFilters.hide();
     }
 }
 AviaFilters.show = function(){
@@ -208,13 +232,13 @@ AviaFilters.arrivalTimeSliderReturn = getAviaFilterTimeSlider({objName: '#arriva
 
 
 $(document).ready(function (){
-    AviaFilters.init({
+    /*AviaFilters.init({
         flightClassFilter:{
             value: 'E'
         },
         departureTimeSliderDirect:{
-            fromTime: '8:00',
-            toTime: '21:00'
+            fromTime: 8*60,
+            toTime: 21*60
         }
-    });
+    });*/
 });

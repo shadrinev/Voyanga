@@ -36,6 +36,11 @@ dateUtils = {
     result += minutes;
     return result;
   },
+  formatTimeInMinutes: function(date) {
+    var result;
+    result = date.getHours() * 60 + date.getMinutes();
+    return result;
+  },
   formatDuration: function(duration) {
     var all_minutes, hours, minutes;
     all_minutes = duration / 60;

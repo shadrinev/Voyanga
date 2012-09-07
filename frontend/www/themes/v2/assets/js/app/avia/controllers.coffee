@@ -27,6 +27,10 @@ class AviaController
         dataType: 'jsonp'
         success: @handleResults
 
+  getFilterLimitValues: (results)=>
+    console.log(results)
+
+
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
 
@@ -39,19 +43,36 @@ class AviaController
       alert(newValue)
     console.log(@myobj)
     console.log(data)
+    this.getFilterLimitValues(stacked)
+    @aviaFiltersInit = {
+      flightClassFilter:{value: data.searchParams.serviceClass},
+      departureTimeSliderDirect:{
+        fromTime: stacked.timeLimits.departureFromTime,
+        toTime: stacked.timeLimits.departureToTime
+      },
+      arrivalTimeSliderDirect:{
+        fromTime: stacked.timeLimits.arrivalFromTime,
+        toTime: stacked.timeLimits.arrivalToTime
+      },
+      departureTimeSliderReturn:{
+        fromTime: stacked.timeLimits.departureFromTimeReturn,
+        toTime: stacked.timeLimits.departureToTimeReturn
+      },
+      arrivalTimeSliderReturn:{
+        fromTime: stacked.timeLimits.arrivalFromTimeReturn,
+        toTime: stacked.timeLimits.arrivalToTimeReturn
+      },
+      rt: data.searchParams.isRoundTrip
+    }
 
-    tt = new Object
 
-    tt.fname = ko.observable()
-    tt.lname = ko.observable()
-    tt.funame = ko.computed(
-      ()->
-        return this.fname() + '' + this.lname()
-      ,tt
-    )
     @render 'results', {'results' :stacked}
-    AviaFilters.init({flightClassFilter:{value: 'E'},departureTimeSliderDirect:{fromTime: '8:00',toTime: '21:00'}})
-    @trigger "sidebarChanged", 'filters', {'firstNameN': tt.fname, 'lastNameN': tt.lname, 'fullNameN': tt.funame,'testInput': @myobj, 'results' :stacked}
+    window.setTimeout(
+      ()=>
+        AviaFilters.init(@aviaFiltersInit)
+      ,1000
+    )
+    @trigger "sidebarChanged", 'filters', {'testInput': @myobj, 'results' :stacked}
 
   indexAction: =>
     @render 'index', {}
