@@ -257,7 +257,7 @@ class CityManager extends CApplicationComponent
     static public function getCities($query)
     {
         $currentLimit = appParams('autocompleteLimit');
-        $items = array();//Yii::app()->cache->get('autocompleteCities' . $query);
+        $items = Yii::app()->cache->get('autocompleteCities' . $query);
         if (!$items)
         {
             $items = array();
