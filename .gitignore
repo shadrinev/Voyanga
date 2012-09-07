@@ -9,9 +9,9 @@
 
 # specific config for local development
 /frontend/config/*-local.php
-/frontend/config/*-local.php
 /backend/config/*-local.php
 /common/config/*-local.php
+/api/config/*-local.php
 
 node_modules
 
