@@ -70,9 +70,9 @@ class FlightTripElement extends TripElement
         {
             //we have only search params now
             $order = new OrderFlightVoyage();
-            $order->departureCity = $this->getDepartureCity()->id;
-            $order->arrivalCity = $this->getArrivalCity()->id;
-            $order->departureDate = $this->getDepartureDate();
+            $order->departureCity = $this->departureCity;
+            $order->arrivalCity = $this->arrivalCity;
+            $order->departureDate = $this->departureDate;
             if ($order->save())
                 return $order;
         }

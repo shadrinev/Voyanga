@@ -9,10 +9,10 @@ class CreateAction extends CAction
 {
     public function run($isTab=false)
     {
-        if ($res = Yii::app()->user->getState('trip.tour.form'))
+/*        if ($res = Yii::app()->user->getState('trip.tour.form'))
             $model = @unserialize($res);
-        else
-            $model = new TourBuilderForm();
+        else*/
+        $model = new TourBuilderForm();
         if (isset($_POST['TourBuilderForm']))
         {
             unset($model);
@@ -24,6 +24,7 @@ class CreateAction extends CAction
             {
                 $validTrips = true;
                 $validRooms = true;
+                $validStartCity = true;
                 foreach ($_POST['TripForm'] as $i=>$attributes)
                 {
                     $trip = new TripForm();
@@ -40,15 +41,31 @@ class CreateAction extends CAction
                     if ($validRooms)
                         $model->rooms[] = $room;
                 }
+                $model->startCities = array();
+                foreach ($_POST['EventStartCityForm'] as $i=>$attributes)
+                {
+                    $startCity = new EventStartCityForm();
+                    $startCity->attributes = $attributes;
+                    $validStartCity = $validStartCity and $startCity->validate();
+                    if ($validStartCity)
+                        $model->startCities[] = $startCity;
+                }
                 if ($validTrips and $validRooms and $model->validate())
                 {
                     Yii::app()->user->setState('trip.tour.form', serialize($model));
                     Yii::app()->shoppingCart->clear();
-                    ConstructorBuilder::buildAndPutToCart($model);
                     if ($model->isLinkedToEvent)
+                    {
+                        Yii::app()->user->setState('tourForm', $model);
+                        Yii::app()->user->setState('startCities', $model->startCities);
+                        Yii::app()->user->setState('startCitiesIndex', 0);
                         $this->controller->redirect($this->controller->createUrl('showEventTrip'));
+                    }
                     else
+                    {
+                        ConstructorBuilder::buildAndPutToCart($model);
                         $this->controller->redirect($this->controller->createUrl('showTrip'));
+                    }
                 }
             }
         }

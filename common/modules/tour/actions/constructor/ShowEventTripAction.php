@@ -5,7 +5,7 @@
  * Date: 01.08.12
  * Time: 11:06
  */
-class ShowTripAction extends CAction
+class ShowEventTripAction extends CAction
 {
     private $tabs;
     private $tripElements;
@@ -20,9 +20,26 @@ class ShowTripAction extends CAction
 
     public function run()
     {
-        $this->init();
-        Yii::app()->getClientScript()->registerScriptFile('/js/constructorViewer.js');
-        $this->controller->render('showTrip', array('tabs'=>$this->tabs));
+        $model = Yii::app()->user->getState('tourForm');
+        $cities = Yii::app()->user->getState('startCities');
+        $citiesIndex = Yii::app()->user->getState('startCitiesIndex', 0);
+        if (sizeof($cities)<=$citiesIndex)
+        {
+            echo 'Все события свзянаы с турами';
+        }
+        else
+        {
+            $city = $cities[$citiesIndex];
+            $model->startCityId = $city->id;
+            Yii::app()->user->setState('startCities', $model->startCities);
+            Yii::app()->user->setState('startCitiesIndex', $citiesIndex+1);
+            Yii::app()->user->setState('currentCity', $model->startCityId);
+            Yii::app()->user->setState('tourForm', $model);
+            ConstructorBuilder::buildAndPutToCart($model);
+            $this->init();
+            Yii::app()->getClientScript()->registerScriptFile('/js/constructorViewer.js');
+            $this->controller->render('showTripForEvent', array('tabs'=>$this->tabs));
+        }
     }
 
     private function fillTabs()
@@ -45,8 +62,12 @@ class ShowTripAction extends CAction
                 $this->tabs[$groupId] = array();
                 if (!$this->firstIndex)
                     $this->firstIndex = $groupId;
+                $previous = array();
             }
+            else
+                $previous = $this->tabs[$groupId];
             $this->tabs[$groupId] = CMap::mergeArray($this->tabs[$groupId], $item->addGroupedInfo($preparedForFrontendItem));
+            $this->tabs[$groupId] = $item->buildTabLabel($this->tabs[$groupId], $previous);
         }
         else
         {
