@@ -104,15 +104,15 @@ constructorViewer.init = function () {
                     }
                 };
                 var rooms = tabElem.info.room;
-                var roomParams = new Object();
                 $.each(rooms, function(i, room){
+                    var roomParams = new Object();
                     roomParams.adultCount = room.adultCount;
                     roomParams.childCount = room.childCount;
                     roomParams.childAge = room.childAge;
                     roomParams.cots = room.cots;
+                    requestParams.HotelRoomForm.push(roomParams);
                 });
 
-                requestParams.HotelRoomForm.push(roomParams);
                 $.ajax({
                     url:'/tour/constructor/hotelSearch',
                     dataType:'json',
