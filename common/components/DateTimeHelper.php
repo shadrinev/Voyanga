@@ -14,7 +14,7 @@ class DateTimeHelper
         else
             $timestamp = strtotime($dateTime);
         //2012-08-22T04:06Z
-        return date('Y-m-d', $timestamp).'T'.date('H:i',$timestamp).'Z';
+        return date('Y-m-d', $timestamp).'T'.date('H:i',$timestamp);
     }
 
     static public function formatForEventForm($dateTime)
