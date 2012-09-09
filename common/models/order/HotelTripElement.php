@@ -12,17 +12,14 @@ class HotelTripElement extends TripElement
     public $city;
     public $checkIn;
     public $checkOut;
-    public $adultCount;
-    public $childCount;
-    public $infantCount;
-    public $childAge;
+    public $rooms;
     public $hotelBookerId;
     private $passports;
 
     public function rules()
     {
         return array(
-            array('city, checkIn, checkOut, adultCount, childCount, infantCount, hotelBookerId', 'safe'),
+            array('city, checkIn, checkOut, hotelBookerId', 'safe'),
         );
     }
 
@@ -35,9 +32,6 @@ class HotelTripElement extends TripElement
             'city',
             'checkIn',
             'checkOut',
-            'adultCount',
-            'childCount',
-            'infantCount',
         );
     }
 

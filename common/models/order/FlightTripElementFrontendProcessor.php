@@ -15,7 +15,7 @@ class FlightTripElementFrontendProcessor
         $tab['info'] = array('type'=>'flight','flights'=>array());
         $tab['id'] = $flight->id.'_tab';
         $tab['groupId'] = $flight->getGroupId();
-        $tab['label'] = '<b>Перелёт</b><br>'.$flight->departureDate."<br>".$from->localRu." &mdash; ".$to->localRu;
+        $tab['label'] = '<b>Перелёт</b>';
 
         if($flight->flightVoyage)
         {
@@ -36,7 +36,10 @@ class FlightTripElementFrontendProcessor
 
     public static function addGroupedInfoToTab($preparedFlight, $flight)
     {
+        $from = City::getCityByPk($flight->departureCity);
+        $to = City::getCityByPk($flight->arrivalCity);
         $preparedFlight['info']['flights'][] = array(
+            'label' => '<br>'.$flight->departureDate."<br>".$from->localRu." &mdash; ".$to->localRu,
             'departureDate'=>$flight->departureDate,
             'cityFromId'=>$flight->departureCity,
             'cityToId'=>$flight->arrivalCity,
@@ -45,5 +48,12 @@ class FlightTripElementFrontendProcessor
             'infantCount'=>$flight->infantCount
         );
         return $preparedFlight;
+    }
+
+    static public function buildTabLabel($current, $previous)
+    {
+        if (!empty($previous))
+            $current['label'] .= $current['info']['flights'][0]['label'] . $current['info']['flights'][1]['label'];
+        return $current;
     }
 }

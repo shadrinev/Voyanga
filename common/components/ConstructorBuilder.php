@@ -43,9 +43,7 @@ class ConstructorBuilder
             $hotel->city = $next;
             $hotel->checkIn = $tripPlan->startDate;
             $hotel->checkOut = $tripPlan->endDate;
-            $hotel->adultCount = $form->adultCount;
-            $hotel->childCount = $form->childCount;
-            $hotel->infantCount = $form->infantCount;
+            $hotel->rooms = $form->rooms;
             $hotel->id = $ind++;
             Yii::app()->shoppingCart->put($hotel);
 

@@ -13,17 +13,20 @@ class TourBuilderForm extends CFormModel
     public $startDate;
     public $endDate;
 
-    public $adultCount = 2;
-    public $childCount = 0;
-    public $infantCount = 0;
-
     //temp var for no warning
     public $startCityId;
+
+    /** @var HotelRoomForm[] */
+    public $rooms;
 
     //event related fields
     public $eventId;
     public $startCities=array();
     public $newEventName;
+
+    private $adultCount;
+    private $childCount;
+    private $infantCount;
 
     public function rules()
     {
@@ -40,6 +43,41 @@ class TourBuilderForm extends CFormModel
     {
         $this->setStartCityName('Санкт-Петербург');
         $this->setEventStartCities();
+        $this->setRooms();
+    }
+
+    public function setRooms()
+    {
+        $element = new HotelRoomForm();
+        $element->adultCount = 2;
+        $element->childCount = 0;
+        $element->cots = 0;
+        $element->childAge = 0;
+        $this->rooms[] = $element;
+    }
+
+    public function getAdultCount()
+    {
+        $adultCount = 0;
+        foreach ($this->rooms as $room)
+            $adultCount += $room->adultCount;
+        return $adultCount;
+    }
+
+    public function getChildCount()
+    {
+        $childCount = 0;
+        foreach ($this->rooms as $room)
+            $childCount += $room->childCount;
+        return $childCount;
+    }
+
+    public function getInfantCount()
+    {
+        $infantCount = 0;
+        foreach ($this->rooms as $room)
+            $infantCount += $room->cots;
+        return $infantCount;
     }
 
     public function getStartCityId()

@@ -9,7 +9,7 @@
 
 <?php $this->widget('site.frontend.widgets.tourBuilder.TourBuilderWidget', array('model' => $model, 'attribute' => 'trips')); ?>
 
-<?php echo $form->dropDownListRow($model, 'adultCount', FlightForm::getPossibleAdultCount()); ?>
+<?php $this->widget('common.widgets.rooms.Rooms', array('model' => $model, 'attribute'=>'rooms', 'form'=>$form)); ?>
 
 <?php echo $form->dropDownListRow($model, 'eventId', Event::getPossibleEvents(), array('id' => 'eventId')); ?>
 

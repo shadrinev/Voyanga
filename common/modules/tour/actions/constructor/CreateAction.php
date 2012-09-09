@@ -19,9 +19,11 @@ class CreateAction extends CAction
             $model = new TourBuilderForm();
             $model->attributes = $_POST['TourBuilderForm'];
             $model->trips = array();
+            $model->rooms = array();
             if (isset($_POST['TripForm']))
             {
                 $validTrips = true;
+                $validRooms = true;
                 foreach ($_POST['TripForm'] as $i=>$attributes)
                 {
                     $trip = new TripForm();
@@ -30,7 +32,15 @@ class CreateAction extends CAction
                     if ($validTrips)
                         $model->trips[] = $trip;
                 }
-                if ($validTrips and $model->validate())
+                foreach ($_POST['HotelRoomForm'] as $i=>$attributes)
+                {
+                    $room = new HotelRoomForm();
+                    $room->attributes = $attributes;
+                    $validRooms = $validRooms and $room->validate();
+                    if ($validRooms)
+                        $model->rooms[] = $room;
+                }
+                if ($validTrips and $validRooms and $model->validate())
                 {
                     Yii::app()->user->setState('trip.tour.form', serialize($model));
                     Yii::app()->shoppingCart->clear();
