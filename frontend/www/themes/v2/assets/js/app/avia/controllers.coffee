@@ -37,7 +37,7 @@ class AviaController
     # temporary development cache
     key = "search_" + @searchParams.key()
     sessionStorage.setItem(key, JSON.stringify(data))
-    stacked = new ResultSet data.flights.flightVoyages
+    stacked = new AviaResultSet data.flights.flightVoyages
     @myobj = ko.observable true
     @myobj.subscribe (newValue)->
       alert(newValue)
@@ -76,6 +76,8 @@ class AviaController
 
 
   indexAction: =>
+    window.voyanga_debug "AVIA: invoking indexAction"
+
     @render 'index', {}
 
   render: (view, data) ->

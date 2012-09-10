@@ -56,6 +56,7 @@ HotelsController = (function() {
   };
 
   HotelsController.prototype.render = function(view, data) {
+    window.voyanga_debug("HOTELS: rendering", view, data);
     return this.trigger("viewChanged", view, data);
   };
 

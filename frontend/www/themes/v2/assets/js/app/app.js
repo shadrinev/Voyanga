@@ -10,7 +10,7 @@ Application = (function(_super) {
   function Application() {
     var _this = this;
     this.activeModule = ko.observable('avia');
-    this.panel = ko.observable({});
+    this.panel = ko.observable();
     this._view = ko.observable('index');
     this._sidebar = ko.observable('dummy');
     this.activeView = ko.computed(function() {
@@ -21,6 +21,9 @@ Application = (function(_super) {
     });
     this.viewData = ko.observable({});
     this.sidebarData = ko.observable({});
+    this.slider = new Slider();
+    this.slider.init();
+    this.activeModule.subscribe(this.slider.handler);
   }
 
   Application.prototype.register = function(prefix, module, isDefault) {
@@ -48,29 +51,38 @@ Application = (function(_super) {
         this.route(route, prefix, action);
       }
     }
-    if (isDefault) {
-      this.panel(module.panel);
-    }
-    return this.on("route:" + prefix, function() {
+    return this.on("beforeroute:" + prefix, function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      if (prefix !== this.activeModule()) {
+      window.voyanga_debug("APP: routing", args);
+      if (this.panel() === void 0 || (prefix !== this.activeModule())) {
         window.voyanga_debug("APP: switching active module to", prefix);
-        return this.activeModule(prefix);
+        this.activeModule(prefix);
+        window.voyanga_debug("APP: activating panel", module.panel);
+        this.panel(module.panel);
+        return ko.processAllDeferredBindingUpdates();
       }
     });
   };
 
   Application.prototype.run = function() {
-    return Backbone.history.start();
+    Backbone.history.start();
+    return this.slider.handler(this.activeModule());
   };
 
   Application.prototype.http404 = function() {
     return alert("Not found");
   };
 
+  Application.prototype.route = function(route, name, callback) {
+    return Backbone.Router.prototype.route.call(this, route, name, function() {
+      this.trigger.apply(this, ['beforeroute:' + name].concat(_.toArray(arguments)));
+      return callback.apply(this, arguments);
+    });
+  };
+
   Application.prototype.contentRendered = function() {
-    console.log("RENDERED");
+    window.voyanga_debug("APP: Content rendered");
     return setTimeout(ResizeFun, 1000);
   };
 
@@ -89,8 +101,8 @@ $(function() {
   avia = new AviaModule();
   hotels = new HotelsModule;
   window.app = app;
-  app.register('avia', avia, true);
   app.register('hotels', hotels);
+  app.register('avia', avia, true);
   app.run();
   return ko.applyBindings(app);
 });

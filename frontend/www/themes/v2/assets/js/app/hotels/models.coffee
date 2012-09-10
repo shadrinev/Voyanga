@@ -9,7 +9,6 @@ class Room
 class RoomSet
   constructor: (data) ->
     @price = data.rubPrice
-    console.log @price, data
 
     @rooms = []
     for room in data.rooms

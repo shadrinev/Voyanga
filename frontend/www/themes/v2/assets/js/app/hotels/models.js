@@ -19,7 +19,6 @@ RoomSet = (function() {
   function RoomSet(data) {
     var room, _i, _len, _ref;
     this.price = data.rubPrice;
-    console.log(this.price, data);
     this.rooms = [];
     _ref = data.rooms;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {

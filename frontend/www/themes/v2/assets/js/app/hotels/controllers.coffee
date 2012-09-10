@@ -42,4 +42,6 @@ class HotelsController
     @searchAction()
 
   render: (view, data) ->
+    window.voyanga_debug "HOTELS: rendering", view, data
+
     @trigger "viewChanged", view, data

@@ -186,7 +186,8 @@ return CMap::mergeArray(
                         'js' => array(
                             //! App supporting vendor modules
                             'js/vendor/jquery.js', 'js/vendor/knockout-2.1.0.js',
-                            'js/vendor/knockout-repeat.js', 'js/vendor/underscore.js',
+                            'js/vendor/knockout-repeat.js', 'js/vendor/knockout-deferred-updates.js',
+                            'js/vendor/underscore.js',
                             'js/vendor/backbone.js', 'js/jquery-ui-1.8.22.custom.min.js',
                             'js/jquery.easing.1.3.js',
                             //! Markup related scripts and modules
@@ -196,7 +197,7 @@ return CMap::mergeArray(
                             'js/voyanga-calendar.js', 'js/jquery.select.slider.js',
                             'js/jquery.slider.min.js','js/jquery.slider.js',
                             //! Our application logic
-                            'js/avia.filters.js',
+                            'js/avia.filters.js', 'js/app/common/module.slider.js',
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
                             'js/app/common/filters.js', 'js/app/avia/panel.js',
                             'js/app/hotels/panel.js', 'js/app/hotels/models.js',

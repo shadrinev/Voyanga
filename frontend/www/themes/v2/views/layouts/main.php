@@ -27,8 +27,8 @@ Yii::app()->clientScript->registerPackage('everything');
 
                 <ul>
                     <li class="planner btn"><a href="#">Планировщик</a></li>
-                    <li class="aviatickets btn" data-bind="css: {active: activeModule == 'avia'}"><a href="#">Авиабилеты</a></li>
-                    <li class="hotel btn" data-bind="css: {active: activeModule == 'hotel'}"><a href="#">Отели</a></li>
+                    <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#">Авиабилеты</a></li>
+                    <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
                     <li class="finish-stages btn"><a href="#">Готовые туры</a></li>
                 </ul>
             </div>
@@ -78,7 +78,6 @@ Yii::app()->clientScript->registerPackage('everything');
 
     <!-- ==== POPUP === -->
     </div>
-<?php echo $content; ?>
 <script type="text/html" id="avia-index">
 <h1> Hello, INDEX PAGE </h1>
 </script>
