@@ -103,6 +103,8 @@ class Hotel extends CApplicationComponent
     /** @var City */
     private $_city;
 
+    private $internalId;
+
     //implementation of ICartPosition
     public function getId()
     {
@@ -149,7 +151,10 @@ class Hotel extends CApplicationComponent
         $order->cityId = $this->cityId;
         $order->object = serialize($this);
         if ($order->save())
+        {
+            $this->internalId = $order->id;
             return $order;
+        }
         return false;
     }
 
@@ -157,8 +162,10 @@ class Hotel extends CApplicationComponent
     {
         $orderHasHotel = new OrderHasHotel();
         $orderHasHotel->orderId = $order->id;
-        $orderHasHotel->orderHotel = $this->id;
+        $orderHasHotel->orderHotel = $this->internalId;
         $orderHasHotel->save();
+        if (!$orderHasHotel->save())
+            throw new CException(VarDumper::dumpAsString($orderHasHotel->errors));
     }
 
     public static function getFromCache($cacheId, $hotelId, $resultId)

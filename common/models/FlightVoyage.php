@@ -21,6 +21,8 @@ class FlightVoyage extends CApplicationComponent
     public $adultPassengerInfo;
     public $childPassengerInfo;
     public $infantPassengerInfo;
+
+    private $internalId;
     /**
      * @var int bitwise mask 0b001 - Best price, 0b010 - best recommended, 0b100 best speed
      */
@@ -69,7 +71,10 @@ class FlightVoyage extends CApplicationComponent
         $order->departureDate = $this->getDepartureDate();
         $order->object = serialize($this);
         if ($order->save())
+        {
+            $this->internalId = $order->id;
             return $order;
+        }
         return false;
     }
 
@@ -77,8 +82,9 @@ class FlightVoyage extends CApplicationComponent
     {
         $orderHasFlightVoyage = new OrderHasFlightVoyage();
         $orderHasFlightVoyage->orderId = $order->id;
-        $orderHasFlightVoyage->orderFlightVoyage = $this->id;
-        $orderHasFlightVoyage->save();
+        $orderHasFlightVoyage->orderFlightVoyage = $this->internalId;
+        if (!$orderHasFlightVoyage->save())
+            throw new CException(VarDumper::dumpAsString($this->attributes).VarDumper::dumpAsString($orderHasFlightVoyage->errors));
     }
 
     /**

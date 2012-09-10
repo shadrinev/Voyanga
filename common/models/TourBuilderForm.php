@@ -14,7 +14,7 @@ class TourBuilderForm extends CFormModel
     public $endDate;
 
     //temp var for no warning
-    public $startCityId;
+    private $startCityId;
 
     /** @var HotelRoomForm[] */
     public $rooms;
@@ -24,15 +24,11 @@ class TourBuilderForm extends CFormModel
     public $startCities=array();
     public $newEventName;
 
-    private $adultCount;
-    private $childCount;
-    private $infantCount;
-
     public function rules()
     {
         return array(
             array(
-                'startDate, endDate, adultCount, childCount, infantCount, startCityId', 'safe'
+                'startDate, endDate, eventId, startCityId', 'safe'
             )
         );
     }
@@ -108,7 +104,6 @@ class TourBuilderForm extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'adultCount' => 'Количество взрослых',
             'startCityId' => 'Начало поездки в городе',
             'eventId' => 'Связать с событием',
             'newEventName' => 'Название нового события',

@@ -7,19 +7,23 @@
 class TripStorage
 {
     private $name;
+    private $order;
     private $items;
+    private $itemsOnePerGroup;
 
     public function __construct()
     {
         $dataProvider = new TripDataProvider();
         $this->items = $dataProvider->getSortedCartItems();
+        $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
     }
 
     public function saveOrder($name)
     {
         $this->name = $name;
-        $this->createOrderAndSaveIt();
+        $this->order = $this->createOrderAndSaveIt();
         $this->saveItemsOfOrder();
+        return $this->order;
     }
 
     private function createOrderAndSaveIt()
