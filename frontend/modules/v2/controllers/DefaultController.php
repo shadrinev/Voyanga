@@ -11,12 +11,7 @@ class DefaultController extends CController
 
     public function actionIndex()
     {
-        $this->render('v2.views.search_results');
-    }
-
-    public function actionHotels()
-    {
-        $this->render('v2.views.hotel_results');
+        $this->render('frontend.www.themes.v2.views.layouts.main');
     }
 
     public function actionSandbox()

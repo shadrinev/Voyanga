@@ -11,7 +11,7 @@ class Application extends Backbone.Router
 #    crossroads.bypassed.add(@http404)
 
     # FIXME
-    @activeModule = ko.observable window.activeModule || 'avia'
+    @activeModule = ko.observable 'avia' #ko.observable window.activeModule || 'avia'
 
     @panel = ko.observable {}
 
@@ -38,6 +38,7 @@ class Application extends Backbone.Router
   # @param prefix url prefix for given controller
   # @param controler - controller to register
   register: (prefix, module, isDefault=false)->
+    console.log prefix
     controller = module.controller
     # Change view when controller wants to
     controller.on "viewChanged", (view, data)=>
@@ -82,12 +83,14 @@ class Application extends Backbone.Router
 
 $ ->
   window.voyanga_debug = (args...) ->
-    # Chrome does not likes window context for console, so we pass itself here
+    # Chrome does not likes window context for console.log, so we pass itself here
     console.log.apply console, args
   # FIXME FIXME FIXME
   app = new Application()
   avia = new AviaModule()
+  hotels = new HotelsModule
+  window.app = app
   app.register 'avia', avia, true
+  app.register 'hotels', hotels
   app.run()
   ko.applyBindings(app)
-  window.app = app

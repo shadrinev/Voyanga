@@ -180,6 +180,8 @@ Yii::app()->clientScript->registerPackage('everything');
 </div>
 
 </script>
-
+<?php
+ $this->renderPartial('v2.views.hotels_results');
+?>
 </body>
 </html>

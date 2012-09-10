@@ -157,7 +157,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 #
 # Coomon parts of StackedVoyage
 #
-class Result
+class AviaResult
   constructor: (data) ->
     # Mix in events
     _.extend @, Backbone.Events
@@ -179,6 +179,7 @@ class Result
     @voyages = []
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
+
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity',
@@ -294,7 +295,7 @@ class Result
 # Result container
 # Stacks them by price and company
 #
-class ResultSet
+class AviaResultSet
   constructor: (rawVoyages) ->
     @_results = {}
 
@@ -303,7 +304,7 @@ class ResultSet
       if @_results[key]
         @_results[key].push flightVoyage
       else
-        result =  new Result flightVoyage
+        result =  new AviaResult flightVoyage
         @_results[key] = result
         result.on "popup", (data)=>
           @popup data
