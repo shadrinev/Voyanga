@@ -14,6 +14,7 @@ FlightPart = (function() {
     this.arrivalAirport = part.arrivalAirport;
     this._duration = part.duration;
     this.transportAirline = part.transportAirline;
+    this.transportAirlineName = part.transportAirlineName;
     this.flightCode = part.transportAirline + ' ' + part.flightCode;
   }
 
@@ -210,6 +211,7 @@ Result = (function() {
     this.roundTrip = flights.length === 2;
     this.visible = ko.observable(true);
     this.airline = data.valCompany;
+    this.airlineName = data.valCompanyName;
     this.activeVoyage = new Voyage(flights[0]);
     if (this.roundTrip) {
       this.activeVoyage.push(new Voyage(flights[1]));
@@ -604,7 +606,7 @@ SearchParams = (function() {
 
   SearchParams.prototype.url = function() {
     var params, result;
-    result = 'http://api.misha.voyanga/v1/flight/search/withParams?';
+    result = 'http://api.voyanga/v1/flight/search/withParams?';
     params = [];
     params.push('destinations[0][departure]=' + this.dep());
     params.push('destinations[0][arrival]=' + this.arr());

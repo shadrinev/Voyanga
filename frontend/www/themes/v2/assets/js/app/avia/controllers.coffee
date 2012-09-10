@@ -74,6 +74,7 @@ class AviaController
     )
     @trigger "sidebarChanged", 'filters', {'testInput': @myobj, 'results' :stacked}
 
+
   indexAction: =>
     @render 'index', {}
 

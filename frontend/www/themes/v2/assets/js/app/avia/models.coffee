@@ -12,6 +12,7 @@ class FlightPart
     @arrivalAirport = part.arrivalAirport
     @_duration = part.duration
     @transportAirline = part.transportAirline
+    @transportAirlineName = part.transportAirlineName
     @flightCode = part.transportAirline + ' ' + part.flightCode
 
   departureTime: ->
@@ -170,6 +171,7 @@ class Result
     @visible = ko.observable true
 
     @airline = data.valCompany
+    @airlineName = data.valCompanyName
 
     @activeVoyage = new Voyage(flights[0])
     if @roundTrip
@@ -467,7 +469,7 @@ class SearchParams
     @rt_date = '12.10.2012'
 
   url: ->
-    result = 'http://api.misha.voyanga/v1/flight/search/withParams?'
+    result = 'http://api.voyanga/v1/flight/search/withParams?'
     params = []
     params.push 'destinations[0][departure]=' + @dep()
     params.push 'destinations[0][arrival]=' + @arr()

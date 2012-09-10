@@ -98,35 +98,19 @@ function LinkDone() {
 
 
 $(document).ready(function() {
-	var text = $('#tuda-obratno').html();
-	var text2 = $('#tuda').html();
-	var text3 = $('#tuda-wait').html();
 	var text4 = $('#popup').html();
 	
-	$('a.tuda-obratno').click(function(e) {
-		e.preventDefault();
-		CreateBox(text); 
-	});
-	
-	$('a.tuda').click(function(e) {
-		e.preventDefault();
-		CreateBox(text2); 
-	});
-	$('a.tuda-wait').click(function(e) {
-		e.preventDefault();
-		CreateBox(text3); 
-	});
 	
 	$('a#popuphotel').click(function(e) {
 		e.preventDefault();
-		CreateBox(text4); 
-		LinkDone();	
+		CreateBox(text4);
+		LinkDone();
 		sliderPhoto('.photo-slide-hotel');
 		SizeBox();
 		$(".description .text").dotdotdot({watch: 'window'});
 		$('a.photo').click(function(e) {
 			e.preventDefault();
-			createPhotoBox(this); 
+			createPhotoBox(this);
 		});
 	});
 	$('a.in-the-map').click(function(e) {
@@ -137,12 +121,12 @@ $(document).ready(function() {
 		$('.place-buy .tmblr li').removeClass('active');
 		$('.place-buy .tmblr li').eq(1).addClass('active');
 		SizeBox();
-		LinkDone();		
+		LinkDone();
 		sliderPhoto('.photo-slide-hotel');
 		$(".description .text").dotdotdot({watch: 'window'});
 		$('a.photo').click(function(e) {
 			e.preventDefault();
-			createPhotoBox(this); 
+			createPhotoBox(this);
 		});
 	});
 

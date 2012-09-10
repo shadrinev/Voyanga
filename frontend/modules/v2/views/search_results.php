@@ -12,7 +12,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
         <div class="content">
             <div class="airlines-line">
                 <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
-                <span data-bind="text:airline">Россия</span>
+                <span data-bind="text:airlineName">Россия</span>
             </div>
             <div class="date-time-city">
                 <div class="start">
@@ -57,7 +57,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
             </div>
             <div class="airlines-line">
                 <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
-                <span data-bind="text:airline">Россия</span>
+                <span data-bind="text:airlineName">Россия</span>
             </div>
             <div class="date-time-city">
                 <div class="start">
@@ -330,7 +330,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
     <div class="airlinesLogo">
         <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
         <br>
-        <span data-bind="text:airline">Россия</span>
+        <span data-bind="text:airlineName">Россия</span>
     </div>
 </div>
 <!-- END DATE TIME CITY -->
@@ -420,7 +420,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
         <div class="airlinesLogo">
         <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
         <br>
-        <span data-bind="text:airline">Россия</span>
+        <span data-bind="text:airlineName">Россия</span>
     </div>
 
 </div>
@@ -546,7 +546,6 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 </script>
 <script type="text/html" id="avia-filters">
     <div class="filter-content">
-
         <div class="slide-filter">
             <img src="<?= $images ?>/images/img-filter-slide01.png">
             <select id='aviaFlightClass' class="selectSlider" data-bind="value: results.serviceClassFilter"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
