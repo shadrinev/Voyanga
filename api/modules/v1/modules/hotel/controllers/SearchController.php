@@ -37,13 +37,24 @@ class SearchController extends ApiController
         }
         Yii::import('site.frontend.models.*');
         Yii::import('site.frontend.components.*');
-        $HotelClient = new HotelBookClient();
-        $variants = $HotelClient->fullHotelSearch($hotelSearchParams);
+        $hotelClient = new HotelBookClient();
+        $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
         $results = array();
         if ($variants['errorStatus']==1)
         {
             $stack = new HotelStack($variants);
             $results = $stack->sortBy('rubPrice',5)->getJsonObject();
+            $query = array();
+            foreach ($results['hotels'] as $i=>$info)
+            {
+                $query[$info['hotelId']] = $hotelClient->hotelDetail($info['hotelId'], true);
+            }
+            $hotelClient->processAsyncRequests();
+            foreach ($query as $hotelId => $responseId)
+            {
+                if (isset($hotelClient->requests[$responseId]['result']))
+                    $this->inject($results, $hotelId, $hotelClient->requests[$responseId]['result']);
+            }
         }
         else
         {
@@ -55,5 +66,23 @@ class SearchController extends ApiController
             $this->sendXml($results, 'hotelSearchResults');
         else
             $this->sendError(400, 'Incorrect response format');
+    }
+
+    private function inject(&$results, $hotelId, $additional)
+    {
+        $newResults = array();
+        foreach ($results['hotels'] as $result)
+        {
+            if ($result['hotelId'] == $hotelId)
+            {
+                $element = CMap::mergeArray($result, $additional);
+            }
+            else
+            {
+                $element = $result;
+            }
+            $newResults[] = $element;
+        }
+        $results['hotels'] = $newResults;
     }
 }
