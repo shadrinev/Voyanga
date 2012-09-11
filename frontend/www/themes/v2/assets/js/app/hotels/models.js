@@ -43,12 +43,12 @@ HotelResult = (function() {
 =======
     this.smallMapUrl = __bind(this.smallMapUrl, this);
 
-    this.mapTumbler = __bind(this.mapTumbler, this);
-
     this.showMap = __bind(this.showMap, this);
 
 >>>>>>> Hotel popup
     this.closeDetails = __bind(this.closeDetails, this);
+
+    this.showMapDetails = __bind(this.showMapDetails, this);
 
     this.showDetails = __bind(this.showDetails, this);
     _.extend(this, Backbone.Events);
@@ -111,6 +111,11 @@ HotelResult = (function() {
     });
   };
 
+  HotelResult.prototype.showMapDetails = function() {
+    this.showDetails();
+    return this.showMap();
+  };
+
   HotelResult.prototype.closeDetails = function() {
     window.voyanga_debug("Hiding popup");
     $('#hotels-body-popup').hide();
@@ -119,12 +124,12 @@ HotelResult = (function() {
 
   HotelResult.prototype.showMap = function(context, event) {
     var coords, el, map, mapOptions, marker;
-    el = $(event.currentTarget);
+    el = $('#hotels-popup-tumblr-map');
     if (el.hasClass('active')) {
       return;
     }
     $('.place-buy .tmblr li').removeClass('active');
-    el.parent().addClass('active');
+    el.addClass('active');
     $('.tab').hide();
     $('#hotels-popup-map').show();
     $('#boxContent').css('height', $('#hotels-popup-map').height() + $('#hotels-popup-header1').height() + $('#hotels-popup-header2').height() + 'px');
@@ -148,29 +153,19 @@ HotelResult = (function() {
 
   HotelResult.prototype.showDescription = function(context, event) {
     var el;
-    el = $(event.currentTarget);
+    el = $('#hotels-popup-tumblr-description');
     if (el.hasClass('active')) {
       return;
     }
     $('.place-buy .tmblr li').removeClass('active');
-    el.parent().addClass('active');
+    el.addClass('active');
     $('.tab').hide();
     $('#hotels-popup-description').show();
+    $(".description .text").dotdotdot({
+      watch: 'window'
+    });
     $('#boxContent').css('height', 'auto');
     return SizeBox('hotels-popup-body');
-  };
-
-  HotelResult.prototype.mapTumbler = function(context, event) {
-    var el, var_nameBlock;
-    el = $(event.currentTarget);
-    if (!el.hasClass('active')) {
-      var_nameBlock = el.attr('href');
-      var_nameBlock = var_nameBlock.slice(1);
-      $('.place-buy .tmblr li').removeClass('active');
-      el.parent().addClass('active');
-      $('.tab').hide();
-      return $('#' + var_nameBlock).show();
-    }
   };
 
   HotelResult.prototype.readMore = function(context, event) {

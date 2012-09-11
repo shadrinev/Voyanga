@@ -14,8 +14,8 @@
                 Санкт-Петербург, ул. Морская Набережная, д. 31/2
             </div>
             <ul class="tmblr">
-                <li class="active"><span class="ico-descr"></span> <a href="#descr" data-bind="click: showDescription">Описание</a></li>
-                <li><span class="ico-see-map"></span> <a href="#map" data-bind="click: showMap">На карте</a></li>
+                <li class="active" id="hotels-popup-tumblr-description"><span class="ico-descr"></span> <a href="#descr" data-bind="click: showDescription">Описание</a></li>
+                <li id="hotels-popup-tumblr-map"><span class="ico-see-map"></span> <a href="#map" data-bind="click: showMap">На карте</a></li>
             </ul>
             <div class="book">
                 <div class="how-cost">
@@ -29,7 +29,7 @@
 
             <div class="photo-slide-hotel">
                 <ul data-bind="foreach: photos">
-                    <li><a href="#" data-bind="attr: {href: largeUrl}" class="photo"><img src="#" data-bind="attr:{src: smallUrl }"></a></li>
+                    <li><a href="#" data-bind="attr: {href: largeUrl}" class="photo"><img src="#" data-bind="attr:{src: largeUrl }"></a></li>
                 </ul>
                 Фотографии предоставлены отелями.
             </div>
@@ -40,7 +40,7 @@
                     <div class="right">
                         <h3>Отель на карте</h3>
                         <div class="map-hotel">
-                            <img src="" data-bind="attr: {src: smallMapUrl()}">
+                            <img src="" data-bind="attr: {src: smallMapUrl()}, click: showMap">
                         </div>
                         Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра
                     </div>

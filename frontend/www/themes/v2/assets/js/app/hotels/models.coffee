@@ -72,6 +72,7 @@ class HotelResult
     SizeBox('hotels-popup-body')
     ResizeBox('hotels-popup-body')
     sliderPhoto('.photo-slide-hotel')
+    # FIXME explicitly call tab handler here ?
     $(".description .text").dotdotdot({watch: 'window'})
 
     # If we initialized google map already
@@ -79,6 +80,10 @@ class HotelResult
 
     $('#popupOverlay').click =>
       @closeDetails()
+
+  showMapDetails: =>
+    @showDetails()
+    @showMap()
 
   # Hide popup with detailed info about given result
   closeDetails: =>
@@ -88,11 +93,11 @@ class HotelResult
 
   # Click handler for map/description in popup
   showMap: (context, event) =>
-    el = $(event.currentTarget)
+    el = $('#hotels-popup-tumblr-map')
     if el.hasClass('active')
       return
     $('.place-buy .tmblr li').removeClass('active')
-    el.parent().addClass('active')
+    el.addClass('active')
     $('.tab').hide();
     $('#hotels-popup-map').show()
     $('#boxContent').css 'height', $('#hotels-popup-map').height() + $('#hotels-popup-header1').height() + $('#hotels-popup-header2').height() + 'px'
@@ -110,27 +115,27 @@ class HotelResult
       @mapInitialized = true
     SizeBox 'hotels-popup-body'
 
-
   showDescription: (context, event) ->
-    el = $(event.currentTarget)
+    el = $('#hotels-popup-tumblr-description')
     if el.hasClass('active')
       return
     $('.place-buy .tmblr li').removeClass('active')
-    el.parent().addClass('active')
+    el.addClass('active')
     $('.tab').hide();
     $('#hotels-popup-description').show()
+    $(".description .text").dotdotdot({watch: 'window'})
     $('#boxContent').css 'height', 'auto'
     SizeBox 'hotels-popup-body'
 
-  mapTumbler: (context, event) =>
-    el = $(event.currentTarget)
-    if ! el.hasClass('active')
-      var_nameBlock = el.attr('href')
-      var_nameBlock = var_nameBlock.slice(1)
-      $('.place-buy .tmblr li').removeClass('active')
-      el.parent().addClass('active')
-      $('.tab').hide();
-      $('#'+var_nameBlock).show()
+  #mapTumbler: (context, event) =>
+  #  el = $(event.currentTarget)
+  #  if ! el.hasClass('active')
+  #    var_nameBlock = el.attr('href')
+  #    var_nameBlock = var_nameBlock.slice(1)
+  #    $('.place-buy .tmblr li').removeClass('active')
+  #    el.parent().addClass('active')
+  #    $('.tab').hide();
+  #    $('#'+var_nameBlock).show()
 
 #    sliderPhoto('.photo-slide-hotel');
 #    $('a.photo').click(function(e) {
