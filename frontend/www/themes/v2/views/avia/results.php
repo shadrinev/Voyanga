@@ -337,6 +337,7 @@
     <div class="btn-minimize"><a href="#">Списком</a></div>
     <div class="clear"></div>
     <ul class="minimize" data-bind="foreach: voyages">
+        <!-- ko if: visible() -->
         <li>
             <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.hash() }, click: $parent.chooseStacked">
                 <input type="radio" data-bind="value: hash(), checked: $parent.hash()">
@@ -348,6 +349,7 @@
                 </div>
             </a>
         </li>
+        <!-- /ko -->
     </ul>
 </div>
 <!-- /ko -->
@@ -428,6 +430,7 @@
     <div class="btn-minimize"><a href="#">Списком</a></div>
     <div class="clear"></div>
     <ul class="minimize" data-bind="foreach: rtVoyages()">
+           <!-- ko if: visible() -->
             <li>
                 <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.rtHash() }, click: $parent.chooseRtStacked">
                     <input type="radio" data-bind="value: hash(), checked: $parent.rtHash()">
@@ -439,6 +442,7 @@
                     </div>
                 </a>
             </li>
+            <!-- /ko -->
         </ul>
 </div>
 <!-- /ko -->

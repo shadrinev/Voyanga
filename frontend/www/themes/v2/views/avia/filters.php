@@ -4,15 +4,17 @@
 <script type="text/html" id="avia-filters">
     <div class="filter-content">
         <div class="slide-filter">
-            <img src="<?= $images ?>/images/img-filter-slide01.png">
-            <select id='aviaFlightClass' class="selectSlider" data-bind="value: results.serviceClassFilter"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
+            <div>
+                <select id='aviaFlightClass' class="selectSlider" data-bind="value: results.serviceClassFilter"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
+            </div>
         </div>
 
         <div class="div-filter">
 
             <div class="slider-filter">
-                <img src="<?= $images ?>/images/img-filter-slide02.png">
-                <select id='aviaOnlyDirectFlights' class="selectSlider" data-bind="value: results.onlyDirectFilter"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
+                <div>
+                    <select id='aviaOnlyDirectFlights' class="selectSlider" data-bind="value: results.onlyDirectFilter"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
+                </div>
             </div>
 
             <input type="checkbox" name="aviaShortTransits" id="aviaShortTransits" data-bind="checked: results.onlyShortFilter"> <label for="aviaShortTransits">Только короткие пересадки</label>
@@ -20,9 +22,6 @@
         </div>
         <div class="div-filter">
             <div class="slider-filter" style="text-align:center; margin-bottom:18px;">
-                <img src="<?= $images ?>/images/tuda.png">
-                <br>
-                <input type="text" id="megaInput" data-bind="value: testInput">
                 <div style="width: 200px; margin-left: 0px;">
                     <select id='aviaShowReturnFilters' class="selectSlider"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
                 </div>
@@ -32,7 +31,6 @@
             <h4>Время вылета</h4>
 
             <div class="slide-filter">
-                <br>
                 <br>
                 <div style="width: 200px; margin-left: 0px;">
                     <input id="departureTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.departureFromToTimeActive"/>

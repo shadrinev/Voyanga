@@ -14,6 +14,7 @@ class HotelStack
     public $groupKey;
     public static $toTop;
     public static $sortParam;
+    public $groupDeep = 0;
 
     /** @var Hotel[] */
     public $_hotels;
@@ -155,7 +156,6 @@ class HotelStack
 
                 $sVal = $hotel->getValueOfParam($sKey);
 
-
                 if (!isset($this->hotelStacks[$sVal]))
                 {
                     $this->hotelStacks[$sVal] = new HotelStack();
@@ -176,6 +176,98 @@ class HotelStack
             }
         }
 
+        $this->groupDeep++;
+
+        return $this;
+    }
+
+    public function mergeStep(){
+        if($this->hotelStacks){
+            if($this->groupKey == 'providerId'){
+                $maxCountKey = false;
+                $maxCount = false;
+                $mergedStacks = array();
+                foreach($this->hotelStacks as $key=>$hotelStack){
+                    if( ($maxCount === false) || ( $maxCount < count($hotelStack->_hotels) ) ){
+                        $maxCount = count($hotelStack->_hotels);
+                        $maxCountKey = $key;
+                    }
+                }
+                /** @var $hotel Hotel */
+                foreach($this->hotelStacks[$maxCountKey]->_hotels as $hotel){
+                    //echo "innn loop;";
+                    $newHotelStack = new HotelStack();
+                    $newHotelStack->addHotel($hotel);
+                    $mergedStacks[] = $newHotelStack;
+                }
+
+                $mCount=0;
+                $ppCnt = 0;
+                foreach($this->hotelStacks as $keyStack=>$hotelStack){
+                    if($keyStack != $maxCountKey){
+                        foreach($hotelStack->_hotels as $hotelKey=>$otherHotel)
+                        {
+                            $minMetrica = 0;
+                            $minStackKey = false;
+                            foreach($mergedStacks as $workHotelStackKey=>$workHotelStack){
+                                $tmpHotel = $workHotelStack->getHotel();
+                                $metrica = $tmpHotel->getMergeMetric($otherHotel);
+                                //echo "metrica:".$metrica." p1:".$tmpHotel->rubPrice." p2:".$otherHotel->rubPrice." showName"."<br>";
+                                if(($minStackKey === false) || $metrica < $minMetrica){
+                                    $minMetrica = $metrica;
+                                    $minStackKey = $workHotelStackKey;
+                                }
+                            }
+                            //die();
+                            if($minMetrica > 1000){
+                                $mCount++;
+                                $newHotelStack = new HotelStack();
+                                $newHotelStack->addHotel($otherHotel);
+                                $mergedStacks[] = $newHotelStack;
+                                if($mCount >0){
+                                    //VarDumper::dump($otherHotel);
+                                    //VarDumper::dump($mergedStacks);
+                                    //die();
+                                }
+                                //echo "merged!!!".$mCount;
+                            }elseif($minMetrica < 0){
+                                //??
+                                $ppCnt++;
+                                //echo "adding+1+!!!";
+                                if($ppCnt >4){
+                                    //VarDumper::dump($otherHotel);
+                                    //VarDumper::dump($mergedStacks[$minStackKey]->getHotel());
+                                    //VarDumper::dump($otherHotel);
+                                    //die();
+                                }
+                                $mergedStacks[$minStackKey]->addHotel($otherHotel);
+                            }else{
+                                //??
+                                //echo "adding+2+!!!";
+                                $mergedStacks[$minStackKey]->addHotel($otherHotel);
+                            }
+                            //$newHotelStack = new HotelStack();
+                            //$newHotelStack->addHotel($tmpHotel);
+                        }
+                    }
+                }
+                $this->groupKey = 'merged';
+                $this->hotelStacks = $mergedStacks;
+
+                //}
+
+            }else{
+                foreach($this->hotelStacks as $hotelStack){
+                    $hotelStack->mergeStep();
+                }
+            }
+        }
+    }
+
+    public function mergeSame(){
+        //$startDeep = $this->groupDeep;
+        $this->groupBy('providerId');
+        $this->mergeStep();
         return $this;
     }
 
@@ -257,7 +349,7 @@ class HotelStack
                     try{
                         uasort($this->hotelStacks,'HotelStack::compareStacksByHotelsParams');
                     }catch (CException $e){
-                        echo "group: {$this->groupKey}";
+                        //echo "group: {$this->groupKey}";
                         print_r($this->hotelStacks);
                     }
                 }

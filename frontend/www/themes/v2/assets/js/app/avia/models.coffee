@@ -136,20 +136,26 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
     if filters.serviceClass != 'A'
       result = result && @serviceClass == filters.serviceClass
-
+    haveBack = false
     for rtVoyage in @_backVoyages
+      thisBack = true
       match_departure_time = false
       if filters.departureTimeReturn.timeFrom <= rtVoyage.departureTimeNumeric() && filters.departureTimeReturn.timeTo >= rtVoyage.departureTimeNumeric()
         match_departure_time = true
-      result = result && match_departure_time
+      thisBack = result && match_departure_time
 
       if filters.onlyDirect
-        result = result && rtVoyage.direct
+        thisBack = thisBack && rtVoyage.direct
 
       match_arrival_time = false
       if filters.arrivalTimeReturn.timeFrom <= rtVoyage.arrivalTimeNumeric() && filters.arrivalTimeReturn.timeTo >= rtVoyage.arrivalTimeNumeric()
         match_arrival_time = true
-      result = result && match_arrival_time
+      thisBack = thisBack && match_arrival_time
+      rtVoyage.visible(thisBack)
+      if thisBack && !haveBack
+        haveBack = true
+        @activeBackVoyage(rtVoyage)
+    result = result && haveBack
     @visible(result)
 
 
