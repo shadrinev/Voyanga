@@ -15,7 +15,7 @@ class HotelsController
     # update search params with values in route
 
     # temporary development cache
-    key = "h_search_1231"
+    key = "h_search_1233"
     if sessionStorage.getItem(key)
       window.voyanga_debug "HOTELS: Getting result from cache"
       @handleResults(JSON.parse(sessionStorage.getItem(key)))
@@ -30,7 +30,7 @@ class HotelsController
     window.voyanga_debug "HOTELS: searchAction: handling results", data
 
     # temporary development cache
-    key = "h_search_1231"
+    key = "h_search_1233"
     sessionStorage.setItem(key, JSON.stringify(data))
     stacked = new HotelsResultSet data.hotels
 

@@ -37,7 +37,7 @@
                         <span class="text">рейтинг<br>отеля</span>
                     </div>
                     <a href="#" class="btn-cost"><span class="l"></span><span class="text">Выбрать отель</span></a>
-                    <a class="details" href="#" id="popuphotel">Подробнее об отеле</a>
+                    <a class="details" data-bind="click: showDetails" href="#">Подробнее об отеле</a>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -74,4 +74,31 @@
     </div>
     <!-- /ko -->
 </div>
+<div id="hotels-body-popup" class="body-popup" style="display:none;" >
+  <div id="hotels-popup-body" class="popup" >
+    <div>
+      <div id="boxTopLeft"></div>
+      <div id="boxTopCenter"></div>
+      <div id="boxTopRight"></div>
+      <div class="clear"></div>
+    </div>
+    <div>
+      <div id="boxMiddleLeft"></div>
+      <div id="boxContent">
+        <div id="contentBox">
+          <div data-bind="template: {name: 'hotels-popup', data: results.popup()}"></div>
+          <div id="boxClose" data-bind="click: results.popup().closeDetails"></div>
+        </div>
+      </div>
+      <div id="boxMiddleRight"></div>
+      <div class="clear"></div>
+    </div>
+    <div>
+      <div id="boxBottomLeft"></div>
+      <div id="boxBottomCenter"></div>
+      <div id="boxBottomRight"></div>
+    </div>
+  </div>
+</div>
+
 </script>

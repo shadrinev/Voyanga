@@ -15,7 +15,7 @@ class AviaController
     # update search params with values in route
     @searchParams.fromList(args)
 
-    # temporary development cache
+    # tempoprary development cache
     key = "search_" + @searchParams.key()
     if sessionStorage.getItem(key)
       window.voyanga_debug "AVIA: Getting result from cache"

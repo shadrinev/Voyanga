@@ -276,9 +276,11 @@ class AviaResult
     @trigger "popup", @
     $('body').prepend('<div id="popupOverlay"></div>')
 
-    $('#body-popup').show()
-    SizeBox();
-    ResizeBox();
+    $('#avia-body-popup').show()
+    ko.processAllDeferredBindingUpdates()
+
+    SizeBox('avia-popup-body');
+    ResizeBox('avia-popup-body');
 
     $('#popupOverlay').click =>
       @closeDetails()
@@ -286,7 +288,7 @@ class AviaResult
   # Hide popup with detailed info about given result
   closeDetails: =>
     window.voyanga_debug "Hiding popup"
-    $('#body-popup').hide()
+    $('#avia-body-popup').hide()
     $('#popupOverlay').remove()
 
 

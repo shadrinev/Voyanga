@@ -470,74 +470,31 @@
 <!-- END TICKET -->
 <!-- /ko -->
 </div>
-<!-- END TICKET CONTENT -->
-<div id="body-popup" style="display:none;">
-    <div id="popup" data-bind="with: results.popup()">
-        <div>
-            <div id="boxTopLeft"></div>
-            <div id="boxTopCenter"></div>
-            <div id="boxTopRight"></div>
-            <div class="clear"></div>
-        </div>
-        <div>
-            <div id="boxMiddleLeft"></div>
-            <div id="boxContent">
-                <div id="contentBox">
-                    <div id="avia-ticket-info-popup">
-                        <div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
-                            <div class="top-head-tickets">
-                               <div class="date" data-bind="text: departurePopup()">
-                                   19 мая, Пн
-                                </div>
-                                <h3>Туда</h3>
-
-                                <div class="other-time">
-                                    <div class="variation">
-                                    <!-- if: stacked() -->
-                                        <ul class="minimize">
-                                            <li>
-                                                Варианты вылета:
-                                            </li>
-                                        <!-- ko template: {name: 'popup-departure-choices', foreach: voyages} -->
-                                        <!-- /ko -->
-                                        </ul>
-                                    <!-- /ko -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content" data-bind="template: {name: 'avia-popup-flight', foreach: activeVoyage().parts}">
-                            </div>
-    <!-- ko if: roundTrip -->
-    <div class="middle-head-tickets">
-        <div class="date" data-bind="text: rtDeparturePopup()">
-            19 мая, Пн
-        </div>
-        <h3>Обратно</h3>
-
-        <div class="other-time">
-            <div class="variation">
-            <!-- ko if:rtStacked -->
-                <ul class="minimize">
-                    <li>
-                        Варианты вылета:
-                    </li>
-                    <!-- ko template: {name: 'popup-departure-choices-rt', foreach: rtVoyages()} -->
-
-                    <!-- /ko -->
-                </ul>
-            <!-- /ko -->
-            </div>
-        </div>
+<!-- FIXME: avia-hotel duplication -->
+<div id="avia-body-popup" class="body-popup" style="display:none;" >
+  <div id="avia-popup-body" class="popup">
+    <div>
+      <div id="boxTopLeft"></div>
+      <div id="boxTopCenter"></div>
+      <div id="boxTopRight"></div>
+      <div class="clear"></div>
     </div>
-    <div class="content" data-bind="template: {name: 'avia-popup-flight', foreach: activeVoyage().activeBackVoyage().parts}">
+    <div>
+      <div id="boxMiddleLeft"></div>
+      <div id="boxContent">
+        <div id="contentBox">
+          <div data-bind="template: {name: 'avia-popup', data: results.popup()}"></div>
+          <div id="boxClose" data-bind="click: results.popup().closeDetails"></div>
+        </div>
+      </div>
+      <div id="boxMiddleRight"></div>
+      <div class="clear"></div>
     </div>
-    <!-- /ko -->
-    <hr class="lines">
-    <div class="yes">
-        <span style="color:#2e333b;" class="f14 bold">Оформить</span>
-        <a class="btn-order" href="#">
-            <span class="cost" data-bind="text: price">63 502</span> <span class="rur f26">o</span>
-        </a>
-    </div></div></div>
-<div id="boxClose" data-bind="click: closeDetails"></div></div></div><div id="boxMiddleRight"></div><div class="clear"></div></div><div><div id="boxBottomLeft"></div><div id="boxBottomCenter"></div><div id="boxBottomRight"></div></div></div></div>
+    <div>
+      <div id="boxBottomLeft"></div>
+      <div id="boxBottomCenter"></div>
+      <div id="boxBottomRight"></div>
+    </div>
+  </div>
+</div>
 </script>

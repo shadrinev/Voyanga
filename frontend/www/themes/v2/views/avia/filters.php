@@ -1,4 +1,6 @@
-
+<?php
+    $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+?>
 <script type="text/html" id="avia-filters">
     <div class="filter-content">
         <div class="slide-filter">
