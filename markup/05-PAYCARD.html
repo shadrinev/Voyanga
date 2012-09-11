@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Voyanga v.0.1 - Trip Flight Rework</title>
+<link href="../frontend/www/themes/v2/assets/css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/panel.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/popup.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/voyanga-calendar.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/paycard.css" rel="stylesheet" type="text/css" />
+
+<!-- JS SLIDE -->
+<link href="../frontend/www/themes/v2/assets/css/jsslidecheck.css" rel="stylesheet" type="text/css" />
+<!-- JS END SLIDE -->
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/jquery.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-2.1.0.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-repeat.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.dotdotdot-1.5.1.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.maskedinput-1.3.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.synctranslit.js"></script>
+	
+<script type="text/javascript" src="js/resize-new.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/slide-mode.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/popup.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/tickets.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/app/hotels/panel.js"></script>
+
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/script.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/voyanga-calendar.js"></script>
+
+<script>
+jQuery(function($){
+   $(".numbercard").mask("9999    9999    9999    9999",{placeholder:" ", completed:function(){ $('.firstLastName').focus();}});
+   $(".month").mask("99",{placeholder:" ", 
+   		completed:function(){ 
+	   		if ( this.val() > 12) { 
+   				this.val('12');$('.year').focus(); 
+	   		
+   			}
+   			else {
+	   			$('.year').focus(); 
+   			}
+   	
+   		}
+   	});
+   $(".firstLastName").syncTranslit({destination: 'slug'});
+   $(".year").mask("99",{placeholder:" ", completed:function(){$('.CVV').focus();}});
+   $(".CVV").mask("999",{placeholder:" ", completed:function(){$('.nameBank').focus();}});
+   $('.month').keyup(function() {
+	   	var_val = $(this).val();
+		var_one = var_val.slice(0,1);
+		if (var_one > 1) {
+			$(this).val('1');
+			var_two = var_val.slice(1,2);
+			if (var_two > 2) {
+				$(this).val('12');	
+			}
+		} 
+   });
+
+});
+</script>
+</head>
+
+<body>
+
+<div class="payCardDiv">
+	
+	<div class="frontside">
+		<input class="numbercard" name="numbercard" type="text">
+		<input class="firstLastName" id="slug" name="FIO" type="text" onfocus="this.value = this.value;">
+		<input class="month" type="text" name="month" placeholder="ММ">
+		<input class="year" type="text" name="year" placeholder="ГГ">
+	</div>
+	<div class="backside">
+		<input class="CVV" name="cvv" type="text">
+		<input class="nameBank" name="bank" type="text">
+	</div>
+	<div class="clear"></div>
+	<div class="infoText">
+		<div class="save">Данные вашей банковской карты обрабатываются процессинговым центром PayOnline и передаются по защищенному протоколу в банк-эквайер в зашифрованном виде.</div>
+		<div class="saveInfo">Вы можете найти этот платеж в вашей банковской выписке по идентификатору «voyanga.com».</div>
+	</div>
+	<div class="finished">
+		<a class="btn-order" href="#">		
+			<span class="text">Оплатить</span>
+		</a>
+		<span class="allCena">Сумма платежа: <strong>37 500 <span class="rur">o</span></strong></span>
+		Заказ №1625
+	</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+.payCardDiv {
+	margin: 50px auto;
+	width: 720px;
+	font-family: Arial;
+}
+.frontside, .backside {
+	width: 343px; height: 212px;
+	background: url(../images/paycard.png) no-repeat;
+	position: relative;
+}
+.frontside {
+	float: left;
+}
+.backside {
+	float: right;
+	background-position: 0px -213px;
+}
+
+.frontside .numbercard {
+	background: none repeat scroll 0 0 transparent;
+    border: 0 solid;
+    font-size: 18px;
+    height: 31px;
+    left: 15px;
+    letter-spacing: 0.074em;
+    padding-left: 13px;
+    position: absolute;
+    text-align: left;
+    top: 92px;
+    width: 302px;
+}
+.frontside .firstLastName {
+	background: none repeat scroll 0 0 transparent;
+    border: 0px solid;
+    font-size: 15px;
+    height: 25px;
+    left: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 4px;
+    position: absolute;
+    top: 168px;
+    width: 199px;
+    text-transform: uppercase;
+}
+.frontside .month {
+	background: none repeat scroll 0 0 transparent;
+    border: 0 solid;
+    font-size: 15px;
+    height: 26px;
+    padding-top: 3px;
+    position: absolute;
+    right: 56px;
+    text-align: center;
+    text-transform: uppercase;
+    top: 168px;
+    width: 40px;
+}
+.frontside .year {
+	background: none repeat scroll 0 0 transparent;
+    border: 0 solid;
+    font-size: 15px;
+    height: 26px;
+    padding-top: 3px;
+    position: absolute;
+    right: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    top: 168px;
+    width: 40px;
+}
+.backside .CVV {
+	background: none repeat scroll 0 0 transparent;
+    border: 0 solid;
+    font-size: 15px;
+    height: 30px;
+    position: absolute;
+    right: 14px;
+    text-align: center;
+    top: 93px;
+    width: 83px;
+}
+.nameBank {
+	background: none repeat scroll 0 0 transparent;
+    border: 0 solid;
+    font-size: 15px;
+    height: 31px;
+    left: 15px;
+    padding: 0 5px;
+    position: absolute;
+    top: 168px;
+    width: 302px;
+}
+.frontside .numbercard:focus, .frontside .firstLastName:focus, .frontside .month:focus, .frontside .year:focus, .backside .CVV:focus, .backside .nameBank:focus  {
+	border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 15px rgba(82, 168, 236, 0.8);
+    color: #16181A !important;
+    outline: 0 none;
+}
+.finished {
+	width: 224px;
+	text-align: right;
+	color: #66676c;
+	font-size: 12px;
+	margin-top: 27px;
+	float: right;
+}
+.finished .btn-order {
+	display: inline-block;
+}
+.finished .btn-order {
+	text-align: left;
+}
+.finished .btn-order .text {
+	font-size: 17px;
+    padding-left: 20px;
+    
+}
+.allCena {
+	color: #1d222b;
+	font-size: 16px;
+	display: block;
+}
+
+.infoText {
+	width: 495px;
+	float: left;
+	color: #66676c;
+	font-size: 12px;
+	margin-top: 27px;
+	
+}
+.save {
+	padding-left: 25px;
+	background: url(../images/ico-01-payCard.png) no-repeat 0px 0px;
+	margin-bottom: 20px;
+	line-height: 18px;
+}
+.saveInfo {
+	padding-left: 25px;
+	background: url(../images/ico-02-payCard.png) no-repeat 0px 0px;
+	line-height: 18px;
+}
