@@ -71,6 +71,7 @@ class SearchController extends ApiController
     private function inject(&$results, $hotelId, $additional)
     {
         $newResults = array();
+        $additional = $this->prepare($additional);
         foreach ($results['hotels'] as $result)
         {
             if ($result['hotelId'] == $hotelId)
@@ -84,5 +85,25 @@ class SearchController extends ApiController
             $newResults[] = $element;
         }
         $results['hotels'] = $newResults;
+    }
+
+    private function prepare($additional)
+    {
+        if (is_object($additional))
+        {
+            $objectVars = get_object_vars($additional);
+            foreach ($objectVars as $objVar=>$objProperties)
+            {
+                if (is_object($additional->$objVar))
+                    $additional->$objVar = $this->prepare($additional->$objVar);
+                elseif (is_array($additional->$objVar))
+                {
+                    $additional->$objVar = $this->prepare($additional->$objVar);
+                }
+                elseif (is_string($additional->$objVar))
+                    $additional->$objVar = strip_tags($additional->$objVar);
+            }
+        }
+        return $additional;
     }
 }
