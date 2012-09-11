@@ -142,6 +142,6 @@ class TourBuilderForm extends CFormModel
 
     public function getIsLinkedToEvent()
     {
-        return ($this->eventId != null);
+        return ($this->eventId != Event::NO_EVENT_ITEM);
     }
 }
