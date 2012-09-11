@@ -42,7 +42,6 @@ class Application extends Backbone.Router
   # @param prefix url prefix for given controller
   # @param controler - controller to register
   register: (prefix, module, isDefault=false)->
-    console.log prefix
     controller = module.controller
     # Change view when controller wants to
     controller.on "viewChanged", (view, data)=>

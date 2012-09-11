@@ -38,11 +38,6 @@ class AviaController
     key = "search_" + @searchParams.key()
     sessionStorage.setItem(key, JSON.stringify(data))
     stacked = new AviaResultSet data.flights.flightVoyages
-    @myobj = ko.observable true
-    @myobj.subscribe (newValue)->
-      alert(newValue)
-    console.log(@myobj)
-    console.log(data)
     this.getFilterLimitValues(stacked)
     @aviaFiltersInit = {
       flightClassFilter:{value: data.searchParams.serviceClass},
