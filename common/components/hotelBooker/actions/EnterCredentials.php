@@ -61,11 +61,16 @@ class EnterCredentials extends StageAction
             $bookingModel->phone = $bookingForm->contactPhone;
             $bookingModel->timestamp = new CDbExpression('NOW()');
             $validSaving = $bookingModel->save();
-            Yii::trace(CVarDumper::dumpAsString($bookingModel->errors), 'HotelBooker.EnterCredentials.bookingModel');
+            $errors = array();
             if ($validSaving)
             {
                 $hotelBookerComponent->getCurrent()->orderBookingId = $bookingModel->id;
                 $hotelBookerComponent->getCurrent()->save();
+            }
+            else
+            {
+                $errors = CMap::mergeArray($errors, $bookingModel->errors);
+                Yii::trace(CVarDumper::dumpAsString($bookingModel->errors), 'HotelBooker.EnterCredentials.bookingModel');
             }
             foreach($form->roomsPassports as $i => $roomPassport)
             {
@@ -77,6 +82,7 @@ class EnterCredentials extends StageAction
                     $hotelPassport->hotelBookingId = $hotelBookerId;
                     $hotelPassport->roomKey = $i;
                     $validSaving = $validSaving and $hotelPassport->save();
+                    $errors = CMap::mergeArray($errors, $hotelPassport->errors);
                     Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.adultPassport');
                 }
                 foreach($roomPassport->childrenPassports as $childInfo)
@@ -87,6 +93,7 @@ class EnterCredentials extends StageAction
                     $hotelPassport->hotelBookingId = $hotelBookerId;
                     $hotelPassport->roomKey = $i;
                     $validSaving = $validSaving and $hotelPassport->save();
+                    $errors = CMap::mergeArray($errors, $hotelPassport->errors);
                     Yii::trace(CVarDumper::dumpAsString($hotelPassport->errors), 'HotelBooker.EnterCredentials.childPassport');
                 }
             }

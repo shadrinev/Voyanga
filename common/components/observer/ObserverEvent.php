@@ -5,7 +5,7 @@
  * Date: 04.06.12
  * Time: 14:56
  */
-class Event
+class ObserverEvent
 {
     public $name;
     public $args;
