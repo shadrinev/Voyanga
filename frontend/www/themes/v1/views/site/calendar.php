@@ -24,7 +24,6 @@ kjhjkhkl
 
 <?php
 $this->widget('site.frontend.widgets.timelineCalendar.TimelineCalendarWidget', array(
-    'eventsTimeline'=>'contact-form',
 ));
     ?>
 

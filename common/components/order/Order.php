@@ -61,10 +61,9 @@ class Order extends FrontendActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
-            'flightItems' => array(self::MANY_MANY, 'OrderFlightVoyage', 'order_has_flight_voyage(orderId,orderFlightVoyage)')
+            'flightItems' => array(self::MANY_MANY, 'OrderFlightVoyage', 'order_has_flight_voyage(orderId,orderFlightVoyage)'),
+            'hotelItems' => array(self::MANY_MANY, 'OrderHotel', 'order_has_hotel(orderId,orderHotel)')
         );
     }
 

@@ -18,4 +18,5 @@ $this->renderPartial('_choosed_flight', array('variable'=>'choosedFlight','showS
 ?>
 
 <?php echo CHtml::link('Назад в конструктор', array('create'), array('class'=>'btn')); ?>
-<?php echo CHtml::link('Забронировать', array('makeBooking'), array('class'=>'btn')); ?>
+<?php echo CHtml::link('Сохранить тур', array('saveTour'), array('class'=>'btn')); ?>
+<?php echo CHtml::link('Дальше', array('showEventTrip'), array('class'=>'btn')); ?>

@@ -25,7 +25,7 @@ class ShowEventTripAction extends CAction
         $citiesIndex = Yii::app()->user->getState('startCitiesIndex', 0);
         if (sizeof($cities)<=$citiesIndex)
         {
-            echo 'Все события свзянаы с турами';
+            echo 'Все события свзянаы с турами<br><a href="/">На главную</a>';
         }
         else
         {

@@ -93,3 +93,5 @@
 </footer>
 </body>
 </html>
+
+<?php Yii::app()->getClientScript()->registerScriptFile('/js/utils.js');
