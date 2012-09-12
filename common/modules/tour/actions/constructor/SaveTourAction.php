@@ -13,7 +13,7 @@ class SaveTourAction extends CAction
         $eventId = $tourForm->eventId;
         $event = Event::model()->findByPk($eventId);
         $tripStorage = new TripStorage();
-        $order = $tripStorage->saveOrder('Тур для события '.$event->title);
+        $order = $tripStorage->saveOrder($event->orderId, 'Тур для события '.$event->title);
         $event->orderId = $order->id;
         $event->update(array('orderId'));
         $this->controller->redirect($this->controller->createUrl('showEventTrip'));

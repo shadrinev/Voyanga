@@ -33,10 +33,11 @@ class EventController extends Controller
 		));
 	}
 
-    protected function createOrUpdate($model)
+    protected function createOrUpdate(Event $model)
     {
         if(isset($_POST['Event']))
         {
+            $model->scenario = 'backend';
             $model->attributes=$_POST['Event'];
             $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
             $links = array();
@@ -54,6 +55,7 @@ class EventController extends Controller
             }
             $model->categories = $categories;
             $model->links = $links;
+            $model->validate();
             if($model->save())
             {
                 if ($pictureSmall=CUploadedFile::getInstance($model, 'pictureSmall'))
@@ -74,9 +76,6 @@ class EventController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
         $this->createOrUpdate($model);
 

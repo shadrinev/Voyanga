@@ -6,9 +6,11 @@
  */
 class TourAdminModule extends ABaseAdminModule
 {
+    public $defaultController = 'constructor';
+
     public function init()
     {
-        Yii::import('site.backend.modules.admin.modules.tour.models.*');
+        Yii::import('site.frontend.modules.tour.models.*');
     }
 
     /**

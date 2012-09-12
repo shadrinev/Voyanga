@@ -47,7 +47,7 @@ class Partner extends CActiveRecord
      * @param string $className active record class name.
      * @return Partner the static model class
      */
-    public static function model($className=__CLASS__)
+    public static function model($className = __CLASS__)
     {
         return parent::model($className);
     }
@@ -69,13 +69,13 @@ class Partner extends CActiveRecord
         // will receive user inputs.
         return array(
             array('name, password, passwordStrategy, requiresNewPassword', 'required'),
-            array('requiresNewPassword, cookieTime', 'numerical', 'integerOnly'=>true),
-            array('name, password', 'length', 'max'=>45),
-            array('salt', 'length', 'max'=>15),
-            array('passwordStrategy', 'length', 'max'=>40),
+            array('requiresNewPassword, cookieTime', 'numerical', 'integerOnly' => true),
+            array('name, password', 'length', 'max' => 45),
+            array('salt', 'length', 'max' => 15),
+            array('passwordStrategy', 'length', 'max' => 40),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, name, password, salt, passwordStrategy, requiresNewPassword, cookieTime', 'safe', 'on'=>'search'),
+            array('id, name, password, salt, passwordStrategy, requiresNewPassword, cookieTime', 'safe', 'on' => 'search'),
         );
     }
 
@@ -86,8 +86,7 @@ class Partner extends CActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array(
-        );
+        return array();
     }
 
     /**
@@ -115,18 +114,18 @@ class Partner extends CActiveRecord
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('name',$this->name,true);
-        $criteria->compare('password',$this->password,true);
-        $criteria->compare('salt',$this->salt,true);
-        $criteria->compare('passwordStrategy',$this->passwordStrategy,true);
-        $criteria->compare('requiresNewPassword',$this->requiresNewPassword);
-        $criteria->compare('cookieTime',$this->cookieTime);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('name', $this->name, true);
+        $criteria->compare('password', $this->password, true);
+        $criteria->compare('salt', $this->salt, true);
+        $criteria->compare('passwordStrategy', $this->passwordStrategy, true);
+        $criteria->compare('requiresNewPassword', $this->requiresNewPassword);
+        $criteria->compare('cookieTime', $this->cookieTime);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
 
@@ -177,48 +176,58 @@ class Partner extends CActiveRecord
         $chars = 'a2bc3de4fg5hk6mn7pq8su9vxyz'; // Используем непохожие друг на друга символы
         $lenChars = strlen($chars); // если изменяем набор символов, то число нужно изменить
         $newPassword = '';
-        for($i = 0; $i<$length; $i++)
+        for ($i = 0; $i < $length; $i++)
         {
-            $randomIndex = rand(0,$lenChars-1);
+            $randomIndex = rand(0, $lenChars - 1);
             $newPassword .= $chars[$randomIndex];
         }
         return $newPassword;
     }
 
-    public function getPartnerKey(){
+    public function getPartnerKey()
+    {
         return self::encodeId(($this->id + 10100));
     }
 
-    public static function getPartnerByKey($key){
+    public static function getPartnerByKey($key)
+    {
         $id = self::decodeId($key);
         $id = $id - 10100;
         $partner = Partner::model()->findByPk($id);
-        if($partner) return $partner;
+        if ($partner) return $partner;
         return false;
     }
 
-    public static function setPartnerByKey(){
+    public static function setPartnerByKey()
+    {
         $partner = false;
-        if(isset($_REQUEST['pid'])){
-            if($partner = self::getPartnerByKey($_REQUEST['pid'])){
-                setcookie('partnerKey',$_REQUEST['pid'],time()+3600*24*$partner->cookieTime);
+        if (isset($_REQUEST['pid']))
+        {
+            if ($partner = self::getPartnerByKey($_REQUEST['pid']))
+            {
+                setcookie('partnerKey', $_REQUEST['pid'], time() + 3600 * 24 * $partner->cookieTime);
                 $_SESSION['partnerKey'] = $_REQUEST['pid'];
             }
         }
-        if(isset($_COOKIE['partnerKey']) && !($partner)){
-            if($partner = self::getPartnerByKey($_COOKIE['partnerKey'])){
+        if (isset($_COOKIE['partnerKey']) && !($partner))
+        {
+            if ($partner = self::getPartnerByKey($_COOKIE['partnerKey']))
+            {
                 $_SESSION['partnerKey'] = $_COOKIE['partnerKey'];
             }
         }
-        if(isset($_SESSION['partnerKey']) && !($partner)){
+        if (isset($_SESSION['partnerKey']) && !($partner))
+        {
             $partner = self::getPartnerByKey($_SESSION['partnerKey']);
         }
-        if($partner){
+        if ($partner)
+        {
             self::$currentPartner = $partner;
         }
     }
 
-    public static function getCurrentPartner(){
+    public static function getCurrentPartner()
+    {
         return self::$currentPartner;
     }
 }

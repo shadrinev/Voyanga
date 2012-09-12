@@ -34,7 +34,7 @@ class OrderBooking extends CActiveRecord
      * @param string $className active record class name.
      * @return OrderBooking the static model class
      */
-    public static function model($className=__CLASS__)
+    public static function model($className = __CLASS__)
     {
         return parent::model($className);
     }
@@ -56,10 +56,10 @@ class OrderBooking extends CActiveRecord
         // will receive user inputs.
         return array(
             //array('timestamp', 'required'),
-            array('email, phone, userId, partnerId', 'length', 'max'=>45),
+            array('email, phone, userId, partnerId', 'length', 'max' => 45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, email, phone, userId, timestamp, partnerId', 'safe', 'on'=>'search'),
+            array('id, email, phone, userId, timestamp, partnerId', 'safe', 'on' => 'search'),
         );
     }
 
@@ -101,28 +101,31 @@ class OrderBooking extends CActiveRecord
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('email',$this->email,true);
-        $criteria->compare('phone',$this->phone,true);
-        $criteria->compare('userId',$this->userId,true);
-        $criteria->compare('timestamp',$this->timestamp,true);
-        $criteria->compare('partnerId',$this->partnerId,true);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('phone', $this->phone, true);
+        $criteria->compare('userId', $this->userId, true);
+        $criteria->compare('timestamp', $this->timestamp, true);
+        $criteria->compare('partnerId', $this->partnerId, true);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
 
-    public function save($runValidation=true,$attributes=null){
-        if($this->isNewRecord){
+    public function beforeSave()
+    {
+        if ($this->isNewRecord)
+        {
             $partner = Partner::getCurrentPartner();
-            if($partner){
+            if ($partner)
+            {
                 $this->partnerId = $partner->id;
             }
         }
-        parent::save($runValidation=true,$attributes=null);
+        return parent::beforeSave();
     }
 
     public function populate(BookingForm $booking)
@@ -133,10 +136,10 @@ class OrderBooking extends CActiveRecord
 
     public function getUserDescription()
     {
-        if($this->userId)
+        if ($this->userId)
         {
             $user = User::model()->findByPk($this->userId);
-            if($user)
+            if ($user)
             {
                 return $user->name;
             }
@@ -153,51 +156,54 @@ class OrderBooking extends CActiveRecord
     public function getOrderStatus()
     {
         $states = array();
-        foreach($this->flightBookers as $flightBooker){
+        foreach ($this->flightBookers as $flightBooker)
+        {
             $states[$this->stateAdapter($flightBooker->status)] = $this->stateAdapter($flightBooker->status);
         }
 
-        foreach($this->hotelBookers as $hotelBooker){
+        foreach ($this->hotelBookers as $hotelBooker)
+        {
             $states[$this->stateAdapter($hotelBooker->status)] = $this->stateAdapter($hotelBooker->status);
         }
-        return join(',',$states);
+        return join(',', $states);
     }
 
     public function stateAdapter($state)
     {
-        if(strpos($state,'/') !== false)
+        if (strpos($state, '/') !== false)
         {
-            $state = substr($state, strpos($state,'/')+1);
+            $state = substr($state, strpos($state, '/') + 1);
         }
-        $aStates = array('enterCredentials'=>'Ввод ПД',
-            'booking'=>'Бронирование',
-            'bookingError'=> 'Ошибка бронирования',
-            'waitingForPayment'=>'Ожидание начала оплаты',
-            'startPayment'=>'Оплата начата',
-            'bookingTimeLimitError'=>'Бронь автоматически снята',
-            'ticketing'=>'Выписывание',
-            'ticketReady'=>'Выписка готова',
-            'ticketingRepeat'=>'Повторное выписывание',
-            'manualProcessing'=>'Ручная обработка',
-            'manualTicketing'=>'Ручное выписывание',
-            'ticketingError'=>'Ошибка выписки',
-            'manualError'=>'Ошибка при ручной обработке',
-            'moneyReturn'=>'Возврат денег',
-            'manualSuccess'=>'Обработано вручную',
-            'bspTransfer'=>'Трансфер денег',
-            'done'=>'Заказ оплачен',
-            'error'=>'Ошибка заказа',
+        $aStates = array('enterCredentials' => 'Ввод ПД',
+            'booking' => 'Бронирование',
+            'bookingError' => 'Ошибка бронирования',
+            'waitingForPayment' => 'Ожидание начала оплаты',
+            'startPayment' => 'Оплата начата',
+            'bookingTimeLimitError' => 'Бронь автоматически снята',
+            'ticketing' => 'Выписывание',
+            'ticketReady' => 'Выписка готова',
+            'ticketingRepeat' => 'Повторное выписывание',
+            'manualProcessing' => 'Ручная обработка',
+            'manualTicketing' => 'Ручное выписывание',
+            'ticketingError' => 'Ошибка выписки',
+            'manualError' => 'Ошибка при ручной обработке',
+            'moneyReturn' => 'Возврат денег',
+            'manualSuccess' => 'Обработано вручную',
+            'bspTransfer' => 'Трансфер денег',
+            'done' => 'Заказ оплачен',
+            'error' => 'Ошибка заказа',
 
-            'analyzing'=>'Анализ штрафов',
+            'analyzing' => 'Анализ штрафов',
 
-            'softWaitingForPayment'=>'Ожидание начала оплаты',
-            'softStartPayment'=>'Оплата начата',
-            'hardWaitingForPayment'=>'Ожидание начала оплаты',
-            'checkingAvailability'=>'Проверка доступности',
-            'availabilityError'=>'Недоступен',
-            'hardStartPayment'=>'Оплата начата',
+            'softWaitingForPayment' => 'Ожидание начала оплаты',
+            'softStartPayment' => 'Оплата начата',
+            'hardWaitingForPayment' => 'Ожидание начала оплаты',
+            'checkingAvailability' => 'Проверка доступности',
+            'availabilityError' => 'Недоступен',
+            'hardStartPayment' => 'Оплата начата',
         );
-        if(isset($aStates[$state])){
+        if (isset($aStates[$state]))
+        {
             $state = $aStates[$state];
         }
         return $state;
@@ -206,26 +212,33 @@ class OrderBooking extends CActiveRecord
     public function getFullPrice()
     {
         $price = 0;
-        foreach($this->flightBookers as $flightBooker){
-            if($flightBooker->price){
+        foreach ($this->flightBookers as $flightBooker)
+        {
+            if ($flightBooker->price)
+            {
                 $price += $flightBooker->price;
             }
             else
             {
-                if($flightBooker->flightVoyage->price){
+                if ($flightBooker->flightVoyage->price)
+                {
                     $price += $flightBooker->flightVoyage->price;
                 }
             }
         }
 
-        foreach($this->hotelBookers as $hotelBooker){
-            if($hotelBooker->price){
+        foreach ($this->hotelBookers as $hotelBooker)
+        {
+            if ($hotelBooker->price)
+            {
                 $price += $hotelBooker->price;
             }
             else
             {
-                if(isset($hotelBooker->hotel)){
-                    if(isset($hotelBooker->hotel->rubPrice)){
+                if (isset($hotelBooker->hotel))
+                {
+                    if (isset($hotelBooker->hotel->rubPrice))
+                    {
                         $price += $hotelBooker->hotel->rubPrice;
                     }
                 }

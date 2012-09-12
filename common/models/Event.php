@@ -120,8 +120,8 @@ class Event extends FrontendActiveRecord
 
             array('links','checkLinks', 'on'=>'backend'),
             array('startDate','checkDates', 'on'=>'backend'),
-            array('title, cityId, startDate, endDate, status', 'required', 'on'=>'backend'),
-            array('cityId, status', 'numerical', 'integerOnly'=>true, 'on'=>'backend'),
+            array('title, startDate, endDate, status', 'required', 'on'=>'backend'),
+            array('status', 'numerical', 'integerOnly'=>true, 'on'=>'backend'),
             array('title, address, contact', 'length', 'max'=>255, 'on'=>'backend'),
             array('startDate, endDate, preview, description', 'safe', 'on'=>'backend'),
             // The following rule is used by search().
@@ -158,10 +158,11 @@ class Event extends FrontendActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'price' => array(self::HAS_MANY, 'EventPrice', 'eventId'),
+            'prices' => array(self::HAS_MANY, 'EventPrice', 'eventId'),
             'categories' => array(self::MANY_MANY, 'EventCategory', 'event_has_category(eventId, eventCategoryId)'),
             'links' => array(self::HAS_MANY, 'EventLink', 'eventId'),
-            'startCities' => array(self::HAS_MANY, 'City', array('cityId'=>'id'), 'through'=>'price')
+            'startCities' => array(self::HAS_MANY, 'City', array('cityId'=>'id'), 'through'=>'prices'),
+            'tour' => array(self::BELONGS_TO, 'Order', 'orderId')
         );
     }
 
@@ -204,7 +205,6 @@ class Event extends FrontendActiveRecord
         $criteria->compare('id',$this->id);
         $criteria->compare('startDate',$this->startDate,true);
         $criteria->compare('endDate',$this->endDate,true);
-        $criteria->compare('cityId',$this->cityId);
         $criteria->compare('address',$this->address,true);
         $criteria->compare('contact',$this->contact,true);
         $criteria->compare('status',$this->status);

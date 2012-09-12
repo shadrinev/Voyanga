@@ -18,16 +18,20 @@ class TripStorage
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
     }
 
-    public function saveOrder($name)
+    public function saveOrder($orderId, $name)
     {
         $this->name = $name;
-        $this->order = $this->createOrderAndSaveIt();
+        $this->order = $this->createOrderAndSaveIt($orderId);
         $this->saveItemsOfOrder();
         return $this->order;
     }
 
-    private function createOrderAndSaveIt()
+    private function createOrderAndSaveIt($orderId)
     {
+        if (is_numeric($orderId))
+        {
+            $this->deleteCurrentOrder($orderId);
+        }
         $order = new Order;
         $order->userId = Yii::app()->user->id;
         $order->name = $this->name;
@@ -40,9 +44,35 @@ class TripStorage
         return $order;
     }
 
+    private function deleteCurrentOrder($orderId)
+    {
+        /** @var Order $order  */
+        $order = Order::model()->findByPk($orderId);
+
+        if ($order)
+        {
+            foreach ($order->flightItems as $item)
+            {
+                $item->delete();
+            }
+            foreach ($order->hotelItems as $item)
+            {
+                $item->delete();
+            }
+
+            $links = OrderHasFlightVoyage::model()->findByAttributes(array('orderId'=>$orderId));
+            $links->deleteAll();
+
+            $links = OrderHasHotel::model()->findByAttributes(array('orderId'=>$orderId));
+            $links->deleteAll();
+
+            $order->delete();
+        }
+    }
+
     private function saveItemsOfOrder()
     {
-        foreach ($this->itemsOnePerGroup as $item)
+        foreach ($this->items as $item)
         {
             if (!$item->saveToOrderDb())
             {

@@ -139,7 +139,6 @@ return CMap::mergeArray(
                     array(
                         'class' => 'CFileLogRoute',
                         'levels' => 'trace, info',
-                        'categories' => 'application'
                     ),
                     array(
                         'class' => 'CFileLogRoute',

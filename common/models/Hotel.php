@@ -144,12 +144,14 @@ class Hotel extends CApplicationComponent
         $key = $this->getId();
         $order = OrderHotel::model()->findByAttributes(array('key' => $key));
         if (!$order)
-            $order = new OrderFlightVoyage();
+            $order = new OrderHotel();
         $order->key = $key;
         $order->checkIn = $this->checkIn;
         $order->duration = $this->duration;
-        $order->cityId = $this->cityId;
+        $city = City::model()->getCityByHotelbookId($this->cityId);
+        $order->cityId = $city->id;
         $order->object = serialize($this);
+
         if ($order->save())
         {
             $this->internalId = $order->id;

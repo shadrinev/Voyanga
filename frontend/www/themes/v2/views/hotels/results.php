@@ -25,7 +25,7 @@
                             <span data-bind="text:address">Санкт-Петребург. ул. Морская Набережная, 31/2</span>
                             <span class="gradient"></span>
                         </div>
-                        <a href="#" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
+                        <a href="#"  data-bind="click:showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
                     </div>
                     <div class="text" data-bind="text:description">
                         Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...

@@ -1,33 +1,20 @@
 function sliderPhoto(that) {
 	var var_this = $(that).eq(0);
-		var_this.find('ul').wrap('<div class="slide"></div>');
 	var var_len = var_this.find('ul > li').length;
 		var_this.find('ul li').eq(0).addClass('active');
 	var var_widthAll = var_this.width();
 	var var_widthUL = 0;
 	for (a = 0; a < var_len; a++) {
 		var_widthUL += var_this.find('ul li').eq(a).find('img').width() + 1;
-	}	
-		var_this.find('ul').css('width', var_widthUL+'px');
-		var_this.find('.slide').append('<div class="left-navi"></div><div class="right-navi"></div><div class="left-opacity"></div><div class="right-opacity"></div>');
-		var_this.find('.left-navi').hide();
-	
-	var var_widthULminus = var_widthUL - var_widthAll;	
-	$(window).resize(function() {
-		if (var_this.length > 0 && var_this.is(':visible')) {
-			var var_in = var_this.find('ul .active').index();
-			var_widthAll = var_this.width();
-			if (var_in == (var_len-1)) {
-				var var_mar = var_this.find('ul').css('margin-left');
-				var_mar = Math.abs(parseInt(var_mar.slice(0,-2)));
-				var all_var = var_mar + var_widthAll - var_widthUL;
-				var_this.find('ul').css('margin-left', '-'+((var_mar - all_var)-3) +'px');
-			}
-			var_widthULminus = var_widthUL - var_widthAll;
-		}
-	});
+        console.log("UL LENGTH", var_widthUL, var_this.find('ul li').eq(a).find('img').width() + 1);
+	}
+	var_this.find('ul').css('width', var_widthUL+'px');
+	$('.left-navi').hide();
+
+	var var_widthULminus = var_widthUL - var_widthAll;
 	var one_short = false;
-	
+
+    $('.right-navi').unbind('click');
 	$('.right-navi').click(function() {
 	if (! one_short) {
 		one_short = true;
@@ -35,14 +22,14 @@ function sliderPhoto(that) {
 		var var_widthOne = (var_this.find('ul .active').width() + 1);
 		var var_margin = var_this.find('ul').css('margin-left');
 			var_margin = Math.abs(parseInt(var_margin.slice(0,-2)));
-		var var_index = var_this.find('ul .active').index();		
-		var all = var_margin+var_widthOne;		
+		var var_index = var_this.find('ul .active').index();
+		var all = var_margin+var_widthOne;
 		if (all <= var_widthULminus) {
 			var_this.find('ul').animate({'margin-left' : '-='+var_widthOne+'px'}, 200, function() {
 						one_short = false;
 					});
 			var_this.find('ul .active').removeClass('active').next().addClass('active');
-		}	
+		}
 		else {
 			$(this).hide();
 			var_widthOne = (var_this.find('ul li').eq(var_len-1).width() + 1);
@@ -53,9 +40,10 @@ function sliderPhoto(that) {
 					});
 			var_this.find('ul li').removeClass('active');
 			var_this.find('ul li').eq(var_len-1).addClass('active');
-		}	
+		}
 	}
 	});
+    $('.left-navi').unbind('click');
 	$('.left-navi').click(function() {
 	if (! one_short) {
 		one_short = true;
@@ -68,38 +56,35 @@ function sliderPhoto(that) {
 						one_short = false;
 					});
 			var_this.find('ul .active').removeClass('active').prev().addClass('active');
-		}	
+		}
 		else {
 			var_this.find('ul').animate({'margin-left' : '0px'}, 200, function() {
 						one_short = false;
 					});
 			var_this.find('ul li').removeClass('active');
-			var_this.find('ul li').eq(0).addClass('active');	
-			$(this).hide();		
-		}	
+			var_this.find('ul li').eq(0).addClass('active');
+			$(this).hide();
+		}
 	}
 	});
 }
-$(window).load(function() {
-	sliderPhoto('.photo-slide-hotel');
-});
 function checkUlList() {
 	$('.details').each(function() {
 		var var_this = $(this).find('ul li');
 		var var_length = var_this.length;
 			for (i = 0; i < var_length; i++) {
 				if (i == 0 || i == 1) {
-					var_this.eq(i).addClass('not-show');	
+					var_this.eq(i).addClass('not-show');
 				}
 				else {
-					var_this.eq(i).hide();	
+					var_this.eq(i).hide();
 				}
 		}
 	});
 	$('.tab-ul a').click(function() {
 		var var_thisLink = $(this);
 		var var_this = $(this).parent().parent();
-		if (! $(this).hasClass('active')) {	
+		if (! $(this).hasClass('active')) {
 			var_thisLink.text('Свернуть все рузультаты');
 			var_thisLink.addClass('active');
 			var_this.find('ul li[class != "not-show"]').slideDown();
@@ -111,12 +96,12 @@ function checkUlList() {
 			});
 		}
 	});
-	
+
 }
 $(window).load(checkUlList);
 $(function() {
-	
-	$('.order-hide').click(function(e){ 
+
+	$('.order-hide').click(function(e){
 		e.preventDefault();
 		$('.recomended-content').slideUp();
 		$('.minimize-rcomended .btn-minimizeRecomended').animate({top : '0px'}, 500);
@@ -141,7 +126,7 @@ $(function() {
 		widthHowLong();
 		setTimeout(smallTicketHeight, 100);
 	});
-	
+
 	$('.descr').eq(1).hide();
 	$('.place-buy .tmblr li a').click(function(e) {
 		e.preventDefault();
@@ -154,7 +139,7 @@ $(function() {
 			$('#'+var_nameBlock).show();
 		}
 	});
-	
+
 	$('.read-more').click(function() {
 		if (! $(this).hasClass('active')) {
 			$(this).prev().css('height', 'auto');
@@ -165,9 +150,9 @@ $(function() {
 			$(this).prev().css('height', '54px');
 			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
 			$(this).removeClass('active').text('Подробнее');
-		}		
+		}
 	});
-	
+
 	$('.stars-li input').each(function() {
 		if ($(this).attr('checked') == 'checked') {
 			$(this).next().addClass('active');
@@ -181,7 +166,7 @@ $(function() {
 		else {
 			$(this).removeClass('active');
 		}
-		
+
 	});
 	var heCal = $('.calendarSlide').height();
 	$('.calendarSlide').css('top','-'+heCal+'px');
@@ -189,8 +174,8 @@ $(function() {
 	$('.input-path').click(function() {
 		$('.calendarSlide').animate({'top' :  '0px'}, 400);
 	});
-	
-	
+
+
 	$('.cityStart a').click(function() {
 		$(this).parent().parent().parent().find('.data .input-path').addClass('small').animate({'width' : '100px'},500);
 		$(this).parent().parent().animate({'width' : '267px'},500);

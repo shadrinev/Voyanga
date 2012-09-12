@@ -109,9 +109,37 @@ class CommonHotelCache extends CActiveRecord
     public function buildRow()
     {
         $attributes = $this->attributes;
-        CVarDumper::dump($attributes);
         $row = implode(',', $attributes)."\n";
         return $row;
+    }
+
+    public function buildQuery()
+    {
+        $currentSql = '';
+        if ($this->isNewRecord)
+            $currentSql = "`createdAt` = NOW(), ";
+
+        $query = "INSERT INTO ".$this->tableName()." SET "
+            ."`cityId` = '".$this->cityId."', "
+            ."`dateFrom` = '".$this->dateFrom."', "
+            ."`dateTo` = '".$this->dateTo."', "
+            ."`stars` = '".$this->stars."', "
+            ."`price` = '".$this->price."', "
+            ."`hotelId` = '".$this->hotelId."', "
+            ."`hotelName` = '".$this->hotelName."', "
+            .$currentSql
+            ."`updatedAt` = NOW() "
+            ." ON DUPLICATE KEY UPDATE "
+            ."`cityId` = '".$this->cityId."', "
+            ."`dateFrom` = '".$this->dateFrom."', "
+            ."`dateTo` = '".$this->dateTo."', "
+            ."`stars` = '".$this->stars."', "
+            ."`price` = '".$this->price."', "
+            ."`hotelId` = '".$this->hotelId."', "
+            ."`hotelName` = '".$this->hotelName."', "
+            ."`updatedAt` = NOW() "
+            .";";
+        return $query;
     }
 
     /**
@@ -126,5 +154,12 @@ class CommonHotelCache extends CActiveRecord
         $this->price = $hotelBook['rubPrice'];
         $this->hotelId = $hotelBook['hotelId'];
         $this->hotelName = $hotelBook['hotelName'];
+    }
+
+    public function forceSave()
+    {
+        $query = $this->buildQuery();
+        $command = Yii::app()->db->createCommand($query);
+        $command->execute();
     }
 }

@@ -110,6 +110,10 @@
 			'label'=>$model->isNewRecord ? 'Добавить' : 'Сохранить',
 		)); ?>
         <?php $this->widget('bootstrap.widgets.BootButton', array(
+            'url'=>Yii::app()->createUrl('/admin/tour/constructor/create', array('eventId'=>$model->id)),
+            'label'=>'Составить тур',
+        )); ?>
+        <?php $this->widget('bootstrap.widgets.BootButton', array(
             'url'=>$model->isNewRecord ? array('admin') : array('view','id'=>$model->id),
             'label'=>'Отмена',
         )); ?>
@@ -119,7 +123,7 @@
             <?php echo '<br>Самая "быстрая" цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestTime ?>
             <?php echo '<br>' ?>
         <?php endforeach ?>
-        <?php foreach ($startCities as $city): ?>
+        <?php foreach ($model->startCities as $city): ?>
             <?php $this->widget('bootstrap.widgets.BootButton', array(
                 'buttonType'=>'submit',
                 'type'=>'warning',
@@ -139,13 +143,13 @@
     $(".getPrice").on("click",function(){
         var btn = $(this),
             from = btn.data("cityid"),
-            eventId = btn.data("eventid"),
+            eventId = btn.data("eventid");
             btn.button("loading");
             $.get("/admin/event/event/getNewPrices", {id: eventId, startCity: from})
             .done(function(data){
                 btn.button("reset");
                 var two = data.priceTo + data.priceBack;
-                btn.append("&nbsp; <b>Цены: </b> оптимальная - " + data.optimal + ", низкая - " + data.cheapest + ", "быстрая" - " + data.fastest + " руб.");
+                btn.append("&nbsp; <b>Цены: </b> оптимальная - " + data.optimal + ", низкая - " + data.cheapest + ", быстрая - " + data.fastest + " руб.");
             })
             .fail(function(data){
                 btn.button("reset");

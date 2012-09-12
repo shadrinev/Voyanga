@@ -13,6 +13,10 @@ class CreateAction extends CAction
             $model = @unserialize($res);
         else*/
         $model = new TourBuilderForm();
+        if (isset($_GET['eventId']))
+        {
+            $model->eventId = $_GET['eventId'];
+        }
         if (isset($_POST['TourBuilderForm']))
         {
             unset($model);

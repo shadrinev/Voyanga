@@ -102,4 +102,12 @@ class OrderHotel extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    public function getCheckOut()
+    {
+        $start = DateTime::createFromFormat('Y-m-d', $this->checkIn);
+        $duration = new DateInterval('P'.$this->duration.'D');
+        $end = $start->add($duration);
+        return $end->format('Y-m-d');
+    }
 }

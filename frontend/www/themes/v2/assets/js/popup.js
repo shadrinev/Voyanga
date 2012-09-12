@@ -27,53 +27,6 @@ function ResizeBox(id) {
 	popup.css('left', paddingLeft+'px').css('top', (paddingTop - 20)+'px');
 }
 
-function LinkDone() {
-	$('.hotel-details .place-buy .tmblr li a').click(function(e) {
-		e.preventDefault();
-		if (! $(this).hasClass('active')) {
-			var var_nameBlock = $(this).attr('href');
-			var_nameBlock = var_nameBlock.slice(1);
-			$('.place-buy .tmblr li').removeClass('active');
-			$(this).parent().addClass('active');
-			$('.tab').hide();
-			$('#'+var_nameBlock).show();
-			if (var_nameBlock == 'map') {
-				$('#boxContent').css('height', $('#boxMiddleLeft').height() +'px');
-			}
-			else {
-				$('#boxContent').css('height', 'auto');
-			}
-		}
-		sliderPhoto('.photo-slide-hotel');
-		$('a.photo').click(function(e) {
-			e.preventDefault();
-			createPhotoBox(this);
-		});
-		SizeBox();
-		$(".description .text").dotdotdot({watch: 'window'});
-	});
-	$('.read-more').click(function(e) {
-		e.preventDefault();
-		if (! $(this).hasClass('active')) {
-			var var_heightCSS = $(this).parent().find('.text').css('height');
-			var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
-			$(this).parent().find('.text').attr('rel',var_heightCSS).css('height','auto');
-			$(".description .text").dotdotdot({watch: 'window'});
-			$(".description .text").css('overflow','visible');
-			$(this).text('Свернуть');
-			$(this).addClass('active');
-		}
-		else {
-			var rel = $(this).parent().find('.text').attr('rel');
-			$(this).parent().find('.text').css('height', rel+'px');
-			$(this).text('Подробнее');
-			$(this).removeClass('active');
-			$(".description .text").dotdotdot({watch: 'window'});
-			$(".description .text").css('overflow','hidden');
-		}
-		SizeBox();
-	});
-}
 
 
 $(document).ready(function() {
@@ -83,11 +36,7 @@ $(document).ready(function() {
 
 	$('a#popuphotel').click(function(e) {
 		e.preventDefault();
-		CreateBox(text4);
 		LinkDone();
-		sliderPhoto('.photo-slide-hotel');
-		SizeBox();
-		$(".description .text").dotdotdot({watch: 'window'});
 		$('a.photo').click(function(e) {
 			e.preventDefault();
 			createPhotoBox(this);
@@ -100,10 +49,7 @@ $(document).ready(function() {
 		$('.tab').eq(1).show();
 		$('.place-buy .tmblr li').removeClass('active');
 		$('.place-buy .tmblr li').eq(1).addClass('active');
-		SizeBox();
 		LinkDone();
-		sliderPhoto('.photo-slide-hotel');
-		$(".description .text").dotdotdot({watch: 'window'});
 		$('a.photo').click(function(e) {
 			e.preventDefault();
 			createPhotoBox(this);
