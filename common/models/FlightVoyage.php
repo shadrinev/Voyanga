@@ -59,17 +59,30 @@ class FlightVoyage extends CApplicationComponent
         return true;
     }
 
-    public function saveToOrderDb()
+    public function saveToOrderDb($groupId = null)
     {
         $key = $this->getId();
         $order = OrderFlightVoyage::model()->findByAttributes(array('key' => $key));
         if (!$order)
+        {
             $order = new OrderFlightVoyage();
-        $order->key = $key;
-        $order->departureCity = $this->getDepartureCity()->id;
-        $order->arrivalCity = $this->getArrivalCity()->id;
-        $order->departureDate = $this->getDepartureDate();
-        $order->object = serialize($this);
+            $order->key = $key;
+            $order->groupId = $groupId;
+            $order->departureCity = $this->getDepartureCity(0)->id;
+            $order->arrivalCity = $this->getArrivalCity(0)->id;
+            $order->departureDate = $this->getDepartureDate(0);
+            $order->object = serialize($this);
+        }
+        else
+        {
+            $order = new OrderFlightVoyage();
+            $order->key = $key;
+            $order->groupId = $groupId;
+            $order->departureCity = $this->getDepartureCity(1)->id;
+            $order->arrivalCity = $this->getArrivalCity(1)->id;
+            $order->departureDate = $this->getDepartureDate(1);
+            $order->object = serialize($this);
+        }
         if ($order->save())
         {
             $this->internalId = $order->id;
@@ -195,27 +208,27 @@ class FlightVoyage extends CApplicationComponent
     /**
      * @return City
      */
-    public function getDepartureCity()
+    public function getDepartureCity($ind=0)
     {
-        return $this->flights[0]->getDepartureCity();
+        return $this->flights[$ind]->getDepartureCity();
     }
 
-    public function getDepartureDate()
+    public function getDepartureDate($ind=0)
     {
-        return $this->flights[0]->departureDate;
+        return $this->flights[$ind]->departureDate;
     }
 
     /**
      * @return City
      */
-    public function getArrivalCity()
+    public function getArrivalCity($ind=0)
     {
-        return $this->flights[0]->getArrivalCity();
+        return $this->flights[$ind]->getArrivalCity();
     }
 
-    public function getArrivalDate()
+    public function getArrivalDate($ind=0)
     {
-        return $this->flights[0]->arrivalDate;
+        return $this->flights[$ind]->arrivalDate;
     }
 
 
