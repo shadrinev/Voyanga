@@ -103,6 +103,8 @@ class Hotel extends CApplicationComponent
     /** @var City */
     private $_city;
 
+    private $internalId;
+
     //implementation of ICartPosition
     public function getId()
     {
@@ -142,14 +144,19 @@ class Hotel extends CApplicationComponent
         $key = $this->getId();
         $order = OrderHotel::model()->findByAttributes(array('key' => $key));
         if (!$order)
-            $order = new OrderFlightVoyage();
+            $order = new OrderHotel();
         $order->key = $key;
         $order->checkIn = $this->checkIn;
         $order->duration = $this->duration;
-        $order->cityId = $this->cityId;
+        $city = City::model()->getCityByHotelbookId($this->cityId);
+        $order->cityId = $city->id;
         $order->object = serialize($this);
+
         if ($order->save())
+        {
+            $this->internalId = $order->id;
             return $order;
+        }
         return false;
     }
 
@@ -157,8 +164,10 @@ class Hotel extends CApplicationComponent
     {
         $orderHasHotel = new OrderHasHotel();
         $orderHasHotel->orderId = $order->id;
-        $orderHasHotel->orderHotel = $this->id;
+        $orderHasHotel->orderHotel = $this->internalId;
         $orderHasHotel->save();
+        if (!$orderHasHotel->save())
+            throw new CException(VarDumper::dumpAsString($orderHasHotel->errors));
     }
 
     public static function getFromCache($cacheId, $hotelId, $resultId)
@@ -408,6 +417,50 @@ class Hotel extends CApplicationComponent
     public function getWeight()
     {
         return 2;
+    }
+
+    public function getMergeMetric(Hotel $otherHotel)
+    {
+        $metrica = 0;
+        $coef = ($this->rubPrice / $otherHotel->rubPrice);
+        if($coef < 1) $coef = 1/$coef;
+        $metrica += $coef * 945;
+        //echo "firstValue: {$metrica}";
+        foreach($this->rooms as $roomKey=>$thisRoom){
+            if(isset($otherHotel->rooms[$roomKey])){
+                $otherRoom = $otherHotel->rooms[$roomKey];
+                if($thisRoom->showName != $otherRoom->showName){
+                    $metrica+=3000;
+                    //echo "others name";
+                }else{
+                    $metrica= $metrica/1.1;
+                }
+                //if()
+                if($thisRoom->sizeName != $otherRoom->showName){
+                    $metrica+=200;
+                }else{
+                    $metrica= $metrica/1.1;
+                }
+                if($thisRoom->typeName != $otherRoom->typeName){
+                    $metrica+=200;
+                }else{
+                    $metrica= $metrica/1.1;
+                }
+                if($thisRoom->mealName != $otherRoom->mealName){
+                    $metrica+=200;
+                }else{
+                    $metrica= $metrica/1.1;
+                }
+                if($thisRoom->viewName != $otherRoom->viewName){
+                    $metrica+=200;
+                }else{
+                    $metrica= $metrica/1.1;
+                }
+            }
+
+        }
+
+        return $metrica;
     }
 
     /**

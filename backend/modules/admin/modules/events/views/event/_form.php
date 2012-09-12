@@ -53,31 +53,6 @@
         'form' => $form
     )); ?>
 
-	<?php echo $form->hiddenField($model,'cityId'); ?>
-
-    <?php echo $form->labelEx($model,'cityId'); ?>
-    <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
-        'options'=>array(
-            'items'=>10,
-            'ajax' => array(
-                'url' => "/site/cityAutocomplete",
-                'timeout' => 500,
-                'displayField' => "label",
-                'triggerLength' => 2,
-                'method' => "get",
-                'loadingClass' => "loading-circle",
-            ),
-            'onselect'=>'js:function(res){$("#Event_cityId").val(res.id)}',
-            'matcher'=>'js: function(){return true}',
-        ),
-        'htmlOptions'=>array(
-            'class'=>'span5',
-            'value'=>$model->isNewRecord?'':$model->city->localRu
-        )
-    )); ?>
-
-    <?php echo $form->error($model, 'cityId'); ?>
-
 	<?php echo $form->textFieldRow($model,'address',array('class'=>'span5','maxlength'=>255)); ?>
 
 	<?php echo $form->textFieldRow($model,'contact',array('class'=>'span5','maxlength'=>255)); ?>
@@ -135,27 +110,29 @@
 			'label'=>$model->isNewRecord ? 'Добавить' : 'Сохранить',
 		)); ?>
         <?php $this->widget('bootstrap.widgets.BootButton', array(
+            'url'=>Yii::app()->createUrl('/admin/tour/constructor/create', array('eventId'=>$model->id)),
+            'label'=>'Составить тур',
+        )); ?>
+        <?php $this->widget('bootstrap.widgets.BootButton', array(
             'url'=>$model->isNewRecord ? array('admin') : array('view','id'=>$model->id),
             'label'=>'Отмена',
         )); ?>
-        <br>
-        <?php echo (!$model->isNewRecord) ? ('<br>Из Москвы: '.$model->priceMoscow." руб., из Питера: ".$model->pricePiter." руб.<br>") : '' ?>
-        <br>
-        <?php $this->widget('bootstrap.widgets.BootButton', array(
-        'buttonType'=>'submit',
-        'type'=>'warning',
-        'label'=>($model->isNewRecord)?'Запросить цену для Москвы':'Уточнить цену для Москвы',
-        'htmlOptions'=>array('id'=>'getPrice'),
-        'loadingText'=>'Запрос цены...',
-         )); ?>
-        <br><br>
-        <?php $this->widget('bootstrap.widgets.BootButton', array(
-        'buttonType'=>'submit',
-        'type'=>'warning',
-        'label'=>($model->isNewRecord)?'Запросить цену для Питера':'Уточнить цену для Питера',
-        'htmlOptions'=>array('id'=>'getPiterPrice'),
-        'loadingText'=>'Запрос цены...',
-    )); ?>
+        <?php foreach ($model->prices as $price): ?>
+            <?php echo '<br>Оптимальная цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestPriceTime ?>
+            <?php echo '<br>Самая низкая цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestPrice ?>
+            <?php echo '<br>Самая "быстрая" цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestTime ?>
+            <?php echo '<br>' ?>
+        <?php endforeach ?>
+        <?php foreach ($model->startCities as $city): ?>
+            <?php $this->widget('bootstrap.widgets.BootButton', array(
+                'buttonType'=>'submit',
+                'type'=>'warning',
+                'label' => ($model->isNewRecord) ? 'Запросить цену для '.$city->caseGen : 'Уточнить цену для '.$city->caseGen,
+                'htmlOptions'=> array ('class'=>'getPrice', 'data-cityid'=>$city->id, 'data-eventid'=>$model->id),
+                'loadingText'=>'Запрос цены...',
+             ));
+            ?>
+        <?php endforeach ?>
 	</div>
 
 <?php $this->endWidget(); ?>
@@ -163,19 +140,16 @@
     if ($model->isNewRecord)
         Yii::app()->clientScript->registerScript('focus','setTimeout(function(){$("#Event_startDate_date").focus();}, 300)', CClientScript::POS_READY);
     Yii::app()->clientScript->registerScript('getPrice','
-    $("#getPrice").on("click",function(){
+    $(".getPrice").on("click",function(){
         var btn = $(this),
-            from = 4466,
-            to = $("#Event_cityId").val(),
-            dateStart = $("#Event_startDate_date").val(),
-            dateEnd = $("#Event_endDate_date").val();
+            from = btn.data("cityid"),
+            eventId = btn.data("eventid");
             btn.button("loading");
-            $.get("/ajax/GetOptimalPrice/from/"+from+"/to/"+to+"/dateStart/"+dateStart+"/dateEnd/"+dateEnd)
+            $.get("/admin/event/event/getNewPrices", {id: eventId, startCity: from})
             .done(function(data){
-                console.log(data);
                 btn.button("reset");
                 var two = data.priceTo + data.priceBack;
-                btn.append("&nbsp; <b>Цена: </b>"+Math.min(data.priceTo + data.priceBack, data.priceToBack) + " руб. (2 билета = " + two + " руб., туда-обратно = " + data.priceToBack + " руб.)");
+                btn.append("&nbsp; <b>Цены: </b> оптимальная - " + data.optimal + ", низкая - " + data.cheapest + ", быстрая - " + data.fastest + " руб.");
             })
             .fail(function(data){
                 btn.button("reset");
@@ -183,27 +157,6 @@
                 btn.addClass("disabled");
             });
         return false;
-    });
-    $("#getPiterPrice").on("click",function(e){
-        var btn = $(this),
-            from = 5185,
-            to = $("#Event_cityId").val(),
-            dateStart = $("#Event_startDate_date").val(),
-            dateEnd = $("#Event_endDate_date").val();
-            btn.button("loading");
-        $.get("/ajax/GetOptimalPrice/from/"+from+"/to/"+to+"/dateStart/"+dateStart+"/dateEnd/"+dateEnd)
-        .done(function(data){
-            console.log(data);
-            btn.button("reset");
-            var two = data.priceTo + data.priceBack;
-            btn.append("&nbsp; <b>Цена: </b>"+Math.min(data.priceTo + data.priceBack, data.priceToBack) + " руб. (2 билета = " + two + " руб., туда-обратно = " + data.priceToBack + " руб.)");
-        })
-        .fail(function(data){
-            btn.button("reset");
-            btn.html("Произошёл сбой");
-            e.preventDefault();
-        });
-        return false;
-    });
+    })
     ', CClientScript::POS_READY);
 ?>

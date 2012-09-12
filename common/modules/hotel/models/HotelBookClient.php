@@ -153,7 +153,7 @@ class HotelBookClient
                                 if (isset($requestInfo['function']))
                                 {
                                     $params = array($result);
-                                    if ($requestInfo['params'])
+                                    if ((isset($requestInfo['params'])) and ($requestInfo['params']))
                                     {
                                         foreach ($requestInfo['params'] as $param)
                                         {

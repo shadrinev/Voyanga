@@ -13,7 +13,7 @@
  * @property integer $id
  * @property string $startDate
  * @property string $endDate
- * @property integer $cityId
+ * @property string $title
  * @property string $address
  * @property string $contact
  * @property integer $status
@@ -24,6 +24,9 @@ class Event extends FrontendActiveRecord
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+
+    const NEW_EVENT_ITEM = -1;
+    const NO_EVENT_ITEM = 0;
 
     /**
      * The behaviors associated with the user model.
@@ -112,12 +115,15 @@ class Event extends FrontendActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('links','checkLinks'),
-            array('startDate','checkDates'),
-            array('title, cityId, startDate, endDate, status', 'required'),
-            array('cityId, status', 'numerical', 'integerOnly'=>true),
-            array('title, address, contact', 'length', 'max'=>255),
-            array('startDate, endDate, preview, description', 'safe'),
+            //for filling out from frontend
+            array('title', 'required', 'on'=>'frontend'),
+
+            array('links','checkLinks', 'on'=>'backend'),
+            array('startDate','checkDates', 'on'=>'backend'),
+            array('title, startDate, endDate, status', 'required', 'on'=>'backend'),
+            array('status', 'numerical', 'integerOnly'=>true, 'on'=>'backend'),
+            array('title, address, contact', 'length', 'max'=>255, 'on'=>'backend'),
+            array('startDate, endDate, preview, description', 'safe', 'on'=>'backend'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, startDate, endDate, cityId, address, contact, status, preview, description', 'safe', 'on'=>'search'),
@@ -152,9 +158,11 @@ class Event extends FrontendActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'city' => array(self::BELONGS_TO, 'City', 'cityId'),
+            'prices' => array(self::HAS_MANY, 'EventPrice', 'eventId'),
             'categories' => array(self::MANY_MANY, 'EventCategory', 'event_has_category(eventId, eventCategoryId)'),
             'links' => array(self::HAS_MANY, 'EventLink', 'eventId'),
+            'startCities' => array(self::HAS_MANY, 'City', array('cityId'=>'id'), 'through'=>'prices'),
+            'tour' => array(self::BELONGS_TO, 'Order', 'orderId')
         );
     }
 
@@ -197,7 +205,6 @@ class Event extends FrontendActiveRecord
         $criteria->compare('id',$this->id);
         $criteria->compare('startDate',$this->startDate,true);
         $criteria->compare('endDate',$this->endDate,true);
-        $criteria->compare('cityId',$this->cityId);
         $criteria->compare('address',$this->address,true);
         $criteria->compare('contact',$this->contact,true);
         $criteria->compare('status',$this->status);
@@ -266,5 +273,18 @@ class Event extends FrontendActiveRecord
     public function getPricePiter($forceUpdate = false)
     {
         return $this->getPriceForCity('LED', $forceUpdate);
+    }
+
+    public static function getPossibleEvents()
+    {
+        $allEvents = Event::model()->findAll();
+        $existingEvents = CHtml::listData($allEvents, 'id', 'title');
+        $newEvent = array(self::NEW_EVENT_ITEM => '..Создать новое событие..');
+        $noEvent = array(self::NO_EVENT_ITEM => 'Не привязывать событие');
+        return CMap::mergeArray(
+            $noEvent,
+            $newEvent,
+            $existingEvents
+        );
     }
 }

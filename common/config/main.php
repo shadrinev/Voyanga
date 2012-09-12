@@ -38,7 +38,8 @@ return array(
 
         'session'=>array(
             'class'=>'site.common.extensions.EMongoDbHttpSession.EMongoDbHttpSession',
-            'dbName' => 'voyanga',
+            'connectionString' => $params['mongo.connectionString'],
+            'dbName'         => $params['mongo.dbName'],
             'collectionName' => 'session',
         ),
 

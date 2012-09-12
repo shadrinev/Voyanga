@@ -11,4 +11,8 @@ $this->breadcrumbs = array(
 
 ?>
 
-<?php $this->widget('site.common.widgets.tourViewer.TourViewerWidget',array('urlToBasket'=>$this->createUrl('/admin/tour/basket/show'), 'urlToBasket'=>$this->createUrl('/tour/basket/show'), 'pathToAirlineImg'=>'http://frontend.voyanga/img/airlines/')); ?>
+<?php $this->widget('site.common.widgets.tourViewer.TourViewerWidget',array(
+    'urlToBasket'=>$this->createUrl('/tour/basket/show'),
+    'urlToConstructor'=>$this->createUrl('/tour/constructor/new'),
+    'pathToAirlineImg'=>'http://frontend.voyanga/img/airlines/'));
+?>

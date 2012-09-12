@@ -11,9 +11,9 @@ class Application extends Backbone.Router
 #    crossroads.bypassed.add(@http404)
 
     # FIXME
-    @activeModule = ko.observable window.activeModule || 'avia'
+    @activeModule = ko.observable 'avia' #ko.observable window.activeModule || 'avia'
 
-    @panel = ko.observable {}
+    @panel = ko.observable()
 
     # View currently being active in given module
     @_view = ko.observable 'index'
@@ -32,6 +32,10 @@ class Application extends Backbone.Router
 
     # View model for sidebar
     @sidebarData = ko.observable {}
+
+    @slider = new Slider()
+    @slider.init()
+    @activeModule.subscribe @slider.handler
 
   # Register routes from controller
   #
@@ -58,36 +62,47 @@ class Application extends Backbone.Router
       if isDefault && route == ''
         @route route, prefix, action
 
-    if isDefault
-     @panel module.panel
-
     # FIXME extract to method
     # Handles module switching
-    @on "route:" + prefix, (args...)->
-      if prefix != @activeModule()
+    @on "beforeroute:" + prefix, (args...)->
+      window.voyanga_debug "APP: routing", args
+      if @panel() == undefined || (prefix != @activeModule())
         window.voyanga_debug "APP: switching active module to", prefix
         @activeModule(prefix)
+        window.voyanga_debug "APP: activating panel", module.panel
+        @panel module.panel
+        ko.processAllDeferredBindingUpdates()
 
   run: ->
     # Start listening to hash changes
     Backbone.history.start()
+    # Call some change handlers with initial values
+    @slider.handler(@activeModule())
 
   # FIXME write better handler
   http404: ->
     alert "Not found"
 
+  # beforeroute event, cuz backbone cant do this for us
+  route: (route, name, callback) ->
+    Backbone.Router.prototype.route.call this, route, name, ->
+            @trigger.apply(@, ['beforeroute:' + name].concat(_.toArray(arguments)))
+            callback.apply(@, arguments)
+
   contentRendered: ->
-    console.log "RENDERED"
+    window.voyanga_debug "APP: Content rendered"
     setTimeout(ResizeFun, 1000);
 
 $ ->
   window.voyanga_debug = (args...) ->
-    # Chrome does not likes window context for console, so we pass itself here
+    # Chrome does not likes window context for console.log, so we pass itself here
     console.log.apply console, args
   # FIXME FIXME FIXME
   app = new Application()
   avia = new AviaModule()
+  hotels = new HotelsModule
+  window.app = app
+  app.register 'hotels', hotels
   app.register 'avia', avia, true
   app.run()
   ko.applyBindings(app)
-  window.app = app

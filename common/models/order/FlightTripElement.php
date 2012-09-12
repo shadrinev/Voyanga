@@ -65,18 +65,29 @@ class FlightTripElement extends TripElement
     public function saveToOrderDb()
     {
         if ($this->flightVoyage)
-            return $this->flightVoyage->saveToOrderDb();
+            return $this->flightVoyage->saveToOrderDb($this->groupId);
         else
         {
             //we have only search params now
             $order = new OrderFlightVoyage();
-            $order->departureCity = $this->getDepartureCity()->id;
-            $order->arrivalCity = $this->getArrivalCity()->id;
-            $order->departureDate = $this->getDepartureDate();
+            $order->groupId = $this->groupId;
+            $order->departureCity = $this->departureCity;
+            $order->arrivalCity = $this->arrivalCity;
+            $order->departureDate = $this->departureDate;
             if ($order->save())
                 return $order;
         }
         return false;
+    }
+
+    public function getDepartureCityModel()
+    {
+        return City::model()->findByPk($this->departureCity);
+    }
+
+    public function getArrivalCityModel()
+    {
+        return City::model()->findByPk($this->arrivalCity);
     }
 
     public function getIsValid()
@@ -172,8 +183,38 @@ class FlightTripElement extends TripElement
         return FlightTripElementFrontendProcessor::addGroupedInfoToTab($preparedFlight, $this);
     }
 
+    public function buildTabLabel($current, $previous)
+    {
+        return FlightTripElementFrontendProcessor::buildTabLabel($current, $previous);
+    }
+
     public function createTripElementWorkflow()
     {
         return new FlightTripElementWorkflow($this);
+    }
+
+    public function getUrlToAllVariants()
+    {
+        $search = array(
+            'destinations' => array(
+                array(
+                    'departure' => $this->getDepartureCityModel()->code,
+                    'arrival' => $this->getArrivalCityModel()->code,
+                    'date' => $this->departureDate,
+                )
+            ),
+            'adt' => $this->adultCount,
+            'chd' => $this->childCount,
+            'inf' => $this->infantCount,
+        );
+        $fullUrl = $this->buildApiUrl($search);
+        return $fullUrl;
+    }
+
+    private function buildApiUrl($params)
+    {
+        $url = Yii::app()->params['app.api.flightSearchUrl'];
+        $fullUrl = $url . '?' . http_build_query($params);
+        return $fullUrl;
     }
 }

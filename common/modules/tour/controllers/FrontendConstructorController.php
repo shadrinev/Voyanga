@@ -16,6 +16,8 @@ class FrontendConstructorController extends FrontendController
     {
         return array(
             'create' => array('class'=>'site.common.modules.tour.actions.constructor.CreateAction'),
+            'showEventTrip' => array('class'=>'site.common.modules.tour.actions.constructor.ShowEventTripAction'),
+            'saveTour' => array('class'=>'site.common.modules.tour.actions.constructor.SaveTourAction'),
             'showTrip' => array('class'=>'site.common.modules.tour.actions.constructor.ShowTripAction'),
             'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
             'startPayment' => array('class'=>'site.common.modules.tour.actions.constructor.StartPaymentAction'),

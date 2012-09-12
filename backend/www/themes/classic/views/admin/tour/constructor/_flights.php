@@ -1,4 +1,4 @@
-<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'tour', 'compileVariable' => $variable)) ?>
+<?php $this->beginWidget('common.components.handlebars.HandlebarsWidget', array('id'=>'flight', 'compileVariable' => $variable)) ?>
 <table class="table" width="100%">
     <thead>
     <tr>

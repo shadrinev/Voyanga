@@ -19,10 +19,14 @@ class HotelTripElementFrontendProcessor
             'checkIn'=>$hotel->checkIn,
             'checkOut'=>$hotel->checkOut,
             'duration'=>$hotel->getDuration(),
-            'adultCount'=>$hotel->adultCount,
-            'childCount'=>$hotel->childCount,
-            'infantCount'=>$hotel->infantCount,
         );
+        foreach ($hotel->rooms as $i => $room)
+        {
+            $tab['info']['room'][$i]['adultCount'] = $room->adultCount;
+            $tab['info']['room'][$i]['childCount'] = $room->childCount;
+            $tab['info']['room'][$i]['cots'] = $room->cots;
+            $tab['info']['room'][$i]['childAge'] = $room->childAge;
+        }
         if($hotel->hotel)
         {
             $controller = Yii::app()->getController();

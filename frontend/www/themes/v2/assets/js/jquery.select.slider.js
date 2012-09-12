@@ -27,42 +27,46 @@
             selectDiv.find('.switch').css('width',elementWidth+'%');
             //console.log(elementWidth);
             _this.find('option').each(function (index) {
-                var listElement = $('<li><a href="#">' + $(this).text() + '</a></li>');
+                var listElement = $('<li><a href="#" onclick="return false">' + $(this).text() + '</a></li>');
                 listElement.data('original_option',$(this));
                 listElement.data('ind',index);
                 listElement.data('option-value', $(this).val());
                 listElement.css('width',selectDiv.data('elementWidth')+'%');
                 listElement.click(function () {
                     //listElement.css('width',selectDiv.data('elementWidth')+'%');
-                    _this.val(listElement.data('option-value'));
-                    selectDiv.find('.switch').animate({'left':selectDiv.data('elementWidth')*listElement.data('ind') + '%'});
-                    selectDiv.data('active').find('a').css('text-shadow','none');
-                    selectDiv.data('active').find('a').animate({
-                            'color': '#2e333b'//,
-                            //'text-shadow': '0px 1px 0px #FFF'
-                        },
-                        function() {
-                            //console.log('old');
-                            //console.log(this);
-                            $(this).css('text-shadow', '0px 1px 0px #FFF');
-                        }
-                    );
-                    selectDiv.data('active').removeClass('active');
-                    listElement.find('a').css('text-shadow','none');
-                    listElement.find('a').animate({
-                            'color': 'white'//,
-                            //'text-shadow': '0px 1px 0px #0b5b88'
-                        },
-                        function() {
-                            //console.log('new');
-                            //console.log(this);
-                            $(this).css('text-shadow', '0px 1px 0px #0b5b88');
-                            $(this).parent().addClass('active');
-                        }
-                    );
-                    //console.log(listElement);
-                    selectDiv.data('active',listElement);
-                    _this.change();
+                    var oldVal = _this.val();
+                    if(oldVal != listElement.data('option-value')){
+                        _this.val(listElement.data('option-value'));
+                        selectDiv.find('.switch').animate({'left':selectDiv.data('elementWidth')*listElement.data('ind') + '%'});
+                        selectDiv.data('active').find('a').css('text-shadow','none');
+                        selectDiv.data('active').find('a').animate({
+                                'color': '#2e333b'//,
+                                //'text-shadow': '0px 1px 0px #FFF'
+                            },
+                            function() {
+                                //console.log('old');
+                                //console.log(this);
+                                $(this).css('text-shadow', '0px 1px 0px #FFF');
+                            }
+                        );
+                        selectDiv.data('active').removeClass('active');
+                        listElement.find('a').css('text-shadow','none');
+                        listElement.find('a').animate({
+                                'color': 'white'//,
+                                //'text-shadow': '0px 1px 0px #0b5b88'
+                            },
+                            function() {
+                                //console.log('new');
+                                //console.log(this);
+                                $(this).css('text-shadow', '0px 1px 0px #0b5b88');
+                                $(this).parent().addClass('active');
+                                _this.change();
+                            }
+                        );
+                        //console.log(listElement);
+                        selectDiv.data('active',listElement);
+
+                    }
                 });
                 /*listElement.bind('mouseenter',function () {
                     $(this).addClass('hover');

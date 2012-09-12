@@ -45,8 +45,12 @@ class ShowTripAction extends CAction
                 $this->tabs[$groupId] = array();
                 if (!$this->firstIndex)
                     $this->firstIndex = $groupId;
+                $previous = array();
             }
+            else
+                $previous = $this->tabs[$groupId];
             $this->tabs[$groupId] = CMap::mergeArray($this->tabs[$groupId], $item->addGroupedInfo($preparedForFrontendItem));
+            $this->tabs[$groupId] = $item->buildTabLabel($this->tabs[$groupId], $previous);
         }
         else
         {

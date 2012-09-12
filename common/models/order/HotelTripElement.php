@@ -12,17 +12,14 @@ class HotelTripElement extends TripElement
     public $city;
     public $checkIn;
     public $checkOut;
-    public $adultCount;
-    public $childCount;
-    public $infantCount;
-    public $childAge;
+    public $rooms;
     public $hotelBookerId;
     private $passports;
 
     public function rules()
     {
         return array(
-            array('city, checkIn, checkOut, adultCount, childCount, infantCount, hotelBookerId', 'safe'),
+            array('city, checkIn, checkOut, hotelBookerId', 'safe'),
         );
     }
 
@@ -35,9 +32,6 @@ class HotelTripElement extends TripElement
             'city',
             'checkIn',
             'checkOut',
-            'adultCount',
-            'childCount',
-            'infantCount',
         );
     }
 
@@ -56,6 +50,11 @@ class HotelTripElement extends TripElement
                 return $order;
         }
         return false;
+    }
+
+    public function getCityModel()
+    {
+        return City::model()->findByPk($this->city);
     }
 
     public function getPrice()
@@ -165,5 +164,31 @@ class HotelTripElement extends TripElement
     public function createTripElementWorkflow()
     {
         return new HotelTripElementWorkflow($this);
+    }
+
+    public function getUrlToAllVariants()
+    {
+        $search = array(
+            'city' => $this->getCityModel()->code,
+            'checkIn' => $this->checkIn,
+            'duration' => $this->getDuration(),
+            'rooms' => array(
+                array(
+                    'adt' => $this->adultCount,
+                    'chd' => $this->childCount,
+                    'chdAge' => 0,
+                    'cots' => 0
+                )
+            )
+        );
+        $fullUrl = $this->buildApiUrl($search);
+        return $fullUrl;
+    }
+
+    private function buildApiUrl($params)
+    {
+        $url = Yii::app()->params['app.api.hotelSearchUrl'];
+        $fullUrl = $url . '?' . http_build_query($params);
+        return $fullUrl;
     }
 }

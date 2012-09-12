@@ -23,7 +23,7 @@ return CMap::mergeArray(
         'name' => 'Voyanga',
         'basePath' => 'api',
         'params' => $params,
-        'language' => 'ru',
+        'language' => 'en',
 
         'preload' => array(
             'log',
@@ -48,7 +48,8 @@ return CMap::mergeArray(
                 'modules' => array(
                     'flight',
                     'hotel',
-                    'tour'
+                    'tour',
+                    'helper'
                 )
             )
         ),

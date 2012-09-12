@@ -8,16 +8,27 @@
 class TestApiController extends FrontendController
 {
     public $api = 'http://api.misha.voyanga/v1';
-    public $avia = 'flight';
-    public $hotel = 'hotel';
+
+    public $flightApi = 'flight';
+    public $hotelApi = 'hotel';
+    public $tourApi = 'tour';
+    public $autocompleteApi = 'helper/autocomplete';
+
     public $search = 'search';
+    public $city = 'city';
 
     public $tests = array(
-        'aviaSearchSimple',
-        'aviaSearchComplex',
-        'aviaSearchRoundTrip',
-        'aviaSearchComplexRoundTrip',
+//        'aviaSearchSimple',
+//        'aviaSearchComplex',
+//        'aviaSearchRoundTrip',
+//        'aviaSearchComplexRoundTrip',
         'hotelSearchSimple',
+//        'tourSearchSimple',
+          'autocompleteSimple',
+          'autocompleteAirports',
+          'autocompleteHotels',
+          'autocompleteAirportsHotels',
+          'autocompleteHotelsAirports',
     );
 
     public function actionDefault()
@@ -43,7 +54,7 @@ class TestApiController extends FrontendController
 
     private function buildAviaApiUrl($params)
     {
-        $url = $this->api . '/' . $this->avia . '/' . $this->search;
+        $url = $this->api . '/' . $this->flightApi . '/' . $this->search;
         $fullUrl = $url . '?' . http_build_query($params);
         echo "<br>Query: ".$fullUrl."<br>";
         return $fullUrl;
@@ -51,7 +62,7 @@ class TestApiController extends FrontendController
 
     private function buildHotelApiUrl($params)
     {
-        $url = $this->api . '/' . $this->hotel . '/' . $this->search;
+        $url = $this->api . '/' . $this->hotelApi . '/' . $this->search;
         $fullUrl = $url . '?' . http_build_query($params);
         echo "<br>Query: ".$fullUrl."<br>";
         return $fullUrl;
@@ -164,5 +175,99 @@ class TestApiController extends FrontendController
         $fullUrl = $this->buildHotelApiUrl($search);
         $result = file_get_contents($fullUrl);
         return $result;
+    }
+
+    private function tourSearchSimple()
+    {
+        $search = array(
+            'start' => 'LED',
+            'destinations' => array(
+                array(
+                    'city' => 'MOW',
+                    'dateFrom' => '01.10.2012',
+                    'dateTo' => '10.10.2012',
+                ))
+        );
+        VarDumper::dump($search);
+        $fullUrl = $this->buildTourApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
+    private function autocompleteSimple()
+    {
+        $search = array(
+            'query' => 'LED',
+        );
+        VarDumper::dump($search);
+        $fullUrl = $this->buildAutocompleteApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
+    private function autocompleteAirports()
+    {
+        $search = array(
+            'query' => 'LED',
+            'airport_req'=>1
+        );
+        VarDumper::dump($search);
+        $fullUrl = $this->buildAutocompleteApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
+    private function autocompleteHotels()
+    {
+        $search = array(
+            'query' => 'LED',
+            'hotel_req'=>1
+        );
+        VarDumper::dump($search);
+        $fullUrl = $this->buildAutocompleteApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
+    private function buildTourApiUrl($params)
+    {
+        $url = $this->api . '/' . $this->tourApi . '/' . $this->search;
+        $fullUrl = $url . '?' . http_build_query($params);
+        echo "<br>Query: ".$fullUrl."<br>";
+        return $fullUrl;
+    }
+
+    private function autocompleteAirportsHotels()
+    {
+        $search = array(
+            'query' => 'LED',
+            'airport_req'=>2,
+            'hotel_req'=>1
+        );
+        VarDumper::dump($search);
+        $fullUrl = $this->buildAutocompleteApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
+    private function autocompleteHotelsAirports()
+    {
+        $search = array(
+            'query' => 'LED',
+            'airport_req'=>1,
+            'hotel_req'=>2
+        );
+        VarDumper::dump($search);
+        $fullUrl = $this->buildAutocompleteApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
+    private function buildAutocompleteApiUrl($params)
+    {
+        $url = $this->api . '/' . $this->autocompleteApi . '/' . $this->city;
+        $fullUrl = $url . '?' . http_build_query($params);
+        echo "<br>Query: ".$fullUrl."<br>";
+        return $fullUrl;
     }
 }

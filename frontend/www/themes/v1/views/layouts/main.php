@@ -26,7 +26,6 @@
     <?php
     Yii::app()->getClientScript()->registerScriptFile('/js/utils.js');
     ?>
-?>
 </head>
 <body>
 <div id="loadingDiv" class="hide">

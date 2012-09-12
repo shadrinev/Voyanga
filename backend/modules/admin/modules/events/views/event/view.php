@@ -28,10 +28,6 @@ $this->beginWidget("AAdminPortlet", array(
 		'startDate',
 		'endDate',
         'title',
-		array(
-            'label' =>'Город',
-            'value'=>$model->city->localRu
-        ),
 		'address',
 		'contact',
 		'statusName',
@@ -88,7 +84,15 @@ $this->beginWidget("AAdminPortlet", array(
         ),
 	),
 )); ?>
-
+<?php if ($model->orderId): ?>
+<?php
+    $this->widget('site.frontend.widgets.timelineCalendar.TimelineCalendarWidget', array('tourModel'=>$model->tour));
+?>
+<?php endif ?>
+<?php $this->widget('bootstrap.widgets.BootButton', array(
+    'url'=>Yii::app()->createUrl('/admin/tour/constructor/create', array('eventId'=>$model->id)),
+    'label'=>'Составить тур',
+)); ?>
 <?php $this->endWidget(); ?>
 
 <?php Yii::app()->clientScript->registerScript('deleteImageGallery', "

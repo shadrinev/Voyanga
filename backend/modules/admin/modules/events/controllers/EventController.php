@@ -33,10 +33,11 @@ class EventController extends Controller
 		));
 	}
 
-    protected function createOrUpdate($model)
+    protected function createOrUpdate(Event $model)
     {
         if(isset($_POST['Event']))
         {
+            $model->scenario = 'backend';
             $model->attributes=$_POST['Event'];
             $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
             $links = array();
@@ -54,6 +55,7 @@ class EventController extends Controller
             }
             $model->categories = $categories;
             $model->links = $links;
+            $model->validate();
             if($model->save())
             {
                 if ($pictureSmall=CUploadedFile::getInstance($model, 'pictureSmall'))
@@ -74,9 +76,6 @@ class EventController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
         $this->createOrUpdate($model);
 
@@ -203,5 +202,38 @@ class EventController extends Controller
         }
         $result=htmlspecialchars(json_encode($result), ENT_NOQUOTES);
         echo $result;
+    }
+
+    public function actionGetNewPrices($id, $startCity)
+    {
+        $tour = $this->buildTour($id, $startCity);
+    }
+
+    private function buildTour($id, $startCity)
+    {
+        $model = $this->loadModel($id);
+        $search = array(
+            'start' => $startCity,
+            'destinations' => array(
+                array(
+                    'city' => $model->cityId,
+                    'dateFrom' => '01.10.2012',
+                    'dateTo' => '10.10.2012',
+                ))
+        );
+    }
+
+    private function getPrices()
+    {
+        $fullUrl = $this->buildTourApiUrl($search);
+        $result = file_get_contents($fullUrl);
+        return $result;
+    }
+
+    private function buildTourApiUrl($params)
+    {
+        $url = $this->api . '/' . $this->tourApi . '/' . $this->search;
+        $fullUrl = $url . '?' . http_build_query($params);
+        return $fullUrl;
     }
 }

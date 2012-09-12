@@ -43,6 +43,10 @@ $this->menu=array(
             'value'=>'$data->fullPrice'
         ),
         array(
+            'header'=>'ID партнера',
+            'value'=>'$data->partnerId'
+        ),
+        array(
             'class'=>'bootstrap.widgets.BootButtonColumn',
             'updateButtonIcon'=>false,
             'template'=>'{view}',

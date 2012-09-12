@@ -7,13 +7,23 @@
  */
 class DateTimeHelper
 {
-    public static function formatForJs($dateTime)
+    static public function formatForJs($dateTime)
     {
         if (is_numeric($dateTime))
             $timestamp = $dateTime;
         else
             $timestamp = strtotime($dateTime);
         //2012-08-22T04:06Z
-        return date('Y-m-d', $timestamp).'T'.date('H:i',$timestamp).'Z';
+        return date('Y-m-d', $timestamp).'T'.date('H:i',$timestamp);
+    }
+
+    static public function formatForEventForm($dateTime)
+    {
+        if ($dateTime)
+        {
+            $timestamp = strtotime($dateTime);
+            return date('d.m.Y', $timestamp);
+        }
+        return null;
     }
 }

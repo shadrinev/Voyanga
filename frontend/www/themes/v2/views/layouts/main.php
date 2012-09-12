@@ -8,6 +8,10 @@ Yii::app()->clientScript->registerPackage('everything');
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Voyanga v.0.1 - Trip Flight Rework</title>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
+    </script>
+
 </head>
 
 <body>
@@ -27,8 +31,8 @@ Yii::app()->clientScript->registerPackage('everything');
 
                 <ul>
                     <li class="planner btn"><a href="#">Планировщик</a></li>
-                    <li class="aviatickets btn" data-bind="css: {active: activeModule == 'avia'}"><a href="#">Авиабилеты</a></li>
-                    <li class="hotel btn" data-bind="css: {active: activeModule == 'hotel'}"><a href="#">Отели</a></li>
+                    <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#">Авиабилеты</a></li>
+                    <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
                     <li class="finish-stages btn"><a href="#">Готовые туры</a></li>
                 </ul>
             </div>
@@ -74,112 +78,15 @@ Yii::app()->clientScript->registerPackage('everything');
         </div>
         <!-- END ALL CONTENT -->
     </div>
-
-
-    <!-- ==== POPUP === -->
-    </div>
-<?php echo $content; ?>
-<script type="text/html" id="avia-index">
-<h1> Hello, INDEX PAGE </h1>
-</script>
-<!-- FIXME include it -->
-<script type="text/html" id="avia-panel-template">
-<table class="panelTable AVIA">
-	<tr>
-		<td class="contTD">
-				<div class="data">
-					<div class="from">
-						<input class="input-path" type="text" placeholder="Куда" data-bind="value: departureCity()">
-						<div class="date">
-							<span class="f17">12</span>
-							<br>
-							<span class="month">мая</span>
-						</div>
-					</div>
-					<div class="tumblr">
-	                    <label for="there-back">
-	                        <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
-	                        <div class="two" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
-	                        <div class="switch"></div>
-	                    </label>
-	                    <input id="there-back" type="checkbox" data-bind="checked: rt()">
-	                </div>
-					<div class="to">
-						<input class="input-path" type="text" placeholder="Откуда" data-bind="value: arrivalCity()">
-						<div class="date">
-							<span class="f17">12</span>
-							<br>
-							<span class="month">мая</span>
-						</div>
-					</div>
-				</div>
-			<div class="how-many-man">
-            <div class="content">
-                <!-- ko if: overall()>5 -->
-                    <!-- ko if: adults()>0 -->
-                    <div class="man"></div>
-                        <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
-                    <!-- /ko -->
-                    <!-- ko if: (sum_children())>0 -->
-                    <div class="child"></div>
-                        <div class="count"><span>x</span><i data-bind="text: sum_children()"></i></div>
-                    <!-- /ko -->
-                <!-- /ko -->
-                <!-- ko if: overall()<=5 -->
-                    <div class="man" data-bind="repeat: adults()"></div>
-                    <div class="child" data-bind="repeat: sum_children()"></div>
-                <!-- /ko -->
-                </div>
-                    <div class="btn"></div>
-                    <div class="popup">
-                        <div class="adults">
-                            <div class="inputDIV">
-                                <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults">
-                                    <a href="#" class="plusOne" data-bind="click: plusOne" rel="adults">+</a>
-                                    <a href="#" class="minusOne" data-bind="click: minusOne" rel="adults">-</a>
-                            </div>
-                            взрослых
-                        </div>
-                        <div class="childs">
-                            <div class="inputDIV">
-                                <input type="text" name="adult2" data-bind="css: {active: children() > 0}, value: children">
-                                    <a href="#" class="plusOne" data-bind="click: plusOne" rel="children">+</a>
-                                    <a href="#" class="minusOne" data-bind="click: minusOne" rel="children">-</a>
-                            </div>
-                            детей до 12 лет
-                        </div>
-                        <div class="small-childs">
-                            <div class="inputDIV">
-                                <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants">
-                                        <a href="#" class="plusOne" data-bind="click: plusOne" rel="infants">+</a>
-                                        <a href="#" class="minusOne" data-bind="click: minusOne" rel="infants">-</a>
-                                </div>
-                                детей до 2 лет
-                            </div>
-
-                        </div>
-                    </div>
-		</td>
-		<td class="btnTD">
-			<a class="btn-find" data-bind="click: navigateToNewSearch">Найти</a>
-		</td>
-	</tr>
-</table>
-
-<!-- BTN MINIMIZE -->
-<a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
-    <!-- ko if: minimized() -->
-    <span></span> развернуть
-    <!-- /ko -->
-    <!-- ko if: !minimized() -->
-    <span></span> свернуть
-    <!-- /ko -->
-</a>
-<div class="minimize-rcomended">
-	<a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
 </div>
-
-</script>
-
+<?php
+    $templates = Array('avia.index', 'avia.results', 'avia.popup', 'avia.panel', 'avia.filters',
+                        'hotels.index', 'hotels.results', 'hotels.panel', 'hotels.popup',
+        );
+    foreach($templates as $template)
+    {
+        $this->renderPartial('www.themes.v2.views.' . $template);
+    }
+?>
 </body>
 </html>

@@ -31,6 +31,11 @@ dateUtils=
     result+= minutes
     return result
 
+  formatTimeInMinutes: (date) ->
+    result = date.getHours() * 60 + date.getMinutes()
+    return result
+
+
   # Fixme we should rename container or move this to timeUtils
   formatDuration: (duration) ->
     # LOL!

@@ -196,7 +196,7 @@ class Dispatcher
                     $obj->$key = $value;
 		}
 		$method = $observer[1];
-        $event = new Event();
+        $event = new ObserverEvent();
         $event->name = $eventName;
 		switch (count($args))
 		{

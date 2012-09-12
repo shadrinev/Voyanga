@@ -92,7 +92,7 @@ class HotelInfo extends CApplicationComponent
     public $childrenPool;
     public $description;
     public $distances;
-    public $hotelFacilities;
+    public $facilities;
     public $roomAmenities;
     public $hotelType;
 

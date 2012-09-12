@@ -15,7 +15,7 @@ class AviaController
     # update search params with values in route
     @searchParams.fromList(args)
 
-    # temporary development cache
+    # tempoprary development cache
     key = "search_" + @searchParams.key()
     if sessionStorage.getItem(key)
       window.voyanga_debug "AVIA: Getting result from cache"
@@ -27,17 +27,52 @@ class AviaController
         dataType: 'jsonp'
         success: @handleResults
 
+  getFilterLimitValues: (results)=>
+    console.log(results)
+
+
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
 
     # temporary development cache
     key = "search_" + @searchParams.key()
     sessionStorage.setItem(key, JSON.stringify(data))
-    stacked = new ResultSet data.flights.flightVoyages
+    stacked = new AviaResultSet data.flights.flightVoyages
+    this.getFilterLimitValues(stacked)
+    @aviaFiltersInit = {
+      flightClassFilter:{value: data.searchParams.serviceClass},
+      departureTimeSliderDirect:{
+        fromTime: stacked.timeLimits.departureFromTime,
+        toTime: stacked.timeLimits.departureToTime
+      },
+      arrivalTimeSliderDirect:{
+        fromTime: stacked.timeLimits.arrivalFromTime,
+        toTime: stacked.timeLimits.arrivalToTime
+      },
+      departureTimeSliderReturn:{
+        fromTime: stacked.timeLimits.departureFromTimeReturn,
+        toTime: stacked.timeLimits.departureToTimeReturn
+      },
+      arrivalTimeSliderReturn:{
+        fromTime: stacked.timeLimits.arrivalFromTimeReturn,
+        toTime: stacked.timeLimits.arrivalToTimeReturn
+      },
+      rt: data.searchParams.isRoundTrip
+    }
+
+
     @render 'results', {'results' :stacked}
-    @trigger "sidebarChanged", 'filters', {'firstNameN': [], 'lastNameN': [], 'fullNameN': [], 'results' :stacked}
+    window.setTimeout(
+      ()=>
+        AviaFilters.init(@aviaFiltersInit)
+      ,1000
+    )
+    @trigger "sidebarChanged", 'filters', {'testInput': @myobj, 'results' :stacked}
+
 
   indexAction: =>
+    window.voyanga_debug "AVIA: invoking indexAction"
+
     @render 'index', {}
 
   render: (view, data) ->
