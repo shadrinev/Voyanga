@@ -60,11 +60,12 @@
                                 //console.log(this);
                                 $(this).css('text-shadow', '0px 1px 0px #0b5b88');
                                 $(this).parent().addClass('active');
+                                _this.change();
                             }
                         );
                         //console.log(listElement);
                         selectDiv.data('active',listElement);
-                        _this.change();
+
                     }
                 });
                 /*listElement.bind('mouseenter',function () {

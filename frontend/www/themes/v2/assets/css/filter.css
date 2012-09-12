@@ -20,3 +20,8 @@
 }
 
 .div-filter ul li {line-height: 15px; margin-bottom: 0px;}
+
+.more-filters{
+    height: 60px;
+    overflow-y: hidden;
+}

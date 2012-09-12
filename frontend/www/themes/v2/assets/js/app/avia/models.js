@@ -161,7 +161,7 @@ Voyage = (function() {
       match_arrival_time = true;
     }
     result = result && match_arrival_time;
-    if (filters.onlyDirect) {
+    if (filters.onlyDirect === '1') {
       result = result && this.direct;
     }
     if (filters.serviceClass !== 'A') {
@@ -177,7 +177,7 @@ Voyage = (function() {
         match_departure_time = true;
       }
       thisBack = result && match_departure_time;
-      if (filters.onlyDirect) {
+      if (filters.onlyDirect === '1') {
         thisBack = thisBack && rtVoyage.direct;
       }
       match_arrival_time = false;
@@ -255,23 +255,24 @@ AviaResult = (function() {
   }
 
   AviaResult.prototype.filter = function(filters) {
-    var field, fields, found, match_lines, match_ports, some_visible, voyage, _i, _j, _len, _len1, _ref;
+    var field, fields, match_lines, match_ports, some_visible, voyage, _i, _j, _len, _len1, _ref;
     match_ports = true;
-    found = false;
-    fields = ['departureAirport', 'arrivalAirport'];
-    if (this.roundTrip) {
-      fields.push('rtDepartureAirport');
-      fields.push('rtArrivalAirport');
-    }
-    for (_i = 0, _len = fields.length; _i < _len; _i++) {
-      field = fields[_i];
-      if (filters.airports.indexOf(this[field]()) >= 0) {
-        found = true;
-      }
-    }
-    match_ports = found;
     if (filters.airports.length === 0) {
       match_ports = true;
+    } else {
+      match_ports = false;
+      fields = ['departureAirport', 'arrivalAirport'];
+      if (this.roundTrip) {
+        fields.push('rtDepartureAirport');
+        fields.push('rtArrivalAirport');
+      }
+      for (_i = 0, _len = fields.length; _i < _len; _i++) {
+        field = fields[_i];
+        if (filters.airports.indexOf(this[field]()) >= 0) {
+          match_ports = true;
+          break;
+        }
+      }
     }
     some_visible = false;
     _ref = this.voyages;
@@ -283,12 +284,12 @@ AviaResult = (function() {
         this.activeVoyage(voyage);
       }
     }
-    found = false;
-    if (filters.airlines.indexOf(this.airline) >= 0) {
-      found = true;
-    }
-    match_lines = found;
     if (filters.airlines.length === 0) {
+      match_lines = true;
+    } else {
+      match_lines = false;
+    }
+    if (!match_lines && filters.airlines.indexOf(this.airline) >= 0) {
       match_lines = true;
     }
     return this.visible(match_ports && match_lines && some_visible);
@@ -414,7 +415,7 @@ AviaResultSet = (function() {
       result = _ref[key];
       result.sort();
       this.data.push(result);
-      _airlines[result.airline] = 1;
+      _airlines[result.airline] = result.airlineName;
       _airports[result.departureAirport()] = 1;
       _airports[result.arrivalAirport()] = 1;
       if (result.roundTrip) {
@@ -467,6 +468,7 @@ AviaResultSet = (function() {
       foo = _airlines[key];
       this.airlines.push({
         'name': key,
+        'visibleName': foo,
         'active': ko.observable(0)
       });
     }
@@ -485,6 +487,7 @@ AviaResultSet = (function() {
     this._airlinesFilters = ko.computed(function() {
       var line, _l, _len3, _ref3;
       result = [];
+      console.log('airlines');
       _ref3 = _this.airlines;
       for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
         line = _ref3[_l];
@@ -551,6 +554,7 @@ AviaResultSet = (function() {
       };
     });
     this._allFilters.subscribe(function(value) {
+      console.log('refilter');
       _.each(_this.data, function(x) {
         return x.filter(value);
       });

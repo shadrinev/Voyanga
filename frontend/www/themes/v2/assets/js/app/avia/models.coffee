@@ -131,7 +131,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       match_arrival_time = true
     result = result && match_arrival_time
 
-    if filters.onlyDirect
+    if filters.onlyDirect == '1'
       result = result && @direct
 
     if filters.serviceClass != 'A'
@@ -144,7 +144,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
         match_departure_time = true
       thisBack = result && match_departure_time
 
-      if filters.onlyDirect
+      if filters.onlyDirect == '1'
         thisBack = thisBack && rtVoyage.direct
 
       match_arrival_time = false
@@ -155,6 +155,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       if thisBack && !haveBack
         haveBack = true
         @activeBackVoyage(rtVoyage)
+
     result = result && haveBack
     @visible(result)
 
@@ -213,17 +214,20 @@ class AviaResult
   filter: (filters) ->
       match_ports = true
       # FIXME UNDERSCORE
-      found = false
-      fields = ['departureAirport', 'arrivalAirport']
-      if @roundTrip
-        fields.push 'rtDepartureAirport'
-        fields.push 'rtArrivalAirport'
-      for field in fields
-        if filters.airports.indexOf(@[field]()) >= 0
-          found = true
-      match_ports = found
       if filters.airports.length == 0
         match_ports = true
+      else
+        match_ports = false
+        fields = ['departureAirport', 'arrivalAirport']
+        if @roundTrip
+          fields.push 'rtDepartureAirport'
+          fields.push 'rtArrivalAirport'
+        for field in fields
+          if filters.airports.indexOf(@[field]()) >= 0
+            match_ports = true
+            break
+
+
 
       some_visible = false
       for voyage in @voyages
@@ -232,12 +236,14 @@ class AviaResult
           some_visible = true
           @activeVoyage(voyage)
 
-      found = false
-      if filters.airlines.indexOf(@airline) >= 0
-        found = true
-      match_lines = found
       if filters.airlines.length == 0
         match_lines = true
+      else
+        match_lines = false
+      if !match_lines && filters.airlines.indexOf(@airline) >= 0
+        match_lines = true
+
+
 
       @visible(match_ports&&match_lines&&some_visible)
 
@@ -346,7 +352,7 @@ class AviaResultSet
     for key, result of @_results
       result.sort()
       @data.push result
-      _airlines[result.airline] = 1
+      _airlines[result.airline] = result.airlineName
       _airports[result.departureAirport()]=1
       _airports[result.arrivalAirport()]=1
       #console.log(result.departureTimeNumeric())
@@ -379,7 +385,7 @@ class AviaResultSet
       @airports.push {'name':key, 'active': ko.observable 0 }
 
     for key, foo of _airlines
-      @airlines.push {'name':key, 'active': ko.observable 0 }
+      @airlines.push {'name':key,'visibleName':foo, 'active': ko.observable 0 }
 
     @_airportsFilters = ko.computed =>
           result = []
@@ -390,6 +396,7 @@ class AviaResultSet
 
     @_airlinesFilters = ko.computed =>
       result = []
+      console.log 'airlines'
       for line in @airlines
         if line.active()
           result.push line.name
@@ -440,6 +447,7 @@ class AviaResultSet
       }
 
     @_allFilters.subscribe (value) =>
+      console.log('refilter');
       _.each @data, (x)-> x.filter (value)
       @update_cheapest()
 

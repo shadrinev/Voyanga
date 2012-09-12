@@ -229,7 +229,26 @@ AviaFilters.departureTimeSliderReturn = getAviaFilterTimeSlider({objName: '#depa
 
 AviaFilters.arrivalTimeSliderReturn = getAviaFilterTimeSlider({objName: '#arrivalTimeSliderReturn'});
 
+AviaFilters.showMoreDiv = function (btnObj,moreIdDiv){
+    var newWidth = $('#'+moreIdDiv).prop('scrollHeight');
+    $('#'+moreIdDiv).animate({
+            height: newWidth+'px'
+        },
+        {
+            duration: 800,
+            complete: function(){
+                $('#'+moreIdDiv).css({'overflowY': 'visible','height':'none'});
+                $(btnObj).hide();
+            }
+        });
+    return false;
+}
+AviaFilters.unCheckAll = function (idDiv){
 
+    $('#'+idDiv+' input[type=checkbox]').attr('checked', false);
+    $('#'+idDiv+' input[type=checkbox]').change();
+    return false;
+}
 
 $(document).ready(function (){
     /*AviaFilters.init({
