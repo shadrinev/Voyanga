@@ -26,14 +26,18 @@ HotelsController = (function() {
     var args, key;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("HOTELS: Invoking searchAction", args);
+<<<<<<< HEAD
     key = "h_search_1233";
+=======
+    key = "h_search_10004";
+>>>>>>> Hotel popup
     if (sessionStorage.getItem(key)) {
       window.voyanga_debug("HOTELS: Getting result from cache");
       return this.handleResults(JSON.parse(sessionStorage.getItem(key)));
     } else {
       window.voyanga_debug("HOTELS: Getting results via JSONP");
       return $.ajax({
-        url: "http://api.misha.voyanga/v1/hotel/search?city=MOW&checkIn=2012-10-11&duration=3&rooms%5B0%5D%5Badt%5D=2&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0",
+        url: "http://api.voyanga/v1/hotel/search?city=LED&checkIn=2012-10-11&duration=3&rooms%5B0%5D%5Badt%5D=2&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0",
         dataType: 'jsonp',
         success: this.handleResults
       });
@@ -43,7 +47,11 @@ HotelsController = (function() {
   HotelsController.prototype.handleResults = function(data) {
     var key, stacked;
     window.voyanga_debug("HOTELS: searchAction: handling results", data);
+<<<<<<< HEAD
     key = "h_search_1233";
+=======
+    key = "h_search_10004";
+>>>>>>> Hotel popup
     sessionStorage.setItem(key, JSON.stringify(data));
     stacked = new HotelsResultSet(data.hotels);
     return this.render('results', {
