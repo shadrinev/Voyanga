@@ -424,7 +424,7 @@
 
 </div>
 <!-- END DATE TIME CITY -->
-<!-- ko if:rtStacked -->
+<!-- ko if:rtStacked() -->
 <div class="other-time" >
     <div class="title">Также вы можете вылететь в</div>
     <div class="btn-minimize"><a href="#">Списком</a></div>

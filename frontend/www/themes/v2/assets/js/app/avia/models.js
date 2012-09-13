@@ -73,7 +73,22 @@ Voyage = (function() {
   };
 
   Voyage.prototype.stacked = function() {
-    return this._backVoyages.length > 1;
+    var count, result, voyage, _i, _len, _ref;
+    result = false;
+    count = 0;
+    _ref = this._backVoyages;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      voyage = _ref[_i];
+      if (voyage.visible()) {
+        count++;
+      }
+      if (count > 1) {
+        result = true;
+        break;
+      }
+    }
+    console.log(result);
+    return result;
   };
 
   Voyage.prototype.departureDayMo = function() {
@@ -167,7 +182,11 @@ Voyage = (function() {
     if (filters.serviceClass !== 'A') {
       result = result && this.serviceClass === filters.serviceClass;
     }
-    haveBack = false;
+    if (this._backVoyages.length > 0) {
+      haveBack = false;
+    } else {
+      haveBack = true;
+    }
     _ref = this._backVoyages;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       rtVoyage = _ref[_i];
@@ -190,6 +209,9 @@ Voyage = (function() {
         haveBack = true;
         this.activeBackVoyage(rtVoyage);
       }
+    }
+    if (!haveBack) {
+      console.log('filtred by back');
     }
     result = result && haveBack;
     return this.visible(result);
@@ -296,11 +318,39 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.stacked = function() {
-    return this._stacked;
+    var count, result, voyage, _i, _len, _ref;
+    result = false;
+    count = 0;
+    _ref = this.voyages;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      voyage = _ref[_i];
+      if (voyage.visible()) {
+        count++;
+      }
+      if (count > 1) {
+        result = true;
+        break;
+      }
+    }
+    return result;
   };
 
   AviaResult.prototype.rtStacked = function() {
-    return this.activeVoyage().stacked();
+    var count, result, voyage, _i, _len, _ref;
+    result = false;
+    count = 0;
+    _ref = this.activeVoyage()._backVoyages;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      voyage = _ref[_i];
+      if (voyage.visible()) {
+        count++;
+      }
+      if (count > 1) {
+        result = true;
+        break;
+      }
+    }
+    return result;
   };
 
   AviaResult.prototype.push = function(data) {
@@ -374,7 +424,13 @@ AviaResult = (function() {
 AviaResultSet = (function() {
 
   function AviaResultSet(rawVoyages) {
-    var flightVoyage, foo, key, result, rtVoyage, voyage, _airlines, _airports, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3,
+    this.resetArrivalAirports = __bind(this.resetArrivalAirports, this);
+
+    this.resetDepartureAirports = __bind(this.resetDepartureAirports, this);
+
+    this.resetAirlines = __bind(this.resetAirlines, this);
+
+    var flightVoyage, foo, key, result, rtVoyage, voyage, _airlines, _airports, _arrivalAirports, _departureAirports, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3,
       _this = this;
     this._results = {};
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
@@ -393,6 +449,8 @@ AviaResultSet = (function() {
     this.cheapest = ko.observable();
     this.data = [];
     this.airports = [];
+    this.departureAirports = [];
+    this.arrivalAirports = [];
     this.airlines = [];
     this.timeLimits = {
       'departureFromTime': 1440,
@@ -409,18 +467,28 @@ AviaResultSet = (function() {
       'arrivalFromToTimeReturnActive': ko.observable('0;1440')
     };
     _airports = {};
+    _departureAirports = {};
+    _arrivalAirports = {};
     _airlines = {};
+    this.departureCity = false;
+    this.arrivalCity = false;
     _ref = this._results;
     for (key in _ref) {
       result = _ref[key];
       result.sort();
       this.data.push(result);
       _airlines[result.airline] = result.airlineName;
-      _airports[result.departureAirport()] = 1;
-      _airports[result.arrivalAirport()] = 1;
+      _departureAirports[result.departureAirport()] = 1;
+      _arrivalAirports[result.arrivalAirport()] = 1;
+      if (!this.departureCity) {
+        this.departureCity = result.activeVoyage().departureCity;
+      }
+      if (!this.arrivalCity) {
+        this.arrivalCity = result.activeVoyage().arrivalCity;
+      }
       if (result.roundTrip) {
-        _airports[result.rtDepartureAirport()] = 1;
-        _airports[result.rtArrivalAirport()] = 1;
+        _arrivalAirports[result.rtDepartureAirport()] = 1;
+        _departureAirports[result.rtArrivalAirport()] = 1;
       }
       _ref1 = result.voyages;
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
@@ -457,9 +525,16 @@ AviaResultSet = (function() {
         }
       }
     }
-    for (key in _airports) {
-      foo = _airports[key];
-      this.airports.push({
+    for (key in _departureAirports) {
+      foo = _departureAirports[key];
+      this.departureAirports.push({
+        'name': key,
+        'active': ko.observable(0)
+      });
+    }
+    for (key in _arrivalAirports) {
+      foo = _arrivalAirports[key];
+      this.arrivalAirports.push({
         'name': key,
         'active': ko.observable(0)
       });
@@ -472,12 +547,20 @@ AviaResultSet = (function() {
         'active': ko.observable(0)
       });
     }
+    console.log(this.airlines);
     this._airportsFilters = ko.computed(function() {
-      var port, _l, _len3, _ref3;
+      var port, _l, _len3, _len4, _m, _ref3, _ref4;
       result = [];
-      _ref3 = _this.airports;
+      _ref3 = _this.departureAirports;
       for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
         port = _ref3[_l];
+        if (port.active()) {
+          result.push(port.name);
+        }
+      }
+      _ref4 = _this.arrivalAirports;
+      for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
+        port = _ref4[_m];
         if (port.active()) {
           result.push(port.name);
         }
@@ -487,7 +570,6 @@ AviaResultSet = (function() {
     this._airlinesFilters = ko.computed(function() {
       var line, _l, _len3, _ref3;
       result = [];
-      console.log('airlines');
       _ref3 = _this.airlines;
       for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
         line = _ref3[_l];
@@ -568,6 +650,39 @@ AviaResultSet = (function() {
     this.update_cheapest();
     this.popup = ko.observable(this.cheapest());
   }
+
+  AviaResultSet.prototype.resetAirlines = function() {
+    var line, _i, _len, _ref, _results;
+    _ref = this.airlines;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      line = _ref[_i];
+      _results.push(line.active(0));
+    }
+    return _results;
+  };
+
+  AviaResultSet.prototype.resetDepartureAirports = function() {
+    var line, _i, _len, _ref, _results;
+    _ref = this.departureAirports;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      line = _ref[_i];
+      _results.push(line.active(0));
+    }
+    return _results;
+  };
+
+  AviaResultSet.prototype.resetArrivalAirports = function() {
+    var line, _i, _len, _ref, _results;
+    _ref = this.arrivalAirports;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      line = _ref[_i];
+      _results.push(line.active(0));
+    }
+    return _results;
+  };
 
   AviaResultSet.prototype.update_cheapest = function() {
     var cheapest_reseted, key, result, _ref, _results;
