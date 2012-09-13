@@ -94,7 +94,7 @@
         </div>
         <!-- ko if: $index() < ($length() - 1) -->
         <div class="transitum">
-            Пересадка: между рейсами  ХЗ СКОЛЬКО 1 ч. 30 м.
+            Пересадка: между рейсами  <span data-bind="text: stopoverText()"></span>
         </div>
         <!-- /ko -->
 </script>

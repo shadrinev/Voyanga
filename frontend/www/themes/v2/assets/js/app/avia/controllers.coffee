@@ -62,12 +62,13 @@ class AviaController
 
 
     @render 'results', {'results' :stacked}
+    # FIXME
     window.setTimeout(
       ()=>
         AviaFilters.init(@aviaFiltersInit)
       ,1000
     )
-    @trigger "sidebarChanged", 'filters', {'testInput': @myobj, 'results' :stacked}
+    @trigger "sidebarChanged", 'filters', {'results' :stacked}
 
 
   indexAction: =>

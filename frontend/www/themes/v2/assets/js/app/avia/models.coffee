@@ -14,6 +14,7 @@ class FlightPart
     @transportAirline = part.transportAirline
     @transportAirlineName = part.transportAirlineName
     @flightCode = part.transportAirline + ' ' + part.flightCode
+    @stopoverLength = 0
 
   departureTime: ->
     dateUtils.formatTime @departureDate
@@ -24,6 +25,15 @@ class FlightPart
   duration: ->
     dateUtils.formatDuration @_duration
 
+  # calculate stopover length to given anotherPart
+  calculateStopoverLength: (anotherPart) ->
+    @stopoverLength = Math.floor((anotherPart.departureDate.getTime() - @arrivalDate.getTime())/1000)
+
+  stopoverText: -> 
+    dateUtils.formatDuration @stopoverLength
+    
+  
+
 class Voyage #Voyage Plus loin que la nuit et le jour
   constructor: (flight) ->
     # Wrap flight parts in model
@@ -31,7 +41,13 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     for part in flight.flightParts
       @parts.push new FlightPart(part)
 
+    @stopoverLength = 0
     @direct = @parts.length == 1
+    if ! @direct
+      for part, index in @parts
+        if index < (@parts.length - 1)
+          part.calculateStopoverLength @parts[index+1]
+        @stopoverLength += part.stopoverLength
 
     @serviceClass = 'E'
 
