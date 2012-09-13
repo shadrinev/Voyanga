@@ -260,8 +260,9 @@
 }
 
 
+/* ALL TOURS*/
 
-.allTourCal .calendarLineVoyanga, .allTourCal .dayCellVoyanga, .allTourCal .innerDayCellVoyanga { height: 106px;}
+.allTourCal .calendarLineVoyanga, .allTourCal .dayCellVoyanga, .allTourCal .innerDayCellVoyanga { height: 106px;	position: relative;}
 .allTourCal .calendarGridVoyanga, .allTourCal .calendarUnscrollVoyanga {
 	height: 318px;
 }
@@ -282,10 +283,148 @@
 	box-shadow: 0px 0px 15px #000;	
 }
 .allTourCal .dayCellVoyanga {
-	background: url(../images/dayCellVoyanga.png) repeat-x #2f3236;
+	background: #f2f6f8;
 }
 .allTourCal .dayLabel {
-color: #71818c; font-family: Verdana; font-size: 12px;
+	font-family: Verdana; font-size: 12px;
 	padding-top: 5px;
 	padding-right: 8px;
+}
+
+.allTourCal .innerDayCellVoyanga.startMonth .dayLabel {
+	padding-right: 35px;
+}
+.allTourCal .innerDayCellVoyanga.startMonth .monthLabel {
+	background: none repeat scroll 0 0 transparent;
+    font-family: Verdana;
+    font-size: 11px;
+    height: 15px;
+    left: auto;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    right: 13px;
+    top: 5px;
+    width: 21px
+}
+
+
+
+
+.startYourTours {
+	background: url("../images/all-tours-slice.png") no-repeat scroll left 0 transparent;
+    height: 106px;
+    position: absolute;
+    top: 0;
+    width: 14.18%;
+    z-index: 210;
+
+    left: 0%;
+}
+.endYourTours {
+	background: url("../images/all-tours-slice.png") no-repeat scroll right 0 transparent;
+    height: 106px;
+    position: absolute;
+    top: 0;
+    width: 14.18%;
+    z-index: 210;
+    
+    left: 57.2%;
+}
+.yourTrip {
+	height: 106px;
+    padding: 0 47px;
+    position: absolute;
+    top: 0;
+    z-index: 210;   
+    
+    left: 9%;
+    width: 29%;
+}
+.yourTrip .startHotel {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url("../images/all-tours-slice.png") no-repeat scroll 0 -107px transparent;
+	height: 106px;
+	width: 47px;
+	z-index: 209;
+}
+.yourTrip .pathHotel {
+	width: 100%;
+	height: 106px;
+	background: url("../images/all-tours-slice.png") repeat scroll 0 -213px transparent;
+	z-index: 209;
+}
+.yourTrip .endHotel {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background: url("../images/all-tours-slice.png") no-repeat scroll 0 -319px transparent;
+	height: 106px;
+	width: 47px;
+	z-index: 209;
+}
+.yourTrip .nameHotel {
+	color: #EAEFF3;
+    left: 16px;
+    position: absolute;
+    top: 49px;
+    z-index: 210;
+}
+
+.flyTrip {
+	height: 55px;
+    position: absolute;
+    top: 0;
+    z-index: 209;
+    
+    width: 14.18%;	
+}
+.tripFlyAll {
+	margin-top: 15px;
+    padding: 0 25px;
+    position: relative;
+    z-index: 209;
+}
+.tripFlyAll img {
+	position: relative;
+	z-index: 209;
+}
+.flyTrip .startNameCity {
+	color: #252628;
+    font-family: Arial;
+    font-size: 11px;
+    height: 16px;
+    left: 5px;
+    position: absolute;
+    top: 69px;
+    white-space: nowrap;
+    z-index: 209;
+}
+.flyTrip .endNameCity {
+	color: #252628;
+    font-family: Arial;
+    font-size: 11px;
+    height: 16px;
+    position: absolute;
+    right: 5px;
+    top: 85px;
+    white-space: nowrap;
+    z-index: 209;
+}
+.tripFlyAll .jetFly {
+	background: url("../images/trip-jet-fly.png") no-repeat scroll 0 0 transparent;
+    height: 13px;
+    left: 40%;
+    position: absolute;
+    top: -5px;
+    width: 29px;
+    z-index: 210;
+}
+.tripFlyAll .jetFly.twoDays {
+	top:4px;
+} 
+.tripFlyAll .jetFly.threeDays {
+	top: 9px;
 }
