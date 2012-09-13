@@ -13,7 +13,7 @@
     <tr>
         <td colspan="4"></td>
         <td><b>{{price}} руб.</b></td>
-        <td><a class="btn btn-warning detail-view" data-key='{{key}}'>Подробнее</a>
+        <td><a class="btn btn-warning detail-view" data-key='{{flightKey}}'>Подробнее</a>
         </td>
     </tr>
     {{#each flights}}
@@ -28,7 +28,7 @@
     </tr>
     <tr>
         <td colspan="6">
-            <table class="table table-bordered detail-{{../key}}" style='display: none; background-color: #f0f0f0'>
+            <table class="table table-bordered detail-{{../flightKey}} hide" style='background-color: #f0f0f0'>
                 <thead>
                 <th>Вылет</th>
                 <th>Прилёт</th>

@@ -32,8 +32,7 @@
 
     $('.detail-view').live('click', function() {
         var openElement = $('.detail-' + $(this).data('key'));
-        console.log(openElement);
-        openElement.toggle();
+        openElement.removeClass('hide');
     });
 
     $('.delete').live('click', function() {
