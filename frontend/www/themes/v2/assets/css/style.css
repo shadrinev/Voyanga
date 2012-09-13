@@ -1425,7 +1425,7 @@ input.hotel-input {
 .allTrip .block .info {
 	padding-bottom: 31px;
 }
-.allTrip .block > .text {
+.allTrip .block .info > .text {
 	padding-left: 45px;
 }
 .allTrip .block .ico-hotel {
@@ -1445,9 +1445,14 @@ input.hotel-input {
 .allTrip .block .title span.f13 {
 	font-size: 13px;
 }
+.hr-bg {
+	width: 100%;
+}
 .allTrip .block .hr-bg {
 	margin-bottom: -31px;
-    width: 100%;
+}
+.allTrip .block.end .hr-bg {
+	display: none;
 }
 .ticketContent {
 	padding-right: 25px;
@@ -1467,4 +1472,5 @@ input.hotel-input {
 }
 .descrTicket td.btn {
 	width: 160px;
+	text-align: right;
 }

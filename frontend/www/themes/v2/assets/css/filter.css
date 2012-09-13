@@ -19,7 +19,11 @@
     width: 17px;
 }
 
-.div-filter ul li {line-height: 15px; margin-bottom: 0px;}
+.div-filter ul li {line-height: 15px; margin-bottom: 0px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 .more-filters{
     height: 60px;

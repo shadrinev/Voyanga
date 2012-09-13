@@ -1,3 +1,33 @@
+@font-face {font-family: 'ALSRublRegular'; src: url('rouble.eot'); src: local('ALS Rubl'), local('ALSRubl'), url('rouble.woff') format('woff'), url('rouble.ttf') format('truetype'), url('rouble.svg#ALSRubl') format('svg');}
+.rur {font-size: inherit; line-height:normal; font-weight: normal; font-family: 'ALSRublRegular', sans-serif;}
+.btn-order {
+	color: #FFF;
+	width: 130px;
+	height: 30px;
+	background: url(../images/slice.png) no-repeat -211px -534px;
+	display: block;
+	padding-top: 9px;
+	padding-left: 15px;
+	margin-bottom: 7px;
+	text-shadow: 0px 1px 0px #850606;
+	margin-top: 5px;
+}
+.btn-order span {
+	display: inline-block;
+	vertical-align: middle;
+}
+.btn-order .cost {
+	font-size: 26px; 
+	font-weight: bold;
+	margin-left: 0px;
+	margin-right: 5px;	
+}
+.btn-order .rur {
+	height: 21px;
+}
+.btn-order:hover {
+	text-decoration: none;
+}
 .payCardDiv {
 	margin: 50px auto;
 	width: 720px;
