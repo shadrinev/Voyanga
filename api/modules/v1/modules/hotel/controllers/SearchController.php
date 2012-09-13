@@ -106,4 +106,32 @@ class SearchController extends ApiController
         }
         return $additional;
     }
+
+    public function actionInfo($cacheId, $hotelId, $format='json')
+    {
+        $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);
+        $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
+        if($resultSearch)
+        {
+            $hotelStack = new HotelStack($resultSearch);
+            $hotelStack->groupBy('hotelId')->groupBy('roomShowName')->groupBy('rubPrice')->sortBy('rubPrice',2);
+            $resultsRecommended = $hotelStack->hotelStacks[$hotelId]->getAsJson();
+            $HotelClient = new HotelBookClient();
+            $hotels = $HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelId);
+            $hotelStackFull = new HotelStack(array('hotels'=>$hotels));
+            $resultsAll = $hotelStackFull->getAsJson();
+            $hotelInfo = $HotelClient->hotelDetail($hotelId);
+            //$this->render('resultInfo', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu,'hotelInfo'=>$hotelInfo,'resultsRecommended'=>$resultsRecommended, 'resultsAll'=>$resultsAll,'cacheId'=>$cacheId));
+        }else{
+            $this->sendError(400, 'Incorrect response format');
+        }
+        $response = array('cityName'=>$hotelSearchParams->city->localRu,'hotelInfo'=>$hotelInfo,'resultsRecommended'=>$resultsRecommended, 'resultsAll'=>$resultsAll,'cacheId'=>$cacheId);
+        if ($format=='json')
+            $this->sendJson($response);
+        elseif ($format=='xml')
+            $this->sendXml($response, 'hotelSearchResults');
+        else
+            $this->sendError(400, 'Incorrect response format');
+
+    }
 }
