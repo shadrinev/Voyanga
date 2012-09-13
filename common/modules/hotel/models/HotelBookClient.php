@@ -458,8 +458,8 @@ class HotelBookClient
 
     private function processHotelSearchResponse($hotelsXml, $checkIn, $duration)
     {
-        //$hotelsObject = simplexml_load_string($hotelsXml);
-        $hotelsObject = simplexml_load_file('/srv/www/oleg.voyanga/public_html/frontend/runtime/resp.xml');
+        $hotelsObject = simplexml_load_string($hotelsXml);
+        //$hotelsObject = simplexml_load_file('/srv/www/oleg.voyanga/public_html/frontend/runtime/resp.xml');
         $response = new HotelSearchResponse();
         if ($hotelsObject)
         {
