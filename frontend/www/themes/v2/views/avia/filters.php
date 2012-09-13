@@ -56,12 +56,19 @@
 
         <div class="div-filter">
             <h4><div data-bind="text: results.departureCity" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: results.resetDepartureAirports">Очистить</a></h4>
+            <ul data-bind="foreach: results.departureAirports">
+                <!-- ko if: $index() < 3 -->
+                <li><input type="checkbox" data-bind="checked: active,attr:{id: 'apd-'+$index()}"> <label data-bind="text: name,attr:{for: 'apd-'+$index()}">Шереметьево</label></li>
+                <!-- /ko -->
+            </ul>
+            <!-- ko if: results.departureAirports.length > 3 -->
             <div id="more-departureAirports" class="more-filters">
                 <ul data-bind="foreach: results.departureAirports">
+                    <!-- ko if: $index() >= 3 -->
                     <li><input type="checkbox" data-bind="checked: active,attr:{id: 'apd-'+$index()}"> <label data-bind="text: name,attr:{for: 'apd-'+$index()}">Шереметьево</label></li>
+                    <!-- /ko -->
                 </ul>
             </div>
-            <!-- ko if: results.departureAirports.length > 3 -->
             <div class="all-list">
                 <a href="#" onclick="return AviaFilters.showMoreDiv(this,'more-departureAirports')">Все аэропорты</a>
             </div>
@@ -69,12 +76,20 @@
         </div>
         <div class="div-filter">
             <h4><div data-bind="text: results.arrivalCity" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: results.resetArrivalAirports">Очистить</a></h4>
+
+            <ul data-bind="foreach: results.arrivalAirports">
+                <!-- ko if: $index() < 3 -->
+                <li><input type="checkbox" data-bind="checked: active,attr:{id: 'apa-'+$index()}"> <label data-bind="text: name,attr:{for: 'apa-'+$index()}">Шереметьево</label></li>
+                <!-- /ko -->
+            </ul>
+            <!-- ko if: results.arrivalAirports.length > 3 -->
             <div id="more-arrivalAirports" class="more-filters">
                 <ul data-bind="foreach: results.arrivalAirports">
+                    <!-- ko if: $index() >= 3 -->
                     <li><input type="checkbox" data-bind="checked: active,attr:{id: 'apa-'+$index()}"> <label data-bind="text: name,attr:{for: 'apa-'+$index()}">Шереметьево</label></li>
+                    <!-- /ko -->
                 </ul>
             </div>
-            <!-- ko if: results.arrivalAirports.length > 3 -->
             <div class="all-list">
                 <a href="#" onclick="return AviaFilters.showMoreDiv(this,'more-arrivalAirports')">Все аэропорты</a>
             </div>
@@ -82,14 +97,25 @@
         </div>
         <div class="div-filter">
             <h4>Авиакомпании <a href="#" class="clean" data-bind="click: results.resetAirlines">Очистить</a></h4>
+
+            <ul data-bind="foreach: results.airlines">
+                <!-- ko if: $index() < 3 -->
+                <li><input type="checkbox" data-bind="checked: active,attr:{id: 'aline-'+name}"> <label data-bind="text: visibleName,attr:{for: 'aline-'+name}">Аэрофлот</label></li>
+                <!-- /ko -->
+            </ul>
+            <!-- ko if: results.airlines.length > 3 -->
             <div id="more-airlines" class="more-filters">
                 <ul data-bind="foreach: results.airlines">
+                    <!-- ko if: $index() >= 3 -->
                     <li><input type="checkbox" data-bind="checked: active,attr:{id: 'aline-'+name}"> <label data-bind="text: visibleName,attr:{for: 'aline-'+name}">Аэрофлот</label></li>
+                    <!-- /ko -->
                 </ul>
             </div>
             <div class="all-list">
                 <a href="#" onclick="return AviaFilters.showMoreDiv(this,'more-airlines')">Все авиакомпании</a>
             </div>
-            </div>
+            <!-- /ko -->
+
         </div>
+    </div>
 </script>

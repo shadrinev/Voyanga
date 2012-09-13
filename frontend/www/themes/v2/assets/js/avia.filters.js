@@ -230,17 +230,20 @@ AviaFilters.departureTimeSliderReturn = getAviaFilterTimeSlider({objName: '#depa
 AviaFilters.arrivalTimeSliderReturn = getAviaFilterTimeSlider({objName: '#arrivalTimeSliderReturn'});
 
 AviaFilters.showMoreDiv = function (btnObj,moreIdDiv){
-    var h = $('#'+moreIdDiv).height();
+    //var h = $('#'+moreIdDiv).height();
     var btnText = $(btnObj).html();
-    if(h <= 61){
-        var newHeight = $('#'+moreIdDiv).prop('scrollHeight');
+    var vis = !($('#'+moreIdDiv).css('display') == 'none');
+    if(!vis){
+        //var newHeight = $('#'+moreIdDiv).prop('scrollHeight');
         btnText = btnText.replace("Все","Скрыть");
+        $('#'+moreIdDiv).show('slow');
     }else{
         var newHeight = 60;
         btnText = btnText.replace("Скрыть","Все");
+        $('#'+moreIdDiv).hide('slow');
     }
     $(btnObj).html(btnText);
-    $('#'+moreIdDiv).animate({
+    /*$('#'+moreIdDiv).animate({
             height: newHeight+'px'
         },
         {
@@ -249,7 +252,7 @@ AviaFilters.showMoreDiv = function (btnObj,moreIdDiv){
                 //$('#'+moreIdDiv).css({'overflowY': 'visible','height':'none'});
 
             }
-        });
+        });*/
     return false;
 }
 AviaFilters.unCheckAll = function (idDiv){

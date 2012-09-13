@@ -26,8 +26,7 @@
 }
 
 .more-filters{
-    height: 60px;
-    overflow-y: hidden;
+    display: none;
 }
 
 .slider-wrapper-div{
