@@ -53,9 +53,9 @@ Yii::app()->clientScript->registerPackage('everything');
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <!-- PANEL -->
-            <div class="panel" data-bind="template: {name: activeModule() + '-panel-template', data: panel(), afterRender: contentRendered}">
-			</div>
-			<!-- END PANEL -->
+            <div class="panel" data-bind="template: {name: activeModule() + '-panel-template', data: panel()}">
+	    </div>
+	    <!-- END PANEL -->
         </div>
         <!-- END CENTER BLOCK -->
     </div>
@@ -65,7 +65,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <div class="center-block">
         <!-- MAIN BLOCK -->
         <div class="main-block">
-            <div id="content" data-bind="template: {name: activeView(), data: viewData()}">
+            <div id="content" data-bind="template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
