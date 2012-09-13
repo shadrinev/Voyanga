@@ -84,11 +84,17 @@ $this->beginWidget("AAdminPortlet", array(
         ),
 	),
 )); ?>
-<?php if ($model->orderId): ?>
-<?php
-    $this->widget('site.frontend.widgets.timelineCalendar.TimelineCalendarWidget', array('tourModel'=>$model->tour));
-?>
-<?php endif ?>
+
+<?php foreach ($model->tours as $tour): ?>
+    <h3><?php echo $tour->order->name; ?></h3>
+    <?php $this->widget('site.common.widgets.tourViewer.TourViewerWidget',array(
+        'orderId' => $tour->order->id,
+        'urlToBasket' => $this->createUrl('/admin/tour/basket/show'),
+        'urlToConstructor' => $this->createUrl('/admin/tour/constructor/new'),
+        'pathToAirlineImg' => 'http://frontend.voyanga/img/airlines/'));
+    ?>
+<?php endforeach ?>
+
 <?php $this->widget('bootstrap.widgets.BootButton', array(
     'url'=>Yii::app()->createUrl('/admin/tour/constructor/create', array('eventId'=>$model->id)),
     'label'=>'Составить тур',

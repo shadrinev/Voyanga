@@ -31,6 +31,6 @@
         'label'=>'Удалить',
         'htmlOptions'=>array(
             'data-del'=>'item-'.$i,
-            'class' => 'deletetrip'
+            'class' => 'deleteItem'
     ))); ?>
 </div>

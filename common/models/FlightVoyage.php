@@ -279,9 +279,22 @@ class FlightVoyage extends CApplicationComponent
         return $ret;
     }
 
-    public function getTime()
+    public function getTime($departureCity = false)
     {
-        return strtotime(date('Y-m-d', $this->flights[0]->flightParts[0]->timestampBegin));
+        if (!$departureCity)
+            return strtotime(date('Y-m-d', $this->flights[0]->flightParts[0]->timestampBegin));
+        else
+        {
+            foreach ($this->flights as $flight)
+            {
+                foreach($flight->flightParts as $flightPart)
+                {
+                    if ($flightPart->departureCityId == $departureCity)
+                        return strtotime(date('Y-m-d', $flightPart->timestampBegin));
+                }
+            }
+        }
+        throw new CException('Cannot determine flight start time');
     }
 
     /**

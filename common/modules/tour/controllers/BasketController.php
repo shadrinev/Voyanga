@@ -8,6 +8,7 @@
  */
 class BasketController extends Controller
 {
+    public $orderId;
 
     public function actionAdd($type, $key, $searchId = '', $searchId2 = '')
     {
@@ -125,8 +126,10 @@ class BasketController extends Controller
         $this->actionShow();
     }
 
-    public function actionShow()
+    public function actionShow($orderId = false)
     {
+        $this->orderId = $orderId;
+        $this->prepareData();
         $dataProvider = new TripDataProvider();
         echo $dataProvider->getSortedCartItemsAsJson();
     }
@@ -144,5 +147,41 @@ class BasketController extends Controller
             $this->redirect('/tour/constructor/new');
         else
             $this->actionShow();
+    }
+
+    public function prepareData()
+    {
+        if (!$this->orderId)
+            return;
+        Yii::app()->shoppingCart->clear();
+        $order = Order::model()->findByPk($this->orderId);
+        $items = $order->flightItems();
+        foreach ($items as $item)
+        {
+            $flightTripElement = new FlightTripElement();
+            $flightTripElement->departureDate = $item->departureDate;
+            $flightTripElement->departureCity = $item->departureCity;
+            $flightTripElement->arrivalCity = $item->arrivalCity;
+            $object = @unserialize($item->object);
+            if ($object)
+            {
+                $flightTripElement->flightVoyage = $object;
+            }
+            Yii::app()->shoppingCart->put($flightTripElement);
+        }
+        $items = $order->hotelItems();
+        foreach ($items as $item)
+        {
+            $hotelTripElement = new HotelTripElement();
+            $city = City::model()->findByPk($item->cityId);
+            $hotelTripElement->city = $city;
+            $hotelTripElement->checkIn = $item->checkIn;
+            $object = @unserialize($item->object);
+            if ($object)
+            {
+                $hotelTripElement->hotel = $object;
+            }
+            Yii::app()->shoppingCart->put($hotelTripElement);
+        }
     }
 }

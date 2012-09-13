@@ -69,7 +69,7 @@ class TripDataProvider
             $prepared = $item->getJsonObject();
             $prepared['isLinked'] = $item->isLinked();
             TripDataProvider::injectAdditionalInfo($prepared);
-            $out[] = $prepared;
+            $out['items'][] = $prepared;
         }
         return json_encode($out);
     }
@@ -96,7 +96,12 @@ class TripDataProvider
 
     private function getTimesForCartItems($items)
     {
-        return array_map(function ($item) { return $item->getTime(); }, $items);
+        $times = array();
+        foreach ($items as $item)
+        {
+            $times[] = $item->getTime();
+        }
+        return $times;
     }
 
     private function getWeightsForCartItems($items)
@@ -112,7 +117,7 @@ class TripDataProvider
 
     public static function injectAdditionalInfo(&$element)
     {
-        $element['isFlight'] = $element instanceof FlightTripElement;
-        $element['isHotel'] = $element instanceof HotelTripElement;
+        $element['isFlight'] = isset($element['flightKey']);
+        $element['isHotel'] = !isset($element['flightKey']);
     }
 }

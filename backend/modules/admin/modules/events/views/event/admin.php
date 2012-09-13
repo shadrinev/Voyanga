@@ -25,10 +25,6 @@ $this->beginWidget("AAdminPortlet", array(
         'title',
 		'contact',
         'description:raw',
-        array(
-            'header' => 'Тур',
-            'name' => 'tour.name',
-        ),
 		/*
 		'status',
 		'preview',*/

@@ -10,6 +10,8 @@ class TripStorage
     private $order;
     private $items;
     private $itemsOnePerGroup;
+    private $event;
+    private $startCityId;
 
     public function __construct()
     {
@@ -18,20 +20,19 @@ class TripStorage
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
     }
 
-    public function saveOrder($orderId, $name)
+    public function saveOrder($event, $startCityId, $name)
     {
         $this->name = $name;
-        $this->order = $this->createOrderAndSaveIt($orderId);
+        $this->event = $event;
+        $this->startCityId = $startCityId;
+        $this->order = $this->createOrderAndSaveIt();
         $this->saveItemsOfOrder();
         return $this->order;
     }
 
-    private function createOrderAndSaveIt($orderId)
+    private function createOrderAndSaveIt()
     {
-        if (is_numeric($orderId))
-        {
-            $this->deleteCurrentOrder($orderId);
-        }
+        $this->deleteCityOrder();
         $order = new Order;
         $order->userId = Yii::app()->user->id;
         $order->name = $this->name;
@@ -44,10 +45,18 @@ class TripStorage
         return $order;
     }
 
-    private function deleteCurrentOrder($orderId)
+    private function deleteCityOrder()
     {
+        $eventOrder = EventOrder::model()->findByAttributes(array(
+            'eventId' => $this->event->id,
+            'startCityId' => $this->startCityId
+        ));
+
+        if (!$eventOrder)
+            return;
+
         /** @var Order $order  */
-        $order = Order::model()->findByPk($orderId);
+        $order = $eventOrder->order;
 
         if ($order)
         {
@@ -60,14 +69,12 @@ class TripStorage
                 $item->delete();
             }
 
-            $links = OrderHasFlightVoyage::model()->findByAttributes(array('orderId'=>$orderId));
-            $links->deleteAll();
-
-            $links = OrderHasHotel::model()->findByAttributes(array('orderId'=>$orderId));
-            $links->deleteAll();
-
+            OrderHasFlightVoyage::model()->deleteAllByAttributes(array('orderId'=>$order->id));
+            OrderHasHotel::model()->deleteAllByAttributes(array('orderId'=>$order->id));
             $order->delete();
         }
+
+        $eventOrder->delete();
     }
 
     private function saveItemsOfOrder()
