@@ -230,15 +230,24 @@ AviaFilters.departureTimeSliderReturn = getAviaFilterTimeSlider({objName: '#depa
 AviaFilters.arrivalTimeSliderReturn = getAviaFilterTimeSlider({objName: '#arrivalTimeSliderReturn'});
 
 AviaFilters.showMoreDiv = function (btnObj,moreIdDiv){
-    var newWidth = $('#'+moreIdDiv).prop('scrollHeight');
+    var h = $('#'+moreIdDiv).height();
+    var btnText = $(btnObj).html();
+    if(h <= 61){
+        var newHeight = $('#'+moreIdDiv).prop('scrollHeight');
+        btnText = btnText.replace("Все","Скрыть");
+    }else{
+        var newHeight = 60;
+        btnText = btnText.replace("Скрыть","Все");
+    }
+    $(btnObj).html(btnText);
     $('#'+moreIdDiv).animate({
-            height: newWidth+'px'
+            height: newHeight+'px'
         },
         {
             duration: 800,
             complete: function(){
-                $('#'+moreIdDiv).css({'overflowY': 'visible','height':'none'});
-                $(btnObj).hide();
+                //$('#'+moreIdDiv).css({'overflowY': 'visible','height':'none'});
+
             }
         });
     return false;

@@ -68,7 +68,16 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     @_backVoyages.push voyage
 
   stacked: ->
-    @_backVoyages.length > 1
+    result = false
+    count = 0
+    for voyage in @_backVoyages
+      if voyage.visible()
+        count++;
+      if count > 1
+        result = true
+        break
+    console.log result
+    return result
 
   departureDayMo: ->
     dateUtils.formatDayMonth @departureDate
@@ -136,7 +145,10 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
     if filters.serviceClass != 'A'
       result = result && @serviceClass == filters.serviceClass
-    haveBack = false
+    if @_backVoyages.length > 0
+      haveBack = false
+    else
+      haveBack = true
     for rtVoyage in @_backVoyages
       thisBack = true
       match_departure_time = false
@@ -155,7 +167,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       if thisBack && !haveBack
         haveBack = true
         @activeBackVoyage(rtVoyage)
-
+    if(!haveBack)
+      console.log('filtred by back')
     result = result && haveBack
     @visible(result)
 
@@ -248,10 +261,26 @@ class AviaResult
       @visible(match_ports&&match_lines&&some_visible)
 
   stacked: ->
-    @_stacked
+    result = false
+    count = 0
+    for voyage in @voyages
+      if voyage.visible()
+        count++;
+      if count > 1
+        result = true
+        break
+    return result
 
   rtStacked: ->
-    @activeVoyage().stacked()
+    result = false
+    count = 0
+    for voyage in @activeVoyage()._backVoyages
+      if voyage.visible()
+        count++;
+      if count > 1
+        result = true
+        break
+    return result
 
   push: (data) ->
     @_stacked = true
@@ -328,6 +357,8 @@ class AviaResultSet
     @data = []
 
     @airports = []
+    @departureAirports = []
+    @arrivalAirports = []
     @airlines = []
 
     @timeLimits = {
@@ -347,18 +378,27 @@ class AviaResultSet
 
     # Temporary
     _airports = {}
+    _departureAirports = {}
+    _arrivalAirports = {}
     _airlines = {}
 
+    @departureCity = false
+    @arrivalCity = false
     for key, result of @_results
       result.sort()
       @data.push result
       _airlines[result.airline] = result.airlineName
-      _airports[result.departureAirport()]=1
-      _airports[result.arrivalAirport()]=1
+      _departureAirports[result.departureAirport()]=1
+      _arrivalAirports[result.arrivalAirport()]=1
+      if(!@departureCity)
+        @departureCity = result.activeVoyage().departureCity
+      if(!@arrivalCity)
+        @arrivalCity = result.activeVoyage().arrivalCity
+
       #console.log(result.departureTimeNumeric())
       if result.roundTrip
-        _airports[result.rtDepartureAirport()]=1
-        _airports[result.rtArrivalAirport()]=1
+        _arrivalAirports[result.rtDepartureAirport()]=1
+        _departureAirports[result.rtArrivalAirport()]=1
       for voyage in result.voyages
         if voyage.departureTimeNumeric() < @timeLimits.departureFromTime
           @timeLimits.departureFromTime = voyage.departureTimeNumeric()
@@ -381,22 +421,30 @@ class AviaResultSet
 
 
 
-    for key, foo of _airports
-      @airports.push {'name':key, 'active': ko.observable 0 }
+
+
+    for key, foo of _departureAirports
+      @departureAirports.push {'name':key, 'active': ko.observable 0 }
+
+    for key, foo of _arrivalAirports
+      @arrivalAirports.push {'name':key, 'active': ko.observable 0 }
 
     for key, foo of _airlines
       @airlines.push {'name':key,'visibleName':foo, 'active': ko.observable 0 }
 
+    console.log @airlines
     @_airportsFilters = ko.computed =>
           result = []
-          for port in @airports
+          for port in @departureAirports
+            if port.active()
+              result.push port.name
+          for port in @arrivalAirports
             if port.active()
               result.push port.name
           return result
 
     @_airlinesFilters = ko.computed =>
       result = []
-      console.log 'airlines'
       for line in @airlines
         if line.active()
           result.push line.name
@@ -458,6 +506,17 @@ class AviaResultSet
 
     # Flight to show in popup
     @popup = ko.observable @cheapest()
+
+  resetAirlines: =>
+    for line in @airlines
+      line.active(0)
+
+  resetDepartureAirports: =>
+    for line in @departureAirports
+      line.active(0)
+  resetArrivalAirports: =>
+    for line in @arrivalAirports
+      line.active(0)
 
   update_cheapest: ->
     # FIXME 0 items

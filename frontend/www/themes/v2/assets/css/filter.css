@@ -25,3 +25,8 @@
     height: 60px;
     overflow-y: hidden;
 }
+
+.slider-wrapper-div{
+    width: 197px;
+    margin-left: 5px;
+}

@@ -458,7 +458,8 @@ class HotelBookClient
 
     private function processHotelSearchResponse($hotelsXml, $checkIn, $duration)
     {
-        $hotelsObject = simplexml_load_string($hotelsXml);
+        //$hotelsObject = simplexml_load_string($hotelsXml);
+        $hotelsObject = simplexml_load_file('/srv/www/oleg.voyanga/public_html/frontend/runtime/resp.xml');
         $response = new HotelSearchResponse();
         if ($hotelsObject)
         {
@@ -728,6 +729,7 @@ class HotelBookClient
         foreach ($this->requests as $request)
         {
             //echo count($request['result']->hotels).'<br>';
+            //die();
             if ($request['result']->hotels)
             {
                 foreach ($request['result']->hotels as $hotel)
@@ -740,6 +742,7 @@ class HotelBookClient
                         //VarDumper::dump($hotels[$key]);
                         //echo 'new:';
                         //VarDumper::dump($hotel);
+                        //echo "key: $key";
                     }
                     $hotels[$key] = $hotel;
                 }
@@ -751,7 +754,9 @@ class HotelBookClient
                     $errorDescriptions[] = $desc;
                 }
             }
+
         }
+        //die();
 
         if ($hotels && $errorDescriptions)
         {
@@ -771,6 +776,7 @@ class HotelBookClient
         print_r($errorDescriptions);*/
         if ($hotels)
         {
+            //echo "pre results count:".count($hotels);
 
             if (count($hotelSearchParams->rooms) == 1)
             {
@@ -779,6 +785,8 @@ class HotelBookClient
                 if (($room['adultCount'] == 2) && ($room['childCount'] == 0) && ($room['cots'] == 0))
                 {
                     $allHotelStack = new HotelStack(array('hotels' => $hotels));
+                    //echo "post results count:".count($allHotelStack->_hotels);
+                    //die();
                     //VarDumper::dump($allHotelStack);die();
                     $allHotelStack->groupBy('categoryId')->groupBy('roomSizeId')->groupBy('roomTypeId')->groupBy('centerDistance')->groupBy('rubPrice');
                     //$allHotelStack->groupBy('categoryId')->groupBy('centerDistance')->groupBy('rubPrice');
@@ -1105,12 +1113,12 @@ class HotelBookClient
             foreach ($hotelSXE->HotelFacility->Facility as $facilitySXE)
             {
                 $hotelParams['facilities'][] = (string)$facilitySXE;
-            }
+            };
         }
         if (isset($hotelSXE->RoomAmenity->Amenity))
         {
             $hotelParams['roomAmenities'] = array();
-            UtilsHelper::soapObjectsArray($hotelSXE->HotelFacility->Facility);
+            UtilsHelper::soapObjectsArray($hotelSXE->RoomAmenity->Amenity);
             foreach ($hotelSXE->RoomAmenity->Amenity as $amenitySXE)
             {
                 $hotelParams['roomAmenities'][] = (string)$amenitySXE;
