@@ -1357,3 +1357,120 @@ input.hotel-input {
 }
 .foot-menu li {background: url(../images/hr-hor-footer.png) no-repeat left top; float: left; height: 24px;  padding: 7px 20px; text-shadow: 0px 1px 0px #202226;}
 .foot-menu li a {color: #d7d8dd; text-decoration: underline;}
+
+/* TIME LINE */
+.headAndTmblr {
+	overflow: hidden;
+}
+.headAndTmblr h1 {
+	float: left;
+}
+.headAndTmblr .tmblr {
+	margin: 0px 0px 0px 34px;
+}
+
+.allTrip .block {
+	overflow: hidden;
+	position: relative;
+	padding-left: 65px;
+}
+.allTrip .block .when {
+	position: absolute;
+	width: 65px;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	background: url(../images/bg-hr-when-trip-all.png) repeat-y;
+}
+.allTrip .block.end .when {
+	background: none;
+}
+.allTrip .block .when .date {
+	width: 38px;
+	height: 38px;
+	position: absolute;
+	top: 0;
+	right: 0px;
+	background: url(../images/slice.png) no-repeat -414px -1406px;
+	text-align: center;
+	color: #FFFFFF;
+    font-size: 11px;
+    line-height: 10px;
+}
+.allTrip .block .when .date.blue-one {
+	background-position: -461px -1406px;
+}
+.allTrip .block .when .date.two {
+	background-position: -414px -1367px;
+    right: -24px;
+    width: 85px;
+}
+.allTrip .block .when .date .f17 {
+    font-family: Verdana;
+    font-weight: bold;
+}
+.allTrip .block .when .date .day {
+   	float: left;
+    margin-top: 8px;
+    text-align: center;
+    width: 38px;
+}
+.allTrip .block .when .date .day + .day {
+	margin-left: 10px;
+	width: 37px;
+}
+.allTrip .block .headTitle {
+	margin-bottom: 20px;
+}
+.allTrip .block .info {
+	padding-bottom: 31px;
+}
+.allTrip .block .info > .text {
+	padding-left: 45px;
+}
+.allTrip .block .ico-hotel {
+	width: 26px;
+	height: 26px;
+	background: url(../images/ico-trip-all-hotel.png) no-repeat 6px 0px;
+	display: inline-block;
+	vertical-align: baseline;
+	margin-right: 9px;
+}
+.allTrip .block .title {
+	display: inline-block;
+	font-size: 22px;
+	color: #252628;
+	text-shadow: 0px 1px 0px #FFF;	
+}
+.allTrip .block .title span.f13 {
+	font-size: 13px;
+}
+.hr-bg {
+	width: 100%;
+}
+.allTrip .block .hr-bg {
+	margin-bottom: -31px;
+}
+.allTrip .block.end .hr-bg {
+	display: none;
+}
+.ticketContent {
+	padding-right: 25px;
+}
+.descrTicket {
+	font-size: 13px;
+	color: #6b7076;
+	text-shadow: 0px 1px 0px rgba(255,255,255,0.7);
+	margin-bottom: 20px;
+	width: 100%;
+}
+.descrTicket tr td {
+	vertical-align: middle;
+}
+.descrTicket td.text {
+	padding-left: 10px;
+}
+.descrTicket td.btn {
+	width: 160px;
+	text-align: right;
+}

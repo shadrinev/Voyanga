@@ -258,3 +258,34 @@
 	background: url("../images/ico-constructor-to.png") no-repeat scroll 0 0 #E1E8EC;
 	background: none repeat scroll 0 0 #f5e9e0;
 }
+
+
+
+.allTourCal .calendarLineVoyanga, .allTourCal .dayCellVoyanga, .allTourCal .innerDayCellVoyanga { height: 106px;}
+.allTourCal .calendarGridVoyanga, .allTourCal .calendarUnscrollVoyanga {
+	height: 318px;
+}
+.allTourCal .monthLineVoyanga {
+	background: url(../images/bg-foot-calendare.png) repeat-x;
+	height: 25px;
+	overflow: hidden;
+}
+.allTourCal  .monthLineVoyanga .monthNameVoyanga .monthWrapper {
+	padding-top: 3px;
+	color: #4d4d4d;
+	text-shadow: 0px 1px 0px #FFF;
+}
+.allTourCal .monthLineVoyanga .knobVoyanga {
+	height: 25px;
+	border-radius: 0px;
+	background: url(../images/knobAllTours.png) repeat-x;
+	box-shadow: 0px 0px 15px #000;	
+}
+.allTourCal .dayCellVoyanga {
+	background: url(../images/dayCellVoyanga.png) repeat-x #2f3236;
+}
+.allTourCal .dayLabel {
+color: #71818c; font-family: Verdana; font-size: 12px;
+	padding-top: 5px;
+	padding-right: 8px;
+}

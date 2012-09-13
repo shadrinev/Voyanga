@@ -3,19 +3,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Voyanga v.0.1 - Trip Flight Rework</title>
-<link href="css/reset.style.css" rel="stylesheet" type="text/css" />
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="css/popup.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
-<script type="text/javascript" src="js/jquery.dotdotdot-1.5.1.js"></script>
+<link href="../frontend/www/themes/v2/assets/css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/panel.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/popup.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/voyanga-calendar.css" rel="stylesheet" type="text/css" />
+
+<!-- JS SLIDE -->
+<link href="../frontend/www/themes/v2/assets/css/jsslidecheck.css" rel="stylesheet" type="text/css" />
+<!-- JS END SLIDE -->
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/jquery.js"></script>
+
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.dotdotdot-1.5.1.js"></script>
+
+
 	
 <script type="text/javascript" src="js/resize-new.js"></script>
-<script type="text/javascript" src="js/slide-mode.js"></script>
-<script type="text/javascript" src="js/panel.js"></script>
-<script type="text/javascript" src="js/popup.js"></script>
-<script type="text/javascript" src="js/tickets.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/slide-mode.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/popup.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/tickets.js"></script>
+
+
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/script.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/voyanga-calendar.js"></script>
 
 </head>
 
@@ -67,11 +79,13 @@
 					<div class="btn-timeline-and-condition">
 						<a href="#" class="btn-timeline active">Таймлайн</a>
 						<a href="#" class="btn-condition">Условия</a>
-					</div>
-					
-										
+					</div>					
 					<div class="clear"></div>
 					<!-- BTN MINIMIZE -->
+					<a href="#" class="btn-minimizePanel"><span></span> свернуть</a>					
+					<div class="minimize-rcomended">
+						<a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+					</div>
 				</div>
 			<!-- END PANEL -->					
 		</div>
@@ -214,997 +228,145 @@
 <!--====**********===-->
 		<!-- MAIN BLOCK -->
 		<div class="main-block">
+			<!-- CONTENT -->
 			<div id="content">
-				<h1><span>Выберите авиабилет</span> Санкт-Петербург → Амстердам, 19 мая</h1>
-				
-				<div class="recomended-content">
-				<!-- RECOMMENDED TICKETS -->
-					<div class="recommended-ticket">
-						<div class="ticket-items">
-							<div class="ribbon-cheapest"></div>
-							<div class="content">
-								<div class="airlines-line">
-									<img src="images/ico-airlline-russia.png"> Россия
+				<div class="headAndTmblr">
+					<h1>Ваша поездка, сэр</h1>
+					<ul class="tmblr">
+						<li class="active"><span class="ico-descr"></span> <a href="#descr">Таймлайн</a></li>
+						<li><span class="ico-see-map"></span> <a href="#map">На карте</a></li>
+					</ul>
+				</div>
+				<div class="allTrip">
+					<div class="block">
+						<div class="when">
+							<div class="date">
+								<div class="day">
+									<span class="f17">12</span>
+									<br>
+									мая
 								</div>
-								<div class="date-time-city">
-									<div class="start">
-										<div class="date">
-											28 мая
-										</div>
-										<div class="time">
-											21:20
-										</div>
-										<div class="city">
-											Москва121212121212
-										</div>
-										<div class="airport">
-											Домодедово
-										</div>
-									</div>
-									<div class="how-long">
-										<div class="path">
-											В пути
-										</div>
-										<div class="ico-path"></div>
-										<div class="time">
-											3 ч. 30 м.
-										</div>						
-									</div>
-									<div class="finish">
-										<div class="date">
-											29 мая
-										</div>
-										<div class="time">
-											00:50
-										</div>
-										<div class="city">
-											Санкт-Петербург
-										</div>
-										<div class="airport">
-											Пулково
-										</div>
-									</div>
-									<div class="clear"></div>
+							</div>
+						</div>
+						<div class="info">
+							<div class="text">
+								<div class="headTitle">
+									<div class="ico-hotel"></div>
+									<div class="title">Санкт-Петербург &mdash; <span class="f13">начало путешествия</span></div>
 								</div>
-								<!-- END DATE -->
-								
-								<div class="line-two-ticket">
-									<span class="end"></span>
+							</div>
+							<div class="hr-bg">
+								<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
+							</div>
+						</div>
+					</div>
+					
+					<div class="block">
+						<div class="when">
+							<div class="date blue-one">
+								<div class="day">
+									<span class="f17">12</span>
+									<br>
+									мая
 								</div>
-								<div class="airlines-line">
-									<img src="images/ico-airlline-russia.png"> Россия
-								</div>
-								<div class="date-time-city">
-									<div class="start">
-										<div class="date">
-											28 мая
-										</div>
-										<div class="time">
-											21:20
-										</div>
-										<div class="city">
-											Москва
-										</div>
-										<div class="airport">
-											Домодедово
-										</div>
-									</div>
-									<div class="how-long">
-										<div class="path">
-											В пути
-										</div>
-										<div class="ico-path"></div>
-										<div class="time">
-											3 ч. 30 м.
-										</div>						
-									</div>
-									<div class="finish">
-										<div class="date">
-											29 мая
-										</div>
-										<div class="time">
-											00:50
-										</div>
-										<div class="city">
-											Санкт-Петербург
-										</div>
-										<div class="airport">
-											Пулково
-										</div>
-									</div>
-									<div class="clear"></div>
-								</div>
-								<!-- END DATE -->
-								
-								<div class="line-dashed-ticket">
-									<span class="end"></span>
-								</div>
-								<div class="details-selecte">
-									<div class="details">
-										<a href="#" class="tuda-obratno">Подробнее<br> о перелете</a>
-									</div>
-									<a href="#" class="btn-cost">
-										<span class="l"></span>
-										<span class="text">Выбрать</span>
-										<span class="price">300 250</span>
-										<span class="rur">o</span>
-									</a>
+							</div>
+						</div>
+						<div class="info">
+							<div class="text">
+								<div class="headTitle">
+									<div class="ico-hotel"></div>
+									<div class="title">Перелёт Санкт-Петербург → Амстердам</div>
 								</div>
 								
+															
+								<table class="descrTicket">
+									<tr>
+										<td class="text">Или другой вариант среди: <span class="f19">19</span> авиакомпаний, от <span class="f19">3 500 <span class="f19 rur">o</span></span> до <span class="f19">14 770 <span class="f19 rur">o</span></span></td>
+										<td class="btn">
+											 <a class="btn-cost" href="#">
+									            <span class="l"></span>
+									            <span class="text">Все авиабилеты</span>
+									        </a>
+										</td>
+									</tr>
+								</table>		
 							</div>
-							
-							<span class="lt"></span>
-							<span class="rt"></span>
-							<span class="lv"></span>
-							<span class="rv"></span>
-							<span class="bh"></span>
-						</div>
-					</div>
-					<!-- END RECOMMENDED TICKETS -->
-					<!-- PRICES OF 3 DAYS -->
-					<div class="prices-of-3days">
-						<div class="ticket">
-							<div class="one-way">
-								<ul class="schedule-of-prices">
-									<li>
-										<div class="price"  style="bottom: 80px">-100</div>
-										<div class="chart" style="background-position: center 55px;"></div>
-										<div class="week">пн</div>
-										<div class="date">16</div>
-									</li>
-									<li>
-										<div class="price"  style="bottom: 55px">-100</div>
-										<div class="chart" style="background-position: center 80px;"></div>
-										<div class="week">вт</div>
-										<div class="date">17</div>
-									</li>
-									<li>
-										<div class="price" style="bottom: 75px">-100</div>
-										<div class="chart" style="background-position: center 60px;"></div>
-										<div class="week">ср</div>
-										<div class="date">18</div>
-									</li>
-									<li class="active">
-										<div class="price" style="bottom: 85px">3 250</div>
-										<div class="chart" style="background-position: center 50px;"></div>
-										<div class="week">чт</div>
-										<div class="date">19</div>
-									</li>
-									<li>
-										<div class="price" style="bottom: 75px">-100</div>
-										<div class="chart" style="background-position: center 60px;"></div>
-										<div class="week">пт</div>
-										<div class="date">20</div>
-									</li>
-									<li>
-										<div class="price" style="bottom: 110px">-100</div>
-										<div class="chart" style="background-position: center 25px;"></div>
-										<div class="week">сб</div>
-										<div class="date">21</div>
-									</li>
-									<li>
-										<div class="price" style="top: 45px">-100</div>
-										<div class="chart" style="background-position: center 60px;"></div>
-										<div class="week">вс</div>
-										<div class="date">22</div>
-									</li>
-								</ul>
-								<div class="month">
-									Май
-								</div>
-							</div>
-							<div class="two-way">
-								<ul class="schedule-of-prices">
-									<li>
-										<div class="price"  style="bottom: 80px">-100</div>
-										<div class="chart" style="background-position: center 55px;"></div>
-										<div class="week">пн</div>
-										<div class="date">16</div>
-									</li>
-									<li>
-										<div class="price"  style="bottom: 55px">-100</div>
-										<div class="chart" style="background-position: center 80px;"></div>
-										<div class="week">вт</div>
-										<div class="date">17</div>
-									</li>
-									<li>
-										<div class="price" style="bottom: 75px">-100</div>
-										<div class="chart" style="background-position: center 60px;"></div>
-										<div class="week">ср</div>
-										<div class="date">18</div>
-									</li>
-									<li class="active">
-										<div class="price" style="bottom: 85px">3 250</div>
-										<div class="chart" style="background-position: center 50px;"></div>
-										<div class="week">чт</div>
-										<div class="date">19</div>
-									</li>
-									<li>
-										<div class="price" style="bottom: 75px">-100</div>
-										<div class="chart" style="background-position: center 60px;"></div>
-										<div class="week">пт</div>
-										<div class="date">20</div>
-									</li>
-									<li>
-										<div class="price" style="bottom: 110px">-100</div>
-										<div class="chart" style="background-position: center 25px;"></div>
-										<div class="week">сб</div>
-										<div class="date">21</div>
-									</li>
-									<li>
-										<div class="price" style="top: 45px">-100</div>
-										<div class="chart" style="background-position: center 60px;"></div>
-										<div class="week">вс</div>
-										<div class="date">22</div>
-									</li>
-								</ul>
-								<div class="month">
-									Май
-								</div>
-							</div>
-							
-							<div class="cena">
-								<div class="total-td">
-									<span class="text">Итого</span>
-									<div class="all-price">
-										80 250 <span class="rur">o</span>
-									</div>
-								</div>
-								<div class="look-td">
-									<a href="#" class="btn-look">
-										Посмотреть
-									</a>
-								</div>						
-								<div class="clear"></div>
-							</div>
-							<span class="lt"></span>
-							<span class="rt"></span>
-							<span class="lv"></span>
-							<span class="rv"></span>
-							<span class="th"></span>
-							<span class="bh"></span>
-						</div>
-					</div>
-					<!-- END PRICES OF 3 DAYS -->
-					<div class="clear"></div>
-				</div>		
-			<!-- END RECCOMENDED BLOCK -->
-			
-			<!-- TICKETS CONTENT -->
-			<div class="ticket-content">
-				<h2 id="start">Все результаты</h2>
-				<div class="order-div"><a href="#start" class="order-hide">Скрыть рекомендации</a></div>
-				<div class="clear"></div>
-				<!-- CLEAR -->
-				
-				<!-- START ONE TICKETS -->
-				<div class="ticket-items">
-					<div class="content">
-						<div class="airlines">
-							<div>
-								<img src="images/ico-airlline-russia.png"><br>
-								Россия
+							<div class="hr-bg">
+								<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
 							</div>
 						</div>
-						<!-- END AIRLINES -->
-						<div class="center-ticket">
-							<div class="date-time-city">
-								<div class="start">
-									<div class="date">
-										28 мая
-									</div>
-									<div class="time">
-										21:20
-									</div>
-									<div class="city">
-										Москва
-									</div>
-									<div class="airport">
-										Домодедово
-									</div>
-								</div>
-								<!-- END START -->
-								<div class="how-long">
-									<div class="time">
-										В пути 8 ч. 30 м.
-									</div>
-									<div class="ico-path">
-										<span class="cup" style="left: 40%;"></span>
-										<span class="cup" style="left: 65%;"></span>
-										<span class="down"></span>
-									</div>
-									<div class="path">
-										Пересадка в Москве и Ванкувере
-									</div>
-								</div>
-								<!-- END HOW LONG -->
-								<div class="finish">
-									<div class="date">
-										29 мая
-									</div>
-									<div class="time">
-										00:50
-									</div>
-									<div class="city">
-										Санкт-Петербург
-									</div>
-									<div class="airport">
-										Пулково
-									</div>
-								</div>
-								<!-- END FINISH -->
-								<div class="clear"></div>
-							</div>
-							<!-- END DATE TIME CITY -->
-						</div>
-						<!-- END CENTER BLOCK -->
-						<div class="buy-ticket">
-							<div class="text">
-								<span>Купить</span>
-								<a href="#" class="btn-cost">
-									<span class="l"></span>
-									<span class="price">3 250</span>
-									<span class="rur">o</span>
-								</a>
-							</div>
-								<a href="#" class="details tuda-wait">Подробнее <span>о перелете</span></a>
-						</div>
-						<!-- END BUY TICKET -->
-						<div class="clear"></div>
 					</div>
 					
-					<span class="lt"></span>
-					<span class="rt"></span>
-					<span class="lv"></span>
-					<span class="rv"></span>
-					<span class="bh"></span>
+					<div class="block end">
+						<div class="when">
+							<div class="date two">
+								<div class="day">
+									<span class="f17">12</span>
+									<br>
+									мая
+								</div>
+								<div class="day">
+									<span class="f17">12</span>
+									<br>
+									мая
+								</div>
+							</div>
+						</div>
+						<div class="info">
+							<div class="text">							
+								<div class="headTitle">
+									<div class="ico-hotel"></div>
+									<div class="title">Отель в Амстердам</div>
+								</div>								
+								<table class="descrTicket">
+									<tr>
+										<td class="text">Вы можете подобрать другой вариант среди: <span class="f19">189</span> гостиниц, от <span class="f19">3 500 <span class="f19 rur">o</span></span> до <span class="f19">14 770 <span class="f19 rur">o</span></span></td>
+										<td class="btn">
+											 <a class="btn-cost hotel" href="#">
+									            <span class="l"></span>
+									            <span class="text">Все отели</span>
+									        </a>
+										</td>
+									</tr>
+								</table>									
+							</div>
+							<div class="hr-bg">
+								<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
+							</div>							
+						</div>
+					</div>
 				</div>
-			<!-- END ONE TICKET -->
-			<!-- START ONE TICKETS -->
-				<div class="ticket-items">
-					<div class="content">
-						<div class="airlines">
-							<div>
-								<img src="images/ico-airlline-russia.png"><br>
-								Россия
-							</div>
-						</div>
-						<!-- END AIRLINES -->
-						<div class="center-ticket">
-							<div class="date-time-city">
-								<div class="start">
-									<div class="date">
-										28 мая
-									</div>
-									<div class="time">
-										21:20
-									</div>
-									<div class="city">
-										Москва
-									</div>
-									<div class="airport">
-										Домодедово
-									</div>
-								</div>
-								<!-- END START -->
-								<div class="how-long">
-									<div class="time">
-										В пути 8 ч. 30 м.
-									</div>
-									<div class="ico-path">
-										<span class="cup" style="left: 40%;"></span>
-										<span class="cup" style="left: 65%;"></span>
-										<span class="down"></span>
-									</div>
-									<div class="path">
-										Пересадка в Москве и Ванкувере
-									</div>
-								</div>
-								<!-- END HOW LONG -->
-								<div class="finish">
-									<div class="date">
-										29 мая
-									</div>
-									<div class="time">
-										00:50
-									</div>
-									<div class="city">
-										Санкт-Петербург
-									</div>
-									<div class="airport">
-										Пулково
-									</div>
-								</div>
-								<!-- END FINISH -->
-								<div class="clear"></div>
-							</div>
-							<!-- END DATE TIME CITY -->
-						</div>
-						<!-- END CENTER BLOCK -->
-						<div class="buy-ticket">
-							<div class="text">
-								<span>Купить</span>
-								<a href="#" class="btn-cost">
-									<span class="l"></span>
-									<span class="price">3 250</span>
-									<span class="rur">o</span>
-								</a>
-							</div>
-								<a href="#" class="details tuda">Подробнее <span>о перелете</span></a>
-						</div>
-						<!-- END BUY TICKET -->
-						<div class="clear"></div>
-					</div>
-					
-					<span class="lt"></span>
-					<span class="rt"></span>
-					<span class="lv"></span>
-					<span class="rv"></span>
-					<span class="bh"></span>
-				</div>
-			<!-- END ONE TICKET -->
-			<!-- START ONE TICKETS -->
-				<div class="ticket-items">
-					<div class="content">
-						<div class="airlines">
-							<div>
-								<img src="images/ico-airlline-russia.png"><br>
-								Россия
-							</div>
-						</div>
-						<!-- END AIRLINES -->
-						<div class="center-ticket">
-							<div class="date-time-city">
-								<div class="start">
-									<div class="date">
-										28 мая
-									</div>
-									<div class="time">
-										21:20
-									</div>
-									<div class="city">
-										Москва
-									</div>
-									<div class="airport">
-										Домодедово
-									</div>
-								</div>
-								<!-- END START -->
-								<div class="how-long">
-									<div class="time">
-										В пути 8 ч. 30 м.
-									</div>
-									<div class="ico-path">
-										<span class="cup" style="left: 40%;"></span>
-										<span class="cup" style="left: 65%;"></span>
-										<span class="down"></span>
-									</div>
-									<div class="path">
-										Пересадка в Москве и Ванкувере
-									</div>
-								</div>
-								<!-- END HOW LONG -->
-								<div class="finish">
-									<div class="date">
-										29 мая
-									</div>
-									<div class="time">
-										00:50
-									</div>
-									<div class="city">
-										Санкт-Петербург
-									</div>
-									<div class="airport">
-										Пулково
-									</div>
-								</div>
-								<!-- END FINISH -->
-								<div class="clear"></div>
-							</div>
-							<!-- END DATE TIME CITY -->
-						</div>
-						<!-- END CENTER BLOCK -->
-						<div class="buy-ticket">
-							<div class="text">
-								<span>Купить</span>
-								<a href="#" class="btn-cost">
-									<span class="l"></span>
-									<span class="price">3 250</span>
-									<span class="rur">o</span>
-								</a>
-							</div>
-								<a href="#" class="details">Подробнее <span>о перелете</span></a>
-						</div>
-						<!-- END BUY TICKET -->
-						<div class="clear"></div>
-					</div>
-					
-					<span class="lt"></span>
-					<span class="rt"></span>
-					<span class="lv"></span>
-					<span class="rv"></span>
-					<span class="bh"></span>
-				</div>
-			<!-- END ONE TICKET -->
-			<!-- START ONE TICKETS -->
-				<div class="ticket-items">
-					<div class="content">
-						<div class="airlines">
-							<div>
-								<img src="images/ico-airlline-russia.png"><br>
-								Россия
-							</div>
-						</div>
-						<!-- END AIRLINES -->
-						<div class="center-ticket">
-							<div class="date-time-city">
-								<div class="start">
-									<div class="date">
-										28 мая
-									</div>
-									<div class="time">
-										21:20
-									</div>
-									<div class="city">
-										Москва
-									</div>
-									<div class="airport">
-										Домодедово
-									</div>
-								</div>
-								<!-- END START -->
-								<div class="how-long">
-									<div class="time">
-										В пути 8 ч. 30 м.
-									</div>
-									<div class="ico-path">
-										<span class="cup" style="left: 40%;"></span>
-										<span class="cup" style="left: 65%;"></span>
-										<span class="down"></span>
-									</div>
-									<div class="path">
-										Пересадка в Москве и Ванкувере
-									</div>
-								</div>
-								<!-- END HOW LONG -->
-								<div class="finish">
-									<div class="date">
-										29 мая
-									</div>
-									<div class="time">
-										00:50
-									</div>
-									<div class="city">
-										Санкт-Петербург
-									</div>
-									<div class="airport">
-										Пулково
-									</div>
-								</div>
-								<!-- END FINISH -->
-								<div class="clear"></div>
-							</div>
-							<!-- END DATE TIME CITY -->
-						</div>
-						<!-- END CENTER BLOCK -->
-						<div class="buy-ticket">
-							<div class="text">
-								<span>Купить</span>
-								<a href="#" class="btn-cost">
-									<span class="l"></span>
-									<span class="price">3 250</span>
-									<span class="rur">o</span>
-								</a>
-							</div>
-								<a href="#" class="details">Подробнее <span>о перелете</span></a>
-						</div>
-						<!-- END BUY TICKET -->
-						<div class="clear"></div>
-					</div>
-					
-					<span class="lt"></span>
-					<span class="rt"></span>
-					<span class="lv"></span>
-					<span class="rv"></span>
-					<span class="bh"></span>
-				</div>
-			<!-- END ONE TICKET -->
-			<!-- START ONE TICKETS -->
-				<div class="ticket-items">
-					<div class="content">
-						<div class="airlines">
-							<div>
-								<img src="images/ico-airlline-russia.png"><br>
-								Россия
-							</div>
-						</div>
-						<!-- END AIRLINES -->
-						<div class="center-ticket">
-							<div class="date-time-city">
-								<div class="start">
-									<div class="date">
-										28 мая
-									</div>
-									<div class="time">
-										21:20
-									</div>
-									<div class="city">
-										Москва
-									</div>
-									<div class="airport">
-										Домодедово
-									</div>
-								</div>
-								<!-- END START -->
-								<div class="how-long">
-									<div class="time">
-										В пути 8 ч. 30 м.
-									</div>
-									<div class="ico-path">
-										<span class="cup" style="left: 40%;"></span>
-										<span class="cup" style="left: 65%;"></span>
-										<span class="down"></span>
-									</div>
-									<div class="path">
-										Пересадка в Москве и Ванкувере
-									</div>
-								</div>
-								<!-- END HOW LONG -->
-								<div class="finish">
-									<div class="date">
-										29 мая
-									</div>
-									<div class="time">
-										00:50
-									</div>
-									<div class="city">
-										Санкт-Петербург
-									</div>
-									<div class="airport">
-										Пулково
-									</div>
-								</div>
-								<!-- END FINISH -->
-								<div class="clear"></div>
-							</div>
-							<!-- END DATE TIME CITY -->
-						</div>
-						<!-- END CENTER BLOCK -->
-						<div class="buy-ticket">
-							<div class="text">
-								<span>Купить</span>
-								<a href="#" class="btn-cost">
-									<span class="l"></span>
-									<span class="price">3 250</span>
-									<span class="rur">o</span>
-								</a>
-							</div>
-								<a href="#" class="details">Подробнее <span>о перелете</span></a>
-						</div>
-						<!-- END BUY TICKET -->
-						<div class="clear"></div>
-					</div>
-					
-					<span class="lt"></span>
-					<span class="rt"></span>
-					<span class="lv"></span>
-					<span class="rv"></span>
-					<span class="bh"></span>
-				</div>
-			<!-- END ONE TICKET -->
-			<!-- START TWO TICKETS -->
-			<div class="ticket-items">
-				<div class="content">
-					<div class="airlines">
-						<div>
-							<img src="images/ico-airlline-russia.png"><br>
-							Россия
-						</div>
-					</div>
-					<!-- END AIRLINES -->
-					<div class="center-ticket">
-						<div class="date-time-city">
-							<div class="start">
-								<div class="date">
-									28 мая
-								</div>
-								<div class="time">
-									21:20
-								</div>
-								<div class="city">
-									Москвафффффффффффф
-								</div>
-								<div class="airport">
-									Домодедово
-								</div>
-							</div>
-							<!-- END START -->
-							<div class="how-long">
-								<div class="time">
-									В пути 8 ч. 30 м.
-								</div>
-								<div class="ico-path">
-									<span class="cup" style="left: 40%;"></span>
-									<span class="cup" style="left: 65%;"></span>
-									<span class="down"></span>
-								</div>
-								<div class="path">
-									Пересадка в Москве и Ванкувере и Ванкувере и Ванкувере
-								</div>
-							</div>
-							<!-- END HOW LONG -->
-							<div class="finish">
-								<div class="date">
-									29 мая
-								</div>
-								<div class="time">
-									00:50
-								</div>
-								<div class="city">
-									Санкт-Петербург
-								</div>
-								<div class="airport">
-									Пулково
-								</div>
-							</div>
-							<!-- END FINISH -->
-							<div class="clear"></div>
-						</div>
-						<!-- END DATE TIME CITY -->
-						<div class="other-time">
-							<div class="title">Также вы можете вылететь в</div>
-							<div class="btn-minimize"><a href="#">Списком</a></div>
-							<div class="clear"></div>
-							<ul class="minimize">
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time hover">
-										<input type="radio" name="radio04" id="name01" checked="checked">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-							</ul>
-						</div>
-						<div class="line-two-ticket">
-							<span class="l"></span>
-							<span class="end"></span>
-							<span class="r"></span>
-						</div>
-						<div class="date-time-city">
-							<div class="start">
-								<div class="date">
-									28 мая
-								</div>
-								<div class="time">
-									21:20
-								</div>
-								<div class="city">
-									Москва
-								</div>
-								<div class="airport">
-									Домодедово
-								</div>
-							</div>
-							<!-- END START -->
-							<div class="how-long">
-								<div class="time">
-									В пути 8 ч. 30 м.
-								</div>
-								<div class="ico-path">
-									<span class="cup" style="left: 40%;"></span>
-									<span class="cup" style="left: 65%;"></span>
-									<span class="down"></span>
-								</div>
-								<div class="path">
-									Пересадка в Москве и Ванкувере и Ванкувере и Ванкувере
-								</div>
-							</div>
-							<!-- END HOW LONG -->
-							<div class="finish">
-								<div class="date">
-									29 мая
-								</div>
-								<div class="time">
-									00:50
-								</div>
-								<div class="city">
-									Санкт-Петербург
-								</div>
-								<div class="airport">
-									Пулково
-								</div>
-							</div>
-							<!-- END FINISH -->
-							<div class="clear"></div>
-						</div>
-						<!-- END DATE TIME CITY -->
-						<div class="other-time">
-							<div class="title">Также вы можете вылететь в</div>
-							<div class="btn-minimize"><a href="#">Списком</a></div>
-							<div class="clear"></div>
-							<ul class="minimize">
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time hover">
-										<input type="radio" name="radio04" id="name01" checked="checked">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="ico-path-time">
-										<input type="radio" name="radio04" id="name01">
-										<div class="path">
-											<div class="in-path"><span>В пути </span>9 ч. 20 м.</div>
-											<div class="start">06:10</div>
-											<div class="finish">08:10</div>
-										</div>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<!-- END CENTER BLOCK -->
-					<div class="buy-ticket">
-						<div class="text">
-							<span>Купить</span>
-							<a href="#" class="btn-cost">
-								<span class="l"></span>
-								<span class="price">3 250</span>
-								<span class="rur">o</span>
-							</a>
-						</div>
-							<a href="#" class="details">Подробнее <span>о перелете</span></a>
-					</div>
-					<!-- END BUY TICKET -->
-					<div class="clear"></div>
+				<div class="hr-bg">
+					<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
 				</div>
 				
-				<span class="lt"></span>
-				<span class="rt"></span>
-				<span class="lv"></span>
-				<span class="rv"></span>
-				<span class="bh"></span>
+				<!-- CALENDAR -->
+				<div class="innerCalendar allTourCal">
+				<div id='voyanga-calendar' class="hotel">
+				    <div class="weekDaysVoyanga">
+				    	<div class="weekDaysVoyangaInner">
+						    <div class="weekDayVoyanga"><span>Понедельник</span></div>
+						    <div class="weekDayVoyanga"><span>Вторник</span></div>
+						    <div class="weekDayVoyanga"><span>Среда</span></div>
+						    <div class="weekDayVoyanga"><span>Четверг</span></div>
+						    <div class="weekDayVoyanga"><span>Пятница</span></div>
+						    <div class="weekDayVoyanga weekEnd "><span>Суббота</span></div>
+						    <div class="weekDayVoyanga weekEnd "><span>Воскресенье</span></div>
+				    	</div>
+				    </div>
+				    <div class="calendarUnscrollVoyanga">
+				        <div class="calendarGridVoyanga">
+				            <div class="calendarDIVVoyanga">
+				
+				            </div>
+				        </div>
+				    </div>
+				    <div class="monthLineVoyanga"><div class="knobUpAllMonth"></div><div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div></div></div>
+				</div>
 			</div>
-			<!-- END TWO TICKET -->
+				<!-- END CALENDARE -->
 			</div>
-			<!-- END TICKETS CONTENT -->
-			</div>
+			<!-- END CONTENT -->
 		</div>
 		<!-- END MAIN BLOCK -->
 <!--====**********===-->

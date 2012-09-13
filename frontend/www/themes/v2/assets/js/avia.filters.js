@@ -230,17 +230,29 @@ AviaFilters.departureTimeSliderReturn = getAviaFilterTimeSlider({objName: '#depa
 AviaFilters.arrivalTimeSliderReturn = getAviaFilterTimeSlider({objName: '#arrivalTimeSliderReturn'});
 
 AviaFilters.showMoreDiv = function (btnObj,moreIdDiv){
-    var newWidth = $('#'+moreIdDiv).prop('scrollHeight');
-    $('#'+moreIdDiv).animate({
-            height: newWidth+'px'
+    //var h = $('#'+moreIdDiv).height();
+    var btnText = $(btnObj).html();
+    var vis = !($('#'+moreIdDiv).css('display') == 'none');
+    if(!vis){
+        //var newHeight = $('#'+moreIdDiv).prop('scrollHeight');
+        btnText = btnText.replace("Все","Скрыть");
+        $('#'+moreIdDiv).show('slow');
+    }else{
+        var newHeight = 60;
+        btnText = btnText.replace("Скрыть","Все");
+        $('#'+moreIdDiv).hide('slow');
+    }
+    $(btnObj).html(btnText);
+    /*$('#'+moreIdDiv).animate({
+            height: newHeight+'px'
         },
         {
             duration: 800,
             complete: function(){
-                $('#'+moreIdDiv).css({'overflowY': 'visible','height':'none'});
-                $(btnObj).hide();
+                //$('#'+moreIdDiv).css({'overflowY': 'visible','height':'none'});
+
             }
-        });
+        });*/
     return false;
 }
 AviaFilters.unCheckAll = function (idDiv){
