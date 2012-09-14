@@ -191,7 +191,7 @@ return CMap::mergeArray(
                             'js/jquery.easing.1.3.js',
                             //! Markup related scripts and modules
                             'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js',
-                            'js/jquery.color.js', 'js/slide-mode.js', 'js/popup.js',
+                            'js/jquery.color.js', 'js/popup.js',
                             'js/tickets.js','js/panel-new.js', 'js/script.js',
                             'js/voyanga-calendar.js', 'js/jquery.select.slider.js',
                             'js/jquery.slider.min.js','js/jquery.slider.js',

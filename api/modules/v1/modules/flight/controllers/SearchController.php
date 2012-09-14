@@ -18,7 +18,6 @@ class SearchController extends ApiController
      * @param int $adt amount of adults
      * @param int $chd amount of childs
      * @param int $inf amount of infanties
-     * @param string $serviceClass (A = all | E = economy | B = business)
      */
     public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
     {
@@ -34,7 +33,7 @@ class SearchController extends ApiController
             if ($httpCode=$response->headers['http_code'] == 200)
             {
                 $combined = CJSON::decode($response->body);
-                $flights = $combined['flightVoyages'];
+                $flights = $combined['flights'];
                 $searchParams = $combined['searchParams'];
                 $variants = CMap::mergeArray($variants, $this->injectForBe($flights, $searchParams));
             }
@@ -47,7 +46,7 @@ class SearchController extends ApiController
         }
         else
         {
-            $result['flightVoyages'] = $variants;
+            $result['flights']['flightVoyages'] = $variants;
             $this->sendWithCorrectFormat($format, $result);
         }
     }
@@ -116,7 +115,7 @@ class SearchController extends ApiController
     {
         $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
         $results = array(
-            'flightVoyages' => $this->doFlightSearch($flightSearchParams),
+            'flights' => $this->doFlightSearch($flightSearchParams),
             'searchParams' => $flightSearchParams->getJsonObject()
         );
         $this->sendWithCorrectFormat($format, $results);
