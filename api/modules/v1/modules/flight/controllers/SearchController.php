@@ -23,26 +23,9 @@ class SearchController extends ApiController
     public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
     {
         $asyncExecutor = new AsyncCurl();
-        $businessUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
-        $query = http_build_query(array(
-            'destinations' => $destinations,
-            'adt' => $adt,
-            'chd' => $chd,
-            'inf' => $inf,
-            'serviceClass' => 'B',
-        ));
-        $businessUrl = $businessUrl . '?' . $query;
-        $economUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
-        $query = http_build_query(array(
-            'destinations' => $destinations,
-            'adt' => $adt,
-            'chd' => $chd,
-            'inf' => $inf,
-            'serviceClass' => 'E',
-        ));
-        $economUrl = $economUrl . '?' . $query;
-        $asyncExecutor->add($businessUrl);
-        $asyncExecutor->add($economUrl);
+        $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+        $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+        $this->addFirstClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
         $responses = $asyncExecutor->send();
         $errors = array();
         $variants = array();
@@ -67,6 +50,48 @@ class SearchController extends ApiController
             $result['flightVoyages'] = $variants;
             $this->sendWithCorrectFormat($format, $result);
         }
+    }
+
+    private function addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
+    {
+        $economUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $query = http_build_query(array(
+            'destinations' => $destinations,
+            'adt' => $adt,
+            'chd' => $chd,
+            'inf' => $inf,
+            'serviceClass' => 'E',
+        ));
+        $economUrl = $economUrl . '?' . $query;
+        $asyncExecutor->add($economUrl);
+    }
+
+    private function addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
+    {
+        $businessUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $query = http_build_query(array(
+            'destinations' => $destinations,
+            'adt' => $adt,
+            'chd' => $chd,
+            'inf' => $inf,
+            'serviceClass' => 'B',
+        ));
+        $businessUrl = $businessUrl . '?' . $query;
+        $asyncExecutor->add($businessUrl);
+    }
+
+    private function addFirstClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
+    {
+        $businessUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $query = http_build_query(array(
+            'destinations' => $destinations,
+            'adt' => $adt,
+            'chd' => $chd,
+            'inf' => $inf,
+            'serviceClass' => 'F',
+        ));
+        $businessUrl = $businessUrl . '?' . $query;
+        $asyncExecutor->add($businessUrl);
     }
 
     /**
