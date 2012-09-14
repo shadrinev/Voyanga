@@ -86,7 +86,6 @@ AviaController = (function() {
       return AviaFilters.init(_this.aviaFiltersInit);
     }, 1000);
     return this.trigger("sidebarChanged", 'filters', {
-      'testInput': this.myobj,
       'results': stacked
     });
   };
