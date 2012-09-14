@@ -65,7 +65,7 @@ Voyage = (function() {
         this.stopoverLength += part.stopoverLength;
       }
     }
-    this.serviceClass = 'E';
+    this.serviceClass = flight.serviceClass;
     this.departureDate = new Date(flight.departureDate);
     this.arrivalDate = new Date(this.parts[this.parts.length - 1].arrivalDate);
     this._duration = flight.fullDuration;
@@ -760,7 +760,7 @@ SearchParams = (function() {
 
   SearchParams.prototype.url = function() {
     var params, result;
-    result = 'http://api.voyanga/v1/flight/search/withParams?';
+    result = 'http://api.voyanga/v1/flight/search/BE?';
     params = [];
     params.push('destinations[0][departure]=' + this.dep());
     params.push('destinations[0][arrival]=' + this.arr());
