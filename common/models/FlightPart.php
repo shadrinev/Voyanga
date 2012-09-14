@@ -60,9 +60,11 @@ class FlightPart
 
     public function getJsonObject()
     {
+        $airline = Airline::getAirlineByCode($this->transportAirlineCode);
         $ret = array(
             'transportAirline' => $this->transportAirlineCode,
-            'transportAirlineName' => Airline::getAirlineByCode($this->transportAirlineCode)->localRu,
+            'transportAirlineName' => $airline->localRu,
+            'transportAirlineNameEn' => $airline->localEn,
             'departureCity' => City::getCityByPk($this->departureCityId)->localRu,
             'departureCityPre' => City::getCityByPk($this->departureCityId)->casePre,
             'arrivalCity' => City::getCityByPk($this->arrivalCityId)->localRu,
