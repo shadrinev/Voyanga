@@ -22,13 +22,13 @@ class TestApiController extends FrontendController
 //        'aviaSearchComplex',
 //        'aviaSearchRoundTrip',
 //        'aviaSearchComplexRoundTrip',
-        'hotelSearchSimple',
-//        'tourSearchSimple',
-          'autocompleteSimple',
+//          'hotelSearchSimple',
+          'tourSearchSimple',
+/*          'autocompleteSimple',
           'autocompleteAirports',
           'autocompleteHotels',
           'autocompleteAirportsHotels',
-          'autocompleteHotelsAirports',
+          'autocompleteHotelsAirports',*/
     );
 
     public function actionDefault()
@@ -186,7 +186,16 @@ class TestApiController extends FrontendController
                     'city' => 'MOW',
                     'dateFrom' => '01.10.2012',
                     'dateTo' => '10.10.2012',
-                ))
+                )
+            ),
+            'rooms' => array(
+                array(
+                    'adt' => 1,
+                    'chd' => 0,
+                    'chdAge' => 0,
+                    'cots' => 0
+                )
+            )
         );
         VarDumper::dump($search);
         $fullUrl = $this->buildTourApiUrl($search);

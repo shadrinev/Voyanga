@@ -18,14 +18,15 @@ class SearchController extends ApiController
      *  [Х][dateFrom] - start of visiting date,
      *  [Х][dateTo] - end of visiting date,
      *
-     * @param int $adt amount of adults
-     * @param int $chd amount of childs
-     * @param int $inf amount of infanties
-     * @param string $serviceClass (A = all | E = economy | B = business)
+     * @param array $rooms
+     *  [Х][adt]
+     *  [Х][chd]
+     *  [Х][chdAge]
+     *  [Х][cots]
      */
-    public function actionDefault($start, array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
+    public function actionDefault($start, array $destinations, array $rooms, $format='json')
     {
-        $tourSearchParams = $this->buildSearchParams($start, $destinations, $adt, $chd, $inf);
+        $tourSearchParams = $this->buildSearchParams($start, $destinations, $rooms);
         $this->buildTour($tourSearchParams);
         $results = $this->searchTourVariants();
         if (empty($this->errors))
@@ -34,13 +35,19 @@ class SearchController extends ApiController
             $this->sendError(500, CVarDumper::dumpAsString($this->errors));
     }
 
-    private function buildSearchParams($start, $destinations, $adt, $chd, $inf)
+    private function buildSearchParams($start, $destinations, $rooms)
     {
         $tourBuilder = new TourBuilderForm();
         $tourBuilder->setStartCityName($start);
-        $tourBuilder->adultCount = $adt;
-        $tourBuilder->childCount = $chd;
-        $tourBuilder->infantCount = $inf;
+        foreach ($rooms as $room)
+        {
+            $newRoom = new HotelRoomForm;
+            $newRoom->adultCount = $room['adt'];
+            $newRoom->childCount = $room['chd'];
+            $newRoom->childAge = $room['chdAge'];
+            $newRoom->cots = $room['cots'];
+            $tourBuilder->rooms[] = $newRoom;
+        }
         $tourBuilder->trips = array();
         foreach ($destinations as $destination)
         {
@@ -63,6 +70,7 @@ class SearchController extends ApiController
         $this->getAllTourVariants();
         if (!empty($this->errors))
             return false;
+        $allVariants = $this->variants;
         $cheapestTour = $this->filterCheapest();
         $fastestTour = $this->filterFastest();
         $optimalTour = $this->filterOptimal();
@@ -79,18 +87,35 @@ class SearchController extends ApiController
                 'totalPrice' => $this->getTotalPrice($optimalTour),
                 'tour' => $optimalTour,
             ),
+            'allVariants' => $allVariants
         );
     }
 
     private function getAllTourVariants()
     {
+        $asyncExecutor = new AsyncCurl();
         $dataProvider = new TripDataProvider();
         $items = $dataProvider->getSortedCartItems();
-        $asyncExecutor = new AsyncCurl();
+        $grouped = array();
         foreach ($items as $item)
         {
-            $itemVariantsUrl = $item->getUrlToAllVariants();;
-            $asyncExecutor->add($itemVariantsUrl);
+            if ($item instanceof FlightTripElement)
+            {
+                $grouped[$item->getGroupId()][] = $item;
+            }
+        }
+        foreach ($grouped as $group)
+        {
+            $url = FlightTripElement::getUrlToAllVariants($group);
+            $asyncExecutor->add($url);
+        }
+        foreach ($items as $item)
+        {
+            if ($item instanceof HotelTripElement)
+            {
+                $itemVariantsUrl = $item->getUrlToAllVariants();
+                $asyncExecutor->add($url);
+            }
         }
         $responses = $asyncExecutor->send();
         $this->errors = array();

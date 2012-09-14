@@ -174,15 +174,17 @@ class HotelTripElement extends TripElement
             'city' => $this->getCityModel()->code,
             'checkIn' => $this->checkIn,
             'duration' => $this->getDuration(),
-            'rooms' => array(
-                array(
-                    'adt' => $this->adultCount,
-                    'chd' => $this->childCount,
-                    'chdAge' => 0,
-                    'cots' => 0
-                )
-            )
         );
+        foreach ($this->rooms as $room)
+        {
+            $newRoom = array(
+                'adt' => $room->adultCount,
+                'chd' => $room->childCount,
+                'chdAge' => $room->childAge,
+                'cots' => $room->cots
+            );
+            $search['rooms'][] = $newRoom;
+        }
         $fullUrl = $this->buildApiUrl($search);
         return $fullUrl;
     }

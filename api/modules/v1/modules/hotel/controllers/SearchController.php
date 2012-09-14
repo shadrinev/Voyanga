@@ -31,9 +31,11 @@ class SearchController extends ApiController
         foreach ($rooms as $i => $room)
         {
             if ($room['chd']==1)
-                $hotelSearchParams->addRoom($room['adt'], $room['cots'], $room['chd']);
-            else
+                $hotelSearchParams->addRoom($room['adt'], $room['cots'], $room['chdAge']);
+            elseif ($room['chd']==0)
                 $hotelSearchParams->addRoom($room['adt'],  $room['cots'], false);
+            else
+                $this->sendError(500, 'Only 0 or 1 child at one hotel room accepted');
         }
         Yii::import('site.frontend.models.*');
         Yii::import('site.frontend.components.*');
