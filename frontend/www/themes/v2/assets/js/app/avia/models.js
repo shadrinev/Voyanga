@@ -821,13 +821,13 @@ SearchParams = (function() {
     this.dep = ko.observable('MOW');
     this.arr = ko.observable('PAR');
     this.date = '02.10.2012';
-    this.adults = ko.observable(5).extend({
+    this.adults = ko.observable(1).extend({
       integerOnly: 'adult'
     });
-    this.children = ko.observable(2).extend({
+    this.children = ko.observable(0).extend({
       integerOnly: true
     });
-    this.infants = ko.observable(2).extend({
+    this.infants = ko.observable(0).extend({
       integerOnly: 'infant'
     });
     this.rt = ko.observable(false);
