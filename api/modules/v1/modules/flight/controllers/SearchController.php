@@ -47,6 +47,8 @@ class SearchController extends ApiController
         else
         {
             $result['flights']['flightVoyages'] = $variants;
+            $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
+            $result['searchParams'] = $flightSearchParams->getJsonObject();
             $this->sendWithCorrectFormat($format, $result);
         }
     }
