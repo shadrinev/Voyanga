@@ -613,7 +613,7 @@ class SearchParams
     @rt_date = '12.10.2012'
 
   url: ->
-    result = 'http://api.voyanga/v1/flight/search/BE?'
+    result = 'http://api.voyanga.com/v1/flight/search/BE?'
     params = []
     params.push 'destinations[0][departure]=' + @dep()
     params.push 'destinations[0][arrival]=' + @arr()

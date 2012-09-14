@@ -147,5 +147,24 @@ class AviaPanel
   navigateToNewSearch: ->
     app.navigate @sp.getHash(), {trigger: true}
 
+  show: (context, event)=>
+    el = $(event.currentTarget)
+    if !el.hasClass('active')
+      $('.how-many-man .btn').addClass('active')
+      $('.how-many-man .content').addClass('active')
+      $('.how-many-man').find('.popup').addClass('active')
+    else
+      console.log "CLOSENG"
+      @close()
+
+  close: ->
+    console.log "CLOSED"
+    $('.how-many-man .btn').removeClass('active')
+    $('.how-many-man .content').removeClass('active')
+
+    $('.how-many-man').find('.popup').removeClass('active')
+  	
+    
+
 # TODO SIZE OF THE PEPOPLE COUNTER xN
 

@@ -836,7 +836,7 @@ SearchParams = (function() {
 
   SearchParams.prototype.url = function() {
     var params, result;
-    result = 'http://api.voyanga/v1/flight/search/BE?';
+    result = 'http://api.voyanga.com/v1/flight/search/BE?';
     params = [];
     params.push('destinations[0][departure]=' + this.dep());
     params.push('destinations[0][arrival]=' + this.arr());
