@@ -12,7 +12,7 @@ class FlightPart
     @arrivalAirport = part.arrivalAirport
     @_duration = part.duration
     @transportAirline = part.transportAirline
-    @transportAirlineName = part.transportAirlineName
+    @transportAirlineName = part.transportAirlineNameEn
     @flightCode = part.transportAirline + ' ' + part.flightCode
     @stopoverLength = 0
 
@@ -210,7 +210,7 @@ class AviaResult
     @visible = ko.observable true
 
     @airline = data.valCompany
-    @airlineName = data.valCompanyName
+    @airlineName = data.valCompanyNameEn
     @serviceClass = data.serviceClass
 
     @activeVoyage = new Voyage(flights[0])
@@ -322,9 +322,51 @@ class AviaResult
     window.voyanga_debug "Choosing stacked voyage", voyage
     @activeVoyage(voyage)
 
+  # < > Buttons on recommended/cheapest ticket
+  choosePrevStacked: =>
+    active_index = 0
+    for voyage, index in @voyages
+      if voyage.hash() == @hash()
+        active_index = index
+    if active_index == 0
+      return
+    @activeVoyage @voyages[active_index-1]
+
+  chooseNextStacked: =>
+    active_index = 0
+    for voyage, index in @voyages
+      if voyage.hash() == @hash()
+        active_index = index
+    if active_index == @voyages.length-1
+      return
+    @activeVoyage @voyages[active_index+1]
+
   chooseRtStacked: (voyage) =>
     window.voyanga_debug "Choosing RT stacked voyage", voyage
     @activeVoyage().activeBackVoyage(voyage)
+
+  # FIXME we can reuse code if we`ll pass voyages as method argument
+  # < > Buttons on recommended/cheapest ticket
+  choosePrevRtStacked: =>
+    active_index = 0
+    rtVoyages = @rtVoyages()
+    for voyage, index in rtVoyages
+      if voyage.hash() == @rtHash()
+        active_index = index
+    if active_index == 0
+      return
+    @activeVoyage().activeBackVoyage(rtVoyages[active_index-1])
+
+  chooseNextRtStacked: =>
+    active_index = 0
+    rtVoyages = @rtVoyages()
+    for voyage, index in rtVoyages
+      if voyage.hash() == @rtHash()
+        active_index = index
+    if active_index == rtVoyages.length-1
+      return
+    @activeVoyage().activeBackVoyage(rtVoyages[active_index+1])
+
 
   rtVoyages: ->
       @activeVoyage()._backVoyages

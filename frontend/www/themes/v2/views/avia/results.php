@@ -48,6 +48,28 @@
                 <div class="clear"></div>
             </div>
             <!-- END DATE -->
+		<!-- ko if: stacked() -->
+		<div class="other-time">
+		  <div class="variation">
+		    <ul class="minimize">
+		      <li>
+			Варианты вылета:
+		      </li>
+		      <!-- ko foreach: voyages -->
+		      <!-- if visible() -->
+		      <li data-bind="css: {active: hash()==$parent.hash()}, click: $parent.chooseStacked">
+			<input name="cheapest_stacked" type="radio"  data-bind="value: hash(), checked: $parent.hash()">
+			<label><span data-bind="text:departureTime()">06:10</span></label>
+		      </li>
+		      <!-- /ko -->
+		      <!-- /ko -->
+		    </ul>
+		  </div>
+		  <a href="#" class="left" data-bind="css: {none: hash() == voyages[0].hash()}, click: choosePrevStacked"></a>
+		  <a href="#" class="right" data-bind="css: {none: hash() == voyages[voyages.length-1].hash()}, click: chooseNextStacked"></a>
+		</div>
+		<!-- /ko -->
+
             <!-- ko if: roundTrip -->
             <div class="line-two-ticket">
                 <span class="end"></span>
@@ -98,6 +120,29 @@
             </div>
             <!-- /ko -->
             <!-- END DATE -->
+
+	    <!-- ko if: rtStacked() -->
+		<div class="other-time">
+		  <div class="variation">
+		    <ul class="minimize">
+		      <li>
+			Варианты вылета:
+		      </li>
+		      <!-- ko foreach: rtVoyages() -->
+		      <!-- ko if: visible() -->
+		      <li data-bind="css: {active: hash()==$parent.rtHash()}, click: $parent.chooseRtStacked">
+			<input name="cheapest_rt_stacked" type="radio"  data-bind="value: hash(), checked: $parent.rtHash()">
+			<label><span data-bind="text:departureTime()">06:10</span></label>
+		      </li>
+		      <!-- /ko -->
+		      <!-- /ko -->
+		    </ul>
+		  </div>
+		  <a href="#" class="left" data-bind="css: {none: rtHash() == rtVoyages()[0].hash()}, click: choosePrevRtStacked"></a>
+		  <a href="#" class="right" data-bind="css: {none: rtHash() == rtVoyages()[rtVoyages().length-1].hash()}, click: chooseNextRtStacked"></a>
+		</div>
+
+	    <!-- /ko -->
 
             <div class="line-dashed-ticket">
                 <span class="end"></span>

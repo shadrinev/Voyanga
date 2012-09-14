@@ -42,20 +42,4 @@ $(document).ready(function() {
 			createPhotoBox(this);
 		});
 	});
-	$('a.in-the-map').click(function(e) {
-		e.preventDefault();
-		CreateBox(text4);
-		$('.tab').eq(0).hide();
-		$('.tab').eq(1).show();
-		$('.place-buy .tmblr li').removeClass('active');
-		$('.place-buy .tmblr li').eq(1).addClass('active');
-		LinkDone();
-		$('a.photo').click(function(e) {
-			e.preventDefault();
-			createPhotoBox(this);
-		});
-	});
-
-
-
 });

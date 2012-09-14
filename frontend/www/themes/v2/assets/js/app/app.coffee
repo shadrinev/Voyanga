@@ -91,7 +91,7 @@ class Application extends Backbone.Router
 
   contentRendered: ->
     window.voyanga_debug "APP: Content rendered"
-    setTimeout(ResizeFun, 1000);
+    ResizeFun();
 
 $ ->
   window.voyanga_debug = (args...) ->

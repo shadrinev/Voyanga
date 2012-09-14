@@ -35,6 +35,7 @@ class HotelsController
     stacked = new HotelsResultSet data.hotels
 
     @render 'results', {'results' :stacked}
+    @trigger "sidebarChanged", 'filters', {'results' :stacked}
 
 
   indexAction: =>
