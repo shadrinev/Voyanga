@@ -1583,3 +1583,66 @@ input.hotel-input {
 	margin-right: 13px;
 	
 }
+
+
+/* EVENTS */
+.events {
+    height: auto;
+    min-width: 1000px;
+    position: relative;
+    width: 100%;
+    z-index: 998;
+    background: #FFF;
+    color: #131416;
+}
+.events .center-block {
+	overflow: hidden;
+}
+#eventsContent {
+	padding-top: 13px;
+	padding-bottom: 1px;
+}
+#eventsContent h1 {
+	font-size: 30px;
+	margin-bottom: 20px;
+}
+
+#eventsContent .photoAlbum {
+	width: 100%;
+	height: 355px;
+	overflow: hidden;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+#eventsContent p {
+	line-height: 20px;
+	margin-bottom: 20px;
+}
+#eventsContent .rightBlock {
+	float: right;
+	width: 190px;
+	margin-left: 30px;
+}
+
+
+#eventsContent .rightBlock a {
+	color: #2e333b;
+	border-bottom: 1px dashed;
+	margin: 10px 0px;
+	display: inline-block;
+}
+
+.price {
+	font-size: 30px;
+	font-family: Verdana;
+	font-weight: bold;
+	display: block;
+	margin-top: -25px;
+}
+.check {
+	font-size: 11px;
+	color: #5e6064;
+	line-height: 15px;
+	display: block;
+	margin-bottom: 10px;
+}

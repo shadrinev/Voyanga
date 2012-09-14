@@ -324,8 +324,8 @@ function ResizeCenterBlock() {
 		if (var_calendarGridVoyangaIsset) {
 		console.log(widthMainBlock);
 			$('.innerCalendar, #voyanga-calendar').css('width', widthMainBlock+'px')
-			var_calendarGridVoyanga.css('width', (widthMainBlock+18)+'px');
-			$('.weekDaysVoyangaInner').css('width', (widthMainBlock+18)+'px');
+			var_calendarGridVoyanga.css('width', (widthMainBlock+20)+'px');
+			$('.weekDaysVoyangaInner').css('width', (widthMainBlock+20)+'px');
 		}
 		/* END CALENDARE RESIZE */
 		if (var_descrIsset) {
