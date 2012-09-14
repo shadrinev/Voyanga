@@ -20,10 +20,70 @@ class SearchController extends ApiController
      * @param int $inf amount of infanties
      * @param string $serviceClass (A = all | E = economy | B = business)
      */
+    public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
+    {
+        $asyncExecutor = new AsyncCurl();
+        $businessUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $query = http_build_query(array(
+            'destinations' => $destinations,
+            'adt' => $adt,
+            'chd' => $chd,
+            'inf' => $inf,
+            'serviceClass' => 'B',
+        ));
+        $businessUrl = $businessUrl . '?' . $query;
+        $economUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $query = http_build_query(array(
+            'destinations' => $destinations,
+            'adt' => $adt,
+            'chd' => $chd,
+            'inf' => $inf,
+            'serviceClass' => 'E',
+        ));
+        $economUrl = $economUrl . '?' . $query;
+        $asyncExecutor->add($businessUrl);
+        $asyncExecutor->add($economUrl);
+        $responses = $asyncExecutor->send();
+        $errors = array();
+        $variants = array();
+        foreach ($responses as $response)
+        {
+            if ($httpCode=$response->headers['http_code'] == 200)
+            {
+                $combined = CJSON::decode($response->body);
+                $flights = $combined['flightVoyages'];
+                $searchParams = $combined['searchParams'];
+                $variants = CMap::mergeArray($variants, $this->injectForBe($flights, $searchParams));
+            }
+            else
+                $errors[] = 'Error '.$httpCode;
+        }
+        if (!empty($this->errors))
+        {
+            $this->sendError(500, CVarDumper::dump($errors));
+        }
+        else
+        {
+            $result['flightVoyages'] = $variants;
+            $this->sendWithCorrectFormat($format, $result);
+        }
+    }
+
+    /**
+     * @param array $destinations
+     *  [Х][departure] - departure city iata code,
+     *  [Х][arrival] - arrival city iata code,
+     *  [Х][date] - departure date,
+     *
+     * @param int $adt amount of adults
+     * @param int $chd amount of childs
+     * @param int $inf amount of infanties
+     * @param string $serviceClass (A = all | E = economy | B = business)
+     */
     public function actionDefault(array $destinations, $adt = 1, $chd = 0, $inf = 0, $serviceClass = 'A', $format='json')
     {
         $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
-        $results = $this->doFlightSearch($flightSearchParams);
+        $results['flightVoyages'] = $this->doFlightSearch($flightSearchParams);
         $this->sendWithCorrectFormat($format, $results);
     }
 
@@ -31,17 +91,44 @@ class SearchController extends ApiController
     {
         $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
         $results = array(
-            'flights' => $this->doFlightSearch($flightSearchParams),
+            'flightVoyages' => $this->doFlightSearch($flightSearchParams),
             'searchParams' => $flightSearchParams->getJsonObject()
         );
         $this->sendWithCorrectFormat($format, $results);
+    }
+
+    private function injectForBe($flightVoyages, $injectSearchParams=false)
+    {
+        $newFlights = array();
+        foreach ($flightVoyages as $key => $flight)
+        {
+            $newFlight = $flight;
+            if ($injectSearchParams)
+                $newFlight['serviceClass'] = $injectSearchParams['serviceClass'];
+            $newFlights[] = $newFlight;
+        }
+        return $newFlights;
+    }
+
+    private function inject($flights)
+    {
+        $newFlights = array();
+        $searchId = $flights['searchId'];
+        $flightVoyages = $flights['flightVoyages'];
+        foreach ($flightVoyages as $key => $flight)
+        {
+            $newFlight = $flight;
+            $newFlight['searchId'] = $searchId;
+            $newFlights[] = $newFlight;
+        }
+        return $newFlights;
     }
 
     private function doFlightSearch($flightSearchParams)
     {
         $fs = new FlightSearch();
         $variants = $fs->sendRequest($flightSearchParams, false);
-        $results = $variants->getJsonObject();
+        $results = $this->inject($variants->getJsonObject());
         return $results;
     }
 

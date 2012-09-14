@@ -45,6 +45,7 @@
 }
 .btn-order:hover {
 	text-decoration: none;
+	background: url("../images/slice.png") no-repeat scroll -211px -573px transparent;
 }
 .btn-look {
 	background: url(../images/slice.png) no-repeat 0px -612px;
