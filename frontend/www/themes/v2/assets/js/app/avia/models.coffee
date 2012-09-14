@@ -605,9 +605,9 @@ class SearchParams
     @dep = ko.observable 'MOW'
     @arr = ko.observable 'PAR'
     @date = '02.10.2012'
-    @adults = ko.observable(5).extend({integerOnly: 'adult'})
-    @children = ko.observable(2).extend({integerOnly: true})
-    @infants = ko.observable(2).extend({integerOnly: 'infant'})
+    @adults = ko.observable(1).extend({integerOnly: 'adult'})
+    @children = ko.observable(0).extend({integerOnly: true})
+    @infants = ko.observable(0).extend({integerOnly: 'infant'})
 
     @rt = ko.observable false
     @rt_date = '12.10.2012'

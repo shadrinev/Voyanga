@@ -48,7 +48,7 @@
                 <div class="clear"></div>
             </div>
             <!-- END DATE -->
-		<!-- ko if: stacked() -->
+             <!-- ko if: stacked() -->
 		<div class="other-time">
 		  <div class="variation">
 		    <ul class="minimize">
@@ -56,7 +56,7 @@
 			Варианты вылета:
 		      </li>
 		      <!-- ko foreach: voyages -->
-		      <!-- if visible() -->
+                      <!-- ko if: visible() -->
 		      <li data-bind="css: {active: hash()==$parent.hash()}, click: $parent.chooseStacked">
 			<input name="cheapest_stacked" type="radio"  data-bind="value: hash(), checked: $parent.hash()">
 			<label><span data-bind="text:departureTime()">06:10</span></label>
@@ -301,10 +301,10 @@
 <div class="ticket-content">
 <h2>Все результаты</h2>
 
-<div class="order-div">
+<!-- div class="order-div">
     Сортировать по: <a href="#" class="order-show">цене</a> <a href="#start" class="order-hide">времени вылета</a> <a
         href="#start" class="order-hide">времени прилета</a>
-</div>
+</div -->
 <div class="clear"></div>
 
 <!-- ko foreach: results -->
