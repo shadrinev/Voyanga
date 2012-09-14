@@ -59,7 +59,7 @@ AviaController = (function() {
     this.getFilterLimitValues(stacked);
     this.aviaFiltersInit = {
       flightClassFilter: {
-        value: data.searchParams.serviceClass
+        value: 'A'
       },
       departureTimeSliderDirect: {
         fromTime: stacked.timeLimits.departureFromTime,

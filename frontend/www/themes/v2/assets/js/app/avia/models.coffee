@@ -49,8 +49,6 @@ class Voyage #Voyage Plus loin que la nuit et le jour
           part.calculateStopoverLength @parts[index+1]
         @stopoverLength += part.stopoverLength
 
-    @serviceClass = flight.serviceClass
-
     # FIXME is this  utc?
     @departureDate = new Date(flight.departureDate)
     @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
@@ -162,8 +160,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     if filters.onlyShort
       result = result && (@stopoverLength <= 7200)
 
-    if filters.serviceClass != 'A'
-      result = result && @serviceClass == filters.serviceClass
+
     if @_backVoyages.length > 0
       haveBack = false
     else
@@ -214,6 +211,7 @@ class AviaResult
 
     @airline = data.valCompany
     @airlineName = data.valCompanyName
+    @serviceClass = data.serviceClass
 
     @activeVoyage = new Voyage(flights[0])
     if @roundTrip
@@ -262,7 +260,11 @@ class AviaResult
             match_ports = true
             break
 
-
+      service_class = true
+      if filters.serviceClass == 'A'
+        service_class = @serviceClass == 'E'
+      else
+        service_class = @serviceClass == 'B' || @serviceClass == 'F'
 
       some_visible = false
       for voyage in @voyages
@@ -280,7 +282,7 @@ class AviaResult
 
 
 
-      @visible(match_ports&&match_lines&&some_visible)
+      @visible(match_ports&&match_lines&&some_visible&&service_class)
 
   stacked: ->
     result = false
@@ -520,6 +522,8 @@ class AviaResultSet
       console.log('refilter');
       _.each @data, (x)-> x.filter (value)
       @update_cheapest()
+      ko.processAllDeferredBindingUpdates()
+      app.contentRendered()
 
     for result in @data
       result.sort()

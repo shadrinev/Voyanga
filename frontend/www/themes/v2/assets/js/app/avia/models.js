@@ -65,7 +65,6 @@ Voyage = (function() {
         this.stopoverLength += part.stopoverLength;
       }
     }
-    this.serviceClass = flight.serviceClass;
     this.departureDate = new Date(flight.departureDate);
     this.arrivalDate = new Date(this.parts[this.parts.length - 1].arrivalDate);
     this._duration = flight.fullDuration;
@@ -202,9 +201,6 @@ Voyage = (function() {
     if (filters.onlyShort) {
       result = result && (this.stopoverLength <= 7200);
     }
-    if (filters.serviceClass !== 'A') {
-      result = result && this.serviceClass === filters.serviceClass;
-    }
     if (this._backVoyages.length > 0) {
       haveBack = false;
     } else {
@@ -268,6 +264,7 @@ AviaResult = (function() {
     this.visible = ko.observable(true);
     this.airline = data.valCompany;
     this.airlineName = data.valCompanyName;
+    this.serviceClass = data.serviceClass;
     this.activeVoyage = new Voyage(flights[0]);
     if (this.roundTrip) {
       this.activeVoyage.push(new Voyage(flights[1]));
@@ -303,7 +300,7 @@ AviaResult = (function() {
   }
 
   AviaResult.prototype.filter = function(filters) {
-    var field, fields, match_lines, match_ports, some_visible, voyage, _i, _j, _len, _len1, _ref;
+    var field, fields, match_lines, match_ports, service_class, some_visible, voyage, _i, _j, _len, _len1, _ref;
     match_ports = true;
     if (filters.airports.length === 0) {
       match_ports = true;
@@ -321,6 +318,12 @@ AviaResult = (function() {
           break;
         }
       }
+    }
+    service_class = true;
+    if (filters.serviceClass === 'A') {
+      service_class = this.serviceClass === 'E';
+    } else {
+      service_class = this.serviceClass === 'B' || this.serviceClass === 'F';
     }
     some_visible = false;
     _ref = this.voyages;
@@ -340,7 +343,7 @@ AviaResult = (function() {
     if (!match_lines && filters.airlines.indexOf(this.airline) >= 0) {
       match_lines = true;
     }
-    return this.visible(match_ports && match_lines && some_visible);
+    return this.visible(match_ports && match_lines && some_visible && service_class);
   };
 
   AviaResult.prototype.stacked = function() {
@@ -666,7 +669,9 @@ AviaResultSet = (function() {
       _.each(_this.data, function(x) {
         return x.filter(value);
       });
-      return _this.update_cheapest();
+      _this.update_cheapest();
+      ko.processAllDeferredBindingUpdates();
+      return app.contentRendered();
     });
     _ref3 = this.data;
     for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
