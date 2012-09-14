@@ -27,6 +27,13 @@ h3 {
 	color: #1d222b;
 	margin-bottom: 10px;
 }
+h3.calendarTitle {
+	color: #202328;
+	font-size: 24px;
+	font-family: Georgia;
+	font-weight: bold;
+	font-style: italic;
+}
 h4 {
 	color: #1d222b; font-size: 15px; text-shadow: 0px 1px 0px #FFF;
 	margin-bottom: 9px;
