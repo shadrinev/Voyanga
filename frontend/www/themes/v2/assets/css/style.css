@@ -1632,14 +1632,14 @@ input.hotel-input {
 	display: inline-block;
 }
 
-.price {
+#eventsContent .rightBlock .price {
 	font-size: 30px;
 	font-family: Verdana;
 	font-weight: bold;
 	display: block;
 	margin-top: -25px;
 }
-.check {
+#eventsContent .rightBlock .check {
 	font-size: 11px;
 	color: #5e6064;
 	line-height: 15px;
