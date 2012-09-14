@@ -16,7 +16,7 @@ class HotelsController
 
     # temporary development cache
     key = "h_search_10004"
-    if sessionStorage.getItem(key)
+    if sessionStorage.getItem(key) && (window.location.host != 'test.voyanga.com')
       window.voyanga_debug "HOTELS: Getting result from cache"
       @handleResults(JSON.parse(sessionStorage.getItem(key)))
     else

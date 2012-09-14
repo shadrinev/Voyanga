@@ -26,7 +26,7 @@ HotelsController = (function() {
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("HOTELS: Invoking searchAction", args);
     key = "h_search_10004";
-    if (sessionStorage.getItem(key)) {
+    if (sessionStorage.getItem(key) && (window.location.host !== 'test.voyanga.com')) {
       window.voyanga_debug("HOTELS: Getting result from cache");
       return this.handleResults(JSON.parse(sessionStorage.getItem(key)));
     } else {
