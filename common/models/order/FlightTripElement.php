@@ -193,21 +193,23 @@ class FlightTripElement extends TripElement
         return new FlightTripElementWorkflow($this);
     }
 
-    public function getUrlToAllVariants()
+    static public function getUrlToAllVariants($flightTripElements)
     {
         $search = array(
-            'destinations' => array(
-                array(
-                    'departure' => $this->getDepartureCityModel()->code,
-                    'arrival' => $this->getArrivalCityModel()->code,
-                    'date' => $this->departureDate,
-                )
-            ),
-            'adt' => $this->adultCount,
-            'chd' => $this->childCount,
-            'inf' => $this->infantCount,
+            'adt' => $flightTripElements[0]->adultCount,
+            'chd' => $flightTripElements[0]->childCount,
+            'inf' => $flightTripElements[0]->infantCount,
         );
-        $fullUrl = $this->buildApiUrl($search);
+        foreach ($flightTripElements as $flightTripElement)
+        {
+            $destination = array(
+                'departure' => $flightTripElement->getDepartureCityModel()->code,
+                'arrival' => $flightTripElement->getArrivalCityModel()->code,
+                'date' => $flightTripElement->departureDate,
+            );
+            $search['destinations'][] = $destination;
+        }
+        $fullUrl = $flightTripElements[0]->buildApiUrl($search);
         return $fullUrl;
     }
 
