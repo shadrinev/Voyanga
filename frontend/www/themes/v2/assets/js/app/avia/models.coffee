@@ -159,6 +159,9 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     if filters.onlyDirect == '1'
       result = result && @direct
 
+    if filters.onlyShort
+      result = result && (@stopoverLength <= 7200)
+
     if filters.serviceClass != 'A'
       result = result && @serviceClass == filters.serviceClass
     if @_backVoyages.length > 0
@@ -174,6 +177,9 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
       if filters.onlyDirect == '1'
         thisBack = thisBack && rtVoyage.direct
+
+      if filters.onlyShort
+        thisBack = thisBack && (rtVoyage.stopoverLength <= 7200)
 
       match_arrival_time = false
       if filters.arrivalTimeReturn.timeFrom <= rtVoyage.arrivalTimeNumeric() && filters.arrivalTimeReturn.timeTo >= rtVoyage.arrivalTimeNumeric()

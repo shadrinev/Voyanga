@@ -16,6 +16,7 @@ FlightPart = (function() {
     this.transportAirline = part.transportAirline;
     this.transportAirlineName = part.transportAirlineName;
     this.flightCode = part.transportAirline + ' ' + part.flightCode;
+    this.stopoverLength = 0;
   }
 
   FlightPart.prototype.departureTime = function() {
@@ -30,6 +31,14 @@ FlightPart = (function() {
     return dateUtils.formatDuration(this._duration);
   };
 
+  FlightPart.prototype.calculateStopoverLength = function(anotherPart) {
+    return this.stopoverLength = Math.floor((anotherPart.departureDate.getTime() - this.arrivalDate.getTime()) / 1000);
+  };
+
+  FlightPart.prototype.stopoverText = function() {
+    return dateUtils.formatDuration(this.stopoverLength);
+  };
+
   return FlightPart;
 
 })();
@@ -37,14 +46,25 @@ FlightPart = (function() {
 Voyage = (function() {
 
   function Voyage(flight) {
-    var part, _i, _len, _ref;
+    var index, part, _i, _j, _len, _len1, _ref, _ref1;
     this.parts = [];
     _ref = flight.flightParts;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
       this.parts.push(new FlightPart(part));
     }
+    this.stopoverLength = 0;
     this.direct = this.parts.length === 1;
+    if (!this.direct) {
+      _ref1 = this.parts;
+      for (index = _j = 0, _len1 = _ref1.length; _j < _len1; index = ++_j) {
+        part = _ref1[index];
+        if (index < (this.parts.length - 1)) {
+          part.calculateStopoverLength(this.parts[index + 1]);
+        }
+        this.stopoverLength += part.stopoverLength;
+      }
+    }
     this.serviceClass = 'E';
     this.departureDate = new Date(flight.departureDate);
     this.arrivalDate = new Date(this.parts[this.parts.length - 1].arrivalDate);
@@ -179,6 +199,9 @@ Voyage = (function() {
     if (filters.onlyDirect === '1') {
       result = result && this.direct;
     }
+    if (filters.onlyShort) {
+      result = result && (this.stopoverLength <= 7200);
+    }
     if (filters.serviceClass !== 'A') {
       result = result && this.serviceClass === filters.serviceClass;
     }
@@ -198,6 +221,9 @@ Voyage = (function() {
       thisBack = result && match_departure_time;
       if (filters.onlyDirect === '1') {
         thisBack = thisBack && rtVoyage.direct;
+      }
+      if (filters.onlyShort) {
+        thisBack = thisBack && (rtVoyage.stopoverLength <= 7200);
       }
       match_arrival_time = false;
       if (filters.arrivalTimeReturn.timeFrom <= rtVoyage.arrivalTimeNumeric() && filters.arrivalTimeReturn.timeTo >= rtVoyage.arrivalTimeNumeric()) {
