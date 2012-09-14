@@ -49,7 +49,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
           part.calculateStopoverLength @parts[index+1]
         @stopoverLength += part.stopoverLength
 
-    @serviceClass = 'E'
+    @serviceClass = flight.serviceClass
 
     # FIXME is this  utc?
     @departureDate = new Date(flight.departureDate)
@@ -567,7 +567,7 @@ class SearchParams
     @rt_date = '12.10.2012'
 
   url: ->
-    result = 'http://api.voyanga/v1/flight/search/withParams?'
+    result = 'http://api.voyanga/v1/flight/search/BE?'
     params = []
     params.push 'destinations[0][departure]=' + @dep()
     params.push 'destinations[0][arrival]=' + @arr()
