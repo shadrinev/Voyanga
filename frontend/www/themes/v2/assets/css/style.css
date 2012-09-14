@@ -1482,6 +1482,27 @@ input.hotel-input {
 }
 .allTrip .block .headTitle {
 	margin-bottom: 20px;
+	width: 100%;
+	color: #252628;
+}
+
+.allTrip .block .headTitle td.allCost {
+	text-align: right;
+	font-size: 11px; font-family: Arial;
+	text-shadow: 0px 1px 0px rgba(172,186,194, 0.6);
+}
+.allTrip .block .headTitle td.allCost .costs {
+	background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #C4CDD5;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 0 #EAEBEC;
+    display: inline-block;
+    font-size: 12px;
+    padding: 2px 5px;
+    text-shadow: 0px 1px 0px rgba(172,186,194, 0.6);
+}
+.allTrip .block .headTitle td.allCost .btnDeleteTrip {
+	margin-left: 20px;
 }
 .allTrip .block .info {
 	padding-bottom: 31px;
@@ -1495,6 +1516,14 @@ input.hotel-input {
 	background: url(../images/ico-trip-all-hotel.png) no-repeat 6px 0px;
 	display: inline-block;
 	vertical-align: baseline;
+	margin-right: 9px;
+}
+.allTrip .block .ico-jet {
+	width: 26px;
+	height: 26px;
+	background: url(../images/ico-trip-all-jet.png) no-repeat center center;
+	display: inline-block;
+	vertical-align: bottom;
 	margin-right: 9px;
 }
 .allTrip .block .title {
@@ -1531,7 +1560,26 @@ input.hotel-input {
 .descrTicket td.text {
 	padding-left: 10px;
 }
-.descrTicket td.btn {
+.descrTicket td.buttons {
 	width: 160px;
 	text-align: right;
+}
+
+.costItAll {
+	text-align: right;
+	color: #252628;
+	font-size: 22px;
+	padding-bottom: 70px;
+}
+.allCost {
+	font-weight: bold;
+	font-size: 28px;
+}
+.detailCost {
+	width: 172px; height: 31px;
+	text-align: center;
+	display: inline-block;
+	margin-top: 9px;
+	margin-right: 13px;
+	
 }

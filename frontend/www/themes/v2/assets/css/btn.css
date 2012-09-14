@@ -122,3 +122,36 @@
 .btn-find:hover {
 	background-position: -122px -1061px;
 }
+.btnDeleteTrip {
+	width: 11px; height: 11px;
+	display: inline-block;
+	cursor: pointer;
+	text-indent: -9999px;
+	background: url(../images/ico-my-trip.png) no-repeat -7px -605px;
+	vertical-align: middle;
+}
+.btnDeleteTrip:hover {
+	background-position: -7px -663px;
+}
+.btnChangeStart {
+	background: url("../images/btnTripAll.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 12px;
+    height: 22px;
+    padding-top: 2px;
+    text-align: center;
+    text-shadow: 0 1px 0 #35383C;
+    vertical-align: text-top;
+    width: 105px;
+}
+.btnGoBuy {
+	text-indent: -9999px;
+	width: 193px;
+	height: 42px;
+	display: inline-block;
+	background: url(../images/slice.png) 0px -1518px;
+	vertical-align: bottom;
+	margin-left: 30px;	
+	position: relative;
+}
