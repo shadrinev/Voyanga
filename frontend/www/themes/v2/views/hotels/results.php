@@ -12,7 +12,7 @@
                 <div class="full-info">
                     <div class="preview-photo">
                         <ul>
-                            <li><a href="#" data-bind="click: showPhoto,attr: {'href': frontPhoto.largeUrl}" class="photo"><img data-bind="attr:{src: frontPhoto.smallUrl}"></a></li>
+                            <li><a href="#" data-bind="click: showPhoto,attr: {'href': frontPhoto.largeUrl}" class="photo"><img data-bind="attr:{src: frontPhoto.largeUrl}"></a></li>
                         </ul>
                         <div class="how-much" data-bind="visible: numPhotos">
                             <a href="#">Фотографий (<span data-bind="text: numPhotos">11</span>)</a>
