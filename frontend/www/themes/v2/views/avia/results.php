@@ -9,7 +9,7 @@
 <div class="clear"></div>
 </div>
 <div class="ticket-content">
-<h2>Все результаты. Найдено <span data-bind="text: results.data.length"></span> ЧЕГОТО</h2>
+<h2>Все результаты. Найдено <span data-bind="text: results.numResults()"></span> ЧЕГОТО</h2>
 
 <div class="clear"></div>
 
