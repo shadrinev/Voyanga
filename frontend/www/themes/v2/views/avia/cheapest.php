@@ -210,7 +210,7 @@
                 Май
             </div>
         </div>
-        <div class="two-way" data-bind="if: roundTrip">
+        <div class="two-way" data-bind="visible: roundTrip">
             <ul class="schedule-of-prices">
                 <li>
                     <div class="price" style="bottom: 80px">-100</div>
