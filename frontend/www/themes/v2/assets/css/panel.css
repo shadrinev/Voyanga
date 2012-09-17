@@ -85,7 +85,7 @@
 	width: 16px; height: 68px;
 	background: url("../images/slice.png") no-repeat scroll right -1055px transparent;
 	float: right;
-	margin-left: 8px;
+	margin-left: 0px;
 }
 .how-many-man .btn.active {
 	background-position: right -1125px;
@@ -93,6 +93,7 @@
 .how-many-man .content {
 	float: left;
 	padding-left: 8px;
+	padding-right: 8px;
 	position: relative;
 }
 .how-many-man .content + .content, .how-many-man .content + .content  + .content, .how-many-man .content + .content  + .content  {
