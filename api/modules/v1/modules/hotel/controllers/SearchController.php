@@ -87,9 +87,9 @@ class SearchController extends ApiController
         {
             if ($hotel['hotelId']==$hotelId)
             {
-                $response = $hotel;
+                $response['hotel'] = $hotel;
                 $hotelClient = new HotelBookClient();
-                $response['detail'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
+                $response['hotel']['details'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
                 $response['searchParams'] = $hotelSearchParams->getJsonObject();
                 if ($format == 'json')
                     $this->sendJson($response);
