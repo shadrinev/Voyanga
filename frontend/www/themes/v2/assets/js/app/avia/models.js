@@ -424,8 +424,16 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.chooseStacked = function(voyage) {
+    var backVoyage, hash;
     window.voyanga_debug("Choosing stacked voyage", voyage);
-    return this.activeVoyage(voyage);
+    hash = this.activeVoyage().activeBackVoyage().hash();
+    this.activeVoyage(voyage);
+    backVoyage = _.find(voyage._backVoyages, function(el) {
+      return el.hash() === hash;
+    });
+    if (backVoyage) {
+      return this.activeVoyage().activeBackVoyage(backVoyage);
+    }
   };
 
   AviaResult.prototype.choosePrevStacked = function() {
@@ -574,6 +582,7 @@ AviaResultSet = (function() {
     }
     this.cheapest = ko.observable();
     this.data = [];
+    this.numResults = ko.observable(0);
     this.airports = [];
     this.departureAirports = [];
     this.arrivalAirports = [];
@@ -765,6 +774,14 @@ AviaResultSet = (function() {
       _.each(_this.data, function(x) {
         return x.filter(value);
       });
+      _this.numResults(_.reduce(_this.data, function(memo, result) {
+        if (result.visible()) {
+          return memo + 1;
+        } else {
+          return memo;
+        }
+      }, 0));
+      console.log(_this.data.length);
       _this.update_cheapest();
       ko.processAllDeferredBindingUpdates();
       return ResizeAvia();

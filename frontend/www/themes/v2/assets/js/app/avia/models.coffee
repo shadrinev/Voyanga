@@ -332,7 +332,11 @@ class AviaResult
 
   chooseStacked: (voyage) =>
     window.voyanga_debug "Choosing stacked voyage", voyage
+    hash = @activeVoyage().activeBackVoyage().hash()
     @activeVoyage(voyage)
+    backVoyage = _.find voyage._backVoyages, (el)-> el.hash() == hash
+    if backVoyage
+      @activeVoyage().activeBackVoyage(backVoyage)
 
   # < > Buttons on recommended/cheapest ticket
   choosePrevStacked: =>
