@@ -258,6 +258,10 @@ AviaResult = (function() {
 
     this.showDetails = __bind(this.showDetails, this);
 
+    this.minimizeRtStacked = __bind(this.minimizeRtStacked, this);
+
+    this.minimizeStacked = __bind(this.minimizeStacked, this);
+
     this.chooseNextRtStacked = __bind(this.chooseNextRtStacked, this);
 
     this.choosePrevRtStacked = __bind(this.choosePrevRtStacked, this);
@@ -288,6 +292,8 @@ AviaResult = (function() {
     this.voyages = [];
     this.voyages.push(this.activeVoyage);
     this.activeVoyage = ko.observable(this.activeVoyage);
+    this.stackedMinimized = ko.observable(true);
+    this.rtStackedMinimized = ko.observable(true);
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
@@ -488,6 +494,14 @@ AviaResult = (function() {
       return;
     }
     return this.activeVoyage().activeBackVoyage(rtVoyages[active_index + 1]);
+  };
+
+  AviaResult.prototype.minimizeStacked = function() {
+    return this.stackedMinimized(!this.stackedMinimized());
+  };
+
+  AviaResult.prototype.minimizeRtStacked = function() {
+    return this.rtStackedMinimized(!this.rtStackedMinimized());
   };
 
   AviaResult.prototype.rtVoyages = function() {

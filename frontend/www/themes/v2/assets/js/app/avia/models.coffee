@@ -228,6 +228,9 @@ class AviaResult
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
 
+    @stackedMinimized = ko.observable true
+    @rtStackedMinimized = ko.observable true
+
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity',
@@ -375,6 +378,12 @@ class AviaResult
       return
     @activeVoyage().activeBackVoyage(rtVoyages[active_index+1])
 
+  # Handler for Списком link
+  minimizeStacked: =>
+    @stackedMinimized !@stackedMinimized()
+
+  minimizeRtStacked: =>
+    @rtStackedMinimized !@rtStackedMinimized()
 
   rtVoyages: ->
       @activeVoyage()._backVoyages
