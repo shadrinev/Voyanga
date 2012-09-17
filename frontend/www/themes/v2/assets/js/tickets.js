@@ -13,6 +13,7 @@ var MIN_BIG_AIRPORT_NAME_SMALL_TICKET = 12;
 var MIN_BIG_AIRPORT_NAME = 12;
 
 function widthHowLong() {
+	return false;
 	$('.recommended-ticket .ticket-items').each(function() {
 		var var_dataTimeCity = $(this).find('.date-time-city');
 		var var_start = var_dataTimeCity.find('.start');

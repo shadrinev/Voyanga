@@ -107,19 +107,23 @@
     min-height: 75px;
 }
 .ticket-items .content .center-ticket .date-time-city {
-	padding-left: 15px; padding-right: 15px;
-	position: relative;
+	min-height: 96px;
+    padding-left: 125px;
+    padding-right: 135px;
+    position: relative;
 }
 
 .date-time-city .start {
-	position: absolute;
-	top:0px; left: 15px;
-	max-width: 100px;
+	left: 15px;
+    position: absolute;
+    top: 0;
+    width: 100px;
 }
 .date-time-city .finish {
 	position: absolute;
-	top:0px; right: 15px;
-	max-width: 100px;
+    right: 15px;
+    top: 0;
+    width: 100px;
 }
 .recommended-ticket .ticket-items .date-time-city .start {
 	left: 0px;
