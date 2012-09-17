@@ -65,6 +65,7 @@ class SearchController extends ApiController
 
         $cacheId = $this->storeToCache($hotelSearchParams, $results);
         $results['cacheId'] = $cacheId;
+        $results['searchParams'] = $hotelSearchParams->getJsonObject();
 
         if ($format == 'json')
             $this->sendJson($results);
