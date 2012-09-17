@@ -323,25 +323,20 @@ AviaResult = (function() {
   }
 
   AviaResult.prototype.filter = function(filters) {
-    var field, fields, match_lines, match_ports, service_class, some_visible, voyage, _i, _j, _len, _len1, _ref;
+    var key, match_lines, match_ports, match_ports_arr, service_class, some_visible, voyage, _i, _j, _len, _len1, _ref, _ref1;
     match_ports = true;
-    if (filters.airports.length === 0) {
-      match_ports = true;
-    } else {
-      match_ports = false;
-      fields = ['departureAirport', 'arrivalAirport'];
-      if (this.roundTrip) {
-        fields.push('rtDepartureAirport');
-        fields.push('rtArrivalAirport');
-      }
-      for (_i = 0, _len = fields.length; _i < _len; _i++) {
-        field = fields[_i];
-        if (filters.airports.indexOf(this[field]()) >= 0) {
-          match_ports = true;
-          break;
-        }
+    match_ports_arr = {
+      'departure': filters.airports.departure.length === 0,
+      'arrival': filters.airports.arrival.length === 0
+    };
+    _ref = ['departure', 'arrival'];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      key = _ref[_i];
+      if (filters.airports[key].indexOf(this[key + 'Airport']()) >= 0) {
+        match_ports_arr[key] = true;
       }
     }
+    match_ports = match_ports_arr['arrival'] && match_ports_arr['departure'];
     service_class = true;
     if (filters.serviceClass === 'A') {
       service_class = this.serviceClass === 'E';

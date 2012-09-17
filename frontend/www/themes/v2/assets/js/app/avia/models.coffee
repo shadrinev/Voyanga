@@ -259,18 +259,17 @@ class AviaResult
   filter: (filters) ->
       match_ports = true
       # FIXME UNDERSCORE
-      if filters.airports.length == 0
-        match_ports = true
-      else
-        match_ports = false
-        fields = ['departureAirport', 'arrivalAirport']
-        if @roundTrip
-          fields.push 'rtDepartureAirport'
-          fields.push 'rtArrivalAirport'
-        for field in fields
-          if filters.airports.indexOf(@[field]()) >= 0
-            match_ports = true
-            break
+      match_ports_arr =
+        'departure': filters.airports.departure.length == 0
+        'arrival': filters.airports.arrival.length == 0
+      for key in ['departure', 'arrival']
+#         if @roundTrip
+#            fields.push 'rtDepartureAirport'
+           #    fields.push 'rtArrivalAirport'
+        if filters.airports[key].indexOf(@[key+'Airport']()) >= 0
+          match_ports_arr[key] = true
+      match_ports = match_ports_arr['arrival'] && match_ports_arr['departure']
+       
 
       service_class = true
       if filters.serviceClass == 'A'
