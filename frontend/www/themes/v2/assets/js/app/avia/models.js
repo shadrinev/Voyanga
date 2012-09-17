@@ -272,6 +272,10 @@ AviaResult = (function() {
 
     this.showDetails = __bind(this.showDetails, this);
 
+    this.minimizeRtStacked = __bind(this.minimizeRtStacked, this);
+
+    this.minimizeStacked = __bind(this.minimizeStacked, this);
+
     this.chooseNextRtStacked = __bind(this.chooseNextRtStacked, this);
 
     this.choosePrevRtStacked = __bind(this.choosePrevRtStacked, this);
@@ -302,6 +306,8 @@ AviaResult = (function() {
     this.voyages = [];
     this.voyages.push(this.activeVoyage);
     this.activeVoyage = ko.observable(this.activeVoyage);
+    this.stackedMinimized = ko.observable(true);
+    this.rtStackedMinimized = ko.observable(true);
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
@@ -431,8 +437,16 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.chooseStacked = function(voyage) {
+    var backVoyage, hash;
     window.voyanga_debug("Choosing stacked voyage", voyage);
-    return this.activeVoyage(voyage);
+    hash = this.activeVoyage().activeBackVoyage().hash();
+    this.activeVoyage(voyage);
+    backVoyage = _.find(voyage._backVoyages, function(el) {
+      return el.hash() === hash;
+    });
+    if (backVoyage) {
+      return this.activeVoyage().activeBackVoyage(backVoyage);
+    }
   };
 
   AviaResult.prototype.choosePrevStacked = function() {
@@ -504,6 +518,14 @@ AviaResult = (function() {
     return this.activeVoyage().activeBackVoyage(rtVoyages[active_index + 1]);
   };
 
+  AviaResult.prototype.minimizeStacked = function() {
+    return this.stackedMinimized(!this.stackedMinimized());
+  };
+
+  AviaResult.prototype.minimizeRtStacked = function() {
+    return this.rtStackedMinimized(!this.rtStackedMinimized());
+  };
+
   AviaResult.prototype.rtVoyages = function() {
     return this.activeVoyage()._backVoyages;
   };
@@ -573,6 +595,7 @@ AviaResultSet = (function() {
     }
     this.cheapest = ko.observable();
     this.data = [];
+    this.numResults = ko.observable(0);
     this.airports = [];
     this.departureAirports = [];
     this.arrivalAirports = [];
@@ -764,6 +787,14 @@ AviaResultSet = (function() {
       _.each(_this.data, function(x) {
         return x.filter(value);
       });
+      _this.numResults(_.reduce(_this.data, function(memo, result) {
+        if (result.visible()) {
+          return memo + 1;
+        } else {
+          return memo;
+        }
+      }, 0));
+      console.log(_this.data.length);
       _this.update_cheapest();
       ko.processAllDeferredBindingUpdates();
       return ResizeAvia();

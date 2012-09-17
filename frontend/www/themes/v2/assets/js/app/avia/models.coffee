@@ -238,6 +238,9 @@ class AviaResult
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
 
+    @stackedMinimized = ko.observable true
+    @rtStackedMinimized = ko.observable true
+
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity',
@@ -336,7 +339,11 @@ class AviaResult
 
   chooseStacked: (voyage) =>
     window.voyanga_debug "Choosing stacked voyage", voyage
+    hash = @activeVoyage().activeBackVoyage().hash()
     @activeVoyage(voyage)
+    backVoyage = _.find voyage._backVoyages, (el)-> el.hash() == hash
+    if backVoyage
+      @activeVoyage().activeBackVoyage(backVoyage)
 
   # < > Buttons on recommended/cheapest ticket
   choosePrevStacked: =>
@@ -383,6 +390,12 @@ class AviaResult
       return
     @activeVoyage().activeBackVoyage(rtVoyages[active_index+1])
 
+  # Handler for Списком link
+  minimizeStacked: =>
+    @stackedMinimized !@stackedMinimized()
+
+  minimizeRtStacked: =>
+    @rtStackedMinimized !@rtStackedMinimized()
 
   rtVoyages: ->
       @activeVoyage()._backVoyages
@@ -437,6 +450,8 @@ class AviaResultSet
     @cheapest = ko.observable()
     # We need array for knockout to work right
     @data = []
+
+    @numResults = ko.observable 0
 
     @airports = []
     @departureAirports = []
@@ -578,6 +593,12 @@ class AviaResultSet
     @_allFilters.subscribe (value) =>
       console.log "REFILTER"
       _.each @data, (x)-> x.filter (value)
+      @numResults _.reduce @data,
+        (memo, result) ->
+          if result.visible() then memo + 1 else memo
+        , 0
+      console.log @data.length
+
       @update_cheapest()
       ko.processAllDeferredBindingUpdates()
       # FIXME

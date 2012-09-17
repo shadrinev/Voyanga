@@ -13,20 +13,7 @@ var MIN_BIG_AIRPORT_NAME_SMALL_TICKET = 12;
 var MIN_BIG_AIRPORT_NAME = 12;
 
 function minimizeListTime() {
-	$('.btn-minimize').click(function(e) {
-		e.preventDefault();
-		var var_list = $(this).parent().find('ul');
-		if(var_list.hasClass('minimize') == true) {
-			var_list.removeClass('minimize').addClass('expand');
-			$(this).find('a').text('Свернуть');
-			$(this).addClass('up');
-		}
-		else {
-			var_list.removeClass('expand').addClass('minimize');
-			$(this).find('a').text('Списком');
-			$(this).removeClass('up');
-		}
-	});
+
 }
 
 // ОТВЕЧАЕТ ЗА СЛАЙДЕР НА МАЛЕНЬКОМ БИЛЕТЕ!
@@ -61,10 +48,3 @@ function inTheTwoLines() {
 }
 
 
-function resizeAllWindow() {
-	inTheTwoLines();
-}
-$(window).resize(resizeAllWindow);
-$(window).load(inTheTwoLines);
-//$(window).load(widthHowLong);
-$(window).load(minimizeListTime);
