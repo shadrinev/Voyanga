@@ -630,7 +630,7 @@ class SearchParams
     @children = ko.observable(0).extend({integerOnly: true})
     @infants = ko.observable(0).extend({integerOnly: 'infant'})
 
-    @rt = ko.observable false
+    @rt = ko.observable true
     @rt_date = '12.10.2012'
 
   url: ->
