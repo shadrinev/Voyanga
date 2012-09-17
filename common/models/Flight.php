@@ -75,6 +75,18 @@ class Flight extends CComponent
         return $last->timestampEnd;
     }
 
+    public function getDepartureAirportCode()
+    {
+        $flightPart = reset($this->flightParts);
+        return CHtml::value($flightPart, 'departureAirport.code');
+    }
+
+    public function getArrivalAirportCode()
+    {
+        $flightPart = end($this->flightParts);
+        return CHtml::value($flightPart, 'arrivalAirport.code');
+    }
+
     public function getJsonObject()
     {
         $ret = array(

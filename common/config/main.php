@@ -119,9 +119,9 @@ return array(
         'logdb'=>array(
             'class' => 'CDbConnection',
             'pdoClass' => 'NestedPDO',
-            'connectionString' => $params['db.connectionString'],
-            'username' => $params['db.username'],
-            'password' => $params['db.password'],
+            'connectionString' => $params['log_db.connectionString'],
+            'username' => $params['log_db.username'],
+            'password' => $params['log_db.password'],
             'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
             'enableParamLogging' => YII_DEBUG,
             'charset' => 'utf8',

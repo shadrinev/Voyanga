@@ -23,7 +23,7 @@
         <div class="div-filter">
             <div class="slider-filter" style="text-align:center; margin-bottom:18px;">
                 <div style="width: 200px; margin-left: 0px;">
-                    <select id='aviaShowReturnFilters' class="selectSlider"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
+                    <select id='aviaShowReturnFilters' class="selectSlider smallSlider"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
                 </div>
                 <br>
                 <br>
@@ -31,7 +31,6 @@
             <h4>Время вылета</h4>
 
             <div class="slide-filter">
-                <br>
                 <div class="slider-wrapper-div">
                     <input id="departureTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.departureFromToTimeActive"/>
                 </div>
@@ -42,7 +41,6 @@
             <h4>Время прилета</h4>
 
             <div class="slide-filter">
-                <br />
                 <div class="slider-wrapper-div">
                     <input id="arrivalTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.arrivalFromToTimeActive"/>
                 </div>

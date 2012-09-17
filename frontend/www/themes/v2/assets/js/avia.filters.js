@@ -236,11 +236,11 @@ AviaFilters.showMoreDiv = function (btnObj,moreIdDiv){
     if(!vis){
         //var newHeight = $('#'+moreIdDiv).prop('scrollHeight');
         btnText = btnText.replace("Все","Скрыть");
-        $('#'+moreIdDiv).show('slow');
+        $('#'+moreIdDiv).show('fast');
     }else{
         var newHeight = 60;
         btnText = btnText.replace("Скрыть","Все");
-        $('#'+moreIdDiv).hide('slow');
+        $('#'+moreIdDiv).hide('fast');
     }
     $(btnObj).html(btnText);
     /*$('#'+moreIdDiv).animate({
