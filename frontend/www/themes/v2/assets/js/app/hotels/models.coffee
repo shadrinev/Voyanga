@@ -34,6 +34,9 @@ class HotelResult
     if @photos && @photos.length
       @frontPhoto = @photos[0]
       @numPhotos = @photos.length
+
+    # for popup
+    @activePhoto = @frontPhoto['largeUrl']
     # FIXME check if categoryId matches star rating
     @stars = STARS_VERBOSE[data.categoryId-1]
     @rating = data.rating
@@ -55,9 +58,11 @@ class HotelResult
       @cheapest = if set.price < @cheapest then set.price else @cheapest
     @roomSets.push set
 
+  showPhoto: =>
+    new PhotoBox(@photos)
+
 
   # FIXME copy-pasted from avia
-
   # Shows popup with detailed info about given result
   showDetails: =>
     # If user had clicked read-more link

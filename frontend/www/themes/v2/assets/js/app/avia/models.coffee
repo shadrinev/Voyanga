@@ -12,7 +12,7 @@ class FlightPart
     @arrivalAirport = part.arrivalAirport
     @_duration = part.duration
     @transportAirline = part.transportAirline
-    @transportAirlineName = part.transportAirlineName
+    @transportAirlineName = part.transportAirlineNameEn
     @flightCode = part.transportAirline + ' ' + part.flightCode
     @stopoverLength = 0
 
@@ -48,8 +48,6 @@ class Voyage #Voyage Plus loin que la nuit et le jour
         if index < (@parts.length - 1)
           part.calculateStopoverLength @parts[index+1]
         @stopoverLength += part.stopoverLength
-
-    @serviceClass = flight.serviceClass
 
     # FIXME is this  utc?
     @departureDate = new Date(flight.departureDate)
@@ -162,8 +160,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     if filters.onlyShort
       result = result && (@stopoverLength <= 7200)
 
-    if filters.serviceClass != 'A'
-      result = result && @serviceClass == filters.serviceClass
+
     if @_backVoyages.length > 0
       haveBack = false
     else
@@ -213,7 +210,8 @@ class AviaResult
     @visible = ko.observable true
 
     @airline = data.valCompany
-    @airlineName = data.valCompanyName
+    @airlineName = data.valCompanyNameEn
+    @serviceClass = data.serviceClass
 
     @activeVoyage = new Voyage(flights[0])
     if @roundTrip
@@ -262,7 +260,11 @@ class AviaResult
             match_ports = true
             break
 
-
+      service_class = true
+      if filters.serviceClass == 'A'
+        service_class = @serviceClass == 'E'
+      else
+        service_class = @serviceClass == 'B' || @serviceClass == 'F'
 
       some_visible = false
       for voyage in @voyages
@@ -280,7 +282,7 @@ class AviaResult
 
 
 
-      @visible(match_ports&&match_lines&&some_visible)
+      @visible(match_ports&&match_lines&&some_visible&&service_class)
 
   stacked: ->
     result = false
@@ -320,9 +322,51 @@ class AviaResult
     window.voyanga_debug "Choosing stacked voyage", voyage
     @activeVoyage(voyage)
 
+  # < > Buttons on recommended/cheapest ticket
+  choosePrevStacked: =>
+    active_index = 0
+    for voyage, index in @voyages
+      if voyage.hash() == @hash()
+        active_index = index
+    if active_index == 0
+      return
+    @activeVoyage @voyages[active_index-1]
+
+  chooseNextStacked: =>
+    active_index = 0
+    for voyage, index in @voyages
+      if voyage.hash() == @hash()
+        active_index = index
+    if active_index == @voyages.length-1
+      return
+    @activeVoyage @voyages[active_index+1]
+
   chooseRtStacked: (voyage) =>
     window.voyanga_debug "Choosing RT stacked voyage", voyage
     @activeVoyage().activeBackVoyage(voyage)
+
+  # FIXME we can reuse code if we`ll pass voyages as method argument
+  # < > Buttons on recommended/cheapest ticket
+  choosePrevRtStacked: =>
+    active_index = 0
+    rtVoyages = @rtVoyages()
+    for voyage, index in rtVoyages
+      if voyage.hash() == @rtHash()
+        active_index = index
+    if active_index == 0
+      return
+    @activeVoyage().activeBackVoyage(rtVoyages[active_index-1])
+
+  chooseNextRtStacked: =>
+    active_index = 0
+    rtVoyages = @rtVoyages()
+    for voyage, index in rtVoyages
+      if voyage.hash() == @rtHash()
+        active_index = index
+    if active_index == rtVoyages.length-1
+      return
+    @activeVoyage().activeBackVoyage(rtVoyages[active_index+1])
+
 
   rtVoyages: ->
       @activeVoyage()._backVoyages
@@ -520,6 +564,8 @@ class AviaResultSet
       console.log('refilter');
       _.each @data, (x)-> x.filter (value)
       @update_cheapest()
+      ko.processAllDeferredBindingUpdates()
+      app.contentRendered()
 
     for result in @data
       result.sort()
@@ -559,15 +605,15 @@ class SearchParams
     @dep = ko.observable 'MOW'
     @arr = ko.observable 'PAR'
     @date = '02.10.2012'
-    @adults = ko.observable(5).extend({integerOnly: 'adult'})
-    @children = ko.observable(2).extend({integerOnly: true})
-    @infants = ko.observable(2).extend({integerOnly: 'infant'})
+    @adults = ko.observable(1).extend({integerOnly: 'adult'})
+    @children = ko.observable(0).extend({integerOnly: true})
+    @infants = ko.observable(0).extend({integerOnly: 'infant'})
 
     @rt = ko.observable false
     @rt_date = '12.10.2012'
 
   url: ->
-    result = 'http://api.voyanga/v1/flight/search/BE?'
+    result = 'http://api.voyanga.com/v1/flight/search/BE?'
     params = []
     params.push 'destinations[0][departure]=' + @dep()
     params.push 'destinations[0][arrival]=' + @arr()

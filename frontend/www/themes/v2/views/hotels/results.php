@@ -1,3 +1,6 @@
+<?php
+    $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+?>
 <script type="text-html" id="hotels-results">
 <h1>Выберите отель в Амстердам, 19-26 мая</h1>
 <div class="ticket-content hotels">
@@ -9,7 +12,7 @@
                 <div class="full-info">
                     <div class="preview-photo">
                         <ul>
-                            <li><a href="" data-bind="attr: {'href': frontPhoto.largeUrl}" class="photo"><img data-bind="attr:{src: frontPhoto.smallUrl}"></a></li>
+                            <li><a href="#" data-bind="click: showPhoto,attr: {'href': frontPhoto.largeUrl}" class="photo"><img data-bind="attr:{src: frontPhoto.largeUrl}"></a></li>
                         </ul>
                         <div class="how-much" data-bind="visible: numPhotos">
                             <a href="#">Фотографий (<span data-bind="text: numPhotos">11</span>)</a>
@@ -100,5 +103,21 @@
     </div>
   </div>
 </div>
-
+</script>
+<script id="photo-popup-template" type="text/html">
+  <div id="body-popup-Photo">
+    <div id="popupPhoto">
+      <div id="hotel-img-load">
+	<img src="<?=   $images; ?>/images/load.gif">
+      </div>
+      <div id="photoBox">
+	<div class="left" data-bind="visible: activeIndex()!=0, click: prev"></div>
+	<div class="right" data-bind="visible: activeIndex()!=length0, click: next"></div>
+	<div id="imgContent">
+          <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
+	</div>
+      </div>
+    </div>
+    <div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div>
+  </div>
 </script>

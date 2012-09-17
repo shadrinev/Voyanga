@@ -114,7 +114,7 @@ class SearchController extends ApiController
             if ($item instanceof HotelTripElement)
             {
                 $itemVariantsUrl = $item->getUrlToAllVariants();
-                $asyncExecutor->add($url);
+                $asyncExecutor->add($itemVariantsUrl);
             }
         }
         $responses = $asyncExecutor->send();

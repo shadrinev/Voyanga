@@ -24,7 +24,7 @@ class SearchController extends ApiController
         $asyncExecutor = new AsyncCurl();
         $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
         $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
-        $this->addFirstClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+        //$this->addFirstClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
         $responses = $asyncExecutor->send();
         $errors = array();
         $variants = array();
