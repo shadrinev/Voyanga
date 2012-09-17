@@ -19,6 +19,8 @@ return CMap::mergeArray(array(
     'flight_time_factor' => 70,
     'flight_repeat_time' => 120,
 
+    'airport_codes_cache' => 365 * 24 * 3600,
+
     'aPassegerTypes' => array(1 => 'ADT', 2 => 'CNN', 3 => 'INN'),
     'GDSNemo' => array(
         'wsdlUri' => 'http://109.120.157.20:10002/Flights.asmx?wsdl',

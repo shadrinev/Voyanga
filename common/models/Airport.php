@@ -159,4 +159,19 @@ class Airport extends CActiveRecord
             return $this->city;
         }
     }
+
+    static public function checkIfExists($code)
+    {
+        $airportCodes = Yii::app()->cache->get('airportCodes');
+        if (!$airportCodes)
+        {
+            $criteria = new CDbCriteria();
+            $criteria->select = array('id', 'code');
+            $criteria->index = 'code';
+            $values = self::model()->findAll($criteria);
+            $airportCodes = array_keys($values);
+            Yii::app()->cache->set('airportCodes', $airportCodes, appParams('airport_codes_cache'));
+        }
+        return in_array($code, $airportCodes);
+    }
 }

@@ -89,7 +89,7 @@ return CMap::mergeArray(
                     array(
                         'class' => 'CDbLogRoute',
                         'levels' => 'info',
-                        'categories' => 'system.*',
+                        'categories' => 'system.*, application.db.*',
                         'connectionID' => 'logdb',
                         'autoCreateLogTable' => true,
                         'logTableName' => 'log_table'
@@ -106,7 +106,7 @@ return CMap::mergeArray(
                         'levels' => 'error, warning',
                         'filter' => 'CLogFilter',
                         'emails' => 'reports-backend@voyanga.com,kuklin@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com,kudinov@voyanga.com'
-                    )
+                    ),
                 )
             ),
 
