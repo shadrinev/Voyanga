@@ -211,13 +211,23 @@ AviaFilters.showReturnFilters = new AviaFilter({
             AviaFilters.departureTimeSliderDirect.hide();
             AviaFilters.departureTimeSliderReturn.show();
             AviaFilters.arrivalTimeSliderReturn.show();
+            $('.flightDirectionName').html(' обратно');
         }else{
             AviaFilters.departureTimeSliderReturn.hide();
             AviaFilters.arrivalTimeSliderReturn.hide();
             AviaFilters.arrivalTimeSliderDirect.show();
             AviaFilters.departureTimeSliderDirect.show();
+            $('.flightDirectionName').html(' туда');
         }
         //console.log(this.jObj.val());
+    },
+    hide:function(){
+        this.jObj.parent().parent().hide();
+        $('.flightDirectionName').hide();
+    },
+    show: function(){
+        this.jObj.parent().parent().show();
+        $('.flightDirectionName').show();
     }
 });
 

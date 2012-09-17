@@ -62,9 +62,8 @@ class AviaController
       rt: data.searchParams.isRoundTrip
     }
 
-
     window.app.on 'avia:contentRendered', =>
-      setTimeout ->
+      setTimeout =>
           AviaFilters.init(@aviaFiltersInit)
         , 100
       
