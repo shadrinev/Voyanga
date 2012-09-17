@@ -17,7 +17,6 @@ class AviaController
 
     # tempoprary development cache
     key = "search_" + @searchParams.key()
-    window.REQ_STATED = new Date().getTime()
 
     if sessionStorage.getItem(key) && (window.location.host != 'test.voyanga.com')
       window.voyanga_debug "AVIA: Getting result from cache"
@@ -35,8 +34,6 @@ class AviaController
 
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
-    msg = "request legth = " + ((new Date().getTime() - window.REQ_STATED) / 1000)
-    alert(msg)
 
     # temporary development cache
     key = "search_" + @searchParams.key()

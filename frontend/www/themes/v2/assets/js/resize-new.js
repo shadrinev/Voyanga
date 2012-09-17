@@ -74,8 +74,6 @@ function ResizeCenterBlock() {
 			var_widthStreet,
 			widthLogin;
 
-		var widthWindow = $(window).width();
-		var heightWindow = $(window).height();
 		var widthBlock = block.width();
 		var heightHead = var_head.height();
 		var pos = block.eq(0).offset();
@@ -393,29 +391,28 @@ function ResizeCenterBlock() {
 	}
 }
 function smallTicketHeight() {
-	if ($('.recommended-ticket').length > 0 && $('.recommended-ticket').is(':visible')) {
-		var var_recomendedContent = $('.recomended-content');
-	 	var var_oneHeight = var_recomendedContent.find('.recommended-ticket .ticket-items').height();
-	 	var var_twoHeight = var_recomendedContent.find('.prices-of-3days .ticket').height();
+    if ($('.recommended-ticket').length > 0 && $('.recommended-ticket').is(':visible')) {
+	var var_recomendedContent = $('.recomended-content');
+	var var_oneHeight = var_recomendedContent.find('.recommended-ticket .ticket-items').height();
+	var var_twoHeight = var_recomendedContent.find('.prices-of-3days .ticket').height();
 
-	 	if ((var_oneHeight - 19)!= var_twoHeight) {
-			var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items');
-			var heightOneTicket = var_recomendedContent.find('.recommended-ticket')[0].clientHeight;
-				heightOneTicket += 2;
-				var_recomendedItems.css('height', heightOneTicket +'px');
-				var_recomendedContent.find('.prices-of-3days .ticket').css('height', (heightOneTicket - 19) +'px');
-			var heightTwoTicket = $('.recomended-content').find('.prices-of-3days')[0].clientHeight;
-				heightTwoTicket = ((heightOneTicket - 35) - 17) / 2;
-				heightTwoTicket = Math.floor(heightTwoTicket);
-				var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices').css('height', heightTwoTicket +'px');
-				var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li').css('height', heightTwoTicket +'px');
-			var heightGraf = heightTwoTicket - 45;
-
-			if (heightGraf < 100) {
-				var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
-			}
-		}
+	if ((var_oneHeight - 19)!= var_twoHeight) {
+	    var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items');
+	    var heightOneTicket = var_recomendedContent.find('.recommended-ticket')[0].clientHeight;
+	    heightOneTicket += 2;
+	    var_recomendedItems.css('height', heightOneTicket +'px');
+	    var_recomendedContent.find('.prices-of-3days .ticket').css('height', (heightOneTicket - 19) +'px');
+	    var heightTwoTicket = $('.recomended-content').find('.prices-of-3days')[0].clientHeight;
+	    heightTwoTicket = ((heightOneTicket - 35) - 17) / 2;
+	    heightTwoTicket = Math.floor(heightTwoTicket);
+	    var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices').css('height', heightTwoTicket +'px');
+	    var heightGraf = heightTwoTicket - 45;
+	    
+	    if (heightGraf < 100) {
+		var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
+	    }
 	}
+    }
 }
 
 function loginResize() {
@@ -456,9 +453,9 @@ function resizeLeftStage() {
 
 }
 function resizeMainStage() {
-	var var_this = $('.recomended-content').find('.prices-of-3days');
+	var var_this = $('.prices-of-3days');
 
-	var var_widthChange = $('.recomended-content').find('.recommended-ticket').width();
+	var var_widthChange = $('.recommended-ticket').width();
 	if (var_widthChange < 318) {
 		var var_widthOneLi = var_widthChange / 7;
 			var_widthOneLi = Math.floor(var_widthOneLi);
@@ -506,14 +503,15 @@ function AlphaBackground() {
 }
 
 
-function ResizeFun() {
+function ResizeAvia() {
     ResizeCenterBlock();
+    smallTicketHeight();
+
+}
+
+function ResizeFun() {
+    ResizeAvia();
 //    loginResize();
 }
 $(window).load(AlphaBackground);
 
-$(function() {
-	$(window).load(function() {
-		setTimeout(smallTicketHeight, 100);
-	});
-});

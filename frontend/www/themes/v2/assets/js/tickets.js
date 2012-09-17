@@ -12,17 +12,6 @@ var MIN_BIG_CITY_NAME = 12;
 var MIN_BIG_AIRPORT_NAME_SMALL_TICKET = 12;
 var MIN_BIG_AIRPORT_NAME = 12;
 
-function centerBuyTikets() {
-    return;
-	$('.buy-ticket').each(function() {
-		var var_heightAllBlock = $(this).parent().height();
-		var var_buyTicket = $(this).find('.text');
-		var var_heightText = var_buyTicket.height();
-		var var_heightBuyTicket = $(this).height();
-		var var_paddingTopTicket = ((var_heightBuyTicket - var_heightText) - 20) / 2;
-		var_buyTicket.css('margin-top', var_paddingTopTicket+'px');
-	});
-}
 function minimizeListTime() {
 	$('.btn-minimize').click(function(e) {
 		e.preventDefault();
@@ -31,13 +20,11 @@ function minimizeListTime() {
 			var_list.removeClass('minimize').addClass('expand');
 			$(this).find('a').text('Свернуть');
 			$(this).addClass('up');
-			centerBuyTikets();
 		}
 		else {
 			var_list.removeClass('expand').addClass('minimize');
 			$(this).find('a').text('Списком');
 			$(this).removeClass('up');
-			centerBuyTikets();
 		}
 	});
 }
@@ -80,8 +67,4 @@ function resizeAllWindow() {
 $(window).resize(resizeAllWindow);
 $(window).load(inTheTwoLines);
 //$(window).load(widthHowLong);
-$(window).load(centerBuyTikets);
 $(window).load(minimizeListTime);
-function ResizeTicket() {
-	$(window).resize(centerBuyTikets);
-}
