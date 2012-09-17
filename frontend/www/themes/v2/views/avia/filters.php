@@ -31,7 +31,6 @@
             <h4>Время вылета</h4>
 
             <div class="slide-filter">
-                <br>
                 <div class="slider-wrapper-div">
                     <input id="departureTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.departureFromToTimeActive"/>
                 </div>
@@ -42,7 +41,6 @@
             <h4>Время прилета</h4>
 
             <div class="slide-filter">
-                <br />
                 <div class="slider-wrapper-div">
                     <input id="arrivalTimeSliderDirect" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.arrivalFromToTimeActive"/>
                 </div>
