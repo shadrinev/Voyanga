@@ -8,7 +8,7 @@ Yii::app()->clientScript->registerPackage('everything');
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Voyanga v.0.1 - Trip Flight Rework</title>
-    <script type="text/javascript"
+    <script type="text/javascript" async
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
 
@@ -81,7 +81,7 @@ Yii::app()->clientScript->registerPackage('everything');
 </div>
 <?php
     $templates = Array('avia.index', 'avia.results', 'avia.popup',
-                       'avia.panel', 'avia.filters',
+                       'avia.panel', 'avia.filters', 'avia.cheapest',
                        'hotels.index', 'hotels.results', 'hotels.panel',
                        'hotels.popup', 'hotels.filters'
         );

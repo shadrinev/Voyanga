@@ -726,7 +726,7 @@
 .schedule-of-prices li {
 	width: 45px;
 	float: left;
-	height: 165px;
+	height: 100%;
 	text-align: center;
 	position: relative;
 	font-family: Verdana;

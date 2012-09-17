@@ -1,4 +1,5 @@
 var Application,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   __slice = [].slice;
@@ -8,6 +9,8 @@ Application = (function(_super) {
   __extends(Application, _super);
 
   function Application() {
+    this.contentRendered = __bind(this.contentRendered, this);
+
     var _this = this;
     this.activeModule = ko.observable('avia');
     this.panel = ko.observable();
@@ -82,6 +85,7 @@ Application = (function(_super) {
 
   Application.prototype.contentRendered = function() {
     window.voyanga_debug("APP: Content rendered");
+    this.trigger(this.activeModule() + ':contentRendered');
     return ResizeFun();
   };
 
@@ -91,6 +95,7 @@ Application = (function(_super) {
 
 $(function() {
   var app, avia, hotels;
+  console.time("App dispatching");
   window.voyanga_debug = function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -103,5 +108,10 @@ $(function() {
   app.register('hotels', hotels);
   app.register('avia', avia, true);
   app.run();
-  return ko.applyBindings(app);
+  console.timeEnd("App dispatching");
+  console.time("Rendering");
+  console.profile("Rendering");
+  ko.applyBindings(app);
+  console.profileEnd();
+  return console.timeEnd("Rendering");
 });

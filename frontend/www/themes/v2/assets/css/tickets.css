@@ -85,7 +85,10 @@
 }
 .ticket-items .content .buy-ticket .text {
 	position: absolute; left: 15px;
-	line-height: 25px;
+	height: 80px;
+	margin-top: -40px;
+	top: 50%;
+
 }
 .ticket-items .content .buy-ticket .text > span {
 	font-size: 14px; 
@@ -316,20 +319,20 @@
     width: 31px;
 }
 /* ACTIVE */
-.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover {
+.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover, .ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover:hover {
     background: none repeat scroll 0 0 #404345;
 }
-.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover .path {
+.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover .path, .ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover:hover .path {
     background: url("../images/ico-path.png") no-repeat scroll center -52px transparent;
     color: #FFFFFF;
 }
-.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover .path .in-path {
+.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover .path .in-path, .ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover:hover .path .in-path {
     background: none repeat scroll 0 0 #404345;
 }
-.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover .path .start {
+.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover .path .start, .ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover:hover .path .start {
     background: url("../images/ico-path.png") no-repeat scroll left -53px #404345;
 }
-.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover .path .finish {
+.ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover .path .finish, .ticket-items .content .center-ticket .other-time ul.expand .ico-path-time.hover:hover .path .finish {
     background: url("../images/ico-path.png") no-repeat scroll -680px -53px #404345;
 }
 .ticket-items .content .center-ticket .other-time ul.expand .ico-path-time:hover {
@@ -348,6 +351,8 @@
 .ticket-items .content .center-ticket .other-time ul.expand .ico-path-time:hover .path .finish {
     background: url("../images/ico-path.png") no-repeat scroll -680px -33px #cbcecf;
 }
+
+
 
 /* TURN */
 .ticket-items .content .center-ticket .other-time ul.minimize {

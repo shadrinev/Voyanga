@@ -143,17 +143,20 @@ Voyage = (function() {
 
   Voyage.prototype.stopoverText = function() {
     var part, result, _i, _len, _ref;
+    if (this.direct) {
+      return "Без пересадок";
+    }
     result = [];
     _ref = this.parts.slice(0, -1);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
       result.push(part.arrivalCityPre);
     }
-    return result.join(', ');
+    return "Пересадка в " + result.join(', ');
   };
 
   Voyage.prototype.stopsRatio = function() {
-    var data, index, part, result, _i, _j, _len, _len1, _ref;
+    var data, htmlResult, index, left, part, result, _i, _j, _k, _len, _len1, _len2, _ref;
     result = [];
     if (this.direct) {
       return result;
@@ -171,7 +174,13 @@ Voyage = (function() {
         result[index] = data + 10;
       }
     }
-    return result;
+    htmlResult = "";
+    for (_k = 0, _len2 = result.length; _k < _len2; _k++) {
+      left = result[_k];
+      htmlResult += '<span class="cup" style="left: ' + left + '%;"></span>';
+    }
+    htmlResult += '<span class="down"></span>';
+    return htmlResult;
   };
 
   Voyage.prototype.sort = function() {
@@ -530,7 +539,9 @@ AviaResultSet = (function() {
 
     this.resetAirlines = __bind(this.resetAirlines, this);
 
-    var flightVoyage, foo, key, result, rtVoyage, voyage, _airlines, _airports, _arrivalAirports, _departureAirports, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3,
+    this.deferedRender = __bind(this.deferedRender, this);
+
+    var flightVoyage, foo, key, result, rtVoyage, voyage, _airlines, _airports, _arrivalAirports, _departureAirports, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
       _this = this;
     this._results = {};
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
@@ -647,7 +658,6 @@ AviaResultSet = (function() {
         'active': ko.observable(0)
       });
     }
-    console.log(this.airlines);
     this._airportsFilters = ko.computed(function() {
       var port, _l, _len3, _len4, _m, _ref3, _ref4;
       result = [];
@@ -736,22 +746,30 @@ AviaResultSet = (function() {
       };
     });
     this._allFilters.subscribe(function(value) {
-      console.log('refilter');
-      _.each(_this.data, function(x) {
-        return x.filter(value);
-      });
-      _this.update_cheapest();
-      ko.processAllDeferredBindingUpdates();
-      return app.contentRendered();
+      return console.log('refilter');
     });
-    _ref3 = this.data;
-    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
-      result = _ref3[_l];
-      result.sort();
-    }
     this.update_cheapest();
     this.popup = ko.observable(this.cheapest());
+    this.done = false;
+    console.log("Resultset DONE");
   }
+
+  AviaResultSet.prototype.deferedRender = function() {
+    var key, result, _ref, _results;
+    return;
+    console.log("DEFERED");
+    if (this.done) {
+      return;
+    }
+    this.done = true;
+    _ref = this._results;
+    _results = [];
+    for (key in _ref) {
+      result = _ref[key];
+      _results.push(this.data.push(result));
+    }
+    return _results;
+  };
 
   AviaResultSet.prototype.resetAirlines = function() {
     var line, _i, _len, _ref, _results;
@@ -787,28 +805,25 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.update_cheapest = function() {
-    var cheapest_reseted, key, result, _ref, _results;
+    var cheapest_reseted, key, result, _ref;
     cheapest_reseted = false;
     _ref = this._results;
-    _results = [];
     for (key in _ref) {
       result = _ref[key];
       if (result.visible()) {
         if (!cheapest_reseted) {
           this.cheapest(result);
+          console.log("CHEAPEST");
           cheapest_reseted = true;
+          return;
           continue;
         }
         if (result.price < this.cheapest().price) {
-          _results.push(this.cheapest(result));
-        } else {
-          _results.push(void 0);
+          console.log("CHEAPEST");
+          this.cheapest(result);
         }
-      } else {
-        _results.push(void 0);
       }
     }
-    return _results;
   };
 
   return AviaResultSet;

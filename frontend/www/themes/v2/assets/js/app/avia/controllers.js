@@ -31,7 +31,6 @@ AviaController = (function() {
     window.voyanga_debug("AVIA: Invoking searchAction", args);
     this.searchParams.fromList(args);
     key = "search_" + this.searchParams.key();
-    window.REQ_STATED = new Date().getTime();
     if (sessionStorage.getItem(key) && (window.location.host !== 'test.voyanga.com')) {
       window.voyanga_debug("AVIA: Getting result from cache");
       return this.handleResults(JSON.parse(sessionStorage.getItem(key)));
@@ -50,11 +49,9 @@ AviaController = (function() {
   };
 
   AviaController.prototype.handleResults = function(data) {
-    var key, msg, stacked,
+    var key, stacked,
       _this = this;
     window.voyanga_debug("searchAction: handling results", data);
-    msg = "request legth = " + ((new Date().getTime() - window.REQ_STATED) / 1000);
-    alert(msg);
     key = "search_" + this.searchParams.key();
     sessionStorage.setItem(key, JSON.stringify(data));
     stacked = new AviaResultSet(data.flights.flightVoyages);
@@ -81,15 +78,19 @@ AviaController = (function() {
       },
       rt: data.searchParams.isRoundTrip
     };
+    window.app.on('avia:contentRendered', function() {
+      return setTimeout(function() {
+        return AviaFilters.init(this.aviaFiltersInit);
+      }, 100);
+    });
     this.render('results', {
       'results': stacked
     });
-    window.setTimeout(function() {
-      return AviaFilters.init(_this.aviaFiltersInit);
-    }, 1000);
-    return this.trigger("sidebarChanged", 'filters', {
+    this.trigger("sidebarChanged", 'filters', {
       'results': stacked
     });
+    ko.processAllDeferredBindingUpdates();
+    return stacked.deferedRender();
   };
 
   AviaController.prototype.indexAction = function() {

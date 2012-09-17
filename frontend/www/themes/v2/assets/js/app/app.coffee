@@ -55,6 +55,7 @@ class Application extends Backbone.Router
       @_sidebar sidebar
 
 
+
     for route, action of controller.routes
       window.voyanga_debug "APP: registreing route", prefix, route, action
       @route prefix + route, prefix, action
@@ -89,11 +90,13 @@ class Application extends Backbone.Router
             @trigger.apply(@, ['beforeroute:' + name].concat(_.toArray(arguments)))
             callback.apply(@, arguments)
 
-  contentRendered: ->
+  contentRendered: =>
     window.voyanga_debug "APP: Content rendered"
-    ResizeFun();
+    @trigger @activeModule() + ':contentRendered'
+    ResizeFun()
 
 $ ->
+  console.time "App dispatching"
   window.voyanga_debug = (args...) ->
     # Chrome does not likes window context for console.log, so we pass itself here
     console.log.apply console, args
@@ -105,4 +108,9 @@ $ ->
   app.register 'hotels', hotels
   app.register 'avia', avia, true
   app.run()
+  console.timeEnd "App dispatching"
+  console.time "Rendering"
+  console.profile "Rendering"
   ko.applyBindings(app)
+  console.profileEnd()
+  console.timeEnd "Rendering"
