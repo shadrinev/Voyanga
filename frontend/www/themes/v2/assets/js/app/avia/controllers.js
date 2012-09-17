@@ -49,7 +49,8 @@ AviaController = (function() {
   };
 
   AviaController.prototype.handleResults = function(data) {
-    var key, stacked;
+    var key, stacked,
+      _this = this;
     window.voyanga_debug("searchAction: handling results", data);
     key = "search_" + this.searchParams.key();
     sessionStorage.setItem(key, JSON.stringify(data));
@@ -77,15 +78,19 @@ AviaController = (function() {
       },
       rt: data.searchParams.isRoundTrip
     };
+    window.app.on('avia:contentRendered', function() {
+      return setTimeout(function() {
+        return AviaFilters.init(this.aviaFiltersInit);
+      }, 100);
+    });
     this.render('results', {
       'results': stacked
     });
-    window.setTimeout(function() {
-      return AviaFilters.init(_this.aviaFiltersInit);
-    }, 1000);
-    return this.trigger("sidebarChanged", 'filters', {
+    this.trigger("sidebarChanged", 'filters', {
       'results': stacked
     });
+    ko.processAllDeferredBindingUpdates();
+    return stacked.deferedRender();
   };
 
   AviaController.prototype.indexAction = function() {

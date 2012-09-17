@@ -62,15 +62,16 @@ class AviaController
     }
 
 
+    window.app.on 'avia:contentRendered', =>
+      setTimeout ->
+          AviaFilters.init(@aviaFiltersInit)
+        , 100
+      
     @render 'results', {'results' :stacked}
-    # FIXME
-    window.setTimeout(
-      ()=>
-        AviaFilters.init(@aviaFiltersInit)
-      ,1000
-    )
-    @trigger "sidebarChanged", 'filters', {'results' :stacked}
 
+    @trigger "sidebarChanged", 'filters', {'results' :stacked}
+    ko.processAllDeferredBindingUpdates()
+    stacked.deferedRender()
 
   indexAction: =>
     window.voyanga_debug "AVIA: invoking indexAction"
