@@ -119,10 +119,12 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     dateUtils.formatDuration @_duration
 
   stopoverText: ->
+    if @direct
+      return "Без пересадок"
     result = []
     for part in @parts[0..-2]
       result.push part.arrivalCityPre
-    result.join(', ')
+    "Пересадка в " + result.join(', ')
 
   stopsRatio: ->
     result = []
@@ -135,7 +137,13 @@ class Voyage #Voyage Plus loin que la nuit et le jour
         result[index] = result[index-1]+data
       else
         result[index] = data + 10
-    return result
+
+    htmlResult = ""
+    for left in result
+      htmlResult += '<span class="cup" style="left: ' + left + '%;"></span>'
+    htmlResult += '<span class="down"></span>'
+
+    return htmlResult
 
   sort: ->
     #console.log "SORTENG "
@@ -498,7 +506,6 @@ class AviaResultSet
     for key, foo of _airlines
       @airlines.push {'name':key,'visibleName':foo, 'active': ko.observable 0 }
 
-    console.log @airlines
     @_airportsFilters = ko.computed =>
           result = []
           for port in @departureAirports
@@ -561,20 +568,31 @@ class AviaResultSet
       }
 
     @_allFilters.subscribe (value) =>
-      console.log('refilter');
-      _.each @data, (x)-> x.filter (value)
-      @update_cheapest()
-      ko.processAllDeferredBindingUpdates()
-      app.contentRendered()
+      console.log('refilter')
+#      _.each @data, (x)-> x.filter (value)
+#      @update_cheapest()
+#      ko.processAllDeferredBindingUpdates()
 
-    for result in @data
-      result.sort()
+#    for result in @data
+#      result.sort()
 
     @update_cheapest()
 
     # Flight to show in popup
     @popup = ko.observable @cheapest()
+    @done = false
+    console.log "Resultset DONE"
 
+  deferedRender: =>
+    return
+    console.log "DEFERED"
+    if @done
+      return
+    @done = true
+
+    for key, result of @_results
+      @data.push result
+      
   resetAirlines: =>
     for line in @airlines
       line.active(0)
@@ -593,9 +611,12 @@ class AviaResultSet
       if result.visible()
         if !cheapest_reseted
           @cheapest(result)
+          console.log "CHEAPEST"
           cheapest_reseted = true
+          return
           continue
         if result.price < @cheapest().price
+          console.log "CHEAPEST"
           @cheapest(result)
 
 # Model for avia search params,

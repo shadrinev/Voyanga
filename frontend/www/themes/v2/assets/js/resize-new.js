@@ -507,14 +507,10 @@ function AlphaBackground() {
 
 
 function ResizeFun() {
-	ResizeCenterBlock();
-	loginResize();
-    widthHowLong();
-	$(window).resize(ResizeCenterBlock);
-	$(window).resize(loginResize);
+    ResizeCenterBlock();
+//    loginResize();
 }
 $(window).load(AlphaBackground);
-//$(window).load(ResizeFun);
 
 $(function() {
 	$(window).load(function() {
