@@ -22,7 +22,7 @@
         </div>
         <div class="div-filter">
             <div class="slider-filter smallSlide" style="text-align:center; margin-bottom:18px;">
-                <div style="margin-left: 0px;">
+                <div>
                     <select id='aviaShowReturnFilters' class="selectSlider smallSlider"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
                 </div>
                 <br>
