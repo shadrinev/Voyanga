@@ -48,9 +48,3 @@ function inTheTwoLines() {
 }
 
 
-function resizeAllWindow() {
-	inTheTwoLines();
-}
-$(window).resize(resizeAllWindow);
-$(window).load(inTheTwoLines);
-//$(window).load(widthHowLong);

@@ -506,6 +506,7 @@ function AlphaBackground() {
 function ResizeAvia() {
     ResizeCenterBlock();
     smallTicketHeight();
+    inTheTwoLines();
 }
 
 function ResizeFun() {
