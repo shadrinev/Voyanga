@@ -98,15 +98,15 @@ function checkUlList() {
 	});
 
 }
+function hideRecomendedBlockTicket() {
+	e.preventDefault();
+	$('.recomended-content').slideUp();
+	$('.minimize-rcomended .btn-minimizeRecomended').animate({top : '0px'}, 500);
+	$(this).fadeOut();
+}
 $(window).load(checkUlList);
 $(function() {
 
-	$('.order-hide').click(function(e){
-		e.preventDefault();
-		$('.recomended-content').slideUp();
-		$('.minimize-rcomended .btn-minimizeRecomended').animate({top : '0px'}, 500);
-		$(this).fadeOut();
-	});
 	$('.minimize-rcomended .btn-minimizeRecomended').click(function() {
 		$('.recomended-content').slideDown();
 		$(this).animate({top : '-19px'}, 500);

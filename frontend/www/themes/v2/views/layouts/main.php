@@ -83,7 +83,7 @@ Yii::app()->clientScript->registerPackage('everything');
     $templates = Array('avia.index', 'avia.results', 'avia.popup',
                        'avia.panel', 'avia.filters', 'avia.cheapest',
                        'hotels.index', 'hotels.results', 'hotels.panel',
-                       'hotels.popup', 'hotels.filters'
+                       'hotels.popup', 'hotels.filters','hotels.info','hotels.timeline'
         );
     foreach($templates as $template)
     {

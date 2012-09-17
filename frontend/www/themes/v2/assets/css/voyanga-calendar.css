@@ -40,6 +40,7 @@
 	height: 22px;
 	overflow-x: hidden;
 	border-left: 1px solid #D7D7D8;
+    width: 102%;
 }
 .weekDayVoyanga{
     background: none repeat scroll 0 0 #E2E5EB;
@@ -65,7 +66,9 @@
     padding-right: 15px;
 }
 .calendarGridVoyanga{
+    /* may be in percents??*/
     width: 950px;
+
     height: 245px;
     overflow: hidden;
     overflow-y: visible;
@@ -333,7 +336,7 @@
 }
 .yourTrip {
 	height: 106px;
-    padding: 0 47px;
+    padding: 0px;
     position: absolute;
     top: 0;
     z-index: 210;   
@@ -344,7 +347,7 @@
 .yourTrip .startHotel {
 	position: absolute;
 	top: 0px;
-	left: 0px;
+	left: -46px;
 	background: url("../images/all-tours-slice.png") no-repeat scroll 0 -107px transparent;
 	height: 106px;
 	width: 47px;
@@ -359,15 +362,15 @@
 .yourTrip .endHotel {
 	position: absolute;
 	top: 0px;
-	right: 0px;
+	right: -46px;
 	background: url("../images/all-tours-slice.png") no-repeat scroll 0 -319px transparent;
 	height: 106px;
-	width: 47px;
+	width: 48px;
 	z-index: 209;
 }
 .yourTrip .nameHotel {
 	color: #EAEFF3;
-    left: 16px;
+    left: -30px;
     position: absolute;
     top: 49px;
     z-index: 210;
@@ -427,4 +430,31 @@
 } 
 .tripFlyAll .jetFly.threeDays {
 	top: 9px;
+}
+
+.allTourCal .dayCellVoyanga {
+    border-right: none;
+    border-bottom: none;
+}
+.allTourCal .innerDayCellVoyanga {
+    border-right: 1px #d7d7d8 solid;
+    border-bottom: 1px #d7d7d8 solid;
+    border-top: none;
+    border-left: none;
+
+}
+
+.allTourCal .weekDayVoyanga {
+    border-right: none;
+}
+
+.allTourCal .weekDayBorder {
+    width: 100%;
+    height: 22px;
+    position: relative;
+    border-right: 1px #d7d7d8 solid;
+    margin: -1px;
+}
+.allTourCal .weekDaysVoyanga .weekDaysVoyangaInner {
+    width: 950px;
 }

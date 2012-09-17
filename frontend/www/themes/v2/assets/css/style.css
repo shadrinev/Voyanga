@@ -851,7 +851,7 @@
 	width: 176px; height: 19px;
 	overflow: hidden;
 	bottom: -19px; 
-	right: 120px;
+	right: 165px;
 	z-index: 800;
 }
 .minimize-rcomended .btn-minimizeRecomended {
@@ -1645,4 +1645,32 @@ input.hotel-input {
 	line-height: 15px;
 	display: block;
 	margin-bottom: 10px;
+}
+
+.toPoint {
+	background: url(../images/toFromPoint.png) no-repeat 0px -31px;
+	width:10px;
+	height: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.fromPoint {
+	background: url(../images/toFromPoint.png) no-repeat 0px -16px;
+	width:10px;
+	height: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.toFromPoint {
+	background: url(../images/toFromPoint.png) no-repeat 0px 0px;
+	width:10px;
+	height: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0px;
+	margin-right: 0px;
 }
