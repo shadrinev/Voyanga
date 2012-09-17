@@ -75,7 +75,6 @@ function ResizeCenterBlock() {
 			widthLogin;
 
 		var widthBlock = block.width();
-		var heightHead = var_head.height();
 		var pos = block.eq(0).offset();
 
 		var var_leftBlockIsset = var_leftBlock.length > 0 && var_leftBlock.is(':visible');
@@ -403,7 +402,7 @@ function smallTicketHeight() {
 	    var_recomendedItems.css('height', heightOneTicket +'px');
 	    var_recomendedContent.find('.prices-of-3days .ticket').css('height', (heightOneTicket - 19) +'px');
 	    var heightTwoTicket = $('.recomended-content').find('.prices-of-3days')[0].clientHeight;
-	    if ($('.recommended-ticket').find('.two-way').css('display')!=='none') {
+	    if ($('.two-way').css('display')!=='none') {
 		heightTwoTicket = ((heightOneTicket - 35) - 17) / 2;				
 	    } else {
 		heightTwoTicket = ((heightOneTicket - 35) - 17);
@@ -510,7 +509,6 @@ function AlphaBackground() {
 function ResizeAvia() {
     ResizeCenterBlock();
     smallTicketHeight();
-
 }
 
 function ResizeFun() {

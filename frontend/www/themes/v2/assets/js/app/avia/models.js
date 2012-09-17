@@ -539,7 +539,7 @@ AviaResultSet = (function() {
 
     this.resetAirlines = __bind(this.resetAirlines, this);
 
-    this.deferedRender = __bind(this.deferedRender, this);
+    this.injectSearchParams = __bind(this.injectSearchParams, this);
 
     var flightVoyage, foo, key, result, rtVoyage, voyage, _airlines, _airports, _arrivalAirports, _departureAirports, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
       _this = this;
@@ -746,29 +746,21 @@ AviaResultSet = (function() {
       };
     });
     this._allFilters.subscribe(function(value) {
-      return console.log('refilter');
+      _.each(_this.data, function(x) {
+        return x.filter(value);
+      });
+      _this.update_cheapest();
+      return ko.processAllDeferredBindingUpdates();
     });
     this.update_cheapest();
     this.popup = ko.observable(this.cheapest());
     this.done = false;
-    console.log("Resultset DONE");
   }
 
-  AviaResultSet.prototype.deferedRender = function() {
-    var key, result, _ref, _results;
-    return;
-    console.log("DEFERED");
-    if (this.done) {
-      return;
-    }
-    this.done = true;
-    _ref = this._results;
-    _results = [];
-    for (key in _ref) {
-      result = _ref[key];
-      _results.push(this.data.push(result));
-    }
-    return _results;
+  AviaResultSet.prototype.injectSearchParams = function(sp) {
+    this.arrivalCity = sp.destinations.arrival;
+    this.departureCity = sp.destinations.departure;
+    return this.date = dateUtils.formatDayShortMonth(new Date(sp.destinations.date));
   };
 
   AviaResultSet.prototype.resetAirlines = function() {

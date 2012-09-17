@@ -39,6 +39,7 @@ class AviaController
     key = "search_" + @searchParams.key()
     sessionStorage.setItem(key, JSON.stringify(data))
     stacked = new AviaResultSet data.flights.flightVoyages
+    stacked.injectSearchParams data.searchParams
     this.getFilterLimitValues(stacked)
     @aviaFiltersInit = {
       flightClassFilter:{value: data.searchParams.serviceClass},
@@ -71,7 +72,6 @@ class AviaController
 
     @trigger "sidebarChanged", 'filters', {'results' :stacked}
     ko.processAllDeferredBindingUpdates()
-    stacked.deferedRender()
 
   indexAction: =>
     window.voyanga_debug "AVIA: invoking indexAction"

@@ -1,6 +1,6 @@
 <script type="text/html" id="avia-results">
 <h1><span>Выберите авиабилет</span>
-    <span>Санкт-Петербург</span> → Амстердам, 19 мая</h1>
+    <span data-bind="text: results.departureCity">Санкт-Петербург</span> → <span data-bind="text: results.arrivalCity">Амстердам</span>, <span data-bind="text: results.date">19 мая</span></h1>
 
 <div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: results.cheapest}">
 
@@ -80,8 +80,7 @@
     <div class="btn-minimize"><a href="#">Списком</a></div>
     <div class="clear"></div>
     <ul class="minimize" data-bind="foreach: voyages">
-        <!-- ko if: visible() -->
-        <li>
+        <li data-bind="visible: visible()">
             <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.hash() }, click: $parent.chooseStacked">
                 <input type="radio" data-bind="value: hash(), checked: $parent.hash()">
 
@@ -92,7 +91,6 @@
                 </div>
             </a>
         </li>
-        <!-- /ko -->
     </ul>
 </div>
 <!-- /ko -->
@@ -158,8 +156,7 @@
     <div class="btn-minimize"><a href="#">Списком</a></div>
     <div class="clear"></div>
     <ul class="minimize" data-bind="foreach: rtVoyages()">
-           <!-- ko if: visible() -->
-            <li>
+            <li data-bind="visible: visible()">
                 <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.rtHash() }, click: $parent.chooseRtStacked">
                     <input type="radio" data-bind="value: hash(), checked: $parent.rtHash()">
 
@@ -170,7 +167,6 @@
                     </div>
                 </a>
             </li>
-            <!-- /ko -->
         </ul>
 </div>
 <!-- /ko -->

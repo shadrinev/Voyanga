@@ -55,6 +55,7 @@ AviaController = (function() {
     key = "search_" + this.searchParams.key();
     sessionStorage.setItem(key, JSON.stringify(data));
     stacked = new AviaResultSet(data.flights.flightVoyages);
+    stacked.injectSearchParams(data.searchParams);
     this.getFilterLimitValues(stacked);
     this.aviaFiltersInit = {
       flightClassFilter: {
@@ -89,8 +90,7 @@ AviaController = (function() {
     this.trigger("sidebarChanged", 'filters', {
       'results': stacked
     });
-    ko.processAllDeferredBindingUpdates();
-    return stacked.deferedRender();
+    return ko.processAllDeferredBindingUpdates();
   };
 
   AviaController.prototype.indexAction = function() {

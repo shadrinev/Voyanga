@@ -568,31 +568,22 @@ class AviaResultSet
       }
 
     @_allFilters.subscribe (value) =>
-      console.log('refilter')
-#      _.each @data, (x)-> x.filter (value)
-#      @update_cheapest()
-#      ko.processAllDeferredBindingUpdates()
-
-#    for result in @data
-#      result.sort()
+      _.each @data, (x)-> x.filter (value)
+      @update_cheapest()
+      ko.processAllDeferredBindingUpdates()
 
     @update_cheapest()
 
     # Flight to show in popup
     @popup = ko.observable @cheapest()
     @done = false
-    console.log "Resultset DONE"
 
-  deferedRender: =>
-    return
-    console.log "DEFERED"
-    if @done
-      return
-    @done = true
-
-    for key, result of @_results
-      @data.push result
-      
+  # Inject search params from response
+  injectSearchParams: (sp) =>
+    @arrivalCity = sp.destinations.arrival
+    @departureCity = sp.destinations.departure
+    @date = dateUtils.formatDayShortMonth new Date(sp.destinations.date)
+        
   resetAirlines: =>
     for line in @airlines
       line.active(0)
