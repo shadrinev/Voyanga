@@ -85,7 +85,10 @@
 }
 .ticket-items .content .buy-ticket .text {
 	position: absolute; left: 15px;
-	line-height: 25px;
+	height: 100px;
+	margin-top: -50px;
+	top: 50%;
+
 }
 .ticket-items .content .buy-ticket .text > span {
 	font-size: 14px; 

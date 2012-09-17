@@ -13,6 +13,7 @@ var MIN_BIG_AIRPORT_NAME_SMALL_TICKET = 12;
 var MIN_BIG_AIRPORT_NAME = 12;
 
 function centerBuyTikets() {
+    return;
 	$('.buy-ticket').each(function() {
 		var var_heightAllBlock = $(this).parent().height();
 		var var_buyTicket = $(this).find('.text');
