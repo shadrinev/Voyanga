@@ -85,8 +85,8 @@
 }
 .ticket-items .content .buy-ticket .text {
 	position: absolute; left: 15px;
-	height: 100px;
-	margin-top: -50px;
+	height: 80px;
+	margin-top: -40px;
 	top: 50%;
 
 }
