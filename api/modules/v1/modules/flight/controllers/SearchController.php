@@ -154,31 +154,8 @@ class SearchController extends ApiController
     {
         $fs = new FlightSearch();
         $variants = $fs->sendRequest($flightSearchParams, false);
-        $results = $this->filterUnknownAirports($variants);
         $results = $this->inject($variants->getJsonObject());
         return $results;
-    }
-
-    private function filterUnknownAirports($flightVoyageStack)
-    {
-        foreach ($flightVoyageStack->flightVoyages as $i=>$flightVoyage)
-        {
-            foreach ($flightVoyage->flights as $j => $flight)
-            {
-                $airport = $flight->getDepartureAirportCode();
-                if (!Airport::checkIfExists($airport))
-                {
-                    unset($flightVoyageStack->flightVoyages[$i]);
-                    Yii::log('Unknown airport '.$airport.' ', CLogger::LEVEL_INFO, 'application.db.missing.airports');
-                }
-                $airport = $flight->getArrivalAirportCode();
-                if (!Airport::checkIfExists($airport))
-                {
-                    unset($flightVoyageStack->flightVoyages[$i]);
-                    Yii::log('Unknown airport '.$airport.' ', CLogger::LEVEL_INFO, 'application.db.missing.airports');
-                }
-            }
-        }
     }
 
     private function buildSearchParams($destinations, $adt, $chd, $inf, $service_class)

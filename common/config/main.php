@@ -174,13 +174,6 @@ return array(
                     'levels' => 'at',
                     'categories' => 'cron'
                 ),
-                array(
-                    'class' => 'CDbLogRoute',
-                    'connectionID' => 'logdb',
-                    'autoCreateLogTable' => true,
-                    'levels' => 'info',
-                    'categories' => 'application.db.*'
-                )
             )
         ),
 

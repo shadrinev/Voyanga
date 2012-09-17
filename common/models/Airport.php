@@ -21,22 +21,23 @@ class Airport extends CActiveRecord
 {
     private static $airports = array();
     private static $codeIdMap = array();
-    
+
     public static function model($className = __CLASS__)
     {
-        return parent::model( $className );
+        return parent::model($className);
     }
-    
+
     public static function getAirportByCode($code)
     {
-        if (isset( Airport::$codeIdMap[$code] ))
+        if (isset(Airport::$codeIdMap[$code]))
         {
             return Airport::$airports[Airport::$codeIdMap[$code]];
         }
         else
         {
-            $airport = Airport::model()->findByAttributes( array(
-                    'code' => $code ) );
+            $airport = Airport::model()->findByAttributes(array(
+                'code' => $code
+            ));
             if ($airport)
             {
                 $city = $airport->city;
@@ -46,21 +47,23 @@ class Airport extends CActiveRecord
             }
             else
             {
-                throw new CException( Yii::t( 'application', 'City with code {code} not found', array(
-                        '{code}' => $code ) ) );
+                Yii::log('Unknown airport ' . $code . ' ', CLogger::LEVEL_INFO, 'application.db.missing.airports');
+                throw new CException(Yii::t('application', 'City with code {code} not found', array(
+                    '{code}' => $code
+                )));
             }
         }
     }
 
     public static function getAirportByPk($id)
     {
-        if (isset( Airport::$airports[$id] ))
+        if (isset(Airport::$airports[$id]))
         {
             return Airport::$airports[$id];
         }
         else
         {
-            $airport = Airport::model()->findByPk( $id );
+            $airport = Airport::model()->findByPk($id);
             if ($airport)
             {
                 $city = $airport->city;
@@ -70,12 +73,13 @@ class Airport extends CActiveRecord
             }
             else
             {
-                throw new CException( Yii::t( 'application', 'City with id {id} not found', array(
-                    '{id}' => $id ) ) );
+                throw new CException(Yii::t('application', 'City with id {id} not found', array(
+                    '{id}' => $id
+                )));
             }
         }
     }
-    
+
     public function tableName()
     {
         return 'airport';
@@ -90,12 +94,12 @@ class Airport extends CActiveRecord
         // will receive user inputs.
         return array(
             array('position, code, cityId', 'required'),
-            array('position, cityId', 'numerical', 'integerOnly'=>true),
-            array('code, icaoCode', 'length', 'max'=>5),
-            array('localRu, localEn, site', 'length', 'max'=>45),
+            array('position, cityId', 'numerical', 'integerOnly' => true),
+            array('code, icaoCode', 'length', 'max' => 5),
+            array('localRu, localEn, site', 'length', 'max' => 45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, position, code, localRu, localEn, cityId, latitude, longitude', 'safe', 'on'=>'search'),
+            array('id, position, code, localRu, localEn, cityId, latitude, longitude', 'safe', 'on' => 'search'),
         );
     }
 
@@ -135,26 +139,28 @@ class Airport extends CActiveRecord
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('position',$this->position);
-        $criteria->compare('code',$this->code,true);
-        $criteria->compare('localRu',$this->localRu,true);
-        $criteria->compare('localEn',$this->localEn,true);
-        $criteria->compare('cityId',$this->cityId);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('position', $this->position);
+        $criteria->compare('code', $this->code, true);
+        $criteria->compare('localRu', $this->localRu, true);
+        $criteria->compare('localEn', $this->localEn, true);
+        $criteria->compare('cityId', $this->cityId);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
 
     public function getCity()
     {
-        if (isset( $this->city ))
+        if (isset($this->city))
         {
             return $this->city;
-        }else{
+        }
+        else
+        {
             $this->city = City::getCityByPk($this->cityId);
             return $this->city;
         }

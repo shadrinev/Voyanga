@@ -250,49 +250,53 @@ class GDSNemoAgency extends CComponent
                     {
                         Yii::log(print_r($oSegment, true) . '|||' . $arrKey, 'info');
                     }
-                    $oPart->departure_airport = Airport::getAirportByCode(UtilsHelper::soapElementValue($oSegment->DepAirp));
-                    //Yii::endProfile('laodAirportData');
-                    $oPart->departure_city = $oPart->departure_airport->city;
-                    //Yii::beginProfile('laodAirportData');
-                    $oPart->arrival_airport = Airport::getAirportByCode(UtilsHelper::soapElementValue($oSegment->ArrAirp));
+                    try
+                    {
+                        $oPart->departure_airport = Airport::getAirportByCode(UtilsHelper::soapElementValue($oSegment->DepAirp));
+                        $oPart->departure_city = $oPart->departure_airport->city;
+                        $oPart->arrival_airport = Airport::getAirportByCode(UtilsHelper::soapElementValue($oSegment->ArrAirp));
+                        $oPart->arrival_city = $oPart->arrival_airport->city;
+                        $oPart->departure_terminal_code = isset($oSegment->DepTerminal) ? UtilsHelper::soapElementValue($oSegment->DepTerminal) : '';
+                        $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal) ? UtilsHelper::soapElementValue($oSegment->ArrTerminal) : '';
+                        if (!$markAirlineCodes)
+                        {
+                            $markAirlineCodes[$oSegment->MarkAirline] = $oSegment->MarkAirline;
+                        }
 
-                    $oPart->arrival_city = $oPart->arrival_airport->city;
-                    //Yii::endProfile('loadAirportData');
-                    $oPart->departure_terminal_code = isset($oSegment->DepTerminal) ? UtilsHelper::soapElementValue($oSegment->DepTerminal) : '';
-                    $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal) ? UtilsHelper::soapElementValue($oSegment->ArrTerminal) : '';
-                    if (!$markAirlineCodes)
-                    {
-                        $markAirlineCodes[$oSegment->MarkAirline] = $oSegment->MarkAirline;
-                    }
+                        $oPart->markAirline = Airline::getAirlineByCode($oSegment->MarkAirline);
+                        if ($oSegment->OpAirline == '**')
+                        {
+                            $oPart->opAirline = $oPart->markAirline;
+                            $oPart->transport_airline = $oPart->markAirline;
+                        }
+                        else
+                        {
+                            $oPart->opAirline = Airline::getAirlineByCode($oSegment->OpAirline);
+                            $oPart->transport_airline = Airline::getAirlineByCode($oSegment->OpAirline);
+                        }
+                        $oPart->code = $oSegment->FlightNumber;
+                        $oPart->duration = $oSegment->FlightTime * 60;
+                        $oPart->datetime_begin = UtilsHelper::soapElementValue($oSegment->DepDateTime);
+                        $oPart->datetime_end = UtilsHelper::soapElementValue($oSegment->ArrDateTime);
+                        $oPart->stopNum = UtilsHelper::soapElementValue($oSegment->StopNum);
+                        $oPart->aircraft_code = $oSegment->AircraftType;
 
-                    $oPart->markAirline = Airline::getAirlineByCode($oSegment->MarkAirline);
-                    if ($oSegment->OpAirline == '**')
-                    {
-                        $oPart->opAirline = $oPart->markAirline;
-                        $oPart->transport_airline = $oPart->markAirline;
+                        $oPart->aTariffs = array();
+                        $oPart->aTaxes = array();
+                        $oPart->aBookingCodes = array();
+                        UtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
+                        foreach ($oSegment->BookingCodes->BookingCode as $sBookingCode)
+                        {
+                            $oPart->aBookingCodes[] = UtilsHelper::soapElementValue($sBookingCode);
+                        }
+                        $aParts[$oSegment->SegNum] = $oPart;
+                        $eTicket = $eTicket && $oSegment->ETicket;
                     }
-                    else
+                    catch (Exception $e)
                     {
-                        $oPart->opAirline = Airline::getAirlineByCode($oSegment->OpAirline);
-                        $oPart->transport_airline = Airline::getAirlineByCode($oSegment->OpAirline);
+                        Yii::log('Error while parsing gds nemo results: '.$e->getMessage());
+                        $needSave = false;
                     }
-                    $oPart->code = $oSegment->FlightNumber;
-                    $oPart->duration = $oSegment->FlightTime * 60;
-                    $oPart->datetime_begin = UtilsHelper::soapElementValue($oSegment->DepDateTime);
-                    $oPart->datetime_end = UtilsHelper::soapElementValue($oSegment->ArrDateTime);
-                    $oPart->stopNum = UtilsHelper::soapElementValue($oSegment->StopNum);
-                    $oPart->aircraft_code = $oSegment->AircraftType;
-
-                    $oPart->aTariffs = array();
-                    $oPart->aTaxes = array();
-                    $oPart->aBookingCodes = array();
-                    UtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
-                    foreach ($oSegment->BookingCodes->BookingCode as $sBookingCode)
-                    {
-                        $oPart->aBookingCodes[] = UtilsHelper::soapElementValue($sBookingCode);
-                    }
-                    $aParts[$oSegment->SegNum] = $oPart;
-                    $eTicket = $eTicket && $oSegment->ETicket;
                 }
                 //Yii::endProfile('processingSegments');
                 $full_sum = 0;
