@@ -611,7 +611,7 @@
 .recommended-ticket .ticket-items .content .details-selecte {
 	overflow: hidden;
 	padding: 0px 2px 2px 2px;
-	margin: 10px -2px -2px -2px;
+	margin: 10px -2px 3px;
 }
 .recommended-ticket .ticket-items .content .dashed {
 	margin-top: 10px;
