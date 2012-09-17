@@ -70,11 +70,16 @@
 	font-size: 12px;
 }
 .airlinesLogo {
-	left: -105px;
+	height: 72px;
+    left: -105px;
+    margin-top: -36px;
     position: absolute;
     text-align: center;
-    top: 31px;
+    top: 50%;
     width: 100px;
+}
+.airlinesLogo img {
+	margin-bottom: 2px;
 }
 .ticket-items .content .buy-ticket {
 	width: 160px; height: 100%;
@@ -606,7 +611,7 @@
 .recommended-ticket .ticket-items .content .details-selecte {
 	overflow: hidden;
 	padding: 0px 2px 2px 2px;
-	margin: 10px -2px -2px -2px;
+	margin: 10px -2px 3px;
 }
 .recommended-ticket .ticket-items .content .dashed {
 	margin-top: 10px;
