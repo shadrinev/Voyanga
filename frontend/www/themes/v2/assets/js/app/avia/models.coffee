@@ -523,13 +523,13 @@ class AviaResultSet
       @airlines.push {'name':key,'visibleName':foo, 'active': ko.observable 0 }
 
     @_airportsFilters = ko.computed =>
-          result = []
+          result = {'departure':[], 'arrival':[]}
           for port in @departureAirports
             if port.active()
-              result.push port.name
+              result['departure'].push port.name
           for port in @arrivalAirports
             if port.active()
-              result.push port.name
+              result['arrival'].push port.name
           return result
 
     @_airlinesFilters = ko.computed =>
@@ -641,13 +641,13 @@ class SearchParams
   constructor: ->
     @dep = ko.observable 'MOW'
     @arr = ko.observable 'PAR'
-    @date = '02.10.2012'
+    @date = '06.10.2012'
     @adults = ko.observable(1).extend({integerOnly: 'adult'})
     @children = ko.observable(0).extend({integerOnly: true})
     @infants = ko.observable(0).extend({integerOnly: 'infant'})
 
-    @rt = ko.observable true
-    @rt_date = '12.10.2012'
+    @rt = ko.observable false
+    @rtDate = '14.10.2012'
 
   url: ->
     result = 'http://api.voyanga.com/v1/flight/search/BE?'
@@ -658,7 +658,7 @@ class SearchParams
     if @rt()
       params.push 'destinations[1][departure]=' + @arr()
       params.push 'destinations[1][arrival]=' + @dep()
-      params.push 'destinations[1][date]=' + @rt_date
+      params.push 'destinations[1][date]=' + @rtDate
     params.push 'adt=' + @adults()
     params.push 'chd=' + @children()
     params.push 'inf=' + @infants()
@@ -669,16 +669,21 @@ class SearchParams
 
   key: ->
     key = @dep() + @arr() + @date
-    if @rt
-      key += @rt_date
+    if @rt()
+      key += @rtDate
+      key += '_rt'
     key += @adults()
     key += @children()
     key += @infants()
+    console.log "Search key", key
     return key
 
   getHash: ->
     # FIXME
-    hash = 'avia/search/' + [@dep(), @arr(), @date, @adults(), @children(), @infants()].join('/') + '/'
+    parts =  [@dep(), @arr(), @date, @adults(), @children(), @infants()]
+    if @rt()
+      parts.push @rtDate
+    hash = 'avia/search/' + parts.join('/') + '/'
     window.voyanga_debug "Generated hash for avia search", hash
     return hash
 
@@ -691,3 +696,7 @@ class SearchParams
     @adults data[3]
     @children data[4]
     @infants data[5]
+    if data.length == 7
+      @rt true
+      console.log "RTDATE"
+      @rtDate = data[6]

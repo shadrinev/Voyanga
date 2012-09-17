@@ -20,6 +20,7 @@ AviaController = (function() {
     this.searchAction = __bind(this.searchAction, this);
 
     this.routes = {
+      '/search/:from/:to/:when/:adults/:children/:infants/:rtwhen/': this.searchAction,
       '/search/:from/:to/:when/:adults/:children/:infants/': this.searchAction,
       '': this.indexAction
     };

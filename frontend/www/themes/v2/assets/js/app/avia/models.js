@@ -349,9 +349,9 @@ AviaResult = (function() {
       service_class = this.serviceClass === 'B' || this.serviceClass === 'F';
     }
     some_visible = false;
-    _ref = this.voyages;
-    for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-      voyage = _ref[_j];
+    _ref1 = this.voyages;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      voyage = _ref1[_j];
       voyage.filter(filters);
       if (!some_visible && voyage.visible()) {
         some_visible = true;
@@ -684,19 +684,22 @@ AviaResultSet = (function() {
     }
     this._airportsFilters = ko.computed(function() {
       var port, _l, _len3, _len4, _m, _ref3, _ref4;
-      result = [];
+      result = {
+        'departure': [],
+        'arrival': []
+      };
       _ref3 = _this.departureAirports;
       for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
         port = _ref3[_l];
         if (port.active()) {
-          result.push(port.name);
+          result['departure'].push(port.name);
         }
       }
       _ref4 = _this.arrivalAirports;
       for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
         port = _ref4[_m];
         if (port.active()) {
-          result.push(port.name);
+          result['arrival'].push(port.name);
         }
       }
       return result;
@@ -861,7 +864,7 @@ SearchParams = (function() {
   function SearchParams() {
     this.dep = ko.observable('MOW');
     this.arr = ko.observable('PAR');
-    this.date = '02.10.2012';
+    this.date = '06.10.2012';
     this.adults = ko.observable(1).extend({
       integerOnly: 'adult'
     });
@@ -871,8 +874,8 @@ SearchParams = (function() {
     this.infants = ko.observable(0).extend({
       integerOnly: 'infant'
     });
-    this.rt = ko.observable(true);
-    this.rt_date = '12.10.2012';
+    this.rt = ko.observable(false);
+    this.rtDate = '14.10.2012';
   }
 
   SearchParams.prototype.url = function() {
@@ -885,7 +888,7 @@ SearchParams = (function() {
     if (this.rt()) {
       params.push('destinations[1][departure]=' + this.arr());
       params.push('destinations[1][arrival]=' + this.dep());
-      params.push('destinations[1][date]=' + this.rt_date);
+      params.push('destinations[1][date]=' + this.rtDate);
     }
     params.push('adt=' + this.adults());
     params.push('chd=' + this.children());
@@ -898,18 +901,24 @@ SearchParams = (function() {
   SearchParams.prototype.key = function() {
     var key;
     key = this.dep() + this.arr() + this.date;
-    if (this.rt) {
-      key += this.rt_date;
+    if (this.rt()) {
+      key += this.rtDate;
+      key += '_rt';
     }
     key += this.adults();
     key += this.children();
     key += this.infants();
+    console.log("Search key", key);
     return key;
   };
 
   SearchParams.prototype.getHash = function() {
-    var hash;
-    hash = 'avia/search/' + [this.dep(), this.arr(), this.date, this.adults(), this.children(), this.infants()].join('/') + '/';
+    var hash, parts;
+    parts = [this.dep(), this.arr(), this.date, this.adults(), this.children(), this.infants()];
+    if (this.rt()) {
+      parts.push(this.rtDate);
+    }
+    hash = 'avia/search/' + parts.join('/') + '/';
     window.voyanga_debug("Generated hash for avia search", hash);
     return hash;
   };
@@ -920,7 +929,12 @@ SearchParams = (function() {
     this.date = data[2];
     this.adults(data[3]);
     this.children(data[4]);
-    return this.infants(data[5]);
+    this.infants(data[5]);
+    if (data.length === 7) {
+      this.rt(true);
+      console.log("RTDATE");
+      return this.rtDate = data[6];
+    }
   };
 
   return SearchParams;
