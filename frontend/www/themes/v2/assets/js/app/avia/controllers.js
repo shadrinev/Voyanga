@@ -82,7 +82,7 @@ AviaController = (function() {
     };
     window.app.on('avia:contentRendered', function() {
       return setTimeout(function() {
-        return AviaFilters.init(this.aviaFiltersInit);
+        return AviaFilters.init(_this.aviaFiltersInit);
       }, 100);
     });
     this.render('results', {

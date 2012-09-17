@@ -28,7 +28,7 @@
                 <br>
                 <br>
             </div>
-            <h4>Время вылета</h4>
+            <h4>Время вылета<span class="flightDirectionName"> туда</span></h4>
 
             <div class="slide-filter">
                 <div class="slider-wrapper-div">
@@ -38,7 +38,7 @@
                     <input id="departureTimeSliderReturn" type="slider" name="departureTimeSlider" value="480;1020" data-bind="value: results.timeLimits.departureFromToTimeReturnActive"/>
                 </div>
             </div>
-            <h4>Время прилета</h4>
+            <h4>Время прилета<span class="flightDirectionName"> туда</span></h4>
 
             <div class="slide-filter">
                 <div class="slider-wrapper-div">
