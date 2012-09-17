@@ -568,9 +568,12 @@ class AviaResultSet
       }
 
     @_allFilters.subscribe (value) =>
+      console.log "REFILTER"
       _.each @data, (x)-> x.filter (value)
       @update_cheapest()
       ko.processAllDeferredBindingUpdates()
+      # FIXME
+      ResizeAvia();
 
     @update_cheapest()
 

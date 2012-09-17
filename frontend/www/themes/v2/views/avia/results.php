@@ -9,12 +9,8 @@
 <div class="clear"></div>
 </div>
 <div class="ticket-content">
-<h2>Все результаты</h2>
+<h2>Все результаты. Найдено <span data-bind="text: results.data.length"></span> ЧЕГОТО</h2>
 
-<!-- div class="order-div">
-    Сортировать по: <a href="#" class="order-show">цене</a> <a href="#start" class="order-hide">времени вылета</a> <a
-        href="#start" class="order-hide">времени прилета</a>
-</div -->
 <div class="clear"></div>
 
 <!-- ko foreach: results -->
