@@ -178,7 +178,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       match_departure_time = false
       if filters.departureTimeReturn.timeFrom <= rtVoyage.departureTimeNumeric() && filters.departureTimeReturn.timeTo >= rtVoyage.departureTimeNumeric()
         match_departure_time = true
-      thisBack = result && match_departure_time
+      thisBack = thisBack && match_departure_time
 
       if filters.onlyDirect == '1'
         thisBack = thisBack && rtVoyage.direct
@@ -189,6 +189,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       match_arrival_time = false
       if filters.arrivalTimeReturn.timeFrom <= rtVoyage.arrivalTimeNumeric() && filters.arrivalTimeReturn.timeTo >= rtVoyage.arrivalTimeNumeric()
         match_arrival_time = true
+
       thisBack = thisBack && match_arrival_time
       rtVoyage.visible(thisBack)
       if thisBack && !haveBack
