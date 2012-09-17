@@ -29,29 +29,34 @@ class HotelSearchParams
      */
     public $rooms;
 
-
-
     public function addRoom($adultCount, $cots = 0, $childAge = false)
     {
         $sameRoom = false;
-        $room = array('adultCount'=>$adultCount,'cots'=>$cots,'childAge'=>$childAge,'childCount'=> $childAge === false ? 0 : 1,'roomCount'=>1);
-        /*$compareParams = array('adultCount','coats','childAge','childCount');
-        foreach($this->rooms as $key=>$roomInfo)
+        $room = array('adultCount' => $adultCount, 'cots' => $cots, 'childAge' => $childAge, 'childCount' => $childAge === false ? 0 : 1, 'roomCount' => 1);
+        if (!$sameRoom)
         {
-            $sameRoom = true;
-            foreach($compareParams as $param)
-            {
-                $sameRoom = $sameRoom && ($roomInfo[$param] === $room[$param]);
-                if(!$sameRoom) break;
-            }
-            if($sameRoom)
-            {
-                $this->rooms[$key]['roomCount']++;
-                break;
-            }
-        }*/
-        if(!$sameRoom){
             $this->rooms[] = $room;
         }
+    }
+
+    public function getJsonObject()
+    {
+        $jsonObject = array(
+            'checkIn' => $this->checkIn,
+            'duration' => $this->duration,
+            'city' => $this->city->id,
+            'rooms' => array()
+        );
+        foreach ($this->rooms as $room)
+        {
+            $newElement = array(
+                'adultCount' => $room['adultCount'],
+                'cots' => $room['cots'],
+                'childAge' => $room['childAge'],
+                'childCount' => $room['childCount'],
+            );
+            $jsonObject['rooms'][] = $newElement;
+        }
+        return $jsonObject;
     }
 }

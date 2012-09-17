@@ -19,7 +19,7 @@ class SearchController extends ApiController
      *  [Х][chdAge] - age of child inside room,
      *  [Х][cots] - cots inside room (0 or 1),
      */
-    public function actionDefault($city, $checkIn, $duration, array $rooms, $format='json')
+    public function actionDefault($city, $checkIn, $duration, array $rooms, $format = 'json')
     {
         $hotelSearchParams = new HotelSearchParams();
         $hotelSearchParams->checkIn = date('Y-m-d', strtotime($checkIn));
@@ -30,10 +30,10 @@ class SearchController extends ApiController
         $hotelSearchParams->duration = $duration;
         foreach ($rooms as $i => $room)
         {
-            if ($room['chd']==1)
+            if ($room['chd'] == 1)
                 $hotelSearchParams->addRoom($room['adt'], $room['cots'], $room['chdAge']);
-            elseif ($room['chd']==0)
-                $hotelSearchParams->addRoom($room['adt'],  $room['cots'], false);
+            elseif ($room['chd'] == 0)
+                $hotelSearchParams->addRoom($room['adt'], $room['cots'], false);
             else
                 $this->sendError(500, 'Only 0 or 1 child at one hotel room accepted');
         }
@@ -42,12 +42,12 @@ class SearchController extends ApiController
         $hotelClient = new HotelBookClient();
         $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
         $results = array();
-        if ($variants['errorStatus']==1)
+        if ($variants['errorStatus'] == 1)
         {
             $stack = new HotelStack($variants);
-            $results = $stack->sortBy('rubPrice',5)->getJsonObject();
+            $results = $stack->sortBy('rubPrice', 5)->getJsonObject();
             $query = array();
-            foreach ($results['hotels'] as $i=>$info)
+            foreach ($results['hotels'] as $i => $info)
             {
                 $query[$info['hotelId']] = $hotelClient->hotelDetail($info['hotelId'], true);
             }
@@ -62,12 +62,52 @@ class SearchController extends ApiController
         {
             $this->sendError(500, $variants['errorsDescriptions']);
         }
-        if ($format=='json')
+
+        $cacheId = $this->storeToCache($hotelSearchParams, $results);
+        $results['cacheId'] = $cacheId;
+        $results['searchParams'] = $hotelSearchParams->getJsonObject();
+
+        if ($format == 'json')
             $this->sendJson($results);
-        elseif ($format=='xml')
+        elseif ($format == 'xml')
             $this->sendXml($results, 'hotelSearchResults');
         else
             $this->sendError(400, 'Incorrect response format');
+    }
+
+    public function actionInfo($hotelId, $cacheId, $format = 'json')
+    {
+        $hotelSearchResult = Yii::app()->cache->get('hotelSearchResult' . $cacheId);
+        $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams' . $cacheId);
+        if ((!$hotelSearchResult) || (!$hotelSearchParams))
+        {
+            $this->sendError(500, 'Cache invalidated already.');
+            Yii::app()->end();
+        }
+        foreach ($hotelSearchResult['hotels'] as $hotel)
+        {
+            if ($hotel['hotelId']==$hotelId)
+            {
+                $response['hotel'] = $hotel;
+                $hotelClient = new HotelBookClient();
+                $response['hotel']['details'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
+                $response['searchParams'] = $hotelSearchParams->getJsonObject();
+                if ($format == 'json')
+                    $this->sendJson($response);
+                elseif ($format == 'xml')
+                    $this->sendXml($response, 'hotelSearchResults');
+                Yii::app()->end();
+            }
+        }
+        $this->sendError(500, 'No hotel with given hotelId found');
+    }
+
+    private function storeToCache($hotelSearchParams, $results)
+    {
+        $cacheId = md5(serialize($hotelSearchParams));
+        Yii::app()->cache->set('hotelSearchResult' . $cacheId, $results, appParams('hotel_search_cache_time'));
+        Yii::app()->cache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
+        return $cacheId;
     }
 
     private function inject(&$results, $hotelId, $additional)
@@ -94,7 +134,7 @@ class SearchController extends ApiController
         if (is_object($additional))
         {
             $objectVars = get_object_vars($additional);
-            foreach ($objectVars as $objVar=>$objProperties)
+            foreach ($objectVars as $objVar => $objProperties)
             {
                 if (is_object($additional->$objVar))
                     $additional->$objVar = $this->prepare($additional->$objVar);
@@ -107,33 +147,5 @@ class SearchController extends ApiController
             }
         }
         return $additional;
-    }
-
-    public function actionInfo($cacheId, $hotelId, $format='json')
-    {
-        $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams'.$cacheId);
-        $resultSearch = Yii::app()->cache->get('hotelResult'.$cacheId);
-        if($resultSearch)
-        {
-            $hotelStack = new HotelStack($resultSearch);
-            $hotelStack->groupBy('hotelId')->groupBy('roomShowName')->groupBy('rubPrice')->sortBy('rubPrice',2);
-            $resultsRecommended = $hotelStack->hotelStacks[$hotelId]->getAsJson();
-            $HotelClient = new HotelBookClient();
-            $hotels = $HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelId);
-            $hotelStackFull = new HotelStack(array('hotels'=>$hotels));
-            $resultsAll = $hotelStackFull->getAsJson();
-            $hotelInfo = $HotelClient->hotelDetail($hotelId);
-            //$this->render('resultInfo', array('items'=>$this->generateItems(), 'autosearch'=>false, 'cityName'=>$hotelSearchParams->city->localRu,'hotelInfo'=>$hotelInfo,'resultsRecommended'=>$resultsRecommended, 'resultsAll'=>$resultsAll,'cacheId'=>$cacheId));
-        }else{
-            $this->sendError(400, 'Incorrect response format');
-        }
-        $response = array('cityName'=>$hotelSearchParams->city->localRu,'hotelInfo'=>$hotelInfo,'resultsRecommended'=>$resultsRecommended, 'resultsAll'=>$resultsAll,'cacheId'=>$cacheId);
-        if ($format=='json')
-            $this->sendJson($response);
-        elseif ($format=='xml')
-            $this->sendXml($response, 'hotelSearchResults');
-        else
-            $this->sendError(400, 'Incorrect response format');
-
     }
 }
