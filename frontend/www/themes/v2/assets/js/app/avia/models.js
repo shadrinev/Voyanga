@@ -198,20 +198,30 @@ Voyage = (function() {
     if (filters.departureTime.timeFrom <= this.departureTimeNumeric() && filters.departureTime.timeTo >= this.departureTimeNumeric()) {
       match_departure_time = true;
     }
+    if (!match_departure_time) {
+      console.log('filt by DT');
+    }
     result = result && match_departure_time;
     match_arrival_time = false;
     if (filters.arrivalTime.timeFrom <= this.arrivalTimeNumeric() && filters.arrivalTime.timeTo >= this.arrivalTimeNumeric()) {
       match_arrival_time = true;
     }
+    if (!match_arrival_time) {
+      console.log('filt by AT');
+    }
     result = result && match_arrival_time;
     if (filters.onlyDirect === '1') {
       result = result && this.direct;
+    }
+    if (!result) {
+      console.log('filt by on Dir');
     }
     if (filters.onlyShort) {
       result = result && (this.stopoverLength <= 7200);
     }
     if (this._backVoyages.length > 0) {
       haveBack = false;
+      console.log('have back');
     } else {
       haveBack = true;
     }
@@ -245,6 +255,9 @@ Voyage = (function() {
       console.log('filtred by back');
     }
     result = result && haveBack;
+    if (!result) {
+      console.log('filtered!!!');
+    }
     return this.visible(result);
   };
 
@@ -840,7 +853,7 @@ SearchParams = (function() {
     this.infants = ko.observable(0).extend({
       integerOnly: 'infant'
     });
-    this.rt = ko.observable(true);
+    this.rt = ko.observable(false);
     this.rt_date = '12.10.2012';
   }
 

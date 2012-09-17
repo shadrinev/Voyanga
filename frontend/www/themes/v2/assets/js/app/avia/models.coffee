@@ -155,15 +155,21 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     match_departure_time = false
     if filters.departureTime.timeFrom <= @departureTimeNumeric() && filters.departureTime.timeTo >= @departureTimeNumeric()
       match_departure_time = true
+    if !match_departure_time
+      console.log 'filt by DT'
     result = result && match_departure_time
 
     match_arrival_time = false
     if filters.arrivalTime.timeFrom <= @arrivalTimeNumeric() && filters.arrivalTime.timeTo >= @arrivalTimeNumeric()
       match_arrival_time = true
+    if !match_arrival_time
+      console.log 'filt by AT'
     result = result && match_arrival_time
 
     if filters.onlyDirect == '1'
       result = result && @direct
+    if !result
+      console.log 'filt by on Dir'
 
     if filters.onlyShort
       result = result && (@stopoverLength <= 7200)
@@ -171,6 +177,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
     if @_backVoyages.length > 0
       haveBack = false
+      console.log('have back')
     else
       haveBack = true
     for rtVoyage in @_backVoyages
@@ -198,6 +205,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     if(!haveBack)
       console.log('filtred by back')
     result = result && haveBack
+    if(!result)
+      console.log 'filtered!!!'
     @visible(result)
 
 
@@ -288,8 +297,6 @@ class AviaResult
         match_lines = false
       if !match_lines && filters.airlines.indexOf(@airline) >= 0
         match_lines = true
-
-
 
       @visible(match_ports&&match_lines&&some_visible&&service_class)
 
@@ -625,7 +632,7 @@ class SearchParams
     @children = ko.observable(0).extend({integerOnly: true})
     @infants = ko.observable(0).extend({integerOnly: 'infant'})
 
-    @rt = ko.observable true
+    @rt = ko.observable false
     @rt_date = '12.10.2012'
 
   url: ->
