@@ -459,7 +459,7 @@
 	position: relative;
 	width: 318px;
 	float: left;
-	margin-bottom: 43px;
+	margin-bottom: 52px;
 }
 .recommended-ticket .ticket-items {
 	background: none repeat scroll 0 0 #F4F7F9;
@@ -1031,7 +1031,7 @@
 .tickets-details .content .aviacompany {
 	color: #1D222B;
     float: right;
-    line-height: 26px;
+    line-height: 16px;
     padding-top: 7px;
     text-align: center;
     width: 160px;
@@ -1123,7 +1123,7 @@
 }
 .tickets-details .finish {
 	overflow: hidden;
-	padding: 10px 35px 0px 13px;
+	padding: 14px 35px 0 13px;
 }
 .tickets-details .finish .floatLeft {
 	color: #525559;
