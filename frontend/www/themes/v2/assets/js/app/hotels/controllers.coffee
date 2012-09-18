@@ -73,7 +73,7 @@ class HotelsController
       window.voyanga_debug "HOTELS: Getting results via JSONP"
       $.ajax
         #url: "http://api.voyanga/v1/hotel/search?city=LED&checkIn=2012-10-11&duration=3&rooms%5B0%5D%5Badt%5D=2&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0"
-        url: "http://api.voyanga.com/v1/hotel/search/info?cacheId=420f2ffaace4f4ba88aedced51b036b7&hotelId=4"
+        url: "http://api.voyanga.com/v1/hotel/search/info?cacheId=420f2ffaace4f4ba88aedced51b036b7&hotelId=17"
         dataType: 'jsonp'
         success: @handleResultsInfo
 

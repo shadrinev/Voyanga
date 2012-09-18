@@ -39,7 +39,7 @@
                 <div class="photo-slide-hotel">
 
                     <ul data-bind="foreach: result.photos">
-                        <li><a href="#" class="photo" data-bind="attr:{href: largeUrl}"><img src="#" data-bind="attr:{src: smallUrl}"></a></li>
+                        <li><a href="#" class="photo" data-bind="attr:{href: largeUrl}"><img src="#" data-bind="attr:{src: largeUrl}"></a></li>
                     </ul>
 
                     Фотографии предоставлены отелями(<span data-bind="text: result.numPhotos"></span>).
