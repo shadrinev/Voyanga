@@ -98,7 +98,7 @@ HotelsController = (function() {
     } else {
       window.voyanga_debug("HOTELS: Getting results via JSONP");
       return $.ajax({
-        url: "http://api.voyanga/v1/hotel/search/info?cacheId=420f2ffaace4f4ba88aedced51b036b7&hotelId=4",
+        url: "http://api.voyanga.com/v1/hotel/search/info?cacheId=420f2ffaace4f4ba88aedced51b036b7&hotelId=4",
         dataType: 'jsonp',
         success: this.handleResultsInfo
       });
