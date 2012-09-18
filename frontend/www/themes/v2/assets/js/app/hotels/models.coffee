@@ -1,5 +1,13 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 
+class HotelFilter
+  constructor: (data) ->
+    @data = data
+
+  test: (object) ->
+    return true
+
+
 class Room
   constructor: (data) ->
     @name = data.showName
@@ -11,8 +19,9 @@ class Room
     @hasMeal = (@meal != 'Без питания' && @meal != 'Не известно')
 
 class RoomSet
-  constructor: (data) ->
+  constructor: (data, duration = 1) ->
     @price = Math.ceil(data.rubPrice)
+    @pricePerNight = Math.ceil(@price / duration)
 
     @rooms = []
     for room in data.rooms
@@ -21,7 +30,7 @@ class RoomSet
 # Stacked hotel, FIXME can we use this as roomset ?
 #
 class HotelResult
-  constructor: (data) ->
+  constructor: (data, duration = 1) ->
     # Mix in events
     _.extend @, Backbone.Events
 
@@ -49,6 +58,8 @@ class HotelResult
     @lng = data.longitude / 1
     @distanceToCenter = Math.round(data.centerDistance/1000)
 
+    @duration = duration
+
     @hasHotelServices = if data.facilities then true else false
     @hotelServices = data.facilities
     @hasRoomAmenities = if data.roomAmenities then true else false
@@ -57,11 +68,15 @@ class HotelResult
     @push data
 
   push: (data) ->
-    set = new RoomSet data
+    set = new RoomSet data,@duration
     if @roomSets.length == 0
       @cheapest = set.price
+      @minPrice = set.pricePerNight
+      @maxPrice = set.pricePerNight
     else
       @cheapest = if set.price < @cheapest then set.price else @cheapest
+      @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
+      @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
 
   showPhoto: =>
@@ -190,27 +205,58 @@ class HotelResult
 # Stacks them by price and company
 #
 class HotelsResultSet
-  constructor: (rawHotels,duraion = 0) ->
+  constructor: (rawHotels,duration = 0) ->
     @_results = {}
 
-    if duraion == 0
+    if duration == 0
       for hotel in rawHotels
-        checkIn = hotel.checkIn;
+        if typeof hotel.duration == 'undefined'
+          checkIn = dateUtils.fromIso hotel.checkIn
+          console.log checkIn
+          checkOut = dateUtils.fromIso hotel.checkOut
+          console.log hotel.checkOut
+          console.log checkOut
+          duration = checkOut.valueOf() - checkIn.valueOf()
+          duration =  Math.floor(duration / (3600 * 24 * 1000))
+        else
+          duration = hotel.duration
+        break
+
+    @minPrice = false
+    @maxPrice = false
     for hotel in rawHotels
       key = hotel.hotelId
       if @_results[key]
         @_results[key].push hotel
+        @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
+        @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
       else
-        result =  new HotelResult hotel
+        result =  new HotelResult hotel, duration
         @_results[key] = result
+        if @minPrice == false
+          @minPrice = @_results[key].minPrice
+          @maxPrice = @_results[key].maxPrice
+        else
+          @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
+          @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
         result.on "popup", (data)=>
           @popup data
 
     # We need array for knockout to work right
     @data = []
+    @_services = {}
+    @_names = []
+    @stars = {}
+
 
     for key, result of @_results
       @data.push result
+      @_names.push(result.hotelName)
+      @stars[result.stars] = 1
+      if result.hasHotelServices
+        for service in result.hotelServices
+          @_services[service] = 1
+
 
     @popup = ko.observable @data[0]
 

@@ -51,3 +51,11 @@ dateUtils=
     hours = (all_minutes - minutes) / 60
     hours + " ч. " + minutes + " м."
 
+  fromIso: (dateIsoString) ->
+    if typeof dateIsoString == 'string'
+      initArray = dateIsoString.split('-')
+      return new Date(initArray[0],(initArray[1]-1),initArray[2])
+    else
+      return dateIsoString
+
+

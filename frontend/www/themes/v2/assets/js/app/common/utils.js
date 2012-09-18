@@ -54,5 +54,14 @@ dateUtils = {
     minutes = all_minutes % 60;
     hours = (all_minutes - minutes) / 60;
     return hours + " ч. " + minutes + " м.";
+  },
+  fromIso: function(dateIsoString) {
+    var initArray;
+    if (typeof dateIsoString === 'string') {
+      initArray = dateIsoString.split('-');
+      return new Date(initArray[0], initArray[1] - 1, initArray[2]);
+    } else {
+      return dateIsoString;
+    }
   }
 };
