@@ -2,7 +2,7 @@
     $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 ?>
 <script type="text-html" id="hotels-results">
-<h1>Выберите отель в Амстердам, 19-26 мая</h1>
+<h1><span data-bind="visible:false">Выберите отель в</span>Амстердам, 19-26 мая</h1>
 <div class="ticket-content hotels">
     <h2>Найдено отелей: 43</h2>
     <div class="clear"></div>
