@@ -95,6 +95,9 @@
 	top: 50%;
 
 }
+.ticket-items .content .buy-ticket .text .btn-cost {
+	width: 88%;
+}
 .ticket-items .content .buy-ticket .text > span {
 	font-size: 14px; 
 	color: #262930; 
