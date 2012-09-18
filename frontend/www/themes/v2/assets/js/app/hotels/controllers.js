@@ -34,7 +34,7 @@ HotelsController = (function() {
     var args, key;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("HOTELS: Invoking searchAction", args);
-    key = "h_search_10005";
+    key = "h_search_10007";
     if (sessionStorage.getItem(key) && (window.location.host !== 'test.voyanga.com')) {
       window.voyanga_debug("HOTELS: Getting result from cache");
       return this.handleResults(JSON.parse(sessionStorage.getItem(key)));
@@ -51,7 +51,7 @@ HotelsController = (function() {
   HotelsController.prototype.handleResults = function(data) {
     var key, stacked;
     window.voyanga_debug("HOTELS: searchAction: handling results", data);
-    key = "h_search_10005";
+    key = "h_search_10007";
     sessionStorage.setItem(key, JSON.stringify(data));
     stacked = new HotelsResultSet(data.hotels);
     this.render('results', {

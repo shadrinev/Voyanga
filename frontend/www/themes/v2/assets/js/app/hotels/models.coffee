@@ -1,11 +1,18 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 
 class HotelFilter
-  constructor: (data) ->
-    @data = data
+  constructor: (@data) ->
 
-  test: (object) ->
-    return true
+  filter: (value) ->
+    if !value
+      console.log('filtered by '+@name)
+
+class HotelNameFilter extends HotelFilter
+  constructor: (hotelNames)->
+    @name = 'NameFilter'
+
+
+  filter: (object)->
 
 
 class Room
