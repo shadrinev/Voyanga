@@ -9,8 +9,8 @@
 <div class="clear"></div>
 </div>
 <div class="ticket-content">
-<h2>Все результаты. Найдено <span data-bind="text: results.numResults()"></span> ЧЕГОТО</h2>
-
+<h2>Все результаты. Найдено: <span data-bind="text: results.numResults()"></span>.</h2>
+<div class="order-div"><a class="order-hide" href="#" style="display: inline;">Скрыть рекомендации</a></div>
 <div class="clear"></div>
 
 <!-- ko foreach: results -->

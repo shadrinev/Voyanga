@@ -4,6 +4,7 @@ SEARCH controller, should be splitted once we will get more actions here
 class AviaController
   constructor: (@searchParams)->
     @routes =
+      '/search/:from/:to/:when/:adults/:children/:infants/:rtwhen/': @searchAction
       '/search/:from/:to/:when/:adults/:children/:infants/': @searchAction
       '': @indexAction
 
