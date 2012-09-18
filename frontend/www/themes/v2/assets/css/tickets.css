@@ -489,7 +489,9 @@
     position: relative;
 }
 .recommended-ticket .ticket-items .content .airlines-line span {
-	font-size: 16px;
+	display: inline-block;
+    font-size: 16px;
+    vertical-align: text-top;
 }
 .recommended-ticket .ticket-items .content .date-time-city {
 	position: relative;
@@ -1027,10 +1029,12 @@
 	color: #525559;
 }
 .tickets-details .content .aviacompany {
-	float: right;
-	width: 160px;
-	padding-top: 7px;
-	color: #1d222b;
+	color: #1D222B;
+    float: right;
+    line-height: 26px;
+    padding-top: 7px;
+    text-align: center;
+    width: 160px;
 }
 .tickets-details .content .information .time-fly {
 	height: 23px;
@@ -1117,10 +1121,53 @@
 	border: none;
 	margin: 0px;
 }
-.tickets-details .yes {
+.tickets-details .finish {
 	overflow: hidden;
-	text-align: right;
-	padding: 5px 35px 0px 13px;
+	padding: 10px 35px 0px 13px;
+}
+.tickets-details .finish .floatLeft {
+	color: #525559;
+    float: left;
+    font-size: 11px;
+    line-height: 16px;
+    padding-left: 14px;
+    width: 330px;
+}
+.back {
+	padding-left: 52px;
+}
+.ico-back {
+	background: url("../images/backornot.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 17px;
+    margin-left: -50px;
+    float: left;
+    vertical-align: text-bottom;
+    width: 42px;
+}
+.ico-back.no {
+	background-position: 0px -17px;
+}
+.boxKG {
+	padding-left: 53px;
+	margin-top: 13px;
+}
+.boxKG .box {
+	background: url("../images/portBox.png") no-repeat scroll center 0 transparent;
+    display: block;
+    float: left;
+    height: 23px;
+    margin-left: -50px;
+    width: 42px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    color: #FFF;
+    padding-top: 9px;
+}
+.tickets-details .finish .floatRight {
+	float: right;
+	width: 155px;
 }
 .tickets-details .yes .btn-order {
 	display: inline-block;

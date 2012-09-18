@@ -802,15 +802,17 @@
 }
 .filter-content a.clean {
 	display: inline-block;
+    font-family: Arial;
     font-size: 11px;
     line-height: 13px;
+    margin-left: 4px;
     vertical-align: middle;
-    font-family: Arial;
 }
 .div-filter {
-	background: url(../images/shadow-filter.png) no-repeat left 0px;
-	padding-top: 21px; margin-top: 14px;
-	line-height: 25px;
+	background: url("../images/shadow-filter.png") no-repeat scroll left 0 transparent;
+    line-height: 25px;
+    padding-bottom: 8px;
+    padding-top: 18px;
 }
 .all-list {
 	padding-left: 2px;

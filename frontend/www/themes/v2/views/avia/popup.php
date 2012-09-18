@@ -48,11 +48,23 @@
               </div>
               <!-- /ko -->
               <hr class="lines">
-              <div class="yes">
-              <span style="color:#2e333b;" class="f14 bold">Оформить</span>
-              <a class="btn-order" href="#">
-                <span class="cost" data-bind="text: price">63 502</span> <span class="rur f26">o</span>
-              </a>
+              <div class="finish">
+              	<div class="floatLeft">
+              		<div class="back">
+              			<span class="ico-back no"></span>
+              			<span>Билет возвратный</span>
+              		</div>
+              		<div class="boxKG">
+              			<span class="box">45</span>
+              			<span>Норма провоза бесплатного багажа у авиакомпании Aigle Azur в экономическом классе: Багаж не должен превышать по весу 40 кг и по сумме трех измерений 158 см на человека.</span>
+              		</div>
+              	</div>	
+              	<div class="floatRight">
+	              	<span style="color:#2e333b;" class="f14 bold">Оформить</span>
+	              	<a class="btn-order" href="#">
+	                	<span class="cost" data-bind="text: price">63 502</span> <span class="rur f26">o</span>
+	                </a>
+              	</div>
               </div>
             </div>
           </div>
@@ -88,8 +100,8 @@
                 </div>
             </div>
             <div class="aviacompany">
-                <img data-bind="attr: {'src': '/img/airlines/' + transportAirline +'.png'}" >
-                <span data-bind="text: flightCode"></span>
+                <img data-bind="attr: {'src': '/img/airlines/' + transportAirline +'.png'}" ><br>
+                Номер рейса: <span data-bind="text: flightCode"></span>
             </div>
         </div>
         <!-- ko if: $index() < ($length() - 1) -->
