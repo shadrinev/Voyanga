@@ -117,7 +117,8 @@ class FlightSearchParams extends CComponent
         $routes = array();
         foreach ($this->routes as $route)
         {
-            $routes = $route->getJsonObject();
+            $routeElement = $route->getJsonObject();
+            $routes[] = $routeElement;
         }
         return $routes;
     }
