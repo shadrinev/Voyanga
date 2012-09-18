@@ -1,5 +1,5 @@
 <script type="text/html" id="avia-results">
-<h1><span data-bind="visible: false">Выберите авиабилет</span>
+<h1 data-bind="visible: false">Выберите авиабилет
     <span data-bind="text: results.departureCity">Санкт-Петербург</span> → <span data-bind="text: results.arrivalCity">Амстердам</span>, <span data-bind="text: results.date">19 мая</span></h1>
 
 <div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: results.cheapest}">
