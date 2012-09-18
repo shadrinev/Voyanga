@@ -348,6 +348,14 @@ AviaResult = (function() {
         match_ports_arr[key] = true;
       }
     }
+    if (this.roundTrip) {
+      if (filters.airports['arrival'].indexOf(this.rtDepartureAirport()) >= 0) {
+        match_ports_arr['departure'] && (match_ports_arr['departure'] = true);
+      }
+      if (filters.airports['departure'].indexOf(this.rtArrivalAirport()) >= 0) {
+        match_ports_arr['arrival'] && (match_ports_arr['arrival'] = true);
+      }
+    }
     match_ports = match_ports_arr['arrival'] && match_ports_arr['departure'];
     service_class = true;
     if (filters.serviceClass === 'A') {
@@ -612,8 +620,6 @@ AviaResultSet = (function() {
     _departureAirports = {};
     _arrivalAirports = {};
     _airlines = {};
-    this.departureCity = false;
-    this.arrivalCity = false;
     _ref = this._results;
     for (key in _ref) {
       result = _ref[key];
@@ -622,12 +628,6 @@ AviaResultSet = (function() {
       _airlines[result.airline] = result.airlineName;
       _departureAirports[result.departureAirport()] = 1;
       _arrivalAirports[result.arrivalAirport()] = 1;
-      if (!this.departureCity) {
-        this.departureCity = result.activeVoyage().departureCity;
-      }
-      if (!this.arrivalCity) {
-        this.arrivalCity = result.activeVoyage().arrivalCity;
-      }
       if (result.roundTrip) {
         _arrivalAirports[result.rtDepartureAirport()] = 1;
         _departureAirports[result.rtArrivalAirport()] = 1;

@@ -277,6 +277,13 @@ class AviaResult
            #    fields.push 'rtArrivalAirport'
         if filters.airports[key].indexOf(@[key+'Airport']()) >= 0
           match_ports_arr[key] = true
+      if @roundTrip
+        # swap arrival/departure for RT
+        if filters.airports['arrival'].indexOf(@rtDepartureAirport()) >= 0
+          match_ports_arr['departure'] and= true
+        if filters.airports['departure'].indexOf(@rtArrivalAirport()) >= 0
+          match_ports_arr['arrival'] and= true
+
       match_ports = match_ports_arr['arrival'] && match_ports_arr['departure']
        
 
@@ -478,18 +485,12 @@ class AviaResultSet
     _arrivalAirports = {}
     _airlines = {}
 
-    @departureCity = false
-    @arrivalCity = false
     for key, result of @_results
       result.sort()
       @data.push result
       _airlines[result.airline] = result.airlineName
       _departureAirports[result.departureAirport()]=1
       _arrivalAirports[result.arrivalAirport()]=1
-      if(!@departureCity)
-        @departureCity = result.activeVoyage().departureCity
-      if(!@arrivalCity)
-        @arrivalCity = result.activeVoyage().arrivalCity
 
       #console.log(result.departureTimeNumeric())
       if result.roundTrip
