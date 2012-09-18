@@ -15,6 +15,13 @@ dateUtils = {
     result += " ";
     return result += MONTHS[date.getMonth()];
   },
+  formatDayShortMonth: function(date) {
+    var result;
+    result = "";
+    result += date.getDate();
+    result += " ";
+    return result += SHORT_MONTHS[date.getMonth()];
+  },
   formatDayMonthWeekday: function(date) {
     var result;
     result = "";

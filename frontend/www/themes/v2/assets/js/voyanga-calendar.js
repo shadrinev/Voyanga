@@ -40,8 +40,12 @@ $.widget("ui.VoyangaCalendarKnob",$.ui.mouse, VoyangaCalendarKnob);/**/
 
 
 Date.fromIso = function (dateIsoString){
-    var initArray = dateIsoString.split('-');
-    return new Date(initArray[0],(initArray[1]-1),initArray[2]);
+    if(typeof dateIsoString == 'string'){
+        var initArray = dateIsoString.split('-');
+        return new Date(initArray[0],(initArray[1]-1),initArray[2]);
+    }else{
+        return dateIsoString;
+    }
 }
 MouseDraggable = {
     options: {

@@ -155,15 +155,21 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     match_departure_time = false
     if filters.departureTime.timeFrom <= @departureTimeNumeric() && filters.departureTime.timeTo >= @departureTimeNumeric()
       match_departure_time = true
+    if !match_departure_time
+      console.log 'filt by DT'
     result = result && match_departure_time
 
     match_arrival_time = false
     if filters.arrivalTime.timeFrom <= @arrivalTimeNumeric() && filters.arrivalTime.timeTo >= @arrivalTimeNumeric()
       match_arrival_time = true
+    if !match_arrival_time
+      console.log 'filt by AT'
     result = result && match_arrival_time
 
     if filters.onlyDirect == '1'
       result = result && @direct
+    if !result
+      console.log 'filt by on Dir'
 
     if filters.onlyShort
       result = result && (@stopoverLength <= 7200)
@@ -171,6 +177,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
     if @_backVoyages.length > 0
       haveBack = false
+      console.log('have back')
     else
       haveBack = true
     for rtVoyage in @_backVoyages
@@ -178,7 +185,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       match_departure_time = false
       if filters.departureTimeReturn.timeFrom <= rtVoyage.departureTimeNumeric() && filters.departureTimeReturn.timeTo >= rtVoyage.departureTimeNumeric()
         match_departure_time = true
-      thisBack = result && match_departure_time
+      thisBack = thisBack && match_departure_time
 
       if filters.onlyDirect == '1'
         thisBack = thisBack && rtVoyage.direct
@@ -189,6 +196,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       match_arrival_time = false
       if filters.arrivalTimeReturn.timeFrom <= rtVoyage.arrivalTimeNumeric() && filters.arrivalTimeReturn.timeTo >= rtVoyage.arrivalTimeNumeric()
         match_arrival_time = true
+
       thisBack = thisBack && match_arrival_time
       rtVoyage.visible(thisBack)
       if thisBack && !haveBack
@@ -197,6 +205,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     if(!haveBack)
       console.log('filtred by back')
     result = result && haveBack
+    if(!result)
+      console.log 'filtered!!!'
     @visible(result)
 
 
@@ -228,6 +238,9 @@ class AviaResult
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
 
+    @stackedMinimized = ko.observable true
+    @rtStackedMinimized = ko.observable true
+
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity',
@@ -255,18 +268,17 @@ class AviaResult
   filter: (filters) ->
       match_ports = true
       # FIXME UNDERSCORE
-      if filters.airports.length == 0
-        match_ports = true
-      else
-        match_ports = false
-        fields = ['departureAirport', 'arrivalAirport']
-        if @roundTrip
-          fields.push 'rtDepartureAirport'
-          fields.push 'rtArrivalAirport'
-        for field in fields
-          if filters.airports.indexOf(@[field]()) >= 0
-            match_ports = true
-            break
+      match_ports_arr =
+        'departure': filters.airports.departure.length == 0
+        'arrival': filters.airports.arrival.length == 0
+      for key in ['departure', 'arrival']
+#         if @roundTrip
+#            fields.push 'rtDepartureAirport'
+           #    fields.push 'rtArrivalAirport'
+        if filters.airports[key].indexOf(@[key+'Airport']()) >= 0
+          match_ports_arr[key] = true
+      match_ports = match_ports_arr['arrival'] && match_ports_arr['departure']
+       
 
       service_class = true
       if filters.serviceClass == 'A'
@@ -287,8 +299,6 @@ class AviaResult
         match_lines = false
       if !match_lines && filters.airlines.indexOf(@airline) >= 0
         match_lines = true
-
-
 
       @visible(match_ports&&match_lines&&some_visible&&service_class)
 
@@ -328,7 +338,11 @@ class AviaResult
 
   chooseStacked: (voyage) =>
     window.voyanga_debug "Choosing stacked voyage", voyage
+    hash = @activeVoyage().activeBackVoyage().hash()
     @activeVoyage(voyage)
+    backVoyage = _.find voyage._backVoyages, (el)-> el.hash() == hash
+    if backVoyage
+      @activeVoyage().activeBackVoyage(backVoyage)
 
   # < > Buttons on recommended/cheapest ticket
   choosePrevStacked: =>
@@ -375,6 +389,12 @@ class AviaResult
       return
     @activeVoyage().activeBackVoyage(rtVoyages[active_index+1])
 
+  # Handler for Списком link
+  minimizeStacked: =>
+    @stackedMinimized !@stackedMinimized()
+
+  minimizeRtStacked: =>
+    @rtStackedMinimized !@rtStackedMinimized()
 
   rtVoyages: ->
       @activeVoyage()._backVoyages
@@ -429,6 +449,8 @@ class AviaResultSet
     @cheapest = ko.observable()
     # We need array for knockout to work right
     @data = []
+
+    @numResults = ko.observable 0
 
     @airports = []
     @departureAirports = []
@@ -507,13 +529,13 @@ class AviaResultSet
       @airlines.push {'name':key,'visibleName':foo, 'active': ko.observable 0 }
 
     @_airportsFilters = ko.computed =>
-          result = []
+          result = {'departure':[], 'arrival':[]}
           for port in @departureAirports
             if port.active()
-              result.push port.name
+              result['departure'].push port.name
           for port in @arrivalAirports
             if port.active()
-              result.push port.name
+              result['arrival'].push port.name
           return result
 
     @_airlinesFilters = ko.computed =>
@@ -568,31 +590,31 @@ class AviaResultSet
       }
 
     @_allFilters.subscribe (value) =>
-      console.log('refilter')
-#      _.each @data, (x)-> x.filter (value)
-#      @update_cheapest()
-#      ko.processAllDeferredBindingUpdates()
+      console.log "REFILTER"
+      _.each @data, (x)-> x.filter (value)
+      @numResults _.reduce @data,
+        (memo, result) ->
+          if result.visible() then memo + 1 else memo
+        , 0
+      console.log @data.length
 
-#    for result in @data
-#      result.sort()
+      @update_cheapest()
+      ko.processAllDeferredBindingUpdates()
+      # FIXME
+      ResizeAvia();
 
     @update_cheapest()
 
     # Flight to show in popup
     @popup = ko.observable @cheapest()
     @done = false
-    console.log "Resultset DONE"
 
-  deferedRender: =>
-    return
-    console.log "DEFERED"
-    if @done
-      return
-    @done = true
-
-    for key, result of @_results
-      @data.push result
-      
+  # Inject search params from response
+  injectSearchParams: (sp) =>
+    @arrivalCity = sp.destinations.arrival
+    @departureCity = sp.destinations.departure
+    @date = dateUtils.formatDayShortMonth new Date(sp.destinations.date)
+        
   resetAirlines: =>
     for line in @airlines
       line.active(0)
@@ -625,13 +647,13 @@ class SearchParams
   constructor: ->
     @dep = ko.observable 'MOW'
     @arr = ko.observable 'PAR'
-    @date = '02.10.2012'
+    @date = '06.10.2012'
     @adults = ko.observable(1).extend({integerOnly: 'adult'})
     @children = ko.observable(0).extend({integerOnly: true})
     @infants = ko.observable(0).extend({integerOnly: 'infant'})
 
     @rt = ko.observable false
-    @rt_date = '12.10.2012'
+    @rtDate = '14.10.2012'
 
   url: ->
     result = 'http://api.voyanga.com/v1/flight/search/BE?'
@@ -642,7 +664,7 @@ class SearchParams
     if @rt()
       params.push 'destinations[1][departure]=' + @arr()
       params.push 'destinations[1][arrival]=' + @dep()
-      params.push 'destinations[1][date]=' + @rt_date
+      params.push 'destinations[1][date]=' + @rtDate
     params.push 'adt=' + @adults()
     params.push 'chd=' + @children()
     params.push 'inf=' + @infants()
@@ -653,16 +675,21 @@ class SearchParams
 
   key: ->
     key = @dep() + @arr() + @date
-    if @rt
-      key += @rt_date
+    if @rt()
+      key += @rtDate
+      key += '_rt'
     key += @adults()
     key += @children()
     key += @infants()
+    console.log "Search key", key
     return key
 
   getHash: ->
     # FIXME
-    hash = 'avia/search/' + [@dep(), @arr(), @date, @adults(), @children(), @infants()].join('/') + '/'
+    parts =  [@dep(), @arr(), @date, @adults(), @children(), @infants()]
+    if @rt()
+      parts.push @rtDate
+    hash = 'avia/search/' + parts.join('/') + '/'
     window.voyanga_debug "Generated hash for avia search", hash
     return hash
 
@@ -675,3 +702,7 @@ class SearchParams
     @adults data[3]
     @children data[4]
     @infants data[5]
+    if data.length == 7
+      @rt true
+      console.log "RTDATE"
+      @rtDate = data[6]

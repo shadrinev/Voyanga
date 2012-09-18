@@ -13,6 +13,13 @@ dateUtils=
     result+= " "
     result+= MONTHS[date.getMonth()]
 
+  formatDayShortMonth: (date) ->
+    result = ""
+    result+= date.getDate()
+    result+= " "
+    result+= SHORT_MONTHS[date.getMonth()]
+
+
   formatDayMonthWeekday: (date) ->
     result = ""
     result+= date.getDate()

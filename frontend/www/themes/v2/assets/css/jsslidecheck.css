@@ -9,6 +9,12 @@
     width: 100%;
     background: url(../images/jslider.checkslide.voyanga.png) center 0px;
 }
+.smallSlider .slidecheckbox {
+	height: 21px;
+    position: relative;
+    width: 100%;
+    background: url("../images/jslider.checkslide.small.voyanga.png") repeat scroll center 1px transparent;
+}
 .slidecheckbox > i.left {
 	display: block;
 	position: absolute;
@@ -27,6 +33,24 @@
 	top: 0px;
 	right: -9px;
 }
+.smallSlider .slidecheckbox > i.left {
+	display: block;
+	position: absolute;
+	background: url(../images/jslider.checkslide.small.voyanga.png) left 1px;
+	width: 11px;
+	height: 21px;
+	top: 0px;
+	left: -9px;
+}
+.smallSlider .slidecheckbox > i.right {
+	display: block;
+	position: absolute;
+	background: url(../images/jslider.checkslide.small.voyanga.png) right 1px;
+	width: 11px;
+	height: 21px;
+	top: 0px;
+	right: -9px;
+}
 .slidecheckbox > .switch {
 	height: 22px;
     position: absolute;
@@ -35,6 +59,15 @@
     background: url(../images/jslider.checkslide.voyanga.png) center -24px;
     cursor: pointer;
 }
+.smallSlider .slidecheckbox > .switch {
+	height: 20px;
+    position: absolute;
+    width: 50%;
+    top: 1px;
+    background: url(../images/jslider.checkslide.small.voyanga.png) center -24px;
+    cursor: pointer;
+}
+
 .slidecheckbox > .switch > i.left {
 	display: block;
 	position: absolute;
@@ -55,6 +88,26 @@
 	right: -9px;
 	z-index: 2;
 } 
+.smallSlider .slidecheckbox > .switch > i.left {
+	display: block;
+	position: absolute;
+	background: url(../images/jslider.checkslide.small.voyanga.png) left -24px;
+	width: 13px;
+	height: 22px;
+	top: 0px;
+	left: -9px;
+	z-index: 2;
+}
+.smallSlider .slidecheckbox > .switch > i.right {
+	display: block;
+	position: absolute;
+	background: url(../images/jslider.checkslide.small.voyanga.png) right -24px;
+	width: 13px;
+	height: 22px;
+	top: 0px;
+	right: -9px;
+	z-index: 2;
+} 
 .slidecheckbox ul li {
 	float: left;
 	width: 50%;
@@ -63,6 +116,9 @@
 	text-align: center;
 	padding-top: 5px;
 	margin: 0px !important;
+}
+.smallSlider .slidecheckbox ul li {
+	padding-top: 4px;
 }
 .slidecheckbox ul li a {
 	color: #2e333b;
@@ -77,4 +133,10 @@
 .slidecheckbox ul li.active a:hover {
 	color: #FFF;
 	text-shadow: 0px 1px 0px #0b5b88;
+}
+
+.smallSlide > div {
+	margin: 0 auto;
+	margin-bottom: 18px;
+	width: 170px;
 }

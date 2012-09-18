@@ -1,6 +1,6 @@
 <script type="text/html" id="avia-results">
 <h1><span>Выберите авиабилет</span>
-    <span>Санкт-Петербург</span> → Амстердам, 19 мая</h1>
+    <span data-bind="text: results.departureCity">Санкт-Петербург</span> → <span data-bind="text: results.arrivalCity">Амстердам</span>, <span data-bind="text: results.date">19 мая</span></h1>
 
 <div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: results.cheapest}">
 
@@ -9,12 +9,8 @@
 <div class="clear"></div>
 </div>
 <div class="ticket-content">
-<h2>Все результаты</h2>
-
-<!-- div class="order-div">
-    Сортировать по: <a href="#" class="order-show">цене</a> <a href="#start" class="order-hide">времени вылета</a> <a
-        href="#start" class="order-hide">времени прилета</a>
-</div -->
+<h2>Все результаты. Найдено: <span data-bind="text: results.numResults()"></span>.</h2>
+<div class="order-div"><a class="order-hide" href="#" style="display: inline;">Скрыть рекомендации</a></div>
 <div class="clear"></div>
 
 <!-- ko foreach: results -->
@@ -77,11 +73,10 @@
 <!-- ko if: stacked() -->
 <div class="other-time">
     <div class="title">Также вы можете вылететь в</div>
-    <div class="btn-minimize"><a href="#">Списком</a></div>
+    <div class="btn-minimize" data-bind="css:{up: !stackedMinimized()}"><a href="#" data-bind="click: minimizeStacked, text: stackedMinimized()?'Списком':'Свернуть'">Списком</a></div>
     <div class="clear"></div>
-    <ul class="minimize" data-bind="foreach: voyages">
-        <!-- ko if: visible() -->
-        <li>
+    <ul data-bind="foreach: voyages, css:{expand: !stackedMinimized(), minimize:stackedMinimized()}">
+        <li data-bind="visible: visible()">
             <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.hash() }, click: $parent.chooseStacked">
                 <input type="radio" data-bind="value: hash(), checked: $parent.hash()">
 
@@ -92,7 +87,6 @@
                 </div>
             </a>
         </li>
-        <!-- /ko -->
     </ul>
 </div>
 <!-- /ko -->
@@ -154,24 +148,22 @@
 <!-- END DATE TIME CITY -->
 <!-- ko if:rtStacked() -->
 <div class="other-time" >
-    <div class="title">Также вы можете вылететь в</div>
-    <div class="btn-minimize"><a href="#">Списком</a></div>
-    <div class="clear"></div>
-    <ul class="minimize" data-bind="foreach: rtVoyages()">
-           <!-- ko if: visible() -->
-            <li>
-                <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.rtHash() }, click: $parent.chooseRtStacked">
-                    <input type="radio" data-bind="value: hash(), checked: $parent.rtHash()">
-
-                    <div class="path">
-                        <div class="in-path"><span>В пути </span><span data-bind="text: duration()">9 ч. 20 м.</span></div>
-                        <div class="start" data-bind="text:departureTime()">06:10</div>
-                        <div class="finish" data-bind="text:arrivalTime()">08:10</div>
-                    </div>
-                </a>
-            </li>
-            <!-- /ko -->
-        </ul>
+  <div class="title">Также вы можете вылететь в</div>
+  <div class="btn-minimize" data-bind="css:{up: !rtStackedMinimized()}"><a href="#" data-bind="click: minimizeRtStacked, text: rtStackedMinimized()?'Списком':'Свернуть'">Списком</a></div>
+  <div class="clear"></div>
+  <ul class="minimize" data-bind="foreach: rtVoyages(), css:{expand: !rtStackedMinimized(), minimize:rtStackedMinimized()}">
+    <li data-bind="visible: visible()">
+      <a href="#" class="ico-path-time" data-bind="css: {hover: hash() == $parent.rtHash() }, click: $parent.chooseRtStacked">
+        <input type="radio" data-bind="value: hash(), checked: $parent.rtHash()">
+	
+        <div class="path">
+          <div class="in-path"><span>В пути </span><span data-bind="text: duration()">9 ч. 20 м.</span></div>
+          <div class="start" data-bind="text:departureTime()">06:10</div>
+          <div class="finish" data-bind="text:arrivalTime()">08:10</div>
+        </div>
+      </a>
+    </li>
+  </ul>
 </div>
 <!-- /ko -->
 <!-- /ko -->

@@ -77,17 +77,7 @@ AviaPanel = (function() {
     this.overall = ko.computed(function() {
       return _this.adults() * 1 + _this.children() * 1 + _this.infants() * 1;
     });
-    this.rt.subscribe(function(newValue) {
-      if (newValue) {
-        return $('.tumblr .switch').animate({
-          'left': '35px'
-        }, 200);
-      } else {
-        return $('.tumblr .switch').animate({
-          'left': '-1px'
-        }, 200);
-      }
-    });
+    this.rt.subscribe(this.rtTumbler);
     this.minimized.subscribe(function(minimized) {
       var heightSubHead, speed;
       speed = 300;
@@ -135,9 +125,21 @@ AviaPanel = (function() {
         }
         return $(this).trigger('change');
       });
-      return _this.rt(!_this.rt());
+      return _this.rtTumbler(_this.rt());
     });
   }
+
+  AviaPanel.prototype.rtTumbler = function(newValue) {
+    if (newValue) {
+      return $('.tumblr .switch').animate({
+        'left': '35px'
+      }, 200);
+    } else {
+      return $('.tumblr .switch').animate({
+        'left': '-1px'
+      }, 200);
+    }
+  };
 
   /*
     # Click handlers

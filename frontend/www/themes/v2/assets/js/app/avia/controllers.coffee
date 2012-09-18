@@ -4,6 +4,7 @@ SEARCH controller, should be splitted once we will get more actions here
 class AviaController
   constructor: (@searchParams)->
     @routes =
+      '/search/:from/:to/:when/:adults/:children/:infants/:rtwhen/': @searchAction
       '/search/:from/:to/:when/:adults/:children/:infants/': @searchAction
       '': @indexAction
 
@@ -39,6 +40,7 @@ class AviaController
     key = "search_" + @searchParams.key()
     sessionStorage.setItem(key, JSON.stringify(data))
     stacked = new AviaResultSet data.flights.flightVoyages
+    stacked.injectSearchParams data.searchParams
     this.getFilterLimitValues(stacked)
     @aviaFiltersInit = {
       flightClassFilter:{value: data.searchParams.serviceClass},
@@ -61,9 +63,8 @@ class AviaController
       rt: data.searchParams.isRoundTrip
     }
 
-
     window.app.on 'avia:contentRendered', =>
-      setTimeout ->
+      setTimeout =>
           AviaFilters.init(@aviaFiltersInit)
         , 100
       
@@ -71,7 +72,6 @@ class AviaController
 
     @trigger "sidebarChanged", 'filters', {'results' :stacked}
     ko.processAllDeferredBindingUpdates()
-    stacked.deferedRender()
 
   indexAction: =>
     window.voyanga_debug "AVIA: invoking indexAction"

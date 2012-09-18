@@ -8,7 +8,7 @@ class Room
 
 class RoomSet
   constructor: (data) ->
-    @price = data.rubPrice
+    @price = Math.ceil(data.rubPrice)
 
     @rooms = []
     for room in data.rooms
@@ -171,7 +171,7 @@ class HotelResult
     SizeBox('hotels-popup-body')
 
   smallMapUrl: =>
-      base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x190&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
+      base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
       base += "%7C"
       base += @lat + "," + @lng
       base += "&sensor=false"

@@ -67,12 +67,8 @@ class AviaPanel
     @overall = ko.computed =>
       @adults()*1 + @children()*1 + @infants()*1
 
-    @rt.subscribe (newValue) ->
-      if newValue
-        $('.tumblr .switch').animate {'left': '35px'}, 200
-      else
-        $('.tumblr .switch').animate {'left': '-1px'}, 200
-
+    @rt.subscribe @rtTumbler
+    
     @minimized.subscribe (minimized) ->
       speed =  300
       heightSubHead = $('.sub-head').height()
@@ -116,8 +112,15 @@ class AviaPanel
           $(@).val $(@).attr 'rel'
         $(@).trigger 'change'
 
-      #! FIXME we need generic way to defer animation untill template rendering is done
-      @rt !@rt()
+      # Initial state for tumbler
+      @rtTumbler(@rt())
+
+  rtTumbler: (newValue) ->
+      if newValue
+        $('.tumblr .switch').animate {'left': '35px'}, 200
+      else
+        $('.tumblr .switch').animate {'left': '-1px'}, 200
+
 
   ###
   # Click handlers
