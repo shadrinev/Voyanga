@@ -31,7 +31,7 @@
         <div class="left">
             <div class="right">
                 <div class="map-hotel">
-                    <img src="images/pic-hotel-map.png">
+                    <img src="" data-bind="attr:{src: result.smallMapUrl()}">
                 </div>
                 Отель расположен в <span data-bind="text: result.distanceToCenter">10</span> км от центра
             </div>
@@ -59,9 +59,9 @@
     </div>
     <!-- END DESCR -->
     <!-- MAP -->
-    <div class="descr" id="map">
+    <div class="descr" id="map" style="display: none">
         <div class="map-big">
-            <img src="images/pic-big-map.png">
+            <img src="" data-bind="attr:{src: result.smallMapUrl()}">
         </div>
         Отель расположен в 10 км от центра
     </div>
@@ -118,12 +118,13 @@
                 <tbody>
                 <tr>
                     <td class="name">
+                        <!-- ko foreach: variants.roomSets -->
                         <div class="items">
                             <ul>
                                 <li>
                                     <table>
                                         <tr>
-                                            <td><span class="text">Трехместный номер люкс</span> <span class="ico-breakfast"></span> Завтрак «шведский стол»<br><a href="#">Условия отмены бронирования</a></td>
+                                            <td data-bind="foreach: rooms"><span class="text" data-bind="text: name">Трехместный номер люкс</span> <span data-bind="if: hasMeal"><span class="ico-breakfast"></span> Завтрак «шведский стол»</span><br><a href="#">Условия отмены бронирования</a></td>
                                             <td class="change">
 
                                                 <div class="change-people">
@@ -140,48 +141,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="items">
-                            <ul>
-                                <li>
-                                    <table>
-                                        <tr>
-                                            <td><span class="text">Трехместный номер люкс</span> <span class="ico-breakfast"></span> Завтрак «шведский стол»<br><a href="#">Условия отмены бронирования</a></td>
-                                            <td class="change">
-                                                <div class="change-people">
-                                                    <div class="minus"></div>
-                                                    <div class="value">
-                                                        <input type="text" value="0">
-                                                    </div>
-                                                    <div class="plus"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="items">
-                            <ul>
-                                <li>
-                                    <table>
-                                        <tr>
-                                            <td><span class="text">Трехместный номер люкс</span> <span class="ico-breakfast"></span> Завтрак «шведский стол»<br><a href="#">Условия отмены бронирования</a></td>
-                                            <td class="change">
-                                                <div class="change-people">
-                                                    <div class="minus"></div>
-                                                    <div class="value">
-                                                        <input type="text" value="0">
-                                                    </div>
-                                                    <div class="plus"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                </li>
-                            </ul>
-                        </div>
+                        <!-- /ko -->
                     </td>
                     <td class="button"><a class="btn-cost" href="#"><span class="l"></span><span class="text">Не выбраны номера</span></a></td>
                 </tr>

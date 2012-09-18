@@ -195,7 +195,7 @@ return CMap::mergeArray(
                             'js/popup-photo.js',
                             'js/tickets.js','js/panel-new.js', 'js/script.js',
                             'js/voyanga-calendar.js', 'js/timeline-calendar.js', 'js/jquery.select.slider.js',
-                            'js/jquery.slider.min.js','js/jquery.slider.js',
+                            'js/jquery.slider.min.js','js/jquery.slider.js', 'js/photoslider.js',
                             //! Our application logic
                             'js/avia.filters.js', 'js/app/common/photobox.js',
                             'js/app/common/module.slider.js',
