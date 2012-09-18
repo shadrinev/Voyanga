@@ -590,6 +590,7 @@ AviaResultSet = (function() {
       } else {
         result = new AviaResult(flightVoyage);
         this._results[key] = result;
+        result.key = key;
         result.on("popup", function(data) {
           return _this.popup(data);
         });
@@ -841,24 +842,26 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.update_cheapest = function() {
-    var cheapest_reseted, key, result, _ref;
-    cheapest_reseted = false;
-    _ref = this._results;
-    for (key in _ref) {
-      result = _ref[key];
-      if (result.visible()) {
-        if (!cheapest_reseted) {
-          this.cheapest(result);
-          console.log("CHEAPEST");
-          cheapest_reseted = true;
-          return;
-          continue;
-        }
-        if (result.price < this.cheapest().price) {
-          console.log("CHEAPEST");
-          this.cheapest(result);
-        }
+    var data, new_cheapest;
+    data = _.filter(this.data, function(el) {
+      return el.visible();
+    });
+    if (data.length === 0) {
+      return;
+    }
+    new_cheapest = _.reduce(data, function(el1, el2) {
+      if (el1.price < el2.price) {
+        return el1;
+      } else {
+        return el2;
       }
+    }, data[0]);
+    if (this.cheapest() === void 0) {
+      this.cheapest(new_cheapest);
+      return;
+    }
+    if (this.cheapest().key !== new_cheapest.key) {
+      return this.cheapest(new_cheapest);
     }
   };
 

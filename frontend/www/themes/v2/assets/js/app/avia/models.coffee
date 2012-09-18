@@ -450,6 +450,7 @@ class AviaResultSet
       else
         result =  new AviaResult flightVoyage
         @_results[key] = result
+        result.key = key
         result.on "popup", (data)=>
           @popup data
 
@@ -628,19 +629,20 @@ class AviaResultSet
       line.active(0)
 
   update_cheapest: ->
-    # FIXME 0 items
-    cheapest_reseted = false
-    for key, result of @_results
-      if result.visible()
-        if !cheapest_reseted
-          @cheapest(result)
-          console.log "CHEAPEST"
-          cheapest_reseted = true
-          return
-          continue
-        if result.price < @cheapest().price
-          console.log "CHEAPEST"
-          @cheapest(result)
+    data = _.filter @data, (el) -> el.visible()
+    # FIXME hide recommend
+    if data.length == 0
+      return
+
+    new_cheapest = _.reduce data,
+      (el1, el2)->
+        if el1.price < el2.price then el1 else el2
+      data[0]
+    if @cheapest() == undefined
+      @cheapest new_cheapest
+      return
+    if @cheapest().key != new_cheapest.key
+      @cheapest new_cheapest
 
 # Model for avia search params,
 # Used in AviaPanel and search controller

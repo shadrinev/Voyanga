@@ -52,7 +52,7 @@
 		Варианты вылета:
 	      </li>
 	      <!-- ko foreach: voyages -->
-	      <li data-bind="css: {active: hash()==$parent.hash()}, click: $parent.chooseStacked">
+	      <li data-bind="css: {active: hash()==$parent.hash()}, click: $parent.chooseStacked, visible: visible">
 		<input name="cheapest_stacked" type="radio"  data-bind="value: hash(), checked: $parent.hash()">
 		<label><span data-bind="text:departureTime()">06:10</span></label>
 	      </li>
@@ -123,7 +123,7 @@
 		Варианты вылета:
 	      </li>
 	      <!-- ko foreach: rtVoyages() -->
-	      <li data-bind="css: {active: hash()==$parent.rtHash()}, click: $parent.chooseRtStacked">
+	      <li data-bind="css: {active: hash()==$parent.rtHash()}, click: $parent.chooseRtStacked, visible: visible">
 		<input name="cheapest_rt_stacked" type="radio"  data-bind="value: hash(), checked: $parent.rtHash()">
 		<label><span data-bind="text:departureTime()">06:10</span></label>
 	      </li>
