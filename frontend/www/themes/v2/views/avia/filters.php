@@ -52,7 +52,7 @@
             </div>
 
 
-        <div class="div-filter">
+        <div class="div-filter" data-bind="visible: results.departureAirports.length>1">
             <h4><div data-bind="text: results.departureCity" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: results.resetDepartureAirports">Очистить</a></h4>
             <ul data-bind="foreach: results.departureAirports">
                 <!-- ko if: $index() < 3 -->
@@ -72,7 +72,7 @@
             </div>
             <!-- /ko -->
         </div>
-        <div class="div-filter">
+        <div class="div-filter" data-bind="visible: results.arrivalAirports.length>1">
             <h4><div data-bind="text: results.arrivalCity" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: results.resetArrivalAirports">Очистить</a></h4>
 
             <ul data-bind="foreach: results.arrivalAirports">
@@ -93,7 +93,7 @@
             </div>
             <!-- /ko -->
         </div>
-        <div class="div-filter">
+        <div class="div-filter" data-bind="visible: results.airlines.length>1">
             <h4>Авиакомпании <a href="#" class="clean" data-bind="click: results.resetAirlines">Очистить</a></h4>
 
             <ul data-bind="foreach: results.airlines">
