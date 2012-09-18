@@ -213,3 +213,37 @@ class HotelsResultSet
       @data.push result
 
     @popup = ko.observable @data[0]
+
+
+# Model for Hotel info params,
+# Used in infoAcion controller
+class HotelInfoParams
+  constructor: ->
+    @cacheId = ''
+    @hotelId = ''
+
+  url: ->
+    result = 'http://api.voyanga/v1/hotel/search/info/'+@cacheId+'/'+@hotelId+'/'
+
+    return result
+
+
+  key: ->
+    key = @dep() + @arr() + @date
+    if @rt
+      key += @rt_date
+    key += @adults()
+    key += @children()
+    key += @infants()
+    return key
+
+  getHash: ->
+    # FIXME
+    hash = 'avia/search/' + [@dep(), @arr(), @date, @adults(), @children(), @infants()].join('/') + '/'
+    window.voyanga_debug "Generated hash for avia search", hash
+    return hash
+
+
+  fromList: (data)->
+    @cacheId data[0]
+    @hotelId data[1]

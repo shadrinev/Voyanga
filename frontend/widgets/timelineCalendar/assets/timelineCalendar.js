@@ -185,6 +185,7 @@ TimelineCalendar.slider.init = function () {
  *
  * @type {Array}
  */
+
 TimelineCalendar.calendarEvents = new Array();
 TimelineCalendar.getDay = function (dateObj) {
     var dayNum = dateObj.getDay();
@@ -244,6 +245,7 @@ TimelineCalendar.generateGrid = function () {
     TimelineCalendar.slider.totalLines = lineNumber;
     //console.log(TimelineCalendar.slider.totalLines);
 }
+
 TimelineCalendar.eventsCompareFunction = function (a, b) {
     if (a.dayStart < b.dayStart) {
         return -1;
@@ -259,6 +261,7 @@ TimelineCalendar.eventsCompareFunction = function (a, b) {
         }
     }
 }
+
 TimelineCalendar.generateHotelDiv = function (HotelEvent) {
     var totalDays = HotelEvent.dayEnd.valueOf() - HotelEvent.dayStart.valueOf();
     totalDays = Math.round(totalDays / (3600 * 24 * 1000));

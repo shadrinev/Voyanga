@@ -11,4 +11,9 @@ class DefaultController extends CController
     {
         $this->render('frontend.www.themes.v2.views.layouts.main');
     }
+
+    public function actionHotelInfo($cacheId, $hotelId)
+    {
+        $this->render('frontend.www.themes.v2.views.layouts.main');
+    }
 }

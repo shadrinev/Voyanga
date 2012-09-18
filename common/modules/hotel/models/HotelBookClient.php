@@ -726,6 +726,7 @@ class HotelBookClient
         self::$groupId = null;
         $hotels = array();
         $errorDescriptions = array();
+
         foreach ($this->requests as $request)
         {
             //echo count($request['result']->hotels).'<br>';
