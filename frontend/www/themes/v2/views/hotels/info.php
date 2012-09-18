@@ -76,17 +76,14 @@
     </div>
     <!-- /ko -->
 
+    <!-- ko if: result.hasRoomAmenities -->
     <div class="service-in-room">
         <h3>Услуги в номере</h3>
-        <ul>
-            <li><span class="ico-wi-fi"></span> бесплатный Wi-Fi</li>
-            <li><span class="ico-wi-fi"></span> бесплатный Wi-Fi</li>
-            <li><span class="ico-glass"></span> широкая коктейльная карта</li>
-            <li><span class="ico-glass"></span> широкая коктейльная карта</li>
-            <li><span class="ico-dog"></span> можно с пёсиком</li>
-            <li><span class="ico-dog"></span> можно с пёсиком</li>
+        <ul data-bind="foreach: result.roomAmenities">
+            <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
         </ul>
     </div>
+    <!-- /ko -->
     <!-- END SERVICE -->
     <!-- INFO TRIP -->
     <div class="info-trip">
@@ -124,7 +121,7 @@
                                 <li>
                                     <table>
                                         <tr>
-                                            <td data-bind="foreach: rooms"><span class="text" data-bind="text: name">Трехместный номер люкс</span> <span data-bind="if: hasMeal"><span class="ico-breakfast"></span> Завтрак «шведский стол»</span><br><a href="#">Условия отмены бронирования</a></td>
+                                            <td data-bind="foreach: rooms"><span class="text" data-bind="text: name">Трехместный номер люкс</span> <span data-bind="if: hasMeal"><span class="ico-breakfast"></span> <span data-bind="text: meal">Завтрак «шведский стол»</span></span><br><a href="#">Условия отмены бронирования</a></td>
                                             <td class="change">
 
                                                 <div class="change-people">

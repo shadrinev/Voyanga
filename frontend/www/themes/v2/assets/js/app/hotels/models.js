@@ -8,7 +8,11 @@ Room = (function() {
 
   function Room(data) {
     this.name = data.showName;
-    this.meal = data.meal;
+    this.meal = data.mealName;
+    if (typeof this.meal === "undefined" || this.meal === '') {
+      this.meal = 'Не известно';
+    }
+    console.log(this.meal);
     this.hasMeal = this.meal !== 'Без питания' && this.meal !== 'Не известно';
   }
 
@@ -69,6 +73,8 @@ HotelResult = (function() {
     this.distanceToCenter = Math.round(data.centerDistance / 1000);
     this.hasHotelServices = data.facilities ? true : false;
     this.hotelServices = data.facilities;
+    this.hasRoomAmenities = data.roomAmenities ? true : false;
+    this.roomAmenities = data.roomAmenities;
     this.roomSets = [];
     this.push(data);
   }
@@ -206,12 +212,21 @@ HotelResult = (function() {
 
 HotelsResultSet = (function() {
 
-  function HotelsResultSet(rawHotels) {
-    var hotel, key, result, _i, _len, _ref,
+  function HotelsResultSet(rawHotels, duraion) {
+    var checkIn, hotel, key, result, _i, _j, _len, _len1, _ref,
       _this = this;
+    if (duraion == null) {
+      duraion = 0;
+    }
     this._results = {};
-    for (_i = 0, _len = rawHotels.length; _i < _len; _i++) {
-      hotel = rawHotels[_i];
+    if (duraion === 0) {
+      for (_i = 0, _len = rawHotels.length; _i < _len; _i++) {
+        hotel = rawHotels[_i];
+        checkIn = hotel.checkIn;
+      }
+    }
+    for (_j = 0, _len1 = rawHotels.length; _j < _len1; _j++) {
+      hotel = rawHotels[_j];
       key = hotel.hotelId;
       if (this._results[key]) {
         this._results[key].push(hotel);

@@ -3,7 +3,11 @@ STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 class Room
   constructor: (data) ->
     @name = data.showName
-    @meal = data.meal
+    @meal = data.mealName
+
+    if typeof @meal == "undefined" || @meal == ''
+      @meal = 'Не известно'
+    console.log(@meal)
     @hasMeal = (@meal != 'Без питания' && @meal != 'Не известно')
 
 class RoomSet
@@ -47,6 +51,8 @@ class HotelResult
 
     @hasHotelServices = if data.facilities then true else false
     @hotelServices = data.facilities
+    @hasRoomAmenities = if data.roomAmenities then true else false
+    @roomAmenities = data.roomAmenities
     @roomSets = []
     @push data
 
@@ -184,9 +190,12 @@ class HotelResult
 # Stacks them by price and company
 #
 class HotelsResultSet
-  constructor: (rawHotels) ->
+  constructor: (rawHotels,duraion = 0) ->
     @_results = {}
 
+    if duraion == 0
+      for hotel in rawHotels
+        checkIn = hotel.checkIn;
     for hotel in rawHotels
       key = hotel.hotelId
       if @_results[key]
