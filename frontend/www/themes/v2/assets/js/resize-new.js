@@ -85,6 +85,7 @@ function ResizeCenterBlock() {
 		var var_descrIsset = var_descrItems.length > 0 && var_descrItems.is(':visible');
 
 		if (! var_leftBlockIsset &&  ! var_filterBlockIsset && var_mainBlockIsset) {
+			console.log("THIS IS === 1 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
 				marginLeftMainBlock = 'auto';
@@ -93,6 +94,8 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
+				
+				widthContent = widthMainBlock;
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
@@ -102,6 +105,8 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = var_paddingLeftMID;
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
+				
+				widthContent = widthMainBlock;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
@@ -111,9 +116,12 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );
 				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
+				
+				widthContent = widthMainBlock;
 			}
 		}
 		else if (! var_leftBlockIsset &&  var_filterBlockIsset && var_mainBlockIsset) {
+			console.log("THIS IS === 2 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthMainBlock = var_widthMiddleBlockMAX;
 				widthFilterBlock = var_widthFilterMAX;
@@ -169,6 +177,7 @@ function ResizeCenterBlock() {
 		}
 
 		else if (var_leftBlockIsset &&  var_filterBlockIsset && var_mainBlockIsset) {
+			console.log("THIS IS === 3 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockMAX;
@@ -219,6 +228,7 @@ function ResizeCenterBlock() {
 		}
 
 		else if (var_leftBlockIsset && var_mainBlockIsset &&  ! var_filterBlockIsset ) {
+			console.log("THIS IS === 4 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockOneMAX;
@@ -280,6 +290,7 @@ function ResizeCenterBlock() {
 			}
 		}
 		else {
+			console.log("THIS IS === 5 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 
 
@@ -298,25 +309,41 @@ function ResizeCenterBlock() {
 
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
-
-
 				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );
 				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
-
 			}
 		}
-
+		if (marginLeftMainBlock != 'auto') {
+				marginLeftMainBlock = marginLeftMainBlock+'px';
+		}
+		if (marginRightMainBlock != 'auto') {
+			marginRightMainBlock = marginRightMainBlock+'px';
+		}
+		if (marginLeftContent != 'auto') {
+			marginLeftContent = marginLeftContent +'px';
+		}
+		if (marginRightContent != 'auto') {
+			marginRightContent = marginRightContent +'px';
+		}
+		if (marginRightFilterBlock != 'auto') {
+			marginRightFilterBlock = marginRightFilterBlock +'px';
+		}
+		if (marginLeftLeftBlock != 'auto') {
+			marginLeftLeftBlock = marginLeftLeftBlock +'px';
+		}
 		/*===*/
 		if (var_mainBlockIsset) {
-			var_mainBlock.css('width', widthMainBlock+'px').css('margin-left', marginLeftMainBlock+'px').css('margin-right', marginRightMainBlock+'px');
-			var_content.css('width', widthContent+'px').css('margin-left', marginLeftContent +'px').css('margin-right', marginRightContent +'px');
+			
+			var_mainBlock.css('width', widthMainBlock+'px').css('margin-left', marginLeftMainBlock).css('margin-right', marginRightMainBlock);
+			var_content.css('width', widthContent+'px').css('margin-left', marginLeftContent).css('margin-right', marginRightContent);
 		}
 		if (var_filterBlockIsset) {
-			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock+'px');
+			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);
+			var_filterBlock.find('.scrollBlock').find('.innerScroll').css('width', (widthFilterBlock+5)+'px');
 		}
 		if (var_leftBlockIsset) {
-			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock+'px');
+			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock);
 		}
 		/* CALENDARE RESIZE */
 		if (var_calendarGridVoyangaIsset) {
@@ -507,5 +534,31 @@ function ResizeFun() {
     ResizeAvia();
 //    loginResize();
 }
+
+function scrollValue() {
+	var var_scrollValueTop = $('.wrapper').scrollTop();
+	console.log(var_scrollValueTop);
+	if (var_scrollValueTop > 179) {
+		$('.filter-content').css('position','fixed').css('top','-73px');
+		$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", $(window).height()+"px");
+	}
+	else {
+		$('.filter-content').css('position','relative').css('top','auto');
+		$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", "auto");
+	}
+	$('.wrapper').scroll(function() {
+		var_scrollValueTop = $(this).scrollTop();
+		if (var_scrollValueTop > 179) {
+			$('.filter-content').css('position','fixed').css('top','-73px');
+			$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", $(window).height()+"px");
+		}
+		else {
+			$('.filter-content').css('position','relative').css('top','auto');
+			$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", "auto");
+		}
+	});
+}
+
 $(window).load(AlphaBackground);
+$(window).load(scrollValue);
 

@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Voyanga v.0.1 - Trip Flight Rework</title>
+<link href="../frontend/www/themes/v2/assets/css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/panel.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/popup.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/load.css" rel="stylesheet" type="text/css" />
+<link href="../frontend/www/themes/v2/assets/css/voyanga-calendar.css" rel="stylesheet" type="text/css" />
+
+<!-- JS SLIDE -->
+<link href="../frontend/www/themes/v2/assets/css/jsslidecheck.css" rel="stylesheet" type="text/css" />
+<!-- JS END SLIDE -->
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/jquery.js"></script>
+
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.dotdotdot-1.5.1.js"></script>
+
+
+	
+<script type="text/javascript" src="js/resize-new.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/slide-mode.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/popup.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/tickets.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/loader.js"></script>
+
+
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/script.js"></script>
+<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/voyanga-calendar.js"></script>
+
+</head>
+
+<body>
+
+<div id="loadWrapBg">
+	<div id="loadContentWin">
+		<div id="loadGIF"><img src="../frontend/www/themes/v2/assets/images/loading-5frame.gif"></div>
+		<div id="loadTXT">
+			Voyanga ищет <br> лучшие предложения...<br>
+			<ul id="loadLight">
+				<li class="active"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<div id="changeText">
+				Это займет от 5 до 30 секунд
+			</div>
+		</div>
+	</div>
+</div>
+<div class="wrapper">
+	<!-- HEAD -->
+	<div class="head">
+		<!-- CENTER BLOCK -->
+		<div class="center-block">
+		
+			<a href="/" class="logo">Voyanga</a>
+			
+			<a href="/" class="about">О проекте</a>
+			
+			<div class="telefon">
+				<img src="images/tel.png">
+			</div>
+				
+			<div class="slide-turn-mode">
+				<div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
+				<div class="bg-mask"></div>
+				
+				<ul>
+					<li class="planner active btn"><a href="#">Планировщик</a></li>
+					<li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
+					<li class="hotel btn"><a href="#">Отели</a></li>
+					<li class="finish-stages btn"><a href="#">Готовые туры</a></li>
+				</ul>
+			</div>
+			
+			<div class="login-window full">
+				<a href="#">
+					<span class="text">Регистрация и вход</span>
+					<span class="point"></span>
+				</a>
+			</div>
+		</div>
+		<!-- END CENTER BLOCK -->
+	</div>
+	<!-- END HEAD -->
+<!--====**********===-->
+	<!-- SUB HEAD -->
+	<div class="sub-head">
+		<!-- CENTER BLOCK -->
+		<div class="center-block">
+			<!-- PANEL -->
+				<div class="panel">
+					<div class="btn-timeline-and-condition">
+						<a href="#" class="btn-timeline active">Таймлайн</a>
+						<a href="#" class="btn-condition">Условия</a>
+					</div>					
+					<div class="clear"></div>
+					<!-- BTN MINIMIZE -->
+					<a href="#" class="btn-minimizePanel"><span></span> свернуть</a>					
+					<div class="minimize-rcomended">
+						<a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+					</div>
+				</div>
+			<!-- END PANEL -->					
+		</div>
+		<!-- END CENTER BLOCK -->
+	</div>	
+	<!-- END SUB HEAD -->
+<!--====**********===-->
+	<!-- ALL CONTENT -->
+	<div class="center-block">
+		<!-- LEFT BLOCK -->
+		<div class="left-block">
+			<!-- LEFT CONTENT -->
+				<div class="left-content">	
+					<h1>Мой маршрут</h1>
+					<!-- UL TRIP -->
+					<ul class="my-trip-list">
+						<li class="items first">
+							<a href="#1" class="fly">
+								<div class="keys"></div>
+								<div class="path">
+									<div class="where">С-Пб &rarr; Амстердам</div>
+									<div class="time">12 750 <span class="rur">o</span>, 7:30 - 12:20</div>
+								</div>
+								<div class="date blue-one">
+									<div class="day">
+										<span class="f17">12</span>
+										<br>
+										мая
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="items">
+							<a href="#2" class="hotel active">
+								<div class="keys"></div>
+								<div class="path">
+									<div class="where">Отель в Амстердам</div>
+									<div class="time">12 750 <span class="rur">o</span>, Park Inn</div>
+								</div>
+								<div class="date orange-two">
+									<div class="day">
+										<span class="f17">12</span>
+										<br>
+										мая
+									</div>
+									<div class="day">
+										<span class="f17">24</span>
+										<br>
+										мая
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="items">
+							<a href="#3" class="fly">
+								<div class="keys"></div>
+								<div class="path">
+									<div class="where">С-Пб &rarr; Амстердам</div>
+									<div class="time">12 750 <span class="rur">o</span>, 7:30 - 12:20</div>
+								</div>
+								<div class="date orange-one">
+									<div class="day">
+										<span class="f17">12</span>
+										<br>
+										мая
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="items">
+							<a href="#4" class="hotel">
+								<div class="keys"></div>
+								<div class="path">
+									<div class="where">Отель в Амстердам</div>
+									<div class="time">12 750 <span class="rur">o</span>, Park Inn</div>
+								</div>
+								<div class="date blue-two">
+									<div class="day">
+										<span class="f17">12</span>
+										<br>
+										мая
+									</div>
+									<div class="day">
+										<span class="f17">24</span>
+										<br>
+										мая
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="items end">
+							<a href="#5" class="last">
+								<div class="keys"></div>
+								<div class="path">
+									Вся поездка
+								</div>
+							</a>
+						</li>
+					</ul>	
+					<!-- END UL TRIP -->
+					<span class="f14 bold" style="color:#2e333b;">Оформить</span>				
+					<a href="#" class="btn-order">		
+						<span class="cost">63 502</span> <span class="rur f26">o</span>
+					</a>				
+					<table class="finish-result">
+						<tr>
+							<td class="txt">Общая стоимость:</td>
+							<td class="price">65 300 <span class="rur">o</span></td>
+						</tr>
+						<tr>
+							<td class="txt">Скидка за комплекс:</td>
+							<td class="price">4 800 <span class="rur">o</span></td>
+						</tr>
+					</table>
+					<hr class="hr">
+					<div class="voyasha-text">
+						<div class="ico-voyasha"></div>
+						<div class="inline-block">
+							<h3>Довериться Вояше</h3>
+							— Я составлю вашу поездку автоматически, просто укажите рамки бюджета
+						</div>
+					</div>
+					<div class="voyasha-slider">
+						<img src="images/img-slide.png">
+					</div>
+					<table class="finish-result">
+						<tr>
+							<td class="txt">Мин. стоимость маршрута:</td>
+							<td class="price">30 300 <span class="rur">o</span></td>
+						</tr>
+						<tr>
+							<td class="txt">Макс. стоимость маршрута:</td>
+							<td class="price">110 000 <span class="rur">o</span></td>
+						</tr>
+					</table>
+				</div>
+			<!-- END LEFT CONTENT -->
+		</div>
+		<!-- END LEFT BLOCK -->
+<!--====**********===-->
+		<!-- MAIN BLOCK -->
+		<div class="main-block">
+			<!-- CONTENT -->
+			<div id="content">
+				<div class="headAndTmblr">
+					<h1>Ваша поездка, сэр</h1>
+					<ul class="tmblr">
+						<li class="active"><span class="ico-descr"></span> <a href="#descr">Таймлайн</a></li>
+						<li><span class="ico-see-map"></span> <a href="#map">На карте</a></li>
+					</ul>
+				</div>
+				<div class="allTrip">
+					<div class="block">
+						<div class="when">
+							<div class="date">
+								<div class="day">
+									<span class="f17">12</span>
+									<br>
+									мая
+								</div>
+							</div>
+						</div>
+						<div class="info">
+							<div class="text">
+								<table class="headTitle">
+									<tr>
+										<td class="name">
+											<div class="ico-hotel"></div>
+											<div class="title">Санкт-Петербург &mdash; <span class="f13">начало путешествия</span></div>
+										</td>
+										<td class="allCost">
+											<a href="#" class="btnChangeStart">Добавить отель</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="hr-bg">
+								<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
+							</div>
+						</div>
+					</div>
+					
+					<div class="block">
+						<div class="when">
+							<div class="date blue-one">
+								<div class="day">
+									<span class="f17">12</span>
+									<br>
+									мая
+								</div>
+							</div>
+						</div>
+						<div class="info">
+							<div class="text">
+								<table class="headTitle">
+									<tr>
+										<td class="name">
+											<div class="ico-jet"></div>
+											<div class="title">Перелёт Санкт-Петербург → Амстердам</div>
+										</td>
+										<td class="allCost">
+											2 человека
+											<span class="costs">58 000 <span class="rur">o</span></span>
+											<a href="#" class="btnDeleteTrip"></a>
+										</td>
+									</tr>
+								</table>	
+								<!-- ЗДЕСЬ БИЛЕТ -->					
+								<table class="descrTicket">
+									<tr>
+										<td class="text">Или другой вариант среди: <span class="f19">19</span> авиакомпаний, от <span class="f19">3 500 <span class="f19 rur">o</span></span> до <span class="f19">14 770 <span class="f19 rur">o</span></span></td>
+										<td class="buttons">
+											 <a class="btn-cost" href="#">
+									            <span class="l"></span>
+									            <span class="text">Все авиабилеты</span>
+									        </a>
+										</td>
+									</tr>
+								</table>		
+							</div>
+							<div class="hr-bg">
+								<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
+							</div>
+						</div>
+					</div>
+					
+					<div class="block end">
+						<div class="when">
+							<div class="date two">
+								<div class="day">
+									<span class="f17">12</span>
+									<br>
+									мая
+								</div>
+								<div class="day">
+									<span class="f17">12</span>
+									<br>
+									мая
+								</div>
+							</div>
+						</div>
+						<div class="info">
+							<div class="text">							
+								<table class="headTitle">
+									<tr>
+										<td class="name">
+											<div class="ico-hotel"></div>
+											<div class="title">Отель в Амстердам</div>
+										</td>
+										<td class="allCost">
+											2 человека, 7 дней:
+											<span class="costs">58 000 <span class="rur">o</span></span>
+											<a href="#" class="btnDeleteTrip"></a>
+										</td>
+									</tr>
+								</table>	
+								<!-- ЗДЕСЬ БИЛЕТ -->							
+								<table class="descrTicket">
+									<tr>
+										<td class="text">Вы можете подобрать другой вариант среди: <span class="f19">189</span> гостиниц, от <span class="f19">3 500 <span class="f19 rur">o</span></span> до <span class="f19">14 770 <span class="f19 rur">o</span></span></td>
+										<td class="buttons">
+											 <a class="btn-cost hotel" href="#">
+									            <span class="l"></span>
+									            <span class="text">Все отели</span>
+									        </a>
+										</td>
+									</tr>
+								</table>									
+							</div>
+							<div class="hr-bg">
+								<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
+							</div>							
+						</div>
+					</div>
+				</div>
+				<div class="hr-bg">
+					<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
+				</div>
+				<h3 class="calendarTitle">Календарь поездки</h3>
+				<!-- CALENDAR -->
+				<div class="innerCalendar allTourCal">
+				<div id='voyanga-calendar' class="hotel">
+				    <div class="weekDaysVoyanga">
+				    	<div class="weekDaysVoyangaInner">
+						    <div class="weekDayVoyanga"><span>Понедельник</span></div>
+						    <div class="weekDayVoyanga"><span>Вторник</span></div>
+						    <div class="weekDayVoyanga"><span>Среда</span></div>
+						    <div class="weekDayVoyanga"><span>Четверг</span></div>
+						    <div class="weekDayVoyanga"><span>Пятница</span></div>
+						    <div class="weekDayVoyanga weekEnd "><span>Суббота</span></div>
+						    <div class="weekDayVoyanga weekEnd "><span>Воскресенье</span></div>
+				    	</div>
+				    </div>
+				    <div class="calendarUnscrollVoyanga">
+				        <div class="calendarGridVoyanga">
+				            <div class="calendarDIVVoyanga">
+				
+				            </div>
+				        </div>
+				    </div>
+				    <div class="monthLineVoyanga"><div class="knobUpAllMonth"></div><div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div></div></div>
+				</div>
+			</div>
+				<!-- END CALENDARE -->
+				<br>
+				<div class="hr-bg">
+					<img src="../frontend/www/themes/v2/assets/images/bg-hr-trip-all.png" width="100%" height="31">
+				</div>
+				<div class="costItAll">
+					Итого <span class="allCost">86 250 <span class="rur">o</span></span>
+					<a href="#" class="btnGoBuy"></a><br>
+					<a href="#" class="detailCost"><img src="../frontend/www/themes/v2/assets/images/detail-cost.png"></a>
+				</div>
+			</div>
+			<!-- END CONTENT -->
+		</div>
+		<!-- END MAIN BLOCK -->
+<!--====**********===-->
+		<div class="clear"></div>
+	</div>
+	<!-- END ALL CONTENT -->
+</div>
+</body>
+</html>
