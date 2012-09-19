@@ -8,6 +8,10 @@
         <select data-bind="slider:true, value: serviceClass.selection"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
       </div>
     </div>
+
+<div class="scrollBlock">
+	<div class="innerScroll" >   
+    
     <div class="div-filter">
       <div class="slider-filter">
         <div>
@@ -51,6 +55,8 @@
     <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: arrivalAirport, if: arrivalAirport.active}, visible: arrivalAirport.active">
     </div>
     <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: airline, if: airline.active}, visible: airline.active">
+    </div>
+    </div>
     </div>
   </div>
 </script>
