@@ -458,3 +458,7 @@
 .allTourCal .weekDaysVoyanga .weekDaysVoyangaInner {
     width: 950px;
 }
+
+.allTourCal .monthLineVoyanga {
+    width: 99.26%;
+}

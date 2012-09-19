@@ -10,7 +10,7 @@ class TourViewerWidget extends CWidget
     public $orderId;
     public $urlToBasket = '/admin/tour/basket/show';
     public $urlToConstructor = '/admin/tour/constructor/create';
-    public $pathToAirlineImg = 'http://frontend.voyanga/img/airlines/';
+    public $pathToAirlineImg = 'http://test.voyanga.com/img/airlines/';
 
     public function init()
     {

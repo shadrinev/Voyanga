@@ -11,7 +11,7 @@
         <tr>
             <td>{{datetimeBegin}}, {{departureCity}}, {{departureAirport}}</td>
             <td>{{datetimeEnd}}, {{arrivalCity}}, {{arrivalAirport}}</td>
-            <td><img src='/img/airlines/{{transportAirline}}.png'></td>
+            <td><img src='http://test.voyanga.com/img/airlines/{{transportAirline}}.png'></td>
             <td>{{humanTime duration}}</td>
         </tr>
         {{/each}}

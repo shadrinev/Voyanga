@@ -17,7 +17,7 @@
       <input type="checkbox" data-bind="checked: shortStopover.selection"> <label>Только короткие пересадки</label>
     </div>
     <div class="div-filter">
-      <div class="slider-filter smallSlide" style="text-align:center; margin-bottom:18px;" data-bind="visible: rt">
+      <div class="slider-filter smallSlide" style="text-align:center; margin-bottom:14px;" data-bind="visible: rt">
         <div>
           <select class="smallSlider" data-bind="slider: true, value: showRt"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
         </div>
@@ -34,7 +34,7 @@
           <input data-bind="timeSlider: rtDeparture"/>
         </div>
       </div>
-      <h4>Время прилета <span class="flightDirectionName" data-bind="visible: rt, text:showRtText">туда</span></h4>
+      <h4 style="margin-top:25px">Время прилета <span class="flightDirectionName" data-bind="visible: rt, text:showRtText">туда</span></h4>
       <div class="slide-filter">
         <div class="slider-wrapper-div" data-bind="visible: !(+showRt())">
           <input data-bind="timeSlider: arrival "/>

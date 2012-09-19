@@ -189,13 +189,14 @@ return CMap::mergeArray(
                             'js/vendor/underscore.js',
                             'js/vendor/backbone.js', 'js/jquery-ui-1.8.22.custom.min.js',
                             'js/jquery.easing.1.3.js',
+                            'js/vendor/jquery.autocomplete.js',
                             //! Markup related scripts and modules
                             'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js',
                             'js/jquery.color.js', 'js/popup.js',
                             'js/popup-photo.js',
                             'js/tickets.js','js/panel-new.js', 'js/script.js',
                             'js/voyanga-calendar.js', 'js/timeline-calendar.js', 'js/jquery.select.slider.js',
-                            'js/jquery.slider.min.js','js/jquery.slider.js',
+                            'js/jquery.slider.min.js','js/jquery.slider.js', 'js/photoslider.js',
                             //! Our application logic
                              'js/app/common/photobox.js',
                             'js/app/common/module.slider.js',
@@ -207,7 +208,9 @@ return CMap::mergeArray(
                             'js/app/hotels/panel.js', 'js/app/hotels/models.js',
                             'js/app/hotels/controllers.js', 'js/app/hotels/module.js',
                             'js/app/avia/models.js', 'js/app/avia/controllers.js',
-                            'js/app/avia/module.js', 'js/app/app.js'),
+                            'js/app/avia/module.js', 'js/app/app.js',
+                            'js/app/common/autocomplete.js',
+                        ),
                         'css' => array(
                             'css/reset.style.css', 'css/style.css',
                             'css/popup.css','css/popup-photo.css','css/jslider.css','css/jslider.round.voyanga.css','css/jsslidecheck.css','css/panel.css', 'css/voyanga-calendar.css'),

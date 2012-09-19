@@ -14,16 +14,16 @@ class TestApiController extends FrontendController
     public $tourApi = 'tour';
     public $autocompleteApi = 'helper/autocomplete';
 
-    public $search = 'search';
+    public $search = 'search/BE';
     public $city = 'city';
 
     public $tests = array(
 //        'aviaSearchSimple',
 //        'aviaSearchComplex',
-//        'aviaSearchRoundTrip',
+        'aviaSearchRoundTrip',
 //        'aviaSearchComplexRoundTrip',
 //          'hotelSearchSimple',
-          'tourSearchSimple',
+//          'tourSearchSimple',
 /*          'autocompleteSimple',
           'autocompleteAirports',
           'autocompleteHotels',
@@ -116,11 +116,11 @@ class TestApiController extends FrontendController
             'destinations' => array(
                 array(
                     'departure' => 'MOW',
-                    'arrival' => 'LED',
+                    'arrival' => 'PAR',
                     'date' => '01.10.2012',
                 ),
                 array(
-                    'departure' => 'LED',
+                    'departure' => 'PAR',
                     'arrival' => 'MOW',
                     'date' => '15.10.2012',
                 ),

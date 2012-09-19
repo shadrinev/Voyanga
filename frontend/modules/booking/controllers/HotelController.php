@@ -128,7 +128,10 @@ class HotelController extends FrontendController
         if($resultSearch['hotels'])
         {
             $hotelStack = new HotelStack($resultSearch);
-            $results = $hotelStack->groupBy('hotelId')->groupBy('roomShowName')
+            //$results = $hotelStack->groupBy('hotelId')->groupBy('roomShowName')
+            //    ->groupBy('rubPrice')->sortBy('rubPrice',3)->getAsJson(1);
+
+            $results = $hotelStack->groupBy('hotelId')->mergeSame()
                 ->groupBy('rubPrice')->sortBy('rubPrice',3)->getAsJson(1);
             //VarDumper::dump($hotelStack);die();
         }

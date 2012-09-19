@@ -595,9 +595,11 @@ class SiteController extends FrontendController
         //echo "mow - led ".UtilsHelper::calculateTheDistance(55.7522,37.6156,59.8944,30.2642).' meters';die();
 
         $HotelClient = new HotelBookClient();
+        $hotelInfo = $HotelClient->hotelDetail(23130);
+        VarDumper::dump($hotelInfo);
         //$HotelClient->synchronize();
         //$russia = Country::getCountryByCode('US');
-        $city = City::getCityByCode('PAR');
+        /*$city = City::getCityByCode('PAR');
         $city = City::getCityByCode('MOW');
         $hotelSearchParams = new HotelSearchParams();
         $hotelSearchParams->checkIn = '2012-09-17';
@@ -613,7 +615,7 @@ class SiteController extends FrontendController
         //echo '<br>'.count($hotelStack->_hotels);
         $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')->groupBy('rubPrice')->sortBy('rubPrice',2);
 
-        VarDumper::dump($HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelStack->getHotel()->hotelId));
+        VarDumper::dump($HotelClient->hotelSearchFullDetails($hotelSearchParams,$hotelStack->getHotel()->hotelId));*/
         //VarDumper::dump($hotelStack->getJsonObject());
 
         //print_r($HotelClient->getCities($russia->hotelbookId));

@@ -159,6 +159,7 @@
       <span class="bh"></span>
     </div>
 </div>
+
 <div class="prices-of-3days">
     <div class="ticket">
         <div class="one-way">
@@ -282,7 +283,6 @@
         <span class="th"></span>
         <span class="bh"></span>
     </div>
-
+</div>
     <div class="clear"></div>
-
 </script>

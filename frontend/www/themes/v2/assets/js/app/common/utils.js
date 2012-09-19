@@ -59,5 +59,14 @@ dateUtils = {
 Utils = {
   inRange: function(value, range) {
     return range.from <= value && value <= range.to;
+  },
+  fromIso: function(dateIsoString) {
+    var initArray;
+    if (typeof dateIsoString === 'string') {
+      initArray = dateIsoString.split('-');
+      return new Date(initArray[0], initArray[1] - 1, initArray[2]);
+    } else {
+      return dateIsoString;
+    }
   }
 };

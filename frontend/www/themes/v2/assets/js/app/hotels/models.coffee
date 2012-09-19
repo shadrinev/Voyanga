@@ -1,14 +1,34 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 
+class HotelFilter
+  constructor: (@data) ->
+
+  filter: (value) ->
+    if !value
+      console.log('filtered by '+@name)
+
+class HotelNameFilter extends HotelFilter
+  constructor: (hotelNames)->
+    @name = 'NameFilter'
+
+
+  filter: (object)->
+
+
 class Room
   constructor: (data) ->
     @name = data.showName
-    @meal = data.meal
+    @meal = data.mealName
+
+    if typeof @meal == "undefined" || @meal == ''
+      @meal = 'Не известно'
+    console.log(@meal)
     @hasMeal = (@meal != 'Без питания' && @meal != 'Не известно')
 
 class RoomSet
-  constructor: (data) ->
-    @price = data.rubPrice
+  constructor: (data, duration = 1) ->
+    @price = Math.ceil(data.rubPrice)
+    @pricePerNight = Math.ceil(@price / duration)
 
     @rooms = []
     for room in data.rooms
@@ -17,7 +37,7 @@ class RoomSet
 # Stacked hotel, FIXME can we use this as roomset ?
 #
 class HotelResult
-  constructor: (data) ->
+  constructor: (data, duration = 1) ->
     # Mix in events
     _.extend @, Backbone.Events
 
@@ -45,17 +65,25 @@ class HotelResult
     @lng = data.longitude / 1
     @distanceToCenter = Math.round(data.centerDistance/1000)
 
+    @duration = duration
+
     @hasHotelServices = if data.facilities then true else false
     @hotelServices = data.facilities
+    @hasRoomAmenities = if data.roomAmenities then true else false
+    @roomAmenities = data.roomAmenities
     @roomSets = []
     @push data
 
   push: (data) ->
-    set = new RoomSet data
+    set = new RoomSet data,@duration
     if @roomSets.length == 0
       @cheapest = set.price
+      @minPrice = set.pricePerNight
+      @maxPrice = set.pricePerNight
     else
       @cheapest = if set.price < @cheapest then set.price else @cheapest
+      @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
+      @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
 
   showPhoto: =>
@@ -171,7 +199,7 @@ class HotelResult
     SizeBox('hotels-popup-body')
 
   smallMapUrl: =>
-      base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x190&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
+      base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
       base += "%7C"
       base += @lat + "," + @lng
       base += "&sensor=false"
@@ -184,23 +212,91 @@ class HotelResult
 # Stacks them by price and company
 #
 class HotelsResultSet
-  constructor: (rawHotels) ->
+  constructor: (rawHotels,duration = 0) ->
     @_results = {}
 
+    if duration == 0
+      for hotel in rawHotels
+        if typeof hotel.duration == 'undefined'
+          checkIn = dateUtils.fromIso hotel.checkIn
+          console.log checkIn
+          checkOut = dateUtils.fromIso hotel.checkOut
+          console.log hotel.checkOut
+          console.log checkOut
+          duration = checkOut.valueOf() - checkIn.valueOf()
+          duration =  Math.floor(duration / (3600 * 24 * 1000))
+        else
+          duration = hotel.duration
+        break
+
+    @minPrice = false
+    @maxPrice = false
     for hotel in rawHotels
       key = hotel.hotelId
       if @_results[key]
         @_results[key].push hotel
+        @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
+        @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
       else
-        result =  new HotelResult hotel
+        result =  new HotelResult hotel, duration
         @_results[key] = result
+        if @minPrice == false
+          @minPrice = @_results[key].minPrice
+          @maxPrice = @_results[key].maxPrice
+        else
+          @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
+          @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
         result.on "popup", (data)=>
           @popup data
 
     # We need array for knockout to work right
     @data = []
+    @_services = {}
+    @_names = []
+    @stars = {}
+
 
     for key, result of @_results
       @data.push result
+      @_names.push(result.hotelName)
+      @stars[result.stars] = 1
+      if result.hasHotelServices
+        for service in result.hotelServices
+          @_services[service] = 1
+
 
     @popup = ko.observable @data[0]
+
+
+# Model for Hotel info params,
+# Used in infoAcion controller
+class HotelInfoParams
+  constructor: ->
+    @cacheId = ''
+    @hotelId = ''
+
+  url: ->
+    result = 'http://api.voyanga/v1/hotel/search/info/'+@cacheId+'/'+@hotelId+'/'
+
+    return result
+
+
+  key: ->
+    key = @dep() + @arr() + @date
+    if @rt
+      key += @rt_date
+    key += @adults()
+    key += @children()
+    key += @infants()
+    return key
+
+  getHash: ->
+    # FIXME
+    hash = 'avia/search/' + [@dep(), @arr(), @date, @adults(), @children(), @infants()].join('/') + '/'
+    window.voyanga_debug "Generated hash for avia search", hash
+    return hash
+
+
+  fromList: (data)->
+    @cacheId data[0]
+    @hotelId data[1]
