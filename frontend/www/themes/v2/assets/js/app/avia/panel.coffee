@@ -30,6 +30,11 @@ class AviaPanel
     @departureCity = @sp.dep
     @arrivalCity = @sp.arr
 
+    # helper flags for clicck outside of ppl panel handling
+    @inside = false
+    @inside2 = false
+    @inside3 = false
+
     @rt = @sp.rt
 
     # Popup inputs
@@ -112,6 +117,21 @@ class AviaPanel
           $(@).val $(@).attr 'rel'
         $(@).trigger 'change'
 
+      $('.how-many-man').find('.popup').hover =>
+        @inside = true
+      , =>
+        @inside = false
+
+      $('.how-many-man .content').hover =>
+        @inside2 = true
+      , =>
+        @inside2 = false
+
+      $('.how-many-man .btn').hover =>
+        @inside3 = true
+      , =>
+        @inside3 = false
+
       # Initial state for tumbler
       @rtTumbler(@rt())
 
@@ -153,15 +173,22 @@ class AviaPanel
   show: (context, event)=>
     el = $(event.currentTarget)
     if !el.hasClass('active')
+      console.log "PP OPENENG"
+      $(document.body).mousedown =>
+        console.log @inside, @inside2
+        if @inside ||  @inside2 || @inside3
+          return
+        @close()
       $('.how-many-man .btn').addClass('active')
       $('.how-many-man .content').addClass('active')
       $('.how-many-man').find('.popup').addClass('active')
+
     else
-      console.log "CLOSENG"
       @close()
 
   close: ->
-    console.log "CLOSED"
+    $(document.body).unbind 'mousedown'
+    console.log "PP CLOSED"
     $('.how-many-man .btn').removeClass('active')
     $('.how-many-man .content').removeClass('active')
 

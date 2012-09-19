@@ -448,12 +448,18 @@ AviaResult = (function() {
     ko.processAllDeferredBindingUpdates();
     SizeBox('avia-popup-body');
     ResizeBox('avia-popup-body');
+    $(window).keyup(function(e) {
+      if (e.keyCode === 27) {
+        return _this.closeDetails();
+      }
+    });
     return $('#popupOverlay').click(function() {
       return _this.closeDetails();
     });
   };
 
   AviaResult.prototype.closeDetails = function() {
+    $(window).unbind('keyup');
     window.voyanga_debug("Hiding popup");
     $('#avia-body-popup').hide();
     return $('#popupOverlay').remove();

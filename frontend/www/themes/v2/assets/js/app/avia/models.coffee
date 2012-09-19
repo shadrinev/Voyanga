@@ -327,11 +327,18 @@ class AviaResult
     SizeBox('avia-popup-body');
     ResizeBox('avia-popup-body');
 
+    # FIXME
+    $(window).keyup (e) =>
+      if e.keyCode == 27
+        @closeDetails()
+
     $('#popupOverlay').click =>
       @closeDetails()
 
   # Hide popup with detailed info about given result
   closeDetails: =>
+    # FIXME
+    $(window).unbind 'keyup'
     window.voyanga_debug "Hiding popup"
     $('#avia-body-popup').hide()
     $('#popupOverlay').remove()

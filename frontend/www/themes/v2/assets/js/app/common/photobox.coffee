@@ -18,7 +18,12 @@ class PhotoBox
     resizeLoad()
     resizePhotoWin()
 
+    $(window).keyup (e) =>
+      if e.keyCode == 27
+        @close()
+
   close: ->
+    $(window).unbind 'keyup'
     $('#body-popup-Photo').remove()
     $('#popupOverlayPhoto').remove()
     
