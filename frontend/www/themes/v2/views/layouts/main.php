@@ -11,7 +11,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <script type="text/javascript" async
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
-
+    <script type="text/javascript" src="/js/iedebug.js"></script>
 </head>
 
 <body>
