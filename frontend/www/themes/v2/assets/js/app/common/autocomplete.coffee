@@ -5,7 +5,7 @@ ko.bindingHandlers.autocomplete =
       $(element).change()
 
     $(element).autocomplete
-      serviceUrl: "http://api.misha.voyanga/v1/helper/autocomplete/"+options[0] # Страница для обработки запросов автозаполнения
+      serviceUrl: "http://api.voyanga/v1/helper/autocomplete/"+options[0] # Страница для обработки запросов автозаполнения
       minChars: 2 # Минимальная длина запроса для срабатывания автозаполнения
       delimiter: /(,|;)\s*/ # Разделитель для нескольких запросов, символ или регулярное выражение
       maxHeight: 400 # Максимальная высота списка подсказок, в пикселях
