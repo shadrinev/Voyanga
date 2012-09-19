@@ -1698,3 +1698,19 @@ input.hotel-input {
     padding-left: 10px;
     width: 245px;
 }
+
+
+.autocomplete {
+	background: #FFF;
+	border: 1px solid rgba(1,1,1,0.6);
+	width: 260px;
+	font-size: 14px;
+	color: #16181a;
+}
+.autocomplete div {
+	padding: 5px 10px;
+	cursor: pointer;
+}
+.autocomplete div:hover {
+	background: #e2e5eb;
+}
