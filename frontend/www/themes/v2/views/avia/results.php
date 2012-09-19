@@ -10,7 +10,7 @@
 </div>
 <div class="ticket-content">
 <h2>Все результаты поиска: <span data-bind="text: results.numResults()"></span> авиабилетов</h2>
-<div class="order-div"><a class="order-hide" href="#" style="display: inline;">Скрыть рекомендации</a></div>
+<div class="order-div"><a class="order-hide" href="#" style="display: inline;" data-bind="click: results.hideRecommend">Скрыть рекомендации</a></div>
 <div class="clear"></div>
 
 <!-- ko foreach: results -->

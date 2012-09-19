@@ -55,7 +55,7 @@
   </div>
 </script>
 <script type="text/html" id="avia-filter-list">
-      <h4><div data-bind="text: caption" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: reset">Очистить</a></h4>
+      <h4><div data-bind="text: caption" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: reset, visible: selection().length">Очистить</a></h4>
       <ul data-bind="foreach: options">
         <!-- ko if: $index() < 3 -->
         <li><input type="checkbox" data-bind="checked: checked"> <label data-bind="text: key">Шереметьево</label></li>

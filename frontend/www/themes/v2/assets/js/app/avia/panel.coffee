@@ -168,6 +168,10 @@ class AviaPanel
     $('.how-many-man').find('.popup').removeClass('active')
   	
     
+  returnRecommend: (context, event)->
+    $('.recomended-content').slideDown()
+    $('.order-hide').fadeIn();
+    $(event.currentTarget).animate {top : '-19px'}, 500, null, ->
+      ResizeAvia()
 
-# TODO SIZE OF THE PEPOPLE COUNTER xN
 

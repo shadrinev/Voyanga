@@ -388,18 +388,10 @@ class AviaResultSet
     @departureCity = sp.destinations[0].departure
     @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
     @roundTrip = sp.isRoundTrip
-        
-  resetAirlines: =>
-    for line in @airlines
-      line.active(0)
 
-  resetDepartureAirports: =>
-    for line in @departureAirports
-      line.active(0)
-  resetArrivalAirports: =>
-    for line in @arrivalAirports
-      line.active(0)
-
+  hideRecommend: (context, event)->
+   hideRecomendedBlockTicket.apply(event.currentTarget)
+  
   postFilters: =>
     data = _.filter @data, (el) -> el.visible()
     console.log "CHEAPEST", @data.length, data.length

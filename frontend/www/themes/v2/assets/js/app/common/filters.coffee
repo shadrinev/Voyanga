@@ -152,9 +152,9 @@ class AviaFiltersT
       @rtArrival = new TimeFilter('arrivalTimeNumeric')
 
 
-    fields = if @rt then ['departureAirport','rtDepartureAirport'] else ['departureAirport']
+    fields = if @rt then ['departureAirport','rtArrivalAirport'] else ['departureAirport']
     @departureAirport = new ListFilter(fields, stacked.departureCity, 'Все аэропорты')
-    fields = if @rt then ['arrivalAirport','rtArrivalAirport'] else ['arrivalAirport']
+    fields = if @rt then ['arrivalAirport','rtDepartureAirport'] else ['arrivalAirport']
     @arrivalAirport = new ListFilter(fields, stacked.arrivalCity, 'Все аэропорты')
     @airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании')
     @shortStopover = new ShortStopoverFilter()

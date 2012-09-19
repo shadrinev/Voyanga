@@ -2,7 +2,7 @@
     <div class="hotel-details">
         <div class="title" id="hotels-popup-header1">
             <h1 data-bind="text: hotelName">Рэдиссон Соня Отель</h1>
-            <div class="rating">
+            <div class="rating" data-bind="visible: rating!='-'">
                 <span class="value" data-bind="text: rating">4,5</span>
                 <span class="text">рейтинг<br>отеля</span>
             </div>

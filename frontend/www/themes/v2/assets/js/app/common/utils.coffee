@@ -21,9 +21,9 @@ dateUtils=
 
 
   formatDayMonthWeekday: (date) ->
-    result = ""
+    result = "<b>"
     result+= date.getDate()
-    result+= " "
+    result+= "</b> "
     result+= SHORT_MONTHS[date.getMonth()]
     result+= ", "
     result+= SHORT_WEEKDAYS[date.getDay()]

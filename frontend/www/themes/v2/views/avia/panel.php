@@ -91,7 +91,7 @@
     <!-- /ko -->
 </a>
 <div class="minimize-rcomended">
-    <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
+    <a href="#" class="btn-minimizeRecomended" data-bind="click: returnRecommend"> вернуть рекомендации</a>
 </div>
 
 </script>

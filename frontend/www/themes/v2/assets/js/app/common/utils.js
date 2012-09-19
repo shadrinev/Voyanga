@@ -23,9 +23,9 @@ dateUtils = {
   },
   formatDayMonthWeekday: function(date) {
     var result;
-    result = "";
+    result = "<b>";
     result += date.getDate();
-    result += " ";
+    result += "</b> ";
     result += SHORT_MONTHS[date.getMonth()];
     result += ", ";
     return result += SHORT_WEEKDAYS[date.getDay()];

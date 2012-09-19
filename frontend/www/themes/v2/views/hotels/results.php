@@ -34,8 +34,8 @@
                         Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...
                     </div>
                 </div>
-                <div class="choose-a-hotel" data-bind="visible: rating!='-'">
-                    <div class="rating">
+                <div class="choose-a-hotel">
+                    <div class="rating"  data-bind="visible: rating!='-'">
                         <span class="value" data-bind="text: rating"></span>
                         <span class="text">рейтинг<br>отеля</span>
                     </div>

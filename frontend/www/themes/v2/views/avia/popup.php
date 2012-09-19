@@ -2,13 +2,13 @@
 <div id="avia-ticket-info-popup">
             <div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
               <div class="top-head-tickets">
-                <div class="date" data-bind="text: departurePopup()">
+                <div class="date" data-bind="html: departurePopup()">
                 19 мая, Пн
                 </div>
                 <h3>Туда</h3>
                 <div class="other-time">
                   <div class="variation">
-                  <!-- if: stacked() -->
+                  <!-- ko if: stacked() -->
                     <ul class="minimize">
                       <li>
                         Варианты вылета:
@@ -24,14 +24,14 @@
               </div>
               <!-- ko if: roundTrip -->
               <div class="middle-head-tickets">
-              <div class="date" data-bind="text: rtDeparturePopup()">
+              <div class="date" data-bind="html: rtDeparturePopup()">
                 19 мая, Пн
               </div>
               <h3>Обратно</h3>
 
               <div class="other-time">
                 <div class="variation">
-              <!-- ko if:rtStacked -->
+                 <!-- ko if: rtStacked() -->
                 <ul class="minimize">
                     <li>
                         Варианты вылета:

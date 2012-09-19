@@ -267,9 +267,9 @@ AviaFiltersT = (function() {
       this.rtDeparture = new TimeFilter('departureTimeNumeric');
       this.rtArrival = new TimeFilter('arrivalTimeNumeric');
     }
-    fields = this.rt ? ['departureAirport', 'rtDepartureAirport'] : ['departureAirport'];
+    fields = this.rt ? ['departureAirport', 'rtArrivalAirport'] : ['departureAirport'];
     this.departureAirport = new ListFilter(fields, stacked.departureCity, 'Все аэропорты');
-    fields = this.rt ? ['arrivalAirport', 'rtArrivalAirport'] : ['arrivalAirport'];
+    fields = this.rt ? ['arrivalAirport', 'rtDepartureAirport'] : ['arrivalAirport'];
     this.arrivalAirport = new ListFilter(fields, stacked.arrivalCity, 'Все аэропорты');
     this.airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании');
     this.shortStopover = new ShortStopoverFilter();
