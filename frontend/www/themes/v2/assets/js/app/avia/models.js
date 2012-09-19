@@ -870,8 +870,8 @@ AviaResultSet = (function() {
 SearchParams = (function() {
 
   function SearchParams() {
-    this.dep = ko.observable('MOW');
-    this.arr = ko.observable('PAR');
+    this.dep = ko.observable('');
+    this.arr = ko.observable('');
     this.date = '06.10.2012';
     this.adults = ko.observable(1).extend({
       integerOnly: 'adult'

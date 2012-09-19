@@ -9,7 +9,8 @@ class ProductionModule extends CWebModule
 {
     public $defaultController = 'default';
 
-    public function init(){
+    public function init()
+    {
         parent::init();
         Yii::app()->theme = 'v2';
     }

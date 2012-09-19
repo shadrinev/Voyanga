@@ -645,8 +645,8 @@ class AviaResultSet
 # Used in AviaPanel and search controller
 class SearchParams
   constructor: ->
-    @dep = ko.observable 'MOW'
-    @arr = ko.observable 'PAR'
+    @dep = ko.observable ''
+    @arr = ko.observable ''
     @date = '06.10.2012'
     @adults = ko.observable(1).extend({integerOnly: 'adult'})
     @children = ko.observable(0).extend({integerOnly: true})

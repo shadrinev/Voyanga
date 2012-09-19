@@ -4,7 +4,7 @@
       <td class="contTD">
         <div class="data">
           <div class="from">
-            <input class="input-path" type="text" placeholder="Куда" data-bind="value: departureCity">
+            <input class="input-path" type="text" placeholder="Куда" data-bind="value: departureCity, autocomplete: 'city/airport_req/1'">
             <div class="date">
               <span class="f17">12</span>
               <br>
@@ -20,7 +20,7 @@
             <input id="there-back" type="checkbox" data-bind="checked: rt()">
           </div>
           <div class="to">
-            <input class="input-path" type="text" placeholder="Откуда" data-bind="value: arrivalCity">
+            <input class="input-path" type="text" placeholder="Откуда" data-bind="value: arrivalCity, autocomplete: 'city/airport_req/1'">
             <div class="date">
               <span class="f17">12</span>
               <br>
