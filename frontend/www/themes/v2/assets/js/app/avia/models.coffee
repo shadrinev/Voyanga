@@ -51,7 +51,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
     # FIXME !!!!!!!!!!!!!!!!!!!!!
     @departureDate = new Date(flight.departureDate+'+04:00')
-    @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate+'+04:00')
+    # fime it is converted already
+    @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
 
     @_duration = flight.fullDuration
 

@@ -65,7 +65,7 @@ Voyage = (function() {
       }
     }
     this.departureDate = new Date(flight.departureDate + '+04:00');
-    this.arrivalDate = new Date(this.parts[this.parts.length - 1].arrivalDate + '+04:00');
+    this.arrivalDate = new Date(this.parts[this.parts.length - 1].arrivalDate);
     this._duration = flight.fullDuration;
     this.departureAirport = this.parts[0].departureAirport;
     this.arrivalAirport = this.parts[this.parts.length - 1].arrivalAirport;
