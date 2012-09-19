@@ -24,6 +24,16 @@ class SaveTourAction extends CAction
         $eventOrder->orderId = $order->id;
         $eventOrder->eventId = $event->id;
         $eventOrder->save();
+
+        $eventPrice = EventPrice::model()->findByAttributes(array('eventId'=>$eventId, 'cityId'=>$startCityId));
+        if (!$eventPrice)
+            $eventPrice = new EventPrice();
+        $eventPrice->eventId = $event->id;
+        $eventPrice->cityId = $startCityId;
+        $eventPrice->bestPrice = $tripStorage->getPrice();
+        if (!$eventPrice->save())
+            throw new CHttpException('Could not save price for event - city.'.CVarDumper::dumpAsString($eventPrice));
+
         $this->controller->redirect($this->controller->createUrl('showEventTrip'));
     }
 }

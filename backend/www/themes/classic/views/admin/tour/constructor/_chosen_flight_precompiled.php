@@ -11,7 +11,7 @@
         <tr>
             <td><?php echo $flightPart['datetimeBegin'];?>, <?php echo $flightPart['departureCity'];?>, <?php echo $flightPart['departureAirport'];?></td>
             <td><?php echo $flightPart['datetimeEnd'];?>, <?php echo $flightPart['arrivalCity'];?>, <?php echo $flightPart['arrivalAirport'];?></td>
-            <td><img src='/img/airlines/<?php echo $flightPart['transportAirline'];?>.png'></td>
+            <td><img src='http://test.voyanga.com/img/airlines/<?php echo $flightPart['transportAirline'];?>.png'></td>
             <td><?php echo floor($flightPart['duration'] / 3600).' ч '.floor(($flightPart['duration'] % 3600) /60).' мин';?></td>
         </tr>
         <?php endforeach;?>

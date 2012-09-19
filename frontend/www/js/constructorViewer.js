@@ -72,16 +72,10 @@ constructorViewer.init = function () {
                             cartElemId = $(this).data('cartElemId');
                             $.getJSON('/tour/basket/fillCartElement/type/' + constructorViewer.flightTypeConst + '/cartElementId/' + cartElemId + '/key/' + key2 + '/searchId/' + searchId)
                                 .done(function (data) {
-
                                     console.log(data);
                                 });
-
-                            //console.log(key1);
-                            //console.log(key2);
-                            //console.log(searchId);
                             return false;
                         });
-                        //$('#popupInfo').modal('hide');
                     })
                     .fail(function (data) {
                         console.log(data);

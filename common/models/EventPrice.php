@@ -16,4 +16,21 @@ class EventPrice extends CActiveRecord
     {
         return 'event_price';
     }
+
+    public function relations()
+    {
+        return array(
+            'city'=>array(self::BELONGS_TO, 'City', 'cityId')
+        );
+    }
+
+    public function behaviors(){
+        return array(
+            'CTimestampBehavior' => array(
+                'class' => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute' => 'created',
+                'updateAttribute' => 'updated',
+            )
+        );
+    }
 }

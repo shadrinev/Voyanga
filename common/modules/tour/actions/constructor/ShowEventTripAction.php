@@ -20,12 +20,18 @@ class ShowEventTripAction extends CAction
 
     public function run()
     {
+        /** @var TourBuilderForm $model  */
         $model = Yii::app()->user->getState('tourForm');
         $cities = Yii::app()->user->getState('startCities');
         $citiesIndex = Yii::app()->user->getState('startCitiesIndex', 0);
         if (sizeof($cities)<=$citiesIndex)
         {
-            echo 'Все события свзянаы с турами<br><a href="/">На главную</a>';
+            $url = $this->getController()->createUrl('/admin/events/event/view', array('id'=>$model->eventId));
+            Yii::app()->user->setState('tourForm', null);
+            Yii::app()->user->setState('startCities', null);
+            Yii::app()->user->setState('startCitiesIndex', null);
+            Yii::app()->user->setState('currentCity', null);
+            $this->getController()->redirect($url);
         }
         else
         {

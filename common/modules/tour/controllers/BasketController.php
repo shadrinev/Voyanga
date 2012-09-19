@@ -98,7 +98,11 @@ class BasketController extends Controller
                             $item->flightVoyage = $flight;
                             Yii::app()->shoppingCart->update($item, 1);
                         }
-                        echo json_encode($flight->getJsonObject());
+                        $json = CJSON::encode($flight->getJsonObject());
+                        if (isset($_GET['callback']))
+                            echo $_GET['callback'] . ' (' . $json . ');';
+                        else
+                            echo $json;
                     }
                     else
                         throw new CHttpException(404, 'Can\'t found item inside cache key:' . $key . ' searchId:' . $searchId);
@@ -111,7 +115,11 @@ class BasketController extends Controller
                         //$needPosition = new HotelTripElement();
                         $needPosition->hotel = $hotel;
                         Yii::app()->shoppingCart->update($needPosition, 1);
-                        echo json_encode($hotel->getJsonObject());
+                        $json = CJSON::encode($hotel->getJsonObject());
+                        if (isset($_GET['callback']))
+                            echo $_GET['callback'] . ' (' . $json . ');';
+                        else
+                            echo $json;
                     }
                     else
                         throw new CHttpException(404, 'Can\'t found item inside cache');
@@ -131,7 +139,7 @@ class BasketController extends Controller
         $this->orderId = $orderId;
         $this->prepareData();
         $dataProvider = new TripDataProvider();
-        echo $dataProvider->getSortedCartItemsAsJson();
+        echo $dataProvider->getSortedCartItemsOnePerGroupAsJson();
     }
 
     public function actionSave($name)
