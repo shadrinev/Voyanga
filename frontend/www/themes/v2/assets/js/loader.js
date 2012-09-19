@@ -11,7 +11,7 @@ function loaderChange() {
 		}
 		loadLight.find('li').removeClass('active');
 		loadLight.find('li').eq(ind).addClass('active');
-	}, 600);
+	}, 500);
 	
 	var var_loadTextCounts = 0;
 	loadText.text(arr_textLoad[var_loadTextCounts]);
@@ -22,7 +22,9 @@ function loaderChange() {
 			var_loadTextCounts = 0;
 		}
 		loadText.text(arr_textLoad[var_loadTextCounts]);
-	}, 12000)
+	}, 12000);
+	
+	$('#loadContentWin').css('left', (($(window).width() - $('#loadContentWin').width()) / 2)+'px');
 }
 
 $(window).load(loaderChange);
