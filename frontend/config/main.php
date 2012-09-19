@@ -197,9 +197,12 @@ return CMap::mergeArray(
                             'js/voyanga-calendar.js', 'js/timeline-calendar.js', 'js/jquery.select.slider.js',
                             'js/jquery.slider.min.js','js/jquery.slider.js',
                             //! Our application logic
-                            'js/avia.filters.js', 'js/app/common/photobox.js',
+                             'js/app/common/photobox.js',
                             'js/app/common/module.slider.js',
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
+                            'js/app/common/ko.bindings.timeslider.js',
+                            'js/app/common/ko.bindings.slider.js',
+                            'js/app/common/ko.rangeobservable.js',
                             'js/app/common/filters.js', 'js/app/avia/panel.js',
                             'js/app/hotels/panel.js', 'js/app/hotels/models.js',
                             'js/app/hotels/controllers.js', 'js/app/hotels/module.js',

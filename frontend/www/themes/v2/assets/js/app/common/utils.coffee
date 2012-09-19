@@ -51,3 +51,6 @@ dateUtils=
     hours = (all_minutes - minutes) / 60
     hours + " ч. " + minutes + " м."
 
+Utils =
+  inRange: (value, range) ->
+    range.from <= value && value <= range.to 

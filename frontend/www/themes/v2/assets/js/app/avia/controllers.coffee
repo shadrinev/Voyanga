@@ -29,10 +29,6 @@ class AviaController
         dataType: 'jsonp'
         success: @handleResults
 
-  getFilterLimitValues: (results)=>
-    console.log(results)
-
-
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
 
@@ -41,36 +37,18 @@ class AviaController
     sessionStorage.setItem(key, JSON.stringify(data))
     stacked = new AviaResultSet data.flights.flightVoyages
     stacked.injectSearchParams data.searchParams
-    this.getFilterLimitValues(stacked)
     @aviaFiltersInit = {
       flightClassFilter:{value: data.searchParams.serviceClass},
-      departureTimeSliderDirect:{
-        fromTime: stacked.timeLimits.departureFromTime,
-        toTime: stacked.timeLimits.departureToTime
-      },
-      arrivalTimeSliderDirect:{
-        fromTime: stacked.timeLimits.arrivalFromTime,
-        toTime: stacked.timeLimits.arrivalToTime
-      },
-      departureTimeSliderReturn:{
-        fromTime: stacked.timeLimits.departureFromTimeReturn,
-        toTime: stacked.timeLimits.departureToTimeReturn
-      },
-      arrivalTimeSliderReturn:{
-        fromTime: stacked.timeLimits.arrivalFromTimeReturn,
-        toTime: stacked.timeLimits.arrivalToTimeReturn
-      },
       rt: data.searchParams.isRoundTrip
     }
-
-    window.app.on 'avia:contentRendered', =>
-      setTimeout =>
-          AviaFilters.init(@aviaFiltersInit)
-        , 100
       
     @render 'results', {'results' :stacked}
 
-    @trigger "sidebarChanged", 'filters', {'results' :stacked}
+    # FIXME may leak(?)
+    # FIXME move to container class
+    filters = new AviaFiltersT stacked
+
+    @trigger "sidebarChanged", 'filters', filters
     ko.processAllDeferredBindingUpdates()
 
   indexAction: =>
