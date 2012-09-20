@@ -347,15 +347,15 @@
 	left: 28.56%;
 	display: block;
 }
-.flyTrip.startPoint.fd1 .endYourTours {
+.flyTrip.endPoint.fd1 .endYourTours {
 	right: 0%;
 	display: block;
 }
-.flyTrip.startPoint.fd2 .endYourTours {
+.flyTrip.endPoint.fd2 .endYourTours {
 	right: 14.28%;
 	display: block;
 }
-.flyTrip.startPoint.fd3 .endYourTours {
+.flyTrip.endPoint.fd3 .endYourTours {
 	right: 28.56%;
 	display: block;
 }
