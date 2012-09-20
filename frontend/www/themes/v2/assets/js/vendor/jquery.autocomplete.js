@@ -118,7 +118,7 @@
 				if ($.isArray(o.lookup)) { o.lookup = { suggestions: o.lookup, data: [] }; }
 			}
 			$('#' + this.mainContainerId).css({ zIndex: o.zIndex });
-			this.container.css({ maxHeight: o.maxHeight + 'px', width: o.width });
+			this.container.css({ maxHeight: o.maxHeight + 'px'/*, width: o.width*/ });
 		},
 
 		clearCache: function () {
