@@ -45,8 +45,9 @@ FlightPart = (function() {
 
 Voyage = (function() {
 
-  function Voyage(flight) {
+  function Voyage(flight, airline) {
     var index, part, _i, _j, _len, _len1, _ref, _ref1;
+    this.airline = airline;
     this.parts = [];
     _ref = flight.flightParts;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -171,7 +172,6 @@ Voyage = (function() {
     }
     for (index = _j = 0, _len1 = result.length; _j < _len1; index = ++_j) {
       data = result[index];
-      console.log(index);
       if (data < 18) {
         data = 18;
       }
@@ -194,6 +194,31 @@ Voyage = (function() {
     this._backVoyages.sort(function(a, b) {
       return a.departureInt() - b.departureInt();
     });
+    return this.activeBackVoyage(this._backVoyages[0]);
+  };
+
+  Voyage.prototype.removeSimilar = function() {
+    var item, key, voyage, _helper, _i, _len, _ref;
+    if (this.direct) {
+      return;
+    }
+    _helper = {};
+    _ref = this._backVoyages;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      voyage = _ref[_i];
+      key = voyage.airline + voyage.departureInt();
+      item = _helper[key];
+      if (item) {
+        _helper[key] = item.stopoverLength < voyage.stopoverLength ? item : voyage;
+      } else {
+        _helper[key] = voyage;
+      }
+    }
+    this._backVoyages = [];
+    for (key in _helper) {
+      item = _helper[key];
+      this._backVoyages.push(item);
+    }
     return this.activeBackVoyage(this._backVoyages[0]);
   };
 
@@ -253,9 +278,13 @@ AviaResult = (function() {
     this.airline = data.valCompany;
     this.airlineName = data.valCompanyNameEn;
     this.serviceClass = data.serviceClass;
-    this.activeVoyage = new Voyage(flights[0]);
+    this.refundable = data.refundable;
+    this.refundableText = this.refundable ? "Билет возвратный" : "Билет не возвратный";
+    this.freeWeight = data.economFreeWeight;
+    this.freeWeightText = data.economDescription;
+    this.activeVoyage = new Voyage(flights[0], this.airline);
     if (this.roundTrip) {
-      this.activeVoyage.push(new Voyage(flights[1]));
+      this.activeVoyage.push(new Voyage(flights[1], this.airline));
     }
     this.voyages = [];
     this.voyages.push(this.activeVoyage);
@@ -324,9 +353,9 @@ AviaResult = (function() {
   AviaResult.prototype.push = function(data) {
     var backVoyage, newVoyage, result;
     this._stacked = true;
-    newVoyage = new Voyage(data.flights[0]);
+    newVoyage = new Voyage(data.flights[0], this.airline);
     if (this.roundTrip) {
-      backVoyage = new Voyage(data.flights[1]);
+      backVoyage = new Voyage(data.flights[1], this.airline);
       newVoyage.push(backVoyage);
       result = _.find(this.voyages, function(voyage) {
         return voyage.hash() === newVoyage.hash();
@@ -441,8 +470,34 @@ AviaResult = (function() {
     });
     if (this.roundTrip) {
       _.each(this.voyages, function(x) {
-        return x.sort();
+        x.sort();
+        return x.removeSimilar();
       });
+    }
+    return this.activeVoyage(this.voyages[0]);
+  };
+
+  AviaResult.prototype.removeSimilar = function() {
+    var item, key, voyage, _helper, _i, _len, _ref;
+    if (this.direct()) {
+      return;
+    }
+    _helper = {};
+    _ref = this.voyages;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      voyage = _ref[_i];
+      key = voyage.airline + voyage.departureInt();
+      item = _helper[key];
+      if (item) {
+        _helper[key] = item.stopoverLength < voyage.stopoverLength ? item : voyage;
+      } else {
+        _helper[key] = voyage;
+      }
+    }
+    this.voyages = [];
+    for (key in _helper) {
+      item = _helper[key];
+      this.voyages.push(item);
     }
     return this.activeVoyage(this.voyages[0]);
   };
@@ -528,6 +583,7 @@ AviaResultSet = (function() {
     for (key in _ref) {
       result = _ref[key];
       result.sort();
+      result.removeSimilar();
       this.data.push(result);
     }
     this.postFilters();
@@ -550,7 +606,6 @@ AviaResultSet = (function() {
     data = _.filter(this.data, function(el) {
       return el.visible();
     });
-    console.log("CHEAPEST", this.data.length, data.length);
     this.numResults(data.length);
     this.updateCheapest(data);
     ko.processAllDeferredBindingUpdates();
@@ -631,7 +686,6 @@ SearchParams = (function() {
     key += this.adults();
     key += this.children();
     key += this.infants();
-    console.log("Search key", key);
     return key;
   };
 
@@ -655,7 +709,6 @@ SearchParams = (function() {
     this.infants(data[5]);
     if (data.length === 7) {
       this.rt(true);
-      console.log("RTDATE");
       return this.rtDate = data[6];
     }
   };
