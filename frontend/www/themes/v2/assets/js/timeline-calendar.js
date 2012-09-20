@@ -40,8 +40,9 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
         $(window).load(function(){self.onresize();self.knobMove();});
 
         this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);});
-        //VoyangaCalendar.jObj.find('.calendarGrid').on('mousewheel',VoyangaCalendar.slider.mousewheelEvent);
-        //VoyangaCalendar.jObj.find('.calendarGrid').on('DOMMouseScroll',VoyangaCalendar.slider.mousewheelEvent);
+        //console.log('set wheel actions2');
+        this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);});
+        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);});
         this.jObj.find('.monthLineVoyanga').mousedown(function(e){self.mouseDown(e);});
         this.jObj.find('.monthLineVoyanga').mouseup(function(e){self.mouseUp(e);});
         //VoyangaCalendar.jObj.find('.monthLineVoyanga .monthNameVoyanga').mouseup(VoyangaCalendar.slider.monthMouseUp);
@@ -213,7 +214,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
                 this.slider.monthArray.push(monthObject);
             }
             var dateLabel = tmpDate.getFullYear()+'-'+(tmpDate.getMonth()+1)+'-'+tmpDate.getDate();
-            newHtml = newHtml + '<div class="dayCellVoyanga'+((tmpDate < dayToday) ? ' inactive' : '')+'" id="dayCell-'+dateLabel+'" data-cell-date="'+dateLabel+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
+            newHtml = newHtml + '<div class="dayCellVoyanga'+((tmpDate < dayToday) ? ' inactive' : '')+((i>=5 && i<7) ? ' weekEnd' : '')+'" id="dayCell-'+dateLabel+'" data-cell-date="'+dateLabel+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
             tmpDate.setDate(tmpDate.getDate()+1);
         }
         newHtml = newHtml + '</div>';
@@ -298,10 +299,10 @@ VoyangaCalendarTimeline.generateHotelDiv = function (HotelEvent) {
     var dayWidth = this.dayCellWidth;
     var setWidth = dayWidth * totalDays - dayWidth + 0.1;
     var outHtml = '<div class="yourTrip" style="width: ' + (setWidth) + '%">';
-    outHtml = outHtml + '<div class="startHotel"></div>';
+    outHtml = outHtml + '<div class="startYourTours"></div><div class="startHotel"></div>';
     outHtml = outHtml + '<div class="pathHotel"></div><div class="endHotel"></div>';
     outHtml = outHtml + '<div class="nameHotel">' + HotelEvent.description + '</div>';
-    outHtml = outHtml + '</div>';
+    outHtml = outHtml + '<div class="endYourTours"><div></div></div>';
 
     //outHtml = '<div class="yourTrip"><div class="startHotel"></div><div class="pathHotel"></div><div class="endHotel"></div><div class="nameHotel" style="color: rgb(234, 239, 243); position: absolute; top: 49px; z-index: 210; left: 16px;">Рэдиссон Соня Отель, Амстердам</div></div>';
     return outHtml;
@@ -324,28 +325,39 @@ VoyangaCalendarTimeline.generateFlightDiv = function (FlightEvent) {
     var names = FlightEvent.description.split('||');
 
 
-    var outHtml = '<div class="flyTrip" style="width: ' + (dayWidth * totalDays) + '%"><div class="tripFlyAll">';
+
     switch (totalDays){
         case 1:
-            outHtml = outHtml + '<div class="jetFly" style="top: 4px;"></div><img width="100%" height="40" src="/images/trip-line-01.png">';
+            var jetFlyClass = '';
+            var imgPath = '/images/trip-line-01.png';
+            var flyTripClass = 'flyTrip1';
+
             break;
         case 2:
-            outHtml = outHtml + '<div class="jetFly twoDays" style="top: 4px;"></div><img width="100%" height="40" src="/images/trip-line-02.png">';
+            var jetFlyClass = ' twoDays';
+            var imgPath = '/images/trip-line-02.png';
+            var flyTripClass = 'flyTrip2';
+
             break;
         case 3:
-            outHtml = outHtml + '<div class="jetFly threeDays" style="top: 4px;"></div><img width="100%" height="40" src="/images/trip-line-03.png">';
+            var jetFlyClass = ' threeDays';
+            var imgPath = '/images/trip-line-03.png';
+            var flyTripClass = 'flyTrip3';
+
             break;
     }
+    var outHtml = '<div class="'+flyTripClass+'" style="width: ' + (dayWidth * totalDays) + '%"><div class="startYourTours"></div><div class="tripFlyAll">';
+    outHtml = outHtml + '<div class="jetFly'+jetFlyClass+'" style="top: 4px;"></div><img width="100%" height="40" src="'+imgPath+'">';
     outHtml = outHtml + '</div>';
     outHtml = outHtml + '<div class="startNameCity">' + names[0] + ' →</div>';
     outHtml = outHtml + '<div class="endNameCity">→ ' + names[1] + '</div>';
-    outHtml = outHtml + '</div>';
+    outHtml = outHtml + '<div class="endYourTours"><div></div>';
     return outHtml;
 }
 
 VoyangaCalendarTimeline.generateEvents = function () {
     this.dayCellWidth = this.jObj.find('.dayCellVoyanga:first').width() + 2;
-    this.dayCellWidth = 14.18;
+    this.dayCellWidth = 14.28;
     //Need width %
 
     var firstElem = true;
@@ -397,10 +409,11 @@ VoyangaCalendarTimeline.generateEvents = function () {
                     var leftPos = -renderedLength * dayWidth;
                 }
                 if(firstElem){
-                    var pointDiv = this.generateStartPoint(this.calendarEvents[i]);
+                    /*var pointDiv = this.generateStartPoint(this.calendarEvents[i]);
                     var pointDivElement = $(pointDiv);
                     pointDivElement.css('left', leftPos + '%');
-                    weekObj.append(pointDivElement);
+                    weekObj.append(pointDivElement);*/
+                    newEventElement.addClass('startPoint');
                     firstElem = false;
                 }
                 newEventElement.css('left', leftPos + '%');
@@ -433,10 +446,11 @@ VoyangaCalendarTimeline.generateEvents = function () {
                     var leftPos = -renderedLength * dayWidth;
                 }
                 if(firstElem){
-                    var pointDiv = this.generateStartPoint(this.calendarEvents[i]);
+                    /*var pointDiv = this.generateStartPoint(this.calendarEvents[i]);
                     var pointDivElement = $(pointDiv);
                     pointDivElement.css('left', leftPos + '%');
-                    weekObj.append(pointDivElement);
+                    weekObj.append(pointDivElement);*/
+                    newEventElement.addClass('startPoint');
                     firstElem = false;
                 }
                 newEventElement.css('left', leftPos + '%');
