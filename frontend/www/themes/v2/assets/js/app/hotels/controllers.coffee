@@ -37,7 +37,6 @@ class HotelsController
     stacked = new HotelsResultSet data.hotels
 
     @render 'results', {'results' :stacked}
-    @trigger "sidebarChanged", 'filters', {'results' :stacked}
 
   handleResultsInfo: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data

@@ -1,31 +1,27 @@
 ###
 SEARCH controller, should be splitted once we will get more actions here
 ###
-class AviaController
+class ToursController
   constructor: (@searchParams)->
     @routes =
-      '/search/:from/:to/:when/:adults/:children/:infants/:rtwhen/': @searchAction
-      '/search/:from/:to/:when/:adults/:children/:infants/': @searchAction
-      '': @indexAction
+      '': @searchAction
 
     # Mix in events
     _.extend @, Backbone.Events
 
   searchAction: (args...)=>
-    window.voyanga_debug "AVIA: Invoking searchAction", args
+    window.voyanga_debug "TOURS: Invoking searchAction", args
     # update search params with values in route
-    @searchParams.fromList(args)
-
     # tempoprary development cache
-    key = "search_" + @searchParams.key()
+    key = "tours_1"
 
     if sessionStorage.getItem(key) && (window.location.host != 'test.voyanga.com')
-      window.voyanga_debug "AVIA: Getting result from cache"
+      window.voyanga_debug "TOURS: Getting result from cache"
       @handleResults(JSON.parse(sessionStorage.getItem(key)))
     else
-      window.voyanga_debug "AVIA: Getting results via JSONP"
+      window.voyanga_debug "TOURS: Getting results via JSONP"
       $.ajax
-        url: @searchParams.url()
+        url: "http://api.voyanga.com/v1/tour/search?start=LED&destinations%5B0%5D%5Bcity%5D=MOW&destinations%5B0%5D%5BdateFrom%5D=01.10.2012&destinations%5B0%5D%5BdateTo%5D=10.10.2012&rooms%5B0%5D%5Badt%5D=1&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0"
         dataType: 'jsonp'
         success: @handleResults
 
@@ -33,19 +29,14 @@ class AviaController
     window.voyanga_debug "searchAction: handling results", data
 
     # temporary development cache
-    key = "search_" + @searchParams.key()
+    key = "tours_1"
     sessionStorage.setItem(key, JSON.stringify(data))
-    stacked = new AviaResultSet data.flights.flightVoyages
-    stacked.injectSearchParams data.searchParams
-    stacked.postInit()
-    @render 'results', {results: stacked}
+    stacked = new ToursResultSet data
+    @trigger "results", stacked
+    @render 'results', stacked
 
+#    @trigger "sidebarChanged", filters
     ko.processAllDeferredBindingUpdates()
-
-  indexAction: =>
-    window.voyanga_debug "AVIA: invoking indexAction"
-
-    @render 'index', {}
 
   render: (view, data) ->
     @trigger "viewChanged", view, data

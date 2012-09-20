@@ -11,27 +11,28 @@ class Application extends Backbone.Router
 #    crossroads.bypassed.add(@http404)
 
     # FIXME
-    @activeModule = ko.observable 'avia' #ko.observable window.activeModule || 'avia'
+    @activeModule = ko.observable null #ko.observable window.activeModule || 'avia'
+    @activeModuleInstance = ko.observable null
 
-    @panel = ko.observable()
+    @panel = ko.computed =>
+      result = false
+      am = @activeModuleInstance()
+      if am
+        result = ko.utils.unwrapObservable am.panel
+      if result
+        return result
+      else
+        return {'template':'',data:{}}
 
     # View currently being active in given module
     @_view = ko.observable 'index'
-    @_sidebar = ko.observable 'dummy'
 
     # Full path to view to render
     @activeView = ko.computed =>
       @activeModule() + '-' + @_view()
 
-    @activeSidebar = ko.computed =>
-      @activeModule() + '-' + @_sidebar()
-
-
     # View model for currently active view
     @viewData = ko.observable {}
-
-    # View model for sidebar
-    @sidebarData = ko.observable {}
 
     @slider = new Slider()
     @slider.init()
@@ -48,14 +49,6 @@ class Application extends Backbone.Router
       @viewData(data)
       @_view(view)
 
-
-
-    controller.on "sidebarChanged", (sidebar, data)=>
-      @sidebarData data
-      @_sidebar sidebar
-
-
-
     for route, action of controller.routes
       window.voyanga_debug "APP: registreing route", prefix, route, action
       @route prefix + route, prefix, action
@@ -67,11 +60,13 @@ class Application extends Backbone.Router
     # Handles module switching
     @on "beforeroute:" + prefix, (args...)->
       window.voyanga_debug "APP: routing", args
+      # hide sidebar
       if @panel() == undefined || (prefix != @activeModule())
         window.voyanga_debug "APP: switching active module to", prefix
         @activeModule(prefix)
-        window.voyanga_debug "APP: activating panel", module.panel
-        @panel module.panel
+        window.voyanga_debug "APP: activating panel", ko.utils.unwrapObservable module.panel
+
+        @activeModuleInstance module
         $(window).unbind 'resize'
         $(window).resize module.resize
         ko.processAllDeferredBindingUpdates()
@@ -105,8 +100,9 @@ $ ->
   # FIXME FIXME FIXME
   app = new Application()
   avia = new AviaModule()
-  hotels = new HotelsModule
+  hotels = new HotelsModule()
   window.app = app
+  app.register 'tours', new ToursModule()
   app.register 'hotels', hotels
   app.register 'avia', avia, true
   app.run()

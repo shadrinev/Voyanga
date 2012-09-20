@@ -1,7 +1,22 @@
 <?php
     $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 ?>
-<script type="text-html" id="hotels-results">
+<script id="hotels-results" type="text/html">
+        <!-- MAIN BLOCK -->
+        <div class="main-block">
+            <div id="content" data-bind="template: {name: 'hotels-results-inner', data: $data}" >
+            </div>
+            <!-- END MAIN BLOCK -->
+            <!-- FILTER BLOCK -->
+            <div class="filter-block" data-bind="template: {name: 'hotels-filters', data: $data}">
+            </div>
+            <!-- END FILTER BLOCK -->
+            <div class="clear"></div>
+        </div>
+        <!-- END ALL CONTENT -->
+</script>
+
+<script type="text-html" id="hotels-results-inner">
 <h1><span data-bind="visible:false">Выберите отель в</span>Амстердам, 19-26 мая</h1>
 <div class="ticket-content hotels">
     <h2>Найдено отелей: 43</h2>

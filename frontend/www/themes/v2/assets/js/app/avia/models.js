@@ -559,6 +559,8 @@ AviaResultSet = (function() {
 
     this.postFilters = __bind(this.postFilters, this);
 
+    this.postInit = __bind(this.postInit, this);
+
     this.injectSearchParams = __bind(this.injectSearchParams, this);
 
     var flightVoyage, key, result, _i, _len, _ref,
@@ -597,6 +599,10 @@ AviaResultSet = (function() {
     this.departureCity = sp.destinations[0].departure;
     this.date = dateUtils.formatDayShortMonth(new Date(sp.destinations[0].date + '+04:00'));
     return this.roundTrip = sp.isRoundTrip;
+  };
+
+  AviaResultSet.prototype.postInit = function() {
+    return this.filters = new AviaFiltersT(this);
   };
 
   AviaResultSet.prototype.hideRecommend = function(context, event) {

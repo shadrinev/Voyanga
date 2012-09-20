@@ -5,6 +5,7 @@ class PanelRoom
 
 class HotelsPanel
   constructor: ->
+    @template = 'hotels-panel-template'
     @rooms = ko.observableArray [[new PanelRoom ]]
 
 

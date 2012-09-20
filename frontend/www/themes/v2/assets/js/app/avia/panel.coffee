@@ -24,12 +24,13 @@ balanceTravelers = (others, model)->
 
 class AviaPanel
   constructor: ->
+    @template = 'avia-panel-template'
     window.voyanga_debug "AviaPanel created"
     @minimized = ko.observable false
     @sp = new SearchParams()
     @departureCity = @sp.dep
     @arrivalCity = @sp.arr
-
+    
     # helper flags for clicck outside of ppl panel handling
     @inside = false
     @inside2 = false

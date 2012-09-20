@@ -443,12 +443,15 @@ class AviaResultSet
     @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
     @roundTrip = sp.isRoundTrip
 
+  postInit: =>
+    @filters = new AviaFiltersT @
+
+
   hideRecommend: (context, event)->
    hideRecomendedBlockTicket.apply(event.currentTarget)
   
   postFilters: =>
     data = _.filter @data, (el) -> el.visible()
-
     @numResults data.length
     # FIXME hide recommend
     @updateCheapest(data)

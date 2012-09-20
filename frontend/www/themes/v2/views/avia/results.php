@@ -1,19 +1,33 @@
-<script type="text/html" id="avia-results">
+<script id="avia-results" type="text/html">
+        <!-- MAIN BLOCK -->
+        <div class="main-block">
+            <div id="content" data-bind="template: {name: 'avia-results-inner', data: results}">
+            </div>
+            <!-- END MAIN BLOCK -->
+            <!-- FILTER BLOCK -->
+            <div class="filter-block" data-bind="template: {name: 'avia-filters', data: results.filters}">
+            </div>
+            <!-- END FILTER BLOCK -->
+            <div class="clear"></div>
+        </div>
+        <!-- END ALL CONTENT -->
+</script>
+<script type="text/html" id="avia-results-inner">
 <h1 data-bind="visible: false">Выберите авиабилет
-    <span data-bind="text: results.departureCity">Санкт-Петербург</span> → <span data-bind="text: results.arrivalCity">Амстердам</span>, <span data-bind="text: results.date">19 мая</span></h1>
+    <span data-bind="text: departureCity">Санкт-Петербург</span> → <span data-bind="text: arrivalCity">Амстердам</span>, <span data-bind="text: date">19 мая</span></h1>
 
-<div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: results.cheapest}">
+<div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: cheapest}">
 
 </div>
 <!-- END RECOMENDED AND GRAFIK -->
 <div class="clear"></div>
 </div>
 <div class="ticket-content">
-<h2>Все результаты поиска: <span data-bind="text: results.numResults()"></span> авиабилетов</h2>
-<div class="order-div"><a class="order-hide" href="#" style="display: inline;" data-bind="click: results.hideRecommend">Скрыть рекомендации</a></div>
+<h2>Все результаты поиска: <span data-bind="text: numResults()"></span> авиабилетов</h2>
+<div class="order-div"><a class="order-hide" href="#" style="display: inline;" data-bind="click: hideRecommend">Скрыть рекомендации</a></div>
 <div class="clear"></div>
 
-<!-- ko foreach: results -->
+<!-- ko foreach: data -->
 <div class="ticket-items" data-bind="visible: visible()">
 <div class="content">
 <div class="airlines">
@@ -43,7 +57,7 @@
         </div>
         <div class="ico-path" data-bind="html: stopsRatio()">
         </div>
-        <div class="path" data-bind="text:stopoverText()">
+        <div class="path" data-bind="text:stopoverText(), css: {'no-wait': direct}">
         </div>
     </div>
     <!-- END HOW LONG -->
@@ -207,8 +221,8 @@
       <div id="boxMiddleLeft"></div>
       <div id="boxContent">
         <div id="contentBox">
-          <div data-bind="template: {name: 'avia-popup', data: results.popup()}"></div>
-          <div id="boxClose" data-bind="click: results.popup().closeDetails"></div>
+          <div data-bind="template: {name: 'avia-popup', data: $data.popup()}"></div>
+          <div id="boxClose" data-bind="click: $data.popup().closeDetails"></div>
         </div>
       </div>
       <div id="boxMiddleRight"></div>

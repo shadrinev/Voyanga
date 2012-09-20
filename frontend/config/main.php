@@ -208,7 +208,9 @@ return CMap::mergeArray(
                             'js/app/hotels/panel.js', 'js/app/hotels/models.js',
                             'js/app/hotels/controllers.js', 'js/app/hotels/module.js',
                             'js/app/avia/models.js', 'js/app/avia/controllers.js',
-                            'js/app/avia/module.js', 'js/app/app.js',
+                            'js/app/avia/module.js', 'js/app/tours/models.js',
+                            'js/app/tours/controllers.js', 'js/app/tours/models.js',
+                            'js/app/tours/module.js', 'js/app/app.js',
                             'js/app/common/autocomplete.js',
                         ),
                         'css' => array(

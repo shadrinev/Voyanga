@@ -70,7 +70,7 @@ class ListFilter extends Filter
       @options.push {key: value, checked: ko.observable 0}
 
   filter: (result)=>
-    if @selection().length == 0
+    @selection().length == 0
       return true
     for key in @keys
       if @selection().indexOf(@get(result,key)) < 0
@@ -119,6 +119,8 @@ class ServiceClassFilter extends Filter
     @selection = ko.observable 0
 
   filter: (item) =>
+    console.log item.serviceClass
+    return true
     lit = @selection()
     if lit == 'A'
       return item.serviceClass == 'E'
@@ -127,9 +129,9 @@ class ServiceClassFilter extends Filter
 
 # FIXME write comments
 class AviaFiltersT
-  constructor: (stacked)->
-    @results = stacked
-    @rt = stacked.roundTrip
+  constructor: (@results)->
+    @template = 'avia-filters'
+    @rt = @results.roundTrip
 
     @showRt = ko.observable 0
     @showRtText = ko.observable ''
@@ -153,9 +155,9 @@ class AviaFiltersT
 
 
     fields = if @rt then ['departureAirport','rtArrivalAirport'] else ['departureAirport']
-    @departureAirport = new ListFilter(fields, stacked.departureCity, 'Все аэропорты')
+    @departureAirport = new ListFilter(fields, @results.departureCity, 'Все аэропорты')
     fields = if @rt then ['arrivalAirport','rtDepartureAirport'] else ['arrivalAirport']
-    @arrivalAirport = new ListFilter(fields, stacked.arrivalCity, 'Все аэропорты')
+    @arrivalAirport = new ListFilter(fields, @results.arrivalCity, 'Все аэропорты')
     @airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании')
     @shortStopover = new ShortStopoverFilter()
     @onlyDirect = new OnlyDirectFilter()

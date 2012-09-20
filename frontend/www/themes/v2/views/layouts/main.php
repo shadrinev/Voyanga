@@ -30,7 +30,7 @@ Yii::app()->clientScript->registerPackage('everything');
                 <div class="bg-mask"></div>
 
                 <ul>
-                    <li class="planner btn"><a href="#">Планировщик</a></li>
+                    <li id="h-tours-slider" class="planner btn"><a href="#">Планировщик</a></li>
                     <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#">Авиабилеты</a></li>
                     <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
                     <li class="finish-stages btn"><a href="#">Готовые туры</a></li>
@@ -53,7 +53,7 @@ Yii::app()->clientScript->registerPackage('everything');
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <!-- PANEL -->
-            <div class="panel" data-bind="template: {name: activeModule() + '-panel-template', data: panel()}">
+            <div class="panel" data-bind="template: {name: panel().template, data: panel()}">
 	    </div>
 	    <!-- END PANEL -->
         </div>
@@ -62,28 +62,15 @@ Yii::app()->clientScript->registerPackage('everything');
     <!-- END SUB HEAD -->
     <!--====**********===-->
     <!-- ALL CONTENT -->
-    <div class="center-block">
-        <!-- MAIN BLOCK -->
-        <div class="main-block">
-            <div id="content" data-bind="template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
-            </div>
-            <!-- END MAIN BLOCK -->
-            <!-- FILTER BLOCK -->
-            <!-- ko if: _sidebar() != 'dummy' -->
-            <div class="filter-block" data-bind="template: {name: activeSidebar(), data: sidebarData()}">
-            </div>
-            <!-- /ko -->
-            <!-- END FILTER BLOCK -->
-            <div class="clear"></div>
-        </div>
-        <!-- END ALL CONTENT -->
+    <div class="center-block" data-bind="template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
 </div>
 <?php
     $templates = Array('avia.index', 'avia.results', 'avia.popup',
                        'avia.panel', 'avia.filters', 'avia.cheapest',
                        'hotels.index', 'hotels.results', 'hotels.panel',
-                       'hotels.popup', 'hotels.filters','hotels.info','hotels.timeline'
+                       'hotels.popup', 'hotels.filters','hotels.info','hotels.timeline',
+                       'tours.results'
         );
     foreach($templates as $template)
     {
