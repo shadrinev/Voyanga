@@ -242,4 +242,6 @@ AviaPanel = (function() {
 
 })();
 
-$(document).on('');
+$(document).on("autocompleted", "input.departureCity", function() {
+  return $('input.arrivalCity').focus();
+});

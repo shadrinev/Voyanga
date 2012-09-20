@@ -403,13 +403,16 @@ EOD;
                                 $modified = true;
                             }
                             $economDescription = (string)$item->luggage->econom->description;
-                            if(!$airline->economDescription && $economDescription){
-                                $airline->economDescription = $economDescription;
+                            if( $airline->economDescription && $economDescription){
+                                $economDescription = substr($economDescription, strpos($economDescription,'Багаж не должен'));
+                                $airline->economDescription = trim($economDescription);
                                 $modified = true;
                             }
                             $businessDescription = (string)$item->luggage->business->description;
-                            if(!$airline->businessDescription && $businessDescription){
-                                $airline->businessDescription = $businessDescription;
+                            if( $airline->businessDescription && $businessDescription){
+                                $businessDescription = substr($businessDescription, strpos($businessDescription,'Багаж не должен'));
+                                $airline->businessDescription = trim($businessDescription);
+                                echo "try modyf ";
                                 $modified = true;
                             }
 
