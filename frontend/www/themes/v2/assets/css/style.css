@@ -1705,14 +1705,49 @@ input.hotel-input {
 .autocomplete {
 	background: #FFF url(../images/autocimTopBg.png) 0px 0px no-repeat;
 	margin-top: -4px;
-	width: 260px;
+	width: 289px;
 	font-size: 14px;
 	color: #16181a;
+	padding-top: 4px;
+	box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6); 
+	-moz-box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6); /* Для Firefox */
+    -webkit-box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6); /* Для Safari и Chrome */
+	border-radius: 0px 0px 4px 4px;
+	overflow: hidden;
 }
 .autocomplete div {
-	padding: 5px 10px;
+	padding: 7px 10px;
 	cursor: pointer;
+	position: relative;
+	white-space: nowrap;
+	overflow: hidden;
 }
-.autocomplete div:hover {
+
+.autocomplete div .code {
+	display: block;
+	position: absolute;
+	padding: 7px 0px 7px 5px;
+	background: #FFF;
+	color: #969ba1;
+	font-size: 11px;
+	text-transform: uppercase;
+	right: 0px;
+	top: 0px;
+	width: 36px;
+	text-align: left;
+	-moz-box-shadow: -7px 0 6px rgba(255,255,255,1); /* Для Firefox */
+    -webkit-box-shadow: -7px 0 6px rgba(255,255,255,1); /* Для Safari и Chrome */
+    box-shadow: -7px 0 6px rgba(255,255,255,1); /* Параметры тени */
+    border-radius: 0px 0px 4px 4px;
+}
+.autocomplete div .country {
+	color: #969ba1;
+}
+.autocomplete div:hover, .autocomplete div:hover .code, .autocomplete .selected, .autocomplete .selected .code {
 	background: #e2e5eb;
+}
+.autocomplete div:hover .code, .autocomplete .selected .code {
+	-moz-box-shadow: -7px 0 6px rgba(226,229,235,1); /* Для Firefox */
+    -webkit-box-shadow: -7px 0 6px rgba(226,229,235,1); /* Для Safari и Chrome */
+    box-shadow: -7px 0 6px rgba(226,229,235,1); /* Параметры тени */
 }
