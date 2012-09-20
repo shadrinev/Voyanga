@@ -315,24 +315,41 @@
 
 
 .startYourTours {
-	background: url("../images/all-tours-slice.png") no-repeat scroll left 0 transparent;
+	background: url("../images/all-tours-slice.png") no-repeat scroll center 0 transparent;
     height: 106px;
+    left: 0;
     position: absolute;
     top: 0;
-    width: 14.28%;
+    width: 47px;
     z-index: 210;
-
-    left: 0%;
 }
 .endYourTours {
-	background: url("../images/all-tours-slice.png") no-repeat scroll right 0 transparent;
+	background: url("../images/all-tours-slice.png") no-repeat scroll center 0 transparent;
     height: 106px;
+    right: 0;
     position: absolute;
     top: 0;
-    width: 14.28%;
+    width: 47px;
     z-index: 210;
-    
-    left: 57.2%;
+}
+.startYourTours, .endYourTours {
+	display: none;
+}
+flyTrip.startPoint.fd2 .startYourTours {
+	left: 14.28%;
+	display: block;
+}
+flyTrip.startPoint.fd3 .startYourTours {
+	left: 28.56%;
+	display: block;
+}
+flyTrip.startPoint.fd2 .startYourTours {
+	right: 14.28%;
+	display: block;
+}
+flyTrip.startPoint.fd3 .startYourTours {
+	right: 28.56%;
+	display: block;
 }
 .yourTrip {
 	height: 106px;
@@ -419,7 +436,7 @@
 .tripFlyAll .jetFly {
 	background: url("../images/trip-jet-fly.png") no-repeat scroll 0 0 transparent;
     height: 13px;
-    left: 40%;
+    left: 18%;
     position: absolute;
     top: -5px;
     width: 29px;
