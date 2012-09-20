@@ -194,7 +194,7 @@
 .ticket-items .content .center-ticket .date-time-city .how-long .ico-path {
     background: url("../images/ico-path.png") no-repeat scroll 0 0 transparent;
     height: 15px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     position: relative;
 }
 .ticket-items .content .center-ticket .date-time-city .how-long .ico-path .down {

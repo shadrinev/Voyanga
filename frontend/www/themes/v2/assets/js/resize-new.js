@@ -561,4 +561,3 @@ function scrollValue() {
 
 $(window).load(AlphaBackground);
 $(window).load(scrollValue);
-
