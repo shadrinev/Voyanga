@@ -397,7 +397,7 @@ EOD;
                                 $airline->economFreeWeight = str_replace('kg','',$economFreeWeight);
                                 $modified = true;
                             }
-                            $businessFreeWeight = (string)$item->luggage->econom->weight;
+                            $businessFreeWeight = (string)$item->luggage->business->weight;
                             if(!$airline->businessFreeWeight && $businessFreeWeight){
                                 $airline->businessFreeWeight = str_replace('kg','',$businessFreeWeight);
                                 $modified = true;
@@ -407,7 +407,7 @@ EOD;
                                 $airline->economDescription = $economDescription;
                                 $modified = true;
                             }
-                            $businessDescription = (string)$item->luggage->econom->description;
+                            $businessDescription = (string)$item->luggage->business->description;
                             if(!$airline->businessDescription && $businessDescription){
                                 $airline->businessDescription = $businessDescription;
                                 $modified = true;
@@ -433,7 +433,7 @@ EOD;
                                 $airline->economFreeWeight = str_replace('kg','',$economFreeWeight);
                                 $modified = true;
                             }
-                            $businessFreeWeight = (string)$item->luggage->econom->weight;
+                            $businessFreeWeight = (string)$item->luggage->business->weight;
                             if(!$airline->businessFreeWeight && $businessFreeWeight){
                                 $airline->businessFreeWeight = str_replace('kg','',$businessFreeWeight);
                                 $modified = true;
@@ -443,7 +443,7 @@ EOD;
                                 $airline->economDescription = $economDescription;
                                 $modified = true;
                             }
-                            $businessDescription = (string)$item->luggage->econom->description;
+                            $businessDescription = (string)$item->luggage->business->description;
                             if(!$airline->businessDescription && $businessDescription){
                                 $airline->businessDescription = $businessDescription;
                                 $modified = true;

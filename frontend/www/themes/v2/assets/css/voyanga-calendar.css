@@ -53,7 +53,7 @@
     text-align: right;
     text-shadow: 0 1px 0 #FFFFFF;
     text-transform: lowercase;
-    width: 14.18%;
+    width: 14.28%;
 }
 .weekDayVoyanga span {
 	margin-right: 15px;
@@ -67,11 +67,11 @@
 }
 .calendarGridVoyanga{
     /* may be in percents??*/
-    width: 950px;
-
+    /*width: 950px;*/
+    width: 100%;
     height: 245px;
     overflow: hidden;
-    overflow-y: visible;
+    /*overflow-y: overlay;*/
     color: #1c1f24;
     padding-left: 1px;
 }
@@ -86,7 +86,7 @@
     height: 49px;
 }
 .dayCellVoyanga {
-    width: 14.18%;
+    width: 14.28%;
     height: 48px;
     display: inline-block;
     border-right: 1px #d7d7d8 solid;
@@ -319,7 +319,7 @@
     height: 106px;
     position: absolute;
     top: 0;
-    width: 14.18%;
+    width: 14.28%;
     z-index: 210;
 
     left: 0%;
@@ -329,7 +329,7 @@
     height: 106px;
     position: absolute;
     top: 0;
-    width: 14.18%;
+    width: 14.28%;
     z-index: 210;
     
     left: 57.2%;
@@ -382,7 +382,7 @@
     top: 0;
     z-index: 209;
     
-    width: 14.18%;	
+    width: 14.28%;
 }
 .tripFlyAll {
 	margin-top: 15px;
@@ -456,9 +456,10 @@
     margin: -1px;
 }
 .allTourCal .weekDaysVoyanga .weekDaysVoyangaInner {
-    width: 950px;
+    width: 100%;
+    overflow-y: hidden;
 }
 
 .allTourCal .monthLineVoyanga {
-    width: 99.26%;
+    width: 100%;
 }
