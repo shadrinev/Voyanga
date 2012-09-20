@@ -367,7 +367,7 @@ class CityManager extends CApplicationComponent
      * @param Traversable $model The model that contains the
      * @return string The template with attribute names replaced by their values
      */
-    static protected function parseTemplate($template, Traversable $model)
+    static public function parseTemplate($template, Traversable $model)
     {
         $replacements = array();
         preg_match_all('|\{(.+?)\}|is', $template, $matches);
