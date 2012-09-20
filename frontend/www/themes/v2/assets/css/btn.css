@@ -108,7 +108,7 @@
 .btn-cost .text {
 	position: relative;
 	z-index: 100;
-	margin: 0 10px;
+	margin: 0 2px 0px 0px;
 }
 .btn-find {
     background: url("../images/slice.png") no-repeat scroll -122px -1014px transparent;

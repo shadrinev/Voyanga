@@ -15,6 +15,9 @@
     width: 100%;
     background: url("../images/jslider.checkslide.small.voyanga.png") repeat scroll center 1px transparent;
 }
+.slidecheckbox .selectList li {
+	cursor: pointer;
+}
 .slidecheckbox > i.left {
 	display: block;
 	position: absolute;

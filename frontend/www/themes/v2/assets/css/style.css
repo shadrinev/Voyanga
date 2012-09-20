@@ -1703,8 +1703,8 @@ input.hotel-input {
 
 
 .autocomplete {
-	background: #FFF;
-	border: 1px solid rgba(1,1,1,0.6);
+	background: #FFF url(../images/autocimTopBg.png) 0px 0px no-repeat;
+	margin-top: -4px;
 	width: 260px;
 	font-size: 14px;
 	color: #16181a;
