@@ -6,3 +6,5 @@ class HotelsModule
   constructor: ->
     @panel = new HotelsPanel()
     @controller = new HotelsController()# @panel.sp
+
+  resize: ->

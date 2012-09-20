@@ -33,8 +33,6 @@ function filterSlider() {
 			var leftPos = obj.css('left');
 			leftPos = leftPos.slice(0, -2);
 			limitX = obj.parent().width() - obj.width();
-			
-			console.log(leftPos);
 		}
 	});
 }
