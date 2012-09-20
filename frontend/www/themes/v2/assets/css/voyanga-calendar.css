@@ -310,47 +310,55 @@
     top: 5px;
     width: 21px
 }
-
-
-
-
 .startYourTours {
-	background: url("../images/all-tours-slice.png") no-repeat scroll center 0 transparent;
+	background: url("../images/all-tours-slice.png") no-repeat scroll -16px 0 transparent;
     height: 106px;
-    left: 0;
+    left: -8px;
     position: absolute;
     top: 0;
-    width: 47px;
+    width: 16px;
     z-index: 210;
 }
 .endYourTours {
-	background: url("../images/all-tours-slice.png") no-repeat scroll center 0 transparent;
+	background: url("../images/all-tours-slice.png") no-repeat scroll -16px 0 transparent;
     height: 106px;
-    right: 0;
     position: absolute;
+    right: -8px;
     top: 0;
-    width: 47px;
+    width: 16px;
     z-index: 210;
 }
+/*
 .startYourTours, .endYourTours {
 	display: none;
 }
-flyTrip.startPoint.fd2 .startYourTours {
+*/
+/*
+.flyTrip.startPoint.fd2 .startYourTours {
+	left: 0%;
+	display: block;
+}
+.flyTrip.startPoint.fd2 .startYourTours {
 	left: 14.28%;
 	display: block;
 }
-flyTrip.startPoint.fd3 .startYourTours {
+.flyTrip.startPoint.fd3 .startYourTours {
 	left: 28.56%;
 	display: block;
 }
-flyTrip.startPoint.fd2 .startYourTours {
+.flyTrip.endPoint.fd1 .endYourTours {
+	right: 0%;
+	display: block;
+}
+.flyTrip.endPoint.fd2 .endYourTours {
 	right: 14.28%;
 	display: block;
 }
-flyTrip.startPoint.fd3 .startYourTours {
+.flyTrip.endPoint.fd3 .endYourTours {
 	right: 28.56%;
 	display: block;
 }
+*/
 .yourTrip {
 	height: 106px;
     padding: 0px;
@@ -362,13 +370,13 @@ flyTrip.startPoint.fd3 .startYourTours {
     width: 29%;
 }
 .yourTrip .startHotel {
-	position: absolute;
-	top: 0px;
-	left: -46px;
 	background: url("../images/all-tours-slice.png") no-repeat scroll 0 -107px transparent;
-	height: 106px;
-	width: 47px;
-	z-index: 209;
+    height: 106px;
+    left: -25px;
+    position: absolute;
+    top: 0;
+    width: 47px;
+    z-index: 209;
 }
 .yourTrip .pathHotel {
 	width: 100%;
@@ -379,7 +387,7 @@ flyTrip.startPoint.fd3 .startYourTours {
 .yourTrip .endHotel {
 	position: absolute;
 	top: 0px;
-	right: -46px;
+	right: -25px;
 	background: url("../images/all-tours-slice.png") no-repeat scroll 0 -319px transparent;
 	height: 106px;
 	width: 48px;
@@ -387,7 +395,7 @@ flyTrip.startPoint.fd3 .startYourTours {
 }
 .yourTrip .nameHotel {
 	color: #EAEFF3;
-    left: -30px;
+    left: -10px;
     position: absolute;
     top: 49px;
     z-index: 210;
@@ -403,7 +411,7 @@ flyTrip.startPoint.fd3 .startYourTours {
 }
 .tripFlyAll {
 	margin-top: 15px;
-    padding: 0 25px;
+    padding: 0 0px;
     position: relative;
     z-index: 209;
 }
@@ -416,11 +424,12 @@ flyTrip.startPoint.fd3 .startYourTours {
     font-family: Arial;
     font-size: 11px;
     height: 16px;
-    left: 5px;
+    left: -10px;
     position: absolute;
     top: 69px;
     white-space: nowrap;
     z-index: 209;
+    text-transform: uppercase;
 }
 .flyTrip .endNameCity {
 	color: #252628;
@@ -428,15 +437,16 @@ flyTrip.startPoint.fd3 .startYourTours {
     font-size: 11px;
     height: 16px;
     position: absolute;
-    right: 5px;
-    top: 85px;
+    right: -14px;
+    top: 69px;
     white-space: nowrap;
     z-index: 209;
+    text-transform: uppercase;
 }
 .tripFlyAll .jetFly {
 	background: url("../images/trip-jet-fly.png") no-repeat scroll 0 0 transparent;
     height: 13px;
-    left: 18%;
+    left: 7%;
     position: absolute;
     top: -5px;
     width: 29px;
