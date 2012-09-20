@@ -280,6 +280,9 @@ AviaResult = (function() {
     this.refundable = data.refundable;
     this.refundableText = this.refundable ? "Билет возвратный" : "Билет не возвратный";
     this.freeWeight = data.freeWeight;
+    if (this.freeWeight === 0) {
+      this.freeWeight = '$';
+    }
     this.freeWeightText = data.freeWeightDescription;
     this.activeVoyage = new Voyage(flights[0], this.airline);
     if (this.roundTrip) {

@@ -54,7 +54,7 @@
               			<span class="ico-back" data-bind="css: {yes: refundable, no:!refundable}"></span>
               			<span data-bind="text: refundableText"></span>
               		</div>
-              		<div class="boxKG" data-bind="visible: freeWeight">
+              		<div class="boxKG" data-bind="visible: freeWeightText">
               			<span class="box" data-bind="text: freeWeight"></span>
               			<span data-bind="text: freeWeightText"></span>
               		</div>

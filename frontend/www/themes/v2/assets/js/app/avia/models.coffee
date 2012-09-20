@@ -205,6 +205,7 @@ class AviaResult
     @refundable = data.refundable
     @refundableText = if @refundable then "Билет возвратный" else "Билет не возвратный"
     @freeWeight = data.freeWeight
+    @freeWeight = '$' if @freeWeight == 0
     @freeWeightText = data.freeWeightDescription
 
     @activeVoyage = new Voyage(flights[0], @airline)
