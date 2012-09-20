@@ -283,6 +283,11 @@ HotelResult = (function() {
       watch: 'window'
     });
     this.mapInitialized = false;
+    $(window).keyup(function(e) {
+      if (e.keyCode === 27) {
+        return _this.closeDetails();
+      }
+    });
     return $('#popupOverlay').click(function() {
       return _this.closeDetails();
     });
@@ -294,6 +299,7 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.closeDetails = function() {
+    $(window).unbind('keyup');
     window.voyanga_debug("Hiding popup");
     $('#hotels-body-popup').hide();
     return $('#popupOverlay').remove();
