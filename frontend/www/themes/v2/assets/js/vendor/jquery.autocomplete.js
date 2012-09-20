@@ -16,12 +16,9 @@
 	var reEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
 	function fnFormatResult(value, data, currentValue) {
-        console.log(value);
-        console.log(data);
-        console.log(currentValue);
 		var pattern = '(' + currentValue.replace(reEscape, '\\$1') + ')',
 		    newValue = data.name.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>'),
-            result = '<span class="city">' + data.name + '</span><span class="country">'+ data.country +'</span><span class="code">' + data.code + '</span>';
+            result = '<span class="city">' + data.name + ', </span><span class="country">'+ data.country +'</span><span class="code">' + data.code + '</span>';
         return result;
 	}
 
@@ -94,7 +91,7 @@
 			if (!this.options.width) { this.options.width = this.el.width(); }
 			this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-			$('<div id="' + this.mainContainerId + '" style="position:absolute;z-index:9999;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:300px;"></div></div></div>').appendTo('body');
+			$('<div id="' + this.mainContainerId + '" style="position:absolute;z-index:9999;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none;"></div></div></div>').appendTo('body');
 
 			this.container = $('#' + autocompleteElId);
 			this.fixPosition();
