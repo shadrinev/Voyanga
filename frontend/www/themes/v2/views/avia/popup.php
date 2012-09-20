@@ -70,7 +70,7 @@
           </div>
 </script>
 <script id="avia-popup-flight" type="text/html">
-        <div data-bind="css: {'start-path': $index()==0, 'end-path': $index()==($length()-1)}">
+        <div data-bind="css: {'start-path': $index()==0, 'end-path': $index()==($length()-1), 'mid-path': $index()>0 && $index()<($length()-1)}">
             <div class="information">
                 <div class="start-fly" data-bind="css: {'no-way': $index()!=0}">
                     <div class="time" data-bind="text: departureTime()">
