@@ -1,5 +1,5 @@
 <script type="text/html" id="avia-results">
-<h1><span>Выберите авиабилет</span>
+<h1 data-bind="visible: false">Выберите авиабилет
     <span data-bind="text: results.departureCity">Санкт-Петербург</span> → <span data-bind="text: results.arrivalCity">Амстердам</span>, <span data-bind="text: results.date">19 мая</span></h1>
 
 <div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: results.cheapest}">
@@ -9,8 +9,8 @@
 <div class="clear"></div>
 </div>
 <div class="ticket-content">
-<h2>Все результаты. Найдено: <span data-bind="text: results.numResults()"></span>.</h2>
-<div class="order-div"><a class="order-hide" href="#" style="display: inline;">Скрыть рекомендации</a></div>
+<h2>Все результаты поиска: <span data-bind="text: results.numResults()"></span> авиабилетов</h2>
+<div class="order-div"><a class="order-hide" href="#" style="display: inline;" data-bind="click: results.hideRecommend">Скрыть рекомендации</a></div>
 <div class="clear"></div>
 
 <!-- ko foreach: results -->
@@ -116,7 +116,7 @@
         <div class="time">
             В пути <span data-bind="text: rtDuration()">8 ч. 30 м.</span>
         </div>
-        <div class="ico-path" data-bind="html: stopsRatio()">
+        <div class="ico-path" data-bind="html: rtStopsRatio()">
         </div>
         <div class="path" data-bind="text:rtStopoverText()">
         </div>

@@ -13,6 +13,10 @@ AviaModule = (function() {
     this.controller = new AviaController(this.panel.sp);
   }
 
+  AviaModule.prototype.resize = function() {
+    return ResizeAvia();
+  };
+
   return AviaModule;
 
 })();

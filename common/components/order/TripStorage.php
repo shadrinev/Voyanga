@@ -20,6 +20,14 @@ class TripStorage
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
     }
 
+    public function  getPrice()
+    {
+        $price = 0;
+        foreach ($this->itemsOnePerGroup as $item)
+            $price += $item->getPrice();
+        return $price;
+    }
+
     public function saveOrder($event, $startCityId, $name)
     {
         $this->name = $name;

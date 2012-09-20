@@ -47,6 +47,9 @@ AviaPanel = (function() {
     this.sp = new SearchParams();
     this.departureCity = this.sp.dep;
     this.arrivalCity = this.sp.arr;
+    this.inside = false;
+    this.inside2 = false;
+    this.inside3 = false;
     this.rt = this.sp.rt;
     this.adults = this.sp.adults;
     this.children = this.sp.children;
@@ -126,6 +129,21 @@ AviaPanel = (function() {
         }
         return $(this).trigger('change');
       });
+      $('.how-many-man').find('.popup').hover(function() {
+        return _this.inside = true;
+      }, function() {
+        return _this.inside = false;
+      });
+      $('.how-many-man .content').hover(function() {
+        return _this.inside2 = true;
+      }, function() {
+        return _this.inside2 = false;
+      });
+      $('.how-many-man .btn').hover(function() {
+        return _this.inside3 = true;
+      }, function() {
+        return _this.inside3 = false;
+      });
       return _this.rtTumbler(_this.rt());
     });
   }
@@ -182,25 +200,46 @@ AviaPanel = (function() {
   };
 
   AviaPanel.prototype.show = function(context, event) {
-    var el;
+    var el,
+      _this = this;
     el = $(event.currentTarget);
     if (!el.hasClass('active')) {
+      console.log("PP OPENENG");
+      $(document.body).mousedown(function() {
+        console.log(_this.inside, _this.inside2);
+        if (_this.inside || _this.inside2 || _this.inside3) {
+          return;
+        }
+        return _this.close();
+      });
       $('.how-many-man .btn').addClass('active');
       $('.how-many-man .content').addClass('active');
       return $('.how-many-man').find('.popup').addClass('active');
     } else {
-      console.log("CLOSENG");
       return this.close();
     }
   };
 
   AviaPanel.prototype.close = function() {
-    console.log("CLOSED");
+    $(document.body).unbind('mousedown');
+    console.log("PP CLOSED");
     $('.how-many-man .btn').removeClass('active');
     $('.how-many-man .content').removeClass('active');
     return $('.how-many-man').find('.popup').removeClass('active');
   };
 
+  AviaPanel.prototype.returnRecommend = function(context, event) {
+    $('.recomended-content').slideDown();
+    $('.order-hide').fadeIn();
+    return $(event.currentTarget).animate({
+      top: '-19px'
+    }, 500, null, function() {
+      return ResizeAvia();
+    });
+  };
+
   return AviaPanel;
 
 })();
+
+$(document).on('');

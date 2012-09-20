@@ -265,16 +265,6 @@ class Event extends FrontendActiveRecord
         }
     }
 
-    public function getPriceMoscow($forceUpdate = false)
-    {
-        return $this->getPriceForCity('MOW', $forceUpdate);
-    }
-
-    public function getPricePiter($forceUpdate = false)
-    {
-        return $this->getPriceForCity('LED', $forceUpdate);
-    }
-
     public static function getPossibleEvents()
     {
         $allEvents = Event::model()->findAll();
@@ -286,5 +276,16 @@ class Event extends FrontendActiveRecord
             $newEvent,
             $existingEvents
         );
+    }
+
+    public function getPricesReadable()
+    {
+        $ret = array();
+        foreach ($this->prices as $price)
+        {
+            $city = $price->city;
+            $ret[] = 'Из '.$city->caseGen.': '.$price->bestPrice." руб.";
+        }
+        return implode(', ', $ret);
     }
 }

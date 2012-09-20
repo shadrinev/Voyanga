@@ -691,6 +691,8 @@ class HotelBookClient
         //add requests to queue
         self::$groupId = substr(md5(uniqid('', true)), 0, 10);
         $params = array('cityId' => $hotelSearchParams->city->hotelbookId, 'checkIn' => $hotelSearchParams->checkIn, 'duration' => $hotelSearchParams->duration);
+        if (!$params['cityId'])
+            throw new CException('City '.$hotelSearchParams->city->localEn.' does not linked with hotelBookId. You cannot find any hotels there');
         foreach ($combinations as $key => $combination)
         {
             $params['rooms'] = array();

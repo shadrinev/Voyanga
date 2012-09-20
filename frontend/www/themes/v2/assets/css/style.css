@@ -791,10 +791,9 @@
 }
 /*---- filter-content -----*/
 .filter-content {
-	margin-top: 35px;
-	color: #2e333b;
-	margin-right: 15px;
-	margin-left: 5px;
+	color: #2E333B;
+    margin-top: 35px;
+    width: inherit;
 }
 .filter-content a {
 	color: #1c81bb;
@@ -802,15 +801,17 @@
 }
 .filter-content a.clean {
 	display: inline-block;
+    font-family: Arial;
     font-size: 11px;
     line-height: 13px;
+    margin-left: 4px;
     vertical-align: middle;
-    font-family: Arial;
 }
 .div-filter {
-	background: url(../images/shadow-filter.png) no-repeat left 0px;
-	padding-top: 21px; margin-top: 14px;
-	line-height: 25px;
+	background: url("../images/shadow-filter.png") no-repeat scroll left 0 transparent;
+    line-height: 25px;
+    padding-bottom: 8px;
+    padding-top: 18px;
 }
 .all-list {
 	padding-left: 2px;
@@ -1114,11 +1115,22 @@
 	line-height: 16px;
 	color: #8f9199;
 	margin-bottom: 15px;
-	width: 100%;
+	/* width: 100%; */
 	overflow: hidden;
 	height: 170px;
 }
-
+.photo-slide-hotel > ul {
+	width: 10000px;
+	overflow: hidden;
+	height: 150px;
+}
+.photo-slide-hotel > ul > li {
+	float: left;
+	margin-right: 1px;
+} 
+.photo-slide-hotel > ul > li img {
+	height: 150px;
+}
 .descr > .left .descr-text {
 	padding-left: 3px;
 	width: 100%;
@@ -1673,4 +1685,32 @@ input.hotel-input {
 	vertical-align: middle;
 	margin-left: 0px;
 	margin-right: 0px;
+}
+
+
+.scrollBlock {
+	overflow: hidden;
+    width: 240px;
+}
+.innerScroll {
+	height: 787px;
+    overflow-y: scroll;
+    padding-left: 10px;
+    width: 245px;
+}
+
+
+.autocomplete {
+	background: #FFF;
+	border: 1px solid rgba(1,1,1,0.6);
+	width: 260px;
+	font-size: 14px;
+	color: #16181a;
+}
+.autocomplete div {
+	padding: 5px 10px;
+	cursor: pointer;
+}
+.autocomplete div:hover {
+	background: #e2e5eb;
 }

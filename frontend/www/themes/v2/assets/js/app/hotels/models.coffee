@@ -174,6 +174,10 @@ class HotelResult
     # If we initialized google map already
     @mapInitialized = false
 
+    $(window).keyup (e) =>
+      if e.keyCode == 27
+        @closeDetails()
+
     $('#popupOverlay').click =>
       @closeDetails()
 
@@ -183,6 +187,7 @@ class HotelResult
 
   # Hide popup with detailed info about given result
   closeDetails: =>
+    $(window).unbind 'keyup'
     window.voyanga_debug "Hiding popup"
     $('#hotels-body-popup').hide()
     $('#popupOverlay').remove()

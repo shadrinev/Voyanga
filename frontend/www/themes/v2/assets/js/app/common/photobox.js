@@ -5,6 +5,7 @@ var PhotoBox,
 PhotoBox = (function() {
 
   function PhotoBox(photos) {
+    var _this = this;
     this.photos = photos;
     this._load = __bind(this._load, this);
 
@@ -27,9 +28,15 @@ PhotoBox = (function() {
     ko.processAllDeferredBindingUpdates();
     resizeLoad();
     resizePhotoWin();
+    $(window).keyup(function(e) {
+      if (e.keyCode === 27) {
+        return _this.close();
+      }
+    });
   }
 
   PhotoBox.prototype.close = function() {
+    $(window).unbind('keyup');
     $('#body-popup-Photo').remove();
     return $('#popupOverlayPhoto').remove();
   };

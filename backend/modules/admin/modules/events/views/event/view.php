@@ -34,8 +34,8 @@ $this->beginWidget("AAdminPortlet", array(
 		'preview',
         'tagsString',
         array(
-            'label' =>'Цена',
-            'value'=>'Из Москвы: '.$model->priceMoscow.", из Питера: ".$model->pricePiter
+            'label' =>'Цены',
+            'name'=>'pricesReadable'
         ),
 		'description:raw',
         array(

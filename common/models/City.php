@@ -159,7 +159,7 @@ class City extends CActiveRecord
         }
         else
         {
-            $city = City::model()->findByPk($id);
+            $city = City::model()->with('country')->findByPk($id);
             if ($city)
             {
                 City::$cities[$city->id] = $city;

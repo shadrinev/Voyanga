@@ -13,6 +13,8 @@ HotelsModule = (function() {
     this.controller = new HotelsController();
   }
 
+  HotelsModule.prototype.resize = function() {};
+
   return HotelsModule;
 
 })();

@@ -63,6 +63,8 @@ Application = (function(_super) {
         this.activeModule(prefix);
         window.voyanga_debug("APP: activating panel", module.panel);
         this.panel(module.panel);
+        $(window).unbind('resize');
+        $(window).resize(module.resize);
         return ko.processAllDeferredBindingUpdates();
       }
     });

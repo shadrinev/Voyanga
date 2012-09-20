@@ -45,7 +45,7 @@ class FlightTripElement extends TripElement
     {
         if ($this->flightVoyage)
         {
-            return $this->flightVoyage->rubPrice;
+            return $this->flightVoyage->price;
         }
         return 0;
     }

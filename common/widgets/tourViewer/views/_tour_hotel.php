@@ -1,4 +1,5 @@
-<table class="table" width="100%">
+<h4>Гостиница</h4>
+<table class="table table-bordered" width="100%">
     <thead>
     <tr>
         <th>Въезд</th>

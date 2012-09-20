@@ -15,8 +15,6 @@ AviaController = (function() {
 
     this.handleResults = __bind(this.handleResults, this);
 
-    this.getFilterLimitValues = __bind(this.getFilterLimitValues, this);
-
     this.searchAction = __bind(this.searchAction, this);
 
     this.routes = {
@@ -46,52 +44,24 @@ AviaController = (function() {
     }
   };
 
-  AviaController.prototype.getFilterLimitValues = function(results) {
-    return console.log(results);
-  };
-
   AviaController.prototype.handleResults = function(data) {
-    var key, stacked,
-      _this = this;
+    var filters, key, stacked;
     window.voyanga_debug("searchAction: handling results", data);
     key = "search_" + this.searchParams.key();
     sessionStorage.setItem(key, JSON.stringify(data));
     stacked = new AviaResultSet(data.flights.flightVoyages);
     stacked.injectSearchParams(data.searchParams);
-    this.getFilterLimitValues(stacked);
     this.aviaFiltersInit = {
       flightClassFilter: {
         value: data.searchParams.serviceClass
       },
-      departureTimeSliderDirect: {
-        fromTime: stacked.timeLimits.departureFromTime,
-        toTime: stacked.timeLimits.departureToTime
-      },
-      arrivalTimeSliderDirect: {
-        fromTime: stacked.timeLimits.arrivalFromTime,
-        toTime: stacked.timeLimits.arrivalToTime
-      },
-      departureTimeSliderReturn: {
-        fromTime: stacked.timeLimits.departureFromTimeReturn,
-        toTime: stacked.timeLimits.departureToTimeReturn
-      },
-      arrivalTimeSliderReturn: {
-        fromTime: stacked.timeLimits.arrivalFromTimeReturn,
-        toTime: stacked.timeLimits.arrivalToTimeReturn
-      },
       rt: data.searchParams.isRoundTrip
     };
-    window.app.on('avia:contentRendered', function() {
-      return setTimeout(function() {
-        return AviaFilters.init(_this.aviaFiltersInit);
-      }, 100);
-    });
     this.render('results', {
       'results': stacked
     });
-    this.trigger("sidebarChanged", 'filters', {
-      'results': stacked
-    });
+    filters = new AviaFiltersT(stacked);
+    this.trigger("sidebarChanged", 'filters', filters);
     return ko.processAllDeferredBindingUpdates();
   };
 

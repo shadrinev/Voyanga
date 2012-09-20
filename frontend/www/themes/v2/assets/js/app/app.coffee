@@ -72,6 +72,8 @@ class Application extends Backbone.Router
         @activeModule(prefix)
         window.voyanga_debug "APP: activating panel", module.panel
         @panel module.panel
+        $(window).unbind 'resize'
+        $(window).resize module.resize
         ko.processAllDeferredBindingUpdates()
 
   run: ->
