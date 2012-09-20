@@ -51,12 +51,12 @@
               <div class="finish">
               	<div class="floatLeft">
               		<div class="back">
-              			<span class="ico-back no"></span>
-              			<span>Билет возвратный</span>
+              			<span class="ico-back" data-bind="css: {yes: refundable, no:!refundable}"></span>
+              			<span data-bind="text: refundableText"></span>
               		</div>
               		<div class="boxKG">
-              			<span class="box">45</span>
-              			<span>Норма провоза бесплатного багажа у авиакомпании Aigle Azur в экономическом классе: Багаж не должен превышать по весу 40 кг и по сумме трех измерений 158 см на человека.</span>
+              			<span class="box" data-bind="text: freeWeight"></span>
+              			<span data-bind="text: freeWeightText"></span>
               		</div>
               	</div>	
               	<div class="floatRight">
@@ -70,7 +70,7 @@
           </div>
 </script>
 <script id="avia-popup-flight" type="text/html">
-        <div data-bind="css: {'start-path': $index()==0, 'end-path': $index()==($length()-1), 'mid-path': $index()>0 && $index()<($length()-1)}">
+        <div data-bind="css: {'start-path': $index()==0, 'end-path': ($index()==($length()-1)) && $length()>1, 'mid-path': $index()>0 && $index()<($length()-1)}">
             <div class="information">
                 <div class="start-fly" data-bind="css: {'no-way': $index()!=0}">
                     <div class="time" data-bind="text: departureTime()">
