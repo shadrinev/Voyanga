@@ -204,8 +204,8 @@ class AviaResult
     @serviceClass = data.serviceClass
     @refundable = data.refundable
     @refundableText = if @refundable then "Билет возвратный" else "Билет не возвратный"
-    @freeWeight = data.economFreeWeight
-    @freeWeightText = data.economDescription
+    @freeWeight = data.freeWeight
+    @freeWeightText = data.freeWeightDescription
 
     @activeVoyage = new Voyage(flights[0], @airline)
     if @roundTrip
