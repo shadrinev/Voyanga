@@ -35,7 +35,7 @@ class FlightPart
   
 
 class Voyage #Voyage Plus loin que la nuit et le jour
-  constructor: (flight) ->
+  constructor: (flight, @airline) ->
     # Wrap flight parts in model
     @parts = []
     for part in flight.flightParts
@@ -136,7 +136,6 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     for part in @parts[0..-2]
       result.push Math.ceil part._duration/duration*80
     for data, index in result
-      console.log index
       if data < 18
         data = 18        
       if index > 0
@@ -154,6 +153,24 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     #console.log "SORTENG "
     @_backVoyages.sort((a,b) -> a.departureInt() - b.departureInt())
     @activeBackVoyage(@_backVoyages[0])
+
+  # FIXME copypaste
+  removeSimilar: ->
+    if @direct
+      return
+    _helper = {}
+    for voyage in @_backVoyages
+      key = voyage.airline + voyage.departureInt()
+      item = _helper[key]
+      if item
+        _helper[key] = if item.stopoverLength < voyage.stopoverLength then item else voyage
+      else
+        _helper[key] = voyage
+    @_backVoyages = []
+    for key, item of _helper
+      @_backVoyages.push item
+    @activeBackVoyage(@_backVoyages[0])
+
 
   chooseActive: ->
     if @_backVoyages.length == 0
@@ -187,9 +204,9 @@ class AviaResult
     @airlineName = data.valCompanyNameEn
     @serviceClass = data.serviceClass
 
-    @activeVoyage = new Voyage(flights[0])
+    @activeVoyage = new Voyage(flights[0], @airline)
     if @roundTrip
-      @activeVoyage.push new Voyage(flights[1])
+      @activeVoyage.push new Voyage(flights[1], @airline)
     @voyages = []
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
@@ -241,9 +258,9 @@ class AviaResult
 
   push: (data) ->
     @_stacked = true
-    newVoyage = new Voyage(data.flights[0])
+    newVoyage = new Voyage(data.flights[0], @airline)
     if @roundTrip
-      backVoyage = new Voyage(data.flights[1])
+      backVoyage = new Voyage(data.flights[1], @airline)
       newVoyage.push(backVoyage)
       result = _.find @voyages, (voyage) -> voyage.hash()==newVoyage.hash()
       if result
@@ -318,7 +335,26 @@ class AviaResult
   sort: ->
     @voyages.sort((a,b) -> a.departureInt() - b.departureInt())
     if @roundTrip
-      _.each(@voyages, (x)-> x.sort() )
+      _.each @voyages,
+       (x)->
+        x.sort()
+        x.removeSimilar() 
+    @activeVoyage(@voyages[0])
+
+  removeSimilar: ->
+    if @direct()
+      return
+    _helper = {}
+    for voyage in @voyages
+      key = voyage.airline + voyage.departureInt()
+      item = _helper[key]
+      if item
+        _helper[key] = if item.stopoverLength < voyage.stopoverLength then item else voyage
+      else
+        _helper[key] = voyage
+    @voyages = []
+    for key, item of _helper
+      @voyages.push item
     @activeVoyage(@voyages[0])
 
   # Shows popup with detailed info about given result
@@ -389,6 +425,7 @@ class AviaResultSet
 
     for key, result of @_results
       result.sort()
+      result.removeSimilar()
       @data.push result
 
     @postFilters()
@@ -407,7 +444,6 @@ class AviaResultSet
   
   postFilters: =>
     data = _.filter @data, (el) -> el.visible()
-    console.log "CHEAPEST", @data.length, data.length
 
     @numResults data.length
     # FIXME hide recommend
@@ -470,7 +506,6 @@ class SearchParams
     key += @adults()
     key += @children()
     key += @infants()
-    console.log "Search key", key
     return key
 
   getHash: ->
@@ -493,5 +528,4 @@ class SearchParams
     @infants data[5]
     if data.length == 7
       @rt true
-      console.log "RTDATE"
       @rtDate = data[6]
