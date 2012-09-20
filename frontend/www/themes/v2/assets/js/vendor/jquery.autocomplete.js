@@ -307,8 +307,15 @@
 				div.click(mClick(i));
 				this.container.append(div);
 			}
-			this.enabled = true;
-			this.container.show();
+            if (len==1)
+            {
+                this.select(0);
+            }
+            else
+            {
+                this.enabled = true;
+                this.container.show();
+            }
 		},
 
 		processResponse: function (text) {
@@ -358,6 +365,7 @@
 				this.hide();
 				this.onSelect(i);
 			}
+            this.el.trigger('autocompleted');
 		},
 
 		change: function (i) {
