@@ -335,19 +335,27 @@
 .startYourTours, .endYourTours {
 	display: none;
 }
-flyTrip.startPoint.fd2 .startYourTours {
+.flyTrip.startPoint.fd2 .startYourTours {
+	left: 0%;
+	display: block;
+}
+.flyTrip.startPoint.fd2 .startYourTours {
 	left: 14.28%;
 	display: block;
 }
-flyTrip.startPoint.fd3 .startYourTours {
+.flyTrip.startPoint.fd3 .startYourTours {
 	left: 28.56%;
 	display: block;
 }
-flyTrip.startPoint.fd2 .startYourTours {
+.flyTrip.startPoint.fd1 .endYourTours {
+	right: 0%;
+	display: block;
+}
+.flyTrip.startPoint.fd2 .endYourTours {
 	right: 14.28%;
 	display: block;
 }
-flyTrip.startPoint.fd3 .startYourTours {
+.flyTrip.startPoint.fd3 .endYourTours {
 	right: 28.56%;
 	display: block;
 }
