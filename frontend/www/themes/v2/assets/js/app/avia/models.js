@@ -277,6 +277,10 @@ AviaResult = (function() {
     this.airline = data.valCompany;
     this.airlineName = data.valCompanyNameEn;
     this.serviceClass = data.serviceClass;
+    this.refundable = data.refundable;
+    this.refundableText = this.refundable ? "Билет возвратный" : "Билет не возвратный";
+    this.freeWeight = data.economFreeWeight;
+    this.freeWeightText = data.economDescription;
     this.activeVoyage = new Voyage(flights[0], this.airline);
     if (this.roundTrip) {
       this.activeVoyage.push(new Voyage(flights[1], this.airline));

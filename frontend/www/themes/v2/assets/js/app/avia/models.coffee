@@ -193,7 +193,6 @@ class AviaResult
     # Mix in events
     _.extend @, Backbone.Events
 
-
     flights = data.flights
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)
@@ -203,6 +202,10 @@ class AviaResult
     @airline = data.valCompany
     @airlineName = data.valCompanyNameEn
     @serviceClass = data.serviceClass
+    @refundable = data.refundable
+    @refundableText = if @refundable then "Билет возвратный" else "Билет не возвратный"
+    @freeWeight = data.economFreeWeight
+    @freeWeightText = data.economDescription
 
     @activeVoyage = new Voyage(flights[0], @airline)
     if @roundTrip
