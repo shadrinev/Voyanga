@@ -155,22 +155,29 @@ Voyage = (function() {
   };
 
   Voyage.prototype.stopsRatio = function() {
-    var data, htmlResult, index, left, part, result, _i, _j, _k, _len, _len1, _len2, _ref;
+    var data, duration, htmlResult, index, left, part, result, _i, _j, _k, _len, _len1, _len2, _ref;
     result = [];
     if (this.direct) {
-      return result;
+      return '<span class="down"></span>';
     }
+    duration = _.reduce(this.parts, function(memo, part) {
+      return memo + part._duration;
+    }, 0);
     _ref = this.parts.slice(0, -1);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
-      result.push(Math.ceil(part.duration / this._duration * 80));
+      result.push(Math.ceil(part._duration / duration * 80));
     }
     for (index = _j = 0, _len1 = result.length; _j < _len1; index = ++_j) {
       data = result[index];
-      if (index > 1) {
+      console.log(index);
+      if (data < 18) {
+        data = 18;
+      }
+      if (index > 0) {
         result[index] = result[index - 1] + data;
       } else {
-        result[index] = data + 10;
+        result[index] = data;
       }
     }
     htmlResult = "";

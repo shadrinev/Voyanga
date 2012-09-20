@@ -129,15 +129,20 @@ class Voyage #Voyage Plus loin que la nuit et le jour
   stopsRatio: ->
     result = []
     if @direct
-      return result
+      return '<span class="down"></span>'
+    duration = _.reduce @parts,
+      (memo, part)-> memo + part._duration,
+      0
     for part in @parts[0..-2]
-      result.push Math.ceil part.duration/@_duration*80
+      result.push Math.ceil part._duration/duration*80
     for data, index in result
-      if index > 1
+      console.log index
+      if data < 18
+        data = 18        
+      if index > 0
         result[index] = result[index-1]+data
       else
-        result[index] = data + 10
-
+        result[index] = data
     htmlResult = ""
     for left in result
       htmlResult += '<span class="cup" style="left: ' + left + '%;"></span>'

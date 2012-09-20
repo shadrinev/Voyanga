@@ -116,7 +116,7 @@
         <div class="time">
             В пути <span data-bind="text: rtDuration()">8 ч. 30 м.</span>
         </div>
-        <div class="ico-path" data-bind="html: stopsRatio()">
+        <div class="ico-path" data-bind="html: rtStopsRatio()">
         </div>
         <div class="path" data-bind="text:rtStopoverText()">
         </div>
