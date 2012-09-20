@@ -424,7 +424,7 @@
     font-family: Arial;
     font-size: 11px;
     height: 16px;
-    left: -8px;
+    left: -10px;
     position: absolute;
     top: 69px;
     white-space: nowrap;
@@ -437,7 +437,7 @@
     font-size: 11px;
     height: 16px;
     position: absolute;
-    right: -8px;
+    right: -14px;
     top: 69px;
     white-space: nowrap;
     z-index: 209;
