@@ -424,24 +424,28 @@
     font-family: Arial;
     font-size: 11px;
     height: 16px;
-    left: -10px;
+    left: -16px;
     position: absolute;
+    text-align: center;
+    text-transform: uppercase;
     top: 69px;
     white-space: nowrap;
+    width: 32px;
     z-index: 209;
-    text-transform: uppercase;
 }
 .flyTrip .endNameCity {
 	color: #252628;
     font-family: Arial;
     font-size: 11px;
     height: 16px;
+    right: -16px;
     position: absolute;
-    right: -14px;
+    text-align: center;
+    text-transform: uppercase;
     top: 69px;
     white-space: nowrap;
+    width: 32px;
     z-index: 209;
-    text-transform: uppercase;
 }
 .tripFlyAll .jetFly {
 	background: url("../images/trip-jet-fly.png") no-repeat scroll 0 0 transparent;
