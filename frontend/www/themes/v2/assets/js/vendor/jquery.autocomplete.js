@@ -16,8 +16,13 @@
 	var reEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
 	function fnFormatResult(value, data, currentValue) {
-		var pattern = '(' + currentValue.replace(reEscape, '\\$1') + ')';
-		return value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>');
+        console.log(value);
+        console.log(data);
+        console.log(currentValue);
+		var pattern = '(' + currentValue.replace(reEscape, '\\$1') + ')',
+		    newValue = data.name.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>'),
+            result = '<span class="city">' + data.name + '</span><span class="country">'+ data.country +'</span><span class="code">' + data.code + '</span>';
+        return result;
 	}
 
 	function Autocomplete(el, options) {
@@ -302,8 +307,15 @@
 				div.click(mClick(i));
 				this.container.append(div);
 			}
-			this.enabled = true;
-			this.container.show();
+            if (len==1)
+            {
+                this.select(0);
+            }
+            else
+            {
+                this.enabled = true;
+                this.container.show();
+            }
 		},
 
 		processResponse: function (text) {
@@ -353,6 +365,7 @@
 				this.hide();
 				this.onSelect(i);
 			}
+            this.el.trigger('autocompleted');
 		},
 
 		change: function (i) {

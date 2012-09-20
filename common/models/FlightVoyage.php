@@ -15,6 +15,7 @@ class FlightVoyage extends CApplicationComponent
     public $price;
     public $taxes;
     public $flightKey;
+    /** @var Airline */
     public $valAirline;
     public $commission;
     public $flights;
@@ -271,6 +272,11 @@ class FlightVoyage extends CApplicationComponent
             'valCompanyName' => $this->valAirline->localRu,
             'valCompanyNameEn' => $this->valAirline->localEn,
             'bestMask' => $this->bestMask,
+            'refundable' => $this->refundable,
+            'economFreeWeight' => $this->valAirline->economFreeWeight,
+            'economDescription' => trim($this->valAirline->economDescription),
+            'businessFreeWeight' => $this->valAirline->businessFreeWeight,
+            'businessDescription' => trim($this->valAirline->businessDescription),
             'flights' => array()
         );
         foreach ($this->flights as $flight)

@@ -135,6 +135,29 @@ VoyangaCalendarSlider = function(options){
         mouseUp: function(e){
             this.knobSlideAction = false;
         },
+        mousewheelEvent: function(e){
+            //console.log(e);
+            var rolled = 0;
+            var event = e.originalEvent;
+            if ('wheelDelta' in event) {
+                rolled = event.wheelDelta;
+            }
+            else {  // Firefox
+                // The measurement units of the detail and wheelDelta properties are different.
+                rolled = -40 * event.detail;
+            }
+            var direction = (rolled > 0)? 1 : -1;
+            if(Math.abs(rolled) > 60){
+                rolled = 60* direction;
+            }
+
+            //var scrollHeight = TimelineCalendar.jObj.find('.calendarGrid').prop('scrollHeight');
+            //console.log(this.jObj.find('.calendarGridVoyanga').scrollTop());
+
+            var scrollTop = this.jObj.find('.calendarGridVoyanga').scrollTop() - rolled;
+            this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
+            return false;
+        },
         animateStep: function(now, fx){
             var data = fx.elem.id + ' ' + fx.prop + ': ' + now;
             if(fx.unit == 'px'){
@@ -278,8 +301,10 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
         $(window).load(function(){self.onresize();self.knobMove();});
 
         this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);});
-        //VoyangaCalendar.jObj.find('.calendarGrid').on('mousewheel',VoyangaCalendar.slider.mousewheelEvent);
-        //VoyangaCalendar.jObj.find('.calendarGrid').on('DOMMouseScroll',VoyangaCalendar.slider.mousewheelEvent);
+        //console.log('set wheel actions');
+        this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);});
+        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);});
+        //console.log(this);
         this.jObj.find('.monthLineVoyanga').mousedown(function(e){self.mouseDown(e);});
         this.jObj.find('.monthLineVoyanga').mouseup(function(e){self.mouseUp(e);});
         //VoyangaCalendar.jObj.find('.monthLineVoyanga .monthNameVoyanga').mouseup(VoyangaCalendar.slider.monthMouseUp);

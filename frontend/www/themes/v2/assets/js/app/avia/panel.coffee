@@ -201,4 +201,4 @@ class AviaPanel
     $(event.currentTarget).animate {top : '-19px'}, 500, null, ->
       ResizeAvia()
 
-
+$(document).on('')
