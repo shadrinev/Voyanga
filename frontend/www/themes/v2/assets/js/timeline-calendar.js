@@ -470,10 +470,11 @@ VoyangaCalendarTimeline.generateEvents = function () {
     weekNum--;
     weekObj = this.jObj.find('#weekNum-' + weekNum);
 
-        var pointDiv = this.generateEndPoint(this.calendarEvents[lastId]);
+    newEventElement.addClass('endPoint');
+        /*var pointDiv = this.generateEndPoint(this.calendarEvents[lastId]);
         var pointDivElement = $(pointDiv);
         //pointDivElement.css('left', leftPos + '%');
-        weekObj.append(pointDivElement);
+        weekObj.append(pointDivElement);*/
 
 
 }
