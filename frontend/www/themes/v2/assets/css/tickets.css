@@ -103,6 +103,10 @@
 	color: #262930; 
 	font-weight: bold;
 }
+.ticket-items .content .buy-ticket .text .txtBuy {
+	display: inline-block;
+	margin-bottom: 5px;
+}
 .ticket-items .content .buy-ticket .details {
 	color: #4b525c; font-size: 11px;
 	border-bottom: 1px dashed;

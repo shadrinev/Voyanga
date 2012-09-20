@@ -815,7 +815,9 @@
 }
 .all-list {
 	padding-left: 2px;
-	font-size: 11px;
+    font-family: Arial;
+    font-size: 11px;
+    line-height: 13px;
 }
 .ticket-content {
 	color: #3E4C52;
@@ -852,7 +854,7 @@
 	width: 176px; height: 19px;
 	overflow: hidden;
 	bottom: -19px; 
-	right: 165px;
+	right: 175px;
 	z-index: 800;
 }
 .minimize-rcomended .btn-minimizeRecomended {

@@ -172,7 +172,7 @@
 <!-- END CENTER BLOCK -->
 <div class="buy-ticket">
     <div class="text">
-        <span>Купить</span>
+        <span class="txtBuy">Купить</span>
         <a href="#" class="btn-cost">
             <span class="l"></span>
             <span class="price" data-bind="text: price">3 250</span>
