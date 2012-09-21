@@ -4,6 +4,7 @@
 @import "btn.css";
 @import "filter.css";
 @import "tickets.css";
+@import "checkradio.css";
 @charset "UTF-8";
 .wrapper {
 	position: absolute; 

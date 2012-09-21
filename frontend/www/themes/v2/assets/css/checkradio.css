@@ -1,0 +1,35 @@
+
+/*--- CHECKBOX and RADIO ---*/
+.ui-hover {
+  display: block;
+  cursor: pointer;
+}
+.checkbox {
+	background: url("../images/check.png") no-repeat scroll 0 0 transparent;
+	float: left;
+	height: 18px;
+	margin: 0 5px 2px 0;
+	width: 18px;
+}
+.radio {
+  background: url("../images/radio.png") no-repeat scroll center 0 transparent;
+  float: left;
+  height: 14px;
+  width: 18px;
+  margin: 3px 5px 2px 0;
+}
+.ui-hover:hover .checkbox {background-position:0 -36px;}
+.checkbox.on {background-position:0 -18px;}
+.ui-hover:hover .checkbox.on {background-position:0 -54px;}
+
+.ui-hover:hover .radio {background-position: center -28px;}
+.radio.on {background-position: center -14px;}
+.ui-hover:hover .radio.on {background-position: center -42px;}
+
+.ui-label {
+  margin: 1px 0 3px;
+}
+.ui-about {
+  color: #777;
+  line-height: 15px;
+}
