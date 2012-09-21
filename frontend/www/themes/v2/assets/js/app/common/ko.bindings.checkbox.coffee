@@ -27,6 +27,7 @@ ko.bindingHandlers.checkbox =
         checkVoybox(el)
         checked(true)
       else
+        checked(false)
         uncheckVoybox(el)
 
     el.after(new_el)

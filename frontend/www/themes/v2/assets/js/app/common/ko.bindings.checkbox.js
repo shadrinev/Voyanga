@@ -29,6 +29,7 @@ ko.bindingHandlers.checkbox = {
         checkVoybox(el);
         return checked(true);
       } else {
+        checked(false);
         return uncheckVoybox(el);
       }
     });
