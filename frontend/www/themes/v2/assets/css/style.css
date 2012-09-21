@@ -4,6 +4,7 @@
 @import "btn.css";
 @import "filter.css";
 @import "tickets.css";
+@import "checkradio.css";
 @charset "UTF-8";
 .wrapper {
 	position: absolute; 
@@ -1696,8 +1697,10 @@ input.hotel-input {
 }
 .innerScroll {
 	height: 787px;
+    overflow-x: hidden;
     overflow-y: scroll;
-    padding-left: 10px;
+    padding-left: 20px;
+    padding-right: 25px;
     width: 245px;
 }
 

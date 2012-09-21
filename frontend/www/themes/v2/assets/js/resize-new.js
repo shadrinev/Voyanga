@@ -340,7 +340,7 @@ function ResizeCenterBlock() {
 		}
 		if (var_filterBlockIsset) {
 			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);
-			var_filterBlock.find('.scrollBlock').find('.innerScroll').css('width', (widthFilterBlock+5)+'px');
+			var_filterBlock.find('.scrollBlock').find('.innerScroll').css('width', (widthFilterBlock-5)+'px');
 		}
 		if (var_leftBlockIsset) {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock);
