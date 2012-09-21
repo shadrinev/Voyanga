@@ -71,11 +71,11 @@ class SearchController extends ApiController
         if (!empty($this->errors))
             return false;
         $allVariants = $this->variants;
-        $cheapestTour = $this->filterCheapest();
+       /* $cheapestTour = $this->filterCheapest();
         $fastestTour = $this->filterFastest();
-        $optimalTour = $this->filterOptimal();
+        $optimalTour = $this->filterOptimal();*/
         return array(
-            'cheapest' => array(
+           /* 'cheapest' => array(
                 'totalPrice' => $this->getTotalPrice($cheapestTour),
                 'tour' => $cheapestTour,
             ),
@@ -86,7 +86,7 @@ class SearchController extends ApiController
             'optimal'  => array(
                 'totalPrice' => $this->getTotalPrice($optimalTour),
                 'tour' => $optimalTour,
-            ),
+            ),*/
             'allVariants' => $allVariants
         );
     }

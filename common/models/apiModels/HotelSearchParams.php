@@ -44,7 +44,7 @@ class HotelSearchParams
         $jsonObject = array(
             'checkIn' => $this->checkIn,
             'duration' => $this->duration,
-            'city' => $this->city->id,
+            'city' => $this->city->code,
             'rooms' => array()
         );
         foreach ($this->rooms as $room)
