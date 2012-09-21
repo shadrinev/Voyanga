@@ -10,13 +10,13 @@ ko.bindingHandlers.autocomplete = {
       minChars: 2,
       delimiter: /(,|;)\s*/,
       maxHeight: 400,
-      width: 300,
       zIndex: 9999,
       deferRequestBy: 0,
       country: "Yes",
       onSelect: function(value, data) {
         valueAccessor().iata(data.code);
-        return $(element).val(value);
+        $(element).val(value);
+        return $(element).siblings('input.second-path').val(value);
       }
     });
   },

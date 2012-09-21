@@ -5,6 +5,7 @@
         <div class="data">
           <div class="from">
             <input class="input-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity}">
+            <input class="second-path departureCity" type="text">
             <div class="date">
               <span class="f17">12</span>
               <br>
@@ -21,6 +22,7 @@
           </div>
           <div class="to">
             <input class="input-path arrivalCity" type="text" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity}">
+            <input class="second-path arrivalCity">
             <div class="date">
               <span class="f17">12</span>
               <br>
