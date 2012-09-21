@@ -74,6 +74,12 @@
     outline: 0 none;
     color: #16181a !important;
 }
+.second-path:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 15px rgba(82, 168, 236, 0.8);
+    outline: 0 none;
+    color: #16181a !important;
+}
 .how-many-man {
 	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
     float: left;
@@ -121,7 +127,7 @@
 	height: 40px; float: left; padding-top: 28px;
 	padding-right: 8px;
 	padding-left: 4px;
-	font-family: Tahoma; font-size: 20px; color: #e8e8e8; text-shadow: 0px 1px 0px #111419;
+	font-family: Tahoma, Arial; font-size: 20px; color: #e8e8e8; text-shadow: 0px 1px 0px #111419;
 }
 .how-many-man .count span {
 	font-size: 11px;
