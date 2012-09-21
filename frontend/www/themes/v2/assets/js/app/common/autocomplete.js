@@ -12,7 +12,7 @@ ko.bindingHandlers.autocomplete = {
       maxHeight: 400,
       zIndex: 9999,
       deferRequestBy: 0,
-      country: "Yes",
+      delay: 0,
       onSelect: function(value, data) {
         valueAccessor().iata(data.code);
         $(element).val(data.name);
