@@ -1697,8 +1697,10 @@ input.hotel-input {
 }
 .innerScroll {
 	height: 787px;
+    overflow-x: hidden;
     overflow-y: scroll;
     padding-left: 10px;
+    padding-right: 25px;
     width: 245px;
 }
 
