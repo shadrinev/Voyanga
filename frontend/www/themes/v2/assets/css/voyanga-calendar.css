@@ -503,6 +503,9 @@
 .z-indexTop {
 	z-index: 995;
 }
+.z-indexTopUp {
+	z-index: 996;
+}
 .btnCloseCal {
 	width: 25px;
 	height: 26px;
