@@ -9,11 +9,11 @@
 	<!-- FIXME change to repeat binding -->
 	<!-- ko foreach: data -->
 	<li class="items first">
-	  <a href="#1" data-bind="css: {fly: isAvia(), hotel: isHotel()}">
+	  <a href="#1" data-bind="css: {fly: isAvia(), hotel: isHotel(), active: $parent.selected() == $data}">
 	    <div class="keys"></div>
 	    <div class="path">
 	      <div class="where" data-bind="html: destinationText()">С-Пб &rarr; Амстердам</div>
-	      <div class="time">12 750 <span class="rur">o</span>, 7:30 - 12:20</div>
+	      <div class="time"><span data-bind="text: price()">12 750</span> <span class="rur">o</span>, 7:30 - 12:20</div>
 	    </div>
 	    <div class="date" data-bind="css: {'blue-one': isAvia(), 'orange-one': isHotel()}">
 	      <div class="day">
@@ -74,7 +74,7 @@
       <!-- END UL TRIP -->
       <span class="f14 bold" style="color:#2e333b;">Оформить</span>				
       <a href="#" class="btn-order">		
-	<span class="cost">63 502</span> <span class="rur f26">o</span>
+	<span class="cost" data-bind="text: price"></span> <span class="rur f26">o</span>
       </a>				
       <table class="finish-result">
 	<tr>

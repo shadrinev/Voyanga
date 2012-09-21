@@ -85,7 +85,7 @@ function ResizeCenterBlock() {
 		var var_descrIsset = var_descrItems.length > 0 && var_descrItems.is(':visible');
 
 		if (! var_leftBlockIsset &&  ! var_filterBlockIsset && var_mainBlockIsset) {
-			console.log("THIS IS === 1 === IF ELSE");
+			//console.log("THIS IS === 1 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
 				marginLeftMainBlock = 'auto';
@@ -121,7 +121,7 @@ function ResizeCenterBlock() {
 			}
 		}
 		else if (! var_leftBlockIsset &&  var_filterBlockIsset && var_mainBlockIsset) {
-			console.log("THIS IS === 2 === IF ELSE");
+			//console.log("THIS IS === 2 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthMainBlock = var_widthMiddleBlockMAX;
 				widthFilterBlock = var_widthFilterMAX;
@@ -177,7 +177,7 @@ function ResizeCenterBlock() {
 		}
 
 		else if (var_leftBlockIsset &&  var_filterBlockIsset && var_mainBlockIsset) {
-			console.log("THIS IS === 3 === IF ELSE");
+			//console.log("THIS IS === 3 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockMAX;
@@ -228,7 +228,7 @@ function ResizeCenterBlock() {
 		}
 
 		else if (var_leftBlockIsset && var_mainBlockIsset &&  ! var_filterBlockIsset ) {
-			console.log("THIS IS === 4 === IF ELSE");
+			//console.log("THIS IS === 4 === IF ELSE"); 
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockOneMAX;
@@ -290,7 +290,7 @@ function ResizeCenterBlock() {
 			}
 		}
 		else {
-			console.log("THIS IS === 5 === IF ELSE");
+			//console.log("THIS IS === 5 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 
 
@@ -537,7 +537,7 @@ function ResizeFun() {
 
 function scrollValue() {
 	var var_scrollValueTop = $('.wrapper').scrollTop();
-	console.log(var_scrollValueTop);
+	//console.log(var_scrollValueTop);
 	if (var_scrollValueTop > 179) {
 		$('.filter-content').css('position','fixed').css('top','-73px');
 		$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", $(window).height()+"px");
