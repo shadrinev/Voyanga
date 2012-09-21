@@ -96,8 +96,10 @@ class AviaPanel
 
       if !minimized
         $('.sub-head').animate {'margin-top' : '0px'}, speed
+        $('.calenderWindow').show()
       else
         $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
+        $('.calenderWindow').hide()
 
     # FIXME:
     $ =>

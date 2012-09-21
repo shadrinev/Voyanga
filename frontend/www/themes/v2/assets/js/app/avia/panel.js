@@ -103,13 +103,15 @@ AviaPanel = (function() {
       speed = 300;
       heightSubHead = $('.sub-head').height();
       if (!minimized) {
-        return $('.sub-head').animate({
+        $('.sub-head').animate({
           'margin-top': '0px'
         }, speed);
+        return $('.calenderWindow').show();
       } else {
-        return $('.sub-head').animate({
+        $('.sub-head').animate({
           'margin-top': '-' + (heightSubHead - 4) + 'px'
         }, speed);
+        return $('.calenderWindow').hide();
       }
     });
     $(function() {
