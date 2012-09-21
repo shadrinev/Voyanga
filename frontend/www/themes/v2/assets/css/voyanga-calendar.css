@@ -181,11 +181,13 @@
     position: absolute;
     z-index: 10;
     text-align: center;
+        color: #767b84;
 }
 .monthLineVoyanga .monthNameVoyanga .monthWrapper{
     padding: 5px;
     cursor: pointer;
     display: inline-block;
+
 }
 .monthLineVoyanga .knobVoyanga{
     position: absolute;
@@ -236,7 +238,7 @@
     z-index: 20;
 }
 .monthLineVoyanga .highlited {
-	color: #24272e;
+	color: #24272e !important;
 }
 
 /* HOTEL */
