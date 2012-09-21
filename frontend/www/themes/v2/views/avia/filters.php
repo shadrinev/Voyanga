@@ -3,7 +3,7 @@
 ?>
 <script type="text/html" id="avia-filters">
   <div class="filter-content">
-    <div class="slide-filter" style="padding-left:20px;">
+    <div class="slide-filter" style="padding-left: 18px; padding-right: 26px;">
       <div>
         <select data-bind="slider:true, value: serviceClass.selection"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
       </div>
