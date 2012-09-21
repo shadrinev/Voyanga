@@ -809,10 +809,13 @@
     vertical-align: middle;
 }
 .div-filter {
-	background: url("../images/shadow-filter.png") no-repeat scroll left 0 transparent;
+	/* background: url("../images/shadow-filter.png") no-repeat scroll left 0 transparent; */
     line-height: 25px;
     padding-bottom: 8px;
-    padding-top: 18px;
+    /* padding-top: 18px; */
+}
+.lineBg {
+	margin-top: -5px;
 }
 .all-list {
 	padding-left: 2px;
