@@ -29,8 +29,14 @@ class AviaPanel
     @minimized = ko.observable false
     @sp = new SearchParams()
     @departureCity = @sp.dep
+    @departureCityReadable = ko.observable ''
+    @departureCityReadableGen = ko.observable ''
+    @departureCityReadableAcc = ko.observable ''
     @arrivalCity = @sp.arr
-    
+    @arrivalCityReadable = ko.observable ''
+    @arrivalCityReadableGen = ko.observable ''
+    @arrivalCityReadableAcc = ko.observable ''
+
     # helper flags for clicck outside of ppl panel handling
     @inside = false
     @inside2 = false
@@ -74,6 +80,10 @@ class AviaPanel
       @adults()*1 + @children()*1 + @infants()*1
 
     @rt.subscribe @rtTumbler
+
+    @depArr = ko.computed =>
+      if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length>0))
+        @departureCityReadable() + ' → ' + @arrivalCityReadable()
     
     @minimized.subscribe (minimized) ->
       speed =  300

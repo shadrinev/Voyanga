@@ -15,17 +15,20 @@ ko.bindingHandlers.autocomplete = {
       delay: 0,
       onSelect: function(value, data) {
         valueAccessor().iata(data.code);
+        valueAccessor().readable(data.name);
         $(element).val(data.name);
         return $(element).siblings('input.input-path').val(value);
       },
       onActivate: function(value, data) {
         valueAccessor().iata(data.code);
+        valueAccessor().readable(data.name);
         $(element).val(data.name);
         return $(element).siblings('input.input-path').val(value);
       }
     });
   },
   update: function(element, valueAccessor) {
-    return console.log(valueAccessor.iata());
+    console.log($(element).val());
+    return console.log(valueAccessor().iata());
   }
 };

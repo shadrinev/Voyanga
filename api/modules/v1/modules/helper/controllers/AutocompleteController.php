@@ -71,6 +71,8 @@ class AutocompleteController extends ApiController
         {
             $suggestion = $city['label'];
             $data['name'] = $city['name'];
+            $data['nameGen'] = $city['nameGen'];
+            $data['nameAcc'] = $city['nameAcc'];
             $data['code'] = $city['code'];
             $data['country'] = $city['country'];
             $result['suggestions'][] = $suggestion;
@@ -86,6 +88,8 @@ class AutocompleteController extends ApiController
             $city = City::getCityByPk($one['id']);
             $cities[$i]['code'] = $city->code;
             $cities[$i]['name'] = $city->localRu;
+            $cities[$i]['nameGen'] = $city->caseGen;
+            $cities[$i]['nameAcc'] = $city->caseAcc;
             $cities[$i]['country'] = $city->country->localRu;
         }
         return $cities;

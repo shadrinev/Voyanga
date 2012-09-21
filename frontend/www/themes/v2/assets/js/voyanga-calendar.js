@@ -316,7 +316,7 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
         });
     }
 });
-console.log(this.jObj);
+console.log(this.slider);
 VoyangaCalendarStandart.onCellOver = function(obj,e){
     var jCell = $(obj);
     if(!jCell.hasClass('inactive')){
@@ -505,17 +505,14 @@ VoyangaCalendarStandart.generateGrid = function(){
 
 
 VoyangaCalendarStandart.init = function (){
-    this.slider.jObj = this.jObj;
+    console.log("YO DAWG", this, this.jObj, $(this.jObj));
+
+    VoyangaCalendarStandart.slider.jObj = this.jObj;
     if(typeof this.jObj == 'string'){
         this.jObj = $(this.jObj);
     }
 
-    this.generateGrid();
+    VoyangaCalendarStandart.generateGrid();
     //return true;
-    this.slider.init();
-
-}
-
-$(document).ready(function(){
-    VoyangaCalendarStandart.init();
-});
+    VoyangaCalendarStandart.slider.init();
+}.bind(VoyangaCalendarStandart)

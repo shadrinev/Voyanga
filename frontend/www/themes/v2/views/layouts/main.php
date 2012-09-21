@@ -61,6 +61,11 @@ Yii::app()->clientScript->registerPackage('everything');
     </div>
     <!-- END SUB HEAD -->
     <!--====**********===-->
+    <!-- CALENDAR -->
+    <div class="calenderWindow" data-bind="template: {name: 'calendar-template', afterRender: VoyangaCalendarStandart.init, data: panel()}" style='margin-top: 36px'>
+    </div>
+    <!-- END CALENDAR -->
+    <!--====**********===-->
     <!-- ALL CONTENT -->
     <div class="center-block" data-bind="template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
@@ -70,7 +75,8 @@ Yii::app()->clientScript->registerPackage('everything');
                        'avia.panel', 'avia.filters', 'avia.cheapest',
                        'hotels.index', 'hotels.results', 'hotels.panel',
                        'hotels.popup', 'hotels.filters','hotels.info','hotels.timeline',
-                       'tours.results'
+                       'tours.results',
+                       'common.calendar'
         );
     foreach($templates as $template)
     {
