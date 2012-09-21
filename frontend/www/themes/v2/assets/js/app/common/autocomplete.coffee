@@ -14,11 +14,15 @@ ko.bindingHandlers.autocomplete =
       onSelect: (value, data) -> # Callback функция, срабатывающая на выбор одного из предложенных вариантов,
         valueAccessor().iata(data.code)
         valueAccessor().readable(data.name)
+        valueAccessor().readableGen(data.nameGen)
+        valueAccessor().readableAcc(data.nameAcc)
         $(element).val(data.name)
         $(element).siblings('input.input-path').val(value)
       onActivate: (value, data) ->
         valueAccessor().iata(data.code)
         valueAccessor().readable(data.name)
+        valueAccessor().readableGen(data.nameGen)
+        valueAccessor().readableAcc(data.nameAcc)
         $(element).val(data.name)
         $(element).siblings('input.input-path').val(value)
 

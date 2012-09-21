@@ -84,7 +84,12 @@ class AviaPanel
     @depArr = ko.computed =>
       if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length>0))
         @departureCityReadable() + ' → ' + @arrivalCityReadable()
-    
+      if ((@departureCityReadable().length==0) && (@arrivalCityReadable().length>0))
+        ' в ' + @arrivalCityReadableAcc()
+      if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length==0))
+        ' из ' + @departureCityReadableGen()
+
+
     @minimized.subscribe (minimized) ->
       speed =  300
       heightSubHead = $('.sub-head').height()

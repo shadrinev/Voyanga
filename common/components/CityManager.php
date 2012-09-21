@@ -9,7 +9,7 @@ class CityManager extends CApplicationComponent
     static public function getCitiesWithAirports($query)
     {
         $currentLimit = appParams('autocompleteLimit');
-        $items = Yii::app()->cache->get('autocompleteCityForFlight' . $query);
+        $items = Yii::app()->cache->get('autocompleteCityForFlight1' . $query);
         if (!$items)
         {
             $items = array();
@@ -112,7 +112,7 @@ class CityManager extends CApplicationComponent
                     $currentLimit -= count($items);
                 }
             }
-            Yii::app()->cache->set('autocompleteCityForFlight' . $query, $items, appParams('autocompleteCacheTime'));
+            Yii::app()->cache->set('autocompleteCityForFlight1' . $query, $items, appParams('autocompleteCacheTime'));
         }
         return $items;
     }
