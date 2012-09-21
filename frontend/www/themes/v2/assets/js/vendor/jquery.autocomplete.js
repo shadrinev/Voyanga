@@ -118,7 +118,7 @@
 				if ($.isArray(o.lookup)) { o.lookup = { suggestions: o.lookup, data: [] }; }
 			}
 			$('#' + this.mainContainerId).css({ zIndex: o.zIndex });
-			this.container.css({ maxHeight: o.maxHeight + 'px', width: o.width });
+			this.container.css({/* maxHeight: o.maxHeight + 'px',*/ width: o.width });
 		},
 
 		clearCache: function () {
@@ -397,6 +397,8 @@
 			if (this.selectedIndex === 0) {
 				this.container.children().get(0).className = '';
 				this.selectedIndex = -1;
+                this.el.val('');
+                this.el.trigger('change');
 				this.el.val(this.currentValue);
 				return;
 			}
