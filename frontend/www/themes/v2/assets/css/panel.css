@@ -470,15 +470,18 @@
 }
 .panelTable div.active .date {
     background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
-    display: inline-block;
-    font-size: 11px;
-    height: 28px;
-    line-height: 10px;
-    margin: 0 0 0 -5px;
-    padding-top: 8px;
-    text-align: center;
-    vertical-align: middle;
-    width: 36px;
+	display: inline-block;
+	font-size: 11px;
+	height: 28px;
+	line-height: 10px;
+	margin: 0 0 0 -5px;
+	padding-top: 8px;
+	text-align: center;
+	vertical-align: middle;
+	width: 36px;
+	position: absolute;
+	z-index: 3;
+	right: 1px;
 }
 .panelTable .data.active .date + .date {
     background-position: -305px -1260px;
