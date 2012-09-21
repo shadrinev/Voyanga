@@ -246,3 +246,12 @@ AviaPanel = (function() {
 $(document).on("autocompleted", "input.departureCity", function() {
   return $('input.arrivalCity').focus();
 });
+
+$(document).on("keyup change", "input.second-path", function(e) {
+  var firstValue, secondEl;
+  firstValue = $(this).val();
+  secondEl = $(this).siblings('input.input-path');
+  if ((e.keyCode === 8) || (firstValue.length < 3)) {
+    return secondEl.val('');
+  }
+});
