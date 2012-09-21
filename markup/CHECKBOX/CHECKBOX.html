@@ -16,7 +16,6 @@ function replaceInput(input){
     htm += '<div class="ui-control '+classCheck+checked+'"></div>';
     htm += '<div class="fl">';
     htm += '<div class="ui-label">'+input.eq(i).data("label")+'</div>';
-    
     htm += '</div>';
     htm += '</label>';
     input.eq(i).after(htm);
@@ -36,12 +35,7 @@ $(function(){
     if($(this).find('.ui-control').hasClass('on') != true) $(this).find('.ui-control').addClass('on');
     else $(this).find('.ui-control').removeClass('on');		
   });
-  function countChecked() {
-    var n = $("input:checked").length;
-    mine = n + (n == 1 ? " is" : " are") +  " checked!";
-    alert(mine);
-  }
-  $("#btn").click(countChecked);
+
 });
 </script>
 </head>
