@@ -42,7 +42,6 @@ TimeFilter = (function(_super) {
   }
 
   TimeFilter.prototype.filter = function(result) {
-    return true;
     return Utils.inRange(result[this.key](), this.selection());
   };
 
@@ -109,9 +108,18 @@ ListFilter = (function(_super) {
         continue;
       }
       this._known[value] = 1;
-      _results.push(this.options.push({
+      this.options.push({
         key: value,
         checked: ko.observable(0)
+      });
+      _results.push(this.options.sort(function(left, right) {
+        if (left.key === right.key) {
+          return 0;
+        }
+        if (left.key > right.key) {
+          return 1;
+        }
+        return -1;
       }));
     }
     return _results;
@@ -119,7 +127,6 @@ ListFilter = (function(_super) {
 
   ListFilter.prototype.filter = function(result) {
     var key, _i, _len, _ref;
-    return true;
     if (this.selection().length === 0) {
       return true;
     }
@@ -212,8 +219,6 @@ ServiceClassFilter = (function(_super) {
 
   ServiceClassFilter.prototype.filter = function(item) {
     var lit;
-    console.log(item.serviceClass);
-    return true;
     lit = this.selection();
     if (lit === 'A') {
       return item.serviceClass === 'E';

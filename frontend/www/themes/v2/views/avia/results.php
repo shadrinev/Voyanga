@@ -1,78 +1,78 @@
 <script id="avia-results" type="text/html">
-        <!-- MAIN BLOCK -->
-        <div class="main-block">
-            <div id="content" data-bind="template: {name: 'avia-results-inner', data: results}">
-            </div>
-            <!-- END MAIN BLOCK -->
-            <!-- FILTER BLOCK -->
-            <div class="filter-block" data-bind="template: {name: 'avia-filters', data: results.filters}">
-            </div>
-            <!-- END FILTER BLOCK -->
-            <div class="clear"></div>
-        </div>
-        <!-- END ALL CONTENT -->
+  <!-- MAIN BLOCK -->
+  <div class="main-block">
+    <div id="content" data-bind="template: {name: 'avia-results-inner', data: results}">
+    </div>
+    <!-- END MAIN BLOCK -->
+    <!-- FILTER BLOCK -->
+    <div class="filter-block" data-bind="template: {name: 'avia-filters', data: results.filters}">
+    </div>
+    <!-- END FILTER BLOCK -->
+    <div class="clear"></div>
+  </div>
+  <!-- END ALL CONTENT -->
 </script>
 <script type="text/html" id="avia-results-inner">
-<h1 data-bind="visible: false">Выберите авиабилет
+  <h1 data-bind="visible: false">Выберите авиабилет
     <span data-bind="text: departureCity">Санкт-Петербург</span> → <span data-bind="text: arrivalCity">Амстердам</span>, <span data-bind="text: date">19 мая</span></h1>
-
-<div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: cheapest}">
-
-</div>
-<!-- END RECOMENDED AND GRAFIK -->
-<div class="clear"></div>
+  
+  <div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: cheapest}">
+    
+  </div>
+  <!-- END RECOMENDED AND GRAFIK -->
+  <div class="clear"></div>
 </div>
 <div class="ticket-content">
-<h2>Все результаты поиска: <span data-bind="text: numResults()"></span> авиабилетов</h2>
-<div class="order-div"><a class="order-hide" href="#" style="display: inline;" data-bind="click: hideRecommend">Скрыть рекомендации</a></div>
-<div class="clear"></div>
-
-<!-- ko foreach: data -->
-<div class="ticket-items" data-bind="visible: visible()">
-<div class="content">
-<div class="airlines">
-
-</div>
-<!-- END AIRLINES -->
-<div class="center-ticket">
-<div class="date-time-city">
-    <div class="start">
-        <div class="date" data-bind="text: departureDayMo()">
-            28 мая
-        </div>
-        <div class="time" data-bind="text: departureTime()">
-            21:20
-        </div>
+  <h2>Все результаты поиска: <span data-bind="text: numResults()"></span> авиабилетов</h2>
+  <div class="order-div"><a class="order-hide" href="#" style="display: inline;" data-bind="click: hideRecommend">Скрыть рекомендации</a></div>
+  <div class="clear"></div>
+  
+  <!-- ko foreach: data -->
+  <div class="ticket-items" data-bind="visible: visible()">
+    <div class="content">
+      <div class="airlines">
+	
+      </div>
+      <!-- END AIRLINES -->
+      <div class="center-ticket">
+	<div class="date-time-city">
+	  <div class="start">
+	    <div class="date" data-bind="text: departureDayMo()">
+              28 мая
+            </div>
+            <div class="time" data-bind="text: departureTime()">
+              21:20
+            </div>
         <div class="city" data-bind="text: departureCity()">
-            Москва
+          Москва
         </div>
         <div class="airport" data-bind="text: departureAirport()">
-            Домодедово
+          Домодедово
         </div>
-    </div>
+	  </div>
     <!-- END START -->
     <div class="how-long">
-        <div class="time">
-            В пути <span data-bind="text: duration()">8 ч. 30 м.</span>
+      <div class="time">
+        В пути <span data-bind="text: duration()">8 ч. 30 м.</span>
         </div>
-        <div class="ico-path" data-bind="html: stopsRatio()">
-        </div>
-        <div class="path" data-bind="text:stopoverText(), css: {'no-wait': direct}">
-        </div>
+      <div class="ico-path" data-bind="html: stopsRatio()">
+      </div>
+      <div class="path" data-bind="text:stopoverText(), css: {'no-wait': direct()}">
+      </div>
     </div>
     <!-- END HOW LONG -->
     <div class="finish">
-        <div class="date" data-bind="text: arrivalDayMo()">
-            29 мая
-        </div>
-        <div class="time" data-bind="text: arrivalTime()">
-            00:50
-        </div>
-        <div class="city" data-bind="text: arrivalCity()">
-            Санкт-Петербург
-        </div>
+      <div class="date" data-bind="text: arrivalDayMo()">
+        29 мая
+      </div>
+      <div class="time" data-bind="text: arrivalTime()">
+        00:50
+      </div>
+      <div class="city" data-bind="text: arrivalCity()">
+        Санкт-Петербург
+      </div>
         <div class="airport" data-bind="text: arrivalAirport()">
-            Пулково
+          Пулково
         </div>
     </div>
     <!-- END FINISH -->
@@ -132,7 +132,7 @@
         </div>
         <div class="ico-path" data-bind="html: rtStopsRatio()">
         </div>
-        <div class="path" data-bind="text:rtStopoverText()">
+        <div class="path" data-bind="text:rtStopoverText(), css: {'no-wait': direct()}">
         </div>
     </div>
     <!-- END HOW LONG -->

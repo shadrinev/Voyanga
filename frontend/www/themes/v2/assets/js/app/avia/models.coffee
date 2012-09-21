@@ -149,6 +149,11 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
     return htmlResult
 
+  recommendStopoverIco: ->
+    if @direct
+      return
+    '<span class="cup"></span>'
+
   sort: ->
     #console.log "SORTENG "
     @_backVoyages.sort((a,b) -> a.departureInt() - b.departureInt())
@@ -222,7 +227,7 @@ class AviaResult
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity',
               'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric',
-              'hash', 'stopsRatio']
+              'hash', 'stopsRatio', 'recommendStopoverIco']
 
     for name in fields
       @[name] = ((name) =>

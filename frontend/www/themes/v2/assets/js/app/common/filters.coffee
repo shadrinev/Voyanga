@@ -68,9 +68,15 @@ class ListFilter extends Filter
         continue
       @_known[value]=1
       @options.push {key: value, checked: ko.observable 0}
+      @options.sort (left, right) ->
+        if left.key == right.key
+          return 0
+        if left.key > right.key
+          return 1
+        return -1
 
   filter: (result)=>
-    @selection().length == 0
+    if @selection().length == 0
       return true
     for key in @keys
       if @selection().indexOf(@get(result,key)) < 0
@@ -119,8 +125,6 @@ class ServiceClassFilter extends Filter
     @selection = ko.observable 0
 
   filter: (item) =>
-    console.log item.serviceClass
-    return true
     lit = @selection()
     if lit == 'A'
       return item.serviceClass == 'E'
