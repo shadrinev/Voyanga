@@ -26,6 +26,6 @@ ko.bindingHandlers.autocomplete = {
     });
   },
   update: function(element, valueAccessor) {
-    return console.log(valueAccessor.iata());
+    return console.log(valueAccessor().iata());
   }
 };
