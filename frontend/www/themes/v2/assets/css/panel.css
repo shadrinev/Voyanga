@@ -445,6 +445,7 @@
     width: 270px;
     position: absolute;
     z-index: 1;
+    color: #969ba1;
 }
 .second-path {
 	z-index: 2;
