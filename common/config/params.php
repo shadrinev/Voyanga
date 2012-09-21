@@ -72,6 +72,6 @@ return CMap::mergeArray(array(
 	
 	'php.exePath' => '/usr/bin/php',
 
-    'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search',
+    'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
     'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',
 ), CMap::mergeArray( $commonParamsEnv, $commonParamsLocal));
