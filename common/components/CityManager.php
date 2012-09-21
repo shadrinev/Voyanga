@@ -32,8 +32,8 @@ class CityManager extends CApplicationComponent
                     {
                         $items[] = array(
                             'id' => $city->primaryKey,
-                            'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                            'value' => self::parseTemplate('{localRu}', $city),
+                            'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                            'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                         );
                         $cityIds[$city->id] = $city->id;
                     }
@@ -61,8 +61,8 @@ class CityManager extends CApplicationComponent
                 {
                     $items[] = array(
                         'id' => $city->primaryKey,
-                        'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                        'value' => self::parseTemplate('{localRu}', $city),
+                        'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                        'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                     );
                     $cityIds[$city->id] = $city->id;
                 }
@@ -103,8 +103,8 @@ class CityManager extends CApplicationComponent
                         {
                             $items[] = array(
                                 'id' => $city->primaryKey,
-                                'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                                'value' => self::parseTemplate('{localRu}', $city),
+                                'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                                'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                             );
                             $cityIds[$city->id] = $city->id;
                         }
@@ -143,8 +143,8 @@ class CityManager extends CApplicationComponent
                     {
                         $items[] = array(
                             'id' => $city->primaryKey,
-                            'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                            'value' => self::parseTemplate('{localRu}', $city),
+                            'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                            'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                         );
                         $cityIds[$city->id] = $city->id;
                     }
@@ -172,8 +172,8 @@ class CityManager extends CApplicationComponent
                 {
                     $items[] = array(
                         'id' => $city->primaryKey,
-                        'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                        'value' => self::parseTemplate('{localRu}', $city),
+                        'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                        'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                     );
                     $cityIds[$city->id] = $city->id;
                 }
@@ -214,8 +214,8 @@ class CityManager extends CApplicationComponent
                         {
                             $items[] = array(
                                 'id' => $city->primaryKey,
-                                'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                                'value' => self::parseTemplate('{localRu}', $city),
+                                'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                                'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                             );
                             $cityIds[$city->id] = $city->id;
                         }
@@ -278,8 +278,8 @@ class CityManager extends CApplicationComponent
                     {
                         $items[] = array(
                             'id' => $city->primaryKey,
-                            'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                            'value' => self::parseTemplate('{localRu}', $city),
+                            'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                            'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                         );
                         $cityIds[$city->id] = $city->id;
                     }
@@ -305,8 +305,8 @@ class CityManager extends CApplicationComponent
                 {
                     $items[] = array(
                         'id' => $city->primaryKey,
-                        'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                        'value' => self::parseTemplate('{localRu}', $city),
+                        'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                        'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                     );
                     $cityIds[$city->id] = $city->id;
                 }
@@ -345,8 +345,8 @@ class CityManager extends CApplicationComponent
                         {
                             $items[] = array(
                                 'id' => $city->primaryKey,
-                                'label' => self::parseTemplate('{localRu}, {country.localRu}, {code}', $city),
-                                'value' => self::parseTemplate('{localRu}', $city),
+                                'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                                'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
                             );
                             $cityIds[$city->id] = $city->id;
                         }
@@ -384,6 +384,16 @@ class CityManager extends CApplicationComponent
             }
         }
         return strtr($template, $replacements);
+    }
+
+    static public function templateForLabelAutocomplete()
+    {
+        return '{localRu}, {country.localRu}';
+    }
+
+    static public function templateForValueAutocomplete()
+    {
+        return '{localRu}';
     }
 
 }

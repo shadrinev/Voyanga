@@ -16,7 +16,7 @@ ko.bindingHandlers.autocomplete = {
       onSelect: function(value, data) {
         valueAccessor().iata(data.code);
         $(element).val(value);
-        return $(element).siblings('input.second-path').val(value);
+        return $(element).siblings('input.input-path').val(value);
       }
     });
   },

@@ -52,7 +52,7 @@ class AutocompleteController extends ApiController
         foreach ($codes as $cityCode)
         {
             $city = City::getCityByCode($cityCode);
-            $result[$cityCode] = CityManager::parseTemplate('{localRu}, {country.localRu}, {code}', $city);
+            $result[$cityCode] = CityManager::parseTemplate(CityManager::templateForLabelAutocomplete(), $city);
         }
         Yii::app()->cache->set($cacheKey, $result, appParams('autocompleteCacheTime'));
         $this->send($result);

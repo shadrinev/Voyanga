@@ -14,6 +14,6 @@ ko.bindingHandlers.autocomplete =
       onSelect: (value, data) -> # Callback функция, срабатывающая на выбор одного из предложенных вариантов,
         valueAccessor().iata(data.code)
         $(element).val(value)
-        $(element).siblings('input.second-path').val(value)
+        $(element).siblings('input.input-path').val(value)
 
   update: (element, params) ->
