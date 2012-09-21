@@ -24,7 +24,7 @@
             <div class="path">
               В пути
             </div>
-            <div class="ico-path"></div>
+            <div class="ico-path" data-bind="html: recommendStopoverIco()"></div>
             <div class="time" data-bind="text: duration()">
               3 ч. 30 м.
             </div>
@@ -91,7 +91,7 @@
             <div class="path">
               В пути
             </div>
-            <div class="ico-path"></div>
+            <div class="ico-path" data-bind="html: rtRecommendStopoverIco()"></div>
             <div class="time" data-bind="text: rtDuration()">
               3 ч. 30 м.
             </div>
@@ -146,7 +146,7 @@
           <a href="#" class="btn-cost">
             <span class="l"></span>
             <span class="text">Выбрать</span>
-            <span class="price" data-bind="text: price">300 250</span>
+            <span class="price" data-bind="text: price"></span>
             <span class="rur">o</span>
           </a>
         </div>
