@@ -484,24 +484,24 @@ class SearchParams
   constructor: ->
     @dep = ko.observable ''
     @arr = ko.observable ''
-    @date = '06.10.2012'
+    @date = ko.observable ''
     @adults = ko.observable(1).extend({integerOnly: 'adult'})
     @children = ko.observable(0).extend({integerOnly: true})
     @infants = ko.observable(0).extend({integerOnly: 'infant'})
 
-    @rt = ko.observable false
-    @rtDate = '14.10.2012'
+    @rt = ko.observable true
+    @rtDate = ko.observable ''
 
   url: ->
     result = 'http://api.voyanga.com/v1/flight/search/BE?'
     params = []
     params.push 'destinations[0][departure]=' + @dep()
     params.push 'destinations[0][arrival]=' + @arr()
-    params.push 'destinations[0][date]=' + @date
+    params.push 'destinations[0][date]=' + @date()
     if @rt()
       params.push 'destinations[1][departure]=' + @arr()
       params.push 'destinations[1][arrival]=' + @dep()
-      params.push 'destinations[1][date]=' + @rtDate
+      params.push 'destinations[1][date]=' + @rtDate()
     params.push 'adt=' + @adults()
     params.push 'chd=' + @children()
     params.push 'inf=' + @infants()
@@ -511,7 +511,7 @@ class SearchParams
 
 
   key: ->
-    key = @dep() + @arr() + @date
+    key = @dep() + @arr() + @date()
     if @rt()
       key += @rtDate
       key += '_rt'
@@ -522,9 +522,9 @@ class SearchParams
 
   getHash: ->
     # FIXME
-    parts =  [@dep(), @arr(), @date, @adults(), @children(), @infants()]
+    parts =  [@dep(), @arr(), @date(), @adults(), @children(), @infants()]
     if @rt()
-      parts.push @rtDate
+      parts.push @rtDate()
     hash = 'avia/search/' + parts.join('/') + '/'
     window.voyanga_debug "Generated hash for avia search", hash
     return hash
@@ -534,10 +534,10 @@ class SearchParams
     # FIXME looks too ugly to hit production, yet does not support RT
     @dep data[0]
     @arr data[1]
-    @date = data[2]
+    @date data[2]
     @adults data[3]
     @children data[4]
     @infants data[5]
     if data.length == 7
       @rt true
-      @rtDate = data[6]
+      @rtDate data[6]

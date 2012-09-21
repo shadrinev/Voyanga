@@ -46,10 +46,12 @@ AviaPanel = (function() {
     window.voyanga_debug("AviaPanel created");
     this.minimized = ko.observable(false);
     this.sp = new SearchParams();
+    this.departureDate = this.sp.date;
     this.departureCity = this.sp.dep;
     this.departureCityReadable = ko.observable('');
     this.departureCityReadableGen = ko.observable('');
     this.departureCityReadableAcc = ko.observable('');
+    this.arrivalDate = this.sp.rtDate;
     this.arrivalCity = this.sp.arr;
     this.arrivalCityReadable = ko.observable('');
     this.arrivalCityReadableGen = ko.observable('');
@@ -168,13 +170,16 @@ AviaPanel = (function() {
 
   AviaPanel.prototype.rtTumbler = function(newValue) {
     if (newValue) {
-      return $('.tumblr .switch').animate({
+      $('.tumblr .switch').animate({
         'left': '35px'
       }, 200);
+      VoyangaCalendarStandart.twoSelect = true;
+      return VoyangaCalendarStandart.clean();
     } else {
-      return $('.tumblr .switch').animate({
+      $('.tumblr .switch').animate({
         'left': '-1px'
       }, 200);
+      return VoyangaCalendarStandart.twoSelect = false;
     }
   };
 

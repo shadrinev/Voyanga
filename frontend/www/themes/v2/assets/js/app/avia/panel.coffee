@@ -28,10 +28,12 @@ class AviaPanel
     window.voyanga_debug "AviaPanel created"
     @minimized = ko.observable false
     @sp = new SearchParams()
+    @departureDate = @sp.date
     @departureCity = @sp.dep
     @departureCityReadable = ko.observable ''
     @departureCityReadableGen = ko.observable ''
     @departureCityReadableAcc = ko.observable ''
+    @arrivalDate = @sp.rtDate
     @arrivalCity = @sp.arr
     @arrivalCityReadable = ko.observable ''
     @arrivalCityReadableGen = ko.observable ''
@@ -156,8 +158,11 @@ class AviaPanel
   rtTumbler: (newValue) ->
       if newValue
         $('.tumblr .switch').animate {'left': '35px'}, 200
+        VoyangaCalendarStandart.twoSelect = true;
+        VoyangaCalendarStandart.clean()
       else
         $('.tumblr .switch').animate {'left': '-1px'}, 200
+        VoyangaCalendarStandart.twoSelect = false;
 
 
   ###
@@ -227,3 +232,4 @@ $(document).on "keyup change", "input.second-path", (e) ->
   secondEl = $(this).siblings('input.input-path')
   if ((e.keyCode==8) || (firstValue.length<3))
     secondEl.val('')
+

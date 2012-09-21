@@ -6,7 +6,7 @@ ko.bindingHandlers.autocomplete = {
       return $(element).change();
     });
     $(element).autocomplete({
-      serviceUrl: "http://api.misha.voyanga/v1/helper/autocomplete/" + valueAccessor().source,
+      serviceUrl: "http://api.voyanga.com/v1/helper/autocomplete/" + valueAccessor().source,
       minChars: 2,
       delimiter: /(,|;)\s*/,
       maxHeight: 400,

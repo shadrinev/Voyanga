@@ -408,6 +408,7 @@ VoyangaCalendarStandart.onCellClick = function(obj,e){
                 }else{
                     this.values.push(cellDate);
                     jCell.addClass('selectData to');
+                    $(document).trigger({type: 'calendarDateChangedFrom', date: jCell.data('cell-date-api')});
                     if(cellDate.getDate() == 1){
                         jCell.addClass('startMonth');
                     }
@@ -429,6 +430,7 @@ VoyangaCalendarStandart.onCellClick = function(obj,e){
         if(this.values.length == 0){
             this.values.push(cellDate);
             jCell.addClass('selectData from');
+            $(document).trigger({type: 'calendarDateChangedTo', date: jCell.data('cell-date-api')});
             if(cellDate.getDate() == 1){
                 jCell.addClass('startMonth');
             }
@@ -475,7 +477,8 @@ VoyangaCalendarStandart.generateGrid = function(){
                 this.slider.monthArray.push(monthObject);
             }
             var dateLabel = tmpDate.getFullYear()+'-'+(tmpDate.getMonth()+1)+'-'+tmpDate.getDate();
-            newHtml = newHtml + '<div class="dayCellVoyanga'+((tmpDate < dayToday) ? ' inactive' : '')+'" id="dayCell-'+dateLabel+'" data-cell-date="'+dateLabel+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
+            var dateLabelApi = tmpDate.getDate()+'.'+(tmpDate.getMonth()+1)+'.'+tmpDate.getFullYear();
+            newHtml = newHtml + '<div class="dayCellVoyanga'+((tmpDate < dayToday) ? ' inactive' : '')+'" id="dayCell-'+dateLabel+'" data-cell-date="'+dateLabel+'" data-cell-date-api="'+dateLabelApi+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
             tmpDate.setDate(tmpDate.getDate()+1);
         }
         newHtml = newHtml + '</div>';
@@ -503,9 +506,11 @@ VoyangaCalendarStandart.generateGrid = function(){
     console.log(this.slider.totalLines);
 }
 
+VoyangaCalendarStandart.clean = function(){
+    this.jObj.find('.to').removeClass('to')
+}
 
-VoyangaCalendarStandart.init = function (){
-    console.log("YO DAWG", this, this.jObj, $(this.jObj));
+VoyangaCalendarStandart.init = function (e, panel){
 
     VoyangaCalendarStandart.slider.jObj = this.jObj;
     if(typeof this.jObj == 'string'){
@@ -515,4 +520,14 @@ VoyangaCalendarStandart.init = function (){
     VoyangaCalendarStandart.generateGrid();
     //return true;
     VoyangaCalendarStandart.slider.init();
+
+    $(document).on("calendarDateChangedTo", function(e){
+        panel.departureDate(e.date)
+        console.log("calendarDateChangedTo", e.date)
+    });
+
+    $(document).on("calendarDateChangedFrom", function(e){
+        panel.arrivalDate(e.date)
+        console.log("calendarDateChangedFrom", e.date)
+    });
 }.bind(VoyangaCalendarStandart)

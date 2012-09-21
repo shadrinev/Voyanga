@@ -658,7 +658,7 @@ SearchParams = (function() {
   function SearchParams() {
     this.dep = ko.observable('');
     this.arr = ko.observable('');
-    this.date = '06.10.2012';
+    this.date = ko.observable('');
     this.adults = ko.observable(1).extend({
       integerOnly: 'adult'
     });
@@ -668,8 +668,8 @@ SearchParams = (function() {
     this.infants = ko.observable(0).extend({
       integerOnly: 'infant'
     });
-    this.rt = ko.observable(false);
-    this.rtDate = '14.10.2012';
+    this.rt = ko.observable(true);
+    this.rtDate = ko.observable('');
   }
 
   SearchParams.prototype.url = function() {
@@ -678,11 +678,11 @@ SearchParams = (function() {
     params = [];
     params.push('destinations[0][departure]=' + this.dep());
     params.push('destinations[0][arrival]=' + this.arr());
-    params.push('destinations[0][date]=' + this.date);
+    params.push('destinations[0][date]=' + this.date());
     if (this.rt()) {
       params.push('destinations[1][departure]=' + this.arr());
       params.push('destinations[1][arrival]=' + this.dep());
-      params.push('destinations[1][date]=' + this.rtDate);
+      params.push('destinations[1][date]=' + this.rtDate());
     }
     params.push('adt=' + this.adults());
     params.push('chd=' + this.children());
@@ -694,7 +694,7 @@ SearchParams = (function() {
 
   SearchParams.prototype.key = function() {
     var key;
-    key = this.dep() + this.arr() + this.date;
+    key = this.dep() + this.arr() + this.date();
     if (this.rt()) {
       key += this.rtDate;
       key += '_rt';
@@ -707,9 +707,9 @@ SearchParams = (function() {
 
   SearchParams.prototype.getHash = function() {
     var hash, parts;
-    parts = [this.dep(), this.arr(), this.date, this.adults(), this.children(), this.infants()];
+    parts = [this.dep(), this.arr(), this.date(), this.adults(), this.children(), this.infants()];
     if (this.rt()) {
-      parts.push(this.rtDate);
+      parts.push(this.rtDate());
     }
     hash = 'avia/search/' + parts.join('/') + '/';
     window.voyanga_debug("Generated hash for avia search", hash);
@@ -719,13 +719,13 @@ SearchParams = (function() {
   SearchParams.prototype.fromList = function(data) {
     this.dep(data[0]);
     this.arr(data[1]);
-    this.date = data[2];
+    this.date(data[2]);
     this.adults(data[3]);
     this.children(data[4]);
     this.infants(data[5]);
     if (data.length === 7) {
       this.rt(true);
-      return this.rtDate = data[6];
+      return this.rtDate(data[6]);
     }
   };
 
