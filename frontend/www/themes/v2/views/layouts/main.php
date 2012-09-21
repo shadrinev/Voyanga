@@ -49,7 +49,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <!-- END HEAD -->
     <!--====**********===-->
     <!-- SUB HEAD -->
-    <div class="sub-head">
+    <div class="sub-head z-indexTopUp">
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <!-- PANEL -->
@@ -62,7 +62,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <!-- END SUB HEAD -->
     <!--====**********===-->
     <!-- CALENDAR -->
-    <div class="calenderWindow" data-bind="template: {name: 'calendar-template', afterRender: VoyangaCalendarStandart.init, data: panel()}" style='margin-top: 36px'>
+    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template', afterRender: VoyangaCalendarStandart.init, data: panel()}" style='margin-top: 36px'>
     </div>
     <!-- END CALENDAR -->
     <!--====**********===-->

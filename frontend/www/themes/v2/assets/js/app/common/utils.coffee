@@ -19,6 +19,14 @@ dateUtils=
     result+= " "
     result+= SHORT_MONTHS[date.getMonth()]
 
+  formatHtmlDayShortMonth: (date) ->
+    if !date.getDate
+      #moment.js date
+      date = date.toDate()
+    result = '<span class="f17">'
+    result+= date.getDate()
+    result+= "</span><br>"
+    result+= SHORT_MONTHS[date.getMonth()]
 
   formatDayMonthWeekday: (date) ->
     result = "<b>"

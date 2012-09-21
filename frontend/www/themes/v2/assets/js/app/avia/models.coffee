@@ -225,7 +225,7 @@ class AviaResult
 
 
     # Generate proxy getters
-    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departurePopup', 'departureTime', 'arrivalCity',
+    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
               'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric',
               'hash', 'stopsRatio', 'recommendStopoverIco']
 
@@ -447,7 +447,8 @@ class AviaResultSet
     @departureCity = sp.destinations[0].departure
     @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
     @roundTrip = sp.isRoundTrip
-
+    if @roundTripe
+      @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+'+04:00')
   postInit: =>
     @filters = new AviaFiltersT @
 
@@ -513,7 +514,7 @@ class SearchParams
   key: ->
     key = @dep() + @arr() + @date()
     if @rt()
-      key += @rtDate
+      key += @rtDate()
       key += '_rt'
     key += @adults()
     key += @children()
@@ -541,3 +542,5 @@ class SearchParams
     if data.length == 7
       @rt true
       @rtDate data[6]
+    else
+      @rt false

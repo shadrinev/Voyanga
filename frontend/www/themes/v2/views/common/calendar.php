@@ -1,7 +1,7 @@
 <script type="text/html" id="calendar-template">
     <div class="calendarSlide">
         <div class="innerCalendar">
-            <h1>Выберите дату перелета <span data-bind="text: depArr">Санкт-Петербург</span></h1>
+            <h1 data-bind="text:calendarText"></h1>
         </div>
         <div class="bg-Calendar">
             <div id='voyanga-calendar'>

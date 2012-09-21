@@ -190,6 +190,7 @@ return CMap::mergeArray(
                             'js/vendor/backbone.js', 'js/jquery-ui-1.8.22.custom.min.js',
                             'js/jquery.easing.1.3.js',
                             'js/vendor/jquery.autocomplete.js',
+                            'js/vendor/moment.js',
                             //! Markup related scripts and modules
                             'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js',
                             'js/jquery.color.js', 'js/popup.js',

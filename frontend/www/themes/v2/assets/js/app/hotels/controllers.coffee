@@ -34,7 +34,7 @@ class HotelsController
     # temporary development cache
     key = "h_search_10007"
     sessionStorage.setItem(key, JSON.stringify(data))
-    stacked = new HotelsResultSet data.hotels
+    stacked = new HotelsResultSet data.hotels, data.searchParams
 
     @render 'results', {'results' :stacked}
 

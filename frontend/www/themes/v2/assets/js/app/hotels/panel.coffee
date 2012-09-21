@@ -7,5 +7,5 @@ class HotelsPanel
   constructor: ->
     @template = 'hotels-panel-template'
     @rooms = ko.observableArray [[new PanelRoom ]]
-
+    @calendarText = "Выберите уже чтонибдь"
 

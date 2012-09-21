@@ -6,6 +6,8 @@ var TourEntry, ToursAviaResultSet, ToursHotelsResultSet, ToursResultSet,
 TourEntry = (function() {
 
   function TourEntry() {
+    this.rt = __bind(this.rt, this);
+
     this.price = __bind(this.price, this);
 
     this.isHotel = __bind(this.isHotel, this);
@@ -26,6 +28,10 @@ TourEntry = (function() {
     return this.selection().price;
   };
 
+  TourEntry.prototype.rt = function() {
+    return false;
+  };
+
   return TourEntry;
 
 })();
@@ -36,6 +42,14 @@ ToursAviaResultSet = (function(_super) {
 
   function ToursAviaResultSet(raw, searchParams) {
     this.searchParams = searchParams;
+    this.rt = __bind(this.rt, this);
+
+    this.dateHtml = __bind(this.dateHtml, this);
+
+    this.dateClass = __bind(this.dateClass, this);
+
+    this.additionalText = __bind(this.additionalText, this);
+
     this.destinationText = __bind(this.destinationText, this);
 
     this.template = 'avia-results';
@@ -54,6 +68,39 @@ ToursAviaResultSet = (function(_super) {
     return this.results.departureCity + ' &rarr; ' + this.results.arrivalCity;
   };
 
+  ToursAviaResultSet.prototype.additionalText = function() {
+    if (this.rt()) {
+      return "";
+    } else {
+      return ", " + this.selection().departureTime() + ' - ' + this.selection().arrivalTime();
+    }
+  };
+
+  ToursAviaResultSet.prototype.dateClass = function() {
+    if (this.rt()) {
+      return 'blue-two';
+    } else {
+      return 'blue-one';
+    }
+  };
+
+  ToursAviaResultSet.prototype.dateHtml = function() {
+    var result;
+    result = '<div class="day">';
+    result += dateUtils.formatHtmlDayShortMonth(this.selection().departureDate());
+    result += '</div>';
+    if (this.rt()) {
+      result += '<div class="day">';
+      result += dateUtils.formatHtmlDayShortMonth(this.selection().rtDepartureDate());
+      result += '</div>';
+    }
+    return result;
+  };
+
+  ToursAviaResultSet.prototype.rt = function() {
+    return this.results.roundTrip;
+  };
+
   return ToursAviaResultSet;
 
 })(TourEntry);
@@ -64,20 +111,50 @@ ToursHotelsResultSet = (function(_super) {
 
   function ToursHotelsResultSet(raw, searchParams) {
     this.searchParams = searchParams;
+    this.dateHtml = __bind(this.dateHtml, this);
+
+    this.dateClass = __bind(this.dateClass, this);
+
+    this.additionalText = __bind(this.additionalText, this);
+
+    this.price = __bind(this.price, this);
+
     this.destinationText = __bind(this.destinationText, this);
 
     this.template = 'hotels-results';
     this.panel = new HotelsPanel();
-    this.results = new HotelsResultSet(raw);
+    this.results = new HotelsResultSet(raw, this.searchParams);
     this.data = {
       results: this.results
     };
     this.hotels = true;
-    this.selection = ko.observable(this.results.data[0].roomSets[0]);
+    this.selection = ko.observable(this.results.data[0]);
   }
 
   ToursHotelsResultSet.prototype.destinationText = function() {
     return "Отель в " + this.searchParams.city;
+  };
+
+  ToursHotelsResultSet.prototype.price = function() {
+    return this.selection().roomSets[0].price;
+  };
+
+  ToursHotelsResultSet.prototype.additionalText = function() {
+    return ", " + this.selection().hotelName;
+  };
+
+  ToursHotelsResultSet.prototype.dateClass = function() {
+    return 'orange-two';
+  };
+
+  ToursHotelsResultSet.prototype.dateHtml = function() {
+    var result;
+    result = '<div class="day">';
+    result += dateUtils.formatHtmlDayShortMonth(this.results.checkIn);
+    result += '</div>';
+    result += '<div class="day">';
+    result += dateUtils.formatHtmlDayShortMonth(this.results.checkOut);
+    return result += '</div>';
   };
 
   return ToursHotelsResultSet;
@@ -87,6 +164,8 @@ ToursHotelsResultSet = (function(_super) {
 ToursResultSet = (function() {
 
   function ToursResultSet(raw) {
+    this.setActive = __bind(this.setActive, this);
+
     var variant, _i, _len, _ref,
       _this = this;
     this.data = [];
@@ -99,9 +178,9 @@ ToursResultSet = (function() {
         this.data.push(new ToursHotelsResultSet(variant.hotels, variant.searchParams));
       }
     }
-    this.selected = ko.observable(this.data[0]);
+    this.selection = ko.observable(this.data[0]);
     this.panel = ko.computed(function() {
-      return _this.selected().panel;
+      return _this.selection().panel;
     });
     this.price = ko.computed(function() {
       var item, sum, _j, _len1, _ref1;
@@ -114,6 +193,12 @@ ToursResultSet = (function() {
       return sum;
     });
   }
+
+  ToursResultSet.prototype.setActive = function(entry) {
+    this.selection(entry);
+    ko.processAllDeferredBindingUpdates();
+    return ResizeAvia();
+  };
 
   return ToursResultSet;
 

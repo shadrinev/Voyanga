@@ -280,9 +280,10 @@ class HotelResult
 # Stacks them by price and company
 #
 class HotelsResultSet
-  constructor: (rawHotels,duration = 0) ->
+  constructor: (rawHotels, @searchParams) ->
     @_results = {}
-
+    @checkIn = moment(@searchParams.checkIn)
+    @checkOut = moment(@checkIn).add('days', @searchParams.duration)
     if duration == 0
       for hotel in rawHotels
         if typeof hotel.duration == 'undefined'

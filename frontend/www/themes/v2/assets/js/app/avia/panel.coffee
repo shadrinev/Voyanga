@@ -83,14 +83,15 @@ class AviaPanel
 
     @rt.subscribe @rtTumbler
 
-    @depArr = ko.computed =>
+    @calendarText = ko.computed =>
+      result = "Выберите дату перелета "
       if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length>0))
-        @departureCityReadable() + ' → ' + @arrivalCityReadable()
+        result +=@departureCityReadable() + ' → ' + @arrivalCityReadable()
       else if ((@departureCityReadable().length==0) && (@arrivalCityReadable().length>0))
-        ' в ' + @arrivalCityReadableAcc()
+        result+=' в ' + @arrivalCityReadableAcc()
       else if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length==0))
-        ' из ' + @departureCityReadableGen()
-
+        result+=' из ' + @departureCityReadableGen()
+      return result
 
     @minimized.subscribe (minimized) ->
       speed =  300
