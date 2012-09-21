@@ -1,0 +1,49 @@
+
+/*--- CHECKBOX and RADIO ---*/
+.ui-hover {
+  display: block;
+  cursor: pointer;
+}
+.checkbox, .radio {
+  background: url(../images/check.gif) no-repeat scroll 0 0 transparent;
+  float: left;
+  width: 18px;
+  height: 14px;
+  margin: 0 5px 2px 0;
+}
+.radio {
+  background-image: url(../images/radio.gif);
+}
+.ui-hover:hover .checkbox, .ui-hover:hover .radio {background-position:0 -28px;}
+.checkbox.on, .radio.on {background-position:0 -14px;}
+.ui-hover:hover .checkbox.on, .ui-hover:hover .radio.on {background-position:0 -42px;}
+.ui-label {
+  margin: 1px 0 3px;
+}
+.ui-about {
+  color: #777;
+  line-height: 15px;
+}
+
+
+.dd-outer {
+ /* border: 1px solid #3B6798; */
+}
+.dd-inner {
+/*  border-color: #7E9CBC #5C82AB #6D8FB3;
+  border-style: solid;
+  border-width: 1px;
+  color: #FFFFFF; */
+  padding: 7px 7px 5px;
+ /* background: #6D8FB3; */
+ background-color: #DAE2E8;
+}
+.dd-inner .ui-label {/*color: #fff;*/ font-weight: bold;}
+/*.dd-inner .ui-about {color: #fff;} */
+.dd-mm {
+  margin: -9px -9px -5px;
+}
+
+.chtmp:hover {
+  background: #E9EDF1;
+}

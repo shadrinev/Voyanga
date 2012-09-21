@@ -105,7 +105,7 @@
 }
 .ticket-items .content .buy-ticket .text .txtBuy {
 	display: inline-block;
-	margin-bottom: 5	px;
+	margin-bottom: 5px;
 }
 .ticket-items .content .buy-ticket .details {
 	color: #4b525c; font-size: 11px;
@@ -194,7 +194,7 @@
 .ticket-items .content .center-ticket .date-time-city .how-long .ico-path {
     background: url("../images/ico-path.png") no-repeat scroll 0 0 transparent;
     height: 15px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     position: relative;
 }
 .ticket-items .content .center-ticket .date-time-city .how-long .ico-path .down {
