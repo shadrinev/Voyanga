@@ -3,7 +3,7 @@
 ?>
 <script type="text/html" id="avia-filters">
   <div class="filter-content">
-    <div class="slide-filter" style="padding-left:20px;">
+    <div class="slide-filter" style="padding-left: 18px; padding-right: 26px;">
       <div>
         <select data-bind="slider:true, value: serviceClass.selection"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
       </div>
@@ -13,6 +13,9 @@
 	<div class="innerScroll" >   
     
     <div class="div-filter">
+    	<div class="lineBg">
+    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
+    	</div>
       <div class="slider-filter">
         <div>
           <select data-bind="slider: true, value: onlyDirect.selection"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
@@ -21,6 +24,9 @@
       <input type="checkbox" data-bind="checkbox:{label: 'Только короткие пересадки', checked: shortStopover.selection}" />
     </div>
     <div class="div-filter">
+    	    	<div class="lineBg">
+    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
+    	</div>
       <div class="slider-filter smallSlide" style="text-align:center; margin-bottom:14px;" data-bind="visible: rt">
         <div>
           <select class="smallSlider" data-bind="slider: true, value: showRt"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
@@ -61,6 +67,9 @@
   </div>
 </script>
 <script type="text/html" id="avia-filter-list">
+	    	<div class="lineBg">
+    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
+    	</div>
       <h4><div data-bind="text: caption" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: reset, visible: selection().length">Очистить</a></h4>
       <ul data-bind="foreach: options">
         <!-- ko if: $index() < 3 -->

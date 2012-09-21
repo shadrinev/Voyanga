@@ -8,7 +8,7 @@ class AutocompleteController extends ApiController
 {
     public function actionCity($query, $airport_req = false, $hotel_req = false)
     {
-        $cacheKey = 'apiAutocompleteCities3' . md5(serialize(array($query, $airport_req, $hotel_req)));
+        $cacheKey = 'apiAutocompleteCities4' . md5(serialize(array($query, $airport_req, $hotel_req)));
         $citiesCache = Yii::app()->cache->get($cacheKey);
         if ($citiesCache)
         {
@@ -71,6 +71,8 @@ class AutocompleteController extends ApiController
         {
             $suggestion = $city['label'];
             $data['name'] = $city['name'];
+            $data['nameGen'] = $city['nameGen'];
+            $data['nameAcc'] = $city['nameAcc'];
             $data['code'] = $city['code'];
             $data['country'] = $city['country'];
             $result['suggestions'][] = $suggestion;
@@ -86,6 +88,8 @@ class AutocompleteController extends ApiController
             $city = City::getCityByPk($one['id']);
             $cities[$i]['code'] = $city->code;
             $cities[$i]['name'] = $city->localRu;
+            $cities[$i]['nameGen'] = $city->caseGen;
+            $cities[$i]['nameAcc'] = $city->caseAcc;
             $cities[$i]['country'] = $city->country->localRu;
         }
         return $cities;

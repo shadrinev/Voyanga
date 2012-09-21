@@ -5,7 +5,7 @@
         <div class="data">
           <div class="from">
             <input class="input-path departureCity" type="text">
-            <input class="second-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity}">
+            <input class="second-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen}">
             <div class="date">
               <span class="f17">12</span>
               <br>
@@ -22,7 +22,7 @@
           </div>
           <div class="to">
             <input class="input-path arrivalCity" type="text">
-            <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity}">
+            <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}">
             <div class="date">
               <span class="f17">12</span>
               <br>
@@ -82,7 +82,6 @@
       </td>
     </tr>
   </table>
-
 <!-- BTN MINIMIZE -->
 <a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
     <!-- ko if: minimized() -->

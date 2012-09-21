@@ -47,7 +47,13 @@ AviaPanel = (function() {
     this.minimized = ko.observable(false);
     this.sp = new SearchParams();
     this.departureCity = this.sp.dep;
+    this.departureCityReadable = ko.observable('');
+    this.departureCityReadableGen = ko.observable('');
+    this.departureCityReadableAcc = ko.observable('');
     this.arrivalCity = this.sp.arr;
+    this.arrivalCityReadable = ko.observable('');
+    this.arrivalCityReadableGen = ko.observable('');
+    this.arrivalCityReadableAcc = ko.observable('');
     this.inside = false;
     this.inside2 = false;
     this.inside3 = false;
@@ -83,18 +89,29 @@ AviaPanel = (function() {
       return _this.adults() * 1 + _this.children() * 1 + _this.infants() * 1;
     });
     this.rt.subscribe(this.rtTumbler);
+    this.depArr = ko.computed(function() {
+      if ((_this.departureCityReadable().length > 0) && (_this.arrivalCityReadable().length > 0)) {
+        return _this.departureCityReadable() + ' → ' + _this.arrivalCityReadable();
+      } else if ((_this.departureCityReadable().length === 0) && (_this.arrivalCityReadable().length > 0)) {
+        return ' в ' + _this.arrivalCityReadableAcc();
+      } else if ((_this.departureCityReadable().length > 0) && (_this.arrivalCityReadable().length === 0)) {
+        return ' из ' + _this.departureCityReadableGen();
+      }
+    });
     this.minimized.subscribe(function(minimized) {
       var heightSubHead, speed;
       speed = 300;
       heightSubHead = $('.sub-head').height();
       if (!minimized) {
-        return $('.sub-head').animate({
+        $('.sub-head').animate({
           'margin-top': '0px'
         }, speed);
+        return $('.calenderWindow').show();
       } else {
-        return $('.sub-head').animate({
+        $('.sub-head').animate({
           'margin-top': '-' + (heightSubHead - 4) + 'px'
         }, speed);
+        return $('.calenderWindow').hide();
       }
     });
     $(function() {

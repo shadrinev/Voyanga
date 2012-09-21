@@ -21,6 +21,7 @@
 .innerCalendar {
 	margin: 0 auto;
 	padding-top: 12px;
+	position: relative;
 }
 .innerCalendar h1 {
 	color: #FFF;
@@ -496,7 +497,21 @@
     overflow-y: hidden;
     white-space: nowrap;
 }
-
 .allTourCal .monthLineVoyanga {
     width: 100%;
+}
+.z-indexTop {
+	z-index: 995;
+}
+.z-indexTopUp {
+	z-index: 996;
+}
+.btnCloseCal {
+	width: 25px;
+	height: 26px;
+	position: absolute;
+	top: 12px;
+	right: 14px;
+	background: url(../images/btnCloseCal.png) no-repeat 0 0;
+	cursor: pointer;
 }
