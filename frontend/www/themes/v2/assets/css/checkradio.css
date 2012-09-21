@@ -29,6 +29,8 @@
 
 .ui-label {
   margin: 1px 0 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .ui-about {
   color: #777;

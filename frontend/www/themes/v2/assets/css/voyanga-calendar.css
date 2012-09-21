@@ -24,12 +24,13 @@
 	position: relative;
 }
 .innerCalendar h1 {
-	color: #FFF;
-	text-shadow: 0px 1px 0px #2a2c30;
-	font-weight: normal;
-	font-size: 22px;
-	font-family: Arial;
-	margin-bottom: 15px;
+	color: #FFFFFF;
+    font-family: Arial;
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 15px;
+    margin-left: 50px;
+    text-shadow: 0 1px 0 #2A2C30;
 }
 .weekDaysVoyanga {
     height: 23px;
@@ -180,11 +181,13 @@
     position: absolute;
     z-index: 10;
     text-align: center;
+        color: #767b84;
 }
 .monthLineVoyanga .monthNameVoyanga .monthWrapper{
     padding: 5px;
     cursor: pointer;
     display: inline-block;
+
 }
 .monthLineVoyanga .knobVoyanga{
     position: absolute;
@@ -235,7 +238,7 @@
     z-index: 20;
 }
 .monthLineVoyanga .highlited {
-	color: #24272e;
+	color: #24272e !important;
 }
 
 /* HOTEL */
