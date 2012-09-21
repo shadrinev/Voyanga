@@ -55,7 +55,7 @@
     text-align: right;
     text-shadow: 0 1px 0 #FFFFFF;
     text-transform: lowercase;
-    width: 14.28%;
+    width: 14.2%;
 }
 .weekDayVoyanga:last-child {
 	margin-right: -10px;
@@ -92,7 +92,7 @@
     white-space: nowrap;
 }
 .dayCellVoyanga {
-    width: 14.28%;
+    width: 14.2%;
     height: 48px;
     display: inline-block;
     border-right: 1px #d7d7d8 solid;
@@ -413,7 +413,7 @@
     top: 0;
     z-index: 209;
     
-    width: 14.28%;
+    width: 14.2%;
 }
 .tripFlyAll {
 	margin-top: 15px;

@@ -409,11 +409,17 @@
 .my-trip-list .items.first .fly .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -0px transparent;
 }
+.my-trip-list .items.first .fly.toFrom .keys {
+	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -870px transparent;
+}
 .my-trip-list .items.first .hotel .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -407px transparent;
 }
 .my-trip-list .items .fly .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -233px transparent;
+}
+.my-trip-list .items .fly.toFrom .keys {
+	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -928px transparent;
 }
 .my-trip-list .items .hotel .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -175px transparent;
@@ -432,6 +438,9 @@
 }
 .my-trip-list .items .fly.active .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -523px transparent;
+}
+.my-trip-list .items .fly.toFrom.active .keys {
+	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -812px transparent;
 }
 .my-trip-list .items .last.active .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -349px transparent;
