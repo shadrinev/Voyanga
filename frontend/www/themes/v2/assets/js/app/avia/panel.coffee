@@ -204,3 +204,7 @@ class AviaPanel
 
 $(document).on "autocompleted", "input.departureCity", ->
   $('input.arrivalCity').focus()
+
+$(document).on "keyup", "input.second-path", ->
+  firstValue = $(this).val()
+  $this.siblings('input.input-path').val('')

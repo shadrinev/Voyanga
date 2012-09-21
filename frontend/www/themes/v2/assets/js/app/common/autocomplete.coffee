@@ -13,7 +13,11 @@ ko.bindingHandlers.autocomplete =
       country: "Yes"
       onSelect: (value, data) -> # Callback функция, срабатывающая на выбор одного из предложенных вариантов,
         valueAccessor().iata(data.code)
-        $(element).val(value)
+        $(element).val(data.name)
+        $(element).siblings('input.input-path').val(value)
+      onActivate: (value, data) ->
+        valueAccessor().iata(data.code)
+        $(element).val(data.name)
         $(element).siblings('input.input-path').val(value)
 
   update: (element, params) ->

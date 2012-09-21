@@ -15,7 +15,12 @@ ko.bindingHandlers.autocomplete = {
       country: "Yes",
       onSelect: function(value, data) {
         valueAccessor().iata(data.code);
-        $(element).val(value);
+        $(element).val(data.name);
+        return $(element).siblings('input.input-path').val(value);
+      },
+      onActivate: function(value, data) {
+        valueAccessor().iata(data.code);
+        $(element).val(data.name);
         return $(element).siblings('input.input-path').val(value);
       }
     });

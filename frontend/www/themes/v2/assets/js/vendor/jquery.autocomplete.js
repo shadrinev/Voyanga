@@ -312,6 +312,7 @@
             {
                 this.enabled = true;
                 this.container.show();
+                this.activate(0);
             }
 		},
 
@@ -340,6 +341,7 @@
 			if (this.selectedIndex !== -1 && divs.length > this.selectedIndex) {
 				activeItem = divs.get(this.selectedIndex);
 				$(activeItem).addClass('selected');
+                this.onActivate(this.selectedIndex);
 			}
 			return activeItem;
 		},
@@ -411,7 +413,7 @@
 			} else if (offsetTop > lowerBound) {
 				this.container.scrollTop(offsetTop - this.options.maxHeight + 25);
 			}
-			this.el.val(this.getValue(this.suggestions[i]));
+			this.el.val(this.data[i].name);
 		},
 
 		onSelect: function (i) {
@@ -423,6 +425,16 @@
 			me.el.val(me.getValue(s));
 			if ($.isFunction(fn)) { fn(s, d, me.el); }
 		},
+
+        onActivate: function (i) {
+            var me, fn, s, d;
+            me = this;
+            fn = me.options.onActivate;
+            s = me.suggestions[i];
+            d = me.data[i];
+            me.el.val(me.getValue(s));
+            if ($.isFunction(fn)) { fn(s, d, me.el); }
+        },
 
 		getValue: function (value) {
 			var del, currVal, arr, me;

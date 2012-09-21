@@ -246,3 +246,9 @@ AviaPanel = (function() {
 $(document).on("autocompleted", "input.departureCity", function() {
   return $('input.arrivalCity').focus();
 });
+
+$(document).on("keyup", "input.second-path", function() {
+  var firstValue;
+  firstValue = $(this).val();
+  return $this.siblings('input.input-path').val('');
+});
