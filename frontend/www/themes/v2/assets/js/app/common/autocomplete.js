@@ -5,7 +5,7 @@ ko.bindingHandlers.autocomplete = {
     $(element).bind("focus", function() {
       return $(element).change();
     });
-    return $(element).autocomplete({
+    $(element).autocomplete({
       serviceUrl: "http://api.misha.voyanga/v1/helper/autocomplete/" + valueAccessor().source,
       minChars: 2,
       delimiter: /(,|;)\s*/,
@@ -28,6 +28,14 @@ ko.bindingHandlers.autocomplete = {
         valueAccessor().readableAcc(data.nameAcc);
         $(element).val(data.name);
         return $(element).siblings('input.input-path').val(value);
+      }
+    });
+    return $(element).on("keyup", function() {
+      if ($(element).val() === '') {
+        valueAccessor().iata('');
+        valueAccessor().readable('');
+        valueAccessor().readableGen('');
+        return valueAccessor().readableAcc('');
       }
     });
   },

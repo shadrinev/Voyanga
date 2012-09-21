@@ -26,6 +26,13 @@ ko.bindingHandlers.autocomplete =
         $(element).val(data.name)
         $(element).siblings('input.input-path').val(value)
 
+    $(element).on "keyup", ->
+      if ($(element).val()=='')
+        valueAccessor().iata('')
+        valueAccessor().readable('')
+        valueAccessor().readableGen('')
+        valueAccessor().readableAcc('')
+
   update: (element, valueAccessor) ->
     console.log($(element).val())
     console.log(valueAccessor().iata());

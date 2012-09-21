@@ -91,12 +91,10 @@ AviaPanel = (function() {
     this.rt.subscribe(this.rtTumbler);
     this.depArr = ko.computed(function() {
       if ((_this.departureCityReadable().length > 0) && (_this.arrivalCityReadable().length > 0)) {
-        _this.departureCityReadable() + ' → ' + _this.arrivalCityReadable();
-      }
-      if ((_this.departureCityReadable().length === 0) && (_this.arrivalCityReadable().length > 0)) {
-        ' в ' + _this.arrivalCityReadableAcc();
-      }
-      if ((_this.departureCityReadable().length > 0) && (_this.arrivalCityReadable().length === 0)) {
+        return _this.departureCityReadable() + ' → ' + _this.arrivalCityReadable();
+      } else if ((_this.departureCityReadable().length === 0) && (_this.arrivalCityReadable().length > 0)) {
+        return ' в ' + _this.arrivalCityReadableAcc();
+      } else if ((_this.departureCityReadable().length > 0) && (_this.arrivalCityReadable().length === 0)) {
         return ' из ' + _this.departureCityReadableGen();
       }
     });

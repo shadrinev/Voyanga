@@ -323,7 +323,7 @@
 			if (!$.isArray(response.data)) { response.data = []; }
 			if (!this.options.noCache) {
 				this.cachedResponse[response.query] = response;
-				if (response && response.suggestions.length === 0)
+				if (response && response.suggestions && response.suggestions.length === 0)
                 {
                     this.badQueries.push(response.query);
                 }
