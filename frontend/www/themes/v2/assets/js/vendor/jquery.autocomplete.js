@@ -206,14 +206,14 @@
 				if (this.options.deferRequestBy > 0) {
 					// Defer lookup in case when value changes very quickly:
 					var me = this;
-					this.onChangeInterval = setInterval(function () { me.onValueChange(); }, this.options.deferRequestBy);
+					this.onChangeInterval = setInterval(function () { me.onValueChange(e); }, this.options.deferRequestBy);
 				} else {
-					this.onValueChange();
+					this.onValueChange(e);
 				}
 			}
 		},
 
-		onValueChange: function () {
+		onValueChange: function (e) {
 			clearInterval(this.onChangeInterval);
 			this.currentValue = this.el.val();
 			var q = this.getQuery(this.currentValue);
@@ -225,7 +225,7 @@
 			if (q === '' || q.length < this.options.minChars) {
 				this.hide();
 			} else {
-				this.getSuggestions(q);
+				this.getSuggestions(q, e);
 			}
 		},
 
@@ -253,14 +253,14 @@
 			return ret;
 		},
 
-		getSuggestions: function (q) {
+		getSuggestions: function (q, e) {
 
 			var cr, me;
 			cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q]; //dadeta this.options.isLocal ||
 			if (cr && $.isArray(cr.suggestions)) {
 				this.suggestions = cr.suggestions;
 				this.data = cr.data;
-				this.suggest();
+				this.suggest(e);
 			} else if (!this.isBadQuery(q)) {
 				me = this;
 				me.options.params.query = q;
@@ -282,7 +282,7 @@
 			this.container.hide();
 		},
 
-		suggest: function () {
+		suggest: function (e) {
 
 			if (this.suggestions.length === 0) {
 				this.hide();
@@ -306,13 +306,15 @@
 			}
             if (len==1)
             {
-                this.select(0);
+                if (!((e) && (e.type =='keyup') && (e.keyCode==8)))
+                    this.select(0);
             }
             else
             {
                 this.enabled = true;
                 this.container.show();
-                this.activate(0);
+               /* if (!((e) && (e.type =='keyup') && (e.keyCode==8)))
+                    this.activate(0);*/
             }
 		},
 
@@ -321,12 +323,16 @@
 			if (!$.isArray(response.data)) { response.data = []; }
 			if (!this.options.noCache) {
 				this.cachedResponse[response.query] = response;
-				if (response.suggestions.length === 0) { this.badQueries.push(response.query); }
+				if (response && response.suggestions.length === 0)
+                {
+                    this.badQueries.push(response.query);
+                }
 			}
 			if (response.query === this.getQuery(this.currentValue)) {
 				this.suggestions = response.suggestions;
 				this.data = response.data;
-				this.suggest();
+                var e = $.Event('processRespond');
+				this.suggest(e);
 			}
 		},
 

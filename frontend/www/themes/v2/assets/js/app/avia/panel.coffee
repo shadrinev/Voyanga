@@ -205,6 +205,8 @@ class AviaPanel
 $(document).on "autocompleted", "input.departureCity", ->
   $('input.arrivalCity').focus()
 
-$(document).on "keyup", "input.second-path", ->
+$(document).on "keyup change", "input.second-path", (e) ->
   firstValue = $(this).val()
-  $this.siblings('input.input-path').val('')
+  secondEl = $(this).siblings('input.input-path')
+  if ((e.keyCode==8) || (firstValue.length<3))
+    secondEl.val('')

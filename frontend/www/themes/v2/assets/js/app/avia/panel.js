@@ -247,8 +247,11 @@ $(document).on("autocompleted", "input.departureCity", function() {
   return $('input.arrivalCity').focus();
 });
 
-$(document).on("keyup", "input.second-path", function() {
-  var firstValue;
+$(document).on("keyup change", "input.second-path", function(e) {
+  var firstValue, secondEl;
   firstValue = $(this).val();
-  return $this.siblings('input.input-path').val('');
+  secondEl = $(this).siblings('input.input-path');
+  if ((e.keyCode === 8) || (firstValue.length < 3)) {
+    return secondEl.val('');
+  }
 });
