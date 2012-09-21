@@ -51,7 +51,7 @@ function ResizeCenterBlock() {
 		var var_ticketsItems = $('.ticket-content');
 		var var_recomendedItems = $('.head-content');
 		var var_hotelItems = $('.hotels-tickets');
-		var var_calendarGridVoyanga = $('.calendarGridVoyanga');
+		var var_calendarGridVoyanga = $('.calenderWindow');
 		var var_descrItems = $('#descr');
 		var widthLeftBlock,
 			widthMainBlock,
@@ -347,7 +347,7 @@ function ResizeCenterBlock() {
 		}
 		/* CALENDARE RESIZE */
 		if (var_calendarGridVoyangaIsset) {
-			//$('.innerCalendar, #voyanga-calendar').css('width', widthBlock+'px')
+			$('.innerCalendar, #voyanga-calendar').css('width', widthBlock+'px')
 			//var_calendarGridVoyanga.css('width', (widthBlock+16)+'px');
 			//$('.weekDaysVoyangaInner').css('width', (widthBlock+16)+'px');
 		}

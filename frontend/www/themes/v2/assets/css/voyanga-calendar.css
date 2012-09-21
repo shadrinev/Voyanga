@@ -6,7 +6,7 @@
 	height: 341px;
 }
 .bg-Calendar {
-	background: url(../images/bg-calendar.png) repeat-x 0 -1px;
+	background: url("../images/bg-calendar.png") repeat-x scroll 0 0 transparent;
 }
 #voyanga-calendar {
 	margin: 0 auto;
@@ -31,29 +31,33 @@
 	margin-bottom: 15px;
 }
 .weekDaysVoyanga {
-    width: 100%;
+    height: 23px;
     overflow: hidden;
-    height: 22px;
+    white-space: nowrap;
+    width: 100%;
 }
 .weekDaysVoyanga .weekDaysVoyangaInner {
-	overflow-y: scroll;
 	height: 22px;
-	overflow-x: hidden;
 	border-left: 1px solid #D7D7D8;
-    width: 102%;
+    width: 100%;
+    white-space: nowrap;
 }
-.weekDayVoyanga{
+.weekDayVoyanga {
     background: none repeat scroll 0 0 #E2E5EB;
+    border-bottom: 1px solid #D7D7D8;
     border-right: 1px solid #D7D7D8;
     color: #1C1F24;
     float: left;
-    font-family: Tahoma, Arial;
+    font-family: Tahoma,Arial;
     font-size: 13px;
     height: 22px;
     text-align: right;
     text-shadow: 0 1px 0 #FFFFFF;
     text-transform: lowercase;
     width: 14.28%;
+}
+.weekDayVoyanga:last-child {
+	margin-right: -10px;
 }
 .weekDayVoyanga span {
 	margin-right: 15px;
@@ -84,6 +88,7 @@
 }
 .calendarLineVoyanga{
     height: 49px;
+    white-space: nowrap;
 }
 .dayCellVoyanga {
     width: 14.28%;
@@ -489,6 +494,7 @@
 .allTourCal .weekDaysVoyanga .weekDaysVoyangaInner {
     width: 100%;
     overflow-y: hidden;
+    white-space: nowrap;
 }
 
 .allTourCal .monthLineVoyanga {

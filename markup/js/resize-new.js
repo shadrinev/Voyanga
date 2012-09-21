@@ -321,11 +321,11 @@ function ResizeCenterBlock() {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock+'px');
 		}
 		/* CALENDARE RESIZE */
+		/* CALENDARE RESIZE */
 		if (var_calendarGridVoyangaIsset) {
-		console.log(widthMainBlock);
-			$('.innerCalendar, #voyanga-calendar').css('width', widthMainBlock+'px')
-			var_calendarGridVoyanga.css('width', (widthMainBlock+20)+'px');
-			$('.weekDaysVoyangaInner').css('width', (widthMainBlock+20)+'px');
+			$('#voyanga-calendar').css('width', widthBlock+'px')
+			//var_calendarGridVoyanga.css('width', (widthBlock+16)+'px');
+			//$('.weekDaysVoyangaInner').css('width', (widthBlock+16)+'px');
 		}
 		/* END CALENDARE RESIZE */
 		if (var_descrIsset) {
