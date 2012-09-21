@@ -533,7 +533,7 @@
     background: url("../images/bg-other-time.png") repeat scroll 0 0 transparent;
     border-top: 1px solid #C0C3C6;
     color: #4B525C;
-    height: 40px;
+    min-height: 40px;
     margin: 8px -19px 0px -18px;
     padding: 0px 1px 0px 18px;
     position: relative; z-index: 102;
