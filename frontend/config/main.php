@@ -203,6 +203,7 @@ return CMap::mergeArray(
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
                             'js/app/common/ko.bindings.timeslider.js',
                             'js/app/common/ko.bindings.slider.js',
+ 			    'js/app/common/ko.bindings.checkbox.js',    
                             'js/app/common/ko.rangeobservable.js',
                             'js/app/common/filters.js', 'js/app/avia/panel.js',
                             'js/app/hotels/panel.js', 'js/app/hotels/models.js',
@@ -215,7 +216,11 @@ return CMap::mergeArray(
                         ),
                         'css' => array(
                             'css/reset.style.css', 'css/style.css',
-                            'css/popup.css','css/popup-photo.css','css/jslider.css','css/jslider.round.voyanga.css','css/jsslidecheck.css','css/panel.css', 'css/voyanga-calendar.css'),
+                            'css/popup.css','css/popup-photo.css','css/jslider.css',
+			    'css/jslider.round.voyanga.css','css/jsslidecheck.css',
+			    'css/panel.css', 'css/voyanga-calendar.css',
+			    'css/checkradio.css'
+			    ),
                     ),
                 ),
             ),

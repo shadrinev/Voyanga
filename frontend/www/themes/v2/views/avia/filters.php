@@ -13,14 +13,20 @@
 	<div class="innerScroll" >   
     
     <div class="div-filter">
+    	<div class="lineBg">
+    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
+    	</div>
       <div class="slider-filter">
         <div>
           <select data-bind="slider: true, value: onlyDirect.selection"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
         </div>
       </div>
-      <input type="checkbox" data-bind="checked: shortStopover.selection"> <label>Только короткие пересадки</label>
+      <input type="checkbox" data-bind="checkbox:{label: 'Только короткие пересадки', checked: shortStopover.selection}" />
     </div>
     <div class="div-filter">
+    	    	<div class="lineBg">
+    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
+    	</div>
       <div class="slider-filter smallSlide" style="text-align:center; margin-bottom:14px;" data-bind="visible: rt">
         <div>
           <select class="smallSlider" data-bind="slider: true, value: showRt"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
@@ -61,17 +67,20 @@
   </div>
 </script>
 <script type="text/html" id="avia-filter-list">
+	    	<div class="lineBg">
+    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
+    	</div>
       <h4><div data-bind="text: caption" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: reset, visible: selection().length">Очистить</a></h4>
       <ul data-bind="foreach: options">
         <!-- ko if: $index() < 3 -->
-        <li><input type="checkbox" data-bind="checked: checked"> <label data-bind="text: key">Шереметьево</label></li>
+        <li><input type="checkbox" data-bind="checkbox:{label: key, checked: checked}"></li>
         <!-- /ko -->
       </ul>
       <!-- ko if: options().length > 3 -->
       <div class="more-filters">
         <ul data-bind="foreach: options">
           <!-- ko if: $index() >= 3 -->
-          <li><input type="checkbox" data-bind="checked: checked"> <label data-bind="text: key">Шереметьево</label></li>
+          <li><input type="checkbox" data-bind="checkbox:{label: key, checked: checked}"></li>
           <!-- /ko -->
         </ul>
       </div>
@@ -80,28 +89,4 @@
       </div>
       <!-- /ko -->
     </div>
-</script>
-<script type="text/html">
-<div>
-    <div class="div-filter" data-bind="visible: results.airlines.length>1">
-      <h4>Авиакомпании <a href="#" class="clean" data-bind="click: ">Очистить</a></h4>
-      <ul data-bind="foreach: results.airlines">
-        <!-- ko if: $index() < 3 -->
-        <li><input type="checkbox" data-bind="checked: active,attr:{id: 'aline-'+name}"> <label data-bind="text: visibleName,attr:{for: 'aline-'+name}">Аэрофлот</label></li>
-        <!-- /ko -->
-      </ul>
-      <!-- ko if: results.airlines.length > 3 -->
-      <div id="more-airlines" class="more-filters">
-        <ul data-bind="foreach: results.airlines">
-          <!-- ko if: $index() >= 3 -->
-          <li><input type="checkbox" data-bind="checked: active,attr:{id: 'aline-'+name}"> <label data-bind="text: visibleName,attr:{for: 'aline-'+name}">Аэрофлот</label></li>
-          <!-- /ko -->
-        </ul>
-      </div>
-      <div class="all-list">
-        <a href="#" onclick="return AviaFilters.showMoreDiv(this,'more-airlines')">Все авиакомпании</a>
-      </div>
-      <!-- /ko -->
-    </div>
-  </div>
 </script>
