@@ -497,11 +497,9 @@
     overflow-y: hidden;
     white-space: nowrap;
 }
-
 .allTourCal .monthLineVoyanga {
     width: 100%;
 }
-
 .z-indexTop {
 	z-index: 995;
 }
