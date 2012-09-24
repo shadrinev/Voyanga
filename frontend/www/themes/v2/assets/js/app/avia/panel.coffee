@@ -27,6 +27,7 @@ class AviaPanel
     @template = 'avia-panel-template'
     window.voyanga_debug "AviaPanel created"
     @minimized = ko.observable false
+    @minimizedCalendar = ko.observable false
     @sp = new SearchParams()
     @departureDate = @sp.date
     @departureCity = @sp.dep
@@ -43,6 +44,9 @@ class AviaPanel
     @inside = false
     @inside2 = false
     @inside3 = false
+
+    #helper to save calendar state
+    @oldCalendarState = @minimizedCalendar()
 
     @rt = @sp.rt
 
@@ -83,6 +87,9 @@ class AviaPanel
 
     @rt.subscribe @rtTumbler
 
+    @togglePanel @minimized()
+    @toggleCalendar @minimizedCalendar()
+
     @calendarText = ko.computed =>
       result = "Выберите дату перелета "
       if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length>0))
@@ -93,16 +100,11 @@ class AviaPanel
         result+=' из ' + @departureCityReadableGen()
       return result
 
-    @minimized.subscribe (minimized) ->
-      speed =  300
-      heightSubHead = $('.sub-head').height()
+    @minimized.subscribe (minimized) =>
+      @togglePanel(minimized)
 
-      if !minimized
-        $('.sub-head').animate {'margin-top' : '0px'}, speed
-        $('.calenderWindow').show()
-      else
-        $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
-        $('.calenderWindow').hide()
+    @minimizedCalendar.subscribe (minimizedCalendar) =>
+      @toggleCalendar(minimizedCalendar)
 
     # FIXME:
     $ =>
@@ -165,6 +167,27 @@ class AviaPanel
         $('.tumblr .switch').animate {'left': '-1px'}, 200
         VoyangaCalendarStandart.twoSelect = false;
 
+  togglePanel: (minimized) ->
+    speed =  300
+    heightSubHead = $('.sub-head').height()
+
+    if !minimized
+      $('.sub-head').animate {'margin-top' : '0px'}, speed
+    else
+      $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
+
+  toggleCalendar: (minimizedCalendar) ->
+    speed =  300
+
+    heightSubHead = $('.sub-head').height()
+    heightCalendar = $('.calenderWindow').height() + heightSubHead
+
+    if !minimizedCalendar
+      $('.calenderWindow').animate {'top' : (heightSubHead-4) + 'px'}, speed
+    else
+      $('.calenderWindow').animate {'top' : '-'+(heightCalendar-4)+'px'}, speed
+
+
 
   ###
   # Click handlers
@@ -176,11 +199,23 @@ class AviaPanel
     @rt(true)
 
   # Minimize button click handler
-  minimize: ->
+  minimize: =>
     if @minimized()
       @minimized(false)
+      @minimizedCalendar(@oldCalendarState)
     else
       @minimized(true)
+      @oldCalendarState = @minimizedCalendar()
+      if !@minimizedCalendar()
+        @minimizedCalendar(true)
+
+  # Minimize button click handler
+  minimizeCalendar: ->
+    if @minimizedCalendar()
+      @minimizedCalendar(false)
+    else
+      @minimizedCalendar(true)
+
 
   plusOne: (model, e)->
     prop = $(e.target).attr("rel")

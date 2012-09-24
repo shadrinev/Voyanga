@@ -2,6 +2,7 @@
     <div class="calendarSlide">
         <div class="innerCalendar">
             <h1 data-bind="text:calendarText"></h1>
+            <a href='#' class="btnCloseCal" data-bind="click:minimizeCalendar"></a>
         </div>
         <div class="bg-Calendar">
             <div id='voyanga-calendar'>

@@ -37,6 +37,8 @@ AviaPanel = (function() {
   function AviaPanel() {
     this.show = __bind(this.show, this);
 
+    this.minimize = __bind(this.minimize, this);
+
     this.selectRoundTrip = __bind(this.selectRoundTrip, this);
 
     this.selectOneWay = __bind(this.selectOneWay, this);
@@ -45,6 +47,7 @@ AviaPanel = (function() {
     this.template = 'avia-panel-template';
     window.voyanga_debug("AviaPanel created");
     this.minimized = ko.observable(false);
+    this.minimizedCalendar = ko.observable(false);
     this.sp = new SearchParams();
     this.departureDate = this.sp.date;
     this.departureCity = this.sp.dep;
@@ -59,6 +62,7 @@ AviaPanel = (function() {
     this.inside = false;
     this.inside2 = false;
     this.inside3 = false;
+    this.oldCalendarState = this.minimizedCalendar();
     this.rt = this.sp.rt;
     this.adults = this.sp.adults;
     this.children = this.sp.children;
@@ -91,6 +95,8 @@ AviaPanel = (function() {
       return _this.adults() * 1 + _this.children() * 1 + _this.infants() * 1;
     });
     this.rt.subscribe(this.rtTumbler);
+    this.togglePanel(this.minimized());
+    this.toggleCalendar(this.minimizedCalendar());
     this.calendarText = ko.computed(function() {
       var result;
       result = "Выберите дату перелета ";
@@ -104,20 +110,10 @@ AviaPanel = (function() {
       return result;
     });
     this.minimized.subscribe(function(minimized) {
-      var heightSubHead, speed;
-      speed = 300;
-      heightSubHead = $('.sub-head').height();
-      if (!minimized) {
-        $('.sub-head').animate({
-          'margin-top': '0px'
-        }, speed);
-        return $('.calenderWindow').show();
-      } else {
-        $('.sub-head').animate({
-          'margin-top': '-' + (heightSubHead - 4) + 'px'
-        }, speed);
-        return $('.calenderWindow').hide();
-      }
+      return _this.togglePanel(minimized);
+    });
+    this.minimizedCalendar.subscribe(function(minimizedCalendar) {
+      return _this.toggleCalendar(minimizedCalendar);
     });
     $(function() {
       $('.how-many-man .popup').find('input').hover(function() {
@@ -186,6 +182,37 @@ AviaPanel = (function() {
     }
   };
 
+  AviaPanel.prototype.togglePanel = function(minimized) {
+    var heightSubHead, speed;
+    speed = 300;
+    heightSubHead = $('.sub-head').height();
+    if (!minimized) {
+      return $('.sub-head').animate({
+        'margin-top': '0px'
+      }, speed);
+    } else {
+      return $('.sub-head').animate({
+        'margin-top': '-' + (heightSubHead - 4) + 'px'
+      }, speed);
+    }
+  };
+
+  AviaPanel.prototype.toggleCalendar = function(minimizedCalendar) {
+    var heightCalendar, heightSubHead, speed;
+    speed = 300;
+    heightSubHead = $('.sub-head').height();
+    heightCalendar = $('.calenderWindow').height() + heightSubHead;
+    if (!minimizedCalendar) {
+      return $('.calenderWindow').animate({
+        'top': (heightSubHead - 4) + 'px'
+      }, speed);
+    } else {
+      return $('.calenderWindow').animate({
+        'top': '-' + (heightCalendar - 4) + 'px'
+      }, speed);
+    }
+  };
+
   /*
     # Click handlers
   */
@@ -201,9 +228,22 @@ AviaPanel = (function() {
 
   AviaPanel.prototype.minimize = function() {
     if (this.minimized()) {
-      return this.minimized(false);
+      this.minimized(false);
+      return this.minimizedCalendar(this.oldCalendarState);
     } else {
-      return this.minimized(true);
+      this.minimized(true);
+      this.oldCalendarState = this.minimizedCalendar();
+      if (!this.minimizedCalendar()) {
+        return this.minimizedCalendar(true);
+      }
+    }
+  };
+
+  AviaPanel.prototype.minimizeCalendar = function() {
+    if (this.minimizedCalendar()) {
+      return this.minimizedCalendar(false);
+    } else {
+      return this.minimizedCalendar(true);
     }
   };
 
