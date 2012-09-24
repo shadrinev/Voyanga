@@ -123,8 +123,6 @@ $(function() {
   app.run();
   console.timeEnd("App dispatching");
   console.time("Rendering");
-  console.profile("Rendering");
   ko.applyBindings(app);
-  console.profileEnd();
   return console.timeEnd("Rendering");
 });
