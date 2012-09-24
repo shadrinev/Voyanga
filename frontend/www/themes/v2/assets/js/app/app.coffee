@@ -19,6 +19,8 @@ class Application extends Backbone.Router
       am = @activeModuleInstance()
       if am
         result = ko.utils.unwrapObservable am.panel
+        # We are actually depend on model observable not module`s one
+        result = ko.utils.unwrapObservable result
       if result
         return result
       else
@@ -108,7 +110,5 @@ $ ->
   app.run()
   console.timeEnd "App dispatching"
   console.time "Rendering"
-  console.profile "Rendering"
   ko.applyBindings(app)
-  console.profileEnd()
   console.timeEnd "Rendering"

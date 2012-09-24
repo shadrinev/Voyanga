@@ -654,9 +654,11 @@
 	margin-left: 20px;
 }
 .prices-of-3days .ticket {
-	position: relative;
-	background: #f4f7f9;
-	padding: 15px 20px 5px 20px;
+	background: none repeat scroll 0 0 #F4F7F9;
+    border-radius: 7px 7px 7px 7px;
+    overflow: hidden;
+    padding: 15px 20px 5px;
+    position: relative;
 }
 .prices-of-3days .ticket .lt {
 	background: url(../images/bg-prices-of-3days.png) no-repeat 0 0px;
@@ -763,7 +765,7 @@
 	background: url(../images/bg-schedule-of-prices.png) no-repeat center 0px;
 	position: absolute;
 	bottom: 45px; left: 0px;
-	border-bottom: 1px solid #DDDDDD;
+	border-bottom: 1px solid #acb0b5;
 }
 .prices-of-3days .ticket .month {
 	height: 22px;
@@ -772,6 +774,7 @@
 	bottom: 26px; left: -8px;
 	z-index: 103;
 	cursor: default;
+	color: #262930;
 } 
 .schedule-of-prices li .week {
 	font-size: 11px;
@@ -789,7 +792,8 @@
 	background: #dcdfe1;
 }
 .schedule-of-prices li.active .price, .schedule-of-prices li.active .week, .schedule-of-prices li.active .date {
-	color: #dc500a;
+	color: #1275ae;
+	font-family: Arial;
 }
 .schedule-of-prices li.active .chart {
 	background: url(../images/bg-schedule-of-prices-hover.png) no-repeat 0px 0px;
@@ -798,6 +802,43 @@
 	display: inline-block;
 	font-size: 26px; font-weight: bold;
 	vertical-align: middle; margin-left: 5px;
+}
+.prices-of-3days .blockText {
+	color: #191c21;
+	font-size: 11px;
+	font-family: Arial;
+	line-height: 18px;
+	margin-top: 6px;
+}
+.prices-of-3days .blockText .txtCena {
+	margin-top: 11px;
+}
+.prices-of-3days .blockText .leftFloat {
+	color: #262930;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    padding-top: 4px;
+}
+.prices-of-3days .blockText .leftFloat .price {
+	font-size: 21px;
+}
+.prices-of-3days .blockText .leftFloat .rur {
+	font-size: 20px;
+}
+.prices-of-3days .blockText .rightFloat {
+	float: right;
+}
+.prices-of-3days .blockText  .btnLook {
+	background: url("../images/btn-look.png") repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 15px;
+    height: 23px;
+    padding-top: 5px;
+    text-align: center;
+    text-shadow: 0 1px 0 #0B5B88;
+    width: 116px;
 }
 /*---- filter-content -----*/
 .filter-content {
@@ -1063,10 +1104,8 @@
 	height: 363px;
 }
 .tab .photo-slide-hotel {
-	margin-left: -21px;
 	height: 150px;
-	width: 822px;margin-top: 15px;
-	margin-bottom: 15px;
+	width: 822px;
 }
 
 
@@ -1359,22 +1398,15 @@
 	background: url(../images/slice.png) no-repeat -37px -1200px;
 }
 
-.slide {
-	overflow: hidden;
-	width: 100%;
-	height: 150px;
-	position: relative;
-	background:#d8d9de;
-}
-.slide ul {
-	width: 100%;
-}
-.slide ul li {
-	float: left;
-	margin-right: 1px;
-}
-.slide ul li img {
-	height: 150px;
+.tab .slide {
+	background: none repeat scroll 0 0 #D8D9DE;
+    height: 150px;
+    margin-left: -21px;
+    overflow: hidden;
+    position: relative;
+    width: 822px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 .slide .left-navi {
 	position: absolute; top:0px; left: 0px;
@@ -1765,4 +1797,11 @@ input.hotel-input {
 	-moz-box-shadow: -7px 0 6px rgba(226,229,235,1); /* Для Firefox */
     -webkit-box-shadow: -7px 0 6px rgba(226,229,235,1); /* Для Safari и Chrome */
     box-shadow: -7px 0 6px rgba(226,229,235,1); /* Параметры тени */
+}
+
+
+
+
+.z-indexTop {
+	display: none;
 }

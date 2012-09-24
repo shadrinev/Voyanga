@@ -75,7 +75,7 @@ Yii::app()->clientScript->registerPackage('everything');
                        'avia.panel', 'avia.filters', 'avia.cheapest',
                        'hotels.index', 'hotels.results', 'hotels.panel',
                        'hotels.popup', 'hotels.filters','hotels.info','hotels.timeline',
-                       'tours.results',
+                       'tours.results', 'tours.index',
                        'common.calendar'
         );
     foreach($templates as $template)

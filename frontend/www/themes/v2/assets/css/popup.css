@@ -21,9 +21,9 @@
 
 #boxContent h1 {margin-bottom:14px;}
 #boxTopLeft {
-    background: url("../images/border1.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/border1.png") no-repeat scroll -29px 0 transparent;
     height: 50px;
-    width: 50px;
+    width: 21px;
 }
 #boxTopCenter {
     background: url("../images/border1.png") repeat-x scroll 0 -102px transparent;
@@ -32,22 +32,22 @@
 #boxTopRight {
     background: url("../images/border1.png") no-repeat scroll -50px 0 transparent;
     height: 50px;
-    width: 50px;
+    width: 20px;
 }
 #boxMiddleLeft {
-    background: url("../images/border2.png") repeat-y scroll 0 0 transparent;
-    width: 50px;
-	min-height:100%;
+    background: url("../images/border2.png") repeat-y scroll -29px 0 transparent;
+    min-height: 100%;
+    width: 21px;
 }
 #boxMiddleRight {
     background: url("../images/border2.png") repeat-y scroll -50px 0 transparent;
-    width: 50px;
+    width: 20px;
 	min-height:100%;
 }
 #boxBottomLeft {
-    background: url("../images/border1.png") no-repeat scroll 0 -50px transparent;
+    background: url("../images/border1.png") no-repeat scroll -29px -50px transparent;
     height: 50px;
-    width: 50px;
+    width: 21px;
 }
 #boxBottomCenter {
     background: url("../images/border1.png") repeat-x scroll 0 -152px transparent;
@@ -56,7 +56,7 @@
 #boxBottomRight {
     background: url("../images/border1.png") no-repeat scroll -50px -50px transparent;
     height: 50px;
-    width: 50px;
+    width: 20px;
 }
 #boxClose {
     background: url("../images/btn-close.png") no-repeat scroll 0 0 transparent;

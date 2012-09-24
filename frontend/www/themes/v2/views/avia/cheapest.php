@@ -261,20 +261,17 @@
             </div>
         </div>
 
-        <div class="cena">
-            <div class="total-td">
-                <span class="text">Итого</span>
-
-                <div class="all-price">
-                    80 250 <span class="rur">o</span>
-                </div>
+        <div class="blockText">
+        	<div class="txt">Данные получены на основании поисковых запросов и могут отличаться от актуальных значений</div>
+        	<div class="txtCena" style="display:none">
+	        	<div class="leftFloat">
+	        		Итого <span class="price">4150</span> <span class="rur">o</span>
+	        	</div>
+	        	<div class="rightFloat">
+	        		<a class="btnLook" href="#">Посмотреть</a>
+	        	</div>
+	            <div class="clear"></div>
             </div>
-            <div class="look-td">
-                <a href="#" class="btn-look">
-                    Посмотреть
-                </a>
-            </div>
-            <div class="clear"></div>
         </div>
         <span class="lt"></span>
         <span class="rt"></span>

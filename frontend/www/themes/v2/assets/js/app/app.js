@@ -21,6 +21,7 @@ Application = (function(_super) {
       am = _this.activeModuleInstance();
       if (am) {
         result = ko.utils.unwrapObservable(am.panel);
+        result = ko.utils.unwrapObservable(result);
       }
       if (result) {
         return result;
