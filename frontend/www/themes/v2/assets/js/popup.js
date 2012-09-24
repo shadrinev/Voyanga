@@ -27,6 +27,7 @@ function ResizeBox(id) {
 		paddingTop = 0;
 	}
 	boxContent.css('left', paddingLeft+'px').css('top', (paddingTop)+'px');
+	$('.wrapper').die('scroll',function() { });
 }
 
 
