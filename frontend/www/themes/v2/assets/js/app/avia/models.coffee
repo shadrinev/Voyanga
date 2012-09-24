@@ -368,32 +368,11 @@ class AviaResult
 
   # Shows popup with detailed info about given result
   showDetails: =>
-    window.voyanga_debug "Setting popup result", @
-    @trigger "popup", @
-    $('body').prepend('<div id="popupOverlay"></div>')
-
-    $('#avia-body-popup').show()
+    new GenericPopup '#avia-body-popup', @
     ko.processAllDeferredBindingUpdates()
 
-    SizeBox('avia-popup-body');
-    ResizeBox('avia-popup-body');
-
-    # FIXME
-    $(window).keyup (e) =>
-      if e.keyCode == 27
-        @closeDetails()
-
-    $('#popupOverlay').click =>
-      @closeDetails()
-
-  # Hide popup with detailed info about given result
-  closeDetails: =>
-    # FIXME
-    $(window).unbind 'keyup'
-    window.voyanga_debug "Hiding popup"
-    $('#avia-body-popup').hide()
-    $('#popupOverlay').remove()
-
+    SizeBox('avia-body-popup');
+    ResizeBox('avia-body-popup');
 
   chooseActive: ->
     if @visible() == false
@@ -422,9 +401,6 @@ class AviaResultSet
         result =  new AviaResult flightVoyage
         @_results[key] = result
         result.key = key
-        result.on "popup", (data)=>
-          @popup data
-
     @cheapest = ko.observable()
     # We need array for knockout to work right
     @data = []
@@ -438,8 +414,6 @@ class AviaResultSet
       @data.push result
 
     @postFilters()
-    # Flight to show in popup
-    @popup = ko.observable @cheapest()
     
   # Inject search params from response
   injectSearchParams: (sp) =>

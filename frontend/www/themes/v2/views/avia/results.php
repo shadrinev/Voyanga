@@ -208,8 +208,10 @@
 <!-- END TICKET -->
 <!-- /ko -->
 </div>
+</script>
 <!-- FIXME: avia-hotel duplication -->
-<div id="avia-body-popup" class="body-popup" style="display:none;" >
+<script id="avia-body-popup-template" type="text/html">
+<div id="avia-body-popup" class="body-popup">
   <div id="avia-popup-body" class="popup">
     <div>
       <div id="boxTopLeft"></div>
@@ -221,8 +223,8 @@
       <div id="boxMiddleLeft"></div>
       <div id="boxContent">
         <div id="contentBox">
-          <div data-bind="template: {name: 'avia-popup', data: $data.popup()}"></div>
-          <div id="boxClose" data-bind="click: $data.popup().closeDetails"></div>
+          <div data-bind="template: {name: 'avia-popup', data: data}"></div>
+          <div id="boxClose" data-bind="click: close"></div>
         </div>
       </div>
       <div id="boxMiddleRight"></div>
