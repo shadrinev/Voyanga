@@ -272,8 +272,8 @@ HotelResult = (function() {
   HotelResult.prototype.showDetails = function() {
     this.readMoreExpanded = false;
     new GenericPopup('#hotels-body-popup', this);
-    SizeBox('hotels-popup-body');
-    ResizeBox('hotels-popup-body');
+    SizeBox('hotels-body-popup');
+    ResizeBox('hotels-body-popup');
     sliderPhoto('.photo-slide-hotel');
     $(".description .text").dotdotdot({
       watch: 'window'

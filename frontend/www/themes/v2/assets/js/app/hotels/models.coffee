@@ -161,8 +161,8 @@ class HotelResult
     @readMoreExpanded = false
     new GenericPopup '#hotels-body-popup', @
 
-    SizeBox('hotels-popup-body')
-    ResizeBox('hotels-popup-body')
+    SizeBox('hotels-body-popup')
+    ResizeBox('hotels-body-popup')
     sliderPhoto('.photo-slide-hotel')
     # FIXME explicitly call tab handler here ?
     $(".description .text").dotdotdot({watch: 'window'})
