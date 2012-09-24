@@ -524,6 +524,6 @@
 	z-index: 996;
 	height: 71px;
 	padding-bottom: 0px;
-	margin-bottom: 0px;
+	margin-bottom: -1px;
 	background: url("../images/bg-board.png") repeat-x scroll 0 0 transparent;
 }
