@@ -5,7 +5,8 @@ function SizeBox(id) {
 	var boxWidth = boxContent.innerWidth();
 	var boxPopUpWidth = popup.innerWidth();
 	var boxPopUpHeight = popup.innerHeight();
-	popup.css('width', (boxPopUpWidth+1)+'px').css('height', boxPopUpHeight+'px');
+	var heightWindowAll = $('.popupBody').innerHeight() + $('.wrapper').scrollTop() + popup.height();
+	popup.css('height', (heightWindowAll)+'px');
 	popup.find('#boxMiddleLeft').css('height', boxHeight+'px');
 	popup.find('#boxMiddleRight').css('height', boxHeight+'px');
 	popup.find('#boxTopCenter').css('width', boxWidth+'px');
@@ -17,15 +18,15 @@ function ResizeBox(id) {
 	var boxContent = popup.find('.popupBody');
 	var boxPopUpWidth = boxContent.innerWidth();
 	var boxPopUpHeight = boxContent.innerHeight();
-	console.log('flkjashahasjhJHKJHKJHKJHKJH '+boxPopUpWidth+' ADFJHASDKJAH '+boxPopUpHeight);
 	var windowWidth = $(window).width();
 	var windowHeight = $(window).height();
+	var scrollTopMine = $('.wrapper').scrollTop();
 	var paddingLeft = (windowWidth - boxPopUpWidth) / 2;
 	var paddingTop = (windowHeight - boxPopUpHeight) / 2;
 	if (paddingTop < 0) {
 		paddingTop = 0;
 	}
-	boxContent.css('left', paddingLeft+'px').css('top', (paddingTop - 20)+'px');
+	boxContent.css('left', paddingLeft+'px').css('top', (paddingTop + scrollTopMine)+'px');
 }
 
 
