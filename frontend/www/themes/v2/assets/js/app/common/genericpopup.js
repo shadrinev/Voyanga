@@ -11,7 +11,7 @@ GenericPopup = (function() {
 
     $('body').prepend('<div id="popupOverlay"></div>');
     el = $($(this.id + '-template').html());
-    $('body').prepend(el);
+    $('.wrapper').prepend(el);
     ko.applyBindings({
       data: data,
       close: this.close

@@ -19,10 +19,10 @@ class Application extends Backbone.Router
       if am
         result = ko.utils.unwrapObservable am.panel
         # We are actually depend on model observable not module`s one
-        # result = ko.utils.unwrapObservable result
-        return result
-      else
-        return {'template':'',data:{}, calendarText:'DOH', calendarHidden: true}
+        result = ko.utils.unwrapObservable result
+        if result
+          return result
+      return {'template':'',data:{}, calendarText:'DOH', calendarHidden: true}
 
     # View currently being active in given module
     @_view = ko.observable 'index'
