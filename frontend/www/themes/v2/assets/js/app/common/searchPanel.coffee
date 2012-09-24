@@ -2,6 +2,7 @@ class SearchPanel
   constructor: ->
     @minimized = ko.observable false
     @minimizedCalendar = ko.observable false
+    @calendarHidden = ko.observable false
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
@@ -25,15 +26,18 @@ class SearchPanel
       $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
 
   toggleCalendar: (minimizedCalendar) ->
-    speed =  300
+    speed =  500
 
     heightSubHead = $('.sub-head').height()
-    heightCalendar = $('.calenderWindow').height() + heightSubHead
+    heightCalendar1 = $('.calenderWindow').height()
+    heightCalendar2 = heightSubHead
 
     if !minimizedCalendar
+      @calendarHidden(false)
       $('.calenderWindow').animate {'top' : (heightSubHead-4) + 'px'}, speed
     else
-      $('.calenderWindow').animate {'top' : '-'+(heightCalendar-4)+'px'}, speed
+      $('.calenderWindow').animate {'top' : '-'+(heightCalendar1)+'px'}, speed, () =>
+        @calendarHidden(true)
 
   # Minimize button click handler
   minimize: =>

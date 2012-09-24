@@ -30,7 +30,7 @@ Application = (function(_super) {
           'template': '',
           data: {},
           calendarText: 'DOH',
-          minimizedCalendar: false
+          calendarHidden: false
         };
       }
     });
