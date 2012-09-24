@@ -23,7 +23,12 @@
 #contentBox {
 	position: relative;
 }
-
+#avia-body-popup .popupBody {
+	width: 580px;
+}
+#avia-body-popup .popupBody #boxClose {
+	top: 17px;
+}
 
 .popup {position:absolute; z-index:1000;}
 .popup > div + div {position: relative;}

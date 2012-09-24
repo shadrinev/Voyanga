@@ -5,8 +5,8 @@ function SizeBox(id) {
 	var boxWidth = boxContent.innerWidth();
 	var boxPopUpWidth = popup.innerWidth();
 	var boxPopUpHeight = popup.innerHeight();
-	var heightWindowAll = $('.popupBody').innerHeight() + $('.wrapper').scrollTop() + popup.height();
-	popup.css('height', (heightWindowAll)+'px');
+	var heightWindowAll = $('.popupBody').innerHeight() + $('.wrapper').scrollTop();
+	//popup.css('height', (heightWindowAll)+'px');
 	popup.find('#boxMiddleLeft').css('height', boxHeight+'px');
 	popup.find('#boxMiddleRight').css('height', boxHeight+'px');
 	popup.find('#boxTopCenter').css('width', boxWidth+'px');
@@ -26,7 +26,7 @@ function ResizeBox(id) {
 	if (paddingTop < 0) {
 		paddingTop = 0;
 	}
-	boxContent.css('left', paddingLeft+'px').css('top', (paddingTop + scrollTopMine)+'px');
+	boxContent.css('left', paddingLeft+'px').css('top', (paddingTop)+'px');
 }
 
 
