@@ -112,11 +112,11 @@
 </script>
 <script type="text/html" id="hotels-body-popup-template">
 <div id="hotels-body-popup" class="body-popup">
-  
-        <div id="contentBox">
-          <div data-bind="template: {name: 'hotels-popup', data: data}"></div>
-          <div id="boxClose" data-bind="click: close"></div>
+ 		<div class="popupBody">
+	        <div id="contentBox">
+	          <div data-bind="template: {name: 'hotels-popup', data: data}"></div>
+	          <div id="boxClose" data-bind="click: close"></div>
+	        </div>
         </div>
-
 </div>
 </script>

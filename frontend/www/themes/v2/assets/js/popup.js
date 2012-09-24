@@ -14,9 +14,10 @@ function SizeBox(id) {
 
 function ResizeBox(id) {
 	var popup = $('#'+id);
-	var boxContent = popup.find('#boxContent');
-	var boxPopUpWidth = popup.innerWidth();
-	var boxPopUpHeight = popup.innerHeight();
+	var boxContent = popup.find('.popupBody');
+	var boxPopUpWidth = boxContent.innerWidth();
+	var boxPopUpHeight = boxContent.innerHeight();
+	console.log('flkjashahasjhJHKJHKJHKJHKJH '+boxPopUpWidth+' ADFJHASDKJAH '+boxPopUpHeight);
 	var windowWidth = $(window).width();
 	var windowHeight = $(window).height();
 	var paddingLeft = (windowWidth - boxPopUpWidth) / 2;
@@ -24,7 +25,7 @@ function ResizeBox(id) {
 	if (paddingTop < 0) {
 		paddingTop = 0;
 	}
-	popup.css('left', paddingLeft+'px').css('top', (paddingTop - 20)+'px');
+	boxContent.css('left', paddingLeft+'px').css('top', (paddingTop - 20)+'px');
 }
 
 
