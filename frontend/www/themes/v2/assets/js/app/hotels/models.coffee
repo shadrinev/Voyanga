@@ -148,6 +148,7 @@ class HotelResult
       @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
       @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
+    @roomSets = _.sortBy @roomSets, (entry)-> entry.price
 
   showPhoto: =>
     new PhotoBox(@photos)
@@ -158,12 +159,7 @@ class HotelResult
   showDetails: =>
     # If user had clicked read-more link
     @readMoreExpanded = false
-    window.voyanga_debug "HOTELS: Setting popup result", @
-    @trigger "popup", @
-    $('body').prepend('<div id="popupOverlay"></div>')
-
-    $('#hotels-body-popup').show()
-    ko.processAllDeferredBindingUpdates()
+    new GenericPopup '#hotels-body-popup', @
 
     SizeBox('hotels-popup-body')
     ResizeBox('hotels-popup-body')
@@ -174,23 +170,10 @@ class HotelResult
     # If we initialized google map already
     @mapInitialized = false
 
-    $(window).keyup (e) =>
-      if e.keyCode == 27
-        @closeDetails()
-
-    $('#popupOverlay').click =>
-      @closeDetails()
-
   showMapDetails: =>
     @showDetails()
     @showMap()
 
-  # Hide popup with detailed info about given result
-  closeDetails: =>
-    $(window).unbind 'keyup'
-    window.voyanga_debug "Hiding popup"
-    $('#hotels-body-popup').hide()
-    $('#popupOverlay').remove()
 
   # Click handler for map/description in popup
   showMap: (context, event) =>
@@ -315,8 +298,6 @@ class HotelsResultSet
         else
           @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
           @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
-        result.on "popup", (data)=>
-          @popup data
 
     # We need array for knockout to work right
     @data = []
@@ -347,9 +328,7 @@ class HotelsResultSet
     @allFiltersActive.subscribe (value) =>
       console.log "REFILTER"
 
-
-    @popup = ko.observable @data[0]
-
+    @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
 
 # Model for Hotel info params,
 # Used in infoAcion controller

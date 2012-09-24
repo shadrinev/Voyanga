@@ -92,14 +92,6 @@
     </div>
     <!-- /ko -->
 </div>
-<div id="hotels-body-popup" class="body-popup" style="display:none;" >
-  
-        <div id="contentBox">
-          <div data-bind="template: {name: 'hotels-popup', data: results.popup()}"></div>
-          <div id="boxClose" data-bind="click: results.popup().closeDetails"></div>
-        </div>
-
-</div>
 </script>
 <script id="photo-popup-template" type="text/html">
   <div id="body-popup-Photo">
@@ -117,4 +109,14 @@
     </div>
     <div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div>
   </div>
+</script>
+<script type="text/html" id="hotels-body-popup-template">
+<div id="hotels-body-popup" class="body-popup">
+  
+        <div id="contentBox">
+          <div data-bind="template: {name: 'hotels-popup', data: data}"></div>
+          <div id="boxClose" data-bind="click: close"></div>
+        </div>
+
+</div>
 </script>

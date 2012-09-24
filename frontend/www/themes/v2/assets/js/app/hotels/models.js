@@ -211,8 +211,6 @@ HotelResult = (function() {
 
     this.showMap = __bind(this.showMap, this);
 
-    this.closeDetails = __bind(this.closeDetails, this);
-
     this.showMapDetails = __bind(this.showMapDetails, this);
 
     this.showDetails = __bind(this.showDetails, this);
@@ -261,7 +259,10 @@ HotelResult = (function() {
       this.minPrice = set.pricePerNight < this.minPrice ? set.pricePerNight : this.minPrice;
       this.maxPrice = set.pricePerNight > this.maxPrice ? set.pricePerNight : this.maxPrice;
     }
-    return this.roomSets.push(set);
+    this.roomSets.push(set);
+    return this.roomSets = _.sortBy(this.roomSets, function(entry) {
+      return entry.price;
+    });
   };
 
   HotelResult.prototype.showPhoto = function() {
@@ -269,40 +270,20 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.showDetails = function() {
-    var _this = this;
     this.readMoreExpanded = false;
-    window.voyanga_debug("HOTELS: Setting popup result", this);
-    this.trigger("popup", this);
-    $('body').prepend('<div id="popupOverlay"></div>');
-    $('#hotels-body-popup').show();
-    ko.processAllDeferredBindingUpdates();
+    new GenericPopup('#hotels-body-popup', this);
     SizeBox('hotels-popup-body');
     ResizeBox('hotels-popup-body');
-    //sliderPhoto('.photo-slide-hotel');
+    sliderPhoto('.photo-slide-hotel');
     $(".description .text").dotdotdot({
       watch: 'window'
     });
-    this.mapInitialized = false;
-    $(window).keyup(function(e) {
-      if (e.keyCode === 27) {
-        return _this.closeDetails();
-      }
-    });
-    return $('#popupOverlay').click(function() {
-      return _this.closeDetails();
-    });
+    return this.mapInitialized = false;
   };
 
   HotelResult.prototype.showMapDetails = function() {
     this.showDetails();
     return this.showMap();
-  };
-
-  HotelResult.prototype.closeDetails = function() {
-    $(window).unbind('keyup');
-    window.voyanga_debug("Hiding popup");
-    $('#hotels-body-popup').hide();
-    return $('#popupOverlay').remove();
   };
 
   HotelResult.prototype.showMap = function(context, event) {
@@ -435,9 +416,6 @@ HotelsResultSet = (function() {
           this.minPrice = this._results[key].minPrice < this.minPrice ? this._results[key].minPrice : this.minPrice;
           this.maxPrice = this._results[key].maxPrice > this.maxPrice ? this._results[key].maxPrice : this.maxPrice;
         }
-        result.on("popup", function(data) {
-          return _this.popup(data);
-        });
       }
     }
     this.data = [];
@@ -475,7 +453,9 @@ HotelsResultSet = (function() {
     this.allFiltersActive.subscribe(function(value) {
       return console.log("REFILTER");
     });
-    this.popup = ko.observable(this.data[0]);
+    this.data = _.sortBy(this.data, function(entry) {
+      return entry.roomSets[0].price;
+    });
   }
 
   return HotelsResultSet;
