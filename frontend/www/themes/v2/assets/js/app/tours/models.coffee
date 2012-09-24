@@ -11,6 +11,8 @@ class TourEntry
 class ToursAviaResultSet extends TourEntry
   constructor: (raw, @searchParams)->
     @template = 'avia-results'
+    # FIXME
+    #new Searchparams...
     @panel = new AviaPanel()
     @results = new AviaResultSet raw
     @results.injectSearchParams @searchParams

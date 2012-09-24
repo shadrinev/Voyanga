@@ -75,8 +75,6 @@ function ResizeCenterBlock() {
 			widthLogin;
 
 		var widthBlock = block.width();
-		var pos = block.eq(0).offset();
-
 		var var_leftBlockIsset = var_leftBlock.length > 0 && var_leftBlock.is(':visible');
 		var var_mainBlockIsset = var_mainBlock.length > 0 && var_mainBlock.is(':visible');
 		var var_filterBlockIsset = var_filterBlock.length > 0 && var_filterBlock.is(':visible');
