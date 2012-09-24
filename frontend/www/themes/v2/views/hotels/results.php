@@ -93,30 +93,12 @@
     <!-- /ko -->
 </div>
 <div id="hotels-body-popup" class="body-popup" style="display:none;" >
-  <div id="hotels-popup-body" class="popup" >
-    <div>
-      <div id="boxTopLeft"></div>
-      <div id="boxTopCenter"></div>
-      <div id="boxTopRight"></div>
-      <div class="clear"></div>
-    </div>
-    <div>
-      <div id="boxMiddleLeft"></div>
-      <div id="boxContent">
+  
         <div id="contentBox">
           <div data-bind="template: {name: 'hotels-popup', data: results.popup()}"></div>
           <div id="boxClose" data-bind="click: results.popup().closeDetails"></div>
         </div>
-      </div>
-      <div id="boxMiddleRight"></div>
-      <div class="clear"></div>
-    </div>
-    <div>
-      <div id="boxBottomLeft"></div>
-      <div id="boxBottomCenter"></div>
-      <div id="boxBottomRight"></div>
-    </div>
-  </div>
+
 </div>
 </script>
 <script id="photo-popup-template" type="text/html">

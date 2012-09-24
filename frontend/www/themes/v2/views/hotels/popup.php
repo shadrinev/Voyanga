@@ -59,9 +59,10 @@
             </div>
         </div>
         <div class="tab" id="hotels-popup-map" style="display:none;">
+        	<br>
             <div class="map-big" id="hotels-popup-gmap">
             </div>
-            <div style="display:none">Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра</div>
+            <div>Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра</div>
         </div>
     </div>
 </script>
