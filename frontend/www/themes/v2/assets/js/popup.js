@@ -5,7 +5,7 @@ function SizeBox(id) {
 	var boxWidth = boxContent.innerWidth();
 	var boxPopUpWidth = popup.innerWidth();
 	var boxPopUpHeight = popup.innerHeight();
-	popup.css('width', (boxPopUpWidth+1)+'px').css('height', boxPopUpHeight+'px');
+	//popup.css('width', (boxPopUpWidth+1)+'px').css('height', boxPopUpHeight+'px');
 	popup.find('#boxMiddleLeft').css('height', boxHeight+'px');
 	popup.find('#boxMiddleRight').css('height', boxHeight+'px');
 	popup.find('#boxTopCenter').css('width', boxWidth+'px');
