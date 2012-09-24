@@ -519,3 +519,11 @@
 	background: url(../images/btnCloseCal.png) no-repeat 0 0;
 	cursor: pointer;
 }
+
+.calSelectedPanelActive {
+	z-index: 996;
+	height: 71px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	background: url("../images/bg-board.png") repeat-x scroll 0 0 transparent;
+}
