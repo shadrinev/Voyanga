@@ -180,7 +180,7 @@ ShortStopoverFilter = (function(_super) {
 
   ShortStopoverFilter.prototype.filter = function(item) {
     if (this.selection()) {
-      return item.stopoverLength <= 7200;
+      return item.stopoverLength <= (60 * 60) * 2.5;
     }
     return true;
   };
@@ -235,7 +235,7 @@ ServiceClassFilter = (function(_super) {
 AviaFiltersT = (function() {
 
   function AviaFiltersT(results) {
-    var fields, key, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
+    var fields,
       _this = this;
     this.results = results;
     this.iterate = __bind(this.iterate, this);
@@ -286,23 +286,31 @@ AviaFiltersT = (function() {
     this.shortStopover = new ShortStopoverFilter();
     this.onlyDirect = new OnlyDirectFilter();
     this.serviceClass = new ServiceClassFilter();
-    _ref = this.resultFilters;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      key = _ref[_i];
-      this[key].selection.subscribe(this.filter);
-    }
-    _ref1 = this.voyageFilters;
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      key = _ref1[_j];
-      this[key].selection.subscribe(this.filter);
-    }
-    if (this.rt) {
-      _ref2 = this.rtVoyageFilters;
-      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-        key = _ref2[_k];
-        this[key].selection.subscribe(this.filter);
+    this.refilter = (ko.computed(function() {
+      var key, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
+      _ref = _this.resultFilters;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        key = _ref[_i];
+        _this[key].selection();
       }
-    }
+      _ref1 = _this.voyageFilters;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        key = _ref1[_j];
+        _this[key].selection();
+      }
+      if (_this.rt) {
+        _ref2 = _this.rtVoyageFilters;
+        _results = [];
+        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+          key = _ref2[_k];
+          _results.push(_this[key].selection());
+        }
+        return _results;
+      }
+    })).extend({
+      throttle: 50
+    });
+    this.refilter.subscribe(this.filter);
     this.iterate(this.updateLimitsResult, this.updateLimitsVoyage, this.updateLimitsBackVoyage);
   }
 

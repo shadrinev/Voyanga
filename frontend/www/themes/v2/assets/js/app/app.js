@@ -17,20 +17,16 @@ Application = (function(_super) {
     this.activeModuleInstance = ko.observable(null);
     this.panel = ko.computed(function() {
       var am, result;
-      result = false;
       am = _this.activeModuleInstance();
       if (am) {
         result = ko.utils.unwrapObservable(am.panel);
-        result = ko.utils.unwrapObservable(result);
-      }
-      if (result) {
         return result;
       } else {
         return {
           'template': '',
           data: {},
           calendarText: 'DOH',
-          calendarHidden: false
+          calendarHidden: true
         };
       }
     });

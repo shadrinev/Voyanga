@@ -108,7 +108,7 @@ class ShortStopoverFilter extends Filter
 
   filter: (item) =>
     if @selection()
-      return item.stopoverLength <= 7200
+      return item.stopoverLength <= (60*60)*2.5
     return true
 
 class OnlyDirectFilter extends Filter
@@ -167,14 +167,18 @@ class AviaFiltersT
     @onlyDirect = new OnlyDirectFilter()
     @serviceClass = new ServiceClassFilter()
 
-    # FIXME: can we abuse different methods to do less filtering?
-    for key in @resultFilters
-      @[key].selection.subscribe @filter     
-    for key in @voyageFilters
-      @[key].selection.subscribe @filter
-    if @rt
-      for key in @rtVoyageFilters
-        @[key].selection.subscribe @filter
+    # Saves us from multiple @filter calls on initial load
+    @refilter = (ko.computed =>
+      for key in @resultFilters
+        @[key].selection()
+      for key in @voyageFilters
+        @[key].selection()
+      if @rt
+        for key in @rtVoyageFilters
+          @[key].selection()
+    ).extend {throttle: 50}
+    @refilter.subscribe @filter
+      
 
     # FIXME looks ugly
     @iterate @updateLimitsResult, @updateLimitsVoyage, @updateLimitsBackVoyage
