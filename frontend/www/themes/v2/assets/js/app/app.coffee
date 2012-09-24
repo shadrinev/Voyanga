@@ -24,7 +24,7 @@ class Application extends Backbone.Router
       if result
         return result
       else
-        return {'template':'',data:{}, calendarText:'DOH'}
+        return {'template':'',data:{}, calendarText:'DOH', minimizedCalendar: false}
 
     # View currently being active in given module
     @_view = ko.observable 'index'

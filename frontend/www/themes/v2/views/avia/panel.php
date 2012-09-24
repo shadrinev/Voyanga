@@ -6,7 +6,7 @@
           <div class="from">
             <input class="input-path departureCity" type="text">
             <input class="second-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen}">
-            <div class="date">
+              <div class="date">
               <span class="f17">12</span>
               <br>
               <span class="month">мая</span>
@@ -21,8 +21,8 @@
             <input id="there-back" type="checkbox" data-bind="checked: rt()">
           </div>
           <div class="to">
-            <input class="input-path arrivalCity" type="text">
             <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}">
+            <input class="input-path arrivalCity" type="text">
             <div class="date">
               <span class="f17">12</span>
               <br>

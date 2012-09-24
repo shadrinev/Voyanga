@@ -29,7 +29,8 @@ Application = (function(_super) {
         return {
           'template': '',
           data: {},
-          calendarText: 'DOH'
+          calendarText: 'DOH',
+          minimizedCalendar: false
         };
       }
     });
