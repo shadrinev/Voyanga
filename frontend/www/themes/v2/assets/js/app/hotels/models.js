@@ -278,7 +278,7 @@ HotelResult = (function() {
     ko.processAllDeferredBindingUpdates();
     SizeBox('hotels-popup-body');
     ResizeBox('hotels-popup-body');
-    sliderPhoto('.photo-slide-hotel');
+    //sliderPhoto('.photo-slide-hotel');
     $(".description .text").dotdotdot({
       watch: 'window'
     });
