@@ -58,11 +58,13 @@ ko.bindingHandlers.autocomplete = {
       return valueAccessor().readableAcc(data.nameAcc);
     };
     iataCode = valueAccessor().iata();
-    window.voyanga_debug("Invoking ajax request to get city info ", iataCode);
-    return $.ajax({
-      url: url(iataCode),
-      dataType: 'jsonp',
-      success: handleResults
-    });
+    if (iataCode.length > 0) {
+      window.voyanga_debug("Invoking ajax request to get city info ", iataCode);
+      return $.ajax({
+        url: url(iataCode),
+        dataType: 'jsonp',
+        success: handleResults
+      });
+    }
   }
 };
