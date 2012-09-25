@@ -33,6 +33,24 @@ ko.bindingHandlers.autocomplete =
         valueAccessor().readableGen('')
         valueAccessor().readableAcc('')
 
-  update: (element, valueAccessor) ->
-    console.log($(element).val())
-    console.log(valueAccessor().iata());
+  update: (element, valueAccessor) =>
+    url = (code) ->
+      result = 'http://api.voyanga.com/v1/helper/autocomplete/citiesReadable?'
+      params = []
+      params.push 'codes[0]=' + code
+      result += params.join "&"
+      window.voyanga_debug "Generated autocomplete city url", result
+      return result
+
+    handleResults = (data) ->
+      window.voyanga_debug "Ajax request done for ", data.code
+      valueAccessor().readable(data.name)
+      valueAccessor().readableGen(data.nameGen)
+      valueAccessor().readableAcc(data.nameAcc)
+
+    iataCode = valueAccessor().iata()
+    window.voyanga_debug "Invoking ajax request to get city info ", iataCode
+    $.ajax
+      url: url iataCode
+      dataType: 'jsonp'
+      success: handleResults
