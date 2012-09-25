@@ -182,4 +182,10 @@ $(function() {
 			$(this).parent().parent().find('.cityStart').find('.to').show();
 		}
 	});
+	
+	$('.lookEyes').hover(function() {
+		$(this).animate({'opacity' : '1'}, 300);
+	}, function() {
+		$(this).animate({'opacity' : '0'}, 100);
+	});
 });

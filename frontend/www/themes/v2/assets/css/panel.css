@@ -385,7 +385,6 @@
 }
 .panelTable .data {
 	display: inline-block;
-    overflow: hidden;
     position: relative;
     vertical-align: middle;
 }
@@ -445,15 +444,16 @@
     background: url("../images/slice.png") repeat scroll 0 -1560px transparent;
     border: medium none;
     border-radius: 4px 4px 4px 4px;
+    color: #969BA1;
     font-family: Arial;
     font-size: 19px;
     height: 34px;
+    overflow: hidden;
     padding-left: 10px;
     padding-right: 10px;
-    width: 270px;
     position: absolute;
+    width: 270px;
     z-index: 1;
-    color: #969ba1;
 }
 .second-path {
 	z-index: 2;
