@@ -69,7 +69,8 @@
 .slide-turn-mode {
 	background: url(../images/slide-turn-mode.png) no-repeat 0 0;
 	position: absolute;
-	width: 553px;
+	/* width: 553px; */
+	width: 392px;
 	height: 38px;
 	top:0px;
 	right: ;
@@ -107,7 +108,8 @@
 	position: absolute;	
 	top:0px;
 	left: 0px;
-	width: 553px;
+	/* width: 553px; */
+	width: 392px;
 	height: 37px;
 	z-index: 2;
 }
