@@ -499,12 +499,16 @@ class AviaResultSet
           
   setBest: (result, unconditional=false)=>
     # FIXME could leak as hell
+    result = _.clone result
+    result.activeVoyage = ko.observable result.activeVoyage()
+
     if !unconditional
-      result = _.clone result
       result.key = result.key + '_optima'
       result.voyages = _.filter result.voyages, (el)->el.maxStopoverLength <60*60*3
       _.each result.voyages, (voyage)->
+    #    voyage.activeBackVoyage = ko.observable voyage.activeBackVoyage()
         voyage._backVoyages = _.filter voyage._backVoyages, (el)->el.maxStopoverLength <60*60*3
+
     if @best() == undefined
       @best result
       return

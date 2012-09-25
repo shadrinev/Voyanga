@@ -688,8 +688,9 @@ AviaResultSet = (function() {
     if (unconditional == null) {
       unconditional = false;
     }
+    result = _.clone(result);
+    result.activeVoyage = ko.observable(result.activeVoyage());
     if (!unconditional) {
-      result = _.clone(result);
       result.key = result.key + '_optima';
       result.voyages = _.filter(result.voyages, function(el) {
         return el.maxStopoverLength < 60 * 60 * 3;
