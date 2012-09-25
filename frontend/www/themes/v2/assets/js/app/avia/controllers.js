@@ -36,6 +36,8 @@ AviaController = (function() {
       return this.handleResults(JSON.parse(sessionStorage.getItem(key)));
     } else {
       window.voyanga_debug("AVIA: Getting results via JSONP");
+      $(document).trigger('jsonpStart');
+      $(document).trigger('aviaStart');
       return $.ajax({
         url: this.searchParams.url(),
         dataType: 'jsonp',
@@ -46,6 +48,7 @@ AviaController = (function() {
 
   AviaController.prototype.handleResults = function(data) {
     var key, stacked;
+    $(document).trigger('jsonpEnd');
     window.voyanga_debug("searchAction: handling results", data);
     key = "search_" + this.searchParams.key();
     sessionStorage.setItem(key, JSON.stringify(data));

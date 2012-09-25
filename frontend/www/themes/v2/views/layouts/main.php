@@ -70,6 +70,22 @@ Yii::app()->clientScript->registerPackage('everything');
     <div class="center-block" data-bind="template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
 </div>
+<div id="loadWrapBg" style='display: none;'>
+    <div id="loadContentWin">
+        <div id="loadGIF"><img src="/themes/v2/assets/images/loading-5frame.gif"></div>
+        <div id="loadTXT">
+            Voyanga ищет <br> лучшие предложения...<br>
+            <ul id="loadLight">
+                <li class=""></li>
+                <li class=""></li>
+                <li class=""></li>
+                <li class=""></li>
+                <li class="active"></li>
+            </ul>
+            <div id="changeText">Уже почти готово</div>
+        </div>
+    </div>
+</div>
 <?php
     $templates = Array('avia.index', 'avia.results', 'avia.popup',
                        'avia.panel', 'avia.filters', 'avia.cheapest',

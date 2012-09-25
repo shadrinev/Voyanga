@@ -199,7 +199,7 @@ return CMap::mergeArray(
                             'js/voyanga-calendar.js', 'js/timeline-calendar.js', 'js/jquery.select.slider.js',
                             'js/jquery.slider.min.js','js/jquery.slider.js', 'js/photoslider.js',
                             //! Our application logic
-			    'js/app/common/genericpopup.js',
+			                'js/app/common/genericpopup.js',
                              'js/app/common/photobox.js',
                             'js/app/common/module.slider.js',
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
@@ -216,14 +216,16 @@ return CMap::mergeArray(
                             'js/app/tours/controllers.js', 'js/app/tours/models.js',
                             'js/app/tours/module.js', 'js/app/app.js',
                             'js/app/common/autocomplete.js',
+                            'js/loader.js',
                         ),
                         'css' => array(
                             'css/reset.style.css', 'css/style.css',
                             'css/popup.css','css/popup-photo.css','css/jslider.css',
-			    'css/jslider.round.voyanga.css','css/jsslidecheck.css',
-			    'css/panel.css', 'css/voyanga-calendar.css',
-			    'css/checkradio.css'
-			    ),
+                            'css/jslider.round.voyanga.css','css/jsslidecheck.css',
+                            'css/panel.css', 'css/voyanga-calendar.css',
+                            'css/checkradio.css',
+                            'css/load.css'
+                            ),
                     ),
                 ),
             ),

@@ -24,12 +24,15 @@ class AviaController
       @handleResults(JSON.parse(sessionStorage.getItem(key)))
     else
       window.voyanga_debug "AVIA: Getting results via JSONP"
+      $(document).trigger 'jsonpStart'
+      $(document).trigger 'aviaStart'
       $.ajax
         url: @searchParams.url()
         dataType: 'jsonp'
         success: @handleResults
 
   handleResults: (data) =>
+    $(document).trigger 'jsonpEnd'
     window.voyanga_debug "searchAction: handling results", data
 
     # temporary development cache
