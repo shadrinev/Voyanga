@@ -77,7 +77,6 @@ ToursAviaResultSet = (function(_super) {
         result = result.data;
       }
       _this.results.selected_key(result.key);
-      console.log(result.key);
       return _this.selection(result);
     };
     this.data = {

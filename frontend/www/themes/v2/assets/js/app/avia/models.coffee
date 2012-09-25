@@ -495,13 +495,21 @@ class AviaResultSet
             result.activeVoyage voyage
             @setBest result
             return
-    @setBest data[0]
+    @setBest data[0], true
           
-  setBest: (result)=>
+  setBest: (result, unconditional=false)=>
+    # FIXME could leak as hell
+    if !unconditional
+      result = _.clone result
+      result.key = result.key + '_optima'
+      result.voyages = _.filter result.voyages, (el)->el.maxStopoverLength <60*60*3
+      _.each result.voyages, (voyage)->
+        voyage._backVoyages = _.filter voyage._backVoyages, (el)->el.maxStopoverLength <60*60*3
     if @best() == undefined
       @best result
       return
     if @best().key != result.key
+      delete @best()
       @best result
 
 

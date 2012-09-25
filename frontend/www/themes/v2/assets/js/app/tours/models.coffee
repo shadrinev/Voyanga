@@ -34,7 +34,6 @@ class ToursAviaResultSet extends TourEntry
         #it is actually recommnd ticket
         result = result.data
       @results.selected_key result.key
-      console.log result.key
       @selection(result)
     @data = {results: @results}
     @avia = true

@@ -681,15 +681,31 @@ AviaResultSet = (function() {
         }
       }
     }
-    return this.setBest(data[0]);
+    return this.setBest(data[0], true);
   };
 
-  AviaResultSet.prototype.setBest = function(result) {
+  AviaResultSet.prototype.setBest = function(result, unconditional) {
+    if (unconditional == null) {
+      unconditional = false;
+    }
+    if (!unconditional) {
+      result = _.clone(result);
+      result.key = result.key + '_optima';
+      result.voyages = _.filter(result.voyages, function(el) {
+        return el.maxStopoverLength < 60 * 60 * 3;
+      });
+      _.each(result.voyages, function(voyage) {
+        return voyage._backVoyages = _.filter(voyage._backVoyages, function(el) {
+          return el.maxStopoverLength < 60 * 60 * 3;
+        });
+      });
+    }
     if (this.best() === void 0) {
       this.best(result);
       return;
     }
     if (this.best().key !== result.key) {
+      delete this.best();
       return this.best(result);
     }
   };
