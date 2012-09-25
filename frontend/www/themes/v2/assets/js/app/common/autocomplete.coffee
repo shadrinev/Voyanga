@@ -50,6 +50,7 @@ ko.bindingHandlers.autocomplete =
       valueAccessor().readableGen(data[iataCode].nameGen)
       valueAccessor().readableAcc(data[iataCode].nameAcc)
       $(element).val(data[iataCode].name)
+      $(element).siblings('input.input-path').val(data[iataCode].label)
 
     if (iataCode.length>0)
       window.voyanga_debug "Invoking ajax request to get city info ", iataCode
