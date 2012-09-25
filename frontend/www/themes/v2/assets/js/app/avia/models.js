@@ -555,10 +555,14 @@ AviaResultSet = (function() {
 
     this.postInit = __bind(this.postInit, this);
 
+    this.select = __bind(this.select, this);
+
     this.injectSearchParams = __bind(this.injectSearchParams, this);
 
     var flightVoyage, key, result, _i, _len, _ref;
     this.recommendTemplate = 'avia-cheapest-result';
+    this.tours = false;
+    this.selected_key = ko.observable('');
     this._results = {};
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
       flightVoyage = rawVoyages[_i];
@@ -589,11 +593,15 @@ AviaResultSet = (function() {
     this.arrivalCity = sp.destinations[0].arrival;
     this.departureCity = sp.destinations[0].departure;
     this.date = dateUtils.formatDayShortMonth(new Date(sp.destinations[0].date + '+04:00'));
+    this.dateHeadingText = this.date;
     this.roundTrip = sp.isRoundTrip;
-    if (this.roundTripe) {
-      return this.rtDate = dateUtils.formatDayShortMonth(new Date(sp.destinations[1].date + '+04:00'));
+    if (this.roundTrip) {
+      this.rtDate = dateUtils.formatDayShortMonth(new Date(sp.destinations[1].date + '+04:00'));
+      return this.dateHeadingText += ', ' + this.rtDate;
     }
   };
+
+  AviaResultSet.prototype.select = function(el) {};
 
   AviaResultSet.prototype.postInit = function() {
     return this.filters = new AviaFiltersT(this);
@@ -637,7 +645,7 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.updateBest = function(data) {
-    var backVoyage, result, voyage, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
+    var backVoyage, backVoyages, result, voyage, voyages, _i, _j, _k, _len, _len1, _len2;
     if (data.length === 0) {
       return;
     }
@@ -646,14 +654,18 @@ AviaResultSet = (function() {
     });
     for (_i = 0, _len = data.length; _i < _len; _i++) {
       result = data[_i];
-      _ref = result.voyages;
-      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-        voyage = _ref[_j];
+      voyages = _.sortBy(result.voyages, function(el) {
+        return el._duration;
+      });
+      for (_j = 0, _len1 = voyages.length; _j < _len1; _j++) {
+        voyage = voyages[_j];
         if (voyage.visible() && voyage.maxStopoverLength < 60 * 60 * 3) {
           if (result.roundTrip) {
-            _ref1 = voyage._backVoyages;
-            for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
-              backVoyage = _ref1[_k];
+            backVoyages = _.sortBy(voyage._backVoyages, function(el) {
+              return el._duration;
+            });
+            for (_k = 0, _len2 = backVoyages.length; _k < _len2; _k++) {
+              backVoyage = backVoyages[_k];
               if (backVoyage.visible() && backVoyage.maxStopoverLength < 60 * 60 * 3) {
                 voyage.activeBackVoyage(backVoyage);
                 result.activeVoyage(voyage);

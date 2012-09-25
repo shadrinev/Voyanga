@@ -53,6 +53,7 @@ ToursAviaResultSet = (function(_super) {
   __extends(ToursAviaResultSet, _super);
 
   function ToursAviaResultSet(raw, searchParams) {
+    var _this = this;
     this.searchParams = searchParams;
     this.rt = __bind(this.rt, this);
 
@@ -70,6 +71,15 @@ ToursAviaResultSet = (function(_super) {
     this.results.injectSearchParams(this.searchParams);
     this.results.postInit();
     this.results.recommendTemplate = 'avia-tours-recommend';
+    this.results.tours = true;
+    this.results.select = function(result) {
+      if (result.ribbon) {
+        result = result.data;
+      }
+      _this.results.selected_key(result.key);
+      console.log(result.key);
+      return _this.selection(result);
+    };
     this.data = {
       results: this.results
     };

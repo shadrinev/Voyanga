@@ -8,7 +8,7 @@
 <script id="avia-tours-recommend" type="text/html">
   <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:cheapest(), ribbon:'ribbon-cheapest'}}">
   </div>
-  <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:best(), ribbon:'ribbon-faster'}}">
+  <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:best(), ribbon:'ribbon-optima'}}">
   </div>
   <div class="clear"></div>
 </script>
@@ -189,7 +189,7 @@
 	      Варианты вылета:
 	    </li>
 	    <!-- ko foreach: data.voyages -->
-	    <li data-bind="css: {active: hash()==$parent.data.hash()}, click: $parent.chooseStacked, visible: visible">
+	    <li data-bind="css: {active: hash()==$parent.data.hash()}, click: $parent.data.chooseStacked, visible: visible">
 	      <input name="cheapest_stacked" type="radio"  data-bind="value: hash(), checked: $parent.data.hash()">
 	      <label><span data-bind="text:departureTime()">06:10</span></label>
 	    </li>
@@ -280,9 +280,9 @@
         <div class="details">
           <a data-bind="click: data.showDetails" href="#">Подробнее<br> о перелете</a>
         </div>
-        <a href="#" class="btn-cost">
+        <a href="#" class="btn-cost" data-bind="click: $parent.select, css:{selected:$parent.selected_key()==key}">
           <span class="l"></span>
-          <span class="text">Выбрать</span>
+          <span class="text" data-bind="text: $parent.tours?($parent.selected_key()==data.key?'Выбран':'Выбрать'):'Купить'"></span>
           <span class="price" data-bind="text: data.price"></span>
           <span class="rur">o</span>
         </a>

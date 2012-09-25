@@ -27,6 +27,15 @@ class ToursAviaResultSet extends TourEntry
     @results.injectSearchParams @searchParams
     @results.postInit()
     @results.recommendTemplate = 'avia-tours-recommend'
+    @results.tours = true
+    @results.select = (result)=>
+      # FIXME looks retardely stupid
+      if result.ribbon
+        #it is actually recommnd ticket
+        result = result.data
+      @results.selected_key result.key
+      console.log result.key
+      @selection(result)
     @data = {results: @results}
     @avia = true
     @selection = ko.observable null

@@ -395,6 +395,10 @@ class AviaResult
 class AviaResultSet
   constructor: (rawVoyages) ->
     @recommendTemplate = 'avia-cheapest-result'
+    # Indicates if we need to alter our rendering to fix tours template
+    @tours = false
+    @selected_key = ko.observable ''
+    
     @_results = {}
 
     for flightVoyage in rawVoyages
@@ -426,9 +430,16 @@ class AviaResultSet
     @arrivalCity = sp.destinations[0].arrival
     @departureCity = sp.destinations[0].departure
     @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
+    @dateHeadingText = @date
     @roundTrip = sp.isRoundTrip
-    if @roundTripe
+    if @roundTrip
       @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+'+04:00')
+      @dateHeadingText += ', ' +@rtDate
+  
+
+  select: (el) =>
+
+
   postInit: =>
     @filters = new AviaFiltersT @
 
@@ -467,10 +478,14 @@ class AviaResultSet
  
     data = _.sortBy data, (el)-> el.price
     for result in data
-      for voyage in result.voyages
+      # Choose fastest first
+      voyages = _.sortBy result.voyages, (el) -> el._duration
+      for voyage in voyages
         if voyage.visible() && voyage.maxStopoverLength < 60*60*3
           if result.roundTrip
-            for backVoyage in voyage._backVoyages
+            # Choose fastest first
+            backVoyages = _.sortBy voyage._backVoyages, (el) -> el._duration
+            for backVoyage in backVoyages
               if backVoyage.visible() && backVoyage.maxStopoverLength < 60*60*3
                 voyage.activeBackVoyage backVoyage
                 result.activeVoyage voyage
