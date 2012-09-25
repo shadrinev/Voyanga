@@ -161,7 +161,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 
   # FIXME copypaste
   removeSimilar: ->
-    if @direct
+    if @_backVoyages.length < 2
       return
     _helper = {}
     for voyage in @_backVoyages
@@ -351,7 +351,7 @@ class AviaResult
     @activeVoyage(@voyages[0])
 
   removeSimilar: ->
-    if @direct()
+    if @voyages.length < 2
       return
     _helper = {}
     for voyage in @voyages
