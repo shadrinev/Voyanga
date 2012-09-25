@@ -3,9 +3,6 @@ var _this = this;
 
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
-    valueAccessor().readable('');
-    valueAccessor().readableGen('');
-    valueAccessor().readableAcc('');
     $(element).bind("focus", function() {
       return $(element).change();
     });
@@ -45,6 +42,7 @@ ko.bindingHandlers.autocomplete = {
   },
   update: function(element, valueAccessor) {
     var handleResults, iataCode, url;
+    iataCode = valueAccessor().iata();
     url = function(code) {
       var params, result;
       result = 'http://api.voyanga.com/v1/helper/autocomplete/citiesReadable?';
@@ -55,15 +53,12 @@ ko.bindingHandlers.autocomplete = {
       return result;
     };
     handleResults = function(data) {
-      window.voyanga_debug("Ajax request done for ", data, data.nameGen);
-      valueAccessor().readable(data.name);
-      valueAccessor().readableGen(data.nameGen);
-      return valueAccessor().readableAcc(data.nameAcc);
+      window.voyanga_debug("Ajax request done for ", data[iataCode]);
+      valueAccessor().readable(data[iataCode].name);
+      valueAccessor().readableGen(data[iataCode].nameGen);
+      valueAccessor().readableAcc(data[iataCode].nameAcc);
+      return $(element).val(data[iataCode].name);
     };
-    iataCode = valueAccessor().iata();
-    valueAccessor().readable('');
-    valueAccessor().readableGen('');
-    valueAccessor().readableAcc('');
     if (iataCode.length > 0) {
       window.voyanga_debug("Invoking ajax request to get city info ", iataCode);
       return $.ajax({

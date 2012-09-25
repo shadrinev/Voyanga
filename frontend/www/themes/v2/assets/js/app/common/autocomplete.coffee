@@ -1,9 +1,5 @@
 ko.bindingHandlers.autocomplete =
   init: (element, valueAccessor) ->
-    valueAccessor().readable('')
-    valueAccessor().readableGen('')
-    valueAccessor().readableAcc('')
-
     $(element).bind "focus", ->
       $(element).change()
 
@@ -38,6 +34,8 @@ ko.bindingHandlers.autocomplete =
         valueAccessor().readableAcc('')
 
   update: (element, valueAccessor) =>
+    iataCode = valueAccessor().iata()
+
     url = (code) ->
       result = 'http://api.voyanga.com/v1/helper/autocomplete/citiesReadable?'
       params = []
@@ -47,15 +45,12 @@ ko.bindingHandlers.autocomplete =
       return result
 
     handleResults = (data) ->
-      window.voyanga_debug "Ajax request done for ", data, data.code
-      valueAccessor().readable(data.name)
-      valueAccessor().readableGen(data.nameGen)
-      valueAccessor().readableAcc(data.nameAcc)
+      window.voyanga_debug "Ajax request done for ", data[iataCode]
+      valueAccessor().readable(data[iataCode].name)
+      valueAccessor().readableGen(data[iataCode].nameGen)
+      valueAccessor().readableAcc(data[iataCode].nameAcc)
+      $(element).val(data[iataCode].name)
 
-    iataCode = valueAccessor().iata()
-    valueAccessor().readable('')
-    valueAccessor().readableGen('')
-    valueAccessor().readableAcc('')
     if (iataCode.length>0)
       window.voyanga_debug "Invoking ajax request to get city info ", iataCode
       $.ajax
