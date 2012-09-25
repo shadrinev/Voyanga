@@ -49,7 +49,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <!-- END HEAD -->
     <!--====**********===-->
     <!-- SUB HEAD -->
-    <div class="sub-head" data-bind="css: {calSelectedPanelActive: !panel().calendarHidden()}">
+    <div class="sub-head" data-bind="css: {calSelectedPanelActive: !panel().calendarHidden(), zIndexTopUp: panel().calendarShadow()}">
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <!-- PANEL -->
