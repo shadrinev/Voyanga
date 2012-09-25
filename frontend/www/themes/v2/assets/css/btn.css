@@ -67,6 +67,20 @@
 	text-align: center;
 	margin-left: 1px;
 }
+.btn-cost.selected {
+	background-position: right -1632px;
+	text-shadow: 0px 1px 0px #444d57;
+}
+.btn-cost.selected .l  {
+	background-position: left -1632px;
+}
+.btn-cost.selected:hover {
+	background-position: right -1632px;
+	text-shadow: 0px 1px 0px #444d57;
+}
+.btn-cost.selected:hover .l  {
+	background-position: left -1632px;
+}
 .btn-cost.hotel {
 	background-position: right -1444px;
 }
