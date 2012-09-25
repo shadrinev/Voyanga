@@ -206,7 +206,7 @@ Voyage = (function() {
 
   Voyage.prototype.removeSimilar = function() {
     var item, key, voyage, _helper, _i, _len, _ref;
-    if (this.direct) {
+    if (this._backVoyages.length < 2) {
       return;
     }
     _helper = {};
@@ -487,7 +487,7 @@ AviaResult = (function() {
 
   AviaResult.prototype.removeSimilar = function() {
     var item, key, voyage, _helper, _i, _len, _ref;
-    if (this.direct()) {
+    if (this.voyages.length < 2) {
       return;
     }
     _helper = {};
