@@ -42,12 +42,15 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       @parts.push new FlightPart(part)
 
     @stopoverLength = 0
+    @maxStopoverLength = 0 
     @direct = @parts.length == 1
     if ! @direct
       for part, index in @parts
         if index < (@parts.length - 1)
           part.calculateStopoverLength @parts[index+1]
         @stopoverLength += part.stopoverLength
+        if part.stopoverLength > @maxStopoverLength
+          @maxStopoverLength = part.stopoverLength
 
     # FIXME !!!!!!!!!!!!!!!!!!!!!
     @departureDate = new Date(flight.departureDate+'+04:00')
@@ -391,6 +394,7 @@ class AviaResult
 #
 class AviaResultSet
   constructor: (rawVoyages) ->
+    @recommendTemplate = 'avia-cheapest-result'
     @_results = {}
 
     for flightVoyage in rawVoyages
@@ -401,7 +405,9 @@ class AviaResultSet
         result =  new AviaResult flightVoyage
         @_results[key] = result
         result.key = key
+    # specials
     @cheapest = ko.observable()
+    @best = ko.observable()
     # We need array for knockout to work right
     @data = []
 
@@ -435,6 +441,8 @@ class AviaResultSet
     @numResults data.length
     # FIXME hide recommend
     @updateCheapest(data)
+    @updateBest(data)
+
     ko.processAllDeferredBindingUpdates()
     # FIXME
     ResizeAvia()
@@ -452,6 +460,35 @@ class AviaResultSet
       return
     if @cheapest().key != new_cheapest.key
       @cheapest new_cheapest
+
+  updateBest: (data)=>
+    if data.length == 0
+      return
+ 
+    data = _.sortBy data, (el)-> el.price
+    for result in data
+      for voyage in result.voyages
+        if voyage.visible() && voyage.maxStopoverLength < 60*60*3
+          if result.roundTrip
+            for backVoyage in voyage._backVoyages
+              if backVoyage.visible() && backVoyage.maxStopoverLength < 60*60*3
+                voyage.activeBackVoyage backVoyage
+                result.activeVoyage voyage
+                @setBest result
+                return
+          else
+            result.activeVoyage voyage
+            @setBest result
+            return
+    @setBest data[0]
+          
+  setBest: (result)=>
+    if @best() == undefined
+      @best result
+      return
+    if @best().key != result.key
+      @best result
+
 
 # Model for avia search params,
 # Used in AviaPanel and search controller

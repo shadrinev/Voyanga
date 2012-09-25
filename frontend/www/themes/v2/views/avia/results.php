@@ -16,8 +16,7 @@
   <h1 data-bind="visible: false">Выберите авиабилет
     <span data-bind="text: departureCity">Санкт-Петербург</span> → <span data-bind="text: arrivalCity">Амстердам</span>, <span data-bind="text: date">19 мая</span></h1>
   
-  <div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: cheapest}">
-    
+  <div class="recomended-content" data-bind="template: {name: recommendTemplate, data: $data}">
   </div>
   <!-- END RECOMENDED AND GRAFIK -->
   <div class="clear"></div>

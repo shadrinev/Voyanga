@@ -22,8 +22,16 @@ class Application extends Backbone.Router
         result = ko.utils.unwrapObservable result
         if result
           return result
-      return {'template':'',data:{}, calendarText:'DOH', calendarHidden: true}
-
+      result =
+        template:''
+        data:{}
+        rt: -> true
+        departureDate: -> '12.11.2013'
+        arrivalDate: -> '12.12.2013'
+        calendarText:'DOH'
+        minimizeCalendar: -> true
+        calendarHidden: -> true
+        calendarShadow: -> true
     # View currently being active in given module
     @_view = ko.observable 'index'
 
