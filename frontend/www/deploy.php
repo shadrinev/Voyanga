@@ -2,7 +2,7 @@
 function _exec($cmd)
 {
     $out = "$ " . $cmd . "\n";
-    $out .= shell_exec($cmd . ' 2>&1');
+    $out .= exec($cmd . ' 2>&1');
     _log($out);
 }
 
