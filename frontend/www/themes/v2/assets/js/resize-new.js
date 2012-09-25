@@ -94,6 +94,8 @@ function ResizeCenterBlock() {
 				paddingLeftTel = var_paddingLeftTelefonMAX;
 				
 				widthContent = widthMainBlock;
+				
+				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
@@ -105,6 +107,8 @@ function ResizeCenterBlock() {
 				paddingLeftTel = var_paddingLeftTelefonMID;
 				
 				widthContent = widthMainBlock;
+				
+				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
@@ -116,6 +120,8 @@ function ResizeCenterBlock() {
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
 				
 				widthContent = widthMainBlock;
+				
+				paddingRightSlide += 100;
 			}
 		}
 		else if (! var_leftBlockIsset &&  var_filterBlockIsset && var_mainBlockIsset) {
@@ -135,6 +141,8 @@ function ResizeCenterBlock() {
 				widthContent = var_widthMainBlockMAX;
 				marginLeftContent = 'auto';
 				marginRightContent = 'auto';
+				
+				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthMainBlock = Math.floor(var_widthMiddleBlockMID + ((widthBlock - var_widthMID) / 1));
@@ -151,6 +159,8 @@ function ResizeCenterBlock() {
 				widthContent = var_widthMainBlockMAX;
 				marginLeftContent = 'auto';
 				marginRightContent = 'auto';
+				
+				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthFilterBlock = Math.floor(220 + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthFilterMID - 220))) );
@@ -171,6 +181,8 @@ function ResizeCenterBlock() {
 				widthContent = var_widthMainBlockMAX;
 				marginLeftContent = 'auto';
 				marginRightContent = 'auto';
+				
+				paddingRightSlide += 100;
 			}
 		}
 
@@ -191,6 +203,8 @@ function ResizeCenterBlock() {
 				paddingLeftTel = var_paddingLeftTelefonMAX;
 
 				widthContent = var_widthMainBlockMAX;
+				
+				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthLeftBlock = var_widthLeftBlockMID;
@@ -206,6 +220,8 @@ function ResizeCenterBlock() {
 				paddingLeftTel = var_paddingLeftTelefonMID;
 
 				widthContent = var_widthMainBlockMAX;
+				
+				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
@@ -222,6 +238,8 @@ function ResizeCenterBlock() {
 				marginLeftLeftBlock = 0;
 
 				widthContent = Math.floor(var_widthMainBlockMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthMainBlockMAX - var_widthMainBlockMIN))) );
+				
+				paddingRightSlide += 100;
 			}
 		}
 
@@ -244,6 +262,8 @@ function ResizeCenterBlock() {
 				marginRightContent = 0;
 				var_widthDescrLeft = 587;
 				var_widthStreet = 'auto'
+				
+				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthMainBlock = Math.floor(910 + ( (widthBlock - var_widthMID) / (var_valueMAX / (935 - 910))) );
@@ -263,6 +283,8 @@ function ResizeCenterBlock() {
 				marginRightContent = 0;
 				var_widthDescrLeft = Math.floor(557 + ((widthBlock - var_widthMID) / (var_valueMAX / (587 - 557))) );
 				var_widthStreet = 'auto'
+				
+				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
@@ -285,6 +307,8 @@ function ResizeCenterBlock() {
 				var_widthDescrLeft = Math.floor(335 + ((widthBlock - var_widthMIN) / (var_valueMIN / (557 - 335))) );
 
 				var_widthStreet = '210px';
+				
+				paddingRightSlide += 100;
 			}
 		}
 		else {
@@ -295,6 +319,8 @@ function ResizeCenterBlock() {
 				paddingLeftLogo = var_paddingLeftMAX;
 				paddingRightSlide = var_paddingRightSlideMAX;
 				paddingLeftTel = var_paddingLeftTelefonMAX;
+				
+				paddingRightSlide += 165;
 
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
@@ -304,12 +330,14 @@ function ResizeCenterBlock() {
 				paddingRightSlide = var_paddingRightSlideMID;
 				paddingLeftTel = var_paddingLeftTelefonMID;
 
-
+				paddingRightSlide += 165;	
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				paddingLeftLogo = Math.floor(var_paddingLeftMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftMID - var_paddingLeftMIN))) );
 				paddingRightSlide = Math.floor(var_paddingRightSlideMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingRightSlideMID - var_paddingRightSlideMIN))) );
 				paddingLeftTel = Math.floor(var_paddingLeftTelefonMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_paddingLeftTelefonMID - var_paddingLeftTelefonMIN))) );
+				
+				paddingRightSlide += 100;
 			}
 		}
 		if (marginLeftMainBlock != 'auto') {

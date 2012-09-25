@@ -384,8 +384,10 @@
 	width: 90px;
 }
 .panelTable .data {
-	position: relative;
 	display: inline-block;
+    overflow: hidden;
+    position: relative;
+    vertical-align: middle;
 }
 .panelTable .how-many-man {
     background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;

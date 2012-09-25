@@ -33,11 +33,11 @@ Yii::app()->clientScript->registerPackage('everything');
                     <li id="h-tours-slider" class="planner btn"><a href="#tours">Планировщик</a></li>
                     <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#">Авиабилеты</a></li>
                     <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
-                    <li class="finish-stages btn"><a href="#">Готовые туры</a></li>
+                    <li class="finish-stages btn" style="display:none;"><a href="#">Готовые туры</a></li>
                 </ul>
             </div>
 
-            <div class="login-window full">
+            <div class="login-window full" style="display:none;">
                 <a href="#">
                     <span class="text">Регистрация и вход</span>
                     <span class="point"></span>
