@@ -54,7 +54,7 @@ class AutocompleteController extends ApiController
             $city = City::getCityByCode($cityCode);
             $element = array();
             $element['id'] = $city->id;
-            $result[] = $element;
+            $result[$city->code] = $element;
         }
         $result = $this->addMoreInfo($result);
         Yii::app()->cache->set($cacheKey, $result, appParams('autocompleteCacheTime'));

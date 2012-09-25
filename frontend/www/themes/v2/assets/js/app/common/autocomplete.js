@@ -3,6 +3,9 @@ var _this = this;
 
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
+    valueAccessor().readable('');
+    valueAccessor().readableGen('');
+    valueAccessor().readableAcc('');
     $(element).bind("focus", function() {
       return $(element).change();
     });
@@ -52,12 +55,15 @@ ko.bindingHandlers.autocomplete = {
       return result;
     };
     handleResults = function(data) {
-      window.voyanga_debug("Ajax request done for ", data.code);
+      window.voyanga_debug("Ajax request done for ", data, data.nameGen);
       valueAccessor().readable(data.name);
       valueAccessor().readableGen(data.nameGen);
       return valueAccessor().readableAcc(data.nameAcc);
     };
     iataCode = valueAccessor().iata();
+    valueAccessor().readable('');
+    valueAccessor().readableGen('');
+    valueAccessor().readableAcc('');
     if (iataCode.length > 0) {
       window.voyanga_debug("Invoking ajax request to get city info ", iataCode);
       return $.ajax({
