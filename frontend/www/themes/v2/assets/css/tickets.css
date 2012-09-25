@@ -465,6 +465,9 @@
 	float: left;
 	margin-bottom: 52px;
 }
+.recommended-ticket + .recommended-ticket {
+	float: right;
+}
 .recommended-ticket .ticket-items {
 	background: none repeat scroll 0 0 #F4F7F9;
     color: #1D222B;
