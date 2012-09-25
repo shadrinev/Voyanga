@@ -18,7 +18,7 @@ function _log($str)
 /*if (in_array($_SERVER['REMOTE_ADDR'], $github_ips))
 {*/
     $dir = '/home/voyanga/app/';
-    $result = _exec("cd $dir && git pull && $dir/yiic migrate --interactive=0");
+    $result = _exec("cd $dir && git pull && {$dir}yiic migrate --interactive=0");
     echo 'Done.';
 /*}
 else
