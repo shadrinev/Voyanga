@@ -1809,3 +1809,85 @@ input.hotel-input {
     z-index: 1;
 }
 
+.toursTicketsMain {
+	background: #f4f7f9;
+	width: 15%;
+	height: 175px;
+	position: relative;
+	color: #262930; 
+	float: left;
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-top: 15px;
+}
+.toursTicketsMain:hover {
+	cursor: pointer;
+}
+.toursTicketsMain .l {
+	width: 6px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 3;
+	background: url(../images/bg-tours-main.png) no-repeat -30px 0px;
+	height: 176px;
+}
+.toursTicketsMain .r {
+	width: 30px;
+	position: absolute;
+	top:0px;
+	right: 0px;
+	z-index: 3;
+	background: url(../images/bg-tours-main.png) no-repeat 0px 0px;
+	height: 176px; 
+}
+.toursTicketsMain .innerTours {
+	background: none repeat scroll 0 0 #F4F7F9;
+    padding: 6px 6px 5px 6px;
+    position: relative;
+    z-index: 2;
+}
+.imgTours {
+	width: 100%;
+	height: 106px;
+	overflow: hidden;
+}
+.imgTours img {
+	vertical-align: middle; width: 100%;
+}
+.toursTicketsMain .textTours {
+	line-height: 25px;
+    padding-left: 10px;
+    padding-top: 3px;
+}
+.toursTicketsMain .textTours .price {
+	font-size: 26px;
+	font-weight: bold;
+}
+.toursTicketsMain .textTours .rur {
+	font-weight: bold;
+	font-size: 25px;
+}
+.lookEyes {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url(../images/bg-tours-main.png) no-repeat -36px 0px;
+	opacity: 0;
+}
+.toursTicketsMain .triangle {
+	position: absolute;
+	left: 50%;
+	top: 0px;
+	z-index: 0;
+	width: 11px;
+	height: 17px;
+}
+.toursTicketsMain .triangle img {
+	margin-left: -11px;
+}
+.toursTicketsMain.active .triangle {
+	top: -18px;
+}
