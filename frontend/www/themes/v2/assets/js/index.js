@@ -3,7 +3,6 @@ function slideToursSlide() {
 	var var_lengthTours;
 	var var_allWidth = $(window).width();
 	var var_widthTours;
-	console.log(var_allWidth);
 	if (var_allWidth > 1390) {
 		var_lengthTours = 6;
 		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
