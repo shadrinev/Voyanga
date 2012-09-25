@@ -1796,3 +1796,14 @@ input.hotel-input {
 }
 
 
+
+/* INDEX */
+.slideTours {
+	background: url("../images/bg-index-slide.png") repeat-x scroll 0 10px transparent;
+    bottom: 31px;
+    height: 195px;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
