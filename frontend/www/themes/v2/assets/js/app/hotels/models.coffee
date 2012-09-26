@@ -103,6 +103,7 @@ class HotelResult
     # Mix in events
     _.extend @, Backbone.Events
 
+    @hotelId = data.hotelId
     @hotelName = data.hotelName
     @address = data.address
     @description = data.description
@@ -174,6 +175,41 @@ class HotelResult
     @showDetails()
     @showMap()
 
+  # FIXME refactor
+  showMapInfo: (context, event)=>
+    # FIXME FIXME FIMXE why this code navigates if we wont stop default?
+    event.preventDefault()
+    console.log event
+    el = $('#hotel-info-tumblr-map')
+    if el.hasClass('active')
+      return
+    $('.place-buy .tmblr li').removeClass('active')
+    el.addClass('active')
+    $('#descr').hide()
+    $('#map').show()
+    if ! @mapInitialized
+      coords = new google.maps.LatLng(@lat, @lng)
+      mapOptions =
+        center: coords
+        zoom: 12
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      map = new google.maps.Map $('#hotel-info-gmap')[0], mapOptions
+      marker = new google.maps.Marker
+        position: coords
+        map: map
+        title: @hotelName
+      @mapInitialized = true
+
+  showDescriptionInfo: (context, event) ->
+    el = $('#hotel-info-tumblr-description')
+    if el.hasClass('active')
+      return
+    $('.place-buy .tmblr li').removeClass('active')
+    el.addClass('active')
+    $('#map').hide();
+    $('#descr').show()
+    $(".description .text").dotdotdot({watch: 'window'})
+    $('#boxContent').css 'height', 'auto'
 
   # Click handler for map/description in popup
   showMap: (context, event) =>
@@ -232,21 +268,24 @@ class HotelResult
   # Click handler for read more button in popup
   readMore: (context, event)->
     el = $(event.currentTarget)
+    text_el = el.parent().find('.text')
+
     if ! el.hasClass('active')
       var_heightCSS = el.parent().find('.text').css('height');
       var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
-      el.parent().find('.text').attr('rel',var_heightCSS).css('height','auto');
-      $(".description .text").dotdotdot({watch: 'window'});
-      $(".description .text").css('overflow','visible');
+      text_el.attr('rel',var_heightCSS).css('height','auto');
+      text_el.dotdotdot({watch: 'window'});
+      text_el.css('overflow','visible');
       el.text('Свернуть');
       el.addClass('active');
     else
       rel = el.parent().find('.text').attr('rel');
-      el.parent().find('.text').css('height', rel+'px');
+      text_el.css('height', rel+'px');
       el.text('Подробнее');
       el.removeClass('active');
-      $(".description .text").dotdotdot({watch: 'window'});
-      $(".description .text").css('overflow','hidden');
+      text_el.dotdotdot({watch: 'window'});
+      text_el.css('overflow','hidden');
+    #FIXME should not be called on details page
     SizeBox('hotels-popup-body')
 
   smallMapUrl: =>
@@ -265,6 +304,7 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawHotels, @searchParams) ->
     @_results = {}
+    @tours = false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
     if duration == 0
@@ -329,6 +369,12 @@ class HotelsResultSet
       console.log "REFILTER"
 
     @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
+
+  # click handler
+  goToDetails: (hotel) =>
+    console.log hotel
+    window.app.navigate "#hotels/info/#{@cacheId}/#{hotel.hotelId}/", {trigger: true}
+
 
 # Model for Hotel info params,
 # Used in infoAcion controller

@@ -10,3 +10,6 @@ class HotelsPanel extends SearchPanel
     @rooms = ko.observableArray [[new PanelRoom ]]
     @calendarText = "Выберите уже чтонибдь"
 
+    @rt = ko.observable false
+    @departureDate = ko.observable()
+    @arrivalDate = ko.observable()
