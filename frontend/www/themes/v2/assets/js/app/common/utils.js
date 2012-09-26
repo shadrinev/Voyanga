@@ -8,6 +8,26 @@ SHORT_MONTHS = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'и�
 SHORT_WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
 dateUtils = {
+  formatDay: function(date) {
+    var re, result;
+    if (date.length === 0) {
+      return;
+    }
+    re = /(\d+)\.(\d+)\.(\d+)/;
+    date = re.exec(date)[1];
+    result = "";
+    return result += date;
+  },
+  formatMonth: function(date) {
+    var re, result;
+    if (date.length === 0) {
+      return;
+    }
+    re = /(\d+)\.(\d+)\.(\d+)/;
+    date = re.exec(date)[2];
+    result = "";
+    return result += SHORT_MONTHS[date - 1];
+  },
   formatDayMonth: function(date) {
     var result;
     if (date.length === 0) {

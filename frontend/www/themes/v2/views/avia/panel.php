@@ -3,13 +3,13 @@
     <tr>
       <td class="contTD">
         <div class="data">
-          <div class="from">
+          <div class="from" data-bind="click: showCalendar, css: {active: fromChosen()}">
             <input class="input-path departureCity" type="text">
             <input class="second-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen}">
               <div class="date">
-              <span class="f17">12</span>
+              <span class="f17" data-bind="text: departureDateDay()">12</span>
               <br>
-              <span class="month">мая</span>
+              <span class="month" data-bind="text: departureDateMonth()">мая</span>
             </div>
           </div>
           <div class="tumblr">
@@ -20,13 +20,13 @@
             </label>
             <input id="there-back" type="checkbox" data-bind="checked: rt()">
           </div>
-          <div class="to">
-            <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}">
+          <div class="to" data-bind="click: showCalendar, css: {active: toChosen()}">
             <input class="input-path arrivalCity" type="text">
+            <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}">
             <div class="date">
-              <span class="f17">12</span>
+              <span class="f17" data-bind="text: arrivalDateDay()">12</span>
               <br>
-              <span class="month">мая</span>
+              <span class="month" data-bind="text: arrivalDateMonth()">мая</span>
             </div>
           </div>
         </div>

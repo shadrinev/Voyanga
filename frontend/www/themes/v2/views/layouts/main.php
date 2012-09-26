@@ -62,7 +62,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <!-- END SUB HEAD -->
     <!--====**********===-->
     <!-- CALENDAR -->
-    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template', afterRender: VoyangaCalendarStandart.init, data: panel()}" style='margin-top: 36px'>
+    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template', data: panel()}" style='margin-top: 36px'>
     </div>
     <!-- END CALENDAR -->
     <!--====**********===-->
@@ -82,7 +82,7 @@ Yii::app()->clientScript->registerPackage('everything');
                 <li class=""></li>
                 <li class="active"></li>
             </ul>
-            <div id="changeText">Уже почти готово</div>
+            <div id="changeText"></div>
         </div>
     </div>
 </div>

@@ -64,10 +64,28 @@ AviaPanel = (function(_super) {
     this.inside2 = false;
     this.inside3 = false;
     this.oldCalendarState = this.minimizedCalendar();
+    this.fromChosen = ko.computed(function() {
+      return _this.departureDate().length > 0;
+    });
+    this.toChosen = ko.computed(function() {
+      return _this.arrivalDate().length > 0 && _this.rt();
+    });
     this.rt = this.sp.rt;
     this.adults = this.sp.adults;
     this.children = this.sp.children;
     this.infants = this.sp.infants;
+    this.departureDateDay = ko.computed(function() {
+      return dateUtils.formatDay(_this.departureDate());
+    });
+    this.departureDateMonth = ko.computed(function() {
+      return dateUtils.formatMonth(_this.departureDate());
+    });
+    this.arrivalDateDay = ko.computed(function() {
+      return dateUtils.formatDay(_this.arrivalDate());
+    });
+    this.arrivalDateMonth = ko.computed(function() {
+      return dateUtils.formatMonth(_this.arrivalDate());
+    });
     this.adults.subscribe(function(newValue) {
       if (_this.infants() > _this.adults()) {
         _this.infants(_this.adults());

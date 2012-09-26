@@ -569,6 +569,11 @@
 .AVIA .contTD div.active .date {
 	background: url("../images/slice.png") no-repeat scroll -225px -978px transparent;
 }
+
+.AVIA .contTD div.active .date {
+    background: url("../images/slice.png") no-repeat scroll -225px -978px transparent;
+}
+
 .AVIA .contTD div.active .input-path {
 	width: 235px;
 	border-radius: 4px 0px 0px 4px;

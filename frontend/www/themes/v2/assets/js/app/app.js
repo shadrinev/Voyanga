@@ -12,6 +12,8 @@ Application = (function(_super) {
   function Application() {
     this.contentRendered = __bind(this.contentRendered, this);
 
+    this.initCalendar = __bind(this.initCalendar, this);
+
     var _this = this;
     this.activeModule = ko.observable(null);
     this.activeModuleInstance = ko.observable(null);
@@ -53,11 +55,19 @@ Application = (function(_super) {
     this.activeView = ko.computed(function() {
       return _this.activeModule() + '-' + _this._view();
     });
+    this.calendarInitialized = false;
     this.viewData = ko.observable({});
     this.slider = new Slider();
     this.slider.init();
     this.activeModule.subscribe(this.slider.handler);
   }
+
+  Application.prototype.initCalendar = function() {
+    if (!this.calendarInitialized) {
+      new Calendar(this.activeModule(), this.panel);
+      return this.calendarInitialized = true;
+    }
+  };
 
   Application.prototype.register = function(prefix, module, isDefault) {
     var action, controller, route, _ref,
@@ -140,5 +150,6 @@ $(function() {
   console.timeEnd("App dispatching");
   console.time("Rendering");
   ko.applyBindings(app);
+  app.initCalendar();
   return console.timeEnd("Rendering");
 });

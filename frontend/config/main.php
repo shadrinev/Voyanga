@@ -199,8 +199,9 @@ return CMap::mergeArray(
                             'js/voyanga-calendar.js', 'js/timeline-calendar.js', 'js/jquery.select.slider.js',
                             'js/jquery.slider.min.js','js/jquery.slider.js', 'js/photoslider.js',
                             //! Our application logic
+                            'js/app/common/calendar.js',
 			                'js/app/common/genericpopup.js',
-                             'js/app/common/photobox.js',
+                            'js/app/common/photobox.js',
                             'js/app/common/module.slider.js',
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
                             'js/app/common/ko.bindings.timeslider.js',

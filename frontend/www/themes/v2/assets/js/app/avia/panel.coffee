@@ -48,12 +48,31 @@ class AviaPanel extends SearchPanel
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
 
+    #helper to handle dispaying of calendar
+    @fromChosen = ko.computed =>
+      @departureDate().length > 0
+
+    @toChosen = ko.computed =>
+      @arrivalDate().length > 0 && @rt()
+
     @rt = @sp.rt
 
     # Popup inputs
     @adults = @sp.adults
     @children = @sp.children
     @infants = @sp.infants
+
+    @departureDateDay = ko.computed =>
+      dateUtils.formatDay(@departureDate())
+
+    @departureDateMonth = ko.computed =>
+      dateUtils.formatMonth(@departureDate())
+
+    @arrivalDateDay = ko.computed =>
+      dateUtils.formatDay(@arrivalDate())
+
+    @arrivalDateMonth = ko.computed =>
+      dateUtils.formatMonth(@arrivalDate())
 
     # Travelers constraits
     @adults.subscribe (newValue) =>

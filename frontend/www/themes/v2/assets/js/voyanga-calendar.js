@@ -515,26 +515,20 @@ VoyangaCalendarStandart.generateGrid = function(from, to){
 }
 
 VoyangaCalendarStandart.clean = function(){
-    this.jObj.find('.to').removeClass('to')
-}
-
-VoyangaCalendarStandart.initParams = false;
-
-VoyangaCalendarStandart.init = function (e, panel){
-
-    if (VoyangaCalendarStandart.initialized == false)
-        VoyangaCalendarStandart.initParams = this.jObj;
-    else
-    {
-        ResizeCenterBlock();
-        this.jObj = VoyangaCalendarStandart.initParams;
-    }
-
-    VoyangaCalendarStandart.slider.jObj = this.jObj;
     if(typeof this.jObj == 'string'){
         this.jObj = $(this.jObj);
     }
-    VoyangaCalendarStandart.twoSelect = panel.rt();
+    this.jObj.find('.to').removeClass('to')
+}
+
+VoyangaCalendarStandart.init = function (panel){
+
+    VoyangaCalendarStandart.slider.jObj = this.jObj;
+    console.log(this.jObj);
+
+    if(typeof this.jObj == 'string'){
+        this.jObj = $(this.jObj);
+    }
 
     VoyangaCalendarStandart.generateGrid(panel.departureDate(), panel.arrivalDate());
     VoyangaCalendarStandart.slider.init();
@@ -554,9 +548,5 @@ VoyangaCalendarStandart.init = function (e, panel){
         panel.minimizedCalendar(true);
     });
 
-    VoyangaCalendarStandart.initialized = true;
-
-    console.log('FOUND1: ', this.jObj);
-    console.log('FOUND2: ', this.jObj.find('.calendarDIVVoyanga'));
 
 }.bind(VoyangaCalendarStandart);

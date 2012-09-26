@@ -39,12 +39,20 @@ class Application extends Backbone.Router
     @activeView = ko.computed =>
       @activeModule() + '-' + @_view()
 
+    @calendarInitialized = false
+
     # View model for currently active view
     @viewData = ko.observable {}
 
     @slider = new Slider()
     @slider.init()
     @activeModule.subscribe @slider.handler
+
+  initCalendar: =>
+    if (!@calendarInitialized)
+      new Calendar(@activeModule(), @panel)
+      @calendarInitialized = true
+
 
   # Register routes from controller
   #
@@ -117,4 +125,5 @@ $ ->
   console.timeEnd "App dispatching"
   console.time "Rendering"
   ko.applyBindings(app)
+  app.initCalendar()
   console.timeEnd "Rendering"

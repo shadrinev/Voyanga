@@ -2,8 +2,8 @@ class SearchPanel
   constructor: ->
     @minimized = ko.observable false
     @minimizedCalendar = ko.observable false
-    @calendarHidden = ko.observable false
-    @calendarShadow = ko.observable false
+    @calendarHidden = ko.observable @minimizedCalendar
+    @calendarShadow = ko.observable @minimizedCalendar
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
@@ -59,3 +59,8 @@ class SearchPanel
       @minimizedCalendar(false)
     else
       @minimizedCalendar(true)
+
+  showCalendar: ->
+    if @minimizedCalendar()
+      @minimizedCalendar(false)
+

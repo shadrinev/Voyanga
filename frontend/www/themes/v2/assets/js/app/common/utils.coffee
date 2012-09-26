@@ -7,6 +7,24 @@ SHORT_MONTHS = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'и�
 SHORT_WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
 
 dateUtils=
+  formatDay: (date) ->
+    if date.length==0
+      return
+
+    re = /(\d+)\.(\d+)\.(\d+)/
+    date = re.exec(date)[1]
+    result = ""
+    result+= date
+
+  formatMonth: (date) ->
+    if date.length==0
+      return
+
+    re = /(\d+)\.(\d+)\.(\d+)/
+    date = re.exec(date)[2]
+    result = ""
+    result+= SHORT_MONTHS[date-1]
+
   formatDayMonth: (date) ->
     if (date.length==0)
       return
