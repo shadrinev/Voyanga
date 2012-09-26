@@ -61,7 +61,7 @@
   <div class="descr" id="map" style="display: none">
     <div class="map-big" id="hotel-info-gmap">
     </div>
-    Отель расположен в 10 км от центра
+    Отель расположен в <span data-bind="text: result.distanceToCenter">10</span> км от центра
   </div>
   <!-- END MAP -->
   <!-- SERVICE -->
