@@ -126,37 +126,36 @@
     </div>
     <!-- END START -->
     <div class="how-long">
-        <div class="time">
-            В пути <span data-bind="text: rtDuration()">8 ч. 30 м.</span>
-        </div>
-        <div class="ico-path" data-bind="html: rtStopsRatio()">
-        </div>
-        <div class="path" data-bind="text:rtStopoverText(), css: {'no-wait': direct()}">
-        </div>
+      <div class="time">
+        В пути <span data-bind="text: rtDuration()">8 ч. 30 м.</span>
+      </div>
+      <div class="ico-path" data-bind="html: rtStopsRatio()">
+      </div>
+      <div class="path" data-bind="text:rtStopoverText(), css: {'no-wait': rtDirect()}">
+      </div>
     </div>
     <!-- END HOW LONG -->
     <div class="finish">
-        <div class="date" data-bind="text: rtArrivalDayMo()">
-            29 мая
-        </div>
-        <div class="time" data-bind="text: rtArrivalTime()">
-            00:50
-        </div>
-        <div class="city" data-bind="text: rtArrivalCity()">
-            Санкт-Петербург
-        </div>
-        <div class="airport" data-bind="text: rtArrivalAirport()">
-            Пулково
-        </div>
+      <div class="date" data-bind="text: rtArrivalDayMo()">
+        29 мая
+      </div>
+      <div class="time" data-bind="text: rtArrivalTime()">
+        00:50
+      </div>
+      <div class="city" data-bind="text: rtArrivalCity()">
+        Санкт-Петербург
+      </div>
+      <div class="airport" data-bind="text: rtArrivalAirport()">
+        Пулково
+      </div>
     </div>
     <!-- END FINISH -->
     <div class="clear"></div>
-        <div class="airlinesLogo">
-        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
-        <br>
-        <span data-bind="text:airlineName">Россия</span>
+    <div class="airlinesLogo">
+      <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+      <br>
+      <span data-bind="text:airlineName">Россия</span>
     </div>
-
 </div>
 <!-- END DATE TIME CITY -->
 <!-- ko if:rtStacked() -->
