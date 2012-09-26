@@ -13,7 +13,7 @@
 	    <div class="keys"></div>
 	    <div class="path">
 	      <div class="where" data-bind="html: destinationText()">С-Пб &rarr; Амстердам</div>
-	      <div class="time"><span data-bind="text: price()">12 750</span> <span class="rur">o</span> <span data-bind="text: additionalText()">7:30 - 12:20</span></div>
+	      <div class="time"><span data-bind="html: priceText()"></span> <span data-bind="text: additionalText()">7:30 - 12:20</span></div>
 	    </div>
 	    <div class="date" data-bind="attr: {class: 'date '+ dateClass()}, html:dateHtml()">
 	    </div>

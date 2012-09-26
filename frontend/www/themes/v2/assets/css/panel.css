@@ -454,6 +454,8 @@
     position: absolute;
     width: 270px;
     z-index: 1;
+    padding-bottom: 0px;
+    padding-top: 0px;
 }
 .second-path {
 	z-index: 2;
@@ -467,6 +469,8 @@
     width: 270px;
     position: absolute;
     background: none;
+    padding-bottom: 0px;
+    padding-top: 0px;
 }
 .panelTable .data.active .input-path {
     background-position: 0 -1260px;

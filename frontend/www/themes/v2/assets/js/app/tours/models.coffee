@@ -4,7 +4,16 @@ class TourEntry
   isHotel: =>
     return @hotels
   price: =>
+    if @selection() == null
+      return 0
     @selection().price
+
+  priceText: =>
+    if @selection() == null
+      return "Не выбрано"
+    return @price() + '<span class="rur">o</span>'
+
+    
   rt: =>
     false
 
@@ -17,14 +26,25 @@ class ToursAviaResultSet extends TourEntry
     @results = new AviaResultSet raw
     @results.injectSearchParams @searchParams
     @results.postInit()
+    @results.recommendTemplate = 'avia-tours-recommend'
+    @results.tours = true
+    @results.select = (result)=>
+      # FIXME looks retardely stupid
+      if result.ribbon
+        #it is actually recommnd ticket
+        result = result.data
+      @results.selected_key result.key
+      @selection(result)
     @data = {results: @results}
     @avia = true
-    @selection = ko.observable @results.data[0]
+    @selection = ko.observable null
 
   destinationText: =>
     @results.departureCity + ' &rarr; ' + @results.arrivalCity   
 
   additionalText: =>
+    if @selection() == null
+      return ""
     if @rt()
       ""
     else
@@ -34,16 +54,17 @@ class ToursAviaResultSet extends TourEntry
     if @rt() then 'blue-two' else 'blue-one'
 
   dateHtml: =>
+    source = @selection()
+    if source == null
+      source = @results.data[0]
     result = '<div class="day">'
-    # FIXME use @results
-    result+= dateUtils.formatHtmlDayShortMonth @selection().departureDate()
+    result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
     result+='</div>'
     if @rt()
       result+= '<div class="day">'
-      result+= dateUtils.formatHtmlDayShortMonth @selection().rtDepartureDate()
+      result+= dateUtils.formatHtmlDayShortMonth source.rtDepartureDate()
       result+= '</div>'
     return result
-
     
   rt: =>
     @results.roundTrip
@@ -56,15 +77,20 @@ class ToursHotelsResultSet extends TourEntry
     @results = new HotelsResultSet raw, @searchParams
     @data = {results: @results}
     @hotels = true
-    @selection = ko.observable @results.data[0]
+    @selection = ko.observable null
     
   destinationText: =>
     "Отель в " + @searchParams.city
 
   price: =>
+    if @selection() == null
+      return 0
+
     @selection().roomSets[0].price
 
   additionalText: =>
+    if @selection() == null
+      return ""
     ", " + @selection().hotelName
 
   dateClass: =>

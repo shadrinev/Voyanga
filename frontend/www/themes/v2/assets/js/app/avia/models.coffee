@@ -42,12 +42,15 @@ class Voyage #Voyage Plus loin que la nuit et le jour
       @parts.push new FlightPart(part)
 
     @stopoverLength = 0
+    @maxStopoverLength = 0 
     @direct = @parts.length == 1
     if ! @direct
       for part, index in @parts
         if index < (@parts.length - 1)
           part.calculateStopoverLength @parts[index+1]
         @stopoverLength += part.stopoverLength
+        if part.stopoverLength > @maxStopoverLength
+          @maxStopoverLength = part.stopoverLength
 
     # FIXME !!!!!!!!!!!!!!!!!!!!!
     @departureDate = new Date(flight.departureDate+'+04:00')
@@ -391,6 +394,11 @@ class AviaResult
 #
 class AviaResultSet
   constructor: (rawVoyages) ->
+    @recommendTemplate = 'avia-cheapest-result'
+    # Indicates if we need to alter our rendering to fix tours template
+    @tours = false
+    @selected_key = ko.observable ''
+    
     @_results = {}
 
     for flightVoyage in rawVoyages
@@ -401,7 +409,9 @@ class AviaResultSet
         result =  new AviaResult flightVoyage
         @_results[key] = result
         result.key = key
+    # specials
     @cheapest = ko.observable()
+    @best = ko.observable()
     # We need array for knockout to work right
     @data = []
 
@@ -420,9 +430,16 @@ class AviaResultSet
     @arrivalCity = sp.destinations[0].arrival
     @departureCity = sp.destinations[0].departure
     @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
+    @dateHeadingText = @date
     @roundTrip = sp.isRoundTrip
-    if @roundTripe
+    if @roundTrip
       @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+'+04:00')
+      @dateHeadingText += ', ' +@rtDate
+  
+
+  select: (el) =>
+
+
   postInit: =>
     @filters = new AviaFiltersT @
 
@@ -435,6 +452,8 @@ class AviaResultSet
     @numResults data.length
     # FIXME hide recommend
     @updateCheapest(data)
+    @updateBest(data)
+
     ko.processAllDeferredBindingUpdates()
     # FIXME
     ResizeAvia()
@@ -452,6 +471,51 @@ class AviaResultSet
       return
     if @cheapest().key != new_cheapest.key
       @cheapest new_cheapest
+
+  updateBest: (data)=>
+    if data.length == 0
+      return
+ 
+    data = _.sortBy data, (el)-> el.price
+    for result in data
+      # Choose fastest first
+      voyages = _.sortBy result.voyages, (el) -> el._duration
+      for voyage in voyages
+        if voyage.visible() && voyage.maxStopoverLength < 60*60*3
+          if result.roundTrip
+            # Choose fastest first
+            backVoyages = _.sortBy voyage._backVoyages, (el) -> el._duration
+            for backVoyage in backVoyages
+              if backVoyage.visible() && backVoyage.maxStopoverLength < 60*60*3
+                voyage.activeBackVoyage backVoyage
+                result.activeVoyage voyage
+                @setBest result
+                return
+          else
+            result.activeVoyage voyage
+            @setBest result
+            return
+    @setBest data[0], true
+          
+  setBest: (result, unconditional=false)=>
+    # FIXME could leak as hell
+    result = _.clone result
+    result.activeVoyage = ko.observable result.activeVoyage()
+
+    if !unconditional
+      result.key = result.key + '_optima'
+      result.voyages = _.filter result.voyages, (el)->el.maxStopoverLength <60*60*3
+      _.each result.voyages, (voyage)->
+    #    voyage.activeBackVoyage = ko.observable voyage.activeBackVoyage()
+        voyage._backVoyages = _.filter voyage._backVoyages, (el)->el.maxStopoverLength <60*60*3
+
+    if @best() == undefined
+      @best result
+      return
+    if @best().key != result.key
+      delete @best()
+      @best result
+
 
 # Model for avia search params,
 # Used in AviaPanel and search controller

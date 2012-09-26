@@ -13,11 +13,10 @@
   <!-- END ALL CONTENT -->
 </script>
 <script type="text/html" id="avia-results-inner">
-  <h1 data-bind="visible: false">Выберите авиабилет
-    <span data-bind="text: departureCity">Санкт-Петербург</span> → <span data-bind="text: arrivalCity">Амстердам</span>, <span data-bind="text: date">19 мая</span></h1>
+  <h1 data-bind="visible: tours">Выберите авиабилет
+    <span data-bind="text: departureCity">Санкт-Петербург</span> → <span data-bind="text: arrivalCity">Амстердам</span>, <span data-bind="text: dateHeadingText">19 мая</span></h1>
   
-  <div class="recomended-content" data-bind="template: {name: 'avia-cheapest-result', data: cheapest}">
-    
+  <div class="recomended-content" data-bind="template: {name: recommendTemplate, data: $data}">
   </div>
   <!-- END RECOMENDED AND GRAFIK -->
   <div class="clear"></div>
@@ -186,8 +185,9 @@
 <!-- END CENTER BLOCK -->
 <div class="buy-ticket">
     <div class="text">
-        <span class="txtBuy">Купить</span>
-        <a href="#" class="btn-cost">
+      <!-- FIXME -->
+        <span class="txtBuy" data-bind="text: $parent.tours?($parent.selected_key()==key?'Выбран':'Выбрать'):'Купить'"></span>
+        <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected:$parent.selected_key()==key}">
             <span class="l"></span>
             <span class="price" data-bind="text: price">3 250</span>
             <span class="rur">o</span>
