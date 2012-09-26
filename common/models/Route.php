@@ -86,7 +86,9 @@ class Route extends CModel
     {
         return array(
             'departure' => $this->departureCity->localRu,
+            'departure_iata' => $this->departureCity->code,
             'arrival'   => $this->arrivalCity->localRu,
+            'arrival_iata'   => $this->arrivalCity->code,
             'date'      => DateTimeHelper::formatForJs($this->departureDate)
         );
     }
