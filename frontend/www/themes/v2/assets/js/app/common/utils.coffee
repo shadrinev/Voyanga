@@ -8,12 +8,16 @@ SHORT_WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
 
 dateUtils=
   formatDayMonth: (date) ->
+    if (date.length==0)
+      return
     result = ""
     result+= date.getDate()
     result+= " "
     result+= MONTHS[date.getMonth()]
 
   formatDayShortMonth: (date) ->
+    if (date.length==0)
+      return
     result = ""
     result+= date.getDate()
     result+= " "

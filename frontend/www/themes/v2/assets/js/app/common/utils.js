@@ -10,6 +10,9 @@ SHORT_WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 dateUtils = {
   formatDayMonth: function(date) {
     var result;
+    if (date.length === 0) {
+      return;
+    }
     result = "";
     result += date.getDate();
     result += " ";
@@ -17,6 +20,9 @@ dateUtils = {
   },
   formatDayShortMonth: function(date) {
     var result;
+    if (date.length === 0) {
+      return;
+    }
     result = "";
     result += date.getDate();
     result += " ";
