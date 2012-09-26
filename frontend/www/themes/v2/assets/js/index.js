@@ -25,23 +25,26 @@ function slideToursSlide() {
 $(window).load(slideToursSlide);
 $(window).resize(slideToursSlide);
 
-
+var activeMaps = 0;
+var speedAnimateChangePic = 500;
 function triangleFun() {
 	var stratCount = 0;
+	$('.slideTours').find('.active').find('.triangle').animate({'top' : '-17px'}, 200);
 	$('.toursTicketsMain').click(function() {
-
+		if(activeMaps == 1) {
+			closeEventsMaps();
+		}
+		if(stratCount == 0) {
+			stratCount = 1;
 			if (! $(this).hasClass('active')) {
-				$('.slideTours').find('.active').find('.triangle').animate({'top' : '0px'}, 300, function() {
-					$('.slideTours').find('.active').removeClass('active');
-				});
 				
-				$(this).find('.triangle').animate({'top' : '-18px'}, 500, function() {
-					$(this).parent().addClass('active');
+				var activeVAR = $('.slideTours').find('.active').index();
+				$('.slideTours').find('.active').find('.triangle').animate({'top' : '0px'}, speedAnimateChangePic, function() {
 					
 				});
-				
+				$('.toursTicketsMain').removeClass('active');
 				var rel = $(this).attr('rel');
-				$('.IMGmain').clone().appendTo('.innerIMG');
+				$('.IMGmain').clone().appendTo('.centerTours');
 				var varLeftPos = $('.IMGmain').eq(1).css('left');
 				var varTopPos = $('.IMGmain').eq(1).css('top');
 				varLeftPos = parseInt(varLeftPos.slice(0,-2));
@@ -49,15 +52,21 @@ function triangleFun() {
 				
 				var varLeftPosStart = varLeftPos;
 				var varTopPosStart = varTopPos;
+				
+				$(this).find('.triangle').animate({'top' : '-17px'}, speedAnimateChangePic, function() {
+					$(this).parent().addClass('active');	
+								
+				});
 				$('.IMGmain').eq(1).css('opacity', '0').css('left', varLeftPosStart+'px').css('top',varTopPosStart+'px').find('img').attr('src',rel);
 				
 				$('.IMGmain').eq(1).find('img').load(function() {
-					$('.IMGmain').eq(0).animate({opacity : 0}, 700, function() { $(this).remove(); });
-					$('.IMGmain').eq(1).animate({'opacity' : 1, 'left': varLeftPos+'px', 'top':varTopPos+'px'}, 400);
+					$('.IMGmain').eq(0).animate({opacity : 0}, speedAnimateChangePic, function() { $('.IMGmain:not(:last-child)').remove(); });
+					$('.IMGmain').eq(1).animate({'opacity' : 1, 'left': varLeftPos+'px', 'top':varTopPos+'px'}, speedAnimateChangePic, function() {
+						setTimeout(function() { stratCount = 0; }, 100);
+					});
 				});				
 			}
-
-		
+		}		
 	});
 }
 $(window).load(triangleFun);
@@ -65,9 +74,9 @@ $(window).load(triangleFun);
 
 function CenterIMGResize() {
 	var HeightAllWindow = $(window).height();
-	HeightAllWindow = HeightAllWindow - 38 - 215;
-	$('.innerIMG').css('height', HeightAllWindow+'px');
-	var pathIMG = $('.innerIMG .IMGmain');
+	HeightAllWindow = HeightAllWindow - 38 - 214;
+	$('.innerBlockMain').css('height', HeightAllWindow+'px');
+	var pathIMG = $('.innerBlockMain .IMGmain');
 	var marginPathLeft = 0;
 	var var_allWidth = $('.slideTours .center').width();
 	if (var_allWidth >= 1390) {
@@ -97,6 +106,22 @@ function CenterIMGResize() {
 $(window).load(CenterIMGResize);
 $(window).resize(CenterIMGResize);
 
+function closeEventsPhoto() {
+	$('.slideTours').find('.active').find('.triangle').animate({'top' : '0px'}, 200);
+	$('.toursTicketsMain').removeClass('active');
+	$('.mapsBigAll').css('opacity','0');
+	$('.toursBigAll').animate({opacity : 0}, 700, function() { $(this).css('display','none')});
+	$('.mapsBigAll').show();
+	$('.mapsBigAll').animate({opacity : 1}, 700);
+	activeMaps = 1;
+}
+function closeEventsMaps() {
+	$('.toursBigAll').css('opacity','0');
+	$('.mapsBigAll').animate({opacity : 0}, 700, function() { $(this).css('display','none')});
+	$('.toursBigAll').show();
+	$('.toursBigAll').animate({opacity : 1}, 700);
+	activeMaps = 0;
+}
 
 $(function() {
 	

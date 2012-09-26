@@ -311,10 +311,43 @@
 
 /* board */
 .panel-index {
-	position: absolute; height: 441px; bottom: 0px;
-	width: 100%; z-index: 1;
-	min-width: 1000px;
+	bottom: 367px;
+    height: 70px;
+    min-width: 1000px;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
 }
+.panel-index .sub-head {
+	background: none;
+    box-shadow: 0 1px 5px #000000;
+    height: 70px;
+    padding-bottom: 0px;
+}
+
+.panel-index .sub-head .navi-l {
+	background: url(../images/navi-index.png) no-repeat 0 0; height: 70px; width: 26px; cursor: pointer;
+	position: absolute; bottom: 0px; left: 0px;
+}
+.panel-index .sub-head .navi-l:hover {
+	background-position: 0px -70px;
+}
+.panel-index .sub-head .navi-r {
+	background: url(../images/navi-index.png) no-repeat -26px 0; height: 70px; width: 26px; cursor: pointer;
+	position: absolute; bottom: 0px; right: 0px;
+}
+.panel-index .sub-head .navi-r:hover {
+	background-position: -26px -70px;
+}
+.fly-panel {
+	width: 100%;
+	height: 70px;
+	position: relative;
+	background: url("../images/bg-board.png") repeat-x scroll 0 0 transparent;
+}
+
+
+
 .board {
 	background: url("../images/bg-board.png") repeat scroll 0 0 transparent;
     bottom: 371px;

@@ -1433,27 +1433,9 @@ input.hotel-input {
 }
 
 /* MAPS */
-.fly-panel {
-	width: 100%;
-	height: 70px;
-	position: relative;
-}
 
 
-.navi-l {
-	background: url(../images/navi-index.png) no-repeat 0 0; height: 70px; width: 26px; cursor: pointer;
-	position: absolute; bottom: 43px; left: 0px;
-}
-.navi-l:hover {
-	background-position: 0px -70px;
-}
-.navi-r {
-	background: url(../images/navi-index.png) no-repeat -26px 0; height: 70px; width: 26px; cursor: pointer;
-	position: absolute; bottom: 43px; right: 0px;
-}
-.navi-r:hover {
-	background-position: -26px -70px;
-}
+
 .fly-ico {
 	position: absolute; left: 26px; bottom: 0px; width: 86px; height: 70px;
 	background: url(../images/fly-ico.png) no-repeat;
@@ -1468,7 +1450,7 @@ input.hotel-input {
 	position: absolute; bottom: 0px; width: 100%; height: 31px; left: 0px; z-index: 1;
 }
 .foot-menu {
-	position: absolute; right: 0px; top: 0px; height: 31px;
+	position: absolute; right: 0px; top: 0px; height: 31px; background: url("../images/hr-hor-footer.png") no-repeat scroll right top transparent;
 }
 .foot-menu li {background: url(../images/hr-hor-footer.png) no-repeat left top; float: left; height: 24px;  padding: 7px 20px; text-shadow: 0px 1px 0px #202226;}
 .foot-menu li a {color: #d7d8dd; text-decoration: underline;}
@@ -1805,8 +1787,11 @@ input.hotel-input {
     width: 100%;
     z-index: 10;
 }
-.slideTours .center{
+.slideTours.mapsView {
 	background: url("../images/bg-index-slide.png") repeat-x scroll 0 10px transparent;
+}
+.slideTours .center{
+	
     height: 195px;
     margin: 0 auto;
     max-width: 1390px;
@@ -1890,6 +1875,9 @@ input.hotel-input {
 	background: url(../images/bg-tours-main.png) no-repeat -36px 0px;
 	opacity: 0;
 }
+.lookEyes:hover {
+	opacity: 1;
+}
 .toursTicketsMain .triangle {
 	position: absolute;
 	left: 50%;
@@ -1901,28 +1889,86 @@ input.hotel-input {
 .toursTicketsMain .triangle img {
 	margin-left: -11px;
 }
-.toursTicketsMain.active .triangle {
-	top: -18px;
-}
 
-
-.maps .innerIMG {
-	max-width: 1390px;
+.maps .innerBlockMain {
+	max-width: 100%;
 	min-width: 1000px;
 	margin: 0 auto;
 	margin-top: 38px;
-	overflow: hidden;
-	box-shadow: 0px 0px 10px rgba(1,1,1,0.9);
 	position: relative;
 }
-.maps .innerIMG .IMGmain {
+.maps .innerBlockMain .IMGmain {
 	position: absolute;
 	width: 1390px;
 	z-index: 1;
 }
-.maps .innerIMG .IMGmain + .IMGmain {
+.maps .innerBlockMain .IMGmain + .IMGmain {
 	z-index: 2;
 }
-.maps .innerIMG .IMGmain img {
+.maps .innerBlockMain .IMGmain img {
 	width: 1390px;
+}
+.maps .mapsBigAll {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: url(../images/mapsBigAll.png) center center repeat-x;
+	z-index: 1;
+	display: none;
+	box-shadow: 0 2px 5px rgba(13,13,14,0.9);
+}
+.maps .toursBigAll {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+	
+}
+.maps .toursBigAll .centerTours {
+	position: relative;
+	max-width: 1390px;
+	min-width: 1000px;
+	height: 100%;
+	margin: 0 auto;
+	overflow: hidden;
+	box-shadow: 0 2px 5px rgba(13,13,14,0.9);
+}
+.maps .toursBigAll .centerTours .close {
+	position: absolute;
+	z-index: 3;
+	width: 14px;
+	height: 15px;
+	background: url(../images/closeMainPhoto.png) no-repeat 0 0;
+	cursor: pointer;
+	top: 17px;
+	right: 12px;
+}
+.maps .toursBigAll .centerTours .textTours {
+	bottom: 23px;
+    color: #FFFFFF;
+    display: block;
+    font-size: 16px;
+    line-height: 32px;
+    position: absolute;
+    right: 25px;
+    text-align: right;
+    text-shadow: 1px 1px 1px #000000;
+    white-space: nowrap;
+    z-index: 3;
+}
+/*
+.maps .toursBigAll .centerTours .textTours:hover .priceSelect {
+	text-decoration: underline;
+}
+*/
+.maps .toursBigAll .centerTours .textTours:hover .txt {
+	text-decoration: underline;
+}
+.maps .toursBigAll .centerTours .textTours .price {
+	font-size: 36px;
+	font-weight: bold;
+}
+.maps .toursBigAll .centerTours .textTours .rur {
+	font-size: 35px;
+	font-weight: bold;
 }

@@ -183,9 +183,11 @@ $(function() {
 		}
 	});
 	
-	$('.lookEyes').hover(function() {
+	/*
+$('.lookEyes').hover(function() {
 		$(this).animate({'opacity' : '1'}, 300);
 	}, function() {
 		$(this).animate({'opacity' : '0'}, 100);
 	});
+*/
 });
