@@ -23,6 +23,7 @@ class ToursAviaResultSet extends TourEntry
     # FIXME
     #new Searchparams...
     @panel = new AviaPanel()
+    @panel.sp.fromObject @searchParams
     @results = new AviaResultSet raw
     @results.injectSearchParams @searchParams
     @results.postInit()

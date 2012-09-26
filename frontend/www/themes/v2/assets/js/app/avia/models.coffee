@@ -582,3 +582,16 @@ class SearchParams
       @rtDate data[6]
     else
       @rt false
+
+  fromObject: (data)->
+    console.log data
+    @adults data.adt
+    @children data.chd
+    @infants data.inf
+    @rt data.isRoundTrip
+    @dep data.destinations[0].departure_iata
+    @arr data.destinations[0].arrival_iata
+    # FIXME dates are fuckd
+    @date new Date(data.destinations[0].date)
+    if @rt()
+      @rtDate new Date(data.destinations[1].date)

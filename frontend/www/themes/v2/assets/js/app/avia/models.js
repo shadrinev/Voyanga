@@ -793,6 +793,20 @@ SearchParams = (function() {
     }
   };
 
+  SearchParams.prototype.fromObject = function(data) {
+    console.log(data);
+    this.adults(data.adt);
+    this.children(data.chd);
+    this.infants(data.inf);
+    this.rt(data.isRoundTrip);
+    this.dep(data.destinations[0].departure_iata);
+    this.arr(data.destinations[0].arrival_iata);
+    this.date(new Date(data.destinations[0].date));
+    if (this.rt()) {
+      return this.rtDate(new Date(data.destinations[1].date));
+    }
+  };
+
   return SearchParams;
 
 })();

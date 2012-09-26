@@ -67,6 +67,7 @@ ToursAviaResultSet = (function(_super) {
 
     this.template = 'avia-results';
     this.panel = new AviaPanel();
+    this.panel.sp.fromObject(this.searchParams);
     this.results = new AviaResultSet(raw);
     this.results.injectSearchParams(this.searchParams);
     this.results.postInit();
