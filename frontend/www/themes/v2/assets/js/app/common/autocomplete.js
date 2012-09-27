@@ -31,8 +31,8 @@ ko.bindingHandlers.autocomplete = {
         return $(element).siblings('input.input-path').val(value);
       }
     });
-    return $(element).on("keyup", function() {
-      if ($(element).val() === '') {
+    return $(element).on("keyup", function(e) {
+      if ((e.keyCode === 8) || (e.keyCode === 46)) {
         valueAccessor().iata('');
         valueAccessor().readable('');
         valueAccessor().readableGen('');
