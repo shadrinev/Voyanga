@@ -30,7 +30,7 @@ dateUtils = {
       month = date.getMonth();
     } else {
       re = /(\d+)\.(\d+)\.(\d+)/;
-      month = re.exec(date)[2](-1);
+      month = re.exec(date)[2] - 1;
     }
     return SHORT_MONTHS[month];
   },
