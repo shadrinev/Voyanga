@@ -19,7 +19,6 @@ ko.bindingHandlers.autocomplete =
         $(element).val(data.name)
         $(element).siblings('input.input-path').val(value)
       onActivate: (value, data) ->
-        valueAccessor().iata(data.code)
         valueAccessor().readable(data.name)
         valueAccessor().readableGen(data.nameGen)
         valueAccessor().readableAcc(data.nameAcc)
@@ -32,6 +31,7 @@ ko.bindingHandlers.autocomplete =
           valueAccessor().readable('')
           valueAccessor().readableGen('')
           valueAccessor().readableAcc('')
+
 
   update: (element, valueAccessor) =>
     iataCode = valueAccessor().iata()

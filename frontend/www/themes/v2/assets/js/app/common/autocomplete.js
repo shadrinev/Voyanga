@@ -23,7 +23,6 @@ ko.bindingHandlers.autocomplete = {
         return $(element).siblings('input.input-path').val(value);
       },
       onActivate: function(value, data) {
-        valueAccessor().iata(data.code);
         valueAccessor().readable(data.name);
         valueAccessor().readableGen(data.nameGen);
         valueAccessor().readableAcc(data.nameAcc);
