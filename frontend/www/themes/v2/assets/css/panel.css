@@ -73,12 +73,14 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 15px rgba(82, 168, 236, 0.8);
     outline: 0 none;
     color: #16181a !important;
+    foreground-color: #16181a;
 }
 .second-path:focus {
     border-color: rgba(82, 168, 236, 0.8);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 15px rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
     outline: 0 none;
     color: #16181a !important;
+    foreground-color: #16181a;
 }
 .how-many-man {
 	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
@@ -527,6 +529,7 @@
 	position: absolute;
 	z-index: 3;
 	right: 1px;
+	cursor: pointer;	
 }
 .panelTable .data.active .date + .date {
     background-position: -305px -1260px;
