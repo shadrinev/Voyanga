@@ -64,6 +64,9 @@ AviaPanel = (function(_super) {
     this.inside2 = false;
     this.inside3 = false;
     this.oldCalendarState = this.minimizedCalendar();
+    this.formFilled = ko.computed(function() {
+      return _this.departureCity() && _this.arrivalCity() && _this.departureDate() && _this.arrivalDate();
+    });
     this.maximizedCalendar = ko.computed(function() {
       return _this.departureCity() && _this.arrivalCity();
     });

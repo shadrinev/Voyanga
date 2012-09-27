@@ -48,6 +48,9 @@ class AviaPanel extends SearchPanel
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
 
+    @formFilled = ko.computed =>
+      @departureCity() && @arrivalCity() && @departureDate() && @arrivalDate()
+
     @maximizedCalendar = ko.computed =>
       @departureCity() && @arrivalCity()
 

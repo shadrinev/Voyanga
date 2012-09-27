@@ -78,7 +78,7 @@
         </div>
       </td>
       <td class="btnTD">
-        <a class="btn-find" data-bind="click: navigateToNewSearch">Найти</a>
+        <a class="btn-find" data-bind="click: navigateToNewSearch, visible: formFilled">Найти</a>
       </td>
     </tr>
   </table>
