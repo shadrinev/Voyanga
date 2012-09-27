@@ -10,7 +10,7 @@ dateUtils=
   formatDay: (date) ->
     if date.length==0
       return
-    if date.getDay()
+    if date.getDay
       day = date.getDay()
     else
       re = /(\d+)\.(\d+)\.(\d+)/
@@ -22,7 +22,7 @@ dateUtils=
     if date.length==0
       return
 
-    if date.getMonth()
+    if date.getMonth
       month = date.getMonth()
     else
       re = /(\d+)\.(\d+)\.(\d+)/
