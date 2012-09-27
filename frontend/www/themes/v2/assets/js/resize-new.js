@@ -532,6 +532,7 @@ function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
     smallTicketHeight();
+    scrollValue();
 }
 
 function ResizeFun() {
@@ -566,12 +567,4 @@ function scrollValue() {
 		scrolShowFilter();
 	});
 }
-function scrollStartShow() {
-	scrollValue();
-	$('.wrapper').scroll(function() {
-		scrollValue();
-	});
-	$(window).resize(scrollValue);
-}
 $(window).load(AlphaBackground);
-$(window).load(scrollStartShow);

@@ -18,7 +18,6 @@ dateUtils=
     day
 
   formatMonth: (date) ->
-    console.log '!@#!@#!@#', date
     if date.length==0
       return
 

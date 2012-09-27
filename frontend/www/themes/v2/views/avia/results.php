@@ -5,7 +5,7 @@
     </div>
     <!-- END MAIN BLOCK -->
     <!-- FILTER BLOCK -->
-    <div class="filter-block" data-bind="template: {name: 'avia-filters', data: results.filters}">
+    <div class="filter-block" data-bind="template: {name: 'avia-filters', data: results.filters, afterRender: results.filtersRendered}">
     </div>
     <!-- END FILTER BLOCK -->
     <div class="clear"></div>

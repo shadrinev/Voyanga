@@ -516,6 +516,12 @@ class AviaResultSet
       delete @best()
       @best result
 
+  filtersRendered: ->
+    ko.processAllDeferredBindingUpdates()
+  	scrollValue()
+  	$('.wrapper').scroll ->
+  		scrollValue()
+
 
 # Model for avia search params,
 # Used in AviaPanel and search controller
