@@ -529,6 +529,7 @@
 	position: absolute;
 	z-index: 3;
 	right: 1px;
+	cursor: pointer;	
 }
 .panelTable .data.active .date + .date {
     background-position: -305px -1260px;
