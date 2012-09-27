@@ -14,24 +14,25 @@ class Application extends Backbone.Router
     @activeModule = ko.observable null #ko.observable window.activeModule || 'avia'
     @activeModuleInstance = ko.observable null
 
+    result =
+      template:''
+      data:{}
+      rt: -> true
+      departureDate: -> '12.11.2013'
+      arrivalDate: -> '12.12.2013'
+      calendarText:'DOH'
+      minimizeCalendar: -> true
+      calendarHidden: -> true
+      calendarShadow: -> true
+    @fakoPanel = ko.observable result
     @panel = ko.computed =>
       am = @activeModuleInstance()
       if am
         result = ko.utils.unwrapObservable am.panel
         # We are actually depend on model observable not module`s one
         result = ko.utils.unwrapObservable result
-        if result
-          return result
-      result =
-        template:''
-        data:{}
-        rt: -> true
-        departureDate: -> '12.11.2013'
-        arrivalDate: -> '12.12.2013'
-        calendarText:'DOH'
-        minimizeCalendar: -> true
-        calendarHidden: -> true
-        calendarShadow: -> true
+        @fakoPanel result
+    # FIXME this retarded shit does not want to work with cuputeds(or it has smth to do with dependencies re-calculation
     # View currently being active in given module
     @_view = ko.observable 'index'
 
@@ -50,7 +51,7 @@ class Application extends Backbone.Router
 
   initCalendar: =>
     if (!@calendarInitialized)
-      new Calendar(@activeModule(), @panel)
+      new Calendar(@activeModule(), @fakoPanel)
       @calendarInitialized = true
 
 
@@ -125,5 +126,6 @@ $ ->
   console.timeEnd "App dispatching"
   console.time "Rendering"
   ko.applyBindings(app)
+  ko.processAllDeferredBindingUpdates()
   app.initCalendar()
   console.timeEnd "Rendering"
