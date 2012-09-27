@@ -1047,6 +1047,7 @@
     line-height: 20px;
     margin-right: 30px;
     margin-top: 11px;
+    max-width: 460px;
 }
 .hotel-details .place-buy > .street {
 	width: 285px;
