@@ -366,7 +366,7 @@ function ResizeCenterBlock() {
 		}
 		if (var_filterBlockIsset) {
 			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);
-			var_filterBlock.find('.scrollBlock').find('.innerScroll').css('width', (widthFilterBlock-30)+'px');
+			var_filterBlock.find('.scrollBlock').find('.viewport').css('width', (widthFilterBlock-30)+'px');
 		}
 		if (var_leftBlockIsset) {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock);
@@ -401,35 +401,13 @@ function ResizeCenterBlock() {
 			var_content.find('h1').find('span').hide();
 			var_ticketsItems.find('.ticket-items').addClass('small');
 			var_hotelItems.addClass('small');
-			/*
-			var mathWidthRicket = Math.floor(var_widthTicket * 0.393);
-			var_recomendedItems.find('.recommended-ticket').css('width', (253 + mathWidthRicket)+'px');
-
-			var_recomendedItems.css('width', var_allWidthContent+'px');
-			var_recomendedItems.*/
 		}
 		else {
 			$('.recommended-ticket').find('.ticket-items').removeClass('small');
 			$('.recommended-ticket').css('width', '318px');
-			//var_content.find('h1').find('span').show();
 			var_ticketsItems.find('.ticket-items').removeClass('small');
 			var_hotelItems.removeClass('small');
-			/*
-			var_recomendedItems.find('.recommended-ticket').css('width', '318px');
-			var_recomendedItems.css('width', var_widthMainBlockMAX+'px');
-			var_recomendedItems.find('h1').find('span').show();*/
 		}
-
-		/*
-		if(var_hotelItems.length > 0 && var_hotelItems.is(':visible')) {
-			if (var_ticketsItems.width() < 650) {
-				var_hotelItems.addClass('small');
-			}
-			else {
-				var_hotelItems.removeClass('small');
-			}
-		}
-		*/
 		if (widthBlock <= var_widthMIN) {
 			$('body').css('overflow-x','scroll');
 		}
@@ -560,30 +538,40 @@ function ResizeFun() {
     ResizeAvia();
 //    loginResize();
 }
-
+function scrolShowFilter() {
+	var oScrollbar5 = $('#scrollbar1');
+	oScrollbar5.tinyscrollbar({ sizethumb: 100 });	
+}
 function scrollValue() {
 	var var_scrollValueTop = $('.wrapper').scrollTop();
-	//console.log(var_scrollValueTop);
-	if (var_scrollValueTop > 179) {
-		$('.filter-content').css('position','fixed').css('top','-73px');
-		$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", $(window).height()+"px");
-	}
-	else {
+	if (var_scrollValueTop == 0) {
 		$('.filter-content').css('position','relative').css('top','auto');
-		$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", "auto");
+		var allHeightFilt = $(window).height() - 179;
+		$('.viewport').css('height',allHeightFilt+'px');
+		scrolShowFilter();
 	}
-	$('.wrapper').scroll(function() {
-		var_scrollValueTop = $(this).scrollTop();
-		if (var_scrollValueTop > 179) {
-			$('.filter-content').css('position','fixed').css('top','-73px');
-			$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", $(window).height()+"px");
-		}
-		else {
-			$('.filter-content').css('position','relative').css('top','auto');
-			$('.filter-content').find('.scrollBlock').find('.innerScroll').css("height", "auto");
-		}
+	else if (var_scrollValueTop > 0 && var_scrollValueTop < 179 ) {
+		$('.filter-content').css('position','relative').css('top','auto');
+		var allHeightFilt = $(window).height() - (179 - var_scrollValueTop);
+		$('.viewport').css('height',allHeightFilt+'px');
+		scrolShowFilter();
+	}
+	else if (var_scrollValueTop > 179) {
+		$('.filter-content').css('position','fixed').css('top','-73px');
+		var allHeightFilt = $(window).height();
+		$('.viewport').css('height',allHeightFilt+'px');
+		scrolShowFilter();
+	}
+	$('.all-list').click(function() {
+		scrolShowFilter();
 	});
 }
-
+function scrollStartShow() {
+	scrollValue();
+	$('.wrapper').scroll(function() {
+		scrollValue();
+	});
+	$(window).resize(scrollValue);
+}
 $(window).load(AlphaBackground);
-$(window).load(scrollValue);
+$(window).load(scrollStartShow);

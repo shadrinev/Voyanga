@@ -183,6 +183,8 @@ $(function() {
 		}
 	});
 	
+	
+	
 	/*
 $('.lookEyes').hover(function() {
 		$(this).animate({'opacity' : '1'}, 300);

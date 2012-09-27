@@ -8,63 +8,69 @@
         <select data-bind="slider:true, value: serviceClass.selection"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
       </div>
     </div>
-
-<div class="scrollBlock">
-	<div class="innerScroll" >   
+	
+<div class="scrollBlock" id="scrollbar1">
+	<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+		<div class="viewport">
+			 <div class="overview">
+			  
     
-    <div class="div-filter">
-    	<div class="lineBg">
-    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
-    	</div>
-      <div class="slider-filter">
-        <div>
-          <select data-bind="slider: true, value: onlyDirect.selection"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
-        </div>
-      </div>
-      <input type="checkbox" data-bind="checkbox:{label: 'Только короткие пересадки', checked: shortStopover.selection}" />
+	    <div class="div-filter">
+	    	<div class="lineBg">
+	    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
+	    	</div>
+	      <div class="slider-filter">
+	        <div>
+	          <select data-bind="slider: true, value: onlyDirect.selection"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
+	        </div>
+	      </div>
+	      <input type="checkbox" data-bind="checkbox:{label: 'Только короткие пересадки', checked: shortStopover.selection}" />
+	    </div>
+	    <div class="div-filter">
+	    	    	<div class="lineBg">
+	    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
+	    	</div>
+	      <div class="slider-filter smallSlide" style="text-align:center; margin-bottom:14px;" data-bind="visible: rt">
+	        <div>
+	          <select class="smallSlider" data-bind="slider: true, value: showRt"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
+	        </div>
+	        <br>
+	        <br>
+	      </div>
+	      <h4>Время вылета <span class="flightDirectionName" data-bind="visible: rt, text:showRtText">туда</span></h4>
+	      <div class="slide-filter">
+	        <div class="slider-wrapper-div" data-bind="visible: !(+showRt())">
+	          <input data-bind="timeSlider: departure"/>
+	        </div>
+		<!-- FIXME -->
+	        <div class="slider-wrapper-div" data-bind="if: rt, visible: +showRt()">
+	          <input data-bind="timeSlider: rtDeparture"/>
+	        </div>
+	      </div>
+	      <h4 style="margin-top:25px">Время прилета <span class="flightDirectionName" data-bind="visible: rt, text:showRtText">туда</span></h4>
+	      <div class="slide-filter">
+	        <div class="slider-wrapper-div" data-bind="visible: !(+showRt())">
+	          <input data-bind="timeSlider: arrival "/>
+	        </div>
+		<!-- FIXME -->
+	        <div class="slider-wrapper-div" data-bind="if: rt, visible: +showRt()">
+	          <input data-bind="timeSlider: rtArrival"/>
+	        </div>
+	      </div>
+	    </div>
+	<!-- AIRPORTS -->
+	    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: departureAirport, if: departureAirport.active}, visible: departureAirport.active">
+	    </div>
+	    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: arrivalAirport, if: arrivalAirport.active}, visible: arrivalAirport.active">
+	    </div>
+	    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: airline, if: airline.active}, visible: airline.active">
+	    </div>
+	    </div>
+	    
+	    </div>
     </div>
-    <div class="div-filter">
-    	    	<div class="lineBg">
-    		<img src="<?=   $images; ?>/images/shadow-filter.png" width="100%" height="20">
-    	</div>
-      <div class="slider-filter smallSlide" style="text-align:center; margin-bottom:14px;" data-bind="visible: rt">
-        <div>
-          <select class="smallSlider" data-bind="slider: true, value: showRt"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
-        </div>
-        <br>
-        <br>
-      </div>
-      <h4>Время вылета <span class="flightDirectionName" data-bind="visible: rt, text:showRtText">туда</span></h4>
-      <div class="slide-filter">
-        <div class="slider-wrapper-div" data-bind="visible: !(+showRt())">
-          <input data-bind="timeSlider: departure"/>
-        </div>
-	<!-- FIXME -->
-        <div class="slider-wrapper-div" data-bind="if: rt, visible: +showRt()">
-          <input data-bind="timeSlider: rtDeparture"/>
-        </div>
-      </div>
-      <h4 style="margin-top:25px">Время прилета <span class="flightDirectionName" data-bind="visible: rt, text:showRtText">туда</span></h4>
-      <div class="slide-filter">
-        <div class="slider-wrapper-div" data-bind="visible: !(+showRt())">
-          <input data-bind="timeSlider: arrival "/>
-        </div>
-	<!-- FIXME -->
-        <div class="slider-wrapper-div" data-bind="if: rt, visible: +showRt()">
-          <input data-bind="timeSlider: rtArrival"/>
-        </div>
-      </div>
-    </div>
-<!-- AIRPORTS -->
-    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: departureAirport, if: departureAirport.active}, visible: departureAirport.active">
-    </div>
-    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: arrivalAirport, if: arrivalAirport.active}, visible: arrivalAirport.active">
-    </div>
-    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: airline, if: airline.active}, visible: airline.active">
-    </div>
-    </div>
-    </div>
-  </div>
+
+</div>
 </script>
 <script type="text/html" id="avia-filter-list">
 	    	<div class="lineBg">
