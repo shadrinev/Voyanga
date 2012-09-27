@@ -10,20 +10,24 @@ dateUtils=
   formatDay: (date) ->
     if date.length==0
       return
-
-    re = /(\d+)\.(\d+)\.(\d+)/
-    date = re.exec(date)[1]
-    result = ""
-    result+= date
+    if date.getDay()
+      day = date.getDay()
+    else
+      re = /(\d+)\.(\d+)\.(\d+)/
+      day = re.exec(date)[1]
+    day
 
   formatMonth: (date) ->
+    console.log '!@#!@#!@#', date
     if date.length==0
       return
 
-    re = /(\d+)\.(\d+)\.(\d+)/
-    date = re.exec(date)[2]
-    result = ""
-    result+= SHORT_MONTHS[date-1]
+    if date.getMonth()
+      month = date.getMonth()
+    else
+      re = /(\d+)\.(\d+)\.(\d+)/
+      month = re.exec(date)[2] -1
+    SHORT_MONTHS[month]
 
   formatDayMonth: (date) ->
     if (date.length==0)
