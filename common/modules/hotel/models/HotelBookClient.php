@@ -951,7 +951,12 @@ class HotelBookClient
         $reqs = array();
         while (!$end)
         {
-            $params = array('cityId' => $hotelSearchParams->city->hotelbookId, 'checkIn' => $hotelSearchParams->checkIn, 'duration' => $hotelSearchParams->duration, 'hotelId' => $hotelId);
+            $params = array(
+                'cityId' => $hotelSearchParams->city->hotelbookId,
+                'checkIn' => $hotelSearchParams->checkIn,
+                'duration' => $hotelSearchParams->duration,
+                'hotelId' => $hotelId
+            );
             $params['rooms'] = array();
             $params['rooms'][] = array('roomSizeId' => self::$roomSizeRoomTypesMap[$i][$j], 'child' => 0, 'cots' => 0, 'roomNumber' => 1);
             $reqs[] = self::hotelSearch($params, true);

@@ -1,7 +1,7 @@
 class SearchPanel
   constructor: ->
     @minimized = ko.observable false
-    @minimizedCalendar = ko.observable false
+    @minimizedCalendar = ko.observable true
     @calendarHidden = ko.observable @minimizedCalendar
     @calendarShadow = ko.observable @minimizedCalendar
 
@@ -35,10 +35,9 @@ class SearchPanel
 
     if !minimizedCalendar
       @calendarHidden(false)
-      $('.calenderWindow').animate {'top' : (heightSubHead-4) + 'px'}, speed
+      $('.calenderWindow').animate {'top' : (heightSubHead+1) + 'px'}, speed
     else
       @calendarShadow(true)
-      @calendarHidden(true)
       $('.calenderWindow').animate {'top' : '-'+(heightCalendar1)+'px'}, speed, () =>
         @calendarShadow(false)
 

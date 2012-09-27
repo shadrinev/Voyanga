@@ -9,7 +9,7 @@ SearchPanel = (function() {
 
     var _this = this;
     this.minimized = ko.observable(false);
-    this.minimizedCalendar = ko.observable(false);
+    this.minimizedCalendar = ko.observable(true);
     this.calendarHidden = ko.observable(this.minimizedCalendar);
     this.calendarShadow = ko.observable(this.minimizedCalendar);
     this.oldCalendarState = this.minimizedCalendar();
@@ -48,11 +48,10 @@ SearchPanel = (function() {
     if (!minimizedCalendar) {
       this.calendarHidden(false);
       return $('.calenderWindow').animate({
-        'top': (heightSubHead - 4) + 'px'
+        'top': (heightSubHead + 1) + 'px'
       }, speed);
     } else {
       this.calendarShadow(true);
-      this.calendarHidden(true);
       return $('.calenderWindow').animate({
         'top': '-' + heightCalendar1 + 'px'
       }, speed, function() {

@@ -40,7 +40,7 @@ class AutocompleteController extends ApiController
 
     public function actionCitiesReadable(array $codes)
     {
-        $cacheKey = 'apiAutocompleteCitiesReadable3' . md5(serialize($codes));
+        $cacheKey = 'apiAutocompleteCitiesReadable4' . md5(serialize($codes));
         $citiesCache = Yii::app()->cache->get($cacheKey);
         if ($citiesCache)
         {
@@ -70,6 +70,8 @@ class AutocompleteController extends ApiController
          */
         $result = array();
         $result['query'] = $query;
+        $result['suggestions'] = array();
+        $result['data'] = array();
         foreach ($cities as $i => $city)
         {
             $suggestion = $city['label'];

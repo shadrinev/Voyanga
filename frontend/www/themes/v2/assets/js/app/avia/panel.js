@@ -64,6 +64,15 @@ AviaPanel = (function(_super) {
     this.inside2 = false;
     this.inside3 = false;
     this.oldCalendarState = this.minimizedCalendar();
+    this.maximizedCalendar = ko.computed(function() {
+      return _this.departureCity() && _this.arrivalCity();
+    });
+    this.maximizedCalendar.subscribe(function() {
+      if (_this.maximizedCalendar()) {
+        console.log('!!!!!!!', _this.maximizedCalendar());
+        return _this.showCalendar();
+      }
+    });
     this.fromChosen = ko.computed(function() {
       return _this.departureDate().length > 0;
     });
