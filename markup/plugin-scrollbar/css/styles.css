@@ -1,0 +1,26 @@
+body{
+	background:#CFCFCF url(../img/creamama.png) no-repeat top right;
+}
+#contenu {
+	width:600px;
+	margin:0 auto;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; 
+	background:white;
+	padding:20px;
+}
+#contenu h1{
+	color:#CF3500;
+}
+#contenu h2{color:#EF3E00;}
+#contenu ul{
+	list-style:circle;
+}
+#contenu ul li{
+	margin-bottom:10px;
+	font-size:12px;
+}
+#contenu ul li span{
+	font-weight:bold;
+}
+
+.clear{clear:both;}

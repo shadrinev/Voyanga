@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
+	<head>
+		<title>Plugin JQuery : Scroll Vertical</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/styles.css" />
+		<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="js/ui.core-1.7.2.js"></script>
+		<script type="text/javascript" src="js/ui.draggable-1.7.2.js"></script>
+		<script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="js/plugin.scrollbar.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#contenu").scrollbar();
+			});
+		</script>
+	</head>
+	<body>
+		
+		<div id="contenu">
+			<h1>Demo: ScrollBar JQuery </h1>
+			<h2>"Historique"</h2>
+			<p>plugin.scrollbar.js est mon premier plugin JQuery. Le besoin de cette création est apparu avec le développement du site d'un ami : <a href="http://www.damienbalada.fr/" title="damien balada">Damien Balada</a></p>
+			<p>Après quelques petites recherches, je suis arrivé sur jquery UI, qui propose un <a href="http://jqueryui.com/demos/slider/">slider</a>. Mais ce dernier fonctionne par "cran" et perd donc un peu en fluidité.
+			Je me suis donc lancé dans ce développement, plein de détermination, le regard fixé sur l'écran, en oubliant de cligner des yeux.
+			</p>
+			<p>
+				Après quelques de semaines de travail, j'arrive enfin à un résultat acceptable, suffisament en tout cas pour avoir envie de le partager.
+			</p>
+			<h2>Description de ce plugin Jquery</h2>
+			<p>
+				Ce plugin n'a qu'une seule utilité. Celle de créer une scrollbar dans un élément de votre choix pour afficher un contenu d'une taille supérieure à celle de l'espace visible. Il s'adresse surtout à ceux (et celles) qui ne veulent plus voir la scrollbar du navigateur.
+				La gestion du sroll molette est également intégrée à ce plugin, mais reste désactivable.</p><p> Pas mal de choses sont facilement configurables, la taille et la position de la scrollBar, du bouton. Il est également possible de définir plusieurs styles.
+				Quand la taille de l'espace visible (taille_englobe) et de la scrollbar (taille_scrollbar) sont en auto, les dimensions s'adaptent automatiquement à l'espace disponible et s'adaptent à chaque redimensionnement de la fenêtre.
+			</p>
+			<h2>Mise en place</h2>
+			<p>
+				Ce plugin nécessite quelques autres fichiers javascript pour fonctionner : jquery-1.4.2.min.js, ui.core-1.7.2.js, ui.draggable-1.7.2.js et jquery.mousewheel.min.js
+				l'appel du plugin ce fait de cette façon là :
+				<code><br />
+					$(document).ready(function(){<br />
+						$("#contenu").scrollbar();<br />
+					});<br />
+				#contenu
+				</code> étant l'id de l'élément qui accueillera la scrollbar.
+				
+			</p>
+			<h2>Les options du plugin</h2>
+			<ul>
+				<li><span>taille_englobe:</span> Taille de l'espace visible. Accepte soit une valeur numérique, soit "auto" pour prendre toute la place disponible</li>
+				<li><span>taille_scrollbar:</span> Taille de la scrollbar. Accepte soit une valeur numérique, soit "auto" pour prendre toute la place disponible</li>
+				<li><span>taille_bouton:</span> C'est la taille du bouton de la scrollbar, doit être une valeur numérique</li>
+				<li><span>pas:</span> Pas du scroll molette. C'est à dire la valeur du déplacement à chaque cran de la molette. Doit être une valeur numérique</li>
+				<li><span>molette:</span> true ou false. Active ou non la prise en compte de la molette de la souris</li>
+				<li><span>drag:</span> true ou false. Active ou non la présence de la scrollbar</li>
+				<li><span>debug:</span> true ou false. Affiche ou non la console de debug</li>
+				<li><span>style:</span> Choix des styles de la scrollbar. Par défaut il n'y a que 'basic'</li>
+				<li><span>position:</span> Position de la scrollbar. droite ou gauche</li>
+				<li><span>alignement_scrollbar:</span> Alignement de la scrollbar. haut, centre ou bas</li>
+				<li><span>orientation:</span> Orientation du contenu. Paysage ou portrait. Dans cette version, seul portrait est disponible</li>
+				<li><span>marge_scroll_contenu:</span> Marge entre la scrollbar et le contenu. Doit êter une valeur numérique.</li>
+				<li><span>largeur_scrollbar:</span> Largeur de la scrollbar et du bouton. Doit être une valeur numérique.</li>
+			</ul>
+			<h2>Téléchargement</h2>
+			<p>Télécharger cette démo (contient une version compréssée et une commentée du plugin): <a href="plugin-scrollbar.zip" title="Télécharger Démo plugin scrollbar Jqurey">Démo plugin scrollbar Jqurey</a></p>
+			<p>Télécharger uniquement la version compressée : <a href="js/plugin.scrollbar-min.js" title="télécharger plugin.scrollbar-min.js">plugin.scrollbar-min.js</a></p>
+			<p>Télécharger uniquement la version commentée : <a href="js/plugin.scrollbar.js" title="télécharger plugin.scrollbar.js">plugin.scrollbar.js</a></p>
+			<h2>Contact</h2>
+			<p>Si vous avez besoin d'aide, ou des suggestions d'amélioration, n'hésitez pas à me contacter : <a href="http://www.creamama.fr/Plugin-JQuery-Scrollbar.html">Creamama</a> ou par mail : matthieu.leorat[arobase]gmail.com</p>			
+		</div>
+		<br>
+		<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+	</body>
+</html>
