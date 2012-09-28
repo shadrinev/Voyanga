@@ -9,7 +9,7 @@
     position: absolute;
 }
 .jspVerticalBar {
-    background: none repeat scroll 0 0 #D5DAE3;
+    /* background: none repeat scroll 0 0 #D5DAE3; */
     height: 100%;
     position: absolute;
     right: 0;
@@ -34,7 +34,7 @@
     float: left;
 }
 .jspTrack {
-    background: none repeat scroll 0 0 #D5DAE3;
+    /* background: none repeat scroll 0 0 #D5DAE3; */
     position: relative;
 }
 .jspDrag {
@@ -44,6 +44,7 @@
     left: 0;
     position: relative;
     top: 0;
+    opacity: 0.6;
 }
 .jspHorizontalBar .jspTrack, .jspHorizontalBar .jspDrag {
     float: left;

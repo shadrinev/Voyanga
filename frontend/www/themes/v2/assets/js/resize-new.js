@@ -541,7 +541,7 @@ function ResizeFun() {
 }
 function scrolShowFilter() {
 	$('.scrollBlock').jScrollPane();
-	OneWidthEquelTwoWidth();	
+	OneWidthEquelTwoWidth();
 }
 function OneWidthEquelTwoWidth() {
 	if ($('.jspPane').width() == $('.scrollBlock').width() ) {
@@ -573,3 +573,7 @@ function scrollValue() {
 	}
 }
 $(window).load(AlphaBackground);
+$(window).load(function() {
+	$('.wrapper').scroll(scrollValue);
+	
+});
