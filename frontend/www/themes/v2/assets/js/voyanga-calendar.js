@@ -437,6 +437,13 @@ VoyangaCalendarStandart.onCellClick = function(obj,e){
         }
     }
 }
+function getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+}
+
 VoyangaCalendarStandart.generateGrid = function(from, to){
     var firstDay = new Date();
     var dayToday = new Date();
@@ -445,25 +452,17 @@ VoyangaCalendarStandart.generateGrid = function(from, to){
 
     var self = this;
     var startMonth = firstDay.getMonth();
-    var tmpDate = new Date(firstDay.toDateString());
-    tmpDate.setDate(1);
+    var tmpDate = getMonday(firstDay);
     var weekDay = this.getDay(tmpDate);
-    //console.log(weekDay);
     var startDate = firstDay.getDate();
     var startYear = firstDay.getFullYear();
-    //console.log(tmpDate);
-    tmpDate.setDate(-this.getDay(tmpDate) + 1);
-    //tmpDate.setDate(0);
-    //console.log(tmpDate);
     var needStop = false;
     var lineNumber = 0;
     while(!needStop)
     {
         var newHtml = '<div class="calendarLineVoyanga" id="weekNum-'+lineNumber+'" data-weeknum="'+lineNumber+'">';
         for(var i=0;i<7;i++){
-
             var label = '<div class="dayLabel'+((i>=5 && i<7) ? ' weekEnd' : '')+'">'+tmpDate.getDate()+'</div>';
-
 
             if(tmpDate.getDate() == 1){
                 label = label + ' <div class="monthLabel">' + this.monthNames[tmpDate.getMonth()] +'</div>';

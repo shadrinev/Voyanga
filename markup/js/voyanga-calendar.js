@@ -472,15 +472,15 @@ VoyangaCalendarStandart.generateGrid = function(){
 
 
 VoyangaCalendarStandart.init = function (){
+
     this.slider.jObj = this.jObj;
+
     if(typeof this.jObj == 'string'){
         this.jObj = $(this.jObj);
     }
 
     this.generateGrid();
-    //return true;
     this.slider.init();
-
 }
 
 $(document).ready(function(){

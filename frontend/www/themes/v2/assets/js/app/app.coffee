@@ -32,6 +32,9 @@ class Application extends Backbone.Router
         # We are actually depend on model observable not module`s one
         result = ko.utils.unwrapObservable result
         @fakoPanel result
+        if result
+          return result
+
     # FIXME this retarded shit does not want to work with cuputeds(or it has smth to do with dependencies re-calculation
     # View currently being active in given module
     @_view = ko.observable 'index'
@@ -51,7 +54,7 @@ class Application extends Backbone.Router
 
   initCalendar: =>
     if (!@calendarInitialized)
-      new Calendar(@activeModule(), @fakoPanel)
+      new Calendar(@activeModule(), @panel)
       @calendarInitialized = true
 
 
