@@ -17,7 +17,7 @@ class SearchPanel
     @minimizedCalendar.subscribe (minimizedCalendar) =>
       @toggleCalendar(minimizedCalendar)
 
-  togglePanel: (minimized) ->
+  togglePanel: (minimized) =>
     speed =  300
     heightSubHead = $('.sub-head').height()
 
@@ -26,7 +26,7 @@ class SearchPanel
     else
       $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
 
-  toggleCalendar: (minimizedCalendar) ->
+  toggleCalendar: (minimizedCalendar) =>
     speed =  500
 
     heightSubHead = $('.sub-head').height()
@@ -53,13 +53,13 @@ class SearchPanel
         @minimizedCalendar(true)
 
   # Minimize button click handler
-  minimizeCalendar: ->
+  minimizeCalendar: =>
     if @minimizedCalendar()
       @minimizedCalendar(false)
     else
       @minimizedCalendar(true)
 
-  showCalendar: ->
+  showCalendar: =>
     if @minimizedCalendar()
       @minimizedCalendar(false)
 

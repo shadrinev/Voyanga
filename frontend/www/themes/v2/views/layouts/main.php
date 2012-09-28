@@ -62,7 +62,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <!-- END SUB HEAD -->
     <!--====**********===-->
     <!-- CALENDAR -->
-    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template', data: fakoPanel}" style="margin-top: 36px; top: -341px;">
+    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}" style="margin-top: 36px; top: -341px;">
     </div>
     <!-- END CALENDAR -->
     <!--====**********===-->
