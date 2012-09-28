@@ -540,7 +540,16 @@ function ResizeFun() {
 //    loginResize();
 }
 function scrolShowFilter() {
-	$('.scrollBlock').jScrollPane();	
+	$('.scrollBlock').jScrollPane();
+	OneWidthEquelTwoWidth();	
+}
+function OneWidthEquelTwoWidth() {
+	if ($('.jspPane').width() == $('.scrollBlock').width() ) {
+		$('.slide-filter.first').css('padding-right','21px');
+	}
+	else {
+		$('.slide-filter.first').css('padding-right','30px');
+	}
 }
 function scrollValue() {
 	var var_scrollValueTop = $('.wrapper').scrollTop();
