@@ -11,7 +11,7 @@ dateUtils=
     if date.length==0
       return
     if date.getDay
-      day = date.getDay()
+      day = date.getDate()
     else
       re = /(\d+)\.(\d+)\.(\d+)/
       day = re.exec(date)[1]

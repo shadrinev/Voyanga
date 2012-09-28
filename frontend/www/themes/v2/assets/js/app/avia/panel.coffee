@@ -34,7 +34,8 @@ class AviaPanel extends SearchPanel
     @departureCityReadable = ko.observable ''
     @departureCityReadableGen = ko.observable ''
     @departureCityReadableAcc = ko.observable ''
-    @arrivalDate = @sp.rtDate
+    @rt = @sp.rt
+    @rtDate = @sp.rtDate
     @arrivalCity = @sp.arr
     @arrivalCityReadable = ko.observable ''
     @arrivalCityReadableGen = ko.observable ''
@@ -49,24 +50,30 @@ class AviaPanel extends SearchPanel
     @oldCalendarState = @minimizedCalendar()
 
     @formFilled = ko.computed =>
-      @departureCity() && @arrivalCity() && @departureDate() && @arrivalDate()
+      @departureCity() && @arrivalCity() && @departureDate() && @rtDate()
 
     @maximizedCalendar = ko.computed =>
       @departureCity() && @arrivalCity()
 
     @maximizedCalendar.subscribe =>
       if (@maximizedCalendar())
-        console.log('!!!!!!!', @maximizedCalendar())
         @showCalendar()
 
     #helper to handle dispaying of calendar
     @fromChosen = ko.computed =>
+      if @departureDate().getDay
+        return true
       @departureDate().length > 0
 
-    @toChosen = ko.computed =>
-      @arrivalDate().length > 0 && @rt()
+    @rtFromChosen = ko.computed =>
+      if !@rt()
+        return false
 
-    @rt = @sp.rt
+      if @rtDate().getDay
+        return true
+
+      @rtDate().length > 0
+
 
     # Popup inputs
     @adults = @sp.adults
@@ -79,11 +86,11 @@ class AviaPanel extends SearchPanel
     @departureDateMonth = ko.computed =>
       dateUtils.formatMonth(@departureDate())
 
-    @arrivalDateDay = ko.computed =>
-      dateUtils.formatDay(@arrivalDate())
+    @rtDateDay = ko.computed =>
+      dateUtils.formatDay(@rtDate())
 
-    @arrivalDateMonth = ko.computed =>
-      dateUtils.formatMonth(@arrivalDate())
+    @rtDateMonth = ko.computed =>
+      dateUtils.formatMonth(@rtDate())
 
     # Travelers constraits
     @adults.subscribe (newValue) =>

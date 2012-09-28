@@ -20,13 +20,13 @@
             </label>
             <input id="there-back" type="checkbox" data-bind="checked: rt()">
           </div>
-          <div class="to" data-bind="css: {active: toChosen()}">
+          <div class="to" data-bind="css: {active: rtFromChosen()}">
             <input class="input-path arrivalCity" type="text"  tabindex="-1">
             <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}">
             <div class="date" data-bind="click: showCalendar">
-              <span class="f17" data-bind="text: arrivalDateDay()">12</span>
+              <span class="f17" data-bind="text: rtDateDay()">12</span>
               <br>
-              <span class="month" data-bind="text: arrivalDateMonth()">мая</span>
+              <span class="month" data-bind="text: rtDateMonth()">мая</span>
             </div>
           </div>
         </div>
