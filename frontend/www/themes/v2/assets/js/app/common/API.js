@@ -1,4 +1,4 @@
-var API, ToursAPI,
+var API, AviaAPI, ToursAPI,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -42,5 +42,24 @@ ToursAPI = (function(_super) {
   };
 
   return ToursAPI;
+
+})(API);
+
+AviaAPI = (function(_super) {
+
+  __extends(AviaAPI, _super);
+
+  function AviaAPI() {
+    this.search = __bind(this.search, this);
+    return AviaAPI.__super__.constructor.apply(this, arguments);
+  }
+
+  AviaAPI.prototype.search = function(url, cb) {
+    return this.call(url, function(data) {
+      return cb(data);
+    });
+  };
+
+  return AviaAPI;
 
 })(API);

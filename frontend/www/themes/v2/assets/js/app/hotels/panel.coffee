@@ -11,5 +11,12 @@ class HotelsPanel extends SearchPanel
     @calendarText = "Выберите уже чтонибдь"
 
     @rt = ko.observable false
-    @departureDate = ko.observable()
-    @arrivalDate = ko.observable()
+    @departureDate = ko.observable(new Date())
+    @arrivalDate = ko.observable(new Date())
+
+    @calendarValue = ko.computed =>
+      twoSelect: true
+      from: @departureDate()
+      to: @arrivalDate()
+  setDate: ->
+    console.log 'setting Date'

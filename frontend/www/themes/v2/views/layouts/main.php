@@ -53,7 +53,7 @@ Yii::app()->clientScript->registerPackage('everything');
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <!-- PANEL -->
-            <div class="panel" data-bind="template: { name: fakoPanel().template, data: fakoPanel }">
+            <div class="panel" data-bind="template: { name: fakoPanel().template, data: fakoPanel, afterRender: fakoPanel().afterRender }">
 	    </div>
 	    <!-- END PANEL -->
         </div>

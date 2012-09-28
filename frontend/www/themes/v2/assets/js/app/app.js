@@ -15,8 +15,8 @@ Application = (function(_super) {
 
     var result,
       _this = this;
-    window.onerror = function() {
-      return alert("Something went wrong");
+    window.onerror = function(error) {
+      return alert(error);
     };
     this.activeModule = ko.observable(null);
     this.activeModuleInstance = ko.observable(null);
@@ -41,7 +41,8 @@ Application = (function(_super) {
       },
       calendarShadow: function() {
         return true;
-      }
+      },
+      afterRender: function() {}
     };
     this.fakoPanel = ko.observable(result);
     this.panel = ko.computed(function() {
@@ -51,7 +52,8 @@ Application = (function(_super) {
         result = ko.utils.unwrapObservable(am.panel);
         result = ko.utils.unwrapObservable(result);
         if (result !== null) {
-          return _this.fakoPanel(result);
+          _this.fakoPanel(result);
+          return ko.processAllDeferredBindingUpdates();
         }
       }
     });
@@ -68,7 +70,7 @@ Application = (function(_super) {
 
   Application.prototype.initCalendar = function() {
     if (!this.calendarInitialized) {
-      new Calendar(this.activeModule(), this.fakoPanel);
+      new Calendar(this.fakoPanel);
       return this.calendarInitialized = true;
     }
   };

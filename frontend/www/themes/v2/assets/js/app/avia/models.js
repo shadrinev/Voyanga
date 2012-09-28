@@ -746,15 +746,15 @@ SearchParams = (function() {
 
   SearchParams.prototype.url = function() {
     var params, result;
-    result = 'http://api.voyanga.com/v1/flight/search/BE?';
+    result = 'flight/search/BE?';
     params = [];
     params.push('destinations[0][departure]=' + this.dep());
     params.push('destinations[0][arrival]=' + this.arr());
-    params.push('destinations[0][date]=' + this.date());
+    params.push('destinations[0][date]=' + moment(this.date()).format('D.M.YYYY'));
     if (this.rt()) {
       params.push('destinations[1][departure]=' + this.arr());
       params.push('destinations[1][arrival]=' + this.dep());
-      params.push('destinations[1][date]=' + this.rtDate());
+      params.push('destinations[1][date]=' + moment(this.rtDate()).format('D.M.YYYY'));
     }
     params.push('adt=' + this.adults());
     params.push('chd=' + this.children());
@@ -779,9 +779,9 @@ SearchParams = (function() {
 
   SearchParams.prototype.getHash = function() {
     var hash, parts;
-    parts = [this.dep(), this.arr(), this.date(), this.adults(), this.children(), this.infants()];
+    parts = [this.dep(), this.arr(), moment(this.date()).format('D.M.YYYY'), this.adults(), this.children(), this.infants()];
     if (this.rt()) {
-      parts.push(this.rtDate());
+      parts.push(moment(this.rtDate()).format('D.M.YYYY'));
     }
     hash = 'avia/search/' + parts.join('/') + '/';
     window.voyanga_debug("Generated hash for avia search", hash);
@@ -791,13 +791,13 @@ SearchParams = (function() {
   SearchParams.prototype.fromList = function(data) {
     this.dep(data[0]);
     this.arr(data[1]);
-    this.date(data[2]);
+    this.date(moment(data[2], 'D.M.YYYY').toDate());
     this.adults(data[3]);
     this.children(data[4]);
     this.infants(data[5]);
     if (data.length === 7) {
       this.rt(true);
-      return this.rtDate(data[6]);
+      return this.rtDate(moment(data[6], 'D.M.YYYY').toDate());
     } else {
       return this.rt(false);
     }

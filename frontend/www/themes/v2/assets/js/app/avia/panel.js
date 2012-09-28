@@ -44,6 +44,10 @@ AviaPanel = (function(_super) {
 
     this.selectOneWay = __bind(this.selectOneWay, this);
 
+    this.setDate = __bind(this.setDate, this);
+
+    this.afterRender = __bind(this.afterRender, this);
+
     var _this = this;
     AviaPanel.__super__.constructor.call(this);
     this.template = 'avia-panel-template';
@@ -67,14 +71,6 @@ AviaPanel = (function(_super) {
     this.formFilled = ko.computed(function() {
       return _this.departureCity() && _this.arrivalCity() && _this.departureDate() && _this.rtDate();
     });
-    this.maximizedCalendar = ko.computed(function() {
-      return _this.departureCity() && _this.arrivalCity();
-    });
-    this.maximizedCalendar.subscribe(function() {
-      if (_this.maximizedCalendar()) {
-        return _this.showCalendar();
-      }
-    });
     this.fromChosen = ko.computed(function() {
       if (_this.departureDate().getDay) {
         return true;
@@ -89,6 +85,21 @@ AviaPanel = (function(_super) {
         return true;
       }
       return _this.rtDate().length > 0;
+    });
+    this.maximizedCalendar = ko.computed(function() {
+      return _this.departureCity() && _this.arrivalCity();
+    });
+    this.maximizedCalendar.subscribe(function(newValue) {
+      if (newValue && (!_this.fromChosen() || !_this.rtFromChosen())) {
+        return _this.showCalendar();
+      }
+    });
+    this.calendarValue = ko.computed(function() {
+      return {
+        twoSelect: _this.rt(),
+        from: _this.departureDate(),
+        to: _this.rtDate()
+      };
     });
     this.adults = this.sp.adults;
     this.children = this.sp.children;
@@ -145,7 +156,11 @@ AviaPanel = (function(_super) {
       }
       return result;
     });
-    $(function() {
+  }
+
+  AviaPanel.prototype.afterRender = function() {
+    var _this = this;
+    return $(function() {
       $('.how-many-man .popup').find('input').hover(function() {
         $(this).parent().find('.plusOne').show();
         return $(this).parent().find('.minusOne').show();
@@ -193,22 +208,31 @@ AviaPanel = (function(_super) {
       }, function() {
         return _this.inside3 = false;
       });
-      return _this.rtTumbler(_this.rt());
+      console.log($('.tumblr .switch'));
+      _this.rtTumbler(_this.rt());
+      return $('.how-many-man .btn');
     });
-  }
+  };
 
   AviaPanel.prototype.rtTumbler = function(newValue) {
     if (newValue) {
-      $('.tumblr .switch').animate({
+      console.log($('.tumblr .switch'));
+      return $('.tumblr .switch').animate({
         'left': '35px'
       }, 200);
-      VoyangaCalendarStandart.twoSelect = true;
-      return VoyangaCalendarStandart.clean();
     } else {
-      $('.tumblr .switch').animate({
+      return $('.tumblr .switch').animate({
         'left': '-1px'
       }, 200);
-      return VoyangaCalendarStandart.twoSelect = false;
+    }
+  };
+
+  AviaPanel.prototype.setDate = function(values) {
+    if (values.length) {
+      this.departureDate(values[0]);
+      if (values.length > 1) {
+        return this.rtDate(values[1]);
+      }
     }
   };
 

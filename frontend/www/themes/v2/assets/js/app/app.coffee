@@ -4,7 +4,7 @@
 class Application extends Backbone.Router
   constructor: ->
     # FIXME
-    window.onerror = -> alert("Something went wrong")
+    window.onerror = (error)-> alert(error)
     # register url hash changes handler
 #    hasher.initialized.add @navigate
 #    hasher.changed.add @navigate
@@ -26,6 +26,7 @@ class Application extends Backbone.Router
       minimizeCalendar: -> true
       calendarHidden: -> true
       calendarShadow: -> true
+      afterRender: ->
     @fakoPanel = ko.observable result
     @panel = ko.computed =>
       am = @activeModuleInstance()
@@ -35,6 +36,8 @@ class Application extends Backbone.Router
         result = ko.utils.unwrapObservable result
         if result != null
           @fakoPanel result
+          ko.processAllDeferredBindingUpdates()
+
     # FIXME this retarded shit does not want to work with cuputeds(or it has smth to do with dependencies re-calculation
     # View currently being active in given module
     @_view = ko.observable 'index'
@@ -54,7 +57,7 @@ class Application extends Backbone.Router
 
   initCalendar: =>
     if (!@calendarInitialized)
-      new Calendar(@activeModule(), @fakoPanel)
+      new Calendar(@fakoPanel)
       @calendarInitialized = true
 
 

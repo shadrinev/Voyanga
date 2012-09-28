@@ -538,15 +538,16 @@ class SearchParams
     @rtDate = ko.observable ''
 
   url: ->
-    result = 'http://api.voyanga.com/v1/flight/search/BE?'
+    result = 'flight/search/BE?'
     params = []
     params.push 'destinations[0][departure]=' + @dep()
     params.push 'destinations[0][arrival]=' + @arr()
-    params.push 'destinations[0][date]=' + @date()
+    params.push 'destinations[0][date]=' + moment(@date()).format('D.M.YYYY')
     if @rt()
       params.push 'destinations[1][departure]=' + @arr()
       params.push 'destinations[1][arrival]=' + @dep()
-      params.push 'destinations[1][date]=' + @rtDate()
+      params.push 'destinations[1][date]=' + moment(@rtDate()).format('D.M.YYYY')
+
     params.push 'adt=' + @adults()
     params.push 'chd=' + @children()
     params.push 'inf=' + @infants()
@@ -566,10 +567,9 @@ class SearchParams
     return key
 
   getHash: ->
-    # FIXME
-    parts =  [@dep(), @arr(), @date(), @adults(), @children(), @infants()]
+    parts =  [@dep(), @arr(), moment(@date()).format('D.M.YYYY'), @adults(), @children(), @infants()]
     if @rt()
-      parts.push @rtDate()
+      parts.push moment(@rtDate()).format('D.M.YYYY')
     hash = 'avia/search/' + parts.join('/') + '/'
     window.voyanga_debug "Generated hash for avia search", hash
     return hash
@@ -579,13 +579,13 @@ class SearchParams
     # FIXME looks too ugly to hit production, yet does not support RT
     @dep data[0]
     @arr data[1]
-    @date data[2]
+    @date moment(data[2], 'D.M.YYYY').toDate()
     @adults data[3]
     @children data[4]
     @infants data[5]
     if data.length == 7
       @rt true
-      @rtDate data[6]
+      @rtDate  moment(data[6], 'D.M.YYYY').toDate()
     else
       @rt false
 

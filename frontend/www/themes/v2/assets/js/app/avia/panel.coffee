@@ -25,7 +25,6 @@ balanceTravelers = (others, model)->
 class AviaPanel extends SearchPanel
   constructor: ->
     super()
-
     @template = 'avia-panel-template'
     window.voyanga_debug "AviaPanel created"
     @sp = new SearchParams()
@@ -52,13 +51,6 @@ class AviaPanel extends SearchPanel
     @formFilled = ko.computed =>
       @departureCity() && @arrivalCity() && @departureDate() && @rtDate()
 
-    @maximizedCalendar = ko.computed =>
-      @departureCity() && @arrivalCity()
-
-    @maximizedCalendar.subscribe =>
-      if (@maximizedCalendar())
-        @showCalendar()
-
     #helper to handle dispaying of calendar
     @fromChosen = ko.computed =>
       if @departureDate().getDay
@@ -74,6 +66,17 @@ class AviaPanel extends SearchPanel
 
       @rtDate().length > 0
 
+    @maximizedCalendar = ko.computed =>
+      @departureCity() && @arrivalCity()
+
+    @maximizedCalendar.subscribe (newValue) =>
+      if newValue && (!@fromChosen() || !@rtFromChosen())
+        @showCalendar()
+
+    @calendarValue = ko.computed =>
+      twoSelect: @rt()
+      from: @departureDate()
+      to: @rtDate()
 
     # Popup inputs
     @adults = @sp.adults
@@ -134,7 +137,7 @@ class AviaPanel extends SearchPanel
         result+=' из ' + @departureCityReadableGen()
       return result
 
-    # FIXME:
+  afterRender: =>
     $ =>
       $('.how-many-man .popup').find('input').hover ->
         $(this).parent().find('.plusOne').show()
@@ -182,19 +185,26 @@ class AviaPanel extends SearchPanel
         @inside3 = true
       , =>
         @inside3 = false
+      console.log $('.tumblr .switch')
 
       # Initial state for tumbler
       @rtTumbler(@rt())
+      $('.how-many-man .btn')
 
   rtTumbler: (newValue) ->
-      if newValue
-        $('.tumblr .switch').animate {'left': '35px'}, 200
-        VoyangaCalendarStandart.twoSelect = true;
-        VoyangaCalendarStandart.clean()
-      else
-        $('.tumblr .switch').animate {'left': '-1px'}, 200
-        VoyangaCalendarStandart.twoSelect = false;
+    if newValue
+      console.log $('.tumblr .switch')
+      $('.tumblr .switch').animate {'left': '35px'}, 200
+    else
+      $('.tumblr .switch').animate {'left': '-1px'}, 200
 
+
+  # calendar handler
+  setDate: (values)=>
+    if values.length
+      @departureDate values[0]
+      if values.length > 1
+        @rtDate values[1]
 
   ###
   # Click handlers
