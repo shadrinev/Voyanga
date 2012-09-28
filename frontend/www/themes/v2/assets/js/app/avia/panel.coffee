@@ -48,9 +48,6 @@ class AviaPanel extends SearchPanel
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
 
-    @formFilled = ko.computed =>
-      @departureCity() && @arrivalCity() && @departureDate() && @rtDate()
-
     #helper to handle dispaying of calendar
     @fromChosen = ko.computed =>
       if @departureDate().getDay
@@ -65,6 +62,13 @@ class AviaPanel extends SearchPanel
         return true
 
       @rtDate().length > 0
+
+    @formFilled = ko.computed =>
+      result = @departureCity() && @arrivalCity() && @fromChosen()
+      if @rt()
+       result = result && @rtFromChosen()
+      return result
+
 
     @maximizedCalendar = ko.computed =>
       @departureCity() && @arrivalCity()
@@ -226,6 +230,7 @@ class AviaPanel extends SearchPanel
   # FIXME decouple!
   navigateToNewSearch: ->
     app.navigate @sp.getHash(), {trigger: true}
+    @minimizedCalendar(true)
 
   show: (context, event)=>
     el = $(event.currentTarget)

@@ -30,21 +30,12 @@ AviaController = (function() {
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("AVIA: Invoking searchAction", args);
     this.searchParams.fromList(args);
-    this.key = "search_" + this.searchParams.key();
-    if (sessionStorage.getItem(this.key) && (window.location.host !== 'test.voyanga.com')) {
-      window.voyanga_debug("AVIA: Getting result from cache");
-      return this.handleResults(JSON.parse(sessionStorage.getItem(key)));
-    } else {
-      return this.api.search(this.searchParams.url(), this.handleResults);
-    }
+    return this.api.search(this.searchParams.url(), this.handleResults);
   };
 
   AviaController.prototype.handleResults = function(data) {
     var stacked;
     window.voyanga_debug("searchAction: handling results", data);
-    if (window.location.host !== 'test.voyanga.com') {
-      sessionStorage.setItem(this.key, JSON.stringify(data));
-    }
     stacked = new AviaResultSet(data.flights.flightVoyages);
     stacked.injectSearchParams(data.searchParams);
     stacked.postInit();

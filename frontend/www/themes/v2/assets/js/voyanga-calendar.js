@@ -434,7 +434,7 @@ VoyangaCalendarStandart.onCellClick = function(obj){
             }
         }
     }else{
-        if(this.values.length == 1){
+        if(this.values.length != 0){
             this.values = new Array();
         }
     }
@@ -506,13 +506,15 @@ VoyangaCalendarStandart.generateGrid = function(){
 VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
     console.log("new calendar value INC", newCalendarValue);
     VoyangaCalendarStandart.twoSelect = newCalendarValue.twoSelect;
-    VoyangaCalendarStandart.values = new Array();
-    if (!newCalendarValue.from)
-	return;
-    VoyangaCalendarStandart.values.push(newCalendarValue.from);
-    if(newCalendarValue.twoSelect)
-	VoyangaCalendarStandart.values.push(newCalendarValue.to);
-    VoyangaCalendarStandart.update(true);
+    if(!newCalendarValue.twoSelect && VoyangaCalendarStandart.values.length > 1)
+	VoyangaCalendarStandart.values = VoyangaCalendarStandart.values.slice(0,1);
+//    VoyangaCalendarStandart.values = new Array();
+//    if (!newCalendarValue.from)
+//	return;
+//    VoyangaCalendarStandart.values.push(newCalendarValue.from);
+//    if(newCalendarValue.twoSelect)
+//	VoyangaCalendarStandart.values.push(newCalendarValue.to);
+      VoyangaCalendarStandart.update(true);
 }
 
 VoyangaCalendarStandart.init = function (panel){
@@ -524,7 +526,7 @@ VoyangaCalendarStandart.init = function (panel){
 	if(newPanel.template) {
 	    if(VoyangaCalendarStandart.subscription)
 		VoyangaCalendarStandart.subscription.dispose();
-//	    VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
+	    VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
 	    VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
 	}
     });

@@ -68,9 +68,6 @@ AviaPanel = (function(_super) {
     this.inside2 = false;
     this.inside3 = false;
     this.oldCalendarState = this.minimizedCalendar();
-    this.formFilled = ko.computed(function() {
-      return _this.departureCity() && _this.arrivalCity() && _this.departureDate() && _this.rtDate();
-    });
     this.fromChosen = ko.computed(function() {
       if (_this.departureDate().getDay) {
         return true;
@@ -85,6 +82,14 @@ AviaPanel = (function(_super) {
         return true;
       }
       return _this.rtDate().length > 0;
+    });
+    this.formFilled = ko.computed(function() {
+      var result;
+      result = _this.departureCity() && _this.arrivalCity() && _this.fromChosen();
+      if (_this.rt()) {
+        result = result && _this.rtFromChosen();
+      }
+      return result;
     });
     this.maximizedCalendar = ko.computed(function() {
       return _this.departureCity() && _this.arrivalCity();
@@ -262,9 +267,10 @@ AviaPanel = (function(_super) {
   };
 
   AviaPanel.prototype.navigateToNewSearch = function() {
-    return app.navigate(this.sp.getHash(), {
+    app.navigate(this.sp.getHash(), {
       trigger: true
     });
+    return this.minimizedCalendar(true);
   };
 
   AviaPanel.prototype.show = function(context, event) {

@@ -3,7 +3,7 @@
     <tr>
       <td class="contTD">
         <div class="data">
-          <div class="from" data-bind="css: {active: fromChosen()}">
+          <div class="from" data-bind="css: {active: fromChosen}">
             <input class="input-path departureCity" type="text"  tabindex="-1">
             <input class="second-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen}">
               <div class="date" data-bind="click: showCalendar">
@@ -20,7 +20,7 @@
             </label>
             <input id="there-back" type="checkbox" data-bind="checked: rt()">
           </div>
-          <div class="to" data-bind="css: {active: rtFromChosen()}">
+          <div class="to" data-bind="css: {active: rtFromChosen}">
             <input class="input-path arrivalCity" type="text"  tabindex="-1">
             <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}">
             <div class="date" data-bind="click: showCalendar">
