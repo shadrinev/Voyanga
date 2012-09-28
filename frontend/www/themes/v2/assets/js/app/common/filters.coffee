@@ -96,10 +96,15 @@ class ListFilter extends Filter
   
     if !(div.css('display')=='none')
       btnText = el.text el.text().replace("Скрыть","Все")
-      div.hide('fast')
+      # Update scroll pane state.
+      # FIXME decouple it somehow
+      div.hide('fast', scrollValue)
     else
       btnText = el.text el.text().replace("Все","Скрыть")
-      div.show('fast')
+      # Update scroll pane state.
+      # FIXME decouple it somehow
+      div.show('fast', scrollValue)
+
 
 
 class ShortStopoverFilter extends Filter

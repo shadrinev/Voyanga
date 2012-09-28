@@ -18,6 +18,7 @@ ToursController = (function() {
     this.routes = {
       '': this.searchAction
     };
+    this.key = "tours_10";
     _.extend(this, Backbone.Events);
   }
 
@@ -25,10 +26,9 @@ ToursController = (function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("TOURS: Invoking searchAction", args);
-    this.key = "tours_7";
-    if (sessionStorage.getItem(key) && (window.location.host !== 'test.voyanga.com')) {
+    if (sessionStorage.getItem(this.key) && (window.location.host !== 'test.voyanga.com')) {
       window.voyanga_debug("TOURS: Getting result from cache");
-      return this.handleResults(JSON.parse(sessionStorage.getItem(key)));
+      return this.handleResults(JSON.parse(sessionStorage.getItem(this.key)));
     } else {
       return this.api.search(this.handleResults);
     }
