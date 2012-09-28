@@ -69,7 +69,7 @@ Application = (function(_super) {
 
   Application.prototype.initCalendar = function() {
     if (!this.calendarInitialized) {
-      new Calendar(this.activeModule(), this.panel);
+      new Calendar(this.activeModule(), this.fakoPanel);
       return this.calendarInitialized = true;
     }
   };

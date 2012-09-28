@@ -55,7 +55,7 @@ class Application extends Backbone.Router
 
   initCalendar: =>
     if (!@calendarInitialized)
-      new Calendar(@activeModule(), @panel)
+      new Calendar(@activeModule(), @fakoPanel)
       @calendarInitialized = true
 
 
