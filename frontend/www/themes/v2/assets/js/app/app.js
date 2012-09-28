@@ -15,6 +15,9 @@ Application = (function(_super) {
 
     var result,
       _this = this;
+    window.onerror = function() {
+      return alert("Something went wrong");
+    };
     this.activeModule = ko.observable(null);
     this.activeModuleInstance = ko.observable(null);
     result = {
@@ -47,7 +50,9 @@ Application = (function(_super) {
       if (am) {
         result = ko.utils.unwrapObservable(am.panel);
         result = ko.utils.unwrapObservable(result);
-        return _this.fakoPanel(result);
+        if (result !== null) {
+          return _this.fakoPanel(result);
+        }
       }
     });
     this._view = ko.observable('index');

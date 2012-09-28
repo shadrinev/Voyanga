@@ -3,6 +3,8 @@
 # FIXME maybe modules is not that good idea?
 class Application extends Backbone.Router
   constructor: ->
+    # FIXME
+    window.onerror = -> alert("Something went wrong")
     # register url hash changes handler
 #    hasher.initialized.add @navigate
 #    hasher.changed.add @navigate
@@ -31,7 +33,8 @@ class Application extends Backbone.Router
         result = ko.utils.unwrapObservable am.panel
         # We are actually depend on model observable not module`s one
         result = ko.utils.unwrapObservable result
-        @fakoPanel result
+        if result != null
+          @fakoPanel result
     # FIXME this retarded shit does not want to work with cuputeds(or it has smth to do with dependencies re-calculation
     # View currently being active in given module
     @_view = ko.observable 'index'

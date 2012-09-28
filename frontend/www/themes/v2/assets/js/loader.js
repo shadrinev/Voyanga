@@ -1,12 +1,3 @@
-$(function(){
-    $(document).on('jsonpStart', function(){
-        $('#loadWrapBg').show();
-    })
-    $(document).on('jsonpEnd', function(){
-        $('#loadWrapBg').hide();
-    })
-})
-
 var arr_textLoad = ['Это займет от 5 до 30 секунд', 'Мы ищем среди 450 авиакомпаний','Уже почти готово', 'Ещё секундочку', 'Немного терпения']
 function loaderChange() {
     var loadLight = $('#loadLight');
