@@ -51,8 +51,9 @@ Application = (function(_super) {
         result = ko.utils.unwrapObservable(am.panel);
         result = ko.utils.unwrapObservable(result);
         if (result !== null) {
-          return _this.fakoPanel(result);
+          _this.fakoPanel(result);
         }
+        return _this.fakoPanel(result);
       }
     });
     this._view = ko.observable('index');
@@ -68,7 +69,7 @@ Application = (function(_super) {
 
   Application.prototype.initCalendar = function() {
     if (!this.calendarInitialized) {
-      new Calendar(this.activeModule(), this.fakoPanel);
+      new Calendar(this.activeModule(), this.panel);
       return this.calendarInitialized = true;
     }
   };

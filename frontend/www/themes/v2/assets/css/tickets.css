@@ -643,7 +643,7 @@
 .recommended-ticket .ticket-items .content .details-selecte {
 	overflow: hidden;
 	padding: 0px 2px 2px 2px;
-	margin: 10px -2px 3px;
+	margin: 5px -2px 8px;
 }
 .recommended-ticket .ticket-items .content .dashed {
 	margin-top: 10px;
@@ -692,12 +692,9 @@
 .recommended-ticket .ticket-items .content .line-dashed-ticket {
     background: url("../images/line-two-ticket.png") no-repeat scroll left -55px transparent;
     height: 13px;
-    margin-left: -20px;
-    margin-right: -20px;
+    margin: 0 -20px 5px;
     position: relative;
     z-index: 205;
-    margin-top: 0px;
-    margin-bottom: 10px;
 }
 .recommended-ticket .ticket-items .content .line-dashed-ticket .end {
     background: url("../images/line-two-ticket.png") no-repeat scroll right -55px transparent;
