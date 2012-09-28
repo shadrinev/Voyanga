@@ -564,19 +564,19 @@ function scrollValue() {
 	if (var_scrollValueTop == 0) {
 		$('.filter-content').css('position','relative').css('top','auto');
 		var allHeightFilt = $(window).height() - diffrentScrollTop;
-		$('.scrollBlock').css('height',allHeightFilt+'px');
+		$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
 		scrolShowFilter();
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
 		$('.filter-content').css('position','relative').css('top','auto');
 		var allHeightFilt = $(window).height() - (diffrentScrollTop - var_scrollValueTop);
-		$('.scrollBlock').css('height',allHeightFilt+'px');
+		$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
 		scrolShowFilter();
 	}
 	else if (var_scrollValueTop > diffrentScrollTop) {
 		$('.filter-content').css('position','fixed').css('top','-73px');
 		var allHeightFilt = $(window).height();
-		$('.scrollBlock').css('height',allHeightFilt+'px');
+		$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
 		scrolShowFilter();
 	}
 	
