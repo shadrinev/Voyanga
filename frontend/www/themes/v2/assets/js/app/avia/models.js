@@ -719,7 +719,7 @@ AviaResultSet = (function() {
   scrollValue();
 
   $('.wrapper').scroll(function() {
-    scrollValue();
+    return scrollValue();
   });
 
   return AviaResultSet;
