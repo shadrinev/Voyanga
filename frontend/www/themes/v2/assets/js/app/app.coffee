@@ -35,7 +35,6 @@ class Application extends Backbone.Router
         result = ko.utils.unwrapObservable result
         if result != null
           @fakoPanel result
-        @fakoPanel result
     # FIXME this retarded shit does not want to work with cuputeds(or it has smth to do with dependencies re-calculation
     # View currently being active in given module
     @_view = ko.observable 'index'

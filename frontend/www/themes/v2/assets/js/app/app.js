@@ -51,9 +51,8 @@ Application = (function(_super) {
         result = ko.utils.unwrapObservable(am.panel);
         result = ko.utils.unwrapObservable(result);
         if (result !== null) {
-          _this.fakoPanel(result);
+          return _this.fakoPanel(result);
         }
-        return _this.fakoPanel(result);
       }
     });
     this._view = ko.observable('index');
