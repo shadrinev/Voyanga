@@ -189,7 +189,6 @@ class AviaPanel extends SearchPanel
         @inside3 = true
       , =>
         @inside3 = false
-      console.log $('.tumblr .switch')
 
       # Initial state for tumbler
       @rtTumbler(@rt())
@@ -197,7 +196,6 @@ class AviaPanel extends SearchPanel
 
   rtTumbler: (newValue) ->
     if newValue
-      console.log $('.tumblr .switch')
       $('.tumblr .switch').animate {'left': '35px'}, 200
     else
       $('.tumblr .switch').animate {'left': '-1px'}, 200
@@ -227,17 +225,20 @@ class AviaPanel extends SearchPanel
     prop = $(e.target).attr("rel")
     model[prop] model[prop]()-1
 
+  handlePanelSubmit: =>
+    app.navigate @sp.getHash(), {trigger: true}
+    @minimizedCalendar(true)
+
+
   # FIXME decouple!
   navigateToNewSearch: ->
-    app.navigate @sp.getHash(), {trigger: true}
+    @handlePanelSubmit()
     @minimizedCalendar(true)
 
   show: (context, event)=>
     el = $(event.currentTarget)
     if !el.hasClass('active')
-      console.log "PP OPENENG"
       $(document.body).mousedown =>
-        console.log @inside, @inside2
         if @inside ||  @inside2 || @inside3
           return
         @close()
@@ -250,7 +251,6 @@ class AviaPanel extends SearchPanel
 
   close: ->
     $(document.body).unbind 'mousedown'
-    console.log "PP CLOSED"
     $('.how-many-man .btn').removeClass('active')
     $('.how-many-man .content').removeClass('active')
 

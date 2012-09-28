@@ -1,11 +1,11 @@
 <script id="avia-results" type="text/html">
   <!-- MAIN BLOCK -->
   <div class="main-block">
-    <div id="content" data-bind="template: {name: 'avia-results-inner', data: results}">
+    <div id="content" data-bind="template: {name: 'avia-results-inner', data: results()}">
     </div>
     <!-- END MAIN BLOCK -->
     <!-- FILTER BLOCK -->
-    <div class="filter-block" data-bind="template: {name: 'avia-filters', data: results.filters, afterRender: results.filtersRendered}">
+    <div class="filter-block" data-bind="template: {name: 'avia-filters', data: results().filters, afterRender: results().filtersRendered}">
     </div>
     <!-- END FILTER BLOCK -->
     <div class="clear"></div>

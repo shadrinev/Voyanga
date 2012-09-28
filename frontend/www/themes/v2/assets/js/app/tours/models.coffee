@@ -18,30 +18,42 @@ class TourEntry
     false
 
 class ToursAviaResultSet extends TourEntry
-  constructor: (raw, @searchParams)->
+  constructor: (raw, sp)->
+    @api = new AviaAPI
     @template = 'avia-results'
     # FIXME
     #new Searchparams...
     @panel = new AviaPanel()
-    @panel.sp.fromObject @searchParams
-    @results = new AviaResultSet raw
-    @results.injectSearchParams @searchParams
-    @results.postInit()
-    @results.recommendTemplate = 'avia-tours-recommend'
-    @results.tours = true
-    @results.select = (result)=>
-      # FIXME looks retardely stupid
-      if result.ribbon
-        #it is actually recommnd ticket
-        result = result.data
-      @results.selected_key result.key
-      @selection(result)
-    @data = {results: @results}
-    @avia = true
+    @panel.handlePanelSubmit = @doNewSearch
+    @panel.sp.fromObject sp
+    @results = ko.observable()
     @selection = ko.observable null
+    @newResults raw, sp
+    @data = {results: @results}
+
+  newResults: (raw, sp)=>
+    result = new AviaResultSet raw
+    result.injectSearchParams sp
+    result.postInit()
+    result.recommendTemplate = 'avia-tours-recommend'
+    result.tours = true
+    result.select = (res)=>
+      # FIXME looks retardely stupid
+      if res.ribbon
+        #it is actually recommnd ticket
+        res = res.data
+      result.selected_key res.key
+      @selection(res)
+    @avia = true
+    @selection null
+    @results result
+
+  doNewSearch: =>
+    @api.search @panel.sp.url(), (data)=>
+      @newResults data.flights.flightVoyages, data.searchParams
 
   destinationText: =>
-    @results.departureCity + ' &rarr; ' + @results.arrivalCity   
+    @results().departureCity + ' &rarr; ' + @results().arrivalCity   
 
   additionalText: =>
     if @selection() == null
@@ -57,7 +69,7 @@ class ToursAviaResultSet extends TourEntry
   dateHtml: =>
     source = @selection()
     if source == null
-      source = @results.data[0]
+      source = @results().data[0]
     result = '<div class="day">'
     result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
     result+='</div>'
@@ -68,7 +80,7 @@ class ToursAviaResultSet extends TourEntry
     return result
     
   rt: =>
-    @results.roundTrip
+    @results().roundTrip
        
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, @searchParams)->

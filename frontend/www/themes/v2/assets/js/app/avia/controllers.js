@@ -40,7 +40,7 @@ AviaController = (function() {
     stacked.injectSearchParams(data.searchParams);
     stacked.postInit();
     this.render('results', {
-      results: stacked
+      results: ko.observable(stacked)
     });
     return ko.processAllDeferredBindingUpdates();
   };

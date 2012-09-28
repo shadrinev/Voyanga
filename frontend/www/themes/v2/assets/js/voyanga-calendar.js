@@ -517,6 +517,18 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
       VoyangaCalendarStandart.update(true);
 }
 
+
+VoyangaCalendarStandart.newValueHandler2 = function(newCalendarValue) {
+    VoyangaCalendarStandart.values = new Array();
+    if (!newCalendarValue.from)
+	return;
+    VoyangaCalendarStandart.values.push(newCalendarValue.from);
+    if(newCalendarValue.twoSelect)
+	VoyangaCalendarStandart.values.push(newCalendarValue.to);
+      VoyangaCalendarStandart.update(true);
+}
+
+
 VoyangaCalendarStandart.init = function (panel){
 
     VoyangaCalendarStandart.slider.jObj = this.jObj;
@@ -528,6 +540,7 @@ VoyangaCalendarStandart.init = function (panel){
 		VoyangaCalendarStandart.subscription.dispose();
 	    VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
 	    VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
+	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
 	}
     });
     if(typeof this.jObj == 'string'){

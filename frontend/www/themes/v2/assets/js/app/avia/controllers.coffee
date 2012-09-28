@@ -28,7 +28,8 @@ class AviaController
     stacked = new AviaResultSet data.flights.flightVoyages
     stacked.injectSearchParams data.searchParams
     stacked.postInit()
-    @render 'results', {results: stacked}
+    # we need observable here to be compatible with tours
+    @render 'results', {results: ko.observable(stacked)}
 
     ko.processAllDeferredBindingUpdates()
 
