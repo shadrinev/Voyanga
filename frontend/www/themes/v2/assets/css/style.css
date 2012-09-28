@@ -374,13 +374,6 @@
 	min-width: 585px;
 	margin: 0 auto;
 }
-.filter-block {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	min-width: 160px;
-	height: 100%;
-}
 /* END */
 /* LEFT BLOCK */
 .left-block {
@@ -859,12 +852,6 @@
     line-height: 13px;
     margin-left: 4px;
     vertical-align: middle;
-}
-.div-filter {
-	/* background: url("../images/shadow-filter.png") no-repeat scroll left 0 transparent; */
-    line-height: 25px;
-    padding-bottom: 8px;
-    /* padding-top: 18px; */
 }
 .lineBg {
 	margin-top: -5px;
@@ -1712,25 +1699,6 @@ input.hotel-input {
 	margin-left: 0px;
 	margin-right: 0px;
 }
-
-
-.scrollBlock {
-	/*
-overflow: hidden;
-    width: 240px;
-*/
-}
-.innerScroll {
-	/*
-height: 787px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding-left: 20px;
-    padding-right: 50px;
-    width: 245px;
-*/
-}
-
 
 .autocomplete {
 	background: #FFF url(../images/autocimTopBg.png) 0px 0px no-repeat;
