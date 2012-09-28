@@ -4,18 +4,17 @@
 #scrollbar1 .viewport {
     height: 250px;
     overflow: hidden;
-    padding-right: 25px;
     position: relative;
     width: 100%;
 }
 #scrollbar1 .overview {
     left: 0;
     list-style: none outside none;
-    margin: 0 20px;
+    margin: 0px;
     padding: 0;
     position: absolute;
     top: 0;
-    width: 195px;
+    width: 235px;
 }
 #scrollbar1 .scrollbar {
     background: url("../images/bg-scrollbar-track-y.png") no-repeat scroll 0 0 transparent;

@@ -366,7 +366,7 @@ function ResizeCenterBlock() {
 		}
 		if (var_filterBlockIsset) {
 			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);
-			var_filterBlock.find('.scrollBlock').find('.viewport').css('width', (widthFilterBlock-30)+'px');
+			var_filterBlock.find('.scrollBlock').find('.viewport, .overview').css('width', (widthFilterBlock - 0)+'px');
 		}
 		if (var_leftBlockIsset) {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock);
@@ -540,31 +540,27 @@ function ResizeFun() {
 //    loginResize();
 }
 function scrolShowFilter() {
-	var oScrollbar5 = $('#scrollbar1');
-	oScrollbar5.tinyscrollbar({ sizethumb: 100 });	
+	$('.scrollBlock').jScrollPane();	
 }
 function scrollValue() {
 	var var_scrollValueTop = $('.wrapper').scrollTop();
 	if (var_scrollValueTop == 0) {
 		$('.filter-content').css('position','relative').css('top','auto');
 		var allHeightFilt = $(window).height() - 179;
-		$('.viewport').css('height',allHeightFilt+'px');
+		$('.scrollBlock').css('height',allHeightFilt+'px');
 		scrolShowFilter();
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < 179 ) {
 		$('.filter-content').css('position','relative').css('top','auto');
 		var allHeightFilt = $(window).height() - (179 - var_scrollValueTop);
-		$('.viewport').css('height',allHeightFilt+'px');
+		$('.scrollBlock').css('height',allHeightFilt+'px');
 		scrolShowFilter();
 	}
 	else if (var_scrollValueTop > 179) {
 		$('.filter-content').css('position','fixed').css('top','-73px');
 		var allHeightFilt = $(window).height();
-		$('.viewport').css('height',allHeightFilt+'px');
+		$('.scrollBlock').css('height',allHeightFilt+'px');
 		scrolShowFilter();
 	}
-	$('.all-list').click(function() {
-		scrolShowFilter();
-	});
 }
 $(window).load(AlphaBackground);

@@ -195,10 +195,12 @@ return CMap::mergeArray(
                             'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js',
                             'js/jquery.color.js', 'js/popup.js',
                             'js/popup-photo.js',
-                            'js/jquery.tinyscrollbar.min.js',
                             'js/tickets.js','js/panel-new.js', 'js/script.js',
                             'js/voyanga-calendar.js', 'js/timeline-calendar.js', 'js/jquery.select.slider.js',
                             'js/jquery.slider.min.js','js/jquery.slider.js', 'js/photoslider.js',
+                            //! Scroll JS
+                            'js/scroll/jquery.mousewheel.js',
+                            'js/scroll/jquery.jscrollpane.min.js',
                             //! Our application logic
                             'js/app/common/calendar.js',
 			                'js/app/common/genericpopup.js',
@@ -226,7 +228,8 @@ return CMap::mergeArray(
                             'css/jslider.round.voyanga.css','css/jsslidecheck.css',
                             'css/panel.css', 'css/voyanga-calendar.css',
                             'css/checkradio.css',
-                            'css/load.css'
+                            'css/load.css',
+                            'css/jquery.jscrollpane.css'
                             ),
                     ),
                 ),

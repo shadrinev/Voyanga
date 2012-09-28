@@ -1,12 +1,48 @@
+.filter-block {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	min-width: 160px;
+	height: 100%;
+	background: #e0e2e7;
+	border-right: 1px solid #b8b9bf;
+	border-left: 1px solid #b8b9bf;
+}
+.scrollBlock {
+	/*
+overflow: hidden;
+    width: 240px;
+*/
+}
+/*
+.innerScroll {
+	height: 787px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-left: 20px;
+    padding-right: 50px;
+    width: 245px;
+
+}
+*/
+.div-filter {
+    border-top: 1px solid #B8B9BF;
+    line-height: 25px;
+    padding: 10px 20px 8px;
+}
 .slider-filter { 
 	height: 23px; width: 100%;
 	position: relative;
 	color: #2e333b;
 	margin-bottom: 11px;
 }
+.slide-filter.first {
+	padding-left: 18px;
+	padding-right: 21px;
+}
 /*--*/
 .slide-filter {
-	margin-bottom: 13px;
+	margin-bottom: 10px;
 	line-height: 15px;
 }
 /*--*/
