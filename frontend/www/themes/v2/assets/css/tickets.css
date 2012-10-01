@@ -502,7 +502,7 @@
     right: -1px;
     top: -4px;
     width: 111px;
-    z-index: 300;
+    z-index: 3;
 }
 .recommended-ticket .ticket-items .content {
 	padding: 15px 20px 0px 20px;
