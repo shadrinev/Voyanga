@@ -40,6 +40,8 @@ AviaPanel = (function(_super) {
   function AviaPanel() {
     this.show = __bind(this.show, this);
 
+    this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
+
     this.selectRoundTrip = __bind(this.selectRoundTrip, this);
 
     this.selectOneWay = __bind(this.selectOneWay, this);
@@ -213,7 +215,6 @@ AviaPanel = (function(_super) {
       }, function() {
         return _this.inside3 = false;
       });
-      console.log($('.tumblr .switch'));
       _this.rtTumbler(_this.rt());
       return $('.how-many-man .btn');
     });
@@ -221,7 +222,6 @@ AviaPanel = (function(_super) {
 
   AviaPanel.prototype.rtTumbler = function(newValue) {
     if (newValue) {
-      console.log($('.tumblr .switch'));
       return $('.tumblr .switch').animate({
         'left': '35px'
       }, 200);
@@ -266,10 +266,15 @@ AviaPanel = (function(_super) {
     return model[prop](model[prop]() - 1);
   };
 
-  AviaPanel.prototype.navigateToNewSearch = function() {
+  AviaPanel.prototype.handlePanelSubmit = function() {
     app.navigate(this.sp.getHash(), {
       trigger: true
     });
+    return this.minimizedCalendar(true);
+  };
+
+  AviaPanel.prototype.navigateToNewSearch = function() {
+    this.handlePanelSubmit();
     return this.minimizedCalendar(true);
   };
 
@@ -278,9 +283,7 @@ AviaPanel = (function(_super) {
       _this = this;
     el = $(event.currentTarget);
     if (!el.hasClass('active')) {
-      console.log("PP OPENENG");
       $(document.body).mousedown(function() {
-        console.log(_this.inside, _this.inside2);
         if (_this.inside || _this.inside2 || _this.inside3) {
           return;
         }
@@ -296,7 +299,6 @@ AviaPanel = (function(_super) {
 
   AviaPanel.prototype.close = function() {
     $(document.body).unbind('mousedown');
-    console.log("PP CLOSED");
     $('.how-many-man .btn').removeClass('active');
     $('.how-many-man .content').removeClass('active');
     return $('.how-many-man').find('.popup').removeClass('active');
