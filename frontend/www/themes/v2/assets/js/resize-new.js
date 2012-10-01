@@ -532,7 +532,8 @@ function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
     smallTicketHeight();
-    
+    scrollValue();
+    console.log('TODO THIS ELEMENT !!!!!!!!!!!!!!!!');
 }
 
 function ResizeFun() {
@@ -550,8 +551,8 @@ function scrolShowFilter() {
 			);
 			var api = $(this).data('jsp');
 			var throttleTimeout;
-			/*
-$(window).bind(
+
+			$(window).bind(
 				'resize',
 				function()
 				{
@@ -574,7 +575,14 @@ $(window).bind(
 					}
 				}
 			);
-*/
+			$('.wrapper').bind(
+				'scroll',
+				function()
+				{
+					api.reinitialise();
+				}
+			);
+
 		}
 	)
 }
@@ -585,7 +593,6 @@ function OneWidthEquelTwoWidth() {
 	else {
 		$('.slide-filter.first').css('padding-right','30px');
 	}
-
 }
 function scrollValue() {
 	var var_marginTopSubHead = $('.sub-head').css('margin-top');
@@ -596,36 +603,32 @@ function scrollValue() {
 	else {
 		var diffrentScrollTop = 110;
 	}
+	
 	if (var_scrollValueTop == 0) {
 		$('.filter-content').css('position','relative').css('top','auto');
-		var allHeightFilt = $(window).height() - diffrentScrollTop;
-		//$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
-		scrolShowFilter();
+		var allHeightFilt = $(window).height() - diffrentScrollTop;		
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
 		$('.filter-content').css('position','relative').css('top','auto');
 		var allHeightFilt = $(window).height() - (diffrentScrollTop - var_scrollValueTop);
 		//$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
-		scrolShowFilter();
 	}
 	else if (var_scrollValueTop > diffrentScrollTop) {
 		$('.filter-content').css('position','fixed').css('top','-73px');
 		var allHeightFilt = $(window).height();
 		//$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
-		scrolShowFilter();
+		//$('.filter-content').css('height',$(window).height()+'px');
 	}
-	/*
-
-	
-	
-*/
-	
+		
 }
 $(window).load(AlphaBackground);
+
 $(window).load(function() {
 	$('.wrapper').scroll(scrollValue);
+	
 	$('.btn-minimizePanel').click(function() {
-		setTimeout(scrollValue, 600);
-	});
+ 		setTimeout(scrollValue, 600);
+ 	});
 });
-$(window).resize(scrollValue);
+
+
