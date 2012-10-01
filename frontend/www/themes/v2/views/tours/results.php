@@ -74,11 +74,11 @@
       <table class="finish-result">
 	<tr>
 	  <td class="txt">Общая стоимость:</td>
-	  <td class="price">65 300 <span class="rur">o</span></td>
+	  <td class="price"><span data-bind="text: price()+savings()">65 300</span> <span class="rur">o</span></td>
 	</tr>
 	<tr>
 	  <td class="txt">Скидка за комплекс:</td>
-	  <td class="price">4 800 <span class="rur">o</span></td>
+	  <td class="price"><span data-bind="text: savings()">4 800</span> <span class="rur">o</span></td>
 	</tr>
       </table>
       <hr class="hr">

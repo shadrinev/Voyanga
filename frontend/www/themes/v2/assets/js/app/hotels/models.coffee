@@ -88,6 +88,8 @@ class Room
 class RoomSet
   constructor: (data, duration = 1) ->
     @price = Math.ceil(data.rubPrice)
+    # Used in tours
+    @savings = 0
     @pricePerNight = Math.ceil(@price / duration)
     @visible = ko.observable(true)
 
@@ -140,6 +142,7 @@ class HotelResult
 
   push: (data) ->
     set = new RoomSet data,@duration
+    set.resultId = data.resultId
     if @roomSets.length == 0
       @cheapest = set.price
       @minPrice = set.pricePerNight
@@ -179,7 +182,6 @@ class HotelResult
   showMapInfo: (context, event)=>
     # FIXME FIXME FIMXE why this code navigates if we wont stop default?
     event.preventDefault()
-    console.log event
     el = $('#hotel-info-tumblr-map')
     if el.hasClass('active')
       return
@@ -288,6 +290,16 @@ class HotelResult
     #FIXME should not be called on details page
     SizeBox('hotels-popup-body')
 
+  # click handler, notify parent container that we want to go back
+  back: =>
+    @trigger 'back'
+
+  select: (room) =>
+    # it is actually cheapest click
+    if room.roomSets
+      room = room.roomSets[0]
+    @trigger 'select', {room: room, hotel: @}
+
   smallMapUrl: =>
       base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
       base += "%7C"
@@ -369,12 +381,7 @@ class HotelsResultSet
       console.log "REFILTER"
 
     @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
-
-  # click handler
-  goToDetails: (hotel) =>
-    console.log hotel
-    window.app.navigate "#hotels/info/#{@cacheId}/#{hotel.hotelId}/", {trigger: true}
-
+    
 
 # Model for Hotel info params,
 # Used in infoAcion controller

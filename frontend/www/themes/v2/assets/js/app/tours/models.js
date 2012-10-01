@@ -8,6 +8,8 @@ TourEntry = (function() {
   function TourEntry() {
     this.rt = __bind(this.rt, this);
 
+    this.savings = __bind(this.savings, this);
+
     this.priceText = __bind(this.priceText, this);
 
     this.price = __bind(this.price, this);
@@ -15,7 +17,7 @@ TourEntry = (function() {
     this.isHotel = __bind(this.isHotel, this);
 
     this.isAvia = __bind(this.isAvia, this);
-
+    _.extend(this, Backbone.Events);
   }
 
   TourEntry.prototype.isAvia = function() {
@@ -38,6 +40,13 @@ TourEntry = (function() {
       return "Не выбрано";
     }
     return this.price() + '<span class="rur">o</span>';
+  };
+
+  TourEntry.prototype.savings = function() {
+    if (this.selection() === null) {
+      return 0;
+    }
+    return 555;
   };
 
   TourEntry.prototype.rt = function() {
@@ -159,6 +168,7 @@ ToursHotelsResultSet = (function(_super) {
   __extends(ToursHotelsResultSet, _super);
 
   function ToursHotelsResultSet(raw, searchParams) {
+    var _this = this;
     this.searchParams = searchParams;
     this.dateHtml = __bind(this.dateHtml, this);
 
@@ -170,9 +180,32 @@ ToursHotelsResultSet = (function(_super) {
 
     this.destinationText = __bind(this.destinationText, this);
 
+    ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
+    this.active_hotel = 0;
+    this.active_result = 0;
     this.template = 'hotels-results';
     this.panel = new HotelsPanel();
     this.results = new HotelsResultSet(raw, this.searchParams);
+    this.results.tours = true;
+    this.results.select = function(hotel) {
+      hotel.tours = true;
+      hotel.off('back');
+      hotel.on('back', function() {
+        return _this.trigger('setActive', _this);
+      });
+      hotel.off('select');
+      hotel.on('select', function(room) {
+        _this.active_hotel = hotel.hotelId;
+        _this.active_result = room.resultId;
+        return _this.selection(room);
+      });
+      hotel.active_result = _this.active_result;
+      return _this.trigger('setActive', {
+        panel: _this.panel,
+        'data': hotel,
+        template: 'hotels-info-template'
+      });
+    };
     this.data = {
       results: this.results
     };
@@ -188,14 +221,14 @@ ToursHotelsResultSet = (function(_super) {
     if (this.selection() === null) {
       return 0;
     }
-    return this.selection().roomSets[0].price;
+    return this.selection().room.price;
   };
 
   ToursHotelsResultSet.prototype.additionalText = function() {
     if (this.selection() === null) {
       return "";
     }
-    return ", " + this.selection().hotelName;
+    return ", " + this.selection().hotel.hotelName;
   };
 
   ToursHotelsResultSet.prototype.dateClass = function() {
@@ -221,7 +254,7 @@ ToursResultSet = (function() {
   function ToursResultSet(raw) {
     this.setActive = __bind(this.setActive, this);
 
-    var variant, _i, _len, _ref,
+    var result, variant, _i, _len, _ref,
       _this = this;
     this.data = [];
     _ref = raw.allVariants;
@@ -230,7 +263,11 @@ ToursResultSet = (function() {
       if (variant.flights) {
         this.data.push(new ToursAviaResultSet(variant.flights.flightVoyages, variant.searchParams));
       } else {
-        this.data.push(new ToursHotelsResultSet(variant.hotels, variant.searchParams));
+        result = new ToursHotelsResultSet(variant.hotels, variant.searchParams);
+        this.data.push(result);
+        result.on('setActive', function(entry) {
+          return _this.setActive(entry);
+        });
       }
     }
     this.selection = ko.observable(this.data[0]);
@@ -244,6 +281,16 @@ ToursResultSet = (function() {
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         item = _ref1[_j];
         sum += item.price();
+      }
+      return sum;
+    });
+    this.savings = ko.computed(function() {
+      var item, sum, _j, _len1, _ref1;
+      sum = 0;
+      _ref1 = _this.data;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        item = _ref1[_j];
+        sum += item.savings();
       }
       return sum;
     });

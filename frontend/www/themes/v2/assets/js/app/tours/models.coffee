@@ -1,4 +1,8 @@
 class TourEntry
+  constructor: ->
+    # Mix in events
+    _.extend @, Backbone.Events
+
   isAvia: =>
     return @avia
   isHotel: =>
@@ -13,7 +17,12 @@ class TourEntry
       return "Не выбрано"
     return @price() + '<span class="rur">o</span>'
 
-    
+  savings: =>
+    if @selection() == null
+      return 0
+
+    return 555
+
   rt: =>
     false
 
@@ -84,10 +93,26 @@ class ToursAviaResultSet extends TourEntry
        
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, @searchParams)->
-    
+    super
+    @active_hotel = 0
+    @active_result = 0
     @template = 'hotels-results'
     @panel = new HotelsPanel()
     @results = new HotelsResultSet raw, @searchParams
+    @results.tours = true
+    @results.select = (hotel) =>
+      hotel.tours = true
+      hotel.off 'back'
+      hotel.on 'back', =>
+        @trigger 'setActive', @
+      hotel.off 'select'
+      hotel.on 'select', (room) =>
+        @active_hotel = hotel.hotelId
+        @active_result = room.resultId
+        @selection room
+
+      hotel.active_result = @active_result
+      @trigger 'setActive', {panel: @panel, 'data':hotel, template: 'hotels-info-template'}
     @data = {results: @results}
     @hotels = true
     @selection = ko.observable null
@@ -99,12 +124,12 @@ class ToursHotelsResultSet extends TourEntry
     if @selection() == null
       return 0
 
-    @selection().roomSets[0].price
+    @selection().room.price
 
   additionalText: =>
     if @selection() == null
       return ""
-    ", " + @selection().hotelName
+    ", " + @selection().hotel.hotelName
 
   dateClass: =>
     'orange-two'
@@ -124,8 +149,11 @@ class ToursResultSet
       if variant.flights
         @data.push new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
       else
-        @data.push new ToursHotelsResultSet variant.hotels, variant.searchParams
-
+        result = new ToursHotelsResultSet variant.hotels, variant.searchParams
+        @data.push result
+        result.on 'setActive', (entry)=>
+          @setActive entry
+          
     @selection = ko.observable @data[0]
     @panel = ko.computed =>
       @selection().panel
@@ -134,6 +162,12 @@ class ToursResultSet
       sum = 0
       for item in @data
         sum += item.price()
+      return sum
+
+    @savings = ko.computed =>
+      sum = 0
+      for item in @data
+        sum += item.savings()
       return sum
 
   setActive: (entry)=>
