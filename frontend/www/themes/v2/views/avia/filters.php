@@ -11,7 +11,7 @@
       </div>
     </div>
 	
-<div class="scrollBlock"> 
+<div class="scrollBlock" id="scroll-pane"> 
     
 	    <div class="div-filter">
 	      <div class="slider-filter">

@@ -366,7 +366,7 @@ function ResizeCenterBlock() {
 		}
 		if (var_filterBlockIsset) {
 			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);
-			var_filterBlock.find('.scrollBlock').find('.viewport, .overview').css('width', (widthFilterBlock - 0)+'px');
+			var_filterBlock.find('.scrollBlock').css('width', (widthFilterBlock - 0)+'px');
 		}
 		if (var_leftBlockIsset) {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock);
@@ -533,6 +533,7 @@ function ResizeAvia() {
     inTheTwoLines();
     smallTicketHeight();
     scrollValue();
+    console.log('TODO THIS ELEMENT !!!!!!!!!!!!!!!!');
 }
 
 function ResizeFun() {
@@ -540,8 +541,50 @@ function ResizeFun() {
 //    loginResize();
 }
 function scrolShowFilter() {
-	$('.scrollBlock').jScrollPane();
-	OneWidthEquelTwoWidth();
+	$('#scroll-pane').each(
+		function()
+		{
+			$(this).jScrollPane(
+				{
+					showArrows: $(this).is('.arrow')
+				}
+			);
+			var api = $(this).data('jsp');
+			var throttleTimeout;
+
+			$(window).bind(
+				'resize',
+				function()
+				{
+					if ($.browser.msie) {
+						// IE fires multiple resize events while you are dragging the browser window which
+						// causes it to crash if you try to update the scrollpane on every one. So we need
+						// to throttle it to fire a maximum of once every 50 milliseconds...
+						if (!throttleTimeout) {
+							throttleTimeout = setTimeout(
+								function()
+								{
+									api.reinitialise();
+									throttleTimeout = null;
+								},
+								300
+							);
+						}
+					} else {
+						api.reinitialise();
+					}
+				}
+			);
+			$('.wrapper').bind(
+				'scroll',
+				function()
+				{
+					api.reinitialise();
+				}
+			);
+
+		}
+	)
 }
 function OneWidthEquelTwoWidth() {
 	if ($('.jspPane').width() == $('.scrollBlock').width() ) {
@@ -550,42 +593,42 @@ function OneWidthEquelTwoWidth() {
 	else {
 		$('.slide-filter.first').css('padding-right','30px');
 	}
-
 }
 function scrollValue() {
-	var var_scrollValueTop = $('.wrapper').scrollTop();
 	var var_marginTopSubHead = $('.sub-head').css('margin-top');
+	var var_scrollValueTop = $('.wrapper').scrollTop();
 	if ($('.sub-head').css('margin-top') != '-67px') {
 		var diffrentScrollTop = 179;
 	}
 	else {
 		var diffrentScrollTop = 110;
 	}
+	
 	if (var_scrollValueTop == 0) {
 		$('.filter-content').css('position','relative').css('top','auto');
-		var allHeightFilt = $(window).height() - diffrentScrollTop;
-		$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
-		scrolShowFilter();
+		var allHeightFilt = $(window).height() - diffrentScrollTop;		
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
 		$('.filter-content').css('position','relative').css('top','auto');
 		var allHeightFilt = $(window).height() - (diffrentScrollTop - var_scrollValueTop);
-		$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
-		scrolShowFilter();
+		//$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
 	}
 	else if (var_scrollValueTop > diffrentScrollTop) {
 		$('.filter-content').css('position','fixed').css('top','-73px');
 		var allHeightFilt = $(window).height();
-		$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
-		scrolShowFilter();
+		//$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
+		//$('.filter-content').css('height',$(window).height()+'px');
 	}
-	
+		
 }
 $(window).load(AlphaBackground);
+
 $(window).load(function() {
 	$('.wrapper').scroll(scrollValue);
+	
 	$('.btn-minimizePanel').click(function() {
-		setTimeout(scrollValue, 600);
-	});
+ 		setTimeout(scrollValue, 600);
+ 	});
 });
-$(window).resize(scrollValue);
+
+

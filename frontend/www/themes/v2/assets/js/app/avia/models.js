@@ -716,11 +716,17 @@ AviaResultSet = (function() {
     return ko.processAllDeferredBindingUpdates();
   };
 
-  scrollValue();
-
-  $('.scrollBlock').scroll(function() {
+  
+/*scrollValue();
+  
+*/
+  scrolShowFilter();
+  console.log('scrolShowFilter();');
+/*
+$('.wrapper').scroll(function() {
     return scrollValue();
   });
+*/
 
   return AviaResultSet;
 

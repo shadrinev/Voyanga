@@ -8,11 +8,31 @@
 	border-right: 1px solid #b8b9bf;
 	border-left: 1px solid #b8b9bf;
 }
+.filter-content {
+	color: #2E333B;
+    margin-top: 35px;
+    width: inherit;
+    height: 100%;
+}
+.filter-content a {
+	color: #1c81bb;
+	border-bottom: 1px dashed;
+}
+.filter-content a.clean {
+	display: inline-block;
+    font-family: Arial;
+    font-size: 11px;
+    line-height: 13px;
+    margin-left: 4px;
+    vertical-align: middle;
+}
 .scrollBlock {
 	/*
 overflow: hidden;
     width: 240px;
 */
+	height:100%;
+	position: absolute;
 }
 .div-filter {
     border-top: 1px solid #B8B9BF;

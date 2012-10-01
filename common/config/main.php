@@ -178,7 +178,7 @@ return array(
         ),
 
         'hotelsRating'=>array(
-            'class'=>'HotelsRatingComponent'
+            'class'=>'common.components.HotelsRatingComponent'
         ),
 
         'httpClient'=>array(
