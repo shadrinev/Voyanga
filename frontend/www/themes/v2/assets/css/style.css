@@ -836,23 +836,7 @@
     width: 116px;
 }
 /*---- filter-content -----*/
-.filter-content {
-	color: #2E333B;
-    margin-top: 35px;
-    width: inherit;
-}
-.filter-content a {
-	color: #1c81bb;
-	border-bottom: 1px dashed;
-}
-.filter-content a.clean {
-	display: inline-block;
-    font-family: Arial;
-    font-size: 11px;
-    line-height: 13px;
-    margin-left: 4px;
-    vertical-align: middle;
-}
+
 .lineBg {
 	margin-top: -5px;
 }
