@@ -41,6 +41,7 @@ class SearchController extends ApiController
         Yii::import('site.frontend.components.*');
         $hotelClient = new HotelBookClient();
         $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
+        Yii::app()->hotelsRating->injectRating($variants, $hotelSearchParams->city);
         $results = array();
         if ($variants['errorStatus'] == 1)
         {
