@@ -385,10 +385,13 @@
 }
 .left-content {
 	margin-top: 35px;
-	margin-left: 32px;
+	margin-left: 12px;
 	color: #1d222b;
 }
 /* MY TRIP LIST */
+.my-trip-list .items {
+	margin-top: -1px;
+}
 .my-trip-list .items a {
 	display: block;
 	background: url(../images/bg-line.png) center -1px no-repeat;
@@ -397,9 +400,9 @@
 	overflow: hidden;
 	color: #2e333b;
 	font-size: 13px;
-	margin-left: -32px;
+	margin-left: -12px;
     margin-right: -10px;
-    padding-left: 32px;
+    padding-left: 12px;
 }
 .my-trip-list .items.first .fly .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -0px transparent;
@@ -423,10 +426,11 @@
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -291px transparent;
 }
 .my-trip-list .items a.active {
-	background: url("../images/slice.png") no-repeat scroll right -27px transparent;
-    margin-left: -32px;
+    background: url("../images/slice.png") no-repeat scroll right -27px transparent;
+    margin-bottom: 1px;
+    margin-left: -12px;
     margin-right: -10px;
-    padding-left: 32px;
+    padding-left: 12px;
 }
 .my-trip-list .items .hotel.active .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -465px transparent;
@@ -451,6 +455,7 @@
 .my-trip-list .items a:hover .date.blue-two, .my-trip-list .items a:hover .date.orange-two {
 	right: 10px !important;
 }
+/*
 .my-trip-list .items a:hover .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -117px transparent;
 }
@@ -463,7 +468,10 @@
 .my-trip-list .items a:hover.active .keys {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -59px transparent;
 }
-
+*/
+.my-trip-list .items a.last:hover .keys:hover {
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -291px transparent;
+}
 .my-trip-list .items a:hover .keys:hover {
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -697px transparent;
 }
@@ -475,9 +483,9 @@
 }
 .my-trip-list .items a:hover.active {
 	background: url("../images/slice.png") no-repeat scroll right -27px transparent;
-    margin-left: -32px;
+    margin-left: -12px;
     margin-right: -10px;
-    padding-left: 32px;
+    padding-left: 12px;
 }
 .my-trip-list .items a:hover.active .date.orange-one, .my-trip-list .items a:hover.active .date.blue-one {
 	right: 54px;
@@ -533,6 +541,11 @@
 	background: url(../images/gradient-left.png) repeat-y;
 	width: 30px;
 	position: absolute; top: 12px; right: 0px; height: 45px;
+}
+.my-trip-list .items a:hover .path .alpha {
+	background: url(../images/gradient-left-hovers.png) repeat-y;
+	width: 30px;
+	position: absolute; top: 12px; right: 0px; height: 44px;
 }
 .my-trip-list .items a.active .path .alpha {
 	background: url(../images/gradient-left-hover.png) repeat-y; 
@@ -608,7 +621,7 @@
 .finish-result .price {
 	width: 40%;
 	text-align: right;
-	padding-right: 11px;
+	padding-right: 12px;
 	color: #1d222b;
 }
 /* SUB HEAD MENU */

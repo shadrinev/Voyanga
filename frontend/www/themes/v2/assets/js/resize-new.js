@@ -18,9 +18,9 @@ var var_widthFilterMAX = 240;
 var var_widthFilterMID = 240;
 var var_widthFilterMIN = 160;
 
-var var_paddingLeftMAX = 32;
-var var_paddingLeftMID = 32;
-var var_paddingLeftMIN = 16;
+var var_paddingLeftMAX = 12;
+var var_paddingLeftMID = 12;
+var var_paddingLeftMIN = 12;
 
 var var_paddingRightSlideMAX = 305;
 var var_paddingRightSlideMID = 305;
