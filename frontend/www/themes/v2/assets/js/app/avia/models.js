@@ -713,20 +713,13 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.filtersRendered = function() {
-    return ko.processAllDeferredBindingUpdates();
+    ko.processAllDeferredBindingUpdates();
+    scrollValue();
+    $('.scrollBlock').scroll(function() {});
+    scrollValue();
+    console.log("ОГОНЬ!!!!");
+    return setTimeout(scrolShowFilter, 1000);
   };
-
-  
-/*scrollValue();
-  
-*/
-  scrolShowFilter();
-  console.log('scrolShowFilter();');
-/*
-$('.wrapper').scroll(function() {
-    return scrollValue();
-  });
-*/
 
   return AviaResultSet;
 

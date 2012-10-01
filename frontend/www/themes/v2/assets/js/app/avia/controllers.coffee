@@ -21,16 +21,14 @@ class AviaController
     @api.search  @searchParams.url(), @handleResults
 
   handleResults: (data) =>
-    
     window.voyanga_debug "searchAction: handling results", data
-
     # temporary development cache
+    console.log data
     stacked = new AviaResultSet data.flights.flightVoyages
     stacked.injectSearchParams data.searchParams
     stacked.postInit()
     # we need observable here to be compatible with tours
     @render 'results', {results: ko.observable(stacked)}
-
     ko.processAllDeferredBindingUpdates()
 
   indexAction: =>

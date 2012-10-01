@@ -518,10 +518,12 @@ class AviaResultSet
 
   filtersRendered: ->
     ko.processAllDeferredBindingUpdates()
-  	scrollValue()
-    scrolShowFilter()
-  	$('.scrollBlock').scroll ->
+    scrollValue()
+    $('.scrollBlock').scroll ->
   		scrollValue()
+    console.log "ОГОНЬ!!!!"
+    setTimeout scrolShowFilter, 1000;
+
 
 
 # Model for avia search params,

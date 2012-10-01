@@ -37,6 +37,7 @@ AviaController = (function() {
   AviaController.prototype.handleResults = function(data) {
     var stacked;
     window.voyanga_debug("searchAction: handling results", data);
+    console.log(data);
     stacked = new AviaResultSet(data.flights.flightVoyages);
     stacked.injectSearchParams(data.searchParams);
     stacked.postInit();

@@ -540,6 +540,7 @@ function ResizeFun() {
 //    loginResize();
 }
 function scrolShowFilter() {
+    console.log("МНУ вызвали");
 	$('#scroll-pane').each(
 		function()
 		{
@@ -578,10 +579,36 @@ function scrolShowFilter() {
 				'scroll',
 				function()
 				{
-					api.reinitialise();
-				}
+                    var throttleTimeout;
+                    if (!throttleTimeout) {
+                        throttleTimeout = setTimeout(
+                            function()
+                            {
+                                api.reinitialise();
+                                throttleTimeout = null;
+                            },
+                            300
+                        );
+                    }
+                }
 			);
-
+            $('.all-list').live(
+                'click',
+                function()
+                {
+                    var throttleTimeout;
+                    if (!throttleTimeout) {
+                        throttleTimeout = setTimeout(
+                            function()
+                            {
+                                api.reinitialise();
+                                throttleTimeout = null;
+                            },
+                            100
+                        );
+                    }
+                }
+            );
 		}
 	)
 }

@@ -77,11 +77,11 @@ Yii::app()->clientScript->registerPackage('everything');
     </div>
     <!-- SLIDE TOURS -->
     <div class="slideTours"
-         data-bind="visible: isEvent(), template: {name: activeView()}">
+         data-bind="visible: isEvent(), template: {name: 'event-index'}">
     </div>
     <!-- END SLIDE TOURS -->
     <!-- FOOTER -->
-    <div class="footer">
+    <div class="footer" data-bind="visible: isEvent()">
         <div class="center-block">
             <ul class="foot-menu">
                 <li><a href="#">О проекте</a></li>
