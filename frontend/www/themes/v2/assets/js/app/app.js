@@ -139,7 +139,7 @@ Application = (function(_super) {
 })(Backbone.Router);
 
 $(function() {
-  var app, avia, hotels;
+  var app, avia, hotels, tour;
   console.time("App dispatching");
   window.voyanga_debug = function() {
     var args;
@@ -149,10 +149,11 @@ $(function() {
   app = new Application();
   avia = new AviaModule();
   hotels = new HotelsModule();
+  tour = new ToursModule();
   window.app = app;
-  app.register('tours', new ToursModule());
+  app.register('tours', tour, true);
   app.register('hotels', hotels);
-  app.register('avia', avia, true);
+  app.register('avia', avia);
   app.run();
   console.timeEnd("App dispatching");
   console.time("Rendering");
