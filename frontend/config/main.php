@@ -205,8 +205,8 @@ return CMap::mergeArray(
                             'js/scroll/jquery.jscrollpane.min.js',
                             //! Our application logic
                             'js/app/common/calendar.js',
-			    'js/app/common/API.js',
-			    'js/app/common/genericpopup.js',
+                            'js/app/common/API.js',
+                            'js/app/common/genericpopup.js',
                             'js/app/common/photobox.js',
                             'js/app/common/module.slider.js',
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
@@ -223,6 +223,11 @@ return CMap::mergeArray(
                             'js/app/tours/controllers.js', 'js/app/tours/models.js',
                             'js/app/tours/module.js', 'js/app/app.js',
                             'js/app/common/autocomplete.js',
+
+                            'js/index.js',
+                            'js/app/events/controllers.js',
+                            'js/app/events/module.js',
+                            'js/app/events/models.js',
                         ),
                         'css' => array(
                             'css/reset.style.css', 'css/style.css',

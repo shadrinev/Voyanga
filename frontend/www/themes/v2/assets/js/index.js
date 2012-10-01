@@ -28,15 +28,15 @@ $(window).resize(slideToursSlide);
 var activeMaps = 0;
 var speedAnimateChangePic = 500;
 function triangleFun() {
-	var stratCount = 0;
+	var startCount = 0;
 	$('.slideTours').find('.active').find('.triangle').animate({'top' : '-17px'}, 200);
 	$('.toursTicketsMain').click(function() {
 		if(activeMaps == 1) {
 			closeEventsMaps();
 		}
-		if(stratCount == 0) {
-			stratCount = 1;
-			if (! $(this).hasClass('active')) {
+		if ((activeMaps == 0) && (startCount==0)) {
+			startCount = 1;
+			if (!$(this).hasClass('active')) {
 				
 				var activeVAR = $('.slideTours').find('.active').index();
 				$('.slideTours').find('.active').find('.triangle').animate({'top' : '0px'}, speedAnimateChangePic, function() {
@@ -62,7 +62,7 @@ function triangleFun() {
 				$('.IMGmain').eq(1).find('img').load(function() {
 					$('.IMGmain').eq(0).animate({opacity : 0}, speedAnimateChangePic, function() { $('.IMGmain:not(:last-child)').remove(); });
 					$('.IMGmain').eq(1).animate({'opacity' : 1, 'left': varLeftPos+'px', 'top':varTopPos+'px'}, speedAnimateChangePic, function() {
-						setTimeout(function() { stratCount = 0; }, 100);
+						setTimeout(function() { startCount = 0; }, 100);
 					});
 				});				
 			}
@@ -104,7 +104,6 @@ function CenterIMGResize() {
 }
 
 $(window).load(CenterIMGResize);
-$(window).resize(CenterIMGResize);
 
 function closeEventsPhoto() {
 	$('.slideTours').find('.active').find('.triangle').animate({'top' : '0px'}, 200);

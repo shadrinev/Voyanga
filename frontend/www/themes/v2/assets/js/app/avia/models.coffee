@@ -519,6 +519,7 @@ class AviaResultSet
   filtersRendered: ->
     ko.processAllDeferredBindingUpdates()
   	scrollValue()
+    scrolShowFilter()
   	$('.scrollBlock').scroll ->
   		scrollValue()
 

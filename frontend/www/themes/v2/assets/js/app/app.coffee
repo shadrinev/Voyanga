@@ -116,6 +116,12 @@ class Application extends Backbone.Router
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
 
+  isNotEvent: =>
+    @activeView() != 'event-index'
+
+  isEvent: =>
+    !@isNotEvent();
+
 $ ->
   console.time "App dispatching"
   window.voyanga_debug = (args...) ->
@@ -126,10 +132,12 @@ $ ->
   avia = new AviaModule()
   hotels = new HotelsModule()
   tour = new ToursModule()
+  event = new EventModule()
   window.app = app
-  app.register 'tours', tour, true
+  app.register 'tours', tour
   app.register 'hotels', hotels
   app.register 'avia', avia
+  app.register 'event', event, true
   app.run()
   console.timeEnd "App dispatching"
   console.time "Rendering"

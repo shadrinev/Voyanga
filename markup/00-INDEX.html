@@ -1,34 +1,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Voyanga v.0.1 - Trip Flight Rework</title>
-<link href="../frontend/www/themes/v2/assets/css/reset.style.css" rel="stylesheet" type="text/css" />
-<link href="../frontend/www/themes/v2/assets/css/style.css" rel="stylesheet" type="text/css" />
-<link href="../frontend/www/themes/v2/assets/css/panel.css" rel="stylesheet" type="text/css" />
-<link href="../frontend/www/themes/v2/assets/css/popup.css" rel="stylesheet" type="text/css" />
-<link href="../frontend/www/themes/v2/assets/css/voyanga-calendar.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Voyanga v.0.1 - Trip Flight Rework</title>
+    <link href="../frontend/www/themes/v2/assets/css/reset.style.css" rel="stylesheet" type="text/css"/>
+    <link href="../frontend/www/themes/v2/assets/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="../frontend/www/themes/v2/assets/css/panel.css" rel="stylesheet" type="text/css"/>
+    <link href="../frontend/www/themes/v2/assets/css/popup.css" rel="stylesheet" type="text/css"/>
+    <link href="../frontend/www/themes/v2/assets/css/voyanga-calendar.css" rel="stylesheet" type="text/css"/>
 
-<!-- JS SLIDE -->
-<link href="../frontend/www/themes/v2/assets/css/jsslidecheck.css" rel="stylesheet" type="text/css" />
-<!-- JS END SLIDE -->
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/jquery.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-2.1.0.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-repeat.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery-ui-1.8.22.custom.min.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.dotdotdot-1.5.1.js"></script>
+    <!-- JS SLIDE -->
+    <link href="../frontend/www/themes/v2/assets/css/jsslidecheck.css" rel="stylesheet" type="text/css"/>
+    <!-- JS END SLIDE -->
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/jquery.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-2.1.0.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/vendor/knockout-repeat.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery-ui-1.8.22.custom.min.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/jquery.dotdotdot-1.5.1.js"></script>
 
-<script type="text/javascript" src="js/resize-new.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/slide-mode.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/popup.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/tickets.js"></script>
+    <script type="text/javascript" src="js/resize-new.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/slide-mode.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/popup.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/tickets.js"></script>
 
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/script.js"></script>
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/voyanga-calendar.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/script.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/voyanga-calendar.js"></script>
 
 
-<script type="text/javascript" src="../frontend/www/themes/v2/assets/js/index.js"></script>
+    <script type="text/javascript" src="../frontend/www/themes/v2/assets/js/index.js"></script>
 
 </head>
 
@@ -36,238 +36,242 @@
 <!-- WRAPPER -->
 <div class="wrapper scroll-none">
 <!-- HEAD -->
-	<div class="head">
-		<div class="center-block">
-			<a href="/" class="logo">Voyanga</a>
-			<a href="/" class="about">О проекте</a>
-			<div class="telefon">
-				<img src="images/tel.png">
-			</div>
-			<div class="slide-turn-mode">
-				<div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
-				<div class="bg-mask"></div>
-				<ul>
-					<li class="planner active btn"><a href="#">Планировщик</a></li>
-					<li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
-					<li class="hotel btn"><a href="#">Отели</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+<div class="head">
+    <div class="center-block">
+        <a href="/" class="logo">Voyanga</a>
+        <a href="/" class="about">О проекте</a>
+
+        <div class="telefon">
+            <img src="images/tel.png">
+        </div>
+        <div class="slide-turn-mode">
+            <div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
+            <div class="bg-mask"></div>
+            <ul>
+                <li class="planner active btn"><a href="#">Планировщик</a></li>
+                <li class="aviatickets btn"><a href="#">Авиабилеты</a></li>
+                <li class="hotel btn"><a href="#">Отели</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 <!--====**********===-->
 <!-- PANEL -->
 <div class="panel-index">
-		
-	<div class="sub-head">
-		<div class="fly-panel">
-			<div class="center-block">
-				<div class="panel">				
-					<div class="path">
-					<div class="data">
-						<input class="input-path" type="text" placeholder="Куда">
-							<div class="tumblr">
-								<label for="there-back">
-									<div class="one"></div>
-									<div class="two"></div>
-									<div class="switch"></div>
-								</label>
-								<input id="there-back" type="checkbox" checked="checked">
-							</div>
-						<input class="input-path" type="text" placeholder="Откуда">
-					</div>
-					<div class="how-many-man">
-						<div class="content"></div>
-						<div class="btn"></div>
-						<div class="popup">
-							<div class="adults">
-								<div class="inputDIV">
-									<input type="text" value="1" name="adult" class="active">
-										<a href="#" class="plusOne">+</a>
-										<a href="#" class="minusOne">-</a>
-								</div>
-								взрослых
-							</div>
-							<div class="childs">
-								<div class="inputDIV">
-									<input type="text" value="0" name="adult2">
-										<a href="#" class="plusOne">+</a>
-										<a href="#" class="minusOne">-</a>
-								</div>
-								детей до 12 лет
-							</div>
-							<div class="small-childs">
-								<div class="inputDIV">
-									<input type="text" value="0" name="adult3">
-										<a href="#" class="plusOne">+</a>
-										<a href="#" class="minusOne">-</a>
-								</div>
-								детей до 2 лет
-							</div>
-							
-						</div>
-					</div>					
-						<a class="btn-find">Найти</a>
-				</div>	
-				</div>		
-			</div>
-			<div class="fly-ico"></div>
-		</div>
-		<div class="navi-l"></div>
-		<div class="navi-r"></div>
-	</div>	
-<div class="calenderWindow" style="top:65px; height:0px;">	
-	<div class="calendarSlide">
-		<div class="innerCalendar">
-			<h1>Выберите дату перелета Санкт-Петербург → Амстердам</h1>
-		</div>
-		<div class="bg-Calendar">	
-			<div id='voyanga-calendar'>
-			    <div class="weekDaysVoyanga">
-			    	<div class="weekDaysVoyangaInner">
-					    <div class="weekDayVoyanga"><span>Понедельник</span></div>
-					    <div class="weekDayVoyanga"><span>Вторник</span></div>
-					    <div class="weekDayVoyanga"><span>Среда</span></div>
-					    <div class="weekDayVoyanga"><span>Четверг</span></div>
-					    <div class="weekDayVoyanga"><span>Пятница</span></div>
-					    <div class="weekDayVoyanga weekEnd"><span>Суббота</span></div>
-					    <div class="weekDayVoyanga weekEnd"><span>Воскресенье</span></div>
-			    	</div>
-			    </div>
-			    <div class="calendarUnscrollVoyanga">
-			        <div class="calendarGridVoyanga">
-			            <div class="calendarDIVVoyanga"></div>
-			        </div>
-			    </div>
-			    <div class="monthLineVoyanga"><div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div></div>
-			</div>		
-		</div>
-	</div>
-</div>
+
+    <div class="sub-head">
+        <div class="fly-panel">
+            <div class="center-block">
+                <div class="panel">
+                    <div class="path">
+                        <div class="data">
+                            <input class="input-path" type="text" placeholder="Куда">
+
+                            <div class="tumblr">
+                                <label for="there-back">
+                                    <div class="one"></div>
+                                    <div class="two"></div>
+                                    <div class="switch"></div>
+                                </label>
+                                <input id="there-back" type="checkbox" checked="checked">
+                            </div>
+                            <input class="input-path" type="text" placeholder="Откуда">
+                        </div>
+                        <div class="how-many-man">
+                            <div class="content"></div>
+                            <div class="btn"></div>
+                            <div class="popup">
+                                <div class="adults">
+                                    <div class="inputDIV">
+                                        <input type="text" value="1" name="adult" class="active">
+                                        <a href="#" class="plusOne">+</a>
+                                        <a href="#" class="minusOne">-</a>
+                                    </div>
+                                    взрослых
+                                </div>
+                                <div class="childs">
+                                    <div class="inputDIV">
+                                        <input type="text" value="0" name="adult2">
+                                        <a href="#" class="plusOne">+</a>
+                                        <a href="#" class="minusOne">-</a>
+                                    </div>
+                                    детей до 12 лет
+                                </div>
+                                <div class="small-childs">
+                                    <div class="inputDIV">
+                                        <input type="text" value="0" name="adult3">
+                                        <a href="#" class="plusOne">+</a>
+                                        <a href="#" class="minusOne">-</a>
+                                    </div>
+                                    детей до 2 лет
+                                </div>
+
+                            </div>
+                        </div>
+                        <a class="btn-find">Найти</a>
+                    </div>
+                </div>
+            </div>
+            <div class="fly-ico"></div>
+        </div>
+        <div class="navi-l"></div>
+        <div class="navi-r"></div>
+    </div>
+    <div class="calenderWindow" style="top:65px; height:0px;">
+        <div class="calendarSlide">
+            <div class="innerCalendar">
+                <h1>Выберите дату перелета Санкт-Петербург → Амстердам</h1>
+            </div>
+            <div class="bg-Calendar">
+                <div id='voyanga-calendar'>
+                    <div class="weekDaysVoyanga">
+                        <div class="weekDaysVoyangaInner">
+                            <div class="weekDayVoyanga"><span>Понедельник</span></div>
+                            <div class="weekDayVoyanga"><span>Вторник</span></div>
+                            <div class="weekDayVoyanga"><span>Среда</span></div>
+                            <div class="weekDayVoyanga"><span>Четверг</span></div>
+                            <div class="weekDayVoyanga"><span>Пятница</span></div>
+                            <div class="weekDayVoyanga weekEnd"><span>Суббота</span></div>
+                            <div class="weekDayVoyanga weekEnd"><span>Воскресенье</span></div>
+                        </div>
+                    </div>
+                    <div class="calendarUnscrollVoyanga">
+                        <div class="calendarGridVoyanga">
+                            <div class="calendarDIVVoyanga"></div>
+                        </div>
+                    </div>
+                    <div class="monthLineVoyanga">
+                        <div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END PANEL -->
 <!--====**********===-->
 <!-- SLIDE TOURS -->
-	<div class="slideTours">
-		<div class="center">
-		<div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/event1.jpg">
-			<div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
-			<div class="innerTours">
-				<div class="imgTours">
-					<img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
-				</div>
-				<div class="textTours">
-					Пять дней в столице Англии<br>
-					от <span class="price">15 250</span> <span class="rur">o</span>
-				</div>
-			</div>
-			<div class="l"></div>
-			<div class="r"><a href="#1" class="lookEyes"></a></div>
-		</div>
-		<div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/event2.jpg">
-			<div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
-			<div class="innerTours">
-				<div class="imgTours">
-					<img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
-				</div>
-				<div class="textTours">
-					Пять дней в столице Англии<br>
-					от <span class="price">15 250</span> <span class="rur">o</span>
-				</div>
-			</div>
-			<div class="l"></div>
-			<div class="r"><a href="#2" class="lookEyes"></a></div>
-		</div>
-		<div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/picIndexPage.png">
-			<div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
-			<div class="innerTours">
-				<div class="imgTours">
-					<img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
-				</div>
-				<div class="textTours" rel="../frontend/www/themes/v2/assets/images/event2.jpg">
-					Пять дней в столице Англии<br>
-					от <span class="price">15 250</span> <span class="rur">o</span>
-				</div>
-			</div>
-			<div class="l"></div>
-			<div class="r"><a href="#3" class="lookEyes"></a></div>
-		</div>
-		<div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/event1.jpg">
-			<div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
-			<div class="innerTours">
-				<div class="imgTours">
-					<img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
-				</div>
-				<div class="textTours">
-					Пять дней в столице Англии<br>
-					от <span class="price">15 250</span> <span class="rur">o</span>
-				</div>
-			</div>
-			<div class="l"></div>
-			<div class="r"><a href="#4" class="lookEyes"></a></div>
-		</div>
-		<div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/event2.jpg">
-			<div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
-			<div class="innerTours">
-				<div class="imgTours">
-					<img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
-				</div>
-				<div class="textTours">
-					Пять дней в столице Англии<br>
-					от <span class="price">15 250</span> <span class="rur">o</span>
-				</div>
-			</div>
-			<div class="l"></div>
-			<div class="r"><a href="#5" class="lookEyes"></a></div>
-		</div>
-		<div class="toursTicketsMain active" rel="../frontend/www/themes/v2/assets/images/picIndexPage.png">
-			<div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
-			<div class="innerTours">
-				<div class="imgTours">
-					<img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
-				</div>
-				<div class="textTours">
-					Пять дней в столице Англии<br>
-					от <span class="price">15 250</span> <span class="rur">o</span>
-				</div>
-			</div>
-			<div class="l"></div>
-			<div class="r"><a href="#6" class="lookEyes"></a></div>
-		</div>
-		</div>
-	</div>
+<div class="slideTours">
+    <div class="center">
+        <div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/event1.jpg">
+            <div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
+            <div class="innerTours">
+                <div class="imgTours">
+                    <img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
+                </div>
+                <div class="textTours">
+                    Пять дней в столице Англии<br>
+                    от <span class="price">15 250</span> <span class="rur">o</span>
+                </div>
+            </div>
+            <div class="l"></div>
+            <div class="r"><a href="#1" class="lookEyes"></a></div>
+        </div>
+        <div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/event2.jpg">
+            <div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
+            <div class="innerTours">
+                <div class="imgTours">
+                    <img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
+                </div>
+                <div class="textTours">
+                    Пять дней в столице Англии<br>
+                    от <span class="price">15 250</span> <span class="rur">o</span>
+                </div>
+            </div>
+            <div class="l"></div>
+            <div class="r"><a href="#2" class="lookEyes"></a></div>
+        </div>
+        <div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/picIndexPage.png">
+            <div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
+            <div class="innerTours">
+                <div class="imgTours">
+                    <img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
+                </div>
+                <div class="textTours" rel="../frontend/www/themes/v2/assets/images/event2.jpg">
+                    Пять дней в столице Англии<br>
+                    от <span class="price">15 250</span> <span class="rur">o</span>
+                </div>
+            </div>
+            <div class="l"></div>
+            <div class="r"><a href="#3" class="lookEyes"></a></div>
+        </div>
+        <div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/event1.jpg">
+            <div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
+            <div class="innerTours">
+                <div class="imgTours">
+                    <img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
+                </div>
+                <div class="textTours">
+                    Пять дней в столице Англии<br>
+                    от <span class="price">15 250</span> <span class="rur">o</span>
+                </div>
+            </div>
+            <div class="l"></div>
+            <div class="r"><a href="#4" class="lookEyes"></a></div>
+        </div>
+        <div class="toursTicketsMain" rel="../frontend/www/themes/v2/assets/images/event2.jpg">
+            <div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
+            <div class="innerTours">
+                <div class="imgTours">
+                    <img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
+                </div>
+                <div class="textTours">
+                    Пять дней в столице Англии<br>
+                    от <span class="price">15 250</span> <span class="rur">o</span>
+                </div>
+            </div>
+            <div class="l"></div>
+            <div class="r"><a href="#5" class="lookEyes"></a></div>
+        </div>
+        <div class="toursTicketsMain active" rel="../frontend/www/themes/v2/assets/images/picIndexPage.png">
+            <div class="triangle"><img src="../frontend/www/themes/v2/assets/images/triangle.png"></div>
+            <div class="innerTours">
+                <div class="imgTours">
+                    <img src="../frontend/www/themes/v2/assets/images/picToursSmall.png">
+                </div>
+                <div class="textTours">
+                    Пять дней в столице Англии<br>
+                    от <span class="price">15 250</span> <span class="rur">o</span>
+                </div>
+            </div>
+            <div class="l"></div>
+            <div class="r"><a href="#6" class="lookEyes"></a></div>
+        </div>
+    </div>
+</div>
 <!-- END SLIDE TOURS -->
 <!-- FOOTER -->
-	<div class="footer">
-		<div class="center-block">
-			<ul class="foot-menu">
-				<li><a href="#">О проекте</a></li>
-				<li><a href="#">Вопросы и ответы</a></li>
-				<li><a href="#">Контакты</a></li>
-			</ul>
-		</div>
-	</div>
+<div class="footer">
+    <div class="center-block">
+        <ul class="foot-menu">
+            <li><a href="#">О проекте</a></li>
+            <li><a href="#">Вопросы и ответы</a></li>
+            <li><a href="#">Контакты</a></li>
+        </ul>
+    </div>
+</div>
 <!-- END FOOTER-->
 </div>
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <div class="maps">
-	<div class="innerBlockMain">
-		<div class="mapsBigAll"></div>
-		<div class="toursBigAll">
-			<div class="centerTours">
-				<div class="close" onclick="closeEventsPhoto()"></div>
-				<div class="IMGmain">
-					<img src="../frontend/www/themes/v2/assets/images/picIndexPage.png">
-				</div>
-				<a href="#" class="textTours">
-					<span class="txt">Гран-при Италии, гонки F1 на самой быстрой трассе сезона</span><br>
+    <div class="innerBlockMain">
+        <div class="mapsBigAll"></div>
+        <div class="toursBigAll">
+            <div class="centerTours">
+                <div class="close" onclick="closeEventsPhoto()"></div>
+                <div class="IMGmain">
+                    <img src="../frontend/www/themes/v2/assets/images/picIndexPage.png">
+                </div>
+                <a href="#" class="textTours">
+                    <span class="txt">Гран-при Италии, гонки F1 на самой быстрой трассе сезона</span><br>
 					<span class="priceSelect">
 						<span class="price">15 250</span> <span class="rur">o</span>
 					</span>
-				</a>
-			</div>
-		</div>
-	</div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END MAPS -->
 </body>

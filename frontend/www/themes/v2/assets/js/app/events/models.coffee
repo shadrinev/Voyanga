@@ -12,6 +12,8 @@ class Event extends Backbone.Events
     @tags = ko.observableArray new EventTagSet(data.tags)
     @prices = ko.observableArray new EventPriceSet(data.prices)
     @tour = ko.observable new EventTour(data.tour)
+    @image = ko.observable data.image
+    @thumb = ko.observable data.thumb
 
   duration: ->
     dateUtils.formatDuration @_duration
@@ -24,8 +26,9 @@ class EventCategory
 class EventCategorySet
   constructor: (data) ->
     set = []
-    data.each (i, eventCategory) ->
+    $.each data, (i, eventCategory) ->
       set.push new EventCategory(eventCategory)
+    return set
 
 class EventLink
   constructor: (data) ->
@@ -35,8 +38,9 @@ class EventLink
 class EventLinkSet
   constructor: (data) ->
     set = []
-    data.each (i, eventLink) ->
-      set.push new EventLink(eventLink)    
+    $.each data, (i, eventLink) ->
+      set.push new EventLink(eventLink)
+    return set
 
 class EventTag
   constructor: (data) ->
@@ -45,8 +49,9 @@ class EventTag
 class EventTagSet
   constructor: (data) ->
     set = []
-    data.each (i, eventTag) ->
+    $.each data, (i, eventTag) ->
       set.push new EventTag(eventTag)
+    return set
 
 class City
   constructor: (data) ->
@@ -60,20 +65,60 @@ class EventPrice
 class EventPriceSet
   constructor: (data) ->
     set = []
-    data.each (i, eventPrice) ->
+    $.each data, (i, eventPrice) ->
       set.push new EventPrice(eventPrice)
+    return set
 
-events =
-  [{
+class EventTour
+  constructor: (data) ->
+    @name = data.name
+
+eventsRaw =
+  [
+    {
     "startDate": "Иван",
     "endDate": "Иванов",
-    "address": "Московское ш., 101, кв.101 ,Ленинград, 101101"
-    "contact":  "812 123-1234",
-    "preview":  "<img src='http://img1-fotki.yandex.net/get/6412/64844073.1d/0_STATIC87fc9_6cd8e943_M'>",
-    "description":  "<img src='http://img1-fotki.yandex.net/get/6412/64844073.1d/0_STATIC87fc9_6cd8e943_L'>",
-    "title":  "Осень",
-    "categories":  [{
+    "address": "Московское ш., 101, кв.101, Ленинград, 101101"
+    "contact": "812 123-1234",
+    "thumb": "http://img1-fotki.yandex.net/get/6412/64844073.1d/0_STATIC87fc9_6cd8e943_M",
+    "preview": "Превью будет здесь",
+    "description": "Здесь будет описание",
+    "image": "http://img1-fotki.yandex.net/get/6412/64844073.1d/0_STATIC87fc9_6cd8e943_L",
+    "title": "Осень",
+    "categories": [
+      {
       "id": 1,
       "title": "Осень"
-      }],
-  }]
+      }
+    ],
+    "links": [
+      {
+      "title": "Осень"
+      "url": "http://ya.ru"
+      }
+    ],
+    "tags": [
+      {
+      "name": "tag1"
+      },
+      {
+      "name": "tag2"
+      }
+    ],
+    "prices": [
+      {
+      "city":
+        {
+        "title": 'Москва'
+        }
+      "price": 12500
+      }
+    ],
+    "tour": [
+      "name": 'Отдых за 12500'
+    ]
+    }
+  ]
+
+event = new Event(eventsRaw[0])
+console.log "EVENT: ",event

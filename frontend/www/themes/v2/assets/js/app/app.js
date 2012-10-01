@@ -10,6 +10,10 @@ Application = (function(_super) {
   __extends(Application, _super);
 
   function Application() {
+    this.isEvent = __bind(this.isEvent, this);
+
+    this.isNotEvent = __bind(this.isNotEvent, this);
+
     this.contentRendered = __bind(this.contentRendered, this);
 
     this.initCalendar = __bind(this.initCalendar, this);
@@ -134,12 +138,20 @@ Application = (function(_super) {
     return ResizeFun();
   };
 
+  Application.prototype.isNotEvent = function() {
+    return this.activeView() !== 'event-index';
+  };
+
+  Application.prototype.isEvent = function() {
+    return !this.isNotEvent();
+  };
+
   return Application;
 
 })(Backbone.Router);
 
 $(function() {
-  var app, avia, hotels, tour;
+  var app, avia, event, hotels, tour;
   console.time("App dispatching");
   window.voyanga_debug = function() {
     var args;
@@ -150,10 +162,12 @@ $(function() {
   avia = new AviaModule();
   hotels = new HotelsModule();
   tour = new ToursModule();
+  event = new EventModule();
   window.app = app;
-  app.register('tours', tour, true);
+  app.register('tours', tour);
   app.register('hotels', hotels);
   app.register('avia', avia);
+  app.register('event', event, true);
   app.run();
   console.timeEnd("App dispatching");
   console.time("Rendering");

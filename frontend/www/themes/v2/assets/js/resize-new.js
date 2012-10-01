@@ -533,7 +533,6 @@ function ResizeAvia() {
     inTheTwoLines();
     smallTicketHeight();
     scrollValue();
-    console.log('TODO THIS ELEMENT !!!!!!!!!!!!!!!!');
 }
 
 function ResizeFun() {
