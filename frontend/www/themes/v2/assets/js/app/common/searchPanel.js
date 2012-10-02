@@ -55,13 +55,19 @@ SearchPanel = (function() {
     heightCalendar2 = heightSubHead;
     if (!minimizedCalendar) {
       this.calendarHidden(false);
+      $('.calenderWindow .calendarSlide').animate({
+        'top': '0px'
+      });
       return $('.calenderWindow').animate({
-        'top': (heightSubHead + 1) + 'px'
+        'height': '341px'
       }, speed);
     } else {
       this.calendarShadow(true);
+      $('.calenderWindow .calendarSlide').animate({
+        'top': '-341px'
+      });
       return $('.calenderWindow').animate({
-        'top': '-' + heightCalendar1 + 'px'
+        'height': '0px'
       }, speed, function() {
         return _this.calendarShadow(false);
       });
@@ -90,6 +96,7 @@ SearchPanel = (function() {
   };
 
   SearchPanel.prototype.showCalendar = function() {
+    $('.calenderWindow').show();
     if (this.minimizedCalendar()) {
       return this.minimizedCalendar(false);
     }

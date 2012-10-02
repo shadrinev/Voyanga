@@ -51,25 +51,28 @@ Yii::app()->clientScript->registerPackage('everything');
     <!-- END HEAD -->
     <!--====**********===-->
     <!-- SUB HEAD -->
-    <div class="sub-head"
-         data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden(), zIndexTopUp: fakoPanel().calendarShadow()}">
-        <!-- CENTER BLOCK -->
-        <div class="center-block">
-            <!-- PANEL -->
-            <div class="panel"
-                 data-bind="template: { name: fakoPanel().template, data: fakoPanel, afterRender: fakoPanel().afterRender }">
+    <div data-bind="css: {'panel-index': isEvent()}">
+        <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden(), zIndexTopUp: fakoPanel().calendarShadow()}">
+            <div data-bind="css: {'fly-panel': isEvent()}">
+                <!-- CENTER BLOCK -->
+                <div class="center-block">
+                    <!-- PANEL -->
+                    <div class="panel"
+                         data-bind="template: { name: fakoPanel().template, data: fakoPanel, afterRender: fakoPanel().afterRender }">
+                    </div>
+                    <!-- END PANEL -->
+                </div>
+                <!-- END CENTER BLOCK -->
             </div>
-            <!-- END PANEL -->
         </div>
-        <!-- END CENTER BLOCK -->
+        <!-- CALENDAR -->
+        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}"
+             style="top: 70px; display: none;">
+        </div>
+        <!-- END CALENDAR -->
+        <!--====**********===-->
     </div>
     <!-- END SUB HEAD -->
-    <!--====**********===-->
-    <!-- CALENDAR -->
-    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}"
-         style="margin-top: 36px; top: -341px;">
-    </div>
-    <!-- END CALENDAR -->
     <!--====**********===-->
     <!-- ALL CONTENT -->
     <div class="center-block"
