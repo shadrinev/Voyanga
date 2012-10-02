@@ -102,12 +102,19 @@
       <div id="photoBox">
 	<div class="left" data-bind="visible: activeIndex()!=0, click: prev"></div>
 	<div class="right" data-bind="visible: activeIndex()!=length0, click: next"></div>
-	<div id="imgContent">
-          <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
+	<div id="titleNamePhoto">
+		<h2>Рэдиссон Соня Отель</h2>
+		<div class="stars three"></div>
 	</div>
+	<div id="imgContent">
+			<div class="countAndClose">11<span class="lost">/17</span> <div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div></div>
+          <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
+          	
+	</div>
+		<div class="keyBoard"></div>
       </div>
     </div>
-    <div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div>
+    
   </div>
 </script>
 <script type="text/html" id="hotels-body-popup-template">
