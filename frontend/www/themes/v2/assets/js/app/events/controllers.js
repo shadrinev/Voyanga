@@ -64,7 +64,8 @@ EventController = (function() {
     });
     eventSet = new EventSet(events);
     console.log("EVENT: eventset = ", eventSet);
-    return this.render('index', eventSet);
+    this.render('index', eventSet);
+    return ResizeAvia();
   };
 
   EventController.prototype.render = function(view, data) {

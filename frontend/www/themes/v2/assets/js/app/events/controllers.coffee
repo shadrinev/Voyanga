@@ -41,6 +41,7 @@ class EventController
     eventSet = new EventSet(events)
     console.log "EVENT: eventset = ", eventSet
     @render 'index', eventSet
+    ResizeAvia()
 
   render: (view, data) ->
     console.log data

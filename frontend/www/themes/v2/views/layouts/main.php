@@ -35,7 +35,7 @@ Yii::app()->clientScript->registerPackage('everything');
                     </li>
                     <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a
                             href="#hotels">Отели</a></li>
-                    <li id="h-event-slider" class="finish-stages btn" data-bind="click: slider.click"><a href="#events">Готовые туры</a></li>
+                    <li id="h-event-slider" class="finish-stages btn" data-bind="click: slider.click"><a href="#events">События</a></li>
                 </ul>
             </div>
 
