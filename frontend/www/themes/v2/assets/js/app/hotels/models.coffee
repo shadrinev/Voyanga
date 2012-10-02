@@ -78,8 +78,17 @@ class HotelStarsFilter extends HotelFilter
 class Room
   constructor: (data) ->
     @name = data.showName
-    @meal = data.mealName
+    @nameNemo = data.roomNemoName
+    if @nameNemo != '' and typeof @nameNemo != 'undefined'
+      @haveNemoName = true
+    else
+      @haveNemoName = false
+      @nameNemo = ''
 
+    @meal = data.meal
+
+    #if data.mealBreakfast != '' and typeof data.mealBreakfast != 'undefined'
+    #  @meal = data.mealBreakfast
     if typeof @meal == "undefined" || @meal == ''
       @meal = 'Не известно'
     #console.log(@meal)

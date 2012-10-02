@@ -168,7 +168,14 @@ Room = (function() {
 
   function Room(data) {
     this.name = data.showName;
-    this.meal = data.mealName;
+    this.nameNemo = data.roomNemoName;
+    if (this.nameNemo !== '' && typeof this.nameNemo !== 'undefined') {
+      this.haveNemoName = true;
+    } else {
+      this.haveNemoName = false;
+      this.nameNemo = '';
+    }
+    this.meal = data.meal;
     if (typeof this.meal === "undefined" || this.meal === '') {
       this.meal = 'Не известно';
     }

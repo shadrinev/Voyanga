@@ -299,10 +299,10 @@ VoyangaCalendarTimeline.generateHotelDiv = function (HotelEvent) {
     var dayWidth = this.dayCellWidth;
     var setWidth = dayWidth * totalDays - dayWidth + 0.1;
     var outHtml = '<div class="yourTrip" style="width: ' + (setWidth) + '%">';
-    outHtml = outHtml + '<div class="startYourTours"></div><div class="startHotel"></div>';
+    outHtml = outHtml + '<div class="startHotel"></div>';
     outHtml = outHtml + '<div class="pathHotel"></div><div class="endHotel"></div>';
     outHtml = outHtml + '<div class="nameHotel">' + HotelEvent.description + '</div>';
-    outHtml = outHtml + '<div class="endYourTours"><div></div></div>';
+    outHtml = outHtml + '</div></div>';
 
     //outHtml = '<div class="yourTrip"><div class="startHotel"></div><div class="pathHotel"></div><div class="endHotel"></div><div class="nameHotel" style="color: rgb(234, 239, 243); position: absolute; top: 49px; z-index: 210; left: 16px;">Рэдиссон Соня Отель, Амстердам</div></div>';
     return outHtml;
@@ -349,8 +349,8 @@ VoyangaCalendarTimeline.generateFlightDiv = function (FlightEvent) {
     var outHtml = '<div class="'+flyTripClass+'" style="width: ' + (dayWidth * totalDays) + '%"><div class="startYourTours"></div><div class="tripFlyAll">';
     outHtml = outHtml + '<div class="jetFly'+jetFlyClass+'" style="top: 4px;"></div><img width="100%" height="40" src="'+imgPath+'">';
     outHtml = outHtml + '</div>';
-    outHtml = outHtml + '<div class="startNameCity">' + names[0] + ' →</div>';
-    outHtml = outHtml + '<div class="endNameCity">→ ' + names[1] + '</div>';
+    outHtml = outHtml + '<div class="startNameCity">' + names[0] + '</div>';
+    outHtml = outHtml + '<div class="endNameCity">' + names[1] + '</div>';
     outHtml = outHtml + '<div class="endYourTours"><div></div>';
     return outHtml;
 }
@@ -359,6 +359,54 @@ VoyangaCalendarTimeline.generateEvents = function () {
     this.dayCellWidth = this.jObj.find('.dayCellVoyanga:first').width() + 2;
     this.dayCellWidth = 14.28;
     //Need width %
+    var eventDays = {};
+
+
+    for (var i in this.calendarEvents) {
+        var dt = this.calendarEvents[i].dayStart;
+        var dateLabel = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
+        if(typeof eventDays[dateLabel] != 'object'){
+            eventDays[dateLabel] = {types: {}, starts: new Array(), count: 0};
+        }
+
+        if(typeof eventDays[dateLabel].types[this.calendarEvents[i].type] != 'object'){
+            eventDays[dateLabel].types[this.calendarEvents[i].type] = {s: new Array(), e: new Array()};
+        }
+        eventDays[dateLabel].types[this.calendarEvents[i].type].s.push(i);
+
+
+        var dt = this.calendarEvents[i].dayEnd;
+        var dateLabel = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
+
+        if(typeof eventDays[dateLabel] != 'object'){
+            eventDays[dateLabel] = {types: {}, starts: new Array(), count: 0};
+        }
+
+        if(typeof eventDays[dateLabel].types[this.calendarEvents[i].type] != 'object'){
+            eventDays[dateLabel].types[this.calendarEvents[i].type] = {s: new Array(), e: new Array()};
+        }
+        eventDays[dateLabel].types[this.calendarEvents[i].type].e.push(i);
+    }
+
+    for(var key in eventDays){
+        var endIds = {};
+        var startIds = {};
+        if(typeof eventDays[dateLabel].types['flight'] == 'object'){
+            for(var fIndS in eventDays[dateLabel].types['flight'].s){
+                sInd = eventDays[dateLabel].types['flight'].s[fIndS];
+                var find = false;
+                for(var fIndE in eventDays[dateLabel].types['flight'].e){
+                    eInd = eventDays[dateLabel].types['flight'].e[fIndE];
+                    if(this.calendarEvents[sInd].cityFrom == this.calendarEvents[eInd].cityTo){
+                        this.calendarEvents[eInd].endPoint = false;
+                        this.calendarEvents[eInd].showEndCity = false;
+                        find = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     var firstElem = true;
     var lastId = 0;
@@ -484,6 +532,12 @@ VoyangaCalendarTimeline.prepareEvents = function () {
     $.each(this.calendarEvents, function (ind, el) {
         el.dayStart = Date.fromIso(el.dayStart);
         el.dayEnd = Date.fromIso(el.dayEnd);
+        if(el.type == 'flight'){
+            el.startPoint = true;
+            el.endPoint = true;
+            el.showStartCity = true;
+            el.showEndCity = true;
+        }
     });
 }
 
