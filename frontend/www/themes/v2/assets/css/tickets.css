@@ -1055,12 +1055,18 @@
 	color: #525559;
 }
 .tickets-details .content .aviacompany {
-	color: #1D222B;
+	color: #aaaeb3;
     float: right;
     line-height: 16px;
     padding-top: 7px;
-    text-align: center;
+    text-align: left;
     width: 160px;
+}
+.tickets-details .content .aviacompany img {
+	margin-bottom: 3px;
+}
+.tickets-details .content .aviacompany span {
+	color: #1D222B;
 }
 .tickets-details .content .information .time-fly {
 	height: 23px;
