@@ -74,9 +74,15 @@ class AviaPanel extends SearchPanel
       @departureCity() && @arrivalCity()
 
     @maximizedCalendar.subscribe (newValue) =>
-      if newValue && (!@fromChosen() || !@rtFromChosen())
+      if !newValue
+        return
+      if @rt() && !@rtFromChosen()
         @showCalendar()
-
+        return
+      if !@fromChosen()
+        @showCalendar()
+        return
+        
     @calendarValue = ko.computed =>
       twoSelect: @rt()
       from: @departureDate()
