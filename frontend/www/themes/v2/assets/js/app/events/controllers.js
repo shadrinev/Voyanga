@@ -40,7 +40,7 @@ EventController = (function() {
 
 
   EventController.prototype.handleResults = function(data) {
-    return window.voyanga_debug("searchAction: handling results", data);
+    return window.voyanga_debug("EVENT searchAction: handling results", data);
   };
 
   /*
@@ -56,11 +56,19 @@ EventController = (function() {
 
 
   EventController.prototype.indexAction = function() {
+    var eventSet, events;
     window.voyanga_debug("EVENT: invoking indexAction");
-    return this.render('index', {});
+    events = [];
+    $.each(window.eventsRaw, function(i, el) {
+      return events.push(new Event(el));
+    });
+    eventSet = new EventSet(events);
+    console.log("EVENT: eventset = ", eventSet);
+    return this.render('index', eventSet);
   };
 
   EventController.prototype.render = function(view, data) {
+    console.log(data);
     return this.trigger("viewChanged", view, data);
   };
 

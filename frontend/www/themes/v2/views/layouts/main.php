@@ -14,7 +14,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <script type="text/javascript" src="/js/iedebug.js"></script>
 </head>
 
-<body>
+<body data-bind="css: {fixed: isEvent()}">
 <div class="wrapper">
     <div class="head" id="header">
         <!-- CENTER BLOCK -->
@@ -73,11 +73,11 @@ Yii::app()->clientScript->registerPackage('everything');
     <!--====**********===-->
     <!-- ALL CONTENT -->
     <div class="center-block"
-         data-bind="visible: isNotEvent(), template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
+         data-bind="template: {if: isNotEvent(), name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
     <!-- SLIDE TOURS -->
     <div class="slideTours"
-         data-bind="visible: isEvent(), template: {name: 'event-index'}">
+         data-bind="template: {if: isEvent(), name: activeView(), data: viewData(), afterRender: mapRendered}">
     </div>
     <!-- END SLIDE TOURS -->
     <!-- FOOTER -->
@@ -96,7 +96,7 @@ Yii::app()->clientScript->registerPackage('everything');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <div class="maps"
-     data-bind="visible: isEvent(), template: {name: 'event-map'}">
+     data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}">
 </div>
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>

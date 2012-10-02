@@ -116,6 +116,10 @@ class Application extends Backbone.Router
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
 
+  mapRendered: (elem) =>
+    console.log "Map Rendered"
+    $('.slideTours').find('.active').find('.triangle').animate({'top' : '-17px'}, 200);
+
   isNotEvent: =>
     @activeView() != 'event-index'
 

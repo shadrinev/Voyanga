@@ -1781,6 +1781,7 @@ input.hotel-input {
 	position: fixed; width: 100%; height: 100%; overflow: hidden;
 	background: url(../images/bg-index.png);
 	z-index: 0;
+    top: 0px; left: 0px;
 	
 }
 .scroll-none { overflow: hidden;}
@@ -1877,14 +1878,17 @@ input.hotel-input {
 .maps .innerBlockMain .IMGmain {
 	position: absolute;
 	width: 1390px;
-	z-index: 1;
-}
-.maps .innerBlockMain .IMGmain + .IMGmain {
 	z-index: 2;
+}
+
+.maps .innerBlockMain .IMGmain + .IMGmain {
+	z-index: 1;
 }
 .maps .innerBlockMain .IMGmain img {
 	width: 1390px;
+    position: absolute;
 }
+
 .maps .mapsBigAll {
 	position: absolute;
 	width: 100%;
@@ -1948,4 +1952,8 @@ input.hotel-input {
 .maps .toursBigAll .centerTours .textTours .rur {
 	font-size: 35px;
 	font-weight: bold;
+}
+
+.fixed {
+    position: fixed;
 }

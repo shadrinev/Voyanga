@@ -14,6 +14,8 @@ Application = (function(_super) {
 
     this.isNotEvent = __bind(this.isNotEvent, this);
 
+    this.mapRendered = __bind(this.mapRendered, this);
+
     this.contentRendered = __bind(this.contentRendered, this);
 
     this.initCalendar = __bind(this.initCalendar, this);
@@ -136,6 +138,13 @@ Application = (function(_super) {
     window.voyanga_debug("APP: Content rendered");
     this.trigger(this.activeModule() + ':contentRendered');
     return ResizeFun();
+  };
+
+  Application.prototype.mapRendered = function(elem) {
+    console.log("Map Rendered");
+    return $('.slideTours').find('.active').find('.triangle').animate({
+      'top': '-17px'
+    }, 200);
   };
 
   Application.prototype.isNotEvent = function() {

@@ -525,6 +525,7 @@ function ResizeAvia() {
     inTheTwoLines();
     smallTicketHeight();
     scrollValue();
+    CenterIMGResize();
 }
 
 function ResizeFun() {
