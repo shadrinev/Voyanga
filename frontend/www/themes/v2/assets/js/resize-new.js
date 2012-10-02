@@ -408,14 +408,6 @@ function ResizeCenterBlock() {
 			var_ticketsItems.find('.ticket-items').removeClass('small');
 			var_hotelItems.removeClass('small');
 		}
-		if (widthBlock <= var_widthMIN) {
-			$('body').css('overflow-x','scroll');
-		}
-		else {
-			$('body').css('overflow-x', 'hidden');
-			$('body').css('overflow-y', 'hidden');
-		}
-
 		resizeLeftStage();
 		resizeMainStage();
 	}
@@ -575,7 +567,7 @@ function scrolShowFilter() {
 					}
 				}
 			);
-			$('.wrapper').bind(
+			$(window).bind(
 				'scroll',
 				function()
 				{
@@ -622,7 +614,7 @@ function OneWidthEquelTwoWidth() {
 }
 function scrollValue() {
 	var var_marginTopSubHead = $('.sub-head').css('margin-top');
-	var var_scrollValueTop = $('.wrapper').scrollTop();
+	var var_scrollValueTop = $(window).scrollTop();
 	if ($('.sub-head').css('margin-top') != '-67px') {
 		var diffrentScrollTop = 179;
 	}
@@ -650,7 +642,7 @@ function scrollValue() {
 $(window).load(AlphaBackground);
 
 $(window).load(function() {
-	$('.wrapper').scroll(scrollValue);
+	$(window).scroll(scrollValue);
 	
 	$('.btn-minimizePanel').click(function() {
  		setTimeout(scrollValue, 600);
