@@ -99,9 +99,20 @@ function checkUlList() {
     
 }
 function hideRecomendedBlockTicket() {
-    $('.recomended-content').slideUp();
-    $('.minimize-rcomended .btn-minimizeRecomended').animate({top : '0px'}, 500);
-    $(this).fadeOut();
+	if (!$(this).hasClass('show')) {
+		$('.recomended-content').slideUp();
+		$(this).addClass('show');	
+	}
+	else {
+		$(this).removeClass('show');
+		$('.recomended-content').slideDown();
+		
+		$(window).load(inTheTwoLines);
+
+		otherTimeSlide();
+		widthHowLong();
+		setTimeout(smallTicketHeight, 100);
+	}
 }
 //$(window).load(checkUlList);
 $(function() {
