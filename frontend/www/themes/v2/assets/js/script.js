@@ -108,10 +108,12 @@ function hideRecomendedBlockTicket() {
 		$('.recomended-content').slideDown();
 		
 		$(window).load(inTheTwoLines);
-
+		setTimeout(smallTicketHeight, 100);
+		/*
 		otherTimeSlide();
 		widthHowLong();
-		setTimeout(smallTicketHeight, 100);
+		
+*/
 	}
 }
 //$(window).load(checkUlList);
