@@ -621,8 +621,7 @@ AviaResultSet = (function() {
     this.updateCheapest(data);
     this.updateBest(data);
     ko.processAllDeferredBindingUpdates();
-    ResizeAvia();
-    return ifHeightMinAllBody();
+    return ResizeAvia();
   };
 
   AviaResultSet.prototype.updateCheapest = function(data) {
