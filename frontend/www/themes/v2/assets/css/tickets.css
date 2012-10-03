@@ -172,6 +172,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100px;
+    padding-left: 1px;
 }
 /* MARGIN */
 .date-time-city .how-long {
@@ -1057,13 +1058,13 @@
 .tickets-details .content .aviacompany {
 	color: #aaaeb3;
     float: right;
-    line-height: 16px;
-    padding-top: 7px;
+    line-height: 21px;
+    padding-top: 2px;
     text-align: left;
     width: 160px;
 }
 .tickets-details .content .aviacompany img {
-	margin-bottom: 3px;
+	margin-bottom: 2px;
 }
 .tickets-details .content .aviacompany span {
 	color: #1D222B;
@@ -1103,13 +1104,14 @@
 }
 
 .tickets-details .content .transitum {
-	height: 22px;
-	border-top:1px solid #b9bbbd;
-	border-bottom:1px solid #b9bbbd;
-	padding-left: 135px;
-	color: #1c81bb;
-	font-size: 12px;
-	background: url(../images/ico-fly-info.png) no-repeat 92px -82px;
+    background: url("../images/ico-fly-info.png") no-repeat scroll 92px -82px transparent;
+    border-bottom: 1px solid #B9BBBD;
+    border-top: 1px solid #B9BBBD;
+    color: #1C81BB;
+    font-size: 12px;
+    height: 20px;
+    padding-left: 135px;
+    padding-top: 2px;
 }
 
 .tickets-details .content .end-path .start-fly {
