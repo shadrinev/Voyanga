@@ -10,7 +10,6 @@
 }
 .filter-content {
 	color: #2E333B;
-    margin-top: 35px;
     width: inherit;
     height: 100%;
 }
@@ -26,11 +25,11 @@
     margin-left: 4px;
     vertical-align: middle;
 }
+.innerFilter {
+	position: relative;
+	width: 100%;
+}
 .scrollBlock {
-	/*
-overflow: hidden;
-    width: 240px;
-*/
 	height:100%;
 	position: absolute;
 }
@@ -48,6 +47,7 @@ overflow: hidden;
 .slide-filter.first {
 	padding-left: 18px;
 	padding-right: 30px;
+	padding-top: 35px;
 }
 /*--*/
 .slide-filter {
