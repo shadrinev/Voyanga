@@ -531,7 +531,6 @@ function ResizeAvia() {
 
 function ResizeFun() {
     ResizeAvia();
-//    loginResize();
 }
 function scrolShowFilter() {
     console.log("МНУ вызвали");
@@ -655,7 +654,6 @@ $(window).load(function() {
 });
 
 function ifHeightMinAllBody() {
-console.log("Ну как выполняется?");
 	$('#content').css('height','auto');
 	var var_heightWindow = $(window).height();
 	var var_heightContent = $('#content').height();
