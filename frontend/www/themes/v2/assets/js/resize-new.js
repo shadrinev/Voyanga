@@ -525,11 +525,12 @@ function ResizeAvia() {
     inTheTwoLines();
     smallTicketHeight();
     scrollValue();
+    CenterIMGResize();
+    ifHeightMinAllBody();
 }
 
 function ResizeFun() {
     ResizeAvia();
-//    loginResize();
 }
 function scrolShowFilter() {
     console.log("МНУ вызвали");
@@ -615,38 +616,56 @@ function OneWidthEquelTwoWidth() {
 function scrollValue() {
 	var var_marginTopSubHead = $('.sub-head').css('margin-top');
 	var var_scrollValueTop = $(window).scrollTop();
+	var var_heightWindow = $(window).height();
 	if ($('.sub-head').css('margin-top') != '-67px') {
 		var diffrentScrollTop = 179;
+		
 	}
 	else {
 		var diffrentScrollTop = 110;
+		
 	}
 	
 	if (var_scrollValueTop == 0) {
 		$('.filter-content').css('position','relative').css('top','auto');
-		var allHeightFilt = $(window).height() - diffrentScrollTop;		
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
 		$('.filter-content').css('position','relative').css('top','auto');
-		var allHeightFilt = $(window).height() - (diffrentScrollTop - var_scrollValueTop);
-		//$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
+		$('.innerFilter').css('height', '100%');
 	}
 	else if (var_scrollValueTop > diffrentScrollTop) {
-		$('.filter-content').css('position','fixed').css('top','-73px');
-		var allHeightFilt = $(window).height();
-		//$('.scrollBlock').css('height',(allHeightFilt+5)+'px');
-		//$('.filter-content').css('height',$(window).height()+'px');
-	}
 		
+		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73)) {
+			$('.filter-content').css('position','fixed').css('bottom','73px').css('top','auto');
+			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
+			console.log(($('.wrapper').height() - var_heightWindow)-var_scrollValueTop);
+		}
+		else {
+			$('.filter-content').css('position','fixed').css('top','-73px').css('bottom','auto');
+			$('.innerFilter').css('height', var_heightWindow +'px');
+		}
+		
+	}		
 }
 $(window).load(AlphaBackground);
 
 $(window).load(function() {
 	$(window).scroll(scrollValue);
-	
-	$('.btn-minimizePanel').click(function() {
- 		setTimeout(scrollValue, 600);
- 	});
 });
 
+function ifHeightMinAllBody() {
+	$('#content').css('height','auto');
+	var var_heightWindow = $(window).height();
+	var var_heightContent = $('#content').height();
+	if (var_heightContent < var_heightWindow - 168) {
+		$('#content').css('height', (var_heightWindow - 168) +'px');
+		$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
+	}
+	else {
+		$('#content').css('height', 'auto');
+		$('.innerFilter').css('height', '100%');
+		
+	}
+	
+}
 

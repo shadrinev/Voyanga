@@ -12,7 +12,6 @@ API = (function() {
 
   API.prototype.call = function(url, cb) {
     $('#loadWrapBg').show();
-    console.log("CALLING", "" + this.endpoint + url);
     return $.ajax({
       url: "" + this.endpoint + url,
       dataType: 'jsonp',

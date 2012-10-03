@@ -14,7 +14,7 @@ Yii::app()->clientScript->registerPackage('everything');
     <script type="text/javascript" src="/js/iedebug.js"></script>
 </head>
 
-<body>
+<body data-bind="css: {fixed: isEvent()}">
 <div class="wrapper">
     <div class="head" id="header">
         <!-- CENTER BLOCK -->
@@ -35,7 +35,7 @@ Yii::app()->clientScript->registerPackage('everything');
                     </li>
                     <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a
                             href="#hotels">Отели</a></li>
-                    <li id="h-event-slider" class="finish-stages btn" data-bind="click: slider.click"><a href="#events">Готовые туры</a></li>
+                    <li id="h-event-slider" class="finish-stages btn" data-bind="click: slider.click"><a href="#events">События</a></li>
                 </ul>
             </div>
 
@@ -51,37 +51,40 @@ Yii::app()->clientScript->registerPackage('everything');
     <!-- END HEAD -->
     <!--====**********===-->
     <!-- SUB HEAD -->
-    <div class="sub-head"
-         data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden(), zIndexTopUp: fakoPanel().calendarShadow()}">
-        <!-- CENTER BLOCK -->
-        <div class="center-block">
-            <!-- PANEL -->
-            <div class="panel"
-                 data-bind="template: { name: fakoPanel().template, data: fakoPanel, afterRender: fakoPanel().afterRender }">
+    <div data-bind="css: {'panel-index': isEvent()}">
+        <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden(), zIndexTopUp: fakoPanel().calendarShadow()}">
+            <div data-bind="css: {'fly-panel': isEvent()}">
+                <!-- CENTER BLOCK -->
+                <div class="center-block">
+                    <!-- PANEL -->
+                    <div class="panel"
+                         data-bind="template: { name: fakoPanel().template, data: fakoPanel, afterRender: fakoPanel().afterRender }">
+                    </div>
+                    <!-- END PANEL -->
+                </div>
+                <!-- END CENTER BLOCK -->
             </div>
-            <!-- END PANEL -->
         </div>
-        <!-- END CENTER BLOCK -->
+        <!-- CALENDAR -->
+        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}"
+             style="top: 70px; display: none;">
+        </div>
+        <!-- END CALENDAR -->
+        <!--====**********===-->
     </div>
     <!-- END SUB HEAD -->
     <!--====**********===-->
-    <!-- CALENDAR -->
-    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}"
-         style="margin-top: 36px; top: -341px;">
-    </div>
-    <!-- END CALENDAR -->
-    <!--====**********===-->
     <!-- ALL CONTENT -->
     <div class="center-block"
-         data-bind="visible: isNotEvent(), template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
+         data-bind="template: {if: isNotEvent(), name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
     <!-- SLIDE TOURS -->
     <div class="slideTours"
-         data-bind="visible: isEvent(), template: {name: 'event-index'}">
+         data-bind="template: {if: isEvent(), name: activeView(), data: viewData(), afterRender: mapRendered}">
     </div>
     <!-- END SLIDE TOURS -->
     <!-- FOOTER -->
-    <div class="footer" data-bind="visible: isEvent()">
+    <div class="footer">
         <div class="center-block">
             <ul class="foot-menu">
                 <li><a href="#">О проекте</a></li>
@@ -96,8 +99,9 @@ Yii::app()->clientScript->registerPackage('everything');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <div class="maps"
-     data-bind="visible: isEvent(), template: {name: 'event-map'}">
+     data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}" style="display:none;">
 </div>
+
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">

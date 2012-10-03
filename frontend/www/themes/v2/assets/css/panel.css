@@ -318,7 +318,7 @@
     min-width: 1000px;
     position: absolute;
     width: 100%;
-    z-index: 10;
+    z-index: 11;
 }
 .panel-index .sub-head {
 	background: none;

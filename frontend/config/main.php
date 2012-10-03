@@ -210,9 +210,11 @@ return CMap::mergeArray(
                             'js/app/common/photobox.js',
                             'js/app/common/module.slider.js',
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
+                             // custom bindings
                             'js/app/common/ko.bindings.timeslider.js',
                             'js/app/common/ko.bindings.slider.js',
  			                'js/app/common/ko.bindings.checkbox.js',
+
                             'js/app/common/ko.rangeobservable.js',
                             'js/app/common/filters.js',
                             'js/app/common/searchPanel.js', 'js/app/avia/panel.js', 'js/app/hotels/panel.js',
@@ -225,9 +227,9 @@ return CMap::mergeArray(
                             'js/app/common/autocomplete.js',
 
                             'js/index.js',
+                            'js/app/events/models.js',
                             'js/app/events/controllers.js',
                             'js/app/events/module.js',
-                            'js/app/events/models.js',
                         ),
                         'css' => array(
                             'css/reset.style.css', 'css/style.css',

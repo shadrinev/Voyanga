@@ -10,8 +10,8 @@
 .wrapper {
 	position: relative;
 	width: 100%; 
-	height: 100%; 
 	min-width: 1000px;
+	min-height: 100%;
 }
 .head { 
 	width: 100%;
@@ -1438,13 +1438,29 @@ input.hotel-input {
 }
 
 .footer {
-	background: url(../images/bg-footer.png) repeat-x;
-	position: absolute; bottom: 0px; width: 100%; height: 31px; left: 0px; z-index: 1;
+    background: url("../images/bg-footer.png") repeat-x scroll 0 0 transparent;
+    bottom: 0;
+    clear: both;
+    height: 33px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
 }
 .foot-menu {
-	position: absolute; right: 0px; top: 0px; height: 31px; background: url("../images/hr-hor-footer.png") no-repeat scroll right top transparent;
+    background: url("../images/hr-hor-footer.png") no-repeat scroll right top transparent;
+    height: 33px;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
-.foot-menu li {background: url(../images/hr-hor-footer.png) no-repeat left top; float: left; height: 24px;  padding: 7px 20px; text-shadow: 0px 1px 0px #202226;}
+.foot-menu li {
+    background: url("../images/hr-hor-footer.png") no-repeat scroll left top transparent;
+    float: left;
+    height: 19px;
+    padding: 7px 20px;
+    text-shadow: 0 1px 0 #202226;
+}
 .foot-menu li a {color: #d7d8dd; text-decoration: underline;}
 
 /* TIME LINE */
@@ -1781,6 +1797,7 @@ input.hotel-input {
 	position: fixed; width: 100%; height: 100%; overflow: hidden;
 	background: url(../images/bg-index.png);
 	z-index: 0;
+    top: 0px; left: 0px;
 	
 }
 .scroll-none { overflow: hidden;}
@@ -1877,14 +1894,17 @@ input.hotel-input {
 .maps .innerBlockMain .IMGmain {
 	position: absolute;
 	width: 1390px;
-	z-index: 1;
-}
-.maps .innerBlockMain .IMGmain + .IMGmain {
 	z-index: 2;
+}
+
+.maps .innerBlockMain .IMGmain + .IMGmain {
+	z-index: 1;
 }
 .maps .innerBlockMain .IMGmain img {
 	width: 1390px;
+    position: absolute;
 }
+
 .maps .mapsBigAll {
 	position: absolute;
 	width: 100%;
@@ -1948,4 +1968,8 @@ input.hotel-input {
 .maps .toursBigAll .centerTours .textTours .rur {
 	font-size: 35px;
 	font-weight: bold;
+}
+
+.fixed {
+    position: fixed;
 }

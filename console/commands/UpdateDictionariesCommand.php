@@ -392,14 +392,28 @@ EOD;
                                 $modified = true;
                             }
 
+                            $economPrice = (string)$item->luggage->econom->price;
+
                             $economFreeWeight = (string)$item->luggage->econom->weight;
-                            if(!$airline->economFreeWeight && $economFreeWeight){
-                                $airline->economFreeWeight = str_replace('kg','',$economFreeWeight);
+
+                            if( $airline->economFreeWeight && $economFreeWeight){
+                                if($economPrice == 'charge'){
+                                    $airline->economFreeWeight = 0;
+                                }else{
+                                    $airline->economFreeWeight = str_replace('kg','',$economFreeWeight);
+                                }
                                 $modified = true;
                             }
+
+                            $businessPrice = (string)$item->luggage->business->price;
+
                             $businessFreeWeight = (string)$item->luggage->business->weight;
-                            if(!$airline->businessFreeWeight && $businessFreeWeight){
-                                $airline->businessFreeWeight = str_replace('kg','',$businessFreeWeight);
+                            if( $airline->businessFreeWeight && $businessFreeWeight){
+                                if($businessPrice == 'charge'){
+                                    $airline->businessFreeWeight = 0;
+                                }else{
+                                    $airline->businessFreeWeight = str_replace('kg','',$businessFreeWeight);
+                                }
                                 $modified = true;
                             }
                             $economDescription = (string)$item->luggage->econom->description;

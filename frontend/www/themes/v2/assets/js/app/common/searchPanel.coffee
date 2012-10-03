@@ -119,10 +119,12 @@ class SearchPanel
 
     if !minimizedCalendar
       @calendarHidden(false)
-      $('.calenderWindow').animate {'top' : (heightSubHead+1) + 'px'}, speed
+      $('.calenderWindow .calendarSlide').animate {'top' : '0px'}
+      $('.calenderWindow').animate {'height' : '341px'}, speed
     else
       @calendarShadow(true)
-      $('.calenderWindow').animate {'top' : '-'+(heightCalendar1)+'px'}, speed, () =>
+      $('.calenderWindow .calendarSlide').animate {'top' : '-341px'}
+      $('.calenderWindow').animate {'height' : '0px'}, speed, () =>
         @calendarShadow(false)
 
   # Minimize button click handler
@@ -144,6 +146,7 @@ class SearchPanel
       @minimizedCalendar(true)
 
   showCalendar: =>
+    $('.calenderWindow').show()
     if @minimizedCalendar()
       @minimizedCalendar(false)
 

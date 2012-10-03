@@ -717,7 +717,6 @@ AviaResultSet = (function() {
     scrollValue();
     $('.scrollBlock').scroll(function() {});
     scrollValue();
-    console.log("ОГОНЬ!!!!");
     return setTimeout(scrolShowFilter, 1000);
   };
 

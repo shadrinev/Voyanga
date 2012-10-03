@@ -457,7 +457,7 @@ class AviaResultSet
     ko.processAllDeferredBindingUpdates()
     # FIXME
     ResizeAvia()
-    
+
   updateCheapest: (data)=>
     if data.length == 0
       return
@@ -521,7 +521,6 @@ class AviaResultSet
     scrollValue()
     $('.scrollBlock').scroll ->
   		scrollValue()
-    console.log "ОГОНЬ!!!!"
     setTimeout scrolShowFilter, 1000;
 
 

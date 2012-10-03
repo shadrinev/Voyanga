@@ -5,7 +5,6 @@ class API
   call: (url, cb) =>
     $('#loadWrapBg').show()
 
-    console.log "CALLING", "#{@endpoint}#{url}"
     #  $(document).trigger 'aviaStart'
     $.ajax
       url: "#{@endpoint}#{url}"
