@@ -99,8 +99,9 @@ Yii::app()->clientScript->registerPackage('everything');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <div class="maps"
-     data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}">
+     data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}" style="display:none;">
 </div>
+
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">

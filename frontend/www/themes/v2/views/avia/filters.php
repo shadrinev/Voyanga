@@ -11,7 +11,9 @@
       </div>
     </div>
 	
-<div class="scrollBlock" id="scroll-pane"> 
+<div class="innerFilter">
+    
+    <div class="scrollBlock" id="scroll-pane"> 
     
 	    <div class="div-filter">
 	      <div class="slider-filter">
@@ -59,6 +61,8 @@
 	    </div>
 	    </div>
 
+	</div>
+	
 </div>
 </script>
 <script type="text/html" id="avia-filter-list">
