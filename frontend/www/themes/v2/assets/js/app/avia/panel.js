@@ -38,8 +38,6 @@ AviaPanel = (function(_super) {
   __extends(AviaPanel, _super);
 
   function AviaPanel() {
-    this.show = __bind(this.show, this);
-
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
 
     this.selectRoundTrip = __bind(this.selectRoundTrip, this);
@@ -66,9 +64,6 @@ AviaPanel = (function(_super) {
     this.arrivalCityReadable = ko.observable('');
     this.arrivalCityReadableGen = ko.observable('');
     this.arrivalCityReadableAcc = ko.observable('');
-    this.inside = false;
-    this.inside2 = false;
-    this.inside3 = false;
     this.oldCalendarState = this.minimizedCalendar();
     this.fromChosen = ko.computed(function() {
       if (_this.departureDate().getDay) {
@@ -173,58 +168,9 @@ AviaPanel = (function(_super) {
   }
 
   AviaPanel.prototype.afterRender = function() {
-    var _this = this;
-    return $(function() {
-      $('.how-many-man .popup').find('input').hover(function() {
-        $(this).parent().find('.plusOne').show();
-        return $(this).parent().find('.minusOne').show();
-      });
-      $('.adults,.childs,.small-childs').hover(null, function() {
-        $(this).parent().find('.plusOne').hide();
-        return $(this).parent().find('.minusOne').hide();
-      });
-      $('.plusOne').hover(function() {
-        $(this).addClass('active');
-        return $('.minusOne').addClass('active');
-      }, function() {
-        $(this).removeClass('active');
-        return $('.minusOne').removeClass('active');
-      });
-      $('.minusOne').hover(function() {
-        $(this).addClass('active');
-        return $('.plusOne').addClass('active');
-      }, function() {
-        $(this).removeClass('active');
-        return $('.plusOne').removeClass('active');
-      });
-      $('.how-many-man .popup').find('input').focus(function() {
-        $(this).attr('rel', $(this).val());
-        return $(this).val('');
-      });
-      $('.how-many-man .popup').find('input').blur(function() {
-        if ($(this).val() === '') {
-          $(this).val($(this).attr('rel'));
-        }
-        return $(this).trigger('change');
-      });
-      $('.how-many-man').find('.popup').hover(function() {
-        return _this.inside = true;
-      }, function() {
-        return _this.inside = false;
-      });
-      $('.how-many-man .content').hover(function() {
-        return _this.inside2 = true;
-      }, function() {
-        return _this.inside2 = false;
-      });
-      $('.how-many-man .btn').hover(function() {
-        return _this.inside3 = true;
-      }, function() {
-        return _this.inside3 = false;
-      });
-      _this.rtTumbler(_this.rt());
-      return $('.how-many-man .btn');
-    });
+    AviaPanel.__super__.afterRender.apply(this, arguments);
+    this.rtTumbler(this.rt());
+    return $('.how-many-man .btn');
   };
 
   AviaPanel.prototype.rtTumbler = function(newValue) {
@@ -283,32 +229,6 @@ AviaPanel = (function(_super) {
   AviaPanel.prototype.navigateToNewSearch = function() {
     this.handlePanelSubmit();
     return this.minimizedCalendar(true);
-  };
-
-  AviaPanel.prototype.show = function(context, event) {
-    var el,
-      _this = this;
-    el = $(event.currentTarget);
-    if (!el.hasClass('active')) {
-      $(document.body).mousedown(function() {
-        if (_this.inside || _this.inside2 || _this.inside3) {
-          return;
-        }
-        return _this.close();
-      });
-      $('.how-many-man .btn').addClass('active');
-      $('.how-many-man .content').addClass('active');
-      return $('.how-many-man').find('.popup').addClass('active');
-    } else {
-      return this.close();
-    }
-  };
-
-  AviaPanel.prototype.close = function() {
-    $(document.body).unbind('mousedown');
-    $('.how-many-man .btn').removeClass('active');
-    $('.how-many-man .content').removeClass('active');
-    return $('.how-many-man').find('.popup').removeClass('active');
   };
 
   AviaPanel.prototype.returnRecommend = function(context, event) {

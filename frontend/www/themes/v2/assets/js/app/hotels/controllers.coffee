@@ -2,10 +2,11 @@
 SEARCH controller, should be splitted once we will get more actions here
 ###
 class HotelsController
-  constructor: ->
+  constructor: (@searchParams) ->
+    @api = new HotelsAPI
     @routes =
-      '/search/:from/:to/:when/': @searchAction
-      '/info/:cacheId/:hotelId/': @infoAction,
+      '/search/:from/:in/:out/*rest': @searchAction
+#      '/info/:cacheId/:hotelId/': @infoAction,
       '/timeline/': @timelineAction,
       '': @indexAction
 
@@ -16,13 +17,8 @@ class HotelsController
     window.voyanga_debug "HOTELS: Invoking searchAction", args
     # update search params with values in route
 
-    # temporary development cache
-    key = "h_search_10100"
-    window.voyanga_debug "HOTELS: Getting results via JSONP"
-    $.ajax
-        url: "http://api.voyanga.com/v1/hotel/search?city=LED&checkIn=2012-10-11&duration=3&rooms%5B0%5D%5Badt%5D=2&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0"
-        dataType: 'jsonp'
-        success: @handleResults
+    @searchParams.fromList(args)
+    @api.search @searchParams.url(), @handleResults
 
   handleResults: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data
@@ -32,7 +28,8 @@ class HotelsController
 
   indexAction: =>
     window.voyanga_debug "HOTELS: indexAction"
-    @searchAction()
+    @render 'index', {}
+
  
   timelineAction: =>
     @render 'timeline-template'

@@ -1,4 +1,4 @@
-var API, AviaAPI, ToursAPI,
+var API, AviaAPI, HotelsAPI, ToursAPI,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -12,12 +12,19 @@ API = (function() {
 
   API.prototype.call = function(url, cb) {
     $('#loadWrapBg').show();
+    console.log("CALLING", "" + this.endpoint + url);
     return $.ajax({
       url: "" + this.endpoint + url,
       dataType: 'jsonp',
+      timeout: 60000,
       success: function(data) {
         cb(data);
         return $('#loadWrapBg').hide();
+      },
+      error: function() {
+        console.log("ERROR");
+        $('#loadWrapBg').hide();
+        return cb(false);
       }
     });
   };
@@ -61,5 +68,24 @@ AviaAPI = (function(_super) {
   };
 
   return AviaAPI;
+
+})(API);
+
+HotelsAPI = (function(_super) {
+
+  __extends(HotelsAPI, _super);
+
+  function HotelsAPI() {
+    this.search = __bind(this.search, this);
+    return HotelsAPI.__super__.constructor.apply(this, arguments);
+  }
+
+  HotelsAPI.prototype.search = function(url, cb) {
+    return this.call(url, function(data) {
+      return cb(data);
+    });
+  };
+
+  return HotelsAPI;
 
 })(API);
