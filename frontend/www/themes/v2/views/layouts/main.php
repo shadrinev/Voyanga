@@ -84,7 +84,7 @@ Yii::app()->clientScript->registerPackage('everything');
     </div>
     <!-- END SLIDE TOURS -->
     <!-- FOOTER -->
-    <div class="footer" data-bind="visible: isEvent()">
+    <div class="footer">
         <div class="center-block">
             <ul class="foot-menu">
                 <li><a href="#">О проекте</a></li>
