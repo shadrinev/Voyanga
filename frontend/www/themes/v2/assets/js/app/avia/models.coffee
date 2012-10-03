@@ -457,6 +457,7 @@ class AviaResultSet
     ko.processAllDeferredBindingUpdates()
     # FIXME
     ResizeAvia()
+    ifHeightMinAllBody()
     
   updateCheapest: (data)=>
     if data.length == 0
