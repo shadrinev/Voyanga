@@ -20,45 +20,8 @@
           </a>
         </li>
         <!-- /ko -->
-        <!--li class="items">
-          <a href="#2" class="hotel active">
-            <div class="keys"></div>
-            <div class="path">
-              <div class="where">Отель в Амстердам</div>
-              <div class="time">12 750 <span class="rur">o</span>, Park Inn</div>
-            </div>
-            <div class="date orange-two">
-              <div class="day">
-                <span class="f17">12</span>
-                <br>
-                мая
-              </div>
-              <div class="day">
-                <span class="f17">24</span>
-                <br>
-                мая
-              </div>
-            </div>
-          </a>
-        </li>
-        <li class="items">
-          <a href="#3" class="fly">
-            <div class="keys"></div>
-            <div class="path">
-              <div class="where">С-Пб &rarr; Амстердам</div>
-              <div class="time">12 750 <span class="rur">o</span>, 7:30 - 12:20</div>
-            </div>
-            <div class="date orange-one">
-              <div class="day">
-                <span class="f17">12</span>
-                <br>
-                мая
-              </div>
-            </div>
-          </a>
-        </li -->
         <li class="items end">
-          <a href="#5" class="last">
+          <a href="#" class="last" data-bind="click: showOverview">
             <div class="keys"></div>
             <div class="path">
               Вся поездка

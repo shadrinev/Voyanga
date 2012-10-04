@@ -21,18 +21,17 @@
 	vertical-align: middle;
 	text-align: center;
 }
-
-
 .board-content .tdCity .from {
 	display: inline-block;
-    height: 34px;
+    height: 36px;
     position: relative;
     vertical-align: middle;
     /* width: 391px; */
     width: 271px;
 }
-.board-content.start .tdCity .from {
-	
+.board-content .tdCity .from.overflow {
+	overflow: hidden;
+	border-radius: 4px 4px 4px 4px;
 }
 .board-content .tdCity div .input-path {
     background: url("../images/input.png") repeat scroll 0 -396px transparent;
@@ -97,7 +96,47 @@
 	right: 1px;
 	background: url("../images/slice.png") no-repeat scroll -305px -1260px transparent;
 }
-
+.tdCity .cityStart {
+	width: 115px;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+	line-height: 17px;
+	font-size: 15px;
+	color: #FFF;
+	position: relative;
+	height: 36px;
+	border-radius: 4px 4px 4px 4px;
+}
+.tdCity .cityStart a {
+	color: #979eab;
+	font-size: 13px;
+	display: block;
+	white-space: nowrap;
+	width: 115px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.tdCity .cityStart a span {
+	border-bottom: 1px dashed;
+}
+.tdCity .cityStart .startInputTo {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 36px;
+	display: none;
+	border-radius: 4px 4px 4px 4px;
+}
+.tdCity .cityStart .startInputTo .input-path {
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	width: 241px;
+}
+.tdCity .cityStart .startInputTo .second-path {
+	width: 241px;
+}
 /* ================ */
 /* ================ */
 /* ================ */
@@ -574,27 +613,7 @@
 .add-tour:hover {
 	background-position: -401px -1254px;
 }
-.cityStart {
-	width: 115px;
-	display: inline-block;
-	text-align: left;
-	vertical-align: middle;
-	line-height: 17px;
-	font-size: 15px;
-	color: #FFF;
-}
-.cityStart a {
-	color: #979eab;
-	font-size: 13px;
-	display: block;
-	white-space: nowrap;
-	width: 115px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-.cityStart a span {
-	border-bottom: 1px dashed;
-}
+
 .board-content.start .panelTable .contTD {
 	text-align: left;
 }
