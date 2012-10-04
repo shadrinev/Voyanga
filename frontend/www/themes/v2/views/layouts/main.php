@@ -98,10 +98,12 @@ Yii::app()->clientScript->registerPackage('everything');
 </div>
 <!-- END WRAPPER -->
 <!-- MAPS -->
+<!-- FIXME -->
+<!-- ko if: isEvent()-->
 <div class="maps"
-     data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}">
+     data-bind="template: {name: 'event-map', data: viewData()}">
 </div>
-
+<!-- /ko -->
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
@@ -124,7 +126,7 @@ $templates = Array('avia.index', 'avia.results', 'avia.popup',
     'avia.panel', 'avia.filters', 'avia.cheapest',
     'hotels.index', 'hotels.results', 'hotels.panel',
     'hotels.popup', 'hotels.filters', 'hotels.info', 'hotels.timeline',
-    'tours.results', 'tours.index',
+    'tours.results', 'tours.index', 'tours.overview',
     'common.calendar',
     'event.index', 'event.map'
 );

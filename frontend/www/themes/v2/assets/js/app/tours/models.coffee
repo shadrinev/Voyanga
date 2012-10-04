@@ -7,6 +7,7 @@ class TourEntry
     return @avia
   isHotel: =>
     return @hotels
+
   price: =>
     if @selection() == null
       return 0
@@ -30,6 +31,7 @@ class ToursAviaResultSet extends TourEntry
   constructor: (raw, sp)->
     @api = new AviaAPI
     @template = 'avia-results'
+    @overviewTemplate = 'tours-overview-avia-ticket'
     # FIXME
     #new Searchparams...
     @panel = new AviaPanel()
@@ -54,12 +56,20 @@ class ToursAviaResultSet extends TourEntry
       result.selected_key res.key
       @selection(res)
     @avia = true
-    @selection null
+    # FIXME
+    r = result.data[0]
+    result.selected_key r.key
+    @selection result.data[0]
+    # END FIXME
     @results result
 
   doNewSearch: =>
     @api.search @panel.sp.url(), (data)=>
       @newResults data.flights.flightVoyages, data.searchParams
+
+
+  overviewText: =>
+    "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity   
 
   destinationText: =>
     @results().departureCity + ' &rarr; ' + @results().arrivalCity   
@@ -94,9 +104,9 @@ class ToursAviaResultSet extends TourEntry
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, @searchParams)->
     super
+    @overviewTemplate = 'tours-overview-hotels-ticket'
     @activeHotel = ko.observable 0
     @template = 'hotels-results'
-    @panel = new HotelsPanel()
     @results = new HotelsResultSet raw, @searchParams
     @results.tours true
     @results.select = (hotel) =>
@@ -109,11 +119,15 @@ class ToursHotelsResultSet extends TourEntry
         @selection room
 
       hotel.active_result = @active_result
-      @trigger 'setActive', {panel: @panel, 'data':hotel, template: 'hotels-info-template'}
+      @trigger 'setActive', {'data':hotel, template: 'hotels-info-template'}
     @data = {results: ko.observable(@results)}
     @hotels = true
     @selection = ko.observable null
-    
+
+  overviewText: =>
+    @destinationText()
+
+  # tours overview
   destinationText: =>
     "Отель в " + @searchParams.city
 
@@ -152,8 +166,11 @@ class ToursResultSet
           @setActive entry
           
     @selection = ko.observable @data()[0]
-    @panel = ko.computed =>
-      @selection().panel
+    @panel = ko.computed 
+      read: =>
+        if @selection().panel
+          @panelContainer = @selection().panel
+        return @panelContainer
 
     @price = ko.computed =>
       sum = 0
@@ -167,10 +184,16 @@ class ToursResultSet
         sum += item.savings()
       return sum
 
+    @vm = new ToursOverviewVM @
+    do @showOverview
+
   setActive: (entry)=>
     @selection entry
     ko.processAllDeferredBindingUpdates()
     ResizeAvia()
+
+  showOverview: =>
+    @setActive {template: 'tours-overview', data: @}
 
   removeItem: (item, event)=>
     event.stopPropagation()
@@ -184,3 +207,27 @@ class ToursResultSet
     @data.splice(idx, 1)
     if item == @selection()
       @setActive @data()[0]
+
+# decoupling some presentation logic from resultset
+class ToursOverviewVM
+  constructor: (@resultSet)->
+
+  startCity: =>
+    firstResult = @resultSet.data()[0]
+    if firstResult.isAvia()
+      firstResult.results().departureCity
+    else
+      'Бобруйск'
+
+
+  dateClass: =>
+    'blue-one'
+  
+  
+  dateHtml: =>
+    firstResult = @resultSet.data()[0]
+    source = firstResult.selection()
+    result = '<div class="day">'
+    result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
+    result+='</div>'
+    return result
