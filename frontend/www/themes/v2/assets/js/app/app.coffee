@@ -121,10 +121,10 @@ class Application extends Backbone.Router
     $('.slideTours').find('.active').find('.triangle').animate({'top' : '-17px'}, 200);
 
   isNotEvent: =>
-    @activeView() != 'event-index'
+    !@isEvent();
 
   isEvent: =>
-    !@isNotEvent();
+    @activeView() == 'tours-index'
 
 $ ->
   console.time "App dispatching"
@@ -136,12 +136,10 @@ $ ->
   avia = new AviaModule()
   hotels = new HotelsModule()
   tour = new ToursModule()
-  event = new EventModule()
   window.app = app
-  app.register 'tours', tour
+  app.register 'tours', tour, true
   app.register 'hotels', hotels
   app.register 'avia', avia
-  app.register 'event', event, true
   app.run()
   console.timeEnd "App dispatching"
   console.time "Rendering"

@@ -14,30 +14,14 @@ HotelsPanel = (function(_super) {
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
 
     var _this = this;
-    HotelsPanel.__super__.constructor.apply(this, arguments);
     this.template = 'hotels-panel-template';
+    this.peopleSelector = 'roomers-template';
+    HotelsPanel.__super__.constructor.call(this);
     this.sp = new HotelsSearchParams();
     this.city = this.sp.city;
     this.checkIn = this.sp.checkIn;
     this.checkOut = this.sp.checkOut;
     this.rooms = this.sp.rooms;
-    this.roomsView = ko.computed(function() {
-      var current, item, result, _i, _len, _ref;
-      result = [];
-      current = [];
-      _ref = _this.rooms();
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        item = _ref[_i];
-        if (current.length === 2) {
-          result.push(current);
-          current = [];
-        }
-        current.push(item);
-      }
-      result.push(current);
-      return result;
-    });
-    this.addRoom = this.sp.addRoom;
     this.cityReadable = ko.observable();
     this.cityReadableAcc = ko.observable();
     this.cityReadableGen = ko.observable();

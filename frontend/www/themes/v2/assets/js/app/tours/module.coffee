@@ -5,8 +5,8 @@ Controller + panel
 class ToursModule
   constructor: ->
     @controller = new ToursController()# @panel.sp
-    # FIXME FIXME FIXME
-    @panel = ko.observable null
+    @panel = new TourPanel()
+    console.log 'I AM PANEL', @panel
     @controller.on 'results', (results) =>
       @panel results.panel
 

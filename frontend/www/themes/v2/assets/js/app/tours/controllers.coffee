@@ -5,11 +5,22 @@ class ToursController
   constructor: (@searchParams)->
     @api = new ToursAPI
     @routes =
-      '': @searchAction
+      '/search' : @searchAction
+      '': @indexAction
     @key = "tours_10"
 
     # Mix in events
     _.extend @, Backbone.Events
+
+  indexAction: (args...) =>
+    window.voyanga_debug "TOURS: Invoking indexAction", args
+    events = []
+    $.each window.eventsRaw, (i, el) ->
+      events.push new Event(el)
+    eventSet = new EventSet(events)
+    console.log "EVENT: eventset = ", eventSet
+    @render 'index', eventSet
+    ResizeAvia()
 
   searchAction: (args...)=>
     window.voyanga_debug "TOURS: Invoking searchAction", args

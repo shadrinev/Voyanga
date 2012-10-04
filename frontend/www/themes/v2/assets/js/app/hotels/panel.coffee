@@ -1,34 +1,21 @@
 class HotelsPanel extends SearchPanel
   constructor: ->
-    super
     @template = 'hotels-panel-template'
+    @peopleSelector = 'roomers-template'
     # translates our flat rooms array to two array as per our view
     # essentially just provides ViewModel for @rooms field
-
+    super()
     @sp = new HotelsSearchParams()
     @city = @sp.city
     @checkIn = @sp.checkIn
     @checkOut = @sp.checkOut
     @rooms = @sp.rooms
-    @roomsView = ko.computed =>
-      result = []
-      current = []
-      for item in @rooms()
-        if current.length == 2
-          result.push current
-          current = []
-        current.push item
-      result.push current
-      return result
-
-    @addRoom = @sp.addRoom
     @cityReadable = ko.observable()
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
     @calendarText = ko.computed =>
       "vibAR->" + @cityReadable()
 
-  
     @formFilled = ko.computed =>
       if @checkIn().getDay
         cin = true
@@ -41,7 +28,6 @@ class HotelsPanel extends SearchPanel
 
       result = @city() && cin && cout
       return result
-
 
     @maximizedCalendar = ko.computed =>
       @city().length > 0

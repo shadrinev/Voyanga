@@ -8,8 +8,8 @@ Yii::app()->clientScript->registerPackage('everything');
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Voyanga v.0.1 - Trip Flight Rework</title>
-    <script type="text/javascript"
-            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
+    <!--<script type="text/javascript"
+            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">-->
     </script>
     <script type="text/javascript" src="/js/iedebug.js"></script>
 </head>
@@ -33,9 +33,7 @@ Yii::app()->clientScript->registerPackage('everything');
                     <li id="h-tours-slider" class="planner btn"><a href="#tours">Планировщик</a></li>
                     <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#">Авиабилеты</a>
                     </li>
-                    <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a
-                            href="#hotels">Отели</a></li>
-                    <li id="h-event-slider" class="finish-stages btn" data-bind="click: slider.click"><a href="#events">События</a></li>
+                    <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
                 </ul>
             </div>
 
@@ -65,6 +63,7 @@ Yii::app()->clientScript->registerPackage('everything');
                 <!-- END CENTER BLOCK -->
             </div>
         </div>
+
         <!-- CALENDAR -->
         <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}"
              style="top: 70px; display: none;">
@@ -120,13 +119,14 @@ Yii::app()->clientScript->registerPackage('everything');
     </div>
 </div>
 <?php
-$templates = Array('avia.index', 'avia.results', 'avia.popup',
+$templates = Array(
+    'avia.index', 'avia.results', 'avia.popup',
     'avia.panel', 'avia.filters', 'avia.cheapest',
     'hotels.index', 'hotels.results', 'hotels.panel',
     'hotels.popup', 'hotels.filters', 'hotels.info', 'hotels.timeline',
-    'tours.results', 'tours.index',
-    'common.calendar',
-    'event.index', 'event.map'
+    'tours.results', 'tours.index', 'tours.panel',
+    'common.calendar', 'common.roomers', 'common.passengers',
+    'event.map'
 );
 foreach ($templates as $template)
 {

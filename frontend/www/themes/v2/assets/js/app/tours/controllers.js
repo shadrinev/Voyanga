@@ -15,13 +15,30 @@ ToursController = (function() {
 
     this.searchAction = __bind(this.searchAction, this);
 
+    this.indexAction = __bind(this.indexAction, this);
+
     this.api = new ToursAPI;
     this.routes = {
-      '': this.searchAction
+      '/search': this.searchAction,
+      '': this.indexAction
     };
     this.key = "tours_10";
     _.extend(this, Backbone.Events);
   }
+
+  ToursController.prototype.indexAction = function() {
+    var args, eventSet, events;
+    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    window.voyanga_debug("TOURS: Invoking indexAction", args);
+    events = [];
+    $.each(window.eventsRaw, function(i, el) {
+      return events.push(new Event(el));
+    });
+    eventSet = new EventSet(events);
+    console.log("EVENT: eventset = ", eventSet);
+    this.render('index', eventSet);
+    return ResizeAvia();
+  };
 
   ToursController.prototype.searchAction = function() {
     var args;

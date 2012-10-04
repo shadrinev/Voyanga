@@ -104,7 +104,7 @@ EventSet = (function() {
     }));
     valueAccessor.active(true);
     return $(event.target).closest('.toursTicketsMain').find('.triangle').animate({
-      'top': '-17px'
+      'top': '-16px'
     }, 200);
   };
 

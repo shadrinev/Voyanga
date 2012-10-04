@@ -33,8 +33,7 @@ class AviaController
 
   indexAction: =>
     window.voyanga_debug "AVIA: invoking indexAction"
-
-    @render 'index', {}
+    @render "index", {}
 
   render: (view, data) ->
     @trigger "viewChanged", view, data

@@ -217,9 +217,11 @@ return CMap::mergeArray(
                             'js/app/common/ko.bindings.slider.js',
  			                'js/app/common/ko.bindings.checkbox.js',
 
+                            'js/app/common/travellers.js',
+                            'js/app/common/searchParams.js',
                             'js/app/common/ko.rangeobservable.js',
                             'js/app/common/filters.js',
-                            'js/app/common/searchPanel.js', 'js/app/avia/panel.js', 'js/app/hotels/panel.js',
+                            'js/app/common/searchPanel.js', 'js/app/avia/panel.js', 'js/app/hotels/panel.js', 'js/app/tours/panel.js',
                             'js/app/hotels/models.js',
                             'js/app/hotels/controllers.js', 'js/app/hotels/module.js',
                             'js/app/avia/models.js', 'js/app/avia/controllers.js',

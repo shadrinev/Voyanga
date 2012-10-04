@@ -1,33 +1,10 @@
-MAX_TRAVELERS = 9
-MAX_CHILDREN = 8
-
-# Recursion work around
-EXITED = true
-
-###
-Balances number of travelers, using those which was not affected by most recent user change
-###
-balanceTravelers = (others, model)->
-  if model.overall() > MAX_TRAVELERS && EXITED
-    EXITED = false
-    # How many travelers we need to throw out
-    delta = model.overall() - MAX_TRAVELERS
-    for prop in others
-      if model[prop]() >= delta
-        model[prop] model[prop]() - delta
-        break
-      else
-        delta -= model[prop]()
-        model[prop] 0
-  EXITED = true
-
-
 class AviaPanel extends SearchPanel
   constructor: ->
     super()
     @template = 'avia-panel-template'
     window.voyanga_debug "AviaPanel created"
-    @sp = new SearchParams()
+    @sp = new AviaSearchParams()
+    @passengers = @sp.passengers
     @departureDate = @sp.date
     @departureCity = @sp.dep
     @departureCityReadable = ko.observable ''
@@ -42,6 +19,8 @@ class AviaPanel extends SearchPanel
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
+
+    @show = @passengers.show
 
     #helper to handle dispaying of calendar
     @fromChosen = ko.computed =>
@@ -83,11 +62,6 @@ class AviaPanel extends SearchPanel
       from: @departureDate()
       to: @rtDate()
 
-    # Popup inputs
-    @adults = @sp.adults
-    @children = @sp.children
-    @infants = @sp.infants
-
     @departureDateDay = ko.computed =>
       dateUtils.formatDay(@departureDate())
 
@@ -100,37 +74,12 @@ class AviaPanel extends SearchPanel
     @rtDateMonth = ko.computed =>
       dateUtils.formatMonth(@rtDate())
 
-    # Travelers constraits
-    @adults.subscribe (newValue) =>
-      if @infants() > @adults()
-        @infants @adults()
-
-      if newValue > MAX_TRAVELERS
-        @adults MAX_TRAVELERS
-
-      balanceTravelers ["children", 'infants'], @
-
-
-    @children.subscribe (newValue) =>
-      if newValue > MAX_TRAVELERS - 1
-        @children MAX_TRAVELERS - 1
-
-      balanceTravelers ["adults", 'infants'], @
-
-    @infants.subscribe (newValue) =>
-      if newValue > @adults()
-        @adults @infants()
-
-      balanceTravelers ["children", 'adults'], @
-
-    @sum_children = ko.computed =>
-      # dunno why but we have stange to string casting here
-      @children()*1 + @infants()*1
-
-    @overall = ko.computed =>
-      @adults()*1 + @children()*1 + @infants()*1
-
     @rt.subscribe @rtTumbler
+
+    # Initial state for tumbler
+    @rtTumbler(@rt())
+    $('.how-many-man .btn')
+
 
     @calendarText = ko.computed =>
       result = "Выберите дату перелета "
@@ -141,12 +90,6 @@ class AviaPanel extends SearchPanel
       else if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length==0))
         result+=' из ' + @departureCityReadableGen()
       return result
-
-  afterRender: =>
-    super
-    # Initial state for tumbler
-    @rtTumbler(@rt())
-    $('.how-many-man .btn')
 
   rtTumbler: (newValue) ->
     if newValue
@@ -171,32 +114,29 @@ class AviaPanel extends SearchPanel
   selectRoundTrip: =>
     @rt(true)
 
-  plusOne: (model, e)->
-    prop = $(e.target).attr("rel")
-    model[prop](model[prop]()+1)
-
-  minusOne: (model, e)->
-    prop = $(e.target).attr("rel")
-    model[prop] model[prop]()-1
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
-
 
   # FIXME decouple!
   navigateToNewSearch: ->
     @handlePanelSubmit()
     @minimizedCalendar(true)
 
-    
+  close: ->
+    $(document.body).unbind 'mousedown'
+    $('.how-many-man .btn').removeClass('active')
+    $('.how-many-man .content').removeClass('active')
+
+    $('.how-many-man').find('.popup').removeClass('active')
+
   returnRecommend: (context, event)->
     $('.recomended-content').slideDown()
     $('.order-hide').fadeIn();
     $(event.currentTarget).animate {top : '-19px'}, 500, null, ->
       ResizeAvia()
 
-# FIXME WATAFAC
 $(document).on "autocompleted", "input.departureCity", ->
   $('input.arrivalCity.second-path').focus()
 
@@ -205,4 +145,3 @@ $(document).on "keyup change", "input.second-path", (e) ->
   secondEl = $(this).siblings('input.input-path')
   if ((e.keyCode==8) || (firstValue.length<3))
     secondEl.val('')
-

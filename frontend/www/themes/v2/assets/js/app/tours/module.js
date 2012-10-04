@@ -11,7 +11,8 @@ ToursModule = (function() {
   function ToursModule() {
     var _this = this;
     this.controller = new ToursController();
-    this.panel = ko.observable(null);
+    this.panel = new TourPanel();
+    console.log('I AM PANEL', this.panel);
     this.controller.on('results', function(results) {
       return _this.panel(results.panel);
     });

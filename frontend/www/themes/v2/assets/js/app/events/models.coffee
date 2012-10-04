@@ -81,7 +81,7 @@ class EventSet
       event.active(false)
     )
     valueAccessor.active(true)
-    $(event.target).closest('.toursTicketsMain').find('.triangle').animate {'top' : '-17px'}, 200
+    $(event.target).closest('.toursTicketsMain').find('.triangle').animate {'top' : '-16px'}, 200
 
 class EventCategory
   constructor: (data) ->

@@ -49,7 +49,7 @@ AviaController = (function() {
 
   AviaController.prototype.indexAction = function() {
     window.voyanga_debug("AVIA: invoking indexAction");
-    return this.render('index', {});
+    return this.render("index", {});
   };
 
   AviaController.prototype.render = function(view, data) {

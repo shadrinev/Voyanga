@@ -174,3 +174,98 @@ class ToursResultSet
     @selection entry
     ko.processAllDeferredBindingUpdates()
     ResizeAvia()
+
+# Models for tour search params,
+class DestinationSearchParams
+  constructor: ->
+    @city = ko.observable ''
+    @dateFrom = ko.observable ''
+    @dateTo = ko.observable ''
+
+class RoomsSearchParams
+  constructor: ->
+    @adt = ko.observable 2
+    @chd = ko.observable 0
+    @chdAge = ko.observable false
+    @cots = ko.observable false
+
+# Used in TourPanel and search controller
+class TourSearchParams extends SearchParams
+  constructor: ->
+    super()
+    @startCity = ko.observable ''
+    @destinations = ko.observableArray []
+    @rooms = ko.observableArray [ new Roomers() ]
+
+  addRoom: =>
+    if @rooms().length == 4
+      return
+    @rooms.push new Roomers()
+
+  url: ->
+    result = 'tour/search?'
+    params = []
+    _params.push 'start=' + @startCity()
+    _.each @destinations(), (destination, ind) =>
+      params.push 'destinations[' + ind + '][city]=' + destination.city()
+      params.push 'destinations[' + ind + '][dateFrom]=' + destination.dateFrom()
+      params.push 'destinations[' + ind + '][dateTo]=' + destination.dateTo()
+
+    params.push 'rooms[0][adt]=' + @adults()
+    params.push 'rooms[0][chd]=' + @children()
+    params.push 'rooms[0][chdAge]=0'
+    if @infants>0
+      params.push 'rooms[0][cots]=1'
+    else
+      params.push 'rooms[0][cots]=0'
+
+    result += params.join "&"
+    window.voyanga_debug "Generated search url for tours", result
+    return result
+
+  key: ->
+    key = @startCity()
+    _.each @destinations(), (destination) ->
+      key += destination.city() + destination.dateFrom() + destination.dateTo()
+    key += @adults()
+    key += @children()
+    key += @infants()
+    return key
+
+  getHash: ->
+    parts =  [@startCity(), @adults(), @children(), @infants()]
+    _.each @destinations(), (destination) ->
+      parts.push destination.city()
+      parts.push destination.dateFrom()
+      parts.push destination.dateTo()
+    hash = 'tour/search/' + parts.join('/') + '/'
+    window.voyanga_debug "Generated hash for tour search", hash
+    return hash
+
+  fromList: (data)->
+    window.voyanga_debug "Restoring TourSearchParams from list"
+    @startCity data[0]
+    @adults data[1]
+    @children data[2]
+    @infants data[3]
+    j = 0
+    for i in [4..data.length] by 3
+      @destinations[j] = new DestinationSearchParams()
+      @destinations[j].city(data[i])
+      @destinations[j].dateFrom(moment(data[i+1], 'D.M.YYYY').toDate())
+      @destinations[j].dateTo(moment(data[i+2], 'D.M.YYYY').toDate())
+      j++
+
+  fromObject: (data)->
+    window.voyanga_debug "Restoring TourSearchParams from object"
+    console.log data
+    @adults data.adt
+    @children data.chd
+    @infants data.inf
+    j = 0
+    _.each data.destinations, (destination) ->
+      @destinations[j] = new DestinationSearchParams()
+      @destinations[j].city(destination.city)
+      @destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate())
+      @destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate())
+      j++

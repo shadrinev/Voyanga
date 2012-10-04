@@ -574,69 +574,10 @@ HotelsResultSet = (function() {
 PanelRoom = (function() {
 
   function PanelRoom(item) {
-    this.getUrl = __bind(this.getUrl, this);
-
-    this.getHash = __bind(this.getHash, this);
-
-    this.minusOne = __bind(this.minusOne, this);
-
-    this.plusOne = __bind(this.plusOne, this);
-
-    var i, parts, _i, _ref,
-      _this = this;
-    this.adults = ko.observable(1);
-    this.children = ko.observable(0);
-    this.ages = ko.observableArray();
-    if (item) {
-      parts = item.split(':');
-      this.adults = ko.observable(parts[0]);
-      this.children = ko.observable(parts[1]);
-      for (i = _i = 0, _ref = this.children; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-        ages.push(ko.observable(parts[2 + i]));
-      }
-    }
-    this.children.subscribe(function(newValue) {
-      var _j, _ref1;
-      if (_this.ages().length < newValue) {
-        for (i = _j = 0, _ref1 = newValue - _this.ages().length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
-          _this.ages.push(ko.observable(12));
-          console.log("$# PUSHING", i);
-        }
-      } else if (_this.ages().length > newValue) {
-        _this.ages.splice(newValue);
-      }
-      return ko.processAllDeferredBindingUpdates();
-    });
+    this.adults = this.roomers.adults;
+    this.children = this.roomers.children;
+    this.ages = this.roomers.ages;
   }
-
-  PanelRoom.prototype.plusOne = function(context, event) {
-    var target;
-    target = $(event.currentTarget).attr('rel');
-    return this[target](this[target]() + 1);
-  };
-
-  PanelRoom.prototype.minusOne = function(context, el) {
-    var target;
-    target = $(event.currentTarget).attr('rel');
-    if (this[target]() > 0) {
-      return this[target](this[target]() - 1);
-    }
-  };
-
-  PanelRoom.prototype.getHash = function() {
-    var age, parts, _i, _len, _ref;
-    parts = [this.adults(), this.children()];
-    _ref = this.ages();
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      age = _ref[_i];
-      parts.push(age);
-    }
-    return parts.join(':');
-  };
-
-  PanelRoom.prototype.getUrl = function(i) {
-    return ("rooms[" + i + "][adt]=") + this.adults() + ("&rooms[" + i + "][chd]=") + this.children() + ("&rooms[" + i + "][chdAge]=0&rooms[" + i + "][cots]=0");
-  };
 
   return PanelRoom;
 
@@ -650,10 +591,28 @@ HotelsSearchParams = (function() {
     this.getHash = __bind(this.getHash, this);
 
     this.addRoom = __bind(this.addRoom, this);
+
+    var _this = this;
     this.city = ko.observable('');
     this.checkIn = ko.observable('');
     this.checkOut = ko.observable('');
     this.rooms = ko.observableArray([new PanelRoom]);
+    this.roomsView = ko.computed(function() {
+      var current, item, result, _i, _len, _ref;
+      result = [];
+      current = [];
+      _ref = _this.rooms();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (current.length === 2) {
+          result.push(current);
+        }
+        current = [];
+        current.push(item);
+        result.push(current);
+      }
+      return result;
+    });
   }
 
   HotelsSearchParams.prototype.addRoom = function() {

@@ -527,17 +527,17 @@ class AviaResultSet
 
 # Model for avia search params,
 # Used in AviaPanel and search controller
-class SearchParams
+class AviaSearchParams extends SearchParams
   constructor: ->
+    super()
     @dep = ko.observable ''
     @arr = ko.observable ''
-    @date = ko.observable ''
-    @adults = ko.observable(1).extend({integerOnly: 'adult'})
-    @children = ko.observable(0).extend({integerOnly: true})
-    @infants = ko.observable(0).extend({integerOnly: 'infant'})
-
     @rt = ko.observable true
     @rtDate = ko.observable ''
+    @passengers = new Passengers()
+    @adults = @passengers.adults
+    @children = @passengers.children
+    @infants = @passengers.infants
 
   url: ->
     result = 'flight/search/BE?'
@@ -556,7 +556,6 @@ class SearchParams
     result += params.join "&"
     window.voyanga_debug "Generated search url", result
     return result
-
 
   key: ->
     key = @dep() + @arr() + @date()

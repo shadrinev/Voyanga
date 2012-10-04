@@ -148,11 +148,11 @@ Application = (function(_super) {
   };
 
   Application.prototype.isNotEvent = function() {
-    return this.activeView() !== 'event-index';
+    return !this.isEvent();
   };
 
   Application.prototype.isEvent = function() {
-    return !this.isNotEvent();
+    return this.activeView() === 'tours-index';
   };
 
   return Application;
@@ -160,7 +160,7 @@ Application = (function(_super) {
 })(Backbone.Router);
 
 $(function() {
-  var app, avia, event, hotels, tour;
+  var app, avia, hotels, tour;
   console.time("App dispatching");
   window.voyanga_debug = function() {
     var args;
@@ -171,12 +171,10 @@ $(function() {
   avia = new AviaModule();
   hotels = new HotelsModule();
   tour = new ToursModule();
-  event = new EventModule();
   window.app = app;
-  app.register('tours', tour);
+  app.register('tours', tour, true);
   app.register('hotels', hotels);
   app.register('avia', avia);
-  app.register('event', event, true);
   app.run();
   console.timeEnd("App dispatching");
   console.time("Rendering");

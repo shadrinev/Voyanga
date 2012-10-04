@@ -326,8 +326,6 @@ class HotelResult
       base += "&sensor=false"
       return base
 
-
-
 #
 # Result container
 # Stacks them by price and company
@@ -416,55 +414,34 @@ class HotelsResultSet
 
 class PanelRoom
   constructor: (item) ->
-    @adults = ko.observable 1
-    @children = ko.observable 0
-    @ages = ko.observableArray()
-    if item
-      parts = item.split(':')
-      @adults = ko.observable parts[0]
-      @children = ko.observable parts[1]
-      for i in [0..@children]
-        ages.push ko.observable parts[2+i]
-    @children.subscribe (newValue)=>
-      if @ages().length < newValue
-        for i in [0..(newValue-@ages().length-1)]
-          @ages.push ko.observable 12
-          console.log "$# PUSHING", i
-      else if @ages().length > newValue
-        @ages.splice(newValue)
-      ko.processAllDeferredBindingUpdates()
+    @adults = @roomers.adults
+    @children = @roomers.children
+    @ages = @roomers.ages
 
-  plusOne: (context, event) =>
-    target = $(event.currentTarget).attr('rel')
-    @[target] @[target]() + 1
 
-  minusOne: (context, el) =>
-    target = $(event.currentTarget).attr('rel')
-    if @[target]() > 0
-      @[target] @[target]() - 1
-        
-  getHash: =>
-    parts = [@adults(), @children()]
-    for age in @ages()
-      parts.push age
-    return parts.join(':')
-
-  getUrl: (i)=>
-    # FIXME FIMXE FIMXE
-    return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&rooms[#{i}][chdAge]=0&rooms[#{i}][cots]=0"
 
 class HotelsSearchParams
   constructor: ->
     @city = ko.observable('')
     @checkIn = ko.observable('')
     @checkOut = ko.observable('')
-    @rooms = ko.observableArray [new PanelRoom ]
+
+    @rooms = ko.observableArray [new PanelRoom]
+    @roomsView = ko.computed =>
+      result = []
+      current = []
+      for item in @rooms()
+        if current.length == 2
+          result.push current
+        current = []
+        current.push item
+        result.push current
+      return result
 
   addRoom: =>
     if @rooms().length == 4
       return
     @rooms.push new PanelRoom()
-
 
   getHash: =>
     parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
@@ -484,7 +461,6 @@ class HotelsSearchParams
     for item in rest
       if item
         @rooms.push new PanelRoom(item)
-
 
   url: =>
     result = "hotel/search?city=" + @city()
