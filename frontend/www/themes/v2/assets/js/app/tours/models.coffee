@@ -94,21 +94,18 @@ class ToursAviaResultSet extends TourEntry
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, @searchParams)->
     super
-    @active_hotel = 0
-    @active_result = 0
+    @activeHotel = ko.observable 0
     @template = 'hotels-results'
     @panel = new HotelsPanel()
     @results = new HotelsResultSet raw, @searchParams
-    @results.tours = true
+    @results.tours true
     @results.select = (hotel) =>
-      hotel.tours = true
       hotel.off 'back'
       hotel.on 'back', =>
         @trigger 'setActive', @
       hotel.off 'select'
       hotel.on 'select', (room) =>
-        @active_hotel = hotel.hotelId
-        @active_result = room.resultId
+        @activeHotel  hotel.hotelId
         @selection room
 
       hotel.active_result = @active_result

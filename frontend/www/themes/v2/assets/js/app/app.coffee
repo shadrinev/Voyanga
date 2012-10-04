@@ -61,6 +61,11 @@ class Application extends Backbone.Router
       new Calendar(@fakoPanel)
       @calendarInitialized = true
 
+  render: (data, view)=>
+#    $('#loadWrapBg').show()
+    @viewData(data)
+    @_view(view)
+    
 
   # Register routes from controller
   #
@@ -70,8 +75,7 @@ class Application extends Backbone.Router
     controller = module.controller
     # Change view when controller wants to
     controller.on "viewChanged", (view, data)=>
-      @viewData(data)
-      @_view(view)
+      @render(data, view)
 
     for route, action of controller.routes
       window.voyanga_debug "APP: registreing route", prefix, route, action
@@ -115,6 +119,7 @@ class Application extends Backbone.Router
     window.voyanga_debug "APP: Content rendered"
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
+#    $('#loadWrapBg').hide()
 
   mapRendered: (elem) =>
     console.log "Map Rendered"

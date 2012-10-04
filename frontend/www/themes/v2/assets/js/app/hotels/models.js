@@ -187,8 +187,10 @@ Room = (function() {
 
 RoomSet = (function() {
 
-  function RoomSet(data, duration) {
-    var room, _i, _len, _ref;
+  function RoomSet(data, parent, duration) {
+    var room, _i, _len, _ref,
+      _this = this;
+    this.parent = parent;
     if (duration == null) {
       duration = 1;
     }
@@ -202,6 +204,16 @@ RoomSet = (function() {
       room = _ref[_i];
       this.rooms.push(new Room(room));
     }
+    this.selectText = ko.computed(function() {
+      if (!_this.parent.tours()) {
+        return "Забронировать";
+      }
+      if (_this.parent.activeResultId()) {
+        return 'Выбран';
+      } else {
+        return 'Выбрать';
+      }
+    });
   }
 
   return RoomSet;
@@ -210,7 +222,8 @@ RoomSet = (function() {
 
 HotelResult = (function() {
 
-  function HotelResult(data, duration) {
+  function HotelResult(data, parent, duration) {
+    var _this = this;
     if (duration == null) {
       duration = 1;
     }
@@ -231,7 +244,9 @@ HotelResult = (function() {
     this.showPhoto = __bind(this.showPhoto, this);
 
     _.extend(this, Backbone.Events);
+    this.tours = parent.tours;
     this.hotelId = data.hotelId;
+    this.activeResultId = ko.observable(0);
     this.hotelName = data.hotelName;
     this.address = data.address;
     this.description = data.description;
@@ -252,6 +267,16 @@ HotelResult = (function() {
     this.lng = data.longitude / 1;
     this.distanceToCenter = Math.round(data.centerDistance / 1000);
     this.duration = duration;
+    this.selectText = ko.computed(function() {
+      if (!_this.tours()) {
+        return "Забронировать";
+      }
+      if (_this.activeResultId()) {
+        return 'Выбран';
+      } else {
+        return 'Выбрать';
+      }
+    });
     this.hasHotelServices = data.facilities ? true : false;
     this.hotelServices = data.facilities;
     this.hasRoomAmenities = data.roomAmenities ? true : false;
@@ -263,14 +288,16 @@ HotelResult = (function() {
 
   HotelResult.prototype.push = function(data) {
     var set;
-    set = new RoomSet(data, this.duration);
+    set = new RoomSet(data, this, this.duration);
     set.resultId = data.resultId;
     if (this.roomSets.length === 0) {
       this.cheapest = set.price;
+      this.cheapestSet = set;
       this.minPrice = set.pricePerNight;
       this.maxPrice = set.pricePerNight;
     } else {
       this.cheapest = set.price < this.cheapest ? set.price : this.cheapest;
+      this.cheapestSet = set.price < this.cheapest ? set : this.cheapestSet;
       this.minPrice = set.pricePerNight < this.minPrice ? set.pricePerNight : this.minPrice;
       this.maxPrice = set.pricePerNight > this.maxPrice ? set.pricePerNight : this.maxPrice;
     }
@@ -426,6 +453,9 @@ HotelResult = (function() {
     if (room.roomSets) {
       room = room.roomSets[0];
     }
+    if (this.tours()) {
+      this.activeResultId(room.resultId);
+    }
     return this.trigger('select', {
       room: room,
       hotel: this
@@ -451,8 +481,12 @@ HotelsResultSet = (function() {
     var checkIn, checkOut, duration, hotel, key, result, service, _i, _j, _k, _len, _len1, _len2, _ref, _ref1,
       _this = this;
     this.searchParams = searchParams;
+    this.selectHotel = __bind(this.selectHotel, this);
+
+    this.select = __bind(this.select, this);
+
     this._results = {};
-    this.tours = false;
+    this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);
     if (duration === 0) {
@@ -482,7 +516,7 @@ HotelsResultSet = (function() {
         this.minPrice = this._results[key].minPrice < this.minPrice ? this._results[key].minPrice : this.minPrice;
         this.maxPrice = this._results[key].maxPrice > this.maxPrice ? this._results[key].maxPrice : this.maxPrice;
       } else {
-        result = new HotelResult(hotel, duration);
+        result = new HotelResult(hotel, this, duration);
         this._results[key] = result;
         if (this.minPrice === false) {
           this.minPrice = this._results[key].minPrice;
@@ -532,6 +566,21 @@ HotelsResultSet = (function() {
       return entry.roomSets[0].price;
     });
   }
+
+  HotelsResultSet.prototype.select = function(hotel, event) {
+    var _this = this;
+    hotel.off('back');
+    hotel.on('back', function() {
+      return window.app.render({
+        results: _this
+      }, 'results');
+    });
+    return window.app.render(hotel, 'info-template');
+  };
+
+  HotelsResultSet.prototype.selectHotel = function(hotel, event) {
+    return this.select(hotel, event);
+  };
 
   return HotelsResultSet;
 

@@ -19,7 +19,7 @@
 <script type="text-html" id="hotels-results-inner">
 <h1  data-bind="visible:tours">Выберите отель в <span>Амстердам</span>, 19-26 мая</h1>
 <div class="ticket-content hotels">
-    <h2>Найдено отелей: 43</h2>
+    <h2>Найдено отелей: ##</h2>
     <div class="clear"></div>
         <!-- ko foreach: data -->
         <div class="hotels-tickets" data-bind="visible: numPhotos">
@@ -54,7 +54,7 @@
                         <span class="value" data-bind="text: rating"></span>
                         <span class="text">рейтинг<br>отеля</span>
                     </div>
-                    <a href="#" class="btn-cost" data-bind="click:$parent.select"><span class="l"></span><span class="text">Выбрать отель</span></a>
+                    <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours()?$parents[2].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
                     <a class="details" data-bind="click: showDetails" href="#">Подробнее об отеле</a>
                 </div>
                 <div class="clear"></div>

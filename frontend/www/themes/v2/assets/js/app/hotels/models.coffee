@@ -95,7 +95,7 @@ class Room
     @hasMeal = (@meal != 'Без питания' && @meal != 'Не известно')
 
 class RoomSet
-  constructor: (data, duration = 1) ->
+  constructor: (data, @parent, duration = 1) ->
     @price = Math.ceil(data.rubPrice)
     # Used in tours
     @savings = 0
@@ -106,15 +106,25 @@ class RoomSet
     @rooms = []
     for room in data.rooms
       @rooms.push new Room room
+
+    @selectText = ko.computed =>
+      if !@parent.tours()
+        return "Забронировать"
+      if @parent.activeResultId()
+        return 'Выбран'
+      else
+        return 'Выбрать'
+
 #
 # Stacked hotel, FIXME can we use this as roomset ?
 #
 class HotelResult
-  constructor: (data, duration = 1) ->
+  constructor: (data, parent, duration = 1) ->
     # Mix in events
     _.extend @, Backbone.Events
-
+    @tours = parent.tours
     @hotelId = data.hotelId
+    @activeResultId = ko.observable 0 
     @hotelName = data.hotelName
     @address = data.address
     @description = data.description
@@ -141,6 +151,16 @@ class HotelResult
 
     @duration = duration
 
+    @selectText = ko.computed =>
+      if !@tours()
+        return "Забронировать"
+      if @activeResultId()
+        return 'Выбран'
+      else
+        return 'Выбрать'
+
+
+
     @hasHotelServices = if data.facilities then true else false
     @hotelServices = data.facilities
     @hasRoomAmenities = if data.roomAmenities then true else false
@@ -150,14 +170,16 @@ class HotelResult
     @push data
 
   push: (data) ->
-    set = new RoomSet data,@duration
+    set = new RoomSet data, @, @duration
     set.resultId = data.resultId
     if @roomSets.length == 0
       @cheapest = set.price
+      @cheapestSet = set  
       @minPrice = set.pricePerNight
       @maxPrice = set.pricePerNight
     else
       @cheapest = if set.price < @cheapest then set.price else @cheapest
+      @cheapestSet = if set.price < @cheapest then set else @cheapestSet 
       @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
       @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
@@ -173,7 +195,6 @@ class HotelResult
     # If user had clicked read-more link
     @readMoreExpanded = false
     new GenericPopup '#hotels-body-popup', @
-
     SizeBox('hotels-body-popup')
     ResizeBox('hotels-body-popup')
     sliderPhoto('.photo-slide-hotel')
@@ -307,6 +328,9 @@ class HotelResult
     # it is actually cheapest click
     if room.roomSets
       room = room.roomSets[0]
+    if @tours()
+      @activeResultId room.resultId
+
     @trigger 'select', {room: room, hotel: @}
 
   smallMapUrl: =>
@@ -316,8 +340,6 @@ class HotelResult
       base += "&sensor=false"
       return base
 
-
-
 #
 # Result container
 # Stacks them by price and company
@@ -325,7 +347,7 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawHotels, @searchParams) ->
     @_results = {}
-    @tours = false
+    @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
     if duration == 0
@@ -351,7 +373,7 @@ class HotelsResultSet
         @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
         @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
       else
-        result =  new HotelResult hotel, duration
+        result =  new HotelResult hotel, @, duration
         @_results[key] = result
         if @minPrice == false
           @minPrice = @_results[key].minPrice
@@ -390,7 +412,17 @@ class HotelsResultSet
       console.log "REFILTER"
 
     @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
-    
+
+  select: (hotel, event) =>
+    hotel.off 'back'
+    hotel.on 'back', =>
+      window.app.render({results: @}, 'results')
+
+
+    window.app.render(hotel, 'info-template')
+
+  selectHotel: (hotel, event) =>
+    @select(hotel, event)
 
 class PanelRoom
   constructor: (item) ->
