@@ -75,7 +75,7 @@
 	  <td class="allCost">
             2 человека
             <span class="costs" data-bind="html:priceHtml()"></span>
-            <a href="#" class="btnDeleteTrip"></a>
+            <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem"></a>
 	  </td>
 	</tr>
       </table>

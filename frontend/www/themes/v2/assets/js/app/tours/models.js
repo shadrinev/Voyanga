@@ -454,7 +454,11 @@ ToursOverviewVM = (function() {
     firstResult = this.resultSet.data()[0];
     source = firstResult.selection();
     result = '<div class="day">';
-    result += dateUtils.formatHtmlDayShortMonth(source.departureDate());
+    if (firstResult.isAvia()) {
+      result += dateUtils.formatHtmlDayShortMonth(source.departureDate());
+    } else {
+      result += dateUtils.formatHtmlDayShortMonth(firstResult.results.checkIn);
+    }
     result += '</div>';
     return result;
   };
