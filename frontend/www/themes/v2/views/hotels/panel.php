@@ -1,12 +1,12 @@
 <script type="text/html" id="hotels-panel-template">
-  <table class="hotel-table">
+  <table class="hotelTable">
     <tr>
       <td class="td-input-hotel">
         <div class="data">
           <input class="input-path-hotel" type="text" placeholder="Город" data-bind="autocomplete: {source:'city/hotel_req/1', iata: city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}">
         </div>
         </td>
-        <td class="td-people-hotel">
+        <td class="tdPeople">
         <div class="how-many-man hotel">
           <!-- ko foreach: rooms -->
           <div class="content" data-bind="click: $parent.show">
@@ -26,7 +26,7 @@
           </div>
         </div>
       </td>
-      <td class="btnTD">
+      <td class="tdButton">
         <a class="btn-find" data-bind="click: navigateToNewSearch, visible: formFilled">Найти</a>
       </td>
     </tr>
