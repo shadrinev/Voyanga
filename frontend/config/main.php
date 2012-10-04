@@ -212,6 +212,8 @@ return CMap::mergeArray(
                             'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
                              // custom bindings
                             'js/app/common/ko.bindings.timeslider.js',
+                            'js/app/common/ko.bindings.priceslider.js',
+                            'js/app/common/ko.bindings.singleslider.js',
                             'js/app/common/ko.bindings.slider.js',
  			                'js/app/common/ko.bindings.checkbox.js',
 

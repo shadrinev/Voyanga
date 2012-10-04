@@ -24,7 +24,8 @@ class HotelsController
     window.voyanga_debug "HOTELS: searchAction: handling results", data
     stacked = new HotelsResultSet data.hotels, data.searchParams
     stacked.cacheId = data.cacheId
-    @render 'results', {'results' :stacked}
+    stacked.postInit()
+    @render 'results', {'results' :ko.observable(stacked)}
 
   indexAction: =>
     window.voyanga_debug "HOTELS: indexAction"
