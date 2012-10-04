@@ -400,6 +400,26 @@ class HotelsResultSet
       console.log "REFILTER"
 
     @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
+<<<<<<< Updated upstream
+=======
+
+  postInit: =>
+    @filters = new HotelFiltersT @
+
+  postFilters: =>
+    console.log 'post filters'
+    data = _.filter @data, (el) -> el.visible();console.log(el.visible())
+    @numResults data.length
+    # FIXME hide recommend
+    #@updateCheapest(data)
+    #@updateBest(data)
+
+    ko.processAllDeferredBindingUpdates()
+    # FIXME
+    #ResizeAvia()
+
+    
+>>>>>>> Stashed changes
 
   postInit: =>
     @filters = new HotelFiltersT @

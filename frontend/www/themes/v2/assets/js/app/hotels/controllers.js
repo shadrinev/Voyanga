@@ -32,8 +32,18 @@ HotelsController = (function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("HOTELS: Invoking searchAction", args);
+<<<<<<< Updated upstream
     this.searchParams.fromList(args);
     return this.api.search(this.searchParams.url(), this.handleResults);
+=======
+    key = "h_search_10100";
+    window.voyanga_debug("HOTELS: Getting results via JSONP");
+    return $.ajax({
+      url: "http://api.voyanga.com/v1/hotel/search?city=MAD&checkIn=11.10.2012&duration=3&rooms%5B0%5D%5Badt%5D=2&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0",
+      dataType: 'jsonp',
+      success: this.handleResults
+    });
+>>>>>>> Stashed changes
   };
 
   HotelsController.prototype.handleResults = function(data) {
