@@ -17,10 +17,9 @@ class HotelsController
     window.voyanga_debug "HOTELS: Invoking searchAction", args
     # update search params with values in route
 
-<<<<<<< Updated upstream
     @searchParams.fromList(args)
     @api.search @searchParams.url(), @handleResults
-=======
+
     # temporary development cache
     key = "h_search_10100"
     window.voyanga_debug "HOTELS: Getting results via JSONP"
@@ -28,7 +27,6 @@ class HotelsController
         url: "http://api.voyanga.com/v1/hotel/search?city=MAD&checkIn=11.10.2012&duration=3&rooms%5B0%5D%5Badt%5D=2&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0"
         dataType: 'jsonp'
         success: @handleResults
->>>>>>> Stashed changes
 
   handleResults: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data

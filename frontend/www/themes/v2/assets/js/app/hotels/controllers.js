@@ -29,13 +29,11 @@ HotelsController = (function() {
   }
 
   HotelsController.prototype.searchAction = function() {
-    var args;
+    var args, key;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("HOTELS: Invoking searchAction", args);
-<<<<<<< Updated upstream
     this.searchParams.fromList(args);
-    return this.api.search(this.searchParams.url(), this.handleResults);
-=======
+    this.api.search(this.searchParams.url(), this.handleResults);
     key = "h_search_10100";
     window.voyanga_debug("HOTELS: Getting results via JSONP");
     return $.ajax({
@@ -43,7 +41,6 @@ HotelsController = (function() {
       dataType: 'jsonp',
       success: this.handleResults
     });
->>>>>>> Stashed changes
   };
 
   HotelsController.prototype.handleResults = function(data) {

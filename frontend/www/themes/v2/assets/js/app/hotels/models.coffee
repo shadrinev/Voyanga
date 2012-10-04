@@ -375,7 +375,7 @@ class HotelsResultSet
     @_services = {}
     @_names = []
     @stars = {}
-
+    @numResults = ko.observable 0
 
     for key, result of @_results
       @data.push result
@@ -400,37 +400,100 @@ class HotelsResultSet
       console.log "REFILTER"
 
     @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
-    
 
-# Model for Hotel info params,
-# Used in infoAcion controller
-class HotelInfoParams
-  constructor: ->
-    @cacheId = ''
-    @hotelId = ''
+  postInit: =>
+    @filters = new HotelFiltersT @
 
-  url: ->
-    result = 'http://api.voyanga/v1/hotel/search/info/'+@cacheId+'/'+@hotelId+'/'
+  postFilters: =>
+    console.log 'post filters'
+    data = _.filter @data, (el) -> el.visible();console.log(el.visible())
+    @numResults data.length
+    # FIXME hide recommend
+    #@updateCheapest(data)
+    #@updateBest(data)
 
-    return result
-
-
-  key: ->
-    key = @dep() + @arr() + @date
-    if @rt
-      key += @rt_date
-    key += @adults()
-    key += @children()
-    key += @infants()
-    return key
-
-  getHash: ->
+    ko.processAllDeferredBindingUpdates()
     # FIXME
-    hash = 'avia/search/' + [@dep(), @arr(), @date, @adults(), @children(), @infants()].join('/') + '/'
-    window.voyanga_debug "Generated hash for avia search", hash
+    #ResizeAvia()
+
+
+
+class PanelRoom
+  constructor: (item) ->
+    @adults = ko.observable 1
+    @children = ko.observable 0
+    @ages = ko.observableArray()
+    if item
+      parts = item.split(':')
+      @adults = ko.observable parts[0]
+      @children = ko.observable parts[1]
+      for i in [0..@children]
+        ages.push ko.observable parts[2+i]
+    @children.subscribe (newValue)=>
+      if @ages().length < newValue
+        for i in [0..(newValue-@ages().length-1)]
+          @ages.push ko.observable 12
+          console.log "$# PUSHING", i
+      else if @ages().length > newValue
+        @ages.splice(newValue)
+      ko.processAllDeferredBindingUpdates()
+
+  plusOne: (context, event) =>
+    target = $(event.currentTarget).attr('rel')
+    @[target] @[target]() + 1
+
+  minusOne: (context, el) =>
+    target = $(event.currentTarget).attr('rel')
+    if @[target]() > 0
+      @[target] @[target]() - 1
+
+  getHash: =>
+    parts = [@adults(), @children()]
+    for age in @ages()
+      parts.push age
+    return parts.join(':')
+
+  getUrl: (i)=>
+    # FIXME FIMXE FIMXE
+    return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&rooms[#{i}][chdAge]=0&rooms[#{i}][cots]=0"
+
+class HotelsSearchParams
+  constructor: ->
+    @city = ko.observable('')
+    @checkIn = ko.observable('')
+    @checkOut = ko.observable('')
+    @rooms = ko.observableArray [new PanelRoom ]
+
+  addRoom: =>
+    if @rooms().length == 4
+      return
+    @rooms.push new PanelRoom()
+
+
+  getHash: =>
+    parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
+    for room in @rooms()
+      parts.push room.getHash()
+    hash = 'hotels/search/' + parts.join('/') + '/'
+    window.voyanga_debug "Generated hash for hotels search", hash
     return hash
 
-
   fromList: (data)->
-    @cacheId data[0]
-    @hotelId data[1]
+    # FIXME looks too ugly to hit production, yet does not support RT
+    @city data[0]
+    @checkIn moment(data[1], 'D.M.YYYY').toDate()
+    @checkOut moment(data[2], 'D.M.YYYY').toDate()
+    @rooms.splice(0)
+    rest = data[3].split('/')
+    for item in rest
+      if item
+        @rooms.push new PanelRoom(item)
+
+
+  url: =>
+    result = "hotel/search?city=" + @city()
+    result += '&checkIn=' + moment(@checkIn()).format('YYYY-M-D')
+    result += '&duration=' + moment(@checkOut()).diff(moment(@checkIn()), 'days')
+    for room, i in @rooms()
+      result += '&' + room.getUrl(i)
+    return result
