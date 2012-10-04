@@ -167,12 +167,14 @@ class HotelResult
 
 
 
-    @hasHotelServices = if data.facilities then true else false
-    @hotelServices = data.facilities
-    if @hasHotelServices
-      for service in @hotelServices
-        if service == 'Фитнесс-центр'
-          service = 'Фитнесс'
+    @hasHotelServices = if data.hotelServices then true else false
+    @hotelServices = data.hotelServices
+    @hasHotelGroupServices = if data.hotelGroupServices then true else false
+    @hotelGroupServices = data.hotelGroupServices
+    #if @hasHotelServices
+    #  for service in @hotelServices
+    #    if service == 'Фитнесс-центр'
+    #      service = 'Фитнесс'
     @hasRoomAmenities = if data.roomAmenities then true else false
     @roomAmenities = data.roomAmenities
     @roomSets = []

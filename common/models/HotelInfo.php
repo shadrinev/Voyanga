@@ -141,6 +141,14 @@ class HotelInfo extends CApplicationComponent
         }
         $serviceGroups[$groupName][$servName] = 0;
     }
+
+    private static function renameService(&$serviceList,$oldName,$newName){
+        if(isset($serviceList[$oldName])){
+            unset($serviceList[$oldName]);
+            $serviceList[$newName] = 0;
+        }
+    }
+
     function makeServices()
     {
         if(!self::$servListMap){
@@ -275,18 +283,10 @@ class HotelInfo extends CApplicationComponent
             }
         }
         if($serviceList){
-            if(isset($serviceList['Интернет в номере'])){
-                unset($serviceList['Интернет в номере']);
-                $serviceList['Интернет']=0;
-            }
-            if(isset($serviceList['Интернет на территории отеля'])){
-                unset($serviceList['Интернет на территории отеля']);
-                $serviceList['Интернет']=0;
-            }
-            if(isset($serviceList['Парковка на территории отеля'])){
-                unset($serviceList['Парковка на территории отеля']);
-                $serviceList['Парковка']=0;
-            }
+            self::renameService($serviceList,'Интернет в номере','Интернет');
+            self::renameService($serviceList,'Интернет на территории отеля','Интернет');
+            self::renameService($serviceList,'Парковка на территории отеля','Парковка');
+            self::renameService($serviceList,'Фитнесс-центр','Фитнесс');
             foreach($serviceList as $serviceName=>$zero){
                 $this->hotelServices[] = $serviceName;
             }

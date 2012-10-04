@@ -8,8 +8,8 @@
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
-            <!-- div class="filter-block" data-bind="template: {name: 'hotels-filters', data: results().filters}">
-            </div -->
+            <div class="filter-block" data-bind="template: {name: 'hotels-filters', data: results().filters}">
+            </div>
             <!-- END FILTER BLOCK -->
             <div class="clear"></div>
         </div>
