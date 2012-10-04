@@ -25,7 +25,8 @@ class RoomSet
     @price = Math.ceil(data.rubPrice)
     # Used in tours
     @savings = 0
-    @pricePerNight = Math.ceil(@price / duration)
+
+    @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
 
 
@@ -82,6 +83,7 @@ class HotelResult
       @distanceToCenter = 30
 
     @duration = duration
+    console.log('duration:'+duration)
 
     @selectText = ko.computed =>
       if !@tours()
@@ -96,7 +98,10 @@ class HotelResult
     @hasHotelServices = if data.hotelServices then true else false
     @hotelServices = data.hotelServices
     @hasHotelGroupServices = if data.hotelGroupServices then true else false
-    @hotelGroupServices = data.hotelGroupServices
+    @hotelGroupServices = []
+    if data.hotelGroupServices
+      for groupName,elements of data.hotelGroupServices
+        @hotelGroupServices.push {groupName: groupName,elements: elements}
     #if @hasHotelServices
     #  for service in @hotelServices
     #    if service == 'Фитнесс-центр'
@@ -288,7 +293,9 @@ class HotelsResultSet
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
-    if duration == 0
+    if @searchParams.duration
+      duration = @searchParams.duration
+    if duration == 0 || typeof duration == 'undefined'
       for hotel in rawHotels
         if typeof hotel.duration == 'undefined'
           checkIn = dateUtils.fromIso hotel.checkIn
@@ -300,8 +307,9 @@ class HotelsResultSet
           duration =  Math.floor(duration / (3600 * 24 * 1000))
         else
           duration = hotel.duration
+          console.log('yes set')
         break
-
+    console.log('MainDuration:'+duration)
     @minPrice = false
     @maxPrice = false
     for hotel in rawHotels
