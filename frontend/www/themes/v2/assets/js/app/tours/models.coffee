@@ -179,7 +179,7 @@ class ToursHotelsResultSet extends TourEntry
     if @selection() == null
       return 0
 
-    @selection().roomSet.price()
+    @selection().roomSet.price
 
   additionalText: =>
     if @selection() == null
