@@ -1,6 +1,3 @@
-# Recursion work around
-EXITED = true
-
 class TourPanel extends SearchPanel
   constructor: ->
     @template = 'tour-panel-template'
@@ -21,25 +18,12 @@ class TourPanel extends SearchPanel
       twoSelect: false
       from: false
 
-    #helper to handle dispaying of calendar
-    ###@fromChosen = ko.computed =>
-      if @departureDate().getDay
-        return true
-      @departureDate().length > 0###
-
     @formFilled = ko.computed =>
       result = @startCity
       return result
 
     @maximizedCalendar = ko.computed =>
       @startCity()
-
-    ###@maximizedCalendar.subscribe (newValue) =>
-      if !newValue
-        return
-      if !@fromChosen()
-        @showCalendar()
-        return###
 
     @calendarText = ko.computed =>
       result = "Выберите дату поездки "

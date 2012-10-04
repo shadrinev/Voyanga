@@ -22,6 +22,7 @@ HotelsPanel = (function(_super) {
     this.checkIn = this.sp.checkIn;
     this.checkOut = this.sp.checkOut;
     this.rooms = this.sp.rooms;
+    this.roomsView = this.sp.roomsView;
     this.cityReadable = ko.observable();
     this.cityReadableAcc = ko.observable();
     this.cityReadableGen = ko.observable();
@@ -62,6 +63,11 @@ HotelsPanel = (function(_super) {
         to: _this.checkOut()
       };
     });
+    this.afterRender = function() {
+      return $(function() {
+        return _this.sp.rooms()[0].afterRender();
+      });
+    };
   }
 
   HotelsPanel.prototype.handlePanelSubmit = function() {

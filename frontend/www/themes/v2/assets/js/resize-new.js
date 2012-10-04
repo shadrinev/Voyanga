@@ -533,7 +533,6 @@ function ResizeFun() {
     ResizeAvia();
 }
 function scrolShowFilter() {
-    console.log("МНУ вызвали");
 	$('#scroll-pane').each(
 		function()
 		{

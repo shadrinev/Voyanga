@@ -9,6 +9,8 @@ AviaPanel = (function(_super) {
   __extends(AviaPanel, _super);
 
   function AviaPanel() {
+    this.afterRender = __bind(this.afterRender, this);
+
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
 
     this.selectRoundTrip = __bind(this.selectRoundTrip, this);
@@ -156,13 +158,6 @@ AviaPanel = (function(_super) {
     return this.minimizedCalendar(true);
   };
 
-  AviaPanel.prototype.close = function() {
-    $(document.body).unbind('mousedown');
-    $('.how-many-man .btn').removeClass('active');
-    $('.how-many-man .content').removeClass('active');
-    return $('.how-many-man').find('.popup').removeClass('active');
-  };
-
   AviaPanel.prototype.returnRecommend = function(context, event) {
     $('.recomended-content').slideDown();
     $('.order-hide').fadeIn();
@@ -170,6 +165,15 @@ AviaPanel = (function(_super) {
       top: '-19px'
     }, 500, null, function() {
       return ResizeAvia();
+    });
+  };
+
+  AviaPanel.prototype.afterRender = function() {
+    var _this = this;
+    return $(function() {
+      _this.sp.passengers.afterRender();
+      _this.rtTumbler(_this.rt());
+      return $('.how-many-man .btn');
     });
   };
 

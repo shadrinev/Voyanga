@@ -43,7 +43,6 @@ class AviaPanel extends SearchPanel
        result = result && @rtFromChosen()
       return result
 
-
     @maximizedCalendar = ko.computed =>
       @departureCity() && @arrivalCity()
 
@@ -80,7 +79,6 @@ class AviaPanel extends SearchPanel
     @rtTumbler(@rt())
     $('.how-many-man .btn')
 
-
     @calendarText = ko.computed =>
       result = "Выберите дату перелета "
       if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length>0))
@@ -96,7 +94,6 @@ class AviaPanel extends SearchPanel
       $('.tumblr .switch').animate {'left': '35px'}, 200
     else
       $('.tumblr .switch').animate {'left': '-1px'}, 200
-
 
   # calendar handler
   setDate: (values)=>
@@ -114,7 +111,6 @@ class AviaPanel extends SearchPanel
   selectRoundTrip: =>
     @rt(true)
 
-
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
@@ -124,18 +120,18 @@ class AviaPanel extends SearchPanel
     @handlePanelSubmit()
     @minimizedCalendar(true)
 
-  close: ->
-    $(document.body).unbind 'mousedown'
-    $('.how-many-man .btn').removeClass('active')
-    $('.how-many-man .content').removeClass('active')
-
-    $('.how-many-man').find('.popup').removeClass('active')
-
   returnRecommend: (context, event)->
     $('.recomended-content').slideDown()
     $('.order-hide').fadeIn();
     $(event.currentTarget).animate {top : '-19px'}, 500, null, ->
       ResizeAvia()
+
+  afterRender: =>
+    $ =>
+      @sp.passengers.afterRender()
+      # Initial state for tumbler
+      @rtTumbler(@rt())
+      $('.how-many-man .btn')
 
 $(document).on "autocompleted", "input.departureCity", ->
   $('input.arrivalCity.second-path').focus()

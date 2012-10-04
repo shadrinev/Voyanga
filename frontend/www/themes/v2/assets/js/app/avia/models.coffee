@@ -523,8 +523,6 @@ class AviaResultSet
   		scrollValue()
     setTimeout scrolShowFilter, 1000;
 
-
-
 # Model for avia search params,
 # Used in AviaPanel and search controller
 class AviaSearchParams extends SearchParams

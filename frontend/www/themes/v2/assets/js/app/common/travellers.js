@@ -85,6 +85,13 @@ Travellers = (function() {
     });
   };
 
+  Travellers.prototype.close = function() {
+    $(document.body).unbind('mousedown');
+    $('.how-many-man .btn').removeClass('active');
+    $('.how-many-man .content').removeClass('active');
+    return $('.how-many-man').find('.popup').removeClass('active');
+  };
+
   return Travellers;
 
 })();
@@ -198,12 +205,11 @@ Roomers = (function(_super) {
 
     this.plusOne = __bind(this.plusOne, this);
 
-    var i, parts, template, _i, _ref,
+    var i, parts, _i, _ref,
       _this = this;
     Roomers.__super__.constructor.call(this);
-    console.log('I AM ROOMER AND I AM INITIALIZED');
-    template = 'roomers-template';
-    this.adults = ko.observable('');
+    this.template = 'roomers-template';
+    this.adults = ko.observable(1);
     this.children = ko.observable(0);
     this.ages = ko.observableArray();
     if (item) {

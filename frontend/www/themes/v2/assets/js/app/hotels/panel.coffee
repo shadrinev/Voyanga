@@ -10,6 +10,7 @@ class HotelsPanel extends SearchPanel
     @checkIn = @sp.checkIn
     @checkOut = @sp.checkOut
     @rooms = @sp.rooms
+    @roomsView = @sp.roomsView
     @cityReadable = ko.observable()
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
@@ -43,6 +44,10 @@ class HotelsPanel extends SearchPanel
       twoSelect: true
       from: @checkIn()
       to: @checkOut()
+
+    @afterRender = () =>
+      $ =>
+        @sp.rooms()[0].afterRender()
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
