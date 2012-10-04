@@ -51,9 +51,21 @@
     width: 178px;
     z-index: 1;
 }
-.board-content.start .tdCity div .input-path {
-	
-    
+.board-content .tdCity div .second-path {
+	z-index: 2;
+	border: medium none;
+    border-radius: 4px 4px 4px 4px;
+    font-family: Arial;
+    font-size: 19px;
+    height: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 178px;
+    left: 0px;
+    position: absolute;
+    background: none;
+    padding-bottom: 0px;
+    padding-top: 0px;
 }
 .board-content .tdCity div .date {
 	display: none;
