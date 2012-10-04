@@ -164,7 +164,7 @@
 .how-many-man  .popup .adults input:focus {
 	background-position: -264px -904px;
 }
-.inputDIV {position: relative;}
+.inputDIV {position: relative; width: 48px;}
 .minusOne {background: url(../images/minuscount.png) no-repeat 0 0;
     overflow: hidden;
     cursor: pointer;
@@ -227,13 +227,25 @@
 	width: 100%;
 }
 .td-input-hotel {
-	text-align: center;
+	text-align: right;
+	vertical-align: middle;
+}
+.td-people-hotel {
+	width: 265px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.td-people-hotel .how-many-man {
+	margin-left: 0px;
 }
 .td-input-hotel .how-many-man {
 	float: none;
 	vertical-align: middle;
 	display: inline-block;
 	margin-left: 5px;
+}
+.btnTD {
+	vertical-align: middle;
 }
 .td-input-hotel .data {
 	float: none;
@@ -263,6 +275,7 @@
 	border-bottom: 1px solid #76777a;
 	border-left: 1px solid #b7b8bc;
 	overflow: hidden;
+	position: relative;
 }
 .number-hotel h5 {
 	text-align: left;
@@ -271,9 +284,39 @@
 	font-size: 12px;
 	margin-left: 13px;
 }
-.one-str {
+.number-hotel .one-str {
 	overflow: hidden;
 	margin-bottom: 5px;
+}
+.number-hotel .adults {
+	margin-left: 10px;
+}
+.number-hotel .addOtherRoom {
+    background: url("../images/bg-add-hotel.png") repeat-x scroll 0 0 transparent;
+    border-top: 1px solid #696D71;
+    color: #23262C !important;
+    display: block;
+    font-size: 11px;
+    height: 19px;
+    padding-left: 10px;
+    padding-top: 2px;
+    text-shadow: none !important;
+}
+.number-hotel .addOtherRoom:hover, .popup:hover .addOtherRoom  {
+	color: #23262c !important;
+}
+.number-hotel .del-hotel {
+    color: #9EA2A7 !important;
+    display: block;
+    font-size: 11px;
+    position: absolute;
+    right: 6px;
+    text-decoration: underline;
+    text-shadow: none !important;
+    top: 0;
+}
+.popup:hover .del-hotel {
+	color: #9ea2a7 !important;
 }
 .how-many-man .popup .one-str .adults, .how-many-man .popup .one-str .childs {
     color: #272728;

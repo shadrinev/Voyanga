@@ -1,10 +1,12 @@
 <script type="text/html" id="hotels-panel-template">
-  <table class="panelTable">
+  <table class="hotel-table">
     <tr>
       <td class="td-input-hotel">
         <div class="data">
           <input class="input-path-hotel" type="text" placeholder="Город" data-bind="autocomplete: {source:'city/hotel_req/1', iata: city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}">
         </div>
+        </td>
+        <td class="td-people-hotel">
         <div class="how-many-man hotel">
           <!-- ko foreach: rooms -->
           <div class="content" data-bind="click: $parent.show">
@@ -32,6 +34,7 @@
 </script>
 <script type="text/html" id="room-template">
   <div class="number-hotel">
+  	<a href="#" class="del-hotel">удалить</a>
     <h5>Номер <span data-bind="text: $index() + 1"></span></h5>
     <div class="one-str">
       <div class="adults">
@@ -57,6 +60,6 @@
         лет
       </div>
     </div>
-    <a href="#" data-bind="click:$parents[1].addRoom, visible: ($index()+1)==$length()">Еще комната</a>
+    <a href="#" data-bind="click:$parents[1].addRoom, visible: ($index()+1)==$length()" class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер</a>
   </div>
 </script>
