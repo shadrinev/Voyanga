@@ -1,7 +1,7 @@
 <?php
     $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 ?>
-<script id="tours-overview">
+<script id="tours-overview" type="text/html">
   <div class="main-block">
     <div id="content">
       <div class="headAndTmblr">
@@ -75,7 +75,7 @@
 	  <td class="allCost">
             2 человека
             <span class="costs" data-bind="html:priceHtml()"></span>
-            <a href="#" class="btnDeleteTrip"></a>
+            <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem"></a>
 	  </td>
 	</tr>
       </table>

@@ -179,7 +179,7 @@ class ToursHotelsResultSet extends TourEntry
     if @selection() == null
       return 0
 
-    @selection().roomSet.price()
+    @selection().roomSet.price
 
   additionalText: =>
     if @selection() == null
@@ -272,6 +272,10 @@ class ToursOverviewVM
     firstResult = @resultSet.data()[0]
     source = firstResult.selection()
     result = '<div class="day">'
-    result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
+    if firstResult.isAvia()
+      result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
+    else
+      result+= dateUtils.formatHtmlDayShortMonth firstResult.results.checkIn
+
     result+='</div>'
     return result

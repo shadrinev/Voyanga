@@ -21,19 +21,7 @@
 	vertical-align: middle;
 	text-align: center;
 }
-.board-content .tdCity .from {
-	display: inline-block;
-    height: 36px;
-    position: relative;
-    vertical-align: middle;
-    /* width: 391px; */
-    width: 271px;
-}
-.board-content .tdCity .from.overflow {
-	overflow: hidden;
-	border-radius: 4px 4px 4px 4px;
-}
-.board-content .tdCity div .input-path {
+.tdCity div .input-path {
     background: url("../images/input.png") repeat scroll 0 -396px transparent;
     background-position: 0 -324px;
     border: medium none;
@@ -46,11 +34,10 @@
     overflow: hidden;
     padding: 0 10px;
     position: absolute;
-    /* width: 302px; */
-    width: 178px;
+    width: 302px;
     z-index: 1;
 }
-.board-content .tdCity div .second-path {
+.tdCity div .second-path {
 	z-index: 2;
 	border: medium none;
     border-radius: 4px 4px 4px 4px;
@@ -65,6 +52,26 @@
     background: none;
     padding-bottom: 0px;
     padding-top: 0px;
+}
+/* CONSTRUCTOR */
+.board-content .tdCity .from {
+	display: inline-block;
+    height: 36px;
+    position: relative;
+    vertical-align: middle;
+    /* width: 391px; */
+    width: 271px;
+}
+.board-content .tdCity .from.overflow {
+	overflow: hidden;
+	border-radius: 4px 4px 4px 4px;
+}
+
+.board-content .tdCity div .input-path {
+	width: 178px;
+}
+.board-content .tdCity div .second-path {
+    width: 178px;
 }
 .board-content .tdCity div .date {
 	display: none;
@@ -132,10 +139,37 @@
 .tdCity .cityStart .startInputTo .input-path {
 	background-position: 0 0;
 	background-repeat: no-repeat;
-	width: 241px;
+	width: 242px;
 }
 .tdCity .cityStart .startInputTo .second-path {
-	width: 241px;
+	width: 242px;
+}
+/* HOTEL */
+.hotelTable .tdCity {
+	text-align: right;
+	vertical-align: middle;
+}
+
+.hotelTable .tdCity .how-many-man {
+	float: none;
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: 5px;
+}
+.hotelTable .tdCity .data {
+	float: none;
+	margin-top: auto;
+	display: inline-block;
+	width: 341px;
+	position: relative;
+	height: 36px;
+}
+.hotelTable .tdCity div .input-path {
+	width: 322px;
+	background-position: 0 -288px;
+}
+.hotelTable .tdCity div .second-path {
+    width: 322px;
 }
 /* ================ */
 /* ================ */
@@ -176,6 +210,7 @@
     position: relative;
     width: 74px;
     vertical-align: middle;
+    margin-top: -1px;
 }
 .tumblr input {display: none;}
 .tumblr .one {
@@ -369,23 +404,7 @@
     width: 321px;
 }
 
-.td-input-hotel {
-	text-align: right;
-	vertical-align: middle;
-}
 
-.td-input-hotel .how-many-man {
-	float: none;
-	vertical-align: middle;
-	display: inline-block;
-	margin-left: 5px;
-}
-.td-input-hotel .data {
-	float: none;
-	margin-top: auto;
-	display: inline-block;
-	width: 400px;
-}
 .how-many-man .content .num {
 	display: block; position: absolute; top: 0px; left: 4px;
 	color: #0c0c0d; font-size: 11px; text-shadow: 0px 1px 0px #3d424a;
@@ -710,7 +729,7 @@
 	vertical-align: middle;
 	position: relative;
 	width: 290px;
-	height: 34px;
+	height: 36px;
 }
 .AVIA .contTD {
 	text-align: left;
