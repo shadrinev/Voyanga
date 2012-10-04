@@ -141,7 +141,7 @@ class ToursHotelsResultSet extends TourEntry
 
 class ToursResultSet
   constructor: (raw)->
-    @data = []
+    @data = ko.observableArray()
     for variant in raw.allVariants
       if variant.flights
         @data.push new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
@@ -151,19 +151,19 @@ class ToursResultSet
         result.on 'setActive', (entry)=>
           @setActive entry
           
-    @selection = ko.observable @data[0]
+    @selection = ko.observable @data()[0]
     @panel = ko.computed =>
       @selection().panel
 
     @price = ko.computed =>
       sum = 0
-      for item in @data
+      for item in @data()
         sum += item.price()
       return sum
 
     @savings = ko.computed =>
       sum = 0
-      for item in @data
+      for item in @data()
         sum += item.savings()
       return sum
 
@@ -171,3 +171,16 @@ class ToursResultSet
     @selection entry
     ko.processAllDeferredBindingUpdates()
     ResizeAvia()
+
+  removeItem: (item, event)=>
+    event.stopPropagation()
+    if @data().length <2
+      return
+    idx = @data.indexOf(item)
+    console.log @data.indexOf(item), item, @selection()
+
+    if idx ==-1
+      return
+    @data.splice(idx, 1)
+    if item == @selection()
+      @setActive @data()[0]

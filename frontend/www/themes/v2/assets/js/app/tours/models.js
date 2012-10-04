@@ -249,11 +249,13 @@ ToursHotelsResultSet = (function(_super) {
 ToursResultSet = (function() {
 
   function ToursResultSet(raw) {
+    this.removeItem = __bind(this.removeItem, this);
+
     this.setActive = __bind(this.setActive, this);
 
     var result, variant, _i, _len, _ref,
       _this = this;
-    this.data = [];
+    this.data = ko.observableArray();
     _ref = raw.allVariants;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       variant = _ref[_i];
@@ -267,14 +269,14 @@ ToursResultSet = (function() {
         });
       }
     }
-    this.selection = ko.observable(this.data[0]);
+    this.selection = ko.observable(this.data()[0]);
     this.panel = ko.computed(function() {
       return _this.selection().panel;
     });
     this.price = ko.computed(function() {
       var item, sum, _j, _len1, _ref1;
       sum = 0;
-      _ref1 = _this.data;
+      _ref1 = _this.data();
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         item = _ref1[_j];
         sum += item.price();
@@ -284,7 +286,7 @@ ToursResultSet = (function() {
     this.savings = ko.computed(function() {
       var item, sum, _j, _len1, _ref1;
       sum = 0;
-      _ref1 = _this.data;
+      _ref1 = _this.data();
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         item = _ref1[_j];
         sum += item.savings();
@@ -297,6 +299,23 @@ ToursResultSet = (function() {
     this.selection(entry);
     ko.processAllDeferredBindingUpdates();
     return ResizeAvia();
+  };
+
+  ToursResultSet.prototype.removeItem = function(item, event) {
+    var idx;
+    event.stopPropagation();
+    if (this.data().length < 2) {
+      return;
+    }
+    idx = this.data.indexOf(item);
+    console.log(this.data.indexOf(item), item, this.selection());
+    if (idx === -1) {
+      return;
+    }
+    this.data.splice(idx, 1);
+    if (item === this.selection()) {
+      return this.setActive(this.data()[0]);
+    }
   };
 
   return ToursResultSet;
