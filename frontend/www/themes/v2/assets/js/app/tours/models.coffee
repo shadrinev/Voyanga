@@ -13,10 +13,17 @@ class TourEntry
       return 0
     @selection().price
 
-  priceText: =>
+  priceHtml: =>
     if @selection() == null
       return "Не выбрано"
     return @price() + '<span class="rur">o</span>'
+
+  minPriceHtml: =>
+    @minPrice() + '<span class="rur">o</span>'
+
+  maxPriceHtml: =>
+    @maxPrice() + '<span class="rur">o</span>'
+
 
   savings: =>
     if @selection() == null
@@ -67,9 +74,30 @@ class ToursAviaResultSet extends TourEntry
     @api.search @panel.sp.url(), (data)=>
       @newResults data.flights.flightVoyages, data.searchParams
 
-
+  # Overview VM
   overviewText: =>
-    "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity   
+    "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity
+
+  numAirlines: =>
+    # FIXME FIXME FIXME
+    @results().filters.airline.options().length
+
+  minPrice: =>
+    cheapest = _.reduce @results().data,
+      (el1, el2)->
+        if el1.price < el2.price then el1 else el2
+      ,@results().data[0]
+    cheapest.price
+
+  maxPrice: =>
+    mostExpensive = _.reduce @results().data,
+      (el1, el2)->
+        if el1.price > el2.price then el1 else el2
+      ,@results().data[0]
+    mostExpensive.price
+    
+
+  # End overview VM
 
   destinationText: =>
     @results().departureCity + ' &rarr; ' + @results().arrivalCity   
@@ -114,18 +142,34 @@ class ToursHotelsResultSet extends TourEntry
       hotel.on 'back', =>
         @trigger 'setActive', @
       hotel.off 'select'
-      hotel.on 'select', (room) =>
+      hotel.on 'select', (roomData) =>
         @activeHotel  hotel.hotelId
-        @selection room
-
-      hotel.active_result = @active_result
+        @selection roomData
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template'}
     @data = {results: ko.observable(@results)}
     @hotels = true
     @selection = ko.observable null
-
+  # FIXME
+    hotel = @results.data[0]
+    room = hotel.roomSets[0]
+    @activeHotel  hotel.hotelId
+    @selection {'roomSet': room, 'hotel': hotel}
+    # END FIXME
+    
+  # Overview VM
   overviewText: =>
     @destinationText()
+
+  numHotels: =>
+    @results.data.length
+
+  minPrice: =>
+    @results.minPrice
+
+  maxPrice: =>
+    @results.maxPrice
+
+  # end Overview VM
 
   # tours overview
   destinationText: =>
@@ -135,7 +179,7 @@ class ToursHotelsResultSet extends TourEntry
     if @selection() == null
       return 0
 
-    @selection().room.price()
+    @selection().roomSet.price()
 
   additionalText: =>
     if @selection() == null

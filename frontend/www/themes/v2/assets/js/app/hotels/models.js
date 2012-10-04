@@ -303,7 +303,7 @@ HotelResult = (function() {
       this.activeResultId(room.resultId);
     }
     return this.trigger('select', {
-      room: room,
+      roomSet: room,
       hotel: this
     });
   };

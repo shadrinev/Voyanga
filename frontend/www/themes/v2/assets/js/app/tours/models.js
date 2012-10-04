@@ -11,7 +11,11 @@ TourEntry = (function() {
 
     this.savings = __bind(this.savings, this);
 
-    this.priceText = __bind(this.priceText, this);
+    this.maxPriceHtml = __bind(this.maxPriceHtml, this);
+
+    this.minPriceHtml = __bind(this.minPriceHtml, this);
+
+    this.priceHtml = __bind(this.priceHtml, this);
 
     this.price = __bind(this.price, this);
 
@@ -36,11 +40,19 @@ TourEntry = (function() {
     return this.selection().price;
   };
 
-  TourEntry.prototype.priceText = function() {
+  TourEntry.prototype.priceHtml = function() {
     if (this.selection() === null) {
       return "Не выбрано";
     }
     return this.price() + '<span class="rur">o</span>';
+  };
+
+  TourEntry.prototype.minPriceHtml = function() {
+    return this.minPrice() + '<span class="rur">o</span>';
+  };
+
+  TourEntry.prototype.maxPriceHtml = function() {
+    return this.maxPrice() + '<span class="rur">o</span>';
   };
 
   TourEntry.prototype.savings = function() {
@@ -72,6 +84,12 @@ ToursAviaResultSet = (function(_super) {
     this.additionalText = __bind(this.additionalText, this);
 
     this.destinationText = __bind(this.destinationText, this);
+
+    this.maxPrice = __bind(this.maxPrice, this);
+
+    this.minPrice = __bind(this.minPrice, this);
+
+    this.numAirlines = __bind(this.numAirlines, this);
 
     this.overviewText = __bind(this.overviewText, this);
 
@@ -123,6 +141,34 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.overviewText = function() {
     return "Перелет " + this.results().departureCity + ' &rarr; ' + this.results().arrivalCity;
+  };
+
+  ToursAviaResultSet.prototype.numAirlines = function() {
+    return this.results().filters.airline.options().length;
+  };
+
+  ToursAviaResultSet.prototype.minPrice = function() {
+    var cheapest;
+    cheapest = _.reduce(this.results().data, function(el1, el2) {
+      if (el1.price < el2.price) {
+        return el1;
+      } else {
+        return el2;
+      }
+    }, this.results().data[0]);
+    return cheapest.price;
+  };
+
+  ToursAviaResultSet.prototype.maxPrice = function() {
+    var mostExpensive;
+    mostExpensive = _.reduce(this.results().data, function(el1, el2) {
+      if (el1.price > el2.price) {
+        return el1;
+      } else {
+        return el2;
+      }
+    }, this.results().data[0]);
+    return mostExpensive.price;
   };
 
   ToursAviaResultSet.prototype.destinationText = function() {
@@ -178,7 +224,8 @@ ToursHotelsResultSet = (function(_super) {
   __extends(ToursHotelsResultSet, _super);
 
   function ToursHotelsResultSet(raw, searchParams) {
-    var _this = this;
+    var hotel, room,
+      _this = this;
     this.searchParams = searchParams;
     this.dateHtml = __bind(this.dateHtml, this);
 
@@ -189,6 +236,12 @@ ToursHotelsResultSet = (function(_super) {
     this.price = __bind(this.price, this);
 
     this.destinationText = __bind(this.destinationText, this);
+
+    this.maxPrice = __bind(this.maxPrice, this);
+
+    this.minPrice = __bind(this.minPrice, this);
+
+    this.numHotels = __bind(this.numHotels, this);
 
     this.overviewText = __bind(this.overviewText, this);
 
@@ -204,11 +257,10 @@ ToursHotelsResultSet = (function(_super) {
         return _this.trigger('setActive', _this);
       });
       hotel.off('select');
-      hotel.on('select', function(room) {
+      hotel.on('select', function(roomData) {
         _this.activeHotel(hotel.hotelId);
-        return _this.selection(room);
+        return _this.selection(roomData);
       });
-      hotel.active_result = _this.active_result;
       return _this.trigger('setActive', {
         'data': hotel,
         template: 'hotels-info-template'
@@ -219,10 +271,29 @@ ToursHotelsResultSet = (function(_super) {
     };
     this.hotels = true;
     this.selection = ko.observable(null);
+    hotel = this.results.data[0];
+    room = hotel.roomSets[0];
+    this.activeHotel(hotel.hotelId);
+    this.selection({
+      'roomSet': room,
+      'hotel': hotel
+    });
   }
 
   ToursHotelsResultSet.prototype.overviewText = function() {
     return this.destinationText();
+  };
+
+  ToursHotelsResultSet.prototype.numHotels = function() {
+    return this.results.data.length;
+  };
+
+  ToursHotelsResultSet.prototype.minPrice = function() {
+    return this.results.minPrice;
+  };
+
+  ToursHotelsResultSet.prototype.maxPrice = function() {
+    return this.results.maxPrice;
   };
 
   ToursHotelsResultSet.prototype.destinationText = function() {
@@ -233,7 +304,7 @@ ToursHotelsResultSet = (function(_super) {
     if (this.selection() === null) {
       return 0;
     }
-    return this.selection().room.price();
+    return this.selection().roomSet.price();
   };
 
   ToursHotelsResultSet.prototype.additionalText = function() {

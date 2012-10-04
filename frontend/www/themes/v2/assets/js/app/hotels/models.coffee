@@ -269,7 +269,7 @@ class HotelResult
     if @tours()
       @activeResultId room.resultId
 
-    @trigger 'select', {room: room, hotel: @}
+    @trigger 'select', {roomSet: room, hotel: @}
 
   smallMapUrl: =>
       base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
