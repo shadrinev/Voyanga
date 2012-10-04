@@ -246,6 +246,7 @@
 }
 .btnTD {
 	vertical-align: middle;
+	text-align: center;
 }
 .td-input-hotel .data {
 	float: none;
