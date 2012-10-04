@@ -94,26 +94,23 @@ class ToursAviaResultSet extends TourEntry
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, @searchParams)->
     super
-    @active_hotel = 0
-    @active_result = 0
+    @activeHotel = ko.observable 0
     @template = 'hotels-results'
     @panel = new HotelsPanel()
     @results = new HotelsResultSet raw, @searchParams
-    @results.tours = true
+    @results.tours true
     @results.select = (hotel) =>
-      hotel.tours = true
       hotel.off 'back'
       hotel.on 'back', =>
         @trigger 'setActive', @
       hotel.off 'select'
       hotel.on 'select', (room) =>
-        @active_hotel = hotel.hotelId
-        @active_result = room.resultId
+        @activeHotel  hotel.hotelId
         @selection room
 
       hotel.active_result = @active_result
       @trigger 'setActive', {panel: @panel, 'data':hotel, template: 'hotels-info-template'}
-    @data = {results: @results}
+    @data = {results: ko.observable(@results)}
     @hotels = true
     @selection = ko.observable null
     
@@ -144,7 +141,7 @@ class ToursHotelsResultSet extends TourEntry
 
 class ToursResultSet
   constructor: (raw)->
-    @data = []
+    @data = ko.observableArray()
     for variant in raw.allVariants
       if variant.flights
         @data.push new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
@@ -154,25 +151,39 @@ class ToursResultSet
         result.on 'setActive', (entry)=>
           @setActive entry
           
-    @selection = ko.observable @data[0]
+    @selection = ko.observable @data()[0]
     @panel = ko.computed =>
       @selection().panel
 
     @price = ko.computed =>
       sum = 0
-      for item in @data
+      for item in @data()
         sum += item.price()
       return sum
 
     @savings = ko.computed =>
       sum = 0
-      for item in @data
+      for item in @data()
         sum += item.savings()
       return sum
 
   setActive: (entry)=>
     @selection entry
     ko.processAllDeferredBindingUpdates()
+    ResizeAvia()
+
+  removeItem: (item, event)=>
+    event.stopPropagation()
+    if @data().length <2
+      return
+    idx = @data.indexOf(item)
+    console.log @data.indexOf(item), item, @selection()
+
+    if idx ==-1
+      return
+    @data.splice(idx, 1)
+    if item == @selection()
+      @setActive @data()[0]
     ResizeAvia()
 
 # Models for tour search params,
