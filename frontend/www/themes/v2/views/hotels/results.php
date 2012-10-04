@@ -8,8 +8,8 @@
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
-            <div class="filter-block" data-bind="template: {name: 'hotels-filters', data: results().filters}">
-            </div>
+            <!-- div class="filter-block" data-bind="template: {name: 'hotels-filters', data: results().filters}">
+            </div -->
             <!-- END FILTER BLOCK -->
             <div class="clear"></div>
         </div>
@@ -118,14 +118,4 @@
     </div>
     
   </div>
-</script>
-<script type="text/html" id="hotels-body-popup-template">
-<div id="hotels-body-popup" class="body-popup">
- 		<div class="popupBody">
-	        <div id="contentBox">
-	          <div data-bind="template: {name: 'hotels-popup', data: data}"></div>
-	          <div id="boxClose" data-bind="click: close"></div>
-	        </div>
-        </div>
-</div>
 </script>

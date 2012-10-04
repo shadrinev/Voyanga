@@ -204,7 +204,7 @@ ToursHotelsResultSet = (function(_super) {
       });
     };
     this.data = {
-      results: this.results
+      results: ko.observable(this.results)
     };
     this.hotels = true;
     this.selection = ko.observable(null);
@@ -218,7 +218,7 @@ ToursHotelsResultSet = (function(_super) {
     if (this.selection() === null) {
       return 0;
     }
-    return this.selection().room.price;
+    return this.selection().room.price();
   };
 
   ToursHotelsResultSet.prototype.additionalText = function() {

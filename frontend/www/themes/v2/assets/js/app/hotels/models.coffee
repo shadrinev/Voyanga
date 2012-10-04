@@ -201,10 +201,10 @@ class HotelResult
 
   # FIXME copy-pasted from avia
   # Shows popup with detailed info about given result
-  showDetails: =>
+  showDetails: (data, event)=>
     # If user had clicked read-more link
     @readMoreExpanded = false
-    new GenericPopup '#hotels-body-popup', @
+    new GenericPopup '#hotels-body-popup', ko.contextFor(event.currentTarget)
     SizeBox('hotels-body-popup')
     ResizeBox('hotels-body-popup')
     sliderPhoto('.photo-slide-hotel')

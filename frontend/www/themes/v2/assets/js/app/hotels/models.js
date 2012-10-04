@@ -324,9 +324,9 @@ HotelResult = (function() {
     return new PhotoBox(this.photos);
   };
 
-  HotelResult.prototype.showDetails = function() {
+  HotelResult.prototype.showDetails = function(data, event) {
     this.readMoreExpanded = false;
-    new GenericPopup('#hotels-body-popup', this);
+    new GenericPopup('#hotels-body-popup', ko.contextFor(event.currentTarget));
     SizeBox('hotels-body-popup');
     ResizeBox('hotels-body-popup');
     sliderPhoto('.photo-slide-hotel');

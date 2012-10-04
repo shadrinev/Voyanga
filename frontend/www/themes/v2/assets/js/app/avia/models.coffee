@@ -370,8 +370,8 @@ class AviaResult
     @activeVoyage(@voyages[0])
 
   # Shows popup with detailed info about given result
-  showDetails: =>
-    new GenericPopup '#avia-body-popup', @
+  showDetails: (data, event)=>
+    new GenericPopup '#avia-body-popup', ko.contextFor(event.currentTarget)
     ko.processAllDeferredBindingUpdates()
 
     SizeBox('avia-body-popup');

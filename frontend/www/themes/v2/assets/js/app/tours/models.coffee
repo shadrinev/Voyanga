@@ -110,7 +110,7 @@ class ToursHotelsResultSet extends TourEntry
 
       hotel.active_result = @active_result
       @trigger 'setActive', {panel: @panel, 'data':hotel, template: 'hotels-info-template'}
-    @data = {results: @results}
+    @data = {results: ko.observable(@results)}
     @hotels = true
     @selection = ko.observable null
     
@@ -121,7 +121,7 @@ class ToursHotelsResultSet extends TourEntry
     if @selection() == null
       return 0
 
-    @selection().room.price
+    @selection().room.price()
 
   additionalText: =>
     if @selection() == null
