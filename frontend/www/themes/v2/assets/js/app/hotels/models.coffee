@@ -416,7 +416,7 @@ class HotelsResultSet
     # FIXME
     #ResizeAvia()
 
-
+    
 
 class PanelRoom
   constructor: (item) ->
@@ -446,7 +446,7 @@ class PanelRoom
     target = $(event.currentTarget).attr('rel')
     if @[target]() > 0
       @[target] @[target]() - 1
-
+        
   getHash: =>
     parts = [@adults(), @children()]
     for age in @ages()
