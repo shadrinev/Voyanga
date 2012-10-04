@@ -413,10 +413,6 @@ class HotelsResultSet
     #@updateBest(data)
 
     ko.processAllDeferredBindingUpdates()
-    # FIXME
-    #ResizeAvia()
-
-    
 
 class PanelRoom
   constructor: (item) ->
