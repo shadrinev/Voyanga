@@ -28,7 +28,7 @@ class TimeFilter extends Filter
     _.extend @, Backbone.Events
 
   filter:  (result)=>
-    Utils.inRange result[@key](), @selection()
+    Utils.inRange @get(result,@key), @selection()
 
 
   updateLimits: (item)->
@@ -51,7 +51,7 @@ class PriceFilter extends Filter
     _.extend @, Backbone.Events
 
   filter:  (result)=>
-    Utils.inRange result[@key](), @selection()
+    Utils.inRange @get(result,@key), @selection()
 
 
   updateLimits: (item)->
@@ -74,7 +74,7 @@ class DistancesFilter extends Filter
     _.extend @, Backbone.Events
 
   filter:  (result)=>
-    return result[@key]() <= @selection()
+    return @get(result,@key) <= @selection()
     #Utils.inRange result[@key](), @selection()
 
   updateLimits: (item)->
@@ -261,6 +261,8 @@ class ServiceClassFilter extends Filter
 class TextFilter extends Filter
   constructor: (@key,@caption)->
     @selection = ko.observable ''
+    @updateTimeout = null
+
 
   filter: (item) =>
     lit = @selection()
@@ -269,6 +271,19 @@ class TextFilter extends Filter
       expr = new RegExp(lit, 'ig');
       result = expr.test item[@key]
     return result
+
+  updateResults: =>
+    ko.processAllDeferredBindingUpdates()
+    @updateTimeout = null
+
+  keyDown: =>
+    if @updateTimeout != null
+      window.clearTimeout(@updateTimeout)
+      @updateTimeout = window.setTimeout(
+        ()=>
+          @updateResults()
+        , 1000
+      )
 
 # FIXME write comments
 class AviaFiltersT
@@ -392,25 +407,10 @@ class HotelFiltersT
 
     @stars = new StarsFilter(['stars'], 'Дополнительно', 'Все услуги')
 
-    @price = new PriceFilter('price')
+    @price = new PriceFilter('pricePerNight')
 
     @distance = new DistancesFilter('distanceToCenter')
     @hotelName = new TextFilter('hotelName','поиск по названию')
-
-    ###@arrival = new TimeFilter('arrivalTimeNumeric')
-    if @rt
-      @rtDeparture = new TimeFilter('departureTimeNumeric')
-      @rtArrival = new TimeFilter('arrivalTimeNumeric')
-
-
-    fields = if @rt then ['departureAirport','rtArrivalAirport'] else ['departureAirport']
-    @departureAirport = new ListFilter(fields, @results.departureCity, 'Все аэропорты')
-    fields = if @rt then ['arrivalAirport','rtDepartureAirport'] else ['arrivalAirport']
-    @arrivalAirport = new ListFilter(fields, @results.arrivalCity, 'Все аэропорты')
-    @airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании')
-    @shortStopover = new ShortStopoverFilter()
-    @onlyDirect = new OnlyDirectFilter()
-    @serviceClass = new ServiceClassFilter()###
 
     # Saves us from multiple @filter calls on initial load
     @refilter = (ko.computed =>
@@ -418,11 +418,6 @@ class HotelFiltersT
         @[key].selection()
       for key in @roomFilters
         @[key].selection()
-      #for key in @voyageFilters
-      #  @[key].selection()
-      #if @rt
-      #  for key in @rtVoyageFilters
-      #    @[key].selection()
     ).extend {throttle: 50}
     @refilter.subscribe @filter
 
@@ -446,9 +441,9 @@ class HotelFiltersT
   setVisibleIfChanged:(item, visible) ->
     if item.visible() == visible
       return
-    console.log('visible changed')
-    if typeof item.price != 'undefined'
-      console.log('item with price '+item.price() + ' visible is '+visible)
+    #console.log('visible changed')
+    #if typeof item.price != 'undefined'
+    #  console.log('item with price '+item.price() + ' visible is '+visible)
     item.visible(visible)
 
   filterHotel: (result) =>

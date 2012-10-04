@@ -43,7 +43,7 @@ TimeFilter = (function(_super) {
   }
 
   TimeFilter.prototype.filter = function(result) {
-    return Utils.inRange(result[this.key](), this.selection());
+    return Utils.inRange(this.get(result, this.key), this.selection());
   };
 
   TimeFilter.prototype.updateLimits = function(item) {
@@ -77,7 +77,7 @@ PriceFilter = (function(_super) {
   }
 
   PriceFilter.prototype.filter = function(result) {
-    return Utils.inRange(result[this.key](), this.selection());
+    return Utils.inRange(this.get(result, this.key), this.selection());
   };
 
   PriceFilter.prototype.updateLimits = function(item) {
@@ -111,7 +111,7 @@ DistancesFilter = (function(_super) {
   }
 
   DistancesFilter.prototype.filter = function(result) {
-    return result[this.key]() <= this.selection();
+    return this.get(result, this.key) <= this.selection();
   };
 
   DistancesFilter.prototype.updateLimits = function(item) {
@@ -434,9 +434,14 @@ TextFilter = (function(_super) {
   function TextFilter(key, caption) {
     this.key = key;
     this.caption = caption;
+    this.keyDown = __bind(this.keyDown, this);
+
+    this.updateResults = __bind(this.updateResults, this);
+
     this.filter = __bind(this.filter, this);
 
     this.selection = ko.observable('');
+    this.updateTimeout = null;
   }
 
   TextFilter.prototype.filter = function(item) {
@@ -448,6 +453,21 @@ TextFilter = (function(_super) {
       result = expr.test(item[this.key]);
     }
     return result;
+  };
+
+  TextFilter.prototype.updateResults = function() {
+    ko.processAllDeferredBindingUpdates();
+    return this.updateTimeout = null;
+  };
+
+  TextFilter.prototype.keyDown = function() {
+    var _this = this;
+    if (this.updateTimeout !== null) {
+      window.clearTimeout(this.updateTimeout);
+      return this.updateTimeout = window.setTimeout(function() {
+        return _this.updateResults();
+      }, 1000);
+    }
   };
 
   return TextFilter;
@@ -650,25 +670,9 @@ HotelFiltersT = (function() {
     this.hotelFilters = ['services', 'stars', 'distance', 'hotelName'];
     this.services = new ListFilter(['hotelServices'], 'Дополнительно', 'Все услуги');
     this.stars = new StarsFilter(['stars'], 'Дополнительно', 'Все услуги');
-    this.price = new PriceFilter('price');
+    this.price = new PriceFilter('pricePerNight');
     this.distance = new DistancesFilter('distanceToCenter');
     this.hotelName = new TextFilter('hotelName', 'поиск по названию');
-    /*@arrival = new TimeFilter('arrivalTimeNumeric')
-    if @rt
-      @rtDeparture = new TimeFilter('departureTimeNumeric')
-      @rtArrival = new TimeFilter('arrivalTimeNumeric')
-    
-    
-    fields = if @rt then ['departureAirport','rtArrivalAirport'] else ['departureAirport']
-    @departureAirport = new ListFilter(fields, @results.departureCity, 'Все аэропорты')
-    fields = if @rt then ['arrivalAirport','rtDepartureAirport'] else ['arrivalAirport']
-    @arrivalAirport = new ListFilter(fields, @results.arrivalCity, 'Все аэропорты')
-    @airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании')
-    @shortStopover = new ShortStopoverFilter()
-    @onlyDirect = new OnlyDirectFilter()
-    @serviceClass = new ServiceClassFilter()
-    */
-
     this.refilter = (ko.computed(function() {
       var key, _i, _j, _len, _len1, _ref, _ref1, _results;
       _ref = _this.hotelFilters;
@@ -707,10 +711,6 @@ HotelFiltersT = (function() {
   HotelFiltersT.prototype.setVisibleIfChanged = function(item, visible) {
     if (item.visible() === visible) {
       return;
-    }
-    console.log('visible changed');
-    if (typeof item.price !== 'undefined') {
-      console.log('item with price ' + item.price() + ' visible is ' + visible);
     }
     return item.visible(visible);
   };

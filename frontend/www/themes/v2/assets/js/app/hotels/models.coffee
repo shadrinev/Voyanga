@@ -1,79 +1,5 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 
-class HotelFilter
-  constructor: (@data) ->
-    @name = 'noname'
-  filter: (value) ->
-    if !value
-      console.log('filtered by '+@name)
-
-class HotelNameFilter extends HotelFilter
-  constructor: (hotelNames)->
-    @name = 'NameFilter'
-    @active = ko.observable('')
-
-  filter: (object)->
-    result = true
-    if @active() != ''
-      expr = new RegExp(@active(), 'ig');
-      result = expr.test object.hotelName
-    super result
-    return result
-
-class HotelServicesFilter extends HotelFilter
-  constructor: (servicesNames)->
-    @name = 'ServicesFilter'
-    @services = []
-    for serviceName, foo of servicesNames
-      @services.push {'name':serviceName, 'active': ko.observable 0 }
-    @active = ko.computed =>
-      result = []
-      for line in @services
-        if line.active()
-          result.push line.name
-      return result
-
-  reset: =>
-    for line in @services
-      line.active(0)
-
-  filter: (object)->
-    result = true
-    _active = @active()
-    if _active.length > 0
-      found = false
-      if object.hasHotelServices
-        for serviceName in object.hotelServices
-          if _active.indexOf(serviceName) != -1
-            found = true
-            break
-      result = found
-    super result
-    return result
-
-class HotelStarsFilter extends HotelFilter
-  constructor: ->
-    @name = 'StarsFilter'
-    @stars = []
-    for i in [1..5]
-      @stars.push {'name':i, 'active': ko.observable 0 }
-    @active = ko.computed =>
-      result = []
-      for line in @stars
-        if line.active()
-          result.push line.name
-      return result
-
-  filter: (object)->
-    result = true
-    _active = @active()
-    if _active.length > 0
-      found = false
-      if _active.indexOf(object.stars) != -1
-        found = true
-      result = found
-    super result
-    return result
 
 class Room
   constructor: (data) ->
@@ -96,10 +22,10 @@ class Room
 
 class RoomSet
   constructor: (data, @parent, duration = 1) ->
-    @price = ko.observable Math.ceil(data.rubPrice)
+    @price = Math.ceil(data.rubPrice)
     # Used in tours
     @savings = 0
-    @pricePerNight = Math.ceil(@price() / duration)
+    @pricePerNight = Math.ceil(@price / duration)
     @visible = ko.observable(true)
 
 
@@ -151,9 +77,9 @@ class HotelResult
     # coords
     @lat = data.latitude / 1
     @lng = data.longitude / 1
-    @distanceToCenter = ko.observable Math.round(data.centerDistance/1000)
-    if @distanceToCenter() > 30
-      @distanceToCenter(30)
+    @distanceToCenter = Math.ceil(data.centerDistance/1000)
+    if @distanceToCenter > 30
+      @distanceToCenter = 30
 
     @duration = duration
 
@@ -396,32 +322,14 @@ class HotelsResultSet
 
     # We need array for knockout to work right
     @data = []
-    @_services = {}
-    @_names = []
-    @stars = {}
+
     @numResults = ko.observable 0
 
     for key, result of @_results
       @data.push result
-      @_names.push(result.hotelName)
-      @stars[result.stars] = 1
-      if result.hasHotelServices
-        for service in result.hotelServices
-          @_services[service] = 1
 
-    @allFilters = {}
-    @allFilters['starsFilter'] = new HotelStarsFilter()
-    @allFilters['servicesFilter'] = new HotelServicesFilter(@_services)
-    @allFilters['nameFilter'] = new HotelNameFilter(@_names)
 
-    @allFiltersActive = ko.computed =>
-      result = {}
-      for filterName,filterObject of @allFilters
-        result[filterName] = filterObject.active()
-      return result
 
-    @allFiltersActive.subscribe (value) =>
-      console.log "REFILTER"
 
     @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
 
@@ -441,7 +349,7 @@ class HotelsResultSet
 
   postFilters: =>
     console.log 'post filters'
-    data = _.filter @data, (el) -> el.visible();console.log(el.visible())
+    data = _.filter @data, (el) -> el.visible()
     @numResults data.length
     # FIXME hide recommend
     #@updateCheapest(data)
