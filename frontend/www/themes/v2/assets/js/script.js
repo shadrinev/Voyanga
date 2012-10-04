@@ -180,19 +180,28 @@ $(function() {
 	});
 
 
-	$('.cityStart a').click(function() {
-		$(this).parent().parent().parent().find('.data .input-path').addClass('small').animate({'width' : '100px'},500);
-		$(this).parent().parent().animate({'width' : '267px'},500);
-		$(this).parent().hide();
-		$(this).parent().parent().find('.input-to').show();
-		$(this).parent().parent().find('.input-to').find('input').focus();
+
+/* НА ГЛАВНОЙ СТРАНИЦЕ ОТВЕЧАЕТ ЗА НАЖАТИЕ НА СТАР ИЗ ГОРОДА! */
+	$('.cityStart .to a').click(function() {
+		var var_parent = $(this).parent().parent();
+		var var_parentUp = var_parent.parent();
+		var_parentUp.find('.from').addClass('overflow').animate({'width':'125px'}, 300);
+		var_parent.find('.startInputTo').show();
+		var_parent.animate({'width' : '261px'}, 300, function() {
+			var_parent.find('.startInputTo').find('input').focus();
+		});
 	});
-	$('.board-content.start .data .input-path').click(function() {
-		if($(this).hasClass('small')) {
-			$(this).removeClass('small').animate({'width' : '252px'},500);
-			$(this).parent().parent().find('.cityStart').animate({'width' : '115px'},500);
-			$(this).parent().parent().find('.cityStart').find('.input-to').hide();
-			$(this).parent().parent().find('.cityStart').find('.to').show();
+	
+	
+	$('.board-content .from input').click(function() {
+		if($(this).parent().hasClass('overflow')) {
+			$(this).parent().animate({'width' : '271px'},300,function() {
+				$(this).removeClass('overflow');
+			});
+			$('.cityStart').animate({'width' : '115px'}, 300);
+			$('.cityStart').find('.startInputTo').animate({'opacity' : '1'},300, function() {
+				$(this).hide();
+			});
 		}
 	});
 	
