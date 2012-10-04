@@ -4,11 +4,11 @@
 <script id="hotels-results" type="text/html">
         <!-- MAIN BLOCK -->
         <div class="main-block">
-            <div id="content" data-bind="template: {name: 'hotels-results-inner', data: results}" >
+            <div id="content" data-bind="template: {name: 'hotels-results-inner', data: results()}" >
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
-            <div class="filter-block" data-bind="template: {name: 'hotels-filters', data: $data}">
+            <div class="filter-block" data-bind="template: {name: 'hotels-filters', data: results().filters}">
             </div>
             <!-- END FILTER BLOCK -->
             <div class="clear"></div>
@@ -22,7 +22,7 @@
     <h2>Найдено отелей: ##</h2>
     <div class="clear"></div>
         <!-- ko foreach: data -->
-        <div class="hotels-tickets" data-bind="visible: numPhotos">
+        <div class="hotels-tickets" data-bind="visible: visible()">
             <div class="content">
                 <div class="full-info">
                     <div class="preview-photo">
@@ -61,6 +61,7 @@
             </div>
             <div class="details">
                 <ul data-bind="foreach: roomSets">
+                    <!-- ko if: visible -->
                     <li class="not-show">
                         <div class="items">
                             <div class="float" data-bind="foreach: rooms">
@@ -76,6 +77,7 @@
                             <div class="clear"></div>
                         </div>
                     </li>
+                    <!-- /ko -->
                 </ul>
                 <div class="tab-ul" data-bind="visible: roomSets.length > 2">
                     <a href="#">Посмотреть все результаты</a>

@@ -122,5 +122,14 @@ class HotelInfo extends CApplicationComponent
                 $this->images[] = new HotelImage($imageParams);
             }
         }
+
+    }
+
+    function makeServices()
+    {
+        $serviceListMap = array();
+        $serviceListMap['hide'] = array();
+        $serviceList = array();
+        $serviceGroups = array();
     }
 }

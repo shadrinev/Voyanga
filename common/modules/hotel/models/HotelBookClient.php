@@ -1120,7 +1120,8 @@ class HotelBookClient
             UtilsHelper::soapObjectsArray($hotelSXE->HotelFacility->Facility);
             foreach ($hotelSXE->HotelFacility->Facility as $facilitySXE)
             {
-                $hotelParams['facilities'][] = (string)$facilitySXE;
+                $id = (int)$facilitySXE['id'];
+                $hotelParams['facilities'][$id] = (string)$facilitySXE;
             };
         }
         if (isset($hotelSXE->RoomAmenity->Amenity))
@@ -1129,7 +1130,8 @@ class HotelBookClient
             UtilsHelper::soapObjectsArray($hotelSXE->RoomAmenity->Amenity);
             foreach ($hotelSXE->RoomAmenity->Amenity as $amenitySXE)
             {
-                $hotelParams['roomAmenities'][] = (string)$amenitySXE;
+                $id = (int)$amenitySXE['id'];
+                $hotelParams['roomAmenities'][$id] = (string)$amenitySXE;
             }
         }
         if ($hotelSXE->Cat['id'])

@@ -194,9 +194,9 @@ RoomSet = (function() {
     if (duration == null) {
       duration = 1;
     }
-    this.price = Math.ceil(data.rubPrice);
+    this.price = ko.observable(Math.ceil(data.rubPrice));
     this.savings = 0;
-    this.pricePerNight = Math.ceil(this.price / duration);
+    this.pricePerNight = Math.ceil(this.price() / duration);
     this.visible = ko.observable(true);
     this.rooms = [];
     _ref = data.rooms;
@@ -223,7 +223,8 @@ RoomSet = (function() {
 HotelResult = (function() {
 
   function HotelResult(data, parent, duration) {
-    var _this = this;
+    var service, _i, _len, _ref,
+      _this = this;
     if (duration == null) {
       duration = 1;
     }
@@ -265,7 +266,10 @@ HotelResult = (function() {
     this.rating = data.rating;
     this.lat = data.latitude / 1;
     this.lng = data.longitude / 1;
-    this.distanceToCenter = Math.round(data.centerDistance / 1000);
+    this.distanceToCenter = ko.observable(Math.round(data.centerDistance / 1000));
+    if (this.distanceToCenter() > 30) {
+      this.distanceToCenter(30);
+    }
     this.duration = duration;
     this.selectText = ko.computed(function() {
       if (!_this.tours()) {
@@ -279,6 +283,15 @@ HotelResult = (function() {
     });
     this.hasHotelServices = data.facilities ? true : false;
     this.hotelServices = data.facilities;
+    if (this.hasHotelServices) {
+      _ref = this.hotelServices;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        service = _ref[_i];
+        if (service === 'Фитнесс-центр') {
+          service = 'Фитнесс';
+        }
+      }
+    }
     this.hasRoomAmenities = data.roomAmenities ? true : false;
     this.roomAmenities = data.roomAmenities;
     this.roomSets = [];
@@ -481,6 +494,10 @@ HotelsResultSet = (function() {
     var checkIn, checkOut, duration, hotel, key, result, service, _i, _j, _k, _len, _len1, _len2, _ref, _ref1,
       _this = this;
     this.searchParams = searchParams;
+    this.postFilters = __bind(this.postFilters, this);
+
+    this.postInit = __bind(this.postInit, this);
+
     this.selectHotel = __bind(this.selectHotel, this);
 
     this.select = __bind(this.select, this);
@@ -531,6 +548,7 @@ HotelsResultSet = (function() {
     this._services = {};
     this._names = [];
     this.stars = {};
+    this.numResults = ko.observable(0);
     _ref = this._results;
     for (key in _ref) {
       result = _ref[key];
@@ -580,6 +598,21 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.selectHotel = function(hotel, event) {
     return this.select(hotel, event);
+  };
+
+  HotelsResultSet.prototype.postInit = function() {
+    return this.filters = new HotelFiltersT(this);
+  };
+
+  HotelsResultSet.prototype.postFilters = function() {
+    var data;
+    console.log('post filters');
+    data = _.filter(this.data, function(el) {
+      el.visible();
+      return console.log(el.visible());
+    });
+    this.numResults(data.length);
+    return ko.processAllDeferredBindingUpdates();
   };
 
   return HotelsResultSet;

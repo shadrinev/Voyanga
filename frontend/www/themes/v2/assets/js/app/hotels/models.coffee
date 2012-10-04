@@ -96,10 +96,10 @@ class Room
 
 class RoomSet
   constructor: (data, @parent, duration = 1) ->
-    @price = Math.ceil(data.rubPrice)
+    @price = ko.observable Math.ceil(data.rubPrice)
     # Used in tours
     @savings = 0
-    @pricePerNight = Math.ceil(@price / duration)
+    @pricePerNight = Math.ceil(@price() / duration)
     @visible = ko.observable(true)
 
 
@@ -115,6 +115,10 @@ class RoomSet
       else
         return 'Выбрать'
 
+  #price: ->
+  #  console.log prm
+  #  console.log 'tt'
+  #  return 22
 #
 # Stacked hotel, FIXME can we use this as roomset ?
 #
@@ -147,7 +151,9 @@ class HotelResult
     # coords
     @lat = data.latitude / 1
     @lng = data.longitude / 1
-    @distanceToCenter = Math.round(data.centerDistance/1000)
+    @distanceToCenter = ko.observable Math.round(data.centerDistance/1000)
+    if @distanceToCenter() > 30
+      @distanceToCenter(30)
 
     @duration = duration
 
@@ -163,6 +169,10 @@ class HotelResult
 
     @hasHotelServices = if data.facilities then true else false
     @hotelServices = data.facilities
+    if @hasHotelServices
+      for service in @hotelServices
+        if service == 'Фитнесс-центр'
+          service = 'Фитнесс'
     @hasRoomAmenities = if data.roomAmenities then true else false
     @roomAmenities = data.roomAmenities
     @roomSets = []
@@ -387,7 +397,7 @@ class HotelsResultSet
     @_services = {}
     @_names = []
     @stars = {}
-
+    @numResults = ko.observable 0
 
     for key, result of @_results
       @data.push result
@@ -424,6 +434,22 @@ class HotelsResultSet
   selectHotel: (hotel, event) =>
     @select(hotel, event)
 
+  postInit: =>
+    @filters = new HotelFiltersT @
+
+  postFilters: =>
+    console.log 'post filters'
+    data = _.filter @data, (el) -> el.visible();console.log(el.visible())
+    @numResults data.length
+    # FIXME hide recommend
+    #@updateCheapest(data)
+    #@updateBest(data)
+
+    ko.processAllDeferredBindingUpdates()
+    # FIXME
+    #ResizeAvia()
+
+
 class PanelRoom
   constructor: (item) ->
     @adults = ko.observable 1
@@ -452,7 +478,7 @@ class PanelRoom
     target = $(event.currentTarget).attr('rel')
     if @[target]() > 0
       @[target] @[target]() - 1
-        
+
   getHash: =>
     parts = [@adults(), @children()]
     for age in @ages()
