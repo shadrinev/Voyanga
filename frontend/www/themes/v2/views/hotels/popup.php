@@ -1,3 +1,14 @@
+<script type="text/html" id="hotels-body-popup-template">
+<div id="hotels-body-popup" class="body-popup">
+ 		<div class="popupBody">
+	        <div id="contentBox">
+	          <div data-bind="template: {name: 'hotels-popup', data: $data}"></div>
+	          <div id="boxClose" data-bind="click: close"></div>
+	        </div>
+        </div>
+</div>
+</script>
+
 <script id="hotels-popup" type="text/html">
   <div class="hotel-details">
     <div class="title" id="hotels-popup-header1">
@@ -21,7 +32,7 @@
         <div class="how-cost">
           от <span class="cost" data-bind="text:cheapest">5 200</span><span class="rur f21">o</span> / ночь
         </div>
-        <a href="#" class="btn-cost"><span class="l"></span><span class="text">Выбрать отель</span></a>
+        <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours()?$parents[3].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
       </div>
     </div>
     <div class="tab" id="hotels-popup-description">

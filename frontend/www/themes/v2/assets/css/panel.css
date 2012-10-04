@@ -1,3 +1,109 @@
+.hotelTable, .panelTable, .constructorTable {
+	width: 100%;
+	height: 70px;
+}
+.hotelTable tr td , .panelTable tr td , .constructorTable tr td {
+	vertical-align: middle;
+}
+.tdCity {
+	text-align: left;
+}
+.tdPeople {
+	width: 285px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.tdPeople .how-many-man {
+	margin-left: 0px;
+}
+.tdButton {
+	width: 90px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+
+.board-content .tdCity .from {
+	display: inline-block;
+    height: 34px;
+    position: relative;
+    vertical-align: middle;
+    /* width: 391px; */
+    width: 271px;
+}
+.board-content.start .tdCity .from {
+	
+}
+.board-content .tdCity div .input-path {
+    background: url("../images/input.png") repeat scroll 0 -396px transparent;
+    background-position: 0 -324px;
+    border: medium none;
+    border-radius: 4px 0px 0px 4px;
+    color: #969BA1;
+    font-family: Arial;
+    font-size: 19px;
+    height: 36px;
+    left: 0;
+    overflow: hidden;
+    padding: 0 10px;
+    position: absolute;
+    /* width: 302px; */
+    width: 178px;
+    z-index: 1;
+}
+.board-content .tdCity div .second-path {
+	z-index: 2;
+	border: medium none;
+    border-radius: 4px 4px 4px 4px;
+    font-family: Arial;
+    font-size: 19px;
+    height: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 178px;
+    left: 0px;
+    position: absolute;
+    background: none;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+.board-content .tdCity div .date {
+	display: none;
+}
+.board-content .tdCity div.active .date {
+    background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
+	display: inline-block;
+	font-size: 11px;
+	height: 28px;
+	line-height: 10px;
+	margin: 0 0 0 -5px;
+	padding-top: 8px;
+	text-align: center;
+	vertical-align: middle;
+	width: 36px;
+	position: absolute;
+	z-index: 3;
+	right: 1px;
+	cursor: pointer;	
+}
+.board-content .tdCity div.active .date.noDate {
+	padding-top: 13px;
+	height: 23px;
+}
+.board-content .constructorTable .tdCity div.active .date {
+	right: 37px;
+}
+.board-content .constructorTable .tdCity div.active .date + .date {
+	right: 1px;
+	background: url("../images/slice.png") no-repeat scroll -305px -1260px transparent;
+}
+
+/* ================ */
+/* ================ */
+/* ================ */
+/* ================ */
+/* ================ */
+/* ================ */
 .sub-head .panel .content {
 	cursor: pointer;
 }
@@ -164,7 +270,7 @@
 .how-many-man  .popup .adults input:focus {
 	background-position: -264px -904px;
 }
-.inputDIV {position: relative;}
+.inputDIV {position: relative; width: 48px;}
 .minusOne {background: url(../images/minuscount.png) no-repeat 0 0;
     overflow: hidden;
     cursor: pointer;
@@ -223,12 +329,12 @@
     padding-right: 10px;
     width: 321px;
 }
-.hotel-table {
-	width: 100%;
-}
+
 .td-input-hotel {
-	text-align: center;
+	text-align: right;
+	vertical-align: middle;
 }
+
 .td-input-hotel .how-many-man {
 	float: none;
 	vertical-align: middle;
@@ -248,7 +354,7 @@
 .how-many-man .content + .content .num, .how-many-man .content + .content  + .content .num, .how-many-man .content + .content  + .content  .num {
 	display: block; position: absolute; top: 0px; left: 11px;
 }
-.hotel-table .how-many-man .popup {
+.hotelTable .how-many-man .popup {
 	height: auto;
 	border: none;
 	background: none;
@@ -263,6 +369,7 @@
 	border-bottom: 1px solid #76777a;
 	border-left: 1px solid #b7b8bc;
 	overflow: hidden;
+	position: relative;
 }
 .number-hotel h5 {
 	text-align: left;
@@ -271,9 +378,39 @@
 	font-size: 12px;
 	margin-left: 13px;
 }
-.one-str {
+.number-hotel .one-str {
 	overflow: hidden;
 	margin-bottom: 5px;
+}
+.number-hotel .adults {
+	margin-left: 10px;
+}
+.number-hotel .addOtherRoom {
+    background: url("../images/bg-add-hotel.png") repeat-x scroll 0 0 transparent;
+    border-top: 1px solid #696D71;
+    color: #23262C !important;
+    display: block;
+    font-size: 11px;
+    height: 19px;
+    padding-left: 10px;
+    padding-top: 2px;
+    text-shadow: none !important;
+}
+.number-hotel .addOtherRoom:hover, .popup:hover .addOtherRoom  {
+	color: #23262c !important;
+}
+.number-hotel .del-hotel {
+    color: #9EA2A7 !important;
+    display: block;
+    font-size: 11px;
+    position: absolute;
+    right: 6px;
+    text-decoration: underline;
+    text-shadow: none !important;
+    top: 0;
+}
+.popup:hover .del-hotel {
+	color: #9ea2a7 !important;
 }
 .how-many-man .popup .one-str .adults, .how-many-man .popup .one-str .childs {
     color: #272728;
@@ -407,16 +544,9 @@
 	width: 948px;
 	height: 70px;
 }
-.panelTable {
-	width: 100%;
-	height: 70px;
-}
+
 .panelTable tr td {
 	vertical-align: middle; text-align: center;
-}
-
-.btnTD {
-	width: 90px;
 }
 .panelTable .data {
 	display: inline-block;
@@ -491,6 +621,7 @@
     z-index: 1;
     padding-bottom: 0px;
     padding-top: 0px;
+    left: 0px;
 }
 .second-path {
 	z-index: 2;
@@ -580,4 +711,10 @@
 .AVIA .contTD div.active .input-path {
 	width: 235px;
 	border-radius: 4px 0px 0px 4px;
+}
+
+
+
+.constructorTable {
+	
 }

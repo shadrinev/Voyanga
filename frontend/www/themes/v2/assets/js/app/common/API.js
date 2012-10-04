@@ -12,12 +12,18 @@ API = (function() {
   }
 
   API.prototype.call = function(url, cb) {
+    var _this = this;
     $('#loadWrapBg').show();
+    if (sessionStorage.getItem("" + this.endpoint + url)) {
+      cb(JSON.parse(sessionStorage.getItem("" + this.endpoint + url)));
+      return $('#loadWrapBg').hide();
+    }
     return $.ajax({
       url: "" + this.endpoint + url,
       dataType: 'jsonp',
       timeout: 60000,
       success: function(data) {
+        sessionStorage.setItem("" + _this.endpoint + url, JSON.stringify(data));
         cb(data);
         return $('#loadWrapBg').hide();
       },
@@ -43,7 +49,7 @@ ToursAPI = (function(_super) {
   }
 
   ToursAPI.prototype.search = function(cb) {
-    return this.call("tour/search?start=BCN&destinations%5B0%5D%5Bcity%5D=MOW&destinations%5B0%5D%5BdateFrom%5D=01.10.2012&destinations%5B0%5D%5BdateTo%5D=10.10.2012&rooms%5B0%5D%5Badt%5D=1&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0", function(data) {
+    return this.call("tour/search?start=BCN&destinations%5B0%5D%5Bcity%5D=MOW&destinations%5B0%5D%5BdateFrom%5D=5.10.2012&destinations%5B0%5D%5BdateTo%5D=10.10.2012&rooms%5B0%5D%5Badt%5D=1&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0", function(data) {
       return cb(data);
     });
   };

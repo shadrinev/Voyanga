@@ -38,3 +38,10 @@
 	width: 16px; height: 13px;
 	display: inline-block;
 }
+.ico-plus {
+	background: url(../images/ico-plus-hotel.png) no-repeat;
+	width: 10px; height: 11px;
+	display: inline-block;
+	margin-right: 5px;
+	vertical-align: middle;
+}
