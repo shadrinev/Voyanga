@@ -1,1 +1,1 @@
-coffee -cbw ./frontend/www/themes/v2/assets
+coffee -cbwo ./frontend/assets/v2/js/app ./frontend/assets/v2/coffee/app 
