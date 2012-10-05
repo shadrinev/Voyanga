@@ -66,12 +66,15 @@
   </div>
   <!-- END MAP -->
   <!-- SERVICE -->
-  <!-- ko if: hasHotelServices -->
+  <!-- ko if: hasHotelGroupServices -->
   <div class="service-in-hotel">
     <h3>Услуги в отеле</h3>
-    <ul data-bind="foreach: hotelServices">
-      <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
-    </ul>
+    <!-- ko foreach: hotelGroupServices -->
+      <h3 data-bind="text: $index"></h3>
+        <ul data-bind="foreach: $data">
+          <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
+        </ul>
+    <!-- /ko -->
   </div>
   <!-- /ko -->
 

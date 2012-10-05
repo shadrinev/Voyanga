@@ -64,7 +64,8 @@ RoomSet = (function() {
 HotelResult = (function() {
 
   function HotelResult(data, parent, duration) {
-    var _this = this;
+    var elements, groupName, _ref,
+      _this = this;
     if (duration == null) {
       duration = 1;
     }
@@ -111,6 +112,7 @@ HotelResult = (function() {
       this.distanceToCenter = 30;
     }
     this.duration = duration;
+    console.log('duration:' + duration);
     this.selectText = ko.computed(function() {
       if (!_this.tours()) {
         return "Забронировать";
@@ -124,7 +126,17 @@ HotelResult = (function() {
     this.hasHotelServices = data.hotelServices ? true : false;
     this.hotelServices = data.hotelServices;
     this.hasHotelGroupServices = data.hotelGroupServices ? true : false;
-    this.hotelGroupServices = data.hotelGroupServices;
+    this.hotelGroupServices = [];
+    if (data.hotelGroupServices) {
+      _ref = data.hotelGroupServices;
+      for (groupName in _ref) {
+        elements = _ref[groupName];
+        this.hotelGroupServices.push({
+          groupName: groupName,
+          elements: elements
+        });
+      }
+    }
     this.hasRoomAmenities = data.roomAmenities ? true : false;
     this.roomAmenities = data.roomAmenities;
     this.roomSets = [];
@@ -338,7 +350,10 @@ HotelsResultSet = (function() {
     this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);
-    if (duration === 0) {
+    if (this.searchParams.duration) {
+      duration = this.searchParams.duration;
+    }
+    if (duration === 0 || typeof duration === 'undefined') {
       for (_i = 0, _len = rawHotels.length; _i < _len; _i++) {
         hotel = rawHotels[_i];
         if (typeof hotel.duration === 'undefined') {
@@ -351,10 +366,12 @@ HotelsResultSet = (function() {
           duration = Math.floor(duration / (3600 * 24 * 1000));
         } else {
           duration = hotel.duration;
+          console.log('yes set');
         }
         break;
       }
     }
+    console.log('MainDuration:' + duration);
     this.minPrice = false;
     this.maxPrice = false;
     for (_j = 0, _len1 = rawHotels.length; _j < _len1; _j++) {
