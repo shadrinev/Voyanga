@@ -1985,7 +1985,20 @@ input.hotel-input {
 .fixed {
     position: fixed;
 }
-
+.sorting-panel {
+	position: absolute;
+	right: 6px;
+	top: 2px;
+	color: #3e4c52;
+}
+.sorting-panel .hotel-sort-by-item {
+	color: #1c81bb;
+	border-bottom: 1px dashed;
+	cursor: pointer;
+}
+.sorting-panel .hotel-sort-by-item.active {
+	border-bottom: none;
+}
 .allTicketsDIV {
 	background: #f4f7f9;
 	border-radius: 6px;
