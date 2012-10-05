@@ -232,9 +232,10 @@ class HotelResult
       url = 'hotel/search/info/?hotelId='+@hotelId
       url += '&cacheId='+@parent.cacheId
       console.log @parent.cacheId
-      #api.search url, (data)=>
+      api.search url, (data)=>
         #adding info to elements
-        #window.voyanga_debug 'searchInfo',data
+        window.voyanga_debug 'searchInfo',data
+        #for
 
 
   #mapTumbler: (context, event) =>
@@ -308,6 +309,7 @@ class HotelsResultSet
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
+    @city = @searchParams.cityName
     if @searchParams.duration
       duration = @searchParams.duration
     if duration == 0 || typeof duration == 'undefined'

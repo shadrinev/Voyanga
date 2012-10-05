@@ -284,12 +284,16 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.getFullInfo = function() {
-    var api, url;
+    var api, url,
+      _this = this;
     if (!this.haveFullInfo) {
       api = new HotelsAPI;
       url = 'hotel/search/info/?hotelId=' + this.hotelId;
       url += '&cacheId=' + this.parent.cacheId;
-      return console.log(this.parent.cacheId);
+      console.log(this.parent.cacheId);
+      return api.search(url, function(data) {
+        return window.voyanga_debug('searchInfo', data);
+      });
     }
   };
 
@@ -371,6 +375,7 @@ HotelsResultSet = (function() {
     this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);
+    this.city = this.searchParams.cityName;
     if (this.searchParams.duration) {
       duration = this.searchParams.duration;
     }

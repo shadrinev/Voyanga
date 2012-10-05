@@ -17,7 +17,7 @@
 </script>
 
 <script type="text-html" id="hotels-results-inner">
-<h1  data-bind="visible:tours">Выберите отель в <span>Амстердам</span>, 19-26 мая</h1>
+<h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city">Амстердам</span>, 19-26 мая</h1>
 <div class="ticket-content hotels">
     <h2>Найдено отелей: <span data-bind="text: numResults">##</span></h2>
     <div class="sorting-panel"><span class="hotel-sort-by">сортировать по:</span> <span class="hotel-sort-by-item" data-bind="click: sortByPrice">&nbsp;цене</span> <span class="hotel-sort-by-item" data-bind="click: sortByRating">&nbsp;рейтингу</span>  </div>
