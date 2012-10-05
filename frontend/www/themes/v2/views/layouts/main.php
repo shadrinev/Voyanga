@@ -63,6 +63,7 @@ Yii::app()->clientScript->registerPackage('appJs');
                 <!-- END CENTER BLOCK -->
             </div>
         </div>
+
         <!-- CALENDAR -->
         <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}"
              style="top: 70px; display: none;">
@@ -120,12 +121,24 @@ Yii::app()->clientScript->registerPackage('appJs');
     </div>
 </div>
 <?php
-$templates = Yii::app()->params['frontend.app.templates'];
+$templates = Array(
+    'avia.index', 'avia.results', 'avia.popup',
+    'avia.panel', 'avia.filters', 'avia.cheapest',
+    'hotels.index', 'hotels.results', 'hotels.panel',
+    'hotels.popup', 'hotels.filters', 'hotels.info', 'hotels.timeline',
+<<<<<<< Temporary merge branch 1
+    'tours.results', 'tours.index', 'tours.overview',
+    'common.calendar',
+    'event.index', 'event.map'
+=======
+    'tours.results', 'tours.index', 'tours.panel',
+    'common.calendar', 'common.roomers', 'common.passengers',
+    'event.map'
+>>>>>>> Temporary merge branch 2
+);
 foreach ($templates as $template)
 {
-    echo "<!-- START OF TEMPLATE $template -->\n";
     $this->renderPartial('www.themes.v2.views.' . $template);
-    echo "<!-- END OF TEMPLATE $template -->\n";
 }
 ?>
 </body>

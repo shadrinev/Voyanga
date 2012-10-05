@@ -60,9 +60,9 @@
               		</div>
               	</div>	
               	<div class="floatRight">
-	              	<span style="color:#2e333b;" class="f14 bold" data-bind="text: $parents[2].tours?'Выбрать':'Оформить', visible: $parents[2].selected_key()!=key">Оформить</span>
+	              	<span style="color:#2e333b;" class="f14 bold" data-bind="text: parent.tours?'Выбрать':'Оформить', visible:!parent.selected_key()!=key">Оформить</span>
 	              	<a class="btn-order" href="#">
-	                	<span class="cost" data-bind="text: ($parents[2].selected_key()!=key)? price:'Выбран'">63 502</span> <span class="rur f26" data-bind="visible: $parents[2].selected_key()!=key">o</span>
+	                	<span class="cost" data-bind="text: (parent.selected_key()!=key)? price:'Выбран'">63 502</span> <span class="rur f26" data-bind="visible: parent.selected_key()!=key">o</span>
 	                </a>
               	</div>
               </div>
