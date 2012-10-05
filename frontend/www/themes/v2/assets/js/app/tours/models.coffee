@@ -7,15 +7,23 @@ class TourEntry
     return @avia
   isHotel: =>
     return @hotels
+
   price: =>
     if @selection() == null
       return 0
     @selection().price
 
-  priceText: =>
+  priceHtml: =>
     if @selection() == null
       return "Не выбрано"
     return @price() + '<span class="rur">o</span>'
+
+  minPriceHtml: =>
+    @minPrice() + '<span class="rur">o</span>'
+
+  maxPriceHtml: =>
+    @maxPrice() + '<span class="rur">o</span>'
+
 
   savings: =>
     if @selection() == null
@@ -30,6 +38,7 @@ class ToursAviaResultSet extends TourEntry
   constructor: (raw, sp)->
     @api = new AviaAPI
     @template = 'avia-results'
+    @overviewTemplate = 'tours-overview-avia-ticket'
     # FIXME
     #new Searchparams...
     @panel = new AviaPanel()
@@ -54,12 +63,41 @@ class ToursAviaResultSet extends TourEntry
       result.selected_key res.key
       @selection(res)
     @avia = true
-    @selection null
+    # FIXME
+    r = result.data[0]
+    result.selected_key r.key
+    @selection result.data[0]
+    # END FIXME
     @results result
 
   doNewSearch: =>
     @api.search @panel.sp.url(), (data)=>
       @newResults data.flights.flightVoyages, data.searchParams
+
+  # Overview VM
+  overviewText: =>
+    "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity
+
+  numAirlines: =>
+    # FIXME FIXME FIXME
+    @results().filters.airline.options().length
+
+  minPrice: =>
+    cheapest = _.reduce @results().data,
+      (el1, el2)->
+        if el1.price < el2.price then el1 else el2
+      ,@results().data[0]
+    cheapest.price
+
+  maxPrice: =>
+    mostExpensive = _.reduce @results().data,
+      (el1, el2)->
+        if el1.price > el2.price then el1 else el2
+      ,@results().data[0]
+    mostExpensive.price
+    
+
+  # End overview VM
 
   destinationText: =>
     @results().departureCity + ' &rarr; ' + @results().arrivalCity   
@@ -94,29 +132,46 @@ class ToursAviaResultSet extends TourEntry
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, @searchParams)->
     super
-    @active_hotel = 0
-    @active_result = 0
+    @overviewTemplate = 'tours-overview-hotels-ticket'
+    @activeHotel = ko.observable 0
     @template = 'hotels-results'
-    @panel = new HotelsPanel()
     @results = new HotelsResultSet raw, @searchParams
-    @results.tours = true
+    @results.tours true
     @results.select = (hotel) =>
-      hotel.tours = true
       hotel.off 'back'
       hotel.on 'back', =>
         @trigger 'setActive', @
       hotel.off 'select'
-      hotel.on 'select', (room) =>
-        @active_hotel = hotel.hotelId
-        @active_result = room.resultId
-        @selection room
-
-      hotel.active_result = @active_result
-      @trigger 'setActive', {panel: @panel, 'data':hotel, template: 'hotels-info-template'}
-    @data = {results: @results}
+      hotel.on 'select', (roomData) =>
+        @activeHotel  hotel.hotelId
+        @selection roomData
+      @trigger 'setActive', {'data':hotel, template: 'hotels-info-template'}
+    @data = {results: ko.observable(@results)}
     @hotels = true
     @selection = ko.observable null
+  # FIXME
+    hotel = @results.data[0]
+    room = hotel.roomSets[0]
+    @activeHotel  hotel.hotelId
+    @selection {'roomSet': room, 'hotel': hotel}
+    # END FIXME
     
+  # Overview VM
+  overviewText: =>
+    @destinationText()
+
+  numHotels: =>
+    @results.data.length
+
+  minPrice: =>
+    @results.minPrice
+
+  maxPrice: =>
+    @results.maxPrice
+
+  # end Overview VM
+
+  # tours overview
   destinationText: =>
     "Отель в " + @searchParams.city
 
@@ -124,7 +179,7 @@ class ToursHotelsResultSet extends TourEntry
     if @selection() == null
       return 0
 
-    @selection().room.price
+    @selection().roomSet.price
 
   additionalText: =>
     if @selection() == null
@@ -144,7 +199,7 @@ class ToursHotelsResultSet extends TourEntry
 
 class ToursResultSet
   constructor: (raw)->
-    @data = []
+    @data = ko.observableArray()
     for variant in raw.allVariants
       if variant.flights
         @data.push new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
@@ -154,21 +209,27 @@ class ToursResultSet
         result.on 'setActive', (entry)=>
           @setActive entry
           
-    @selection = ko.observable @data[0]
-    @panel = ko.computed =>
-      @selection().panel
+    @selection = ko.observable @data()[0]
+    @panel = ko.computed 
+      read: =>
+        if @selection().panel
+          @panelContainer = @selection().panel
+        return @panelContainer
 
     @price = ko.computed =>
       sum = 0
-      for item in @data
+      for item in @data()
         sum += item.price()
       return sum
 
     @savings = ko.computed =>
       sum = 0
-      for item in @data
+      for item in @data()
         sum += item.savings()
       return sum
+
+    @vm = new ToursOverviewVM @
+    do @showOverview
 
   setActive: (entry)=>
     @selection entry
@@ -268,4 +329,48 @@ class TourSearchParams extends SearchParams
       @destinations[j].city(destination.city)
       @destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate())
       @destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate())
-      j++
+      j++    ResizeAvia()
+
+  showOverview: =>
+    @setActive {template: 'tours-overview', data: @}
+
+  removeItem: (item, event)=>
+    event.stopPropagation()
+    if @data().length <2
+      return
+    idx = @data.indexOf(item)
+    console.log @data.indexOf(item), item, @selection()
+
+    if idx ==-1
+      return
+    @data.splice(idx, 1)
+    if item == @selection()
+      @setActive @data()[0]
+
+# decoupling some presentation logic from resultset
+class ToursOverviewVM
+  constructor: (@resultSet)->
+
+  startCity: =>
+    firstResult = @resultSet.data()[0]
+    if firstResult.isAvia()
+      firstResult.results().departureCity
+    else
+      'Бобруйск'
+
+
+  dateClass: =>
+    'blue-one'
+  
+  
+  dateHtml: =>
+    firstResult = @resultSet.data()[0]
+    source = firstResult.selection()
+    result = '<div class="day">'
+    if firstResult.isAvia()
+      result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
+    else
+      result+= dateUtils.formatHtmlDayShortMonth firstResult.results.checkIn
+
+    result+='</div>'
+    return result

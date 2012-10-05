@@ -18,6 +18,8 @@ Application = (function(_super) {
 
     this.contentRendered = __bind(this.contentRendered, this);
 
+    this.render = __bind(this.render, this);
+
     this.initCalendar = __bind(this.initCalendar, this);
 
     var result,
@@ -82,6 +84,11 @@ Application = (function(_super) {
     }
   };
 
+  Application.prototype.render = function(data, view) {
+    this.viewData(data);
+    return this._view(view);
+  };
+
   Application.prototype.register = function(prefix, module, isDefault) {
     var action, controller, route, _ref,
       _this = this;
@@ -90,8 +97,7 @@ Application = (function(_super) {
     }
     controller = module.controller;
     controller.on("viewChanged", function(view, data) {
-      _this.viewData(data);
-      return _this._view(view);
+      return _this.render(data, view);
     });
     _ref = controller.routes;
     for (route in _ref) {

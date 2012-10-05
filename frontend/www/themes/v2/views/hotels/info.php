@@ -29,7 +29,7 @@
       <div class="how-cost">
         от <span class="cost" data-bind="text: cheapest">5 200</span><span class="rur f21">o</span> / ночь
       </div>
-      <a class="btn-cost" href="#" data-bind="click:select"><span class="l"></span><span class="text" data-bind="text: tours?'Выбрать':'Забронировать'"></span></a>
+      <a class="btn-cost" href="#" data-bind="click:select, css: {selected: cheapestSet.resultId == activeResultId()}"><span class="l"></span><span class="text" data-bind="text: selectText"></span></a>
     </div>
   </div>
   <!-- DESCR -->
@@ -66,12 +66,15 @@
   </div>
   <!-- END MAP -->
   <!-- SERVICE -->
-  <!-- ko if: hasHotelServices -->
+  <!-- ko if: hasHotelGroupServices -->
   <div class="service-in-hotel">
     <h3>Услуги в отеле</h3>
-    <ul data-bind="foreach: hotelServices">
-      <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
-    </ul>
+    <!-- ko foreach: hotelGroupServices -->
+      <h3 data-bind="text: $index"></h3>
+        <ul data-bind="foreach: $data">
+          <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
+        </ul>
+    <!-- /ko -->
   </div>
   <!-- /ko -->
 
@@ -102,7 +105,7 @@
               </ul>
               <a href="">Условия отмены бронирования</a>
             </td>
-            <td class="button"><a class="btn-cost" href="#" data-bind="click:$parent.select"><span class="l"></span><span class="text" data-bind="text: $parent.tours?'Выбрать':'Забронировать'"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a></td>
+            <td class="button"><a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="text" data-bind="text: $parent.selectText"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a></td>
           </tr>
         </tbody>
       </table>

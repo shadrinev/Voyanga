@@ -54,16 +54,11 @@
     vertical-align: baseline;
 }
 .hr {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    background: none repeat scroll 0 0 transparent;
-    border-color: -moz-use-text-color -moz-use-text-color #B6BCC4;
-    border-image: none;
-    border-style: none none solid;
-    border-width: medium medium 1px;
-    margin-left: -16px;
+    background: #B6BCC4;
+	border: none;
+	height: 1px;
+	margin-left: -13px;
+    
 }
 .inline-block {
     display: inline-block;

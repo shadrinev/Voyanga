@@ -13,10 +13,15 @@ GenericPopup = (function() {
     $('body').prepend('<div id="popupOverlay"></div>');
     el = $($(this.id + '-template').html());
     $('body').prepend(el);
-    ko.applyBindings({
-      data: data,
-      close: this.close
-    }, el[0]);
+    if (data['$data']) {
+      data['$data']['close'] = this.close;
+      ko.applyBindings(data, el[0]);
+    } else {
+      ko.applyBindings({
+        data: data,
+        close: this.close
+      }, el[0]);
+    }
     ko.processAllDeferredBindingUpdates();
     $(window).keyup(function(e) {
       if (e.keyCode === 27) {
@@ -30,7 +35,7 @@ GenericPopup = (function() {
 
   GenericPopup.prototype.close = function() {
     $(window).unbind('keyup');
-    $(this.id).hide();
+    $(this.id).remove();
     return $('#popupOverlay').remove();
   };
 
