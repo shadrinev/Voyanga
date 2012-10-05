@@ -431,8 +431,9 @@ function smallTicketHeight() {
 	    heightTwoTicket = ((var_oneHeight - 35) - 19);
 	}
 	heightTwoTicket = Math.floor(heightTwoTicket);
+	console.log(heightTwoTicket);
 	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices').css('height', heightTwoTicket +'px');
-	var heightGraf = heightTwoTicket - 70;	
+	var heightGraf = heightTwoTicket - 65;	
 	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
     }
 }

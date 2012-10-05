@@ -642,9 +642,9 @@
 	border: none;
 }
 .recommended-ticket .ticket-items .content .details-selecte {
-	overflow: hidden;
-	padding: 0px 2px 2px 2px;
-	margin: 5px -2px 8px;
+    margin: 0 -2px;
+    overflow: hidden;
+    padding: 0 2px 10px;
 }
 .recommended-ticket .ticket-items .content .dashed {
 	margin-top: 10px;
