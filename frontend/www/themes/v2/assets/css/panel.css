@@ -215,7 +215,7 @@
 .tumblr input {display: none;}
 .tumblr .one {
 	width: 37px; height: 37px;
-	background: url(../images/slice.png) no-repeat -35px -1086px;
+	background: url(../images/slice.png) no-repeat -35px -1087px;
 	position: absolute; top: 0px; left: 0px; z-index: 2;
 	cursor: pointer;
 }
@@ -226,7 +226,7 @@
 	cursor: pointer;
 }
 .tumblr .one.active {
-	background-position: 2px -1086px; 
+	background-position: 2px -1087px; 
 }
 .tumblr .two.active {
 	background-position: 0px -1051px; 
