@@ -2,7 +2,7 @@
     <div class="filter-content">
         <div class="div-filter">
             <h4>Название</h4>
-            <input class="hotel-input" placeholder="поиск" type="text" data-bind="value: hotelName.selection,attr:{placeholder: hotelName.caption}">
+            <input class="hotel-input" placeholder="поиск" type="text" data-bind="value: hotelName.selection,attr:{placeholder: hotelName.caption},valueUpdate: 'keyup'">
         </div>
         <div class="div-filter">
             <h4>Количество звезд</h4>

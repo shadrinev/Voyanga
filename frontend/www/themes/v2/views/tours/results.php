@@ -8,57 +8,20 @@
       <ul class="my-trip-list">
         <!-- FIXME change to repeat binding -->
         <!-- ko foreach: data -->
-        <li class="items first">
+        <li class="items" data-bind="css: {first: $index()==0}">
           <a href="#" data-bind="css: {fly: isAvia(), hotel: isHotel(), active: $parent.selection() == $data, toFrom: rt()}, click: $parent.setActive">
             <div class="keys" data-bind="click: $parent.removeItem"></div>
             <div class="path">
               <div class="where" data-bind="html: destinationText()">С-Пб &rarr; Амстердам</div>
-              <div class="time"><span data-bind="html: priceText()"></span> <span data-bind="text: additionalText()">7:30 - 12:20</span></div>
+              <div class="time"><span data-bind="html: priceHtml()"></span> <span data-bind="text: additionalText()">7:30 - 12:20</span></div>
             </div>
             <div class="date" data-bind="attr: {class: 'date '+ dateClass()}, html:dateHtml()">
             </div>
           </a>
         </li>
         <!-- /ko -->
-        <!--li class="items">
-          <a href="#2" class="hotel active">
-            <div class="keys"></div>
-            <div class="path">
-              <div class="where">Отель в Амстердам</div>
-              <div class="time">12 750 <span class="rur">o</span>, Park Inn</div>
-            </div>
-            <div class="date orange-two">
-              <div class="day">
-                <span class="f17">12</span>
-                <br>
-                мая
-              </div>
-              <div class="day">
-                <span class="f17">24</span>
-                <br>
-                мая
-              </div>
-            </div>
-          </a>
-        </li>
-        <li class="items">
-          <a href="#3" class="fly">
-            <div class="keys"></div>
-            <div class="path">
-              <div class="where">С-Пб &rarr; Амстердам</div>
-              <div class="time">12 750 <span class="rur">o</span>, 7:30 - 12:20</div>
-            </div>
-            <div class="date orange-one">
-              <div class="day">
-                <span class="f17">12</span>
-                <br>
-                мая
-              </div>
-            </div>
-          </a>
-        </li -->
         <li class="items end">
-          <a href="#5" class="last">
+          <a href="#" class="last" data-bind="click: showOverview">
             <div class="keys"></div>
             <div class="path">
               Вся поездка

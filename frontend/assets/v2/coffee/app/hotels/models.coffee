@@ -1,79 +1,5 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 
-class HotelFilter
-  constructor: (@data) ->
-    @name = 'noname'
-  filter: (value) ->
-    if !value
-      console.log('filtered by '+@name)
-
-class HotelNameFilter extends HotelFilter
-  constructor: (hotelNames)->
-    @name = 'NameFilter'
-    @active = ko.observable('')
-
-  filter: (object)->
-    result = true
-    if @active() != ''
-      expr = new RegExp(@active(), 'ig');
-      result = expr.test object.hotelName
-    super result
-    return result
-
-class HotelServicesFilter extends HotelFilter
-  constructor: (servicesNames)->
-    @name = 'ServicesFilter'
-    @services = []
-    for serviceName, foo of servicesNames
-      @services.push {'name':serviceName, 'active': ko.observable 0 }
-    @active = ko.computed =>
-      result = []
-      for line in @services
-        if line.active()
-          result.push line.name
-      return result
-
-  reset: =>
-    for line in @services
-      line.active(0)
-
-  filter: (object)->
-    result = true
-    _active = @active()
-    if _active.length > 0
-      found = false
-      if object.hasHotelServices
-        for serviceName in object.hotelServices
-          if _active.indexOf(serviceName) != -1
-            found = true
-            break
-      result = found
-    super result
-    return result
-
-class HotelStarsFilter extends HotelFilter
-  constructor: ->
-    @name = 'StarsFilter'
-    @stars = []
-    for i in [1..5]
-      @stars.push {'name':i, 'active': ko.observable 0 }
-    @active = ko.computed =>
-      result = []
-      for line in @stars
-        if line.active()
-          result.push line.name
-      return result
-
-  filter: (object)->
-    result = true
-    _active = @active()
-    if _active.length > 0
-      found = false
-      if _active.indexOf(object.stars) != -1
-        found = true
-      result = found
-    super result
-    return result
 
 class Room
   constructor: (data) ->
@@ -96,10 +22,11 @@ class Room
 
 class RoomSet
   constructor: (data, @parent, duration = 1) ->
-    @price = ko.observable Math.ceil(data.rubPrice)
+    @price = Math.ceil(data.rubPrice)
     # Used in tours
     @savings = 0
-    @pricePerNight = Math.ceil(@price() / duration)
+
+    @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
 
 
@@ -151,11 +78,12 @@ class HotelResult
     # coords
     @lat = data.latitude / 1
     @lng = data.longitude / 1
-    @distanceToCenter = ko.observable Math.round(data.centerDistance/1000)
-    if @distanceToCenter() > 30
-      @distanceToCenter(30)
+    @distanceToCenter = Math.ceil(data.centerDistance/1000)
+    if @distanceToCenter > 30
+      @distanceToCenter = 30
 
     @duration = duration
+    console.log('duration:'+duration)
 
     @selectText = ko.computed =>
       if !@tours()
@@ -167,12 +95,17 @@ class HotelResult
 
 
 
-    @hasHotelServices = if data.facilities then true else false
-    @hotelServices = data.facilities
-    if @hasHotelServices
-      for service in @hotelServices
-        if service == 'Фитнесс-центр'
-          service = 'Фитнесс'
+    @hasHotelServices = if data.hotelServices then true else false
+    @hotelServices = data.hotelServices
+    @hasHotelGroupServices = if data.hotelGroupServices then true else false
+    @hotelGroupServices = []
+    if data.hotelGroupServices
+      for groupName,elements of data.hotelGroupServices
+        @hotelGroupServices.push {groupName: groupName,elements: elements}
+    #if @hasHotelServices
+    #  for service in @hotelServices
+    #    if service == 'Фитнесс-центр'
+    #      service = 'Фитнесс'
     @hasRoomAmenities = if data.roomAmenities then true else false
     @roomAmenities = data.roomAmenities
     @roomSets = []
@@ -338,7 +271,10 @@ class HotelResult
     # it is actually cheapest click
     if room.roomSets
       room = room.roomSets[0]
-    @trigger 'select', {room: room, hotel: @}
+    if @tours()
+      @activeResultId room.resultId
+
+    @trigger 'select', {roomSet: room, hotel: @}
 
   smallMapUrl: =>
       base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
@@ -347,8 +283,6 @@ class HotelResult
       base += "&sensor=false"
       return base
 
-
-
 #
 # Result container
 # Stacks them by price and company
@@ -356,10 +290,12 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawHotels, @searchParams) ->
     @_results = {}
-    @tours = false
+    @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
-    if duration == 0
+    if @searchParams.duration
+      duration = @searchParams.duration
+    if duration == 0 || typeof duration == 'undefined'
       for hotel in rawHotels
         if typeof hotel.duration == 'undefined'
           checkIn = dateUtils.fromIso hotel.checkIn
@@ -371,8 +307,9 @@ class HotelsResultSet
           duration =  Math.floor(duration / (3600 * 24 * 1000))
         else
           duration = hotel.duration
+          console.log('yes set')
         break
-
+    console.log('MainDuration:'+duration)
     @minPrice = false
     @maxPrice = false
     for hotel in rawHotels
@@ -393,32 +330,14 @@ class HotelsResultSet
 
     # We need array for knockout to work right
     @data = []
-    @_services = {}
-    @_names = []
-    @stars = {}
+
     @numResults = ko.observable 0
 
     for key, result of @_results
       @data.push result
-      @_names.push(result.hotelName)
-      @stars[result.stars] = 1
-      if result.hasHotelServices
-        for service in result.hotelServices
-          @_services[service] = 1
 
-    @allFilters = {}
-    @allFilters['starsFilter'] = new HotelStarsFilter()
-    @allFilters['servicesFilter'] = new HotelServicesFilter(@_services)
-    @allFilters['nameFilter'] = new HotelNameFilter(@_names)
 
-    @allFiltersActive = ko.computed =>
-      result = {}
-      for filterName,filterObject of @allFilters
-        result[filterName] = filterObject.active()
-      return result
 
-    @allFiltersActive.subscribe (value) =>
-      console.log "REFILTER"
 
     @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
 
@@ -438,44 +357,68 @@ class HotelsResultSet
 
   postFilters: =>
     console.log 'post filters'
-    data = _.filter @data, (el) -> el.visible();console.log(el.visible())
+    data = _.filter @data, (el) -> el.visible()
     @numResults data.length
     # FIXME hide recommend
     #@updateCheapest(data)
     #@updateBest(data)
 
     ko.processAllDeferredBindingUpdates()
+    # FIXME
+    #ResizeAvia()
+
 
 class PanelRoom
   constructor: (item) ->
-    @adults = @roomers.adults
-    @children = @roomers.children
-    @ages = @roomers.ages
+    @adults = ko.observable 1
+    @children = ko.observable 0
+    @ages = ko.observableArray()
+    if item
+      parts = item.split(':')
+      @adults = ko.observable parts[0]
+      @children = ko.observable parts[1]
+      for i in [0..@children]
+        ages.push ko.observable parts[2+i]
+    @children.subscribe (newValue)=>
+      if @ages().length < newValue
+        for i in [0..(newValue-@ages().length-1)]
+          @ages.push ko.observable 12
+          console.log "$# PUSHING", i
+      else if @ages().length > newValue
+        @ages.splice(newValue)
+      ko.processAllDeferredBindingUpdates()
 
+  plusOne: (context, event) =>
+    target = $(event.currentTarget).attr('rel')
+    @[target] @[target]() + 1
 
+  minusOne: (context, el) =>
+    target = $(event.currentTarget).attr('rel')
+    if @[target]() > 0
+      @[target] @[target]() - 1
+
+  getHash: =>
+    parts = [@adults(), @children()]
+    for age in @ages()
+      parts.push age
+    return parts.join(':')
+
+  getUrl: (i)=>
+    # FIXME FIMXE FIMXE
+    return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&rooms[#{i}][chdAge]=0&rooms[#{i}][cots]=0"
 
 class HotelsSearchParams
   constructor: ->
     @city = ko.observable('')
     @checkIn = ko.observable('')
     @checkOut = ko.observable('')
-
-    @rooms = ko.observableArray [new PanelRoom]
-    @roomsView = ko.computed =>
-      result = []
-      current = []
-      for item in @rooms()
-        if current.length == 2
-          result.push current
-        current = []
-        current.push item
-        result.push current
-      return result
+    @rooms = ko.observableArray [new PanelRoom ]
 
   addRoom: =>
     if @rooms().length == 4
       return
     @rooms.push new PanelRoom()
+
 
   getHash: =>
     parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
@@ -495,6 +438,7 @@ class HotelsSearchParams
     for item in rest
       if item
         @rooms.push new PanelRoom(item)
+
 
   url: =>
     result = "hotel/search?city=" + @city()

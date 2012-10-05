@@ -58,12 +58,17 @@
           <div class="text" data-bind="text: description">
           </div>
           <a href="#" class="read-more" data-bind="click: readMore">Подробнее</a>
-          <!-- ko if: hasHotelServices -->
-          <h3>Услуги в отеле</h3>
-          <ul data-bind="foreach: hotelServices">
-            <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
-          </ul>
-          <!-- /ko -->
+            <!-- ko if: hasHotelGroupServices -->
+            <div class="service-in-hotel">
+                <h3>Услуги в отеле</h3>
+                <!-- ko foreach: hotelGroupServices -->
+                <h3 data-bind="text: groupName"></h3>
+                <ul data-bind="foreach: elements">
+                    <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
+                </ul>
+                <!-- /ko -->
+            </div>
+            <!-- /ko -->
         </div>
       </div>
     </div>

@@ -98,10 +98,12 @@ Yii::app()->clientScript->registerPackage('appJs');
 </div>
 <!-- END WRAPPER -->
 <!-- MAPS -->
+<!-- FIXME -->
+<!-- ko if: isEvent()-->
 <div class="maps"
-     data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}">
+     data-bind="template: {name: 'event-map', data: viewData()}">
 </div>
-
+<!-- /ko -->
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
@@ -128,6 +130,9 @@ $templates = Array(
     'tours.results', 'tours.index', 'tours.panel',
     'common.calendar', 'common.roomers', 'common.passengers',
     'event.map'
+    'tours.results', 'tours.index', 'tours.overview',
+    'common.calendar',
+    'event.index', 'event.map'
 );
 foreach ($templates as $template)
 {
