@@ -19,16 +19,18 @@
 	margin-left: 5px;
 }
 .btn-order {
-	color: #FFF;
-	width: 165px;
-	height: 30px;
-	background: url(../images/slice.png) no-repeat -211px -534px;
-	display: block;
-	padding-top: 9px;
-	padding-left: 15px;
-	margin-bottom: 7px;
-	text-shadow: 0px 1px 0px #850606;
-	margin-top: 5px;
+    background: url("../images/slice.png") no-repeat scroll -211px -534px transparent;
+    color: #FFFFFF;
+    display: block;
+    height: 30px;
+    margin-bottom: 7px;
+    margin-top: 5px;
+    padding-left: 2px;
+    padding-right: 10px;
+    padding-top: 9px;
+    text-align: center;
+    text-shadow: 0 1px 0 #850606;
+    width: 143px;
 }
 .btn-order span {
 	display: inline-block;

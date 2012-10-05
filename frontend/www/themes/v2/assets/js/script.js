@@ -179,7 +179,7 @@ $(function() {
 		$('.calendarSlide').animate({'top' :  '0px'}, 400);
 	});
 
-
+	
 
 /* НА ГЛАВНОЙ СТРАНИЦЕ ОТВЕЧАЕТ ЗА НАЖАТИЕ НА СТАР ИЗ ГОРОДА! */
 	$('.cityStart .to a').click(function() {
@@ -204,6 +204,7 @@ $(function() {
 			});
 		}
 	});
+	
 	
 	
 	

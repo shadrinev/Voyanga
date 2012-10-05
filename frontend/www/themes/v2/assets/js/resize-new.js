@@ -411,6 +411,11 @@ function ResizeCenterBlock() {
 		resizeLeftStage();
 		resizeMainStage();
 	}
+	$(".second-path").focus(function () {
+        $(this).select();
+    }).mouseup(function(e){
+        e.preventDefault();
+    });
 }
 function smallTicketHeight() {
     if ($('.recommended-ticket').length > 0 && $('.recommended-ticket').is(':visible')) {
