@@ -27,7 +27,7 @@
     </ul>
     <div class="book">
       <div class="how-cost">
-        от <span class="cost" data-bind="text: cheapest">5 200</span><span class="rur f21">o</span> / ночь
+        от <span class="cost" data-bind="text: cheapestSet.pricePerNight">5 200</span><span class="rur f21">o</span> / ночь
       </div>
       <a class="btn-cost" href="#" data-bind="click:select, css: {selected: cheapestSet.resultId == activeResultId()}"><span class="l"></span><span class="text" data-bind="text: selectText"></span></a>
     </div>
@@ -69,12 +69,12 @@
   <!-- ko if: hasHotelGroupServices -->
   <div class="service-in-hotel">
     <h3>Услуги в отеле</h3>
-    <!-- ko foreach: hotelGroupServices -->
-      <h3 data-bind="text: $index"></h3>
-        <ul data-bind="foreach: $data">
+      <!-- ko foreach: hotelGroupServices -->
+      <h3 data-bind="text: groupName"></h3>
+      <ul data-bind="foreach: elements">
           <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
-        </ul>
-    <!-- /ko -->
+      </ul>
+      <!-- /ko -->
   </div>
   <!-- /ko -->
 

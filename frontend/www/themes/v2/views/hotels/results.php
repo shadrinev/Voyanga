@@ -19,7 +19,8 @@
 <script type="text-html" id="hotels-results-inner">
 <h1  data-bind="visible:tours">Выберите отель в <span>Амстердам</span>, 19-26 мая</h1>
 <div class="ticket-content hotels">
-    <h2>Найдено отелей: ##</h2>
+    <h2>Найдено отелей: <span data-bind="text: numResults">##</span></h2>
+    <div><span style="float: right" data-bind="click: sortByRating">&nbsp;рейтингу</span> <span style="float: right" data-bind="click: sortByPrice">&nbsp;цене</span> <span style="float: right">сортировать по:</span></div>
     <div class="clear"></div>
         <!-- ko foreach: data -->
         <div class="hotels-tickets" data-bind="visible: visible()">
@@ -43,14 +44,14 @@
                             <span data-bind="text:address">Санкт-Петребург. ул. Морская Набережная, 31/2</span>
                             <span class="gradient"></span>
                         </div>
-                        <a href="#"  data-bind="click:showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
+                        <a href="#"  data-bind="click: showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
                     </div>
                     <div class="text" data-bind="text:description">
                         Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...
                     </div>
                 </div>
                 <div class="choose-a-hotel">
-                    <div class="rating"  data-bind="visible: rating!='-'">
+                    <div class="rating"  data-bind="visible: rating">
                         <span class="value" data-bind="text: rating"></span>
                         <span class="text">рейтинг<br>отеля</span>
                     </div>

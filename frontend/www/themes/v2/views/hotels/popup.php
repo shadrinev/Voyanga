@@ -30,7 +30,7 @@
       </ul>
       <div class="book">
         <div class="how-cost">
-          от <span class="cost" data-bind="text:cheapest">5 200</span><span class="rur f21">o</span> / ночь
+          от <span class="cost" data-bind="text: cheapestSet.pricePerNight">5 200</span><span class="rur f21">o</span> / ночь
         </div>
         <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours()?$parents[3].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
       </div>

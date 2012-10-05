@@ -150,7 +150,7 @@ class ToursHotelsResultSet extends TourEntry
     @hotels = true
     @selection = ko.observable null
   # FIXME
-    hotel = @results.data[0]
+    hotel = @results.data()[0]
     room = hotel.roomSets[0]
     @activeHotel  hotel.hotelId
     @selection {'roomSet': room, 'hotel': hotel}

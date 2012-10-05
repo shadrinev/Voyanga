@@ -470,7 +470,7 @@ class HotelFiltersT
     @iterate @filterHotel, @filterRoom
 
   iterate: (onHotel, onRoom) =>
-    for result in @results.data
+    for result in @results.data()
       onHotel(result)
       if result.visible()
         someVisible = false
