@@ -882,9 +882,10 @@
 	text-indent: -9999px;
 	width: 163px;
 	height: 19px;
-	display: block;
+	display: b	lock;
 	background: url(../images/btn-recommend-show-hide.png) no-repeat 0 0;
 	margin-top: 0px;
+	display: block;
 }
 .ticket-content .order-div a.show {
 	background-position: 0px -19px;
@@ -1969,11 +1970,6 @@ input.hotel-input {
     white-space: nowrap;
     z-index: 3;
 }
-/*
-.maps .toursBigAll .centerTours .textTours:hover .priceSelect {
-	text-decoration: underline;
-}
-*/
 .maps .toursBigAll .centerTours .textTours:hover .txt {
 	text-decoration: underline;
 }
@@ -1988,4 +1984,14 @@ input.hotel-input {
 
 .fixed {
     position: fixed;
+}
+
+.allTicketsDIV {
+	background: #f4f7f9;
+	border-radius: 6px;
+	box-shadow: 0px 1px 1px rgba(26,27,31,0.6);
+	color: #1d222b;
+}
+.allTicketsDIV .aviaTickets {
+	width: 100%;
 }
