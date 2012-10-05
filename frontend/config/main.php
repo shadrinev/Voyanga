@@ -14,6 +14,8 @@ Yii::setPathOfAlias('frontend', $root . '/frontend');
 Yii::setPathOfAlias('uploads', $root . '/frontend/www/uploads');
 
 $frontendMainLocal = file_exists('frontend/config/main-local.php') ? require('frontend/config/main-local.php') : array();
+$packagesJs = require('frontend/assets/v2/coffee/app/packages.php');
+$packagesCss = require('frontend/www/themes/v2/css/packages.php');
 
 return CMap::mergeArray(
     require_once ('common/config/main.php'),
@@ -46,6 +48,7 @@ return CMap::mergeArray(
             'site.common.extensions.order.*',
             'site.backend.extensions.bootstrap.widgets.*',
             'site.common.extensions.yiidebugtb.*', //our extension
+            'site.frontend.extensions.EScriptBoost.*'
         ),
 
         'modules' => array(
@@ -85,23 +88,27 @@ return CMap::mergeArray(
 
         // application components
         'components' => array(
+            'assetManager'=>array(
+                'class'=> 'VAssetManager',
+            ),
+/*            'clientScript' => array(
+                'class'=> YII_DEBUG ? 'EClientScriptBoost' : 'EClientScriptBoost',
+                'cacheDuration'=>30,
+            ),*/
             'bootstrap' => array(
                 'class' => 'site.backend.extensions.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
                 'responsiveCss' => true,
                 'debug' => true
             ),
-
             'user' => array(
                 // enable cookie-based authentication
                 'allowAutoLogin' => true
             ),
-
             'urlManager' => array(
                 'urlFormat' => 'path',
                 'showScriptName' => false,
                 'rules' => $routes,
             ),
-
             'cache' => array(
                 'class' => 'CMemCache',
                 'servers' => array(
@@ -179,73 +186,7 @@ return CMap::mergeArray(
                 )
             ),
             'clientScript' => array(
-                'packages' => array(
-                    'everything' => array(
-                        'basePath' => 'frontend.www.themes.v2.assets',
-                        'js' => array(
-                            //! App supporting vendor modules
-                            'js/vendor/jquery.js', 'js/vendor/knockout-2.1.0.js',
-                            'js/vendor/knockout-repeat.js', 'js/vendor/knockout-deferred-updates.js',
-                            'js/vendor/underscore.js',
-                            'js/vendor/backbone.js', 'js/jquery-ui-1.8.22.custom.min.js',
-                            'js/jquery.easing.1.3.js',
-                            'js/vendor/jquery.autocomplete.js',
-                            'js/vendor/moment.js',
-                            //! Markup related scripts and modules
-                            'js/jquery.dotdotdot-1.5.1.js', 'js/resize-new.js',
-                            'js/jquery.color.js', 'js/popup.js',
-                            'js/popup-photo.js',
-                            'js/tickets.js','js/panel-new.js', 'js/script.js',
-                            'js/voyanga-calendar.js', 'js/timeline-calendar.js', 'js/jquery.select.slider.js',
-                            'js/jquery.slider.min.js','js/jquery.slider.js', 'js/photoslider.js',
-			    //! TO register load handlers before app does
-                            'js/loader.js',
-                            //! Scroll JS
-                            'js/scroll/jquery.mousewheel.js',
-                            'js/scroll/jquery.jscrollpane.min.js',
-                            //! Our application logic
-                            'js/app/common/calendar.js',
-                            'js/app/common/API.js',
-                            'js/app/common/genericpopup.js',
-                            'js/app/common/photobox.js',
-                            'js/app/common/module.slider.js',
-                            'js/app/common/utils.js', 'js/app/common/ko.extenders.js',
-                             // custom bindings
-                            'js/app/common/ko.bindings.timeslider.js',
-                            'js/app/common/ko.bindings.priceslider.js',
-                            'js/app/common/ko.bindings.singleslider.js',
-                            'js/app/common/ko.bindings.slider.js',
- 			                'js/app/common/ko.bindings.checkbox.js',
-
-                            'js/app/common/travellers.js',
-                            'js/app/common/searchParams.js',
-                            'js/app/common/ko.rangeobservable.js',
-                            'js/app/common/filters.js',
-                            'js/app/common/searchPanel.js', 'js/app/avia/panel.js', 'js/app/hotels/panel.js', 'js/app/tours/panel.js',
-                            'js/app/hotels/models.js',
-                            'js/app/hotels/controllers.js', 'js/app/hotels/module.js',
-                            'js/app/avia/models.js', 'js/app/avia/controllers.js',
-                            'js/app/avia/module.js', 'js/app/tours/models.js',
-                            'js/app/tours/controllers.js', 'js/app/tours/models.js',
-                            'js/app/tours/module.js', 'js/app/app.js',
-                            'js/app/common/autocomplete.js',
-
-                            'js/index.js',
-                            'js/app/events/models.js',
-                            'js/app/events/controllers.js',
-                            'js/app/events/module.js',
-                        ),
-                        'css' => array(
-                            'css/reset.style.css', 'css/style.css',
-                            'css/popup.css','css/popup-photo.css','css/jslider.css',
-                            'css/jslider.round.voyanga.css','css/jsslidecheck.css',
-                            'css/panel.css', 'css/voyanga-calendar.css',
-                            'css/checkradio.css',
-                            'css/load.css',
-                            'css/jquery.jscrollpane.css'
-                            ),
-                    ),
-                ),
+                'packages' => CMap::mergeArray($packagesJs, $packagesCss)
             ),
         ),
         'controllerMap' => array(
