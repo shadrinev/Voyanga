@@ -6,9 +6,9 @@ class API
     $('#loadWrapBg').show()
 
     #  $(document).trigger 'aviaStart'
-    if sessionStorage.getItem("#{@endpoint}#{url}")
-      cb(JSON.parse(sessionStorage.getItem("#{@endpoint}#{url}")))
-      return $('#loadWrapBg').hide()
+    #if sessionStorage.getItem("#{@endpoint}#{url}")
+    #  cb(JSON.parse(sessionStorage.getItem("#{@endpoint}#{url}")))
+    #  return $('#loadWrapBg').hide()
      
     $.ajax
       url: "#{@endpoint}#{url}"

@@ -17,9 +17,10 @@
 </script>
 
 <script type="text-html" id="hotels-results-inner">
-<h1  data-bind="visible:tours">Выберите отель в <span>Амстердам</span>, 19-26 мая</h1>
+<h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city">Амстердам</span>, 19-26 мая</h1>
 <div class="ticket-content hotels">
-    <h2>Найдено отелей: ##</h2>
+    <h2>Найдено отелей: <span data-bind="text: numResults">##</span></h2>
+    <div class="sorting-panel"><span class="hotel-sort-by">сортировать по:</span> <span class="hotel-sort-by-item" data-bind="click: sortByPrice">&nbsp;цене</span> <span class="hotel-sort-by-item" data-bind="click: sortByRating">&nbsp;рейтингу</span>  </div>
     <div class="clear"></div>
         <!-- ko foreach: data -->
         <div class="hotels-tickets" data-bind="visible: visible()">
@@ -43,14 +44,14 @@
                             <span data-bind="text:address">Санкт-Петребург. ул. Морская Набережная, 31/2</span>
                             <span class="gradient"></span>
                         </div>
-                        <a href="#"  data-bind="click:showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
+                        <a href="#"  data-bind="click: showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
                     </div>
                     <div class="text" data-bind="text:description">
                         Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...
                     </div>
                 </div>
                 <div class="choose-a-hotel">
-                    <div class="rating"  data-bind="visible: rating!='-'">
+                    <div class="rating"  data-bind="visible: rating">
                         <span class="value" data-bind="text: rating"></span>
                         <span class="text">рейтинг<br>отеля</span>
                     </div>
@@ -64,17 +65,24 @@
                     <!-- ko if: visible -->
                     <li class="not-show">
                         <div class="items">
-                            <div class="float" data-bind="foreach: rooms">
-                                <span class="text"><span data-bind="text: name">Стандартный двухместный номер</span> <span data-bind="text: nameNemo"></span></span>
-                                <!-- ko if: hasMeal -->
-                                 <span class="ico-breakfast"></span> <span data-bind="text:meal">Завтрак</span>
-                                <!-- /ko -->
-                                <br>
-                            </div>
-                            <div class="how-cost">
-                                <span class="cost" data-bind="text: pricePerNight">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em" data-bind="visible: rooms.length == 2">За оба номера</span>
-                            </div>
-                            <div class="clear"></div>
+                            <table class="table-hotel-result">
+                                <tr>
+                                    <td class="td-float">
+                                        <div class="float" data-bind="foreach: rooms">
+                                            <span class="text"><span data-bind="text: name">Стандартный двухместный номер</span><br /><span data-bind="text: nameNemo" class="textOriginal"></span></span>
+                                            <!-- ko if: hasMeal -->
+                                             <span class="ico-breakfast"></span> <span data-bind="text:meal">Завтрак</span>
+                                            <!-- /ko -->
+                                            <br>
+                                        </div>
+                                    </td>
+                                    <td class="td-cost">
+                                        <div class="how-cost">
+                                            <span class="cost" data-bind="text: pricePerNight">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em" data-bind="visible: rooms.length == 2">За оба номера</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </li>
                     <!-- /ko -->

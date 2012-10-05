@@ -371,7 +371,7 @@ class AviaResult
 
   # Shows popup with detailed info about given result
   showDetails: (data, event)=>
-    new GenericPopup '#avia-body-popup', ko.contextFor(event.currentTarget)
+    new GenericPopup '#avia-body-popup', @
     ko.processAllDeferredBindingUpdates()
 
     SizeBox('avia-body-popup');
@@ -466,6 +466,7 @@ class AviaResultSet
       (el1, el2)->
         if el1.price < el2.price then el1 else el2
       ,data[0]
+
     if @cheapest() == undefined
       @cheapest new_cheapest
       return

@@ -45,6 +45,7 @@ class HotelSearchParams
             'checkIn' => $this->checkIn,
             'duration' => $this->duration,
             'city' => $this->city->code,
+            'cityNameAcc' => $this->city->caseAcc,
             'rooms' => array()
         );
         foreach ($this->rooms as $room)

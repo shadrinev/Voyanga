@@ -62,6 +62,7 @@ class HotelResult
     # FIXME check if we can get diffirent photos for different rooms in same hotel
     @photos = data.images
     @numPhotos = 0
+    @parent = parent
     # FIXME trollface
     @frontPhoto =
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png'
@@ -75,6 +76,8 @@ class HotelResult
     # FIXME check if categoryId matches star rating
     @stars = STARS_VERBOSE[data.categoryId-1]
     @rating = data.rating
+    if @rating == '-'
+      @rating = 0
     # coords
     @lat = data.latitude / 1
     @lng = data.longitude / 1
@@ -84,6 +87,7 @@ class HotelResult
 
     @duration = duration
     console.log('duration:'+duration)
+    @haveFullInfo = false
 
     @selectText = ko.computed =>
       if !@tours()
@@ -147,8 +151,8 @@ class HotelResult
     # If we initialized google map already
     @mapInitialized = false
 
-  showMapDetails: =>
-    @showDetails()
+  showMapDetails: (data, event)=>
+    @showDetails(data, event)
     @showMap()
 
   # FIXME refactor
@@ -222,6 +226,18 @@ class HotelResult
     $('#boxContent').css 'height', 'auto'
     SizeBox 'hotels-popup-body'
 
+  getFullInfo: ()=>
+    if !@haveFullInfo
+      api = new HotelsAPI
+      url = 'hotel/search/info/?hotelId='+@hotelId
+      url += '&cacheId='+@parent.cacheId
+      console.log @parent.cacheId
+      api.search url, (data)=>
+        #adding info to elements
+        window.voyanga_debug 'searchInfo',data
+        #for
+
+
   #mapTumbler: (context, event) =>
   #  el = $(event.currentTarget)
   #  if ! el.hasClass('active')
@@ -293,6 +309,7 @@ class HotelsResultSet
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
+    @city = @searchParams.cityName
     if @searchParams.duration
       duration = @searchParams.duration
     if duration == 0 || typeof duration == 'undefined'
@@ -329,8 +346,8 @@ class HotelsResultSet
           @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
 
     # We need array for knockout to work right
-    @data = []
-
+    #@data = []
+    @data = ko.observableArray()
     @numResults = ko.observable 0
 
     for key, result of @_results
@@ -338,16 +355,40 @@ class HotelsResultSet
 
 
 
-
-    @data = _.sortBy @data, (entry)-> entry.roomSets[0].price
+    @data.sort (left, right)->
+      if left.minPrice < right.minPrice
+        return -1
+      if left.minPrice > right.minPrice
+        return  1
+      return 0
 
   select: (hotel, event) =>
+    window.voyanga_debug ' i wonna get hotel for you',hotel
     hotel.off 'back'
     hotel.on 'back', =>
-      window.app.render({results: @}, 'results')
+      window.app.render({results: ko.observable(@)}, 'results')
 
-
+    hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
+
+  sortByPrice:  =>
+    @data.sort (left, right)->
+      if left.minPrice < right.minPrice
+        return -1
+      if left.minPrice > right.minPrice
+        return  1
+      return 0
+    ko.processAllDeferredBindingUpdates()
+
+  sortByRating:  =>
+    @data.sort (left, right)->
+      if left.rating > right.rating
+        return -1
+      if left.rating < right.rating
+        return  1
+      return 0
+    console.log(@data())
+    ko.processAllDeferredBindingUpdates()
 
   selectHotel: (hotel, event) =>
     @select(hotel, event)
@@ -357,15 +398,18 @@ class HotelsResultSet
 
   postFilters: =>
     console.log 'post filters'
-    data = _.filter @data, (el) -> el.visible()
+    data = _.filter @data(), (el) -> el.visible()
     @numResults data.length
-    # FIXME hide recommend
-    #@updateCheapest(data)
-    #@updateBest(data)
 
+    console.log(@data)
     ko.processAllDeferredBindingUpdates()
-    # FIXME
-    #ResizeAvia()
+
+    window.setTimeout(
+      =>
+        ifHeightMinAllBody()
+        scrolShowFilter()
+      , 50
+    )
 
 
 class PanelRoom

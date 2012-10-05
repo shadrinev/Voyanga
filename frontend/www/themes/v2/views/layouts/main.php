@@ -79,9 +79,11 @@ Yii::app()->clientScript->registerPackage('appJs');
          data-bind="template: {if: isNotEvent(), name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
     <!-- SLIDE TOURS -->
+    <!-- ko if: isEvent() -->
     <div class="slideTours"
-         data-bind="template: {if: isEvent(), name: activeView(), data: viewData(), afterRender: mapRendered}">
+         data-bind="template: {name: activeView(), data: viewData(), afterRender: mapRendered}">
     </div>
+    <!-- /ko -->
     <!-- END SLIDE TOURS -->
     <!-- FOOTER -->
     <div class="footer">
