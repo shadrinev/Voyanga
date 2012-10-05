@@ -45,6 +45,6 @@
                 лет
             </div>
         </div>
-        <a href="#" data-bind="click:$parents[1].addRoom, visible: ($index()+1)==$length()">Еще комната</a>
+        <a href="#" data-bind="click: $parents[2].addRoom, visible: ($index()+1)==$length()">Еще комната</a>
     </div>
 </script>

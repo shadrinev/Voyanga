@@ -259,7 +259,10 @@ Voyage = (function() {
 
 AviaResult = (function() {
 
-  function AviaResult(data) {
+  function AviaResult(data, parent) {
+    var fields, flights, name, rtName, _i, _len,
+      _this = this;
+    this.parent = parent;
     this.showDetails = __bind(this.showDetails, this);
 
     this.minimizeRtStacked = __bind(this.minimizeRtStacked, this);
@@ -278,8 +281,6 @@ AviaResult = (function() {
 
     this.chooseStacked = __bind(this.chooseStacked, this);
 
-    var fields, flights, name, rtName, _i, _len,
-      _this = this;
     _.extend(this, Backbone.Events);
     flights = data.flights;
     this.price = Math.ceil(data.price);
@@ -573,7 +574,7 @@ AviaResultSet = (function() {
       if (this._results[key]) {
         this._results[key].push(flightVoyage);
       } else {
-        result = new AviaResult(flightVoyage);
+        result = new AviaResult(flightVoyage, this);
         this._results[key] = result;
         result.key = key;
       }

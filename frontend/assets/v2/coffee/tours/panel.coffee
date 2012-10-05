@@ -3,7 +3,6 @@ class TourPanelSet
     window.voyanga_debug 'Init of TourPanelSet'
 
     @sp = new TourSearchParams()
-    @rooms = @sp.rooms
 
     @startCity = @sp.startCity
     @startCityReadable = ko.observable ''
@@ -21,6 +20,27 @@ class TourPanel extends SearchPanel
     @template = 'tour-panel-template'
     window.voyanga_debug "TourPanel created"
     super()
+
+    @rooms = sp.rooms
+    @roomsView = ko.computed =>
+      result = []
+      current = []
+      for item in @rooms()
+        if current.length == 2
+          result.push current
+        current = []
+        current.push item
+        result.push current
+      return result
+
+    @afterRender = () =>
+      $ =>
+        @rooms()[0].afterRender()
+
+    @addRoom = () =>
+      if @rooms().length == 4
+        return
+      @rooms.push new Roomers()
 
     @city = sp.destinations()[0].city
     @cityReadable = ko.observable ''
@@ -89,12 +109,9 @@ class TourPanel extends SearchPanel
       , 300, ->
         $(this).hide()
 
-  
-
 
 $(document).on "keyup change", "input.second-path", (e) ->
   firstValue = $(this).val()
   secondEl = $(this).siblings('input.input-path')
   if ((e.keyCode==8) || (firstValue.length<3))
     secondEl.val('')
-

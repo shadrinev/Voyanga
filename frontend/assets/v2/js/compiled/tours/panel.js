@@ -10,7 +10,6 @@ TourPanelSet = (function() {
     this.isFirst = __bind(this.isFirst, this);
     window.voyanga_debug('Init of TourPanelSet');
     this.sp = new TourSearchParams();
-    this.rooms = this.sp.rooms;
     this.startCity = this.sp.startCity;
     this.startCityReadable = ko.observable('');
     this.startCityReadableGen = ko.observable('');
@@ -38,6 +37,34 @@ TourPanel = (function(_super) {
     this.template = 'tour-panel-template';
     window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this);
+    this.rooms = sp.rooms;
+    this.roomsView = ko.computed(function() {
+      var current, item, result, _i, _len, _ref;
+      result = [];
+      current = [];
+      _ref = _this.rooms();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (current.length === 2) {
+          result.push(current);
+        }
+        current = [];
+        current.push(item);
+        result.push(current);
+      }
+      return result;
+    });
+    this.afterRender = function() {
+      return $(function() {
+        return _this.rooms()[0].afterRender();
+      });
+    };
+    this.addRoom = function() {
+      if (_this.rooms().length === 4) {
+        return;
+      }
+      return _this.rooms.push(new Roomers());
+    };
     this.city = sp.destinations()[0].city;
     this.cityReadable = ko.observable('');
     this.cityReadableGen = ko.observable('');

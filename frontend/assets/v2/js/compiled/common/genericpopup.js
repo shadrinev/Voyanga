@@ -14,6 +14,11 @@ GenericPopup = (function() {
     el = $($(this.id + '-template').html());
     $('body').prepend(el);
     if (data['$data']) {
+      if (!data['$data']['data']) {
+        data['$data'] = {
+          data: data['$data']
+        };
+      }
       data['$data']['close'] = this.close;
       ko.applyBindings(data, el[0]);
     } else {

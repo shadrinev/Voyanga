@@ -30,12 +30,13 @@
                             мая
                         </div>
                     </div>
+                    <a href="#" class="add-tour"></a>
                 </td>
                 <td class="tdPeople">
-                    <!-- СТАНОВИТСЯ ПУСТЫМ КОГДА ПЕРЕДВИГАЕТСЯ ВНИЗ -->
+                    <span data-bind="template: {name: rooms()[0].template, data: rooms}"></span>
                 </td>
                 <td class="tdButton">
-                    <!-- СТАНОВИТСЯ ПУСТЫМ КОГДА ПЕРЕДВИГАЕТСЯ ВНИЗ -->
+                    <div class="btn-find"></div>
                 </td>
             </tr>
         </table>

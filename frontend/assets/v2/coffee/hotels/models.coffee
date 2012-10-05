@@ -425,21 +425,13 @@ class HotelsResultSet
 
     ko.processAllDeferredBindingUpdates()
 
-class PanelRoom
-  constructor: (item) ->
-    @adults = @roomers.adults
-    @children = @roomers.children
-    @ages = @roomers.ages
-
-
-
 class HotelsSearchParams
   constructor: ->
     @city = ko.observable('')
     @checkIn = ko.observable('')
     @checkOut = ko.observable('')
 
-    @rooms = ko.observableArray [new PanelRoom]
+    @rooms = ko.observableArray [new Roomers()]
     @roomsView = ko.computed =>
       result = []
       current = []
@@ -454,7 +446,7 @@ class HotelsSearchParams
   addRoom: =>
     if @rooms().length == 4
       return
-    @rooms.push new PanelRoom()
+    @rooms.push new Roomers()
 
   getHash: =>
     parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
