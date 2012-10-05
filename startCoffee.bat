@@ -1,1 +1,1 @@
-coffee -cbwo ./frontend/assets/v2/js/app ./frontend/assets/v2/coffee/app 
+coffee -cbwo ./frontend/assets/v2/js/compiled ./frontend/assets/v2/coffee

@@ -10,9 +10,8 @@ Yii::app()->clientScript->registerPackage('appJs');
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Voyanga v.0.1 - Trip Flight Rework</title>
     <!--<script type="text/javascript"
-            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">-->
-    </script>
-    <script type="text/javascript" src="/js/iedebug.js"></script>
+            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
+    </script>-->
 </head>
 
 <body data-bind="css: {fixed: isEvent()}">
@@ -121,17 +120,7 @@ Yii::app()->clientScript->registerPackage('appJs');
     </div>
 </div>
 <?php
-$templates = Array('avia.index', 'avia.results', 'avia.popup',
-    'avia.panel', 'avia.filters', 'avia.cheapest',
-    'hotels.index', 'hotels.results', 'hotels.panel',
-    'hotels.popup', 'hotels.filters', 'hotels.info', 'hotels.timeline',
-    'tours.results', 'tours.index', 'tours.panel',
-    'common.calendar', 'common.roomers', 'common.passengers',
-    'event.map'
-    'tours.results', 'tours.index', 'tours.overview',
-    'common.calendar',
-    'event.index', 'event.map'
-);
+$templates = Yii::app()->params['frontend.app.templates'];
 foreach ($templates as $template)
 {
     $this->renderPartial('www.themes.v2.views.' . $template);

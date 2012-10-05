@@ -15,6 +15,7 @@
             'moment.js',
             'scroll/jquery.mousewheel.js',
             'scroll/jquery.jscrollpane.min.js',
+            'iedebug.js'
         ),
         'depends' => array('jquery')
     ),
@@ -40,7 +41,7 @@
         )
     ),
     'common' => array(
-        'basePath' => 'frontend.assets.v2.js.app.common',
+        'basePath' => 'frontend.assets.v2.js.compiled.common',
         'js' => array(
             //! Our application logic
             'calendar.js',
@@ -67,7 +68,7 @@
         )
     ),
     'avia' => array(
-        'basePath' => 'frontend.assets.v2.js.app.avia',
+        'basePath' => 'frontend.assets.v2.js.compiled.avia',
         'js' => array(
             'panel.js',
             'models.js',
@@ -76,7 +77,7 @@
         )
     ),
     'hotels' => array(
-        'basePath' => 'frontend.assets.v2.js.app.hotels',
+        'basePath' => 'frontend.assets.v2.js.compiled.hotels',
         'js' => array(
             'panel.js',
             'models.js',
@@ -85,7 +86,7 @@
         )
     ),
     'tours' => array(
-        'basePath' => 'frontend.assets.v2.js.app.tours',
+        'basePath' => 'frontend.assets.v2.js.compiled.tours',
         'js' => array(
             'panel.js',
             'models.js',
@@ -94,7 +95,7 @@
         )
     ),
     'events' =>  array(
-        'basePath' => 'frontend.assets.v2.js.app.events',
+        'basePath' => 'frontend.assets.v2.js.compiled.events',
         'js' => array(
             'models.js',
             'controllers.js',
@@ -102,7 +103,7 @@
         )
     ),
     'appJs' => array(
-        'basePath' => 'frontend.assets.v2.js.app',
+        'basePath' => 'frontend.assets.v2.js.compiled.app',
         'js' => array(
             'app.js',
         ),
