@@ -268,7 +268,7 @@ class RoomsSearchParams
 class TourSearchParams extends SearchParams
   constructor: ->
     super()
-    @startCity = ko.observable ''
+    @startCity = ko.observable 'LED'
     @destinations = ko.observableArray [new DestinationSearchParams()]
     @rooms = ko.observableArray [ new Roomers() ]
 

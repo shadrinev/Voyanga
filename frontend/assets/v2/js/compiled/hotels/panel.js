@@ -18,6 +18,7 @@ HotelsPanel = (function(_super) {
     this.peopleSelector = 'roomers-template';
     HotelsPanel.__super__.constructor.call(this);
     this.sp = new HotelsSearchParams();
+    this.calendarHidden = ko.observable(true);
     this.city = this.sp.city;
     this.checkIn = this.sp.checkIn;
     this.checkOut = this.sp.checkOut;

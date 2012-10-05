@@ -16,6 +16,7 @@ class AviaPanel extends SearchPanel
     @arrivalCityReadable = ko.observable ''
     @arrivalCityReadableGen = ko.observable ''
     @arrivalCityReadableAcc = ko.observable ''
+    @calendarHidden = ko.observable true
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()

@@ -8,11 +8,11 @@
                     <div class="cityStart">
                         <div class="to">
                             Старт из:
-                            <a href="#"><span data-bind="click: showFromCityInput">Санкт-Петербург</span></a>
+                            <a href="#"><span data-bind="click: showFromCityInput, text: $root.tourPanelSet.startCityReadableGen">Санкт-Петербург</span></a>
                         </div>
                         <div class="startInputTo">
-                            <input type="text" tabindex="-1" class="input-path">
-                            <input type="text" placeholder="Санкт-Петербург" class="second-path" data-bind="autocomplete: {source:'city', iata: $root.tourPanelSet.startCity, readable: $root.tourPanelSet.startCityReadable, readableAcc: $root.tourPanelSet.startCityReadableAcc, readableGen: $root.tourPanelSet.startCityReadableGen}">
+                            <input type="text" tabindex="-1" class="input-path" data-bind="blur: hideFromCityInput">
+                            <input type="text" placeholder="Санкт-Петербург" class="second-path" data-bind="blur: hideFromCityInput, autocomplete: {source:'city', iata: $root.tourPanelSet.startCity, readable: $root.tourPanelSet.startCityReadable, readableAcc: $root.tourPanelSet.startCityReadableAcc, readableGen: $root.tourPanelSet.startCityReadableGen}">
                         </div>
                     </div>
                     <!-- /ko -->

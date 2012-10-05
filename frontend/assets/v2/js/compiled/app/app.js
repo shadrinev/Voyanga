@@ -161,6 +161,7 @@ Application = (function(_super) {
   };
 
   Application.prototype.isEvent = function() {
+    console.log('Checking isEvent ', this.activeView());
     return this.activeView() === 'tours-index';
   };
 

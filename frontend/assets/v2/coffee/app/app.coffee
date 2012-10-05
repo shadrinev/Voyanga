@@ -133,6 +133,7 @@ class Application extends Backbone.Router
     !@isEvent();
 
   isEvent: =>
+    console.log 'Checking isEvent ', @activeView()
     @activeView() == 'tours-index'
 
 $ ->

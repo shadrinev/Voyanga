@@ -11,7 +11,8 @@ ToursModule = (function() {
   function ToursModule() {
     var _this = this;
     this.controller = new ToursController();
-    this.panel = false;
+    this.sp = new TourSearchParams();
+    this.panel = new TourPanel(this.sp, 0);
     console.log('I AM PANEL', this.panel);
     this.controller.on('results', function(results) {
       return _this.panel(results.panel);

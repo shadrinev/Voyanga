@@ -452,7 +452,7 @@ TourSearchParams = (function(_super) {
 
     this.addRoom = __bind(this.addRoom, this);
     TourSearchParams.__super__.constructor.call(this);
-    this.startCity = ko.observable('');
+    this.startCity = ko.observable('LED');
     this.destinations = ko.observableArray([new DestinationSearchParams()]);
     this.rooms = ko.observableArray([new Roomers()]);
   }

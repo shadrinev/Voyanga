@@ -33,6 +33,8 @@ class TourPanel extends SearchPanel
         result.push current
       return result
 
+    @calendarHidden = true
+
     @afterRender = () =>
       $ =>
         @rooms()[0].afterRender()
@@ -82,7 +84,8 @@ class TourPanel extends SearchPanel
     $('.how-many-man').find('.popup').removeClass('active')
 
   showFromCityInput: (panel, event) ->
-    elem = $(event.target)
+    elem = $('.cityStart .second-path')
+    elem.data('old', elem.val())
     el = elem.closest('.tdCity')
     el.find(".from").addClass("overflow").animate
       width: "125px"
@@ -91,10 +94,10 @@ class TourPanel extends SearchPanel
     el.find('.cityStart').animate
       width: "261px"
     , 300, ->
-      el.find(".startInputTo").find("input").focus()
+      el.find(".startInputTo").find("input").focus().select()
 
   hideFromCityInput: (panel, event) ->
-    elem = $(event.target)    
+    elem = $('.from.active .second-path')
     if elem.parent().hasClass("overflow")
       elem.parent().animate
         width: "271px"
@@ -115,3 +118,21 @@ $(document).on "keyup change", "input.second-path", (e) ->
   secondEl = $(this).siblings('input.input-path')
   if ((e.keyCode==8) || (firstValue.length<3))
     secondEl.val('')
+
+$(document).on  "keyup change", '.cityStart input.second-path', (e) ->
+  elem = $('.from.active .second-path')
+  if (e.keyCode==13)
+    if elem.parent().hasClass("overflow")
+      elem.parent().animate
+        width: "271px"
+      , 300, ->
+        $(this).removeClass "overflow"
+        $('.from.active .second-path').focus()
+
+      $(".cityStart").animate
+        width: "115px"
+      , 300
+      $(".cityStart").find(".startInputTo").animate
+        opacity: "1"
+      , 300, ->
+        $(this).hide()

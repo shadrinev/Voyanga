@@ -54,6 +54,7 @@ TourPanel = (function(_super) {
       }
       return result;
     });
+    this.calendarHidden = true;
     this.afterRender = function() {
       return $(function() {
         return _this.rooms()[0].afterRender();
@@ -111,7 +112,8 @@ TourPanel = (function(_super) {
 
   TourPanel.prototype.showFromCityInput = function(panel, event) {
     var el, elem;
-    elem = $(event.target);
+    elem = $('.cityStart .second-path');
+    elem.data('old', elem.val());
     el = elem.closest('.tdCity');
     el.find(".from").addClass("overflow").animate({
       width: "125px"
@@ -120,13 +122,13 @@ TourPanel = (function(_super) {
     return el.find('.cityStart').animate({
       width: "261px"
     }, 300, function() {
-      return el.find(".startInputTo").find("input").focus();
+      return el.find(".startInputTo").find("input").focus().select();
     });
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
     var elem;
-    elem = $(event.target);
+    elem = $('.from.active .second-path');
     if (elem.parent().hasClass("overflow")) {
       elem.parent().animate({
         width: "271px"
@@ -154,5 +156,28 @@ $(document).on("keyup change", "input.second-path", function(e) {
   secondEl = $(this).siblings('input.input-path');
   if ((e.keyCode === 8) || (firstValue.length < 3)) {
     return secondEl.val('');
+  }
+});
+
+$(document).on("keyup change", '.cityStart input.second-path', function(e) {
+  var elem;
+  elem = $('.from.active .second-path');
+  if (e.keyCode === 13) {
+    if (elem.parent().hasClass("overflow")) {
+      elem.parent().animate({
+        width: "271px"
+      }, 300, function() {
+        $(this).removeClass("overflow");
+        return $('.from.active .second-path').focus();
+      });
+      $(".cityStart").animate({
+        width: "115px"
+      }, 300);
+      return $(".cityStart").find(".startInputTo").animate({
+        opacity: "1"
+      }, 300, function() {
+        return $(this).hide();
+      });
+    }
   }
 });

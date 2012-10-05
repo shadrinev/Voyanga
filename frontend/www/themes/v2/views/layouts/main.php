@@ -32,7 +32,7 @@ Yii::app()->clientScript->registerPackage('appJs');
 
                 <ul>
                     <li id="h-tours-slider" class="planner btn"><a href="#tours">Планировщик</a></li>
-                    <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#">Авиабилеты</a>
+                    <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#avia">Авиабилеты</a>
                     </li>
                     <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
                 </ul>
@@ -119,11 +119,8 @@ Yii::app()->clientScript->registerPackage('appJs');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
-<!-- ko if: isEvent()-->
-<div class="maps"
-     data-bind="template: {name: 'event-map', data: viewData()}">
+<div class="maps" data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}">
 </div>
-<!-- /ko -->
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
