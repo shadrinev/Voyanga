@@ -197,7 +197,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
 # Coomon parts of StackedVoyage
 #
 class AviaResult
-  constructor: (data) ->
+  constructor: (data, @parent) ->
     # Mix in events
     _.extend @, Backbone.Events
 
@@ -406,7 +406,7 @@ class AviaResultSet
       if @_results[key]
         @_results[key].push flightVoyage
       else
-        result =  new AviaResult flightVoyage
+        result =  new AviaResult flightVoyage, @
         @_results[key] = result
         result.key = key
     # specials
