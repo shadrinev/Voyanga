@@ -29,6 +29,10 @@ class Application extends Backbone.Router
       afterRender: ->
 
     @fakoPanel = ko.observable result
+
+    @tourPanelSet = new TourPanelSet()
+    @panels = @tourPanelSet.panels
+
     @panel = ko.computed =>
       am = @activeModuleInstance()
       if am
@@ -119,7 +123,7 @@ class Application extends Backbone.Router
     window.voyanga_debug "APP: Content rendered"
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
-#    $('#loadWrapBg').hide()
+    WidthMine()
 
   mapRendered: (elem) =>
     console.log "Map Rendered"
@@ -129,6 +133,7 @@ class Application extends Backbone.Router
     !@isEvent();
 
   isEvent: =>
+    console.log 'Checking isEvent ', @activeView()
     @activeView() == 'tours-index'
 
 $ ->

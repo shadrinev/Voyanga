@@ -18,10 +18,25 @@
         ),
         'depends' => array('jquery')
     ),
-    'mapkup' => array(
+    'calendar' => array(
+        'basePath' => 'frontend.assets.v2.js',
+        'js' => array(
+            'calendar/voyanga-calendar.js',
+            'compiled/common/calendar.js',
+        ),
+        'depends' => array('jquery', 'vendor')
+    ),
+    'timelineCalendar' => array(
+        'basePath' => 'frontend.assets.v2.js',
+        'js' => array(
+            'calendar/timeline-calendar.js',
+        ),
+        'depends' => array('jquery', 'calendar')
+    ),
+    'markup' => array(
         'basePath' => 'frontend.assets.v2.js.markup',
         'js' => array(
-            //! Markup related scripts and modules
+            'iedebug.js',
             'resize-new.js',
             'jquery.color.js',
             'popup.js',
@@ -29,21 +44,20 @@
             'tickets.js',
             'panel-new.js',
             'helpers.js',
-            'voyanga-calendar.js',
-            'timeline-calendar.js',
             'jquery.select.slider.js',
             'jquery.slider.lib.js',
             'jquery.slider.js',
             'photoslider.js',
             'loader.js',
             'index.js',
-        )
+            'slide-mode.js'
+        ),
+        'depends' => array('jquery')
     ),
     'common' => array(
-        'basePath' => 'frontend.assets.v2.js.app.common',
+        'basePath' => 'frontend.assets.v2.js.compiled.common',
         'js' => array(
             //! Our application logic
-            'calendar.js',
             'API.js',
             'genericpopup.js',
             'photobox.js',
@@ -67,7 +81,7 @@
         )
     ),
     'avia' => array(
-        'basePath' => 'frontend.assets.v2.js.app.avia',
+        'basePath' => 'frontend.assets.v2.js.compiled.avia',
         'js' => array(
             'panel.js',
             'models.js',
@@ -76,7 +90,7 @@
         )
     ),
     'hotels' => array(
-        'basePath' => 'frontend.assets.v2.js.app.hotels',
+        'basePath' => 'frontend.assets.v2.js.compiled.hotels',
         'js' => array(
             'panel.js',
             'models.js',
@@ -85,7 +99,7 @@
         )
     ),
     'tours' => array(
-        'basePath' => 'frontend.assets.v2.js.app.tours',
+        'basePath' => 'frontend.assets.v2.js.compiled.tours',
         'js' => array(
             'panel.js',
             'models.js',
@@ -94,7 +108,7 @@
         )
     ),
     'events' =>  array(
-        'basePath' => 'frontend.assets.v2.js.app.events',
+        'basePath' => 'frontend.assets.v2.js.compiled.events',
         'js' => array(
             'models.js',
             'controllers.js',
@@ -102,11 +116,14 @@
         )
     ),
     'appJs' => array(
-        'basePath' => 'frontend.assets.v2.js.app',
+        'basePath' => 'frontend.assets.v2.js.compiled.app',
         'js' => array(
             'app.js',
         ),
         'depends' => array(
+            'markup',
+            'calendar',
+            'timelineCalendar',
             'vendor',
             'common',
             'avia',

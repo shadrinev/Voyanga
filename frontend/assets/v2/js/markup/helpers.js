@@ -119,6 +119,8 @@ function hideRecomendedBlockTicket() {
 //$(window).load(checkUlList);
 $(function() {
 
+bindActions = function() {
+
 	$('.minimize-rcomended .btn-minimizeRecomended').click(function() {
 	});
 	$('.order-show').click(function() {
@@ -216,3 +218,4 @@ $('.lookEyes').hover(function() {
 	});
 */
 });
+};

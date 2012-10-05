@@ -2,6 +2,7 @@
 $cs = Yii::app()->getClientScript();
 $cs->reset();
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+$theme = Yii::app()->theme->baseUrl;
 Yii::app()->clientScript->registerPackage('appCss');
 Yii::app()->clientScript->registerPackage('appJs');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -10,13 +11,12 @@ Yii::app()->clientScript->registerPackage('appJs');
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Voyanga v.0.1 - Trip Flight Rework</title>
     <!--<script type="text/javascript"
-            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">-->
-    </script>
-    <script type="text/javascript" src="/js/iedebug.js"></script>
+            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
+    </script>-->
 </head>
 
 <body data-bind="css: {fixed: isEvent()}">
-<div class="wrapper">
+<div class="wrapper" data-bind="css: {'scroll-none': isEvent()}">
     <div class="head" id="header">
         <!-- CENTER BLOCK -->
         <div class="center-block">
@@ -24,7 +24,7 @@ Yii::app()->clientScript->registerPackage('appJs');
             <a href="/" class="about">О проекте</a>
 
             <div class="telefon">
-                <img src="<?= $images ?>/images/tel.png">
+                <img src="<?= $theme ?>/images/tel.png">
             </div>
             <div class="slide-turn-mode">
                 <div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
@@ -32,7 +32,7 @@ Yii::app()->clientScript->registerPackage('appJs');
 
                 <ul>
                     <li id="h-tours-slider" class="planner btn"><a href="#tours">Планировщик</a></li>
-                    <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#">Авиабилеты</a>
+                    <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#avia">Авиабилеты</a>
                     </li>
                     <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
                 </ul>
@@ -49,22 +49,41 @@ Yii::app()->clientScript->registerPackage('appJs');
     </div>
     <!-- END HEAD -->
     <!--====**********===-->
-    <!-- SUB HEAD -->
-    <div data-bind="css: {'panel-index': isEvent()}">
-        <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden(), zIndexTopUp: fakoPanel().calendarShadow()}">
-            <div data-bind="css: {'fly-panel': isEvent()}">
-                <!-- CENTER BLOCK -->
-                <div class="center-block">
-                    <!-- PANEL -->
-                    <div class="panel"
-                         data-bind="template: { name: fakoPanel().template, data: fakoPanel, afterRender: fakoPanel().afterRender }">
-                    </div>
-                    <!-- END PANEL -->
-                </div>
-                <!-- END CENTER BLOCK -->
-            </div>
-        </div>
 
+    <!-- BOARD IF WE ARE AT THE MAIN -->
+    <!-- ko if: isEvent() -->
+    <div class="panel-index">
+        <div class="board" style="height: 0px;">
+            <div class="constructor">
+                <!-- BOARD CONTENT -->
+                <!-- ko foreach: panels -->
+                    <div class="board-content" data-bind="template: { name: $data.template, data: $data, afterRender: $data.afterRender }"></div>
+                <!-- /ko -->
+                <!-- END BOARD CONTENT -->
+
+                <div class="constructor-ico"></div>
+
+            </div>
+
+            <!-- END CONSTRUCTOR -->
+            <div class="leftPageBtn"></div>
+            <div class="rightPageBtn"></div>
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- SUB HEAD IF WE NOT ON THE MAIN -->
+    <!-- ko if: !isEvent()-->
+    <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden(), zIndexTopUp: fakoPanel().calendarShadow()}">
+        <!-- CENTER BLOCK -->
+            <div class="center-block">
+                <!-- PANEL -->
+                <div class="panel"
+                     data-bind="template: { name: fakoPanel().template, data: fakoPanel, afterRender: fakoPanel().afterRender }">
+                </div>
+                <!-- END PANEL -->
+            </div>
+            <!-- END CENTER BLOCK -->
         <!-- CALENDAR -->
         <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}"
              style="top: 70px; display: none;">
@@ -72,6 +91,7 @@ Yii::app()->clientScript->registerPackage('appJs');
         <!-- END CALENDAR -->
         <!--====**********===-->
     </div>
+    <!-- /ko -->
     <!-- END SUB HEAD -->
     <!--====**********===-->
     <!-- ALL CONTENT -->
@@ -101,15 +121,12 @@ Yii::app()->clientScript->registerPackage('appJs');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
-<!-- ko if: isEvent()-->
-<div class="maps"
-     data-bind="template: {name: 'event-map', data: viewData()}">
+<div class="maps" data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}">
 </div>
-<!-- /ko -->
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
-        <div id="loadGIF"><img src="/themes/v2/assets/images/loading-5frame.gif"></div>
+        <div id="loadGIF"><img src="/themes/v2/images/loading-5frame.gif"></div>
         <div id="loadTXT">
             Voyanga ищет <br> лучшие предложения...<br>
             <ul id="loadLight">
@@ -124,21 +141,12 @@ Yii::app()->clientScript->registerPackage('appJs');
     </div>
 </div>
 <?php
-$templates = Array(
-    'avia.index', 'avia.results', 'avia.popup',
-    'avia.panel', 'avia.filters', 'avia.cheapest',
-    'hotels.index', 'hotels.results', 'hotels.panel',
-    'hotels.popup', 'hotels.filters', 'hotels.info', 'hotels.timeline',
-    'tours.results', 'tours.index', 'tours.panel',
-    'common.calendar', 'common.roomers', 'common.passengers',
-    'event.map'
-    'tours.results', 'tours.index', 'tours.overview',
-    'common.calendar',
-    'event.index', 'event.map'
-);
+$templates = Yii::app()->params['frontend.app.templates'];
 foreach ($templates as $template)
 {
+    echo "<!-- START OF TEMPLATE $template -->\n";
     $this->renderPartial('www.themes.v2.views.' . $template);
+    echo "<!-- END OF TEMPLATE $template -->\n";
 }
 ?>
 </body>

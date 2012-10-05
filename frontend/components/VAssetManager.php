@@ -7,7 +7,7 @@
  */
 Yii::import('frontend.extensions.EScriptBoost.*');
 
-class VAssetManager extends EAssetManagerBoost
+class VAssetManager extends CAssetManager
 {
     /**
      * Creating assets folder with human readable names
@@ -16,21 +16,20 @@ class VAssetManager extends EAssetManagerBoost
      */
     protected function hash($path)
     {
-        $path2 = str_replace('\\', '/', $path) . '/';
+        $path2 = str_replace('\\', '/', $path);
         $parts = explode('/assets', $path2);
-        $ptr = strrpos($parts[0], '/');
-        echo '!!-';
-        CVarDumper::dump($path);
-        CVarDumper::dump($parts);
-        echo '-!!';
-        if (isset($parts[1]) and ($parts[1]!=''))
+        if (sizeof($parts)==1)
         {
-            $path2 = str_replace('/', '_',
-                substr($parts[0], $ptr + 1) . "_" . $parts[1]);
+            $parts = explode('/', $path2);
+            $path2 = end($parts);
         }
         else
         {
-            $path2 = str_replace('/', '_', substr($parts[0], $ptr + 1));
+            $end = end($parts);
+            if (is_numeric($end))
+                $end = $parts[0];
+            $parts = explode('/', $end);
+            $path2 = end($parts);
         }
         //we are adding hash to get unque pathname
         $path2 .= '_' . parent::hash($path);
@@ -50,7 +49,7 @@ class VAssetManager extends EAssetManagerBoost
         if (YII_DEBUG)
         {
             $forceCopy = true;
-            $hashByName = true;
+            $hashByName = false;
         }
         return parent::publish($path, $hashByName, $level, $forceCopy);
     }

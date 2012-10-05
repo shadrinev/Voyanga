@@ -66,6 +66,13 @@ class Travellers
     , =>
       @inside3 = false
 
+  close: ->
+    $(document.body).unbind 'mousedown'
+    $('.how-many-man .btn').removeClass('active')
+    $('.how-many-man .content').removeClass('active')
+
+    $('.how-many-man').find('.popup').removeClass('active')
+
 
 class Passengers extends Travellers
   constructor: () ->
@@ -143,9 +150,8 @@ class Passengers extends Travellers
 class Roomers extends Travellers
   constructor: (item) ->
     super()
-    console.log 'I AM ROOMER AND I AM INITIALIZED'
-    template = 'roomers-template'
-    @adults = ko.observable ''
+    @template = 'roomers-template'
+    @adults = ko.observable 1
     @children = ko.observable 0
     @ages = ko.observableArray()
 
@@ -182,5 +188,3 @@ class Roomers extends Travellers
   getUrl: (i)=>
     # FIXME FIMXE FIMXE
     return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&rooms[#{i}][chdAge]=0&rooms[#{i}][cots]=0"
-
-

@@ -6,10 +6,12 @@ class HotelsPanel extends SearchPanel
     # essentially just provides ViewModel for @rooms field
     super()
     @sp = new HotelsSearchParams()
+    @calendarHidden = ko.observable true
     @city = @sp.city
     @checkIn = @sp.checkIn
     @checkOut = @sp.checkOut
     @rooms = @sp.rooms
+    @roomsView = @sp.roomsView
     @cityReadable = ko.observable()
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
@@ -43,6 +45,10 @@ class HotelsPanel extends SearchPanel
       twoSelect: true
       from: @checkIn()
       to: @checkOut()
+
+    @afterRender = () =>
+      $ =>
+        @sp.rooms()[0].afterRender()
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}

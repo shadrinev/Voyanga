@@ -9,6 +9,7 @@
 $frontendParamsLocal = file_exists('frontend/config/params-local.php') ? require('frontend/config/params-local.php') : array();
 $commonParams = require_once ('common/config/params.php');
 $environmentParams = require_once (dirname(__FILE__) . '/environments/params-' . $commonParams['env.code'] . '.php');
+$templates = require_once('frontend/assets/v2/coffee/app/templates.php');
 
 return CMap::mergeArray(
     $commonParams,
@@ -18,5 +19,8 @@ return CMap::mergeArray(
         'sharedMemory' => array(
             'flushDirectory' => 'application.runtime.cache',
             'flushExtension' => 'dump',
-        )
-    ), CMap::mergeArray($environmentParams, $frontendParamsLocal)));
+        ),
+        'frontend.app.templates' => $templates
+    ),
+    CMap::mergeArray($environmentParams, $frontendParamsLocal
+)));
