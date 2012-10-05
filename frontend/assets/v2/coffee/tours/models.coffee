@@ -180,7 +180,7 @@ class ToursHotelsResultSet extends TourEntry
       return 0
 
     @selection().roomSet.price
-
+    
   additionalText: =>
     if @selection() == null
       return ""
@@ -236,9 +236,6 @@ class ToursResultSet
     ko.processAllDeferredBindingUpdates()
     ResizeAvia()
 
-  showOverview: =>
-    @setActive {template: 'tours-overview', data: @}
-
   removeItem: (item, event)=>
     event.stopPropagation()
     if @data().length <2
@@ -251,36 +248,6 @@ class ToursResultSet
     @data.splice(idx, 1)
     if item == @selection()
       @setActive @data()[0]
-<<<<<<< Temporary merge branch 1:frontend/www/themes/v2/assets/js/app/tours/models.coffee
-
-# decoupling some presentation logic from resultset
-class ToursOverviewVM
-  constructor: (@resultSet)->
-
-  startCity: =>
-    firstResult = @resultSet.data()[0]
-    if firstResult.isAvia()
-      firstResult.results().departureCity
-    else
-      'Бобруйск'
-
-
-  dateClass: =>
-    'blue-one'
-  
-  
-  dateHtml: =>
-    firstResult = @resultSet.data()[0]
-    source = firstResult.selection()
-    result = '<div class="day">'
-    if firstResult.isAvia()
-      result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
-    else
-      result+= dateUtils.formatHtmlDayShortMonth firstResult.results.checkIn
-
-    result+='</div>'
-    return result
-=======
     ResizeAvia()
 
 # Models for tour search params,
@@ -302,7 +269,7 @@ class TourSearchParams extends SearchParams
   constructor: ->
     super()
     @startCity = ko.observable ''
-    @destinations = ko.observableArray []
+    @destinations = ko.observableArray [new DestinationSearchParams()]
     @rooms = ko.observableArray [ new Roomers() ]
 
   addRoom: =>
@@ -377,4 +344,47 @@ class TourSearchParams extends SearchParams
       @destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate())
       @destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate())
       j++
->>>>>>> Temporary merge branch 2:frontend/assets/v2/coffee/app/tours/models.coffee
+
+  showOverview: =>
+    @setActive {template: 'tours-overview', data: @}
+
+  removeItem: (item, event)=>
+    event.stopPropagation()
+    if @data().length <2
+      return
+    idx = @data.indexOf(item)
+    console.log @data.indexOf(item), item, @selection()
+
+    if idx ==-1
+      return
+    @data.splice(idx, 1)
+    if item == @selection()
+      @setActive @data()[0]
+
+# decoupling some presentation logic from resultset
+class ToursOverviewVM
+  constructor: (@resultSet)->
+
+  startCity: =>
+    firstResult = @resultSet.data()[0]
+    if firstResult.isAvia()
+      firstResult.results().departureCity
+    else
+      'Бобруйск'
+
+
+  dateClass: =>
+    'blue-one'
+  
+  
+  dateHtml: =>
+    firstResult = @resultSet.data()[0]
+    source = firstResult.selection()
+    result = '<div class="day">'
+    if firstResult.isAvia()
+      result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
+    else
+      result+= dateUtils.formatHtmlDayShortMonth firstResult.results.checkIn
+
+    result+='</div>'
+    return result

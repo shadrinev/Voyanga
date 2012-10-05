@@ -508,7 +508,7 @@
 
 /* board */
 .panel-index {
-	bottom: 367px;
+	bottom: 0px;
     height: 70px;
     min-width: 1000px;
     position: absolute;

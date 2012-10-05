@@ -1,8 +1,7 @@
-class TourPanel extends SearchPanel
+class TourPanelSet
   constructor: ->
-    @template = 'tour-panel-template'
-    window.voyanga_debug "TourPanel created"
-    super()
+    window.voyanga_debug 'Init of TourPanelSet'
+
     @sp = new TourSearchParams()
     @rooms = @sp.rooms
 
@@ -10,6 +9,23 @@ class TourPanel extends SearchPanel
     @startCityReadable = ko.observable ''
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
+
+    @panels = ko.observableArray [new TourPanel(@sp, 0)]
+    @i = 0
+
+  isFirst: =>
+    return @i++ == 0
+
+class TourPanel extends SearchPanel
+  constructor: (sp, ind) ->
+    @template = 'tour-panel-template'
+    window.voyanga_debug "TourPanel created"
+    super()
+
+    @city = sp.destinations()[0].city
+    @cityReadable = ko.observable ''
+    @cityReadableGen = ko.observable ''
+    @cityReadableAcc = ko.observable ''
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
@@ -23,7 +39,7 @@ class TourPanel extends SearchPanel
       return result
 
     @maximizedCalendar = ko.computed =>
-      @startCity()
+      @city().length>0
 
     @calendarText = ko.computed =>
       result = "Выберите дату поездки "
@@ -44,6 +60,37 @@ class TourPanel extends SearchPanel
     $('.how-many-man .btn').removeClass('active')
     $('.how-many-man .content').removeClass('active')
     $('.how-many-man').find('.popup').removeClass('active')
+
+  showFromCityInput: (panel, event) ->
+    elem = $(event.target)
+    el = elem.closest('.tdCity')
+    el.find(".from").addClass("overflow").animate
+      width: "125px"
+    , 300
+    el.find(".startInputTo").show()
+    el.find('.cityStart').animate
+      width: "261px"
+    , 300, ->
+      el.find(".startInputTo").find("input").focus()
+
+  hideFromCityInput: (panel, event) ->
+    elem = $(event.target)    
+    if elem.parent().hasClass("overflow")
+      elem.parent().animate
+        width: "271px"
+      , 300, ->
+        $(this).removeClass "overflow"
+    
+      $(".cityStart").animate
+        width: "115px"
+      , 300
+      $(".cityStart").find(".startInputTo").animate
+        opacity: "1"
+      , 300, ->
+        $(this).hide()
+
+  
+
 
 $(document).on "keyup change", "input.second-path", (e) ->
   firstValue = $(this).val()

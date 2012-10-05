@@ -116,8 +116,8 @@ function hideRecomendedBlockTicket() {
 */
 	}
 }
-//$(window).load(checkUlList);
-$(function() {
+
+bindActions = function() {
 
 	$('.minimize-rcomended .btn-minimizeRecomended').click(function() {
 	});
@@ -204,14 +204,5 @@ $(function() {
 			});
 		}
 	});
-	
-	
-	
-	/*
-$('.lookEyes').hover(function() {
-		$(this).animate({'opacity' : '1'}, 300);
-	}, function() {
-		$(this).animate({'opacity' : '0'}, 100);
-	});
-*/
-});
+
+};

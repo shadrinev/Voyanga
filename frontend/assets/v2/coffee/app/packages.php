@@ -15,14 +15,28 @@
             'moment.js',
             'scroll/jquery.mousewheel.js',
             'scroll/jquery.jscrollpane.min.js',
-            'iedebug.js'
         ),
         'depends' => array('jquery')
     ),
-    'mapkup' => array(
+    'calendar' => array(
+        'basePath' => 'frontend.assets.v2.js',
+        'js' => array(
+            'calendar/voyanga-calendar.js',
+            'compiled/common/calendar.js',
+        ),
+        'depends' => array('jquery', 'vendor')
+    ),
+    'timelineCalendar' => array(
+        'basePath' => 'frontend.assets.v2.js',
+        'js' => array(
+            'calendar/timeline-calendar.js',
+        ),
+        'depends' => array('jquery', 'calendar')
+    ),
+    'markup' => array(
         'basePath' => 'frontend.assets.v2.js.markup',
         'js' => array(
-            //! Markup related scripts and modules
+            'iedebug.js',
             'resize-new.js',
             'jquery.color.js',
             'popup.js',
@@ -30,21 +44,20 @@
             'tickets.js',
             'panel-new.js',
             'helpers.js',
-            'voyanga-calendar.js',
-            'timeline-calendar.js',
             'jquery.select.slider.js',
             'jquery.slider.lib.js',
             'jquery.slider.js',
             'photoslider.js',
             'loader.js',
             'index.js',
-        )
+            'slide-mode.js'
+        ),
+        'depends' => array('jquery')
     ),
     'common' => array(
         'basePath' => 'frontend.assets.v2.js.compiled.common',
         'js' => array(
             //! Our application logic
-            'calendar.js',
             'API.js',
             'genericpopup.js',
             'photobox.js',
@@ -108,6 +121,9 @@
             'app.js',
         ),
         'depends' => array(
+            'markup',
+            'calendar',
+            'timelineCalendar',
             'vendor',
             'common',
             'avia',
