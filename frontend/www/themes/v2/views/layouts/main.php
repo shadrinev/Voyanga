@@ -123,7 +123,9 @@ Yii::app()->clientScript->registerPackage('appJs');
 $templates = Yii::app()->params['frontend.app.templates'];
 foreach ($templates as $template)
 {
+    echo "<!-- START OF TEMPLATE $template -->\n";
     $this->renderPartial('www.themes.v2.views.' . $template);
+    echo "<!-- END OF TEMPLATE $template -->\n";
 }
 ?>
 </body>
