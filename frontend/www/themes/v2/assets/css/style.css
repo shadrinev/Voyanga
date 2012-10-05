@@ -873,6 +873,7 @@
 .ticket-content .order-div {
 	letter-spacing: -0.03em;
 	float: right;
+	padding-top: 6px;
 }
 .ticket-content .order-div a {
 	margin-left: 0px;
@@ -883,7 +884,7 @@
 	height: 19px;
 	display: block;
 	background: url(../images/btn-recommend-show-hide.png) no-repeat 0 0;
-	margin-top: 2px;
+	margin-top: 0px;
 }
 .ticket-content .order-div a.show {
 	background-position: 0px -19px;
