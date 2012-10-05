@@ -516,8 +516,8 @@ AviaResult = (function() {
     return this.activeVoyage(this.voyages[0]);
   };
 
-  AviaResult.prototype.showDetails = function(data, event) {
-    new GenericPopup('#avia-body-popup', ko.contextFor(event.currentTarget));
+  AviaResult.prototype.showDetails = function() {
+    new GenericPopup('#avia-body-popup', this);
     ko.processAllDeferredBindingUpdates();
     SizeBox('avia-body-popup');
     return ResizeBox('avia-body-popup');

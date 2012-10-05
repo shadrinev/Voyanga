@@ -1,5 +1,79 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 
+class HotelFilter
+  constructor: (@data) ->
+    @name = 'noname'
+  filter: (value) ->
+    if !value
+      console.log('filtered by '+@name)
+
+class HotelNameFilter extends HotelFilter
+  constructor: (hotelNames)->
+    @name = 'NameFilter'
+    @active = ko.observable('')
+
+  filter: (object)->
+    result = true
+    if @active() != ''
+      expr = new RegExp(@active(), 'ig');
+      result = expr.test object.hotelName
+    super result
+    return result
+
+class HotelServicesFilter extends HotelFilter
+  constructor: (servicesNames)->
+    @name = 'ServicesFilter'
+    @services = []
+    for serviceName, foo of servicesNames
+      @services.push {'name':serviceName, 'active': ko.observable 0 }
+    @active = ko.computed =>
+      result = []
+      for line in @services
+        if line.active()
+          result.push line.name
+      return result
+
+  reset: =>
+    for line in @services
+      line.active(0)
+
+  filter: (object)->
+    result = true
+    _active = @active()
+    if _active.length > 0
+      found = false
+      if object.hasHotelServices
+        for serviceName in object.hotelServices
+          if _active.indexOf(serviceName) != -1
+            found = true
+            break
+      result = found
+    super result
+    return result
+
+class HotelStarsFilter extends HotelFilter
+  constructor: ->
+    @name = 'StarsFilter'
+    @stars = []
+    for i in [1..5]
+      @stars.push {'name':i, 'active': ko.observable 0 }
+    @active = ko.computed =>
+      result = []
+      for line in @stars
+        if line.active()
+          result.push line.name
+      return result
+
+  filter: (object)->
+    result = true
+    _active = @active()
+    if _active.length > 0
+      found = false
+      if _active.indexOf(object.stars) != -1
+        found = true
+      result = found
+    super result
+    return result
 
 class Room
   constructor: (data) ->
@@ -275,6 +349,7 @@ class HotelResult
       @activeResultId room.resultId
 
     @trigger 'select', {roomSet: room, hotel: @}
+    @trigger 'select', {room: room, hotel: @}
 
   smallMapUrl: =>
       base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
@@ -283,6 +358,8 @@ class HotelResult
       base += "&sensor=false"
       return base
 
+
+
 #
 # Result container
 # Stacks them by price and company
@@ -290,7 +367,7 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawHotels, @searchParams) ->
     @_results = {}
-    @tours = ko.observable false
+    @tours = false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
     if @searchParams.duration

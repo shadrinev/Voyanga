@@ -180,6 +180,7 @@ class ToursHotelsResultSet extends TourEntry
       return 0
 
     @selection().roomSet.price
+    @selection().room.price
 
   additionalText: =>
     if @selection() == null
@@ -234,6 +235,20 @@ class ToursResultSet
   setActive: (entry)=>
     @selection entry
     ko.processAllDeferredBindingUpdates()
+    ResizeAvia()
+
+  removeItem: (item, event)=>
+    event.stopPropagation()
+    if @data().length <2
+      return
+    idx = @data.indexOf(item)
+    console.log @data.indexOf(item), item, @selection()
+
+    if idx ==-1
+      return
+    @data.splice(idx, 1)
+    if item == @selection()
+      @setActive @data()[0]
     ResizeAvia()
 
 # Models for tour search params,
@@ -374,3 +389,4 @@ class ToursOverviewVM
 
     result+='</div>'
     return result
+      j++
