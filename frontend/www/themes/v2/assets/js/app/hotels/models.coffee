@@ -5,6 +5,8 @@ class Room
   constructor: (data) ->
     @name = data.showName
     @nameNemo = data.roomNemoName
+    if !@nameNemo || data.roomName
+      @nameNemo = data.roomName
     if @nameNemo != '' and typeof @nameNemo != 'undefined'
       @haveNemoName = true
     else
@@ -12,7 +14,8 @@ class Room
       @nameNemo = ''
 
     @meal = data.meal
-
+    if data.mealName
+      @meal = data.mealName
     #if data.mealBreakfast != '' and typeof data.mealBreakfast != 'undefined'
     #  @meal = data.mealBreakfast
     if typeof @meal == "undefined" || @meal == ''
@@ -33,6 +36,9 @@ class RoomSet
     @rooms = []
     for room in data.rooms
       @rooms.push new Room room
+    @selectedCount = ko.observable 0
+    @selectedCount.subscribe (newValue)=>
+      @checkCount(newValue)
 
     @selectText = ko.computed =>
       if !@parent.tours()
@@ -41,6 +47,20 @@ class RoomSet
         return 'Выбран'
       else
         return 'Выбрать'
+
+  checkCount: (newValue)=>
+    count = parseInt(newValue)
+    if count < 0 || isNaN(count)
+      @selectedCount(0)
+    else
+      @selectedCount(count)
+
+  plusCount: =>
+    @selectedCount(@selectedCount() + 1)
+
+  minusCount: =>
+    if @selectedCount() > 0
+      @selectedCount(@selectedCount() - 1)
 
   #price: ->
   #  console.log prm
@@ -87,7 +107,7 @@ class HotelResult
 
     @duration = duration
     console.log('duration:'+duration)
-    @haveFullInfo = false
+    @haveFullInfo = ko.observable false
 
     @selectText = ko.computed =>
       if !@tours()
@@ -226,8 +246,23 @@ class HotelResult
     $('#boxContent').css 'height', 'auto'
     SizeBox 'hotels-popup-body'
 
+  initFullInfo: =>
+    @roomCombinations = ko.observableArray([])
+    @combinedPrice = ko.computed =>
+      res = 0
+      for roomSet in @roomCombinations()
+        if roomSet.selectedCount()
+          res += roomSet.selectedCount()*roomSet.price
+      return res
+
+    @combinedButtonLabel = ko.computed =>
+      if @combinedPrice() > 0
+        return @selectText()
+      else
+        return 'Не выбраны номера'
+
   getFullInfo: ()=>
-    if !@haveFullInfo
+    if !@haveFullInfo()
       api = new HotelsAPI
       url = 'hotel/search/info/?hotelId='+@hotelId
       url += '&cacheId='+@parent.cacheId
@@ -235,8 +270,16 @@ class HotelResult
       api.search url, (data)=>
         #adding info to elements
         window.voyanga_debug 'searchInfo',data
-        #for
+        @initFullInfo()
+        for ind,roomSet of data.hotel.details
+          set = new RoomSet roomSet, @, @duration
+          set.resultId = roomSet.resultId
+          @roomCombinations.push set
+        @haveFullInfo(true)
+        console.log(@roomCombinations())
 
+  combinationClick: =>
+    console.log 'combination click'
 
   #mapTumbler: (context, event) =>
   #  el = $(event.currentTarget)
@@ -309,7 +352,8 @@ class HotelsResultSet
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
-    @city = @searchParams.cityName
+    window.voyanga_debug('checkOut',@checkOut)
+    @city = 0
     if @searchParams.duration
       duration = @searchParams.duration
     if duration == 0 || typeof duration == 'undefined'
@@ -331,6 +375,8 @@ class HotelsResultSet
     @maxPrice = false
     for hotel in rawHotels
       key = hotel.hotelId
+      if !@city
+        @city = hotel.city
       if @_results[key]
         @_results[key].push hotel
         @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
@@ -353,7 +399,19 @@ class HotelsResultSet
     for key, result of @_results
       @data.push result
 
+    @sortBy = ko.observable( 'minPrice')
 
+    @sortByPriceClass = ko.computed =>
+      ret = 'hotel-sort-by-item'
+      if @sortBy() == 'minPrice'
+        ret += ' active'
+      return ret
+
+    @sortByRatingClass = ko.computed =>
+      ret = 'hotel-sort-by-item'
+      if @sortBy() == 'rating'
+        ret += ' active'
+      return ret
 
     @data.sort (left, right)->
       if left.minPrice < right.minPrice
@@ -361,6 +419,7 @@ class HotelsResultSet
       if left.minPrice > right.minPrice
         return  1
       return 0
+
 
   select: (hotel, event) =>
     window.voyanga_debug ' i wonna get hotel for you',hotel
@@ -371,24 +430,31 @@ class HotelsResultSet
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
 
+  getDateInterval: =>
+    dateUtils.formatDayMonthInterval(@checkIn._d,@checkOut._d)
+
   sortByPrice:  =>
-    @data.sort (left, right)->
-      if left.minPrice < right.minPrice
-        return -1
-      if left.minPrice > right.minPrice
-        return  1
-      return 0
-    ko.processAllDeferredBindingUpdates()
+    if @sortBy() != 'minPrice'
+      @sortBy('minPrice')
+      @data.sort (left, right)->
+        if left.minPrice < right.minPrice
+          return -1
+        if left.minPrice > right.minPrice
+          return  1
+        return 0
+      #ko.processAllDeferredBindingUpdates()
 
   sortByRating:  =>
-    @data.sort (left, right)->
-      if left.rating > right.rating
-        return -1
-      if left.rating < right.rating
-        return  1
-      return 0
-    console.log(@data())
-    ko.processAllDeferredBindingUpdates()
+    if @sortBy() != 'rating'
+      @sortBy('rating')
+      @data.sort (left, right)->
+        if left.rating > right.rating
+          return -1
+        if left.rating < right.rating
+          return  1
+        return 0
+      #console.log(@data())
+      #ko.processAllDeferredBindingUpdates()
 
   selectHotel: (hotel, event) =>
     @select(hotel, event)

@@ -90,7 +90,7 @@
   <!-- INFO TRIP -->
   <div class="info-trip">
     <div class="date-trip">
-      26 мая - 27 мая
+      <span data-bind="text: parent.getDateInterval()">26 мая - 27 мая</span>
     </div>
     <h2>Номера в <span data-bind="text: hotelName">Рэдиссон Соня Отель</span></h2>
     <h3>Рекомендуемые сочетания по вашему запросу</h3>
@@ -110,6 +110,51 @@
         </tbody>
       </table>
     </div>
+    <!-- /ko -->
+    <!-- ko if: haveFullInfo() -->
+      <h3>Или подберите свое сочетание из всех возможных вариантов</h3>
+      <div class="block-trip">
+          <table>
+              <tbody>
+              <tr>
+                  <td class="name">
+                      <!-- ko foreach: roomCombinations -->
+                      <div class="items">
+                          <ul>
+                              <li>
+                                  <table>
+                                      <tr>
+                                          <td>
+                                              <!-- ko foreach: rooms -->
+                                                  <span class="text">
+                                                      <span data-bind="text: name">Стандартный двухместный номер</span><br />
+                                                      <span data-bind="text: nameNemo" class="textOriginal"></span>
+                                                  </span>
+                                                    <span data-bind="if: hasMeal"><span class="ico-breakfast"></span> <span data-bind="text: meal">Завтрак «шведский стол»</span></span>
+                                              <!-- /ko -->
+                                          </td>
+                                          <td class="change">
+                                              <div class="change-people">
+                                                  <div class="minus"  data-bind="click: minusCount"></div>
+                                                  <div class="value">
+                                                      <input type="text" value="10" data-bind="value: selectedCount">
+                                                  </div>
+                                                  <div class="plus" data-bind="click: plusCount"></div>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </table>
+
+                              </li>
+                          </ul>
+                      </div>
+                      <!-- /ko -->
+                  </td>
+                  <td class="button"><a class="btn-cost" href="#" data-bind="click: combinationClick"><span class="l"></span><span class="text" data-bind="text: combinedButtonLabel()">Не выбраны номера</span><span class="cost" data-bind="text: combinedPrice(),visible: combinedPrice()"></span><span class="rur f21" data-bind="visible: combinedPrice()">o</span></a></td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
     <!-- /ko -->
   </div>
   <!-- END INFO TRIP -->

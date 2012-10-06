@@ -36,6 +36,16 @@ dateUtils=
     result+= " "
     result+= MONTHS[date.getMonth()]
 
+  formatDayMonthInterval: (dateStart,dateEnd) ->
+    if (dateStart.length==0 || dateEnd.length==0)
+      return
+    result = "с "
+    result+= dateStart.getDate()
+    if dateStart.getMonth() != dateEnd.getMonth()
+      result+= ' '+MONTHS[dateStart.getMonth()]
+    result+= ' по ' + dateEnd.getDate()
+    result+= ' '+MONTHS[dateEnd.getMonth()]
+
   formatDayShortMonth: (date) ->
     if (date.length==0)
       return

@@ -17,10 +17,10 @@
 </script>
 
 <script type="text-html" id="hotels-results-inner">
-<h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city">Амстердам</span>, 19-26 мая</h1>
+<h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city.casePre">Амстердам</span>, <span data-bind="text: getDateInterval()">19-26 мая</span></h1>
 <div class="ticket-content hotels">
     <h2>Найдено отелей: <span data-bind="text: numResults">##</span></h2>
-    <div class="sorting-panel"><span class="hotel-sort-by">сортировать по:</span> <span class="hotel-sort-by-item" data-bind="click: sortByPrice">&nbsp;цене</span> <span class="hotel-sort-by-item" data-bind="click: sortByRating">&nbsp;рейтингу</span>  </div>
+    <div class="sorting-panel"><span class="hotel-sort-by">сортировать по:</span> <span data-bind="click: sortByPrice,attr:{class: sortByPriceClass()}">&nbsp;цене</span> <span data-bind="click: sortByRating,attr:{class: sortByRatingClass()}">&nbsp;рейтингу</span>  </div>
     <div class="clear"></div>
         <!-- ko foreach: data -->
         <div class="hotels-tickets" data-bind="visible: visible()">

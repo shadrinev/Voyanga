@@ -9,6 +9,9 @@ Room = (function() {
   function Room(data) {
     this.name = data.showName;
     this.nameNemo = data.roomNemoName;
+    if (!this.nameNemo || data.roomName) {
+      this.nameNemo = data.roomName;
+    }
     if (this.nameNemo !== '' && typeof this.nameNemo !== 'undefined') {
       this.haveNemoName = true;
     } else {
@@ -16,6 +19,9 @@ Room = (function() {
       this.nameNemo = '';
     }
     this.meal = data.meal;
+    if (data.mealName) {
+      this.meal = data.mealName;
+    }
     if (typeof this.meal === "undefined" || this.meal === '') {
       this.meal = 'Не известно';
     }
@@ -35,6 +41,12 @@ RoomSet = (function() {
     if (duration == null) {
       duration = 1;
     }
+    this.minusCount = __bind(this.minusCount, this);
+
+    this.plusCount = __bind(this.plusCount, this);
+
+    this.checkCount = __bind(this.checkCount, this);
+
     this.price = Math.ceil(data.rubPrice);
     this.savings = 0;
     this.pricePerNight = Math.ceil(this.price / duration);
@@ -45,6 +57,10 @@ RoomSet = (function() {
       room = _ref[_i];
       this.rooms.push(new Room(room));
     }
+    this.selectedCount = ko.observable(0);
+    this.selectedCount.subscribe(function(newValue) {
+      return _this.checkCount(newValue);
+    });
     this.selectText = ko.computed(function() {
       if (!_this.parent.tours()) {
         return "Забронировать";
@@ -56,6 +72,26 @@ RoomSet = (function() {
       }
     });
   }
+
+  RoomSet.prototype.checkCount = function(newValue) {
+    var count;
+    count = parseInt(newValue);
+    if (count < 0 || isNaN(count)) {
+      return this.selectedCount(0);
+    } else {
+      return this.selectedCount(count);
+    }
+  };
+
+  RoomSet.prototype.plusCount = function() {
+    return this.selectedCount(this.selectedCount() + 1);
+  };
+
+  RoomSet.prototype.minusCount = function() {
+    if (this.selectedCount() > 0) {
+      return this.selectedCount(this.selectedCount() - 1);
+    }
+  };
 
   return RoomSet;
 
@@ -75,7 +111,11 @@ HotelResult = (function() {
 
     this.back = __bind(this.back, this);
 
+    this.combinationClick = __bind(this.combinationClick, this);
+
     this.getFullInfo = __bind(this.getFullInfo, this);
+
+    this.initFullInfo = __bind(this.initFullInfo, this);
 
     this.showMap = __bind(this.showMap, this);
 
@@ -119,7 +159,7 @@ HotelResult = (function() {
     }
     this.duration = duration;
     console.log('duration:' + duration);
-    this.haveFullInfo = false;
+    this.haveFullInfo = ko.observable(false);
     this.selectText = ko.computed(function() {
       if (!_this.tours()) {
         return "Забронировать";
@@ -283,18 +323,57 @@ HotelResult = (function() {
     return SizeBox('hotels-popup-body');
   };
 
+  HotelResult.prototype.initFullInfo = function() {
+    var _this = this;
+    this.roomCombinations = ko.observableArray([]);
+    this.combinedPrice = ko.computed(function() {
+      var res, roomSet, _i, _len, _ref;
+      res = 0;
+      _ref = _this.roomCombinations();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        roomSet = _ref[_i];
+        if (roomSet.selectedCount()) {
+          res += roomSet.selectedCount() * roomSet.price;
+        }
+      }
+      return res;
+    });
+    return this.combinedButtonLabel = ko.computed(function() {
+      if (_this.combinedPrice() > 0) {
+        return _this.selectText();
+      } else {
+        return 'Не выбраны номера';
+      }
+    });
+  };
+
   HotelResult.prototype.getFullInfo = function() {
     var api, url,
       _this = this;
-    if (!this.haveFullInfo) {
+    if (!this.haveFullInfo()) {
       api = new HotelsAPI;
       url = 'hotel/search/info/?hotelId=' + this.hotelId;
       url += '&cacheId=' + this.parent.cacheId;
       console.log(this.parent.cacheId);
       return api.search(url, function(data) {
-        return window.voyanga_debug('searchInfo', data);
+        var ind, roomSet, set, _ref;
+        window.voyanga_debug('searchInfo', data);
+        _this.initFullInfo();
+        _ref = data.hotel.details;
+        for (ind in _ref) {
+          roomSet = _ref[ind];
+          set = new RoomSet(roomSet, _this, _this.duration);
+          set.resultId = roomSet.resultId;
+          _this.roomCombinations.push(set);
+        }
+        _this.haveFullInfo(true);
+        return console.log(_this.roomCombinations());
       });
     }
+  };
+
+  HotelResult.prototype.combinationClick = function() {
+    return console.log('combination click');
   };
 
   HotelResult.prototype.readMore = function(context, event) {
@@ -357,7 +436,8 @@ HotelResult = (function() {
 HotelsResultSet = (function() {
 
   function HotelsResultSet(rawHotels, searchParams) {
-    var checkIn, checkOut, duration, hotel, key, result, _i, _j, _len, _len1, _ref;
+    var checkIn, checkOut, duration, hotel, key, result, _i, _j, _len, _len1, _ref,
+      _this = this;
     this.searchParams = searchParams;
     this.postFilters = __bind(this.postFilters, this);
 
@@ -369,13 +449,16 @@ HotelsResultSet = (function() {
 
     this.sortByPrice = __bind(this.sortByPrice, this);
 
+    this.getDateInterval = __bind(this.getDateInterval, this);
+
     this.select = __bind(this.select, this);
 
     this._results = {};
     this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);
-    this.city = this.searchParams.cityName;
+    window.voyanga_debug('checkOut', this.checkOut);
+    this.city = 0;
     if (this.searchParams.duration) {
       duration = this.searchParams.duration;
     }
@@ -403,6 +486,9 @@ HotelsResultSet = (function() {
     for (_j = 0, _len1 = rawHotels.length; _j < _len1; _j++) {
       hotel = rawHotels[_j];
       key = hotel.hotelId;
+      if (!this.city) {
+        this.city = hotel.city;
+      }
       if (this._results[key]) {
         this._results[key].push(hotel);
         this.minPrice = this._results[key].minPrice < this.minPrice ? this._results[key].minPrice : this.minPrice;
@@ -426,6 +512,23 @@ HotelsResultSet = (function() {
       result = _ref[key];
       this.data.push(result);
     }
+    this.sortBy = ko.observable('minPrice');
+    this.sortByPriceClass = ko.computed(function() {
+      var ret;
+      ret = 'hotel-sort-by-item';
+      if (_this.sortBy() === 'minPrice') {
+        ret += ' active';
+      }
+      return ret;
+    });
+    this.sortByRatingClass = ko.computed(function() {
+      var ret;
+      ret = 'hotel-sort-by-item';
+      if (_this.sortBy() === 'rating') {
+        ret += ' active';
+      }
+      return ret;
+    });
     this.data.sort(function(left, right) {
       if (left.minPrice < right.minPrice) {
         return -1;
@@ -450,31 +553,38 @@ HotelsResultSet = (function() {
     return window.app.render(hotel, 'info-template');
   };
 
+  HotelsResultSet.prototype.getDateInterval = function() {
+    return dateUtils.formatDayMonthInterval(this.checkIn._d, this.checkOut._d);
+  };
+
   HotelsResultSet.prototype.sortByPrice = function() {
-    this.data.sort(function(left, right) {
-      if (left.minPrice < right.minPrice) {
-        return -1;
-      }
-      if (left.minPrice > right.minPrice) {
-        return 1;
-      }
-      return 0;
-    });
-    return ko.processAllDeferredBindingUpdates();
+    if (this.sortBy() !== 'minPrice') {
+      this.sortBy('minPrice');
+      return this.data.sort(function(left, right) {
+        if (left.minPrice < right.minPrice) {
+          return -1;
+        }
+        if (left.minPrice > right.minPrice) {
+          return 1;
+        }
+        return 0;
+      });
+    }
   };
 
   HotelsResultSet.prototype.sortByRating = function() {
-    this.data.sort(function(left, right) {
-      if (left.rating > right.rating) {
-        return -1;
-      }
-      if (left.rating < right.rating) {
-        return 1;
-      }
-      return 0;
-    });
-    console.log(this.data());
-    return ko.processAllDeferredBindingUpdates();
+    if (this.sortBy() !== 'rating') {
+      this.sortBy('rating');
+      return this.data.sort(function(left, right) {
+        if (left.rating > right.rating) {
+          return -1;
+        }
+        if (left.rating < right.rating) {
+          return 1;
+        }
+        return 0;
+      });
+    }
   };
 
   HotelsResultSet.prototype.selectHotel = function(hotel, event) {

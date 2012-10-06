@@ -44,6 +44,19 @@ dateUtils = {
     result += " ";
     return result += MONTHS[date.getMonth()];
   },
+  formatDayMonthInterval: function(dateStart, dateEnd) {
+    var result;
+    if (dateStart.length === 0 || dateEnd.length === 0) {
+      return;
+    }
+    result = "с ";
+    result += dateStart.getDate();
+    if (dateStart.getMonth() !== dateEnd.getMonth()) {
+      result += ' ' + MONTHS[dateStart.getMonth()];
+    }
+    result += ' по ' + dateEnd.getDate();
+    return result += ' ' + MONTHS[dateEnd.getMonth()];
+  },
   formatDayShortMonth: function(date) {
     var result;
     if (date.length === 0) {
