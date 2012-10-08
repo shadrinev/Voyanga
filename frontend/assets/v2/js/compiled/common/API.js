@@ -14,10 +14,6 @@ API = (function() {
   API.prototype.call = function(url, cb) {
     var _this = this;
     $('#loadWrapBg').show();
-    if (sessionStorage.getItem("" + this.endpoint + url)) {
-      cb(JSON.parse(sessionStorage.getItem("" + this.endpoint + url)));
-      return $('#loadWrapBg').hide();
-    }
     return $.ajax({
       url: "" + this.endpoint + url,
       dataType: 'jsonp',

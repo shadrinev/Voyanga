@@ -753,7 +753,7 @@ HotelFiltersT = (function() {
 
   HotelFiltersT.prototype.iterate = function(onHotel, onRoom) {
     var result, roomSet, someVisible, _i, _j, _len, _len1, _ref, _ref1;
-    _ref = this.results.data;
+    _ref = this.results.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       result = _ref[_i];
       onHotel(result);
