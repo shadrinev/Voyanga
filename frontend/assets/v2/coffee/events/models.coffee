@@ -74,14 +74,48 @@ class EventSet
         return event.active()
       return activeEvents[0]
     @previousImage = ko.observable ''
+    @activeMaps = 0;
 
   setActive: (valueAccessor, event) =>
+    if(@activeMaps == 1)
+      @closeEventsMaps()
+
     $('.slideTours').find('.triangle').animate {'top' : '0px'}, 200
     @events(_.map @events(), (event) =>
       event.active(false)
     )
     valueAccessor.active(true)
     $(event.target).closest('.toursTicketsMain').find('.triangle').animate {'top' : '-16px'}, 200
+
+  closeEventsPhoto: =>
+    $(".slideTours").find(".active").find(".triangle").animate
+      top: "0px"
+    , 200
+    $(".toursTicketsMain").removeClass "active"
+    $(".mapsBigAll").css "opacity", "0"
+    $(".toursBigAll").animate
+      opacity: 0
+    , 700, ->
+      $(this).css "display", "none"
+
+    $(".mapsBigAll").show()
+    $(".mapsBigAll").animate
+      opacity: 1
+    , 700
+    @activeMaps = 1
+
+  closeEventsMaps: =>
+    $(".toursBigAll").css "opacity", "0"
+    $(".mapsBigAll").animate
+      opacity: 0
+    , 700, ->
+      $(this).css "display", "none"
+
+    $(".toursBigAll").show()
+    $(".toursBigAll").animate
+      opacity: 1
+    , 700
+    @activeMaps = 0
 
 class EventCategory
   constructor: (data) ->

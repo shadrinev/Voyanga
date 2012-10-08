@@ -13,6 +13,7 @@ class DefaultController extends CController
         $eventsJsonObject = array();
         foreach ($events as $event)
             $eventsJsonObject[] = $event->getJsonObject();
+        $eventsJsonObject[0]['active'] = true;
         $this->render('frontend.www.themes.v2.views.default.index', array('events'=>$eventsJsonObject));
     }
 

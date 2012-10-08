@@ -5,33 +5,16 @@ class EventController
   constructor: (@searchParams)->
     @api = ''
     @routes =
-      '/event/:from/:id/': @searchAction
+      '/event/:id/': @searchAction
       '': @indexAction
 
     _.extend @, Backbone.Events
 
   searchAction: (args...)=>
-
     window.voyanga_debug "EVENT: Invoking searchAction", args
-  ###    # update search params with values in route
-      @searchParams.fromList(args)
-
-      # tempoprary development cache
-      @api.search  @searchParams.url(), @handleResults
-  ###
 
   handleResults: (data) =>
     window.voyanga_debug "EVENT searchAction: handling results", data
-  ###
-      # temporary development cache
-      stacked = new AviaResultSet data.flights.flightVoyages
-      stacked.injectSearchParams data.searchParams
-      stacked.postInit()
-      # we need observable here to be compatible with tours
-      @render 'results', {results: ko.observable(stacked)}
-
-      ko.processAllDeferredBindingUpdates()
-  ###
 
   indexAction: =>
     window.voyanga_debug "EVENT: invoking indexAction"
@@ -41,7 +24,7 @@ class EventController
     eventSet = new EventSet(events)
     console.log "EVENT: eventset = ", eventSet
     @render 'index', eventSet
-    ResizeAvia()
+    CenterIMGResize()
 
   render: (view, data) ->
     console.log data

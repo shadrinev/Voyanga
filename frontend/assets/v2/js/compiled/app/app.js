@@ -154,9 +154,12 @@ Application = (function(_super) {
 
   Application.prototype.mapRendered = function(elem) {
     console.log("Map Rendered");
-    return $('.slideTours').find('.active').find('.triangle').animate({
-      'top': '-17px'
+    $('.slideTours').find('.active').find('.triangle').animate({
+      'top': '-16px'
     }, 200);
+    return setTimeout(function() {
+      return $(window).trigger('resize');
+    }, 500);
   };
 
   Application.prototype.isNotEvent = function() {

@@ -19,7 +19,7 @@ EventController = (function() {
 
     this.api = '';
     this.routes = {
-      '/event/:from/:id/': this.searchAction,
+      '/event/:id/': this.searchAction,
       '': this.indexAction
     };
     _.extend(this, Backbone.Events);
@@ -31,29 +31,9 @@ EventController = (function() {
     return window.voyanga_debug("EVENT: Invoking searchAction", args);
   };
 
-  /*    # update search params with values in route
-      @searchParams.fromList(args)
-  
-      # tempoprary development cache
-      @api.search  @searchParams.url(), @handleResults
-  */
-
-
   EventController.prototype.handleResults = function(data) {
     return window.voyanga_debug("EVENT searchAction: handling results", data);
   };
-
-  /*
-        # temporary development cache
-        stacked = new AviaResultSet data.flights.flightVoyages
-        stacked.injectSearchParams data.searchParams
-        stacked.postInit()
-        # we need observable here to be compatible with tours
-        @render 'results', {results: ko.observable(stacked)}
-  
-        ko.processAllDeferredBindingUpdates()
-  */
-
 
   EventController.prototype.indexAction = function() {
     var eventSet, events;
@@ -65,7 +45,7 @@ EventController = (function() {
     eventSet = new EventSet(events);
     console.log("EVENT: eventset = ", eventSet);
     this.render('index', eventSet);
-    return ResizeAvia();
+    return CenterIMGResize();
   };
 
   EventController.prototype.render = function(view, data) {

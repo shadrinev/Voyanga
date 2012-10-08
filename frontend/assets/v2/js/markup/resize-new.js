@@ -524,7 +524,6 @@ function AlphaBackground() {
 	});
 }
 
-
 function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
@@ -532,6 +531,8 @@ function ResizeAvia() {
     scrollValue();
     CenterIMGResize();
     ifHeightMinAllBody();
+    slideToursSlide();
+    CenterIMGResize();
 }
 
 function ResizeFun() {

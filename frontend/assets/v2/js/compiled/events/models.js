@@ -80,6 +80,10 @@ Event = (function(_super) {
 EventSet = (function() {
 
   function EventSet(events) {
+    this.closeEventsMaps = __bind(this.closeEventsMaps, this);
+
+    this.closeEventsPhoto = __bind(this.closeEventsPhoto, this);
+
     this.setActive = __bind(this.setActive, this);
 
     var _this = this;
@@ -92,10 +96,14 @@ EventSet = (function() {
       return activeEvents[0];
     });
     this.previousImage = ko.observable('');
+    this.activeMaps = 0;
   }
 
   EventSet.prototype.setActive = function(valueAccessor, event) {
     var _this = this;
+    if (this.activeMaps === 1) {
+      this.closeEventsMaps();
+    }
     $('.slideTours').find('.triangle').animate({
       'top': '0px'
     }, 200);
@@ -106,6 +114,38 @@ EventSet = (function() {
     return $(event.target).closest('.toursTicketsMain').find('.triangle').animate({
       'top': '-16px'
     }, 200);
+  };
+
+  EventSet.prototype.closeEventsPhoto = function() {
+    $(".slideTours").find(".active").find(".triangle").animate({
+      top: "0px"
+    }, 200);
+    $(".toursTicketsMain").removeClass("active");
+    $(".mapsBigAll").css("opacity", "0");
+    $(".toursBigAll").animate({
+      opacity: 0
+    }, 700, function() {
+      return $(this).css("display", "none");
+    });
+    $(".mapsBigAll").show();
+    $(".mapsBigAll").animate({
+      opacity: 1
+    }, 700);
+    return this.activeMaps = 1;
+  };
+
+  EventSet.prototype.closeEventsMaps = function() {
+    $(".toursBigAll").css("opacity", "0");
+    $(".mapsBigAll").animate({
+      opacity: 0
+    }, 700, function() {
+      return $(this).css("display", "none");
+    });
+    $(".toursBigAll").show();
+    $(".toursBigAll").animate({
+      opacity: 1
+    }, 700);
+    return this.activeMaps = 0;
   };
 
   return EventSet;
