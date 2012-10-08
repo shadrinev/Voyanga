@@ -38,9 +38,19 @@ AviaController = (function() {
     var stacked;
     window.voyanga_debug("searchAction: handling results", data);
     console.log(data);
-    stacked = new AviaResultSet(data.flights.flightVoyages);
-    stacked.injectSearchParams(data.searchParams);
-    stacked.postInit();
+    try {
+      stacked = new AviaResultSet(data.flights.flightVoyages);
+      stacked.injectSearchParams(data.searchParams);
+      stacked.postInit();
+    } catch (err) {
+      if (err === '404') {
+        this.render('e404', {});
+        return;
+      }
+      this.render('e500', {
+        msg: err
+      });
+    }
     this.render('results', {
       results: ko.observable(stacked)
     });

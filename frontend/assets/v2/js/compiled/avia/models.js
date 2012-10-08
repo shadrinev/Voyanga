@@ -568,6 +568,9 @@ AviaResultSet = (function() {
     this.tours = false;
     this.selected_key = ko.observable('');
     this._results = {};
+    if (!rawVoyages.length) {
+      throw "404";
+    }
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
       flightVoyage = rawVoyages[_i];
       key = flightVoyage.price + "_" + flightVoyage.valCompany;

@@ -68,8 +68,11 @@ Application = (function(_super) {
         }
       }
     });
-    this._view = ko.observable('index');
+    this._view = ko.observable(false);
     this.activeView = ko.computed(function() {
+      if (!_this._view()) {
+        return 'stub';
+      }
       return _this.activeModule() + '-' + _this._view();
     });
     this.calendarInitialized = false;

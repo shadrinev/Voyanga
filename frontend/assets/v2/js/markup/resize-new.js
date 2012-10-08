@@ -365,8 +365,7 @@ function ResizeCenterBlock() {
 			var_content.css('width', widthContent+'px').css('margin-left', marginLeftContent).css('margin-right', marginRightContent);
 		}
 		if (var_filterBlockIsset) {
-			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);
-			var_filterBlock.find('.scrollBlock').css('width', (widthFilterBlock - 0)+'px');
+			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);			
 		}
 		if (var_leftBlockIsset) {
 			var_leftBlock.css('width', widthLeftBlock+'px').css('margin-left', marginLeftLeftBlock);
@@ -571,6 +570,7 @@ function scrolShowFilter() {
 					} else {
 						api.reinitialise();
 					}
+					$('.scrollBlock, .jspContainer, .jspPane').css('width',$('.filter-block').width());
 				}
 			);
 			$(window).bind(

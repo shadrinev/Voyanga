@@ -401,6 +401,9 @@ class AviaResultSet
     
     @_results = {}
 
+    if !rawVoyages.length
+      throw "404"
+
     for flightVoyage in rawVoyages
       key = flightVoyage.price + "_" + flightVoyage.valCompany
       if @_results[key]
