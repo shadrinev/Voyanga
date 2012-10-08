@@ -62,7 +62,7 @@ RoomSet = (function() {
       return _this.checkCount(newValue);
     });
     this.selectText = ko.computed(function() {
-      if (!_this.parent.tours()) {
+      if (!_this.parent.tours) {
         return "Забронировать";
       }
       if (_this.parent.activeResultId()) {
@@ -161,7 +161,7 @@ HotelResult = (function() {
     console.log('duration:' + duration);
     this.haveFullInfo = ko.observable(false);
     this.selectText = ko.computed(function() {
-      if (!_this.tours()) {
+      if (!_this.tours) {
         return "Забронировать";
       }
       if (_this.activeResultId()) {
@@ -411,7 +411,7 @@ HotelResult = (function() {
     if (room.roomSets) {
       room = room.roomSets[0];
     }
-    if (this.tours()) {
+    if (this.tours) {
       this.activeResultId(room.resultId);
     }
     return this.trigger('select', {
@@ -673,7 +673,7 @@ HotelsSearchParams = (function() {
     for (_i = 0, _len = rest.length; _i < _len; _i++) {
       item = rest[_i];
       if (item) {
-        _results.push(this.rooms.push(new PanelRoom(item)));
+        _results.push(this.rooms.push(new Roomers(item)));
       } else {
         _results.push(void 0);
       }

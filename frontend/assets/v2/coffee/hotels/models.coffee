@@ -40,7 +40,7 @@ class RoomSet
       @checkCount(newValue)
 
     @selectText = ko.computed =>
-      if !@parent.tours()
+      if !@parent.tours
         return "Забронировать"
       if @parent.activeResultId()
         return 'Выбран'
@@ -109,7 +109,7 @@ class HotelResult
     @haveFullInfo = ko.observable false
 
     @selectText = ko.computed =>
-      if !@tours()
+      if !@tours
         return "Забронировать"
       if @activeResultId()
         return 'Выбран'
@@ -329,7 +329,7 @@ class HotelResult
     # it is actually cheapest click
     if room.roomSets
       room = room.roomSets[0]
-    if @tours()
+    if @tours
       @activeResultId room.resultId
 
     @trigger 'select', {roomSet: room, hotel: @}
