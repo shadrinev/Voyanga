@@ -136,7 +136,7 @@ class ToursHotelsResultSet extends TourEntry
     @activeHotel = ko.observable 0
     @template = 'hotels-results'
     @results = new HotelsResultSet raw, @searchParams
-    @results.tours true
+    @results.tours = true
     @results.select = (hotel) =>
       hotel.off 'back'
       hotel.on 'back', =>
@@ -250,6 +250,11 @@ class ToursResultSet
       @setActive @data()[0]
     ResizeAvia()
 
+  showOverview: =>
+    @setActive {template: 'tours-overview', data: @}
+
+
+
 # Models for tour search params,
 class DestinationSearchParams
   constructor: ->
@@ -344,9 +349,6 @@ class TourSearchParams extends SearchParams
       @destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate())
       @destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate())
       j++
-
-  showOverview: =>
-    @setActive {template: 'tours-overview', data: @}
 
   removeItem: (item, event)=>
     event.stopPropagation()

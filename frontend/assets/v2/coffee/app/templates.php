@@ -24,6 +24,7 @@ return array (
     'common.roomers',
     'common.passengers',
     'common.errors',
+    'common.stub',
 
     'event.map',
 );
