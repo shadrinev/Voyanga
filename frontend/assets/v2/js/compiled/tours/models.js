@@ -267,8 +267,7 @@ ToursHotelsResultSet = (function(_super) {
     var result,
       _this = this;
     result = new HotelsResultSet(data, sp);
-    console.log(result, data);
-    result.tours = true;
+    result.tours(true);
     result.postInit();
     result.select = function(hotel) {
       hotel.off('back');

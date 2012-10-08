@@ -149,8 +149,7 @@ class ToursHotelsResultSet extends TourEntry
 
   newResults: (data, sp)=>
     result = new HotelsResultSet data, sp
-    console.log result, data
-    result.tours = true
+    result.tours true
     result.postInit()
     result.select = (hotel) =>
       hotel.off 'back'
