@@ -505,6 +505,10 @@ VoyangaCalendarStandart.generateGrid = function(){
 
 VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
     console.log("new calendar value INC", newCalendarValue);
+    if(newCalendarValue.hotels)
+	$('#voyanga-calendar').addClass('hotel');
+    else
+	$('#voyanga-calendar').removeClass('hotel');
     VoyangaCalendarStandart.twoSelect = newCalendarValue.twoSelect;
     if(!newCalendarValue.twoSelect && VoyangaCalendarStandart.values.length > 1)
 	VoyangaCalendarStandart.values = VoyangaCalendarStandart.values.slice(0,1);

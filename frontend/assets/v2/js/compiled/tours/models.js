@@ -224,8 +224,6 @@ ToursHotelsResultSet = (function(_super) {
   __extends(ToursHotelsResultSet, _super);
 
   function ToursHotelsResultSet(raw, searchParams) {
-    var hotel, room,
-      _this = this;
     this.searchParams = searchParams;
     this.dateHtml = __bind(this.dateHtml, this);
 
@@ -245,13 +243,34 @@ ToursHotelsResultSet = (function(_super) {
 
     this.overviewText = __bind(this.overviewText, this);
 
+    this.doNewSearch = __bind(this.doNewSearch, this);
+
+    this.newResults = __bind(this.newResults, this);
+
     ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
+    this.api = new HotelsAPI;
+    this.panel = new HotelsPanel();
+    this.panel.handlePanelSubmit = this.doNewSearch;
+    this.panel.sp.fromObject(this.searchParams);
     this.overviewTemplate = 'tours-overview-hotels-ticket';
-    this.activeHotel = ko.observable(0);
     this.template = 'hotels-results';
-    this.results = new HotelsResultSet(raw, this.searchParams);
-    this.results.tours = true;
-    this.results.select = function(hotel) {
+    this.activeHotel = ko.observable(0);
+    this.selection = ko.observable(null);
+    this.results = ko.observable();
+    this.data = {
+      results: this.results
+    };
+    this.newResults(raw, this.searchParams);
+  }
+
+  ToursHotelsResultSet.prototype.newResults = function(data, sp) {
+    var result,
+      _this = this;
+    result = new HotelsResultSet(data, sp);
+    console.log(result, data);
+    result.tours = true;
+    result.postInit();
+    result.select = function(hotel) {
       hotel.off('back');
       hotel.on('back', function() {
         return _this.trigger('setActive', _this);
@@ -266,19 +285,17 @@ ToursHotelsResultSet = (function(_super) {
         template: 'hotels-info-template'
       });
     };
-    this.data = {
-      results: ko.observable(this.results)
-    };
     this.hotels = true;
-    this.selection = ko.observable(null);
-    hotel = this.results.data()[0];
-    room = hotel.roomSets[0];
-    this.activeHotel(hotel.hotelId);
-    this.selection({
-      'roomSet': room,
-      'hotel': hotel
+    this.selection(null);
+    return this.results(result);
+  };
+
+  ToursHotelsResultSet.prototype.doNewSearch = function() {
+    var _this = this;
+    return this.api.search(this.panel.sp.url(), function(data) {
+      return _this.newResults(data.hotels, data.searchParams);
     });
-  }
+  };
 
   ToursHotelsResultSet.prototype.overviewText = function() {
     return this.destinationText();
@@ -321,10 +338,10 @@ ToursHotelsResultSet = (function(_super) {
   ToursHotelsResultSet.prototype.dateHtml = function() {
     var result;
     result = '<div class="day">';
-    result += dateUtils.formatHtmlDayShortMonth(this.results.checkIn);
+    result += dateUtils.formatHtmlDayShortMonth(this.results().checkIn);
     result += '</div>';
     result += '<div class="day">';
-    result += dateUtils.formatHtmlDayShortMonth(this.results.checkOut);
+    result += dateUtils.formatHtmlDayShortMonth(this.results().checkOut);
     return result += '</div>';
   };
 
@@ -357,9 +374,10 @@ ToursResultSet = (function() {
         });
       }
     }
-    this.selection = ko.observable(this.data()[0]);
+    this.selection = ko.observable(this.data()[1]);
     this.panel = ko.computed({
       read: function() {
+        console.log('TOURS-PANEL', _this.selection().panel);
         if (_this.selection().panel) {
           _this.panelContainer = _this.selection().panel;
         }
@@ -387,7 +405,6 @@ ToursResultSet = (function() {
       return sum;
     });
     this.vm = new ToursOverviewVM(this);
-    this.showOverview();
   }
 
   ToursResultSet.prototype.setActive = function(entry) {
@@ -456,20 +473,10 @@ TourSearchParams = (function(_super) {
 
   function TourSearchParams() {
     this.removeItem = __bind(this.removeItem, this);
-
-    this.addRoom = __bind(this.addRoom, this);
     TourSearchParams.__super__.constructor.call(this);
     this.startCity = ko.observable('LED');
     this.destinations = ko.observableArray([new DestinationSearchParams()]);
-    this.rooms = ko.observableArray([new Roomers()]);
   }
-
-  TourSearchParams.prototype.addRoom = function() {
-    if (this.rooms().length === 4) {
-      return;
-    }
-    return this.rooms.push(new Roomers());
-  };
 
   TourSearchParams.prototype.url = function() {
     var params, result,

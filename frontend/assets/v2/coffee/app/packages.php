@@ -94,6 +94,7 @@
         'js' => array(
             'panel.js',
             'models.js',
+            'searchparams.js',
             'controllers.js',
             'module.js',
         )

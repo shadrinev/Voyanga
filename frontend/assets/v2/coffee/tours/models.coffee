@@ -114,6 +114,7 @@ class ToursAviaResultSet extends TourEntry
     if @rt() then 'blue-two' else 'blue-one'
 
   dateHtml: =>
+    # FIXME SEARCH PARAMS
     source = @selection()
     if source == null
       source = @results().data[0]
@@ -132,12 +133,26 @@ class ToursAviaResultSet extends TourEntry
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, @searchParams)->
     super
+    @api = new HotelsAPI
+    @panel = new HotelsPanel()
+    @panel.handlePanelSubmit = @doNewSearch
+    @panel.sp.fromObject @searchParams
     @overviewTemplate = 'tours-overview-hotels-ticket'
-    @activeHotel = ko.observable 0
     @template = 'hotels-results'
-    @results = new HotelsResultSet raw, @searchParams
-    @results.tours = true
-    @results.select = (hotel) =>
+
+    @activeHotel = ko.observable 0
+    @selection = ko.observable null
+    @results = ko.observable()
+    @data = {results: @results}
+
+    @newResults raw, @searchParams
+
+  newResults: (data, sp)=>
+    result = new HotelsResultSet data, sp
+    console.log result, data
+    result.tours = true
+    result.postInit()
+    result.select = (hotel) =>
       hotel.off 'back'
       hotel.on 'back', =>
         @trigger 'setActive', @
@@ -146,16 +161,15 @@ class ToursHotelsResultSet extends TourEntry
         @activeHotel  hotel.hotelId
         @selection roomData
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template'}
-    @data = {results: ko.observable(@results)}
+    # FIXME WTF
     @hotels = true
-    @selection = ko.observable null
-  # FIXME
-    hotel = @results.data()[0]
-    room = hotel.roomSets[0]
-    @activeHotel  hotel.hotelId
-    @selection {'roomSet': room, 'hotel': hotel}
-    # END FIXME
-    
+    @selection null
+    @results result
+
+  doNewSearch: =>
+    @api.search @panel.sp.url(), (data)=>
+      @newResults data.hotels, data.searchParams
+
   # Overview VM
   overviewText: =>
     @destinationText()
@@ -191,10 +205,10 @@ class ToursHotelsResultSet extends TourEntry
 
   dateHtml: =>
     result = '<div class="day">'
-    result+= dateUtils.formatHtmlDayShortMonth @results.checkIn
+    result+= dateUtils.formatHtmlDayShortMonth @results().checkIn
     result+='</div>'
     result+= '<div class="day">'
-    result+= dateUtils.formatHtmlDayShortMonth @results.checkOut
+    result+= dateUtils.formatHtmlDayShortMonth @results().checkOut
     result+= '</div>'
 
 class ToursResultSet
@@ -209,9 +223,10 @@ class ToursResultSet
         result.on 'setActive', (entry)=>
           @setActive entry
           
-    @selection = ko.observable @data()[0]
+    @selection = ko.observable @data()[1]
     @panel = ko.computed 
       read: =>
+        console.log 'TOURS-PANEL', @selection().panel
         if @selection().panel
           @panelContainer = @selection().panel
         return @panelContainer
@@ -229,7 +244,6 @@ class ToursResultSet
       return sum
 
     @vm = new ToursOverviewVM @
-    do @showOverview
 
   setActive: (entry)=>
     @selection entry
@@ -275,12 +289,6 @@ class TourSearchParams extends SearchParams
     super()
     @startCity = ko.observable 'LED'
     @destinations = ko.observableArray [new DestinationSearchParams()]
-    @rooms = ko.observableArray [ new Roomers() ]
-
-  addRoom: =>
-    if @rooms().length == 4
-      return
-    @rooms.push new Roomers()
 
   url: ->
     result = 'tour/search?'

@@ -61,6 +61,7 @@ class AviaPanel extends SearchPanel
       twoSelect: @rt()
       from: @departureDate()
       to: @rtDate()
+      hotels: false
 
     @departureDateDay = ko.computed =>
       dateUtils.formatDay(@departureDate())

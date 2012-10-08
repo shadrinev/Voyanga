@@ -81,7 +81,8 @@ AviaPanel = (function(_super) {
       return {
         twoSelect: _this.rt(),
         from: _this.departureDate(),
-        to: _this.rtDate()
+        to: _this.rtDate(),
+        hotels: false
       };
     });
     this.departureDateDay = ko.computed(function() {

@@ -11,19 +11,23 @@ HotelsPanel = (function(_super) {
   function HotelsPanel() {
     this.setDate = __bind(this.setDate, this);
 
+    this.haveDates = __bind(this.haveDates, this);
+
+    this.checkOutHtml = __bind(this.checkOutHtml, this);
+
+    this.checkInHtml = __bind(this.checkInHtml, this);
+
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
 
     var _this = this;
     this.template = 'hotels-panel-template';
-    this.peopleSelector = 'roomers-template';
     HotelsPanel.__super__.constructor.call(this);
     this.sp = new HotelsSearchParams();
     this.calendarHidden = ko.observable(true);
     this.city = this.sp.city;
     this.checkIn = this.sp.checkIn;
     this.checkOut = this.sp.checkOut;
-    this.rooms = this.sp.rooms;
-    this.roomsView = this.sp.roomsView;
+    this.peopleSelectorVM = new HotelPeopleSelector(this.sp);
     this.cityReadable = ko.observable();
     this.cityReadableAcc = ko.observable();
     this.cityReadableGen = ko.observable();
@@ -60,15 +64,11 @@ HotelsPanel = (function(_super) {
     this.calendarValue = ko.computed(function() {
       return {
         twoSelect: true,
+        hotels: true,
         from: _this.checkIn(),
         to: _this.checkOut()
       };
     });
-    this.afterRender = function() {
-      return $(function() {
-        return _this.sp.rooms()[0].afterRender();
-      });
-    };
   }
 
   HotelsPanel.prototype.handlePanelSubmit = function() {
@@ -76,6 +76,24 @@ HotelsPanel = (function(_super) {
       trigger: true
     });
     return this.minimizedCalendar(true);
+  };
+
+  HotelsPanel.prototype.checkInHtml = function() {
+    if (this.checkIn()) {
+      return dateUtils.formatHtmlDayShortMonth(this.checkIn());
+    }
+    return '';
+  };
+
+  HotelsPanel.prototype.checkOutHtml = function() {
+    if (this.checkOut()) {
+      return dateUtils.formatHtmlDayShortMonth(this.checkOut());
+    }
+    return '';
+  };
+
+  HotelsPanel.prototype.haveDates = function() {
+    return reutn(this.checkOut() && this.checkIn());
   };
 
   HotelsPanel.prototype.navigateToNewSearch = function() {
