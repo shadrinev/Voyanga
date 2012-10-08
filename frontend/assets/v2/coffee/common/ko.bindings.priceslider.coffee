@@ -12,7 +12,7 @@ ko.bindingHandlers.priceSlider =
     value.to = limits.to unless Utils.inRange(value.to, limits)
 
     $(element).val(value.from+';'+value.to)
-    $(element).slider
+    $(element).jslider
       from: limits.from,
       to: limits.to,
       dimension: '&nbsp;Р',

@@ -122,9 +122,7 @@ Yii::app()->clientScript->registerPackage('appJs');
 <!-- MAPS -->
 <!-- FIXME -->
 <!-- ko if: isEvent() -->
-<div class="maps" data-bind="template: {name: 'event-map', data: viewData()}">
-</div>
-<!-- /ko -->
+<span data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}"></span>
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">

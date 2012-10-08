@@ -45,7 +45,7 @@
             'panel-new.js',
             'helpers.js',
             'jquery.select.slider.js',
-            'jquery.slider.lib.js',
+            //'jquery.slider.lib.js',
             'jquery.slider.js',
             'photoslider.js',
             'loader.js',
