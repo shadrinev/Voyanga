@@ -518,7 +518,7 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.showDetails = function(data, event) {
-    new GenericPopup('#avia-body-popup', ko.contextFor(event.currentTarget));
+    new GenericPopup('#avia-body-popup', this);
     ko.processAllDeferredBindingUpdates();
     SizeBox('avia-body-popup');
     return ResizeBox('avia-body-popup');

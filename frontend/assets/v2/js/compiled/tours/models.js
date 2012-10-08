@@ -271,7 +271,7 @@ ToursHotelsResultSet = (function(_super) {
     };
     this.hotels = true;
     this.selection = ko.observable(null);
-    hotel = this.results.data[0];
+    hotel = this.results.data()[0];
     room = hotel.roomSets[0];
     this.activeHotel(hotel.hotelId);
     this.selection({
