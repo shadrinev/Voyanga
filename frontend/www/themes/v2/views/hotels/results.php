@@ -1,5 +1,6 @@
 <?php
-    $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+    //$images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+    $images = '/themes/v2';
 ?>
 <script id="hotels-results" type="text/html">
         <!-- MAIN BLOCK -->
@@ -61,34 +62,20 @@
                 <div class="clear"></div>
             </div>
             <div class="details">
-                <ul data-bind="foreach: roomSets">
-                    <!-- ko if: visible -->
-                    <li class="not-show">
-                        <div class="items">
-                            <table class="table-hotel-result">
-                                <tr>
-                                    <td class="td-float">
-                                        <div class="float" data-bind="foreach: rooms">
-                                            <span class="text"><span data-bind="text: name">Стандартный двухместный номер</span><br /><span data-bind="text: nameNemo" class="textOriginal"></span></span>
-                                            <!-- ko if: hasMeal -->
-                                             <span class="ico-breakfast"></span> <span data-bind="text:meal">Завтрак</span>
-                                            <!-- /ko -->
-                                            <br>
-                                        </div>
-                                    </td>
-                                    <td class="td-cost">
-                                        <div class="how-cost">
-                                            <span class="cost" data-bind="text: pricePerNight">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em" data-bind="visible: rooms.length == 2">За оба номера</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </li>
+                <ul data-bind="foreach: visibleRoomSets()">
+                    <!-- ko if: $index() < 2 -->
+                    <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: $data}" />
                     <!-- /ko -->
                 </ul>
-                <div class="tab-ul" data-bind="visible: roomSets.length > 2">
-                    <a href="#">Посмотреть все результаты</a>
+                <div class="hidden-roomSets">
+                    <ul data-bind="foreach: visibleRoomSets()">
+                        <!-- ko if: $index() >= 2 -->
+                        <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: $data}" />
+                        <!-- /ko -->
+                    </ul>
+                </div>
+                <div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
+                    <a href="#" data-bind="click: showAllResults">Посмотреть все результаты</a>
                 </div>
                 <span class="lv"></span>
                 <span class="rv"></span>
@@ -113,11 +100,11 @@
 	<div class="left" data-bind="visible: activeIndex()!=0, click: prev"></div>
 	<div class="right" data-bind="visible: activeIndex()!=length0, click: next"></div>
 	<div id="titleNamePhoto">
-		<h2>Рэдиссон Соня Отель</h2>
-		<div class="stars three"></div>
+		<h2 data-bind="text: title">Рэдиссон Соня Отель</h2>
+		<div class="stars three" data-bind="attr:{class: 'stars '+ stars}"></div>
 	</div>
 	<div id="imgContent">
-			<div class="countAndClose">11<span class="lost">/17</span> <div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div></div>
+			<div class="countAndClose"><span data-bind="text: (activeIndex()+1)">11</span><span class="lost">/<span data-bind="text: (length0 +1)">17</span></span> <div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div></div>
           <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
           	
 	</div>
@@ -126,4 +113,28 @@
     </div>
     
   </div>
+</script>
+<script id="hotel-roomSet-template" type="text/html">
+
+        <div class="items">
+            <table class="table-hotel-result">
+                <tr>
+                    <td class="td-float">
+                        <div class="float" data-bind="foreach: rooms">
+                            <span class="text"><span data-bind="text: name">Стандартный двухместный номер</span><br /><span data-bind="text: nameNemo" class="textOriginal"></span></span>
+                            <!-- ko if: hasMeal -->
+                            <span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
+                            <!-- /ko -->
+                            <br>
+                        </div>
+                    </td>
+                    <td class="td-cost">
+                        <div class="how-cost">
+                            <span class="cost" data-bind="text: pricePerNight">14 200</span><span class="rur f21">o</span> / ночь <br> <span class="grey em" data-bind="visible: rooms.length == 2">За оба номера</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
 </script>

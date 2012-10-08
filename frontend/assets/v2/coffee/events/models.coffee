@@ -1,5 +1,6 @@
 ko.bindingHandlers.highlightChange =
   update: (element, valueAccessor, allBindingsAccessor) ->
+    window.voyanga_debug 'Switching element'
 
     # First get the latest data that we're bound to
     value = valueAccessor()
@@ -29,6 +30,7 @@ ko.bindingHandlers.highlightChange =
     previousImage(valueUnwrapped)
 
     $(".IMGmain").eq(1).find("img").load ->
+      ResizeAvia()
       $(".IMGmain").eq(0).animate
         opacity: 0
       , speedAnimateChangePic, ->
@@ -38,10 +40,7 @@ ko.bindingHandlers.highlightChange =
         opacity: 1
         left: varLeftPos + "px"
         top: varTopPos + "px"
-      , speedAnimateChangePic, ->
-        setTimeout () ->
-          startCount = 0
-        , 100
+      , speedAnimateChangePic
 
 class Event extends Backbone.Events
   constructor: (data) ->
@@ -56,7 +55,7 @@ class Event extends Backbone.Events
     @links = ko.observableArray new EventLinkSet(data.links)
     @tags = ko.observableArray new EventTagSet(data.tags)
     @prices = ko.observableArray new EventPriceSet(data.prices)
-    @tour = ko.observable new EventTour(data.tour)
+    @tour = ko.observable new EventTourSet(data.tours)
     @image = ko.observable data.image
     @thumb = ko.observable data.thumb
     @active = ko.observable data.active
@@ -74,14 +73,48 @@ class EventSet
         return event.active()
       return activeEvents[0]
     @previousImage = ko.observable ''
+    @activeMaps = 0;
 
   setActive: (valueAccessor, event) =>
+    if(@activeMaps == 1)
+      @closeEventsMaps()
+
     $('.slideTours').find('.triangle').animate {'top' : '0px'}, 200
     @events(_.map @events(), (event) =>
       event.active(false)
     )
     valueAccessor.active(true)
     $(event.target).closest('.toursTicketsMain').find('.triangle').animate {'top' : '-16px'}, 200
+
+  closeEventsPhoto: =>
+    $(".slideTours").find(".active").find(".triangle").animate
+      top: "0px"
+    , 200
+    $(".toursTicketsMain").removeClass "active"
+    $(".mapsBigAll").css "opacity", "0"
+    $(".toursBigAll").animate
+      opacity: 0
+    , 700, ->
+      $(this).css "display", "none"
+
+    $(".mapsBigAll").show()
+    $(".mapsBigAll").animate
+      opacity: 1
+    , 700
+    @activeMaps = 1
+
+  closeEventsMaps: =>
+    $(".toursBigAll").css "opacity", "0"
+    $(".mapsBigAll").animate
+      opacity: 0
+    , 700, ->
+      $(this).css "display", "none"
+
+    $(".toursBigAll").show()
+    $(".toursBigAll").animate
+      opacity: 1
+    , 700
+    @activeMaps = 0
 
 class EventCategory
   constructor: (data) ->
@@ -138,141 +171,9 @@ class EventTour
   constructor: (data) ->
     @name = data.name
 
-window.eventsRaw =
-  [
-    {
-    "active": true,
-    "startDate": "Иван",
-    "endDate": "Иванов",
-    "address": "Московское ш., 101, кв.101, Ленинград, 101101"
-    "contact": "812 123-1234",
-    "thumb": "http://img1-fotki.yandex.net/get/6412/64844073.1d/0_STATIC87fc9_6cd8e943_L",
-    "preview": "Превью будет здесь",
-    "description": "Здесь будет описание",
-    "image": "http://img-fotki.yandex.ru/get/6412/64844073.1d/0_87fc9_6cd8e943_XXL",
-    "title": "Осень",
-    "categories": [
-      {
-      "id": 1,
-      "title": "Осень"
-      }
-    ],
-    "links": [
-      {
-      "title": "Осень"
-      "url": "http://ya.ru"
-      }
-    ],
-    "tags": [
-      {
-      "name": "tag1"
-      },
-      {
-      "name": "tag2"
-      }
-    ],
-    "prices": [
-      {
-      "city":
-        {
-        "title": 'Москва'
-        }
-      "price": 12500
-      }
-    ],
-    "tour": [
-      "name": 'Отдых за 12500'
-    ]
-    },
-
-    {
-    "active": false,
-    "startDate": "Иван",
-    "endDate": "Иванов",
-    "address": "Московское ш., 101, кв.101, Ленинград, 101101"
-    "contact": "812 123-1234",
-    "thumb": "http://img-fotki.yandex.ru/get/6402/64844073.1d/0_881e6_4aa84b25_M",
-    "preview": "Превью будет здесь новое и шикарное",
-    "description": "Здесь будет описание",
-    "image": "http://img-fotki.yandex.ru/get/6402/64844073.1d/0_881e6_4aa84b25_XXL",
-    "title": "Трам пам пам",
-    "categories": [
-      {
-      "id": 1,
-      "title": "Осень"
-      }
-    ],
-    "links": [
-      {
-      "title": "Осень"
-      "url": "http://ya.ru"
-      }
-    ],
-    "tags": [
-      {
-      "name": "tag1"
-      },
-      {
-      "name": "tag2"
-      }
-    ],
-    "prices": [
-      {
-      "city":
-        {
-        "title": 'Москва'
-        }
-      "price": 13244
-      }
-    ],
-    "tour": [
-      "name": 'Отдых за 12500'
-    ]
-    },
-
-    {
-    "active": false,
-    "startDate": "Иван",
-    "endDate": "Иванов",
-    "address": "Московское ш., 101, кв.101, Ленинград, 101101"
-    "contact": "812 123-1234",
-    "thumb": "http://img-fotki.yandex.ru/get/6101/64844073.15/0_7ae13_5f74c202_M",
-    "preview": "Превью будет здесь",
-    "description": "Здесь будет описание",
-    "image": "http://img-fotki.yandex.ru/get/6101/64844073.15/0_7ae13_5f74c202_orig",
-    "title": "Лето",
-    "categories": [
-      {
-      "id": 1,
-      "title": "Осень"
-      }
-    ],
-    "links": [
-      {
-      "title": "Осень"
-      "url": "http://ya.ru"
-      }
-    ],
-    "tags": [
-      {
-      "name": "tag1"
-      },
-      {
-      "name": "tag2"
-      }
-    ],
-    "prices": [
-      {
-      "city":
-        {
-        "title": 'Москва'
-        }
-      "price": 3850
-      }
-    ],
-    "tour": [
-      "name": 'Отдых за 12500'
-    ]
-    }
-  ]
-
+class EventTourSet
+  constructor: (data) ->
+    set = []
+    $.each data, (i, tour) ->
+      set.push new EventTour(tour)
+    return set

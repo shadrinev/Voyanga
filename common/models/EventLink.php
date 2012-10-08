@@ -99,4 +99,12 @@ class EventLink extends FrontendActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    public function getJsonObject()
+    {
+        return array(
+            'title' => $this->title,
+            'url' => $this->url
+        );
+    }
 }

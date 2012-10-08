@@ -418,19 +418,22 @@ function ResizeCenterBlock() {
 }
 function smallTicketHeight() {
     if ($('.recommended-ticket').length > 0 && $('.recommended-ticket').is(':visible')) {
+    
 	var var_recomendedContent = $('.recomended-content');
-	var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items');
+	var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items .content');
 	var var_oneHeight = var_recomendedItems.height();
-
-	var_recomendedContent.find('.prices-of-3days .ticket').css('height', (var_oneHeight-19) +'px');
+	console.log(var_oneHeight);
+	//var_recomendedContent.find('.prices-of-3days .ticket').css('height', var_oneHeight +'px');
+	//var_recomendedItems.css('height', var_oneHeight +'px');
+	
 	var heightTwoTicket= 0;
 	if ($('.two-way').css('display')!=='none') {
-	    heightTwoTicket = ((var_oneHeight - 35) - 19) / 2;				
+	    heightTwoTicket = (var_oneHeight - 32) / 2;				
 	} else {
-	    heightTwoTicket = ((var_oneHeight - 35) - 19);
+	    heightTwoTicket = (var_oneHeight - 32);
 	}
 	heightTwoTicket = Math.floor(heightTwoTicket);
-	console.log(heightTwoTicket);
+	//console.log(heightTwoTicket);
 	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices').css('height', heightTwoTicket +'px');
 	var heightGraf = heightTwoTicket - 65;	
 	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
@@ -524,7 +527,6 @@ function AlphaBackground() {
 	});
 }
 
-
 function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
@@ -532,6 +534,7 @@ function ResizeAvia() {
     scrollValue();
     CenterIMGResize();
     ifHeightMinAllBody();
+
 }
 
 function ResizeFun() {
@@ -570,7 +573,13 @@ function scrolShowFilter() {
 					} else {
 						api.reinitialise();
 					}
-					$('.scrollBlock, .jspContainer, .jspPane').css('width',$('.filter-block').width());
+				}
+			);
+			$('body').bind(
+				'resize',
+				function()
+				{
+					console.log("СВЕРШИЛОСЬ!!!!");
 				}
 			);
 			$(window).bind(
@@ -590,10 +599,10 @@ function scrolShowFilter() {
                     }
                 }
 			);
-            $('.all-list').live(
+            $('.all-list, .order-hide').live(
                 'click',
                 function()
-                {
+                {	
                     var throttleTimeout;
                     if (!throttleTimeout) {
                         throttleTimeout = setTimeout(
@@ -603,6 +612,23 @@ function scrolShowFilter() {
                                 throttleTimeout = null;
                             },
                             100
+                        );
+                    }
+                }
+            );
+            $('.div-filter').live(
+                'mouseup',
+                function()
+                {	
+                    var throttleTimeout;
+                    if (!throttleTimeout) {
+                        throttleTimeout = setTimeout(
+                            function()
+                            {
+                                api.reinitialise();
+                                throttleTimeout = null;
+                            },
+                            1000
                         );
                     }
                 }
@@ -630,20 +656,30 @@ function scrollValue() {
 		var diffrentScrollTop = 110;
 		
 	}
+	var var_heightWindow = $(window).height();
+	var var_heightContent = $('#content').height();
 	
 	if (var_scrollValueTop == 0) {
-		$('.filter-content').css('position','relative').css('top','auto');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
-		$('.filter-content').css('position','relative').css('top','auto');
-		$('.innerFilter').css('height', '100%');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		if (var_heightContent < var_heightWindow) {
+			$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
+		}
+		else {
+			$('.innerFilter').css('height', '100%');
+		}
 	}
 	else if (var_scrollValueTop > diffrentScrollTop) {
 		
-		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73)) {
+		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73) && var_scrollValueTop != 0) {
 			$('.filter-content').css('position','fixed').css('bottom','73px').css('top','auto');
 			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
-			console.log(($('.wrapper').height() - var_heightWindow)-var_scrollValueTop);
+		}
+		else if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73) && var_scrollValueTop == 0) {
+			$('.filter-content').css('position','fixed').css('bottom','auto').css('top','auto');
+			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
 		}
 		else {
 			$('.filter-content').css('position','fixed').css('top','-73px').css('bottom','auto');
@@ -662,13 +698,18 @@ function ifHeightMinAllBody() {
 	$('#content').css('height','auto');
 	var var_heightWindow = $(window).height();
 	var var_heightContent = $('#content').height();
-	if (var_heightContent < var_heightWindow - 168) {
+	
+	if (var_heightContent < var_heightWindow) {
 		$('#content').css('height', (var_heightWindow - 168) +'px');
 		$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
+		//$('body').css('height', var_heightWindow +'px');
+		console.log("НУ ЧТО? = "+var_heightContent+ " x "+ (var_heightWindow - 168));
 	}
 	else {
 		$('#content').css('height', 'auto');
 		$('.innerFilter').css('height', '100%');
+		//$('body').css('height', 'auto');
+		console.log("И ТО? = "+var_heightContent+ " x "+ (var_heightWindow - 168));
 		
 	}
 	

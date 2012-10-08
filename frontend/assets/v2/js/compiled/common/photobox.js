@@ -4,9 +4,14 @@ var PhotoBox,
 
 PhotoBox = (function() {
 
-  function PhotoBox(photos) {
+  function PhotoBox(photos, title, stars, initIndex) {
     var _this = this;
     this.photos = photos;
+    this.title = title;
+    this.stars = stars != null ? stars : 0;
+    if (initIndex == null) {
+      initIndex = 0;
+    }
     this._load = __bind(this._load, this);
 
     this.prev = __bind(this.prev, this);
@@ -18,7 +23,7 @@ PhotoBox = (function() {
     if (photos.length === 0) {
       return;
     }
-    this.activeIndex = ko.observable(0);
+    this.activeIndex = ko.observable(initIndex);
     this.length0 = photos.length - 1;
     this.activePhoto = ko.observable(this.photos[this.activeIndex()]['largeUrl']);
     this.busy = false;
@@ -31,6 +36,10 @@ PhotoBox = (function() {
     $(window).keyup(function(e) {
       if (e.keyCode === 27) {
         return _this.close();
+      } else if (e.keyCode === 37) {
+        return _this.prev();
+      } else if (e.keyCode === 39) {
+        return _this.next();
       }
     });
   }

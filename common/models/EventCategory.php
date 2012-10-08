@@ -113,4 +113,12 @@ class EventCategory extends FrontendActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    public function getJsonObject()
+    {
+        return array(
+            'id' => $this->id,
+            'title' => $this->title
+        );
+    }
 }

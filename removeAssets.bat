@@ -1,0 +1,1 @@
+FOR /d /r . %d IN (frontend/www/assets) DO @IF EXIST "%d" (RMDIR /S/Q "%d")

@@ -36,7 +36,6 @@ AviaPanel = (function(_super) {
     this.arrivalCityReadable = ko.observable('');
     this.arrivalCityReadableGen = ko.observable('');
     this.arrivalCityReadableAcc = ko.observable('');
-    this.calendarHidden = ko.observable(true);
     this.oldCalendarState = this.minimizedCalendar();
     this.show = this.passengers.show;
     this.fromChosen = ko.computed(function() {

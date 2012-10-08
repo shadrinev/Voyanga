@@ -9,7 +9,12 @@ class DefaultController extends CController
 {
     public function actionIndex()
     {
-        $this->render('frontend.www.themes.v2.views.layouts.main');
+        $events = Event::getRandomEvents();
+        $eventsJsonObject = array();
+        foreach ($events as $event)
+            $eventsJsonObject[] = $event->getJsonObject();
+        $eventsJsonObject[0]['active'] = true;
+        $this->render('frontend.www.themes.v2.views.default.index', array('events'=>$eventsJsonObject));
     }
 
     public function actionHotelInfo($cacheId, $hotelId)

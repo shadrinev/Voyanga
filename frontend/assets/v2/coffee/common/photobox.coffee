@@ -1,8 +1,8 @@
 class PhotoBox
-  constructor: (@photos)->
+  constructor: (@photos,@title,@stars = 0,initIndex = 0)->
     if photos.length == 0
       return
-    @activeIndex = ko.observable 0
+    @activeIndex = ko.observable initIndex
     @length0 = photos.length - 1
     @activePhoto = ko.observable @photos[@activeIndex()]['largeUrl']
     # Indicates if we are sliding right now, so no one should be able
@@ -21,6 +21,10 @@ class PhotoBox
     $(window).keyup (e) =>
       if e.keyCode == 27
         @close()
+      else if e.keyCode == 37
+        @prev()
+      else if e.keyCode == 39
+        @next()
 
   close: ->
     $(window).unbind 'keyup'

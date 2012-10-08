@@ -30,14 +30,16 @@
                             мая
                         </div>
                     </div>
-                    <a href="#" class="add-tour"></a>
+                    <a href="#" class="add-tour" data-bind="click: $root.tourPanelSet.addPanel"></a>
                 </td>
                 <td class="tdPeople">
                     <span data-bind="template: {name: rooms()[0].template, data: rooms}"></span>
                 </td>
+                <!-- ko if: ($root.tourPanelSet.isLast()) -->
                 <td class="tdButton">
                     <div class="btn-find"></div>
                 </td>
+                <!-- /ko -->
             </tr>
         </table>
     </div>
