@@ -32,6 +32,7 @@
 .scrollBlock {
 	height:100%;
 	position: absolute;
+	width: 100%;
 }
 .div-filter {
     border-top: 1px solid #B8B9BF;

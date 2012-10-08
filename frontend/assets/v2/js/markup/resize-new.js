@@ -570,7 +570,13 @@ function scrolShowFilter() {
 					} else {
 						api.reinitialise();
 					}
-					$('.scrollBlock, .jspContainer, .jspPane').css('width',$('.filter-block').width());
+				}
+			);
+			$('body').bind(
+				'resize',
+				function()
+				{
+					console.log("СВЕРШИЛОСЬ!!!!");
 				}
 			);
 			$(window).bind(
@@ -590,10 +596,10 @@ function scrolShowFilter() {
                     }
                 }
 			);
-            $('.all-list').live(
+            $('.all-list, .order-hide').live(
                 'click',
                 function()
-                {
+                {	
                     var throttleTimeout;
                     if (!throttleTimeout) {
                         throttleTimeout = setTimeout(
@@ -603,6 +609,23 @@ function scrolShowFilter() {
                                 throttleTimeout = null;
                             },
                             100
+                        );
+                    }
+                }
+            );
+            $('.div-filter').live(
+                'mouseup',
+                function()
+                {	
+                    var throttleTimeout;
+                    if (!throttleTimeout) {
+                        throttleTimeout = setTimeout(
+                            function()
+                            {
+                                api.reinitialise();
+                                throttleTimeout = null;
+                            },
+                            1000
                         );
                     }
                 }
@@ -630,20 +653,30 @@ function scrollValue() {
 		var diffrentScrollTop = 110;
 		
 	}
+	var var_heightWindow = $(window).height();
+	var var_heightContent = $('#content').height();
 	
 	if (var_scrollValueTop == 0) {
-		$('.filter-content').css('position','relative').css('top','auto');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
-		$('.filter-content').css('position','relative').css('top','auto');
-		$('.innerFilter').css('height', '100%');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		if (var_heightContent < var_heightWindow) {
+			$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
+		}
+		else {
+			$('.innerFilter').css('height', '100%');
+		}
 	}
 	else if (var_scrollValueTop > diffrentScrollTop) {
 		
-		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73)) {
+		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73) && var_scrollValueTop != 0) {
 			$('.filter-content').css('position','fixed').css('bottom','73px').css('top','auto');
 			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
-			console.log(($('.wrapper').height() - var_heightWindow)-var_scrollValueTop);
+		}
+		else if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73) && var_scrollValueTop == 0) {
+			$('.filter-content').css('position','fixed').css('bottom','auto').css('top','auto');
+			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
 		}
 		else {
 			$('.filter-content').css('position','fixed').css('top','-73px').css('bottom','auto');
@@ -662,13 +695,18 @@ function ifHeightMinAllBody() {
 	$('#content').css('height','auto');
 	var var_heightWindow = $(window).height();
 	var var_heightContent = $('#content').height();
-	if (var_heightContent < var_heightWindow - 168) {
+	
+	if (var_heightContent < var_heightWindow) {
 		$('#content').css('height', (var_heightWindow - 168) +'px');
 		$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
+		//$('body').css('height', var_heightWindow +'px');
+		console.log("НУ ЧТО? = "+var_heightContent+ " x "+ (var_heightWindow - 168));
 	}
 	else {
 		$('#content').css('height', 'auto');
 		$('.innerFilter').css('height', '100%');
+		//$('body').css('height', 'auto');
+		console.log("И ТО? = "+var_heightContent+ " x "+ (var_heightWindow - 168));
 		
 	}
 	
