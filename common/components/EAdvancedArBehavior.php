@@ -77,7 +77,7 @@ class EAdvancedArBehavior extends CActiveRecordBehavior
                         $related->save(false);
                     }
                 }
-                else if ($relation['0'] == CActiveRecord::HAS_MANY)
+                else if (($relation['0'] == CActiveRecord::HAS_MANY) && (!isset($relation['through'])))
                 {
                     Yii::trace('set HAS_MANY foreign-key field for ' . get_class($owner), 'system.db.ar.CActiveRecord');
                     $related = $owner->{$key};
