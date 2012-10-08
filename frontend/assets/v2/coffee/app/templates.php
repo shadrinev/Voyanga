@@ -21,6 +21,7 @@ return array (
     'tours.overview',
 
     'common.calendar',
+    'common.calendarHotel',
     'common.roomers',
     'common.passengers',
     'common.errors',

@@ -29,8 +29,9 @@ ko.bindingHandlers.highlightChange =
     $(".IMGmain").eq(1).css("opacity", "0").css("left", varLeftPosStart + "px").css("top", varTopPosStart + "px").find("img").attr "src", valueUnwrapped
     previousImage(valueUnwrapped)
 
+    ResizeAvia()
+
     $(".IMGmain").eq(1).find("img").load ->
-      ResizeAvia()
       $(".IMGmain").eq(0).animate
         opacity: 0
       , speedAnimateChangePic, ->

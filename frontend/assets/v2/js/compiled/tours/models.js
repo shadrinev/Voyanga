@@ -476,6 +476,7 @@ TourSearchParams = (function(_super) {
     TourSearchParams.__super__.constructor.call(this);
     this.startCity = ko.observable('LED');
     this.destinations = ko.observableArray([new DestinationSearchParams()]);
+    this.rooms = ko.observableArray([new SpRoom()]);
   }
 
   TourSearchParams.prototype.url = function() {

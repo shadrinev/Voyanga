@@ -9,9 +9,11 @@ TourPanelSet = (function() {
   function TourPanelSet() {
     this.addPanel = __bind(this.addPanel, this);
 
-    this.isLast = __bind(this.isLast, this);
-
     this.isFirst = __bind(this.isFirst, this);
+
+    this.deletePanel = __bind(this.deletePanel, this);
+
+    var _this = this;
     window.voyanga_debug('Init of TourPanelSet');
     this.sp = new TourSearchParams();
     this.startCity = this.sp.startCity;
@@ -20,17 +22,27 @@ TourPanelSet = (function() {
     this.startCityReadableAcc = ko.observable('');
     this.panels = ko.observableArray([new TourPanel(this.sp, 0)]);
     this.i = 0;
+    this.height = ko.computed(function() {
+      return 70 * _this.panels().length + 'px';
+    });
+    this.isMaxReached = ko.computed(function() {
+      return _this.panels().length > 6;
+    });
   }
+
+  TourPanelSet.prototype.deletePanel = function(elem) {
+    this.sp.destinations.remove(elem.city);
+    this.panels.remove(elem);
+    return _.last(this.panels()).isLast(true);
+  };
 
   TourPanelSet.prototype.isFirst = function() {
     return this.i++ === 0;
   };
 
-  TourPanelSet.prototype.isLast = function() {
-    return (this.i + 1) === this.panels.length;
-  };
-
   TourPanelSet.prototype.addPanel = function() {
+    this.sp.destinations.push(new DestinationSearchParams());
+    _.last(this.panels()).isLast(false);
     return this.panels.push(new TourPanel(this.sp, this.i));
   };
 
@@ -49,36 +61,11 @@ TourPanel = (function(_super) {
     this.template = 'tour-panel-template';
     window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this);
-    this.rooms = sp.rooms;
-    this.roomsView = ko.computed(function() {
-      var current, item, result, _i, _len, _ref;
-      result = [];
-      current = [];
-      _ref = _this.rooms();
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        item = _ref[_i];
-        if (current.length === 2) {
-          result.push(current);
-        }
-        current = [];
-        current.push(item);
-        result.push(current);
-      }
-      return result;
-    });
-    this.calendarHidden = true;
-    this.afterRender = function() {
-      return $(function() {
-        return _this.rooms()[0].afterRender();
-      });
-    };
-    this.addRoom = function() {
-      if (_this.rooms().length === 4) {
-        return;
-      }
-      return _this.rooms.push(new Roomers());
-    };
-    this.city = sp.destinations()[0].city;
+    this.isLast = ko.observable(true);
+    this.peopleSelectorVM = new HotelPeopleSelector(sp);
+    this.city = _.last(sp.destinations()).city;
+    this.dateFrom = _.last(sp.destinations()).dateFrom;
+    this.dateTo = _.last(sp.destinations()).dateTo;
     this.cityReadable = ko.observable('');
     this.cityReadableGen = ko.observable('');
     this.cityReadableAcc = ko.observable('');
@@ -106,7 +93,7 @@ TourPanel = (function(_super) {
 
   TourPanel.prototype.setDate = function(values) {
     if (values.length) {
-      return this.departureDate(values[0]);
+      return this.dateFrom(values[0]);
     }
   };
 

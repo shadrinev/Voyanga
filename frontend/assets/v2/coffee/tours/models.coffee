@@ -289,6 +289,7 @@ class TourSearchParams extends SearchParams
     super()
     @startCity = ko.observable 'LED'
     @destinations = ko.observableArray [new DestinationSearchParams()]
+    @rooms = ko.observableArray [new SpRoom()]
 
   url: ->
     result = 'tour/search?'
