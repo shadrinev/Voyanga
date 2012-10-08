@@ -158,8 +158,8 @@ Application = (function(_super) {
       'top': '-16px'
     }, 200);
     return setTimeout(function() {
-      return $(window).trigger('resize');
-    }, 500);
+      return ResizeAvia();
+    }, 3000);
   };
 
   Application.prototype.isNotEvent = function() {

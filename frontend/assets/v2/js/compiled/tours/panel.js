@@ -7,6 +7,10 @@ var TourPanel, TourPanelSet,
 TourPanelSet = (function() {
 
   function TourPanelSet() {
+    this.addPanel = __bind(this.addPanel, this);
+
+    this.isLast = __bind(this.isLast, this);
+
     this.isFirst = __bind(this.isFirst, this);
     window.voyanga_debug('Init of TourPanelSet');
     this.sp = new TourSearchParams();
@@ -20,6 +24,14 @@ TourPanelSet = (function() {
 
   TourPanelSet.prototype.isFirst = function() {
     return this.i++ === 0;
+  };
+
+  TourPanelSet.prototype.isLast = function() {
+    return (this.i + 1) === this.panels.length;
+  };
+
+  TourPanelSet.prototype.addPanel = function() {
+    return this.panels.push(new TourPanel(this.sp, this.i));
   };
 
   return TourPanelSet;

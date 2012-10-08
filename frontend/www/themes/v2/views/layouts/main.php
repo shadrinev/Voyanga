@@ -74,7 +74,7 @@ Yii::app()->clientScript->registerPackage('appJs');
 
     <!-- SUB HEAD IF WE NOT ON THE MAIN -->
     <!-- ko if: !isEvent()-->
-    <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden(), zIndexTopUp: fakoPanel().calendarShadow()}">
+    <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
         <!-- CENTER BLOCK -->
             <div class="center-block">
                 <!-- PANEL -->

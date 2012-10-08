@@ -4,7 +4,7 @@ function slideToursSlide() {
 	var var_slideToursBody = $('.slideTours');
 	var var_lengthTours;
 	var var_allWidth = $('.slideTours .center').width();
-	console.log(var_allWidth);
+	console.log('SLIDE TOURS SLIDE: ', var_allWidth);
 	var var_widthTours;
 	if (var_allWidth >= 1390) {
 		var_lengthTours = 6;

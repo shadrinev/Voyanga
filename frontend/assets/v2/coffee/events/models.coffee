@@ -1,5 +1,6 @@
 ko.bindingHandlers.highlightChange =
   update: (element, valueAccessor, allBindingsAccessor) ->
+    window.voyanga_debug 'Switching element'
 
     # First get the latest data that we're bound to
     value = valueAccessor()
@@ -29,6 +30,7 @@ ko.bindingHandlers.highlightChange =
     previousImage(valueUnwrapped)
 
     $(".IMGmain").eq(1).find("img").load ->
+      ResizeAvia()
       $(".IMGmain").eq(0).animate
         opacity: 0
       , speedAnimateChangePic, ->
@@ -38,10 +40,7 @@ ko.bindingHandlers.highlightChange =
         opacity: 1
         left: varLeftPos + "px"
         top: varTopPos + "px"
-      , speedAnimateChangePic, ->
-        setTimeout () ->
-          startCount = 0
-        , 100
+      , speedAnimateChangePic
 
 class Event extends Backbone.Events
   constructor: (data) ->

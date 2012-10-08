@@ -68,11 +68,11 @@ SearchPanel = (function() {
       $('.calenderWindow .calendarSlide').animate({
         'top': '-341px'
       });
-      return $('.calenderWindow').animate({
+      $('.calenderWindow').animate({
         'height': '0px'
-      }, speed, function() {
-        return _this.calendarShadow(false);
-      });
+      }, speed, function() {});
+      this.calendarHidden(true);
+      return this.calendarShadow(false);
     }
   };
 

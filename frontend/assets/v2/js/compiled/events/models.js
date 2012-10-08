@@ -7,6 +7,7 @@ var City, Event, EventCategory, EventCategorySet, EventLink, EventLinkSet, Event
 ko.bindingHandlers.highlightChange = {
   update: function(element, valueAccessor, allBindingsAccessor) {
     var allBindings, newEl, previousImage, value, valueUnwrapped, varLeftPos, varLeftPosStart, varTopPos, varTopPosStart;
+    window.voyanga_debug('Switching element');
     value = valueAccessor();
     allBindings = allBindingsAccessor();
     valueUnwrapped = ko.utils.unwrapObservable(value);
@@ -24,6 +25,7 @@ ko.bindingHandlers.highlightChange = {
     $(".IMGmain").eq(1).css("opacity", "0").css("left", varLeftPosStart + "px").css("top", varTopPosStart + "px").find("img").attr("src", valueUnwrapped);
     previousImage(valueUnwrapped);
     return $(".IMGmain").eq(1).find("img").load(function() {
+      ResizeAvia();
       $(".IMGmain").eq(0).animate({
         opacity: 0
       }, speedAnimateChangePic, function() {
@@ -33,12 +35,7 @@ ko.bindingHandlers.highlightChange = {
         opacity: 1,
         left: varLeftPos + "px",
         top: varTopPos + "px"
-      }, speedAnimateChangePic, function() {
-        return setTimeout(function() {
-          var startCount;
-          return startCount = 0;
-        }, 100);
-      });
+      }, speedAnimateChangePic);
     });
   }
 };
