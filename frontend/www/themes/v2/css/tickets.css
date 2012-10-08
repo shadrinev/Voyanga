@@ -168,11 +168,12 @@
 .date-time-city .start .airport, .date-time-city .finish .airport {
     color: #879094;
     line-height: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-left: -1px;
     max-width: 100px;
+    overflow: hidden;
     padding-left: 1px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 /* MARGIN */
 .date-time-city .how-long {
@@ -1403,14 +1404,18 @@
 .cena {
 	margin-top: 15px;
 }
-.schedule-of-prices { height: 165px;
-	margin: 0px -20px 0px -19px;
-	position: relative; z-index: 102;
-	border-bottom: 1px solid #acafb0;
-	z-index: 100; position: relative;
+.schedule-of-prices {
+    border-bottom: 1px solid #ACAFB0;
+    border-radius: 9px 9px 0 0;
+    height: 165px;
+    margin: 0 -20px 0 -19px;
+    overflow: hidden;
+    position: relative;
+    z-index: 100;
 }
 .prices-of-3days .two-way .schedule-of-prices {
 	margin: 0px -20px 0px -19px;
+	border-radius: 0px;
 }
 .schedule-of-prices li {
 	width: 45px;
@@ -1517,4 +1522,7 @@
     text-align: center;
     text-shadow: 0 1px 0 #0B5B88;
     width: 116px;
+}
+.hidden-roomSets {
+    display:none;
 }

@@ -7,6 +7,7 @@ STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five'];
 Room = (function() {
 
   function Room(data) {
+    this.key = __bind(this.key, this);
     this.name = data.showName;
     this.nameNemo = data.roomNemoName;
     if (!this.nameNemo || data.roomName) {
@@ -25,8 +26,26 @@ Room = (function() {
     if (typeof this.meal === "undefined" || this.meal === '') {
       this.meal = 'Не известно';
     }
+    this.mealIcon = "ico-breakfast";
+    switch (this.meal) {
+      case "Завтрак + обед":
+        this.meal = "Завтрак и обед";
+        this.mealIcon = "ico-breakfast-lunch";
+        break;
+      case "Завтрак + ужин":
+        this.meal = "Завтрак и ужин";
+        this.mealIcon = "ico-breakfast-dinner";
+        break;
+      case "Завтрак + обед + ужин":
+        this.meal = "Завтрак и обед и ужин";
+        this.mealIcon = "ico-breakfast-lunch-dinner";
+    }
     this.hasMeal = this.meal !== 'Без питания' && this.meal !== 'Не известно';
   }
+
+  Room.prototype.key = function() {
+    return this.nameNemo + this.name + this.meal;
+  };
 
   return Room;
 
@@ -41,6 +60,10 @@ RoomSet = (function() {
     if (duration == null) {
       duration = 1;
     }
+    this.showCancelationRules = __bind(this.showCancelationRules, this);
+
+    this.key = __bind(this.key, this);
+
     this.minusCount = __bind(this.minusCount, this);
 
     this.plusCount = __bind(this.plusCount, this);
@@ -93,6 +116,19 @@ RoomSet = (function() {
     }
   };
 
+  RoomSet.prototype.key = function() {
+    var result, room, _i, _len, _ref;
+    result = this.price;
+    _ref = this.rooms;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      room = _ref[_i];
+      result += room.key();
+    }
+    return result;
+  };
+
+  RoomSet.prototype.showCancelationRules = function() {};
+
   return RoomSet;
 
 })();
@@ -137,6 +173,7 @@ HotelResult = (function() {
     this.photos = data.images;
     this.numPhotos = 0;
     this.parent = parent;
+    this.checkInTime = data.earliestCheckInTime;
     this.frontPhoto = {
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png',
       largeUrl: 'http://ya.ru'
@@ -186,13 +223,32 @@ HotelResult = (function() {
     }
     this.hasRoomAmenities = data.roomAmenities ? true : false;
     this.roomAmenities = data.roomAmenities;
-    this.roomSets = [];
+    this.roomSets = ko.observableArray([]);
+    console.log(this.roomSets());
     this.visible = ko.observable(true);
+    this.visibleRoomSets = ko.computed(function() {
+      var result, roomSet, _i, _len, _ref1;
+      result = [];
+      _ref1 = _this.roomSets();
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        roomSet = _ref1[_i];
+        if (roomSet.visible()) {
+          result.push(roomSet);
+        }
+      }
+      if (result.length > 0) {
+        window.voyanga_debug('all results for hotel'.result);
+      } else {
+        window.voyanga_debug('all results for hotel zero');
+      }
+      return result;
+    });
     this.push(data);
   }
 
   HotelResult.prototype.push = function(data) {
-    var set;
+    var set,
+      _this = this;
     set = new RoomSet(data, this, this.duration);
     set.resultId = data.resultId;
     if (this.roomSets.length === 0) {
@@ -207,13 +263,33 @@ HotelResult = (function() {
       this.maxPrice = set.pricePerNight > this.maxPrice ? set.pricePerNight : this.maxPrice;
     }
     this.roomSets.push(set);
-    return this.roomSets = _.sortBy(this.roomSets, function(entry) {
-      return entry.price;
+    return this.roomSets.sort(function(left, right) {
+      if (left.price > right.price) {
+        return 1;
+      } else if (left.price < right.price) {
+        return -1;
+      }
+      return 0;
     });
   };
 
-  HotelResult.prototype.showPhoto = function() {
-    return new PhotoBox(this.photos, this.hotelName, this.stars);
+  HotelResult.prototype.showPhoto = function(fp, ev) {
+    var ind;
+    window.voyanga_debug('click info', fp, ev);
+    console.log(ev.target);
+    ind = $(ev.currentTarget).data('photo-index');
+    console.log(ind);
+    if (!ind) {
+      ind = 0;
+    }
+    console.log(ind);
+    return new PhotoBox(this.photos, this.hotelName, this.stars, ind);
+  };
+
+  HotelResult.prototype.showAllResults = function(data, event) {
+    console.log(event);
+    $(event.target).parent().parent().find('.hidden-roomSets').show('fast');
+    return $(event.target).parent().hide();
   };
 
   HotelResult.prototype.showDetails = function(data, event) {
@@ -366,6 +442,32 @@ HotelResult = (function() {
           set.resultId = roomSet.resultId;
           _this.roomCombinations.push(set);
         }
+        _this.roomMixed = ko.computed(function() {
+          var key, result, resultsObj, _i, _j, _len, _len1, _ref1, _ref2;
+          resultsObj = {};
+          _ref1 = _this.roomSets();
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            roomSet = _ref1[_i];
+            key = roomSet.key();
+            if (typeof resultsObj[key] === 'undefined') {
+              resultsObj[key] = roomSet;
+            }
+          }
+          _ref2 = _this.roomCombinations();
+          for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+            roomSet = _ref2[_j];
+            key = roomSet.key();
+            if (typeof resultsObj[key] === 'undefined') {
+              resultsObj[key] = roomSet;
+            }
+          }
+          result = [];
+          for (key in resultsObj) {
+            roomSet = resultsObj[key];
+            result.push(roomSet);
+          }
+          return result;
+        });
         _this.haveFullInfo(true);
         return console.log(_this.roomCombinations());
       });
@@ -373,7 +475,7 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.combinationClick = function() {
-    return console.log('combination click');
+    return console.log('combinati data = _.filter @data(), (el) -> el.visible()on click');
   };
 
   HotelResult.prototype.readMore = function(context, event) {
@@ -602,8 +704,7 @@ HotelsResultSet = (function() {
       return el.visible();
     });
     this.numResults(data.length);
-    console.log(this.data);
-    return ko.processAllDeferredBindingUpdates();
+    return console.log(this.data);
   };
 
   return HotelsResultSet;

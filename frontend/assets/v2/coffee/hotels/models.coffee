@@ -19,8 +19,21 @@ class Room
     #  @meal = data.mealBreakfast
     if typeof @meal == "undefined" || @meal == ''
       @meal = 'Не известно'
-    #console.log(@meal)
+    @mealIcon = "ico-breakfast"
+    switch @meal
+      when "Завтрак + обед"
+        @meal = "Завтрак и обед"
+        @mealIcon = "ico-breakfast-lunch"
+      when "Завтрак + ужин"
+        @meal = "Завтрак и ужин"
+        @mealIcon = "ico-breakfast-dinner"
+      when "Завтрак + обед + ужин"
+        @meal = "Завтрак и обед и ужин"
+        @mealIcon = "ico-breakfast-lunch-dinner"
     @hasMeal = (@meal != 'Без питания' && @meal != 'Не известно')
+  key: =>
+    return @nameNemo + @name + @meal
+
 
 class RoomSet
   constructor: (data, @parent, duration = 1) ->
@@ -30,6 +43,7 @@ class RoomSet
 
     @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
+
 
 
     @rooms = []
@@ -61,6 +75,15 @@ class RoomSet
     if @selectedCount() > 0
       @selectedCount(@selectedCount() - 1)
 
+  key: =>
+    result = @price
+    for room in @rooms
+      result +=room.key()
+    return result
+
+  showCancelationRules: =>
+
+
   #price: ->
   #  console.log prm
   #  console.log 'tt'
@@ -82,6 +105,7 @@ class HotelResult
     @photos = data.images
     @numPhotos = 0
     @parent = parent
+    @checkInTime = data.earliestCheckInTime
     # FIXME trollface
     @frontPhoto =
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png'
@@ -131,8 +155,19 @@ class HotelResult
     #      service = 'Фитнесс'
     @hasRoomAmenities = if data.roomAmenities then true else false
     @roomAmenities = data.roomAmenities
-    @roomSets = []
+    @roomSets = ko.observableArray([])
+    #@roomSets = []
+    console.log(@roomSets())
     @visible = ko.observable(true)
+    @visibleRoomSets = ko.computed =>
+      result = []
+      for roomSet in @roomSets()
+        if roomSet.visible()
+          result.push roomSet
+      if result.length > 0
+        window.voyanga_debug('all results for hotel'.result)
+      else window.voyanga_debug('all results for hotel zero')
+      return result
     @push data
 
   push: (data) ->
@@ -149,11 +184,29 @@ class HotelResult
       @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
       @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
-    @roomSets = _.sortBy @roomSets, (entry)-> entry.price
+    #@roomSets = _.sortBy @roomSets, (entry)-> entry.price
+    @roomSets.sort (left,right)=>
+      if left.price > right.price
+        return 1
+      else if left.price < right.price
+        return -1
+      return 0
 
-  showPhoto: =>
-    new PhotoBox(@photos,@hotelName,@stars)
+  showPhoto: (fp,ev)=>
+    window.voyanga_debug('click info',fp,ev)
+    console.log(ev.target)
+    #console.log($(ev.target).data())
+    ind = $(ev.currentTarget).data('photo-index')
+    console.log(ind)
+    if !ind
+      ind = 0
+    console.log(ind)
+    new PhotoBox(@photos,@hotelName,@stars,ind)
 
+  showAllResults: (data,event)->
+    console.log(event)
+    $(event.target).parent().parent().find('.hidden-roomSets').show('fast')
+    $(event.target).parent().hide()
 
   # FIXME copy-pasted from avia
   # Shows popup with detailed info about given result
@@ -254,6 +307,7 @@ class HotelResult
           res += roomSet.selectedCount()*roomSet.price
       return res
 
+
     @combinedButtonLabel = ko.computed =>
       if @combinedPrice() > 0
         return @selectText()
@@ -274,11 +328,27 @@ class HotelResult
           set = new RoomSet roomSet, @, @duration
           set.resultId = roomSet.resultId
           @roomCombinations.push set
+        @roomMixed = ko.computed =>
+          resultsObj = {}
+          for roomSet in @roomSets()
+            key = roomSet.key()
+            if typeof resultsObj[key] == 'undefined'
+              resultsObj[key] = roomSet
+
+          for roomSet in @roomCombinations()
+            key = roomSet.key()
+            if typeof resultsObj[key] == 'undefined'
+              resultsObj[key] = roomSet
+
+          result = []
+          for key,roomSet of resultsObj
+            result.push roomSet
+          return result
         @haveFullInfo(true)
         console.log(@roomCombinations())
 
   combinationClick: =>
-    console.log 'combination click'
+    console.log 'combinati data = _.filter @data(), (el) -> el.visible()on click'
 
   #mapTumbler: (context, event) =>
   #  el = $(event.currentTarget)
@@ -469,7 +539,7 @@ class HotelsResultSet
     @numResults data.length
 
     console.log(@data)
-    ko.processAllDeferredBindingUpdates()
+    #ko.processAllDeferredBindingUpdates()
     # FIXME
     #ResizeAvia()
 
