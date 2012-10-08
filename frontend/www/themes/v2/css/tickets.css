@@ -1395,6 +1395,7 @@
 }
 .prices-of-3days .one-way {
 	position: relative;
+	margin-top: 2px;
 }
 .prices-of-3days .two-way {
 	position: relative;
