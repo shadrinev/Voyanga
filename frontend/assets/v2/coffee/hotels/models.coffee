@@ -513,7 +513,7 @@ class HotelsSearchParams
     rest = data[3].split('/')
     for item in rest
       if item
-        @rooms.push new PanelRoom(item)
+        @rooms.push new Roomers(item)
 
   url: =>
     result = "hotel/search?city=" + @city()
