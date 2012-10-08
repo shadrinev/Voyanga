@@ -15,4 +15,4 @@
     <!-- END FILTER BLOCK -->
     <div class="clear"></div>
   </div>
-</scirpt>
+</script>
