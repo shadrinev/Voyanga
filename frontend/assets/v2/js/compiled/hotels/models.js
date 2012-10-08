@@ -218,7 +218,7 @@ HotelResult = (function() {
 
   HotelResult.prototype.showDetails = function(data, event) {
     this.readMoreExpanded = false;
-    new GenericPopup('#hotels-body-popup', ko.contextFor(event.currentTarget));
+    new GenericPopup('#hotels-body-popup', this);
     SizeBox('hotels-body-popup');
     ResizeBox('hotels-body-popup');
     sliderPhoto('.photo-slide-hotel');
