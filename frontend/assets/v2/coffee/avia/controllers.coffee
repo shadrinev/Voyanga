@@ -24,9 +24,16 @@ class AviaController
     window.voyanga_debug "searchAction: handling results", data
     # temporary development cache
     console.log data
-    stacked = new AviaResultSet data.flights.flightVoyages
-    stacked.injectSearchParams data.searchParams
-    stacked.postInit()
+    try
+      stacked = new AviaResultSet data.flights.flightVoyages
+      stacked.injectSearchParams data.searchParams
+      stacked.postInit()
+    catch err
+      if err=='404'
+        @render 'e404', {}
+        return
+      @render 'e500', {msg: err}
+    
     # we need observable here to be compatible with tours
     @render 'results', {results: ko.observable(stacked)}
     ko.processAllDeferredBindingUpdates()

@@ -23,6 +23,7 @@ return array (
     'common.calendar',
     'common.roomers',
     'common.passengers',
+    'common.errors',
 
     'event.map',
 );
