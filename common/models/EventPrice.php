@@ -33,4 +33,14 @@ class EventPrice extends CActiveRecord
             )
         );
     }
+
+    public function getJsonObject()
+    {
+        return array(
+            'city' => array(
+                'title' => $this->city->localRu
+            ),
+            'price' => floor($this->bestPrice)
+        );
+    }
 }

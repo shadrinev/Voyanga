@@ -56,7 +56,7 @@ class Event extends Backbone.Events
     @links = ko.observableArray new EventLinkSet(data.links)
     @tags = ko.observableArray new EventTagSet(data.tags)
     @prices = ko.observableArray new EventPriceSet(data.prices)
-    @tour = ko.observable new EventTour(data.tour)
+    @tour = ko.observable new EventTourSet(data.tours)
     @image = ko.observable data.image
     @thumb = ko.observable data.thumb
     @active = ko.observable data.active
@@ -138,141 +138,9 @@ class EventTour
   constructor: (data) ->
     @name = data.name
 
-window.eventsRaw =
-  [
-    {
-    "active": true,
-    "startDate": "Иван",
-    "endDate": "Иванов",
-    "address": "Московское ш., 101, кв.101, Ленинград, 101101"
-    "contact": "812 123-1234",
-    "thumb": "http://img1-fotki.yandex.net/get/6412/64844073.1d/0_STATIC87fc9_6cd8e943_L",
-    "preview": "Превью будет здесь",
-    "description": "Здесь будет описание",
-    "image": "http://img-fotki.yandex.ru/get/6412/64844073.1d/0_87fc9_6cd8e943_XXL",
-    "title": "Осень",
-    "categories": [
-      {
-      "id": 1,
-      "title": "Осень"
-      }
-    ],
-    "links": [
-      {
-      "title": "Осень"
-      "url": "http://ya.ru"
-      }
-    ],
-    "tags": [
-      {
-      "name": "tag1"
-      },
-      {
-      "name": "tag2"
-      }
-    ],
-    "prices": [
-      {
-      "city":
-        {
-        "title": 'Москва'
-        }
-      "price": 12500
-      }
-    ],
-    "tour": [
-      "name": 'Отдых за 12500'
-    ]
-    },
-
-    {
-    "active": false,
-    "startDate": "Иван",
-    "endDate": "Иванов",
-    "address": "Московское ш., 101, кв.101, Ленинград, 101101"
-    "contact": "812 123-1234",
-    "thumb": "http://img-fotki.yandex.ru/get/6402/64844073.1d/0_881e6_4aa84b25_M",
-    "preview": "Превью будет здесь новое и шикарное",
-    "description": "Здесь будет описание",
-    "image": "http://img-fotki.yandex.ru/get/6402/64844073.1d/0_881e6_4aa84b25_XXL",
-    "title": "Трам пам пам",
-    "categories": [
-      {
-      "id": 1,
-      "title": "Осень"
-      }
-    ],
-    "links": [
-      {
-      "title": "Осень"
-      "url": "http://ya.ru"
-      }
-    ],
-    "tags": [
-      {
-      "name": "tag1"
-      },
-      {
-      "name": "tag2"
-      }
-    ],
-    "prices": [
-      {
-      "city":
-        {
-        "title": 'Москва'
-        }
-      "price": 13244
-      }
-    ],
-    "tour": [
-      "name": 'Отдых за 12500'
-    ]
-    },
-
-    {
-    "active": false,
-    "startDate": "Иван",
-    "endDate": "Иванов",
-    "address": "Московское ш., 101, кв.101, Ленинград, 101101"
-    "contact": "812 123-1234",
-    "thumb": "http://img-fotki.yandex.ru/get/6101/64844073.15/0_7ae13_5f74c202_M",
-    "preview": "Превью будет здесь",
-    "description": "Здесь будет описание",
-    "image": "http://img-fotki.yandex.ru/get/6101/64844073.15/0_7ae13_5f74c202_orig",
-    "title": "Лето",
-    "categories": [
-      {
-      "id": 1,
-      "title": "Осень"
-      }
-    ],
-    "links": [
-      {
-      "title": "Осень"
-      "url": "http://ya.ru"
-      }
-    ],
-    "tags": [
-      {
-      "name": "tag1"
-      },
-      {
-      "name": "tag2"
-      }
-    ],
-    "prices": [
-      {
-      "city":
-        {
-        "title": 'Москва'
-        }
-      "price": 3850
-      }
-    ],
-    "tour": [
-      "name": 'Отдых за 12500'
-    ]
-    }
-  ]
-
+class EventTourSet
+  constructor: (data) ->
+    set = []
+    $.each data, (i, tour) ->
+      set.push new EventTour(tour)
+    return set

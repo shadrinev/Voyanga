@@ -14,8 +14,8 @@ Yii::app()->clientScript->registerPackage('appJs');
             src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>-->
 </head>
-
 <body data-bind="css: {fixed: isEvent()}">
+<?php echo $content; ?>
 <div class="wrapper" data-bind="css: {'scroll-none': isEvent()}">
     <div class="head" id="header">
         <!-- CENTER BLOCK -->
