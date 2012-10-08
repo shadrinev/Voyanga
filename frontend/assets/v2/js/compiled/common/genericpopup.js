@@ -26,6 +26,16 @@ GenericPopup = (function() {
     $('#popupOverlay').click(function() {
       return _this.close();
     });
+    var mouseHoverPopUp = 0; 
+    $('.popupBody').hover(function() { mouseHoverPopUp = 1; }, function() { mouseHoverPopUp = 0; })
+    $('#avia-body-popup').click(function() {
+    	if (mouseHoverPopUp == 0) {
+	    	return _this.close();	
+    	}
+    	else {
+	    	return false;
+    	}
+    });
   }
 
   GenericPopup.prototype.close = function() {
