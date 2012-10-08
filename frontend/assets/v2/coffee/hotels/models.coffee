@@ -160,7 +160,7 @@ class HotelResult
   showDetails: (data, event)=>
     # If user had clicked read-more link
     @readMoreExpanded = false
-    new GenericPopup '#hotels-body-popup', ko.contextFor(event.currentTarget)
+    new GenericPopup '#hotels-body-popup', @
     SizeBox('hotels-body-popup')
     ResizeBox('hotels-body-popup')
     sliderPhoto('.photo-slide-hotel')
