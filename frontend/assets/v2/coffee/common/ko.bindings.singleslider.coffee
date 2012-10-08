@@ -11,7 +11,7 @@ ko.bindingHandlers.singleSlider =
       dimension = '&nbsp;'+ dimension
 
     $(element).val(value)
-    $(element).slider
+    $(element).jslider
       from: limits.from,
       to: limits.to,
       dimension: dimension,
