@@ -273,8 +273,17 @@ HotelResult = (function() {
     });
   };
 
-  HotelResult.prototype.showPhoto = function() {
-    return new PhotoBox(this.photos, this.hotelName, this.stars);
+  HotelResult.prototype.showPhoto = function(fp, ev) {
+    var ind;
+    window.voyanga_debug('click info', fp, ev);
+    console.log(ev.target);
+    ind = $(ev.currentTarget).data('photo-index');
+    console.log(ind);
+    if (!ind) {
+      ind = 0;
+    }
+    console.log(ind);
+    return new PhotoBox(this.photos, this.hotelName, this.stars, ind);
   };
 
   HotelResult.prototype.showAllResults = function(data, event) {

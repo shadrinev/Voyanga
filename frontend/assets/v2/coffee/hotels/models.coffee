@@ -192,8 +192,16 @@ class HotelResult
         return -1
       return 0
 
-  showPhoto: =>
-    new PhotoBox(@photos,@hotelName,@stars)
+  showPhoto: (fp,ev)=>
+    window.voyanga_debug('click info',fp,ev)
+    console.log(ev.target)
+    #console.log($(ev.target).data())
+    ind = $(ev.currentTarget).data('photo-index')
+    console.log(ind)
+    if !ind
+      ind = 0
+    console.log(ind)
+    new PhotoBox(@photos,@hotelName,@stars,ind)
 
   showAllResults: (data,event)->
     console.log(event)
