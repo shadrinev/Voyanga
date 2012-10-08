@@ -44,7 +44,7 @@ Room = (function() {
   }
 
   Room.prototype.key = function() {
-    return this.nemoName + this.name + this.meal;
+    return this.nameNemo + this.name + this.meal;
   };
 
   return Room;
@@ -60,6 +60,8 @@ RoomSet = (function() {
     if (duration == null) {
       duration = 1;
     }
+    this.showCancelationRules = __bind(this.showCancelationRules, this);
+
     this.key = __bind(this.key, this);
 
     this.minusCount = __bind(this.minusCount, this);
@@ -117,13 +119,15 @@ RoomSet = (function() {
   RoomSet.prototype.key = function() {
     var result, room, _i, _len, _ref;
     result = this.price;
-    _ref = data.rooms;
+    _ref = this.rooms;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
-      result += room.key;
+      result += room.key();
     }
     return result;
   };
+
+  RoomSet.prototype.showCancelationRules = function() {};
 
   return RoomSet;
 
@@ -169,6 +173,7 @@ HotelResult = (function() {
     this.photos = data.images;
     this.numPhotos = 0;
     this.parent = parent;
+    this.checkInTime = data.earliestCheckInTime;
     this.frontPhoto = {
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png',
       largeUrl: 'http://ya.ru'
@@ -400,10 +405,6 @@ HotelResult = (function() {
       }
       return res;
     });
-    this.roomMixed = ko.computed(function() {
-      var keys;
-      return keys = [];
-    });
     return this.combinedButtonLabel = ko.computed(function() {
       if (_this.combinedPrice() > 0) {
         return _this.selectText();
@@ -432,6 +433,32 @@ HotelResult = (function() {
           set.resultId = roomSet.resultId;
           _this.roomCombinations.push(set);
         }
+        _this.roomMixed = ko.computed(function() {
+          var key, result, resultsObj, _i, _j, _len, _len1, _ref1, _ref2;
+          resultsObj = {};
+          _ref1 = _this.roomSets();
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            roomSet = _ref1[_i];
+            key = roomSet.key();
+            if (typeof resultsObj[key] === 'undefined') {
+              resultsObj[key] = roomSet;
+            }
+          }
+          _ref2 = _this.roomCombinations();
+          for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+            roomSet = _ref2[_j];
+            key = roomSet.key();
+            if (typeof resultsObj[key] === 'undefined') {
+              resultsObj[key] = roomSet;
+            }
+          }
+          result = [];
+          for (key in resultsObj) {
+            roomSet = resultsObj[key];
+            result.push(roomSet);
+          }
+          return result;
+        });
         _this.haveFullInfo(true);
         return console.log(_this.roomCombinations());
       });

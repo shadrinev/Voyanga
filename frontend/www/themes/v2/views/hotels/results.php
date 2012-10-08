@@ -1,5 +1,6 @@
 <?php
-    $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+    //$images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+    $images = '/themes/v2';
 ?>
 <script id="hotels-results" type="text/html">
         <!-- MAIN BLOCK -->

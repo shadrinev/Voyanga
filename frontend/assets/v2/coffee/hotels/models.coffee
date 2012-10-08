@@ -32,7 +32,7 @@ class Room
         @mealIcon = "ico-breakfast-lunch-dinner"
     @hasMeal = (@meal != 'Без питания' && @meal != 'Не известно')
   key: =>
-    return @nemoName + @name + @meal
+    return @nameNemo + @name + @meal
 
 
 class RoomSet
@@ -77,9 +77,12 @@ class RoomSet
 
   key: =>
     result = @price
-    for room in data.rooms
-      result +=room.key
+    for room in @rooms
+      result +=room.key()
     return result
+
+  showCancelationRules: =>
+
 
   #price: ->
   #  console.log prm
@@ -102,6 +105,7 @@ class HotelResult
     @photos = data.images
     @numPhotos = 0
     @parent = parent
+    @checkInTime = data.earliestCheckInTime
     # FIXME trollface
     @frontPhoto =
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png'
@@ -295,9 +299,6 @@ class HotelResult
           res += roomSet.selectedCount()*roomSet.price
       return res
 
-    @roomMixed = ko.computed =>
-      keys = []
-
 
     @combinedButtonLabel = ko.computed =>
       if @combinedPrice() > 0
@@ -319,6 +320,22 @@ class HotelResult
           set = new RoomSet roomSet, @, @duration
           set.resultId = roomSet.resultId
           @roomCombinations.push set
+        @roomMixed = ko.computed =>
+          resultsObj = {}
+          for roomSet in @roomSets()
+            key = roomSet.key()
+            if typeof resultsObj[key] == 'undefined'
+              resultsObj[key] = roomSet
+
+          for roomSet in @roomCombinations()
+            key = roomSet.key()
+            if typeof resultsObj[key] == 'undefined'
+              resultsObj[key] = roomSet
+
+          result = []
+          for key,roomSet of resultsObj
+            result.push roomSet
+          return result
         @haveFullInfo(true)
         console.log(@roomCombinations())
 
