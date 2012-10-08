@@ -102,15 +102,20 @@ function checkUlList() {
 
 function hideRecomendedBlockTicket() {
 	if (!$(this).hasClass('show')) {
-		$('.recomended-content').slideUp();
+		$('.recomended-content').slideUp(function() {
+			ifHeightMinAllBody();
+		});
 		$(this).addClass('show');	
 	}
 	else {
 		$(this).removeClass('show');
-		$('.recomended-content').slideDown();
+		$('.recomended-content').slideDown(function() {
+			ifHeightMinAllBody();
+		});
 		
 		$(window).load(inTheTwoLines);
 		setTimeout(smallTicketHeight, 100);
+		
 		/*
 		otherTimeSlide();
 		widthHowLong();

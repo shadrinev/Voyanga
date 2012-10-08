@@ -1,8 +1,10 @@
+var speedAnimateChangePic = 500;
+
 function slideToursSlide() {
 	var var_slideToursBody = $('.slideTours');
 	var var_lengthTours;
 	var var_allWidth = $('.slideTours .center').width();
-	console.log(var_allWidth);
+	console.log('SLIDE TOURS SLIDE: ', var_allWidth);
 	var var_widthTours;
 	if (var_allWidth >= 1390) {
 		var_lengthTours = 6;
@@ -22,24 +24,6 @@ function slideToursSlide() {
 	var_slideToursBody.find('.toursTicketsMain').css('width',var_widthTours+'px');
 	
 }
-$(window).load(slideToursSlide);
-$(window).resize(slideToursSlide);
-
-var activeMaps = 0;
-var speedAnimateChangePic = 500;
-function triangleFun() {
-	var startCount = 0;
-    if(activeMaps == 1) {
-        closeEventsMaps();
-    }
-    if ((activeMaps == 0) && (startCount==0)) {
-        startCount = 1;
-        var activeVAR = $('.slideTours').find('.active').index();
-    }
-}
-
-$(window).load(triangleFun);
-
 
 function CenterIMGResize() {
 	var HeightAllWindow = $(window).height();
@@ -71,26 +55,3 @@ function CenterIMGResize() {
 	}
 	pathIMG.css('top', '-'+marginPathTop+'px');
 }
-
-$(window).load(CenterIMGResize);
-
-function closeEventsPhoto() {
-	$('.slideTours').find('.active').find('.triangle').animate({'top' : '0px'}, 200);
-	$('.toursTicketsMain').removeClass('active');
-	$('.mapsBigAll').css('opacity','0');
-	$('.toursBigAll').animate({opacity : 0}, 700, function() { $(this).css('display','none')});
-	$('.mapsBigAll').show();
-	$('.mapsBigAll').animate({opacity : 1}, 700);
-	activeMaps = 1;
-}
-function closeEventsMaps() {
-	$('.toursBigAll').css('opacity','0');
-	$('.mapsBigAll').animate({opacity : 0}, 700, function() { $(this).css('display','none')});
-	$('.toursBigAll').show();
-	$('.toursBigAll').animate({opacity : 1}, 700);
-	activeMaps = 0;
-}
-
-$(function() {
-	
-});

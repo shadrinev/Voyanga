@@ -40,7 +40,8 @@ class SearchPanel
       @calendarShadow(true)
       $('.calenderWindow .calendarSlide').animate {'top' : '-341px'}
       $('.calenderWindow').animate {'height' : '0px'}, speed, () =>
-        @calendarShadow(false)
+      @calendarHidden(true)
+      @calendarShadow(false)
 
   # Minimize button click handler
   minimize: =>

@@ -5,7 +5,7 @@
     position: relative;
     padding: 0; margin-bottom: 21px;
 
-    padding-bottom: 3px;
+    padding-bottom: 0px;
 }
 
 .ticket-items .lt {
@@ -460,11 +460,22 @@
 	display: none;
 }
 /* tickets SMALL */
+.recomended-content {
+	/* background: url(../images/shadow-ticket.png) no-repeat center bottom; */
+	position: relative;
+}
+.recommendedBlock {
+	position: relative;
+}
+.backgroundLineRec {
+	background: url(../images/shadow-ticket.png) no-repeat center bottom;
+	height: 46px;
+}
 .recommended-ticket {
 	position: relative;
 	width: 318px;
 	float: left;
-	margin-bottom: 52px;
+	margin-bottom: -2px;
 }
 .recommended-ticket + .recommended-ticket {
 	float: right;
@@ -506,7 +517,7 @@
     z-index: 3;
 }
 .recommended-ticket .ticket-items .content {
-	padding: 15px 20px 0px 20px;
+	padding: 15px 20px 7px 20px;
 }
 .recommended-ticket .ticket-items .content .airlines-line {
 	font-size: 20px;
@@ -524,7 +535,7 @@
 .recommended-ticket .ticket-items .content .date-time-city {
 	position: relative;
 	
-	min-height: 72px;
+	height: 72px;
 }
 .recommended-ticket .ticket-items .content .date-time-city .start .date, .recommended-ticket .ticket-items .content .date-time-city .finish .date, .recommended-ticket .ticket-items .content .date-time-city .start .city, .recommended-ticket .ticket-items .content .date-time-city .finish .city, .recommended-ticket .ticket-items .content .date-time-city .start .airport, .recommended-ticket .ticket-items .content .date-time-city .finish .airport {
 	line-height: 15px;
@@ -558,7 +569,7 @@
     border-top: 1px solid #C0C3C6;
     color: #4B525C;
     min-height: 40px;
-    margin: 8px -19px 0px -18px;
+    margin: 0px -19px 0px -18px;
     padding: 0px 1px 0px 18px;
     position: relative; z-index: 102;
 }
@@ -644,7 +655,9 @@
 .recommended-ticket .ticket-items .content .details-selecte {
     margin: 0 -2px;
     overflow: hidden;
-    padding: 0 2px 10px;
+    padding: 0 2px 1px;
+    display: block;
+   	 
 }
 .recommended-ticket .ticket-items .content .dashed {
 	margin-top: 10px;
@@ -675,12 +688,9 @@
 .recommended-ticket .ticket-items .content .line-two-ticket {
     background: url("../images/line-two-ticket.png") no-repeat scroll left -40px transparent;
     height: 13px;
-    margin-left: -20px;
-    margin-right: -20px;
+    margin: 10px -20px;
     position: relative;
     z-index: 205;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 .recommended-ticket .ticket-items .content .line-two-ticket .end {
     background: url("../images/line-two-ticket.png") no-repeat scroll right -40px transparent;
@@ -693,7 +703,7 @@
 .recommended-ticket .ticket-items .content .line-dashed-ticket {
     background: url("../images/line-two-ticket.png") no-repeat scroll left -55px transparent;
     height: 13px;
-    margin: 0 -20px 5px;
+    margin: 0 -20px 0px;
     position: relative;
     z-index: 205;
 }
@@ -1309,6 +1319,202 @@
     border: medium none;
     color: #FFFFFF;
 }
-.hidden-roomSets {
-    display:none;
+/*--- prices-of-3days ---*/
+.prices-of-3days {
+    color: #262930;
+    float: right;
+    height: 100%;
+    margin-left: 20px;
+    position: absolute;
+    right: 0;
+}
+.prices-of-3days .ticket {
+    background: none repeat scroll 0 0 #F4F7F9;
+    border-radius: 7px 7px 7px 7px;
+    height: 100%;
+    overflow: hidden;
+    padding: 0 20px;
+    position: absolute;
+}
+.prices-of-3days .ticket .lt {
+	background: url(../images/bg-prices-of-3days.png) no-repeat 0 0px;
+	position: absolute; top: 0px; left: 0px;
+	width: 8px; height: 8px;
+	display: block;
+	z-index: 3;
+	
+}
+.prices-of-3days .ticket .rt {
+	background: url(../images/bg-prices-of-3days.png) no-repeat -8px 0px;
+	position: absolute; top: 0px; right: 0px;
+	width: 8px; height: 8px;
+	display: block;
+	z-index: 3;
+}
+
+.prices-of-3days .ticket .lv {
+	background: url(../images/bg-prices-of-3days.png) no-repeat 0px bottom;
+	position: absolute; top: 0px; left: 0px;
+	width: 8px; height: 100%;
+	display: block;
+	z-index: 2;
+}
+.prices-of-3days .ticket .rv {
+	background: url(../images/bg-prices-of-3days.png) no-repeat -8px bottom;
+	position: absolute; top: 0px; right: 0px;
+	width: 8px; height: 100%;
+	display: block;
+	z-index: 2;
+}
+.prices-of-3days .ticket .th {
+	background: url(../images/bg-prices-of-3days-hor.png) repeat-x 0px 0px;
+	position: absolute; top: 0px; left: 0px;
+	width: 100%; height: 8px;
+	display: block;
+	z-index: 1;
+}
+.prices-of-3days .ticket .bh {
+	background: url(../images/bg-prices-of-3days-hor.png) repeat-x 0px -8px;
+	position: absolute; bottom: 0px; left: 0px;
+	width: 100%; height: 8px;
+	display: block;
+	z-index: 1;
+}
+.prices-of-3days .total-td {
+	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	padding-top: 2px;
+	position: relative;
+	z-index: 205;
+}
+.prices-of-3days .look-td {
+	float: right;
+	position: relative;
+	z-index: 205;
+}
+.prices-of-3days .one-way {
+	position: relative;
+	margin-top: 2px;
+}
+.prices-of-3days .two-way {
+	position: relative;
+}
+.cena {
+	margin-top: 15px;
+}
+.schedule-of-prices { height: 165px;
+	margin: 0px -20px 0px -19px;
+	position: relative; z-index: 102;
+	border-bottom: 1px solid #acafb0;
+	z-index: 100; position: relative;
+}
+.prices-of-3days .two-way .schedule-of-prices {
+	margin: 0px -20px 0px -19px;
+}
+.schedule-of-prices li {
+	width: 45px;
+	float: left;
+	height: 100%;
+	text-align: center;
+	position: relative;
+	font-family: Verdana;
+	cursor: pointer;
+	z-index: 100;
+}
+.schedule-of-prices li:hover {
+	background: #dcdfe1;
+}
+.schedule-of-prices li .price {
+	color: #6D6F72;
+    font-size: 9px;
+    left: 0;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    width: 45px;
+}
+.schedule-of-prices li .price.margin {
+	margin: 0 -3px;
+}
+.schedule-of-prices li .chart {
+	width: inherit; height: 100px;
+	background: url(../images/bg-schedule-of-prices.png) no-repeat center 0px;
+	position: absolute;
+	bottom: 45px; left: 0px;
+	border-bottom: 1px solid #acb0b5;
+}
+.prices-of-3days .ticket .month {
+	height: 22px;
+	font-family: Verdana; font-size: 11px; font-weight: bold;
+	position: absolute;
+	bottom: 26px; left: -8px;
+	z-index: 103;
+	cursor: default;
+	color: #262930;
+} 
+.schedule-of-prices li .week {
+	font-size: 11px;
+	position: absolute; bottom:19px;
+	width: inherit;
+	text-align: center; color: #6d6f72;
+}
+.schedule-of-prices li .date {
+	font-size: 16px;
+	position: absolute; bottom: 4px;
+	width: inherit;
+	text-align: center; color: #262930;
+}
+.schedule-of-prices li.active {
+	background: #dcdfe1;
+}
+.schedule-of-prices li.active .price, .schedule-of-prices li.active .week, .schedule-of-prices li.active .date {
+	color: #1275ae;
+	font-family: Arial;
+}
+.schedule-of-prices li.active .chart {
+	background: url(../images/bg-schedule-of-prices-hover.png) no-repeat 0px 0px;
+}
+.prices-of-3days .all-price {
+	display: inline-block;
+	font-size: 26px; font-weight: bold;
+	vertical-align: middle; margin-left: 5px;
+}
+.prices-of-3days .blockText {
+	color: #191c21;
+	font-size: 11px;
+	font-family: Arial;
+	line-height: 18px;
+	margin-top: 6px;
+	margin-bottom: 6px;	
+}
+.prices-of-3days .blockText .txtCena {
+	margin-top: 11px;
+}
+.prices-of-3days .blockText .leftFloat {
+	color: #262930;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    padding-top: 4px;
+}
+.prices-of-3days .blockText .leftFloat .price {
+	font-size: 21px;
+}
+.prices-of-3days .blockText .leftFloat .rur {
+	font-size: 20px;
+}
+.prices-of-3days .blockText .rightFloat {
+	float: right;
+}
+.prices-of-3days .blockText  .btnLook {
+	background: url("../images/btn-look.png") repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 15px;
+    height: 23px;
+    padding-top: 5px;
+    text-align: center;
+    text-shadow: 0 1px 0 #0B5B88;
+    width: 116px;
 }

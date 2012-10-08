@@ -655,201 +655,7 @@
 
 
 
-/*--- prices-of-3days ---*/
-.prices-of-3days {
-	width: 318px;
-	float: right;
-	color: #262930;
-	margin-left: 20px;
-}
-.prices-of-3days .ticket {
-	background: none repeat scroll 0 0 #F4F7F9;
-    border-radius: 7px 7px 7px 7px;
-    overflow: hidden;
-    padding: 15px 20px 5px;
-    position: relative;
-}
-.prices-of-3days .ticket .lt {
-	background: url(../images/bg-prices-of-3days.png) no-repeat 0 0px;
-	position: absolute; top: 0px; left: 0px;
-	width: 8px; height: 8px;
-	display: block;
-	z-index: 3;
-	
-}
-.prices-of-3days .ticket .rt {
-	background: url(../images/bg-prices-of-3days.png) no-repeat -8px 0px;
-	position: absolute; top: 0px; right: 0px;
-	width: 8px; height: 8px;
-	display: block;
-	z-index: 3;
-}
 
-.prices-of-3days .ticket .lv {
-	background: url(../images/bg-prices-of-3days.png) no-repeat 0px bottom;
-	position: absolute; top: 0px; left: 0px;
-	width: 8px; height: 100%;
-	display: block;
-	z-index: 2;
-}
-.prices-of-3days .ticket .rv {
-	background: url(../images/bg-prices-of-3days.png) no-repeat -8px bottom;
-	position: absolute; top: 0px; right: 0px;
-	width: 8px; height: 100%;
-	display: block;
-	z-index: 2;
-}
-.prices-of-3days .ticket .th {
-	background: url(../images/bg-prices-of-3days-hor.png) repeat-x 0px 0px;
-	position: absolute; top: 0px; left: 0px;
-	width: 100%; height: 8px;
-	display: block;
-	z-index: 1;
-}
-.prices-of-3days .ticket .bh {
-	background: url(../images/bg-prices-of-3days-hor.png) repeat-x 0px -8px;
-	position: absolute; bottom: 0px; left: 0px;
-	width: 100%; height: 8px;
-	display: block;
-	z-index: 1;
-}
-.prices-of-3days .total-td {
-	float: left;
-	font-size: 14px;
-	font-weight: bold;
-	padding-top: 2px;
-	position: relative;
-	z-index: 205;
-}
-.prices-of-3days .look-td {
-	float: right;
-	position: relative;
-	z-index: 205;
-}
-.prices-of-3days .one-way {
-	position: relative;
-}
-.prices-of-3days .two-way {
-	position: relative;
-}
-.cena {
-	margin-top: 15px;
-}
-.schedule-of-prices { height: 165px;
-	margin: -13px -20px 0px -19px;
-	position: relative; z-index: 102;
-	border-bottom: 1px solid #acafb0;
-	z-index: 100; position: relative;
-}
-.prices-of-3days .two-way .schedule-of-prices {
-	margin: 0px -20px 0px -19px;
-}
-.schedule-of-prices li {
-	width: 45px;
-	float: left;
-	height: 100%;
-	text-align: center;
-	position: relative;
-	font-family: Verdana;
-	cursor: pointer;
-	z-index: 100;
-}
-.schedule-of-prices li:hover {
-	background: #dcdfe1;
-}
-.schedule-of-prices li .price {
-	color: #6D6F72;
-    font-size: 9px;
-    left: 0;
-    margin: 0;
-    position: absolute;
-    text-align: center;
-    width: 45px;
-}
-.schedule-of-prices li .price.margin {
-	margin: 0 -3px;
-}
-.schedule-of-prices li .chart {
-	width: inherit; height: 100px;
-	background: url(../images/bg-schedule-of-prices.png) no-repeat center 0px;
-	position: absolute;
-	bottom: 45px; left: 0px;
-	border-bottom: 1px solid #acb0b5;
-}
-.prices-of-3days .ticket .month {
-	height: 22px;
-	font-family: Verdana; font-size: 11px; font-weight: bold;
-	position: absolute;
-	bottom: 26px; left: -8px;
-	z-index: 103;
-	cursor: default;
-	color: #262930;
-} 
-.schedule-of-prices li .week {
-	font-size: 11px;
-	position: absolute; bottom:19px;
-	width: inherit;
-	text-align: center; color: #6d6f72;
-}
-.schedule-of-prices li .date {
-	font-size: 16px;
-	position: absolute; bottom: 4px;
-	width: inherit;
-	text-align: center; color: #262930;
-}
-.schedule-of-prices li.active {
-	background: #dcdfe1;
-}
-.schedule-of-prices li.active .price, .schedule-of-prices li.active .week, .schedule-of-prices li.active .date {
-	color: #1275ae;
-	font-family: Arial;
-}
-.schedule-of-prices li.active .chart {
-	background: url(../images/bg-schedule-of-prices-hover.png) no-repeat 0px 0px;
-}
-.prices-of-3days .all-price {
-	display: inline-block;
-	font-size: 26px; font-weight: bold;
-	vertical-align: middle; margin-left: 5px;
-}
-.prices-of-3days .blockText {
-	color: #191c21;
-	font-size: 11px;
-	font-family: Arial;
-	line-height: 18px;
-	margin-top: 6px;
-	margin-bottom: 6px;	
-}
-.prices-of-3days .blockText .txtCena {
-	margin-top: 11px;
-}
-.prices-of-3days .blockText .leftFloat {
-	color: #262930;
-    float: left;
-    font-size: 14px;
-    font-weight: bold;
-    padding-top: 4px;
-}
-.prices-of-3days .blockText .leftFloat .price {
-	font-size: 21px;
-}
-.prices-of-3days .blockText .leftFloat .rur {
-	font-size: 20px;
-}
-.prices-of-3days .blockText .rightFloat {
-	float: right;
-}
-.prices-of-3days .blockText  .btnLook {
-	background: url("../images/btn-look.png") repeat scroll 0 0 transparent;
-    color: #FFFFFF;
-    display: inline-block;
-    font-size: 15px;
-    height: 23px;
-    padding-top: 5px;
-    text-align: center;
-    text-shadow: 0 1px 0 #0B5B88;
-    width: 116px;
-}
 /*---- filter-content -----*/
 
 .lineBg {
@@ -876,16 +682,17 @@
 	padding-top: 6px;
 }
 .ticket-content .order-div a {
-	margin-left: 0px;
-	color: #1C81BB;
-	border-bottom: none;
-	text-indent: -9999px;
-	width: 163px;
-	height: 19px;
-	display: b	lock;
-	background: url(../images/btn-recommend-show-hide.png) no-repeat 0 0;
-	margin-top: 0px;
-	display: block;
+    background: url("../images/btn-recommend-show-hide.png") no-repeat scroll 0 0 transparent;
+    border-bottom: medium none;
+    color: #1C81BB;
+    display: block;
+    height: 19px;
+    margin-left: 0;
+    margin-top: -5px;
+    position: relative;
+    text-indent: -9999px;
+    width: 163px;
+    z-index: 997;
 }
 .ticket-content .order-div a.show {
 	background-position: 0px -19px;
@@ -895,9 +702,7 @@
 	margin: 35px auto 0;
 	position: relative;
 }
-.recomended-content {
-	background: url(../images/shadow-ticket.png) no-repeat center bottom;
-}
+
 .hotels { background: none !important}
 .hotels  h1 {text-shadow: #FFF 0px 1px 0px; margin-bottom: 20px; letter-spacing: -0.05em;}
 

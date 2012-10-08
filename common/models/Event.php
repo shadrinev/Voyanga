@@ -19,6 +19,15 @@
  * @property integer $status
  * @property string $preview
  * @property string $description
+
+ * @property string $pictureSmall
+ * @property string $pictureBig
+ * @property array $pictures
+ *
+ * @property EventCategory[] $categories
+ * @property EventLink[] $links
+ * @property EventPrice[] $prices
+ * @property EventTour[] $tours
  */
 class Event extends FrontendActiveRecord
 {
@@ -27,6 +36,10 @@ class Event extends FrontendActiveRecord
 
     const NEW_EVENT_ITEM = -1;
     const NO_EVENT_ITEM = 0;
+
+    public $defaultThumbImageUrl = '/img/events/defaultSmall.jpg';
+    public $defaultBigImageUrl = '/img/events/defaultBig.jpg';
+    public $imgSrc = 'http://backend.voyanga.com';
 
     /**
      * The behaviors associated with the user model.
@@ -287,5 +300,88 @@ class Event extends FrontendActiveRecord
             $ret[] = 'Из '.$city->caseGen.': '.$price->bestPrice." руб.";
         }
         return implode(', ', $ret);
+    }
+
+    public function getJsonObject()
+    {
+        $data = array(
+            'active' => false,
+            "startDate" => DateTimeHelper::formatForJs($this->startDate),
+            "endDate" => DateTimeHelper::formatForJs($this->endDate),
+            "address" => $this->address,
+            "contact" => $this->contact,
+            "thumb" => isset($this->pictureSmall) ? $this->imgSrc.$this->pictureSmall->url : $this->defaultThumbImageUrl,
+            "preview" => $this->preview,
+            "description" => $this->description,
+            "image" => isset($this->pictureBig) ? $this->imgSrc.$this->pictureBig->url : $this->defaultBigImageUrl,
+            "title" => $this->title,
+            "categories" => $this->getCategoriesJsonObject(),
+            "links" => $this->getLinksJsonObject(),
+            "tags" => $this->getTagsJsonObject(),
+            "prices" => $this->getPricesJsonObject(),
+            "tours" => $this->getToursJsonObject(),
+        );
+        return $data;
+    }
+
+    static public function getRandomEvents($amount = 5)
+    {
+        $condition = new CDbCriteria();
+        $condition->limit = $amount;
+        $condition->order = new CDbExpression('RAND()');
+        $events = self::model()->findAll($condition);
+        return $events;
+    }
+
+    public function getCategoriesJsonObject()
+    {
+        $arr = array();
+        foreach ($this->categories as $category)
+        {
+            $arr[] = $category->getJsonObject();
+        }
+        return $arr;
+    }
+
+    public function getLinksJsonObject()
+    {
+        $arr = array();
+        foreach ($this->links as $link)
+        {
+            $arr[] = $link->getJsonObject();
+        }
+        return $arr;
+    }
+
+    public function getTagsJsonObject()
+    {
+        $arr = array();
+        $tags = array_map('trim', explode(',', $this->getTagsString()));
+        foreach ($tags as $tag)
+        {
+            if (strlen($tag)>0)
+                $arr[] = array('name' => $tag);
+        }
+        return $arr;
+    }
+
+    public function getPricesJsonObject()
+    {
+        $arr = array();
+        foreach ($this->prices as $price)
+        {
+            $arr[] = $price->getJsonObject();
+        }
+        return $arr;
+    }
+
+    public function getToursJsonObject()
+    {
+        $arr = array();
+        foreach ($this->tours as $tour)
+        {
+            $arr[] = $tour->getJsonObject();
+        }
+        return $arr;
     }
 }

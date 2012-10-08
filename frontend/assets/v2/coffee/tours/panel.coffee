@@ -13,7 +13,13 @@ class TourPanelSet
     @i = 0
 
   isFirst: =>
-    return @i++ == 0
+    @i++ == 0
+
+  isLast: =>
+    (@i+1) == @panels.length
+
+  addPanel: =>
+    @panels.push new TourPanel(@sp, @i)
 
 class TourPanel extends SearchPanel
   constructor: (sp, ind) ->

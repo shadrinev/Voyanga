@@ -89,4 +89,11 @@ class EventOrder extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    public function getJsonObject()
+    {
+        return array(
+            'name' => $this->order->name,
+        );
+    }
 }
