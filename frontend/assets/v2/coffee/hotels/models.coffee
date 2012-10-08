@@ -152,7 +152,7 @@ class HotelResult
     @roomSets = _.sortBy @roomSets, (entry)-> entry.price
 
   showPhoto: =>
-    new PhotoBox(@photos)
+    new PhotoBox(@photos,@hotelName,@stars)
 
 
   # FIXME copy-pasted from avia

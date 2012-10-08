@@ -4,9 +4,11 @@ var PhotoBox,
 
 PhotoBox = (function() {
 
-  function PhotoBox(photos) {
+  function PhotoBox(photos, title, stars) {
     var _this = this;
     this.photos = photos;
+    this.title = title;
+    this.stars = stars != null ? stars : 0;
     this._load = __bind(this._load, this);
 
     this.prev = __bind(this.prev, this);
@@ -31,6 +33,10 @@ PhotoBox = (function() {
     $(window).keyup(function(e) {
       if (e.keyCode === 27) {
         return _this.close();
+      } else if (e.keyCode === 37) {
+        return _this.prev();
+      } else if (e.keyCode === 39) {
+        return _this.next();
       }
     });
   }

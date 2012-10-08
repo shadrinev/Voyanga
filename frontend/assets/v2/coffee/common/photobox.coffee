@@ -1,5 +1,5 @@
 class PhotoBox
-  constructor: (@photos)->
+  constructor: (@photos,@title,@stars = 0)->
     if photos.length == 0
       return
     @activeIndex = ko.observable 0
@@ -21,6 +21,10 @@ class PhotoBox
     $(window).keyup (e) =>
       if e.keyCode == 27
         @close()
+      else if e.keyCode == 37
+        @prev()
+      else if e.keyCode == 39
+        @next()
 
   close: ->
     $(window).unbind 'keyup'

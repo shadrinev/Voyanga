@@ -113,11 +113,11 @@
 	<div class="left" data-bind="visible: activeIndex()!=0, click: prev"></div>
 	<div class="right" data-bind="visible: activeIndex()!=length0, click: next"></div>
 	<div id="titleNamePhoto">
-		<h2>Рэдиссон Соня Отель</h2>
-		<div class="stars three"></div>
+		<h2 data-bind="text: title">Рэдиссон Соня Отель</h2>
+		<div class="stars three" data-bind="attr:{class: 'stars '+ stars}"></div>
 	</div>
 	<div id="imgContent">
-			<div class="countAndClose">11<span class="lost">/17</span> <div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div></div>
+			<div class="countAndClose"><span data-bind="text: (activeIndex()+1)">11</span><span class="lost">/<span data-bind="text: (length0 +1)">17</span></span> <div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div></div>
           <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
           	
 	</div>

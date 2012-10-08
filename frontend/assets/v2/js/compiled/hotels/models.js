@@ -213,7 +213,7 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.showPhoto = function() {
-    return new PhotoBox(this.photos);
+    return new PhotoBox(this.photos, this.hotelName, this.stars);
   };
 
   HotelResult.prototype.showDetails = function(data, event) {
