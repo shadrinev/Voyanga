@@ -8,17 +8,26 @@ class TourPanelSet
     @startCityReadable = ko.observable ''
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
-
     @panels = ko.observableArray [new TourPanel(@sp, 0)]
     @i = 0
+
+    @height = ko.computed =>
+      70 * @panels().length + 'px'
+
+    @isMaxReached = ko.computed =>
+      @panels().length > 6
+
+  deletePanel: (elem) =>
+    @sp.destinations.remove(elem.city)
+    @panels.remove(elem)
+    _.last(@panels()).isLast(true)
 
   isFirst: =>
     @i++ == 0
 
-  isLast: =>
-    (@i+1) == @panels.length
-
   addPanel: =>
+    @sp.destinations.push new DestinationSearchParams()
+    _.last(@panels()).isLast(false)
     @panels.push new TourPanel(@sp, @i)
 
 class TourPanel extends SearchPanel
@@ -27,6 +36,7 @@ class TourPanel extends SearchPanel
     window.voyanga_debug "TourPanel created"
     super()
 
+    @isLast = ko.observable true
     @rooms = sp.rooms
     @roomsView = ko.computed =>
       result = []
@@ -39,8 +49,6 @@ class TourPanel extends SearchPanel
         result.push current
       return result
 
-    @calendarHidden = true
-
     @afterRender = () =>
       $ =>
         @rooms()[0].afterRender()
@@ -50,7 +58,9 @@ class TourPanel extends SearchPanel
         return
       @rooms.push new Roomers()
 
-    @city = sp.destinations()[0].city
+    @city = _.last(sp.destinations()).city
+    @dateFrom = _.last(sp.destinations()).dateFrom
+    @dateTo = _.last(sp.destinations()).dateTo
     @cityReadable = ko.observable ''
     @cityReadableGen = ko.observable ''
     @cityReadableAcc = ko.observable ''
@@ -76,7 +86,7 @@ class TourPanel extends SearchPanel
   # calendar handler
   setDate: (values)=>
     if values.length
-      @departureDate values[0]
+      @dateFrom values[0]
 
   # FIXME decouple!
   navigateToNewSearch: ->

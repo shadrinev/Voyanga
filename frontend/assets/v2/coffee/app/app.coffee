@@ -131,10 +131,6 @@ class Application extends Backbone.Router
   mapRendered: (elem) =>
     console.log "Map Rendered"
     $('.slideTours').find('.active').find('.triangle').animate({'top' : '-16px'}, 200);
-    setTimeout ()->
-      ResizeAvia()
-    , 3000
-
 
   isNotEvent: =>
     !@isEvent();
