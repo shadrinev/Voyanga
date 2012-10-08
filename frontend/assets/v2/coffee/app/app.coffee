@@ -43,12 +43,15 @@ class Application extends Backbone.Router
           @fakoPanel result
           ko.processAllDeferredBindingUpdates()
 
-    # FIXME this retarded shit does not want to work with cuputeds(or it has smth to do with dependencies re-calculation
-    # View currently being active in given module
-    @_view = ko.observable 'index'
+    @_view = ko.observable false
 
     # Full path to view to render
     @activeView = ko.computed =>
+      # If we directly navigate one of our pages 
+      # we want empty template to be rendered while
+      # ajax is going
+      if !@_view()
+        return 'stub'
       @activeModule() + '-' + @_view()
 
     @calendarInitialized = false

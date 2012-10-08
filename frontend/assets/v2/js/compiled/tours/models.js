@@ -250,7 +250,7 @@ ToursHotelsResultSet = (function(_super) {
     this.activeHotel = ko.observable(0);
     this.template = 'hotels-results';
     this.results = new HotelsResultSet(raw, this.searchParams);
-    this.results.tours(true);
+    this.results.tours = true;
     this.results.select = function(hotel) {
       hotel.off('back');
       hotel.on('back', function() {
@@ -335,6 +335,8 @@ ToursHotelsResultSet = (function(_super) {
 ToursResultSet = (function() {
 
   function ToursResultSet(raw) {
+    this.showOverview = __bind(this.showOverview, this);
+
     this.removeItem = __bind(this.removeItem, this);
 
     this.setActive = __bind(this.setActive, this);
@@ -412,6 +414,13 @@ ToursResultSet = (function() {
     return ResizeAvia();
   };
 
+  ToursResultSet.prototype.showOverview = function() {
+    return this.setActive({
+      template: 'tours-overview',
+      data: this
+    });
+  };
+
   return ToursResultSet;
 
 })();
@@ -447,8 +456,6 @@ TourSearchParams = (function(_super) {
 
   function TourSearchParams() {
     this.removeItem = __bind(this.removeItem, this);
-
-    this.showOverview = __bind(this.showOverview, this);
 
     this.addRoom = __bind(this.addRoom, this);
     TourSearchParams.__super__.constructor.call(this);
@@ -546,13 +553,6 @@ TourSearchParams = (function(_super) {
       this.destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate());
       this.destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate());
       return j++;
-    });
-  };
-
-  TourSearchParams.prototype.showOverview = function() {
-    return this.setActive({
-      template: 'tours-overview',
-      data: this
     });
   };
 
