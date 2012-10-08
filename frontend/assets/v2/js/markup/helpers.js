@@ -68,6 +68,7 @@ function sliderPhoto(that) {
 	}
     });
 }
+
 function checkUlList() {
     $('.details').each(function() {
 	var var_this = $(this).find('ul li');
@@ -98,6 +99,7 @@ function checkUlList() {
     });
     
 }
+
 function hideRecomendedBlockTicket() {
 	if (!$(this).hasClass('show')) {
 		$('.recomended-content').slideUp();
@@ -123,7 +125,8 @@ bindActions = function() {
 
 	$('.minimize-rcomended .btn-minimizeRecomended').click(function() {
 	});
-	$('.order-show').click(function() {
+
+    $('.order-show').click(function() {
 		$('.recomended-content').slideDown();
 		$('.minimize-rcomended .btn-minimizeRecomended').animate({top : '-19px'}, 500);
 		$(window).load(inTheTwoLines);
@@ -181,8 +184,6 @@ bindActions = function() {
 		$('.calendarSlide').animate({'top' :  '0px'}, 400);
 	});
 
-	
-
 /* НА ГЛАВНОЙ СТРАНИЦЕ ОТВЕЧАЕТ ЗА НАЖАТИЕ НА СТАР ИЗ ГОРОДА! */
 	$('.cityStart .to a').click(function() {
 		var var_parent = $(this).parent().parent();
@@ -206,16 +207,5 @@ bindActions = function() {
 			});
 		}
 	});
-	
-	
-	
-	
-	/*
-$('.lookEyes').hover(function() {
-		$(this).animate({'opacity' : '1'}, 300);
-	}, function() {
-		$(this).animate({'opacity' : '0'}, 100);
-	});
-*/
+  }
 });
-};
