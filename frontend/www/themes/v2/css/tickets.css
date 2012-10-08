@@ -1309,3 +1309,6 @@
     border: medium none;
     color: #FFFFFF;
 }
+.hidden-roomSets {
+    display:none;
+}

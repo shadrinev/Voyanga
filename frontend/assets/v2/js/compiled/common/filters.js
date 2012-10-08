@@ -759,7 +759,7 @@ HotelFiltersT = (function() {
       onHotel(result);
       if (result.visible()) {
         someVisible = false;
-        _ref1 = result.roomSets;
+        _ref1 = result.roomSets();
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           roomSet = _ref1[_j];
           onRoom(roomSet);

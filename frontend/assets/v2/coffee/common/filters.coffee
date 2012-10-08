@@ -474,7 +474,7 @@ class HotelFiltersT
       onHotel(result)
       if result.visible()
         someVisible = false
-        for roomSet in result.roomSets
+        for roomSet in result.roomSets()
           onRoom(roomSet)
           someVisible = someVisible || roomSet.visible()
         result.visible(someVisible)

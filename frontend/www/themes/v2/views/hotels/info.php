@@ -94,24 +94,45 @@
     </div>
     <h2>Номера в <span data-bind="text: hotelName">Рэдиссон Соня Отель</span></h2>
     <h3>Рекомендуемые сочетания по вашему запросу</h3>
-    <!-- ko foreach: roomSets -->
-    <div class="block-trip">
-      <table>
-        <tbody>
-          <tr>
-            <td class="name">
-              <ul data-bind="foreach: rooms">
-                <li><span class="text" data-bind="text: name">Стандартный двухместный номер</span> <span data-bind="if: hasMeal"><span class="ico-breakfast"></span> <span data-bind="text: meal">Завтрак «шведский стол»</span></span></li>
-              </ul>
-              <a href="">Условия отмены бронирования</a>
-            </td>
-            <td class="button"><a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="text" data-bind="text: $parent.selectText"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <!-- ko if: !haveFullInfo() -->
+        <!-- ko foreach: roomSets -->
+        <div class="block-trip">
+          <table>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <ul data-bind="foreach: rooms">
+                    <li><span class="text" data-bind="text: name">Стандартный двухместный номер</span> <span data-bind="if: hasMeal"><span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text: meal">Завтрак «шведский стол»</span></span></li>
+                  </ul>
+                  <a href="">Условия отмены бронирования</a>
+                </td>
+                <td class="button"><a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="text" data-bind="text: $parent.selectText"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /ko -->
     <!-- /ko -->
     <!-- ko if: haveFullInfo() -->
+      <!-- ko foreach: roomCombinations -->
+      <div class="block-trip">
+          <table>
+              <tbody>
+              <tr>
+                  <td class="name">
+                      <ul data-bind="foreach: rooms">
+                          <li><span class="text" data-bind="text: name">Стандартный двухместный номер</span> <span data-bind="if: hasMeal"><span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text: meal">Завтрак «шведский стол»</span></span></li>
+                      </ul>
+                      <a href="">Условия отмены бронирования</a>
+                  </td>
+                  <td class="button"><a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="text" data-bind="text: $parent.selectText"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a></td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+      <!-- /ko -->
+    <!-- /ko -->
+    <!-- ko if: false -->
       <h3>Или подберите свое сочетание из всех возможных вариантов</h3>
       <div class="block-trip">
           <table>
