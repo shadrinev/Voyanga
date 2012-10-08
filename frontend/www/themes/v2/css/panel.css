@@ -1,0 +1,758 @@
+.hotelTable, .panelTable, .constructorTable {
+	width: 100%;
+	height: 70px;
+}
+.hotelTable tr td , .panelTable tr td , .constructorTable tr td {
+	vertical-align: middle;
+}
+.tdCity {
+	text-align: left;
+}
+.tdPeople {
+	width: 285px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.tdPeople .how-many-man {
+	margin-left: 0px;
+}
+.tdButton {
+	width: 90px;
+	vertical-align: middle;
+	text-align: center;
+}
+.tdCity div .input-path {
+    background: url("../images/input.png") repeat scroll 0 -396px transparent;
+    background-position: 0 -324px;
+    border: medium none;
+    border-radius: 4px 0px 0px 4px;
+    color: #969BA1;
+    font-family: Arial;
+    font-size: 19px;
+    height: 36px;
+    left: 0;
+    overflow: hidden;
+    padding: 0 10px;
+    position: absolute;
+    width: 302px;
+    z-index: 1;
+}
+.tdCity div .second-path {
+	z-index: 2;
+	border: medium none;
+    border-radius: 4px 4px 4px 4px;
+    font-family: Arial;
+    font-size: 19px;
+    height: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 178px;
+    left: 0px;
+    position: absolute;
+    background: none;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+/* CONSTRUCTOR */
+.board-content .tdCity .from {
+	display: inline-block;
+    height: 36px;
+    position: relative;
+    vertical-align: middle;
+    /* width: 391px; */
+    width: 271px;
+}
+.board-content .tdCity .from.overflow {
+	overflow: hidden;
+	border-radius: 4px 4px 4px 4px;
+}
+
+.board-content .tdCity div .input-path {
+	width: 178px;
+}
+.board-content .tdCity div .second-path {
+    width: 178px;
+}
+.board-content .tdCity div .date {
+	display: none;
+}
+.board-content .tdCity div.active .date {
+    background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
+	display: inline-block;
+	font-size: 11px;
+	height: 28px;
+	line-height: 10px;
+	margin: 0 0 0 -5px;
+	padding-top: 8px;
+	text-align: center;
+	vertical-align: middle;
+	width: 36px;
+	position: absolute;
+	z-index: 3;
+	right: 1px;
+	cursor: pointer;	
+}
+.board-content .tdCity div.active .date.noDate {
+	padding-top: 13px;
+	height: 23px;
+}
+.board-content .constructorTable .tdCity div.active .date {
+	right: 37px;
+}
+.board-content .constructorTable .tdCity div.active .date + .date {
+	right: 1px;
+	background: url("../images/slice.png") no-repeat scroll -305px -1260px transparent;
+}
+.tdCity .cityStart {
+	width: 115px;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+	line-height: 17px;
+	font-size: 15px;
+	color: #FFF;
+	position: relative;
+	height: 36px;
+	border-radius: 4px 4px 4px 4px;
+}
+.tdCity .cityStart a {
+	color: #979eab;
+	font-size: 13px;
+	display: block;
+	white-space: nowrap;
+	width: 115px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.tdCity .cityStart a span {
+	border-bottom: 1px dashed;
+}
+.tdCity .cityStart .startInputTo {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 36px;
+	display: none;
+	border-radius: 4px 4px 4px 4px;
+}
+.tdCity .cityStart .startInputTo .input-path {
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	width: 242px;
+}
+.tdCity .cityStart .startInputTo .second-path {
+	width: 242px;
+}
+/* HOTEL */
+.hotelTable .tdCity {
+	text-align: right;
+	vertical-align: middle;
+}
+
+.hotelTable .tdCity .how-many-man {
+	float: none;
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: 5px;
+}
+.hotelTable .tdCity .data {
+	float: none;
+	margin-top: auto;
+	display: inline-block;
+	width: 341px;
+	position: relative;
+	height: 36px;
+}
+.hotelTable .tdCity div .input-path {
+	width: 322px;
+	background-position: 0 -288px;
+}
+.hotelTable .tdCity div .second-path {
+    width: 322px;
+}
+/* ================ */
+/* ================ */
+/* ================ */
+/* ================ */
+/* ================ */
+/* ================ */
+.sub-head .panel .content {
+	cursor: pointer;
+}
+.sub-head .panel .path {
+	height: 70px;
+	position:relative;
+	width: 920px;
+	margin: 0 auto;
+	margin-top: -5px;
+}
+.sub-head .panel .path > .data {
+	width: 625px;
+	position: relative;
+	margin-top: 17px;
+	float: left;
+}
+.sub-head .panel > .path .input-path {
+	border: none;
+	border-radius: 4px;
+	background: url(../images/slice.png) 0px -904px;
+	width: 241px; height: 35px;
+	font-family: Arial; font-size: 19px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.tumblr {
+    background: url("../images/slice.png") no-repeat scroll 0 -1014px transparent;
+    display: inline-block;
+    height: 37px;
+    margin: 0px 10px 0px 10px;
+    position: relative;
+    width: 74px;
+    vertical-align: middle;
+    margin-top: -1px;
+}
+.tumblr input {display: none;}
+.tumblr .one {
+	width: 37px; height: 37px;
+	background: url(../images/slice.png) no-repeat -35px -1087px;
+	position: absolute; top: 0px; left: 0px; z-index: 2;
+	cursor: pointer;
+}
+.tumblr .two {
+	width: 37px; height: 37px;
+	background: url(../images/slice.png) no-repeat -37px -1051px;
+	position: absolute; top: 0px; right: 0px; z-index: 2;
+	cursor: pointer;
+}
+.tumblr .one.active {
+	background-position: 2px -1087px; 
+}
+.tumblr .two.active {
+	background-position: 0px -1051px; 
+}
+.tumblr  .switch {
+	background: url("../images/slice.png") no-repeat scroll -74px -1014px transparent;
+    height: 37px;
+    left: -1px;
+    position: absolute;
+    top: 0;
+    width: 39px;
+    z-index: 1;
+}
+.slide-tmblr {
+	height: 68px;
+    overflow: hidden;
+    width: 839px;
+    position: absolute;
+    left: 106px;
+    top: 0px;
+}
+.input-path:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 15px rgba(82, 168, 236, 0.8);
+    outline: 0 none;
+    color: #16181a !important;
+    foreground-color: #16181a;
+}
+.second-path:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
+    outline: 0 none;
+    color: #16181a !important;
+    foreground-color: #16181a;
+}
+.how-many-man {
+	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+    float: left;
+    height: 70px;
+    margin-left: 20px;
+    position: relative;
+}
+.how-many-man .btn {
+	width: 16px; height: 68px;
+	background: url("../images/slice.png") no-repeat scroll right -1055px transparent;
+	float: right;
+	margin-left: 0px;
+}
+.how-many-man .btn.active {
+	background-position: right -1125px;
+}
+.how-many-man .content {
+	float: left;
+	padding-left: 8px;
+	padding-right: 8px;
+	position: relative;
+}
+.how-many-man .content + .content, .how-many-man .content + .content  + .content, .how-many-man .content + .content  + .content  {
+	padding-left: 13px;
+	background: url("../images/bg-num-man.png") no-repeat scroll 0 0 transparent;
+}
+.how-many-man .popup {
+	position: absolute; bottom: -86px; left: 0px;
+	background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
+	width: 194px; height: 85px;
+	border-right: 1px solid #b7b8bc;
+	border-bottom: 1px solid #76777a;
+	border-left: 1px solid #b7b8bc;
+	display: none;
+	z-index: 900;
+}
+.how-many-man .popup.active {
+	display: block;
+}
+.how-many-man .man {
+	width: 21px; height: 68px; float: left;
+	background: url("../images/bg-man.png") no-repeat scroll center center transparent;
+}
+.how-many-man .count {
+	height: 40px; float: left; padding-top: 28px;
+	padding-right: 8px;
+	padding-left: 4px;
+	font-family: Tahoma, Arial; font-size: 20px; color: #e8e8e8; text-shadow: 0px 1px 0px #111419;
+}
+.how-many-man .count span {
+	font-size: 11px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: -6px; margin-right: 4px;
+}
+.how-many-man .child {
+	width: 21px; height: 68px; float: left;
+	background: url("../images/bg-child.png") no-repeat scroll center center transparent;
+}
+.how-many-man  .popup .adults, .how-many-man  .popup .childs, .how-many-man  .popup .small-childs {
+	float: left;
+	width: 48px; font-size: 11px; color: #272728; text-shadow: 0px 1px 0px #FFF; line-height: 13px;
+	margin-left: 13px;
+	padding-top: 13px;
+	position: relative;
+}
+.how-many-man  .popup .adults input, .how-many-man  .popup .childs input, .how-many-man  .popup .small-childs input  {
+	background: url("../images/slice.png") no-repeat scroll -264px -941px transparent;
+    border: medium none;
+    font-size: 25px;
+    height: 31px;
+    text-align: center;
+    width: 48px;
+    color: #8f959c;
+}
+.how-many-man  .popup .adults input.active, .how-many-man  .popup .childs input.active, .how-many-man  .popup .small-childs input.active {
+	background-position: -264px -904px;
+	    color: #272729;
+}
+.how-many-man  .popup .adults input:focus {
+	background-position: -264px -904px;
+}
+.inputDIV {position: relative; width: 48px;}
+.minusOne {background: url(../images/minuscount.png) no-repeat 0 0;
+    overflow: hidden;
+    cursor: pointer;
+    height: 30px;
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 7px;
+    z-index: 100;
+    display: none;
+    text-indent: -9999px;}
+.plusOne {background: url(../images/pluscount.png) no-repeat 0px 0;
+    overflow: hidden;
+    cursor: pointer;
+    height: 30px;
+    position: absolute;
+    right: 4px;
+    top: 0px;
+    width: 7px;
+    z-index: 100;
+    display: none;
+    text-indent: -9999px;}
+.inputDIV .minusOne.active, .inputDIV .plusOne.active  {
+	background-position: 0px -30px;	
+}
+
+.btn-minimizePanel {
+	width: 104px; height: 19px;
+	color: #616770;
+	font-size: 13px;
+	background: url(../images/slice.png) no-repeat 0px -880px;
+	position: absolute;
+	right: 60px;
+	bottom: -19px;
+	text-align: center;
+	line-height: 15px;
+	z-index: 800;
+}
+.btn-minimizePanel span {
+	display: inline-block;
+	width: 12px; height: 6px;
+	background: url(../images/slice.png) no-repeat -72px -35px;
+}
+.btn-minimizePanel.active span {
+	background-position: -84px -35px;
+}
+/* HOTEL */
+.input-path-hotel {
+	background: url("../images/slice.png") repeat scroll 0 -1296px transparent;
+    border: medium none;
+    border-radius: 4px 4px 4px 4px;
+    font-family: Arial;
+    font-size: 19px;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 321px;
+}
+
+
+.how-many-man .content .num {
+	display: block; position: absolute; top: 0px; left: 4px;
+	color: #0c0c0d; font-size: 11px; text-shadow: 0px 1px 0px #3d424a;
+}
+.how-many-man .content + .content .num, .how-many-man .content + .content  + .content .num, .how-many-man .content + .content  + .content  .num {
+	display: block; position: absolute; top: 0px; left: 11px;
+}
+.hotelTable .how-many-man .popup {
+	height: auto;
+	border: none;
+	background: none;
+	width: 406px;
+	bottom: auto;
+	top: 71px;
+}
+.number-hotel {
+	width: 198px;
+	background: url("../images/bg-how-much.png") repeat-x scroll left bottom #F7F9FB;
+	border-right: 1px solid #b7b8bc;
+	border-bottom: 1px solid #76777a;
+	border-left: 1px solid #b7b8bc;
+	overflow: hidden;
+	position: relative;
+}
+.number-hotel h5 {
+	text-align: left;
+	margin: 0px;
+	color: #303335;
+	font-size: 12px;
+	margin-left: 13px;
+}
+.number-hotel .one-str {
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+.number-hotel .adults {
+	margin-left: 10px;
+}
+.number-hotel .addOtherRoom {
+    background: url("../images/bg-add-hotel.png") repeat-x scroll 0 0 transparent;
+    border-top: 1px solid #696D71;
+    color: #23262C !important;
+    display: block;
+    font-size: 11px;
+    height: 19px;
+    padding-left: 10px;
+    padding-top: 2px;
+    text-shadow: none !important;
+}
+.number-hotel .addOtherRoom:hover, .popup:hover .addOtherRoom  {
+	color: #23262c !important;
+}
+.number-hotel .del-hotel {
+    color: #9EA2A7 !important;
+    display: block;
+    font-size: 11px;
+    position: absolute;
+    right: 6px;
+    text-decoration: underline;
+    text-shadow: none !important;
+    top: 0;
+}
+.popup:hover .del-hotel {
+	color: #9ea2a7 !important;
+}
+.how-many-man .popup .one-str .adults, .how-many-man .popup .one-str .childs {
+    color: #272728;
+    float: left;
+    font-size: 11px;
+    line-height: 13px;
+    margin-left: 6px;
+    padding-top: 5px;
+    position: relative;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 60px;
+}
+.one-str .ages {
+	width: 40px;
+	text-align: center;
+	color: #272728;
+	text-shadow: 0px 1px 0px #FFF;
+	float: left;
+	margin-left: 6px;
+	font-size: 11px;
+}
+.one-str .ages:first-child {
+	margin-left: 10px;
+}
+.one-str .ages input {
+	background: url(../images/slice.png) no-repeat -320px -904px;
+	border: none;
+	width: 36px;
+	height: 31px;
+	font-size: 19px;
+	color: #272729;
+	text-align: center;
+}
+
+
+
+
+/* board */
+.panel-index {
+	bottom: 0px;
+    height: 70px;
+    min-width: 1000px;
+    position: absolute;
+    width: 100%;
+    z-index: 11;
+}
+.panel-index .sub-head {
+	background: none;
+    box-shadow: 0 1px 5px #000000;
+    height: 70px;
+    padding-bottom: 0px;
+}
+
+.panel-index .sub-head .navi-l {
+	background: url(../images/navi-index.png) no-repeat 0 0; height: 70px; width: 26px; cursor: pointer;
+	position: absolute; bottom: 0px; left: 0px;
+}
+.panel-index .sub-head .navi-l:hover {
+	background-position: 0px -70px;
+}
+.panel-index .sub-head .navi-r {
+	background: url(../images/navi-index.png) no-repeat -26px 0; height: 70px; width: 26px; cursor: pointer;
+	position: absolute; bottom: 0px; right: 0px;
+}
+.panel-index .sub-head .navi-r:hover {
+	background-position: -26px -70px;
+}
+.fly-panel {
+	width: 100%;
+	height: 70px;
+	position: relative;
+	background: url("../images/bg-board.png") repeat-x scroll 0 0 transparent;
+}
+
+
+
+.board {
+	background: url("../images/bg-board.png") repeat scroll 0 0 transparent;
+    bottom: 371px;
+    min-height: 70px;
+    min-width: 1000px;
+    position: absolute;
+    width: 100%;
+}
+.leftPageBtn {
+	background: url("../images/navi-index.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 70px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 26px;
+}
+.leftPageBtn:hover {
+	background-position: 0px -70px;
+}
+.rightPageBtn {
+	background: url("../images/navi-index.png") no-repeat scroll -26px 0 transparent;
+    cursor: pointer;
+    height: 70px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 26px;
+}
+.rightPageBtn:hover {
+	background-position: -26px -70px;
+}
+
+.constructor-ico {
+	background: url("../images/constructor-ico.png") no-repeat scroll 0 0 transparent;
+    height: 70px;
+    left: 26px;
+    position: absolute;
+    top: 0;
+    width: 86px;
+}	
+.constructor {
+	left: 0;
+    min-height: 70px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.board-content {
+	height: 70px;
+    position: relative;
+}
+.panel {
+	margin: 0 auto;
+	width: 948px;
+	height: 70px;
+}
+
+.panelTable tr td {
+	vertical-align: middle; text-align: center;
+}
+.panelTable .data {
+	display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+.panelTable .how-many-man {
+    background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+    display: inline-block;
+    height: 70px;
+    position: relative;
+    float: none;
+    margin: auto;
+    vertical-align: middle;
+}
+.add-tour {
+	background: url("../images/slice.png") no-repeat scroll -401px -1224px transparent;
+    display: inline-block;
+    height: 29px;
+    vertical-align: middle;
+    width: 99px;
+    margin-left: 12px;
+    margin-right: 18px;
+}
+.add-tour:hover {
+	background-position: -401px -1254px;
+}
+
+.board-content.start .panelTable .contTD {
+	text-align: left;
+}
+.deleteTab {
+	background: url(../images/delete-ico.png) no-repeat;
+	width: 70px; height: 70px;
+	position: absolute;
+	left: 26px;
+	cursor: pointer;
+}
+.input-path {
+    background: url("../images/slice.png") repeat scroll 0 -1560px transparent;
+    border: medium none;
+    border-radius: 4px 4px 4px 4px;
+    color: #969BA1;
+    font-family: Arial;
+    font-size: 19px;
+    height: 36px;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    width: 270px;
+    z-index: 1;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    left: 0px;
+}
+.second-path {
+	z-index: 2;
+	border: medium none;
+    border-radius: 4px 4px 4px 4px;
+    font-family: Arial;
+    font-size: 19px;
+    height: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 270px;
+    position: absolute;
+    background: none;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+.panelTable .data.active .input-path {
+    background-position: 0 -1260px;
+    border-radius: 4px 0 0 4px;
+    width: 252px;
+}
+.panelTable .data .date {
+    display: none;
+}
+.panelTable div.active .date {
+    background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
+	display: inline-block;
+	font-size: 11px;
+	height: 28px;
+	line-height: 10px;
+	margin: 0 0 0 -5px;
+	padding-top: 8px;
+	text-align: center;
+	vertical-align: middle;
+	width: 36px;
+	position: absolute;
+	z-index: 3;
+	right: 1px;
+	cursor: pointer;	
+}
+.panelTable .data.active .date + .date {
+    background-position: -305px -1260px;
+}
+.panelTable .data.active .date .f17 {
+    font-family: Verdana;
+    font-size: 17px;
+    font-weight: bold;
+}
+.panelTable .data.active .date .f26 {
+    display: inline-block;
+    font-family: Verdana;
+    font-weight: bold;
+    margin-top: 5px;
+    padding-top: 0;
+}
+.contTD.cityActive .data .input-path {
+    width: 100px;
+}
+.contTD.cityActive .cityStart {
+    width: 265px;
+}
+.input-to {
+    display: none;
+}
+.contTD .data .to, .contTD .data .from {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	width: 290px;
+	height: 36px;
+}
+.AVIA .contTD {
+	text-align: left;
+}
+.AVIA .contTD .how-many-man {	
+	margin-left: 10px;
+}
+
+.AVIA .contTD div.active .date {
+	background: url("../images/slice.png") no-repeat scroll -225px -978px transparent;
+}
+
+.AVIA .contTD div.active .date {
+    background: url("../images/slice.png") no-repeat scroll -225px -978px transparent;
+}
+
+.AVIA .contTD div.active .input-path {
+	width: 235px;
+	border-radius: 4px 0px 0px 4px;
+}
+
+
+
+.constructorTable {
+	
+}
