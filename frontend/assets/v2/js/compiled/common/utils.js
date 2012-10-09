@@ -69,7 +69,6 @@ dateUtils = {
   },
   formatHtmlDayShortMonth: function(date) {
     var result;
-    console.log("formatHtmlDayShortMonth", date);
     if (!date.getDate) {
       date = date.toDate();
     }
