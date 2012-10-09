@@ -419,6 +419,8 @@ VoyangaCalendarStandart.onCellClick = function(obj){
     if(jCell.hasClass('inactive'))
 	return;
     var cellDate = Date.fromIso(jCell.data('cell-date'));
+    var dontset = true;
+
     if(this.twoSelect){
         if(this.values.length == 2){
             this.values = new Array();
@@ -426,18 +428,24 @@ VoyangaCalendarStandart.onCellClick = function(obj){
             if(cellDate < this.values[0]){
                 this.values = new Array();
             }else{
+		dontset = false;
                 this.values.push(cellDate);
             }
         }
     }else{
         if(this.values.length != 0){
             this.values = new Array();
-        }
+        } else {
+	    dontset = false;
+	}
     }
+
     if(this.values.length == 0){
+	    console.error("PUSING2");
+
         this.values.push(cellDate);
     } 
-    VoyangaCalendarStandart.update();
+    VoyangaCalendarStandart.update(dontset);
 }
 function getMonday(d) {
     d = new Date(d);
