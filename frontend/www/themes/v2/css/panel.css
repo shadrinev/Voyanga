@@ -94,15 +94,23 @@
     /* width: 391px; */
     width: 271px;
 }
+.board-content .tdCity .from.active {}
 .board-content .tdCity .from.overflow {
 	overflow: hidden;
 	border-radius: 4px 4px 4px 4px;
 }
 
 .board-content .tdCity div .input-path {
-	width: 178px;
+	width: 250px;
+	background: url("../images/input.png") no-repeat scroll 0px -432px transparent;
 }
 .board-content .tdCity div .second-path {
+    width: 250px;
+}
+.board-content .tdCity div.active .input-path {
+	width: 178px;
+}
+.board-content .tdCity div.active .second-path {
     width: 178px;
 }
 .board-content .tdCity div .date {
