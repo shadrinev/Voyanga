@@ -17,7 +17,7 @@
                             </div>
                             <!-- /ko -->
                         </div>
-                        <div class="from active">
+                        <div class="from" data-bind="css: {active: city()}">
                             <input type="text" tabindex="-1" class="input-path">
                             <input type="text" placeholder="Куда едем?" class="second-path" data-bind="click: hideFromCityInput, autocomplete: {source:'city', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}">
                             <div class="date" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}">
@@ -34,7 +34,7 @@
                          <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}"></span>
                     </td>
                     <td class="tdButton">
-                        <div class="btn-find"></div>
+                        <div class="btn-find" data-bind="click: navigateToNewSearch, visible: formFilled"></div>
                     </td>
                     <!-- /ko -->
                 </tr>

@@ -30,6 +30,17 @@ class TourPanelSet
       from: @checkIn()
       to: @checkOut()
 
+    @formFilled = ko.computed =>
+      isFilled = true
+
+      _.each @panels(), (panel) ->
+        isFilled &&= panel.formFilled()
+
+      console.log 'IS FILLED ', isFilled
+
+      result = @startCity && isFilled
+      return result
+
   deletePanel: (elem) =>
     @sp.destinations.remove(elem.city)
     @panels.remove(elem)
@@ -42,7 +53,7 @@ class TourPanelSet
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
-    newPanel = new TourPanel(@sp, @i, @isFirst())
+    newPanel = new TourPanel(@sp, @i, @i==0)
     newPanel.on "tourPanel:showCalendar", (args...) =>
       @showPanelCalendar(args)
     @panels.push newPanel
@@ -81,17 +92,19 @@ class TourPanel extends SearchPanel
     @oldCalendarState = @minimizedCalendar()
 
     @formFilled = ko.computed =>
-      result = @startCity
+      result = @city() && @checkIn() && @checkOut()
       return result
 
     @maximizedCalendar = ko.computed =>
-      @city().length>0
+      @city().length > 0
 
     @calendarText = ko.computed =>
       result = "Выберите дату поездки "
       return result
 
-  # FIXME decouple!
+  handlePanelSubmit: =>
+    app.navigate @sp.getHash(), {trigger: true}
+
   navigateToNewSearch: ->
     @handlePanelSubmit()
     @minimizedCalendar(true)
