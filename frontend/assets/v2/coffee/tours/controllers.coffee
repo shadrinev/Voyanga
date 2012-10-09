@@ -5,7 +5,7 @@ class ToursController
   constructor: (@searchParams)->
     @api = new ToursAPI
     @routes =
-      '/search' : @searchAction
+      '/search/*rest' : @searchAction
       '': @indexAction
     @key = "tours_10"
 
@@ -19,15 +19,16 @@ class ToursController
       events.push new Event(el)
     eventSet = new EventSet(events)
     console.log "EVENT: eventset = ", eventSet
+    @trigger "index"
     @render 'index', eventSet
     ResizeAvia()
 
   searchAction: (args...)=>
+    args[0] = exTrim args[0], '/'
+    args = args[0].split('/')
     window.voyanga_debug "TOURS: Invoking searchAction", args
-    # update search params with values in route
-    # tempoprary development cache
-    
-    @api.search @handleResults
+    @searchParams.fromList(args)
+    @api.search @searchParams.url(), @handleResults
 
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
@@ -35,6 +36,7 @@ class ToursController
     stacked = new ToursResultSet data
     @trigger "results", stacked
     @render 'results', stacked
+
 
 #    @trigger "sidebarChanged", filters
     ko.processAllDeferredBindingUpdates()

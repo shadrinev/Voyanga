@@ -96,12 +96,15 @@ ToursAviaResultSet = (function(_super) {
     this.doNewSearch = __bind(this.doNewSearch, this);
 
     this.newResults = __bind(this.newResults, this);
+    ToursAviaResultSet.__super__.constructor.apply(this, arguments);
     this.api = new AviaAPI;
     this.template = 'avia-results';
     this.overviewTemplate = 'tours-overview-avia-ticket';
     this.panel = new AviaPanel();
     this.panel.handlePanelSubmit = this.doNewSearch;
     this.panel.sp.fromObject(sp);
+    this.panel.original_template = this.panel.template;
+    this.panel.template = 'tours-panel-template';
     this.results = ko.observable();
     this.selection = ko.observable(null);
     this.newResults(raw, sp);
@@ -224,8 +227,6 @@ ToursHotelsResultSet = (function(_super) {
   __extends(ToursHotelsResultSet, _super);
 
   function ToursHotelsResultSet(raw, searchParams) {
-    var hotel, room,
-      _this = this;
     this.searchParams = searchParams;
     this.dateHtml = __bind(this.dateHtml, this);
 
@@ -245,13 +246,35 @@ ToursHotelsResultSet = (function(_super) {
 
     this.overviewText = __bind(this.overviewText, this);
 
+    this.doNewSearch = __bind(this.doNewSearch, this);
+
+    this.newResults = __bind(this.newResults, this);
+
     ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
+    this.api = new HotelsAPI;
+    this.panel = new HotelsPanel();
+    this.panel.handlePanelSubmit = this.doNewSearch;
+    this.panel.sp.fromObject(this.searchParams);
+    this.panel.original_template = this.panel.template;
+    this.panel.template = 'tours-panel-template';
     this.overviewTemplate = 'tours-overview-hotels-ticket';
-    this.activeHotel = ko.observable(0);
     this.template = 'hotels-results';
-    this.results = new HotelsResultSet(raw, this.searchParams);
-    this.results.tours = true;
-    this.results.select = function(hotel) {
+    this.activeHotel = ko.observable(0);
+    this.selection = ko.observable(null);
+    this.results = ko.observable();
+    this.data = {
+      results: this.results
+    };
+    this.newResults(raw, this.searchParams);
+  }
+
+  ToursHotelsResultSet.prototype.newResults = function(data, sp) {
+    var result,
+      _this = this;
+    result = new HotelsResultSet(data, sp);
+    result.tours(true);
+    result.postInit();
+    result.select = function(hotel) {
       hotel.off('back');
       hotel.on('back', function() {
         return _this.trigger('setActive', _this);
@@ -266,19 +289,17 @@ ToursHotelsResultSet = (function(_super) {
         template: 'hotels-info-template'
       });
     };
-    this.data = {
-      results: ko.observable(this.results)
-    };
     this.hotels = true;
-    this.selection = ko.observable(null);
-    hotel = this.results.data()[0];
-    room = hotel.roomSets[0];
-    this.activeHotel(hotel.hotelId);
-    this.selection({
-      'roomSet': room,
-      'hotel': hotel
+    this.selection(null);
+    return this.results(result);
+  };
+
+  ToursHotelsResultSet.prototype.doNewSearch = function() {
+    var _this = this;
+    return this.api.search(this.panel.sp.url(), function(data) {
+      return _this.newResults(data.hotels, data.searchParams);
     });
-  }
+  };
 
   ToursHotelsResultSet.prototype.overviewText = function() {
     return this.destinationText();
@@ -321,10 +342,10 @@ ToursHotelsResultSet = (function(_super) {
   ToursHotelsResultSet.prototype.dateHtml = function() {
     var result;
     result = '<div class="day">';
-    result += dateUtils.formatHtmlDayShortMonth(this.results.checkIn);
+    result += dateUtils.formatHtmlDayShortMonth(this.results().checkIn);
     result += '</div>';
     result += '<div class="day">';
-    result += dateUtils.formatHtmlDayShortMonth(this.results.checkOut);
+    result += dateUtils.formatHtmlDayShortMonth(this.results().checkOut);
     return result += '</div>';
   };
 
@@ -357,9 +378,10 @@ ToursResultSet = (function() {
         });
       }
     }
-    this.selection = ko.observable(this.data()[0]);
+    this.selection = ko.observable(this.data()[1]);
     this.panel = ko.computed({
       read: function() {
+        console.log('TOURS-PANEL', _this.selection().panel);
         if (_this.selection().panel) {
           _this.panelContainer = _this.selection().panel;
         }
@@ -387,7 +409,6 @@ ToursResultSet = (function() {
       return sum;
     });
     this.vm = new ToursOverviewVM(this);
-    this.showOverview();
   }
 
   ToursResultSet.prototype.setActive = function(entry) {
@@ -456,40 +477,27 @@ TourSearchParams = (function(_super) {
 
   function TourSearchParams() {
     this.removeItem = __bind(this.removeItem, this);
-
-    this.addRoom = __bind(this.addRoom, this);
     TourSearchParams.__super__.constructor.call(this);
     this.startCity = ko.observable('LED');
-    this.destinations = ko.observableArray([new DestinationSearchParams()]);
-    this.rooms = ko.observableArray([new Roomers()]);
+    this.destinations = ko.observableArray([]);
+    this.rooms = ko.observableArray([new SpRoom()]);
+    this.returnBack = ko.observable(1);
   }
-
-  TourSearchParams.prototype.addRoom = function() {
-    if (this.rooms().length === 4) {
-      return;
-    }
-    return this.rooms.push(new Roomers());
-  };
 
   TourSearchParams.prototype.url = function() {
     var params, result,
       _this = this;
     result = 'tour/search?';
     params = [];
-    _params.push('start=' + this.startCity());
+    params.push('start=' + this.startCity());
     _.each(this.destinations(), function(destination, ind) {
       params.push('destinations[' + ind + '][city]=' + destination.city());
-      params.push('destinations[' + ind + '][dateFrom]=' + destination.dateFrom());
-      return params.push('destinations[' + ind + '][dateTo]=' + destination.dateTo());
+      params.push('destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY'));
+      return params.push('destinations[' + ind + '][dateTo]=' + moment(destination.dateTo()).format('D.M.YYYY'));
     });
-    params.push('rooms[0][adt]=' + this.adults());
-    params.push('rooms[0][chd]=' + this.children());
-    params.push('rooms[0][chdAge]=0');
-    if (this.infants > 0) {
-      params.push('rooms[0][cots]=1');
-    } else {
-      params.push('rooms[0][cots]=0');
-    }
+    _.each(this.rooms(), function(room, ind) {
+      return params.push(room.getUrl(ind));
+    });
     result += params.join("&");
     window.voyanga_debug("Generated search url for tours", result);
     return result;
@@ -501,59 +509,73 @@ TourSearchParams = (function(_super) {
     _.each(this.destinations(), function(destination) {
       return key += destination.city() + destination.dateFrom() + destination.dateTo();
     });
-    key += this.adults();
-    key += this.children();
-    key += this.infants();
+    _.each(this.rooms(), function(room) {
+      return key += room.getHash();
+    });
     return key;
   };
 
   TourSearchParams.prototype.getHash = function() {
     var hash, parts;
-    parts = [this.startCity(), this.adults(), this.children(), this.infants()];
+    parts = [this.startCity(), this.returnBack()];
     _.each(this.destinations(), function(destination) {
       parts.push(destination.city());
-      parts.push(destination.dateFrom());
-      return parts.push(destination.dateTo());
+      parts.push(moment(destination.dateFrom()).format('D.M.YYYY'));
+      return parts.push(moment(destination.dateTo()).format('D.M.YYYY'));
     });
-    hash = 'tour/search/' + parts.join('/') + '/';
+    parts.push('rooms');
+    _.each(this.rooms(), function(room) {
+      return parts.push(room.getHash());
+    });
+    hash = 'tours/search/' + parts.join('/') + '/';
     window.voyanga_debug("Generated hash for tour search", hash);
     return hash;
   };
 
   TourSearchParams.prototype.fromList = function(data) {
-    var i, j, _i, _ref, _results;
+    var destination, doingrooms, i, room, _i, _ref;
     window.voyanga_debug("Restoring TourSearchParams from list");
     this.startCity(data[0]);
-    this.adults(data[1]);
-    this.children(data[2]);
-    this.infants(data[3]);
-    j = 0;
-    _results = [];
-    for (i = _i = 4, _ref = data.length; _i <= _ref; i = _i += 3) {
-      this.destinations[j] = new DestinationSearchParams();
-      this.destinations[j].city(data[i]);
-      this.destinations[j].dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
-      this.destinations[j].dateTo(moment(data[i + 2], 'D.M.YYYY').toDate());
-      _results.push(j++);
+    this.returnBack(data[1]);
+    doingrooms = false;
+    this.destinations([]);
+    this.rooms([]);
+    for (i = _i = 2, _ref = data.length; _i <= _ref; i = _i += 3) {
+      if (data[i] === 'rooms') {
+        break;
+      }
+      console.log(data[i], data[i + 1], data[i + 2]);
+      destination = new DestinationSearchParams();
+      destination.city(data[i]);
+      destination.dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
+      destination.dateTo(moment(data[i + 2], 'D.M.YYYY').toDate());
+      this.destinations.push(destination);
     }
-    return _results;
+    i = i + 1;
+    while (i < data.length) {
+      room = new SpRoom();
+      room.fromList(data[i]);
+      this.rooms.push(room);
+      i++;
+    }
+    return window.voyanga_debug('Result', this);
   };
 
   TourSearchParams.prototype.fromObject = function(data) {
-    var j;
     window.voyanga_debug("Restoring TourSearchParams from object");
     console.log(data);
-    this.adults(data.adt);
-    this.children(data.chd);
-    this.infants(data.inf);
-    j = 0;
-    return _.each(data.destinations, function(destination) {
-      this.destinations[j] = new DestinationSearchParams();
-      this.destinations[j].city(destination.city);
-      this.destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate());
-      this.destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate());
-      return j++;
+    _.each(data.destinations, function(destination) {
+      destination = new DestinationSearchParams();
+      destination.city(destination.city);
+      destination.dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate());
+      destination.dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate());
+      return this.destinations.push(destination);
     });
+    _.each(data.rooms, function(room) {
+      room = new SpRoom();
+      return this.rooms.push(this.room.fromObject(room));
+    });
+    return window.voyanga_debug('Result', this);
   };
 
   TourSearchParams.prototype.removeItem = function(item, event) {

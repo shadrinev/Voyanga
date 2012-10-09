@@ -53,22 +53,21 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- BOARD IF WE ARE AT THE MAIN -->
     <!-- ko if: isEvent() -->
     <div class="panel-index">
-        <div class="board" style="height: 0px;">
+        <div class="board" data-bind="style: {height: fakoPanel().height}">
             <div class="constructor">
                 <!-- BOARD CONTENT -->
-                <!-- ko foreach: panels -->
-                    <div class="board-content" data-bind="template: { name: $data.template, data: $data, afterRender: $data.afterRender }"></div>
-                <!-- /ko -->
+                    <div class="board-content" data-bind="template: { name: fakoPanel().template, data: fakoPanel(), afterRender: fakoPanel().afterRender }"></div>
                 <!-- END BOARD CONTENT -->
-
                 <div class="constructor-ico"></div>
-
             </div>
 
             <!-- END CONSTRUCTOR -->
             <div class="leftPageBtn"></div>
             <div class="rightPageBtn"></div>
         </div>
+        <!-- CALENDAR -->
+        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendar}" style="top: -302px; display: none;"></div>
+        <!-- END CALENDAR -->
     </div>
     <!-- /ko -->
 
@@ -84,11 +83,8 @@ Yii::app()->clientScript->registerPackage('appJs');
                 <!-- END PANEL -->
             </div>
             <!-- END CENTER BLOCK -->
-        <!-- CALENDAR -->
-        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}"
-             style="top: 70px; display: none;">
-        </div>
-        <!-- END CALENDAR -->
+	    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template', afterRender: reRenderCalendar}" 	
+             style="top: 70px; display: none;"></div>
         <!--====**********===-->
     </div>
     <!-- /ko -->
@@ -100,9 +96,8 @@ Yii::app()->clientScript->registerPackage('appJs');
     </div>
     <!-- SLIDE TOURS -->
     <!-- ko if: isEvent() -->
-    <div class="slideTours"
-         data-bind="template: {name: activeView(), data: viewData(), afterRender: mapRendered}">
-    </div>
+        <div class="slideTours" data-bind="template: {name: activeView(), data: viewData(), afterRender: mapRendered}">
+        </div>
     <!-- /ko -->
     <!-- END SLIDE TOURS -->
     <!-- FOOTER -->

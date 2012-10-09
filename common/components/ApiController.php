@@ -83,8 +83,8 @@ class ApiController extends Controller
     public function sendError($errorCode, $errorText='')
     {
         $this->statusCode = $errorCode;
-        $this->data = $errorText;
-        $this->_sendResponse(true);
+        $this->data = array('error' => $errorText);
+        $this->_sendResponse(false);
     }
 
     public function init()

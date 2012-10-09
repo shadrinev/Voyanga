@@ -1,4 +1,4 @@
-class Travellers
+class PeopleSelector
   constructor: ->
     # helper flags for clicck outside of ppl panel handling
     @inside = false
@@ -74,14 +74,14 @@ class Travellers
     $('.how-many-man').find('.popup').removeClass('active')
 
 
-class Passengers extends Travellers
+class Passengers extends PeopleSelector
   constructor: () ->
     @template = 'passengers-template'
     # Popup inputs
-    @adults = ko.observable 1
-    @children = ko.observable 0
-    @infants = ko.observable 0
-
+    @adults = ko.observable(1).extend({integerOnly: 'adult'})
+    @children = ko.observable(0).extend({integerOnly: true})
+    @infants = ko.observable(0).extend({integerOnly: 'infant'})
+    
     @MAX_TRAVELERS = 9
     @MAX_CHILDREN = 8
 
@@ -129,9 +129,6 @@ class Passengers extends Travellers
           model[prop] 0
 
 
-  afterRender: =>
-    super()
-
   plusOne: (model, e)->
     prop = $(e.target).attr("rel")
     model[prop](model[prop]()+1)
@@ -140,35 +137,14 @@ class Passengers extends Travellers
     prop = $(e.target).attr("rel")
     model[prop] model[prop]()-1
 
-  close: ->
-    $(document.body).unbind 'mousedown'
-    $('.how-many-man .btn').removeClass('active')
-    $('.how-many-man .content').removeClass('active')
-    $('.how-many-man').find('.popup').removeClass('active')
 
-
-class Roomers extends Travellers
-  constructor: (item) ->
-    super()
-    @template = 'roomers-template'
-    @adults = ko.observable 1
-    @children = ko.observable 0
-    @ages = ko.observableArray()
-
-    if item
-      parts = item.split(':')
-      @adults = ko.observable parts[0]
-      @children = ko.observable parts[1]
-      for i in [0..@children]
-        ages.push ko.observable parts[2+i]
-      @children.subscribe (newValue)=>
-        if @ages().length < newValue
-          for i in [0..(newValue-@ages().length-1)]
-            @ages.push ko.observable 12
-            console.log "$# PUSHING", i
-        else if @ages().length > newValue
-          @ages.splice(newValue)
-        ko.processAllDeferredBindingUpdates()
+# View model for a single room dropdown
+class Roomers
+  constructor: (@room, @index, @length ) ->
+    @adults = @room.adults
+    @children = @room.children
+    @ages = @room.ages
+    #@overall = 
 
   plusOne: (context, event) =>
     target = $(event.currentTarget).attr('rel')
@@ -179,12 +155,39 @@ class Roomers extends Travellers
     if @[target]() > 0
       @[target] @[target]() - 1
 
-  getHash: =>
-    parts = [@adults(), @children()]
-    for age in @ages()
-      parts.push age
-    return parts.join(':')
+  last: =>
+    return @index+1 == @length
 
-  getUrl: (i)=>
-    # FIXME FIMXE FIMXE
-    return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&rooms[#{i}][chdAge]=0&rooms[#{i}][cots]=0"
+# View Model for hotels people selector
+# FIXME ME move me somewhere
+class HotelPeopleSelector extends PeopleSelector
+  constructor: (@sp)->
+    super
+    @template = 'roomers-template'
+    @rawRooms = @sp.rooms
+    @roomsView = ko.computed =>
+      result = []
+      current = []
+      for item, index in @sp.rooms()
+        if current.length == 2
+          result.push current
+          current = []
+        # FIXME mem/handlers leak?
+        r = new Roomers item, index, @sp.rooms().length
+        r.addRoom = @addRoom
+        r.removeRoom = @removeRoom
+        current.push r
+      result.push current
+      return result
+
+  addRoom: =>
+    if @sp.rooms().length == 4
+      return
+    @sp.rooms.push new SpRoom()
+
+
+  removeRoom: (roomer)=>
+    # You should not be allower to remove last room left
+    if @sp.rooms().length == 1
+      return
+    @sp.rooms.splice @sp.rooms.indexOf(roomer.room),1

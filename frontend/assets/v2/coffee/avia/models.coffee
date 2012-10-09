@@ -531,7 +531,7 @@ class AviaResultSet
 # Used in AviaPanel and search controller
 class AviaSearchParams extends SearchParams
   constructor: ->
-    super()
+    super
     @dep = ko.observable ''
     @arr = ko.observable ''
     @rt = ko.observable true

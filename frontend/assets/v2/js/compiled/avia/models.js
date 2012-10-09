@@ -735,7 +735,7 @@ AviaSearchParams = (function(_super) {
   __extends(AviaSearchParams, _super);
 
   function AviaSearchParams() {
-    AviaSearchParams.__super__.constructor.call(this);
+    AviaSearchParams.__super__.constructor.apply(this, arguments);
     this.dep = ko.observable('');
     this.arr = ko.observable('');
     this.rt = ko.observable(true);

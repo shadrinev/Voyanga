@@ -54,7 +54,7 @@ class RoomSet
       @checkCount(newValue)
 
     @selectText = ko.computed =>
-      if !@parent.tours
+      if !@parent.tours()
         return "Забронировать"
       if @parent.activeResultId()
         return 'Выбран'
@@ -95,7 +95,7 @@ class HotelResult
   constructor: (data, parent, duration = 1) ->
     # Mix in events
     _.extend @, Backbone.Events
-    @tours = parent.tours
+    @tours =  parent.tours
     @hotelId = data.hotelId
     @activeResultId = ko.observable 0 
     @hotelName = data.hotelName
@@ -144,7 +144,7 @@ class HotelResult
     @haveFullInfo = ko.observable false
 
     @selectText = ko.computed =>
-      if !@tours
+      if !@tours()
         return "Забронировать"
       if @activeResultId()
         return 'Выбран'
@@ -421,8 +421,8 @@ class HotelResult
   select: (room) =>
     # it is actually cheapest click
     if room.roomSets
-      room = room.roomSets[0]
-    if @tours
+      room = room.roomSets()[0]
+    if @tours()
       @activeResultId room.resultId
 
     @trigger 'select', {roomSet: room, hotel: @}
@@ -444,7 +444,7 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawHotels, @searchParams) ->
     @_results = {}
-    @tours = false
+    @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
     window.voyanga_debug('checkOut',@checkOut)
@@ -574,52 +574,3 @@ class HotelsResultSet
     # FIXME
     #ResizeAvia()
 
-class HotelsSearchParams
-  constructor: ->
-    @city = ko.observable('')
-    @checkIn = ko.observable('')
-    @checkOut = ko.observable('')
-
-    @rooms = ko.observableArray [new Roomers()]
-    @roomsView = ko.computed =>
-      result = []
-      current = []
-      for item in @rooms()
-        if current.length == 2
-          result.push current
-        current = []
-        current.push item
-        result.push current
-      return result
-
-  addRoom: =>
-    if @rooms().length == 4
-      return
-    @rooms.push new Roomers()
-
-  getHash: =>
-    parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
-    for room in @rooms()
-      parts.push room.getHash()
-    hash = 'hotels/search/' + parts.join('/') + '/'
-    window.voyanga_debug "Generated hash for hotels search", hash
-    return hash
-
-  fromList: (data)->
-    # FIXME looks too ugly to hit production, yet does not support RT
-    @city data[0]
-    @checkIn moment(data[1], 'D.M.YYYY').toDate()
-    @checkOut moment(data[2], 'D.M.YYYY').toDate()
-    @rooms.splice(0)
-    rest = data[3].split('/')
-    for item in rest
-      if item
-        @rooms.push new Roomers(item)
-
-  url: =>
-    result = "hotel/search?city=" + @city()
-    result += '&checkIn=' + moment(@checkIn()).format('YYYY-M-D')
-    result += '&duration=' + moment(@checkOut()).diff(moment(@checkIn()), 'days')
-    for room, i in @rooms()
-      result += '&' + room.getUrl(i)
-    return result

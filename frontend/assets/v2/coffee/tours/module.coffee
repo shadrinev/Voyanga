@@ -4,14 +4,14 @@ Controller + panel
 ###
 class ToursModule
   constructor: ->
-    @controller = new ToursController()# @panel.sp
-    @sp = new TourSearchParams()
-    @panel = ko.observable null 
-    console.log 'I AM PANEL', @panel
+    @panel = ko.observable null
+    @p = new TourPanelSet()
+    @controller = new ToursController(@p.sp)
     @controller.on 'results', (results) =>
       @panel results.panel
-    @controller.on 'index', () =>
-      @panel new TourPanel(@sp, 0)
+    @controller.on 'index', (results) =>
+      # FIXME FIMXE
+      @panel @p
 
   resize: ->
     # FIXME

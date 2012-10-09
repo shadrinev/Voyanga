@@ -4,7 +4,13 @@ var SearchPanel,
 
 SearchPanel = (function() {
 
-  function SearchPanel() {
+  function SearchPanel(hideCalendar) {
+    var _this = this;
+    if (hideCalendar == null) {
+      hideCalendar = true;
+    }
+    this.afterRender = __bind(this.afterRender, this);
+
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
 
     this.showCalendar = __bind(this.showCalendar, this);
@@ -17,9 +23,8 @@ SearchPanel = (function() {
 
     this.togglePanel = __bind(this.togglePanel, this);
 
-    var _this = this;
-    this.minimized = ko.observable(false);
-    this.minimizedCalendar = ko.observable(true);
+    this.minimized = ko.observable(!hideCalendar);
+    this.minimizedCalendar = ko.observable(hideCalendar);
     this.calendarHidden = ko.observable(this.minimizedCalendar);
     this.calendarShadow = ko.observable(this.minimizedCalendar);
     this.oldCalendarState = this.minimizedCalendar();
@@ -56,6 +61,7 @@ SearchPanel = (function() {
     heightCalendar1 = $('.calenderWindow').height();
     heightCalendar2 = heightSubHead;
     if (!minimizedCalendar) {
+      ResizeAvia();
       this.calendarHidden(false);
       $('.calenderWindow .calendarSlide').animate({
         'top': '0px'
@@ -64,6 +70,7 @@ SearchPanel = (function() {
         'height': '341px'
       }, speed);
     } else {
+      ResizeAvia();
       this.calendarShadow(true);
       $('.calenderWindow .calendarSlide').animate({
         'top': '-341px'
@@ -109,6 +116,10 @@ SearchPanel = (function() {
       trigger: true
     });
     return this.minimizedCalendar(true);
+  };
+
+  SearchPanel.prototype.afterRender = function() {
+    throw "Implement me";
   };
 
   return SearchPanel;

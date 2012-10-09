@@ -30,9 +30,6 @@ class Application extends Backbone.Router
 
     @fakoPanel = ko.observable result
 
-    @tourPanelSet = new TourPanelSet()
-    @panels = @tourPanelSet.panels
-
     @panel = ko.computed =>
       am = @activeModuleInstance()
       if am
@@ -64,14 +61,20 @@ class Application extends Backbone.Router
     @activeModule.subscribe @slider.handler
 
   initCalendar: =>
-    if (!@calendarInitialized)
-      new Calendar(@fakoPanel)
-      @calendarInitialized = true
+    throw "Deprecated"
+
+    #if (!@calendarInitialized)
+    #  new Calendar(@fakoPanel)
+    #  @calendarInitialized = true
+
+  reRenderCalendar:(elements) =>
+    VoyangaCalendarStandart.init @fakoPanel, elements[1]
 
   render: (data, view)=>
 #    $('#loadWrapBg').show()
     @viewData(data)
     @_view(view)
+    $(window).resize()
     
 
   # Register routes from controller
@@ -131,10 +134,6 @@ class Application extends Backbone.Router
   mapRendered: (elem) =>
     console.log "Map Rendered"
     $('.slideTours').find('.active').find('.triangle').animate({'top' : '-16px'}, 200);
-    setTimeout ()->
-      ResizeAvia()
-    , 3000
-
 
   isNotEvent: =>
     !@isEvent();
@@ -162,5 +161,4 @@ $ ->
   console.time "Rendering"
   ko.applyBindings(app)
   ko.processAllDeferredBindingUpdates()
-  app.initCalendar()
   console.timeEnd "Rendering"

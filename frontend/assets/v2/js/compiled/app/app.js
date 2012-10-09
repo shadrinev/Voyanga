@@ -20,6 +20,8 @@ Application = (function(_super) {
 
     this.render = __bind(this.render, this);
 
+    this.reRenderCalendar = __bind(this.reRenderCalendar, this);
+
     this.initCalendar = __bind(this.initCalendar, this);
 
     var result,
@@ -54,8 +56,6 @@ Application = (function(_super) {
       afterRender: function() {}
     };
     this.fakoPanel = ko.observable(result);
-    this.tourPanelSet = new TourPanelSet();
-    this.panels = this.tourPanelSet.panels;
     this.panel = ko.computed(function() {
       var am;
       am = _this.activeModuleInstance();
@@ -83,15 +83,17 @@ Application = (function(_super) {
   }
 
   Application.prototype.initCalendar = function() {
-    if (!this.calendarInitialized) {
-      new Calendar(this.fakoPanel);
-      return this.calendarInitialized = true;
-    }
+    throw "Deprecated";
+  };
+
+  Application.prototype.reRenderCalendar = function(elements) {
+    return VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
   };
 
   Application.prototype.render = function(data, view) {
     this.viewData(data);
-    return this._view(view);
+    this._view(view);
+    return $(window).resize();
   };
 
   Application.prototype.register = function(prefix, module, isDefault) {
@@ -154,12 +156,9 @@ Application = (function(_super) {
 
   Application.prototype.mapRendered = function(elem) {
     console.log("Map Rendered");
-    $('.slideTours').find('.active').find('.triangle').animate({
+    return $('.slideTours').find('.active').find('.triangle').animate({
       'top': '-16px'
     }, 200);
-    return setTimeout(function() {
-      return ResizeAvia();
-    }, 3000);
   };
 
   Application.prototype.isNotEvent = function() {
@@ -196,6 +195,5 @@ $(function() {
   console.time("Rendering");
   ko.applyBindings(app);
   ko.processAllDeferredBindingUpdates();
-  app.initCalendar();
   return console.timeEnd("Rendering");
 });

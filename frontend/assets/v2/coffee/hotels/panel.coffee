@@ -1,17 +1,13 @@
 class HotelsPanel extends SearchPanel
   constructor: ->
     @template = 'hotels-panel-template'
-    @peopleSelector = 'roomers-template'
-    # translates our flat rooms array to two array as per our view
-    # essentially just provides ViewModel for @rooms field
     super()
     @sp = new HotelsSearchParams()
     @calendarHidden = ko.observable true
     @city = @sp.city
     @checkIn = @sp.checkIn
     @checkOut = @sp.checkOut
-    @rooms = @sp.rooms
-    @roomsView = @sp.roomsView
+    @peopleSelectorVM = new HotelPeopleSelector @sp
     @cityReadable = ko.observable()
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
@@ -43,17 +39,26 @@ class HotelsPanel extends SearchPanel
       
     @calendarValue = ko.computed =>
       twoSelect: true
+      hotels: true
       from: @checkIn()
       to: @checkOut()
-
-    @afterRender = () =>
-      $ =>
-        @sp.rooms()[0].afterRender()
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
 
+  checkInHtml: =>
+    if @checkIn()
+      return dateUtils.formatHtmlDayShortMonth @checkIn()
+    return ''
+
+  checkOutHtml: =>
+    if @checkOut()
+      return dateUtils.formatHtmlDayShortMonth @checkOut()
+    return ''
+
+  haveDates: =>
+    return @checkOut() && @checkIn()
 
   # FIXME decouple!
   navigateToNewSearch: ->
@@ -66,3 +71,5 @@ class HotelsPanel extends SearchPanel
       @checkIn values[0]
       if values.length > 1
         @checkOut values[1]
+  afterRender: =>
+    

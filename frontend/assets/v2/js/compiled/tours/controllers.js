@@ -19,7 +19,7 @@ ToursController = (function() {
 
     this.api = new ToursAPI;
     this.routes = {
-      '/search': this.searchAction,
+      '/search/*rest': this.searchAction,
       '': this.indexAction
     };
     this.key = "tours_10";
@@ -36,6 +36,7 @@ ToursController = (function() {
     });
     eventSet = new EventSet(events);
     console.log("EVENT: eventset = ", eventSet);
+    this.trigger("index");
     this.render('index', eventSet);
     return ResizeAvia();
   };
@@ -43,8 +44,11 @@ ToursController = (function() {
   ToursController.prototype.searchAction = function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    args[0] = exTrim(args[0], '/');
+    args = args[0].split('/');
     window.voyanga_debug("TOURS: Invoking searchAction", args);
-    return this.api.search(this.handleResults);
+    this.searchParams.fromList(args);
+    return this.api.search(this.searchParams.url(), this.handleResults);
   };
 
   ToursController.prototype.handleResults = function(data) {

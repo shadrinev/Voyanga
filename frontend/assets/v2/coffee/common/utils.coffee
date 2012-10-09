@@ -64,6 +64,10 @@ dateUtils=
     result+= SHORT_MONTHS[date.getMonth()]
 
   formatDayMonthWeekday: (date) ->
+    console.log "formatDayMonthWeekday", date
+    if !date.getDate()
+      #moment.js date
+      date = date.toDate()
     result = "<b>"
     result+= date.getDate()
     result+= "</b> "
@@ -105,10 +109,7 @@ Utils =
     else
       return dateIsoString
 
-  scrollTo: (selector)->
-    if typeof(selector) == "string"
-      oPos = $(selector).offset()
-    else
-      oPos = {}
-      oPos.top = selector
-    $("html,body").animate({'scrollTop':oPos.top})
+exTrim = (str, charlist) ->
+  charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
+  re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g")
+  str.replace re, ""

@@ -4,7 +4,7 @@
   </div>
 </script>
 <script type="text/html" id="hotels-info-inner">
-  <a href="#back" data-bind="click: back">НАЗАД</a>
+  <a href="#back" data-bind="click: back" class="backToBack">Назад к результатам поиска</a>
   <div class="title">
     <h1 data-bind="text: hotelName">Рэдиссон Соня Отель</h1>
     <div class="rating" data-bind="visible: rating">

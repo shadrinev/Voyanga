@@ -1,56 +1,93 @@
 class TourPanelSet
   constructor: ->
+    _.extend @, Backbone.Events
+
     window.voyanga_debug 'Init of TourPanelSet'
 
+    @template = 'tour-panel-template'
     @sp = new TourSearchParams()
 
     @startCity = @sp.startCity
     @startCityReadable = ko.observable ''
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
-
-    @panels = ko.observableArray [new TourPanel(@sp, 0)]
+    @panels = ko.observableArray []
     @i = 0
+    @addPanel()
+    @activeCalendarPanel = ko.observable @panels()[0]
 
-  isFirst: =>
-    @i++ == 0
+    @height = ko.computed =>
+      70 * @panels().length + 'px'
 
-  isLast: =>
-    (@i+1) == @panels.length
+    @isMaxReached = ko.computed =>
+      @panels().length > 6
 
-  addPanel: =>
-    @panels.push new TourPanel(@sp, @i)
+    @calendarValue = ko.computed =>
+      twoSelect: true
+      hotels: true
+      from: @activeCalendarPanel().checkIn()
+      to: @activeCalendarPanel().checkOut()
 
-class TourPanel extends SearchPanel
-  constructor: (sp, ind) ->
-    @template = 'tour-panel-template'
-    window.voyanga_debug "TourPanel created"
-    super()
+    @formFilled = ko.computed =>
+      isFilled = true
 
-    @rooms = sp.rooms
-    @roomsView = ko.computed =>
-      result = []
-      current = []
-      for item in @rooms()
-        if current.length == 2
-          result.push current
-        current = []
-        current.push item
-        result.push current
+      _.each @panels(), (panel) ->
+        isFilled &&= panel.formFilled()
+
+      console.log 'IS FILLED ', isFilled
+
+      result = @startCity && isFilled
       return result
 
-    @calendarHidden = true
+  deletePanel: (elem) =>
+    @sp.destinations.remove(elem.city)
+    @panels.remove(elem)
+    _.last(@panels()).isLast(true)
 
-    @afterRender = () =>
-      $ =>
-        @rooms()[0].afterRender()
+  isFirst: =>
+    @i == 1
 
-    @addRoom = () =>
-      if @rooms().length == 4
-        return
-      @rooms.push new Roomers()
+  addPanel: =>
+    @sp.destinations.push new DestinationSearchParams()
+    if _.last(@panels())
+      _.last(@panels()).isLast(false)
+    newPanel = new TourPanel(@sp, @i, @i==0)
+    newPanel.on "tourPanel:showCalendar", (args...) =>
+      @showPanelCalendar(args)
+    newPanel.on "tourPanel:hasFocus", (args...) =>
+      @showPanelCalendar(args)
+    @panels.push newPanel
+    @i = @panels().length
+    VoyangaCalendarStandart.clear()
 
-    @city = sp.destinations()[0].city
+  showPanelCalendar: (args) =>
+    VoyangaCalendarStandart.clear()
+    @activeCalendarPanel  args[0]
+    console.log 'showPanelCalendar', args
+
+  # calendar handler
+  setDate: (values) =>
+    console.log 'Calendar selected:', values
+    if values && values.length
+      @activeCalendarPanel().checkIn values[0]
+      if values.length > 1
+        @activeCalendarPanel().checkOut values[1]
+
+class TourPanel extends SearchPanel
+  constructor: (sp, ind, isFirst) ->
+    window.voyanga_debug "TourPanel created"
+    super(isFirst)
+
+    _.extend @, Backbone.Events
+
+    @hasfocus = ko.observable false
+    @sp = sp
+    @isLast = ko.observable true
+    @peopleSelectorVM = new HotelPeopleSelector sp
+    @destinationSp = _.last(sp.destinations());
+    @city = @destinationSp.city
+    @checkIn = @destinationSp.dateFrom
+    @checkOut = @destinationSp.dateTo
     @cityReadable = ko.observable ''
     @cityReadableGen = ko.observable ''
     @cityReadableAcc = ko.observable ''
@@ -58,27 +95,27 @@ class TourPanel extends SearchPanel
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
 
-    @calendarValue = ko.computed =>
-      twoSelect: false
-      from: false
-
     @formFilled = ko.computed =>
-      result = @startCity
+      result = @city() && @checkIn() && @checkOut()
       return result
 
     @maximizedCalendar = ko.computed =>
-      @city().length>0
+      @city().length > 0
 
     @calendarText = ko.computed =>
       result = "Выберите дату поездки "
       return result
 
-  # calendar handler
-  setDate: (values)=>
-    if values.length
-      @departureDate values[0]
+    @hasfocus.subscribe (newValue) =>
+      console.log "HAS FOCUS", @
+      @trigger "tourPanel:hasFocus", @
 
-  # FIXME decouple!
+    @city.subscribe (newValue) =>
+      @showCalendar()
+
+  handlePanelSubmit: =>
+    app.navigate @sp.getHash(), {trigger: true}
+
   navigateToNewSearch: ->
     @handlePanelSubmit()
     @minimizedCalendar(true)
@@ -117,6 +154,23 @@ class TourPanel extends SearchPanel
         opacity: "1"
       , 300, ->
         $(this).hide()
+
+  showCalendar: =>
+    $('.calenderWindow').show()
+    @trigger "tourPanel:showCalendar", @
+    if @minimizedCalendar()
+      ResizeAvia()
+      @minimizedCalendar(false)
+
+  checkInHtml: =>
+    if @checkIn()
+      return dateUtils.formatHtmlDayShortMonth @checkIn()
+    return ''
+
+  checkOutHtml: =>
+    if @checkOut()
+      return dateUtils.formatHtmlDayShortMonth @checkOut()
+    return ''
 
 
 $(document).on "keyup change", "input.second-path", (e) ->

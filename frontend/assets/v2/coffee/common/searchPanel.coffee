@@ -1,7 +1,7 @@
 class SearchPanel
-  constructor: ->
-    @minimized = ko.observable false
-    @minimizedCalendar = ko.observable true
+  constructor: (hideCalendar = true) ->
+    @minimized = ko.observable !hideCalendar
+    @minimizedCalendar = ko.observable hideCalendar
     @calendarHidden = ko.observable @minimizedCalendar
     @calendarShadow = ko.observable @minimizedCalendar
 
@@ -33,10 +33,12 @@ class SearchPanel
     heightCalendar2 = heightSubHead
 
     if !minimizedCalendar
+      ResizeAvia()
       @calendarHidden(false)
       $('.calenderWindow .calendarSlide').animate {'top' : '0px'}
       $('.calenderWindow').animate {'height' : '341px'}, speed
     else
+      ResizeAvia()
       @calendarShadow(true)
       $('.calenderWindow .calendarSlide').animate {'top' : '-341px'}
       $('.calenderWindow').animate {'height' : '0px'}, speed, () =>
@@ -69,3 +71,7 @@ class SearchPanel
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
+
+
+  afterRender: =>
+    throw "Implement me"
