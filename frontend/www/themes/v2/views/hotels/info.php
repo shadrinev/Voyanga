@@ -4,13 +4,21 @@
   </div>
 </script>
 <script type="text/html" id="hotels-info-inner">
-  <a href="#back" data-bind="click: back" class="backToBack">Назад к результатам поиска</a>
-  <div class="title">
+  <a href="#back" data-bind="click: back" class="backToBack"><span>Назад к результатам поиска</span></a>
+  <div class="title hotel">
     <h1 data-bind="text: hotelName">Рэдиссон Соня Отель</h1>
-    <div class="rating" data-bind="visible: rating">
-      <span class="value" data-bind="text: rating">4,5</span>
-      <span class="text">рейтинг<br>отеля</span>
-    </div>
+    
+    <div class="rating"  data-bind="visible: rating">
+		<div class="textRating">
+	        <span class="value" data-bind="text: rating"></span>
+	        <span class="text">рейтинг<br>отеля</span>
+	    </div>
+	    <div class="descrRating">
+	    	<strong>4.5 из 5 баллов</strong>
+	    	Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
+	    </div>
+	</div>
+
 
     <div class="stars four" data-bind="attr: {class: 'stars ' + stars}"></div>
 
@@ -65,28 +73,6 @@
     Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра
   </div>
   <!-- END MAP -->
-  <!-- SERVICE -->
-  <!-- ko if: hasHotelGroupServices -->
-  <div class="service-in-hotel">
-    <h3>Услуги в отеле</h3>
-      <!-- ko foreach: hotelGroupServices -->
-      <h3 data-bind="text: groupName"></h3>
-      <ul data-bind="foreach: elements">
-          <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
-      </ul>
-      <!-- /ko -->
-  </div>
-  <!-- /ko -->
-
-  <!-- ko if: hasRoomAmenities -->
-  <div class="service-in-room">
-    <h3>Услуги в номере</h3>
-    <ul data-bind="foreach: roomAmenities">
-      <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
-    </ul>
-  </div>
-  <!-- /ko -->
-  <!-- END SERVICE -->
   <!-- INFO TRIP -->
   <div class="info-trip">
     <div class="date-trip">
@@ -132,14 +118,7 @@
       </div>
       <!-- /ko -->
     <!-- /ko -->
-
-      <div class="hotel-important-info">
-          <h3>Важная информация</h3>
-          <ul>
-              <li>Время заселения: <span data-bind="text: checkInTime"></span></li>
-          </ul>
-      </div>
-      <br /><br /><br /><br />
+    
     <!-- ko if: false -->
       <h3>Или подберите свое сочетание из всех возможных вариантов</h3>
       <div class="block-trip">
@@ -187,5 +166,42 @@
     <!-- /ko -->
   </div>
   <!-- END INFO TRIP -->
+  <!-- SERVICE -->
+  <!-- ko if: hasHotelGroupServices -->
+  <div class="service-in-hotel">
+    <h3>Услуги в отеле</h3>
+      <!-- ko foreach: hotelGroupServices -->
+      <table class="serviceInHotelTable">
+      	<tr>
+      		<td class="title">
+      			<h3><span class="icoService in-hotel"></span><span data-bind="text: groupName"></span></h3>
+      		</td>
+      		<td class="list">
+      			<ul data-bind="foreach: elements">
+			    	<li><span class="dotted"></span> <span data-bind="text: $data"></span></li>
+			    </ul>
+      		</td>
+      	</tr>
+      </table>
+      <!-- /ko -->
+  </div>
+  <!-- /ko -->
+
+  <!-- ko if: hasRoomAmenities -->
+  <div class="service-in-room">
+    <h3>Услуги в номере</h3>
+    <ul data-bind="foreach: roomAmenities">
+      <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
+    </ul>
+  </div>
+  <!-- /ko -->
+  <!-- END SERVICE -->
+  <div class="hotel-important-info">
+          <h3>Важная информация</h3>
+          <ul>
+              <li>Время заселения: <span data-bind="text: checkInTime"></span></li>
+          </ul>
+      </div>
+  <a href="#back" data-bind="click: back" class="backToBackBottom"><span>Назад к результатам поиска</span></a>
 </div>
 </script>

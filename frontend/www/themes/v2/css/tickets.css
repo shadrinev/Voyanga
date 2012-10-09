@@ -846,14 +846,24 @@
     z-index: 3;
     padding-bottom: 0px;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .rating:hover {
+.title.hotel .rating {
+    right: -5px;
+    padding: 9px;
+    position: absolute;
+    text-align: left;
+    top: -9px;
+    width: 120px;
+    z-index: 5;
+    padding-bottom: 0px;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .rating:hover, .title.hotel .rating:hover {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 5px;
     box-shadow: 0 1px 1px rgba(0, 1, 1, 0.3);
     cursor: pointer;
     padding-bottom: 9px;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .rating .textRating {
+.hotels-tickets .content .full-info .choose-a-hotel .rating .textRating,  .title.hotel .rating .textRating {
     line-height: 11px;
     margin-left: -9px;
     margin-right: -9px;
@@ -862,7 +872,10 @@
     padding-right: 9px;
     text-align: right;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .textRating {
+.title.hotel .rating .textRating {
+	text-align: left;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .textRating,  .title.hotel .rating:hover .textRating {
     border-bottom: 1px solid #BCBDC0;
     margin-left: -9px;
     margin-right: -9px;
@@ -870,28 +883,28 @@
     padding-left: 9px;
     line-height: 16px;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .rating .descrRating {
+.hotels-tickets .content .full-info .choose-a-hotel .rating .descrRating,  .title.hotel .rating .descrRating {
     display: none;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .descrRating {
+.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .descrRating,  .title.hotel .rating:hover .descrRating {
     display: block;
     padding-top: 9px;
     color: #616161;
     font-size: 11px;
     line-height: 15px;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .descrRating strong {
+.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .descrRating strong,  .title.hotel .rating:hover .descrRating strong {
 	display: block;
 	color: #202328;
 	font-size: 12px;
 	margin-bottom: 4px;
 }
 
-.hotels-tickets .content .full-info .choose-a-hotel .rating .value {
+.hotels-tickets .content .full-info .choose-a-hotel .rating .value,  .title.hotel .rating .value {
 	display: inline-block;
 	font-size: 20px;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .rating span.text {
+.hotels-tickets .content .full-info .choose-a-hotel .rating span.text,  .title.hotel .rating span.text {
 	display: inline-block;
 	line-height: 9px;
 	text-align: left;

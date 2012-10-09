@@ -31,7 +31,7 @@
 }
 #content {
 	padding-top: 35px;
-	padding-bottom: 5px;
+	padding-bottom: 65px;
 	margin: 0 auto;
 	position: relative;
 }
@@ -739,8 +739,6 @@
 #content > .title .rating, .hotel-details > .title .rating{
     color: #202328;
     font-size: 11px;
-    float: right;
-    text-align: right;
 }
 #content > .title .rating .value, .hotel-details > .title .rating .value {
     display: inline-block;
@@ -1025,6 +1023,8 @@
 .service-in-hotel {
 	margin-bottom: 20px;
 	padding-left: 0px;
+	background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
+	padding-top: 30px;
 }
 .service-in-room {
 	margin-bottom: 20px;
@@ -1035,7 +1035,6 @@
 	margin-bottom: -1px;
 }
 .service-in-hotel ul li, .service-in-room ul li {
-	border-bottom: 1px dotted;
     color: #4B4B4F;
     float: left;
     line-height: 20px;
@@ -1043,7 +1042,7 @@
     margin-right: 5%;
     padding-bottom: 3px;
     padding-top: 3px;
-    width: 45%;
+    width: 25%;
 }
 .service-in-hotel ul li .ico-wi-fi, 
 .service-in-hotel ul li .ico-glass, 
@@ -1055,8 +1054,10 @@
 }
 .info-trip {
 	padding-left: 0px;
-	background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
+	/*
+background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
 	padding-top: 30px;
+*/
 }
 .info-trip .date-trip {
 	font-size: 15px;
@@ -1813,4 +1814,40 @@ input.hotel-input {
 }
 .allTicketsDIV .aviaTickets {
 	width: 100%;
+}
+
+.backToBack, .backToBackBottom {
+    background: url("../images/btn-back-point.png") no-repeat scroll left center transparent;
+    color: #2E2F31;
+    left: -11px;
+    padding-left: 12px;
+    position: absolute;
+    top: 11px;
+    z-index: 5;
+}
+.backToBackBottom {
+	bottom: 40px;
+	top: auto;
+}
+.backToBack span, .backToBackBottom span {
+	border-bottom: 1px dotted;
+}
+
+.serviceInHotelTable {
+	width: 100%;
+	border-bottom: 1px dotted #4B4B4F;
+	margin-bottom: 13px;
+}
+.serviceInHotelTable tr td {
+	padding-bottom: 3px;
+}
+.serviceInHotelTable .title {
+	width: 210px;
+}
+.serviceInHotelTable .title h3 {
+	font-size: 14px;
+	color: #2f3134;
+}
+.serviceInHotelTable .list ul li {
+	list-style: disc;
 }

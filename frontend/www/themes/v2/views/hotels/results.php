@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="choose-a-hotel">
-                    <div class="rating hover"  data-bind="visible: rating">
+                    <div class="rating"  data-bind="visible: rating">
                     	<div class="textRating">
 	                        <span class="value" data-bind="text: rating"></span>
 	                        <span class="text">рейтинг<br>отеля</span>
