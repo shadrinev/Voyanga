@@ -1,5 +1,5 @@
 <script type="text/html" id="hotels-panel-template">
-  <table class="hotelTable panelTable">
+  <table class="hotelTable	">
     <tr>
       <td class="tdCity">
         <div class="data" data-bind="css: {active: haveDates}">
@@ -11,7 +11,7 @@
             </div>
         </div>
       </td>
-      <td class="tdPeopleHotel">
+      <td class="tdPeople">
         <span data-bind="template: {name: peopleSelectorVM.template, data: peopleSelectorVM}"></span>
       </td>
       <td class="btnTD">
