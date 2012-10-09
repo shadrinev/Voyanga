@@ -49,7 +49,7 @@
             var rightVisible = self.rightNavi.css('display') != 'none';
             if( ((self.fullWidth - self.leftPosition) > self.visibleWidth) && !rightVisible){
                 self.rightNavi.fadeIn();
-            }else if( ((self.fullWidth - self.leftPosition) < self.visibleWidth) && rightVisible ){
+            }else if( ((self.fullWidth - self.leftPosition) <= self.visibleWidth) && rightVisible ){
                 self.rightNavi.fadeOut();
             }
             var leftVisible = self.leftNavi.css('display') != 'none';
@@ -72,6 +72,7 @@
             self.transitionProcess = false;
             self.visibleWidth = self.obj.parent().width();
             self.testLimits();
+            $(window).resize(function(){self.onresize()});
 
             console.log(self);
         },
@@ -79,6 +80,9 @@
             var self = this;
             var pos = self.obj.find('li:eq('+self.indexPosition+')').position();
             //console.log(pos);
+            if( self.indexPosition > 0 && ((self.fullWidth - pos.left) < self.visibleWidth) ){
+                pos.left = self.fullWidth - self.visibleWidth;
+            }
             self.leftPosition = pos.left;
             self.obj.animate({'left' : (-pos.left) +'px'}, 200, function() {
                 self.transitionProcess = false;
@@ -101,6 +105,17 @@
                 self.transitionProcess = true;
                 self.indexPosition--;
                 self.transit();
+            }
+        },
+        onresize: function(){
+            var self = this;
+            var alignRight = (self.fullWidth - self.leftPosition) == self.visibleWidth;
+
+            self.visibleWidth = self.obj.parent().width();
+
+            if(alignRight){
+                self.leftPosition = self.fullWidth - self.visibleWidth;
+                self.obj.css({'left': (-self.leftPosition) + 'px'});
             }
         }
     }
