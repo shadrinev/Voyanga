@@ -847,7 +847,7 @@
 }
 .hotels-tickets .content .full-info .choose-a-hotel .rating:hover {
     background: none repeat scroll 0 0 #FFFFFF;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px;
     box-shadow: 0 1px 1px rgba(0, 1, 1, 0.3);
     cursor: pointer;
 }

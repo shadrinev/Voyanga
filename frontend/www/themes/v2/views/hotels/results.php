@@ -58,8 +58,8 @@
 	                        <span class="text">рейтинг<br>отеля</span>
                         </div>
                         <div class="descrRating">
-                        	<strong>4,5 из 5 баллов</strong>
-                        	Оценка основана на анализе 365 отзывов и комментариев в интернете среди посетителей отеля.
+                        	<strong>4.5 из 5 баллов</strong>
+                        	Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
                         </div>
                     </div>
                     <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours() ? $parents[2].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
