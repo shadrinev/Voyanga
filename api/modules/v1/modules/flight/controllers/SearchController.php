@@ -42,7 +42,7 @@ class SearchController extends ApiController
         }
         if (!empty($this->errors))
         {
-            $this->sendError(500, CVarDumper::dump($errors));
+            $this->sendError(200, CVarDumper::dump($errors));
         }
         else
         {
