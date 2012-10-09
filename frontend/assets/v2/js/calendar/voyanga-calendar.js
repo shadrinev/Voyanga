@@ -268,16 +268,12 @@ VoyangaCalendarClass = function(options){
     }
 }
 /**/
-VoyangaCalendarStandart = new VoyangaCalendarClass({jObj:'#voyanga-calendar',values:new Array()});
+VoyangaCalendarStandart = new VoyangaCalendarClass({values:new Array()});
 VoyangaCalendarStandart.initialized = false;
 
 VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
     init: function(){
         //console.log(this.monthArray);
-        console.log(this.jObj);
-        if(typeof this.jObj == 'string'){
-            this.jObj = $(this.jObj);
-        }
         var self = this;
         for(var i in this.monthArray){
             var leftPercent = this.monthArray[i].line / (this.totalLines - this.linesWidth);
@@ -533,8 +529,8 @@ VoyangaCalendarStandart.newValueHandler2 = function(newCalendarValue) {
 }
 
 
-VoyangaCalendarStandart.init = function (panel){
-
+VoyangaCalendarStandart.init = function (panel, element){
+    this.jObj =  $(element);
     VoyangaCalendarStandart.slider.jObj = this.jObj;
     this.panel = panel;
     panel.subscribe(function(newPanel) {
@@ -547,9 +543,6 @@ VoyangaCalendarStandart.init = function (panel){
 	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
 	}
     });
-    if(typeof this.jObj == 'string'){
-        this.jObj = $(this.jObj); 
-    }
     VoyangaCalendarStandart.generateGrid();
     VoyangaCalendarStandart.slider.init();
 }.bind(VoyangaCalendarStandart);

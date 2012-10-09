@@ -87,7 +87,7 @@ Yii::app()->clientScript->registerPackage('appJs');
                 <!-- END PANEL -->
             </div>
             <!-- END CENTER BLOCK -->
-	    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template'}" 	
+	    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template', afterRender: reRenderCalendar}" 	
              style="top: 70px; display: none;"></div>
         <!--====**********===-->
     </div>
