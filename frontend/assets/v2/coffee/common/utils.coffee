@@ -55,7 +55,8 @@ dateUtils=
     result+= SHORT_MONTHS[date.getMonth()]
 
   formatHtmlDayShortMonth: (date) ->
-    if !date.getDate
+    console.log "formatHtmlDayShortMonth", date
+    if !date.getDate()
       #moment.js date
       date = date.toDate()
     result = '<span class="f17">'
@@ -64,6 +65,10 @@ dateUtils=
     result+= SHORT_MONTHS[date.getMonth()]
 
   formatDayMonthWeekday: (date) ->
+    console.log "formatDayMonthWeekday", date
+    if !date.getDate()
+      #moment.js date
+      date = date.toDate()
     result = "<b>"
     result+= date.getDate()
     result+= "</b> "

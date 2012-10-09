@@ -36,6 +36,7 @@ ToursController = (function() {
     });
     eventSet = new EventSet(events);
     console.log("EVENT: eventset = ", eventSet);
+    this.trigger("index");
     this.render('index', eventSet);
     return ResizeAvia();
   };

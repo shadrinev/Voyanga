@@ -69,7 +69,8 @@ dateUtils = {
   },
   formatHtmlDayShortMonth: function(date) {
     var result;
-    if (!date.getDate) {
+    console.log("formatHtmlDayShortMonth", date);
+    if (!date.getDate()) {
       date = date.toDate();
     }
     result = '<span class="f17">';
@@ -79,6 +80,10 @@ dateUtils = {
   },
   formatDayMonthWeekday: function(date) {
     var result;
+    console.log("formatDayMonthWeekday", date);
+    if (!date.getDate()) {
+      date = date.toDate();
+    }
     result = "<b>";
     result += date.getDate();
     result += "</b> ";

@@ -55,8 +55,6 @@ Application = (function(_super) {
       afterRender: function() {}
     };
     this.fakoPanel = ko.observable(result);
-    this.tourPanelSet = new TourPanelSet();
-    this.panels = this.tourPanelSet.panels;
     this.panel = ko.computed(function() {
       var am;
       am = _this.activeModuleInstance();
@@ -93,7 +91,8 @@ Application = (function(_super) {
 
   Application.prototype.render = function(data, view) {
     this.viewData(data);
-    return this._view(view);
+    this._view(view);
+    return $(window).resize();
   };
 
   Application.prototype.register = function(prefix, module, isDefault) {
