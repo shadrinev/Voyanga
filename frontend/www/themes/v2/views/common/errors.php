@@ -34,3 +34,11 @@
     <div class="clear"></div>
   </div>
 </script>
+<script id="hotels-e404" type="text/html">
+  <div class="main-block">
+    <div id="content">
+      <h1>Hotels 404</h1>
+    </div>
+    <div class="clear"></div>
+  </div>
+</script>

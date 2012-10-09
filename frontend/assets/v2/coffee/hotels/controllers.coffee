@@ -25,6 +25,9 @@ class HotelsController
     if data.error
       @render 'e500', {msg: data.error}
       return
+    if !data.hotels
+      @render 'e404'
+      return
 
     stacked = new HotelsResultSet data.hotels, data.searchParams
     stacked.cacheId = data.cacheId

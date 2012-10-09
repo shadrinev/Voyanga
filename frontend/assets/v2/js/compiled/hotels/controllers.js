@@ -45,6 +45,10 @@ HotelsController = (function() {
       });
       return;
     }
+    if (!data.hotels) {
+      this.render('e404');
+      return;
+    }
     stacked = new HotelsResultSet(data.hotels, data.searchParams);
     stacked.cacheId = data.cacheId;
     stacked.postInit();
