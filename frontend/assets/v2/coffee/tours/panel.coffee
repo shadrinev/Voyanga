@@ -77,6 +77,7 @@ class TourPanel extends SearchPanel
 
     _.extend @, Backbone.Events
 
+    @hasfocus = ko.observable false
     @sp = sp
     @isLast = ko.observable true
     @peopleSelectorVM = new HotelPeopleSelector sp
@@ -101,6 +102,11 @@ class TourPanel extends SearchPanel
     @calendarText = ko.computed =>
       result = "Выберите дату поездки "
       return result
+
+    @hasfocus.subscribe (newValue) =>
+      console.log "HAS FOCUS", @
+      VoyangaCalendarStandart.clear()
+      @trigger "tourPanel:showCalendar", @
 
     @city.subscribe (newValue) =>
       @showCalendar()
