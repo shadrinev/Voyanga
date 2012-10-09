@@ -14,7 +14,7 @@
       <td class="tdPeople">
         <span data-bind="template: {name: peopleSelectorVM.template, data: peopleSelectorVM}"></span>
       </td>
-      <td class="btnTD">
+      <td class="tdButton">
         <a class="btn-find" data-bind="click: navigateToNewSearch, visible: formFilled">Найти</a>
       </td>
     </tr>
