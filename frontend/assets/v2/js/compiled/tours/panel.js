@@ -38,7 +38,6 @@ TourPanelSet = (function() {
       return _this.panels().length > 6;
     });
     this.calendarValue = ko.computed(function() {
-      console.log("COMPUTED");
       return {
         twoSelect: true,
         hotels: true,

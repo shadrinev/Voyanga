@@ -23,7 +23,6 @@ class TourPanelSet
       @panels().length > 6
 
     @calendarValue = ko.computed =>
-      console.log "COMPUTED"
       twoSelect: true
       hotels: true
       from: @activeCalendarPanel().checkIn()

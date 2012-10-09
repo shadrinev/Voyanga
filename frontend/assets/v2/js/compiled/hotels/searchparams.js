@@ -37,8 +37,7 @@ SpRoom = (function() {
       if (_this.ages().length < newValue) {
         _results = [];
         for (i = _j = 0, _ref1 = newValue - _this.ages().length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
-          _this.ages.push(ko.observable(12));
-          _results.push(console.log("$# PUSHING", i));
+          _results.push(_this.ages.push(ko.observable(12)));
         }
         return _results;
       } else if (_this.ages().length > newValue) {

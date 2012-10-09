@@ -14,7 +14,6 @@ class SpRoom
       if @ages().length < newValue
         for i in [0..(newValue-@ages().length-1)]
           @ages.push ko.observable 12
-          console.log "$# PUSHING", i
       else if @ages().length > newValue
         @ages.splice(newValue)
     ko.processAllDeferredBindingUpdates()

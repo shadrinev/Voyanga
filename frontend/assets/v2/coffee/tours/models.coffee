@@ -329,6 +329,7 @@ class TourSearchParams extends SearchParams
       parts.push destination.city()
       parts.push moment(destination.dateFrom()).format('D.M.YYYY')
       parts.push moment(destination.dateTo()).format('D.M.YYYY')
+    parts.push 'rooms'
     _.each @rooms(), (room) ->
       parts.push room.getHash()
     console.log 'PARTS: ', parts
@@ -339,18 +340,25 @@ class TourSearchParams extends SearchParams
   fromList: (data)->
     window.voyanga_debug "Restoring TourSearchParams from list"
     @startCity data[0]
-    @returnBack data[1]
-    j = 0
-    for i in [4..data.length-2] by 3
+#    @returnBack data[1]
+    # FIXME REWRITE ME
+    doingrooms = false
+    for i in [1..data.length-2] by 3
+      if data[i] == 'rooms'
+        break
+      console.log data[i], data[i+1], data[i+2]
       destination = new DestinationSearchParams()
       destination.city(data[i])
       destination.dateFrom(moment(data[i+1], 'D.M.YYYY').toDate())
       destination.dateTo(moment(data[i+2], 'D.M.YYYY').toDate())
       @destinations.push destination
 
-    room = new SpRoom()
-    room.fromList(data.length-1)
-    @rooms.push room
+    i = i + 1
+    while i < data.length
+      room = new SpRoom()
+      room.fromList(data[i])
+      @rooms.push room
+      i++
     window.voyanga_debug 'Result', @
 
   fromObject: (data)->

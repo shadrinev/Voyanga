@@ -30,6 +30,9 @@ class Slider
 
   # handles app.activeModule changes
   handler: (newValue)=>
+    if !newValue
+      console.error('HANDLER RECIEVED EMPTY MODUEL NAME')
+      return
     activeLI = $('#h-' + newValue + '-slider')
     activeLIindex = activeLI.index()
     $('.btn').removeClass 'active'

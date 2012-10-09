@@ -528,6 +528,7 @@ TourSearchParams = (function(_super) {
       parts.push(moment(destination.dateFrom()).format('D.M.YYYY'));
       return parts.push(moment(destination.dateTo()).format('D.M.YYYY'));
     });
+    parts.push('rooms');
     _.each(this.rooms(), function(room) {
       return parts.push(room.getHash());
     });
@@ -538,21 +539,28 @@ TourSearchParams = (function(_super) {
   };
 
   TourSearchParams.prototype.fromList = function(data) {
-    var destination, i, j, room, _i, _ref;
+    var destination, doingrooms, i, room, _i, _ref;
     window.voyanga_debug("Restoring TourSearchParams from list");
     this.startCity(data[0]);
-    this.returnBack(data[1]);
-    j = 0;
-    for (i = _i = 4, _ref = data.length - 2; _i <= _ref; i = _i += 3) {
+    doingrooms = false;
+    for (i = _i = 1, _ref = data.length - 2; _i <= _ref; i = _i += 3) {
+      if (data[i] === 'rooms') {
+        break;
+      }
+      console.log(data[i], data[i + 1], data[i + 2]);
       destination = new DestinationSearchParams();
       destination.city(data[i]);
       destination.dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
       destination.dateTo(moment(data[i + 2], 'D.M.YYYY').toDate());
       this.destinations.push(destination);
     }
-    room = new SpRoom();
-    room.fromList(data.length - 1);
-    this.rooms.push(room);
+    i = i + 1;
+    while (i < data.length) {
+      room = new SpRoom();
+      room.fromList(data[i]);
+      this.rooms.push(room);
+      i++;
+    }
     return window.voyanga_debug('Result', this);
   };
 

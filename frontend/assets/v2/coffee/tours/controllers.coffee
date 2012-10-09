@@ -5,7 +5,7 @@ class ToursController
   constructor: (@searchParams)->
     @api = new ToursAPI
     @routes =
-      '/search' : @searchAction
+      '/search/*rest' : @searchAction
       '': @indexAction
     @key = "tours_10"
 
@@ -24,8 +24,8 @@ class ToursController
     ResizeAvia()
 
   searchAction: (args...)=>
+    args = args[0].split('/')
     window.voyanga_debug "TOURS: Invoking searchAction", args
-
     @searchParams.fromList(args)
     @api.search @searchParams.url(), @handleResults
 
