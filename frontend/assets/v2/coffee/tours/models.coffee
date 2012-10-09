@@ -36,14 +36,15 @@ class TourEntry
 
 class ToursAviaResultSet extends TourEntry
   constructor: (raw, sp)->
+    super
     @api = new AviaAPI
     @template = 'avia-results'
     @overviewTemplate = 'tours-overview-avia-ticket'
-    # FIXME
-    #new Searchparams...
     @panel = new AviaPanel()
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject sp
+    @panel.original_template = @panel.template
+    @panel.template = 'tours-panel-template'
     @results = ko.observable()
     @selection = ko.observable null
     @newResults raw, sp
@@ -137,6 +138,8 @@ class ToursHotelsResultSet extends TourEntry
     @panel = new HotelsPanel()
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject @searchParams
+    @panel.original_template = @panel.template
+    @panel.template = 'tours-panel-template'
     @overviewTemplate = 'tours-overview-hotels-ticket'
     @template = 'hotels-results'
 

@@ -56,7 +56,7 @@ dateUtils=
 
   formatHtmlDayShortMonth: (date) ->
     console.log "formatHtmlDayShortMonth", date
-    if !date.getDate()
+    if !date.getDate
       #moment.js date
       date = date.toDate()
     result = '<span class="f17">'

@@ -71,3 +71,7 @@ class SearchPanel
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
+
+
+  afterRender: =>
+    throw "Implement me"

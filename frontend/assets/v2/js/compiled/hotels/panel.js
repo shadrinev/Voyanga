@@ -8,6 +8,8 @@ HotelsPanel = (function(_super) {
   __extends(HotelsPanel, _super);
 
   function HotelsPanel() {
+    this.afterRender = __bind(this.afterRender, this);
+
     this.setDate = __bind(this.setDate, this);
 
     this.haveDates = __bind(this.haveDates, this);
@@ -108,6 +110,8 @@ HotelsPanel = (function(_super) {
       }
     }
   };
+
+  HotelsPanel.prototype.afterRender = function() {};
 
   return HotelsPanel;
 
