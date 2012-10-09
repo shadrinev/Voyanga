@@ -290,8 +290,9 @@ class TourSearchParams extends SearchParams
   constructor: ->
     super()
     @startCity = ko.observable 'LED'
-    @destinations = ko.observableArray [new DestinationSearchParams()]
+    @destinations = ko.observableArray []
     @rooms = ko.observableArray [new SpRoom()]
+    @returnBack = ko.observable 1
 
   url: ->
     result = 'tour/search?'
@@ -318,13 +319,12 @@ class TourSearchParams extends SearchParams
     key = @startCity()
     _.each @destinations(), (destination) ->
       key += destination.city() + destination.dateFrom() + destination.dateTo()
-    key += @adults()
-    key += @children()
-    key += @infants()
+    _.each @rooms(), (room) ->
+      key += room.getHash()
     return key
 
   getHash: ->
-    parts =  [@startCity()]
+    parts =  [@startCity(), @returnBack()]
     _.each @destinations(), (destination) ->
       parts.push destination.city()
       parts.push moment(destination.dateFrom()).format('D.M.YYYY')
@@ -332,37 +332,43 @@ class TourSearchParams extends SearchParams
     _.each @rooms(), (room) ->
       parts.push room.getHash()
     console.log 'PARTS: ', parts
-    hash = 'tour/search/' + parts.join('/') + '/'
+    hash = 'tours/search/' + parts.join('/') + '/'
     window.voyanga_debug "Generated hash for tour search", hash
     return hash
 
   fromList: (data)->
     window.voyanga_debug "Restoring TourSearchParams from list"
     @startCity data[0]
-    @adults data[1]
-    @children data[2]
-    @infants data[3]
+    @returnBack data[1]
     j = 0
-    for i in [4..data.length] by 3
-      @destinations[j] = new DestinationSearchParams()
-      @destinations[j].city(data[i])
-      @destinations[j].dateFrom(moment(data[i+1], 'D.M.YYYY').toDate())
-      @destinations[j].dateTo(moment(data[i+2], 'D.M.YYYY').toDate())
-      j++
+    for i in [4..data.length-2] by 3
+      destination = new DestinationSearchParams()
+      destination.city(data[i])
+      destination.dateFrom(moment(data[i+1], 'D.M.YYYY').toDate())
+      destination.dateTo(moment(data[i+2], 'D.M.YYYY').toDate())
+      @destinations.push destination
+
+    room = new SpRoom()
+    room.fromList(data.length-1)
+    @rooms.push room
+    window.voyanga_debug 'Result', @
 
   fromObject: (data)->
     window.voyanga_debug "Restoring TourSearchParams from object"
     console.log data
-    @adults data.adt
-    @children data.chd
-    @infants data.inf
-    j = 0
+
     _.each data.destinations, (destination) ->
-      @destinations[j] = new DestinationSearchParams()
-      @destinations[j].city(destination.city)
-      @destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate())
-      @destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate())
-      j++
+      destination = new DestinationSearchParams()
+      destination.city(destination.city)
+      destination.dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate())
+      destination.dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate())
+      @destinations.push destination
+
+    _.each data.rooms, (room) ->
+      room = new SpRoom()
+      @rooms.push @room.fromObject(room)
+
+    window.voyanga_debug 'Result', @
 
   removeItem: (item, event)=>
     event.stopPropagation()

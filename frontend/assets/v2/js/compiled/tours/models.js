@@ -479,8 +479,9 @@ TourSearchParams = (function(_super) {
     this.removeItem = __bind(this.removeItem, this);
     TourSearchParams.__super__.constructor.call(this);
     this.startCity = ko.observable('LED');
-    this.destinations = ko.observableArray([new DestinationSearchParams()]);
+    this.destinations = ko.observableArray([]);
     this.rooms = ko.observableArray([new SpRoom()]);
+    this.returnBack = ko.observable(1);
   }
 
   TourSearchParams.prototype.url = function() {
@@ -513,15 +514,15 @@ TourSearchParams = (function(_super) {
     _.each(this.destinations(), function(destination) {
       return key += destination.city() + destination.dateFrom() + destination.dateTo();
     });
-    key += this.adults();
-    key += this.children();
-    key += this.infants();
+    _.each(this.rooms(), function(room) {
+      return key += room.getHash();
+    });
     return key;
   };
 
   TourSearchParams.prototype.getHash = function() {
     var hash, parts;
-    parts = [this.startCity()];
+    parts = [this.startCity(), this.returnBack()];
     _.each(this.destinations(), function(destination) {
       parts.push(destination.city());
       parts.push(moment(destination.dateFrom()).format('D.M.YYYY'));
@@ -531,45 +532,45 @@ TourSearchParams = (function(_super) {
       return parts.push(room.getHash());
     });
     console.log('PARTS: ', parts);
-    hash = 'tour/search/' + parts.join('/') + '/';
+    hash = 'tours/search/' + parts.join('/') + '/';
     window.voyanga_debug("Generated hash for tour search", hash);
     return hash;
   };
 
   TourSearchParams.prototype.fromList = function(data) {
-    var i, j, _i, _ref, _results;
+    var destination, i, j, room, _i, _ref;
     window.voyanga_debug("Restoring TourSearchParams from list");
     this.startCity(data[0]);
-    this.adults(data[1]);
-    this.children(data[2]);
-    this.infants(data[3]);
+    this.returnBack(data[1]);
     j = 0;
-    _results = [];
-    for (i = _i = 4, _ref = data.length; _i <= _ref; i = _i += 3) {
-      this.destinations[j] = new DestinationSearchParams();
-      this.destinations[j].city(data[i]);
-      this.destinations[j].dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
-      this.destinations[j].dateTo(moment(data[i + 2], 'D.M.YYYY').toDate());
-      _results.push(j++);
+    for (i = _i = 4, _ref = data.length - 2; _i <= _ref; i = _i += 3) {
+      destination = new DestinationSearchParams();
+      destination.city(data[i]);
+      destination.dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
+      destination.dateTo(moment(data[i + 2], 'D.M.YYYY').toDate());
+      this.destinations.push(destination);
     }
-    return _results;
+    room = new SpRoom();
+    room.fromList(data.length - 1);
+    this.rooms.push(room);
+    return window.voyanga_debug('Result', this);
   };
 
   TourSearchParams.prototype.fromObject = function(data) {
-    var j;
     window.voyanga_debug("Restoring TourSearchParams from object");
     console.log(data);
-    this.adults(data.adt);
-    this.children(data.chd);
-    this.infants(data.inf);
-    j = 0;
-    return _.each(data.destinations, function(destination) {
-      this.destinations[j] = new DestinationSearchParams();
-      this.destinations[j].city(destination.city);
-      this.destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate());
-      this.destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate());
-      return j++;
+    _.each(data.destinations, function(destination) {
+      destination = new DestinationSearchParams();
+      destination.city(destination.city);
+      destination.dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate());
+      destination.dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate());
+      return this.destinations.push(destination);
     });
+    _.each(data.rooms, function(room) {
+      room = new SpRoom();
+      return this.rooms.push(this.room.fromObject(room));
+    });
+    return window.voyanga_debug('Result', this);
   };
 
   TourSearchParams.prototype.removeItem = function(item, event) {
