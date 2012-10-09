@@ -452,7 +452,7 @@
 .how-many-man .content + .content .num, .how-many-man .content + .content  + .content .num, .how-many-man .content + .content  + .content  .num {
 	display: block; position: absolute; top: 0px; left: 11px;
 }
-.hotelTable .how-many-man .popup {
+.how-many-man.hotel .popup {
 	height: auto;
 	border: none;
 	background: none;

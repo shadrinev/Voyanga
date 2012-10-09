@@ -39,7 +39,16 @@ HotelsController = (function() {
   HotelsController.prototype.handleResults = function(data) {
     var stacked;
     window.voyanga_debug("HOTELS: searchAction: handling results", data);
-    console.log('!!!!!!!!!!!!!!@@@@@@@@@@@@@');
+    if (data.error) {
+      this.render('e500', {
+        msg: data.error
+      });
+      return;
+    }
+    if (!data.hotels) {
+      this.render('e404');
+      return;
+    }
     stacked = new HotelsResultSet(data.hotels, data.searchParams);
     stacked.cacheId = data.cacheId;
     stacked.postInit();

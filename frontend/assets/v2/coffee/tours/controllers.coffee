@@ -32,6 +32,12 @@ class ToursController
 
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
+    if data.error
+#      if err=='404'
+#@render 'e404', {}
+#        return
+      @render 'e500', {msg: data.error}
+      return
 
     stacked = new ToursResultSet data
     @trigger "results", stacked
