@@ -42,9 +42,9 @@ class ApiController extends Controller
 
         // set the status
         $status_header = 'HTTP/1.1 ' . $status . ' ' . $this->_statusText;
-        header($status_header);
+        @header($status_header);
         // and the content type
-        header('Content-type: ' . $contentType);
+        @header('Content-type: ' . $contentType);
 
         $response = $this->data;
 

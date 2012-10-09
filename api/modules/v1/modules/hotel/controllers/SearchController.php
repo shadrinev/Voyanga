@@ -61,7 +61,7 @@ class SearchController extends ApiController
         }
         else
         {
-            $this->sendError(500, $variants['errorsDescriptions']);
+            $this->sendError(200, $variants['errorsDescriptions']);
         }
 
         $cacheId = $this->storeToCache($hotelSearchParams, $results);
