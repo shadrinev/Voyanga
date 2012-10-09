@@ -1,13 +1,22 @@
 class SpRoom
-  constructor: () ->
+  constructor: (@parent) ->
     @adults = ko.observable(1).extend({integerOnly: {min: 1, max:4}})
     @children = ko.observable(0).extend({integerOnly: {min: 0, max:4}})
     @ages = ko.observableArray()
+
+    @adults.subscribe (newValue)=>
+      if newValue + @children() > 4
+        @adults 4 - @children()
+      if (@parent.overall() - @adults() + newValue) > 9
+        @adults  9 - @parent.overall() + @adults()
 
     @children.subscribe (newValue)=>
       if newValue + @adults() > 4
         newValue = 4 - @adults()
         @children newValue
+      if (@parent.overall() - @children() + newValue) > 9
+        @children  9 - @parent.overall() + @children()
+
 
       if @ages().length == newValue
         return
@@ -18,19 +27,13 @@ class SpRoom
         @ages.splice(newValue)
       ko.processAllDeferredBindingUpdates()
 
-    @adults.subscribe (newValue)=>
-      if newValue + @children() > 4
-        @adults 4 - @children()
-      
-        
-
-
   fromList: (item) ->
     parts = item.split(':')
     @adults parts[0]
     @children parts[1]
-    for i in [0..@children]
-      @ages.push {age: ko.observable(parts[2+i]).extend {integerOnly: {min: 12, max:17}}}
+    # FIXME: FIXME FIXME
+#    for i in [0..@children]
+#      @ages.push {age: ko.observable(parts[2+i]).extend {integerOnly: {min: 12, max:17}}}
 
   fromObject: (item) ->
     @adults +item.adultCount
@@ -51,8 +54,14 @@ class HotelsSearchParams
     @city = ko.observable('')
     @checkIn = ko.observable(false)
     @checkOut = ko.observable(false)
-    @rooms = ko.observableArray [new SpRoom()]
-
+    @rooms = ko.observableArray [new SpRoom(@)]
+    @overall = ko.computed =>
+      result = 0
+      for room in @rooms()
+        result += room.adults()
+        result += room.children()
+      return result
+        
   getHash: =>
     parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
     for room in @rooms()

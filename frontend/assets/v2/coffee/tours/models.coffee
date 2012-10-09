@@ -291,7 +291,15 @@ class TourSearchParams extends SearchParams
     super()
     @startCity = ko.observable 'LED'
     @destinations = ko.observableArray []
-    @rooms = ko.observableArray [new SpRoom()]
+    # FIXME copy paste from hotel search params
+    @rooms = ko.observableArray [new SpRoom(@)]
+    @overall = ko.computed =>
+      result = 0
+      for room in @rooms()
+        result += room.adults()
+        result += room.children()
+      return result
+
     @returnBack = ko.observable 1
 
   url: ->
