@@ -14,9 +14,7 @@ class TourPanelSet
     @panels = ko.observableArray []
     @i = 0
     @addPanel()
-    @activeCalendarPanel = @panels()[0]
-    @checkIn = @activeCalendarPanel.checkIn
-    @checkOut = @activeCalendarPanel.checkOut
+    @activeCalendarPanel = ko.observable @panels()[0]
 
     @height = ko.computed =>
       70 * @panels().length + 'px'
@@ -27,8 +25,8 @@ class TourPanelSet
     @calendarValue = ko.computed =>
       twoSelect: true
       hotels: true
-      from: @checkIn()
-      to: @checkOut()
+      from: @activeCalendarPanel().checkIn()
+      to: @activeCalendarPanel().checkOut()
 
     @formFilled = ko.computed =>
       isFilled = true
@@ -56,21 +54,24 @@ class TourPanelSet
     newPanel = new TourPanel(@sp, @i, @i==0)
     newPanel.on "tourPanel:showCalendar", (args...) =>
       @showPanelCalendar(args)
+    newPanel.on "tourPanel:hasFocus", (args...) =>
+      @showPanelCalendar(args)
     @panels.push newPanel
     @i = @panels().length
     VoyangaCalendarStandart.clear()
 
   showPanelCalendar: (args) =>
-    @activeCalendarPanel = args[0]
+    VoyangaCalendarStandart.clear()
+    @activeCalendarPanel  args[0]
     console.log 'showPanelCalendar', args
 
   # calendar handler
   setDate: (values) =>
     console.log 'Calendar selected:', values
-    if (values)
-      @activeCalendarPanel.checkIn(values[0])
-      if (values[1])
-        @activeCalendarPanel.checkOut(values[1])
+    if values && values.length
+      @activeCalendarPanel().checkIn values[0]
+      if values.length > 1
+        @activeCalendarPanel().checkOut values[1]
 
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
@@ -79,6 +80,7 @@ class TourPanel extends SearchPanel
 
     _.extend @, Backbone.Events
 
+    @hasfocus = ko.observable false
     @sp = sp
     @isLast = ko.observable true
     @peopleSelectorVM = new HotelPeopleSelector sp
@@ -103,6 +105,10 @@ class TourPanel extends SearchPanel
     @calendarText = ko.computed =>
       result = "Выберите дату поездки "
       return result
+
+    @hasfocus.subscribe (newValue) =>
+      console.log "HAS FOCUS", @
+      @trigger "tourPanel:hasFocus", @
 
     @city.subscribe (newValue) =>
       @showCalendar()

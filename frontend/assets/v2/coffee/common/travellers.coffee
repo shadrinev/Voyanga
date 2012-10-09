@@ -158,10 +158,6 @@ class Roomers
   last: =>
     return @index+1 == @length
 
-  equals: (other)->
-    console.log "CALLED"
-    return @index == other.index
-
 # View Model for hotels people selector
 # FIXME ME move me somewhere
 class HotelPeopleSelector extends PeopleSelector
@@ -187,7 +183,9 @@ class HotelPeopleSelector extends PeopleSelector
   addRoom: =>
     if @sp.rooms().length == 4
       return
-    @sp.rooms.push new SpRoom()
+    if @sp.overall() > 8
+      return
+    @sp.rooms.push new SpRoom(@sp)
 
 
   removeRoom: (roomer)=>

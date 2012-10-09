@@ -972,11 +972,14 @@
 	/* width: 100%; */
 	overflow: hidden;
 	height: 170px;
+    position: relative;
 }
 .photo-slide-hotel > ul {
 	width: 10000px;
 	overflow: hidden;
 	height: 150px;
+    position: absolute;
+    left: 0px;
 }
 .photo-slide-hotel > ul > li {
 	float: left;
@@ -1211,24 +1214,24 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
     margin-bottom: 15px;
     margin-top: 15px;
 }
-.slide .left-navi {
+.photo-slide-hotel .left-navi {
 	position: absolute; top:0px; left: 0px;
 	width: 80px; height: 150px; cursor: pointer;
 	background: url(../images/navigation-slide.png) no-repeat left 0;
 	z-index: 900;
 }
-.slide .right-navi {
+.photo-slide-hotel .right-navi {
 	position: absolute; top:0px; right: 0px;
 	width: 80px; height: 150px; cursor: pointer;
 	background: url(../images/navigation-slide.png) no-repeat right 0;
 	z-index: 900;
 }
-.slide .left-opacity {
+.photo-slide-hotel .left-opacity {
 	position: absolute; top:0px; left: 0px;
 	width: 40px; height: 150px;
 	z-index: 800;
 }
-.slide .right-opacity {
+.photo-slide-hotel .right-opacity {
 	position: absolute; top:0px; right: 0px;
 	width: 40px; height: 150px;
 	z-index: 800;
@@ -1258,7 +1261,7 @@ input.hotel-input {
     left: 0;
     position: absolute;
     width: 100%;
-    z-index: 1;
+    z-index: 12;
 }
 .foot-menu {
     background: url("../images/hr-hor-footer.png") no-repeat scroll right top transparent;

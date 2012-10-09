@@ -477,10 +477,24 @@ TourSearchParams = (function(_super) {
 
   function TourSearchParams() {
     this.removeItem = __bind(this.removeItem, this);
+
+    var _this = this;
     TourSearchParams.__super__.constructor.call(this);
     this.startCity = ko.observable('LED');
-    this.destinations = ko.observableArray([new DestinationSearchParams()]);
-    this.rooms = ko.observableArray([new SpRoom()]);
+    this.destinations = ko.observableArray([]);
+    this.rooms = ko.observableArray([new SpRoom(this)]);
+    this.overall = ko.computed(function() {
+      var result, room, _i, _len, _ref;
+      result = 0;
+      _ref = _this.rooms();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        room = _ref[_i];
+        result += room.adults();
+        result += room.children();
+      }
+      return result;
+    });
+    this.returnBack = ko.observable(1);
   }
 
   TourSearchParams.prototype.url = function() {
@@ -488,20 +502,15 @@ TourSearchParams = (function(_super) {
       _this = this;
     result = 'tour/search?';
     params = [];
-    _params.push('start=' + this.startCity());
+    params.push('start=' + this.startCity());
     _.each(this.destinations(), function(destination, ind) {
       params.push('destinations[' + ind + '][city]=' + destination.city());
-      params.push('destinations[' + ind + '][dateFrom]=' + destination.dateFrom());
-      return params.push('destinations[' + ind + '][dateTo]=' + destination.dateTo());
+      params.push('destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY'));
+      return params.push('destinations[' + ind + '][dateTo]=' + moment(destination.dateTo()).format('D.M.YYYY'));
     });
-    params.push('rooms[0][adt]=' + this.adults());
-    params.push('rooms[0][chd]=' + this.children());
-    params.push('rooms[0][chdAge]=0');
-    if (this.infants > 0) {
-      params.push('rooms[0][cots]=1');
-    } else {
-      params.push('rooms[0][cots]=0');
-    }
+    _.each(this.rooms(), function(room, ind) {
+      return params.push(room.getUrl(ind));
+    });
     result += params.join("&");
     window.voyanga_debug("Generated search url for tours", result);
     return result;
@@ -513,63 +522,73 @@ TourSearchParams = (function(_super) {
     _.each(this.destinations(), function(destination) {
       return key += destination.city() + destination.dateFrom() + destination.dateTo();
     });
-    key += this.adults();
-    key += this.children();
-    key += this.infants();
+    _.each(this.rooms(), function(room) {
+      return key += room.getHash();
+    });
     return key;
   };
 
   TourSearchParams.prototype.getHash = function() {
     var hash, parts;
-    parts = [this.startCity()];
+    parts = [this.startCity(), this.returnBack()];
     _.each(this.destinations(), function(destination) {
       parts.push(destination.city());
       parts.push(moment(destination.dateFrom()).format('D.M.YYYY'));
       return parts.push(moment(destination.dateTo()).format('D.M.YYYY'));
     });
+    parts.push('rooms');
     _.each(this.rooms(), function(room) {
       return parts.push(room.getHash());
     });
-    console.log('PARTS: ', parts);
-    hash = 'tour/search/' + parts.join('/') + '/';
+    hash = 'tours/search/' + parts.join('/') + '/';
     window.voyanga_debug("Generated hash for tour search", hash);
     return hash;
   };
 
   TourSearchParams.prototype.fromList = function(data) {
-    var i, j, _i, _ref, _results;
+    var destination, doingrooms, i, room, _i, _ref;
     window.voyanga_debug("Restoring TourSearchParams from list");
     this.startCity(data[0]);
-    this.adults(data[1]);
-    this.children(data[2]);
-    this.infants(data[3]);
-    j = 0;
-    _results = [];
-    for (i = _i = 4, _ref = data.length; _i <= _ref; i = _i += 3) {
-      this.destinations[j] = new DestinationSearchParams();
-      this.destinations[j].city(data[i]);
-      this.destinations[j].dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
-      this.destinations[j].dateTo(moment(data[i + 2], 'D.M.YYYY').toDate());
-      _results.push(j++);
+    this.returnBack(data[1]);
+    doingrooms = false;
+    this.destinations([]);
+    this.rooms([]);
+    for (i = _i = 2, _ref = data.length; _i <= _ref; i = _i += 3) {
+      if (data[i] === 'rooms') {
+        break;
+      }
+      console.log(data[i], data[i + 1], data[i + 2]);
+      destination = new DestinationSearchParams();
+      destination.city(data[i]);
+      destination.dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
+      destination.dateTo(moment(data[i + 2], 'D.M.YYYY').toDate());
+      this.destinations.push(destination);
     }
-    return _results;
+    i = i + 1;
+    while (i < data.length) {
+      room = new SpRoom(this);
+      room.fromList(data[i]);
+      this.rooms.push(room);
+      i++;
+    }
+    return window.voyanga_debug('Result', this);
   };
 
   TourSearchParams.prototype.fromObject = function(data) {
-    var j;
     window.voyanga_debug("Restoring TourSearchParams from object");
     console.log(data);
-    this.adults(data.adt);
-    this.children(data.chd);
-    this.infants(data.inf);
-    j = 0;
-    return _.each(data.destinations, function(destination) {
-      this.destinations[j] = new DestinationSearchParams();
-      this.destinations[j].city(destination.city);
-      this.destinations[j].dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate());
-      this.destinations[j].dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate());
-      return j++;
+    _.each(data.destinations, function(destination) {
+      destination = new DestinationSearchParams();
+      destination.city(destination.city);
+      destination.dateFrom(moment(destination.dateFrom, 'D.M.YYYY').toDate());
+      destination.dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate());
+      return this.destinations.push(destination);
     });
+    _.each(data.rooms, function(room) {
+      room = new SpRoom(this);
+      return this.rooms.push(this.room.fromObject(room));
+    });
+    return window.voyanga_debug('Result', this);
   };
 
   TourSearchParams.prototype.removeItem = function(item, event) {

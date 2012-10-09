@@ -55,7 +55,6 @@ dateUtils=
     result+= SHORT_MONTHS[date.getMonth()]
 
   formatHtmlDayShortMonth: (date) ->
-    console.log "formatHtmlDayShortMonth", date
     if !date.getDate
       #moment.js date
       date = date.toDate()
@@ -109,3 +108,16 @@ Utils =
       return new Date(initArray[0],(initArray[1]-1),initArray[2])
     else
       return dateIsoString
+
+  scrollTo: (selector)->
+    if typeof(selector) == "string"
+      oPos = $(selector).offset()
+    else
+      oPos = {}
+      oPos.top = selector
+    $("html,body").animate({'scrollTop':oPos.top})
+
+exTrim = (str, charlist) ->
+  charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
+  re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g")
+  str.replace re, ""

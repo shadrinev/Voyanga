@@ -13,13 +13,13 @@
                             </div>
                             <div class="startInputTo">
                                 <input type="text" tabindex="-1" class="input-path" data-bind="blur: hideFromCityInput">
-                                <input type="text" placeholder="Санкт-Петербург" class="second-path" data-bind="blur: hideFromCityInput, autocomplete: {source:'city', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen}">
+                                <input type="text" placeholder="Санкт-Петербург" class="second-path" data-bind="blur: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen}">
                             </div>
                             <!-- /ko -->
                         </div>
-                        <div class="from" data-bind="css: {active: city()}">
+                        <div class="from" data-bind="css: {active: checkIn()}">
                             <input type="text" tabindex="-1" class="input-path">
-                            <input type="text" placeholder="Куда едем?" class="second-path" data-bind="click: hideFromCityInput, autocomplete: {source:'city', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}">
+                            <input type="text" placeholder="Куда едем?" class="second-path" data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}">
                             <div class="date" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}">
                             </div>
                             <div class="date" data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}">

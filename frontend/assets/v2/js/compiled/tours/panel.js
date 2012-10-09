@@ -30,9 +30,7 @@ TourPanelSet = (function() {
     this.panels = ko.observableArray([]);
     this.i = 0;
     this.addPanel();
-    this.activeCalendarPanel = this.panels()[0];
-    this.checkIn = this.activeCalendarPanel.checkIn;
-    this.checkOut = this.activeCalendarPanel.checkOut;
+    this.activeCalendarPanel = ko.observable(this.panels()[0]);
     this.height = ko.computed(function() {
       return 70 * _this.panels().length + 'px';
     });
@@ -43,8 +41,8 @@ TourPanelSet = (function() {
       return {
         twoSelect: true,
         hotels: true,
-        from: _this.checkIn(),
-        to: _this.checkOut()
+        from: _this.activeCalendarPanel().checkIn(),
+        to: _this.activeCalendarPanel().checkOut()
       };
     });
     this.formFilled = ko.computed(function() {
@@ -82,22 +80,28 @@ TourPanelSet = (function() {
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       return _this.showPanelCalendar(args);
     });
+    newPanel.on("tourPanel:hasFocus", function() {
+      var args;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      return _this.showPanelCalendar(args);
+    });
     this.panels.push(newPanel);
     this.i = this.panels().length;
     return VoyangaCalendarStandart.clear();
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
-    this.activeCalendarPanel = args[0];
+    VoyangaCalendarStandart.clear();
+    this.activeCalendarPanel(args[0]);
     return console.log('showPanelCalendar', args);
   };
 
   TourPanelSet.prototype.setDate = function(values) {
     console.log('Calendar selected:', values);
-    if (values) {
-      this.activeCalendarPanel.checkIn(values[0]);
-      if (values[1]) {
-        return this.activeCalendarPanel.checkOut(values[1]);
+    if (values && values.length) {
+      this.activeCalendarPanel().checkIn(values[0]);
+      if (values.length > 1) {
+        return this.activeCalendarPanel().checkOut(values[1]);
       }
     }
   };
@@ -123,6 +127,7 @@ TourPanel = (function(_super) {
     window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this, isFirst);
     _.extend(this, Backbone.Events);
+    this.hasfocus = ko.observable(false);
     this.sp = sp;
     this.isLast = ko.observable(true);
     this.peopleSelectorVM = new HotelPeopleSelector(sp);
@@ -146,6 +151,10 @@ TourPanel = (function(_super) {
       var result;
       result = "Выберите дату поездки ";
       return result;
+    });
+    this.hasfocus.subscribe(function(newValue) {
+      console.log("HAS FOCUS", _this);
+      return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
       return _this.showCalendar();

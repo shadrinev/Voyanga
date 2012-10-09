@@ -10,10 +10,14 @@ ToursModule = (function() {
 
   function ToursModule() {
     var _this = this;
-    this.panel = new TourPanelSet();
-    this.controller = new ToursController(this.panel.sp);
+    this.panel = ko.observable(null);
+    this.p = new TourPanelSet();
+    this.controller = new ToursController(this.p.sp);
     this.controller.on('results', function(results) {
       return _this.panel(results.panel);
+    });
+    this.controller.on('index', function(results) {
+      return _this.panel(_this.p);
     });
   }
 
