@@ -781,7 +781,7 @@
 	z-index: 1;
 }
 .hotels-tickets .content {
-	position: relative; z-index: 10;
+	position: relative; z-index: 3;
 	padding: 10px 0px 8px 0px;
 	height: 100%;
 }
@@ -810,14 +810,14 @@
     width: 117px;
 }
 .hotels-tickets .content .full-info .choose-a-hotel {
-	width: 135px; height: 117px;
+	width: 135px; height: 114px;
 	position: absolute;
 	top: 0px; right: 0px;
 	color: #202328;
 	font-size: 11px;
 }
 .hotels-tickets .content .full-info .choose-a-hotel .btn-cost {
-	position: absolute; top: 60px;
+	position: absolute; top: 50px;
 	width: 130px;
 }
 .hotels-tickets .content .full-info .choose-a-hotel .details {
@@ -827,9 +827,62 @@
 	border-bottom: 1px dashed;
 	line-height: 12px; bottom: -1px;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .rating {
-	text-align: right;
+.hotels-tickets .content .full-info .choose-a-hotel .details {
+    border-bottom: 1px dashed;
+    bottom: -1px;
+    color: #292D34;
+    display: inline-block;
+    font-size: 11px;
+    line-height: 12px;
+    position: absolute;
 }
+.hotels-tickets .content .full-info .choose-a-hotel .rating {
+    left: -5px;
+    padding: 9px;
+    position: absolute;
+    text-align: left;
+    top: -9px;
+    width: 132px;
+    z-index: 3;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .rating:hover {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 1px 1px rgba(0, 1, 1, 0.3);
+    cursor: pointer;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .rating .textRating {
+    margin-left: -9px;
+    margin-right: -9px;
+    padding-bottom: 5px;
+    padding-left: 9px;
+    padding-right: 9px;
+    text-align: right;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .textRating {
+    border-bottom: 1px solid #BCBDC0;
+    margin-left: -9px;
+    margin-right: -9px;
+    padding-bottom: 5px;
+    padding-left: 9px;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .rating .descrRating {
+    display: none;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .descrRating {
+    display: block;
+    padding-top: 9px;
+    color: #616161;
+    font-size: 11px;
+    line-height: 15px;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .rating:hover .descrRating strong {
+	display: block;
+	color: #202328;
+	font-size: 12px;
+	margin-bottom: 4px;
+}
+
 .hotels-tickets .content .full-info .choose-a-hotel .rating .value {
 	display: inline-block;
 	font-size: 20px;
@@ -853,7 +906,7 @@
 .description .place .street {
 	display: inline-block;
     height: 17px;
-    max-width: 365px;
+    max-width: 285px;
     overflow: hidden;
     padding-right: 20px;
     position: relative;
@@ -880,7 +933,7 @@
     letter-spacing: normal;
 }
 .description > .title > .stars {
-	margin-left: -8px;
+	margin-left: -6px;
 }
 
 .description .place .in-the-map {
@@ -962,6 +1015,24 @@
 .hotels-tickets .content .details ul li .items .float.first {
 	border: none;
 }
+
+.hotels-tickets .content .details ul li .items .float table {
+	width: 100%;
+}
+.hotels-tickets .content .details ul li .items .float table .tdOrigText {
+	width: 50%;
+	padding-left: 9px;
+}
+.hotels-tickets .content .details ul li .items .float table .textOriginal {
+	font-size: 11px;
+	font-style: italic;
+	color: #858585;
+	font-weight: normal;
+	overflow: hidden;
+	width: 100%;
+	display: block;
+	text-overflow: ellipsis;
+}
 .table-hotel-result {
 	width: 100%;
 }
@@ -980,16 +1051,9 @@
 	font-weight: bold;
 	color: #2174a3;
 	letter-spacing: 0.02em;
-	display: block;
-	float: left;
 	padding-left: 9px;
 }
-.hotels-tickets .content .details ul li .items .text .textOriginal {
-	font-size: 11px;
-	font-style: italic;
-	color: #858585;
-	font-weight: normal;
-}
+
 .hotels-tickets .content .details ul li .items .how-cost {
     display: inline-block;
     line-height: 19px;
@@ -1000,7 +1064,8 @@
 	font-weight: bold;
 }
 .hotels-tickets .content .details ul li .items .ico-breakfast {
-	margin-left: 10px;
+	margin-right: 5px;
+	vertical-align: middle;
 }
 .tab-ul {
 	position: absolute;

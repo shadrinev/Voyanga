@@ -9,9 +9,28 @@
 	width: 61px; height: 11px;
 }
 .ico-breakfast {
-	background: url(../images/ico.png) no-repeat 0px -81px;
-	width: 11px; height: 16px;
-	display: inline-block;
+    background: url("../images/ico.png") no-repeat scroll 0 -83px transparent;
+    display: inline-block;
+    height: 14px;
+    width: 12px;
+}
+.ico-breakfast-lunch {
+    background: url("../images/ico.png") no-repeat scroll 0 -97px transparent;
+    display: inline-block;
+    height: 15px;
+    width: 12px;
+}
+.ico-breakfast-dinner {
+    background: url("../images/ico.png") no-repeat scroll 0 -97px transparent;
+    display: inline-block;
+    height: 15px;
+    width: 12px;
+}
+.ico-breakfast-lunch-dinner {
+    background: url("../images/ico.png") no-repeat scroll 0 -97px transparent;
+    display: inline-block;
+    height: 15px;
+    width: 12px;
 }
 .ico-descr {
 	background: url(../images/ico.png) no-repeat -0px -23px;
