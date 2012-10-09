@@ -52,9 +52,15 @@
                     </div>
                 </div>
                 <div class="choose-a-hotel">
-                    <div class="rating"  data-bind="visible: rating">
-                        <span class="value" data-bind="text: rating"></span>
-                        <span class="text">рейтинг<br>отеля</span>
+                    <div class="rating hover"  data-bind="visible: rating">
+                    	<div class="textRating">
+	                        <span class="value" data-bind="text: rating"></span>
+	                        <span class="text">рейтинг<br>отеля</span>
+                        </div>
+                        <div class="descrRating">
+                        	<strong>4,5 из 5 баллов</strong>
+                        	Оценка основана на анализе 365 отзывов и комментариев в интернете среди посетителей отеля.
+                        </div>
                     </div>
                     <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours() ? $parents[2].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
                     <a class="details" data-bind="click: showDetails" href="#">Подробнее об отеле</a>
@@ -119,13 +125,27 @@
         <div class="items">
             <table class="table-hotel-result">
                 <tr>
-                    <td class="td-float">
-                        <div class="float" data-bind="foreach: rooms">
-                            <span class="text"><span data-bind="text: name">Стандартный двухместный номер</span><br /><span data-bind="text: nameNemo" class="textOriginal"></span></span>
-                            <!-- ko if: hasMeal -->
-                            <span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
-                            <!-- /ko -->
-                            <br>
+                    <td class="td-float" data-bind="foreach: rooms">
+                        <div class="float" >
+                        
+                        	<table>
+                        		<tr>
+                        			<td class="text" colspan="2">
+                        				<span data-bind="text: name">Стандартный двухместный номер</span>
+                        			</td>
+                        		</tr>
+                        		<tr>
+                        			<td class="tdOrigText">
+                        				<span data-bind="text: nameNemo" class="textOriginal"></span>
+                        			</td>
+                        			<td>
+                      				 	<!-- ko if: hasMeal -->
+			                            	<span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
+			                            <!-- /ko -->
+                        			</td>
+                        		</tr>
+                        	</table>
+                        	
                         </div>
                     </td>
                     <td class="td-cost">

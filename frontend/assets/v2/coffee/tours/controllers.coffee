@@ -25,10 +25,9 @@ class ToursController
 
   searchAction: (args...)=>
     window.voyanga_debug "TOURS: Invoking searchAction", args
-    # update search params with values in route
-    # tempoprary development cache
-    
-    @api.search @handleResults
+
+    @searchParams.fromList(args)
+    @api.search @searchParams.url(), @handleResults
 
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data

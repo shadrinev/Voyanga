@@ -47,6 +47,16 @@ TourPanelSet = (function() {
         to: _this.checkOut()
       };
     });
+    this.formFilled = ko.computed(function() {
+      var isFilled, result;
+      isFilled = true;
+      _.each(_this.panels(), function(panel) {
+        return isFilled && (isFilled = panel.formFilled());
+      });
+      console.log('IS FILLED ', isFilled);
+      result = _this.startCity && isFilled;
+      return result;
+    });
   }
 
   TourPanelSet.prototype.deletePanel = function(elem) {
@@ -66,7 +76,7 @@ TourPanelSet = (function() {
     if (_.last(this.panels())) {
       _.last(this.panels()).isLast(false);
     }
-    newPanel = new TourPanel(this.sp, this.i, this.isFirst());
+    newPanel = new TourPanel(this.sp, this.i, this.i === 0);
     newPanel.on("tourPanel:showCalendar", function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -106,6 +116,8 @@ TourPanel = (function(_super) {
 
     this.showCalendar = __bind(this.showCalendar, this);
 
+    this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
+
     var _this = this;
     window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this, isFirst);
@@ -122,7 +134,7 @@ TourPanel = (function(_super) {
     this.oldCalendarState = this.minimizedCalendar();
     this.formFilled = ko.computed(function() {
       var result;
-      result = _this.startCity;
+      result = _this.city() && _this.checkIn() && _this.checkOut();
       return result;
     });
     this.maximizedCalendar = ko.computed(function() {
@@ -134,6 +146,12 @@ TourPanel = (function(_super) {
       return result;
     });
   }
+
+  TourPanel.prototype.handlePanelSubmit = function() {
+    return app.navigate(this.sp.getHash(), {
+      trigger: true
+    });
+  };
 
   TourPanel.prototype.navigateToNewSearch = function() {
     this.handlePanelSubmit();

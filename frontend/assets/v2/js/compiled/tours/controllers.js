@@ -45,7 +45,8 @@ ToursController = (function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("TOURS: Invoking searchAction", args);
-    return this.api.search(this.handleResults);
+    this.searchParams.fromList(args);
+    return this.api.search(this.searchParams.url(), this.handleResults);
   };
 
   ToursController.prototype.handleResults = function(data) {
