@@ -54,11 +54,14 @@ class TourPanelSet
     newPanel = new TourPanel(@sp, @i, @i==0)
     newPanel.on "tourPanel:showCalendar", (args...) =>
       @showPanelCalendar(args)
+    newPanel.on "tourPanel:hasFocus", (args...) =>
+      @showPanelCalendar(args)
     @panels.push newPanel
     @i = @panels().length
     VoyangaCalendarStandart.clear()
 
   showPanelCalendar: (args) =>
+    VoyangaCalendarStandart.clear()
     @activeCalendarPanel  args[0]
     console.log 'showPanelCalendar', args
 
@@ -105,8 +108,7 @@ class TourPanel extends SearchPanel
 
     @hasfocus.subscribe (newValue) =>
       console.log "HAS FOCUS", @
-      VoyangaCalendarStandart.clear()
-      @trigger "tourPanel:showCalendar", @
+      @trigger "tourPanel:hasFocus", @
 
     @city.subscribe (newValue) =>
       @showCalendar()

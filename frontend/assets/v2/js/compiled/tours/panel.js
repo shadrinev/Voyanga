@@ -80,12 +80,18 @@ TourPanelSet = (function() {
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       return _this.showPanelCalendar(args);
     });
+    newPanel.on("tourPanel:hasFocus", function() {
+      var args;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      return _this.showPanelCalendar(args);
+    });
     this.panels.push(newPanel);
     this.i = this.panels().length;
     return VoyangaCalendarStandart.clear();
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
+    VoyangaCalendarStandart.clear();
     this.activeCalendarPanel(args[0]);
     return console.log('showPanelCalendar', args);
   };
@@ -148,8 +154,7 @@ TourPanel = (function(_super) {
     });
     this.hasfocus.subscribe(function(newValue) {
       console.log("HAS FOCUS", _this);
-      VoyangaCalendarStandart.clear();
-      return _this.trigger("tourPanel:showCalendar", _this);
+      return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
       return _this.showCalendar();

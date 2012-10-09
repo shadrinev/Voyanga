@@ -295,21 +295,17 @@ class TourSearchParams extends SearchParams
     @returnBack = ko.observable 1
 
   url: ->
+    console.log 'DESTINATIONS:', @destinations()
     result = 'tour/search?'
     params = []
-    _params.push 'start=' + @startCity()
+    params.push 'start=' + @startCity()
     _.each @destinations(), (destination, ind) =>
       params.push 'destinations[' + ind + '][city]=' + destination.city()
-      params.push 'destinations[' + ind + '][dateFrom]=' + destination.dateFrom()
-      params.push 'destinations[' + ind + '][dateTo]=' + destination.dateTo()
+      params.push 'destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY')
+      params.push 'destinations[' + ind + '][dateTo]=' + moment(destination.dateTo()).format('D.M.YYYY')
 
-    params.push 'rooms[0][adt]=' + @adults()
-    params.push 'rooms[0][chd]=' + @children()
-    params.push 'rooms[0][chdAge]=0'
-    if @infants>0
-      params.push 'rooms[0][cots]=1'
-    else
-      params.push 'rooms[0][cots]=0'
+    _.each @rooms, (room, ind) =>
+      params.push @rooms.getUrl(ind)
 
     result += params.join "&"
     window.voyanga_debug "Generated search url for tours", result
@@ -340,10 +336,11 @@ class TourSearchParams extends SearchParams
   fromList: (data)->
     window.voyanga_debug "Restoring TourSearchParams from list"
     @startCity data[0]
-#    @returnBack data[1]
+    @returnBack data[1]
     # FIXME REWRITE ME
     doingrooms = false
-    for i in [1..data.length-2] by 3
+    @destinations([])
+    for i in [2..data.length-2] by 3
       if data[i] == 'rooms'
         break
       console.log data[i], data[i+1], data[i+2]
