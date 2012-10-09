@@ -32,7 +32,7 @@ class SearchController extends ApiController
         if (empty($this->errors))
             $this->sendWithCorrectFormat($format, $results);
         else
-            $this->sendError(500, CVarDumper::dumpAsString($this->errors));
+            $this->sendError(200, CVarDumper::dumpAsString($this->errors));
     }
 
     private function buildSearchParams($start, $destinations, $rooms)

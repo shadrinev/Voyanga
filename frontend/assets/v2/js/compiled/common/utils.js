@@ -69,7 +69,6 @@ dateUtils = {
   },
   formatHtmlDayShortMonth: function(date) {
     var result;
-    console.log("formatHtmlDayShortMonth", date);
     if (!date.getDate) {
       date = date.toDate();
     }
@@ -129,6 +128,18 @@ Utils = {
     } else {
       return dateIsoString;
     }
+  },
+  scrollTo: function(selector) {
+    var oPos;
+    if (typeof selector === "string") {
+      oPos = $(selector).offset();
+    } else {
+      oPos = {};
+      oPos.top = selector;
+    }
+    return $("html,body").animate({
+      'scrollTop': oPos.top
+    });
   }
 };
 

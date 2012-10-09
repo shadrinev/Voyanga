@@ -9,7 +9,7 @@
     <h1 data-bind="text: hotelName">Рэдиссон Соня Отель</h1>
     <div class="rating" data-bind="visible: rating">
       <span class="value" data-bind="text: rating">4,5</span>
-      <span class="text">рейтинг<br>отеля</span>
+      <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
     </div>
 
     <div class="stars four" data-bind="attr: {class: 'stars ' + stars}"></div>
@@ -43,7 +43,7 @@
       </div>
       <!-- ko if: numPhotos > 0 -->
       <div class="photo-slide-hotel">
-        <ul data-bind="foreach: photos">
+        <ul data-bind="foreach: photos,photoSlider: photos">
           <li><a href="#" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="0"><img src="#" data-bind="attr:{src: largeUrl}"></a></li>
         </ul>
         Фотографии предоставлены отелями(<span data-bind="text: numPhotos"></span>).

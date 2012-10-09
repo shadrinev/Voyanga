@@ -55,10 +55,10 @@
                     <div class="rating hover"  data-bind="visible: rating">
                     	<div class="textRating">
 	                        <span class="value" data-bind="text: rating"></span>
-	                        <span class="text">рейтинг<br>отеля</span>
+	                        <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
                         </div>
                         <div class="descrRating">
-                        	<strong>4.5 из 5 баллов</strong>
+                        	<strong><span data-bind="text: rating"></span> из 5 баллов</strong>
                         	Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                     </ul>
                 </div>
                 <div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
-                    <a href="#" data-bind="click: showAllResults">Посмотреть все результаты</a>
+                    <a href="#" data-bind="click: showAllResults,text: showAllText(),attr:{class: isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
                 </div>
                 <span class="lv"></span>
                 <span class="rv"></span>
