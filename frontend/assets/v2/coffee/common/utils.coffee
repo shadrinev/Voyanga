@@ -109,6 +109,14 @@ Utils =
     else
       return dateIsoString
 
+  scrollTo: (selector)->
+    if typeof(selector) == "string"
+      oPos = $(selector).offset()
+    else
+      oPos = {}
+      oPos.top = selector
+    $("html,body").animate({'scrollTop':oPos.top})
+
 exTrim = (str, charlist) ->
   charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
   re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g")
