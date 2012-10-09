@@ -58,7 +58,7 @@ class HotelsPanel extends SearchPanel
     return ''
 
   haveDates: =>
-    reutn @checkOut() && @checkIn()
+    return @checkOut() && @checkIn()
 
   # FIXME decouple!
   navigateToNewSearch: ->
