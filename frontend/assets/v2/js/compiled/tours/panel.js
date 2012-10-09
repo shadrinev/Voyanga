@@ -122,6 +122,7 @@ TourPanel = (function(_super) {
     window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this, isFirst);
     _.extend(this, Backbone.Events);
+    this.hasfocus = ko.observable(false);
     this.sp = sp;
     this.isLast = ko.observable(true);
     this.peopleSelectorVM = new HotelPeopleSelector(sp);
@@ -145,6 +146,11 @@ TourPanel = (function(_super) {
       var result;
       result = "Выберите дату поездки ";
       return result;
+    });
+    this.hasfocus.subscribe(function(newValue) {
+      console.log("HAS FOCUS", _this);
+      VoyangaCalendarStandart.clear();
+      return _this.trigger("tourPanel:showCalendar", _this);
     });
     this.city.subscribe(function(newValue) {
       return _this.showCalendar();
