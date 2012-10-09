@@ -441,8 +441,6 @@ VoyangaCalendarStandart.onCellClick = function(obj){
     }
 
     if(this.values.length == 0){
-	    console.error("PUSING2");
-
         this.values.push(cellDate);
     } 
     VoyangaCalendarStandart.update(dontset);
