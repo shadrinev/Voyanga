@@ -295,7 +295,6 @@ class TourSearchParams extends SearchParams
     @returnBack = ko.observable 1
 
   url: ->
-    console.log 'DESTINATIONS:', @destinations()
     result = 'tour/search?'
     params = []
     params.push 'start=' + @startCity()
@@ -304,8 +303,8 @@ class TourSearchParams extends SearchParams
       params.push 'destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY')
       params.push 'destinations[' + ind + '][dateTo]=' + moment(destination.dateTo()).format('D.M.YYYY')
 
-    _.each @rooms, (room, ind) =>
-      params.push @rooms.getUrl(ind)
+    _.each @rooms(), (room, ind) =>
+      params.push room.getUrl(ind)
 
     result += params.join "&"
     window.voyanga_debug "Generated search url for tours", result
@@ -328,7 +327,7 @@ class TourSearchParams extends SearchParams
     parts.push 'rooms'
     _.each @rooms(), (room) ->
       parts.push room.getHash()
-    console.log 'PARTS: ', parts
+
     hash = 'tours/search/' + parts.join('/') + '/'
     window.voyanga_debug "Generated hash for tour search", hash
     return hash
@@ -340,7 +339,8 @@ class TourSearchParams extends SearchParams
     # FIXME REWRITE ME
     doingrooms = false
     @destinations([])
-    for i in [2..data.length-2] by 3
+    @rooms([])
+    for i in [2..data.length] by 3
       if data[i] == 'rooms'
         break
       console.log data[i], data[i+1], data[i+2]

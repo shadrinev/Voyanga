@@ -24,6 +24,7 @@ class ToursController
     ResizeAvia()
 
   searchAction: (args...)=>
+    args[0] = exTrim args[0], '/'
     args = args[0].split('/')
     window.voyanga_debug "TOURS: Invoking searchAction", args
     @searchParams.fromList(args)

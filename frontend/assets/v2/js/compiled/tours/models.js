@@ -487,7 +487,6 @@ TourSearchParams = (function(_super) {
   TourSearchParams.prototype.url = function() {
     var params, result,
       _this = this;
-    console.log('DESTINATIONS:', this.destinations());
     result = 'tour/search?';
     params = [];
     params.push('start=' + this.startCity());
@@ -496,8 +495,8 @@ TourSearchParams = (function(_super) {
       params.push('destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY'));
       return params.push('destinations[' + ind + '][dateTo]=' + moment(destination.dateTo()).format('D.M.YYYY'));
     });
-    _.each(this.rooms, function(room, ind) {
-      return params.push(_this.rooms.getUrl(ind));
+    _.each(this.rooms(), function(room, ind) {
+      return params.push(room.getUrl(ind));
     });
     result += params.join("&");
     window.voyanga_debug("Generated search url for tours", result);
@@ -528,7 +527,6 @@ TourSearchParams = (function(_super) {
     _.each(this.rooms(), function(room) {
       return parts.push(room.getHash());
     });
-    console.log('PARTS: ', parts);
     hash = 'tours/search/' + parts.join('/') + '/';
     window.voyanga_debug("Generated hash for tour search", hash);
     return hash;
@@ -541,7 +539,8 @@ TourSearchParams = (function(_super) {
     this.returnBack(data[1]);
     doingrooms = false;
     this.destinations([]);
-    for (i = _i = 2, _ref = data.length - 2; _i <= _ref; i = _i += 3) {
+    this.rooms([]);
+    for (i = _i = 2, _ref = data.length; _i <= _ref; i = _i += 3) {
       if (data[i] === 'rooms') {
         break;
       }

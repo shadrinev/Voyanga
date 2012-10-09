@@ -109,3 +109,8 @@ Utils =
       return new Date(initArray[0],(initArray[1]-1),initArray[2])
     else
       return dateIsoString
+
+exTrim = (str, charlist) ->
+  charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
+  re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g")
+  str.replace re, ""
