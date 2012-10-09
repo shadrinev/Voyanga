@@ -1257,7 +1257,7 @@ input.hotel-input {
     left: 0;
     position: absolute;
     width: 100%;
-    z-index: 1;
+    z-index: 12;
 }
 .foot-menu {
     background: url("../images/hr-hor-footer.png") no-repeat scroll right top transparent;

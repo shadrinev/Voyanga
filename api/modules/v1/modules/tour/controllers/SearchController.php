@@ -33,6 +33,7 @@ class SearchController extends ApiController
             $this->sendWithCorrectFormat($format, $results);
         else
             $this->sendError(200, CVarDumper::dumpAsString($this->errors));
+        Yii::app()->end();
     }
 
     private function buildSearchParams($start, $destinations, $rooms)

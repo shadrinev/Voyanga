@@ -2,7 +2,7 @@
     <div class="calendarSlide">
         <div class="innerCalendar">
             <h1 data-bind="text:fakoPanel().calendarText"></h1>
-            <a href='#' class="btnCloseCal" data-bind="click:fakoPanel().minimizeCalendar"></a>
+            <a href='#' class="btnCloseCal" data-bind="click:$data.minimizeCalendar"></a>
         </div>
         <div class="bg-Calendar">
             <div id='voyanga-calendar' class='hotel'>
