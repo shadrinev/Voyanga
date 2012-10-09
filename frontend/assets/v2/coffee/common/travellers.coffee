@@ -183,7 +183,9 @@ class HotelPeopleSelector extends PeopleSelector
   addRoom: =>
     if @sp.rooms().length == 4
       return
-    @sp.rooms.push new SpRoom()
+    if @sp.overall() > 8
+      return
+    @sp.rooms.push new SpRoom(@sp)
 
 
   removeRoom: (roomer)=>

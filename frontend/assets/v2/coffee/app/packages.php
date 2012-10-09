@@ -47,6 +47,7 @@
             'jquery.select.slider.js',
             //'jquery.slider.lib.js',
             'jquery.slider.js',
+            'jquery.photoslider.js',
             'photoslider.js',
             'loader.js',
             'index.js',
@@ -70,6 +71,7 @@
             'ko.bindings.priceslider.js',
             'ko.bindings.singleslider.js',
             'ko.bindings.slider.js',
+            'ko.bindings.photoslider.js',
             'ko.bindings.checkbox.js',
 
             'travellers.js',

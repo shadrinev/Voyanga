@@ -106,6 +106,8 @@ class HotelResult
     @numPhotos = 0
     @parent = parent
     @checkInTime = data.earliestCheckInTime
+    if @checkInTime
+      @checkInTime = @checkInTime.substr(0,@checkInTime.length - 3)
     # FIXME trollface
     @frontPhoto =
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png'
@@ -121,6 +123,15 @@ class HotelResult
     @rating = data.rating
     if @rating == '-'
       @rating = 0
+    @ratingName = ''
+    if 0 < @rating <= 2.5
+      @ratingName = "средний<br>отель"
+    else if 2.5 < @rating <= 4
+      @ratingName = "хороший<br>отель"
+    else if 4 < @rating < 4.8
+      @ratingName = "очень хороший<br>отель"
+    else if 4.8 <= @rating <= 5
+      @ratingName = "великолепный<br>отель"
     # coords
     @lat = data.latitude / 1
     @lng = data.longitude / 1
@@ -168,6 +179,12 @@ class HotelResult
         window.voyanga_debug('all results for hotel'.result)
       else window.voyanga_debug('all results for hotel zero')
       return result
+    @isShowAll = ko.observable(false)
+    @showAllText = ko.computed =>
+      if @isShowAll()
+        return 'Свернуть все результаты'
+      else
+        return 'Посмотреть все результаты'
     @push data
 
   push: (data) ->
@@ -193,20 +210,26 @@ class HotelResult
       return 0
 
   showPhoto: (fp,ev)=>
-    window.voyanga_debug('click info',fp,ev)
-    console.log(ev.target)
+    #window.voyanga_debug('click info',fp,ev)
+    #console.log(ev.target)
     #console.log($(ev.target).data())
     ind = $(ev.currentTarget).data('photo-index')
-    console.log(ind)
+    #console.log(ind)
     if !ind
       ind = 0
-    console.log(ind)
+    #console.log(ind)
     new PhotoBox(@photos,@hotelName,@stars,ind)
 
   showAllResults: (data,event)->
-    console.log(event)
-    $(event.target).parent().parent().find('.hidden-roomSets').show('fast')
-    $(event.target).parent().hide()
+    #console.log(event)
+    if @isShowAll()
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast')
+      #$(event.currentTarget).parent().hide()
+      @isShowAll(false)
+    else
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast')
+      #$(event.currentTarget).parent().hide()
+      @isShowAll(true)
 
   # FIXME copy-pasted from avia
   # Shows popup with detailed info about given result
@@ -403,6 +426,7 @@ class HotelResult
       @activeResultId room.resultId
 
     @trigger 'select', {roomSet: room, hotel: @}
+    Utils.scrollTo('.info-trip')
 
   smallMapUrl: =>
       base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
@@ -500,6 +524,7 @@ class HotelsResultSet
 
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
+    Utils.scrollTo('#content')
 
   getDateInterval: =>
     dateUtils.formatDayMonthInterval(@checkIn._d,@checkOut._d)
@@ -539,6 +564,12 @@ class HotelsResultSet
     @numResults data.length
 
     console.log(@data)
+    window.setTimeout(
+      =>
+        ifHeightMinAllBody()
+        scrolShowFilter()
+      , 50
+    )
     #ko.processAllDeferredBindingUpdates()
     # FIXME
     #ResizeAvia()

@@ -263,7 +263,10 @@ HotelPeopleSelector = (function(_super) {
     if (this.sp.rooms().length === 4) {
       return;
     }
-    return this.sp.rooms.push(new SpRoom());
+    if (this.sp.overall() > 8) {
+      return;
+    }
+    return this.sp.rooms.push(new SpRoom(this.sp));
   };
 
   HotelPeopleSelector.prototype.removeRoom = function(roomer) {
