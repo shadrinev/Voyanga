@@ -18,7 +18,7 @@ ToursModule = (function() {
       return _this.panel(results.panel);
     });
     this.controller.on('index', function() {
-      return _this.panel(new TourPanel(_this.sp, 0));
+      return _this.panel(new TourPanelSet());
     });
   }
 

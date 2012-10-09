@@ -11,7 +11,7 @@ class ToursModule
     @controller.on 'results', (results) =>
       @panel results.panel
     @controller.on 'index', () =>
-      @panel new TourPanel(@sp, 0)
+      @panel new TourPanelSet()
 
   resize: ->
     # FIXME

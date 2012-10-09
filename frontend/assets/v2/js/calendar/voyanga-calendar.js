@@ -457,7 +457,9 @@ VoyangaCalendarStandart.generateGrid = function(){
     dayToday.setHours(0);
     var self = this;
     var startMonth = firstDay.getMonth();
-    var tmpDate = getMonday(firstDay);
+    var firstDayOfMonth = new Date();
+    firstDayOfMonth.setFullYear(firstDay.getFullYear(), startMonth, 1);
+    var tmpDate = getMonday(firstDayOfMonth);
     var weekDay = this.getDay(tmpDate);
     var startDate = firstDay.getDate();
     var startYear = firstDay.getFullYear();
@@ -501,6 +503,11 @@ VoyangaCalendarStandart.generateGrid = function(){
     this.jObj.find('.dayCellVoyanga').click(function (e) {var obj = this; self.onCellClick(obj,e);});
 
     this.slider.totalLines = lineNumber;
+}
+
+VoyangaCalendarStandart.clear = function(){
+    VoyangaCalendarStandart.values = [];
+    VoyangaCalendarStandart.update(true);
 }
 
 VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {

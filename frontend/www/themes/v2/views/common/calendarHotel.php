@@ -5,8 +5,8 @@
             <a href='#' class="btnCloseCal" data-bind="click:fakoPanel().minimizeCalendar"></a>
         </div>
         <div class="bg-Calendar">
-            <div id='voyanga-calendar'>
-                <div class="weekDaysVoyanga" class='hotel'>
+            <div id='voyanga-calendar' class='hotel'>
+                <div class="weekDaysVoyanga">
                     <div class="weekDaysVoyangaInner">
                         <div class="weekDayVoyanga"><span>Понедельник</span></div>
                         <div class="weekDayVoyanga"><span>Вторник</span></div>

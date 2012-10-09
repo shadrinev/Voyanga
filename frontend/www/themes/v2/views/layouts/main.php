@@ -53,16 +53,12 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- BOARD IF WE ARE AT THE MAIN -->
     <!-- ko if: isEvent() -->
     <div class="panel-index">
-        <div class="board" data-bind="style: {height: $root.tourPanelSet.height}">
+        <div class="board" data-bind="style: {height: fakoPanel().height}">
             <div class="constructor">
                 <!-- BOARD CONTENT -->
-                <!-- ko foreach: panels -->
-                    <div class="board-content" data-bind="template: { name: $data.template, data: $data, afterRender: $data.afterRender }"></div>
-                <!-- /ko -->
+                    <div class="board-content" data-bind="template: { name: fakoPanel().template, data: fakoPanel(), afterRender: fakoPanel().afterRender }"></div>
                 <!-- END BOARD CONTENT -->
-
                 <div class="constructor-ico"></div>
-
             </div>
 
             <!-- END CONSTRUCTOR -->
@@ -70,7 +66,7 @@ Yii::app()->clientScript->registerPackage('appJs');
             <div class="rightPageBtn"></div>
         </div>
         <!-- CALENDAR -->
-        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel'}" style="top: 70px; display: block;"></div>
+        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel'}" style="top: -302px; display: none;"></div>
         <!-- END CALENDAR -->
     </div>
     <!-- /ko -->
@@ -100,11 +96,6 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- ko if: isEvent() -->
         <div class="slideTours" data-bind="template: {name: activeView(), data: viewData(), afterRender: mapRendered}">
         </div>
-        <!-- CALENDAR -->
-        <div class="calenderWindow z-indexTop" data-bind="template: {name: viewData().calendarTemplate, data: viewData().calendar}"
-             style="top: 70px; display: none;">
-        </div>
-        <!-- END CALENDAR -->
     <!-- /ko -->
     <!-- END SLIDE TOURS -->
     <!-- FOOTER -->

@@ -19,6 +19,7 @@ class ToursController
       events.push new Event(el)
     eventSet = new EventSet(events)
     console.log "EVENT: eventset = ", eventSet
+    @trigger "index"
     @render 'index', eventSet
     ResizeAvia()
 
@@ -35,6 +36,7 @@ class ToursController
     stacked = new ToursResultSet data
     @trigger "results", stacked
     @render 'results', stacked
+
 
 #    @trigger "sidebarChanged", filters
     ko.processAllDeferredBindingUpdates()

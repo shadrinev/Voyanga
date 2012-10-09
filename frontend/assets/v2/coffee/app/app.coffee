@@ -30,9 +30,6 @@ class Application extends Backbone.Router
 
     @fakoPanel = ko.observable result
 
-    @tourPanelSet = new TourPanelSet()
-    @panels = @tourPanelSet.panels
-
     @panel = ko.computed =>
       am = @activeModuleInstance()
       if am
@@ -72,6 +69,7 @@ class Application extends Backbone.Router
 #    $('#loadWrapBg').show()
     @viewData(data)
     @_view(view)
+    $(window).resize()
     
 
   # Register routes from controller
