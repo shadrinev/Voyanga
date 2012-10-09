@@ -8,13 +8,13 @@
 	background: url(../images/slice.png) no-repeat -37px -33px;
 	width: 61px; height: 11px;
 }
-.ico-breakfast {
+.ico-breakfast-lunch {
     background: url("../images/ico.png") no-repeat scroll 0 -83px transparent;
     display: inline-block;
     height: 14px;
     width: 12px;
 }
-.ico-breakfast-lunch {
+.ico-breakfast {
     background: url("../images/ico.png") no-repeat scroll 0 -97px transparent;
     display: inline-block;
     height: 15px;
