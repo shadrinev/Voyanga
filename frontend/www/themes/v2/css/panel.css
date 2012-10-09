@@ -70,7 +70,7 @@
 	width: 36px;
 	position: absolute;
 	z-index: 3;
-	right: 1px;
+	right: 0px;
 	cursor: pointer;	
 }
 .hotelTable .tdCity div.active .date.noDate {
@@ -78,10 +78,10 @@
 	height: 23px;
 }
 .hotelTable .tdCity div.active .date {
-	right: 37px;
+	right: 36px;
 }
 .hotelTable .tdCity div.active .date + .date {
-	right: 1px;
+	right: 0px;
 	background: url("../images/slice.png") no-repeat scroll -305px -1260px transparent;
 }
 
