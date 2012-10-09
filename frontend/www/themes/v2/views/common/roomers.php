@@ -42,7 +42,7 @@
     </div>
     <div class="one-str" data-bind="foreach: ages, visible: ages().length">
       <div class="ages">
-        <input data-bind="value: $data">
+        <input data-bind="value: age">
         лет
       </div>
     </div>

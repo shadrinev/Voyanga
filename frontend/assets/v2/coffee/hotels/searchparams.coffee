@@ -4,19 +4,33 @@ class SpRoom
     @children = ko.observable(0).extend({integerOnly: {min: 0, max:4}})
     @ages = ko.observableArray()
 
+    @children.subscribe (newValue)=>
+      if newValue + @adults() > 4
+        newValue = 4 - @adults()
+        @children newValue
+
+      if @ages().length == newValue
+        return
+      if @ages().length < newValue
+        for i in [0..(newValue-@ages().length-1)]
+          @ages.push {age: ko.observable(12).extend {integerOnly: {min: 12, max:17}}}
+      else if @ages().length > newValue
+        @ages.splice(newValue)
+      ko.processAllDeferredBindingUpdates()
+
+    @adults.subscribe (newValue)=>
+      if newValue + @children() > 4
+        @adults 4 - @children()
+      
+        
+
+
   fromList: (item) ->
     parts = item.split(':')
     @adults parts[0]
     @children parts[1]
     for i in [0..@children]
-      ages.push ko.observable parts[2+i]
-    @children.subscribe (newValue)=>
-      if @ages().length < newValue
-        for i in [0..(newValue-@ages().length-1)]
-          @ages.push ko.observable 12
-      else if @ages().length > newValue
-        @ages.splice(newValue)
-    ko.processAllDeferredBindingUpdates()
+      @ages.push {age: ko.observable(parts[2+i]).extend {integerOnly: {min: 12, max:17}}}
 
   fromObject: (item) ->
     @adults +item.adultCount
