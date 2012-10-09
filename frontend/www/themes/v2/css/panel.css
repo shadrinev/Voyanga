@@ -53,6 +53,38 @@
     padding-bottom: 0px;
     padding-top: 0px;
 }
+/* DATE */
+.hotelTable .tdCity div .date {
+	display: none;
+}
+.hotelTable .tdCity div.active .date {
+    background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
+	display: inline-block;
+	font-size: 11px;
+	height: 28px;
+	line-height: 10px;
+	margin: 0 0 0 -5px;
+	padding-top: 8px;
+	text-align: center;
+	vertical-align: middle;
+	width: 36px;
+	position: absolute;
+	z-index: 3;
+	right: 0px;
+	cursor: pointer;	
+}
+.hotelTable .tdCity div.active .date.noDate {
+	padding-top: 13px;
+	height: 23px;
+}
+.hotelTable .tdCity div.active .date {
+	right: 36px;
+}
+.hotelTable .tdCity div.active .date + .date {
+	right: 0px;
+	background: url("../images/slice.png") no-repeat scroll -305px -1260px transparent;
+}
+
 /* CONSTRUCTOR */
 .board-content .tdCity .from {
 	display: inline-block;
@@ -296,7 +328,7 @@
 	border-bottom: 1px solid #76777a;
 	border-left: 1px solid #b7b8bc;
 	display: none;
-	z-index: 900;
+	z-index: 997;
 }
 .how-many-man .popup.active {
 	display: block;

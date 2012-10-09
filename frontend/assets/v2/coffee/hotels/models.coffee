@@ -54,7 +54,7 @@ class RoomSet
       @checkCount(newValue)
 
     @selectText = ko.computed =>
-      if !@parent.tours
+      if !@parent.tours()
         return "Забронировать"
       if @parent.activeResultId()
         return 'Выбран'
@@ -95,7 +95,7 @@ class HotelResult
   constructor: (data, parent, duration = 1) ->
     # Mix in events
     _.extend @, Backbone.Events
-    @tours = parent.tours
+    @tours =  parent.tours
     @hotelId = data.hotelId
     @activeResultId = ko.observable 0 
     @hotelName = data.hotelName
@@ -133,7 +133,7 @@ class HotelResult
     @haveFullInfo = ko.observable false
 
     @selectText = ko.computed =>
-      if !@tours
+      if !@tours()
         return "Забронировать"
       if @activeResultId()
         return 'Выбран'
@@ -398,8 +398,8 @@ class HotelResult
   select: (room) =>
     # it is actually cheapest click
     if room.roomSets
-      room = room.roomSets[0]
-    if @tours
+      room = room.roomSets()[0]
+    if @tours()
       @activeResultId room.resultId
 
     @trigger 'select', {roomSet: room, hotel: @}
@@ -420,7 +420,7 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawHotels, @searchParams) ->
     @_results = {}
-    @tours = false
+    @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
     window.voyanga_debug('checkOut',@checkOut)
