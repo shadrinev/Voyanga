@@ -104,3 +104,11 @@ Utils =
       return new Date(initArray[0],(initArray[1]-1),initArray[2])
     else
       return dateIsoString
+
+  scrollTo: (selector)->
+    if typeof(selector) == "string"
+      oPos = $(selector).offset()
+    else
+      oPos = {}
+      oPos.top = selector
+    $("html,body").animate({'scrollTop':oPos.top})

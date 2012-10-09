@@ -136,7 +136,7 @@ RoomSet = (function() {
 HotelResult = (function() {
 
   function HotelResult(data, parent, duration) {
-    var elements, groupName, _ref,
+    var elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4,
       _this = this;
     if (duration == null) {
       duration = 1;
@@ -174,6 +174,9 @@ HotelResult = (function() {
     this.numPhotos = 0;
     this.parent = parent;
     this.checkInTime = data.earliestCheckInTime;
+    if (this.checkInTime) {
+      this.checkInTime = this.checkInTime.substr(0, this.checkInTime.length - 3);
+    }
     this.frontPhoto = {
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png',
       largeUrl: 'http://ya.ru'
@@ -187,6 +190,16 @@ HotelResult = (function() {
     this.rating = data.rating;
     if (this.rating === '-') {
       this.rating = 0;
+    }
+    this.ratingName = '';
+    if ((0 < (_ref = this.rating) && _ref <= 2.5)) {
+      this.ratingName = "средний<br>отель";
+    } else if ((2.5 < (_ref1 = this.rating) && _ref1 <= 4)) {
+      this.ratingName = "хороший<br>отель";
+    } else if ((4 < (_ref2 = this.rating) && _ref2 < 4.8)) {
+      this.ratingName = "очень хороший<br>отель";
+    } else if ((4.8 <= (_ref3 = this.rating) && _ref3 <= 5)) {
+      this.ratingName = "великолепный<br>отель";
     }
     this.lat = data.latitude / 1;
     this.lng = data.longitude / 1;
@@ -212,9 +225,9 @@ HotelResult = (function() {
     this.hasHotelGroupServices = data.hotelGroupServices ? true : false;
     this.hotelGroupServices = [];
     if (data.hotelGroupServices) {
-      _ref = data.hotelGroupServices;
-      for (groupName in _ref) {
-        elements = _ref[groupName];
+      _ref4 = data.hotelGroupServices;
+      for (groupName in _ref4) {
+        elements = _ref4[groupName];
         this.hotelGroupServices.push({
           groupName: groupName,
           elements: elements
@@ -227,11 +240,11 @@ HotelResult = (function() {
     console.log(this.roomSets());
     this.visible = ko.observable(true);
     this.visibleRoomSets = ko.computed(function() {
-      var result, roomSet, _i, _len, _ref1;
+      var result, roomSet, _i, _len, _ref5;
       result = [];
-      _ref1 = _this.roomSets();
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        roomSet = _ref1[_i];
+      _ref5 = _this.roomSets();
+      for (_i = 0, _len = _ref5.length; _i < _len; _i++) {
+        roomSet = _ref5[_i];
         if (roomSet.visible()) {
           result.push(roomSet);
         }
@@ -242,6 +255,14 @@ HotelResult = (function() {
         window.voyanga_debug('all results for hotel zero');
       }
       return result;
+    });
+    this.isShowAll = ko.observable(false);
+    this.showAllText = ko.computed(function() {
+      if (_this.isShowAll()) {
+        return 'Свернуть все результаты';
+      } else {
+        return 'Посмотреть все результаты';
+      }
     });
     this.push(data);
   }
@@ -275,21 +296,21 @@ HotelResult = (function() {
 
   HotelResult.prototype.showPhoto = function(fp, ev) {
     var ind;
-    window.voyanga_debug('click info', fp, ev);
-    console.log(ev.target);
     ind = $(ev.currentTarget).data('photo-index');
-    console.log(ind);
     if (!ind) {
       ind = 0;
     }
-    console.log(ind);
     return new PhotoBox(this.photos, this.hotelName, this.stars, ind);
   };
 
   HotelResult.prototype.showAllResults = function(data, event) {
-    console.log(event);
-    $(event.target).parent().parent().find('.hidden-roomSets').show('fast');
-    return $(event.target).parent().hide();
+    if (this.isShowAll()) {
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast');
+      return this.isShowAll(false);
+    } else {
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast');
+      return this.isShowAll(true);
+    }
   };
 
   HotelResult.prototype.showDetails = function(data, event) {
@@ -516,10 +537,11 @@ HotelResult = (function() {
     if (this.tours) {
       this.activeResultId(room.resultId);
     }
-    return this.trigger('select', {
+    this.trigger('select', {
       roomSet: room,
       hotel: this
     });
+    return Utils.scrollTo('.info-trip');
   };
 
   HotelResult.prototype.smallMapUrl = function() {
@@ -652,7 +674,8 @@ HotelsResultSet = (function() {
       }, 'results');
     });
     hotel.getFullInfo();
-    return window.app.render(hotel, 'info-template');
+    window.app.render(hotel, 'info-template');
+    return Utils.scrollTo('#content');
   };
 
   HotelsResultSet.prototype.getDateInterval = function() {
@@ -698,13 +721,18 @@ HotelsResultSet = (function() {
   };
 
   HotelsResultSet.prototype.postFilters = function() {
-    var data;
+    var data,
+      _this = this;
     console.log('post filters');
     data = _.filter(this.data(), function(el) {
       return el.visible();
     });
     this.numResults(data.length);
-    return console.log(this.data);
+    console.log(this.data);
+    return window.setTimeout(function() {
+      ifHeightMinAllBody();
+      return scrolShowFilter();
+    }, 50);
   };
 
   return HotelsResultSet;
