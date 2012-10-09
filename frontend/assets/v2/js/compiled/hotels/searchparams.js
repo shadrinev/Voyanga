@@ -4,12 +4,13 @@ var HotelsSearchParams, SpRoom,
 
 SpRoom = (function() {
 
-  function SpRoom() {
+  function SpRoom(parent) {
+    var _this = this;
+    this.parent = parent;
     this.getUrl = __bind(this.getUrl, this);
 
     this.getHash = __bind(this.getHash, this);
 
-    var _this = this;
     this.adults = ko.observable(1).extend({
       integerOnly: {
         min: 1,
@@ -23,11 +24,22 @@ SpRoom = (function() {
       }
     });
     this.ages = ko.observableArray();
+    this.adults.subscribe(function(newValue) {
+      if (newValue + _this.children() > 4) {
+        _this.adults(4 - _this.children());
+      }
+      if ((_this.parent.overall() - _this.adults() + newValue) > 9) {
+        return _this.adults(9 - _this.parent.overall() + _this.adults());
+      }
+    });
     this.children.subscribe(function(newValue) {
       var i, _i, _ref;
       if (newValue + _this.adults() > 4) {
         newValue = 4 - _this.adults();
         _this.children(newValue);
+      }
+      if ((_this.parent.overall() - _this.children() + newValue) > 9) {
+        _this.children(9 - _this.parent.overall() + _this.children());
       }
       if (_this.ages().length === newValue) {
         return;
@@ -48,30 +60,13 @@ SpRoom = (function() {
       }
       return ko.processAllDeferredBindingUpdates();
     });
-    this.adults.subscribe(function(newValue) {
-      if (newValue + _this.children() > 4) {
-        return _this.adults(4 - _this.children());
-      }
-    });
   }
 
   SpRoom.prototype.fromList = function(item) {
-    var i, parts, _i, _ref, _results;
+    var parts;
     parts = item.split(':');
     this.adults(parts[0]);
-    this.children(parts[1]);
-    _results = [];
-    for (i = _i = 0, _ref = this.children; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-      _results.push(this.ages.push({
-        age: ko.observable(parts[2 + i]).extend({
-          integerOnly: {
-            min: 12,
-            max: 17
-          }
-        })
-      }));
-    }
-    return _results;
+    return this.children(parts[1]);
   };
 
   SpRoom.prototype.fromObject = function(item) {
@@ -103,11 +98,28 @@ HotelsSearchParams = (function() {
   function HotelsSearchParams() {
     this.url = __bind(this.url, this);
 
+    this.fromObject = __bind(this.fromObject, this);
+
+    this.fromList = __bind(this.fromList, this);
+
     this.getHash = __bind(this.getHash, this);
+
+    var _this = this;
     this.city = ko.observable('');
     this.checkIn = ko.observable(false);
     this.checkOut = ko.observable(false);
-    this.rooms = ko.observableArray([new SpRoom()]);
+    this.rooms = ko.observableArray([new SpRoom(this)]);
+    this.overall = ko.computed(function() {
+      var result, room, _i, _len, _ref;
+      result = 0;
+      _ref = _this.rooms();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        room = _ref[_i];
+        result += room.adults();
+        result += room.children();
+      }
+      return result;
+    });
   }
 
   HotelsSearchParams.prototype.getHash = function() {
@@ -134,7 +146,7 @@ HotelsSearchParams = (function() {
     for (_i = 0, _len = rest.length; _i < _len; _i++) {
       item = rest[_i];
       if (item) {
-        r = new SpRoom();
+        r = new SpRoom(this);
         r.fromList(item);
         _results.push(this.rooms.push(r));
       } else {
@@ -154,7 +166,7 @@ HotelsSearchParams = (function() {
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       item = _ref[_i];
-      r = new SpRoom();
+      r = new SpRoom(this);
       r.fromObject(item);
       _results.push(this.rooms.push(r));
     }

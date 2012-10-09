@@ -477,10 +477,23 @@ TourSearchParams = (function(_super) {
 
   function TourSearchParams() {
     this.removeItem = __bind(this.removeItem, this);
+
+    var _this = this;
     TourSearchParams.__super__.constructor.call(this);
     this.startCity = ko.observable('LED');
     this.destinations = ko.observableArray([]);
-    this.rooms = ko.observableArray([new SpRoom()]);
+    this.rooms = ko.observableArray([new SpRoom(this)]);
+    this.overall = ko.computed(function() {
+      var result, room, _i, _len, _ref;
+      result = 0;
+      _ref = _this.rooms();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        room = _ref[_i];
+        result += room.adults();
+        result += room.children();
+      }
+      return result;
+    });
     this.returnBack = ko.observable(1);
   }
 
@@ -553,7 +566,7 @@ TourSearchParams = (function(_super) {
     }
     i = i + 1;
     while (i < data.length) {
-      room = new SpRoom();
+      room = new SpRoom(this);
       room.fromList(data[i]);
       this.rooms.push(room);
       i++;
@@ -572,7 +585,7 @@ TourSearchParams = (function(_super) {
       return this.destinations.push(destination);
     });
     _.each(data.rooms, function(room) {
-      room = new SpRoom();
+      room = new SpRoom(this);
       return this.rooms.push(this.room.fromObject(room));
     });
     return window.voyanga_debug('Result', this);
