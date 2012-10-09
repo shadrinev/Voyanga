@@ -360,7 +360,7 @@ class TourSearchParams extends SearchParams
 
     i = i + 1
     while i < data.length
-      room = new SpRoom()
+      room = new SpRoom(@)
       room.fromList(data[i])
       @rooms.push room
       i++
@@ -378,7 +378,7 @@ class TourSearchParams extends SearchParams
       @destinations.push destination
 
     _.each data.rooms, (room) ->
-      room = new SpRoom()
+      room = new SpRoom(@)
       @rooms.push @room.fromObject(room)
 
     window.voyanga_debug 'Result', @

@@ -565,7 +565,7 @@ TourSearchParams = (function(_super) {
     }
     i = i + 1;
     while (i < data.length) {
-      room = new SpRoom();
+      room = new SpRoom(this);
       room.fromList(data[i]);
       this.rooms.push(room);
       i++;
@@ -584,7 +584,7 @@ TourSearchParams = (function(_super) {
       return this.destinations.push(destination);
     });
     _.each(data.rooms, function(room) {
-      room = new SpRoom();
+      room = new SpRoom(this);
       return this.rooms.push(this.room.fromObject(room));
     });
     return window.voyanga_debug('Result', this);

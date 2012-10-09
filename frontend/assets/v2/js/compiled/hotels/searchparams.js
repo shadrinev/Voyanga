@@ -97,6 +97,10 @@ HotelsSearchParams = (function() {
   function HotelsSearchParams() {
     this.url = __bind(this.url, this);
 
+    this.fromObject = __bind(this.fromObject, this);
+
+    this.fromList = __bind(this.fromList, this);
+
     this.getHash = __bind(this.getHash, this);
 
     var _this = this;
@@ -141,7 +145,7 @@ HotelsSearchParams = (function() {
     for (_i = 0, _len = rest.length; _i < _len; _i++) {
       item = rest[_i];
       if (item) {
-        r = new SpRoom();
+        r = new SpRoom(this);
         r.fromList(item);
         _results.push(this.rooms.push(r));
       } else {
@@ -161,7 +165,7 @@ HotelsSearchParams = (function() {
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       item = _ref[_i];
-      r = new SpRoom();
+      r = new SpRoom(this);
       r.fromObject(item);
       _results.push(this.rooms.push(r));
     }

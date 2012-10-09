@@ -70,7 +70,7 @@ class HotelsSearchParams
     window.voyanga_debug "Generated hash for hotels search", hash
     return hash
 
-  fromList: (data)->
+  fromList: (data)=>
     # FIXME looks too ugly to hit production, yet does not support RT
     @city data[0]
     @checkIn moment(data[1], 'D.M.YYYY').toDate()
@@ -79,17 +79,17 @@ class HotelsSearchParams
     rest = data[3].split('/')
     for item in rest
       if item
-        r = new SpRoom()
+        r = new SpRoom(@)
         r.fromList(item)
         @rooms.push r
 
-  fromObject: (data)->
+  fromObject: (data)=>
     @city data.city
     @checkIn moment(data.checkIn, 'YYYY-M-D').toDate()
     @checkOut moment(data.checkIn, 'YYYY-M-D').add('days',data.duration).toDate()
     @rooms.splice(0)
     for item in data.rooms
-      r = new SpRoom()
+      r = new SpRoom(@)
       r.fromObject(item)
       @rooms.push r
 
