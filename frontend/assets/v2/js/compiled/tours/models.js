@@ -487,22 +487,18 @@ TourSearchParams = (function(_super) {
   TourSearchParams.prototype.url = function() {
     var params, result,
       _this = this;
+    console.log('DESTINATIONS:', this.destinations());
     result = 'tour/search?';
     params = [];
-    _params.push('start=' + this.startCity());
+    params.push('start=' + this.startCity());
     _.each(this.destinations(), function(destination, ind) {
       params.push('destinations[' + ind + '][city]=' + destination.city());
-      params.push('destinations[' + ind + '][dateFrom]=' + destination.dateFrom());
-      return params.push('destinations[' + ind + '][dateTo]=' + destination.dateTo());
+      params.push('destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY'));
+      return params.push('destinations[' + ind + '][dateTo]=' + moment(destination.dateTo()).format('D.M.YYYY'));
     });
-    params.push('rooms[0][adt]=' + this.adults());
-    params.push('rooms[0][chd]=' + this.children());
-    params.push('rooms[0][chdAge]=0');
-    if (this.infants > 0) {
-      params.push('rooms[0][cots]=1');
-    } else {
-      params.push('rooms[0][cots]=0');
-    }
+    _.each(this.rooms, function(room, ind) {
+      return params.push(_this.rooms.getUrl(ind));
+    });
     result += params.join("&");
     window.voyanga_debug("Generated search url for tours", result);
     return result;
@@ -542,8 +538,10 @@ TourSearchParams = (function(_super) {
     var destination, doingrooms, i, room, _i, _ref;
     window.voyanga_debug("Restoring TourSearchParams from list");
     this.startCity(data[0]);
+    this.returnBack(data[1]);
     doingrooms = false;
-    for (i = _i = 1, _ref = data.length - 2; _i <= _ref; i = _i += 3) {
+    this.destinations([]);
+    for (i = _i = 2, _ref = data.length - 2; _i <= _ref; i = _i += 3) {
       if (data[i] === 'rooms') {
         break;
       }
