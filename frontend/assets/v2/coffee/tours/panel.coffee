@@ -47,7 +47,7 @@ class TourPanelSet
     _.last(@panels()).isLast(true)
 
   isFirst: =>
-    @i++ == 0
+    @i == 1
 
   addPanel: =>
     @sp.destinations.push new DestinationSearchParams()
@@ -57,6 +57,7 @@ class TourPanelSet
     newPanel.on "tourPanel:showCalendar", (args...) =>
       @showPanelCalendar(args)
     @panels.push newPanel
+    @i = @panels().length
     VoyangaCalendarStandart.clear()
 
   showPanelCalendar: (args) =>
@@ -78,6 +79,7 @@ class TourPanel extends SearchPanel
 
     _.extend @, Backbone.Events
 
+    @sp = sp
     @isLast = ko.observable true
     @peopleSelectorVM = new HotelPeopleSelector sp
     @destinationSp = _.last(sp.destinations());
@@ -101,6 +103,9 @@ class TourPanel extends SearchPanel
     @calendarText = ko.computed =>
       result = "Выберите дату поездки "
       return result
+
+    @city.subscribe (newValue) =>
+      @showCalendar()
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
@@ -145,11 +150,10 @@ class TourPanel extends SearchPanel
         $(this).hide()
 
   showCalendar: =>
-    console.log "SHOW CALENDAR"
     $('.calenderWindow').show()
-    ResizeAvia()
     @trigger "tourPanel:showCalendar", @
     if @minimizedCalendar()
+      ResizeAvia()
       @minimizedCalendar(false)
 
   checkInHtml: =>

@@ -66,7 +66,7 @@ Yii::app()->clientScript->registerPackage('appJs');
             <div class="rightPageBtn"></div>
         </div>
         <!-- CALENDAR -->
-        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel'}" style="top: -302px; display: none;"></div>
+        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendar}" style="top: -302px; display: none;"></div>
         <!-- END CALENDAR -->
     </div>
     <!-- /ko -->

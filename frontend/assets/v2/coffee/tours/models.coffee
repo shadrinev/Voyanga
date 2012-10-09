@@ -324,11 +324,14 @@ class TourSearchParams extends SearchParams
     return key
 
   getHash: ->
-    parts =  [@startCity(), @adults(), @children(), @infants()]
+    parts =  [@startCity()]
     _.each @destinations(), (destination) ->
       parts.push destination.city()
-      parts.push destination.dateFrom()
-      parts.push destination.dateTo()
+      parts.push moment(destination.dateFrom()).format('D.M.YYYY')
+      parts.push moment(destination.dateTo()).format('D.M.YYYY')
+    _.each @rooms(), (room) ->
+      parts.push room.getHash()
+    console.log 'PARTS: ', parts
     hash = 'tour/search/' + parts.join('/') + '/'
     window.voyanga_debug "Generated hash for tour search", hash
     return hash

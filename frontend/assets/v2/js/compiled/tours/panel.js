@@ -66,7 +66,7 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.isFirst = function() {
-    return this.i++ === 0;
+    return this.i === 1;
   };
 
   TourPanelSet.prototype.addPanel = function() {
@@ -83,6 +83,7 @@ TourPanelSet = (function() {
       return _this.showPanelCalendar(args);
     });
     this.panels.push(newPanel);
+    this.i = this.panels().length;
     return VoyangaCalendarStandart.clear();
   };
 
@@ -122,6 +123,7 @@ TourPanel = (function(_super) {
     window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this, isFirst);
     _.extend(this, Backbone.Events);
+    this.sp = sp;
     this.isLast = ko.observable(true);
     this.peopleSelectorVM = new HotelPeopleSelector(sp);
     this.destinationSp = _.last(sp.destinations());
@@ -144,6 +146,9 @@ TourPanel = (function(_super) {
       var result;
       result = "Выберите дату поездки ";
       return result;
+    });
+    this.city.subscribe(function(newValue) {
+      return _this.showCalendar();
     });
   }
 
@@ -202,11 +207,10 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.showCalendar = function() {
-    console.log("SHOW CALENDAR");
     $('.calenderWindow').show();
-    ResizeAvia();
     this.trigger("tourPanel:showCalendar", this);
     if (this.minimizedCalendar()) {
+      ResizeAvia();
       return this.minimizedCalendar(false);
     }
   };
