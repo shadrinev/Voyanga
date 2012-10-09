@@ -14,9 +14,7 @@ class TourPanelSet
     @panels = ko.observableArray []
     @i = 0
     @addPanel()
-    @activeCalendarPanel = @panels()[0]
-    @checkIn = @activeCalendarPanel.checkIn
-    @checkOut = @activeCalendarPanel.checkOut
+    @activeCalendarPanel = ko.observable @panels()[0]
 
     @height = ko.computed =>
       70 * @panels().length + 'px'
@@ -25,10 +23,11 @@ class TourPanelSet
       @panels().length > 6
 
     @calendarValue = ko.computed =>
+      console.log "COMPUTED"
       twoSelect: true
       hotels: true
-      from: @checkIn()
-      to: @checkOut()
+      from: @activeCalendarPanel().checkIn()
+      to: @activeCalendarPanel().checkOut()
 
     @formFilled = ko.computed =>
       isFilled = true
@@ -61,16 +60,16 @@ class TourPanelSet
     VoyangaCalendarStandart.clear()
 
   showPanelCalendar: (args) =>
-    @activeCalendarPanel = args[0]
+    @activeCalendarPanel  args[0]
     console.log 'showPanelCalendar', args
 
   # calendar handler
   setDate: (values) =>
     console.log 'Calendar selected:', values
-    if (values)
-      @activeCalendarPanel.checkIn(values[0])
-      if (values[1])
-        @activeCalendarPanel.checkOut(values[1])
+    if values && values.length
+      @activeCalendarPanel().checkIn values[0]
+      if values.length > 1
+        @activeCalendarPanel().checkOut values[1]
 
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->

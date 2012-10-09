@@ -521,17 +521,13 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
 //    VoyangaCalendarStandart.values.push(newCalendarValue.from);
 //    if(newCalendarValue.twoSelect)
 //	VoyangaCalendarStandart.values.push(newCalendarValue.to);
-      VoyangaCalendarStandart.update(true);
-}
-
-
-VoyangaCalendarStandart.newValueHandler2 = function(newCalendarValue) {
-    VoyangaCalendarStandart.values = new Array();
-    if (!newCalendarValue.from)
+    if (!newCalendarValue.from || !newCalendarValue.to)
 	return;
+    VoyangaCalendarStandart.values = new Array();
     VoyangaCalendarStandart.values.push(newCalendarValue.from);
     if(newCalendarValue.twoSelect)
 	VoyangaCalendarStandart.values.push(newCalendarValue.to);
+
       VoyangaCalendarStandart.update(true);
 }
 
@@ -547,7 +543,7 @@ VoyangaCalendarStandart.init = function (panel, element){
 		VoyangaCalendarStandart.subscription.dispose();
 	    VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
 	    VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
-	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
+//	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
 	}
     });
     VoyangaCalendarStandart.generateGrid();
