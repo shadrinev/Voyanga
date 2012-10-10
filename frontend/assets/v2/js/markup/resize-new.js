@@ -457,7 +457,7 @@ function resizeLeftStage() {
 	var leftStage = $('.left-block');
 	var leftWidth = leftStage.width();
 	var leftDate = leftStage.find('.date');
-	var startPosition = 150;
+	var startPosition = 170;
 	var leftPaddingDate = 215;
 	leftPaddingDate = (leftWidth - leftPaddingDate);
 	if (leftPaddingDate < 75) {
@@ -531,7 +531,8 @@ function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
     smallTicketHeight();
-    scrollValue();
+    scrollValue('avia');
+    scrollValue('hotel');
     CenterIMGResize();
     ifHeightMinAllBody();
     showMiniPopUp();
@@ -644,26 +645,41 @@ function OneWidthEquelTwoWidth() {
 		$('.slide-filter.first').css('padding-right','30px');
 	}
 }
-function scrollValue() {
+function scrollValue(what) {
+	var filterContent = $('.filter-content.'+what)
 	var var_marginTopSubHead = $('.sub-head').css('margin-top');
 	var var_scrollValueTop = $(window).scrollTop();
 	var var_heightWindow = $(window).height();
-	if ($('.sub-head').css('margin-top') != '-67px') {
-		var diffrentScrollTop = 179;
-		
+	if (what == 'avia') {
+		var var_topFilterContent = 73;
+		if ($('.sub-head').css('margin-top') != '-67px') {
+			var diffrentScrollTop = 179;
+			
+		}
+		else {
+			var diffrentScrollTop = 110;
+			
+		}
 	}
 	else {
-		var diffrentScrollTop = 110;
-		
+		var var_topFilterContent = 0;
+		if ($('.sub-head').css('margin-top') != '-67px') {
+			var diffrentScrollTop = 131;
+			
+		}
+		else {
+			var diffrentScrollTop = 61 ;
+			
+		}
 	}
 	var var_heightWindow = $(window).height();
 	var var_heightContent = $('#content').height();
-	
+	console.log(var_scrollValueTop);
 	if (var_scrollValueTop == 0) {
-		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		filterContent.css('position','relative').css('top','auto').css('bottom','auto');
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
-		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		filterContent.css('position','relative').css('top','auto').css('bottom','auto');
 		if (var_heightContent < var_heightWindow) {
 			$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
 		}
@@ -673,16 +689,16 @@ function scrollValue() {
 	}
 	else if (var_scrollValueTop > diffrentScrollTop) {
 		
-		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73) && var_scrollValueTop != 0) {
-			$('.filter-content').css('position','fixed').css('bottom','73px').css('top','auto');
-			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
+		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - var_topFilterContent) && var_scrollValueTop != 0) {
+			filterContent.css('position','fixed').css('bottom','var_topFilterContentpx').css('top','auto');
+			$('.innerFilter').css('height', (var_heightWindow - (var_topFilterContent - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
 		}
-		else if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73) && var_scrollValueTop == 0) {
-			$('.filter-content').css('position','fixed').css('bottom','auto').css('top','auto');
-			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
+		else if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - var_topFilterContent) && var_scrollValueTop == 0) {
+			filterContent.css('position','fixed').css('bottom','auto').css('top','auto');
+			$('.innerFilter').css('height', (var_heightWindow - (var_topFilterContent - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
 		}
 		else {
-			$('.filter-content').css('position','fixed').css('top','-73px').css('bottom','auto');
+			filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
 			$('.innerFilter').css('height', var_heightWindow +'px');
 		}
 		
@@ -691,7 +707,10 @@ function scrollValue() {
 $(window).load(AlphaBackground);
 
 $(window).load(function() {
-	$(window).scroll(scrollValue);
+	$(window).scroll(function() {
+	scrollValue('avia');
+	scrollValue('hotel');
+	});
 });
 
 function ifHeightMinAllBody() {
