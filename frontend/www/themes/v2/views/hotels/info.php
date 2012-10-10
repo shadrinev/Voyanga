@@ -56,7 +56,7 @@
         <ul data-bind="foreach: photos,photoSlider: photos">
           <li><a href="#" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="0"><img src="#" data-bind="attr:{src: largeUrl}"></a></li>
         </ul>
-        Фотографии предоставлены отелями(<span data-bind="text: numPhotos"></span>).
+        <div class="photoNumb">Фотографии предоставлены отелями(<span data-bind="text: numPhotos"></span>).</div>
       </div>
       <!-- /ko -->
       <div class="descr-text">

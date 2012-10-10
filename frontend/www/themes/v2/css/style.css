@@ -968,7 +968,7 @@
 	font-size: 11px;
 	line-height: 16px;
 	color: #8f9199;
-	margin-bottom: 15px;
+	margin-bottom: 11px;
 	/* width: 100%; */
 	overflow: hidden;
 	height: 170px;
@@ -1931,4 +1931,10 @@ input.hotel-input {
 	box-shadow: 0px 0px 4px rgba(0,1,1,0.2);
 	background: #FFF;
 	color: #4B4B4F;
+}
+.photoNumb {
+    bottom: 0;
+    color: #8F9199;
+    font-size: 11px;
+    position: absolute;
 }
