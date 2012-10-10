@@ -1010,6 +1010,7 @@ class HotelBookClient
     {
         $hotelObject = simplexml_load_string($hotelDetailXml);
         //VarDumper::dump($hotelsObject);
+        if(!$hotelObject) return false;
         $hotelSXE = $hotelObject->HotelDetail;
 
 
