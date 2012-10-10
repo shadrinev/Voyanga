@@ -43,10 +43,12 @@
 	display: inline-block;
 }
 .dotted {
-	background: url(../images/dotted.png) no-repeat -0px -0px;
-	width: 10px; height: 10px;
-	display: inline-block;
-	vertical-align: middle;
+    background: url("../images/dotted.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 10px;
+    margin-left: -10px;
+    vertical-align: middle;
+    width: 10px;
 }
 .ico-glass {
 	background: url(../images/ico.png) no-repeat -0px -53px;

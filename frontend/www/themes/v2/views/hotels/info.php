@@ -3,6 +3,8 @@
     <div id="content" data-bind="template: {name: 'hotels-info-inner', data: $data}" ></div>
   </div>
 </script>
+<?php $theme = Yii::app()->theme->baseUrl; ?>
+
 <script type="text/html" id="hotels-info-inner">
   <a href="#back" data-bind="click: back" class="backToBack"><span>Назад к результатам поиска</span></a>
   <div class="title hotel">
@@ -83,38 +85,81 @@
     <!-- ko if: !haveFullInfo() -->
         <!-- ko foreach: roomSets -->
         <div class="block-trip">
-          <table>
-            <tbody>
-              <tr>
-                <td class="name">
-                  <ul data-bind="foreach: rooms">
-                    <li><span class="text" data-bind="text: name">Стандартный двухместный номер</span> <span data-bind="if: hasMeal"><span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text: meal">Завтрак «шведский стол»</span></span></li>
-                  </ul>
-                  <a href="">Условия отмены бронирования</a>
-                </td>
-                <td class="button"><a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="text" data-bind="text: $parent.selectText"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a></td>
-              </tr>
-            </tbody>
-          </table>
+        	 <table class="table-hotel-result">
+                <tr>
+                    <td class="td-float" data-bind="foreach: rooms">
+                        <div class="float" >
+                        
+                        	<table>
+                        		<tr>
+                        			<td class="text" colspan="2">
+                        				<span data-bind="text: name">Стандартный двухместный номер</span>
+                        			</td>
+                        		</tr>
+                        		<tr>
+                        			<td class="tdOrigText">
+                        				<span data-bind="text: nameNemo" class="textOriginal"></span>
+                        			</td>
+                        			<td>
+                      				 	<!-- ko if: hasMeal -->
+			                            	<span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
+			                            <!-- /ko -->
+                        			</td>
+                        		</tr>
+                        		<tr>
+                        			<td colspan="2"><a href="#" class="conditionCancel">Условия отмены бронирования</a></td>
+                        		</tr>
+                        	</table>
+                        	
+                        </div>
+                    </td>
+                    <td class="td-cost">
+                        <a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="text" data-bind="text: $parent.selectText"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
+                    </td>
+                </tr>
+            </table>
         </div>
         <!-- /ko -->
     <!-- /ko -->
     <!-- ko if: haveFullInfo() -->
       <!-- ko foreach: roomMixed -->
       <div class="block-trip">
-          <table>
-              <tbody>
-              <tr>
-                  <td class="name">
-                      <ul data-bind="foreach: rooms">
-                          <li><span class="text"><span data-bind="text: name">Стандартный двухместный номер</span><br /><span data-bind="text: nameNemo" class="textOriginal"></span></span> <span data-bind="if: hasMeal"><span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text: meal">Завтрак «шведский стол»</span></span></li>
-                      </ul>
-                      <a href="#" data-bind="click: showCancelationRules">Условия отмены бронирования</a>
-                  </td>
-                  <td class="button"><a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="text" data-bind="text: $parent.selectText"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a></td>
-              </tr>
-              </tbody>
-          </table>
+      	
+      		<table class="table-hotel-result">
+                <tr>
+                    <td class="td-float" data-bind="foreach: rooms">
+                        <div class="float" >
+                        
+                        	<table>
+                        		<tr>
+                        			<td class="text" colspan="2">
+                        				<span data-bind="text: name">Стандартный двухместный номер</span>
+                        			</td>
+                        		</tr>
+                        		<tr>
+                        			<td class="tdOrigText">
+                        				<span data-bind="text: nameNemo" class="textOriginal"></span>
+                        			</td>
+                        			<td>
+                      				 	<!-- ko if: hasMeal -->
+			                            	<span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
+			                            <!-- /ko -->
+                        			</td>
+                        		</tr>
+                        		<tr>
+                        			<td colspan="2"><a href="#" class="conditionCancel">Условия отмены бронирования</a></td>
+                        		</tr>
+                        	</table>
+                        	
+                        </div>
+                    </td>
+                    <td class="td-cost">
+                        <a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="text" data-bind="text: $parent.selectText"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
+                    </td>
+                </tr>
+            </table>	
+      	
+          
       </div>
       <!-- /ko -->
     <!-- /ko -->
@@ -151,6 +196,7 @@
                                               </div>
                                           </td>
                                       </tr>
+                                      
                                   </table>
 
                               </li>
@@ -169,6 +215,7 @@
   <!-- SERVICE -->
   <!-- ko if: hasHotelGroupServices -->
   <div class="service-in-hotel">
+  	<div class="shadowHotel"><img src="<?= $theme; ?>/images/shadow-hotel.png"></div>
     <h3>Услуги в отеле</h3>
       <!-- ko foreach: hotelGroupServices -->
       <table class="serviceInHotelTable">
@@ -189,6 +236,7 @@
 
   <!-- ko if: hasRoomAmenities -->
   <div class="service-in-room">
+  	<div class="shadowHotel"><img src="<?= $theme; ?>/images/shadow-hotel.png"></div>
     <h3>Услуги в номере</h3>
     <ul data-bind="foreach: roomAmenities">
       <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
@@ -197,6 +245,7 @@
   <!-- /ko -->
   <!-- END SERVICE -->
   <div class="hotel-important-info">
+  	<div class="shadowHotel"><img src="<?= $theme; ?>/images/shadow-hotel.png"></div>
           <h3>Важная информация</h3>
           <ul>
               <li>Время заселения: <span data-bind="text: checkInTime"></span></li>
