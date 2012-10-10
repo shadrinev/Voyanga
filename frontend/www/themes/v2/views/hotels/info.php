@@ -107,7 +107,7 @@
                         			</td>
                         		</tr>
                         		<tr>
-                        			<td colspan="2"><a href="#" class="conditionCancel">Условия отмены бронирования</a></td>
+                        			<td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" >Условия отмены бронирования</a></td>
                         		</tr>
                         	</table>
                         	
@@ -147,7 +147,7 @@
                         			</td>
                         		</tr>
                         		<tr>
-                        			<td colspan="2"><a href="#" class="conditionCancel">Условия отмены бронирования</a></td>
+                        			<td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" >Условия отмены бронирования</a></td>
                         		</tr>
                         	</table>
                         	

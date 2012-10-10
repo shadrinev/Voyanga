@@ -1893,7 +1893,9 @@ input.hotel-input {
 .backToBack span, .backToBackBottom span {
 	border-bottom: 1px dotted;
 }
-
+.list ul li {
+	line-height: 15px;
+}
 .serviceInHotelTable {
 	width: 100%;
 	border-bottom: 1px dotted #4B4B4F;
@@ -1916,4 +1918,17 @@ input.hotel-input {
 	height: 31px;
 	/* background: url(../images/shadow-hotel.png) no-repeat center top; */
 	width: 100%;
+}
+.hotel-important-info, .service-in-room {
+	color: #4B4B4F;
+	padding-bottom: 10px;
+}
+
+.miniPopUp {
+	position: absolute;
+	padding: 4px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 4px rgba(0,1,1,0.2);
+	background: #FFF;
+	color: #4B4B4F;
 }
