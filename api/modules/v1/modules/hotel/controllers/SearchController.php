@@ -85,20 +85,32 @@ class SearchController extends ApiController
             $this->sendError(200, 'Cache invalidated already.');
             Yii::app()->end();
         }
+        $hotelClient = new HotelBookClient();
+
         foreach ($hotelSearchResult['hotels'] as $hotel)
         {
             if ($hotel['hotelId']==$hotelId)
             {
-                $response['hotel'] = $hotel;
-                $hotelClient = new HotelBookClient();
-                $response['hotel']['details'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
-                $response['searchParams'] = $hotelSearchParams->getJsonObject();
-                if ($format == 'json')
-                    $this->sendJson($response);
-                elseif ($format == 'xml')
-                    $this->sendXml($response, 'hotelSearchResults');
-                Yii::app()->end();
+                if(!isset($response['hotel'])){
+                    $response['hotel'] = $hotel;
+
+                    $response['hotel']['details'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
+                    $response['searchParams'] = $hotelSearchParams->getJsonObject();
+                    $response['hotel']['oldHotels'] = array();
+                    $response['hotel']['oldHotels'][] = new Hotel($hotel);
+                }else{
+                    $response['hotel']['oldHotels'][] = new Hotel($hotel);
+                }
             }
+        }
+        if(isset($response)){
+            $null = null;
+            $hotelClient->hotelSearchDetails($null,$response['hotel']['oldHotels']);
+            if ($format == 'json')
+                $this->sendJson($response);
+            elseif ($format == 'xml')
+                $this->sendXml($response, 'hotelSearchResults');
+            Yii::app()->end();
         }
         $this->sendError(200, 'No hotel with given hotelId found');
     }
@@ -106,6 +118,7 @@ class SearchController extends ApiController
     private function storeToCache($hotelSearchParams, $results)
     {
         $cacheId = md5(serialize($hotelSearchParams));
+
         Yii::app()->cache->set('hotelSearchResult' . $cacheId, $results, appParams('hotel_search_cache_time'));
         Yii::app()->cache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
         return $cacheId;

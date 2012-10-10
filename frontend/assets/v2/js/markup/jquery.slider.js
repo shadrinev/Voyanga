@@ -403,9 +403,13 @@ var Hashtable=function(){function c(b){var d;if(typeof b=="string")return b;if(t
     this.setValue();
     
     // redraw range line
-    if( this.o.pointers[0] && this.o.pointers[1] )
+    if( this.o.pointers[0] && this.o.pointers[1] ){
       this.o.value.css({ left: this.o.pointers[0].value.prc + "%", width: ( this.o.pointers[1].value.prc - this.o.pointers[0].value.prc ) + "%" });
-
+    }else{
+        if(this.settings.single){
+            this.o.value.css({width: ( this.o.pointers[0].value.prc ) + "%" });
+        }
+    }
     this.o.labels[pointer.uid].value.html(
       this.nice(
         pointer.value.origin

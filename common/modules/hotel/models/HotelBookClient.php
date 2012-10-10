@@ -879,16 +879,28 @@ class HotelBookClient
      * Additional information to hotel
      * @param Hotel $hotel
      */
-    public function hotelSearchDetails(Hotel &$hotel)
+    public function hotelSearchDetails(&$hotel,&$hotels = null)
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
         $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time));
 
         self::$lastRequestMethod = 'HotelSearchDetails';
-        self::$lastRequestDescription = "SID:{$hotel->searchId} RID: {$hotel->resultId} HID: {$hotel->hotelId}";
+        if($hotel){
+            self::$lastRequestDescription = "SID:{$hotel->searchId} RID: {$hotel->resultId} HID: {$hotel->hotelId}";
+        }else{
+
+            foreach($hotels as $htl){ break;}
+            self::$lastRequestDescription = "SID:{$htl->searchId} RID: {$htl->resultId} HID: {$htl->hotelId}";
+        }
 
         $xml = '<?xml version="1.0" encoding="utf-8"?>
+<HotelSearchDetailsRequest>
+    <HotelSearches>
+    </HotelSearches>
+</HotelSearchDetailsRequest>';
+
+        /*$xml = '<?xml version="1.0" encoding="utf-8"?>
 <HotelSearchDetailsRequest>
     <HotelSearches>
         <HotelSearch>
@@ -896,32 +908,68 @@ class HotelBookClient
             <ResultId>' . $hotel->resultId . '</ResultId>
         </HotelSearch>
     </HotelSearches>
-</HotelSearchDetailsRequest>';
+</HotelSearchDetailsRequest>';*/
+
+        $requestObject = simplexml_load_string($xml);
+
+        if($hotel){
+            $hotSearch = $requestObject->HotelSearches->addChild('HotelSearch');
+            $hotSearch->addChild('SearchId',$hotel->searchId);
+            $hotSearch->addChild('ResultId',$hotel->resultId);
+        }else if($hotels){
+            $keys = array();
+            foreach($hotels as $key=>$hot){
+                $hotSearch = $requestObject->HotelSearches->addChild('HotelSearch');
+                $hotSearch->addChild('SearchId',$hot->searchId);
+                $hotSearch->addChild('ResultId',$hot->resultId);
+                $sr = $hot->searchId.$hot->resultId;
+                $keys[$sr] = $key;
+            }
+        }
+
+        $xml = $requestObject->asXML();
+
 
         $hotelXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_search_details', $getData, array('request' => $xml));
         $hotelObject = simplexml_load_string($hotelXml);
         if (isset($hotelObject->HotelSearchDetails->Hotel->ChargeConditions))
         {
-            $currency = (string)$hotelObject->HotelSearchDetails->Hotel->ChargeConditions->Currency;
-            UtilsHelper::soapObjectsArray($hotelObject->HotelSearchDetails->Hotel->ChargeConditions->Cancellations->Cancellation);
-            foreach ($hotelObject->HotelSearchDetails->Hotel->ChargeConditions->Cancellations->Cancellation as $cancelSXE)
-            {
-                $cancelParams = array();
-                $cancelParams['charge'] = (string)$cancelSXE['charge'];
-                $cancelParams['denyChanges'] = (string)$cancelSXE['denyChanges'];
-                if ($cancelSXE['from'])
+            UtilsHelper::soapObjectsArray($hotelObject->HotelSearchDetails->Hotel);
+            foreach($hotelObject->HotelSearchDetails->Hotel as $HotelSXE){
+                if (isset($HotelSXE->ChargeConditions))
                 {
-                    $cancelParams['from'] = (string)$cancelSXE['from'];
+                    $currency = (string)$HotelSXE->ChargeConditions->Currency;
+                    UtilsHelper::soapObjectsArray($HotelSXE->ChargeConditions->Cancellations->Cancellation);
+                    foreach ($HotelSXE->ChargeConditions->Cancellations->Cancellation as $cancelSXE)
+                    {
+                        $cancelParams = array();
+                        $cancelParams['charge'] = (string)$cancelSXE['charge'];
+                        $cancelParams['denyChanges'] = (string)$cancelSXE['denyChanges'];
+                        if ($cancelSXE['from'])
+                        {
+                            $cancelParams['from'] = (string)$cancelSXE['from'];
+                        }
+                        if ($cancelSXE['to'])
+                        {
+                            $cancelParams['to'] = (string)$cancelSXE['to'];
+                        }
+                        if ($cancelSXE['price'])
+                        {
+                            $cancelParams['price'] = (string)$cancelSXE['price'];
+                        }
+                        if(isset($keys)){
+                            $searchId = (string)$HotelSXE['searchId'];
+                            $resultId = (string)$HotelSXE['resultId'];
+                            $key = $keys[$searchId.$resultId];
+                            if(isset($hotels[$key])){
+                                $hotels[$key]->addCancelCharge($cancelParams);
+                            }
+
+                        }else{
+                            $hotel->addCancelCharge($cancelParams);
+                        }
+                    }
                 }
-                if ($cancelSXE['to'])
-                {
-                    $cancelParams['to'] = (string)$cancelSXE['to'];
-                }
-                if ($cancelSXE['price'])
-                {
-                    $cancelParams['price'] = (string)$cancelSXE['price'];
-                }
-                $hotel->addCancelCharge($cancelParams);
             }
         }
         //VarDumper::dump($hotelObject);

@@ -66,7 +66,7 @@ class PhotoBox
 
   # load image with @activeIndex
   _load: (var1, var2)=>
-    console.log var1, var2, @
+    #console.log var1, var2, @
     $('#photoBox').find('img').animate {opacity : 0}, 100, =>
       @activePhoto(@photos[@activeIndex()]['largeUrl'])
   		$('#hotel-img-load').show()

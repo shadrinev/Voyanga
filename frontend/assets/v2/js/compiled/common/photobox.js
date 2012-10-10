@@ -91,7 +91,6 @@ PhotoBox = (function() {
 
   PhotoBox.prototype._load = function(var1, var2) {
     var _this = this;
-    console.log(var1, var2, this);
     $('#photoBox').find('img').animate({
       opacity: 0
     }, 100, function() {

@@ -1,7 +1,10 @@
 function resizePhotoWin() {
-    
+    var src = $('#imgContent img').attr('src');
+    var img = new Image;
+
  
-    $('#imgContent img').load(function() {
+    $(img).bind('load error',function() {
+        //console.log('kk');
     	var var_height = $('#imgContent').height();
     	var var_width = $('#imgContent img').innerWidth();
 	    var var_allWinWidth = $(window).width();
@@ -13,7 +16,8 @@ function resizePhotoWin() {
 	    }
 	    $('#imgContent').css('margin-top', paddingTop+'px');
 	    $('.countAndClose').css('width', var_width+'px')
-    });    
+    });
+    img.src = src;
 }
 
 function resizeLoad() {
