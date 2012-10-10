@@ -35,7 +35,7 @@ class SearchController extends ApiController
             elseif ($room['chd'] == 0)
                 $hotelSearchParams->addRoom($room['adt'], $room['cots'], false);
             else
-                $this->sendError(500, 'Only 0 or 1 child at one hotel room accepted');
+                $this->sendError(200, 'Only 0 or 1 child at one hotel room accepted');
         }
         Yii::import('site.frontend.models.*');
         Yii::import('site.frontend.components.*');
@@ -82,7 +82,7 @@ class SearchController extends ApiController
         $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams' . $cacheId);
         if ((!$hotelSearchResult) || (!$hotelSearchParams))
         {
-            $this->sendError(500, 'Cache invalidated already.');
+            $this->sendError(200, 'Cache invalidated already.');
             Yii::app()->end();
         }
         foreach ($hotelSearchResult['hotels'] as $hotel)
@@ -100,7 +100,7 @@ class SearchController extends ApiController
                 Yii::app()->end();
             }
         }
-        $this->sendError(500, 'No hotel with given hotelId found');
+        $this->sendError(200, 'No hotel with given hotelId found');
     }
 
     private function storeToCache($hotelSearchParams, $results)
