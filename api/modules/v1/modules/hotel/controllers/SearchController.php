@@ -35,7 +35,7 @@ class SearchController extends ApiController
             elseif ($room['chd'] == 0)
                 $hotelSearchParams->addRoom($room['adt'], $room['cots'], false);
             else
-                $this->sendError(500, 'Only 0 or 1 child at one hotel room accepted');
+                $this->sendError(200, 'Only 0 or 1 child at one hotel room accepted');
         }
         Yii::import('site.frontend.models.*');
         Yii::import('site.frontend.components.*');
@@ -82,30 +82,43 @@ class SearchController extends ApiController
         $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams' . $cacheId);
         if ((!$hotelSearchResult) || (!$hotelSearchParams))
         {
-            $this->sendError(500, 'Cache invalidated already.');
+            $this->sendError(200, 'Cache invalidated already.');
             Yii::app()->end();
         }
+        $hotelClient = new HotelBookClient();
+
         foreach ($hotelSearchResult['hotels'] as $hotel)
         {
             if ($hotel['hotelId']==$hotelId)
             {
-                $response['hotel'] = $hotel;
-                $hotelClient = new HotelBookClient();
-                $response['hotel']['details'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
-                $response['searchParams'] = $hotelSearchParams->getJsonObject();
-                if ($format == 'json')
-                    $this->sendJson($response);
-                elseif ($format == 'xml')
-                    $this->sendXml($response, 'hotelSearchResults');
-                Yii::app()->end();
+                if(!isset($response['hotel'])){
+                    $response['hotel'] = $hotel;
+
+                    $response['hotel']['details'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
+                    $response['searchParams'] = $hotelSearchParams->getJsonObject();
+                    $response['hotel']['oldHotels'] = array();
+                    $response['hotel']['oldHotels'][] = new Hotel($hotel);
+                }else{
+                    $response['hotel']['oldHotels'][] = new Hotel($hotel);
+                }
             }
         }
-        $this->sendError(500, 'No hotel with given hotelId found');
+        if(isset($response)){
+            $null = null;
+            $hotelClient->hotelSearchDetails($null,$response['hotel']['oldHotels']);
+            if ($format == 'json')
+                $this->sendJson($response);
+            elseif ($format == 'xml')
+                $this->sendXml($response, 'hotelSearchResults');
+            Yii::app()->end();
+        }
+        $this->sendError(200, 'No hotel with given hotelId found');
     }
 
     private function storeToCache($hotelSearchParams, $results)
     {
         $cacheId = md5(serialize($hotelSearchParams));
+
         Yii::app()->cache->set('hotelSearchResult' . $cacheId, $results, appParams('hotel_search_cache_time'));
         Yii::app()->cache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
         return $cacheId;

@@ -31,7 +31,7 @@
 }
 #content {
 	padding-top: 35px;
-	padding-bottom: 5px;
+	padding-bottom: 65px;
 	margin: 0 auto;
 	position: relative;
 }
@@ -667,6 +667,11 @@
     font-family: Arial;
     font-size: 11px;
     line-height: 13px;
+    margin-left: -2px;
+}
+.all-list a {
+	color: #2174a3;
+	border-bottom: 1px dashed;
 }
 .ticket-content {
 	color: #3E4C52;
@@ -739,8 +744,6 @@
 #content > .title .rating, .hotel-details > .title .rating{
     color: #202328;
     font-size: 11px;
-    float: right;
-    text-align: right;
 }
 #content > .title .rating .value, .hotel-details > .title .rating .value {
     display: inline-block;
@@ -777,12 +780,15 @@
 }
 .stars-select {
 	display: inline-block; width: 89px; height: 16px;
-	background: url(../images/slice.png) no-repeat -127px -768px;
+	background: url(../images/slice.png) no-repeat -288px -768px;
 	vertical-align: top;
 	margin-left: 0px;
 	overflow:hidden;
 	margin-top: 2px;
 	position: relative;
+}
+.div-filter .stars-select {
+	background: none;
 }
 .stars-select  .none-select {
 	 width: 89px; height: 16px;
@@ -819,6 +825,7 @@
     padding-top: 23px;
     text-align: center;
     width: 18px;
+    margin-right: 9px;
 }
 .stars-li li input {
 	display: none;
@@ -831,8 +838,12 @@
 	margin-top: -25px;
     padding-top: 25px;
     cursor: pointer;
+    background: url(../images/slice.png) no-repeat -288px -762px;
 }
 .stars-li li label.active {
+	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
+}
+.stars-li li label:hover {
 	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
 }
 #content > .title > .stars, .hotel-details > .title > .stars {
@@ -960,7 +971,7 @@
 	margin-top: 18px;
 	overflow: hidden;
 	margin-bottom: 20px;
-	margin-left: -11px;
+	margin-left: 0px;
 }
 .descr > .left {
 	float: left;
@@ -970,7 +981,7 @@
 	font-size: 11px;
 	line-height: 16px;
 	color: #8f9199;
-	margin-bottom: 15px;
+	margin-bottom: 11px;
 	/* width: 100%; */
 	overflow: hidden;
 	height: 170px;
@@ -1028,17 +1039,14 @@
 .service-in-hotel {
 	margin-bottom: 20px;
 	padding-left: 0px;
+	/* background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
+	padding-top: 30px; */
 }
 .service-in-room {
 	margin-bottom: 20px;
 	padding-left: 0px;
 }
-.service-in-hotel ul, .service-in-room ul {
-	overflow: hidden;
-	margin-bottom: -1px;
-}
 .service-in-hotel ul li, .service-in-room ul li {
-	border-bottom: 1px dotted;
     color: #4B4B4F;
     float: left;
     line-height: 20px;
@@ -1046,7 +1054,7 @@
     margin-right: 5%;
     padding-bottom: 3px;
     padding-top: 3px;
-    width: 45%;
+    width: 25%;
 }
 .service-in-hotel ul li .ico-wi-fi, 
 .service-in-hotel ul li .ico-glass, 
@@ -1058,8 +1066,10 @@
 }
 .info-trip {
 	padding-left: 0px;
-	background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
+	/*
+background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
 	padding-top: 30px;
+*/
 }
 .info-trip .date-trip {
 	font-size: 15px;
@@ -1116,10 +1126,75 @@
     position: relative;
     z-index: 100;
 }
-.block-trip table ul li {
-	margin-bottom: 1px;
-	margin-top: 3px;
+.block-trip {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 0 #A6A7AB;
+    line-height: 20px;
+    padding: 0;
+    vertical-align: bottom;
 }
+.block-trip .table-hotel-result .td-cost {
+    border-left: 1px solid #DFE1E2;
+    padding-left: 15px;
+    text-align: left;
+    vertical-align: middle;
+    width: 255px;
+    padding-right: 15px;
+}
+.block-trip .table-hotel-result .td-cost .btn-cost {
+	width: 100%;
+	padding: 10px 5px 0 0;
+	height: 27px;
+}
+.block-trip .table-hotel-result .td-cost .btn-cost .text {
+	margin-right: 5px;
+}
+.block-trip .table-hotel-result .td-cost .btn-cost .cost {
+    display: inline-block;
+    font-size: 26px;
+    vertical-align: middle;
+}
+.block-trip .table-hotel-result .td-cost .btn-cost .btn-cost .rur {
+    display: inline-block;
+    margin-left: 2px;
+    margin-top: -1px;
+}
+.block-trip .table-hotel-result .td-float .float {
+    border-top: 1px solid #DFE1E2;
+    font-size: 11px;
+    margin-top: -1px;
+    padding: 5px 0;
+    width: 100%;
+}
+.block-trip .table-hotel-result .td-float .float .text {
+    color: #2174A3;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    padding-left: 9px;
+}
+.block-trip .table-hotel-result .td-float .float table .tdOrigText {
+    padding-left: 9px;
+    width: 50%;
+}
+.block-trip .table-hotel-result .td-float .float table .textOriginal {
+    color: #858585;
+    display: block;
+    font-size: 11px;
+    font-style: italic;
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+.block-trip .table-hotel-result .td-float .float table a.conditionCancel {
+	border-bottom: 1px dashed;
+	font-size: 11px;
+	line-height: 16px;
+	margin-left: 10px;
+}
+
 .block-trip table .name ul li span.text {
 	color: #2174a3;
 	text-shadow: 0px 1px 0px #FFF;
@@ -1127,11 +1202,8 @@
 	font-size: 16px;
 	margin-right: 10px;	
 }
-.block-trip table .name a {
-	border-bottom: 1px dashed;
-	font-size: 11px;
-	line-height: 16px;
-}
+
+
 .block-trip table .name div.items {
 	border-right: 1px solid #b6bcc4;
 	border-bottom: 1px solid #b6bcc4;
@@ -1816,4 +1888,66 @@ input.hotel-input {
 }
 .allTicketsDIV .aviaTickets {
 	width: 100%;
+}
+
+.backToBack, .backToBackBottom {
+    background: url("../images/btn-back-point.png") no-repeat scroll left center transparent;
+    color: #2E2F31;
+    left: -11px;
+    padding-left: 12px;
+    position: absolute;
+    top: 11px;
+    z-index: 5;
+}
+.backToBackBottom {
+	bottom: 40px;
+	top: auto;
+}
+.backToBack span, .backToBackBottom span {
+	border-bottom: 1px dotted;
+}
+.list ul li {
+	line-height: 15px;
+}
+.serviceInHotelTable {
+	width: 100%;
+	border-bottom: 1px dotted #4B4B4F;
+	margin-bottom: 13px;
+}
+.serviceInHotelTable tr td {
+	padding-bottom: 3px;
+}
+.serviceInHotelTable .title {
+	width: 210px;
+}
+.serviceInHotelTable .title h3 {
+	font-size: 14px;
+	color: #2f3134;
+}
+.serviceInHotelTable .list ul li {
+	list-style: disc;
+}
+.shadowHotel {
+	height: 31px;
+	/* background: url(../images/shadow-hotel.png) no-repeat center top; */
+	width: 100%;
+}
+.hotel-important-info, .service-in-room {
+	color: #4B4B4F;
+	padding-bottom: 10px;
+}
+
+.miniPopUp {
+	position: absolute;
+	padding: 4px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 4px rgba(0,1,1,0.2);
+	background: #FFF;
+	color: #4B4B4F;
+}
+.photoNumb {
+    bottom: 0;
+    color: #8F9199;
+    font-size: 11px;
+    position: absolute;
 }

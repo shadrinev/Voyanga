@@ -42,10 +42,13 @@
 	width: 16px; height: 11px;
 	display: inline-block;
 }
-.ico-wi-fi {
-	background: url(../images/ico.png) no-repeat -0px -41px;
-	width: 16px; height: 12px;
-	display: inline-block;
+.dotted {
+    background: url("../images/dotted.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 10px;
+    margin-left: -13px;
+    vertical-align: middle;
+    width: 10px;
 }
 .ico-glass {
 	background: url(../images/ico.png) no-repeat -0px -53px;
@@ -63,4 +66,35 @@
 	display: inline-block;
 	margin-right: 5px;
 	vertical-align: middle;
+}
+.icoService {
+	display: inline-block;
+	width: 16px; height: 17px;
+	vertical-align: middle;
+	background: url(../images/ico.png) no-repeat 0px -112px;
+	margin-right: 5px;
+}
+.icoService.in-hotel {
+	background-position: 0px -146px;
+}
+.icoService.service {
+	background-position: 0px -112px;
+}
+.icoService.sport {
+	background-position: 0px -129px;
+}
+.icoService.turist {
+	background-position: 0px -163px;
+}
+.icoService.internet {
+	background-position: 0px -180px;
+}
+.icoService.dosug {
+	background-position: 0px -197px;
+}
+.icoService.parkovka {
+	background-position: 0px -214px;
+}
+.icoService.dop {
+	background-position: 0px -231px;
 }

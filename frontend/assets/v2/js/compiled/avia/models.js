@@ -719,9 +719,9 @@ AviaResultSet = (function() {
 
   AviaResultSet.prototype.filtersRendered = function() {
     ko.processAllDeferredBindingUpdates();
-    scrollValue();
+    scrollValue('avia');
     $('.scrollBlock').scroll(function() {});
-    scrollValue();
+    scrollValue('avia');
     return setTimeout(scrolShowFilter, 1000);
   };
 

@@ -13,6 +13,7 @@
     width: inherit;
     height: 100%;
 }
+.filter-content.hotel
 .filter-content a {
 	color: #1c81bb;
 	border-bottom: 1px dashed;
@@ -37,7 +38,11 @@
 .div-filter {
     border-top: 1px solid #B8B9BF;
     line-height: 25px;
-    padding: 10px 20px 8px;
+    padding: 13px 20px 11px;
+}
+.div-filter.first {
+	border-top:none;
+	padding-top: 13px;
 }
 .slider-filter { 
 	height: 23px; width: 100%;
@@ -50,10 +55,18 @@
 	padding-right: 21px;
 	padding-top: 35px;
 }
+.slide-filter.first.hotel {
+	padding-top: 13px;
+}
 /*--*/
 .slide-filter {
 	margin-bottom: 10px;
 	line-height: 15px;
+}
+.linksFilter {
+	color: #2174a3;
+	font-size: 11px;
+	text-decoration: underline !important;
 }
 /*--*/
 .checkbox {
@@ -80,4 +93,5 @@
     margin-left: 5px;
     margin-right: 7px;
     margin-top: 26px;
+    height: 18px;
 }

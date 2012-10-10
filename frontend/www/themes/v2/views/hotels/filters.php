@@ -1,14 +1,11 @@
 <script id="hotels-filters" type="text/html">
-    <div class="filter-content">
+    <div class="slide-filter first hotel"></div>
+    <div class="filter-content hotel">
         <div class="innerFilter">
 
             <div class="scrollBlock" id="scroll-pane">
-                <div class="div-filter">
-                    <h4>Фильтры</h4>
-
-                </div>
-                <div class="div-filter">
-                    <h4>Название</h4>
+                <div class="div-filter first">
+                    <h4>Поиск по названию</h4>
                     <input class="hotel-input" placeholder="поиск" type="text" data-bind="value: hotelName.selection,attr:{placeholder: hotelName.caption},valueUpdate: 'keyup'">
                 </div>
                 <div class="div-filter">
@@ -25,6 +22,7 @@
                     <div class="slider-wrapper-div">
                         <input data-bind="priceSlider: price"/>
                     </div>
+                    <a href="#" class="linksFilter">Отели на большой карте</a>
                 </div>
                 <div class="div-filter">
                     <h4>Удаленность от центра</h4>

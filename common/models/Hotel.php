@@ -247,6 +247,22 @@ class Hotel extends CApplicationComponent
                 }
                 $this->cancelCharges[] = $params;
             }
+        }elseif(!$this->cancelCharges){
+
+            $params['fromTimestamp'] = time();
+            $params['charge'] = $cancelParams['charge'] == 'false' ? false : true;
+            $params['denyChanges'] = $cancelParams['denyChanges'] == 'false' ? false : true;
+            if($params['charge'] == true)
+            {
+                if(!$this->cancelExpiration){
+                    $this->cancelExpiration = strtotime($this->checkIn);
+                }
+                if($this->cancelExpiration > $params['fromTimestamp'])
+                {
+                    $this->cancelExpiration = $params['fromTimestamp'];
+                }
+                $this->cancelCharges[] = $params;
+            }
         }
     }
 
