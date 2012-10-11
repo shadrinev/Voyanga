@@ -231,6 +231,8 @@ HotelResult = (function() {
 
     this.showMapDetails = __bind(this.showMapDetails, this);
 
+    this.selectFromPopup = __bind(this.selectFromPopup, this);
+
     this.showDetails = __bind(this.showDetails, this);
 
     this.showPhoto = __bind(this.showPhoto, this);
@@ -388,13 +390,27 @@ HotelResult = (function() {
 
   HotelResult.prototype.showDetails = function(data, event) {
     this.readMoreExpanded = false;
-    new GenericPopup('#hotels-body-popup', this);
+    this.activePopup = new GenericPopup('#hotels-body-popup', this);
     SizeBox('hotels-body-popup');
     ResizeBox('hotels-body-popup');
     $(".description .text").dotdotdot({
       watch: 'window'
     });
     return this.mapInitialized = false;
+  };
+
+  HotelResult.prototype.selectFromPopup = function(hotel, event) {
+    var _this = this;
+    this.activePopup.close();
+    hotel.off('back');
+    hotel.on('back', function() {
+      return window.app.render({
+        results: ko.observable(_this.parent)
+      }, 'results');
+    });
+    hotel.getFullInfo();
+    window.app.render(hotel, 'info-template');
+    return Utils.scrollTo('#content');
   };
 
   HotelResult.prototype.showMapDetails = function(data, event) {

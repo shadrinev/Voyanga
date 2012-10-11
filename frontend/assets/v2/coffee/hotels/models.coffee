@@ -276,7 +276,7 @@ class HotelResult
   showDetails: (data, event)=>
     # If user had clicked read-more link
     @readMoreExpanded = false
-    new GenericPopup '#hotels-body-popup', @
+    @activePopup = new GenericPopup '#hotels-body-popup', @
     SizeBox('hotels-body-popup')
     ResizeBox('hotels-body-popup')
     #sliderPhoto('.photo-slide-hotel')
@@ -285,6 +285,16 @@ class HotelResult
 
     # If we initialized google map already
     @mapInitialized = false
+
+  selectFromPopup: (hotel, event) =>
+    @activePopup.close()
+    hotel.off 'back'
+    hotel.on 'back', =>
+      window.app.render({results: ko.observable(@parent)}, 'results')
+
+    hotel.getFullInfo()
+    window.app.render(hotel, 'info-template')
+    Utils.scrollTo('#content')
 
   showMapDetails: (data, event)=>
     @showDetails(data, event)
