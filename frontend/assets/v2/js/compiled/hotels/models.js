@@ -510,7 +510,6 @@ HotelResult = (function() {
       text_el.dotdotdot({
         watch: 'window'
       });
-      text_el.css('overflow', 'visible');
       el.text('Свернуть');
       el.addClass('active');
     } else {
@@ -521,7 +520,6 @@ HotelResult = (function() {
       text_el.dotdotdot({
         watch: 'window'
       });
-      text_el.css('overflow', 'hidden');
     }
     return SizeBox('hotels-popup-body');
   };
