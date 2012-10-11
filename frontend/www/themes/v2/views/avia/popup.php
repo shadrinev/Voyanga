@@ -1,6 +1,6 @@
 <script id="avia-popup" type="text/html">
 <div id="avia-ticket-info-popup">
-            <div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
+            <div class="tickets-details" style="margin-top: -1px; ">
               <div class="top-head-tickets">
                 <div class="date" data-bind="html: departurePopup()">
                 19 мая, Пн

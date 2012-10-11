@@ -38,6 +38,7 @@
     border-radius: 6px 6px 6px 6px;
     padding: 1px 0 25px;
     position: relative;
+    overflow: hidden;
 }
 .pv_switch {
     height: 5px;
