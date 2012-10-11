@@ -58,7 +58,6 @@
         'basePath' => 'frontend.assets.v2.js.compiled.common',
         'js' => array(
             //! Our application logic
-            'API.js',
             'genericpopup.js',
             'photobox.js',
             'module.slider.js',
