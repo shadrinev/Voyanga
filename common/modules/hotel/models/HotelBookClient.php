@@ -16,109 +16,156 @@ class HotelBookClient
     public static $requestIds;
     public $requests;
 
-    public function request($url, $getData = null, $postData = null, $asyncParams = null)
+    public function request($url, $getData = null, $postData = null, $asyncParams = null, $cacheFileName = null)
     {
-        $rCh = curl_init();
+        if($cacheFileName){
+            $cachePath = Yii::getPathOfAlias('cacheStorage');
+            $cacheFilePath = $cachePath.'/'.$cacheFileName.'.xml';
+            if( file_exists($cacheFilePath) ){
+                $cacheResult = file_get_contents($cacheFilePath);
+            }else{
+                $cacheResult = false;
+            }
+        }else
+            $cacheResult = false;
+        if(!$cacheResult){
+            $rCh = curl_init();
 
-        if ($postData)
-        {
-            curl_setopt($rCh, CURLOPT_POST, (true));
-        }
-        curl_setopt($rCh, CURLOPT_HEADER, true);
-        curl_setopt($rCh, CURLOPT_RETURNTRANSFER, true);
-        if ($postData)
-        {
-            curl_setopt($rCh, CURLOPT_POSTFIELDS, $postData);
-        }
-        curl_setopt($rCh, CURLOPT_TIMEOUT, 190);
-        //$aHeadersToSend = array();
-        //$aHeadersToSend[] = "Content-Length: " . strlen($sRequest);
-        //$aHeadersToSend[] = "Content-Type: text/xml; charset=utf-8";
-        //$aHeadersToSend[] = "SOAPAction: \"$sAction\"";
-
-        //curl_setopt($rCh, CURLOPT_HTTPHEADER, $aHeadersToSend);
-
-        //evaluate get parametrs
-        if ($getData)
-        {
-            $pos = strpos($url, '?');
-            if ($pos !== false)
+            if ($postData)
             {
-                list($url, $args) = explode("?", $url, 2);
-                parse_str($args, $params);
-                $getData = array_merge($params, $getData);
+                curl_setopt($rCh, CURLOPT_POST, (true));
+            }
+            curl_setopt($rCh, CURLOPT_HEADER, true);
+            curl_setopt($rCh, CURLOPT_RETURNTRANSFER, true);
+            if ($postData)
+            {
+                curl_setopt($rCh, CURLOPT_POSTFIELDS, $postData);
+            }
+            curl_setopt($rCh, CURLOPT_TIMEOUT, 190);
+            //$aHeadersToSend = array();
+            //$aHeadersToSend[] = "Content-Length: " . strlen($sRequest);
+            //$aHeadersToSend[] = "Content-Type: text/xml; charset=utf-8";
+            //$aHeadersToSend[] = "SOAPAction: \"$sAction\"";
+
+            //curl_setopt($rCh, CURLOPT_HTTPHEADER, $aHeadersToSend);
+
+            //evaluate get parametrs
+            if ($getData)
+            {
+                $pos = strpos($url, '?');
+                if ($pos !== false)
+                {
+                    list($url, $args) = explode("?", $url, 2);
+                    parse_str($args, $params);
+                    $getData = array_merge($params, $getData);
+                }
+
+                $url = $url . '?' . http_build_query($getData);
             }
 
-            $url = $url . '?' . http_build_query($getData);
+
+            curl_setopt($rCh, CURLOPT_URL, $url);
+            $key = $url . md5(serialize($postData));
+            $mongoKey = substr(md5($key . uniqid('', true)), 0, 10);
+
+            $hotelRequest = new HotelRequest();
+            $hotelRequest->requestNum = $mongoKey;
+            self::$requestIds[] = array('key' => $mongoKey, 'class' => get_class($hotelRequest), 'keyName' => 'requestNum');
+            $hotelRequest->timestamp = time();
+            //echo 'send req: '.self::$lastRequestMethod."\n";
+            $hotelRequest->methodName = self::$lastRequestMethod;
+            $hotelRequest->requestUrl = $url;
+            if (self::$groupId)
+            {
+                $hotelRequest->groupId = self::$groupId;
+            }
+            $hotelRequest->requestDescription = self::$lastRequestDescription;
+            $hotelRequest->requestXml = isset($postData['request']) ? $postData['request'] : '';
+            $valid = $hotelRequest->save();
+            if (!$valid) CVarDumper::dump($hotelRequest->getErrors());
         }
-
-
-        curl_setopt($rCh, CURLOPT_URL, $url);
-        $key = $url . md5(serialize($postData));
-        $mongoKey = substr(md5($key . uniqid('', true)), 0, 10);
-
-        $hotelRequest = new HotelRequest();
-        $hotelRequest->requestNum = $mongoKey;
-        self::$requestIds[] = array('key' => $mongoKey, 'class' => get_class($hotelRequest), 'keyName' => 'requestNum');
-        $hotelRequest->timestamp = time();
-        //echo 'send req: '.self::$lastRequestMethod."\n";
-        $hotelRequest->methodName = self::$lastRequestMethod;
-        $hotelRequest->requestUrl = $url;
-        if (self::$groupId)
-        {
-            $hotelRequest->groupId = self::$groupId;
-        }
-        $hotelRequest->requestDescription = self::$lastRequestDescription;
-        $hotelRequest->requestXml = isset($postData['request']) ? $postData['request'] : '';
-        $valid = $hotelRequest->save();
-        if (!$valid) CVarDumper::dump($hotelRequest->getErrors());
 
 
 
         if ($asyncParams === null)
         {
-            $startTime = microtime(true);
-            $sData = curl_exec($rCh);
-            $endTime = microtime(true);
+            if(!$cacheResult){
+                $startTime = microtime(true);
+                $sData = curl_exec($rCh);
+                $endTime = microtime(true);
 
-            //Biletoid_Utils::addLogMessage($sData, '/tmp/curl_response.txt');
-            if ($sData !== FALSE)
-            {
-                list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
-                if (strpos($sHeaders, 'Continue') !== FALSE)
+                //Biletoid_Utils::addLogMessage($sData, '/tmp/curl_response.txt');
+                if ($sData !== FALSE)
                 {
                     list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
+                    if (strpos($sHeaders, 'Continue') !== FALSE)
+                    {
+                        list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
+                    }
+                    $this->lastHeaders = $sHeaders;
+
+                    $hotelRequest->executionTime = ($endTime - $startTime);
+                    $hotelRequest->responseXml = UtilsHelper::formatXML($sData);
+                    $hotelRequest->save();
+
+                    if($cacheFileName){
+                        file_put_contents($cacheFilePath,$sData);
+                    }
                 }
-                $this->lastHeaders = $sHeaders;
+                else
+                {
+                    $this->lastCurlError = curl_error($rCh);
+                    $hotelRequest->errorDescription = $this->lastCurlError;
+                    $hotelRequest->save();
+                }
 
-                $hotelRequest->executionTime = ($endTime - $startTime);
-                $hotelRequest->responseXml = UtilsHelper::formatXML($sData);
-                $hotelRequest->save();
+                return $sData;
+            }else{
+                return $cacheResult;
             }
-            else
-            {
-                $this->lastCurlError = curl_error($rCh);
-                $hotelRequest->errorDescription = $this->lastCurlError;
-                $hotelRequest->save();
-            }
-
-            return $sData;
         }
         else
         {
-            curl_setopt($rCh, CURLOPT_HEADER, false);
-            if (!$this->multiCurl)
-            {
-                $this->multiCurl = curl_multi_init();
+            if(!$cacheResult){
+                curl_setopt($rCh, CURLOPT_HEADER, false);
+                if (!$this->multiCurl)
+                {
+                    $this->multiCurl = curl_multi_init();
+                }
+
+                $this->requests[] = array('curlHandle' => $rCh, 'completed' => false, 'hotelRequestLog' => $hotelRequest,'cacheFilePath'=> $cacheFileName ? $cacheFilePath : null);
+
+                $id = count($this->requests) - 1;
+                curl_multi_add_handle($this->multiCurl, $this->requests[$id]['curlHandle']);
+                $this->requests[$id]['id'] = $id;
+                $this->requests[$id] = array_merge($this->requests[$id], $asyncParams);
+                return $id;
+            }else{
+
+                $this->requests[] = array('curlHandle' => null, 'completed' => true, 'hotelRequestLog' => null,'cacheFilePath'=> $cacheFileName ? $cacheFilePath : null);
+
+                $id = count($this->requests) - 1;
+
+                $this->requests[$id]['id'] = $id;
+                //$this->requests[$id] = array_merge($this->requests[$id], $asyncParams);
+                if (isset($asyncParams['function']))
+                {
+                    $params = array($cacheResult);
+                    if ((isset($asyncParams['params'])) and ($asyncParams['params']))
+                    {
+                        foreach ($asyncParams['params'] as $param)
+                        {
+                            $params[] = $param;
+                        }
+                    }
+                    $this->requests[$id]['result'] = call_user_func_array($asyncParams['function'], $params);
+                }
+                else
+                {
+                    $this->requests[$id]['result'] = $cacheResult;
+                }
+                return $id;
             }
-
-            $this->requests[] = array('curlHandle' => $rCh, 'completed' => false, 'hotelRequestLog' => $hotelRequest);
-
-            $id = count($this->requests) - 1;
-            curl_multi_add_handle($this->multiCurl, $this->requests[$id]['curlHandle']);
-            $this->requests[$id]['id'] = $id;
-            $this->requests[$id] = array_merge($this->requests[$id], $asyncParams);
-            return $id;
         }
     }
 
@@ -150,6 +197,9 @@ class HotelBookClient
                                 $requestInfo['hotelRequestLog']->executionTime = ($endTime - $startTime);
                                 $requestInfo['hotelRequestLog']->responseXml = UtilsHelper::formatXML($result);
                                 $requestInfo['hotelRequestLog']->save();
+                                if($requestInfo['cacheFilePath']){
+                                    file_put_contents($requestInfo['cacheFilePath'],$result);
+                                }
                                 if (isset($requestInfo['function']))
                                 {
                                     $params = array($result);
@@ -1205,24 +1255,27 @@ class HotelBookClient
         return new HotelInfo($hotelParams);
     }
 
-    public function hotelDetail($hotelId, $async = false)
+    public function hotelDetail($hotelId, $async = false, $cache = true)
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
         $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time), 'hotel_id' => $hotelId);
         self::$lastRequestMethod = 'HotelDetail';
         self::$lastRequestDescription = $hotelId;
+        if($cache){
+            $cacheFileName = 'HotelDetail'.$hotelId;
+        }else{
+            $cacheFileName = null;
+        }
         if ($async)
         {
             $asyncParams = array('function' => array($this, 'processHotelDetail'));
-            return $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_detail', $getData, null, $asyncParams);
+            return $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_detail', $getData, null, $asyncParams,$cacheFileName);
 
         }
         else
         {
-
-
-            $hotelDetailXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_detail', $getData);
+            $hotelDetailXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_detail', $getData, null, null, $cacheFileName);
 
             //CTextHighlighter::registerCssFile();
 
