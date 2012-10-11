@@ -1,4 +1,5 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
+HOTEL_SERVICE_VERBOSE = {'Сервис':'service','Спорт и отдых':'sport','Туристам':'turist','Интернет':'internet','Развлечения и досуг':'dosug','Парковка':'parkovka','Дополнительно':'dop','В отеле':'in-hotel'}
 
 class Room
   constructor: (data) ->
@@ -15,6 +16,7 @@ class Room
     @meal = data.meal
     if data.mealName
       @meal = data.mealName
+    @last = ko.observable false
     #if data.mealBreakfast != '' and typeof data.mealBreakfast != 'undefined'
     #  @meal = data.mealBreakfast
     if typeof @meal == "undefined" || @meal == ''
@@ -44,11 +46,28 @@ class RoomSet
     @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
     @cancelRules = ko.observable(false)
+    @cancelText = ko.computed =>
+      if @cancelRules()
+        result = []
+        for cancelObject in @cancelRules()
+          if cancelObject.charge
+            nowDate = dateUtils.formatDayMonth( moment()._d )
+            if nowDate == dateUtils.formatDayMonth(cancelObject.cancelDate._d)
+              result.push 'Штраф взымается в размере ' + Math.ceil(cancelObject.price) + ' руб'
+            else
+              result.push 'Штраф взымается в размере ' + Math.ceil(cancelObject.price) + ' руб с ' + dateUtils.formatDayMonth(cancelObject.cancelDate._d)
+            #console.log(resultText,cancelObject.cancelDate);
+          else
+            result.push 'Штраф за отмену не взымается '
+        return result.join('<br>')
+      else
+        return 'Условия бронирования пока не известны'
 
 
     @rooms = []
     for room in data.rooms
       @rooms.push new Room room
+    @rooms[(@rooms.length-1)].last(true)
     @selectedCount = ko.observable 0
     @selectedCount.subscribe (newValue)=>
       @checkCount(newValue)
@@ -90,13 +109,21 @@ class RoomSet
           return -1
         return 0
     )
-    cancelObject = roomSetData.cancelCharges.shift()
-    cancelObject.cancelDate = moment(cancelObject.fromTimestamp)
-    @cancelRules(cancelObject)
+    #cancelObject = roomSetData.cancelCharges.shift()
+    console.log('adding cancel rules',roomSetData.cancelCharges)
+    for cancelObject in roomSetData.cancelCharges
+      cancelObject.cancelDate = moment.unix(cancelObject.fromTimestamp)
+      console.log('date convert',cancelObject,cancelObject.fromTimestamp,cancelObject.cancelDate)
+    @cancelRules(roomSetData.cancelCharges)
 
-  showCancelationRules: =>
-
-
+  showCancelationRules: (el,e)=>
+    miniPopUp = '<div class="miniPopUp"></div>'
+    console.log(e)
+    widthThisElement = $(e.currentTarget).width()
+    $('body').append(miniPopUp)
+    $('.miniPopUp').html($(e.currentTarget).attr('rel')).css('left', (e.pageX - (widthThisElement / 2))+'px').css('top', (e.pageY + 10)+'px')
+  hideCancelationRules: (el,ev)=>
+    $('.miniPopUp').remove()
   #price: ->
   #  console.log prm
   #  console.log 'tt'
@@ -172,7 +199,7 @@ class HotelResult
     @hotelGroupServices = []
     if data.hotelGroupServices
       for groupName,elements of data.hotelGroupServices
-        @hotelGroupServices.push {groupName: groupName,elements: elements}
+        @hotelGroupServices.push {groupName: groupName,elements: elements,groupIcon: HOTEL_SERVICE_VERBOSE[groupName]}
     #if @hasHotelServices
     #  for service in @hotelServices
     #    if service == 'Фитнесс-центр'
@@ -366,15 +393,15 @@ class HotelResult
           @roomCombinations.push set
         cancelObjs = {}
         for ind,roomSet of data.hotel.oldHotels
-          set = new RoomSet roomSet, @, @duration
-          set.resultId = roomSet.resultId
-          key = set.key()
+          key = roomSet.resultId
           cancelObjs[key] = roomSet
-
+        console.log(cancelObjs)
         for roomSet in @roomSets()
-          key = roomSet.key()
+          key = roomSet.resultId
           if cancelObjs[key]
             roomSet.addCancelationRules(cancelObjs[key])
+          else
+            console.log('not found result with key',key)
 
         @roomMixed = ko.computed =>
           resultsObj = {}

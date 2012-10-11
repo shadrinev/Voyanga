@@ -229,7 +229,7 @@ class Hotel extends CApplicationComponent
     public function addCancelCharge($cancelParams)
     {
         $params = array();
-        $params['price'] = isset($cancelParams['price']) ? $cancelParams['price'] : 0;
+        $params['price'] = isset($cancelParams['price']) ? $cancelParams['price'] * ($this->rubPrice / $this->price) : 0;
         if(isset($cancelParams['from']))
         {
             $time = strtotime($cancelParams['from']);

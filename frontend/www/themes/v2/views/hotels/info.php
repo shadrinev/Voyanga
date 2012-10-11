@@ -106,9 +106,11 @@
 			                            <!-- /ko -->
                         			</td>
                         		</tr>
-                        		<tr>
-                        			<td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" >Условия отмены бронирования</a></td>
-                        		</tr>
+                                <!-- ko if: last()-->
+                                <tr>
+                                    <td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: $parent.cancelText()},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
+                                </tr>
+                                <!-- /ko -->
                         	</table>
                         	
                         </div>
@@ -131,6 +133,7 @@
                         <div class="float" >
                         
                         	<table>
+
                         		<tr>
                         			<td class="text" colspan="2">
                         				<span data-bind="text: name">Стандартный двухместный номер</span>
@@ -146,9 +149,11 @@
 			                            <!-- /ko -->
                         			</td>
                         		</tr>
+                                <!-- ko if: last()-->
                         		<tr>
-                        			<td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" >Условия отмены бронирования</a></td>
+                        			<td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: $parent.cancelText()},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
                         		</tr>
+                                <!-- /ko -->
                         	</table>
                         	
                         </div>
@@ -221,7 +226,7 @@
       <table class="serviceInHotelTable">
       	<tr>
       		<td class="title">
-      			<h3><span class="icoService in-hotel"></span><span data-bind="text: groupName"></span></h3>
+      			<h3><span class="icoService in-hotel" data-bind="attr:{class: 'icoService '+groupIcon}"></span><span data-bind="text: groupName"></span></h3>
       		</td>
       		<td class="list">
       			<ul data-bind="foreach: elements">
