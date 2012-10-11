@@ -467,7 +467,6 @@ class HotelResult
       var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
       text_el.attr('rel',var_heightCSS).css('height','auto');
       text_el.dotdotdot({watch: 'window'});
-      text_el.css('overflow','visible');
       el.text('Свернуть');
       el.addClass('active');
     else
@@ -476,7 +475,6 @@ class HotelResult
       el.text('Подробнее');
       el.removeClass('active');
       text_el.dotdotdot({watch: 'window'});
-      text_el.css('overflow','hidden');
     #FIXME should not be called on details page
     SizeBox('hotels-popup-body')
 

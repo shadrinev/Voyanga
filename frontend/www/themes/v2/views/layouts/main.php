@@ -5,7 +5,8 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 $theme = Yii::app()->theme->baseUrl;
 Yii::app()->clientScript->registerPackage('appCss');
 Yii::app()->clientScript->registerPackage('appJs');
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -13,6 +14,7 @@ Yii::app()->clientScript->registerPackage('appJs');
     <script type="text/javascript"
             src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
+    <script type="text/javascript" src="http://api.voyanga.com/API.js"
 </head>
 <body data-bind="css: {fixed: isEvent()}">
 <?php echo $content; ?>

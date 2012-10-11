@@ -21,7 +21,7 @@ API = (function() {
     }
     return $.ajax({
       url: "" + this.endpoint + url,
-      dataType: 'jsonp',
+      dataType: 'json',
       timeout: 60000,
       success: function(data) {
         sessionStorage.setItem("" + _this.endpoint + url, JSON.stringify(data));

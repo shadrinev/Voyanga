@@ -45,16 +45,16 @@
 
 <script id="tours-panel-template" type="text/html">
   <div class="btn-timeline-and-condition">
-    <a href="#" class="btn-timeline active" data-bind="click: showTimeline">Таймлайн</a>
-    <a href="#" class="btn-condition" data-bind="click: showConditions">Условия</a>
+    <a href="#" class="btn-timeline" data-bind="click: timeline.showTimeline, css: {active: !timeline.termsActive}">Таймлайн</a>
+    <a href="#" class="btn-condition" data-bind="click: timeline.showConditions, css: {active: timeline.termsActive}">Условия</a>
   </div>
   
   <div class="slide-tmblr">
-    <div class="timeline">
-      <div class="btn-left"></div>
-      <div class="btn-right"></div>
+    <div class="timeline" data-bind="style: {top: timeline.termsActive?'-68px':0}">
+      <div class="btn-left" data-bind="click: timeline.scrollLeft"> </div>
+      <div class="btn-right" data-bind="click: timeline.scrollRight"></div>
       <div class="timedatelineOverflow">
-	<ul class="timedateline" style="width:840px;" data-bind="foreach: timeline">
+	<ul class="timedateline"  data-bind="foreach: timeline.data, style: {width: timeline.data().length * 32 + 'px', marginLeft: '-' + timeline.timelinePosition() + 'px'}">
 	  <li>
 	    <!-- ko if: avia -->
 	    <div class="trip-fly"></div>
@@ -75,18 +75,13 @@
     </div>
     
 
-    <div class="condition" style="top: 68px;"
-         data-bind="template: { name: original_template, data: $data, afterRender: afterRender }">
+    <div class="condition"
+         data-bind="template: { name: original_template, data: $data, afterRender: afterRender },style: {top: timeline.termsActive?'-15px':'68px'}">
     </div>
   </div>
   
   <div class="clear"></div>
   <!-- BTN MINIMIZE -->
   <!-- fixme -->
-  <a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
-  
-  <div class="minimize-rcomended">
-    <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
-  </div>
 </div>
 </script>

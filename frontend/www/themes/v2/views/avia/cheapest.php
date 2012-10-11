@@ -1,10 +1,10 @@
 <script id="avia-cheapest-result" type="text/html">
   <div class="recommendedBlock">
-	  <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:cheapest(), ribbon:'ribbon-cheapest'}}">
-	  </div>
-	  <div class="prices-of-3days" data-bind="template:{name: 'prices-of-3days-template', data:$data}">
-	  </div>
-	  <div class="clear"></div>
+    <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:cheapest(), ribbon:'ribbon-cheapest'}}">
+    </div>
+    <div class="prices-of-3days" data-bind="template:{name: 'prices-of-3days-template', data:$data}">
+    </div>
+    <div class="clear"></div>
   </div>
   <div class="backgroundLineRec"> </div>
 </script>
@@ -14,6 +14,7 @@
   <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:best(), ribbon:'ribbon-optima'}}">
   </div>
   <div class="clear"></div>
+  <div class="backgroundLineRec"> </div>
 </script>
 
 <script id="prices-of-3days-template" type="text/html">

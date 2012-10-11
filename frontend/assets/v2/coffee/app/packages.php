@@ -58,7 +58,6 @@
         'basePath' => 'frontend.assets.v2.js.compiled.common',
         'js' => array(
             //! Our application logic
-            'API.js',
             'genericpopup.js',
             'photobox.js',
             'module.slider.js',
@@ -103,6 +102,7 @@
     'tours' => array(
         'basePath' => 'frontend.assets.v2.js.compiled.tours',
         'js' => array(
+            'timeline.js',
             'panel.js',
             'models.js',
             'controllers.js',

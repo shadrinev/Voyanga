@@ -58,14 +58,15 @@
               			<span class="box" data-bind="text: freeWeight"></span>
               			<span data-bind="text: freeWeightText"></span>
               		</div>
-              	</div>	
-              	<div class="floatRight">
-	              	<span style="color:#2e333b;" class="f14 bold" data-bind="text: parent.tours?'Выбрать':'Оформить', visible:!parent.selected_key()!=key">Оформить</span>
-	              	<a class="btn-order" href="#">
-	                	<span class="cost" data-bind="text: (parent.selected_key()!=key)? price:'Выбран'">63 502</span> <span class="rur f26" data-bind="visible: parent.selected_key()!=key">o</span>
-	                </a>
               	</div>
-              </div>
+      <div class="floatRight">
+	<span style="color:#2e333b;" class="f14 bold" data-bind="text: parent.tours?(parent.selected_key()!=key?'Выбрать':'Выбран'):'Оформить'">Оформить</span>
+	<a class="btn-order" href="#" data-bind="visible: parent.selected_key()!=key">
+	  <span class="cost" data-bind="text: price">63 502</span> <span class="rur f26">o</span>
+	</a>
+      </div>
+
+             </div>
             </div>
           </div>
 </script>
