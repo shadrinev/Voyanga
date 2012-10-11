@@ -17,6 +17,7 @@ class PhotoBox
 
     resizeLoad()
     resizePhotoWin()
+    @loadFirstTime = true
 
     $(window).keyup (e) =>
       if e.keyCode == 27
@@ -34,6 +35,9 @@ class PhotoBox
   # Load handler for popup photos
   photoLoad: (context, event) =>
     console.log "PHOTOLOAD"
+    if @loadFirstTime
+      #resizePhotoWinHandler()
+      @loadFirstTime = false
     el = $(event.currentTarget)
     el.show()
     if el.width() > 850
@@ -42,7 +46,7 @@ class PhotoBox
       el.css 'width', 'auto'
     $('#hotel-img-load').hide()
 
-    el.animate {opacity : 1}, 200
+    el.animate({opacity : 1},200,resizePhotoWinHandler)
     #resizeImg();
     @busy = false
 

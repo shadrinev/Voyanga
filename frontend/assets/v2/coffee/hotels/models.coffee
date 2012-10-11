@@ -43,7 +43,7 @@ class RoomSet
 
     @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
-
+    @cancelRules = ko.observable(false)
 
 
     @rooms = []
@@ -80,6 +80,19 @@ class RoomSet
     for room in @rooms
       result +=room.key()
     return result
+
+  addCancelationRules: (roomSetData)=>
+    roomSetData.cancelCharges.sort(
+      (left,right)->
+        if left.fromTimestamp < right.fromTimestamp
+          return 1
+        else if left.fromTimestamp > right.fromTimestamp
+          return -1
+        return 0
+    )
+    cancelObject = roomSetData.cancelCharges.shift()
+    cancelObject.cancelDate = moment(cancelObject.fromTimestamp)
+    @cancelRules(cancelObject)
 
   showCancelationRules: =>
 
@@ -351,6 +364,18 @@ class HotelResult
           set = new RoomSet roomSet, @, @duration
           set.resultId = roomSet.resultId
           @roomCombinations.push set
+        cancelObjs = {}
+        for ind,roomSet of data.hotel.oldHotels
+          set = new RoomSet roomSet, @, @duration
+          set.resultId = roomSet.resultId
+          key = set.key()
+          cancelObjs[key] = roomSet
+
+        for roomSet in @roomSets()
+          key = roomSet.key()
+          if cancelObjs[key]
+            roomSet.addCancelationRules(cancelObjs[key])
+
         @roomMixed = ko.computed =>
           resultsObj = {}
           for roomSet in @roomSets()
