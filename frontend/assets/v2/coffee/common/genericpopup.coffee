@@ -17,3 +17,4 @@ class GenericPopup
     $(window).unbind 'keyup'
     $(@id).remove()
     $('#popupOverlay').remove()
+    do btnClosePopUp

@@ -211,11 +211,25 @@
 <!-- FIXME: avia-hotel duplication -->
 <script id="avia-body-popup-template" type="text/html">
 <div id="avia-body-popup" class="body-popup">
-	<div class="popupBody">
-        <div id="contentBox">
-          <div data-bind="template: {name: 'avia-popup', data: data}"></div>
-          <div id="boxClose" data-bind="click: close"></div>
-        </div>
-    </div>
+	<div id="layer">  
+		<div class="pv_cont">
+			<table cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td>
+							<div id="pv_box">
+						          <div data-bind="template: {name: 'avia-popup', data: data}"></div>
+						          <div id="boxClose" data-bind="click: close"></div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="pv_switch">
+			
+		</div>
+	</div>
 </div>
+
 </script>

@@ -1,12 +1,26 @@
 <script type="text/html" id="hotels-body-popup-template">
-  <div id="hotels-body-popup" class="body-popup">
-    <div class="popupBody">
-      <div id="contentBox">
-	<div data-bind="template: {name: 'hotels-popup', data: data}"></div>
-	<div id="boxClose" data-bind="click: close"></div>
-      </div>
-    </div>
-  </div>
+<div id="hotels-body-popup" class="body-popup">
+	<div id="layer">  
+		<div class="pv_cont">
+			<table cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td>
+							<div id="pv_box">
+
+								<div data-bind="template: {name: 'hotels-popup', data: data}"></div>
+								<div id="boxClose" data-bind="click: close"></div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="pv_switch">
+			
+		</div>
+	</div>
+</div>
 </script>
 
 <script id="hotels-popup" type="text/html">

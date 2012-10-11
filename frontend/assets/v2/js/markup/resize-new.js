@@ -534,7 +534,6 @@ function ResizeAvia() {
     scrollValue();
     CenterIMGResize();
     ifHeightMinAllBody();
-
 }
 
 function ResizeFun() {
@@ -714,4 +713,3 @@ function ifHeightMinAllBody() {
 	}
 	
 }
-

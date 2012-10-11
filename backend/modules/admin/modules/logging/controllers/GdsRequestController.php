@@ -24,7 +24,20 @@ class GdsRequestController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider=new EMongoDocumentDataProvider('GdsRequest',array('sort'=>array('defaultOrder'=>'timestamp desc')));
+        $dataProvider=new EMongoDocumentDataProvider(
+            'GdsRequest',
+            array(
+                'criteria' => array(
+                    'select' => array('requestNum', 'methodName', 'timestamp', 'requestDescription', 'executionTime')
+                ),
+                'sort'=>array(
+                    'defaultOrder'=>'timestamp desc'
+                ),
+                'pagination' => array(
+                    'pageSize' => 100
+                )
+            )
+        );
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
         ));

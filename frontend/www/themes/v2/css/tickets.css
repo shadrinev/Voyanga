@@ -1337,7 +1337,7 @@
 }
 .tickets-details .finish .floatRight {
 	float: right;
-    height: 85px;
+    height: 64px; /*85px*/
     overflow: hidden;
     padding-bottom: 1px;
     width: 155px;
