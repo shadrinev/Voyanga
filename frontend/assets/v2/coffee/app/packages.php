@@ -48,7 +48,6 @@
             //'jquery.slider.lib.js',
             'jquery.slider.js',
             'jquery.photoslider.js',
-            'photoslider.js',
             'loader.js',
             'index.js',
             'slide-mode.js'

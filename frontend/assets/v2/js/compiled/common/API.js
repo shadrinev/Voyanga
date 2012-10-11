@@ -11,9 +11,14 @@ API = (function() {
     this.endpoint = 'http://api.voyanga.com/v1/';
   }
 
-  API.prototype.call = function(url, cb) {
+  API.prototype.call = function(url, cb, showLoad) {
     var _this = this;
-    $('#loadWrapBg').show();
+    if (showLoad == null) {
+      showLoad = true;
+    }
+    if (showLoad) {
+      $('#loadWrapBg').show();
+    }
     return $.ajax({
       url: "" + this.endpoint + url,
       dataType: 'jsonp',
@@ -21,11 +26,15 @@ API = (function() {
       success: function(data) {
         sessionStorage.setItem("" + _this.endpoint + url, JSON.stringify(data));
         cb(data);
-        return $('#loadWrapBg').hide();
+        if (showLoad) {
+          return $('#loadWrapBg').hide();
+        }
       },
       error: function() {
         console.log("ERROR");
-        $('#loadWrapBg').hide();
+        if (showLoad) {
+          $('#loadWrapBg').hide();
+        }
         return cb(false);
       }
     });
@@ -82,10 +91,13 @@ HotelsAPI = (function(_super) {
     return HotelsAPI.__super__.constructor.apply(this, arguments);
   }
 
-  HotelsAPI.prototype.search = function(url, cb) {
+  HotelsAPI.prototype.search = function(url, cb, showLoad) {
+    if (showLoad == null) {
+      showLoad = true;
+    }
     return this.call(url, function(data) {
       return cb(data);
-    });
+    }, showLoad);
   };
 
   return HotelsAPI;

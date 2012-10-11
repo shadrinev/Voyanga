@@ -46,7 +46,7 @@
         <div class="how-cost">
           от <span class="cost" data-bind="text: cheapestSet.pricePerNight">5 200</span><span class="rur f21">o</span> / ночь
         </div>
-        <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours()?$parents[3].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
+        <a href="#" class="btn-cost" data-bind="click: selectFromPopup, css:{selected: tours()?$parents[3].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
       </div>
     </div>
     <div class="tab" id="hotels-popup-description">
@@ -69,7 +69,7 @@
             Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра
           </div>
           <h3>Описание отеля</h3>
-          <div class="text" data-bind="text: description">
+          <div class="text" data-bind="html: description">
           </div>
           <a href="#" class="read-more" data-bind="click: readMore">Подробнее</a>
           <!-- ko if: hasHotelGroupServices -->

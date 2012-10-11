@@ -2,8 +2,9 @@ class API
   constructor: ->
     @endpoint = 'http://api.voyanga.com/v1/'
 
-  call: (url, cb) =>
-    $('#loadWrapBg').show()
+  call: (url, cb, showLoad = true) =>
+    if showLoad
+      $('#loadWrapBg').show()
 
     #  $(document).trigger 'aviaStart'
     #if sessionStorage.getItem("#{@endpoint}#{url}")
@@ -17,10 +18,12 @@ class API
       success: (data)=>
         sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
         cb(data)
-        $('#loadWrapBg').hide()
+        if showLoad
+          $('#loadWrapBg').hide()
       error: ->
         console.log( "ERROR")
-        $('#loadWrapBg').hide()
+        if showLoad
+          $('#loadWrapBg').hide()
         cb(false)
 
 class ToursAPI extends API
@@ -33,5 +36,10 @@ class AviaAPI extends API
     @call url, (data) -> cb(data)
 
 class HotelsAPI extends API
-  search: (url, cb)=>
-    @call url, (data) -> cb(data)
+  search: (url, cb, showLoad = true)=>
+    @call(
+      url,
+      (data) ->
+        cb(data)
+      , showLoad
+    )
