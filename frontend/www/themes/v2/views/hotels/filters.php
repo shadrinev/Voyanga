@@ -1,6 +1,6 @@
 <script id="hotels-filters" type="text/html">
-    <div class="slide-filter first hotel"></div>
     <div class="filter-content hotel">
+    	<div class="slide-filter first hotel"></div>
         <div class="innerFilter">
 
             <div class="scrollBlock" id="scroll-pane">
