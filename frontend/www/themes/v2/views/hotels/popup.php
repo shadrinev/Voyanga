@@ -69,7 +69,7 @@
             Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра
           </div>
           <h3>Описание отеля</h3>
-          <div class="text" data-bind="text: description">
+          <div class="text" data-bind="html: description">
           </div>
           <a href="#" class="read-more" data-bind="click: readMore">Подробнее</a>
           <!-- ko if: hasHotelGroupServices -->
