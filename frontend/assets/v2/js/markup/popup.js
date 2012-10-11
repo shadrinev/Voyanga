@@ -1,10 +1,33 @@
 function SizeBox(id) {
 	$('body').css('overflow','hidden');
 	var popup = $('#' + id);
-	
+	$('#pv_box').find('form').focus();
 	
 	/*
+$(document).on('keydown', function(e){
+		var modalKeys = [40,38,37,39,36,35,33,34];
+		if ($.inArray(e.which, modalKeys) >= 0) {
+			e.preventDefault();
+			$('.' + localOptions.overlayClass).trigger(e);
+		}
+	});
 
+	
+	$(window).on('keydown', function(e){
+		if ($(e.target) != popup) {
+			var modalKeys = [40,38,37,39,36,35,33,34];
+			if ($.inArray(e.which, modalKeys) >= 0) {
+				e.preventDefault();
+				popup.trigger(e);
+				console.log(e);
+			}
+		}
+e.stopPropagation();
+		return false;
+
+	});
+	
+*/
 	var boxContent = popup.find('#boxContent');
 	var boxHeight = boxContent.innerHeight();
 	var boxWidth = boxContent.innerWidth();

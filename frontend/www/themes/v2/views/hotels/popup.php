@@ -7,14 +7,9 @@
 					<tr>
 						<td>
 							<div id="pv_box">
-							
-								
-								
+
 								<div data-bind="template: {name: 'hotels-popup', data: data}"></div>
 								<div id="boxClose" data-bind="click: close"></div>
-								
-								
-			
 							</div>
 						</td>
 					</tr>
@@ -22,7 +17,7 @@
 			</table>
 		</div>
 		<div class="pv_switch">
-		
+			
 		</div>
 	</div>
 </div>
