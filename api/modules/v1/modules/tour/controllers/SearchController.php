@@ -90,17 +90,20 @@ class SearchController extends ApiController
             {
                 $grouped[$item->getGroupId()][] = $item;
             }
+            else
+            {
+                $grouped[$item->getGroupId()][] = $item;
+            }
         }
         foreach ($grouped as $group)
         {
-            $url = FlightTripElement::getUrlToAllVariants($group);
-            $asyncExecutor->add($url);
-        }
-        foreach ($items as $item)
-        {
-            if ($item instanceof HotelTripElement)
+            if ($group[0] instanceof FlightTripElement)
             {
-                $itemVariantsUrl = $item->getUrlToAllVariants();
+                $url = FlightTripElement::getUrlToAllVariants($group);
+                $asyncExecutor->add($url);
+            } else if ($group[0] instanceof HotelTripElement)
+            {
+                $itemVariantsUrl = $group[0]->getUrlToAllVariants();
                 $asyncExecutor->add($itemVariantsUrl);
             }
         }

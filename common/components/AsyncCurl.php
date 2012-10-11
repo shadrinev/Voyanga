@@ -70,7 +70,7 @@ class AsyncRequest
 
         if ($method == "GET")
         {
-            if (strlen($qs)>0)
+            if (strlen($qs) > 0)
                 curl_setopt($ch, CURLOPT_URL, "{$url}?{$qs}");
             else
                 curl_setopt($ch, CURLOPT_URL, "{$url}");
@@ -129,6 +129,7 @@ class AsyncCurl
      * @access private
      */
     private $requests = array();
+    private $orderRequests = array();
 
     /**
      * Adds a request to the list of Async request
@@ -154,9 +155,11 @@ class AsyncCurl
         $cmh = curl_multi_init();
         $still_running = null;
 
-        foreach ($this->requests as $request)
+        foreach ($this->requests as $i => $request)
         {
             curl_multi_add_handle($cmh, $request->ch);
+            $cmhAsIndex = intval($request->ch);
+            $this->orderRequests[$cmhAsIndex] = $i;
         }
 
         do
@@ -178,15 +181,15 @@ class AsyncCurl
         foreach ($this->requests as $request)
         {
             $body = curl_multi_getcontent($request->ch);
-            $responses[] = new AsyncResponse($body, array(
+            $cmhAsIndex = intval($request->ch);
+            $index = $this->orderRequests[$cmhAsIndex];
+            $responses[$index] = new AsyncResponse($body, array(
                 "http_code" => curl_getinfo($request->ch, CURLINFO_HTTP_CODE)
             ));
-
             curl_multi_remove_handle($cmh, $request->ch);
         }
 
         curl_multi_close($cmh);
-
         return $responses;
     }
 }
