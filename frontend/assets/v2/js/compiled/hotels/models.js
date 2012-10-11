@@ -391,7 +391,6 @@ HotelResult = (function() {
     new GenericPopup('#hotels-body-popup', this);
     SizeBox('hotels-body-popup');
     ResizeBox('hotels-body-popup');
-    sliderPhoto('.photo-slide-hotel');
     $(".description .text").dotdotdot({
       watch: 'window'
     });

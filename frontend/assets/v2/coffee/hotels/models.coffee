@@ -279,7 +279,7 @@ class HotelResult
     new GenericPopup '#hotels-body-popup', @
     SizeBox('hotels-body-popup')
     ResizeBox('hotels-body-popup')
-    sliderPhoto('.photo-slide-hotel')
+    #sliderPhoto('.photo-slide-hotel')
     # FIXME explicitly call tab handler here ?
     $(".description .text").dotdotdot({watch: 'window'})
 
