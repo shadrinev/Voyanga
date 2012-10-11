@@ -216,25 +216,26 @@ class HotelBookClient
                                     $params = array($result);
                                     if ((isset($requestInfo['params'])) and ($requestInfo['params']))
                                     {
-                                        foreach ($requestInfo['params'] as $param)
+                                        foreach ($requestInfo['params'] as $param){
                                             $params[] = $param;
+                                        }
                                     }
+                                    try
+                                    {
+                                        $this->requests[$i]['result'] = call_user_func_array($requestInfo['function'], $params);
+                                    }
+                                    catch (Exception $e)
+                                    {
+                                        Yii::log('HotelBookClient Return Incorrect Response:' . CVarDumper::dumpAsString($requestInfo) . CVarDumper::dumpAsString($params));
+                                    }
+                                    unset($this->requests[$i]['function']);
                                 }
-                                try
+                                else
                                 {
-                                    $this->requests[$i]['result'] = call_user_func_array($requestInfo['function'], $params);
+                                    $this->requests[$i]['result'] = $result;
                                 }
-                                catch (Exception $e)
-                                {
-                                    Yii::log('HotelBookClient Return Incorrect Response:' . CVarDumper::dumpAsString($requestInfo) . CVarDumper::dumpAsString($params));
-                                }
-                                unset($this->requests[$i]['function']);
+                                $this->requests[$i]['completed'] = true;
                             }
-                            else
-                            {
-                                $this->requests[$i]['result'] = $result;
-                            }
-                            $this->requests[$i]['completed'] = true;
                         }
                     }
                 }
