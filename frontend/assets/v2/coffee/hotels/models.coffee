@@ -276,7 +276,7 @@ class HotelResult
   showDetails: (data, event)=>
     # If user had clicked read-more link
     @readMoreExpanded = false
-    new GenericPopup '#hotels-body-popup', @
+    @activePopup = new GenericPopup '#hotels-body-popup', @
     SizeBox('hotels-body-popup')
     ResizeBox('hotels-body-popup')
     #sliderPhoto('.photo-slide-hotel')
@@ -285,6 +285,16 @@ class HotelResult
 
     # If we initialized google map already
     @mapInitialized = false
+
+  selectFromPopup: (hotel, event) =>
+    @activePopup.close()
+    hotel.off 'back'
+    hotel.on 'back', =>
+      window.app.render({results: ko.observable(@parent)}, 'results')
+
+    hotel.getFullInfo()
+    window.app.render(hotel, 'info-template')
+    Utils.scrollTo('#content')
 
   showMapDetails: (data, event)=>
     @showDetails(data, event)
@@ -457,7 +467,6 @@ class HotelResult
       var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
       text_el.attr('rel',var_heightCSS).css('height','auto');
       text_el.dotdotdot({watch: 'window'});
-      text_el.css('overflow','visible');
       el.text('Свернуть');
       el.addClass('active');
     else
@@ -466,7 +475,6 @@ class HotelResult
       el.text('Подробнее');
       el.removeClass('active');
       text_el.dotdotdot({watch: 'window'});
-      text_el.css('overflow','hidden');
     #FIXME should not be called on details page
     SizeBox('hotels-popup-body')
 

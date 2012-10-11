@@ -54,6 +54,8 @@ class FlightTripElement extends TripElement
     {
         if($this->flightVoyage)
             return $this->flightVoyage->getId();
+        if (!$this->groupId)
+            $this->groupId = uniqid();
         return $this->groupId;
     }
 

@@ -61,7 +61,7 @@
       <!-- /ko -->
       <div class="descr-text">
         <h3>Описание отеля</h3> <a href="#" class="translate">Перевести</a>
-        <div class="text" data-bind="text:description">
+        <div class="text" data-bind="html:description">
         </div>
         <a href="#" class="read-more" data-bind="click: readMore">Подробнее</a>
       </div>
