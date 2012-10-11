@@ -15,6 +15,7 @@ class HotelTripElement extends TripElement
     public $rooms;
     public $hotelBookerId;
     private $passports;
+    private $groupId;
 
     public function rules()
     {
@@ -194,5 +195,14 @@ class HotelTripElement extends TripElement
         $url = Yii::app()->params['app.api.hotelSearchUrl'];
         $fullUrl = $url . '?' . http_build_query($params);
         return $fullUrl;
+    }
+
+    public function getGroupId()
+    {
+        if($this->hotel)
+            return $this->hotel->getId();
+        if (!$this->groupId)
+            $this->groupId = uniqid();
+        return $this->groupId;
     }
 }

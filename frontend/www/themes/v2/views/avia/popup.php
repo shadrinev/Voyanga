@@ -1,73 +1,74 @@
 <script id="avia-popup" type="text/html">
 <div id="avia-ticket-info-popup">
-  <div class="tickets-details" style="margin-left: -21px; margin-top: -23px; margin-right: -19px; margin-bottom: -15px;">
-    <div class="top-head-tickets">
-      <div class="date" data-bind="html: departurePopup()">
-        19 мая, Пн
-      </div>
-      <h3>Туда</h3>
-      <div class="other-time">
-        <div class="variation">
-          <!-- ko if: stacked() -->
-          <ul class="minimize">
-            <li>
-              Варианты вылета:
-            </li>
-            <!-- ko template: {name: 'popup-departure-choices', foreach: voyages} -->
+            <div class="tickets-details" style="margin-top: -1px; ">
+              <div class="top-head-tickets">
+                <div class="date" data-bind="html: departurePopup()">
+                19 мая, Пн
+                </div>
+                <h3>Туда</h3>
+                <div class="other-time">
+                  <div class="variation">
+                  <!-- ko if: stacked() -->
+                    <ul class="minimize">
+                      <li>
+                        Варианты вылета:
+                      </li>
+                      <!-- ko template: {name: 'popup-departure-choices', foreach: voyages} -->
+                      <!-- /ko -->
+                    </ul>
+                  <!-- /ko -->
+                  </div>
+                </div>
+              </div>
+              <div class="content" data-bind="template: {name: 'avia-popup-flight', foreach: activeVoyage().parts}">
+              </div>
+              <!-- ko if: roundTrip -->
+              <div class="middle-head-tickets">
+              <div class="date" data-bind="html: rtDeparturePopup()">
+                19 мая, Пн
+              </div>
+              <h3>Обратно</h3>
+
+              <div class="other-time">
+                <div class="variation">
+                 <!-- ko if: rtStacked() -->
+                <ul class="minimize">
+                    <li>
+                        Варианты вылета:
+                    </li>
+                    <!-- ko template: {name: 'popup-departure-choices-rt', foreach: rtVoyages()} -->
+
+                    <!-- /ko -->
+                </ul>
             <!-- /ko -->
-          </ul>
-          <!-- /ko -->
+            </div>
         </div>
-      </div>
     </div>
-    <div class="content" data-bind="template: {name: 'avia-popup-flight', foreach: activeVoyage().parts}">
-    </div>
-    <!-- ko if: roundTrip -->
-    <div class="middle-head-tickets">
-      <div class="date" data-bind="html: rtDeparturePopup()">
-        19 мая, Пн
-      </div>
-      <h3>Обратно</h3>
-      
-      <div class="other-time">
-        <div class="variation">
-          <!-- ko if: rtStacked() -->
-          <ul class="minimize">
-            <li>
-              Варианты вылета:
-            </li>
-            <!-- ko template: {name: 'popup-departure-choices-rt', foreach: rtVoyages()} -->
-	    
-            <!-- /ko -->
-          </ul>
-          <!-- /ko -->
-        </div>
-      </div>
-    </div>
-    <div class="content" data-bind="template: {name: 'avia-popup-flight', foreach: activeVoyage().activeBackVoyage().parts}">
-    </div>
-    <!-- /ko -->
-    <hr class="lines">
-    <div class="finish">
-      <div class="floatLeft">
-        <div class="back">
-          <span class="ico-back" data-bind="css: {yes: refundable, no:!refundable}"></span>
-          <span data-bind="text: refundableText"></span>
-        </div>
-        <div class="boxKG" data-bind="visible: freeWeightText">
-          <span class="box" data-bind="text: freeWeight"></span>
-          <span data-bind="text: freeWeightText"></span>
-        </div>
-      </div>	
+              <div class="content" data-bind="template: {name: 'avia-popup-flight', foreach: activeVoyage().activeBackVoyage().parts}">
+              </div>
+              <!-- /ko -->
+              <hr class="lines">
+              <div class="finish">
+              	<div class="floatLeft">
+              		<div class="back">
+              			<span class="ico-back" data-bind="css: {yes: refundable, no:!refundable}"></span>
+              			<span data-bind="text: refundableText"></span>
+              		</div>
+              		<div class="boxKG" data-bind="visible: freeWeightText">
+              			<span class="box" data-bind="text: freeWeight"></span>
+              			<span data-bind="text: freeWeightText"></span>
+              		</div>
+              	</div>
       <div class="floatRight">
 	<span style="color:#2e333b;" class="f14 bold" data-bind="text: parent.tours?(parent.selected_key()!=key?'Выбрать':'Выбран'):'Оформить'">Оформить</span>
 	<a class="btn-order" href="#" data-bind="visible: parent.selected_key()!=key">
 	  <span class="cost" data-bind="text: price">63 502</span> <span class="rur f26">o</span>
 	</a>
       </div>
-    </div>
-  </div>
-</div>
+
+             </div>
+            </div>
+          </div>
 </script>
 <script id="avia-popup-flight" type="text/html">
         <div data-bind="css: {'start-path': $index()==0, 'end-path': ($index()==($length()-1)) && $length()>1, 'mid-path': $index()>0 && $index()<($length()-1)}">

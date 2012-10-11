@@ -33,6 +33,7 @@ PhotoBox = (function() {
     ko.processAllDeferredBindingUpdates();
     resizeLoad();
     resizePhotoWin();
+    this.loadFirstTime = true;
     $(window).keyup(function(e) {
       if (e.keyCode === 27) {
         return _this.close();
@@ -53,6 +54,9 @@ PhotoBox = (function() {
   PhotoBox.prototype.photoLoad = function(context, event) {
     var el;
     console.log("PHOTOLOAD");
+    if (this.loadFirstTime) {
+      this.loadFirstTime = false;
+    }
     el = $(event.currentTarget);
     el.show();
     if (el.width() > 850) {
@@ -63,7 +67,7 @@ PhotoBox = (function() {
     $('#hotel-img-load').hide();
     el.animate({
       opacity: 1
-    }, 200);
+    }, 200, resizePhotoWinHandler);
     return this.busy = false;
   };
 

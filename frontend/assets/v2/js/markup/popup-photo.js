@@ -1,22 +1,32 @@
+function resizePhotoWinHandler() {
+    console.log('kk');
+    var var_height = $('#imgContent').height();
+    var var_width = $('#imgContent img').innerWidth();
+    var var_allWinWidth = $(window).width();
+    var var_allWinHeight = $(window).height();
+    var paddingLeft = (var_allWinWidth - var_width) / 2;
+    var paddingTop = ((var_allWinHeight - (var_height + 84)) - 78) / 2;
+    if (paddingTop < 0) {
+        paddingTop = 0;
+    }
+    paddingTop = Math.round(paddingTop);
+    window.setTimeout(function(){
+    $('.countAndClose').css('width', var_width+'px');
+        //$('#imgContent').css('margin-top', paddingTop+'px');
+        $('#titleNamePhoto').css('height', (paddingTop+50)+'px')
+    },50);
+
+
+    console.log('pddingtop:',paddingTop,' allwin:',var_allWinHeight,'h:',var_height);
+}
+
 function resizePhotoWin() {
+    console.log('try start');
     var src = $('#imgContent img').attr('src');
     var img = new Image;
-
  
-    $(img).bind('load error',function() {
-        //console.log('kk');
-    	var var_height = $('#imgContent').height();
-    	var var_width = $('#imgContent img').innerWidth();
-	    var var_allWinWidth = $(window).width();
-	    var var_allWinHeight = $(window).height();
-	    var paddingLeft = (var_allWinWidth - var_width) / 2;
-	    var paddingTop = ((var_allWinHeight - (var_height + 84)) - 78) / 2;
-	    if (paddingTop < 0) {
-		paddingTop = 0;
-	    }
-	    $('#imgContent').css('margin-top', paddingTop+'px');
-	    $('.countAndClose').css('width', var_width+'px')
-    });
+    //$(img).bind('load error',resizePhotoWinHandler);
+    //resizePhotoWinHandler();
     img.src = src;
 }
 
@@ -35,5 +45,5 @@ function resizeLoad() {
 
 $(window).resize(function() {
 	resizePhotoWin();
-    resizeLoad();
+    //resizeLoad();
 });
