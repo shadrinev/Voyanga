@@ -1,5 +1,8 @@
 function SizeBox(id) {
+	$('body').css('overflow','hidden');
 	var popup = $('#' + id);
+	
+	
 	/*
 
 	var boxContent = popup.find('#boxContent');
@@ -18,6 +21,13 @@ function SizeBox(id) {
 
 function ResizeBox(id) {
 	var popup = $('#'+id);
+	var layer = popup.find('#layer');
+	
+	var winWidth = $(window).width();
+	var winHeight = $(window).height()
+	
+	popup.css('width', winWidth+'px');
+	layer.css('width', (winWidth-16)+'px');
 	/*
 
 	var boxContent = popup.find('.popupBody');
@@ -35,9 +45,8 @@ function ResizeBox(id) {
 	$('.wrapper').die('scroll',function() { });
 */
 }
-
 function btnClosePopUp() {
-	
+	$('body').css('overflow','auto');
 }
 
 $(document).ready(function() {

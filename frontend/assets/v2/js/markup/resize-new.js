@@ -714,4 +714,3 @@ function ifHeightMinAllBody() {
 	}
 	
 }
-

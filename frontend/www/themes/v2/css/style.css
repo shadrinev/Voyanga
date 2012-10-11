@@ -732,7 +732,8 @@
     cursor: pointer;
 }
 .hotel-details {
-	width: 782px;
+    padding: 20px;
+    width: 781px;
 }
 #content > .title, .hotel-details > .title {
 	padding:0px 45px 0px 0px;
@@ -1276,14 +1277,14 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
 }
 
 .tab .slide {
-	background: none repeat scroll 0 0 #dadce0;
+    background: none repeat scroll 0 0 #DADCE0;
     height: 150px;
-    margin-left: -21px;
+    margin-bottom: 15px;
+    margin-left: -20px;
+    margin-top: 15px;
     overflow: hidden;
     position: relative;
-    width: 822px;
-    margin-bottom: 15px;
-    margin-top: 15px;
+    width: 821px;
 }
 .photo-slide-hotel .left-navi {
 	position: absolute; top:0px; left: 0px;
