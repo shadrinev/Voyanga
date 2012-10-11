@@ -27,7 +27,7 @@ e.stopPropagation();
 
 	});
 	
-*/
+
 	var boxContent = popup.find('#boxContent');
 	var boxHeight = boxContent.innerHeight();
 	var boxWidth = boxContent.innerWidth();
