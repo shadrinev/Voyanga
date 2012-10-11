@@ -581,7 +581,7 @@ HotelResult = (function() {
         });
         _this.haveFullInfo(true);
         return console.log(_this.roomCombinations());
-      });
+      }, false);
     }
   };
 
