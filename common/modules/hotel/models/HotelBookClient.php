@@ -206,7 +206,6 @@ class HotelBookClient
                                     if ((isset($requestInfo['params'])) and ($requestInfo['params']))
                                     {
                                         foreach ($requestInfo['params'] as $param)
-                                        {
                                             $params[] = $param;
                                         }
                                     }
