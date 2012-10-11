@@ -1,5 +1,7 @@
 function SizeBox(id) {
 	var popup = $('#' + id);
+	/*
+
 	var boxContent = popup.find('#boxContent');
 	var boxHeight = boxContent.innerHeight();
 	var boxWidth = boxContent.innerWidth();
@@ -11,10 +13,13 @@ function SizeBox(id) {
 	popup.find('#boxMiddleRight').css('height', boxHeight+'px');
 	popup.find('#boxTopCenter').css('width', boxWidth+'px');
 	popup.find('#boxBottomCenter').css('width', boxWidth+'px');
+*/
 }
 
 function ResizeBox(id) {
 	var popup = $('#'+id);
+	/*
+
 	var boxContent = popup.find('.popupBody');
 	var boxPopUpWidth = boxContent.innerWidth();
 	var boxPopUpHeight = boxContent.innerHeight();
@@ -28,9 +33,12 @@ function ResizeBox(id) {
 	}
 	boxContent.css('left', paddingLeft+'px').css('top', (paddingTop)+'px');
 	$('.wrapper').die('scroll',function() { });
+*/
 }
 
-
+function btnClosePopUp() {
+	
+}
 
 $(document).ready(function() {
     return;
