@@ -713,3 +713,18 @@ function ifHeightMinAllBody() {
 	}
 	
 }
+
+
+function readMoreService(obj) {
+	if (! $(obj).hasClass('active')) {
+		$('.hideService').animate({'height':'100%'}, 300);
+		$(obj).text('Свернуть');
+		$(obj).addClass('active');
+	}
+	else {
+		$('.hideService').animate({'height':'34px'}, 300);
+		$(obj).text('Подробнее');
+		$(obj).removeClass('active') 
+	}
+	
+}
