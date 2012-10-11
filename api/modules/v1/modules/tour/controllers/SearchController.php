@@ -40,6 +40,7 @@ class SearchController extends ApiController
     {
         $tourBuilder = new TourBuilderForm();
         $tourBuilder->setStartCityName($start);
+        $tourBuilder->rooms = array();
         foreach ($rooms as $room)
         {
             $newRoom = new HotelRoomForm;

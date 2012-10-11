@@ -15,6 +15,7 @@ $this->menu=array(
     'id'=>'event-grid',
     'dataProvider'=>$dataProvider,
     //'filter'=>$model,
+    'template' =>"{pager}\n{summary}\n{items}\n{pager}",
     'columns'=>array(
         array(
             'header'=>'Ключ',
