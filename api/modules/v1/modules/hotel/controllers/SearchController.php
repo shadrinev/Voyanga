@@ -158,6 +158,14 @@ class SearchController extends ApiController
                 }
                 elseif (is_string($additional->$objVar))
                     $additional->$objVar = strip_tags($additional->$objVar);
+                    if($objVar == 'description'){
+                        $pattern = '/\s?[^.]*?:\s?/';
+                        $replace = "<br>\n";
+                        $additional->$objVar = preg_replace($pattern, $replace, $additional->$objVar);
+                        if(strpos($additional->$objVar,'<br>') === 0){
+                            $additional->$objVar = substr($additional->$objVar,4);
+                        }
+                    }
             }
         }
         return $additional;
