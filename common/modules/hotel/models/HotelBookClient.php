@@ -170,7 +170,16 @@ class HotelBookClient
                             $params[] = $param;
                         }
                     }
-                    $this->requests[$id]['result'] = call_user_func_array($asyncParams['function'], $params);
+                    try
+                    {
+                        $this->requests[$id]['result'] = call_user_func_array($asyncParams['function'], $params);
+                    }
+                    catch (Exception $e)
+                    {
+                        Yii::log('HotelBookClient Return Incorrect Response:' . CVarDumper::dumpAsString($asyncParams) . CVarDumper::dumpAsString($params));
+                        unlink($cacheFilePath);
+                    }
+                    //$this->requests[$id]['result'] = call_user_func_array($asyncParams['function'], $params);
                 }
                 else
                 {
