@@ -48,9 +48,29 @@ function ResizeBox(id) {
 	
 	var winWidth = $(window).width();
 	var winHeight = $(window).height()
-	
+	var pvCont = popup.find('.pv_cont');
+	var pvContHeight = pvCont.height();
+	var paddingTopPopUp = (winHeight - pvContHeight) / 2;
+	if (paddingTopPopUp <= 10) {
+		paddingTopPopUp = 10;
+	}	
 	popup.css('width', winWidth+'px');
 	layer.css('width', (winWidth-16)+'px');
+	pvCont.css('padding-top', paddingTopPopUp+'px');
+	
+	$(window).resize(function() {
+		var winWidth = $(window).width();
+		var winHeight = $(window).height()
+		var pvCont = popup.find('.pv_cont');
+		var pvContHeight = pvCont.height();
+		var paddingTopPopUp = (winHeight - pvContHeight) / 2;
+		if (paddingTopPopUp <= 10) {
+			paddingTopPopUp = 10;
+		}	
+		popup.css('width', winWidth+'px');
+		layer.css('width', (winWidth-16)+'px');
+		pvCont.css('padding-top', paddingTopPopUp+'px');
+	});
 	/*
 
 	var boxContent = popup.find('.popupBody');
