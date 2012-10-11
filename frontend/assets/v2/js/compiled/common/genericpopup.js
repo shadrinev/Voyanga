@@ -31,7 +31,8 @@ GenericPopup = (function() {
   GenericPopup.prototype.close = function() {
     $(window).unbind('keyup');
     $(this.id).remove();
-    return $('#popupOverlay').remove();
+    $('#popupOverlay').remove();
+    return btnClosePopUp();
   };
 
   return GenericPopup;
