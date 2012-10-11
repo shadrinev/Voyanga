@@ -73,6 +73,9 @@ class TourPanelSet
       if values.length > 1
         @activeCalendarPanel().checkOut values[1]
 
+  calendarHidden: =>
+#    console.error("HANDLE ME")
+
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
     window.voyanga_debug "TourPanel created"

@@ -641,6 +641,7 @@
 	margin: 0 auto;
 	width: 948px;
 	height: 70px;
+	position: relative;
 }
 
 .panelTable tr td {

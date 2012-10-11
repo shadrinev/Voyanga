@@ -229,8 +229,8 @@ class AviaResult
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
-              'arrivalAirport', 'arrivalDayMo', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric',
-              'hash', 'stopsRatio', 'recommendStopoverIco']
+              'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric',
+              'arrivalTimeNumeric','hash', 'stopsRatio', 'recommendStopoverIco']
 
     for name in fields
       @[name] = ((name) =>

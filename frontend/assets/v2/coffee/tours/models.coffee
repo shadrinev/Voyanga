@@ -127,7 +127,31 @@ class ToursAviaResultSet extends TourEntry
       result+= dateUtils.formatHtmlDayShortMonth source.rtDepartureDate()
       result+= '</div>'
     return result
-    
+
+  timelineStart: =>
+    source = @selection()
+    if source == null
+      source = @results().data[0]
+    source.departureDate()
+
+  rtTimelineStart: =>
+    source = @selection()
+    if source == null
+      source = @results().data[0]
+    source.rtDepartureDate()
+
+  rt: =>
+    source = @selection()
+    if source == null
+      source = @results().data[0]
+    source.roundTrip
+
+  timelineEnd: =>
+    source = @selection()
+    if source == null
+      source = @results().data[0]
+    source.arrivalDate()
+        
   rt: =>
     @results().roundTrip
        
@@ -213,10 +237,18 @@ class ToursHotelsResultSet extends TourEntry
     result+= dateUtils.formatHtmlDayShortMonth @results().checkOut
     result+= '</div>'
 
+  timelineStart: =>
+    @results().checkIn
+
+  timelineEnd: =>
+    @results().checkOut
+
 class ToursResultSet
-  constructor: (raw)->
+  constructor: (raw, @searchParams)->
     @data = ko.observableArray()
     for variant in raw.allVariants
+      if !variant
+        continue
       if variant.flights
         @data.push new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
       else
@@ -224,13 +256,75 @@ class ToursResultSet
         @data.push result
         result.on 'setActive', (entry)=>
           @setActive entry
-          
+
+    @timeline = ko.computed =>
+      spans = []
+      avia_map = {}
+      hotel_map = {}
+      for item in @data()
+        obj =  {start: moment(item.timelineStart()), end: moment(item.timelineEnd())}
+        spans.push obj
+        if item.isHotel()
+          hotel_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days')}
+        else:
+          avia_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days')}
+      start_date = spans[0].start
+      end_date = spans[spans.length-1].end
+
+      # FIXME FIXME FIXME
+      if true#@searchParams.returnBack
+        item = @data()[0]
+        if item.isAvia()
+          if item.rt()
+            end_date = moment(item.rtTimelineStart())
+            avia_map[end_date.format('M.D')] = {duration: 1}
+      timeline_length = end_date.diff(start_date, 'days')
+      middle_date = start_date.clone().add('days', timeline_length/2)
+      if timeline_length < 23
+        timeline_length = 23
+      left = timeline_length / 2
+      right = timeline_length /2
+      # odd length
+      if timeline_length % 2
+        right += 1
+      results = []
+      console.log "MIDDLE", middle_date.format('D')
+      for x in [1..left]
+        obj =  {date: middle_date.clone().subtract('days', left-x)}
+        obj.day = obj.date.format('D')
+        obj.hotel = false
+        obj.avia = false
+        item_avia = avia_map[obj.date.format('M.D')]
+        item_hotel = hotel_map[obj.date.format('M.D')]
+        if item_hotel
+          obj.hotel = item_hotel
+          console.log "!!!!!!!!!!!!!!!!", item_hotel.duration, item_hotel.duration*18
+        if item_avia
+          obj.avia = item_avia
+        results.push obj
+      for x in [0..right]
+        obj =  {date: middle_date.clone().add('days', x)}
+        obj.day = obj.date.format('D')
+        obj.hotel = false
+        obj.avia = false
+        item_avia = avia_map[obj.date.format('M.D')]
+        item_hotel = hotel_map[obj.date.format('M.D')]
+        if item_hotel
+          obj.hotel = item_hotel
+        if item_avia
+          obj.avia = item_avia
+        results.push obj
+      return results
+                    
     @selection = ko.observable @data()[1]
     @panel = ko.computed 
       read: =>
         console.log 'TOURS-PANEL', @selection().panel
         if @selection().panel
           @panelContainer = @selection().panel
+        @panelContainer.timeline = @timeline()
+        @panelContainer.showConditions = @showConditions
+        @panelContainer.showTimeline = @showTimeline
         return @panelContainer
 
     @price = ko.computed =>
@@ -245,7 +339,34 @@ class ToursResultSet
         sum += item.savings()
       return sum
 
+
     @vm = new ToursOverviewVM @
+
+  showConditions: (context, event) =>
+    el = $(event.currentTarget)
+
+    if !el.hasClass('active')
+      $('.btn-timeline-and-condition a').removeClass('active')
+      el.addClass('active')
+
+      $('.timeline').addClass('hide')
+      $('.timeline').animate(
+        {'top': '-'+$('.timeline').height()+'px'},
+        400,
+        ->
+          $('.slide-tmblr').css('overflow','visible'))
+      $('.condition').animate({'top': '0px'},400).removeClass('hide')
+
+  showTimeline: (context, event) =>
+    el = $(event.currentTarget)
+    if ! el.hasClass('active')
+      $('.slide-tmblr').css('overflow','hidden')
+      $('.btn-timeline-and-condition a').removeClass('active')
+      el.addClass('active')
+      $('.timeline').animate({'top': '0px'},400).removeClass('hide')
+      $('.condition').animate({'top': '68px'},400).addClass('hide')
+
+
 
   setActive: (entry)=>
     @selection entry

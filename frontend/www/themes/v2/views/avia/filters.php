@@ -3,7 +3,7 @@
 ?>
 <script type="text/html" id="avia-filters">
 
-<div class="filter-content">
+<div class="filter-content avia">
   
     <div class="slide-filter first">
       <div>

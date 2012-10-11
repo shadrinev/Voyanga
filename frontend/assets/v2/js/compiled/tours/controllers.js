@@ -60,7 +60,7 @@ ToursController = (function() {
       });
       return;
     }
-    stacked = new ToursResultSet(data);
+    stacked = new ToursResultSet(data, this.searchParams);
     this.trigger("results", stacked);
     this.render('results', stacked);
     return ko.processAllDeferredBindingUpdates();

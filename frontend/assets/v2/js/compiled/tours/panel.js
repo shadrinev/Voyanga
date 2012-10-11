@@ -8,6 +8,8 @@ var TourPanel, TourPanelSet,
 TourPanelSet = (function() {
 
   function TourPanelSet() {
+    this.calendarHidden = __bind(this.calendarHidden, this);
+
     this.setDate = __bind(this.setDate, this);
 
     this.showPanelCalendar = __bind(this.showPanelCalendar, this);
@@ -105,6 +107,8 @@ TourPanelSet = (function() {
       }
     }
   };
+
+  TourPanelSet.prototype.calendarHidden = function() {};
 
   return TourPanelSet;
 

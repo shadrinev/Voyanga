@@ -39,7 +39,7 @@ class ToursController
       @render 'e500', {msg: data.error}
       return
 
-    stacked = new ToursResultSet data
+    stacked = new ToursResultSet data, @searchParams
     @trigger "results", stacked
     @render 'results', stacked
 

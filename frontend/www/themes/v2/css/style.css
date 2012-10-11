@@ -667,6 +667,11 @@
     font-family: Arial;
     font-size: 11px;
     line-height: 13px;
+    margin-left: -2px;
+}
+.all-list a {
+	color: #2174a3;
+	border-bottom: 1px dashed;
 }
 .ticket-content {
 	color: #3E4C52;
@@ -775,12 +780,15 @@
 }
 .stars-select {
 	display: inline-block; width: 89px; height: 16px;
-	background: url(../images/slice.png) no-repeat -127px -768px;
+	background: url(../images/slice.png) no-repeat -288px -768px;
 	vertical-align: top;
 	margin-left: 0px;
 	overflow:hidden;
 	margin-top: 2px;
 	position: relative;
+}
+.div-filter .stars-select {
+	background: none;
 }
 .stars-select  .none-select {
 	 width: 89px; height: 16px;
@@ -817,6 +825,7 @@
     padding-top: 23px;
     text-align: center;
     width: 18px;
+    margin-right: 9px;
 }
 .stars-li li input {
 	display: none;
@@ -829,8 +838,12 @@
 	margin-top: -25px;
     padding-top: 25px;
     cursor: pointer;
+    background: url(../images/slice.png) no-repeat -288px -762px;
 }
 .stars-li li label.active {
+	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
+}
+.stars-li li label:hover {
 	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
 }
 #content > .title > .stars, .hotel-details > .title > .stars {

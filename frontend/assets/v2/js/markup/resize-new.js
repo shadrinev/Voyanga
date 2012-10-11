@@ -457,7 +457,7 @@ function resizeLeftStage() {
 	var leftStage = $('.left-block');
 	var leftWidth = leftStage.width();
 	var leftDate = leftStage.find('.date');
-	var startPosition = 150;
+	var startPosition = 170;
 	var leftPaddingDate = 215;
 	leftPaddingDate = (leftWidth - leftPaddingDate);
 	if (leftPaddingDate < 75) {
@@ -534,7 +534,7 @@ function ResizeAvia() {
     scrollValue();
     CenterIMGResize();
     ifHeightMinAllBody();
-    showMiniPopUp();
+
 }
 
 function ResizeFun() {
@@ -713,17 +713,5 @@ function ifHeightMinAllBody() {
 		
 	}
 	
-}
-
-function showMiniPopUp() {
-	var miniPopUp = '<div class="miniPopUp"></div>';
-	$('.conditionCancel').hover(function(e) {
-		console.log(e);
-		var widthThisElement = $(this).width();
-		$('body').append(miniPopUp);
-		$('.miniPopUp').text($(this).attr('rel')).css('left', (e.pageX - (widthThisElement / 2))+'px').css('top', (e.pageY + 10)+'px');
-	}, function() {
-		$('.miniPopUp').remove();
-	});
 }
 

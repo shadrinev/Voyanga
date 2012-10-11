@@ -45,8 +45,8 @@
 
 <script id="tours-panel-template" type="text/html">
   <div class="btn-timeline-and-condition">
-    <a href="#" class="btn-timeline active">Таймлайн</a>
-    <a href="#" class="btn-condition">Условия</a>
+    <a href="#" class="btn-timeline active" data-bind="click: showTimeline">Таймлайн</a>
+    <a href="#" class="btn-condition" data-bind="click: showConditions">Условия</a>
   </div>
   
   <div class="slide-tmblr">
@@ -54,93 +54,20 @@
       <div class="btn-left"></div>
       <div class="btn-right"></div>
       <div class="timedatelineOverflow">
-	<ul class="timedateline" style="width:840px;">
+	<ul class="timedateline" style="width:840px;" data-bind="foreach: timeline">
 	  <li>
-	    <div class="date">14</div>
-	  </li>
-	  <li>
-	    <div class="date">15</div>
-	  </li>
-	  <li>
+	    <!-- ko if: avia -->
 	    <div class="trip-fly"></div>
-	    <div class="trip-hotel" style="left:18px; width:312px;"></div>
-	    <div class="date">16</div>
+	    <!-- /ko -->
+	    <!-- ko if:hotel -->
+	    <div class="trip-hotel" style="left:16px;" data-bind="style: {width:'' + hotel.duration * 32 + 'px'}"></div>
+	    <!-- /ko -->
+	    <div class="date" data-bind="text: day"></div>
 	  </li>
-	  <li>							
-	    <div class="date">17</div>
-	  </li>
-	  <li>
-	    <div class="date">18</div>
-	  </li>
-	  <li>
-	    <div class="date">19</div>
-	  </li>
-	  <li>
-	    <div class="date">20</div>
-	  </li>
-	  <li>
-	    <div class="date">21</div>
-	  </li>
-	  <li>
-	    <div class="date">22</div>
-	  </li>
-	  <li>
-	    <div class="date">23</div>
-	  </li>
-	  <li>
-	    <div class="date">24</div>
-	  </li>
-	  <li>
-	    <div class="date">25</div>
-	  </li>
-	  <li>
-	    <div class="trip-fly"></div>
+	  <!-- li>
 	    <div class="trip-hotel" style="left:18px; width:188px;"></div>
 	    <div class="date">26</div>
-	  </li>
-	  <li>
-	    <div class="date">27</div>
-	  </li>
-	  <li>
-	    <div class="date">28</div>
-	  </li>
-	  <li>
-	    <div class="date">29</div>
-	  </li>
-	  <li>
-	    <div class="date">30</div>
-	  </li>
-	  <li>
-	    <div class="date">31</div>
-	  </li>
-	  <li>
-	    <div class="trip-fly"></div>
-	    <div class="date">1</div>
-	  </li>
-	  <li>
-	    <div class="date">2</div>
-	  </li>
-	  <li>
-	    <div class="date">3</div>
-	  </li>
-	  <li>
-	    <div class="date">4</div>
-	  </li>
-	  <li>
-	    <div class="date">5</div>
-	  </li>
-	  <li>
-	    <div class="date">6</div>
-	  </li>
-	  <li>
-	    <div class="date">7</div>
-	  </li>
-	  <li>
-	    <div class="date">8</div>
-	  </li>
-	  <li>
-	    <div class="date">9</div>
-	  </li>
+	  </li -->
 	</ul>
       </div>
       <div class="left-corners"></div>
