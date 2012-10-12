@@ -120,13 +120,6 @@ return CMap::mergeArray (
                 'enableParamLogging' => true,
                 'charset' => 'utf8',
             ),
-
-            'urlManager' => array(
-                'urlFormat' => 'path',
-                'showScriptName' => false,
-                'rules' => $params['urlRules'],
-                'baseUrl' => '',
-            ),
             'gdsAdapter' => array(
                 'class' => 'GDSAdapter'
             ),

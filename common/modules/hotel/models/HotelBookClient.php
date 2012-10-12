@@ -256,14 +256,12 @@ class HotelBookClient
 
     }
 
-    private
-    function getChecksum($time)
+    private function getChecksum($time)
     {
         return md5(md5(Yii::app()->params['HotelBook']['password']) . $time);
     }
 
-    public
-    function getCountries()
+    public function getCountries()
     {
         $this->synchronize();
         //echo "iNN";
@@ -274,6 +272,7 @@ class HotelBookClient
         $countries = $this->request(Yii::app()->params['HotelBook']['uri'] . 'countries', $getData);
         $countriesObject = simplexml_load_string($countries);
         $return = array();
+        CVarDumper::dump($countriesObject);
         foreach ($countriesObject->Countries->Country as $country)
         {
             $id = intval($country['id']);
@@ -293,8 +292,7 @@ class HotelBookClient
         return $return;
     }
 
-    public
-    function getCities($countryId = 0)
+    public function getCities($countryId = 0)
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
@@ -316,21 +314,42 @@ class HotelBookClient
             $country_id = intval($city['country']);
             $return[$id] = array('id' => $id, 'nameEn' => $name, 'countryId' => $country_id);
         }
-        /* $getData['language']= 'en';
-        $cities = $this->request(Yii::app()->params['HotelBook']['uri'].'cities',$getData);
-        $citiesObject = simplexml_load_string($cities);
-        foreach($citiesObject->Cities->City as $city)
-        {
-            $id = intval($city['id']);
-            $name = trim((string)$city);
-            $return[$id]['nameEn'] = $name;
-        }*/
-        //print_r($return);
+
         return $return;
     }
 
-    public
-    function getRoomTypes()
+    public function getHotels($cityId = 0)
+    {
+        $this->synchronize();
+        $time = time() + $this->differenceTimestamp;
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time));
+        self::$lastRequestMethod = 'Hotels';
+        self::$lastRequestDescription = '';
+        if ($cityId)
+        {
+            $getData['city_id'] = $cityId;
+            self::$lastRequestDescription = $getData['city_id'];
+        }
+        $returnXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_list', $getData);
+        $hotelsObject = simplexml_load_string($returnXml);
+        $return = array();
+
+        UtilsHelper::soapObjectsArray($hotelsObject->HotelList->Hotel);
+        foreach ($hotelsObject->HotelList->Hotel as $objectSXE)
+        {
+            $id = intval($objectSXE['id']);
+            $name = trim((string)$objectSXE['name']);
+            $city_id = intval((string)$objectSXE['city_id']);
+            $assoc = intval((string)$objectSXE['assoc']);
+            if($assoc){
+                $return[$id] = array('id' => $id, 'name' => $name, 'cityId' => $city_id);
+            }
+        }
+
+        return $return;
+    }
+
+    public function getRoomTypes()
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
@@ -352,8 +371,7 @@ class HotelBookClient
         return $return;
     }
 
-    private
-    function getHotelFromSXE($hotelSXE)
+    private function getHotelFromSXE($hotelSXE)
     {
         $hotelAttrMap = array(
             'hotelId', 'hotelName', 'resultId', 'confirmation', 'price', 'currency', 'comparePrice', 'specialOffer', 'providerId', 'providerHotelCode',
@@ -451,8 +469,7 @@ class HotelBookClient
         return $hotel;
     }
 
-    private
-    function prepareHotelSearchRequest($params)
+    private function prepareHotelSearchRequest($params)
     {
         $xml = '<?xml version="1.0" encoding="utf-8"?>
 <HotelSearchRequest>
@@ -538,8 +555,7 @@ class HotelBookClient
         return $xml;
     }
 
-    private
-    function processHotelSearchResponse($hotelsXml, $checkIn, $duration)
+    private function processHotelSearchResponse($hotelsXml, $checkIn, $duration)
     {
         $hotelsObject = simplexml_load_string($hotelsXml);
         //$hotelsObject = simplexml_load_file('/srv/www/oleg.voyanga/public_html/frontend/runtime/resp.xml');
@@ -622,8 +638,7 @@ class HotelBookClient
      * @param bool $async
      * @return array|int|mixed
      */
-    public
-    function hotelSearch($params, $async = false)
+    public function hotelSearch($params, $async = false)
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
@@ -631,6 +646,7 @@ class HotelBookClient
         self::$lastRequestMethod = 'HotelSearch';
         self::$lastRequestDescription = '';
         self::$lastRequestCity = City::getCityByHotelbookId($params['cityId']);
+        self::$lastRequestDescription = self::$lastRequestCity->code.' ';
         self::$lastRequestCityHaveCoordinates = (self::$lastRequestCity->latitude !== null) && (self::$lastRequestCity->longitude !== null);
         foreach ($params['rooms'] as $room)
         {
@@ -1293,8 +1309,13 @@ class HotelBookClient
         }
         if ($hotelSXE->City['id'])
         {
-
-            $hotelParams['city'] = City::getCityByHotelbookId((string)$hotelSXE->City['id']);
+            try{
+                $hotelParams['city'] = City::getCityByHotelbookId((string)$hotelSXE->City['id']);
+            }catch (Exception $e){
+                if(self::$lastRequestCity){
+                    $hotelParams['city'] = self::$lastRequestCity;
+                }
+            }
         }
         //VarDumper::dump($hotelSXE);
         //VarDumper::dump($hotelParams);
