@@ -2,7 +2,7 @@
     <div class="maps">
         <div class="innerBlockMain">
             <div class="mapsBigAll"></div>
-            <div class="toursBigAll" data-bind='with: currentEvent'>
+            <div class="toursBigAll" data-bind='with: currentEvent()'>
                 <div class="centerTours">
                     <div class="close" data-bind="click: $parent.closeEventsPhoto"></div>
                     <div class="IMGmain">

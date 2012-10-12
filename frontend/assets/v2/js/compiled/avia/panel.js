@@ -21,6 +21,10 @@ AviaPanel = (function(_super) {
 
     var _this = this;
     AviaPanel.__super__.constructor.call(this);
+    this.prevPanel = 'tours';
+    this.nextPanel = 'hotels';
+    this.icon = 'fly-ico';
+    this.indexMode = ko.observable(true);
     this.template = 'avia-panel-template';
     window.voyanga_debug("AviaPanel created");
     this.sp = new AviaSearchParams();

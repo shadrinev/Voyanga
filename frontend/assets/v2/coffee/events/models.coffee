@@ -5,7 +5,7 @@ ko.bindingHandlers.highlightChange =
     # First get the latest data that we're bound to
     value = valueAccessor()
     allBindings = allBindingsAccessor()
-
+    console.log allBindings
     # Next, whether or not the supplied model property is observable, get its current value
     valueUnwrapped = ko.utils.unwrapObservable(value)
 
@@ -30,6 +30,7 @@ ko.bindingHandlers.highlightChange =
     previousImage(valueUnwrapped)
 
     ResizeAvia()
+    slideToursSlide()
 
     $(".IMGmain").eq(1).find("img").load ->
       $(".IMGmain").eq(0).animate
@@ -68,13 +69,20 @@ class Event extends Backbone.Events
 
 class EventSet
   constructor: (events) ->
+    console.trace()
     @events = ko.observableArray events
+
+    @currentTitle = ko.observable 'HUY'
+
     @currentEvent = ko.computed =>
       activeEvents = _.filter @events(), (event) ->
-        return event.active()
+        event.active()
+      console.log "SETTING TAITL", activeEvents[0].title()
+      @currentTitle activeEvents[0].title()
       return activeEvents[0]
     @previousImage = ko.observable ''
     @activeMaps = 0;
+
 
   setActive: (valueAccessor, event) =>
     if(@activeMaps == 1)

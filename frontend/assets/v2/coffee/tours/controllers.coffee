@@ -14,13 +14,8 @@ class ToursController
 
   indexAction: (args...) =>
     window.voyanga_debug "TOURS: Invoking indexAction", args
-    events = []
-    $.each window.eventsRaw, (i, el) ->
-      events.push new Event(el)
-    eventSet = new EventSet(events)
-    console.log "EVENT: eventset = ", eventSet
-    @trigger "index"
-    @render 'index', eventSet
+    @trigger "index", {}
+    @render 'index'
     ResizeAvia()
 
   searchAction: (args...)=>

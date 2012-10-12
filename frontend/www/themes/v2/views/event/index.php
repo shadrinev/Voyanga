@@ -1,4 +1,4 @@
-<script type="text/html" id="tours-index">
+<script type="text/html" id="event-index">
     <div class="center" data-bind="foreach: events">
         <div class="toursTicketsMain " data-bind="css: {active: active}, attr: {rel: image}, click: $parent.setActive">
             <div class="triangle" style="top: 0px;"><img src="/themes/v2/images/triangle.png"></div>

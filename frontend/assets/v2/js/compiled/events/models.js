@@ -10,6 +10,7 @@ ko.bindingHandlers.highlightChange = {
     window.voyanga_debug('Switching element');
     value = valueAccessor();
     allBindings = allBindingsAccessor();
+    console.log(allBindings);
     valueUnwrapped = ko.utils.unwrapObservable(value);
     previousImage = allBindings.previousImage;
     console.log(previousImage(), valueUnwrapped);
@@ -25,6 +26,7 @@ ko.bindingHandlers.highlightChange = {
     $(".IMGmain").eq(1).css("opacity", "0").css("left", varLeftPosStart + "px").css("top", varTopPosStart + "px").find("img").attr("src", valueUnwrapped);
     previousImage(valueUnwrapped);
     ResizeAvia();
+    slideToursSlide();
     return $(".IMGmain").eq(1).find("img").load(function() {
       $(".IMGmain").eq(0).animate({
         opacity: 0
@@ -84,12 +86,16 @@ EventSet = (function() {
     this.setActive = __bind(this.setActive, this);
 
     var _this = this;
+    console.trace();
     this.events = ko.observableArray(events);
+    this.currentTitle = ko.observable('HUY');
     this.currentEvent = ko.computed(function() {
       var activeEvents;
       activeEvents = _.filter(_this.events(), function(event) {
         return event.active();
       });
+      console.log("SETTING TAITL", activeEvents[0].title());
+      _this.currentTitle(activeEvents[0].title());
       return activeEvents[0];
     });
     this.previousImage = ko.observable('');

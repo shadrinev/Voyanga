@@ -24,7 +24,7 @@ Application = (function(_super) {
 
     this.initCalendar = __bind(this.initCalendar, this);
 
-    var result,
+    var ev, result,
       _this = this;
     window.onerror = function(error) {
       return alert(error);
@@ -80,6 +80,11 @@ Application = (function(_super) {
     this.slider = new Slider();
     this.slider.init();
     this.activeModule.subscribe(this.slider.handler);
+    ev = [];
+    $.each(window.eventsRaw, function(i, el) {
+      return ev.push(new Event(el));
+    });
+    this.events = new EventSet(ev);
   }
 
   Application.prototype.initCalendar = function() {

@@ -25,6 +25,10 @@ TourPanelSet = (function() {
     window.voyanga_debug('Init of TourPanelSet');
     this.template = 'tour-panel-template';
     this.sp = new TourSearchParams();
+    this.prevPanel = 'hotels';
+    this.nextPanel = 'avia';
+    this.icon = 'constructor-ico';
+    this.indexMode = true;
     this.startCity = this.sp.startCity;
     this.startCityReadable = ko.observable('');
     this.startCityReadableGen = ko.observable('');

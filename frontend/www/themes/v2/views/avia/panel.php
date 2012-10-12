@@ -38,7 +38,7 @@
     </tr>
   </table>
 <!-- BTN MINIMIZE -->
-<a href="#" class="btn-minimizePanel" data-bind="css: {active: minimized()}, click:minimize">
+<a href="#" class="btn-minimizePanel" data-bind="visible: !indexMode(), css: {active: minimized()}, click:minimize">
     <!-- ko if: minimized() -->
     <span></span> развернуть
     <!-- /ko -->

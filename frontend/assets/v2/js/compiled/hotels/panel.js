@@ -24,6 +24,10 @@ HotelsPanel = (function(_super) {
     var _this = this;
     this.template = 'hotels-panel-template';
     HotelsPanel.__super__.constructor.call(this);
+    this.prevPanel = 'avia';
+    this.nextPanel = 'tours';
+    this.icon = 'hotel-ico';
+    this.indexMode = ko.observable(true);
     this.sp = new HotelsSearchParams();
     this.calendarHidden = ko.observable(true);
     this.city = this.sp.city;
