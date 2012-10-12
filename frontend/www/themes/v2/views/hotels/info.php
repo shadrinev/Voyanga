@@ -239,15 +239,6 @@
   </div>
   <!-- /ko -->
 
-  <!-- ko if: hasRoomAmenities -->
-  <div class="service-in-room">
-  	<div class="shadowHotel"><img src="<?= $theme; ?>/images/shadow-hotel.png"></div>
-    <h3>Услуги в номере</h3>
-    <ul data-bind="foreach: roomAmenities">
-      <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
-    </ul>
-  </div>
-  <!-- /ko -->
   <!-- END SERVICE -->
   <div class="hotel-important-info">
   	<div class="shadowHotel"><img src="<?= $theme; ?>/images/shadow-hotel.png"></div>

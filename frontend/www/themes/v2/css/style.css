@@ -732,12 +732,18 @@
     cursor: pointer;
 }
 .hotel-details {
-    padding: 20px;
+    padding: 20px 20px 0px 20px;
     width: 781px;
+    position: relative;
 }
+.hotel-details .book .btn-cost {
+	width: 126px;
+}
+
 #content > .title, .hotel-details > .title {
-	padding:0px 45px 0px 0px;
+	padding:0px 45px 10px 0px;
 	position: relative;
+	margin-top: 45px;
 }
 #content > .title h1, .hotel-details > .title h1 {
 	float: left;
@@ -848,7 +854,7 @@
 	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
 }
 #content > .title > .stars, .hotel-details > .title > .stars {
-	position: absolute; bottom: -7px; left: 0px;
+	position: absolute; bottom: -6px; left: 0px;
 }
 #content .place-buy, .hotel-details .place-buy {
 	overflow: hidden;
@@ -879,7 +885,7 @@
 	margin-top: 10px;
 }
 #content .place-buy > .book .btn-cost, .hotel-details .place-buy > .book .btn-cost {
-	margin-left: 10px;
+	margin-left: 20px;
 }
 .hotel-details .description {
 	overflow: hidden;
@@ -890,11 +896,6 @@
 .hotel-details .description .left .right {
 	margin-left: 20px;
 }
-/*
-.hotel-details .description .text {
-	overflow: visible !important;
-}
-*/
 .description > .left > .read-more {
 	border-bottom: 1px dashed;
     color: #2174A3;
@@ -906,19 +907,24 @@
 	color: #1a1b1e;
 	line-height: 20px;
 	margin-bottom: 0px;
+	height: 180px;
 }
-.hotel-details .description .right {
+.hotel-details .description .smallMaps {
 	color: #5D5F63;
     float: right;
     width: 312px;
+    height: 240px;
 }
-.hotel-details .description .right .map-hotel {
+.hotel-details .description .smallMaps .map-hotel {
 	width: 310px;
 	border: 1px solid #c7c7c7;
 	margin-bottom: 3px;
+	height: 180px;
+	margin-top: 12px;
+	overflow: hidden;
 }
 .tab .photo-slide-hotel {
-	height: 150px;
+	height: 170px;
 	width: 822px;
 }
 
@@ -994,6 +1000,7 @@
 	height: 150px;
     position: absolute;
     left: 0px;
+    background: none repeat scroll 0 0 #DADCE0;
 }
 .photo-slide-hotel > ul > li {
 	float: left;
@@ -1043,6 +1050,9 @@
 	/* background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
 	padding-top: 30px; */
 }
+.hotel-details .service-in-hotel {
+	margin-bottom: 0px;
+}
 .service-in-room {
 	margin-bottom: 20px;
 	padding-left: 0px;
@@ -1067,10 +1077,15 @@
 }
 .info-trip {
 	padding-left: 0px;
+	margin-bottom: 20px;
 	/*
 background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
 	padding-top: 30px;
 */
+}
+.service-in-hotel > h3, .hotel-important-info > h3 {
+	margin-top: -10px;
+	margin-bottom: 13px;
 }
 .info-trip .date-trip {
 	font-size: 15px;
@@ -1134,6 +1149,7 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
     line-height: 20px;
     padding: 0;
     vertical-align: bottom;
+    margin-bottom: 8px;
 }
 .block-trip .table-hotel-result .td-cost {
     border-left: 1px solid #DFE1E2;
@@ -1275,10 +1291,39 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
 	height: 24px;
 	background: url(../images/slice.png) no-repeat -37px -1200px;
 }
-
+#hotels-popup-description .photo-slide-hotel .photoNumb {
+	left: 20px;
+}
+#hotels-popup-map {
+	color: #1A1B1E;
+}
+.otherText {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 -10px 10px #FFFFFF;
+    color: #000000;
+    height: 20px;
+    margin-top: -15px;
+    position: relative;
+    text-align: right;
+    width: 100%;
+    z-index: 2;
+}
+.otherText a {
+	background: url(../images/podrobnee-point.png) left center no-repeat;
+    padding-left: 11px;
+    color: #2174a3;
+}
+.otherText a span {
+	border-bottom:  1px dashed #2174a3;
+}
+.hideService {
+    height: 34px;
+    overflow: hidden;
+    width: 100%;
+}
 .tab .slide {
-    background: none repeat scroll 0 0 #DADCE0;
-    height: 150px;
+    background: none;
+    height: 170px;
     margin-bottom: 15px;
     margin-left: -20px;
     margin-top: 15px;
@@ -1290,13 +1335,13 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
 	position: absolute; top:0px; left: 0px;
 	width: 80px; height: 150px; cursor: pointer;
 	background: url(../images/navigation-slide.png) no-repeat left 0;
-	z-index: 900;
+	z-index: 1;
 }
 .photo-slide-hotel .right-navi {
 	position: absolute; top:0px; right: 0px;
 	width: 80px; height: 150px; cursor: pointer;
 	background: url(../images/navigation-slide.png) no-repeat right 0;
-	z-index: 900;
+	z-index: 1;
 }
 .photo-slide-hotel .left-opacity {
 	position: absolute; top:0px; left: 0px;
@@ -1897,11 +1942,10 @@ input.hotel-input {
     left: -11px;
     padding-left: 12px;
     position: absolute;
-    top: 11px;
     z-index: 5;
 }
 .backToBackBottom {
-	bottom: 40px;
+	bottom: 55px;
 	top: auto;
 }
 .backToBack span, .backToBackBottom span {
@@ -1937,7 +1981,9 @@ input.hotel-input {
 	color: #4B4B4F;
 	padding-bottom: 10px;
 }
-
+.hotel-important-info {
+	padding-bottom: 25px;
+}
 .miniPopUp {
 	position: absolute;
 	padding: 4px;
@@ -1945,6 +1991,7 @@ input.hotel-input {
 	box-shadow: 0px 0px 4px rgba(0,1,1,0.2);
 	background: #FFF;
 	color: #4B4B4F;
+	font-size: 11px;
 }
 .photoNumb {
     bottom: 0;

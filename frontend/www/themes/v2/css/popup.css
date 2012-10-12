@@ -30,9 +30,6 @@
     position: relative;
     width: 780px;
 }
-.pv_cont table {
-    margin: 0 auto;
-}
 #pv_box {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 6px 6px 6px 6px;

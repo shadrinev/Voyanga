@@ -7,6 +7,8 @@
  *
  * For all applications around Voyanga
  */
+Yii::setPathOfAlias('cacheStorage', $root . '/common/cache_storage');
+
 return array(
     'preload' => array(
         'notification'

@@ -18,6 +18,9 @@
     background: url("../images/ico.png") no-repeat scroll 0 -97px transparent;
     display: inline-block;
     height: 15px;
+    margin-right: 4px;
+    margin-top: -5px;
+    vertical-align: middle;
     width: 12px;
 }
 .ico-breakfast-dinner {
@@ -72,7 +75,7 @@
 	width: 16px; height: 17px;
 	vertical-align: middle;
 	background: url(../images/ico.png) no-repeat 0px -112px;
-	margin-right: 5px;
+	margin-right: 9px;
 }
 .icoService.in-hotel {
 	background-position: 0px -146px;
