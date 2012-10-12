@@ -6,8 +6,10 @@ ko.bindingHandlers.swapPanel = {
     value = ko.utils.unwrapObservable(valueAccessor());
     return $(element).on('click', function() {
       var newHref;
-      newHref = window.location.protocol + '//' + window.location.hostname + '#' + value.to;
-      return window.location.href = newHref;
+      newHref = value.to;
+      return window.app.navigate(newHref, {
+        'trigger': true
+      });
     });
   }
 };
