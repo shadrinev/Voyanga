@@ -46,7 +46,7 @@
         <div class="how-cost">
           от <span class="cost" data-bind="text: cheapestSet.pricePerNight">5 200</span><span class="rur f21">o</span> / ночь
         </div>
-        <a href="#" class="btn-cost" data-bind="click: selectFromPopup, css:{selected: tours()?$parents[3].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
+        <a href="#" class="btn-cost" data-bind="click: selectFromPopup, css:{selected: tours()?isActive():false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
       </div>
     </div>
     <div class="tab" id="hotels-popup-description">

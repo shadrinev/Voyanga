@@ -250,6 +250,12 @@ class AviaResult
                       field
                   )(name)
 
+  isActive: ->
+    console.log @parent.selected_key(), @key, @parent.selected_best()
+    if @parent.selected_best()
+      return @parent.selected_key()==@key
+    @parent.selected_key()==@key
+    
   stacked: ->
     count = 0
     for voyage in @voyages
@@ -398,6 +404,7 @@ class AviaResultSet
     # Indicates if we need to alter our rendering to fix tours template
     @tours = false
     @selected_key = ko.observable ''
+    @selected_best = ko.observable false
     
     @_results = {}
 
@@ -505,14 +512,14 @@ class AviaResultSet
     # FIXME could leak as hell
     result = _.clone result
     result.activeVoyage = ko.observable result.activeVoyage()
+    result.best = true
+    result.key = result.key + '_optima'
 
     if !unconditional
-      result.key = result.key + '_optima'
       result.voyages = _.filter result.voyages, (el)->el.maxStopoverLength <60*60*3
       _.each result.voyages, (voyage)->
     #    voyage.activeBackVoyage = ko.observable voyage.activeBackVoyage()
         voyage._backVoyages = _.filter voyage._backVoyages, (el)->el.maxStopoverLength <60*60*3
-
     if @best() == undefined
       @best result
       return

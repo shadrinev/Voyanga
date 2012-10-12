@@ -13,7 +13,7 @@ class Timeline
         spans.push obj
         if item.isHotel()
           hotel_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days'), item: item}
-        else:
+        else
           avia_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days'), item: item}
       start_date = spans[0].start
       end_date = spans[spans.length-1].end
@@ -44,10 +44,8 @@ class Timeline
         item_hotel = hotel_map[obj.date.format('M.D')]
         if item_hotel
           obj.hotel = item_hotel
-          obj.hotel_item = item_hotel.item
         if item_avia
           obj.avia = item_avia
-          obj.avia_item = item_avia.item
         results.push obj
       for x in [0..right]
         obj =  {date: middle_date.clone().add('days', x)}

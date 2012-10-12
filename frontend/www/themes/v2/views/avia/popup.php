@@ -60,8 +60,8 @@
               		</div>
               	</div>
       <div class="floatRight">
-	<span style="color:#2e333b;" class="f14 bold" data-bind="text: parent.tours?(parent.selected_key()!=key?'Выбрать':'Выбран'):'Оформить'">Оформить</span>
-	<a class="btn-order" href="#" data-bind="visible: parent.selected_key()!=key">
+	<span style="color:#2e333b;" class="f14 bold" data-bind="text: parent.tours?(isActive()?'Выбран':'Выбрать'):'Оформить'">Оформить</span>
+	<a class="btn-order" href="#" data-bind="visible: !isActive()">
 	  <span class="cost" data-bind="text: price">63 502</span> <span class="rur f26">o</span>
 	</a>
       </div>

@@ -62,7 +62,7 @@
                         	Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
                         </div>
                     </div>
-                    <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours() ? $parents[2].selection().activeHotel()==hotelId:false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
+                    <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours() ? isActive():false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
                     <a class="details" data-bind="click: showDetails" href="#">Подробнее об отеле</a>
                 </div>
                 <div class="clear"></div>

@@ -62,13 +62,9 @@ class ToursAviaResultSet extends TourEntry
         #it is actually recommnd ticket
         res = res.data
       result.selected_key res.key
+      result.selected_best res.best | false
       @selection(res)
     @avia = true
-    # FIXME
-    r = result.data[0]
-    result.selected_key r.key
-    @selection result.data[0]
-    # END FIXME
     @results result
 
   doNewSearch: =>
@@ -175,7 +171,7 @@ class ToursHotelsResultSet extends TourEntry
     @newResults raw, @searchParams
 
   newResults: (data, sp)=>
-    result = new HotelsResultSet data, sp
+    result = new HotelsResultSet data, sp, @activeHotel
     result.tours true
     result.postInit()
     result.select = (hotel) =>
@@ -291,11 +287,12 @@ class ToursResultSet
     ResizeAvia()
 
   setActiveTimelineAvia: (entry)=>
-    @selection entry.avia_item
+    @selection entry.avia.item
     ko.processAllDeferredBindingUpdates()
     ResizeAvia()
+
   setActiveTimelineHotels: (entry)=>
-    @selection entry.hotel_item
+    @selection entry.hotel.item
     ko.processAllDeferredBindingUpdates()
     ResizeAvia()
 
