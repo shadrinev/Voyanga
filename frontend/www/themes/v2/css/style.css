@@ -740,10 +740,14 @@
 	width: 126px;
 }
 
-#content > .title, .hotel-details > .title {
+#content > .title {
 	padding:0px 45px 10px 0px;
 	position: relative;
 	margin-top: 45px;
+}
+.hotel-details > .title {
+	padding:0px 45px 10px 0px;
+	position: relative;
 }
 #content > .title h1, .hotel-details > .title h1 {
 	float: left;
@@ -1967,7 +1971,7 @@ input.hotel-input {
 }
 .serviceInHotelTable .title h3 {
 	font-size: 14px;
-	color: #2f3134;
+	color: #2f3134;
 }
 .serviceInHotelTable .list ul li {
 	list-style: disc;
