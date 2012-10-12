@@ -308,22 +308,27 @@
 .timedateline li .trip-fly {
 	width: 24px; border: 2px solid #133950; height: 6px;
 	border-radius: 10px;
-	box-shadow: 0px 0px 20px #1383c4;
 	background: url(../images/bg-trip-fly.png);
 	position: absolute;
 	top:11px;
 	z-index: 1;
 	left: 2px;
 }
+.timedateline li .trip-fly.active {
+	box-shadow: 0 0 20px #1383C4
+}
 .timedateline li .trip-hotel {
 	width: 24px; border: 2px solid #452617; height: 6px;
 	border-radius: 10px;
-	box-shadow: 0px 0px 20px #f9610e;
+	
 	background: url(../images/bg-trip-hotel.png);
 	position: absolute;
 	top:27px;
 	z-index: 1;
 	left: 2px;
+}
+.timedateline li .trip-hotel.active {
+	box-shadow: 0px 0px 20px #f9610e;
 }
 .condition {
     position: absolute;

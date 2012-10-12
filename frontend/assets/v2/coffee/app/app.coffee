@@ -72,7 +72,6 @@ class Application extends Backbone.Router
       ev.push new Event(el)
     @events = new EventSet(ev)
 
-
   initCalendar: =>
     throw "Deprecated"
 
