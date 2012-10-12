@@ -140,6 +140,28 @@ Utils = {
     return $("html,body").animate({
       'scrollTop': oPos.top
     });
+  },
+  wordAfterNum: function(number, oneWord, fourWord, sevenWord) {
+    var iModulo, iNum;
+    if (sevenWord == null) {
+      sevenWord = false;
+    }
+    if (!sevenWord) {
+      sevenWord = fourWord;
+    }
+    iNum = number % 100;
+    if ((4 < iNum && iNum < 21)) {
+      return number + ' ' + sevenWord;
+    } else {
+      iModulo = iNum % 10;
+      if (iModulo === 1) {
+        return number + ' ' + oneWord;
+      } else if ((1 < iModulo && iModulo < 5)) {
+        return number + ' ' + fourWord;
+      } else {
+        return number + ' ' + sevenWord;
+      }
+    }
   }
 };
 

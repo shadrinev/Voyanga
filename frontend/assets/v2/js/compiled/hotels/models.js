@@ -170,22 +170,24 @@ RoomSet = (function() {
 
   RoomSet.prototype.addCancelationRules = function(roomSetData) {
     var cancelObject, _i, _len, _ref;
-    roomSetData.cancelCharges.sort(function(left, right) {
-      if (left.fromTimestamp < right.fromTimestamp) {
-        return 1;
-      } else if (left.fromTimestamp > right.fromTimestamp) {
-        return -1;
+    if (roomSetData.cancelCharges) {
+      roomSetData.cancelCharges.sort(function(left, right) {
+        if (left.fromTimestamp < right.fromTimestamp) {
+          return 1;
+        } else if (left.fromTimestamp > right.fromTimestamp) {
+          return -1;
+        }
+        return 0;
+      });
+      console.log('adding cancel rules', roomSetData.cancelCharges);
+      _ref = roomSetData.cancelCharges;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        cancelObject = _ref[_i];
+        cancelObject.cancelDate = moment.unix(cancelObject.fromTimestamp);
+        console.log('date convert', cancelObject, cancelObject.fromTimestamp, cancelObject.cancelDate);
       }
-      return 0;
-    });
-    console.log('adding cancel rules', roomSetData.cancelCharges);
-    _ref = roomSetData.cancelCharges;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      cancelObject = _ref[_i];
-      cancelObject.cancelDate = moment.unix(cancelObject.fromTimestamp);
-      console.log('date convert', cancelObject, cancelObject.fromTimestamp, cancelObject.cancelDate);
+      return this.cancelRules(roomSetData.cancelCharges);
     }
-    return this.cancelRules(roomSetData.cancelCharges);
   };
 
   RoomSet.prototype.showCancelationRules = function(el, e) {
@@ -314,6 +316,7 @@ HotelResult = (function() {
     this.roomSets = ko.observableArray([]);
     console.log(this.roomSets());
     this.visible = ko.observable(true);
+    this.wordDays = Utils.wordAfterNum(this.duration, 'день', 'дня', 'дней');
     this.visibleRoomSets = ko.computed(function() {
       var result, roomSet, _i, _len, _ref5;
       result = [];
