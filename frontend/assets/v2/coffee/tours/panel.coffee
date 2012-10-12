@@ -7,6 +7,11 @@ class TourPanelSet
     @template = 'tour-panel-template'
     @sp = new TourSearchParams()
 
+    @prevPanel = 'hotels'
+    @nextPanel = 'avia'
+    @icon = 'constructor-ico';
+    @indexMode = true
+
     @startCity = @sp.startCity
     @startCityReadable = ko.observable ''
     @startCityReadableGen = ko.observable ''

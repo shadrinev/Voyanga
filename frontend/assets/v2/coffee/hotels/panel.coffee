@@ -2,6 +2,12 @@ class HotelsPanel extends SearchPanel
   constructor: ->
     @template = 'hotels-panel-template'
     super()
+
+    @prevPanel = 'avia'
+    @nextPanel = 'tours'
+    @icon = 'hotel-ico';
+    @indexMode = ko.observable true
+
     @sp = new HotelsSearchParams()
     @calendarHidden = ko.observable true
     @city = @sp.city

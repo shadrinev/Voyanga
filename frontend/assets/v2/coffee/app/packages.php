@@ -71,6 +71,7 @@
             'ko.bindings.slider.js',
             'ko.bindings.photoslider.js',
             'ko.bindings.checkbox.js',
+            'ko.bindings.swapPanel.js',
 
             'travellers.js',
             'searchParams.js',
@@ -113,8 +114,6 @@
         'basePath' => 'frontend.assets.v2.js.compiled.events',
         'js' => array(
             'models.js',
-            'controllers.js',
-            'module.js',
         )
     ),
     'appJs' => array(

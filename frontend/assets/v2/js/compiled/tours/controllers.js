@@ -27,17 +27,11 @@ ToursController = (function() {
   }
 
   ToursController.prototype.indexAction = function() {
-    var args, eventSet, events;
+    var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("TOURS: Invoking indexAction", args);
-    events = [];
-    $.each(window.eventsRaw, function(i, el) {
-      return events.push(new Event(el));
-    });
-    eventSet = new EventSet(events);
-    console.log("EVENT: eventset = ", eventSet);
-    this.trigger("index");
-    this.render('index', eventSet);
+    this.trigger("index", {});
+    this.render('index');
     return ResizeAvia();
   };
 

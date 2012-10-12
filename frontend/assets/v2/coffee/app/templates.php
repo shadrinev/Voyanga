@@ -16,7 +16,6 @@ return array (
     'hotels.timeline',
 
     'tours.results',
-    'tours.index',
     'tours.panel',
     'tours.overview',
 
@@ -28,4 +27,5 @@ return array (
     'common.stub',
 
     'event.map',
+    'event.index'
 );

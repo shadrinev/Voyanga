@@ -1,6 +1,11 @@
 class AviaPanel extends SearchPanel
   constructor: ->
     super()
+    @prevPanel = 'tours'
+    @nextPanel = 'hotels'
+    @icon = 'fly-ico';
+    @indexMode = ko.observable true
+
     @template = 'avia-panel-template'
     window.voyanga_debug "AviaPanel created"
     @sp = new AviaSearchParams()

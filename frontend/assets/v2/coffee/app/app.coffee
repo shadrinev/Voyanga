@@ -60,6 +60,11 @@ class Application extends Backbone.Router
     @slider.init()
     @activeModule.subscribe @slider.handler
 
+    ev = []
+    $.each window.eventsRaw, (i, el) ->
+      ev.push new Event(el)
+    @events = new EventSet(ev)
+
   initCalendar: =>
     throw "Deprecated"
 

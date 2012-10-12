@@ -601,7 +601,9 @@
     position: absolute;
     top: 0;
     width: 26px;
+    z-index: 5;
 }
+
 .leftPageBtn:hover {
 	background-position: 0px -70px;
 }
@@ -613,6 +615,7 @@
     right: 0;
     top: 0;
     width: 26px;
+    z-index: 5;
 }
 .rightPageBtn:hover {
 	background-position: -26px -70px;

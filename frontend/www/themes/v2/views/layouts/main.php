@@ -53,19 +53,33 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!--====**********===-->
 
     <!-- BOARD IF WE ARE AT THE MAIN -->
-    <!-- ko if: isEvent() -->
+    <!-- ko if:fakoPanel().indexMode -->
     <div class="panel-index">
         <div class="board" data-bind="style: {height: fakoPanel().height}">
-            <div class="constructor">
-                <!-- BOARD CONTENT -->
-                    <div class="board-content" data-bind="template: { name: fakoPanel().template, data: fakoPanel(), afterRender: fakoPanel().afterRender }"></div>
-                <!-- END BOARD CONTENT -->
-                <div class="constructor-ico"></div>
-            </div>
-
+            <!-- ko if:fakoPanel().template=='tour-panel-template' -->
+                <div class="constructor">
+                    <!-- BOARD CONTENT -->
+                        <div class="board-content" data-bind="template: { name: fakoPanel().template, data: fakoPanel(), afterRender: fakoPanel().afterRender }"></div>
+                    <!-- END BOARD CONTENT -->
+                    <div data-bind="attr: {class: fakoPanel().icon}"></div>
+                </div>
+            <!-- /ko -->
+            <!-- ko if:fakoPanel().template!='tour-panel-template' -->
+                <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
+                    <!-- CENTER BLOCK -->
+                    <div class="center-block">
+                        <!-- PANEL -->
+                        <div class="panel"
+                             data-bind="template: { name: fakoPanel().template, data: fakoPanel, afterRender: fakoPanel().afterRender }">
+                        </div>
+                        <!-- END PANEL -->
+                    </div>
+                    <div data-bind="attr: {class: fakoPanel().icon}"></div>
+                </div>
+            <!-- /ko -->
             <!-- END CONSTRUCTOR -->
-            <div class="leftPageBtn"></div>
-            <div class="rightPageBtn"></div>
+            <div class="leftPageBtn" data-bind="swapPanel: {to: fakoPanel().prevPanel}"></div>
+            <div class="rightPageBtn" data-bind="swapPanel: {to: fakoPanel().nextPanel}"></div>
         </div>
         <!-- CALENDAR -->
         <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendar}" style="top: -302px; display: none;"></div>
@@ -74,7 +88,7 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- /ko -->
 
     <!-- SUB HEAD IF WE NOT ON THE MAIN -->
-    <!-- ko if: !isEvent()-->
+    <!-- ko if: !fakoPanel().indexMode -->
     <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
         <!-- CENTER BLOCK -->
             <div class="center-block">
@@ -97,8 +111,8 @@ Yii::app()->clientScript->registerPackage('appJs');
          data-bind="template: {if: isNotEvent(), name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
     <!-- SLIDE TOURS -->
-    <!-- ko if: isEvent() -->
-        <div class="slideTours" data-bind="template: {name: activeView(), data: viewData(), afterRender: mapRendered}">
+    <!-- ko if:fakoPanel().indexMode -->
+        <div class="slideTours" data-bind="template: {name: 'event-index', data: events, afterRender: mapRendered}">
         </div>
     <!-- /ko -->
     <!-- END SLIDE TOURS -->
@@ -118,7 +132,7 @@ Yii::app()->clientScript->registerPackage('appJs');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
-<span data-bind="template: {if: isEvent(), name: 'event-map', data: viewData()}"></span>
+<span data-bind="template: {if:fakoPanel().indexMode, name: 'event-map', data: events}"></span>
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
