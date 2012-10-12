@@ -88,7 +88,7 @@
 	height: 31px;
 	display: inline-block;
 	left: 0px;
-	
+
 }
 .slide-turn-mode .switch .r {
 	background: url(../images/slide-turn-mode.png) no-repeat -131px -78px;
@@ -224,7 +224,7 @@
 	background-position: -76px -828px;
 	color: #FFF;
 	text-shadow: none;
-	
+
 }
 .btn-timeline-and-condition .btn-condition {
 	background: url("../images/slice.png") repeat scroll -76px -852px transparent;
@@ -336,7 +336,7 @@
 	display: inline-block;
 	position: relative;
 	float: left;
-	
+
 }
 .condition .whence .input, .condition  .where .input {
 	background: none; width: 251px; padding-left: 5px; padding-right: 5px; height: 36px; font-size: 21px; border: none; margin-top: -1px;
@@ -1609,7 +1609,7 @@ input.hotel-input {
 	display: inline-block;
 	margin-top: 9px;
 	margin-right: 13px;
-	
+
 }
 
 
@@ -1774,7 +1774,7 @@ input.hotel-input {
 	background: url("../images/bg-index-slide.png") repeat-x scroll 0 10px transparent;
 }
 .slideTours .center{
-	
+
     height: 195px;
     margin: 0 auto;
     max-width: 1390px;
@@ -1788,7 +1788,7 @@ input.hotel-input {
 	background: url(../images/bg-index.png);
 	z-index: 0;
     top: 0px; left: 0px;
-	
+
 }
 .scroll-none { overflow: hidden;}
 .toursTicketsMain {
@@ -1909,7 +1909,7 @@ input.hotel-input {
 	width: 100%;
 	height: 100%;
 	z-index: 2;
-	
+
 }
 .maps .toursBigAll .centerTours {
 	position: relative;
