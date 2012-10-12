@@ -851,11 +851,11 @@
     cursor: pointer;
     background: url(../images/slice.png) no-repeat -288px -762px;
 }
-.stars-li li label.active {
+.stars-li li label.active, .stars-li li label.active:hover {
 	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
 }
 .stars-li li label:hover {
-	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
+	background: url("../images/stars-hover.png") no-repeat scroll 0px 6px transparent;
 }
 #content > .title > .stars, .hotel-details > .title > .stars {
 	position: absolute; bottom: -6px; left: 0px;

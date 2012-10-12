@@ -113,13 +113,14 @@
 	display: block;
 	position: absolute;
 	left: 15px;
-	bottom: 5px;
+	bottom: 9px;
 	line-height: 13px;
 }
 .ticket-items .content .center-ticket {
 	margin: 0 auto;
-    padding: 0 0px 0px 0px;
+    padding: 0px 0px 5px 0px;
     min-height: 75px;
+    
 }
 .ticket-items .content .center-ticket .date-time-city {
 	min-height: 96px;
