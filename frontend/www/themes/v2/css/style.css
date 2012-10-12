@@ -860,6 +860,21 @@
 #content > .title > .stars, .hotel-details > .title > .stars {
 	position: absolute; bottom: -6px; left: 0px;
 }
+#hotels-popup-header1.title h1 {
+    display: inline-block;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 525px;
+}
+#hotels-popup-header1.title h1 {
+	margin-bottom: 5px;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 #content .place-buy, .hotel-details .place-buy {
 	overflow: hidden;
 	padding-left: 0px;
@@ -879,6 +894,9 @@
 }
 .hotel-details .place-buy > .street {
 	width: 285px;
+	max-height: 40px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 #content .place-buy > .book, .hotel-details .place-buy > .book {
 	float: right;
