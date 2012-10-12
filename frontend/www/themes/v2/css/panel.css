@@ -795,8 +795,23 @@
 	border-radius: 4px 0px 0px 4px;
 }
 
-
-
-.constructorTable {
-	
+.alphaRight {
+    background: url("../images/alpha-tours-left.png") repeat-y scroll 0 0 transparent;
+    display: block;
+    height: 41px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 64px;
+    z-index: 2;
+}
+.alphaRight {
+    background: url("../images/alpha-tours-right.png") repeat-y scroll 0 0 transparent;
+    display: block;
+    height: 41px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 64px;
+    z-index: 2;
 }
