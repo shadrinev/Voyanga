@@ -24,7 +24,7 @@ class Timeline
         if item.isAvia()
           if item.rt()
             end_date = moment(item.rtTimelineStart())
-            avia_map[end_date.format('M.D')] = {duration: 1}
+            avia_map[end_date.format('M.D')] = {duration: 1, item: item}
       timeline_length = end_date.diff(start_date, 'days')
       middle_date = start_date.clone().add('days', timeline_length/2)
       if timeline_length < 23

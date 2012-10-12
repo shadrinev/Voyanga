@@ -49,7 +49,8 @@ Timeline = (function() {
           if (item.rt()) {
             end_date = moment(item.rtTimelineStart());
             avia_map[end_date.format('M.D')] = {
-              duration: 1
+              duration: 1,
+              item: item
             };
           }
         }
