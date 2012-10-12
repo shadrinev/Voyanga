@@ -28,8 +28,14 @@
     <div class="title" id="hotels-popup-header1">
       <h1 data-bind="text: hotelName">Рэдиссон Соня Отель</h1>
       <div class="rating" data-bind="visible: rating">
-        <span class="value" data-bind="text: rating">4,5</span>
-        <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
+	<div class="textRating" onmouseover="ratingHoverActive(this)" onmouseout="ratingHoverNoActive(this)">
+          <span class="value" data-bind="text: rating"></span>
+          <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
+	</div>
+	<div class="descrRating">
+          <strong><span data-bind="text: rating"></span> из 5 баллов</strong>
+          Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
+	</div>
       </div>
       <div data-bind="attr: {class: 'stars ' + stars}"></div>
       <div class="clear"></div>
@@ -53,11 +59,9 @@
       <div class="slide">
         <div class="photo-slide-hotel">
           <ul data-bind="foreach: photos,photoSlider: photos">
-            <li><a href="#" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="0" class="photo"><img src="#" data-bind="attr:{src: largeUrl }"></a></li>
+            <li><a href="#" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="0"><img src="#" data-bind="attr:{src: largeUrl}"></a></li>
           </ul>
-          Фотографии предоставлены отелями.
         </div>
-        <div class="left-navi"></div><div class="right-navi"></div><div class="left-opacity"></div><div class="right-opacity"></div>
       </div>
       <div class="description">
         <div class="left">
@@ -69,28 +73,40 @@
             Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра
           </div>
           <h3>Описание отеля</h3>
-          <div class="text" data-bind="html: description">
-          </div>
+          <div class="text" data-bind="html: description"></div>
           <a href="#" class="read-more" data-bind="click: readMore">Подробнее</a>
-          <!-- ko if: hasHotelGroupServices -->
-          <div class="service-in-hotel">
-            <h3>Услуги в отеле</h3>
-            <!-- ko foreach: hotelGroupServices -->
-            <h3 data-bind="text: groupName"></h3>
-            <ul data-bind="foreach: elements">
-                    <li><span class="ico-wi-fi"></span> <span data-bind="text: $data"></span></li>
-            </ul>
-            <!-- /ko -->
-          </div>
+	</div>
+    </div>
+      <!-- ko if: hasHotelGroupServices -->
+      <div class="service-in-hotel">
+        <h3>Услуги в отеле</h3>
+        <div class="hideService">
+          <!-- ko foreach: hotelGroupServices -->
+          <table class="serviceInHotelTable">
+            <tr>
+              <td class="title">
+                <h3><span class="icoService in-hotel" data-bind="attr:{class: 'icoService '+groupIcon}"></span><span data-bind="text: groupName"></span></h3>
+                </td>
+              <td class="list">
+                <ul data-bind="foreach: elements">
+                  <li><span class="dotted"></span> <span data-bind="text: $data"></span></li>
+                </ul>
+              </td>
+            </tr>
+          </table>
           <!-- /ko -->
         </div>
+        <div class="otherText">
+          <a href="javascript:void(0)" onclick="readMoreService(this)"><span>Подробнее</span></a>
+        </div>
       </div>
-    </div>
-    <div class="tab" id="hotels-popup-map" style="display:none;">
-      <br>
-      <div class="map-big" id="hotels-popup-gmap">
-      </div>
-      <div>Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра</div>
+      <!-- /ko -->
     </div>
   </div>
+    <div class="tab" id="hotels-popup-map" style="display:none;">
+      <br>
+      <div class="map-big" id="hotels-popup-gmap"></div>
+      <div style="padding-left:20px;">Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра</div>
+    </div>
+</div>
 </script>

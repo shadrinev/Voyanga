@@ -531,9 +531,11 @@ function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
     smallTicketHeight();
-    scrollValue();
+    scrollValue('avia');
+    scrollValue('hotel');
     CenterIMGResize();
     ifHeightMinAllBody();
+    showMiniPopUp();
 }
 
 function ResizeFun() {
@@ -643,26 +645,37 @@ function OneWidthEquelTwoWidth() {
 		$('.slide-filter.first').css('padding-right','30px');
 	}
 }
-function scrollValue() {
+function scrollValue(what) {
+	var filterContent = $('.filter-content.'+what)
 	var var_marginTopSubHead = $('.sub-head').css('margin-top');
 	var var_scrollValueTop = $(window).scrollTop();
 	var var_heightWindow = $(window).height();
-	if ($('.sub-head').css('margin-top') != '-67px') {
-		var diffrentScrollTop = 179;
-		
+	if (what == 'avia') {
+		var var_topFilterContent = 73;
+		if ($('.sub-head').css('margin-top') != '-67px') {
+			var diffrentScrollTop = 179;
+		}
+		else {
+			var diffrentScrollTop = 110;
+		}
 	}
 	else {
-		var diffrentScrollTop = 110;
-		
+		var var_topFilterContent = 23;
+		if ($('.sub-head').css('margin-top') != '-67px') {
+			var diffrentScrollTop = 131;
+		}
+		else {
+			var diffrentScrollTop = 61 ;
+
+		}
 	}
 	var var_heightWindow = $(window).height();
 	var var_heightContent = $('#content').height();
-	
 	if (var_scrollValueTop == 0) {
-		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		filterContent.css('position','relative').css('top','auto').css('bottom','auto');
 	}
 	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
-		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		filterContent.css('position','relative').css('top','auto').css('bottom','auto');
 		if (var_heightContent < var_heightWindow) {
 			$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
 		}
@@ -670,27 +683,28 @@ function scrollValue() {
 			$('.innerFilter').css('height', '100%');
 		}
 	}
-	else if (var_scrollValueTop > diffrentScrollTop) {
-		
-		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73) && var_scrollValueTop != 0) {
-			$('.filter-content').css('position','fixed').css('bottom','73px').css('top','auto');
-			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
+	else if (var_scrollValueTop > diffrentScrollTop) {		
+		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - var_topFilterContent) && var_scrollValueTop != 0) {
+			filterContent.css('position','fixed').css('bottom', var_topFilterContent+'px').css('top','auto');
+			$('.innerFilter').css('height', (var_heightWindow - (var_topFilterContent - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
 		}
-		else if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 73) && var_scrollValueTop == 0) {
-			$('.filter-content').css('position','fixed').css('bottom','auto').css('top','auto');
-			$('.innerFilter').css('height', (var_heightWindow - (73 - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
+		else if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - var_topFilterContent) && var_scrollValueTop == 0) {
+			filterContent.css('position','fixed').css('bottom','auto').css('top','auto');
+			$('.innerFilter').css('height', (var_heightWindow - (var_topFilterContent - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
 		}
 		else {
-			$('.filter-content').css('position','fixed').css('top','-73px').css('bottom','auto');
+			filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
 			$('.innerFilter').css('height', var_heightWindow +'px');
-		}
-		
+		}		
 	}		
 }
 $(window).load(AlphaBackground);
 
 $(window).load(function() {
-	$(window).scroll(scrollValue);
+	$(window).scroll(function() {
+	scrollValue('avia');
+	scrollValue('hotel');
+	});
 });
 
 function ifHeightMinAllBody() {
@@ -701,19 +715,25 @@ function ifHeightMinAllBody() {
 	if (var_heightContent < var_heightWindow) {
 		$('#content').css('height', (var_heightWindow - 168) +'px');
 		$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
-		//$('body').css('height', var_heightWindow +'px');
 		console.log("НУ ЧТО? = "+var_heightContent+ " x "+ (var_heightWindow - 168));
 	}
 	else {
 		$('#content').css('height', 'auto');
 		$('.innerFilter').css('height', '100%');
-		//$('body').css('height', 'auto');
 		console.log("И ТО? = "+var_heightContent+ " x "+ (var_heightWindow - 168));
-		
 	}
-	
 }
 
+function showMiniPopUp() {
+	var miniPopUp = '<div class="miniPopUp"></div>';
+	$('.conditionCancel').hover(function(e) {
+		var widthThisElement = $(this).width();
+		$('body').append(miniPopUp);
+		$('.miniPopUp').text($(this).attr('rel')).css('left', (e.pageX - (widthThisElement / 2))+'px').css('top', (e.pageY + 10)+'px');
+	}, function() {
+		$('.miniPopUp').remove();
+	});
+}
 
 function readMoreService(obj) {
 	if (! $(obj).hasClass('active')) {
@@ -726,5 +746,4 @@ function readMoreService(obj) {
 		$(obj).text('Подробнее');
 		$(obj).removeClass('active') 
 	}
-	
 }
