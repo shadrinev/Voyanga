@@ -861,7 +861,7 @@
 	right: -5px;
 	left: auto;
 }
-.rating:hover, .title.hotel .rating:hover {
+.rating.hover, .title.hotel .rating.hover {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 5px;
     box-shadow: 0 1px 1px rgba(0, 1, 1, 0.3);
@@ -880,7 +880,7 @@
 .title.hotel .rating .textRating, .hotel-details .rating .textRating {
 	text-align: left;
 }
-.rating:hover .textRating,  .title.hotel .rating:hover .textRating {
+.rating.hover .textRating,  .title.hotel .rating.hover .textRating {
     border-bottom: 1px solid #BCBDC0;
     margin-left: -9px;
     margin-right: -9px;
@@ -892,14 +892,14 @@
 .rating .descrRating,  .title.hotel .rating .descrRating {
     display: none;
 }
-.rating:hover .descrRating,  .title.hotel .rating:hover .descrRating {
+.rating.hover .descrRating,  .title.hotel .rating.hover .descrRating {
     display: block;
     padding-top: 9px;
     color: #616161;
     font-size: 11px;
     line-height: 15px;
 }
-.rating:hover .descrRating strong,  .title.hotel .rating:hover .descrRating strong {
+.rating.hover .descrRating strong,  .title.hotel .rating.hover .descrRating strong {
 	display: block;
 	color: #202328;
 	font-size: 12px;

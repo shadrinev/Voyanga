@@ -675,7 +675,7 @@
 }
 .ticket-content {
 	color: #3E4C52;
-    margin: 0 auto 60px;
+    margin: 0 auto 32 px;
     position: relative;
 }
 .ticket-content.bg-none {
@@ -1163,8 +1163,20 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
     width: 255px;
     padding-right: 15px;
 }
+.table-hotel-result .td-cost .left {
+	float: left;
+	font-size: 11px;
+	line-height: 17px;
+}
+.table-hotel-result .td-cost .left .text {
+	color: #1d222b;
+	font-size: 14px;
+}
+.table-hotel-result .td-cost .right {
+	float: right;
+}
 .block-trip .table-hotel-result .td-cost .btn-cost {
-	width: 100%;
+	width: 138px;
 	padding: 10px 5px 0 0;
 	height: 27px;
 }
@@ -1316,6 +1328,10 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
 	background: url(../images/podrobnee-point.png) left center no-repeat;
     padding-left: 11px;
     color: #2174a3;
+}
+.otherText a.active {
+	background: url(../images/podrobnee-point-hover.png) left center no-repeat;
+
 }
 .otherText a span {
 	border-bottom:  1px dashed #2174a3;
@@ -2001,5 +2017,5 @@ input.hotel-input {
     bottom: 0;
     color: #8F9199;
     font-size: 11px;
-    position: absolute;
+    position: absolute; 
 }

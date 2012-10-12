@@ -28,7 +28,7 @@
 	<div class="title" id="hotels-popup-header1">
 		<h1 data-bind="text: hotelName">Рэдиссон Соня Отель</h1>		
 			<div class="rating"  data-bind="visible: rating">
-				<div class="textRating">
+				<div class="textRating" onmouseover="ratingHoverActive(this)" onmouseout="ratingHoverNoActive(this)">
 					<span class="value" data-bind="text: rating"></span>
 					<span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
 				</div>
