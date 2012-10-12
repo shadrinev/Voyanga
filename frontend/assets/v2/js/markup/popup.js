@@ -1,7 +1,9 @@
 function SizeBox(id) {
-	$('body').css('overflow','hidden');
 	var popup = $('#' + id);
-	$('#pv_box').find('form').focus();
+	if ($('#' + id).length > 0 && $('#' + id).is(':visible')) {
+		$('body').css('overflow','hidden');
+	}
+	
 	
 	/*
 $(document).on('keydown', function(e){

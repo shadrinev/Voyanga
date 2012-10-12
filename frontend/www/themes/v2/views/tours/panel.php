@@ -49,7 +49,7 @@
     <a href="#" class="btn-condition" data-bind="click: timeline.showConditions, css: {active: timeline.termsActive}">Условия</a>
   </div>
   
-  <div class="slide-tmblr">
+  <div class="slide-tmblr" data-bind="style: {overflow: timeline.termsActive?'visible':'hidden'}">
     <div class="timeline" data-bind="style: {top: timeline.termsActive?'-68px':0}">
       <div class="btn-left" data-bind="click: timeline.scrollLeft"> </div>
       <div class="btn-right" data-bind="click: timeline.scrollRight"></div>

@@ -10,11 +10,12 @@ function resizePhotoWinHandler() {
         paddingTop = 0;
     }
     paddingTop = Math.round(paddingTop);
-    window.setTimeout(function(){
+    
     $('.countAndClose').css('width', var_width+'px');
         //$('#imgContent').css('margin-top', paddingTop+'px');
-        $('#titleNamePhoto').css('height', (paddingTop+50)+'px')
-    },50);
+        $('#titleNamePhoto').css('height', (paddingTop+50)+'px');
+        $('#photoBox').animate({'width':'100%'},10);
+
 
 
     console.log('pddingtop:',paddingTop,' allwin:',var_allWinHeight,'h:',var_height);

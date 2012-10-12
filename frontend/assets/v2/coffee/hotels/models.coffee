@@ -80,6 +80,7 @@ class RoomSet
       else
         return 'Выбрать'
 
+
   checkCount: (newValue)=>
     count = parseInt(newValue)
     if count < 0 || isNaN(count)
@@ -101,20 +102,21 @@ class RoomSet
     return result
 
   addCancelationRules: (roomSetData)=>
-    roomSetData.cancelCharges.sort(
-      (left,right)->
-        if left.fromTimestamp < right.fromTimestamp
-          return 1
-        else if left.fromTimestamp > right.fromTimestamp
-          return -1
-        return 0
-    )
-    #cancelObject = roomSetData.cancelCharges.shift()
-    console.log('adding cancel rules',roomSetData.cancelCharges)
-    for cancelObject in roomSetData.cancelCharges
-      cancelObject.cancelDate = moment.unix(cancelObject.fromTimestamp)
-      console.log('date convert',cancelObject,cancelObject.fromTimestamp,cancelObject.cancelDate)
-    @cancelRules(roomSetData.cancelCharges)
+    if roomSetData.cancelCharges
+      roomSetData.cancelCharges.sort(
+        (left,right)->
+          if left.fromTimestamp < right.fromTimestamp
+            return 1
+          else if left.fromTimestamp > right.fromTimestamp
+            return -1
+          return 0
+      )
+      #cancelObject = roomSetData.cancelCharges.shift()
+      console.log('adding cancel rules',roomSetData.cancelCharges)
+      for cancelObject in roomSetData.cancelCharges
+        cancelObject.cancelDate = moment.unix(cancelObject.fromTimestamp)
+        console.log('date convert',cancelObject,cancelObject.fromTimestamp,cancelObject.cancelDate)
+      @cancelRules(roomSetData.cancelCharges)
 
   showCancelationRules: (el,e)=>
     miniPopUp = '<div class="miniPopUp"></div>'
@@ -208,6 +210,7 @@ class HotelResult
     #@roomSets = []
     console.log(@roomSets())
     @visible = ko.observable(true)
+    @wordDays = Utils.wordAfterNum(@duration,'день','дня','дней')
     @visibleRoomSets = ko.computed =>
       result = []
       for roomSet in @roomSets()

@@ -108,7 +108,7 @@
                         		</tr>
                                 <!-- ko if: last()-->
                                 <tr>
-                                    <td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: $parent.cancelText()},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
+                                    <td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: 'Идет запрос на получение информации...'},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
                                 </tr>
                                 <!-- /ko -->
                         	</table>
@@ -118,7 +118,7 @@
                     <td class="td-cost">
                         <div class="left">
                         	<span class="text" data-bind="text: $parent.selectText"></span><br>
-                        	<span class="grey em">Цена за 7 дней</span>
+                        	<span class="grey em">Цена за <span data-bind="text: parent.wordDays"></span></span>
                         </div>
                         <div class="right">
                         	<a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
@@ -167,7 +167,7 @@
                     <td class="td-cost">
                     	<div class="left">
                         	<span class="text" data-bind="text: $parent.selectText"></span><br>
-                        	<span class="grey em">Цена за 7 дней</span>
+                        	<span class="grey em">Цена за <span data-bind="text: parent.wordDays"></span></span>
                         </div>
                         <div class="right">
                         	<a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>

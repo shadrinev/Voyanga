@@ -65,9 +65,10 @@ PhotoBox = (function() {
       el.css('width', 'auto');
     }
     $('#hotel-img-load').hide();
+    resizePhotoWinHandler();
     el.animate({
       opacity: 1
-    }, 200, resizePhotoWinHandler);
+    }, 200);
     return this.busy = false;
   };
 
