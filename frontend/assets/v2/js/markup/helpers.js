@@ -1,3 +1,13 @@
+/* RATING HOVER */
+function ratingHoverActive(obj) {
+	var that = $(obj);
+	that.parent().addClass('hover');
+}
+function ratingHoverNoActive(obj) {
+	var that = $(obj);
+	that.parent().removeClass('hover');
+}
+/* END RATING HOVER */
 function sliderPhoto(that) {
     var var_this = $(that).eq(0);
     var var_len = var_this.find('ul > li').length;

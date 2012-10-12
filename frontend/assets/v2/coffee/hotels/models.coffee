@@ -132,7 +132,7 @@ class RoomSet
 # Stacked hotel, FIXME can we use this as roomset ?
 #
 class HotelResult
-  constructor: (data, parent, duration = 1) ->
+  constructor: (data, parent, duration, @activeHotel) ->
     # Mix in events
     _.extend @, Backbone.Events
     @tours =  parent.tours
@@ -186,12 +186,10 @@ class HotelResult
     @selectText = ko.computed =>
       if !@tours()
         return "Забронировать"
-      if @activeResultId()
+      if @isActive()
         return 'Выбран'
       else
         return 'Выбрать'
-
-
 
     @hasHotelServices = if data.hotelServices then true else false
     @hotelServices = data.hotelServices
@@ -248,6 +246,11 @@ class HotelResult
       else if left.price < right.price
         return -1
       return 0
+
+  isActive: =>
+    if @activeHotel
+      return @activeHotel() == @hotelId
+    return false
 
   showPhoto: (fp,ev)=>
     #window.voyanga_debug('click info',fp,ev)
@@ -506,7 +509,7 @@ class HotelResult
 # Stacks them by price and company
 #
 class HotelsResultSet
-  constructor: (rawHotels, @searchParams) ->
+  constructor: (rawHotels, @searchParams, @activeHotel) ->
     @_results = {}
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
@@ -541,7 +544,7 @@ class HotelsResultSet
         @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
         @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
       else
-        result =  new HotelResult hotel, @, duration
+        result =  new HotelResult hotel, @, duration, @activeHotel
         @_results[key] = result
         if @minPrice == false
           @minPrice = @_results[key].minPrice

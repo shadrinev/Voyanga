@@ -12,9 +12,9 @@ class Timeline
         obj =  {start: moment(item.timelineStart()), end: moment(item.timelineEnd())}
         spans.push obj
         if item.isHotel()
-          hotel_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days')}
-        else:
-          avia_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days')}
+          hotel_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days'), item: item}
+        else
+          avia_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days'), item: item}
       start_date = spans[0].start
       end_date = spans[spans.length-1].end
 
