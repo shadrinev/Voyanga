@@ -4,7 +4,6 @@ class AviaPanel extends SearchPanel
     @prevPanel = 'tours'
     @nextPanel = 'hotels'
     @icon = 'fly-ico';
-    @indexMode = ko.observable true
 
     @template = 'avia-panel-template'
     window.voyanga_debug "AviaPanel created"

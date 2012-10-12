@@ -51,7 +51,13 @@ class Application extends Backbone.Router
         return 'stub'
       @activeModule() + '-' + @_view()
 
+    @indexMode = ko.computed =>
+      @_view() == 'index'
+
     @calendarInitialized = false
+
+    @showEventsPicture = ko.computed =>
+      @activeView() == 'tours-index'
 
     # View model for currently active view
     @viewData = ko.observable {}
@@ -64,6 +70,7 @@ class Application extends Backbone.Router
     $.each window.eventsRaw, (i, el) ->
       ev.push new Event(el)
     @events = new EventSet(ev)
+
 
   initCalendar: =>
     throw "Deprecated"
@@ -137,7 +144,6 @@ class Application extends Backbone.Router
     WidthMine()
 
   mapRendered: (elem) =>
-    console.log "Map Rendered"
     $('.slideTours').find('.active').find('.triangle').animate({'top' : '-16px'}, 200);
 
   isNotEvent: =>

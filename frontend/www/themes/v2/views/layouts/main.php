@@ -16,9 +16,9 @@ Yii::app()->clientScript->registerPackage('appJs');
     </script>
     <script type="text/javascript" src="http://api.voyanga.com/API.js"></script>
 </head>
-<body data-bind="css: {fixed: isEvent()}">
+<body data-bind="css: {fixed: indexMode()}">
 <?php echo $content; ?>
-<div class="wrapper" data-bind="css: {'scroll-none': isEvent()}">
+<div class="wrapper" data-bind="css: {'scroll-none': indexMode()}">
     <div class="head" id="header">
         <!-- CENTER BLOCK -->
         <div class="center-block">
@@ -53,7 +53,7 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!--====**********===-->
 
     <!-- BOARD IF WE ARE AT THE MAIN -->
-    <!-- ko if:fakoPanel().indexMode -->
+    <!-- ko if:indexMode() -->
     <div class="panel-index">
         <div class="board" data-bind="style: {height: fakoPanel().height}">
             <!-- ko if:fakoPanel().template=='tour-panel-template' -->
@@ -88,7 +88,7 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- /ko -->
 
     <!-- SUB HEAD IF WE NOT ON THE MAIN -->
-    <!-- ko if: !fakoPanel().indexMode -->
+    <!-- ko if: !indexMode() -->
     <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
         <!-- CENTER BLOCK -->
             <div class="center-block">
@@ -107,13 +107,14 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- END SUB HEAD -->
     <!--====**********===-->
     <!-- ALL CONTENT -->
+    <!-- ko if: !indexMode() -->
     <div class="center-block"
-         data-bind="template: {if: isNotEvent(), name: activeView(), data: viewData(), afterRender: contentRendered}">
+         data-bind="template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
+    <!-- /ko -->
     <!-- SLIDE TOURS -->
-    <!-- ko if:fakoPanel().indexMode -->
-        <div class="slideTours" data-bind="template: {name: 'event-index', data: events, afterRender: mapRendered}">
-        </div>
+    <!-- ko if:indexMode -->
+        <div class="slideTours" data-bind="template: {name: 'event-index', data: events, afterRender: mapRendered}"></div>
     <!-- /ko -->
     <!-- END SLIDE TOURS -->
     <!-- FOOTER -->
@@ -132,7 +133,7 @@ Yii::app()->clientScript->registerPackage('appJs');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
-<span data-bind="template: {if:fakoPanel().indexMode, name: 'event-map', data: events}"></span>
+<span data-bind="template: {if: indexMode(), name: 'event-map', data: events}"></span>
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">

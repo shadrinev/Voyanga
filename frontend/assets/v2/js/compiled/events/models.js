@@ -7,10 +7,8 @@ var City, Event, EventCategory, EventCategorySet, EventLink, EventLinkSet, Event
 ko.bindingHandlers.highlightChange = {
   update: function(element, valueAccessor, allBindingsAccessor) {
     var allBindings, newEl, previousImage, value, valueUnwrapped, varLeftPos, varLeftPosStart, varTopPos, varTopPosStart;
-    window.voyanga_debug('Switching element');
     value = valueAccessor();
     allBindings = allBindingsAccessor();
-    console.log(allBindings);
     valueUnwrapped = ko.utils.unwrapObservable(value);
     previousImage = allBindings.previousImage;
     console.log(previousImage(), valueUnwrapped);

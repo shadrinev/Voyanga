@@ -1,11 +1,9 @@
 ko.bindingHandlers.highlightChange =
   update: (element, valueAccessor, allBindingsAccessor) ->
-    window.voyanga_debug 'Switching element'
-
     # First get the latest data that we're bound to
     value = valueAccessor()
     allBindings = allBindingsAccessor()
-    console.log allBindings
+
     # Next, whether or not the supplied model property is observable, get its current value
     valueUnwrapped = ko.utils.unwrapObservable(value)
 
@@ -82,7 +80,6 @@ class EventSet
       return activeEvents[0]
     @previousImage = ko.observable ''
     @activeMaps = 0;
-
 
   setActive: (valueAccessor, event) =>
     if(@activeMaps == 1)

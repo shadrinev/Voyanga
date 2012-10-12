@@ -75,7 +75,13 @@ Application = (function(_super) {
       }
       return _this.activeModule() + '-' + _this._view();
     });
+    this.indexMode = ko.computed(function() {
+      return _this._view() === 'index';
+    });
     this.calendarInitialized = false;
+    this.showEventsPicture = ko.computed(function() {
+      return _this.activeView() === 'tours-index';
+    });
     this.viewData = ko.observable({});
     this.slider = new Slider();
     this.slider.init();
@@ -160,7 +166,6 @@ Application = (function(_super) {
   };
 
   Application.prototype.mapRendered = function(elem) {
-    console.log("Map Rendered");
     return $('.slideTours').find('.active').find('.triangle').animate({
       'top': '-16px'
     }, 200);
