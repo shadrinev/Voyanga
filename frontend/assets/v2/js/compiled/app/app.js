@@ -75,8 +75,9 @@ Application = (function(_super) {
       }
       return _this.activeModule() + '-' + _this._view();
     });
+    this.in1 = ko.observable(0);
     this.indexMode = ko.computed(function() {
-      return _this._view() === 'index';
+      return _this.in1(_this._view() === 'index');
     });
     this.calendarInitialized = false;
     this.showEventsPicture = ko.computed(function() {

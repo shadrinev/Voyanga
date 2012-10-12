@@ -51,8 +51,9 @@ class Application extends Backbone.Router
         return 'stub'
       @activeModule() + '-' + @_view()
 
+    @in1 = ko.observable 0
     @indexMode = ko.computed =>
-      @_view() == 'index'
+      @in1(@_view() == 'index')
 
     @calendarInitialized = false
 

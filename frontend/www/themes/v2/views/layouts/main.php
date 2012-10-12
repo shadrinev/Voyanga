@@ -16,9 +16,9 @@ Yii::app()->clientScript->registerPackage('appJs');
     </script>
     <script type="text/javascript" src="http://api.voyanga.com/API.js"></script>
 </head>
-<body data-bind="css: {fixed: indexMode()}">
+<body data-bind="css: {fixed: in1}">
 <?php echo $content; ?>
-<div class="wrapper" data-bind="css: {'scroll-none': indexMode()}">
+<div class="wrapper" data-bind="css: {'scroll-none': in1}">
     <div class="head" id="header">
         <!-- CENTER BLOCK -->
         <div class="center-block">
@@ -53,7 +53,7 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!--====**********===-->
 
     <!-- BOARD IF WE ARE AT THE MAIN -->
-    <!-- ko if:indexMode() -->
+    <!-- ko if:in1 -->
     <div class="panel-index">
         <div class="board" data-bind="style: {height: fakoPanel().height}">
             <!-- ko if:fakoPanel().template=='tour-panel-template' -->
@@ -88,7 +88,7 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- /ko -->
 
     <!-- SUB HEAD IF WE NOT ON THE MAIN -->
-    <!-- ko if: !indexMode() -->
+    <!-- ko ifnot: in1 -->
     <div class="sub-head" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
         <!-- CENTER BLOCK -->
             <div class="center-block">
@@ -107,13 +107,13 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- END SUB HEAD -->
     <!--====**********===-->
     <!-- ALL CONTENT -->
-    <!-- ko if: !indexMode() -->
+    <!-- ko ifnot: in1 -->
     <div class="center-block"
          data-bind="template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
     </div>
     <!-- /ko -->
     <!-- SLIDE TOURS -->
-    <!-- ko if:indexMode -->
+    <!-- ko if:in1 -->
         <div class="slideTours" data-bind="template: {name: 'event-index', data: events, afterRender: mapRendered}"></div>
     <!-- /ko -->
     <!-- END SLIDE TOURS -->
@@ -133,7 +133,7 @@ Yii::app()->clientScript->registerPackage('appJs');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
-<span data-bind="template: {if: indexMode(), name: 'event-map', data: events}"></span>
+<span data-bind="template: {if: in1, name: 'event-map', data: events}"></span>
 <!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
