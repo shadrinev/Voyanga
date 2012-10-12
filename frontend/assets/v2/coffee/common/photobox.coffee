@@ -45,8 +45,9 @@ class PhotoBox
     else
       el.css 'width', 'auto'
     $('#hotel-img-load').hide()
+    resizePhotoWinHandler()
 
-    el.animate({opacity : 1},200,resizePhotoWinHandler)
+    el.animate({opacity : 1},200)
     #resizeImg();
     @busy = false
 
