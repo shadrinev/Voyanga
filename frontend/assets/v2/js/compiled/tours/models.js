@@ -419,6 +419,10 @@ ToursResultSet = (function() {
 
     this.removeItem = __bind(this.removeItem, this);
 
+    this.setActiveTimelineHotels = __bind(this.setActiveTimelineHotels, this);
+
+    this.setActiveTimelineAvia = __bind(this.setActiveTimelineAvia, this);
+
     this.setActive = __bind(this.setActive, this);
 
     this.data = ko.observableArray();
@@ -446,6 +450,8 @@ ToursResultSet = (function() {
           _this.panelContainer = _this.selection().panel;
         }
         _this.panelContainer.timeline = _this.timeline;
+        _this.panelContainer.setActiveTimelineAvia = _this.setActiveTimelineAvia;
+        _this.panelContainer.setActiveTimelineHotels = _this.setActiveTimelineHotels;
         return _this.panelContainer;
       }
     });
@@ -474,6 +480,18 @@ ToursResultSet = (function() {
 
   ToursResultSet.prototype.setActive = function(entry) {
     this.selection(entry);
+    ko.processAllDeferredBindingUpdates();
+    return ResizeAvia();
+  };
+
+  ToursResultSet.prototype.setActiveTimelineAvia = function(entry) {
+    this.selection(entry.avia_item);
+    ko.processAllDeferredBindingUpdates();
+    return ResizeAvia();
+  };
+
+  ToursResultSet.prototype.setActiveTimelineHotels = function(entry) {
+    this.selection(entry.hotel_item);
     ko.processAllDeferredBindingUpdates();
     return ResizeAvia();
   };

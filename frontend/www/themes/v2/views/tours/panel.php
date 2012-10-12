@@ -57,10 +57,10 @@
 	<ul class="timedateline"  data-bind="foreach: timeline.data, style: {width: timeline.data().length * 32 + 'px', marginLeft: '-' + timeline.timelinePosition() + 'px'}">
 	  <li>
 	    <!-- ko if: avia -->
-	    <div class="trip-fly"></div>
+	    <div class="trip-fly" data-bind="click: $parent.setActiveTimelineAvia"></div>
 	    <!-- /ko -->
 	    <!-- ko if:hotel -->
-	    <div class="trip-hotel" style="left:16px;" data-bind="style: {width:'' + hotel.duration * 32 + 'px'}"></div>
+	    <div class="trip-hotel" style="left:16px;" data-bind="style: {width:'' + hotel.duration * 32 + 'px'}, click: $parent.setActiveTimelineHotels"></div>
 	    <!-- /ko -->
 	    <div class="date" data-bind="text: day"></div>
 	  </li>

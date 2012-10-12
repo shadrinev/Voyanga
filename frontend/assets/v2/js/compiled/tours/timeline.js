@@ -31,12 +31,14 @@ Timeline = (function() {
         spans.push(obj);
         if (item.isHotel()) {
           hotel_map[obj.start.format('M.D')] = {
-            duration: obj.end.diff(obj.start, 'days')
+            duration: obj.end.diff(obj.start, 'days'),
+            item: item
           };
         }
         ({
           "else": avia_map[obj.start.format('M.D')] = {
-            duration: obj.end.diff(obj.start, 'days')
+            duration: obj.end.diff(obj.start, 'days'),
+            item: item
           }
         });
       }
@@ -75,9 +77,11 @@ Timeline = (function() {
         item_hotel = hotel_map[obj.date.format('M.D')];
         if (item_hotel) {
           obj.hotel = item_hotel;
+          obj.hotel_item = item_hotel.item;
         }
         if (item_avia) {
           obj.avia = item_avia;
+          obj.avia_item = item_avia.item;
         }
         results.push(obj);
       }

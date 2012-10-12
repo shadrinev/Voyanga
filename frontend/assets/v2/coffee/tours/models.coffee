@@ -264,6 +264,9 @@ class ToursResultSet
         if @selection().panel
           @panelContainer = @selection().panel
         @panelContainer.timeline = @timeline
+        @panelContainer.setActiveTimelineAvia = @setActiveTimelineAvia
+        @panelContainer.setActiveTimelineHotels = @setActiveTimelineHotels
+
         return @panelContainer
 
     @price = ko.computed =>
@@ -286,6 +289,16 @@ class ToursResultSet
     @selection entry
     ko.processAllDeferredBindingUpdates()
     ResizeAvia()
+
+  setActiveTimelineAvia: (entry)=>
+    @selection entry.avia_item
+    ko.processAllDeferredBindingUpdates()
+    ResizeAvia()
+  setActiveTimelineHotels: (entry)=>
+    @selection entry.hotel_item
+    ko.processAllDeferredBindingUpdates()
+    ResizeAvia()
+
 
   removeItem: (item, event)=>
     event.stopPropagation()
