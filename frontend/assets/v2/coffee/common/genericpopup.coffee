@@ -1,5 +1,6 @@
 class GenericPopup
   constructor: (@id, data)->
+    @inside = false
     $('body').prepend('<div id="popupOverlay"></div>')
     el = $($(@id+'-template').html())
     $('body').prepend(el)
@@ -8,9 +9,16 @@ class GenericPopup
     $(window).keyup (e) =>
       if e.keyCode == 27
         @close()
-
-    $('#popupOverlay').click =>
-      @close()
+    el.find('table').hover =>
+      console.log "INSIDE"
+      @inside = true
+    , =>
+      console.log "OUTSIDE"
+      @inside = false
+    el.click =>
+      console.log "CLEAK"
+      if !@inside
+        @close()
 
 
   close: =>

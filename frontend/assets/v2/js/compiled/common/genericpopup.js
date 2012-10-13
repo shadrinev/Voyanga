@@ -10,6 +10,7 @@ GenericPopup = (function() {
     this.id = id;
     this.close = __bind(this.close, this);
 
+    this.inside = false;
     $('body').prepend('<div id="popupOverlay"></div>');
     el = $($(this.id + '-template').html());
     $('body').prepend(el);
@@ -23,8 +24,18 @@ GenericPopup = (function() {
         return _this.close();
       }
     });
-    $('#popupOverlay').click(function() {
-      return _this.close();
+    el.find('table').hover(function() {
+      console.log("INSIDE");
+      return _this.inside = true;
+    }, function() {
+      console.log("OUTSIDE");
+      return _this.inside = false;
+    });
+    el.click(function() {
+      console.log("CLEAK");
+      if (!_this.inside) {
+        return _this.close();
+      }
     });
   }
 
