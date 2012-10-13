@@ -433,6 +433,9 @@ class AviaResultSet
       result.removeSimilar()
       @data.push result
 
+    @data.sort (left, right)=>
+      left.price - right.price
+
     @postFilters()
     
   # Inject search params from response

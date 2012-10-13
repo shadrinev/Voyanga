@@ -571,7 +571,8 @@ AviaResultSet = (function() {
 
     this.injectSearchParams = __bind(this.injectSearchParams, this);
 
-    var flightVoyage, key, result, _i, _len, _ref;
+    var flightVoyage, key, result, _i, _len, _ref,
+      _this = this;
     this.recommendTemplate = 'avia-cheapest-result';
     this.tours = false;
     this.selected_key = ko.observable('');
@@ -602,6 +603,9 @@ AviaResultSet = (function() {
       result.removeSimilar();
       this.data.push(result);
     }
+    this.data.sort(function(left, right) {
+      return left.price - right.price;
+    });
     this.postFilters();
   }
 
