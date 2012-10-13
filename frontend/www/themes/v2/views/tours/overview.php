@@ -1,6 +1,7 @@
 <?php
     $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 ?>
+<script id="tours-index"></script>
 <script id="tours-overview" type="text/html">
   <div class="main-block">
     <div id="content">
