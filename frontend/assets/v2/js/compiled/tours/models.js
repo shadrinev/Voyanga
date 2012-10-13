@@ -450,6 +450,7 @@ ToursResultSet = (function() {
         _this.panelContainer.timeline = _this.timeline;
         _this.panelContainer.setActiveTimelineAvia = _this.setActiveTimelineAvia;
         _this.panelContainer.setActiveTimelineHotels = _this.setActiveTimelineHotels;
+        _this.panelContainer.selection = _this.selection;
         return _this.panelContainer;
       }
     });

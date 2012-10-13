@@ -262,6 +262,7 @@ class ToursResultSet
         @panelContainer.timeline = @timeline
         @panelContainer.setActiveTimelineAvia = @setActiveTimelineAvia
         @panelContainer.setActiveTimelineHotels = @setActiveTimelineHotels
+        @panelContainer.selection = @selection
 
         return @panelContainer
 
