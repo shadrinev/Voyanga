@@ -356,11 +356,11 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.minPrice = function() {
-    return this.results.minPrice;
+    return this.results().minPrice;
   };
 
   ToursHotelsResultSet.prototype.maxPrice = function() {
-    return this.results.maxPrice;
+    return this.results().maxPrice;
   };
 
   ToursHotelsResultSet.prototype.destinationText = function() {

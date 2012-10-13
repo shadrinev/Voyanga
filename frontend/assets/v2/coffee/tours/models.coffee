@@ -200,10 +200,10 @@ class ToursHotelsResultSet extends TourEntry
     @results().data().length
 
   minPrice: =>
-    @results.minPrice
+    @results().minPrice
 
   maxPrice: =>
-    @results.maxPrice
+    @results().maxPrice
 
   # end Overview VM
 
