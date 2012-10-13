@@ -197,7 +197,7 @@ class ToursHotelsResultSet extends TourEntry
     @destinationText()
 
   numHotels: =>
-    @results.data().length
+    @results().data().length
 
   minPrice: =>
     @results.minPrice
