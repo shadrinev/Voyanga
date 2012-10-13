@@ -352,7 +352,7 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.numHotels = function() {
-    return this.results.data.length;
+    return this.results.data().length;
   };
 
   ToursHotelsResultSet.prototype.minPrice = function() {
