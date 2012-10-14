@@ -1,34 +1,36 @@
 <?php
-/* params-home */
+/* params-private */
 
 /**
  * This file contains private application parameters that may vary in different environment.
  * You may modify this file to fit for your environment.
  */
+
 return array(
     "env.code" => "private",
 
     'db.name' => 'search',
-    'db.connectionString'=>'mysql:host=localhost;dbname=voyanga_search',
-    'db.username'=>'root',
-    'db.password'=>'',
+    'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',
+    'db.username'=>'voyanga',
+    'db.password'=>'srazunadogovoritblya',
 
-    'backendDb.connectionString'=>'mysql:host=localhost;dbname=voyanga_backend',
-    'backendDb.username'=>'root',
-    'backendDb.password'=>'',
+    'backendDb.name' => 'search',
+    'backendDb.connectionString'=>'mysql:host=109.236.87.227;dbname=backend;port=3307',
+    'backendDb.username'=>'voyanga',
+    'backendDb.password'=>'srazunadogovoritblya',
 
     'userDb.name' => 'search',
-    'userDb.connectionString'=>'mysql:host=localhost;dbname=voyanga_backend',
-    'userDb.username'=>'root',
-    'userDb.password'=>'',
+    'userDb.connectionString'=>'mysql:host=109.236.87.227;dbname=backend;port=3307',
+    'userDb.username'=>'voyanga',
+    'userDb.password'=>'srazunadogovoritblya',
 
     'log_db.name' => 'search',
-    'log_db.connectionString'=>'mysql:host=localhost;dbname=voyanga_logdb',
-    'log_db.username'=>'root',
-    'log_db.password'=>'',
+    'log_db.connectionString'=>'mysql:host=109.236.87.227;dbname=logdb;port=3307',
+    'log_db.username'=>'voyanga',
+    'log_db.password'=>'srazunadogovoritblya',
 
-    'mongo.connectionString' => 'mongodb://127.0.0.1',
-    'mongo.dbName'=> 'mongo',
+    'mongo.connectionString' => 'mongodb://109.236.87.123',
+    'mongo.dbName'=> 'voyanga',
 
     'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)'
 );

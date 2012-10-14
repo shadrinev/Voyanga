@@ -16,7 +16,7 @@ class HotelCacheDumper
     {
         $dump = new HotelCacheDump;
         $dump->model = $this->model;
-        //Yii::app()->sharedMemory->write($dump);
+        Yii::app()->sharedMemory->write($dump);
     }
 
 }

@@ -1,6 +1,7 @@
 class API
   constructor: ->
-    @endpoint = 'http://api.voyanga.com/v1/'
+    #@endpoint = 'http://api.voyanga.com/v1/'
+    @endpoint = 'http://api.misha.voyanga/v1/'
 
   call: (url, cb, showLoad = true) =>
     if showLoad
@@ -16,7 +17,7 @@ class API
       dataType: 'json'
       timeout: 60000
       success: (data)=>
-        sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
+        #sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
         cb(data)
         if showLoad
           $('#loadWrapBg').hide()

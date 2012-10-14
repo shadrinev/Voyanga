@@ -8,7 +8,7 @@ API = (function() {
 
   function API() {
     this.call = __bind(this.call, this);
-    this.endpoint = 'http://api.voyanga.com/v1/';
+    this.endpoint = 'http://api.misha.voyanga/v1/';
   }
 
   API.prototype.call = function(url, cb, showLoad) {
@@ -24,7 +24,6 @@ API = (function() {
       dataType: 'json',
       timeout: 60000,
       success: function(data) {
-        sessionStorage.setItem("" + _this.endpoint + url, JSON.stringify(data));
         cb(data);
         if (showLoad) {
           return $('#loadWrapBg').hide();
