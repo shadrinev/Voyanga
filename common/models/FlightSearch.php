@@ -83,6 +83,7 @@ class FlightSearch extends CModel implements IStatisticItem
                     Yii::app()->observer->notify('onAfterFlightSearch', $this);
                     //FIXME: now using only frontend implementation
                     Yii::import('frontend.models.*');
+                    Yii::import('frontend.components.*');
                     FlightCache::addCacheFromStack($this->flightVoyageStack);
                     return $this->flightVoyageStack;
                 }
