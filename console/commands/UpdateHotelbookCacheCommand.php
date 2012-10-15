@@ -73,18 +73,26 @@ EOD;
                                 echo "Cant get hotelDetail for hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
                                 $tryAgain--;
                                 $cachePath = Yii::getPathOfAlias('cacheStorage');
-                                $cacheFilePath = $cachePath . '/HotelDetail' . $hotel['id'] . '.xml';
+                                $cacheSubDir = md5('HotelDetail' . $hotel['id'] . '.xml');
+                                $cacheSubDir = substr($cacheSubDir,-3);
+                                $cacheFilePath = $cachePath . '/' . $cacheSubDir .'/HotelDetail' . $hotel['id'] . '.xml';
                                 if (file_exists($cacheFilePath)) {
                                     unlink($cacheFilePath);
+                                }
+                                if(!$tryAgain){
+                                    echo "HotelError hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
                                 }
 
                             } else {
                                 $tryAgain = 0;
+                                if(!$tryAgain){
+                                    echo "HotelOK hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
+                                }
                             }
-                            usleep(300000);
+                            usleep(200000);
                         }
                     }
-                    echo count($cityHotels) . " hotel completed\n";
+                    //echo count($cityHotels) . " hotel completed\n";
                 }
                 echo "Memory usage: " . memory_get_peak_usage() . "\n";
             }

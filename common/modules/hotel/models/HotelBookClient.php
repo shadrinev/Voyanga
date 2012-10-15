@@ -21,7 +21,18 @@ class HotelBookClient
         if ($cacheFileName)
         {
             $cachePath = Yii::getPathOfAlias('cacheStorage');
-            $cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
+            $cacheSubDir = md5($cacheFileName);
+            $cacheSubDir = substr($cacheSubDir,-3);
+            if(!file_exists($cachePath . '/' . $cacheSubDir)){
+                mkdir($cachePath . '/' . $cacheSubDir);
+            }
+
+            //$cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
+            if(file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml')){
+                rename($cachePath . '/' . $cacheFileName . '.xml',$cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
+            }
+
+            $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
             if (file_exists($cacheFilePath))
             {
                 $cacheResult = file_get_contents($cacheFilePath);
