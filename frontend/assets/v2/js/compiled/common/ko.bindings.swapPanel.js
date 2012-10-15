@@ -4,6 +4,7 @@ ko.bindingHandlers.swapPanel = {
   update: function(element, valueAccessor) {
     var value;
     value = ko.utils.unwrapObservable(valueAccessor());
+    $(element).off('click');
     return $(element).on('click', function() {
       var newHref;
       newHref = value.to;
