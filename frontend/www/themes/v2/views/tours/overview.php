@@ -1,5 +1,5 @@
 <?php
-    $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
+$images = 'themes/v2';
 ?>
 <script id="tours-index"></script>
 <script id="tours-overview" type="text/html">

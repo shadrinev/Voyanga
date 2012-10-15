@@ -21,7 +21,7 @@
         </li>
         <!-- /ko -->
         <li class="items end">
-          <a href="#" class="last" data-bind="click: showOverview">
+          <a href="#" class="last" data-bind="click: showOverview, css: {active: selection().overview}">
             <div class="keys"></div>
             <div class="path">
               Вся поездка
@@ -30,10 +30,12 @@
         </li>
       </ul>
       <!-- END UL TRIP -->
-      <span class="f14 bold" style="color:#2e333b;">Оформить</span>
-      <a href="#" class="btn-order">
-        <span class="cost" data-bind="text: price"></span> <span class="rur f26">o</span>
-      </a>
+      <div id="tour-buy-btn" style="display: none">
+	<span class="f14 bold" style="color:#2e333b;">Оформить</span>
+	<a href="#" class="btn-order">
+          <span class="cost" data-bind="text: price"></span> <span class="rur f26">o</span>
+	</a>
+      </div>
       <table class="finish-result">
         <tr>
           <td class="txt">Общая стоимость:</td>
@@ -70,4 +72,11 @@
   </div>
     <!-- ko template: {name: selection().template, data: selection().data} -->
     <!-- /ko -->
+</script>
+<script id="tours-select-segments" type="text/html">
+  <div class="main-block">
+    <div id="content">
+      Типо не все выбрано пацаны.
+    </div>
+  </div>
 </script>

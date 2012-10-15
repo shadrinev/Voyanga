@@ -112,7 +112,6 @@ ToursAviaResultSet = (function(_super) {
     this.panel.handlePanelSubmit = this.doNewSearch;
     this.panel.sp.fromObject(sp);
     this.panel.original_template = this.panel.template;
-    this.panel.template = 'tours-panel-template';
     this.results = ko.observable();
     this.selection = ko.observable(null);
     this.newResults(raw, sp);
@@ -135,7 +134,8 @@ ToursAviaResultSet = (function(_super) {
       }
       result.selected_key(res.key);
       result.selected_best(res.best | false);
-      return _this.selection(res);
+      _this.selection(res);
+      return _this.trigger('next');
     };
     this.avia = true;
     return this.results(result);
@@ -302,7 +302,6 @@ ToursHotelsResultSet = (function(_super) {
     this.panel.handlePanelSubmit = this.doNewSearch;
     this.panel.sp.fromObject(this.searchParams);
     this.panel.original_template = this.panel.template;
-    this.panel.template = 'tours-panel-template';
     this.overviewTemplate = 'tours-overview-hotels-ticket';
     this.template = 'hotels-results';
     this.activeHotel = ko.observable(0);
@@ -328,7 +327,8 @@ ToursHotelsResultSet = (function(_super) {
       hotel.off('select');
       hotel.on('select', function(roomData) {
         _this.activeHotel(hotel.hotelId);
-        return _this.selection(roomData);
+        _this.selection(roomData);
+        return _this.trigger('next');
       });
       return _this.trigger('setActive', {
         'data': hotel,
@@ -417,6 +417,8 @@ ToursResultSet = (function() {
 
     this.removeItem = __bind(this.removeItem, this);
 
+    this.nextEntry = __bind(this.nextEntry, this);
+
     this.setActiveTimelineHotels = __bind(this.setActiveTimelineHotels, this);
 
     this.setActiveTimelineAvia = __bind(this.setActiveTimelineAvia, this);
@@ -431,14 +433,17 @@ ToursResultSet = (function() {
         continue;
       }
       if (variant.flights) {
-        this.data.push(new ToursAviaResultSet(variant.flights.flightVoyages, variant.searchParams));
+        result = new ToursAviaResultSet(variant.flights.flightVoyages, variant.searchParams);
       } else {
         result = new ToursHotelsResultSet(variant.hotels, variant.searchParams);
-        this.data.push(result);
-        result.on('setActive', function(entry) {
-          return _this.setActive(entry);
-        });
       }
+      this.data.push(result);
+      result.on('setActive', function(entry) {
+        return _this.setActive(entry);
+      });
+      result.on('next', function(entry) {
+        return _this.nextEntry();
+      });
     }
     this.timeline = new Timeline(this.data);
     this.selection = ko.observable(this.data()[0]);
@@ -450,7 +455,13 @@ ToursResultSet = (function() {
         _this.panelContainer.timeline = _this.timeline;
         _this.panelContainer.setActiveTimelineAvia = _this.setActiveTimelineAvia;
         _this.panelContainer.setActiveTimelineHotels = _this.setActiveTimelineHotels;
+        if (!_this.panelContainer.onlyTimeline) {
+          _this.panelContainer.onlyTimeline = false;
+        } else {
+          _this.panelContainer.timeline.termsActive = false;
+        }
         _this.panelContainer.selection = _this.selection;
+        _this.panelContainer.template = 'tours-panel-template';
         return _this.panelContainer;
       }
     });
@@ -474,13 +485,37 @@ ToursResultSet = (function() {
       }
       return sum;
     });
+    this.allSegmentsSelected = ko.computed(function() {
+      var x, _j, _len1, _ref1;
+      _ref1 = _this.data();
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        x = _ref1[_j];
+        if (!x.selection()) {
+          return false;
+        }
+      }
+      return true;
+    });
+    this.allSegmentsSelected.subscribe(function(newValue) {
+      if (newValue) {
+        return $('#tour-buy-btn').show('fast');
+      } else {
+        return $('#tour-buy-btn').hide('fast');
+      }
+    });
     this.vm = new ToursOverviewVM(this);
   }
 
   ToursResultSet.prototype.setActive = function(entry) {
-    this.selection(entry);
-    ko.processAllDeferredBindingUpdates();
-    return ResizeAvia();
+    var _this = this;
+    $('#loadWrapBg').show();
+    return window.setTimeout(function() {
+      _this.selection(entry);
+      ko.processAllDeferredBindingUpdates();
+      ResizeAvia();
+      $('#loadWrapBg').hide();
+      return $('body').scrollTop(0);
+    }, 100);
   };
 
   ToursResultSet.prototype.setActiveTimelineAvia = function(entry) {
@@ -489,6 +524,20 @@ ToursResultSet = (function() {
 
   ToursResultSet.prototype.setActiveTimelineHotels = function(entry) {
     return this.setActive(entry.hotel.item);
+  };
+
+  ToursResultSet.prototype.nextEntry = function() {
+    var x, _i, _len, _ref;
+    console.log("WHOA");
+    _ref = this.data();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      x = _ref[_i];
+      if (!x.selection()) {
+        this.setActive(x);
+        return;
+      }
+    }
+    return this.showOverview();
   };
 
   ToursResultSet.prototype.removeItem = function(item, event) {
@@ -510,10 +559,30 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.showOverview = function() {
-    return this.setActive({
-      template: 'tours-overview',
-      data: this
-    });
+    var dummyPanel;
+    dummyPanel = {
+      onlyTimeline: true,
+      calendarHidden: function() {
+        return true;
+      },
+      calendarValue: ko.observable({
+        values: []
+      })
+    };
+    if (this.allSegmentsSelected()) {
+      return this.setActive({
+        template: 'tours-overview',
+        data: this,
+        overview: true,
+        panel: dummyPanel
+      });
+    } else {
+      return this.setActive({
+        template: 'tours-select-segments',
+        overview: true,
+        panel: dummyPanel
+      });
+    }
   };
 
   return ToursResultSet;

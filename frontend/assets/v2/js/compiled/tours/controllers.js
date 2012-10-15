@@ -47,8 +47,8 @@ ToursController = (function() {
 
   ToursController.prototype.handleResults = function(data) {
     var stacked;
-    window.voyanga_debug("searchAction: handling results", data);
-    if (data.error) {
+    console.log("Handling results", data);
+    if (!data || data.error) {
       this.render('e500', {
         msg: data.error
       });

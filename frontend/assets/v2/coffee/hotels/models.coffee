@@ -496,7 +496,8 @@ class HotelResult
       @activeResultId room.resultId
 
     @trigger 'select', {roomSet: room, hotel: @}
-    Utils.scrollTo('.info-trip')
+    if !@tours()
+      Utils.scrollTo('.info-trip')
 
   smallMapUrl: =>
       base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"

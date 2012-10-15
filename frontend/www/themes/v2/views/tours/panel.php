@@ -44,7 +44,7 @@
 </script>
 
 <script id="tours-panel-template" type="text/html">
-  <div class="btn-timeline-and-condition">
+  <div class="btn-timeline-and-condition" data-bind="visible: !onlyTimeline">
     <a href="#" class="btn-timeline" data-bind="click: timeline.showTimeline, css: {active: !timeline.termsActive}">Таймлайн</a>
     <a href="#" class="btn-condition" data-bind="click: timeline.showConditions, css: {active: timeline.termsActive}">Условия</a>
   </div>
@@ -75,10 +75,11 @@
       <div class="right-corners"></div>
     </div>
     
-
+    <!-- ko if: !onlyTimeline --> 
     <div class="condition"
-         data-bind="template: { name: original_template, data: $data, afterRender: afterRender },style: {top: timeline.termsActive?'-15px':'68px'}">
+         data-bind="template: {name: original_template, data: $data, afterRender: afterRender },style: {top: timeline.termsActive?'-15px':'68px'}">
     </div>
+    <!-- /ko -->
   </div>
   
   <div class="clear"></div>

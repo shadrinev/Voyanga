@@ -18,6 +18,7 @@ class TourEntry
       return "Не выбрано"
     return @price() + '<span class="rur">o</span>'
 
+
   minPriceHtml: =>
     @minPrice() + '<span class="rur">o</span>'
 
@@ -44,7 +45,6 @@ class ToursAviaResultSet extends TourEntry
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject sp
     @panel.original_template = @panel.template
-    @panel.template = 'tours-panel-template'
     @results = ko.observable()
     @selection = ko.observable null
     @newResults raw, sp
@@ -64,6 +64,7 @@ class ToursAviaResultSet extends TourEntry
       result.selected_key res.key
       result.selected_best res.best | false
       @selection(res)
+      @trigger 'next'
     @avia = true
     @results result
 
@@ -159,7 +160,6 @@ class ToursHotelsResultSet extends TourEntry
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject @searchParams
     @panel.original_template = @panel.template
-    @panel.template = 'tours-panel-template'
     @overviewTemplate = 'tours-overview-hotels-ticket'
     @template = 'hotels-results'
 
@@ -182,6 +182,7 @@ class ToursHotelsResultSet extends TourEntry
       hotel.on 'select', (roomData) =>
         @activeHotel  hotel.hotelId
         @selection roomData
+        @trigger 'next'
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template'}
     # FIXME WTF
     @hotels = true
@@ -216,6 +217,11 @@ class ToursHotelsResultSet extends TourEntry
       return 0
 
     @selection().roomSet.price
+
+#  overviewPriceHtml: =>
+#    result =', ' + @selection().hotel.wordDays
+#    result += @price() + '<span class="rur">o</span>'
+#    return result
     
   additionalText: =>
     if @selection() == null
@@ -246,12 +252,14 @@ class ToursResultSet
       if !variant
         continue
       if variant.flights
-        @data.push new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
+        result =  new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
       else
         result = new ToursHotelsResultSet variant.hotels, variant.searchParams
-        @data.push result
-        result.on 'setActive', (entry)=>
-          @setActive entry
+      @data.push result
+      result.on 'setActive', (entry)=>
+        @setActive entry
+      result.on 'next', (entry)=>
+        @nextEntry()
 
     @timeline = new Timeline(@data)
     @selection = ko.observable @data()[0]
@@ -262,7 +270,13 @@ class ToursResultSet
         @panelContainer.timeline = @timeline
         @panelContainer.setActiveTimelineAvia = @setActiveTimelineAvia
         @panelContainer.setActiveTimelineHotels = @setActiveTimelineHotels
+        
+        if !@panelContainer.onlyTimeline
+          @panelContainer.onlyTimeline = false
+        else
+          @panelContainer.timeline.termsActive = false
         @panelContainer.selection = @selection
+        @panelContainer.template = 'tours-panel-template'
 
         return @panelContainer
 
@@ -278,15 +292,33 @@ class ToursResultSet
         sum += item.savings()
       return sum
 
+    @allSegmentsSelected = ko.computed =>
+      for x in @data()
+        if !x.selection()
+          return false
+      return true
 
+    @allSegmentsSelected.subscribe (newValue)=>
+      if newValue
+        $('#tour-buy-btn').show 'fast'
+      else
+        $('#tour-buy-btn').hide 'fast'
+      
     @vm = new ToursOverviewVM @
 
 
   setActive: (entry)=>
 #    console.profile('RESULTS RENDERING')
-    @selection entry
-    ko.processAllDeferredBindingUpdates()
-    ResizeAvia()
+    $('#loadWrapBg').show()
+    # FIXME 
+    window.setTimeout =>
+      @selection entry
+      ko.processAllDeferredBindingUpdates()
+      ResizeAvia()
+      $('#loadWrapBg').hide()
+      $('body').scrollTop(0)
+    , 100
+
 #    console.profileEnd('RESULTS RENDERING')
 
   setActiveTimelineAvia: (entry)=>
@@ -294,6 +326,14 @@ class ToursResultSet
 
   setActiveTimelineHotels: (entry)=>
     @setActive entry.hotel.item
+
+  nextEntry: =>
+    console.log "WHOA"
+    for x in @data()
+      if !x.selection()
+        @setActive x
+        return
+    return @showOverview()
 
   removeItem: (item, event)=>
     event.stopPropagation()
@@ -310,7 +350,15 @@ class ToursResultSet
     ResizeAvia()
 
   showOverview: =>
-    @setActive {template: 'tours-overview', data: @}
+    # FIXME FIXME FIXME
+    dummyPanel =
+      onlyTimeline: true
+      calendarHidden: -> true
+      calendarValue: ko.observable {values: []}
+    if @allSegmentsSelected()
+      @setActive {template: 'tours-overview', data: @, overview: true, panel: dummyPanel}
+    else
+      @setActive {template: 'tours-select-segments', overview: true, panel:  dummyPanel}
 
 
 

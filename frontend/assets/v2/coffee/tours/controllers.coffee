@@ -26,11 +26,8 @@ class ToursController
     @api.search @searchParams.url(), @handleResults
 
   handleResults: (data) =>
-    window.voyanga_debug "searchAction: handling results", data
-    if data.error
-#      if err=='404'
-#@render 'e404', {}
-#        return
+    console.log "Handling results", data
+    if !data || data.error
       @render 'e500', {msg: data.error}
       return
 

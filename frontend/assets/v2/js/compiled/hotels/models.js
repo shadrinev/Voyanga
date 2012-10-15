@@ -652,7 +652,9 @@ HotelResult = (function() {
       roomSet: room,
       hotel: this
     });
-    return Utils.scrollTo('.info-trip');
+    if (!this.tours()) {
+      return Utils.scrollTo('.info-trip');
+    }
   };
 
   HotelResult.prototype.smallMapUrl = function() {
