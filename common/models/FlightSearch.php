@@ -84,10 +84,7 @@ class FlightSearch extends CModel implements IStatisticItem
                     //FIXME: now using only frontend implementation
                     Yii::import('frontend.models.*');
                     Yii::import('frontend.components.*');
-                    if (function_exists('shmop_open'))
-                        FlightCache::addCacheFromStack($this->flightVoyageStack);
-                    else
-                        Yii::log('No cache available. Please check if shmop exists');
+                    FlightCache::addCacheFromStack($this->flightVoyageStack);
                     return $this->flightVoyageStack;
                 }
             }
