@@ -403,9 +403,6 @@ HotelResult = (function() {
     this.activePopup = new GenericPopup('#hotels-body-popup', this);
     SizeBox('hotels-body-popup');
     ResizeBox('hotels-body-popup');
-    $(".description .text").dotdotdot({
-      watch: 'window'
-    });
     return this.mapInitialized = false;
   };
 
@@ -697,7 +694,7 @@ HotelsResultSet = (function() {
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);
     window.voyanga_debug('checkOut', this.checkOut);
-    this.city = 0;
+    this.city = this.searchParams.cityFull;
     if (this.searchParams.duration) {
       duration = this.searchParams.duration;
     }
@@ -780,17 +777,20 @@ HotelsResultSet = (function() {
   }
 
   HotelsResultSet.prototype.select = function(hotel, event) {
-    var _this = this;
+    var oldPos,
+      _this = this;
     window.voyanga_debug(' i wonna get hotel for you', hotel);
+    oldPos = $("html").scrollTop() | $("body").scrollTop();
     hotel.off('back');
     hotel.on('back', function() {
-      return window.app.render({
+      window.app.render({
         results: ko.observable(_this)
       }, 'results');
+      return Utils.scrollTo(oldPos, false);
     });
     hotel.getFullInfo();
     window.app.render(hotel, 'info-template');
-    return Utils.scrollTo('#content');
+    return Utils.scrollTo('#content', false);
   };
 
   HotelsResultSet.prototype.getDateInterval = function() {

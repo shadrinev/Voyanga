@@ -46,6 +46,7 @@ class HotelSearchParams
             'duration' => $this->duration,
             'city' => $this->city->code,
             'cityNameAcc' => $this->city->caseAcc,
+            'cityFull' => $this->city,
             'rooms' => array()
         );
         foreach ($this->rooms as $room)

@@ -109,13 +109,16 @@ Utils =
     else
       return dateIsoString
 
-  scrollTo: (selector)->
+  scrollTo: (selector, animation = true)->
     if typeof(selector) == "string"
       oPos = $(selector).offset()
     else
       oPos = {}
       oPos.top = selector
-    $("html,body").animate({'scrollTop':oPos.top})
+    if animation
+      $("html,body").animate({'scrollTop':oPos.top})
+    else
+      $("html,body").scrollTop(oPos.top)
 
   wordAfterNum: (number,oneWord,fourWord,sevenWord = false) ->
     if !sevenWord

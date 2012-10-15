@@ -4,7 +4,6 @@ ko.bindingHandlers.photoSlider = {
   init: function(element, valueAccessor) {
     var value;
     value = ko.utils.unwrapObservable(valueAccessor());
-    console.log('try start photoslider!!!!');
     return $(element).photoSlider({});
   },
   update: function(element, valueAccessor) {}

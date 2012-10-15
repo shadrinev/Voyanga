@@ -18,7 +18,7 @@ function resizePhotoWinHandler() {
 
 
 
-    console.log('pddingtop:',paddingTop,' allwin:',var_allWinHeight,'h:',var_height);
+    //console.log('pddingtop:',paddingTop,' allwin:',var_allWinHeight,'h:',var_height);
 }
 
 function resizePhotoWin() {

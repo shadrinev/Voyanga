@@ -287,7 +287,7 @@ class HotelResult
     ResizeBox('hotels-body-popup')
     #sliderPhoto('.photo-slide-hotel')
     # FIXME explicitly call tab handler here ?
-    $(".description .text").dotdotdot({watch: 'window'})
+    #$(".description .text").dotdotdot({watch: 'window'})
 
     # If we initialized google map already
     @mapInitialized = false
@@ -518,7 +518,7 @@ class HotelsResultSet
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
     window.voyanga_debug('checkOut',@checkOut)
-    @city = 0
+    @city = @searchParams.cityFull
     if @searchParams.duration
       duration = @searchParams.duration
     if duration == 0 || typeof duration == 'undefined'
@@ -588,13 +588,15 @@ class HotelsResultSet
 
   select: (hotel, event) =>
     window.voyanga_debug ' i wonna get hotel for you',hotel
+    oldPos = $("html").scrollTop() | $("body").scrollTop()
     hotel.off 'back'
     hotel.on 'back', =>
       window.app.render({results: ko.observable(@)}, 'results')
+      Utils.scrollTo(oldPos,false)
 
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
-    Utils.scrollTo('#content')
+    Utils.scrollTo('#content',false)
 
   getDateInterval: =>
     dateUtils.formatDayMonthInterval(@checkIn._d,@checkOut._d)

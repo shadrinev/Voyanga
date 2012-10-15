@@ -129,17 +129,24 @@ Utils = {
       return dateIsoString;
     }
   },
-  scrollTo: function(selector) {
+  scrollTo: function(selector, animation) {
     var oPos;
+    if (animation == null) {
+      animation = true;
+    }
     if (typeof selector === "string") {
       oPos = $(selector).offset();
     } else {
       oPos = {};
       oPos.top = selector;
     }
-    return $("html,body").animate({
-      'scrollTop': oPos.top
-    });
+    if (animation) {
+      return $("html,body").animate({
+        'scrollTop': oPos.top
+      });
+    } else {
+      return $("html,body").scrollTop(oPos.top);
+    }
   },
   wordAfterNum: function(number, oneWord, fourWord, sevenWord) {
     var iModulo, iNum;
