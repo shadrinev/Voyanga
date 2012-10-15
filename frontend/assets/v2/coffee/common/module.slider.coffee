@@ -41,7 +41,7 @@ class Slider
       width : @valueWidth[activeLIindex][0] + 'px'
       left : @valueWidth[activeLIindex][1] + 'px'
       , @speed , ->
-          activeLI.addClass('active')
+        activeLI.addClass('active')
     @switchSlide.find('.c').animate
       width : (@valueWidth[activeLIindex][0] - 27) + 'px'
       , @speed
