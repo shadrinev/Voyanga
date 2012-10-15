@@ -1330,7 +1330,7 @@ class HotelBookClient
         if ($hotelSXE->City['id'])
         {
             try{
-                $hotelParams['city'] = City::getCityByHotelbookId((string)$hotelSXE->City['id']);
+                //$hotelParams['city'] = City::getCityByHotelbookId((string)$hotelSXE->City['id']);
             }catch (Exception $e){
                 if(self::$lastRequestCity){
                     $hotelParams['city'] = self::$lastRequestCity;
