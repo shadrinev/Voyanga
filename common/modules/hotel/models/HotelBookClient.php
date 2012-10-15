@@ -318,11 +318,11 @@ class HotelBookClient
         if ($countryId)
         {
             $getData['country_id'] = $countryId;
-            try{
-                self::$lastRequestDescription = Country::getCountryByHotelbookId($countryId)->code;
-            }catch (Exception $e){
+            //try{
+            //    self::$lastRequestDescription = Country::getCountryByHotelbookId($countryId)->code;
+            //}catch (Exception $e){
                 self::$lastRequestDescription = $countryId;
-            }
+            //}
         }
         $cities = $this->request(Yii::app()->params['HotelBook']['uri'] . 'cities', $getData);
         $citiesObject = simplexml_load_string($cities);
