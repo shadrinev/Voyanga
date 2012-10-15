@@ -254,7 +254,7 @@ class ToursResultSet
           @setActive entry
 
     @timeline = new Timeline(@data)
-    @selection = ko.observable @data()[1]
+    @selection = ko.observable @data()[0]
     @panel = ko.computed 
       read: =>
         if @selection().panel
@@ -283,20 +283,17 @@ class ToursResultSet
 
 
   setActive: (entry)=>
+#    console.profile('RESULTS RENDERING')
     @selection entry
     ko.processAllDeferredBindingUpdates()
     ResizeAvia()
+#    console.profileEnd('RESULTS RENDERING')
 
   setActiveTimelineAvia: (entry)=>
-    @selection entry.avia.item
-    ko.processAllDeferredBindingUpdates()
-    ResizeAvia()
+    @setActive entry.avia.item
 
   setActiveTimelineHotels: (entry)=>
-    @selection entry.hotel.item
-    ko.processAllDeferredBindingUpdates()
-    ResizeAvia()
-
+    @setActive entry.hotel.item
 
   removeItem: (item, event)=>
     event.stopPropagation()

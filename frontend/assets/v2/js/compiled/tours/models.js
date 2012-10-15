@@ -441,7 +441,7 @@ ToursResultSet = (function() {
       }
     }
     this.timeline = new Timeline(this.data);
-    this.selection = ko.observable(this.data()[1]);
+    this.selection = ko.observable(this.data()[0]);
     this.panel = ko.computed({
       read: function() {
         if (_this.selection().panel) {
@@ -484,15 +484,11 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.setActiveTimelineAvia = function(entry) {
-    this.selection(entry.avia.item);
-    ko.processAllDeferredBindingUpdates();
-    return ResizeAvia();
+    return this.setActive(entry.avia.item);
   };
 
   ToursResultSet.prototype.setActiveTimelineHotels = function(entry) {
-    this.selection(entry.hotel.item);
-    ko.processAllDeferredBindingUpdates();
-    return ResizeAvia();
+    return this.setActive(entry.hotel.item);
   };
 
   ToursResultSet.prototype.removeItem = function(item, event) {
