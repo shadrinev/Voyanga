@@ -20,14 +20,30 @@ class HotelBookClient
     {
         if ($cacheFileName)
         {
-            $cachePath = Yii::getPathOfAlias('cacheStorage');
-            $cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
-            if (file_exists($cacheFilePath))
-            {
-                $cacheResult = file_get_contents($cacheFilePath);
-            }
-            else
-            {
+            if(strpos($url,'vsespo') === false){
+                $cachePath = Yii::getPathOfAlias('cacheStorage');
+                $cacheSubDir = md5($cacheFileName);
+                $cacheSubDir = substr($cacheSubDir,-3);
+                if(!file_exists($cachePath . '/' . $cacheSubDir)){
+                    mkdir($cachePath . '/' . $cacheSubDir);
+                }
+
+                //$cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
+                if(file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml')){
+                    rename($cachePath . '/' . $cacheFileName . '.xml',$cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
+                }
+
+                $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
+                if (file_exists($cacheFilePath))
+                {
+                    $cacheResult = file_get_contents($cacheFilePath);
+                }
+                else
+                {
+                    $cacheResult = false;
+                }
+            }else{
+                $cacheFileName = null;
                 $cacheResult = false;
             }
         }
@@ -302,7 +318,11 @@ class HotelBookClient
         if ($countryId)
         {
             $getData['country_id'] = $countryId;
-            self::$lastRequestDescription = Country::getCountryByHotelbookId($countryId)->code;
+            try{
+                self::$lastRequestDescription = Country::getCountryByHotelbookId($countryId)->code;
+            }catch (Exception $e){
+                self::$lastRequestDescription = $countryId;
+            }
         }
         $cities = $this->request(Yii::app()->params['HotelBook']['uri'] . 'cities', $getData);
         $citiesObject = simplexml_load_string($cities);

@@ -51,7 +51,7 @@ return CMap::mergeArray (
                 'class'=>'application.components.SyncCacheExecuter',
                 'frontends' => array(
                     array(
-                        'url' => 'http://frontend.misha.voyanga/sync/get',
+                        'url' => 'http://test.voyanga.com/sync/get',
                         'key' => '12345'
                     )
                 )

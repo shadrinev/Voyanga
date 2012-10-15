@@ -24,7 +24,6 @@ API = (function() {
       dataType: 'json',
       timeout: 60000,
       success: function(data) {
-        sessionStorage.setItem("" + _this.endpoint + url, JSON.stringify(data));
         cb(data);
         if (showLoad) {
           return $('#loadWrapBg').hide();
