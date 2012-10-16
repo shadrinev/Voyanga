@@ -169,7 +169,7 @@ class HotelInfo extends CApplicationComponent
             $serviceListMap[13] = array('name'=>'Пляж','f'=> array(116,104,346),'a'=>array(240,324));
             $serviceListMap[14] = array('name'=>'Возможен заказ дополнительной кровати','f'=> array(),'a'=>array(172,189,274));
             $serviceListMap[15] = array('name'=>'Кондиционер','f'=> array(61,343),'a'=>array(1,332));
-            $serviceListMap[16] = array('name'=>'Номера для некурящих','f'=> array(345),'a'=>array(229));
+            $serviceListMap[16] = array('name'=>'Наличие номеров для некурящих','f'=> array(345),'a'=>array(229));
             $serviceListMap[17] = array('name'=>'Электричество','f'=> array(141),'a'=>array(13));
             $serviceListMap[18] = array('name'=>'Допускаются домашние животные','f'=> array(123),'a'=>array(267,190));
             $serviceListMap[19] = array('name'=>'Присмотр за детьми','f'=> array(17),'a'=>array(270,269));
@@ -197,13 +197,13 @@ class HotelInfo extends CApplicationComponent
 
             $serviceGroupsMap = array();
             $serviceGroupsMap[] = array('name'=>'Сервис','s'=>array(1,19,5),'f'=>array(93,64,30,73,377,394,353,354,376,374),'a'=>array(318,205,377));
-            $serviceGroupsMap[] = array('name'=>'Спорт и отдых','s'=>array(7,4,8,9,12,13),'f'=>array(26,113,91,35,33,15,47,142,139,22,51,107,49,72,98,143,137,109,105,45,39,136,140,118),'a'=>array());
-            $serviceGroupsMap[] = array('name'=>'В отеле','s'=>array(17),'f'=>array(27,28,34,16,14),'a'=>array(303,328));
-            $serviceGroupsMap[] = array('name'=>'Туристам','s'=>array(10,11,6),'f'=>array(),'a'=>array());
+            $serviceGroupsMap[] = array('name'=>'Спорт и отдых','s'=>array(7,4,8,9,12,13),'f'=>array(26,113,91,35,33,15,47,142,139,22,51,107,49,72,98,143,137,109,105,45,39,136,140,118,391,379,378,402,401,363,362),'a'=>array());
+            $serviceGroupsMap[] = array('name'=>'В отеле','s'=>array(),'f'=>array(27,399,403,28,34,16,14,359,339,425,406,392,341,393,397),'a'=>array(303,328));
+            $serviceGroupsMap[] = array('name'=>'Туристам','s'=>array(10,11,6,22),'f'=>array(375),'a'=>array());
             $serviceGroupsMap[] = array('name'=>'Интернет','s'=>array(2,3),'f'=>array(),'a'=>array());
-            $serviceGroupsMap[] = array('name'=>'Развлечения и досуг','s'=>array(),'f'=>array(40,95,69,57,59),'a'=>array());
-            $serviceGroupsMap[] = array('name'=>'Парковка','s'=>array(21),'f'=>array(24,67),'a'=>array());
-            $serviceGroupsMap[] = array('name'=>'Дополнительно','s'=>array(18,20,16,14),'f'=>array(131,21),'a'=>array());
+            $serviceGroupsMap[] = array('name'=>'Развлечения и досуг','s'=>array(),'f'=>array(40,95,69,57,59,398,400,333,334,342),'a'=>array());
+            $serviceGroupsMap[] = array('name'=>'Парковка','s'=>array(21),'f'=>array(24,67,356,357),'a'=>array());
+            $serviceGroupsMap[] = array('name'=>'Дополнительно','s'=>array(18,20,16,14,15,17),'f'=>array(131,21,390),'a'=>array());
             $serviceGroupsMap[] = array('name'=>'hide','s'=>array(),'f'=>array(41,50,53,52,48,46,144,82,96,119,106,58,108,134,92,99,117,94,114,115,89,110,38,68,86,85,44,66,100,79,151,75,129,130),'a'=>array());
 
             foreach($serviceGroupsMap as $key=>$groupInfo)
