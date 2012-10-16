@@ -48,7 +48,7 @@ class PhotoBox
     $('#hotel-img-load').hide()
     #resizePhotoWinHandler()
 
-    el.animate({opacity : 1},200, ->
+    el.animate({opacity : 1},300, ->
       console.log("opacitied")
     )
     #resizeImg();
@@ -74,7 +74,7 @@ class PhotoBox
 
   # load image with @activeIndex
   _load: (var1, var2)=>
-    $('#body-popup-Photo').find('table img').animate {opacity : 0}, 100, =>
+    $('#body-popup-Photo').find('table img').animate {opacity : 0}, 300, =>
       @activePhoto(@photos[@activeIndex()]['largeUrl'])
   		$('#hotel-img-load').show()
 	   

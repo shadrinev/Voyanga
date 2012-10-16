@@ -196,7 +196,7 @@ class HotelInfo extends CApplicationComponent
             self::$servListMap = $serviceListMap;
 
             $serviceGroupsMap = array();
-            $serviceGroupsMap[] = array('name'=>'Сервис','s'=>array(1,19,5),'f'=>array(93,64,30,73),'a'=>array(318));
+            $serviceGroupsMap[] = array('name'=>'Сервис','s'=>array(1,19,5),'f'=>array(93,64,30,73,377,394,353,354,376,374),'a'=>array(318,205,377));
             $serviceGroupsMap[] = array('name'=>'Спорт и отдых','s'=>array(7,4,8,9,12,13),'f'=>array(26,113,91,35,33,15,47,142,139,22,51,107,49,72,98,143,137,109,105,45,39,136,140,118),'a'=>array());
             $serviceGroupsMap[] = array('name'=>'В отеле','s'=>array(17),'f'=>array(27,28,34,16,14),'a'=>array(303,328));
             $serviceGroupsMap[] = array('name'=>'Туристам','s'=>array(10,11,6),'f'=>array(),'a'=>array());

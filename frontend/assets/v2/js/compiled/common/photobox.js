@@ -67,7 +67,7 @@ PhotoBox = (function() {
     $('#hotel-img-load').hide();
     el.animate({
       opacity: 1
-    }, 200, function() {
+    }, 300, function() {
       return console.log("opacitied");
     });
     return this.busy = false;
@@ -81,7 +81,6 @@ PhotoBox = (function() {
       return;
     }
     this.activeIndex(this.activeIndex() + 1);
-    this.activePhoto(this.photos[this.activeIndex()]['largeUrl']);
     return this._load();
   };
 
@@ -93,7 +92,6 @@ PhotoBox = (function() {
       return;
     }
     this.activeIndex(this.activeIndex() - 1);
-    this.activePhoto(this.photos[this.activeIndex()]['largeUrl']);
     return this._load();
   };
 
@@ -101,7 +99,7 @@ PhotoBox = (function() {
     var _this = this;
     $('#body-popup-Photo').find('table img').animate({
       opacity: 0
-    }, 100, function() {
+    }, 300, function() {
       return _this.activePhoto(_this.photos[_this.activeIndex()]['largeUrl']);
     });
     return $('#hotel-img-load').show();
