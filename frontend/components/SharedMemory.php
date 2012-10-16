@@ -97,6 +97,11 @@ class SharedMemory extends Component
 
     public function write($obj)
     {
+        if ($this->shmId==0)
+        {
+            Yii::log('Could not write to shmop', 'error');
+            return;
+        }
         Yii::log('WRITING TO CACHE', 'cache');
         $string = serialize($obj);
         $nextOffset = strlen($string)+$this->offsetWrite;
