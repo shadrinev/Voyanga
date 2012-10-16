@@ -34,7 +34,10 @@ class SharedMemory extends Component
         $shmKey = ftok(__FILE__, $project);
         try
         {
-            $this->shmId = shmop_open($shmKey, "c", 0644, $this->maxSize);
+            $this->shmId = @shmop_open($shmKey, "c", 0644, $this->maxSize);
+            if ($this->shmId==0)
+                throw new CException('Bad shmop');
+
             $try = @unserialize(shmop_read($this->shmId, 0, 0));
             $this->offsetWrite = (int)$try;
             if ($this->offsetWrite == 0)
