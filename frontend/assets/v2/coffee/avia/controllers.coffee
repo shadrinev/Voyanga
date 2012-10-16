@@ -32,8 +32,9 @@ class AviaController
       if err=='404'
         @render 'e404', {}
         return
+      console.log 'error', err
       @render 'e500', {msg: err}
-    
+      return
     # we need observable here to be compatible with tours
     @render 'results', {results: ko.observable(stacked)}
     ko.processAllDeferredBindingUpdates()

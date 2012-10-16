@@ -642,19 +642,19 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.select = function(room) {
+    console.log(room);
     if (room.roomSets) {
       room = room.roomSets()[0];
+      Utils.scrollTo('.info-trip');
+      return;
     }
     if (this.tours()) {
       this.activeResultId(room.resultId);
     }
-    this.trigger('select', {
+    return this.trigger('select', {
       roomSet: room,
       hotel: this
     });
-    if (!this.tours()) {
-      return Utils.scrollTo('.info-trip');
-    }
   };
 
   HotelResult.prototype.smallMapUrl = function() {

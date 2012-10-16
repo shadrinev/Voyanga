@@ -47,9 +47,11 @@ AviaController = (function() {
         this.render('e404', {});
         return;
       }
+      console.log('error', err);
       this.render('e500', {
         msg: err
       });
+      return;
     }
     this.render('results', {
       results: ko.observable(stacked)
