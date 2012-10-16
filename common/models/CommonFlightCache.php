@@ -168,6 +168,8 @@ class CommonFlightCache extends CActiveRecord
             $flightCache->setFromFlightVoyage($voyage, 'BestPriceTime');
         }
 
+        Yii::log("AFTER CALCULATIONS WE GET FLIGHT CACHE = \n".CVarDumper::dumpAsString($flightCache), 'info');
+
         if (!$flightCache->validate())
         {
             throw new CException("Can't save flight cache item.".print_r($flightCache->errors,true).print_r($flightCache->attributes,true));
