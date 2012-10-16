@@ -980,6 +980,7 @@ class HotelBookClient
                                 $jsonObject['dateFrom'] = $hotelSearchParams->checkIn;
                                 $from = DateTime::createFromFormat('Y-m-d', $hotelSearchParams->checkIn);
                                 $jsonObject['dateTo'] = $from->add(new DateInterval('P' . $hotelSearchParams->duration . 'D'))->format('Y-m-d');
+                                Yii::log('TRYING TO SAVE HOTEL CACHE');
                                 $hotelCache = new HotelCache();
                                 $hotelCache->populateFromJsonObject($jsonObject);
                                 $hotelCache->save();
