@@ -17,7 +17,7 @@ return CMap::mergeArray(
         // this is used in contact page
         'adminEmail' => 'dev@voyanga.com',
         'sharedMemory' => array(
-            'flushDirectory' => 'application.runtime.cache',
+            'flushDirectory' => 'site.api.runtime.cache',
             'flushExtension' => 'dump',
         ),
         'frontend.app.templates' => $templates

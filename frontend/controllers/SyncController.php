@@ -38,11 +38,11 @@ class SyncController extends Controller
             $descr = fopen($descriptor, "w");
             fwrite($descr, $pos);
             fclose($descr);
-            /*if ($pos>=$size)
+            if ($pos>=$size)
             {
                 unlink($files[0]);
                 unlink($descriptor);
-            }*/
+            }
             Yii::app()->end();
         }
     }
