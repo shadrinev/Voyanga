@@ -60,7 +60,7 @@ class PhotoBox
     if @activeIndex() >= @length0
       return
     @activeIndex(@activeIndex() + 1)
-    @activePhoto(@photos[@activeIndex()]['largeUrl'])
+    #@activePhoto(@photos[@activeIndex()]['largeUrl'])
     @_load()
 	   
   prev: (context, event) =>
@@ -69,7 +69,7 @@ class PhotoBox
     if @activeIndex() <= 0
       return
     @activeIndex(@activeIndex() - 1)
-    @activePhoto(@photos[@activeIndex()]['largeUrl'])
+    #@activePhoto(@photos[@activeIndex()]['largeUrl'])
     @_load()
 
   # load image with @activeIndex
