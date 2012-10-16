@@ -23,7 +23,7 @@ class SharedMemory extends Component
 
     public function init()
     {
-        $project = chr(getmypid() % 26 + 65);
+        $project = intval(getmypid());
 
         $dir = Yii::getPathOfAlias('application.runtime.cache');
 
