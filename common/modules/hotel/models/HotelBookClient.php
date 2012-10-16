@@ -977,8 +977,6 @@ class HotelBookClient
                             }
                             if ($haveStack)
                             {
-                                //print_r($hotelStack);
-                                //die();
                                 $jsonObject = $hotelStack->sortBy('rubPrice', 5)->getHotel()->getJsonObject();
                                 $jsonObject['cityId'] = $hotelSearchParams->city->id;
                                 $jsonObject['dateFrom'] = $hotelSearchParams->checkIn;

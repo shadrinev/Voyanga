@@ -24,7 +24,7 @@ GenericPopup = (function() {
         return _this.close();
       }
     });
-    el.find('table').hover(function() {
+    $(el.find('table')[0]).hover(function() {
       console.log("INSIDE");
       return _this.inside = true;
     }, function() {
