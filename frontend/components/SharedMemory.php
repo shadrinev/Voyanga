@@ -94,6 +94,8 @@ class SharedMemory extends Component
         $writtenBytes = shmop_write($this->shmId, $this->strToNts($string), $this->offsetWrite);
         $this->offsetWrite += $writtenBytes;
         $this->saveOffsetWrite();
+        Yii::log('CACHE nextOffset: '.$nextOffset);
+        Yii::log('CACHE writtenBytes: '.$writtenBytes);
     }
 
     public function flushToFile()
