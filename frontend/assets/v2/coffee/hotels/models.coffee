@@ -490,14 +490,14 @@ class HotelResult
 
   select: (room) =>
     # it is actually cheapest click
+    console.log room
     if room.roomSets
       room = room.roomSets()[0]
+      Utils.scrollTo('.info-trip')
+      return
     if @tours()
       @activeResultId room.resultId
-
     @trigger 'select', {roomSet: room, hotel: @}
-    if !@tours()
-      Utils.scrollTo('.info-trip')
 
   smallMapUrl: =>
       base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"

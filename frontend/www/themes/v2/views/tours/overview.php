@@ -74,7 +74,7 @@ $images = 'themes/v2';
             <div class="title" data-bind="html: overviewText()"></div>
 	  </td>
 	  <td class="allCost">
-            2 человека
+            <span data-bind="text: peopleOverview"></span>
             <span class="costs" data-bind="html:priceHtml()"></span>
             <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem"></a>
 	  </td>
@@ -84,7 +84,7 @@ $images = 'themes/v2';
       <!-- ЗДЕСЬ БИЛЕТ -->
       <table class="descrTicket">
 	<tr data-bind="if: isAvia()">
-	  <td class="text" >Или другой вариант среди: <span class="f19" data-bind="text:numAirlines()">19</span> авиакомпаний, от <span class="f19"  data-bind="html: minPriceHtml()"></span> до <span class="f19"  data-bind="html: maxPriceHtml()"></span></td>
+	  <td class="text"><span data-bind="text:selection()?'Или другой':'Выберите'"></span> вариант среди: <span class="f19" data-bind="text:numAirlines()">19</span> авиакомпаний, от <span class="f19"  data-bind="html: minPriceHtml()"></span> до <span class="f19"  data-bind="html: maxPriceHtml()"></span></td>
 	  <td class="buttons">
             <a class="btn-cost" href="#" data-bind="click: $parents[1].setActive">
               <span class="l"></span>
@@ -93,7 +93,7 @@ $images = 'themes/v2';
 	  </td>
 	</tr>
 	<tr data-bind="if: isHotel()">
-	  <td class="text">Вы можете подобрать другой вариант среди: <span class="f19" data-bind="text:numHotels()">189</span> гостиниц, от <span class="f19" data-bind="html: minPriceHtml()"></span> до <span class="f19" data-bind="html: maxPriceHtml()"></span></td>
+	  <td class="text"><span data-bind="text:selection()?'Или другой':'Выберите'"></span> вариант среди: <span class="f19" data-bind="text:numHotels()">189</span> гостиниц, от <span class="f19" data-bind="html: minPriceHtml()"></span> до <span class="f19" data-bind="html: maxPriceHtml()"></span></td>
 	  <td class="buttons">
             <a class="btn-cost hotel" href="#" data-bind="click: $parents[1].setActive">
               <span class="l"></span>
@@ -223,6 +223,12 @@ $images = 'themes/v2';
 	<!-- /ko -->
 
       </div>
+      <div class="buy-ticket">
+	<div class="text">
+	  <!-- FIXME -->
+          <span class="txtBuy" data-bind="text: price"></span> <span class="rur">o</span>
+	</div>
+      </div>
       <!-- END BUY TICKET -->
       <div class="clear"></div>
     </div>
@@ -298,4 +304,8 @@ $images = 'themes/v2';
     <span class="rv"></span>
     <span class="bh"></span>
   </div>
+</script>
+<script id="tours-overview-avia-no-selection" type="text/html">
+</script>
+<script id="tours-overview-hotels-no-selection" type="text/html">
 </script>

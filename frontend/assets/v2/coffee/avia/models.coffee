@@ -285,6 +285,8 @@ class AviaResult
         result.push(backVoyage)
         return
     @voyages.push newVoyage
+    if newVoyage.stopoverLength < @aciteveVoyage().stopoverLength
+      @activeVoyage newVoyage
 
   chooseStacked: (voyage) =>
     window.voyanga_debug "Choosing stacked voyage", voyage
@@ -411,7 +413,27 @@ class AviaResultSet
     if !rawVoyages.length
       throw "404"
 
+    # first pass filter interlines
+    _interlines = {}
     for flightVoyage in rawVoyages
+      key = ''
+      for flight in flightVoyage.flights
+        for part in flight.flightParts
+          key += part.datetimeBegin
+          key += part.datetimeEnd
+       if _interlines[key]
+        if _interlines[key].price > flightVoyage.price
+          _interlines[key] = flightVoyage
+        console.log "FILTERED INTER"
+       else
+          _interlines[key] = flightVoyage
+
+    filteredVoyages = []
+    for key, item of _interlines
+      filteredVoyages.push item
+    
+
+    for flightVoyage in filteredVoyages
       key = flightVoyage.price + "_" + flightVoyage.valCompany
       if @_results[key]
         @_results[key].push flightVoyage

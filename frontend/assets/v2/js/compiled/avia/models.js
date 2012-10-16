@@ -388,7 +388,10 @@ AviaResult = (function() {
         return;
       }
     }
-    return this.voyages.push(newVoyage);
+    this.voyages.push(newVoyage);
+    if (newVoyage.stopoverLength < this.aciteveVoyage().stopoverLength) {
+      return this.activeVoyage(newVoyage);
+    }
   };
 
   AviaResult.prototype.chooseStacked = function(voyage) {
@@ -571,7 +574,7 @@ AviaResultSet = (function() {
 
     this.injectSearchParams = __bind(this.injectSearchParams, this);
 
-    var flightVoyage, key, result, _i, _len, _ref,
+    var filteredVoyages, flight, flightVoyage, item, key, part, result, _i, _interlines, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2,
       _this = this;
     this.recommendTemplate = 'avia-cheapest-result';
     this.tours = false;
@@ -581,8 +584,36 @@ AviaResultSet = (function() {
     if (!rawVoyages.length) {
       throw "404";
     }
+    _interlines = {};
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
       flightVoyage = rawVoyages[_i];
+      key = '';
+      _ref = flightVoyage.flights;
+      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+        flight = _ref[_j];
+        _ref1 = flight.flightParts;
+        for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+          part = _ref1[_k];
+          key += part.datetimeBegin;
+          key += part.datetimeEnd;
+        }
+      }
+      if (_interlines[key]) {
+        if (_interlines[key].price > flightVoyage.price) {
+          _interlines[key] = flightVoyage;
+        }
+        console.log("FILTERED INTER");
+      } else {
+        _interlines[key] = flightVoyage;
+      }
+    }
+    filteredVoyages = [];
+    for (key in _interlines) {
+      item = _interlines[key];
+      filteredVoyages.push(item);
+    }
+    for (_l = 0, _len3 = filteredVoyages.length; _l < _len3; _l++) {
+      flightVoyage = filteredVoyages[_l];
       key = flightVoyage.price + "_" + flightVoyage.valCompany;
       if (this._results[key]) {
         this._results[key].push(flightVoyage);
@@ -596,9 +627,9 @@ AviaResultSet = (function() {
     this.best = ko.observable();
     this.data = [];
     this.numResults = ko.observable(0);
-    _ref = this._results;
-    for (key in _ref) {
-      result = _ref[key];
+    _ref2 = this._results;
+    for (key in _ref2) {
+      result = _ref2[key];
       result.sort();
       result.removeSimilar();
       this.data.push(result);

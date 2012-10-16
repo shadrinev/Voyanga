@@ -73,10 +73,3 @@
     <!-- ko template: {name: selection().template, data: selection().data} -->
     <!-- /ko -->
 </script>
-<script id="tours-select-segments" type="text/html">
-  <div class="main-block">
-    <div id="content">
-      Типо не все выбрано пацаны.
-    </div>
-  </div>
-</script>

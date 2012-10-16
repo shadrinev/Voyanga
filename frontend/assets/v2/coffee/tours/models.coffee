@@ -40,7 +40,7 @@ class ToursAviaResultSet extends TourEntry
     super
     @api = new AviaAPI
     @template = 'avia-results'
-    @overviewTemplate = 'tours-overview-avia-ticket'
+    @overviewTemplate = 'tours-overview-avia-no-selection'
     @panel = new AviaPanel()
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject sp
@@ -63,6 +63,7 @@ class ToursAviaResultSet extends TourEntry
         res = res.data
       result.selected_key res.key
       result.selected_best res.best | false
+      @overviewTemplate = 'tours-overview-avia-ticket'
       @selection(res)
       @trigger 'next'
     @avia = true
@@ -75,6 +76,11 @@ class ToursAviaResultSet extends TourEntry
   # Overview VM
   overviewText: =>
     "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity
+
+  overviewPeople: =>
+    sum = @panel.sp.adults()+@panel.sp.children()+@panel.sp.infants()
+    Utils.wordAfterNum(sum,'человек','человека','человек')
+
 
   numAirlines: =>
     # FIXME FIXME FIXME
@@ -160,7 +166,7 @@ class ToursHotelsResultSet extends TourEntry
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject @searchParams
     @panel.original_template = @panel.template
-    @overviewTemplate = 'tours-overview-hotels-ticket'
+    @overviewTemplate = 'tours-overview-hotels-no-selection'
     @template = 'hotels-results'
 
     @activeHotel = ko.observable 0
@@ -181,6 +187,7 @@ class ToursHotelsResultSet extends TourEntry
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
         @activeHotel  hotel.hotelId
+        @overviewTemplate = 'tours-overview-hotels-ticket'
         @selection roomData
         @trigger 'next'
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template'}
@@ -197,6 +204,10 @@ class ToursHotelsResultSet extends TourEntry
   overviewText: =>
     @destinationText()
 
+  overviewPeople: =>
+    sum = @panel.sp.overall()
+    Utils.wordAfterNum(sum,'человек','человека','человек')
+
   numHotels: =>
     @results().data().length
 
@@ -210,7 +221,7 @@ class ToursHotelsResultSet extends TourEntry
 
   # tours overview
   destinationText: =>
-    "Отель в " + @searchParams.city
+    "Отель в " + @searchParams.cityFull.caseDat
 
   price: =>
     if @selection() == null
@@ -292,13 +303,13 @@ class ToursResultSet
         sum += item.savings()
       return sum
 
-    @allSegmentsSelected = ko.computed =>
+    @someSegmentsSelected= ko.computed =>
       for x in @data()
-        if !x.selection()
-          return false
-      return true
+        if x.selection()
+          return true
+      return false
 
-    @allSegmentsSelected.subscribe (newValue)=>
+    @someSegmentsSelected.subscribe (newValue)=>
       if newValue
         $('#tour-buy-btn').show 'fast'
       else
@@ -310,6 +321,9 @@ class ToursResultSet
   setActive: (entry)=>
 #    console.profile('RESULTS RENDERING')
     $('#loadWrapBg').show()
+    if entry.overview
+      $('.btn-timeline-and-condition').hide()
+
     # FIXME 
     window.setTimeout =>
       @selection entry
@@ -355,12 +369,7 @@ class ToursResultSet
       onlyTimeline: true
       calendarHidden: -> true
       calendarValue: ko.observable {values: []}
-    if @allSegmentsSelected()
-      @setActive {template: 'tours-overview', data: @, overview: true, panel: dummyPanel}
-    else
-      @setActive {template: 'tours-select-segments', overview: true, panel:  dummyPanel}
-
-
+    @setActive {template: 'tours-overview', data: @, overview: true, panel: dummyPanel}
 
 # Models for tour search params,
 class DestinationSearchParams
@@ -505,12 +514,4 @@ class ToursOverviewVM
   
   dateHtml: =>
     firstResult = @resultSet.data()[0]
-    source = firstResult.selection()
-    result = '<div class="day">'
-    if firstResult.isAvia()
-      result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
-    else
-      result+= dateUtils.formatHtmlDayShortMonth firstResult.results.checkIn
-
-    result+='</div>'
-    return result
+    return firstResult.dateHtml()
