@@ -13,11 +13,8 @@ function resizePhotoWinHandler() {
     
     $('.countAndClose').css('width', var_width+'px');
         //$('#imgContent').css('margin-top', paddingTop+'px');
-        $('#titleNamePhoto').css('height', (paddingTop+50)+'px');
-        $('#photoBox').animate({'width':'100%'},10);
-
-
-
+        //$('#titleNamePhoto').css('height', (paddingTop+50)+'px');
+        //$('#photoBox').animate({'width':'100%'},10);
     //console.log('pddingtop:',paddingTop,' allwin:',var_allWinHeight,'h:',var_height);
 }
 
@@ -41,7 +38,7 @@ function resizeLoad() {
     if (paddingTop < 0) {
 	paddingTop = 0;
     }
-    $('#hotel-img-load').css('left', paddingLeft+'px').css('top', (paddingTop - 20)+'px');
+    $('#hotel-img-load').css('left', (paddingLeft-20)+'px').css('top', (paddingTop - 20)+'px');
 }
 
 $(window).resize(function() {

@@ -79,7 +79,9 @@ PhotoBox = (function() {
     if (this.activeIndex() >= this.length0) {
       return;
     }
+    console.log("NEXT "+this.activeIndex()+' '+ this.activePhoto());
     this.activeIndex(this.activeIndex() + 1);
+    this.activePhoto(this.photos[this.activeIndex()]['largeUrl']);
     return this._load();
   };
 
