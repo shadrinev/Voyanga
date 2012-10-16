@@ -311,12 +311,12 @@
 	background: url(../images/ico-fly-timeline.png) no-repeat;
 	position: absolute;
 	top: 11px;
-	left: -14px;
+	left: -26px;
 }
 .timedateline li .trip-fly {
 	width: 24px; border: 2px solid #133950; height: 6px;
 	border-radius: 10px;
-	background: url(../images/bg-trip-fly-none.png);
+	background: url(../images/bg-trip-fly-none.png) repeat-x;
 	position: absolute;
 	top:11px;
 	z-index: 1;
@@ -336,13 +336,13 @@
 	background: url(../images/ico-hotel-timeline.png) no-repeat;
 	position: absolute;
 	top: 27px;
-	left: -10px;
+	left: -12px;
 }
 .timedateline li .trip-hotel {
 	width: 24px; border: 2px solid #452617; height: 6px;
 	border-radius: 10px;
 	
-	background: url(../images/bg-trip-hotel-none.png);
+	background: url(../images/bg-trip-hotel-none.png) repeat-x;
 	position: absolute;
 	top:27px;
 	z-index: 1;
