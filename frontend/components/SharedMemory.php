@@ -87,6 +87,7 @@ class SharedMemory extends Component
 
     public function write($obj)
     {
+        Yii::log('WRITING TO CACHE', CLogger::LEVEL_INFO);
         $string = serialize($obj);
         $nextOffset = strlen($string)+$this->offsetWrite;
         if ($nextOffset >= $this->maxSize)
@@ -94,8 +95,8 @@ class SharedMemory extends Component
         $writtenBytes = shmop_write($this->shmId, $this->strToNts($string), $this->offsetWrite);
         $this->offsetWrite += $writtenBytes;
         $this->saveOffsetWrite();
-        Yii::log('CACHE nextOffset: '.$nextOffset);
-        Yii::log('CACHE writtenBytes: '.$writtenBytes);
+        Yii::log('CACHE nextOffset: '.$nextOffset, CLogger::LEVEL_INFO);
+        Yii::log('CACHE writtenBytes: '.$writtenBytes, CLogger::LEVEL_INFO);
     }
 
     public function flushToFile()
