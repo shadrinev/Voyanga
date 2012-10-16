@@ -122,8 +122,6 @@ class CommonFlightCache extends CActiveRecord
      */
     public static function addCacheFromStack(FlightVoyageStack $flightVoyageStack)
     {
-        Yii::log("TRYING TO SAVE FLIGHT CACHE", 'info');
-
         $flightCache = new FlightCache;
 
         if (sizeof($flightVoyageStack->flightVoyages)==0)
@@ -173,6 +171,7 @@ class CommonFlightCache extends CActiveRecord
             Yii::log("AFTER CALCULATIONS WE GET BAD FLIGHT CACHE: \n".CVarDumper::dumpAsString($flightCache->errors), 'info');
             throw new CException("Can't save flight cache item.".print_r($flightCache->errors,true).print_r($flightCache->attributes,true));
         }
+        Yii::log("TRYING TO SAVE FLIGHT CACHE", 'info');
         $flightCache->save();
         return $flightCache;
     }
