@@ -13,7 +13,7 @@ class SharedMemory extends Component
 
     private $fileName;
 
-    private $shmId;
+    private $shmId=0;
 
     private $offsetWrite = 0;
 
@@ -23,7 +23,7 @@ class SharedMemory extends Component
 
     public function init()
     {
-        $project = intval(getmypid());
+        $project = chr(getmypid() % 26 + 65);
 
         $dir = Yii::getPathOfAlias('application.runtime.cache');
 
@@ -31,9 +31,11 @@ class SharedMemory extends Component
             mkdir($dir);
 
         $this->fileName = $dir.DIRECTORY_SEPARATOR.'cache_'.$project.".dump";
-        $shmKey = ftok(__FILE__, $project);
         try
         {
+            $shmKey = ftok(__FILE__, $project);
+            if ($shmKey<0)
+                throw new CException('Bad ftok');
             $this->shmId = @shmop_open($shmKey, "c", 0644, $this->maxSize);
             if ($this->shmId==0)
                 throw new CException('Bad shmop');
@@ -60,6 +62,11 @@ class SharedMemory extends Component
 
     public function erase()
     {
+        if ($this->shmId==0)
+        {
+            Yii::log('Could not write to shmop', 'error');
+            return;
+        }
         $date = str_repeat(" ", $this->maxSize);
         $bytes = shmop_write($this->shmId, $date, $this->maxSize);
         $this->offsetWrite == 0;
@@ -68,6 +75,11 @@ class SharedMemory extends Component
 
     private function saveOffsetWrite($isNew=false)
     {
+        if ($this->shmId==0)
+        {
+            Yii::log('Could not write to shmop', 'error');
+            return;
+        }
         $len = strlen((string)$this->maxSize);
         $string = sprintf('%0'.$len.'u', $this->offsetWrite);
         $bytes = shmop_write($this->shmId, serialize($string), 0);
@@ -116,17 +128,29 @@ class SharedMemory extends Component
 
     public function flushToFile()
     {
-        $file = fopen($this->fileName, 'a');
-        $size = $this->offsetWrite - $this->startData;
-        $value = shmop_read($this->shmId, $this->startData, $size);
-        fwrite($file, $value);
-        fclose($file);
-        chmod($this->fileName, 0777);
-        $this->erase();
+        try
+        {
+            $file = fopen($this->fileName, 'a');
+            $size = $this->offsetWrite - $this->startData;
+            $value = shmop_read($this->shmId, $this->startData, $size);
+            fwrite($file, $value);
+            fclose($file);
+            chmod($this->fileName, 0777);
+            $this->erase();
+        }
+        catch (Exception $e)
+        {
+            Yii::log('Error inside flushToFile: '.$e->getMessage());
+        }
     }
 
     public function read($serialized=false)
     {
+        if ($this->shmId==0)
+        {
+            Yii::log('Could not read shmop', 'error');
+            return;
+        }
         if ($this->offsetRead>=$this->offsetWrite)
             return false;
         $value = shmop_read($this->shmId, $this->offsetRead, $this->maxSize-$this->offsetRead);
@@ -140,6 +164,11 @@ class SharedMemory extends Component
 
     public function __destruct()
     {
+        if ($this->shmId==0)
+        {
+            Yii::log('Could not write to shmop', 'error');
+            return;
+        }
         shmop_close($this->shmId);
     }
 }
