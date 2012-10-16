@@ -154,27 +154,28 @@ class HotelInfo extends CApplicationComponent
         if(!self::$servListMap){
             $serviceListMap = array();
             $serviceListMap[0] = array('name'=>'hide','f'=>array(41,50,53,52,48,46,144,82,96,119,106,58,108,134,92,99,117,94,114,115,89,110,38,68,86,85,44,66,100,79,151,75,129,130),'a'=>array());
-            $serviceListMap[1] = array('name'=>'Уборка номеров','f'=> array(32),'a'=>array(194,236));
-            $serviceListMap[2] = array('name'=>'Интернет в номере','f'=> array(),'a'=>array(6));
-            $serviceListMap[3] = array('name'=>'Интернет на территории отеля','f'=> array(87,102),'a'=>array());
+            $serviceListMap[1] = array('name'=>'Уборка номеров','f'=> array(32,355,380,381),'a'=>array(194,236));
+            $serviceListMap[2] = array('name'=>'Интернет в номере','f'=> array(423),'a'=>array(6,347,348,349));
+            $serviceListMap[3] = array('name'=>'Интернет на территории отеля','f'=> array(87,102,336,337),'a'=>array());
             $serviceListMap[4] = array('name'=>'Горячие ванны','f'=> array(126,127),'a'=>array());
             $serviceListMap[5] = array('name'=>'Услуги прачечной','f'=> array(97,29),'a'=>array(315,263));
             $serviceListMap[6] = array('name'=>'Экскурсии','f'=> array(74,42),'a'=>array(254,184));
-            $serviceListMap[7] = array('name'=>'Бассейн','f'=> array(25,31),'a'=>array());
+            $serviceListMap[7] = array('name'=>'Бассейн','f'=> array(25,31,352),'a'=>array());
             $serviceListMap[8] = array('name'=>'Природные горячие источники','f'=> array(128,124),'a'=>array());
             $serviceListMap[9] = array('name'=>'Спа','f'=> array(84,56),'a'=>array(292,293));
             $serviceListMap[10] = array('name'=>'Аренда автомобиля','f'=> array(19,65),'a'=>array());
             $serviceListMap[11] = array('name'=>'Туристическое агентство','f'=> array(135,36),'a'=>array(309));
             $serviceListMap[12] = array('name'=>'Фитнесс-центр','f'=> array(88,23),'a'=>array());
-            $serviceListMap[13] = array('name'=>'Пляж','f'=> array(116,104),'a'=>array(240,324));
+            $serviceListMap[13] = array('name'=>'Пляж','f'=> array(116,104,346),'a'=>array(240,324));
             $serviceListMap[14] = array('name'=>'Возможен заказ дополнительной кровати','f'=> array(),'a'=>array(172,189,274));
-            $serviceListMap[15] = array('name'=>'Кондиционер','f'=> array(61),'a'=>array(1,332));
-            $serviceListMap[16] = array('name'=>'Номера для некурящих','f'=> array(),'a'=>array(229));
+            $serviceListMap[15] = array('name'=>'Кондиционер','f'=> array(61,343),'a'=>array(1,332));
+            $serviceListMap[16] = array('name'=>'Номера для некурящих','f'=> array(345),'a'=>array(229));
             $serviceListMap[17] = array('name'=>'Электричество','f'=> array(141),'a'=>array(13));
             $serviceListMap[18] = array('name'=>'Допускаются домашние животные','f'=> array(123),'a'=>array(267,190));
             $serviceListMap[19] = array('name'=>'Присмотр за детьми','f'=> array(17),'a'=>array(270,269));
-            $serviceListMap[20] = array('name'=>'Удобства для инвалидов','f'=> array(63),'a'=>array(191));
+            $serviceListMap[20] = array('name'=>'Удобства для инвалидов','f'=> array(63,340),'a'=>array(191));
             $serviceListMap[21] = array('name'=>'Парковка на территории отеля','f'=> array(18),'a'=>array());
+            $serviceListMap[22] = array('name'=>'Вызов такси','f'=> array(338,335),'a'=>array());
 
             //$serviceListMap[] = array('name'=>'','f'=> array(),'a'=>array());
             foreach($serviceListMap as $key=>$servInfo)

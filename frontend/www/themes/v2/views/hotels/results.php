@@ -114,7 +114,9 @@
     					<span class="lost">/<span data-bind="text: (length0 +1)">17</span></span> 
     					<div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div>
     				</div>
-    				<img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
+                    <div>
+    				    <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
+                    </div>
           		</td>
     			<td id="right" data-bind="attr:{class: (activeIndex()!=length0) ? '' :'none'}, click: next"></td>
     		</tr>

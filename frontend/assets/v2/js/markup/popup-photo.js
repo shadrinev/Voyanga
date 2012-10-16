@@ -20,7 +20,7 @@ function resizePhotoWinHandler() {
 
 function resizePhotoWin() {
     console.log('try start');
-    var src = $('#imgContent img').attr('src');
+    var src = $('#body-popup-Photo img').attr('src');
     var img = new Image;
  
     //$(img).bind('load error',resizePhotoWinHandler);
@@ -42,6 +42,6 @@ function resizeLoad() {
 }
 
 $(window).resize(function() {
-	resizePhotoWin();
-    //resizeLoad();
+	//resizePhotoWin();
+    resizeLoad();
 });
