@@ -23,7 +23,7 @@ class SharedMemory extends Component
 
     public function init()
     {
-        $project = intval(getmypid());
+        $project = chr(getmypid() % 26 + 65);
 
         $dir = Yii::getPathOfAlias('application.runtime.cache');
 
@@ -31,9 +31,9 @@ class SharedMemory extends Component
             mkdir($dir);
 
         $this->fileName = $dir.DIRECTORY_SEPARATOR.'cache_'.$project.".dump";
-        $shmKey = ftok(__FILE__, $project);
         try
         {
+            $shmKey = ftok(__FILE__, $project);
             $this->shmId = @shmop_open($shmKey, "c", 0644, $this->maxSize);
             if ($this->shmId==0)
                 throw new CException('Bad shmop');
