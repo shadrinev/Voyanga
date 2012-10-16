@@ -133,7 +133,11 @@ class CommonFlightCache extends CActiveRecord
 
         //we aren't saving complex voyage
         if ($firstVoyage->isComplex())
+        {
+            Yii::log("COMPLEX FLIGHT - DOESNOT SAVE IT", 'info');
             return;
+        }
+
 
         $withReturn = (count($firstVoyage->flights) == 2);
 
