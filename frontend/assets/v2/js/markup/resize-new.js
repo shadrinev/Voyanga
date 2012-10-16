@@ -378,7 +378,7 @@ function ResizeCenterBlock() {
 		}
 		/* END CALENDARE RESIZE */
 		if (var_descrIsset) {
-			$('#descr').find('.photo-slide-hotel').css('width', var_widthDescrLeft+'px');
+			//$('#descr').find('.photo-slide-hotel').css('width', var_widthDescrLeft+'px');
 			$('#descr').find('.left').find(".descr-text .text").dotdotdot({watch: 'window'});
 			$('#content .place-buy .street').css('width', var_widthStreet);
 

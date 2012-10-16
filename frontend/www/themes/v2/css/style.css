@@ -206,7 +206,7 @@
 
 .btn-timeline-and-condition {
 	float: left;
-    padding-top: 6px;
+    padding-top: 11px;
     width: 76px;
 }
 .btn-timeline-and-condition .btn-timeline {
@@ -305,29 +305,55 @@
 	background: url(../images/bg-timeline.png) repeat-x 0 0;
 	z-index: 2;
 }
+.timedateline li .icoFlyTimeline {
+	width: 12px;
+	height: 12px;
+	background: url(../images/ico-fly-timeline.png) no-repeat;
+	position: absolute;
+	top: 11px;
+	left: -14px;
+}
 .timedateline li .trip-fly {
 	width: 24px; border: 2px solid #133950; height: 6px;
 	border-radius: 10px;
-	background: url(../images/bg-trip-fly.png);
+	background: url(../images/bg-trip-fly-none.png);
 	position: absolute;
 	top:11px;
 	z-index: 1;
 	left: 2px;
+	cursor: pointer;
+}
+.timedateline li .trip-fly:hover {
+	box-shadow: 0 0 20px #1383C4
 }
 .timedateline li .trip-fly.active {
+	background: url(../images/bg-trip-fly.png);
 	box-shadow: 0 0 20px #1383C4
+}
+.timedateline li .icoHotelTimeline {
+	width: 14px;
+	height: 8px;
+	background: url(../images/ico-hotel-timeline.png) no-repeat;
+	position: absolute;
+	top: 27px;
+	left: -10px;
 }
 .timedateline li .trip-hotel {
 	width: 24px; border: 2px solid #452617; height: 6px;
 	border-radius: 10px;
 	
-	background: url(../images/bg-trip-hotel.png);
+	background: url(../images/bg-trip-hotel-none.png);
 	position: absolute;
 	top:27px;
 	z-index: 1;
 	left: 2px;
+	cursor: pointer;
+}
+.timedateline li .trip-hotel:hover {
+	box-shadow: 0px 0px 20px #f9610e;
 }
 .timedateline li .trip-hotel.active {
+	background: url(../images/bg-trip-hotel.png);
 	box-shadow: 0px 0px 20px #f9610e;
 }
 .condition {
@@ -386,7 +412,7 @@
 	top:0px; left: 0px; 
 	min-width: 245px; height: 100%;
 	background: #f4f7f9;
-	z-index: 100;	
+	z-index: 5;	
 }
 .left-content {
 	margin-top: 35px;
@@ -527,8 +553,10 @@
 	position: relative;
 }
 .my-trip-list .items a .path .where {
-	font-weight: bold;
-	white-space: nowrap;
+    font-weight: bold;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .my-trip-list .items a .path .time {
 	color: #4b525c;
@@ -2054,4 +2082,13 @@ input.hotel-input {
     color: #8F9199;
     font-size: 11px;
     position: absolute; 
+}
+.miniPopUpIndex {
+	background: url(../images/constructor-popup.png) no-repeat;
+	width: 220px;
+	height: 98px;
+	position: absolute;
+	z-index: 200;
+	top: -71px;
+	left: 77px;
 }

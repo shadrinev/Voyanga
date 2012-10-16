@@ -61,7 +61,7 @@ Yii::app()->clientScript->registerPackage('appJs');
                     <!-- BOARD CONTENT -->
                         <div class="board-content" data-bind="template: { name: fakoPanel().template, data: fakoPanel(), afterRender: fakoPanel().afterRender }"></div>
                     <!-- END BOARD CONTENT -->
-                    <div data-bind="attr: {class: fakoPanel().icon}"></div>
+                    <div data-bind="attr: {class: fakoPanel().icon}"><div class="miniPopUpIndex"></div></div>
                 </div>
             <!-- /ko -->
             <!-- ko if:fakoPanel().template!='tour-panel-template' -->

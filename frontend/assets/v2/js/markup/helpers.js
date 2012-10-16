@@ -224,3 +224,16 @@ bindActions = function() {
 	});
   }
 });
+
+
+function miniPopUpIndex(obj) {
+	var _this = $(obj);
+	if (_this.hasClass('constructor-ico')) {
+		var pos = _this.offset();
+		$('body').prepend('<div class="miniPopUpIndex"></div>');
+		$('.miniPopUpIndex').css('top', (pos.top - 71)+'px').css('left', (pos.left + 73)+'px');
+	}
+}
+function miniPopUpIndexHide() {
+	$('.miniPopUpIndex').remove();
+}
