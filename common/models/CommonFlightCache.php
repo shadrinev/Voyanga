@@ -166,7 +166,7 @@ class CommonFlightCache extends CActiveRecord
         {
             throw new CException("Can't save flight cache item.".print_r($flightCache->errors,true).print_r($flightCache->attributes,true));
         }
-        Yii::log("TRYING TO SAVE FLIGHT CACHE:\n".CVarDumper::dumpAsString($flightCache), 'cache');
+        Yii::log("TRYING TO SAVE FLIGHT CACHE:\n".CVarDumper::dumpAsString($flightCache), 'info');
         $flightCache->save();
         return $flightCache;
     }
