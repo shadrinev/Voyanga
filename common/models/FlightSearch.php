@@ -84,6 +84,7 @@ class FlightSearch extends CModel implements IStatisticItem
                     //FIXME: now using only frontend implementation
                     Yii::import('frontend.models.*');
                     Yii::import('frontend.components.*');
+                    Yii::log('TRYING TO ADD CACHE FROM STACK', 'cache');
                     FlightCache::addCacheFromStack($this->flightVoyageStack);
                     return $this->flightVoyageStack;
                 }
