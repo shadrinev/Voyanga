@@ -74,7 +74,7 @@ $images = 'themes/v2';
             <div class="title" data-bind="html: overviewText()"></div>
 	  </td>
 	  <td class="allCost">
-            <span data-bind="text: peopleOverview"></span>
+            <span data-bind="text: overviewPeople()"></span>
             <span class="costs" data-bind="html:priceHtml()"></span>
             <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem"></a>
 	  </td>
