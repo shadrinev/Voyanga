@@ -338,19 +338,23 @@ class HotelBookClient
         return $return;
     }
 
-    public function getHotels($cityId = 0)
+    public function getHotels($cityId = 0,$cache = true)
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
         $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time));
         self::$lastRequestMethod = 'Hotels';
         self::$lastRequestDescription = '';
+        $cacheFileName = null;
         if ($cityId)
         {
             $getData['city_id'] = $cityId;
             self::$lastRequestDescription = $getData['city_id'];
+            if($cache){
+                $cacheFileName = 'Hotels'.$cityId;
+            }
         }
-        $returnXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_list', $getData);
+        $returnXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_list', $getData,null,null,$cacheFileName);
         $hotelsObject = simplexml_load_string($returnXml);
         $return = array();
 
@@ -973,8 +977,6 @@ class HotelBookClient
                             }
                             if ($haveStack)
                             {
-                                //print_r($hotelStack);
-                                //die();
                                 $jsonObject = $hotelStack->sortBy('rubPrice', 5)->getHotel()->getJsonObject();
                                 $jsonObject['cityId'] = $hotelSearchParams->city->id;
                                 $jsonObject['dateFrom'] = $hotelSearchParams->checkIn;

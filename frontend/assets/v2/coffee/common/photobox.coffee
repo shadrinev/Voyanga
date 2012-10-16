@@ -16,7 +16,7 @@ class PhotoBox
     ko.processAllDeferredBindingUpdates()
 
     resizeLoad()
-    resizePhotoWin()
+    #resizePhotoWin()
     @loadFirstTime = true
 
     $(window).keyup (e) =>
@@ -40,14 +40,17 @@ class PhotoBox
       @loadFirstTime = false
     el = $(event.currentTarget)
     el.show()
+    console.log(el)
     if el.width() > 850
       el.css 'width', '850px'
     else
       el.css 'width', 'auto'
     $('#hotel-img-load').hide()
-    resizePhotoWinHandler()
+    #resizePhotoWinHandler()
 
-    el.animate({opacity : 1},200)
+    el.animate({opacity : 1},300, ->
+      console.log("opacitied")
+    )
     #resizeImg();
     @busy = false
 
@@ -57,7 +60,7 @@ class PhotoBox
     if @activeIndex() >= @length0
       return
     @activeIndex(@activeIndex() + 1)
-    
+    #@activePhoto(@photos[@activeIndex()]['largeUrl'])
     @_load()
 	   
   prev: (context, event) =>
@@ -66,13 +69,12 @@ class PhotoBox
     if @activeIndex() <= 0
       return
     @activeIndex(@activeIndex() - 1)
-
+    #@activePhoto(@photos[@activeIndex()]['largeUrl'])
     @_load()
 
   # load image with @activeIndex
   _load: (var1, var2)=>
-    #console.log var1, var2, @
-    $('#photoBox').find('img').animate {opacity : 0}, 100, =>
+    $('#body-popup-Photo').find('table img').animate {opacity : 0}, 300, =>
       @activePhoto(@photos[@activeIndex()]['largeUrl'])
   		$('#hotel-img-load').show()
 	   

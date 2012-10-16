@@ -799,6 +799,32 @@ EOD;
                     }
                     $hotelCity['metaphoneRu'] = UtilsHelper::ruMetaphone($hotelCity['nameRu']);
                     $hotelCity['sondexEn'] = UtilsHelper::soundex($hotelCity['nameEn']);
+                    $hotels = $HotelClient->getHotels($hotelCity);
+                    if(count($hotels) == 0){
+                        //We are don't need empty cities
+                        continue;
+                    }
+                    $cnt = 0;
+                    $haveCoordinates = false;
+                    foreach ($hotels as $hotelObj)
+                    {
+                        $cnt++;
+                        $query[$hotelObj['id']] = $HotelClient->hotelDetail($hotelObj['id'], true);
+                        if($cnt > 10) break;
+                    }
+                    $HotelClient->processAsyncRequests();
+                    foreach ($query as $hotelId => $responseId)
+                    {
+                        if (isset($HotelClient->requests[$responseId]['result'])){
+                            if(isset($HotelClient->requests[$responseId]['result']->latitude,$HotelClient->requests[$responseId]['result']->longitude) && $HotelClient->requests[$responseId]['result']->latitude && $HotelClient->requests[$responseId]['result']->longitude){
+                                $haveCoordinates = true;
+                                $possibleLatitude = $HotelClient->requests[$responseId]['result']->latitude;
+                                $possibleLongitude = $HotelClient->requests[$responseId]['result']->longitude;
+                                break;
+                            }
+                        }
+
+                    }
                     $cityCriteria = new CityFindCriteria();
                     $cityCriteria->paramValues = array('countryCode'=>$country->code,'nameEn'=>$hotelCity['nameEn'],'metaphoneRu'=>$hotelCity['metaphoneRu'],'soundexEn'=>$hotelCity['sondexEn']);
                     //$prevCriteria = null;
@@ -813,7 +839,21 @@ EOD;
                         $prevCount = $count;
                         $currCriteria = $cityCriteria->getCriteria();
                         $count =  GeoNames::model()->count($currCriteria);
+                        $findGeo = null;
                         echo "Params: ".implode(',',$cityCriteria->paramUsed).' count:'.$count."\n";
+                        if($haveCoordinates && $count<15){
+                            $geoNames = GeoNames::model()->findAll($currCriteria);
+                            foreach($geoNames as $geoName){
+                                if($geoName->latitude && $geoName->longitude){
+                                    $distance = intval(UtilsHelper::calculateTheDistance($geoName->latitude, $geoName->longitude, $possibleLatitude, $possibleLongitude));
+                                    if ($distance < 10000)
+                                    {
+                                        $findGeo = $geoName;
+                                        $count = 1;
+                                    }
+                                }
+                            }
+                        }
 
                         if($count>1){
                             $findEnd = !$cityCriteria->setPlus();
@@ -843,12 +883,16 @@ EOD;
                         }elseif($count>1){
                             //echo "Many results for city {$hotelCity['nameEn']} - $count\n";
                             $geoName = GeoNames::model()->find($currCriteria);
-                            echo "Found by city name city {$hotelCity['nameEn']} City: {$geoName->nameEn} Ru: {$geoName->nameRu} IATA: {$geoName->iataCode} coords: {$geoName->longitude} {$geoName->latitude}\n";
+                            echo "Possible by city name city {$hotelCity['nameEn']} City: {$geoName->nameEn} Ru: {$geoName->nameRu} IATA: {$geoName->iataCode} coords: {$geoName->longitude} {$geoName->latitude}\n";
                             $someResult++;
                             fwrite($outfp, "{$hotelCity['nameEn']}|{$hotelCity['nameRu']}|{$hotelCity['id']}|{$count}\n");
                         }else{
-                            $geoName = GeoNames::model()->find($currCriteria);
-                            echo "Found by city name city {$hotelCity['nameEn']} City: {$geoName->nameEn} Ru: {$geoName->nameRu} IATA: {$geoName->iataCode} coords: {$geoName->longitude} {$geoName->latitude}\n";
+                            if($findGeo){
+                                $geoName = $findGeo;
+                            }else{
+                                $geoName = GeoNames::model()->find($currCriteria);
+                            }
+                            echo "Found by city name city {$hotelCity['nameEn']} City: {$geoName->nameEn} Ru: {$geoName->nameRu} IATA: {$geoName->iataCode} coords: {$geoName->longitude} {$geoName->latitude}".($findGeo ? " ByCoords" : "")."\n";
                             if($geoName->iataCode)
                             {
                                 $city = City::model()->findByAttributes(array('code'=>$geoName->iataCode,'countryId'=>$country->id));

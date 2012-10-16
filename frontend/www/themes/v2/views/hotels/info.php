@@ -108,7 +108,7 @@
                         		</tr>
                                 <!-- ko if: last()-->
                                 <tr>
-                                    <td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: 'Идет запрос на получение информации...'},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
+                                    <td colspan="2"><a href="javascript:void(0)" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: 'Идет запрос на получение информации...'},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
                                 </tr>
                                 <!-- /ko -->
                         	</table>
@@ -157,7 +157,7 @@
                         		</tr>
                                 <!-- ko if: last()-->
                         		<tr>
-                        			<td colspan="2"><a href="#" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: $parent.cancelText()},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
+                        			<td colspan="2"><a href="javascript:void(0)" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: $parent.cancelText()},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
                         		</tr>
                                 <!-- /ko -->
                         	</table>

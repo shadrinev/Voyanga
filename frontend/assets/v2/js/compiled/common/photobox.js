@@ -32,7 +32,6 @@ PhotoBox = (function() {
     ko.applyBindings(this, $('#body-popup-Photo')[0]);
     ko.processAllDeferredBindingUpdates();
     resizeLoad();
-    resizePhotoWin();
     this.loadFirstTime = true;
     $(window).keyup(function(e) {
       if (e.keyCode === 27) {
@@ -59,16 +58,18 @@ PhotoBox = (function() {
     }
     el = $(event.currentTarget);
     el.show();
+    console.log(el);
     if (el.width() > 850) {
       el.css('width', '850px');
     } else {
       el.css('width', 'auto');
     }
     $('#hotel-img-load').hide();
-    resizePhotoWinHandler();
     el.animate({
       opacity: 1
-    }, 200);
+    }, 300, function() {
+      return console.log("opacitied");
+    });
     return this.busy = false;
   };
 
@@ -96,9 +97,9 @@ PhotoBox = (function() {
 
   PhotoBox.prototype._load = function(var1, var2) {
     var _this = this;
-    $('#photoBox').find('img').animate({
+    $('#body-popup-Photo').find('table img').animate({
       opacity: 0
-    }, 100, function() {
+    }, 300, function() {
       return _this.activePhoto(_this.photos[_this.activeIndex()]['largeUrl']);
     });
     return $('#hotel-img-load').show();
