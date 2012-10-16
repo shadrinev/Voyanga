@@ -172,6 +172,12 @@ return array(
                 ),
                 array(
                     'class' => 'CFileLogRoute',
+                    'logFile' => 'cache',
+                    'levels' => 'cache',
+                    'categories' => 'application'
+                ),
+                array(
+                    'class' => 'CFileLogRoute',
                     'logFile' => 'cron.at.log',
                     'levels' => 'at',
                     'categories' => 'cron'
