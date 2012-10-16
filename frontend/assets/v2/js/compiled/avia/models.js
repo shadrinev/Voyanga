@@ -389,7 +389,7 @@ AviaResult = (function() {
       }
     }
     this.voyages.push(newVoyage);
-    if (newVoyage.stopoverLength < this.aciteveVoyage().stopoverLength) {
+    if (newVoyage.stopoverLength < this.activeVoyage().stopoverLength) {
       return this.activeVoyage(newVoyage);
     }
   };

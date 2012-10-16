@@ -285,7 +285,7 @@ class AviaResult
         result.push(backVoyage)
         return
     @voyages.push newVoyage
-    if newVoyage.stopoverLength < @aciteveVoyage().stopoverLength
+    if newVoyage.stopoverLength < @activeVoyage().stopoverLength
       @activeVoyage newVoyage
 
   chooseStacked: (voyage) =>
