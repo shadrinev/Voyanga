@@ -32,13 +32,20 @@ class SharedMemory extends Component
 
         $this->fileName = $dir.DIRECTORY_SEPARATOR.'cache_'.$project.".dump";
         $shmKey = ftok(__FILE__, $project);
-        $this->shmId = shmop_open($shmKey, "c", 0644, $this->maxSize);
-        $try = @unserialize(shmop_read($this->shmId, 0, 0));
-        $this->offsetWrite = (int)$try;
-        if ($this->offsetWrite == 0)
-            $this->saveOffsetWrite(true);
-        else
-            $this->detectStart();
+        try
+        {
+            $this->shmId = shmop_open($shmKey, "c", 0644, $this->maxSize);
+            $try = @unserialize(shmop_read($this->shmId, 0, 0));
+            $this->offsetWrite = (int)$try;
+            if ($this->offsetWrite == 0)
+                $this->saveOffsetWrite(true);
+            else
+                $this->detectStart();
+        }
+        catch (Exception $e)
+        {
+            Yii::log('Unable to write to shared memory', CLogger::LEVEL_ERROR);
+        }
     }
 
     private function detectStart()
