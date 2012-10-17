@@ -46,7 +46,7 @@ EOD;
         $hotelSearchParams->addRoom(1, 0, false);
         $HotelClient = new HotelBookClient();
         $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
-        Yii::app()->hotelsRating->injectRating($resultSearch, $hotelSearchParams->city);
+        Yii::app()->hotelsRating->injectRating($resultSearch->hotels, $hotelSearchParams->city);
         if(!@count($resultSearch['hotels']))
             return 'No results';
         $total = 0;

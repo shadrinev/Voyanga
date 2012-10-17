@@ -34,10 +34,18 @@ class HotelStack
     {
         if ($params)
         {
-            if($params['hotels'])
+            $hotels = null;
+            if($params instanceof HotelSearchResponse)
+            {
+                $hotels = &$params->hotels;
+            }elseif($params['hotels']){
+                $hotels = &$params['hotels'];
+            }
+
+            if($hotels)
             {
                 $bParamsNeedInit = true;
-                foreach($params['hotels'] as $hotel)
+                foreach($hotels as $hotel)
                 {
                     $bNeedSave = TRUE;
                     //TODO: check filters and save only needed hotels
