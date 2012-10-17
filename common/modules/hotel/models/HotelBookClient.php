@@ -14,38 +14,37 @@ class HotelBookClient
     public static $lastRequestDescription;
     public static $groupId;
     public static $requestIds;
+    public static $saveCache;
     public $requests;
 
     public function request($url, $getData = null, $postData = null, $asyncParams = null, $cacheFileName = null)
     {
         if ($cacheFileName)
         {
-            if(strpos($url,'vsespo') === false){
-                $cachePath = Yii::getPathOfAlias('cacheStorage');
-                $cacheSubDir = md5($cacheFileName);
-                $cacheSubDir = substr($cacheSubDir,-3);
-                if(!file_exists($cachePath . '/' . $cacheSubDir)){
-                    mkdir($cachePath . '/' . $cacheSubDir);
-                }
+            self::$saveCache = strpos($url,'vsespo') === false;
 
-                //$cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
-                if(file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml')){
-                    rename($cachePath . '/' . $cacheFileName . '.xml',$cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
-                }
+            $cachePath = Yii::getPathOfAlias('cacheStorage');
+            $cacheSubDir = md5($cacheFileName);
+            $cacheSubDir = substr($cacheSubDir,-3);
+            if(!file_exists($cachePath . '/' . $cacheSubDir)){
+                mkdir($cachePath . '/' . $cacheSubDir);
+            }
 
-                $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
-                if (file_exists($cacheFilePath))
-                {
-                    $cacheResult = file_get_contents($cacheFilePath);
-                }
-                else
-                {
-                    $cacheResult = false;
-                }
-            }else{
-                $cacheFileName = null;
+            //$cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
+            if(file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml')){
+                rename($cachePath . '/' . $cacheFileName . '.xml',$cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
+            }
+
+            $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
+            if (file_exists($cacheFilePath))
+            {
+                $cacheResult = file_get_contents($cacheFilePath);
+            }
+            else
+            {
                 $cacheResult = false;
             }
+
         }
         else
             $cacheResult = false;
@@ -130,7 +129,7 @@ class HotelBookClient
                     $hotelRequest->responseXml = UtilsHelper::formatXML($sData);
                     $hotelRequest->save();
 
-                    if ($cacheFileName)
+                    if ($cacheFileName && self::$saveCache)
                     {
                         file_put_contents($cacheFilePath, $sData);
                     }
@@ -232,7 +231,7 @@ class HotelBookClient
                                 $requestInfo['hotelRequestLog']->executionTime = ($endTime - $startTime);
                                 $requestInfo['hotelRequestLog']->responseXml = UtilsHelper::formatXML($result);
                                 $requestInfo['hotelRequestLog']->save();
-                                if ($requestInfo['cacheFilePath'])
+                                if ($requestInfo['cacheFilePath'] && self::$saveCache)
                                 {
                                     file_put_contents($requestInfo['cacheFilePath'], $result);
                                 }
