@@ -798,6 +798,9 @@
 	position: absolute;
 	top: 0px; left: 0px;
 }
+.hotels-tickets .content .full-info .preview-photo ul li img {
+	height: 117px;
+}
 .how-much {
 	background: url("../images/bg-photo-preview.png") no-repeat scroll 0 0 transparent;
     bottom: 0;
@@ -966,7 +969,7 @@
     padding-left: 0;
     position: relative;
     vertical-align: top;
-    z-index: 100;
+    z-index: 3;
 }
 .hotels-tickets .description .place .in-the-map span.link {
 	border-bottom: 1px dashed;
@@ -1613,4 +1616,20 @@
 }
 .hidden-roomSets {
     display:none;
+}
+
+.allTrip .ticket-items .content .buy-ticket .text {
+    height: 20px;
+    left: 15px;
+    margin-top: -15px;
+    position: absolute;
+    top: 50%;
+    width: 80%;
+    text-align: center;
+    font-size: 22px;
+}
+.allTrip .ticket-items .content .buy-ticket .text > span {
+    color: #262930;
+    font-size: 22px;
+    font-weight: bold;
 }

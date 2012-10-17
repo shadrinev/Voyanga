@@ -27,20 +27,20 @@ $images = 'themes/v2';
       </td>
       </tr>
    </table>
-      <div class="hr-bg">
+      <div class="hr-bg first">
         <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
       <h3 class="calendarTitle">Календарь поездки</h3>
       <!-- CALENDAR -->
       <br>
       <div class="hr-bg">
-        <img src="<?php echo $images.'/images/bg-hr-trip-all.png' ?>" width="100%" height="31">
+        <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
       <div class="costItAll">
 	Итого <span class="allCost">86 250 <span class="rur">o</span></span>
 	<a href="#" class="btnGoBuy"></a><br>
 
-	<a href="#" class="detailCost"><img src="<?php echo $images.'/images/detail-cost.png'?>"></a>
+	<!--<a href="#" class="detailCost"><img src="<?php echo $images.'/images/detail-cost.png'?>"></a>-->
       </div>
     </div>
     <div class="clear"></div>
@@ -66,7 +66,7 @@ $images = 'themes/v2';
       </table>
     </div>
     <div class="hr-bg">
-      <img src="<?php echo $images.'/images/bg-hr-trip-all.png' ?>" width="100%" height="31">
+      <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
     </div>
   </div>
 </script>
@@ -90,7 +90,7 @@ $images = 'themes/v2';
             <span class="costs" data-bind="html:priceHtml()"></span>
       </td>
       <td class="removeTD">      
-            <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem"></a>
+            <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem" onmouseover="deletePopUp(this)" onmouseout="deletePopUpHide()" ></a>
 	  </td>
 	</tr>
       </table>
@@ -118,7 +118,7 @@ $images = 'themes/v2';
       </table>
     </div>
     <div class="hr-bg">
-      <img src="<?php echo $images.'/images/bg-hr-trip-all.png' ?>" width="100%" height="31">
+      <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
     </div>
   </div>
 </script>
