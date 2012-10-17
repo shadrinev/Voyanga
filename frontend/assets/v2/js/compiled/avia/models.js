@@ -285,6 +285,8 @@ AviaResult = (function() {
     this._data = data;
     this._stacked_data = [];
     flights = data.flights;
+    this.searchId = data.searchId;
+    this.flightKey = data.flightKey;
     this.price = Math.ceil(data.price);
     this._stacked = false;
     this.roundTrip = flights.length === 2;

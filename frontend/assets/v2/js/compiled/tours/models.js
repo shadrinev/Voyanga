@@ -105,6 +105,8 @@ ToursAviaResultSet = (function(_super) {
 
     this.doNewSearch = __bind(this.doNewSearch, this);
 
+    this.toBuyRequest = __bind(this.toBuyRequest, this);
+
     this.newResults = __bind(this.newResults, this);
     ToursAviaResultSet.__super__.constructor.apply(this, arguments);
     this.api = new AviaAPI;
@@ -125,6 +127,7 @@ ToursAviaResultSet = (function(_super) {
   ToursAviaResultSet.prototype.newResults = function(raw, sp) {
     var result,
       _this = this;
+    this.rawSP = sp;
     result = new AviaResultSet(raw);
     result.injectSearchParams(sp);
     result.postInit();
@@ -142,6 +145,18 @@ ToursAviaResultSet = (function(_super) {
     };
     this.avia = true;
     return this.results(result);
+  };
+
+  ToursAviaResultSet.prototype.toBuyRequest = function() {
+    var result;
+    result = {};
+    result.type = 'avia';
+    result.searchId = this.selection().searchId;
+    result.flightKey = this.selection().flightKey;
+    result.adults = this.rawSP.adt;
+    result.children = this.rawSP.chd;
+    result.infants = this.rawSP.inf;
+    return result;
   };
 
   ToursAviaResultSet.prototype.doNewSearch = function() {
@@ -311,6 +326,8 @@ ToursHotelsResultSet = (function(_super) {
 
     this.doNewSearch = __bind(this.doNewSearch, this);
 
+    this.toBuyRequest = __bind(this.toBuyRequest, this);
+
     this.newResults = __bind(this.newResults, this);
 
     ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
@@ -358,6 +375,10 @@ ToursHotelsResultSet = (function(_super) {
     this.hotels = true;
     this.selection(null);
     return this.results(result);
+  };
+
+  ToursHotelsResultSet.prototype.toBuyRequest = function() {
+    return {};
   };
 
   ToursHotelsResultSet.prototype.doNewSearch = function() {
@@ -439,6 +460,8 @@ ToursResultSet = (function() {
     var result, variant, _i, _len, _ref,
       _this = this;
     this.searchParams = searchParams;
+    this.buy = __bind(this.buy, this);
+
     this.showOverview = __bind(this.showOverview, this);
 
     this.removeItem = __bind(this.removeItem, this);
@@ -582,9 +605,8 @@ ToursResultSet = (function() {
     }
     this.data.splice(idx, 1);
     if (item === this.selection()) {
-      this.setActive(this.data()[0]);
+      return this.setActive(this.data()[0]);
     }
-    return ResizeAvia();
   };
 
   ToursResultSet.prototype.showOverview = function() {
@@ -598,12 +620,37 @@ ToursResultSet = (function() {
         values: []
       })
     };
-    return this.setActive({
+    this.setActive({
       template: 'tours-overview',
       data: this,
       overview: true,
       panel: dummyPanel
     });
+    return risizeAvia();
+  };
+
+  ToursResultSet.prototype.buy = function() {
+    var form_html, index, key, params, toBuy, value, x, _i, _j, _len, _len1, _ref;
+    toBuy = [];
+    _ref = this.data();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      x = _ref[_i];
+      if (x.selection()) {
+        toBuy.push(x.toBuyRequest());
+      }
+    }
+    form_html = '<form id="buy-form" method="POST" action="/buy">';
+    for (index = _j = 0, _len1 = toBuy.length; _j < _len1; index = ++_j) {
+      params = toBuy[index];
+      for (key in params) {
+        value = params[key];
+        key = "item[" + index + "][" + key + "]";
+        form_html += "<input type=\"hidden\" name=\"" + key + "\" value=\"" + value + "\" />";
+      }
+    }
+    form_html += '</form>';
+    $('body').append(form_html);
+    return $('#buy-form').submit();
   };
 
   return ToursResultSet;

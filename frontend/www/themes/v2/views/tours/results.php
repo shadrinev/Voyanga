@@ -33,7 +33,7 @@
       <!-- END UL TRIP -->
       <div id="tour-buy-btn" style="display: none">
 	<span class="f14 bold" style="color:#2e333b;">Оформить</span>
-	<a href="#" class="btn-order">
+	<a href="#" class="btn-order" data-bind="click: buy">
           <span class="cost" data-bind="text: price"></span> <span class="rur f26">o</span>
 	</a>
       </div>

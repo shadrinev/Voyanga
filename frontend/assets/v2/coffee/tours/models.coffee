@@ -51,6 +51,7 @@ class ToursAviaResultSet extends TourEntry
     @data = {results: @results}
 
   newResults: (raw, sp)=>
+    @rawSP = sp
     result = new AviaResultSet raw
     result.injectSearchParams sp
     result.postInit()
@@ -68,6 +69,17 @@ class ToursAviaResultSet extends TourEntry
       @trigger 'next'
     @avia = true
     @results result
+
+  toBuyRequest: =>
+    result = {}
+    result.type = 'avia'
+    result.searchId = @selection().searchId
+    # FIXME FIXME FXIME
+    result.flightKey = @selection().flightKey
+    result.adults = @rawSP.adt
+    result.children = @rawSP.chd
+    result.infants = @rawSP.inf
+    return result
 
   doNewSearch: =>
     @api.search @panel.sp.url(), (data)=>
@@ -198,6 +210,9 @@ class ToursHotelsResultSet extends TourEntry
     @hotels = true
     @selection null
     @results result
+
+  toBuyRequest: =>
+    {}
 
   doNewSearch: =>
     @api.search @panel.sp.url(), (data)=>
@@ -362,7 +377,6 @@ class ToursResultSet
     @data.splice(idx, 1)
     if item == @selection()
       @setActive @data()[0]
-    ResizeAvia()
 
   showOverview: =>
     # FIXME FIXME FIXME
@@ -371,7 +385,23 @@ class ToursResultSet
       calendarHidden: -> true
       calendarValue: ko.observable {values: []}
     @setActive {template: 'tours-overview', data: @, overview: true, panel: dummyPanel}
+    do risizeAvia
 
+  buy: =>
+    toBuy = []
+    for x in @data()
+      if x.selection()
+        toBuy.push x.toBuyRequest()
+
+    form_html = '<form id="buy-form" method="POST" action="/buy">'
+    for params, index in toBuy
+      for key,value of params
+        key = "item[#{index}][#{key}]"
+        form_html += "<input type=\"hidden\" name=\"#{key}\" value=\"#{value}\" />"
+    form_html += '</form>'
+    $('body').append(form_html)
+    $('#buy-form').submit()
+  
 # Models for tour search params,
 class DestinationSearchParams
   constructor: ->
