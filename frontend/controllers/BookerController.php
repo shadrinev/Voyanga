@@ -7,8 +7,6 @@
  */
 class BookerController extends Controller
 {
-
-
     public function actions()
     {
         return array(

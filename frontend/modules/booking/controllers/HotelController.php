@@ -74,7 +74,7 @@ class HotelController extends FrontendController
                 }
                 $HotelClient = new HotelBookClient();
                 $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
-                Yii::app()->hotelsRating->injectRating($resultSearch, $hotelSearchParams->city);
+                Yii::app()->hotelsRating->injectRating($resultSearch->hotels, $hotelSearchParams->city);
                 $cacheId = substr(md5(uniqid('', true)), 0, 10);
                 Yii::app()->cache->set('hotelResult'.$cacheId, $resultSearch,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelSearchParams'.$cacheId, $hotelSearchParams,appParams('hotel_search_cache_time'));

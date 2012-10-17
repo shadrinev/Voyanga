@@ -94,13 +94,11 @@ return CMap::mergeArray(
                         'autoCreateLogTable' => true,
                         'logTableName' => 'log_table'
                     ),
-
                     array(
                         'class' => 'CProfileLogRoute',
                         'levels' => 'profile',
                         'enabled' => false
                     ),
-
                     array(
                         'class' => 'CEmailLogRoute',
                         'levels' => 'error, warning',

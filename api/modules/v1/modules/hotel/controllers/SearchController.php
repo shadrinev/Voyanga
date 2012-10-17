@@ -41,9 +41,9 @@ class SearchController extends ApiController
         Yii::import('site.frontend.components.*');
         $hotelClient = new HotelBookClient();
         $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
-        Yii::app()->hotelsRating->injectRating($variants, $hotelSearchParams->city);
+        Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
         $results = array();
-        if ($variants['errorStatus'] == 1)
+        if (!$variants->hasErrors())
         {
             $stack = new HotelStack($variants);
             $results = $stack->sortBy('rubPrice', 5)->getJsonObject();
@@ -61,7 +61,7 @@ class SearchController extends ApiController
         }
         else
         {
-            $this->sendError(200, $variants['errorsDescriptions']);
+            $this->sendError(200, $variants->errorsDescriptions);
         }
 
         $cacheId = $this->storeToCache($hotelSearchParams, $results);

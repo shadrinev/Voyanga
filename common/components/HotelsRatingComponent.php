@@ -8,22 +8,21 @@ class HotelsRatingComponent extends CApplicationComponent
      * @param mixed &$resultSearch results from booking engine
      * @param City $city City model instance for this search
      */
-    public function injectRating(&$resultSearch, $city)
+    public function injectRating(&$resultSearchHotels, $city)
     {
-        if(!$resultSearch)
-            return;
-        if(!$resultSearch['hotels'])
+        if(!$resultSearchHotels)
             return;
 
+
         $hotelNamesToFind = Array();
-        foreach ($resultSearch['hotels'] as $hotel) {
+        foreach ($resultSearchHotels as $hotel) {
             $hotelNamesToFind[$hotel->hotelName]=1;
         }
         $hotelNamesToFind = array_keys($hotelNamesToFind);
         $nameToRating = HotelRating::model()
             ->findByNames($hotelNamesToFind, $city);
 
-        foreach ($resultSearch['hotels'] as &$hotel) {
+        foreach ($resultSearchHotels as &$hotel) {
             $hotelName = $hotel->hotelName;
             if(isset($nameToRating[$hotelName])){
                 $hotel->rating=$nameToRating[$hotelName];

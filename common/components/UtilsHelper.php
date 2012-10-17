@@ -26,7 +26,7 @@ class UtilsHelper
         libxml_use_internal_errors(true);
         $oDM = new DOMDocument();
         try {
-            $load = $oDM->loadXML($xml);
+            $load = @$oDM->loadXML($xml);
             if ($load)
             {
                 $oDM->formatOutput = true;

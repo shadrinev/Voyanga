@@ -62,7 +62,7 @@ class HotelBookClient
             {
                 curl_setopt($rCh, CURLOPT_POSTFIELDS, $postData);
             }
-            curl_setopt($rCh, CURLOPT_TIMEOUT, 190);
+            curl_setopt($rCh, CURLOPT_TIMEOUT, 60);
             //$aHeadersToSend = array();
             //$aHeadersToSend[] = "Content-Length: " . strlen($sRequest);
             //$aHeadersToSend[] = "Content-Type: text/xml; charset=utf-8";
@@ -250,7 +250,8 @@ class HotelBookClient
                                     }
                                     catch (Exception $e)
                                     {
-                                        Yii::log('HotelBookClient Return Incorrect Response:' . CVarDumper::dumpAsString($requestInfo) . CVarDumper::dumpAsString($params));
+                                        echo "TryLogging".$e->getMessage();
+                                        Yii::log("HotelBookClient Return Incorrect Response:\nExeption:".$e->getMessage()."\nRequestInfo:" . CVarDumper::dumpAsString($requestInfo) . CVarDumper::dumpAsString($params));
                                     }
                                     unset($this->requests[$i]['function']);
                                 }
@@ -721,6 +722,7 @@ class HotelBookClient
     /**
      * Do HotelSearch requests with all combinations of room types,
      * @param HotelSearchParams $hotelSearchParams
+     * @return HotelSearchResponse
      */
     public function fullHotelSearch(HotelSearchParams $hotelSearchParams)
     {
@@ -859,45 +861,52 @@ class HotelBookClient
         {
             //echo count($request['result']->hotels).'<br>';
             //die();
-            if ($request['result']->hotels)
-            {
-                foreach ($request['result']->hotels as $hotel)
+            if(isset($request['result'])){
+                if ($request['result']->hotels)
                 {
-                    $key = $hotel->key;
-                    if (isset($hotels[$key]))
+                    foreach ($request['result']->hotels as $hotel)
                     {
-                        //echo '--duplicate';
-                        //echo 'have:';
-                        //VarDumper::dump($hotels[$key]);
-                        //echo 'new:';
-                        //VarDumper::dump($hotel);
-                        //echo "key: $key";
+                        $key = $hotel->key;
+                        if (isset($hotels[$key]))
+                        {
+                            //echo '--duplicate';
+                            //echo 'have:';
+                            //VarDumper::dump($hotels[$key]);
+                            //echo 'new:';
+                            //VarDumper::dump($hotel);
+                            //echo "key: $key";
+                        }
+                        $hotels[$key] = $hotel;
                     }
-                    $hotels[$key] = $hotel;
                 }
-            }
-            if ($request['result']->errorsDescriptions)
-            {
-                foreach ($request['result']->errorsDescriptions as $desc)
+                if ($request['result']->errorsDescriptions)
                 {
-                    $errorDescriptions[] = $desc;
+                    foreach ($request['result']->errorsDescriptions as $desc)
+                    {
+                        $errorDescriptions[] = $desc;
+                    }
                 }
+            }else{
+                print_r($request);
+                die();
             }
 
         }
         //die();
+        $response = new HotelSearchResponse();
 
-        if ($hotels && $errorDescriptions)
+        if ($hotels)
         {
-            $errorStatus = 1;
+            $response->responseStatus = ResponseStatus::ERROR_CODE_NO_ERRORS;
         }
-        elseif ($hotels)
+        else if(!$errorDescriptions)
         {
-            $errorStatus = 0;
+            $response->responseStatus = ResponseStatus::ERROR_CODE_EMPTY;
         }
         else
         {
-            $errorStatus = 2;
+            $response->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
+            $response->errorsDescriptions = $errorDescriptions;
         }
 
         /*        //print_r($combinations);
@@ -996,8 +1005,9 @@ class HotelBookClient
 
                 }
             }
+            $response->hotels = $hotels;
         }
-        return array('hotels' => $hotels, 'errorsDescriptions' => $errorDescriptions, 'errorStatus' => $errorStatus);
+        return $response;
     }
 
     /**

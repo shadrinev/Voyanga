@@ -387,10 +387,26 @@ VoyangaCalendarTimeline.generateEvents = function () {
         }
         eventDays[dateLabel].types[this.calendarEvents[i].type].e.push(i);
     }
+    console.log('eventDays',eventDays);
 
     for(var key in eventDays){
         var endIds = {};
         var startIds = {};
+        if(typeof eventDays[dateLabel].types['hotel'] == 'object'){
+            for(var fIndS in eventDays[dateLabel].types['flight'].s){
+                sInd = eventDays[dateLabel].types['hotel'].s[fIndS];
+                var find = false;
+                for(var fIndE in eventDays[dateLabel].types['hotel'].e){
+                    eInd = eventDays[dateLabel].types['hotel'].e[fIndE];
+                    if(this.calendarEvents[sInd].cityFrom == this.calendarEvents[eInd].cityTo){
+                        this.calendarEvents[eInd].endPoint = false;
+                        this.calendarEvents[eInd].showEndCity = false;
+                        find = true;
+                        break;
+                    }
+                }
+            }
+        }
         if(typeof eventDays[dateLabel].types['flight'] == 'object'){
             for(var fIndS in eventDays[dateLabel].types['flight'].s){
                 sInd = eventDays[dateLabel].types['flight'].s[fIndS];
@@ -407,6 +423,8 @@ VoyangaCalendarTimeline.generateEvents = function () {
             }
         }
     }
+    console.log('eventDays',eventDays);
+    console.log('calendarEvents',this.calendarEvents);
 
     var firstElem = true;
     var lastId = 0;

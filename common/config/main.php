@@ -182,6 +182,13 @@ return array(
                     'levels' => 'at',
                     'categories' => 'cron'
                 ),
+                array(
+                    'class' => 'CDbLogRoute',
+                    'categories' => 'sharedMemory.*',
+                    'connectionID' => 'logdb',
+                    'autoCreateLogTable' => true,
+                    'logTableName' => 'shared_memory'
+                ),
             )
         ),
 
