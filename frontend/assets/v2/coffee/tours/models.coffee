@@ -117,7 +117,7 @@ class ToursAviaResultSet extends TourEntry
   dateClass: =>
     if @rt() then 'blue-two' else 'blue-one'
 
-  dateHtml: =>
+  dateHtml: (startonly=false)=>
     # FIXME SEARCH PARAMS
     source = @selection()
     if source == null
@@ -125,6 +125,8 @@ class ToursAviaResultSet extends TourEntry
     result = '<div class="day">'
     result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
     result+='</div>'
+    if startonly
+      return result
     if @rt()
       result+= '<div class="day">'
       result+= dateUtils.formatHtmlDayShortMonth source.rtDepartureDate()
@@ -206,7 +208,7 @@ class ToursHotelsResultSet extends TourEntry
 
   overviewPeople: =>
     sum = @panel.sp.overall()
-    Utils.wordAfterNum(sum,'человек','человека','человек')
+    Utils.wordAfterNum(sum,'человек','человека','человек') + ', ' + @results().wordDays
 
   numHotels: =>
     @results().data().length
@@ -514,4 +516,4 @@ class ToursOverviewVM
   
   dateHtml: =>
     firstResult = @resultSet.data()[0]
-    return firstResult.dateHtml()
+    return firstResult.dateHtml(true)

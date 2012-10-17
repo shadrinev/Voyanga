@@ -212,8 +212,11 @@ ToursAviaResultSet = (function(_super) {
     }
   };
 
-  ToursAviaResultSet.prototype.dateHtml = function() {
+  ToursAviaResultSet.prototype.dateHtml = function(startonly) {
     var result, source;
+    if (startonly == null) {
+      startonly = false;
+    }
     source = this.selection();
     if (source === null) {
       source = this.results().data[0];
@@ -221,6 +224,9 @@ ToursAviaResultSet = (function(_super) {
     result = '<div class="day">';
     result += dateUtils.formatHtmlDayShortMonth(source.departureDate());
     result += '</div>';
+    if (startonly) {
+      return result;
+    }
     if (this.rt()) {
       result += '<div class="day">';
       result += dateUtils.formatHtmlDayShortMonth(source.rtDepartureDate());
@@ -366,7 +372,7 @@ ToursHotelsResultSet = (function(_super) {
   ToursHotelsResultSet.prototype.overviewPeople = function() {
     var sum;
     sum = this.panel.sp.overall();
-    return Utils.wordAfterNum(sum, 'человек', 'человека', 'человек');
+    return Utils.wordAfterNum(sum, 'человек', 'человека', 'человек') + ', ' + this.results().wordDays;
   };
 
   ToursHotelsResultSet.prototype.numHotels = function() {
@@ -797,7 +803,7 @@ ToursOverviewVM = (function() {
   ToursOverviewVM.prototype.dateHtml = function() {
     var firstResult;
     firstResult = this.resultSet.data()[0];
-    return firstResult.dateHtml();
+    return firstResult.dateHtml(true);
   };
 
   return ToursOverviewVM;
