@@ -388,10 +388,7 @@ AviaResult = (function() {
         return;
       }
     }
-    this.voyages.push(newVoyage);
-    if (newVoyage.stopoverLength < this.activeVoyage().stopoverLength) {
-      return this.activeVoyage(newVoyage);
-    }
+    return this.voyages.push(newVoyage);
   };
 
   AviaResult.prototype.chooseStacked = function(voyage) {
@@ -504,7 +501,7 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.removeSimilar = function() {
-    var item, key, voyage, _helper, _i, _len, _ref;
+    var item, key, voyage, _helper, _i, _len, _ref, _results;
     if (this.voyages.length < 2) {
       return;
     }
@@ -520,12 +517,17 @@ AviaResult = (function() {
         _helper[key] = voyage;
       }
     }
+    this.activeVoyage(_helper[key]);
     this.voyages = [];
+    _results = [];
     for (key in _helper) {
       item = _helper[key];
-      this.voyages.push(item);
+      if (item.stopoverLength < this.activeVoyage().stopoverLength) {
+        this.activeVoyage(item);
+      }
+      _results.push(this.voyages.push(item));
     }
-    return this.activeVoyage(this.voyages[0]);
+    return _results;
   };
 
   AviaResult.prototype.showDetails = function(data, event) {

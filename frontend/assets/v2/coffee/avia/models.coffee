@@ -285,8 +285,6 @@ class AviaResult
         result.push(backVoyage)
         return
     @voyages.push newVoyage
-    if newVoyage.stopoverLength < @activeVoyage().stopoverLength
-      @activeVoyage newVoyage
 
   chooseStacked: (voyage) =>
     window.voyanga_debug "Choosing stacked voyage", voyage
@@ -372,10 +370,13 @@ class AviaResult
         _helper[key] = if item.stopoverLength < voyage.stopoverLength then item else voyage
       else
         _helper[key] = voyage
+    @activeVoyage(_helper[key])
     @voyages = []
     for key, item of _helper
+      if item.stopoverLength < @activeVoyage().stopoverLength
+        @activeVoyage item
       @voyages.push item
-    @activeVoyage(@voyages[0])
+
 
   # Shows popup with detailed info about given result
   showDetails: (data, event)=>
