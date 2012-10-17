@@ -182,6 +182,11 @@ return array(
                     'levels' => 'at',
                     'categories' => 'cron'
                 ),
+                array(
+                    'class' => 'CFileLogRoute',
+                    'logFile' => 'sharedMemory',
+                    'categories' => 'sharedMemory.*'
+                ),
             )
         ),
 

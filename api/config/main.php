@@ -105,11 +105,6 @@ return CMap::mergeArray(
                         'filter' => 'CLogFilter',
                         'emails' => 'reports-backend@voyanga.com,kuklin@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com,kudinov@voyanga.com'
                     ),
-                    array(
-                        'class' => 'CFileLogRoute',
-                        'logFile' => 'sharedMemory',
-                        'categories' => 'sharedMemory.*'
-                    ),
                 )
             ),
 
