@@ -184,7 +184,6 @@ return array(
                 ),
                 array(
                     'class' => 'CDbLogRoute',
-                    'logFile' => 'sharedMemory',
                     'categories' => 'sharedMemory.*',
                     'connectionID' => 'logdb',
                     'autoCreateLogTable' => true,
