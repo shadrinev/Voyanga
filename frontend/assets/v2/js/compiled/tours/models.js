@@ -390,7 +390,7 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.destinationText = function() {
-    return "Отель в " + this.searchParams.cityFull.caseDat;
+    return "Отель в " + this.searchParams.cityFull.casePre;
   };
 
   ToursHotelsResultSet.prototype.price = function() {

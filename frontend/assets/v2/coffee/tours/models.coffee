@@ -224,7 +224,7 @@ class ToursHotelsResultSet extends TourEntry
 
   # tours overview
   destinationText: =>
-    "Отель в " + @searchParams.cityFull.caseDat
+    "Отель в " + @searchParams.cityFull.casePre
 
   price: =>
     if @selection() == null
