@@ -965,7 +965,7 @@
 	color: #1a1b1e;
 	line-height: 20px;
 	margin-bottom: 0px;
-	height: 160px;
+	height: auto;
 	overflow: inherit;
 }
 .hotel-details .description .smallMaps {
@@ -1083,7 +1083,7 @@
 	border-bottom: 1px dashed;
 }
 .descr > .left .descr-text .text {
-	height: 54px;
+	height: auto;
 }
 .descr > .left .descr-text h3 {
 	display: inline-block;

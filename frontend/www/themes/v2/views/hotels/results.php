@@ -24,7 +24,7 @@
     <div class="sorting-panel"><span class="hotel-sort-by">сортировать по:</span> <span data-bind="click: sortByPrice,attr:{class: sortByPriceClass()}">&nbsp;цене</span> <span data-bind="click: sortByRating,attr:{class: sortByRatingClass()}">&nbsp;рейтингу</span>  </div>
     <div class="clear"></div>
         <!-- ko foreach: data -->
-        <div class="hotels-tickets" data-bind="visible: visible() && numPhotos">
+        <div class="hotels-tickets" data-bind="visible: visible()">
             <div class="content">
                 <div class="full-info">
                     <div class="preview-photo">
@@ -47,8 +47,8 @@
                         </div>
                         <a href="#"  data-bind="click: showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
                     </div>
-                    <div class="text" data-bind="html:description">
-                        Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...
+                    <div class="text">
+                        <span data-bind="html: limitDesc.startText">Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...</span><span data-bind="visible: limitDesc.isBigText">...</span>
                     </div>
                 </div>
                 <div class="choose-a-hotel">
