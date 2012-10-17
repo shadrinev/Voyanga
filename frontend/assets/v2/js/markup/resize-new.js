@@ -399,12 +399,14 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
 			var_content.find('h1').find('span').hide();
 			var_ticketsItems.find('.ticket-items').addClass('small');
+			$('.block').find('.ticket-items').addClass('small');
 			var_hotelItems.addClass('small');
 		}
 		else {
 			$('.recommended-ticket').find('.ticket-items').removeClass('small');
 			$('.recommended-ticket').css('width', '318px');
 			var_ticketsItems.find('.ticket-items').removeClass('small');
+			$('.block').find('.ticket-items').addClass('small');
 			var_hotelItems.removeClass('small');
 		}
 		resizeLeftStage();
@@ -521,11 +523,7 @@ function resizeMainStage() {
 	}
 }
 
-function AlphaBackground() {
-	$('.my-trip-list').find('.items').find('.path').each(function() {
-		$(this).append('<div class="alpha"></div>');
-	});
-}
+
 
 function ResizeAvia() {
     ResizeCenterBlock();
@@ -698,7 +696,7 @@ function scrollValue(what) {
 		}		
 	}		
 }
-$(window).load(AlphaBackground);
+
 
 $(window).load(function() {
 	$(window).scroll(function() {

@@ -553,7 +553,7 @@ class HotelsResultSet
           duration = hotel.duration
           console.log('yes set')
         break
-    console.log('MainDuration:'+duration)
+    @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
     @minPrice = false
     @maxPrice = false
     for hotel in rawHotels

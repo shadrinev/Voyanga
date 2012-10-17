@@ -712,7 +712,7 @@ HotelsResultSet = (function() {
         break;
       }
     }
-    console.log('MainDuration:' + duration);
+    this.wordDays = Utils.wordAfterNum(duration, 'день', 'дня', 'дней');
     this.minPrice = false;
     this.maxPrice = false;
     for (_j = 0, _len1 = rawHotels.length; _j < _len1; _j++) {
