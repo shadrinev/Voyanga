@@ -217,7 +217,7 @@ class HotelResult
     #@roomSets = []
     console.log(@roomSets())
     @visible = ko.observable(true)
-    @wordDays = Utils.wordAfterNum(@duration,'день','дня','дней')
+    @wordDays = @parent.wordDays
     @visibleRoomSets = ko.computed =>
       result = []
       for roomSet in @roomSets()
