@@ -49,7 +49,7 @@ class SharedMemory extends Component
         }
         catch (Exception $e)
         {
-            Yii::log('Unable to write to shared memory', CLogger::LEVEL_ERROR);
+            Yii::log('Unable to init shared memory', CLogger::LEVEL_ERROR, 'sharedMemory');
         }
     }
 
@@ -64,7 +64,7 @@ class SharedMemory extends Component
     {
         if ($this->shmId==0)
         {
-            Yii::log('Could not write to shmop', 'error');
+            Yii::log('Could not erase shmop', CLogger::LEVEL_ERROR, 'sharedMemory');
             return;
         }
         $date = str_repeat(" ", $this->maxSize);
@@ -77,7 +77,7 @@ class SharedMemory extends Component
     {
         if ($this->shmId==0)
         {
-            Yii::log('Could not write to shmop', 'error');
+            Yii::log('Could not saveOffsetWrite shmop', CLogger::LEVEL_ERROR, 'sharedMemory');
             return;
         }
         $len = strlen((string)$this->maxSize);
@@ -111,10 +111,10 @@ class SharedMemory extends Component
     {
         if ($this->shmId==0)
         {
-            Yii::log('Could not write to shmop', 'error');
+            Yii::log('Could not write shmop', CLogger::LEVEL_ERROR, 'sharedMemory');
             return;
         }
-        Yii::log('WRITING TO CACHE', 'cache');
+        Yii::log('Saving to shared memory', CLogger::LEVEL_INFO, 'sharedMemory');
         $string = serialize($obj);
         $nextOffset = strlen($string)+$this->offsetWrite;
         if ($nextOffset >= $this->maxSize)
@@ -122,8 +122,6 @@ class SharedMemory extends Component
         $writtenBytes = shmop_write($this->shmId, $this->strToNts($string), $this->offsetWrite);
         $this->offsetWrite += $writtenBytes;
         $this->saveOffsetWrite();
-        Yii::log('CACHE nextOffset: '.$nextOffset, 'cache');
-        Yii::log('CACHE writtenBytes: '.$writtenBytes, 'cache');
     }
 
     public function flushToFile()
@@ -140,7 +138,7 @@ class SharedMemory extends Component
         }
         catch (Exception $e)
         {
-            Yii::log('Error inside flushToFile: '.$e->getMessage());
+            Yii::log('Could not flushToFile shmop', CLogger::LEVEL_ERROR, 'sharedMemory');
         }
     }
 
@@ -148,7 +146,7 @@ class SharedMemory extends Component
     {
         if ($this->shmId==0)
         {
-            Yii::log('Could not read shmop', 'error');
+            Yii::log('Could not read shmop', CLogger::LEVEL_ERROR, 'sharedMemory');
             return;
         }
         if ($this->offsetRead>=$this->offsetWrite)
@@ -166,7 +164,7 @@ class SharedMemory extends Component
     {
         if ($this->shmId==0)
         {
-            Yii::log('Could not write to shmop', 'error');
+            Yii::log('Could not __destruct shmop', CLogger::LEVEL_ERROR, 'sharedMemory');
             return;
         }
         shmop_close($this->shmId);
