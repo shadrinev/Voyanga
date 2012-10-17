@@ -183,6 +183,7 @@ class ToursHotelsResultSet extends TourEntry
     result.tours true
     result.postInit()
     result.select = (hotel) =>
+      hotel.parent = result
       hotel.off 'back'
       hotel.on 'back', =>
         @trigger 'setActive', @
@@ -192,7 +193,7 @@ class ToursHotelsResultSet extends TourEntry
         @overviewTemplate = 'tours-overview-hotels-ticket'
         @selection roomData
         @trigger 'next'
-      @trigger 'setActive', {'data':hotel, template: 'hotels-info-template'}
+      @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
     # FIXME WTF
     @hotels = true
     @selection null

@@ -337,6 +337,7 @@ ToursHotelsResultSet = (function(_super) {
     result.tours(true);
     result.postInit();
     result.select = function(hotel) {
+      hotel.parent = result;
       hotel.off('back');
       hotel.on('back', function() {
         return _this.trigger('setActive', _this);
@@ -350,7 +351,8 @@ ToursHotelsResultSet = (function(_super) {
       });
       return _this.trigger('setActive', {
         'data': hotel,
-        template: 'hotels-info-template'
+        template: 'hotels-info-template',
+        'parent': _this
       });
     };
     this.hotels = true;

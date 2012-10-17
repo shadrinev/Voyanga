@@ -9,7 +9,7 @@
         <!-- FIXME change to repeat binding -->
         <!-- ko foreach: data -->
         <li class="items" data-bind="css: {first: $index()==0}">
-          <a href="#" data-bind="css: {fly: isAvia(), hotel: isHotel(), active: $parent.selection() == $data, toFrom: rt()}, click: $parent.setActive">
+          <a href="#" data-bind="css: {fly: isAvia(), hotel: isHotel(), active: $parent.selection() == $data ||  $parent.selection().parent == $data, toFrom: rt()}, click: $parent.setActive">
             <div class="keys" data-bind="click: $parent.removeItem"></div>
             <div class="path">
               <div class="where" data-bind="html: destinationText()">С-Пб &rarr; Амстердам</div>
