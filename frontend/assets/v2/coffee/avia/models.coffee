@@ -201,6 +201,9 @@ class AviaResult
     # Mix in events
     _.extend @, Backbone.Events
 
+    # for cloning result to best later
+    @_data = data
+    @_stacked_data = []
     flights = data.flights
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)
@@ -277,6 +280,7 @@ class AviaResult
   push: (data) ->
     @_stacked = true
     newVoyage = new Voyage(data.flights[0], @airline)
+    @_stacked_data.push data
     if @roundTrip
       backVoyage = new Voyage(data.flights[1], @airline)
       newVoyage.push(backVoyage)
@@ -534,12 +538,16 @@ class AviaResultSet
             return
     @setBest data[0], true
           
-  setBest: (result, unconditional=false)=>
+  setBest: (oldresult, unconditional=false)=>
     # FIXME could leak as hell
-    result = _.clone result
-    result.activeVoyage = ko.observable result.activeVoyage()
+    key = oldresult.key
+    result = new AviaResult oldresult._data, @
+    for item in oldresult._stacked_data
+      result.push item
+    result.sort()
+    result.removeSimilar()
     result.best = true
-    result.key = result.key + '_optima'
+    result.key = key + '_optima'
 
     if !unconditional
       result.voyages = _.filter result.voyages, (el)->el.maxStopoverLength <60*60*3

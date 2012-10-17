@@ -282,6 +282,8 @@ AviaResult = (function() {
     this.chooseStacked = __bind(this.chooseStacked, this);
 
     _.extend(this, Backbone.Events);
+    this._data = data;
+    this._stacked_data = [];
     flights = data.flights;
     this.price = Math.ceil(data.price);
     this._stacked = false;
@@ -377,6 +379,7 @@ AviaResult = (function() {
     var backVoyage, newVoyage, result;
     this._stacked = true;
     newVoyage = new Voyage(data.flights[0], this.airline);
+    this._stacked_data.push(data);
     if (this.roundTrip) {
       backVoyage = new Voyage(data.flights[1], this.airline);
       newVoyage.push(backVoyage);
@@ -737,14 +740,22 @@ AviaResultSet = (function() {
     return this.setBest(data[0], true);
   };
 
-  AviaResultSet.prototype.setBest = function(result, unconditional) {
+  AviaResultSet.prototype.setBest = function(oldresult, unconditional) {
+    var item, key, result, _i, _len, _ref;
     if (unconditional == null) {
       unconditional = false;
     }
-    result = _.clone(result);
-    result.activeVoyage = ko.observable(result.activeVoyage());
+    key = oldresult.key;
+    result = new AviaResult(oldresult._data, this);
+    _ref = oldresult._stacked_data;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      result.push(item);
+    }
+    result.sort();
+    result.removeSimilar();
     result.best = true;
-    result.key = result.key + '_optima';
+    result.key = key + '_optima';
     if (!unconditional) {
       result.voyages = _.filter(result.voyages, function(el) {
         return el.maxStopoverLength < 60 * 60 * 3;

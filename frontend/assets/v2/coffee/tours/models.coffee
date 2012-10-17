@@ -322,7 +322,6 @@ class ToursResultSet
 
 
   setActive: (entry)=>
-#    console.profile('RESULTS RENDERING')
     $('#loadWrapBg').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
@@ -336,7 +335,6 @@ class ToursResultSet
       $('body').scrollTop(0)
     , 100
 
-#    console.profileEnd('RESULTS RENDERING')
 
   setActiveTimelineAvia: (entry)=>
     @setActive entry.avia.item
