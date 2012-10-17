@@ -399,12 +399,14 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
 			var_content.find('h1').find('span').hide();
 			var_ticketsItems.find('.ticket-items').addClass('small');
+			$('.block').find('.ticket-items').addClass('small');
 			var_hotelItems.addClass('small');
 		}
 		else {
 			$('.recommended-ticket').find('.ticket-items').removeClass('small');
 			$('.recommended-ticket').css('width', '318px');
 			var_ticketsItems.find('.ticket-items').removeClass('small');
+			$('.block').find('.ticket-items').addClass('small');
 			var_hotelItems.removeClass('small');
 		}
 		resizeLeftStage();
