@@ -463,9 +463,6 @@ HotelResult = (function() {
     el.addClass('active');
     $('#map').hide();
     $('#descr').show();
-    $(".description .text").dotdotdot({
-      watch: 'window'
-    });
     return $('#boxContent').css('height', 'auto');
   };
 
@@ -508,9 +505,6 @@ HotelResult = (function() {
     el.addClass('active');
     $('.tab').hide();
     $('#hotels-popup-description').show();
-    $(".description .text").dotdotdot({
-      watch: 'window'
-    });
     $('#boxContent').css('height', 'auto');
     return SizeBox('hotels-popup-body');
   };
@@ -620,9 +614,6 @@ HotelResult = (function() {
       var_heightCSS = el.parent().find('.text').css('height');
       var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0, -2)));
       text_el.attr('rel', var_heightCSS).css('height', 'auto');
-      text_el.dotdotdot({
-        watch: 'window'
-      });
       el.text('Свернуть');
       el.addClass('active');
     } else {
@@ -630,9 +621,6 @@ HotelResult = (function() {
       text_el.css('height', rel + 'px');
       el.text('Подробнее');
       el.removeClass('active');
-      text_el.dotdotdot({
-        watch: 'window'
-      });
     }
     return SizeBox('hotels-popup-body');
   };

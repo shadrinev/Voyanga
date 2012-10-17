@@ -521,11 +521,7 @@ function resizeMainStage() {
 	}
 }
 
-function AlphaBackground() {
-	$('.my-trip-list').find('.items').find('.path').each(function() {
-		$(this).append('<div class="alpha"></div>');
-	});
-}
+
 
 function ResizeAvia() {
     ResizeCenterBlock();
@@ -698,7 +694,7 @@ function scrollValue(what) {
 		}		
 	}		
 }
-$(window).load(AlphaBackground);
+
 
 $(window).load(function() {
 	$(window).scroll(function() {

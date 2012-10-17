@@ -141,5 +141,5 @@
 .smallSlide > div {
 	margin: 0 auto;
 	margin-bottom: 18px;
-	width: 155px;
+	max-width: 155px;
 }
