@@ -114,6 +114,7 @@ class SharedMemory extends Component
             Yii::log('Could not write shmop', CLogger::LEVEL_ERROR, 'sharedMemory');
             return;
         }
+        Yii::log('Saving to shared memory', CLogger::LEVEL_INFO, 'sharedMemory');
         $string = serialize($obj);
         $nextOffset = strlen($string)+$this->offsetWrite;
         if ($nextOffset >= $this->maxSize)
