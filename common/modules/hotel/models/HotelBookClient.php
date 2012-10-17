@@ -62,7 +62,7 @@ class HotelBookClient
             {
                 curl_setopt($rCh, CURLOPT_POSTFIELDS, $postData);
             }
-            curl_setopt($rCh, CURLOPT_TIMEOUT, 190);
+            curl_setopt($rCh, CURLOPT_TIMEOUT, 60);
             //$aHeadersToSend = array();
             //$aHeadersToSend[] = "Content-Length: " . strlen($sRequest);
             //$aHeadersToSend[] = "Content-Type: text/xml; charset=utf-8";
