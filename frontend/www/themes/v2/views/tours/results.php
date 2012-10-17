@@ -14,6 +14,7 @@
             <div class="path">
               <div class="where" data-bind="html: destinationText()">С-Пб &rarr; Амстердам</div>
               <div class="time"><span data-bind="html: priceHtml()"></span> <span data-bind="text: additionalText()">7:30 - 12:20</span></div>
+              <div class="alpha"></div>
             </div>
             <div class="date" data-bind="attr: {class: 'date '+ dateClass()}, html:dateHtml()">
             </div>
