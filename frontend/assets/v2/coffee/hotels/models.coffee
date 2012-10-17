@@ -338,7 +338,7 @@ class HotelResult
     el.addClass('active')
     $('#map').hide();
     $('#descr').show()
-    $(".description .text").dotdotdot({watch: 'window'})
+    #$(".description .text").dotdotdot({watch: 'window'})
     $('#boxContent').css 'height', 'auto'
 
   # Click handler for map/description in popup
@@ -373,7 +373,7 @@ class HotelResult
     el.addClass('active')
     $('.tab').hide();
     $('#hotels-popup-description').show()
-    $(".description .text").dotdotdot({watch: 'window'})
+    #$(".description .text").dotdotdot({watch: 'window'})
     $('#boxContent').css 'height', 'auto'
     SizeBox 'hotels-popup-body'
 
@@ -472,7 +472,7 @@ class HotelResult
       var_heightCSS = el.parent().find('.text').css('height');
       var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
       text_el.attr('rel',var_heightCSS).css('height','auto');
-      text_el.dotdotdot({watch: 'window'});
+      #text_el.dotdotdot({watch: 'window'});
       el.text('Свернуть');
       el.addClass('active');
     else
@@ -480,7 +480,7 @@ class HotelResult
       text_el.css('height', rel+'px');
       el.text('Подробнее');
       el.removeClass('active');
-      text_el.dotdotdot({watch: 'window'});
+      #text_el.dotdotdot({watch: 'window'});
     #FIXME should not be called on details page
     SizeBox('hotels-popup-body')
 
