@@ -183,9 +183,12 @@ return array(
                     'categories' => 'cron'
                 ),
                 array(
-                    'class' => 'CFileLogRoute',
+                    'class' => 'CDbLogRoute',
                     'logFile' => 'sharedMemory',
-                    'categories' => 'sharedMemory.*'
+                    'categories' => 'sharedMemory.*',
+                    'connectionID' => 'logdb',
+                    'autoCreateLogTable' => true,
+                    'logTableName' => 'shared_memory'
                 ),
             )
         ),
