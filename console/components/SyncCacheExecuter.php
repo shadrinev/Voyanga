@@ -149,6 +149,7 @@ class SyncCacheExecuter extends Component
                         if (!is_array($attr))
                             continue;
                         $flightCache = new FlightCache;
+                        $flightCache->scenario = 'restore';
                         $result[$hash]['time'] = $item->createdAt;
                         $flightCache->setAttributes($attr, false);
                         $part = $flightCache->buildRow();

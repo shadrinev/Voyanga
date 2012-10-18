@@ -265,9 +265,6 @@ class CommonFlightCache extends CActiveRecord
 
     public function buildRow()
     {
-        CVarDumper::dump($this->attributes);
-        echo "\n";
-
         $attributes = $this->prepare($this->attributes);
         echo "\n";
         $row = implode(',', $attributes)."\n";
