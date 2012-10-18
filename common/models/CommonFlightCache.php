@@ -262,7 +262,24 @@ class CommonFlightCache extends CActiveRecord
 
     private function prepare($attributes)
     {
-        $order = 'from, to, dateFrom, dateBack, priceBestPrice, durationBestPrice,  validatorBestPrice, transportBestPrice,  validatorBestPriceTime, transportBestPriceTime, validatorBestTime, transportBestTime, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime';
+        $order = '
+          from,
+          to,
+          dateFrom,
+          dateBack,
+          priceBestPrice,
+          durationBestPrice,
+          validatorBestPrice,
+          transportBestPrice,
+          priceBestTime,
+          durationBestTime,
+          validatorBestTime,
+          transportBestTime,
+          priceBestPriceTime,
+          durationBestPriceTime,
+          validatorBestPriceTime,
+          transportBestPriceTime
+          ';
         $columns = array_map('trim', explode(',', $order));
         $result = array();
         foreach ($columns as $column)
