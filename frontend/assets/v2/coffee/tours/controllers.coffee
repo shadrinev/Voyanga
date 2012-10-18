@@ -32,6 +32,10 @@ class ToursController
       return
 
     stacked = new ToursResultSet data, @searchParams
+    stacked.off 'inner-template'
+    stacked.on 'inner-template', (data)=>
+      @trigger 'inner-template', data
+      
     @trigger "results", stacked
     @render 'results', stacked
 

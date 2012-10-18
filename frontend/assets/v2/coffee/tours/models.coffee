@@ -276,6 +276,9 @@ class ToursHotelsResultSet extends TourEntry
 
 class ToursResultSet
   constructor: (raw, @searchParams)->
+    # Mix in events
+    _.extend @, Backbone.Events
+
     @data = ko.observableArray()
     for variant in raw.allVariants
       if !variant
@@ -335,12 +338,12 @@ class ToursResultSet
       
     @vm = new ToursOverviewVM @
 
-
   setActive: (entry)=>
     $('#loadWrapBg').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
 
+    @trigger 'inner-template', entry.template
     # FIXME 
     window.setTimeout =>
       @selection entry

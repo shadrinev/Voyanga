@@ -46,7 +46,8 @@ ToursController = (function() {
   };
 
   ToursController.prototype.handleResults = function(data) {
-    var stacked;
+    var stacked,
+      _this = this;
     console.log("Handling results", data);
     if (!data || data.error) {
       this.render('e500', {
@@ -55,6 +56,10 @@ ToursController = (function() {
       return;
     }
     stacked = new ToursResultSet(data, this.searchParams);
+    stacked.off('inner-template');
+    stacked.on('inner-template', function(data) {
+      return _this.trigger('inner-template', data);
+    });
     this.trigger("results", stacked);
     this.render('results', stacked);
     return ko.processAllDeferredBindingUpdates();

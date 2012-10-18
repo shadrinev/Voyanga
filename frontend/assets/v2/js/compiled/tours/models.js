@@ -474,6 +474,7 @@ ToursResultSet = (function() {
 
     this.setActive = __bind(this.setActive, this);
 
+    _.extend(this, Backbone.Events);
     this.data = ko.observableArray();
     _ref = raw.allVariants;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -561,6 +562,7 @@ ToursResultSet = (function() {
     if (entry.overview) {
       $('.btn-timeline-and-condition').hide();
     }
+    this.trigger('inner-template', entry.template);
     return window.setTimeout(function() {
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
