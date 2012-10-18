@@ -388,7 +388,7 @@ class ToursResultSet
       calendarHidden: -> true
       calendarValue: ko.observable {values: []}
     @setActive {template: 'tours-overview', data: @, overview: true, panel: dummyPanel}
-    do risizeAvia
+    do resizeAvia
 
   buy: =>
     toBuy = []

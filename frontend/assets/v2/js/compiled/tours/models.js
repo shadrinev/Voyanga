@@ -628,7 +628,7 @@ ToursResultSet = (function() {
       overview: true,
       panel: dummyPanel
     });
-    return risizeAvia();
+    return resizeAvia();
   };
 
   ToursResultSet.prototype.buy = function() {
