@@ -44,8 +44,26 @@ class CommonFlightCache extends CActiveRecord
         // will receive user inputs.
         return array(
             array('from, to, priceBestPrice, durationBestPrice, priceBestTime, durationBestTime, priceBestPriceTime, durationBestPriceTime', 'numerical', 'integerOnly'=>false),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
+            array('from,
+                  to,
+                  dateFrom,
+                  dateBack,
+                  priceBestPrice,
+                  durationBestPrice,
+                  validatorBestPrice,
+                  transportBestPrice,
+                  priceBestTime,
+                  durationBestTime,
+                  validatorBestTime,
+                  transportBestTime,
+                  priceBestPriceTime,
+                  durationBestPriceTime,
+                  validatorBestPriceTime,
+                  transportBestPriceTime,
+                  createdAt',
+                  'safe',
+                  'on' => 'restore'
+            ),
             array('from, to, dateFrom, dateBack, priceBestPrice, durationBestPrice,  validatorBestPrice, transportBestPrice,  validatorBestPriceTime, transportBestPriceTime, validatorBestTime, transportBestTime, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'safe', 'on'=>'search'),
         );
     }
@@ -282,6 +300,7 @@ class CommonFlightCache extends CActiveRecord
           durationBestPriceTime,
           validatorBestPriceTime,
           transportBestPriceTime,
+          createdAt
           ';
         $columns = array_map('trim', explode(',', $order));
         $result = array();
@@ -289,7 +308,6 @@ class CommonFlightCache extends CActiveRecord
         {
             $result[] = $attributes[$column];
         }
-        $result[] = $attributes['createdAt'];
         $result[] = $attributes['createdAt'];
         return $result;
     }
