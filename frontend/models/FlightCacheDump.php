@@ -19,7 +19,7 @@ class FlightCacheDump extends Component
      */
     public function setModel($value)
     {
-        $this->createdAt = time();
+        $this->createdAt = date('Y-m-d h:i:s');
         $this->from = $value->from;
         $this->to = $value->to;
         $this->dateFrom = date('Y-m-d', strtotime($value->dateFrom));
