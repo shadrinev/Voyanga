@@ -167,6 +167,7 @@ class SyncCacheExecuter extends Component
                     $flightCache = new FlightCache;
                     $flightCache->scenario = 'restore';
                     $flightCache->setAttributes($attr, false);
+                    CVarDumper::dump($flightCache->attributes);
                     $part = $flightCache->buildRow();
                     $counter++;
                     fwrite($fileFlight, $part);
