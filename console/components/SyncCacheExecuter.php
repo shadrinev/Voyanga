@@ -80,8 +80,6 @@ class SyncCacheExecuter extends Component
     public function batchInsert()
     {
         echo "Executing query start\n";
-        /*$query = "ALTER TABLE `".FlightCache::model()->tableName()."` DISABLE KEYS";
-        Yii::app()->db->createCommand($query)->execute();*/
 
         $query = "SELECT COUNT(*) FROM `".FlightCache::model()->tableName()."`";
         $beforeFlights = Yii::app()->db->createCommand($query)->queryScalar();

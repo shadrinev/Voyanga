@@ -40,7 +40,7 @@ class SyncController extends Controller
             fclose($descr);
             if ($pos>=$size)
             {
-                unlink($files[0]);
+                //unlink($files[0]);
                 unlink($descriptor);
             }
             Yii::app()->end();
