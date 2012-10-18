@@ -23,7 +23,7 @@
     <h2>Найдено отелей: <span data-bind="text: numResults">##</span></h2>
     <div class="sorting-panel"><span class="hotel-sort-by">сортировать по:</span> <span data-bind="click: sortByPrice,attr:{class: sortByPriceClass()}">&nbsp;цене</span> <span data-bind="click: sortByRating,attr:{class: sortByRatingClass()}">&nbsp;рейтингу</span>  </div>
     <div class="clear"></div>
-        <!-- ko foreach: data -->
+        <!-- ko foreach: resultsForRender -->
         <div class="hotels-tickets" data-bind="visible: visible()">
             <div class="content">
                 <div class="full-info">

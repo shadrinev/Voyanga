@@ -452,7 +452,7 @@ class Hotel extends CApplicationComponent
                     $metrica= $metrica/1.1;
                 }
                 //if()
-                if($thisRoom->sizeName != $otherRoom->showName){
+                if($thisRoom->sizeName != $otherRoom->sizeName){
                     $metrica+=200;
                 }else{
                     $metrica= $metrica/1.1;

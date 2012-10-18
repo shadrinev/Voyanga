@@ -248,11 +248,11 @@ class HotelStack
                                     //VarDumper::dump($otherHotel);
                                     //die();
                                 }
-                                $mergedStacks[$minStackKey]->addHotel($otherHotel);
+                                //$mergedStacks[$minStackKey]->addHotel($otherHotel);
                             }else{
                                 //??
                                 //echo "adding+2+!!!";
-                                $mergedStacks[$minStackKey]->addHotel($otherHotel);
+                                //$mergedStacks[$minStackKey]->addHotel($otherHotel);
                             }
                             //$newHotelStack = new HotelStack();
                             //$newHotelStack->addHotel($tmpHotel);

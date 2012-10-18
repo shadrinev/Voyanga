@@ -33,6 +33,7 @@ var var_paddingLeftTelefonMIN = 220;
 var var_widthMainBlockMAX = 695;
 var var_widthMainBlockMIN = 530;
 
+window.hotelsScrollCallback = function(){}
 
 function ResizeCenterBlock() {
     console.log("CENTER")
@@ -700,8 +701,9 @@ function scrollValue(what) {
 
 $(window).load(function() {
 	$(window).scroll(function() {
-	scrollValue('avia');
-	scrollValue('hotel');
+        scrollValue('avia');
+        scrollValue('hotel');
+        window.hotelsScrollCallback();
 	});
 });
 

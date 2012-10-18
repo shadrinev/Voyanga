@@ -575,7 +575,23 @@ class HotelsResultSet
     # We need array for knockout to work right
     #@data = []
     @data = ko.observableArray()
+    @showParts = ko.observable 1
+    @showLimit = 20
+    @resultsForRender = ko.computed =>
+      limit = @showParts() * @showLimit
+      results = []
+      for result in @data()
+        if result.visible()
+          results.push result
+        limit--
+        if limit <= 0
+          break
+      return results
     @numResults = ko.observable 0
+    window.hotelsScrollCallback = (ev)=>
+      @checkShowMore(ev)
+
+
 
     for key, result of @_results
       if result.numPhotos
@@ -609,7 +625,12 @@ class HotelsResultSet
     hotel.off 'back'
     hotel.on 'back', =>
       window.app.render({results: ko.observable(@)}, 'results')
-      Utils.scrollTo(oldPos,false)
+      window.setTimeout(
+        ->
+          Utils.scrollTo(oldPos,false)
+          console.log(oldPos)
+        , 50
+      )
 
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
@@ -617,6 +638,22 @@ class HotelsResultSet
 
   getDateInterval: =>
     dateUtils.formatDayMonthInterval(@checkIn._d,@checkOut._d)
+
+  showMoreResults: =>
+    if @numResults() > (@showParts() * @showLimit)
+      @showParts(@showParts()+1)
+
+  checkShowMore: (ev)=>
+    posTop = $('html').scrollTop() || $('body').scrollTop()
+    fullHeight = $('html')[0].scrollHeight || $('body')[0].scrollHeight
+    winHeight = $(window).height()
+    #console.log(ev,posTop,fullHeight,winHeight)
+    if((fullHeight - (posTop+winHeight)) < 2)
+      if window.app.activeView() == 'hotels-results'
+        console.log(window.app.activeView())
+        @showMoreResults()
+
+
 
   sortByPrice:  =>
     if @sortBy() != 'minPrice'
@@ -651,6 +688,7 @@ class HotelsResultSet
     console.log 'post filters'
     data = _.filter @data(), (el) -> el.visible()
     @numResults data.length
+    @showParts 1
 
     console.log(@data)
     window.setTimeout(

@@ -325,7 +325,7 @@ HotelResult = (function() {
     this.roomSets = ko.observableArray([]);
     console.log(this.roomSets());
     this.visible = ko.observable(true);
-    this.wordDays = Utils.wordAfterNum(this.duration, 'день', 'дня', 'дней');
+    this.wordDays = this.parent.wordDays;
     this.visibleRoomSets = ko.computed(function() {
       var result, roomSet, _i, _len, _ref5;
       result = [];
@@ -681,6 +681,10 @@ HotelsResultSet = (function() {
 
     this.sortByPrice = __bind(this.sortByPrice, this);
 
+    this.checkShowMore = __bind(this.checkShowMore, this);
+
+    this.showMoreResults = __bind(this.showMoreResults, this);
+
     this.getDateInterval = __bind(this.getDateInterval, this);
 
     this.select = __bind(this.select, this);
@@ -735,7 +739,29 @@ HotelsResultSet = (function() {
       }
     }
     this.data = ko.observableArray();
+    this.showParts = ko.observable(1);
+    this.showLimit = 20;
+    this.resultsForRender = ko.computed(function() {
+      var limit, results, _k, _len2, _ref;
+      limit = _this.showParts() * _this.showLimit;
+      results = [];
+      _ref = _this.data();
+      for (_k = 0, _len2 = _ref.length; _k < _len2; _k++) {
+        result = _ref[_k];
+        if (result.visible()) {
+          results.push(result);
+        }
+        limit--;
+        if (limit <= 0) {
+          break;
+        }
+      }
+      return results;
+    });
     this.numResults = ko.observable(0);
+    window.hotelsScrollCallback = function(ev) {
+      return _this.checkShowMore(ev);
+    };
     _ref = this._results;
     for (key in _ref) {
       result = _ref[key];
@@ -781,7 +807,10 @@ HotelsResultSet = (function() {
       window.app.render({
         results: ko.observable(_this)
       }, 'results');
-      return Utils.scrollTo(oldPos, false);
+      return window.setTimeout(function() {
+        Utils.scrollTo(oldPos, false);
+        return console.log(oldPos);
+      }, 50);
     });
     hotel.getFullInfo();
     window.app.render(hotel, 'info-template');
@@ -790,6 +819,25 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.getDateInterval = function() {
     return dateUtils.formatDayMonthInterval(this.checkIn._d, this.checkOut._d);
+  };
+
+  HotelsResultSet.prototype.showMoreResults = function() {
+    if (this.numResults() > (this.showParts() * this.showLimit)) {
+      return this.showParts(this.showParts() + 1);
+    }
+  };
+
+  HotelsResultSet.prototype.checkShowMore = function(ev) {
+    var fullHeight, posTop, winHeight;
+    posTop = $('html').scrollTop() || $('body').scrollTop();
+    fullHeight = $('html')[0].scrollHeight || $('body')[0].scrollHeight;
+    winHeight = $(window).height();
+    if ((fullHeight - (posTop + winHeight)) < 2) {
+      if (window.app.activeView() === 'hotels-results') {
+        console.log(window.app.activeView());
+        return this.showMoreResults();
+      }
+    }
   };
 
   HotelsResultSet.prototype.sortByPrice = function() {
@@ -838,6 +886,7 @@ HotelsResultSet = (function() {
       return el.visible();
     });
     this.numResults(data.length);
+    this.showParts(1);
     console.log(this.data);
     return window.setTimeout(function() {
       ifHeightMinAllBody();

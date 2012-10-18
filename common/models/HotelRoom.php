@@ -214,7 +214,9 @@ class HotelRoom extends CApplicationComponent
        /* if(self::stripWords($roomName,array(' 1 bedroom',' one bedroom'))){
 
         }*/
+        $roomName = str_replace(';','',$roomName);
         self::stripWords($roomName,array(' room'));
+
         //self::stripWords($roomName,array(' classic','classic',' offer',' offer-','offer','offer-'));
 
 

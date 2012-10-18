@@ -46,7 +46,7 @@ class SearchController extends ApiController
         if (!$variants->hasErrors())
         {
             $stack = new HotelStack($variants);
-            $results = $stack->sortBy('rubPrice', 5)->getJsonObject();
+            $results = $stack->groupBy('hotelId')->mergeSame()->sortBy('rubPrice', 5)->getJsonObject(4);
             $query = array();
             foreach ($results['hotels'] as $i => $info)
             {
