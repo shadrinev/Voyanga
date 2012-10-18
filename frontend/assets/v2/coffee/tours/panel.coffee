@@ -107,6 +107,9 @@ class TourPanel extends SearchPanel
       result = @city() && @checkIn() && @checkOut()
       return result
 
+    @formNotFilled = ko.computed =>
+      !@formFilled()
+
     @maximizedCalendar = ko.computed =>
       @city().length > 0
 
@@ -125,6 +128,8 @@ class TourPanel extends SearchPanel
     app.navigate @sp.getHash(), {trigger: true}
 
   navigateToNewSearch: ->
+    if (@formNotFilled())
+      return
     @handlePanelSubmit()
     @minimizedCalendar(true)
 

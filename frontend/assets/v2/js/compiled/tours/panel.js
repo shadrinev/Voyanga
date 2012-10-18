@@ -152,6 +152,9 @@ TourPanel = (function(_super) {
       result = _this.city() && _this.checkIn() && _this.checkOut();
       return result;
     });
+    this.formNotFilled = ko.computed(function() {
+      return !_this.formFilled();
+    });
     this.maximizedCalendar = ko.computed(function() {
       return _this.city().length > 0;
     });
@@ -176,6 +179,9 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.navigateToNewSearch = function() {
+    if (this.formNotFilled()) {
+      return;
+    }
     this.handlePanelSubmit();
     return this.minimizedCalendar(true);
   };

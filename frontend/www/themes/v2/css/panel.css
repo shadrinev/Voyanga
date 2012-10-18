@@ -305,7 +305,7 @@
 .how-many-man {
 	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
     float: left;
-    height: 70px;
+    height: 68px;
     margin-left: 20px;
     position: relative;
 }
@@ -458,7 +458,7 @@
 	background: none;
 	width: 406px;
 	bottom: auto;
-	top: 71px;
+	top: 69px;
 }
 .number-hotel {
 	width: 198px;
@@ -557,7 +557,7 @@
 }
 .panel-index .sub-head {
 	background: none;
-    box-shadow: 0 1px 5px #000000;
+    /* box-shadow: 0 1px 5px #000000; */
     height: 70px;
     padding-bottom: 0px;
 }
@@ -592,6 +592,7 @@
     min-width: 1000px;
     position: absolute;
     width: 100%;
+    box-shadow: 0 1px 5px #000000;
 }
 .leftPageBtn {
 	background: url("../images/navi-index.png") no-repeat scroll 0 0 transparent;
@@ -643,7 +644,7 @@
 .panel {
 	margin: 0 auto;
 	width: 948px;
-	height: 72px;
+	height: 70px;
 	position: relative;
 }
 
