@@ -108,8 +108,6 @@ class SyncCacheExecuter extends Component
         $query = "SELECT COUNT(*) FROM `".HotelCache::model()->tableName()."`";
         $afterHotels = Yii::app()->db->createCommand($query)->queryScalar();
 
-        /*$query = "ALTER TABLE `".FlightCache::model()->tableName()."` ENABLE KEYS";
-        Yii::app()->db->createCommand($query)->execute();*/
         echo "Executing queries end\n\n";
         echo "Before flights: $beforeFlights\n";
         echo "After flights: $afterFlights \n";
@@ -120,12 +118,9 @@ class SyncCacheExecuter extends Component
         echo "Inserted hotels: ".($afterHotels-$beforeHotels)."\n\n";
 
         $stat = Yii::app()->db->getStats();
-        //echo "Speed: ".($counter/$stat[1])."\n";
-        CVarDumper::dump($stat);
         echo "\n";
-        unlink($this->fullFlightPath);
-        echo $this->fullHotelPath;
-        //echo "Total queries: ".$counter."\n";
+        //unlink($this->fullFlightPath);
+        //unlink($this->fullHotelPath);
     }
 
     public function merge()
