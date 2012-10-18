@@ -117,6 +117,9 @@
                     <div>
     				    <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
                     </div>
+                    <div class="namePhotoPopUp">
+                    	Привет привет!
+                    </div>
           		</td>
     			<td id="right" data-bind="attr:{class: (activeIndex()!=length0) ? '' :'none'}, click: next"></td>
     		</tr>

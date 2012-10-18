@@ -425,7 +425,7 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').find('.ticket-items').removeClass('small');
 			$('.recommended-ticket').css('width', '318px');
 			var_ticketsItems.find('.ticket-items').removeClass('small');
-			$('.block').find('.ticket-items').addClass('small');
+			$('.block').find('.ticket-items').removeClass('small');
 			var_hotelItems.removeClass('small');
 		}
 		resizeLeftStage();
