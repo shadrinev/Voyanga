@@ -151,6 +151,7 @@ class SyncCacheExecuter extends Component
                         $flightCache = new FlightCache;
                         $flightCache->scenario = 'restore';
                         $result[$hash]['time'] = $item->createdAt;
+                        $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
                         $flightCache->setAttributes($attr, false);
                         CVarDumper::dump($flightCache->attributes);
                         $part = $flightCache->buildRow();
@@ -165,6 +166,7 @@ class SyncCacheExecuter extends Component
                         continue;
                     $result[$hash]['time'] = $item->createdAt;
                     $flightCache = new FlightCache;
+                    $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
                     $flightCache->setAttributes($attr, false);
                     CVarDumper::dump($flightCache->attributes);
                     $part = $flightCache->buildRow();
@@ -186,6 +188,7 @@ class SyncCacheExecuter extends Component
                             continue;
                         $hotelCache = new HotelCache;
                         $result[$hash]['time'] = $item->createdAt;
+                        $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
                         $hotelCache->setAttributes($attr, false);
                         $part = $hotelCache->buildRow();
                         fwrite($fileHotel, $part);
