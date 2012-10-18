@@ -44,8 +44,7 @@ class CommonFlightCache extends CActiveRecord
         // will receive user inputs.
         return array(
             array('from, to, priceBestPrice, durationBestPrice, priceBestTime, durationBestTime, priceBestPriceTime, durationBestPriceTime', 'numerical', 'integerOnly'=>false),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
+            array('createdAt, updatedAt', 'safe'),
             array('from, to, dateFrom, dateBack, priceBestPrice, durationBestPrice,  validatorBestPrice, transportBestPrice,  validatorBestPriceTime, transportBestPriceTime, validatorBestTime, transportBestTime, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'safe', 'on'=>'search'),
         );
     }
@@ -247,7 +246,8 @@ class CommonFlightCache extends CActiveRecord
 
     public function buildRow()
     {
-        $attributes = $this->attributes;
+        $attributes = $this->prepare($this->attributes);
+        echo "\n";
         $row = implode(',', $attributes)."\n";
         return $row;
     }
@@ -257,5 +257,36 @@ class CommonFlightCache extends CActiveRecord
         $query = $this->buildQuery();
         $command = Yii::app()->db->createCommand($query);
         $command->execute();
+    }
+
+    private function prepare($attributes)
+    {
+        $order = '
+          from,
+          to,
+          dateFrom,
+          dateBack,
+          priceBestPrice,
+          durationBestPrice,
+          validatorBestPrice,
+          transportBestPrice,
+          priceBestTime,
+          durationBestTime,
+          validatorBestTime,
+          transportBestTime,
+          priceBestPriceTime,
+          durationBestPriceTime,
+          validatorBestPriceTime,
+          transportBestPriceTime,
+          updatedAt
+          ';
+        $columns = array_map('trim', explode(',', $order));
+        $result = array();
+        foreach ($columns as $column)
+        {
+            $result[] = $attributes[$column];
+        }
+        $result[] = $attributes['updatedAt'];
+        return $result;
     }
 }

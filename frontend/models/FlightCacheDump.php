@@ -22,8 +22,8 @@ class FlightCacheDump extends Component
         $this->createdAt = time();
         $this->from = $value->from;
         $this->to = $value->to;
-        $this->dateFrom = $value->dateFrom;
-        $this->dateBack = $value->dateBack;
+        $this->dateFrom = date('Y-m-d', strtotime($value->dateFrom));
+        $this->dateBack = date('Y-m-d', strtotime($value->dateBack));;
         $this->attributes = serialize($value->attributes);
     }
 }

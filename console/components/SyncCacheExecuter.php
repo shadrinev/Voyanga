@@ -80,8 +80,6 @@ class SyncCacheExecuter extends Component
     public function batchInsert()
     {
         echo "Executing query start\n";
-        /*$query = "ALTER TABLE `".FlightCache::model()->tableName()."` DISABLE KEYS";
-        Yii::app()->db->createCommand($query)->execute();*/
 
         $query = "SELECT COUNT(*) FROM `".FlightCache::model()->tableName()."`";
         $beforeFlights = Yii::app()->db->createCommand($query)->queryScalar();
@@ -108,8 +106,6 @@ class SyncCacheExecuter extends Component
         $query = "SELECT COUNT(*) FROM `".HotelCache::model()->tableName()."`";
         $afterHotels = Yii::app()->db->createCommand($query)->queryScalar();
 
-        /*$query = "ALTER TABLE `".FlightCache::model()->tableName()."` ENABLE KEYS";
-        Yii::app()->db->createCommand($query)->execute();*/
         echo "Executing queries end\n\n";
         echo "Before flights: $beforeFlights\n";
         echo "After flights: $afterFlights \n";
@@ -120,12 +116,8 @@ class SyncCacheExecuter extends Component
         echo "Inserted hotels: ".($afterHotels-$beforeHotels)."\n\n";
 
         $stat = Yii::app()->db->getStats();
-        //echo "Speed: ".($counter/$stat[1])."\n";
-        CVarDumper::dump($stat);
-        echo "\n";
         unlink($this->fullFlightPath);
-        echo $this->fullHotelPath;
-        //echo "Total queries: ".$counter."\n";
+        unlink($this->fullHotelPath);
     }
 
     public function merge()
@@ -156,7 +148,9 @@ class SyncCacheExecuter extends Component
                         if (!is_array($attr))
                             continue;
                         $flightCache = new FlightCache;
+                        $flightCache->scenario = 'restore';
                         $result[$hash]['time'] = $item->createdAt;
+                        $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
                         $flightCache->setAttributes($attr, false);
                         $part = $flightCache->buildRow();
                         fwrite($fileFlight, $part);
@@ -170,6 +164,7 @@ class SyncCacheExecuter extends Component
                         continue;
                     $result[$hash]['time'] = $item->createdAt;
                     $flightCache = new FlightCache;
+                    $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
                     $flightCache->setAttributes($attr, false);
                     $part = $flightCache->buildRow();
                     $counter++;
@@ -190,6 +185,7 @@ class SyncCacheExecuter extends Component
                             continue;
                         $hotelCache = new HotelCache;
                         $result[$hash]['time'] = $item->createdAt;
+                        $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
                         $hotelCache->setAttributes($attr, false);
                         $part = $hotelCache->buildRow();
                         fwrite($fileHotel, $part);
