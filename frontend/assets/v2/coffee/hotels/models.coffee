@@ -583,7 +583,7 @@ class HotelsResultSet
       for result in @data()
         if result.visible()
           results.push result
-        limit--
+          limit--
         if limit <= 0
           break
       return results
@@ -647,10 +647,8 @@ class HotelsResultSet
     posTop = $('html').scrollTop() || $('body').scrollTop()
     fullHeight = $('html')[0].scrollHeight || $('body')[0].scrollHeight
     winHeight = $(window).height()
-    #console.log(ev,posTop,fullHeight,winHeight)
     if((fullHeight - (posTop+winHeight)) < 2)
-      if window.app.activeView() == 'hotels-results'
-        console.log(window.app.activeView())
+      if (window.app.activeView() == 'hotels-results') || (window.app.activeView() == 'tours-results' && window.app.activeModuleInstance().innerTemplate == 'hotels-results')
         @showMoreResults()
 
 
