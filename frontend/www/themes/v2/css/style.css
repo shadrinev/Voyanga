@@ -653,12 +653,37 @@
 .finish-result .txt {
 	color: #4b525c;
 	width: 60%;
+	font-size: 12px;
+}
+.finish-result td {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+.finish-result tr:hover {
+	cursor: pointer;
+}
+.finish-result tr:hover .txt {
+	color: #2f3134;
 }
 .finish-result .price {
 	width: 40%;
 	text-align: right;
 	padding-right: 12px;
 	color: #1d222b;
+}
+.finish-result .price div {
+    background: url("../images/bg-btn-voyasha-price.png") no-repeat scroll 0 0 transparent;
+    color: #1D222B;
+    display: inline-block;
+    font-size: 11px;
+    height: 16px;
+    line-height: 17px;
+    text-align: center;
+    width: 60px;
+    padding-left: 10px;
+}
+.finish-result tr:hover .price div {
+	background-position: 0px -16px;
 }
 /* SUB HEAD MENU */
 .sub-head {
@@ -674,6 +699,8 @@
 .voyasha-text {
 	position: relative;
 	margin-top: 18px;	
+	min-height: 68px;
+	margin-bottom: 4px;
 }
 .voyasha-text .ico-voyasha {
 	position: absolute;

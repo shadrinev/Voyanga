@@ -52,20 +52,21 @@
         <div class="ico-voyasha"></div>
         <div class="inline-block">
           <h3>Довериться Вояше</h3>
-          — Я составлю вашу поездку автоматически, просто укажите рамки бюджета
+          — Я уже составила вашу поездку, просто укажите рамки бюджета
         </div>
-      </div>
-      <div class="voyasha-slider">
-        <img src="images/img-slide.png">
       </div>
       <table class="finish-result">
         <tr>
           <td class="txt">Мин. стоимость маршрута:</td>
-          <td class="price">30 300 <span class="rur">o</span></td>
+          <td class="price"><div>30 300 <span class="rur">o</span></div></td>
         </tr>
         <tr>
-          <td class="txt">Макс. стоимость маршрута:</td>
-          <td class="price">110 000 <span class="rur">o</span></td>
+          <td class="txt">Оптимальный вариант:</td>
+          <td class="price"><div>58 200 <span class="rur">o</span></div></td>
+        </tr>
+        <tr>
+          <td class="txt">Роскошный вариант:</td>
+          <td class="price"><div>112 140 <span class="rur">o</span></div></td>
         </tr>
       </table>
     </div>
