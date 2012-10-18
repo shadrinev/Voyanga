@@ -237,14 +237,18 @@ ListFilter = (function(_super) {
           return false;
         }
       } else {
-        values = propValue;
-        _ref1 = this.selection();
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          value = _ref1[_j];
-          find = true;
-          find = find && (propValue.indexOf(value) >= 0);
+        if (propValue) {
+          values = propValue;
+          _ref1 = this.selection();
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            value = _ref1[_j];
+            find = true;
+            find = find && (propValue.indexOf(value) >= 0);
+          }
+          return find;
+        } else {
+          return false;
         }
-        return find;
       }
     }
     return true;

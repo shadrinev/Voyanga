@@ -170,7 +170,13 @@ class RoomNamesNemo extends CActiveRecord
 
     public function getRoomType(){
         if($this->roomTypeId){
-            return NemoRoomType::getNemoRoomTypeByPk($this->roomTypeId)->name;
+            try{
+                $name = RoomTypeHotelbook::getRoomTypeByPk($this->roomTypeId)->name;
+            }catch (Exception $e){
+                RoomTypeHotelbook::updateRoomTypes($this->roomTypeId);
+                $name = RoomTypeHotelbook::getRoomTypeByPk($this->roomTypeId)->name;
+            }
+            return $name;
         }else{
             return '';
         }
