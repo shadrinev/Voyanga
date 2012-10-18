@@ -278,7 +278,7 @@ class CommonFlightCache extends CActiveRecord
           priceBestPriceTime,
           durationBestPriceTime,
           validatorBestPriceTime,
-          transportBestPriceTime
+          transportBestPriceTime,
           ';
         $columns = array_map('trim', explode(',', $order));
         $result = array();
@@ -286,6 +286,8 @@ class CommonFlightCache extends CActiveRecord
         {
             $result[] = $attributes[$column];
         }
+        $result[] = $attributes['createdAt'];
+        $result[] = $attributes['createdAt'];
         return $result;
     }
 }
