@@ -43,7 +43,7 @@ class SearchController extends ApiController
         $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
         Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
         $results = array();
-        if (!$variants->hasErrors())
+        if ($variants->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
         {
             $stack = new HotelStack($variants);
             $results = $stack->groupBy('hotelId')->mergeSame()->sortBy('rubPrice', 5)->getJsonObject(4);
@@ -58,6 +58,10 @@ class SearchController extends ApiController
                 if (isset($hotelClient->requests[$responseId]['result']))
                     $this->inject($results, $hotelId, $hotelClient->requests[$responseId]['result']);
             }
+        }
+        elseif($variants->responseStatus == ResponseStatus::ERROR_CODE_EMPTY)
+        {
+            $results['hotels'] = array();
         }
         else
         {
