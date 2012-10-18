@@ -750,8 +750,8 @@ HotelsResultSet = (function() {
         result = _ref[_k];
         if (result.visible()) {
           results.push(result);
+          limit--;
         }
-        limit--;
         if (limit <= 0) {
           break;
         }
@@ -833,8 +833,7 @@ HotelsResultSet = (function() {
     fullHeight = $('html')[0].scrollHeight || $('body')[0].scrollHeight;
     winHeight = $(window).height();
     if ((fullHeight - (posTop + winHeight)) < 2) {
-      if (window.app.activeView() === 'hotels-results') {
-        console.log(window.app.activeView());
+      if ((window.app.activeView() === 'hotels-results') || (window.app.activeView() === 'tours-results' && window.app.activeModuleInstance().innerTemplate === 'hotels-results')) {
         return this.showMoreResults();
       }
     }

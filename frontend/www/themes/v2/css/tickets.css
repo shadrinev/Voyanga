@@ -1007,16 +1007,16 @@
     position: relative;
 }
 .hotels-tickets .content .details .lv {
-	background: url(../images/bg-hotel-ticket.png) no-repeat 0px top;
+	background: url("../images/bg-hotel-ticket.png") repeat-y scroll 0px top transparent;
 	position: absolute; top: 0px; left: 0px;
-	width: 8px; height: 100%;
+	width: 7px; height: 100%;
 	display: block;
 	z-index: 2;
 }
 .hotels-tickets .content .details .rv {
-	background: url(../images/bg-hotel-ticket.png) no-repeat -8px top;
+	background: url("../images/bg-hotel-ticket.png") repeat-y scroll -8px top transparent;
 	position: absolute; top: 0px; right: 0px;
-	width: 8px; height: 100%;
+	width: 7px; height: 100%;
 	display: block;
 	z-index: 2;
 }
