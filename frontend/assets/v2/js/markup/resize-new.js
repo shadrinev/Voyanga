@@ -52,6 +52,7 @@ function ResizeCenterBlock() {
 		var var_recomendedItems = $('.head-content');
 		var var_hotelItems = $('.hotels-tickets');
 		var var_calendarGridVoyanga = $('.calenderWindow');
+		var var_allTripInfo = $('.allTrip .info');
 		var var_descrItems = $('#descr');
 		var widthLeftBlock,
 			widthMainBlock,
@@ -72,6 +73,8 @@ function ResizeCenterBlock() {
 			widthContent,
 			var_widthDescrLeft,
 			var_widthStreet,
+			widthAllTripInfo,
+			paddingLeftInfo,
 			widthLogin;
 
 		var widthBlock = block.width();
@@ -264,6 +267,9 @@ function ResizeCenterBlock() {
 				var_widthStreet = 'auto'
 				
 				paddingRightSlide += 165;
+
+				widthAllTripInfo = 'auto';
+				paddingLeftInfo = '112px';
 			}
 			else if (widthBlock < var_widthMAX && widthBlock >= var_widthMID) {
 				widthMainBlock = Math.floor(910 + ( (widthBlock - var_widthMID) / (var_valueMAX / (935 - 910))) );
@@ -285,6 +291,11 @@ function ResizeCenterBlock() {
 				var_widthStreet = 'auto'
 				
 				paddingRightSlide += 165;
+				
+				//=== THERE ===//
+				//widthAllTripInfo = Math.floor(var_widthMiddleBlockMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthMiddleBlockMID - var_widthMiddleBlockMIN))) );
+				widthAllTripInfo = 'auto';
+				paddingLeftInfo = '112px';
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
 				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
@@ -309,6 +320,11 @@ function ResizeCenterBlock() {
 				var_widthStreet = '210px';
 				
 				paddingRightSlide += 100;
+				
+				//=== THERE ===//
+				widthAllTripInfo = Math.floor(585 + ((widthBlock - var_widthMIN) / (var_valueMIN / (734 - 585))) );
+				widthAllTripInfo = widthAllTripInfo+'px';
+				paddingLeftInfo = Math.floor(36 + ((widthBlock - var_widthMIN) / (var_valueMIN / (112 - 36))) );
 			}
 		}
 		else {
@@ -363,6 +379,8 @@ function ResizeCenterBlock() {
 			
 			var_mainBlock.css('width', widthMainBlock+'px').css('margin-left', marginLeftMainBlock).css('margin-right', marginRightMainBlock);
 			var_content.css('width', widthContent+'px').css('margin-left', marginLeftContent).css('margin-right', marginRightContent);
+			var_allTripInfo.css('width', widthAllTripInfo);
+			$('.costItAll').css('padding-right', paddingLeftInfo);			
 		}
 		if (var_filterBlockIsset) {
 			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);			
@@ -399,12 +417,14 @@ function ResizeCenterBlock() {
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
 			var_content.find('h1').find('span').hide();
 			var_ticketsItems.find('.ticket-items').addClass('small');
+			$('.block').find('.ticket-items').addClass('small');
 			var_hotelItems.addClass('small');
 		}
 		else {
 			$('.recommended-ticket').find('.ticket-items').removeClass('small');
 			$('.recommended-ticket').css('width', '318px');
 			var_ticketsItems.find('.ticket-items').removeClass('small');
+			$('.block').find('.ticket-items').addClass('small');
 			var_hotelItems.removeClass('small');
 		}
 		resizeLeftStage();
@@ -463,11 +483,9 @@ function resizeLeftStage() {
 	if (leftPaddingDate < 75) {
 		var leftPadding = leftPaddingDate / 1.5 ;
 		leftPadding = leftPadding + 100;
-		leftStage.find('.alpha').show();
 	}
 	else {
 		leftPadding = startPosition;
-		leftStage.find('.alpha').hide();
 	}
 	if (leftPadding < 125) {
 		leftStage.find('.path').css('width', '125px');
@@ -521,11 +539,7 @@ function resizeMainStage() {
 	}
 }
 
-function AlphaBackground() {
-	$('.my-trip-list').find('.items').find('.path').each(function() {
-		$(this).append('<div class="alpha"></div>');
-	});
-}
+
 
 function ResizeAvia() {
     ResizeCenterBlock();
@@ -698,7 +712,7 @@ function scrollValue(what) {
 		}		
 	}		
 }
-$(window).load(AlphaBackground);
+
 
 $(window).load(function() {
 	$(window).scroll(function() {

@@ -246,6 +246,15 @@ HotelResult = (function() {
     this.hotelName = data.hotelName;
     this.address = data.address;
     this.description = data.description;
+    this.limitDesc = Utils.limitTextLenght(data.description, 195);
+    this.showMoreDesc = ko.observable(true);
+    this.showMoreDescText = ko.computed(function() {
+      if (_this.showMoreDesc()) {
+        return 'Подробнее';
+      } else {
+        return 'Свернуть';
+      }
+    });
     this.photos = data.images;
     this.numPhotos = 0;
     this.parent = parent;
@@ -463,9 +472,6 @@ HotelResult = (function() {
     el.addClass('active');
     $('#map').hide();
     $('#descr').show();
-    $(".description .text").dotdotdot({
-      watch: 'window'
-    });
     return $('#boxContent').css('height', 'auto');
   };
 
@@ -508,9 +514,6 @@ HotelResult = (function() {
     el.addClass('active');
     $('.tab').hide();
     $('#hotels-popup-description').show();
-    $(".description .text").dotdotdot({
-      watch: 'window'
-    });
     $('#boxContent').css('height', 'auto');
     return SizeBox('hotels-popup-body');
   };
@@ -613,26 +616,17 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.readMore = function(context, event) {
-    var el, rel, text_el, var_heightCSS;
+    var el, text_el;
     el = $(event.currentTarget);
     text_el = el.parent().find('.text');
-    if (!el.hasClass('active')) {
-      var_heightCSS = el.parent().find('.text').css('height');
-      var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0, -2)));
-      text_el.attr('rel', var_heightCSS).css('height', 'auto');
-      text_el.dotdotdot({
-        watch: 'window'
+    if (this.showMoreDesc()) {
+      text_el.find('.endDesc').show('fast', function() {
+        return text_el.find('.endDesc').css('display', 'inline');
       });
-      el.text('Свернуть');
-      el.addClass('active');
+      this.showMoreDesc(false);
     } else {
-      rel = el.parent().find('.text').attr('rel');
-      text_el.css('height', rel + 'px');
-      el.text('Подробнее');
-      el.removeClass('active');
-      text_el.dotdotdot({
-        watch: 'window'
-      });
+      text_el.find('.endDesc').hide('fast');
+      this.showMoreDesc(true);
     }
     return SizeBox('hotels-popup-body');
   };
@@ -718,15 +712,12 @@ HotelsResultSet = (function() {
         break;
       }
     }
-    console.log('MainDuration:' + duration);
+    this.wordDays = Utils.wordAfterNum(duration, 'день', 'дня', 'дней');
     this.minPrice = false;
     this.maxPrice = false;
     for (_j = 0, _len1 = rawHotels.length; _j < _len1; _j++) {
       hotel = rawHotels[_j];
       key = hotel.hotelId;
-      if (!this.city) {
-        this.city = hotel.city;
-      }
       if (this._results[key]) {
         this._results[key].push(hotel);
         this.minPrice = this._results[key].minPrice < this.minPrice ? this._results[key].minPrice : this.minPrice;
@@ -748,7 +739,9 @@ HotelsResultSet = (function() {
     _ref = this._results;
     for (key in _ref) {
       result = _ref[key];
-      this.data.push(result);
+      if (result.numPhotos) {
+        this.data.push(result);
+      }
     }
     this.sortBy = ko.observable('minPrice');
     this.sortByPriceClass = ko.computed(function() {

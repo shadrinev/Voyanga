@@ -135,6 +135,34 @@ Utils =
       else
         return number + ' ' + sevenWord
 
+  limitTextLenght: (text,limit) ->
+    result = {}
+    pos = text.lastIndexOf(' ',limit)
+    subText = text.substr(0,pos)
+    rusCount = Utils.countRusChars(subText)
+    if rusCount > (limit / 2)
+      limit = Math.round(limit * 0.84)
+
+    if text.length > limit
+
+      pos = text.lastIndexOf(' ',limit)
+      result['startText'] = text.substr(0,pos)
+      result['endText'] = text.substr(pos)
+      result['isBigText'] = true
+    else
+      result['isBigText'] = false
+      result['startText'] = text
+      result['endText'] = ''
+    return result
+
+  countRusChars: (text)->
+    startLen = text.length
+    re = new RegExp('[а-яА-ЯёЁ]','gi')
+    endLen = (text.replace(re,'')).length
+    return startLen - endLen
+
+
+
 exTrim = (str, charlist) ->
   charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
   re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g")

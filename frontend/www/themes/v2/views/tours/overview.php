@@ -12,26 +12,35 @@ $images = 'themes/v2';
 	  <li><span class="ico-see-map"></span> <a href="#map">На карте</a></li>
 	</ul>
       </div>
+   
+   <table class="allTripTable">   
+      <tr>
+      <td class="firstTd">
       <div class="allTrip" data-bind="foreach: data">
 	<div class="block" data-bind="template: {if: $index()==0, name:'tours-overview-start', data:$parent}">
 	</div>
 	<div class="block" data-bind="template: {name:'tours-overview-entry', data:$data}, css:{end: $index()==$length()-1}">
 	</div>    
       </div>
-      <div class="hr-bg">
-        <img src="<?php echo $images.'/images/bg-hr-trip-all.png' ?>" width="100%" height="31">
+      </td>
+      <td class="secondTd">
+      </td>
+      </tr>
+   </table>
+      <div class="hr-bg first">
+        <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
       <h3 class="calendarTitle">Календарь поездки</h3>
       <!-- CALENDAR -->
       <br>
       <div class="hr-bg">
-        <img src="<?php echo $images.'/images/bg-hr-trip-all.png' ?>" width="100%" height="31">
+        <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
       <div class="costItAll">
 	Итого <span class="allCost">86 250 <span class="rur">o</span></span>
 	<a href="#" class="btnGoBuy"></a><br>
 
-	<a href="#" class="detailCost"><img src="<?php echo $images.'/images/detail-cost.png'?>"></a>
+	<!--<a href="#" class="detailCost"><img src="<?php echo $images.'/images/detail-cost.png'?>"></a>-->
       </div>
     </div>
     <div class="clear"></div>
@@ -46,17 +55,18 @@ $images = 'themes/v2';
     <div class="text">
       <table class="headTitle">
 	<tr>
-	  <td class="name">
-            <div class="ico-hotel"></div>
-            <div class="title"><span  data-bind="text:vm.startCity()">Санкт-Петербург</span> &mdash; <span class="f13">начало путешествия</span></div>
+	  <td class="icoTD">
+            <div class="ico-hotel"></div>      </td>
+      <td class="nameTD">
+            <div class="title"><span  data-bind="text:vm.startCity()">Санкт-Петербург</span><span class="f13"> &mdash; начало путешествия</span></div>
 	  </td>
-	  <td class="allCost">
-	  </td>
+	  <td class="costTD"></td>
+      <td class="removeTD"></td>
 	</tr>
       </table>
     </div>
     <div class="hr-bg">
-      <img src="<?php echo $images.'/images/bg-hr-trip-all.png' ?>" width="100%" height="31">
+      <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
     </div>
   </div>
 </script>
@@ -69,14 +79,18 @@ $images = 'themes/v2';
     <div class="text">
       <table class="headTitle">
 	<tr>
-	  <td class="name">
+	  <td class="icoTD">
             <div data-bind="css: {'ico-jet': isAvia(), 'ico-hotel': isHotel()}"></div>
+      </td>
+      <td class="nameTD">
             <div class="title" data-bind="html: overviewText()"></div>
 	  </td>
-	  <td class="allCost">
+	  <td class="costTD">
             <span data-bind="text: overviewPeople()"></span>
             <span class="costs" data-bind="html:priceHtml()"></span>
-            <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem"></a>
+      </td>
+      <td class="removeTD">      
+            <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem" onmouseover="deletePopUp(this)" onmouseout="deletePopUpHide()" ></a>
 	  </td>
 	</tr>
       </table>
@@ -104,7 +118,7 @@ $images = 'themes/v2';
       </table>
     </div>
     <div class="hr-bg">
-      <img src="<?php echo $images.'/images/bg-hr-trip-all.png' ?>" width="100%" height="31">
+      <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
     </div>
   </div>
 </script>

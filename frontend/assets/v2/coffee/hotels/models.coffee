@@ -143,6 +143,13 @@ class HotelResult
     @hotelName = data.hotelName
     @address = data.address
     @description = data.description
+    @limitDesc = Utils.limitTextLenght(data.description,195)
+    @showMoreDesc = ko.observable(true)
+    @showMoreDescText = ko.computed =>
+      if @showMoreDesc()
+        return 'Подробнее'
+      else
+        return 'Свернуть'
     # FIXME check if we can get diffirent photos for different rooms in same hotel
     @photos = data.images
     @numPhotos = 0
@@ -210,7 +217,7 @@ class HotelResult
     #@roomSets = []
     console.log(@roomSets())
     @visible = ko.observable(true)
-    @wordDays = Utils.wordAfterNum(@duration,'день','дня','дней')
+    @wordDays = @parent.wordDays
     @visibleRoomSets = ko.computed =>
       result = []
       for roomSet in @roomSets()
@@ -338,7 +345,7 @@ class HotelResult
     el.addClass('active')
     $('#map').hide();
     $('#descr').show()
-    $(".description .text").dotdotdot({watch: 'window'})
+    #$(".description .text").dotdotdot({watch: 'window'})
     $('#boxContent').css 'height', 'auto'
 
   # Click handler for map/description in popup
@@ -373,7 +380,7 @@ class HotelResult
     el.addClass('active')
     $('.tab').hide();
     $('#hotels-popup-description').show()
-    $(".description .text").dotdotdot({watch: 'window'})
+    #$(".description .text").dotdotdot({watch: 'window'})
     $('#boxContent').css 'height', 'auto'
     SizeBox 'hotels-popup-body'
 
@@ -467,20 +474,30 @@ class HotelResult
   readMore: (context, event)->
     el = $(event.currentTarget)
     text_el = el.parent().find('.text')
-
-    if ! el.hasClass('active')
-      var_heightCSS = el.parent().find('.text').css('height');
-      var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
-      text_el.attr('rel',var_heightCSS).css('height','auto');
-      text_el.dotdotdot({watch: 'window'});
-      el.text('Свернуть');
-      el.addClass('active');
+    if @showMoreDesc()
+      text_el.find('.endDesc').show(
+        'fast',
+        ()->
+          text_el.find('.endDesc').css('display','inline')
+      )
+      @showMoreDesc(false)
     else
-      rel = el.parent().find('.text').attr('rel');
-      text_el.css('height', rel+'px');
-      el.text('Подробнее');
-      el.removeClass('active');
-      text_el.dotdotdot({watch: 'window'});
+      text_el.find('.endDesc').hide('fast')
+      @showMoreDesc(true)
+
+    #if ! el.hasClass('active')
+      #var_heightCSS = el.parent().find('.text').css('height');
+      #var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
+      #text_el.attr('rel',var_heightCSS).css('height','auto');
+      #text_el.dotdotdot({watch: 'window'});
+      #el.text('Свернуть');
+      #el.addClass('active');
+    #else
+      #rel = el.parent().find('.text').attr('rel');
+      #text_el.css('height', rel+'px');
+      #el.text('Подробнее');
+      #el.removeClass('active');
+      #text_el.dotdotdot({watch: 'window'});
     #FIXME should not be called on details page
     SizeBox('hotels-popup-body')
 
@@ -536,13 +553,11 @@ class HotelsResultSet
           duration = hotel.duration
           console.log('yes set')
         break
-    console.log('MainDuration:'+duration)
+    @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
     @minPrice = false
     @maxPrice = false
     for hotel in rawHotels
       key = hotel.hotelId
-      if !@city
-        @city = hotel.city
       if @_results[key]
         @_results[key].push hotel
         @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
@@ -563,7 +578,8 @@ class HotelsResultSet
     @numResults = ko.observable 0
 
     for key, result of @_results
-      @data.push result
+      if result.numPhotos
+        @data.push result
 
     @sortBy = ko.observable( 'minPrice')
 

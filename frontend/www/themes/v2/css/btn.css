@@ -138,6 +138,9 @@
 .btn-find:hover {
 	background-position: -122px -1061px;
 }
+.btn-find.inactive {
+	background-position: -205px -1014px;
+}
 .btnDeleteTrip {
 	width: 11px; height: 11px;
 	display: inline-block;

@@ -965,7 +965,7 @@
 	color: #1a1b1e;
 	line-height: 20px;
 	margin-bottom: 0px;
-	height: 160px;
+	height: auto;
 	overflow: inherit;
 }
 .hotel-details .description .smallMaps {
@@ -1083,7 +1083,7 @@
 	border-bottom: 1px dashed;
 }
 .descr > .left .descr-text .text {
-	height: 54px;
+	height: auto;
 }
 .descr > .left .descr-text h3 {
 	display: inline-block;
@@ -1483,6 +1483,7 @@ input.hotel-input {
 /* TIME LINE */
 .headAndTmblr {
 	overflow: hidden;
+	margin-bottom: 16px;
 }
 .headAndTmblr h1 {
 	float: left;
@@ -1492,7 +1493,6 @@ input.hotel-input {
 }
 
 .allTrip .block {
-	overflow: hidden;
 	position: relative;
 	padding-left: 65px;
 }
@@ -1511,7 +1511,7 @@ input.hotel-input {
 	width: 38px;
 	height: 38px;
 	position: absolute;
-	top: 0;
+	top: -6px;
 	right: 0px;
 	background: url(../images/slice.png) no-repeat -414px -1406px;
 	text-align: center;
@@ -1546,18 +1546,25 @@ input.hotel-input {
 	margin-left: 10px;
 	width: 37px;
 }
+
 .allTrip .block .headTitle {
 	margin-bottom: 20px;
 	width: 100%;
 	color: #252628;
 }
-
-.allTrip .block .headTitle td.allCost {
+.allTrip .block .headTitle td.icoTD {
+	width: 35px;
+}
+.allTrip .block .headTitle td.nameTD {
+	vertical-align: middle;
+}
+.allTrip .block .headTitle td.costTD {
 	text-align: right;
 	font-size: 11px; font-family: Arial;
 	text-shadow: 0px 1px 0px rgba(172,186,194, 0.6);
+	vertical-align: middle;
 }
-.allTrip .block .headTitle td.allCost .costs {
+.allTrip .block .headTitle td.costTD .costs {
 	background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #C4CDD5;
     border-radius: 4px 4px 4px 4px;
@@ -1567,11 +1574,18 @@ input.hotel-input {
     padding: 2px 5px;
     text-shadow: 0px 1px 0px rgba(172,186,194, 0.6);
 }
-.allTrip .block .headTitle td.allCost .btnDeleteTrip {
-	margin-left: 20px;
+.allTrip .block .headTitle td.removeTD {
+	width: 30px;
+	vertical-align: middle;
+	
 }
+.allTrip .block .headTitle td.removeTD .btnDeleteTrip {
+	margin-left: 19px;
+}
+
+
 .allTrip .block .info {
-	padding-bottom: 31px;
+	padding-bottom: 5px;
 }
 .allTrip .block .info > .text {
 	padding-left: 45px;
@@ -1596,7 +1610,8 @@ input.hotel-input {
 	display: inline-block;
 	font-size: 22px;
 	color: #252628;
-	text-shadow: 0px 1px 0px #FFF;	
+	text-shadow: 0px 1px 0px #FFF;
+	line-height: 24px;	
 }
 .allTrip .block .title span.f13 {
 	font-size: 13px;
@@ -1605,7 +1620,8 @@ input.hotel-input {
 	width: 100%;
 }
 .allTrip .block .hr-bg {
-	margin-bottom: -31px;
+    margin-bottom: -15px;
+    margin-top: -5px;
 }
 .allTrip .block.end .hr-bg {
 	display: none;
@@ -1636,6 +1652,7 @@ input.hotel-input {
 	color: #252628;
 	font-size: 22px;
 	padding-bottom: 70px;
+	padding-right: 112px;
 }
 .costItAll .allCost {
 	font-weight: bold;
@@ -2091,4 +2108,35 @@ input.hotel-input {
 	z-index: 200;
 	top: -71px;
 	left: 77px;
+}
+.deletePopUp {
+	background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #C4CDD5;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 0 #EAEBEC;
+    font-size: 11px;
+    padding: 2px 5px;
+    text-shadow: 0 1px 0 rgba(172, 186, 194, 0.6);
+	position: absolute;
+	z-index: 200;
+	border-radius: 5px;
+	color: #202329;
+}
+
+.allTripTable {
+	width: 100%;
+}
+.firstTd {
+	
+}
+.secondTd {
+	width: 112px;
+}
+
+#tour-buy-btn {
+	margin-top: 12px;
+}
+
+.hr-bg.first {
+	margin-top: -10px;
 }

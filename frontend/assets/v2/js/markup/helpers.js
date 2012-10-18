@@ -237,3 +237,13 @@ function miniPopUpIndex(obj) {
 function miniPopUpIndexHide() {
 	$('.miniPopUpIndex').remove();
 }
+
+function deletePopUp(obj) {
+	var _this = $(obj);
+	var pos = _this.offset();
+	$('body').prepend('<div class="deletePopUp">Удалить?</div>');
+	$('.deletePopUp').css('top', (pos.top - 28)+'px').css('left', (pos.left - 6)+'px');
+}
+function deletePopUpHide() {
+	$('.deletePopUp').remove();
+}

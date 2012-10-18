@@ -51,6 +51,7 @@ class ToursAviaResultSet extends TourEntry
     @data = {results: @results}
 
   newResults: (raw, sp)=>
+    @rawSP = sp
     result = new AviaResultSet raw
     result.injectSearchParams sp
     result.postInit()
@@ -68,6 +69,17 @@ class ToursAviaResultSet extends TourEntry
       @trigger 'next'
     @avia = true
     @results result
+
+  toBuyRequest: =>
+    result = {}
+    result.type = 'avia'
+    result.searchId = @selection().searchId
+    # FIXME FIXME FXIME
+    result.flightKey = @selection().flightKey
+    result.adults = @rawSP.adt
+    result.children = @rawSP.chd
+    result.infants = @rawSP.inf
+    return result
 
   doNewSearch: =>
     @api.search @panel.sp.url(), (data)=>
@@ -117,7 +129,7 @@ class ToursAviaResultSet extends TourEntry
   dateClass: =>
     if @rt() then 'blue-two' else 'blue-one'
 
-  dateHtml: =>
+  dateHtml: (startonly=false)=>
     # FIXME SEARCH PARAMS
     source = @selection()
     if source == null
@@ -125,6 +137,8 @@ class ToursAviaResultSet extends TourEntry
     result = '<div class="day">'
     result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
     result+='</div>'
+    if startonly
+      return result
     if @rt()
       result+= '<div class="day">'
       result+= dateUtils.formatHtmlDayShortMonth source.rtDepartureDate()
@@ -181,6 +195,7 @@ class ToursHotelsResultSet extends TourEntry
     result.tours true
     result.postInit()
     result.select = (hotel) =>
+      hotel.parent = result
       hotel.off 'back'
       hotel.on 'back', =>
         @trigger 'setActive', @
@@ -190,11 +205,14 @@ class ToursHotelsResultSet extends TourEntry
         @overviewTemplate = 'tours-overview-hotels-ticket'
         @selection roomData
         @trigger 'next'
-      @trigger 'setActive', {'data':hotel, template: 'hotels-info-template'}
+      @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
     # FIXME WTF
     @hotels = true
     @selection null
     @results result
+
+  toBuyRequest: =>
+    {}
 
   doNewSearch: =>
     @api.search @panel.sp.url(), (data)=>
@@ -206,7 +224,7 @@ class ToursHotelsResultSet extends TourEntry
 
   overviewPeople: =>
     sum = @panel.sp.overall()
-    Utils.wordAfterNum(sum,'человек','человека','человек')
+    Utils.wordAfterNum(sum,'человек','человека','человек') + ', ' + @results().wordDays
 
   numHotels: =>
     @results().data().length
@@ -221,7 +239,7 @@ class ToursHotelsResultSet extends TourEntry
 
   # tours overview
   destinationText: =>
-    "Отель в " + @searchParams.cityFull.caseDat
+    "Отель в " + @searchParams.cityFull.casePre
 
   price: =>
     if @selection() == null
@@ -319,7 +337,6 @@ class ToursResultSet
 
 
   setActive: (entry)=>
-#    console.profile('RESULTS RENDERING')
     $('#loadWrapBg').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
@@ -333,7 +350,6 @@ class ToursResultSet
       $('body').scrollTop(0)
     , 100
 
-#    console.profileEnd('RESULTS RENDERING')
 
   setActiveTimelineAvia: (entry)=>
     @setActive entry.avia.item
@@ -361,7 +377,6 @@ class ToursResultSet
     @data.splice(idx, 1)
     if item == @selection()
       @setActive @data()[0]
-    ResizeAvia()
 
   showOverview: =>
     # FIXME FIXME FIXME
@@ -370,7 +385,23 @@ class ToursResultSet
       calendarHidden: -> true
       calendarValue: ko.observable {values: []}
     @setActive {template: 'tours-overview', data: @, overview: true, panel: dummyPanel}
+    do risizeAvia
 
+  buy: =>
+    toBuy = []
+    for x in @data()
+      if x.selection()
+        toBuy.push x.toBuyRequest()
+
+    form_html = '<form id="buy-form" method="POST" action="/buy">'
+    for params, index in toBuy
+      for key,value of params
+        key = "item[#{index}][#{key}]"
+        form_html += "<input type=\"hidden\" name=\"#{key}\" value=\"#{value}\" />"
+    form_html += '</form>'
+    $('body').append(form_html)
+    $('#buy-form').submit()
+  
 # Models for tour search params,
 class DestinationSearchParams
   constructor: ->
@@ -514,4 +545,4 @@ class ToursOverviewVM
   
   dateHtml: =>
     firstResult = @resultSet.data()[0]
-    return firstResult.dateHtml()
+    return firstResult.dateHtml(true)

@@ -201,7 +201,12 @@ class AviaResult
     # Mix in events
     _.extend @, Backbone.Events
 
+    # for cloning result to best later
+    @_data = data
+    @_stacked_data = []
     flights = data.flights
+    @searchId = data.searchId
+    @flightKey = data.flightKey
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)
     @_stacked = false
@@ -277,6 +282,7 @@ class AviaResult
   push: (data) ->
     @_stacked = true
     newVoyage = new Voyage(data.flights[0], @airline)
+    @_stacked_data.push data
     if @roundTrip
       backVoyage = new Voyage(data.flights[1], @airline)
       newVoyage.push(backVoyage)
@@ -285,8 +291,6 @@ class AviaResult
         result.push(backVoyage)
         return
     @voyages.push newVoyage
-    if newVoyage.stopoverLength < @activeVoyage().stopoverLength
-      @activeVoyage newVoyage
 
   chooseStacked: (voyage) =>
     window.voyanga_debug "Choosing stacked voyage", voyage
@@ -372,10 +376,13 @@ class AviaResult
         _helper[key] = if item.stopoverLength < voyage.stopoverLength then item else voyage
       else
         _helper[key] = voyage
+    @activeVoyage(_helper[key])
     @voyages = []
     for key, item of _helper
+      if item.stopoverLength < @activeVoyage().stopoverLength
+        @activeVoyage item
       @voyages.push item
-    @activeVoyage(@voyages[0])
+
 
   # Shows popup with detailed info about given result
   showDetails: (data, event)=>
@@ -533,12 +540,16 @@ class AviaResultSet
             return
     @setBest data[0], true
           
-  setBest: (result, unconditional=false)=>
+  setBest: (oldresult, unconditional=false)=>
     # FIXME could leak as hell
-    result = _.clone result
-    result.activeVoyage = ko.observable result.activeVoyage()
+    key = oldresult.key
+    result = new AviaResult oldresult._data, @
+    for item in oldresult._stacked_data
+      result.push item
+    result.sort()
+    result.removeSimilar()
     result.best = true
-    result.key = result.key + '_optima'
+    result.key = key + '_optima'
 
     if !unconditional
       result.voyages = _.filter result.voyages, (el)->el.maxStopoverLength <60*60*3

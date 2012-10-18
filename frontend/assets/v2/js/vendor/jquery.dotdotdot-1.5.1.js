@@ -22,6 +22,7 @@
 
 	$.fn.dotdotdot = function( o )
 	{
+        return;
 		if ( this.length == 0 )
 		{
 			debug( true, 'No element found for "' + this.selector + '".' );
