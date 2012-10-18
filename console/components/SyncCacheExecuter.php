@@ -153,7 +153,6 @@ class SyncCacheExecuter extends Component
                         $result[$hash]['time'] = $item->createdAt;
                         $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
                         $flightCache->setAttributes($attr, false);
-                        CVarDumper::dump($flightCache->attributes);
                         $part = $flightCache->buildRow();
                         fwrite($fileFlight, $part);
                         unset($flightCache);
@@ -168,7 +167,6 @@ class SyncCacheExecuter extends Component
                     $flightCache = new FlightCache;
                     $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
                     $flightCache->setAttributes($attr, false);
-                    CVarDumper::dump($flightCache->attributes);
                     $part = $flightCache->buildRow();
                     $counter++;
                     fwrite($fileFlight, $part);
