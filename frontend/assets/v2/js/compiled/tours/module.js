@@ -12,6 +12,7 @@ ToursModule = (function() {
     var _this = this;
     this.panel = ko.observable(null);
     this.p = new TourPanelSet();
+    this.innerTemplate = '';
     this.controller = new ToursController(this.p.sp);
     this.controller.on('results', function(results) {
       _this.panel(results.panel);
@@ -19,6 +20,9 @@ ToursModule = (function() {
     });
     this.controller.on('index', function(results) {
       return _this.panel(_this.p);
+    });
+    this.controller.on('inner-template', function(data) {
+      return _this.innerTemplate = data;
     });
   }
 
