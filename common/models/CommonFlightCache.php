@@ -209,8 +209,8 @@ class CommonFlightCache extends CActiveRecord
             $currentSql = "`createdAt` = NOW(), ";
 
         $query = "INSERT INTO ".$this->tableName()." SET "
-            ."`dateFrom` = '".date('Y-m-d', strtotime($this->dateFrom))."', "
-            ."`dateBack` = '".date('Y-m-d', strtotime($this->dateBack))."', "
+            ."`dateFrom` = '".$this->dateFrom."', "
+            ."`dateBack` = '".$this->dateBack."', "
             ."`from` = '".$this->from."', "
             ."`to` = '".$this->to."', "
             ."`priceBestPrice` = '".$this->priceBestPrice."', "

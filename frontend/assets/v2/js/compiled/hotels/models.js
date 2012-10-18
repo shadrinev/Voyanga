@@ -325,7 +325,7 @@ HotelResult = (function() {
     this.roomSets = ko.observableArray([]);
     console.log(this.roomSets());
     this.visible = ko.observable(true);
-    this.wordDays = Utils.wordAfterNum(this.duration, 'день', 'дня', 'дней');
+    this.wordDays = this.parent.wordDays;
     this.visibleRoomSets = ko.computed(function() {
       var result, roomSet, _i, _len, _ref5;
       result = [];
