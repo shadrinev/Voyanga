@@ -8,8 +8,8 @@ $images = 'themes/v2';
       <div class="headAndTmblr">
 	<h1>Ваша поездка, сэр</h1>
 	<ul class="tmblr">
-	  <li class="active"><span class="ico-descr"></span> <a href="#descr">Таймлайн</a></li>
-	  <li><span class="ico-see-map"></span> <a href="#map">На карте</a></li>
+	  <li class="active"><span class="ico-descr"></span> <a href="javascript:void(0)">Таймлайн</a></li>
+	  <li><span class="ico-see-map"></span> <a href="javascript:void(0)">На карте</a></li>
 	</ul>
       </div>
    

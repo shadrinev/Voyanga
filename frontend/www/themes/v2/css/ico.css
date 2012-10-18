@@ -1,8 +1,19 @@
 .ico-voyasha {
 	display:inline-block;
-	width: 39px; height: 57px;
+	width: 39px; height: 58px;
 	vertical-align: middle;
-	background: url(../images/slice.png) no-repeat 0px -476px;
+	background: url(../images/voyasha.png) no-repeat 0px 0px;
+	transition:width 1s, height 1s;
+	-moz-transition:width 1s, height 1s, -moz-transform 1s; /* Firefox 4 */
+	-webkit-transition:width 1s, height 1s, -webkit-transform 1s; /* Safari and Chrome */
+	-o-transition:width 1s, height 1s, -o-transform 1s; /* Opera */
+}
+.ico-voyasha:hover {
+	background-position: -39px 0px;
+	transform:rotate(180deg);
+	-moz-transform:rotate(180deg); /* Firefox 4 */
+	-webkit-transform:rotate(180deg); /* Safari and Chrome */
+	-o-transform:rotate(180deg); /* Opera */
 }
 .recommended-ticket .ticket .date-time-city .how-long .ico-path {
 	background: url(../images/slice.png) no-repeat -37px -33px;
