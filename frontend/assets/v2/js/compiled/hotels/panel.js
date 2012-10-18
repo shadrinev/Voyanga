@@ -55,6 +55,9 @@ HotelsPanel = (function(_super) {
       result = _this.city() && cin && cout;
       return result;
     });
+    this.formNotFilled = ko.computed(function() {
+      return !_this.formFilled();
+    });
     this.maximizedCalendar = ko.computed(function() {
       return _this.city().length > 0;
     });
@@ -103,6 +106,9 @@ HotelsPanel = (function(_super) {
   };
 
   HotelsPanel.prototype.navigateToNewSearch = function() {
+    if (this.formNotFilled()) {
+      return;
+    }
     this.handlePanelSubmit();
     return this.minimizedCalendar(true);
   };

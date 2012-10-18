@@ -33,7 +33,7 @@
         <span data-bind="template: {name: passengers.template, data: passengers}"></span>
       </td>
       <td class="btnTD">
-        <a class="btn-find" data-bind="click: navigateToNewSearch, visible: formFilled">Найти</a>
+        <a class="btn-find" data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}">Найти</a>
       </td>
     </tr>
   </table>

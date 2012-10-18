@@ -33,6 +33,9 @@ class HotelsPanel extends SearchPanel
       result = @city() && cin && cout
       return result
 
+    @formNotFilled = ko.computed =>
+      !@formFilled()
+
     @maximizedCalendar = ko.computed =>
       @city().length > 0
 
@@ -68,6 +71,8 @@ class HotelsPanel extends SearchPanel
 
   # FIXME decouple!
   navigateToNewSearch: ->
+    if (@formNotFilled())
+      return
     @handlePanelSubmit()
     @minimizedCalendar(true)
 

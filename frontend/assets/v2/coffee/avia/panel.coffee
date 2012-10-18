@@ -47,6 +47,9 @@ class AviaPanel extends SearchPanel
        result = result && @rtFromChosen()
       return result
 
+    @formNotFilled = ko.computed =>
+      !@formFilled()
+
     @maximizedCalendar = ko.computed =>
       @departureCity() && @arrivalCity()
 
@@ -122,6 +125,8 @@ class AviaPanel extends SearchPanel
 
   # FIXME decouple!
   navigateToNewSearch: ->
+    if (@formNotFilled())
+      return
     @handlePanelSubmit()
     @minimizedCalendar(true)
 

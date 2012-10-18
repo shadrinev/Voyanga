@@ -64,6 +64,9 @@ AviaPanel = (function(_super) {
       }
       return result;
     });
+    this.formNotFilled = ko.computed(function() {
+      return !_this.formFilled();
+    });
     this.maximizedCalendar = ko.computed(function() {
       return _this.departureCity() && _this.arrivalCity();
     });
@@ -158,6 +161,9 @@ AviaPanel = (function(_super) {
   };
 
   AviaPanel.prototype.navigateToNewSearch = function() {
+    if (this.formNotFilled()) {
+      return;
+    }
     this.handlePanelSubmit();
     return this.minimizedCalendar(true);
   };
