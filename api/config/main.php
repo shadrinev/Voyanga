@@ -69,7 +69,7 @@ return CMap::mergeArray(
 
             'sharedMemory' => array(
                 'class' => 'site.frontend.components.SharedMemory',
-                'maxSize' =>  4 * 1024, //2*1024*1024
+                'maxSize' =>  3 * 1024, //2*1024*1024
             ),
 
             'errorHandler' => array(
