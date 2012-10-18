@@ -165,7 +165,6 @@ class SyncCacheExecuter extends Component
                         continue;
                     $result[$hash]['time'] = $item->createdAt;
                     $flightCache = new FlightCache;
-                    $flightCache->scenario = 'restore';
                     $flightCache->setAttributes($attr, false);
                     CVarDumper::dump($flightCache->attributes);
                     $part = $flightCache->buildRow();

@@ -44,26 +44,7 @@ class CommonFlightCache extends CActiveRecord
         // will receive user inputs.
         return array(
             array('from, to, priceBestPrice, durationBestPrice, priceBestTime, durationBestTime, priceBestPriceTime, durationBestPriceTime', 'numerical', 'integerOnly'=>false),
-            array('from,
-                  to,
-                  dateFrom,
-                  dateBack,
-                  priceBestPrice,
-                  durationBestPrice,
-                  validatorBestPrice,
-                  transportBestPrice,
-                  priceBestTime,
-                  durationBestTime,
-                  validatorBestTime,
-                  transportBestTime,
-                  priceBestPriceTime,
-                  durationBestPriceTime,
-                  validatorBestPriceTime,
-                  transportBestPriceTime,
-                  createdAt',
-                  'safe',
-                  'on' => 'restore'
-            ),
+            array('createdAt, updatedAt', 'safe'),
             array('from, to, dateFrom, dateBack, priceBestPrice, durationBestPrice,  validatorBestPrice, transportBestPrice,  validatorBestPriceTime, transportBestPriceTime, validatorBestTime, transportBestTime, validatorBestPrice, transportBestPrice, priceBestTime, durationBestTime, validatorBestTime, transportBestTime, priceBestPriceTime, durationBestPriceTime, validatorBestPriceTime, transportBestPriceTime', 'safe', 'on'=>'search'),
         );
     }
