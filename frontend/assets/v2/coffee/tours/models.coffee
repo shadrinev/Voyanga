@@ -361,7 +361,6 @@ class ToursResultSet
     @setActive entry.hotel.item
 
   nextEntry: =>
-    console.log "WHOA"
     for x in @data()
       if !x.selection()
         @setActive x
@@ -373,7 +372,6 @@ class ToursResultSet
     if @data().length <2
       return
     idx = @data.indexOf(item)
-    console.log @data.indexOf(item), item, @selection()
 
     if idx ==-1
       return
@@ -485,7 +483,6 @@ class TourSearchParams extends SearchParams
     for i in [2..data.length] by 3
       if data[i] == 'rooms'
         break
-      console.log data[i], data[i+1], data[i+2]
       destination = new DestinationSearchParams()
       destination.city(data[i])
       destination.dateFrom(moment(data[i+1], 'D.M.YYYY').toDate())
@@ -502,7 +499,6 @@ class TourSearchParams extends SearchParams
 
   fromObject: (data)->
     window.voyanga_debug "Restoring TourSearchParams from object"
-    console.log data
 
     _.each data.destinations, (destination) ->
       destination = new DestinationSearchParams()
@@ -522,7 +518,6 @@ class TourSearchParams extends SearchParams
     if @data().length <2
       return
     idx = @data.indexOf(item)
-    console.log @data.indexOf(item), item, @selection()
 
     if idx ==-1
       return

@@ -582,7 +582,6 @@ ToursResultSet = (function() {
 
   ToursResultSet.prototype.nextEntry = function() {
     var x, _i, _len, _ref;
-    console.log("WHOA");
     _ref = this.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       x = _ref[_i];
@@ -601,7 +600,6 @@ ToursResultSet = (function() {
       return;
     }
     idx = this.data.indexOf(item);
-    console.log(this.data.indexOf(item), item, this.selection());
     if (idx === -1) {
       return;
     }
@@ -770,7 +768,6 @@ TourSearchParams = (function(_super) {
       if (data[i] === 'rooms') {
         break;
       }
-      console.log(data[i], data[i + 1], data[i + 2]);
       destination = new DestinationSearchParams();
       destination.city(data[i]);
       destination.dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
@@ -789,7 +786,6 @@ TourSearchParams = (function(_super) {
 
   TourSearchParams.prototype.fromObject = function(data) {
     window.voyanga_debug("Restoring TourSearchParams from object");
-    console.log(data);
     _.each(data.destinations, function(destination) {
       destination = new DestinationSearchParams();
       destination.city(destination.city);
@@ -811,7 +807,6 @@ TourSearchParams = (function(_super) {
       return;
     }
     idx = this.data.indexOf(item);
-    console.log(this.data.indexOf(item), item, this.selection());
     if (idx === -1) {
       return;
     }
