@@ -116,9 +116,8 @@ class SyncCacheExecuter extends Component
         echo "Inserted hotels: ".($afterHotels-$beforeHotels)."\n\n";
 
         $stat = Yii::app()->db->getStats();
-        echo "\n";
-        //unlink($this->fullFlightPath);
-        //unlink($this->fullHotelPath);
+        unlink($this->fullFlightPath);
+        unlink($this->fullHotelPath);
     }
 
     public function merge()
