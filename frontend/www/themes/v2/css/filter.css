@@ -23,8 +23,9 @@
     font-family: Arial;
     font-size: 11px;
     line-height: 13px;
-    margin-left: 4px;
     vertical-align: middle;
+    color: #2174A3;
+    border-bottom: 1px dashed ;
 }
 .innerFilter {
 	position: relative;

@@ -199,6 +199,21 @@ Utils = {
     re = new RegExp('[а-яА-ЯёЁ]', 'gi');
     endLen = (text.replace(re, '')).length;
     return startLen - endLen;
+  },
+  toBuySubmit: function(toBuy) {
+    var form_html, index, key, params, value, _i, _len;
+    form_html = '<form id="buy-form" method="POST" action="/buy">';
+    for (index = _i = 0, _len = toBuy.length; _i < _len; index = ++_i) {
+      params = toBuy[index];
+      for (key in params) {
+        value = params[key];
+        key = "item[" + index + "][" + key + "]";
+        form_html += "<input type=\"hidden\" name=\"" + key + "\" value=\"" + value + "\" />";
+      }
+    }
+    form_html += '</form>';
+    $('body').append(form_html);
+    return $('#buy-form').submit();
   }
 };
 

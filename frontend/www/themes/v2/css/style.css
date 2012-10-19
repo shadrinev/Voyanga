@@ -410,7 +410,7 @@
 .left-block {
 	position: absolute; 
 	top:0px; left: 0px; 
-	min-width: 245px; height: 100%;
+	min-width: 220px; height: 100%;
 	background: #f4f7f9;
 	z-index: 5;	
 }
@@ -460,7 +460,7 @@
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -291px transparent;
 }
 .my-trip-list .items a.active {
-    background: url("../images/slice.png") no-repeat scroll right -27px transparent;
+    background: url("../images/leftLiActive.png") no-repeat scroll right 0px transparent;
     margin-bottom: 1px;
     margin-left: -12px;
     margin-right: -10px;
@@ -516,7 +516,7 @@
 	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -639px transparent;
 }
 .my-trip-list .items a:hover.active {
-	background: url("../images/slice.png") no-repeat scroll right -27px transparent;
+	background: url("../images/leftLiActive.png") no-repeat scroll right 0px transparent;
     margin-left: -12px;
     margin-right: -10px;
     padding-left: 12px;
@@ -527,22 +527,29 @@
 .my-trip-list .items a:hover.active .date.blue-two, .my-trip-list .items a:hover.active .date.orange-two {
 	right: 20px !important;
 }
+.my-trip-list .items a .keys .deleteTours {
+	height: 16px;
+	left: 4px;
+	position: absolute;
+	top: 20px;
+	width: 16px;
+}
 .my-trip-list .items a .keys {
 	float: left;
+	position: relative;
+	margin-right: 7px;
+	width: 28px;
 }
 .my-trip-list .items a.fly .keys {
 	display: block;
-	width: 35px;
 	height: 58px;
 }
 .my-trip-list .items a.hotel .keys {
 	display: block;
-	width: 35px;
 	height: 58px;
 }
 .my-trip-list .items.end .last .keys {
 	display: block;
-	width: 35px;
 	height: 58px;
 }
 .my-trip-list .items a .path {
@@ -572,6 +579,7 @@
 	color: #1d222b;
 	padding-top: 20px;
 	height: 39px;
+	white-space: nowrap;
 }
 .my-trip-list .items a .path .alpha {
 	background: url(../images/gradient-left.png) repeat-y;
@@ -640,7 +648,41 @@
 	background: url(../images/slice.png) no-repeat -175px -440px;
 	text-shadow: 0px 1px 0px #f55407;
 }
-
+/* */
+.smallBlock .my-trip-list .items .fly {
+	height: 71px;
+}
+.smallBlock .my-trip-list .items .fly .keys {
+	height: 71px;
+}
+.smallBlock .my-trip-list .items .fly .keys {
+	height: 71px;
+}
+.smallBlock .my-trip-list .items .fly .path .where {
+	white-space: normal;
+}
+.smallBlock .my-trip-list .items .fly .path .where span {
+	display: block;
+	white-space: nowrap;
+}
+.smallBlock .my-trip-list .items .fly.active {
+    background: url("../images/leftLiActive.png") no-repeat scroll right -200px transparent;
+}
+.smallBlock .my-trip-list .items.first a:hover .keys:hover {
+	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -986px transparent;
+}
+.smallBlock .my-trip-list .items a:hover .keys:hover {
+	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -1057px transparent;
+}
+.hotel-left-short {
+	display: none;
+}
+.smallBlock .hotel-left-short {
+	display: block;
+}
+.smallBlock .hotel-left-long {
+	display: none;
+}
 /* MY TRIP LIST END */
 
 
@@ -658,6 +700,7 @@
 .finish-result.voyasha td {
 	padding-top: 6px;
 	padding-bottom: 6px;
+	line-height: 16px;
 }
 .finish-result.voyasha tr:hover {
 	cursor: pointer;
@@ -701,18 +744,23 @@
 	margin-top: 18px;	
 	min-height: 68px;
 	margin-bottom: 4px;
+	line-height: 18px;
 }
 .voyasha-text .ico-voyasha {
 	position: absolute;
-	top: 10px;
+	top: 5px;
 }
 .voyasha-text .inline-block {
-	width: 195px;
 	margin-left: 55px;
+	padding-right: 10px;
+}
+.voyasha-text .inline-block h3 {
+	line-height: 21px;
 }
 .voyasha-slider {
 	margin-top: 30px; margin-bottom: 25px;
 }
+.div-filter h4 div {margin-right: 4px;}
 /* CONTENT */
 
 
@@ -1465,7 +1513,14 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
 	z-index: 800;
 }
 input.hotel-input {
-	border: none; background: url(../images/bg-search-hotel-filter.png) no-repeat 0px 1px; width: 183px; height: 27px; padding-left: 5px; font-size: 13px;
+    background: url("../images/bg-search-hotel-filter.png") no-repeat scroll 0 1px transparent;
+    border: medium none;
+    border-radius: 6px 6px 6px 6px;
+    font-size: 13px;
+    height: 27px;
+    padding-left: 5px;
+    width: 100%;
+    max-width: 183px;
 }
 
 /* MAPS */
@@ -2166,4 +2221,8 @@ input.hotel-input {
 
 .hr-bg.first {
 	margin-top: -10px;
+}
+.hideTitle {
+	display: inline-block;
+	
 }

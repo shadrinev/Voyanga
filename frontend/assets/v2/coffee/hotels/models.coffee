@@ -38,7 +38,7 @@ class RoomSet
     @price = Math.ceil(data.rubPrice)
     # Used in tours
     @savings = 0
-
+    @resultId = data.resultId
     @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
     @cancelRules = ko.observable(false)
@@ -135,6 +135,7 @@ class HotelResult
     _.extend @, Backbone.Events
     @tours =  parent.tours
     @hotelId = data.hotelId
+    @cacheId = parent.cacheId
     @activeResultId = ko.observable 0 
     @hotelName = data.hotelName
     @address = data.address
@@ -417,7 +418,6 @@ class HotelResult
           @initFullInfo()
           for ind,roomSet of data.hotel.details
             set = new RoomSet roomSet, @, @duration
-            set.resultId = roomSet.resultId
             @roomCombinations.push set
           cancelObjs = {}
           for ind,roomSet of data.hotel.oldHotels
@@ -519,7 +519,25 @@ class HotelResult
       return
     if @tours()
       @activeResultId room.resultId
-    @trigger 'select', {roomSet: room, hotel: @}
+      @trigger 'select', {roomSet: room, hotel: @}
+    else
+      result = {}
+      result.type = 'hotel'
+      result.searchId = @cacheId
+      # FIXME FIXME FXIME
+      result.searchKey = room.resultId
+      result.adults = 0
+      result.age = false
+      result.cots = 0
+      for room in @parent.rawSP.rooms
+        result.adults += room.adultCount*1
+        # FIXME looks like this could be array
+        if room.childAge
+          result.age = room.childAgeage
+      
+        result.cots += room.cots*1
+      Utils.toBuySubmit [result]
+
 
   smallMapUrl: =>
       base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
@@ -537,6 +555,9 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawHotels, @searchParams, @activeHotel) ->
     @_results = {}
+    # FIXME FIXME FIXEM
+    @rawSP = @searchParams
+    @cacheId = @searchParams.cacheId
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)

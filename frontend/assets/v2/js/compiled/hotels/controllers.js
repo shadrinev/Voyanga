@@ -49,8 +49,8 @@ HotelsController = (function() {
       this.render('e404');
       return;
     }
+    data.searchParams.cacheId = data.cacheId;
     stacked = new HotelsResultSet(data.hotels, data.searchParams);
-    stacked.cacheId = data.cacheId;
     stacked.postInit();
     this.results = ko.observable(stacked);
     return this.render('results', {

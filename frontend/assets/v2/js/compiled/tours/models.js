@@ -308,10 +308,6 @@ ToursHotelsResultSet = (function(_super) {
 
   function ToursHotelsResultSet(raw, searchParams) {
     this.searchParams = searchParams;
-    this.afterRender = __bind(this.afterRender, this);
-
-    this.beforeRender = __bind(this.beforeRender, this);
-
     this.timelineEnd = __bind(this.timelineEnd, this);
 
     this.timelineStart = __bind(this.timelineStart, this);
@@ -376,8 +372,6 @@ ToursHotelsResultSet = (function(_super) {
         _this.activeHotel(hotel.hotelId);
         _this.overviewTemplate = 'tours-overview-hotels-ticket';
         _this.selection(roomData);
-        hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
-        hotel.parent.pagesLoad = hotel.parent.showParts();
         return _this.trigger('next');
       });
       return _this.trigger('setActive', {
@@ -462,34 +456,6 @@ ToursHotelsResultSet = (function(_super) {
 
   ToursHotelsResultSet.prototype.timelineEnd = function() {
     return this.results().checkOut;
-  };
-
-  ToursHotelsResultSet.prototype.beforeRender = function() {
-    console.log('beforeRender hotels');
-    if (this.results()) {
-      this.results().toursOpened = true;
-      if (this.activeHotel()) {
-        this.results().filters.setConfig(this.results().filtersConfig);
-        return this.results().showParts(this.results().pagesLoad);
-      } else {
-        return this.results().postFilters();
-      }
-    }
-  };
-
-  ToursHotelsResultSet.prototype.afterRender = function() {
-    var _this = this;
-    if (this.results()) {
-      if (this.activeHotel()) {
-        return window.setTimeout(function() {
-          ifHeightMinAllBody();
-          scrolShowFilter();
-          if ($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length) {
-            return Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent());
-          }
-        }, 50);
-      }
-    }
   };
 
   return ToursHotelsResultSet;
@@ -604,19 +570,13 @@ ToursResultSet = (function() {
     if (entry.overview) {
       $('.btn-timeline-and-condition').hide();
     }
-    if (entry.beforeRender) {
-      entry.beforeRender();
-    }
     this.trigger('inner-template', entry.template);
     return window.setTimeout(function() {
-      if (entry.afterRender) {
-        entry.afterRender();
-      }
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
       ResizeAvia();
       $('#loadWrapBg').hide();
-      return Utils.scrollTo(0, false);
+      return $('body').scrollTop(0);
     }, 100);
   };
 
@@ -676,7 +636,7 @@ ToursResultSet = (function() {
       overview: true,
       panel: dummyPanel
     });
-    return ResizeAvia();
+    return resizeAvia();
   };
 
   ToursResultSet.prototype.buy = function() {
