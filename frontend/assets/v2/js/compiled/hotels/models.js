@@ -88,6 +88,7 @@ RoomSet = (function() {
 
     this.price = Math.ceil(data.rubPrice);
     this.savings = 0;
+    this.resultId = data.resultId;
     this.pricePerNight = Math.ceil(this.price / duration);
     this.visible = ko.observable(true);
     this.cancelRules = ko.observable(false);
@@ -242,6 +243,7 @@ HotelResult = (function() {
     _.extend(this, Backbone.Events);
     this.tours = parent.tours;
     this.hotelId = data.hotelId;
+    this.cacheId = parent.cacheId;
     this.activeResultId = ko.observable(0);
     this.hotelName = data.hotelName;
     this.address = data.address;
@@ -358,7 +360,6 @@ HotelResult = (function() {
     var set,
       _this = this;
     set = new RoomSet(data, this, this.duration);
-    set.resultId = data.resultId;
     if (this.roomSets.length === 0) {
       this.cheapest = set.price;
       this.cheapestSet = set;
@@ -558,7 +559,6 @@ HotelResult = (function() {
         for (ind in _ref) {
           roomSet = _ref[ind];
           set = new RoomSet(roomSet, _this, _this.duration);
-          set.resultId = roomSet.resultId;
           _this.roomCombinations.push(set);
         }
         cancelObjs = {};
@@ -690,6 +690,7 @@ HotelsResultSet = (function() {
     this.select = __bind(this.select, this);
 
     this._results = {};
+    this.cacheId = this.searchParams.cacheId;
     this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);

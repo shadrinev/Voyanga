@@ -152,7 +152,7 @@ ToursAviaResultSet = (function(_super) {
     result = {};
     result.type = 'avia';
     result.searchId = this.selection().searchId;
-    result.flightKey = this.selection().flightKey;
+    result.searchKey = this.selection().flightKey();
     result.adults = this.rawSP.adt;
     result.children = this.rawSP.chd;
     result.infants = this.rawSP.inf;
@@ -205,7 +205,7 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.destinationText = function() {
-    return this.results().departureCity + ' &rarr; ' + this.results().arrivalCity;
+    return "<span class='left-avia-city'>" + this.results().departureCity + "</span>" + ' &rarr; ' + "<span class='left-avia-city'>" + this.results().arrivalCity + "</span>";
   };
 
   ToursAviaResultSet.prototype.additionalText = function() {
@@ -298,8 +298,8 @@ ToursHotelsResultSet = (function(_super) {
 
   __extends(ToursHotelsResultSet, _super);
 
-  function ToursHotelsResultSet(raw, searchParams) {
-    this.searchParams = searchParams;
+  function ToursHotelsResultSet(raw, rawSP) {
+    this.rawSP = rawSP;
     this.timelineEnd = __bind(this.timelineEnd, this);
 
     this.timelineStart = __bind(this.timelineStart, this);
@@ -334,7 +334,7 @@ ToursHotelsResultSet = (function(_super) {
     this.api = new HotelsAPI;
     this.panel = new HotelsPanel();
     this.panel.handlePanelSubmit = this.doNewSearch;
-    this.panel.sp.fromObject(this.searchParams);
+    this.panel.sp.fromObject(this.rawSP);
     this.panel.original_template = this.panel.template;
     this.overviewTemplate = 'tours-overview-hotels-no-selection';
     this.template = 'hotels-results';
@@ -344,7 +344,7 @@ ToursHotelsResultSet = (function(_super) {
     this.data = {
       results: this.results
     };
-    this.newResults(raw, this.searchParams);
+    this.newResults(raw, this.rawSP);
   }
 
   ToursHotelsResultSet.prototype.newResults = function(data, sp) {
@@ -378,12 +378,30 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.toBuyRequest = function() {
-    return {};
+    var result, room, _i, _len, _ref;
+    result = {};
+    result.type = 'hotel';
+    result.searchId = this.selection().hotel.cacheId;
+    result.searchKey = this.selection().roomSet.resultId;
+    result.adults = 0;
+    result.age = false;
+    result.cots = 0;
+    _ref = this.rawSP.rooms;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      room = _ref[_i];
+      result.adults += room.adultCount * 1;
+      if (room.childAge) {
+        result.age = room.childAgeage;
+      }
+      result.cots += room.cots * 1;
+    }
+    return result;
   };
 
   ToursHotelsResultSet.prototype.doNewSearch = function() {
     var _this = this;
     return this.api.search(this.panel.sp.url(), function(data) {
+      data.searchParams.cacheId = data.cacheId;
       return _this.newResults(data.hotels, data.searchParams);
     });
   };
@@ -411,7 +429,7 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.destinationText = function() {
-    return "Отель в " + this.searchParams.cityFull.casePre;
+    return "<span class='hotel-left-long'>Отель в " + this.rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + this.rawSP.cityFull.caseNom + "</span>";
   };
 
   ToursHotelsResultSet.prototype.price = function() {
@@ -485,6 +503,7 @@ ToursResultSet = (function() {
       if (variant.flights) {
         result = new ToursAviaResultSet(variant.flights.flightVoyages, variant.searchParams);
       } else {
+        variant.searchParams.cacheId = variant.cacheId;
         result = new ToursHotelsResultSet(variant.hotels, variant.searchParams);
       }
       this.data.push(result);
@@ -626,7 +645,7 @@ ToursResultSet = (function() {
       overview: true,
       panel: dummyPanel
     });
-    return resizeAvia();
+    return ResizeAvia();
   };
 
   ToursResultSet.prototype.buy = function() {

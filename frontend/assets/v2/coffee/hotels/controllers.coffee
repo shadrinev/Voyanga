@@ -29,8 +29,9 @@ class HotelsController
       @render 'e404'
       return
 
+    # FIXME REALLY RETARDED
+    data.searchParams.cacheId = data.cacheId
     stacked = new HotelsResultSet data.hotels, data.searchParams
-    stacked.cacheId = data.cacheId
     stacked.postInit()
     @render 'results', {'results' :ko.observable(stacked)}
 

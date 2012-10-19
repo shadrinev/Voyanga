@@ -41,6 +41,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour
     for part in flight.flightParts
       @parts.push new FlightPart(part)
 
+    @flightKey = flight.flightKey
     @stopoverLength = 0
     @maxStopoverLength = 0 
     @direct = @parts.length == 1
@@ -206,7 +207,6 @@ class AviaResult
     @_stacked_data = []
     flights = data.flights
     @searchId = data.searchId
-    @flightKey = data.flightKey
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)
     @_stacked = false
@@ -220,9 +220,10 @@ class AviaResult
     @freeWeight = data.freeWeight
     @freeWeight = '$' if @freeWeight == '0'
     @freeWeightText = data.freeWeightDescription
-
+    flights[0].flightKey = data.flightKey
     @activeVoyage = new Voyage(flights[0], @airline)
     if @roundTrip
+      flights[1].flightKey = data.flightKey
       @activeVoyage.push new Voyage(flights[1], @airline)
     @voyages = []
     @voyages.push @activeVoyage
@@ -255,6 +256,12 @@ class AviaResult
                       field
                   )(name)
 
+  flightKey: =>
+    if @roundTrip
+      return @activeVoyage().activeBackVoyage().flightKey
+    return @activeVoyage().flightKey
+
+
   isActive: ->
     console.log @parent.selected_key(), @key, @parent.selected_best()
     if @parent.selected_best()
@@ -281,9 +288,11 @@ class AviaResult
 
   push: (data) ->
     @_stacked = true
+    data.flights[0].flightKey = data.flightKey
     newVoyage = new Voyage(data.flights[0], @airline)
     @_stacked_data.push data
     if @roundTrip
+      data.flights[1].flightKey = data.flightKey
       backVoyage = new Voyage(data.flights[1], @airline)
       newVoyage.push(backVoyage)
       result = _.find @voyages, (voyage) -> voyage.hash()==newVoyage.hash()
@@ -431,7 +440,6 @@ class AviaResultSet
        if _interlines[key]
         if _interlines[key].price > flightVoyage.price
           _interlines[key] = flightVoyage
-        console.log "FILTERED INTER"
        else
           _interlines[key] = flightVoyage
 
@@ -480,6 +488,15 @@ class AviaResultSet
   
 
   select: (el) =>
+    result = {}
+    result.type = 'avia'
+    result.searchId = @selection().searchId
+    # FIXME FIXME FXIME
+    result.searchKey = @selection().flightKey()
+    result.adults = @rawSP.adt
+    result.children = @rawSP.chd
+    result.infants = @rawSP.inf
+    return result
 
 
   postInit: =>

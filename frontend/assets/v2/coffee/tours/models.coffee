@@ -5,6 +5,7 @@ class TourEntry
 
   isAvia: =>
     return @avia
+
   isHotel: =>
     return @hotels
 
@@ -75,7 +76,7 @@ class ToursAviaResultSet extends TourEntry
     result.type = 'avia'
     result.searchId = @selection().searchId
     # FIXME FIXME FXIME
-    result.flightKey = @selection().flightKey
+    result.searchKey = @selection().flightKey()
     result.adults = @rawSP.adt
     result.children = @rawSP.chd
     result.infants = @rawSP.inf
@@ -116,7 +117,7 @@ class ToursAviaResultSet extends TourEntry
   # End overview VM
 
   destinationText: =>
-    @results().departureCity + ' &rarr; ' + @results().arrivalCity   
+    "<span class='left-avia-city'>" + @results().departureCity + "</span>" + ' &rarr; ' + "<span class='left-avia-city'>" + @results().arrivalCity + "</span>"
 
   additionalText: =>
     if @selection() == null
@@ -173,12 +174,12 @@ class ToursAviaResultSet extends TourEntry
     @results().roundTrip
        
 class ToursHotelsResultSet extends TourEntry
-  constructor: (raw, @searchParams)->
+  constructor: (raw, @rawSP)->
     super
     @api = new HotelsAPI
     @panel = new HotelsPanel()
     @panel.handlePanelSubmit = @doNewSearch
-    @panel.sp.fromObject @searchParams
+    @panel.sp.fromObject @rawSP
     @panel.original_template = @panel.template
     @overviewTemplate = 'tours-overview-hotels-no-selection'
     @template = 'hotels-results'
@@ -188,7 +189,7 @@ class ToursHotelsResultSet extends TourEntry
     @results = ko.observable()
     @data = {results: @results}
 
-    @newResults raw, @searchParams
+    @newResults raw, @rawSP
 
   newResults: (data, sp)=>
     result = new HotelsResultSet data, sp, @activeHotel
@@ -212,10 +213,27 @@ class ToursHotelsResultSet extends TourEntry
     @results result
 
   toBuyRequest: =>
-    {}
+    result = {}
+    result.type = 'hotel'
+    result.searchId = @selection().hotel.cacheId
+    # FIXME FIXME FXIME
+    result.searchKey = @selection().roomSet.resultId
+    result.adults = 0
+    result.age = false
+    result.cots = 0
+    for room in @rawSP.rooms
+      result.adults += room.adultCount*1
+      # FIXME looks like this could be array
+      if room.childAge
+        result.age = room.childAgeage
+      
+      result.cots += room.cots*1
+    return result
+
 
   doNewSearch: =>
     @api.search @panel.sp.url(), (data)=>
+      data.searchParams.cacheId = data.cacheId
       @newResults data.hotels, data.searchParams
 
   # Overview VM
@@ -239,7 +257,7 @@ class ToursHotelsResultSet extends TourEntry
 
   # tours overview
   destinationText: =>
-    "Отель в " + @searchParams.cityFull.casePre
+    "<span class='hotel-left-long'>Отель в " + @rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + @rawSP.cityFull.caseNom + "</span>"
 
   price: =>
     if @selection() == null
@@ -286,6 +304,7 @@ class ToursResultSet
       if variant.flights
         result =  new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
       else
+        variant.searchParams.cacheId = variant.cacheId
         result = new ToursHotelsResultSet variant.hotels, variant.searchParams
       @data.push result
       result.on 'setActive', (entry)=>
@@ -386,7 +405,7 @@ class ToursResultSet
       calendarHidden: -> true
       calendarValue: ko.observable {values: []}
     @setActive {template: 'tours-overview', data: @, overview: true, panel: dummyPanel}
-    do resizeAvia
+    do ResizeAvia
 
   buy: =>
     toBuy = []

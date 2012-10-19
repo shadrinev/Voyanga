@@ -56,6 +56,7 @@ Voyage = (function() {
       part = _ref[_i];
       this.parts.push(new FlightPart(part));
     }
+    this.flightKey = flight.flightKey;
     this.stopoverLength = 0;
     this.maxStopoverLength = 0;
     this.direct = this.parts.length === 1;
@@ -281,12 +282,13 @@ AviaResult = (function() {
 
     this.chooseStacked = __bind(this.chooseStacked, this);
 
+    this.flightKey = __bind(this.flightKey, this);
+
     _.extend(this, Backbone.Events);
     this._data = data;
     this._stacked_data = [];
     flights = data.flights;
     this.searchId = data.searchId;
-    this.flightKey = data.flightKey;
     this.price = Math.ceil(data.price);
     this._stacked = false;
     this.roundTrip = flights.length === 2;
@@ -301,8 +303,10 @@ AviaResult = (function() {
       this.freeWeight = '$';
     }
     this.freeWeightText = data.freeWeightDescription;
+    flights[0].flightKey = data.flightKey;
     this.activeVoyage = new Voyage(flights[0], this.airline);
     if (this.roundTrip) {
+      flights[1].flightKey = data.flightKey;
       this.activeVoyage.push(new Voyage(flights[1], this.airline));
     }
     this.voyages = [];
@@ -336,6 +340,13 @@ AviaResult = (function() {
       })(name);
     }
   }
+
+  AviaResult.prototype.flightKey = function() {
+    if (this.roundTrip) {
+      return this.activeVoyage().activeBackVoyage().flightKey;
+    }
+    return this.activeVoyage().flightKey;
+  };
 
   AviaResult.prototype.isActive = function() {
     console.log(this.parent.selected_key(), this.key, this.parent.selected_best());
@@ -380,9 +391,11 @@ AviaResult = (function() {
   AviaResult.prototype.push = function(data) {
     var backVoyage, newVoyage, result;
     this._stacked = true;
+    data.flights[0].flightKey = data.flightKey;
     newVoyage = new Voyage(data.flights[0], this.airline);
     this._stacked_data.push(data);
     if (this.roundTrip) {
+      data.flights[1].flightKey = data.flightKey;
       backVoyage = new Voyage(data.flights[1], this.airline);
       newVoyage.push(backVoyage);
       result = _.find(this.voyages, function(voyage) {
@@ -609,7 +622,6 @@ AviaResultSet = (function() {
         if (_interlines[key].price > flightVoyage.price) {
           _interlines[key] = flightVoyage;
         }
-        console.log("FILTERED INTER");
       } else {
         _interlines[key] = flightVoyage;
       }
@@ -659,7 +671,17 @@ AviaResultSet = (function() {
     }
   };
 
-  AviaResultSet.prototype.select = function(el) {};
+  AviaResultSet.prototype.select = function(el) {
+    var result;
+    result = {};
+    result.type = 'avia';
+    result.searchId = this.selection().searchId;
+    result.searchKey = this.selection().flightKey();
+    result.adults = this.rawSP.adt;
+    result.children = this.rawSP.chd;
+    result.infants = this.rawSP.inf;
+    return result;
+  };
 
   AviaResultSet.prototype.postInit = function() {
     return this.filters = new AviaFiltersT(this);

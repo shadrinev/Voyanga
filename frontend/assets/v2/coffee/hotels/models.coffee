@@ -42,7 +42,7 @@ class RoomSet
     @price = Math.ceil(data.rubPrice)
     # Used in tours
     @savings = 0
-
+    @resultId = data.resultId
     @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
     @cancelRules = ko.observable(false)
@@ -139,6 +139,7 @@ class HotelResult
     _.extend @, Backbone.Events
     @tours =  parent.tours
     @hotelId = data.hotelId
+    @cacheId = parent.cacheId
     @activeResultId = ko.observable 0 
     @hotelName = data.hotelName
     @address = data.address
@@ -237,7 +238,6 @@ class HotelResult
 
   push: (data) ->
     set = new RoomSet data, @, @duration
-    set.resultId = data.resultId
     if @roomSets.length == 0
       @cheapest = set.price
       @cheapestSet = set  
@@ -414,7 +414,6 @@ class HotelResult
           @initFullInfo()
           for ind,roomSet of data.hotel.details
             set = new RoomSet roomSet, @, @duration
-            set.resultId = roomSet.resultId
             @roomCombinations.push set
           cancelObjs = {}
           for ind,roomSet of data.hotel.oldHotels
@@ -532,6 +531,7 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawHotels, @searchParams, @activeHotel) ->
     @_results = {}
+    @cacheId = @searchParams.cacheId
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
