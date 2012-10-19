@@ -16,7 +16,7 @@ ko.bindingHandlers.priceSlider = {
       value.to = limits.to;
     }
     $(element).val(value.from + ';' + value.to);
-    return $(element).jslider({
+    $(element).jslider({
       from: limits.from,
       to: limits.to,
       dimension: '&nbsp;Р',
@@ -36,6 +36,7 @@ ko.bindingHandlers.priceSlider = {
         return valueAccessor().selection(newValue);
       }
     });
+    return valueAccessor().element = $(element);
   },
   update: function(element, valueAccessor) {
     var s;

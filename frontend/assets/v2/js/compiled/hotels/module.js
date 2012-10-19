@@ -13,7 +13,9 @@ HotelsModule = (function() {
     this.controller = new HotelsController(this.panel.sp);
   }
 
-  HotelsModule.prototype.resize = function() {};
+  HotelsModule.prototype.resize = function() {
+    return ResizeAvia();
+  };
 
   return HotelsModule;
 

@@ -25,7 +25,6 @@ class TourEntry
   maxPriceHtml: =>
     @maxPrice() + '<span class="rur">o</span>'
 
-
   savings: =>
     if @selection() == null
       return 0
@@ -34,6 +33,8 @@ class TourEntry
 
   rt: =>
     false
+
+  beforeRender: =>
 
 class ToursAviaResultSet extends TourEntry
   constructor: (raw, sp)->
@@ -171,6 +172,9 @@ class ToursAviaResultSet extends TourEntry
         
   rt: =>
     @results().roundTrip
+
+  beforeRender: =>
+
        
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, @searchParams)->
@@ -204,6 +208,8 @@ class ToursHotelsResultSet extends TourEntry
         @activeHotel  hotel.hotelId
         @overviewTemplate = 'tours-overview-hotels-ticket'
         @selection roomData
+        hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
+        hotel.parent.pagesLoad = hotel.parent.showParts()
         @trigger 'next'
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
     # FIXME WTF
@@ -274,6 +280,30 @@ class ToursHotelsResultSet extends TourEntry
   timelineEnd: =>
     @results().checkOut
 
+  beforeRender: =>
+    console.log('beforeRender hotels')
+    if @results()
+      @results().toursOpened = true
+      if @activeHotel()
+        @results().filters.setConfig(@results().filtersConfig)
+        @results().showParts(@results().pagesLoad)
+      else
+        @results().postFilters()
+
+  afterRender: =>
+    if @results()
+      if @activeHotel()
+        window.setTimeout(
+          =>
+            ifHeightMinAllBody()
+            scrolShowFilter()
+            if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
+              Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent())
+
+          , 50
+        )
+
+
 class ToursResultSet
   constructor: (raw, @searchParams)->
     # Mix in events
@@ -343,14 +373,18 @@ class ToursResultSet
     if entry.overview
       $('.btn-timeline-and-condition').hide()
 
+    if entry.beforeRender
+      entry.beforeRender()
     @trigger 'inner-template', entry.template
     # FIXME 
     window.setTimeout =>
+      if entry.afterRender
+        entry.afterRender()
       @selection entry
       ko.processAllDeferredBindingUpdates()
       ResizeAvia()
       $('#loadWrapBg').hide()
-      $('body').scrollTop(0)
+      Utils.scrollTo(0,false)
     , 100
 
 
@@ -388,7 +422,7 @@ class ToursResultSet
       calendarHidden: -> true
       calendarValue: ko.observable {values: []}
     @setActive {template: 'tours-overview', data: @, overview: true, panel: dummyPanel}
-    do resizeAvia
+    do ResizeAvia
 
   buy: =>
     toBuy = []

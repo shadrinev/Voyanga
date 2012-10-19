@@ -1,5 +1,6 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 HOTEL_SERVICE_VERBOSE = {'Сервис':'service','Спорт и отдых':'sport','Туристам':'turist','Интернет':'internet','Развлечения и досуг':'dosug','Парковка':'parkovka','Дополнительно':'dop','В отеле':'in-hotel'}
+MEAL_VERBOSE = {'Американский завтрак':'Завтрак','Английский завтрак':'Завтрак','Завтрак в номер':'Завтрак','Завтрак + обед':'Завтрак и обед','Завтрак + обед + ужин':'Завтрак и обед и ужин','Завтрак + обед + ужин + напитки':'Завтрак и обед и ужин и напитки','Завтрак + ужин':'Завтрак и ужин','Континентальный завтрак':'Завтрак','Завтрак Шведский стол':'Завтрак'}
 
 class Room
   constructor: (data) ->
@@ -22,17 +23,12 @@ class Room
     if typeof @meal == "undefined" || @meal == ''
       @meal = 'Не известно'
     @mealIcon = "ico-breakfast"
-    switch @meal
-      when "Завтрак + обед"
-        @meal = "Завтрак и обед"
-        @mealIcon = "ico-breakfast-lunch"
-      when "Завтрак + ужин"
-        @meal = "Завтрак и ужин"
-        @mealIcon = "ico-breakfast-dinner"
-      when "Завтрак + обед + ужин"
-        @meal = "Завтрак и обед и ужин"
-        @mealIcon = "ico-breakfast-lunch-dinner"
+    if MEAL_VERBOSE[@meal]
+      @meal = MEAL_VERBOSE[@meal]
+
     @hasMeal = (@meal != 'Без питания' && @meal != 'Не известно')
+    if @hasMeal && @meal != 'Завтрак'
+      @mealIcon = "ico-breakfast-dinner"
   key: =>
     return @nameNemo + @name + @meal
 
@@ -288,6 +284,7 @@ class HotelResult
   # Shows popup with detailed info about given result
   showDetails: (data, event)=>
     # If user had clicked read-more link
+    @oldPageTop = $('html').scrollTop() | $('body').scrollTop()
     @readMoreExpanded = false
     @activePopup = new GenericPopup '#hotels-body-popup', @
     SizeBox('hotels-body-popup')
@@ -303,11 +300,17 @@ class HotelResult
     @activePopup.close()
     hotel.off 'back'
     hotel.on 'back', =>
-      window.app.render({results: ko.observable(@parent)}, 'results')
+      window.app.render({results: ko.observable(hotel.parent)}, 'results')
+      window.setTimeout(
+        ->
+          Utils.scrollTo(hotel.oldPageTop,false)
+          console.log(hotel.oldPageTop)
+        , 50
+      )
 
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
-    Utils.scrollTo('#content')
+    Utils.scrollTo('#content',false)
 
   showMapDetails: (data, event)=>
     @showDetails(data, event)
@@ -475,14 +478,16 @@ class HotelResult
     el = $(event.currentTarget)
     text_el = el.parent().find('.text')
     if @showMoreDesc()
-      text_el.find('.endDesc').show(
+      text_el.find('.endDesc').fadeIn(
         'fast',
         ()->
           text_el.find('.endDesc').css('display','inline')
       )
       @showMoreDesc(false)
     else
-      text_el.find('.endDesc').hide('fast')
+      text_el.find('.endDesc').fadeOut(
+        'fast'
+      )
       @showMoreDesc(true)
 
     #if ! el.hasClass('active')
@@ -594,6 +599,9 @@ class HotelsResultSet
 
       return results
     @numResults = ko.observable 0
+    @filtersConfig = false
+    @pagesLoad = @showParts()
+    @toursOpened = false
     window.hotelsScrollCallback = (ev)=>
       @checkShowMore(ev)
 
@@ -627,14 +635,14 @@ class HotelsResultSet
 
   select: (hotel, event) =>
     window.voyanga_debug ' i wonna get hotel for you',hotel
-    oldPos = $("html").scrollTop() | $("body").scrollTop()
+    hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     hotel.off 'back'
     hotel.on 'back', =>
       window.app.render({results: ko.observable(@)}, 'results')
       window.setTimeout(
         ->
-          Utils.scrollTo(oldPos,false)
-          console.log(oldPos)
+          Utils.scrollTo(hotel.oldPageTop,false)
+          console.log(hotel.oldPageTop)
         , 50
       )
 
@@ -694,13 +702,27 @@ class HotelsResultSet
     console.log 'post filters'
     data = _.filter @data(), (el) -> el.visible()
     @numResults data.length
-    @showParts 1
+    if !@pagesLoad
+      @showParts 1
+    else
+      @showParts @pagesLoad
+
     console.log(@data)
     window.setTimeout(
       =>
         ifHeightMinAllBody()
         scrolShowFilter()
-        Utils.scrollTo('#content')
+        if window.app.activeView() == 'hotels-results'
+          Utils.scrollTo('#content')
+        else if @toursOpened && @tours() && @filtersConfig
+          kb = true
+          #if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
+            #Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent())
+
+        else
+          Utils.scrollTo(0,false)
+
+        @toursOpened = false
       , 50
     )
     #ko.processAllDeferredBindingUpdates()

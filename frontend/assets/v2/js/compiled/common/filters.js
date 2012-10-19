@@ -6,7 +6,12 @@ var AviaFiltersT, DistancesFilter, Filter, HotelFiltersT, ListFilter, OnlyDirect
 
 Filter = (function() {
 
-  function Filter() {}
+  function Filter() {
+    this.setConfig = __bind(this.setConfig, this);
+
+    this.getConfig = __bind(this.getConfig, this);
+
+  }
 
   Filter.prototype.filter = function(item) {
     throw "override me";
@@ -25,6 +30,14 @@ Filter = (function() {
     return value;
   };
 
+  Filter.prototype.getConfig = function() {
+    return this.selection();
+  };
+
+  Filter.prototype.setConfig = function(value) {
+    return this.selection(value);
+  };
+
   return Filter;
 
 })();
@@ -35,10 +48,13 @@ TimeFilter = (function(_super) {
 
   function TimeFilter(key) {
     this.key = key;
+    this.setConfig = __bind(this.setConfig, this);
+
     this.filter = __bind(this.filter, this);
 
     this.limits = ko.rangeObservable(1440, 0);
     this.selection = ko.rangeObservable(0, 1440);
+    this.element = false;
     _.extend(this, Backbone.Events);
   }
 
@@ -59,6 +75,13 @@ TimeFilter = (function(_super) {
     return this.limits(limits.from + ';' + limits.to);
   };
 
+  TimeFilter.prototype.setConfig = function(value) {
+    this.selection(value.from + ';' + value.to);
+    if (this.element) {
+      return this.element.jslider('value', value.from, value.to);
+    }
+  };
+
   return TimeFilter;
 
 })(Filter);
@@ -69,10 +92,13 @@ PriceFilter = (function(_super) {
 
   function PriceFilter(key) {
     this.key = key;
+    this.setConfig = __bind(this.setConfig, this);
+
     this.filter = __bind(this.filter, this);
 
     this.limits = ko.rangeObservable(999000, 0);
     this.selection = ko.rangeObservable(0, 999000);
+    this.element = false;
     _.extend(this, Backbone.Events);
   }
 
@@ -93,6 +119,13 @@ PriceFilter = (function(_super) {
     return this.limits(limits.from + ';' + limits.to);
   };
 
+  PriceFilter.prototype.setConfig = function(value) {
+    this.selection(value.from + ';' + value.to);
+    if (this.element) {
+      return this.element.jslider('value', value.from, value.to);
+    }
+  };
+
   return PriceFilter;
 
 })(Filter);
@@ -103,10 +136,13 @@ DistancesFilter = (function(_super) {
 
   function DistancesFilter(key) {
     this.key = key;
+    this.setConfig = __bind(this.setConfig, this);
+
     this.filter = __bind(this.filter, this);
 
     this.limits = ko.rangeObservable(999000, 0);
     this.selection = ko.observable(999000);
+    this.element = false;
     _.extend(this, Backbone.Events);
   }
 
@@ -127,6 +163,13 @@ DistancesFilter = (function(_super) {
     return this.limits(limits.from + ';' + limits.to);
   };
 
+  DistancesFilter.prototype.setConfig = function(value) {
+    this.selection(value);
+    if (this.element) {
+      return this.element.jslider('value', value);
+    }
+  };
+
   return DistancesFilter;
 
 })(Filter);
@@ -140,6 +183,10 @@ ListFilter = (function(_super) {
     this.keys = keys;
     this.caption = caption;
     this.moreLabel = moreLabel;
+    this.setConfig = __bind(this.setConfig, this);
+
+    this.getConfig = __bind(this.getConfig, this);
+
     this.showMore = __bind(this.showMore, this);
 
     this.reset = __bind(this.reset, this);
@@ -278,6 +325,28 @@ ListFilter = (function(_super) {
     }
   };
 
+  ListFilter.prototype.getConfig = function() {
+    var item, result, _i, _len, _ref;
+    result = {};
+    _ref = this.options();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      result[item.key] = item.checked();
+    }
+    return result;
+  };
+
+  ListFilter.prototype.setConfig = function(value) {
+    var item, _i, _len, _ref, _results;
+    _ref = this.options();
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      _results.push(item.checked(value[item.key]));
+    }
+    return _results;
+  };
+
   return ListFilter;
 
 })(Filter);
@@ -311,6 +380,10 @@ StarsFilter = (function(_super) {
     this.keys = keys;
     this.caption = caption;
     this.moreLabel = moreLabel;
+    this.setConfig = __bind(this.setConfig, this);
+
+    this.getConfig = __bind(this.getConfig, this);
+
     this.filter = __bind(this.filter, this);
 
     this.options = ko.observableArray();
@@ -362,6 +435,28 @@ StarsFilter = (function(_super) {
     } else {
       return $(this).removeClass('active');
     }
+  };
+
+  StarsFilter.prototype.getConfig = function() {
+    var item, result, _i, _len, _ref;
+    result = {};
+    _ref = this.options();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      result[item.starName] = item.checked();
+    }
+    return result;
+  };
+
+  StarsFilter.prototype.setConfig = function(value) {
+    var item, _i, _len, _ref, _results;
+    _ref = this.options();
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      _results.push(item.checked(value[item.starName]));
+    }
+    return _results;
   };
 
   return StarsFilter;
@@ -484,6 +579,10 @@ AviaFiltersT = (function() {
     var fields,
       _this = this;
     this.results = results;
+    this.setConfig = __bind(this.setConfig, this);
+
+    this.getConfig = __bind(this.getConfig, this);
+
     this.iterate = __bind(this.iterate, this);
 
     this.filter = __bind(this.filter, this);
@@ -644,6 +743,41 @@ AviaFiltersT = (function() {
     return this.results.postFilters();
   };
 
+  AviaFiltersT.prototype.getConfig = function() {
+    var config, key, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    config = {};
+    _ref = this.resultFilters;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      key = _ref[_i];
+      config[key] = this[key].getConfig();
+    }
+    _ref1 = this.voyageFilters;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      key = _ref1[_j];
+      config[key] = this[key].getConfig();
+    }
+    if (this.rt) {
+      _ref2 = this.rtVoyageFilters;
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        key = _ref2[_k];
+        config[key] = this[key].getConfig();
+      }
+    }
+    console.log('getConfig', config);
+    return config;
+  };
+
+  AviaFiltersT.prototype.setConfig = function(config) {
+    var cfg, key, _results;
+    console.log('setConfig', config);
+    _results = [];
+    for (key in config) {
+      cfg = config[key];
+      _results.push(this[key].setConfig(cfg));
+    }
+    return _results;
+  };
+
   return AviaFiltersT;
 
 })();
@@ -653,6 +787,10 @@ HotelFiltersT = (function() {
   function HotelFiltersT(results) {
     var _this = this;
     this.results = results;
+    this.setConfig = __bind(this.setConfig, this);
+
+    this.getConfig = __bind(this.getConfig, this);
+
     this.iterate = __bind(this.iterate, this);
 
     this.filter = __bind(this.filter, this);
@@ -774,6 +912,34 @@ HotelFiltersT = (function() {
     }
     console.log('all filters accepted');
     return this.results.postFilters();
+  };
+
+  HotelFiltersT.prototype.getConfig = function() {
+    var config, key, _i, _j, _len, _len1, _ref, _ref1;
+    config = {};
+    _ref = this.hotelFilters;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      key = _ref[_i];
+      config[key] = this[key].getConfig();
+    }
+    _ref1 = this.roomFilters;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      key = _ref1[_j];
+      config[key] = this[key].getConfig();
+    }
+    console.log('getConfig', config);
+    return config;
+  };
+
+  HotelFiltersT.prototype.setConfig = function(config) {
+    var cfg, key, _results;
+    console.log('setConfig', config);
+    _results = [];
+    for (key in config) {
+      cfg = config[key];
+      _results.push(this[key].setConfig(cfg));
+    }
+    return _results;
   };
 
   return HotelFiltersT;

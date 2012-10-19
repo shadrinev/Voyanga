@@ -16,6 +16,12 @@ class Filter
       value = value.apply(item)
     return value
 
+  getConfig: =>
+    return @selection()
+
+  setConfig: (value)=>
+    @selection(value)
+
     
 
 class TimeFilter extends Filter
@@ -23,7 +29,7 @@ class TimeFilter extends Filter
     # so we can query limits better
     @limits = ko.rangeObservable 1440, 0
     @selection = ko.rangeObservable 0,1440
-
+    @element = false
     # Mix in events
     _.extend @, Backbone.Events
 
@@ -41,18 +47,23 @@ class TimeFilter extends Filter
     # FIXME hardcofe KOSTIL
     @limits(limits.from+';'+limits.to)
 
+  setConfig: (value)=>
+    @selection(value.from + ';'+ value.to)
+    if @element
+      @element.jslider('value',value.from,value.to)
+
 class PriceFilter extends Filter
   constructor: (@key)->
     # so we can query limits better
     @limits = ko.rangeObservable 999000, 0
     @selection = ko.rangeObservable 0,999000
+    @element = false
 
     # Mix in events
     _.extend @, Backbone.Events
 
   filter:  (result)=>
     Utils.inRange @get(result,@key), @selection()
-
 
   updateLimits: (item)->
     value = @get(item, @key)
@@ -64,11 +75,17 @@ class PriceFilter extends Filter
     # FIXME hardcore KOSTIL
     @limits(limits.from+';'+limits.to)
 
+  setConfig: (value)=>
+    @selection(value.from + ';'+ value.to)
+    if @element
+      @element.jslider('value',value.from,value.to)
+
 class DistancesFilter extends Filter
   constructor: (@key)->
     # so we can query limits better
     @limits = ko.rangeObservable 999000, 0
     @selection = ko.observable 999000
+    @element = false
 
     # Mix in events
     _.extend @, Backbone.Events
@@ -88,6 +105,11 @@ class DistancesFilter extends Filter
     #  console.log item
     # FIXME hardcore KOSTIL
     @limits(limits.from+';'+limits.to)
+
+  setConfig: (value)=>
+    @selection(value)
+    if @element
+      @element.jslider('value',value)
 
 class ListFilter extends Filter
   constructor: (@keys, @caption, @moreLabel)->
@@ -178,6 +200,16 @@ class ListFilter extends Filter
       # FIXME decouple it somehow
       div.show('fast', scrollValue)
 
+  getConfig: =>
+    result = {}
+    for item in @options()
+      result[item.key] = item.checked()
+    return result
+
+  setConfig: (value)=>
+    for item in @options()
+      item.checked(value[item.key])
+
 class StarOption
   constructor: (@key)->
     @starName = STARS_VERBOSE[@key-1]
@@ -230,6 +262,16 @@ class StarsFilter extends Filter
         $(this).addClass('active')
     else
       $(this).removeClass('active')
+
+  getConfig: =>
+    result = {}
+    for item in @options()
+      result[item.starName] = item.checked()
+    return result
+
+  setConfig: (value)=>
+    for item in @options()
+      item.checked(value[item.starName])
 
 
 class ShortStopoverFilter extends Filter
@@ -394,6 +436,23 @@ class AviaFiltersT
       result.chooseActive()  
     @results.postFilters()
 
+  getConfig: =>
+    config = {}
+    for key in @resultFilters
+      config[key] = @[key].getConfig()
+    for key in @voyageFilters
+      config[key] = @[key].getConfig()
+    if @rt
+      for key in @rtVoyageFilters
+        config[key] = @[key].getConfig()
+    console.log('getConfig',config)
+    return config
+
+  setConfig: (config)=>
+    console.log('setConfig',config)
+    for key,cfg of config
+      @[key].setConfig(cfg)
+
 
 class HotelFiltersT
   constructor: (@results)->
@@ -484,3 +543,17 @@ class HotelFiltersT
       #result.chooseActive()
     console.log('all filters accepted')
     @results.postFilters()
+
+  getConfig: =>
+    config = {}
+    for key in @hotelFilters
+      config[key] = @[key].getConfig()
+    for key in @roomFilters
+      config[key] = @[key].getConfig()
+    console.log('getConfig',config)
+    return config
+
+  setConfig: (config)=>
+    console.log('setConfig',config)
+    for key,cfg of config
+      @[key].setConfig(cfg)

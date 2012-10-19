@@ -30,6 +30,8 @@ ko.bindingHandlers.timeSlider =
         hours + ':' + mins
       callback: (newValue) ->
         valueAccessor().selection(newValue)
+    valueAccessor().element = $(element)
+
   update: (element, valueAccessor) ->
     s = $(element).data("jslider")
     # FIXME FIXME FIXME

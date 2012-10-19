@@ -27,6 +27,8 @@ ko.bindingHandlers.singleSlider =
         strVal
       callback: (newValue) ->
         valueAccessor().selection(newValue)
+    valueAccessor().element = $(element)
+
   update: (element, valueAccessor) ->
     s = $(element).data("jslider")
     # FIXME FIXME FIXME

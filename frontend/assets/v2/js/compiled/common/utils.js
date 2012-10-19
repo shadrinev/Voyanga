@@ -136,6 +136,8 @@ Utils = {
     }
     if (typeof selector === "string") {
       oPos = $(selector).offset();
+    } else if (typeof selector === "object") {
+      oPos = $(selector).offset();
     } else {
       oPos = {};
       oPos.top = selector;

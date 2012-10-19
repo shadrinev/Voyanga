@@ -14,7 +14,7 @@ ko.bindingHandlers.singleSlider = {
       dimension = '&nbsp;' + dimension;
     }
     $(element).val(value);
-    return $(element).jslider({
+    $(element).jslider({
       from: limits.from,
       to: limits.to,
       dimension: dimension,
@@ -34,6 +34,7 @@ ko.bindingHandlers.singleSlider = {
         return valueAccessor().selection(newValue);
       }
     });
+    return valueAccessor().element = $(element);
   },
   update: function(element, valueAccessor) {
     var s;

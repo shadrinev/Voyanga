@@ -8,3 +8,4 @@ class HotelsModule
     @controller = new HotelsController(@panel.sp)
 
   resize: ->
+    ResizeAvia()

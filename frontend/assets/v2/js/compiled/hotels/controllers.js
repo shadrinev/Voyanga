@@ -52,8 +52,9 @@ HotelsController = (function() {
     stacked = new HotelsResultSet(data.hotels, data.searchParams);
     stacked.cacheId = data.cacheId;
     stacked.postInit();
+    this.results = ko.observable(stacked);
     return this.render('results', {
-      'results': ko.observable(stacked)
+      'results': this.results
     });
   };
 

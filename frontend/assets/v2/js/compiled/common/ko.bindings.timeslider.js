@@ -21,7 +21,7 @@ ko.bindingHandlers.timeSlider = {
       value.to = limits.to;
     }
     $(element).val(value.from + ';' + value.to);
-    return $(element).jslider({
+    $(element).jslider({
       from: limits.from,
       to: limits.to,
       step: 15,
@@ -46,6 +46,7 @@ ko.bindingHandlers.timeSlider = {
         return valueAccessor().selection(newValue);
       }
     });
+    return valueAccessor().element = $(element);
   },
   update: function(element, valueAccessor) {
     var s;
