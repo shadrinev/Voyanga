@@ -78,6 +78,10 @@ class HotelRoom extends CApplicationComponent
                 $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical);
             }
         }
+        if(!$roomNameCanonical && !$this->sizeId && !$this->typeId)
+        {
+            $needAddToDb = false;
+        }
 
         if($needAddToDb){
             $newRoomNameNemo = new RoomNamesNemo();

@@ -145,12 +145,15 @@ class ListFilter extends Filter
         if @selection().indexOf(propValue) < 0
           return false
       else
-        values = propValue
-        for value in @selection()
-          find = true
-          find = find && (propValue.indexOf(value) >= 0)
+        if propValue
+          values = propValue
+          for value in @selection()
+            find = true
+            find = find && (propValue.indexOf(value) >= 0)
 
-        return find
+          return find
+        else
+          return false
     return true
 
   # reset filter. click handler.

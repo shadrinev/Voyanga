@@ -238,7 +238,8 @@ class HotelResult
 
   push: (data) ->
     set = new RoomSet data, @, @duration
-    if @roomSets.length == 0
+    set.resultId = data.resultId
+    if @roomSets().length == 0
       @cheapest = set.price
       @cheapestSet = set  
       @minPrice = set.pricePerNight
@@ -577,6 +578,7 @@ class HotelsResultSet
     @data = ko.observableArray()
     @showParts = ko.observable 1
     @showLimit = 20
+    @sortBy = ko.observable( 'minPrice')
     @resultsForRender = ko.computed =>
       limit = @showParts() * @showLimit
       results = []
@@ -586,6 +588,11 @@ class HotelsResultSet
           limit--
         if limit <= 0
           break
+      #if @sortBy() == 'minPrice'
+      #  results = _.sortBy results, (el)-> el.minPrice
+      #else
+      #  results = _.sortBy results, (el)-> el.rating
+
       return results
     @numResults = ko.observable 0
     window.hotelsScrollCallback = (ev)=>
@@ -597,7 +604,7 @@ class HotelsResultSet
       if result.numPhotos
         @data.push result
 
-    @sortBy = ko.observable( 'minPrice')
+
 
     @sortByPriceClass = ko.computed =>
       ret = 'hotel-sort-by-item'
@@ -662,6 +669,7 @@ class HotelsResultSet
         if left.minPrice > right.minPrice
           return  1
         return 0
+      @showParts 1
       #ko.processAllDeferredBindingUpdates()
 
   sortByRating:  =>
@@ -673,6 +681,7 @@ class HotelsResultSet
         if left.rating < right.rating
           return  1
         return 0
+      @showParts 1
       #console.log(@data())
       #ko.processAllDeferredBindingUpdates()
 
@@ -687,12 +696,12 @@ class HotelsResultSet
     data = _.filter @data(), (el) -> el.visible()
     @numResults data.length
     @showParts 1
-
     console.log(@data)
     window.setTimeout(
       =>
         ifHeightMinAllBody()
         scrolShowFilter()
+        Utils.scrollTo('#content')
       , 50
     )
     #ko.processAllDeferredBindingUpdates()

@@ -360,7 +360,8 @@ HotelResult = (function() {
     var set,
       _this = this;
     set = new RoomSet(data, this, this.duration);
-    if (this.roomSets.length === 0) {
+    set.resultId = data.resultId;
+    if (this.roomSets().length === 0) {
       this.cheapest = set.price;
       this.cheapestSet = set;
       this.minPrice = set.pricePerNight;
@@ -742,6 +743,7 @@ HotelsResultSet = (function() {
     this.data = ko.observableArray();
     this.showParts = ko.observable(1);
     this.showLimit = 20;
+    this.sortBy = ko.observable('minPrice');
     this.resultsForRender = ko.computed(function() {
       var limit, results, _k, _len2, _ref;
       limit = _this.showParts() * _this.showLimit;
@@ -770,7 +772,6 @@ HotelsResultSet = (function() {
         this.data.push(result);
       }
     }
-    this.sortBy = ko.observable('minPrice');
     this.sortByPriceClass = ko.computed(function() {
       var ret;
       ret = 'hotel-sort-by-item';
@@ -843,7 +844,7 @@ HotelsResultSet = (function() {
   HotelsResultSet.prototype.sortByPrice = function() {
     if (this.sortBy() !== 'minPrice') {
       this.sortBy('minPrice');
-      return this.data.sort(function(left, right) {
+      this.data.sort(function(left, right) {
         if (left.minPrice < right.minPrice) {
           return -1;
         }
@@ -852,13 +853,14 @@ HotelsResultSet = (function() {
         }
         return 0;
       });
+      return this.showParts(1);
     }
   };
 
   HotelsResultSet.prototype.sortByRating = function() {
     if (this.sortBy() !== 'rating') {
       this.sortBy('rating');
-      return this.data.sort(function(left, right) {
+      this.data.sort(function(left, right) {
         if (left.rating > right.rating) {
           return -1;
         }
@@ -867,6 +869,7 @@ HotelsResultSet = (function() {
         }
         return 0;
       });
+      return this.showParts(1);
     }
   };
 
@@ -890,7 +893,8 @@ HotelsResultSet = (function() {
     console.log(this.data);
     return window.setTimeout(function() {
       ifHeightMinAllBody();
-      return scrolShowFilter();
+      scrolShowFilter();
+      return Utils.scrollTo('#content');
     }, 50);
   };
 
