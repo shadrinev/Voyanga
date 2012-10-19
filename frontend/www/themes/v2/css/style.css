@@ -748,7 +748,7 @@
 }
 .voyasha-text .ico-voyasha {
 	position: absolute;
-	top: 10px;
+	top: 5px;
 }
 .voyasha-text .inline-block {
 	margin-left: 55px;
@@ -760,6 +760,7 @@
 .voyasha-slider {
 	margin-top: 30px; margin-bottom: 25px;
 }
+.div-filter h4 div {margin-right: 4px;}
 /* CONTENT */
 
 
