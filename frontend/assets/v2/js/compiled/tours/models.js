@@ -158,7 +158,7 @@ ToursAviaResultSet = (function(_super) {
     result = {};
     result.type = 'avia';
     result.searchId = this.selection().searchId;
-    result.flightKey = this.selection().flightKey;
+    result.searchKey = this.selection().flightKey();
     result.adults = this.rawSP.adt;
     result.children = this.rawSP.chd;
     result.infants = this.rawSP.inf;
@@ -211,7 +211,7 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.destinationText = function() {
-    return this.results().departureCity + ' &rarr; ' + this.results().arrivalCity;
+    return "<span class='left-avia-city'>" + this.results().departureCity + "&rarr;</span> " + "<span class='left-avia-city'>" + this.results().arrivalCity + "</span>";
   };
 
   ToursAviaResultSet.prototype.additionalText = function() {
@@ -306,8 +306,12 @@ ToursHotelsResultSet = (function(_super) {
 
   __extends(ToursHotelsResultSet, _super);
 
-  function ToursHotelsResultSet(raw, searchParams) {
-    this.searchParams = searchParams;
+  function ToursHotelsResultSet(raw, rawSP) {
+    this.rawSP = rawSP;
+    this.afterRender = __bind(this.afterRender, this);
+
+    this.beforeRender = __bind(this.beforeRender, this);
+
     this.timelineEnd = __bind(this.timelineEnd, this);
 
     this.timelineStart = __bind(this.timelineStart, this);
@@ -342,7 +346,7 @@ ToursHotelsResultSet = (function(_super) {
     this.api = new HotelsAPI;
     this.panel = new HotelsPanel();
     this.panel.handlePanelSubmit = this.doNewSearch;
-    this.panel.sp.fromObject(this.searchParams);
+    this.panel.sp.fromObject(this.rawSP);
     this.panel.original_template = this.panel.template;
     this.overviewTemplate = 'tours-overview-hotels-no-selection';
     this.template = 'hotels-results';
@@ -352,7 +356,7 @@ ToursHotelsResultSet = (function(_super) {
     this.data = {
       results: this.results
     };
-    this.newResults(raw, this.searchParams);
+    this.newResults(raw, this.rawSP);
   }
 
   ToursHotelsResultSet.prototype.newResults = function(data, sp) {
@@ -372,6 +376,8 @@ ToursHotelsResultSet = (function(_super) {
         _this.activeHotel(hotel.hotelId);
         _this.overviewTemplate = 'tours-overview-hotels-ticket';
         _this.selection(roomData);
+        hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
+        hotel.parent.pagesLoad = hotel.parent.showParts();
         return _this.trigger('next');
       });
       return _this.trigger('setActive', {
@@ -386,12 +392,30 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.toBuyRequest = function() {
-    return {};
+    var result, room, _i, _len, _ref;
+    result = {};
+    result.type = 'hotel';
+    result.searchId = this.selection().hotel.cacheId;
+    result.searchKey = this.selection().roomSet.resultId;
+    result.adults = 0;
+    result.age = false;
+    result.cots = 0;
+    _ref = this.rawSP.rooms;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      room = _ref[_i];
+      result.adults += room.adultCount * 1;
+      if (room.childAge) {
+        result.age = room.childAgeage;
+      }
+      result.cots += room.cots * 1;
+    }
+    return result;
   };
 
   ToursHotelsResultSet.prototype.doNewSearch = function() {
     var _this = this;
     return this.api.search(this.panel.sp.url(), function(data) {
+      data.searchParams.cacheId = data.cacheId;
       return _this.newResults(data.hotels, data.searchParams);
     });
   };
@@ -419,7 +443,7 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.destinationText = function() {
-    return "Отель в " + this.searchParams.cityFull.casePre;
+    return "<span class='hotel-left-long'>Отель в " + this.rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + this.rawSP.cityFull.caseNom + "</span>";
   };
 
   ToursHotelsResultSet.prototype.price = function() {
@@ -458,6 +482,34 @@ ToursHotelsResultSet = (function(_super) {
     return this.results().checkOut;
   };
 
+  ToursHotelsResultSet.prototype.beforeRender = function() {
+    console.log('beforeRender hotels');
+    if (this.results()) {
+      this.results().toursOpened = true;
+      if (this.activeHotel()) {
+        this.results().filters.setConfig(this.results().filtersConfig);
+        return this.results().showParts(this.results().pagesLoad);
+      } else {
+        return this.results().postFilters();
+      }
+    }
+  };
+
+  ToursHotelsResultSet.prototype.afterRender = function() {
+    var _this = this;
+    if (this.results()) {
+      if (this.activeHotel()) {
+        return window.setTimeout(function() {
+          ifHeightMinAllBody();
+          scrolShowFilter();
+          if ($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length) {
+            return Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent());
+          }
+        }, 50);
+      }
+    }
+  };
+
   return ToursHotelsResultSet;
 
 })(TourEntry);
@@ -493,6 +545,7 @@ ToursResultSet = (function() {
       if (variant.flights) {
         result = new ToursAviaResultSet(variant.flights.flightVoyages, variant.searchParams);
       } else {
+        variant.searchParams.cacheId = variant.cacheId;
         result = new ToursHotelsResultSet(variant.hotels, variant.searchParams);
       }
       this.data.push(result);
@@ -570,13 +623,19 @@ ToursResultSet = (function() {
     if (entry.overview) {
       $('.btn-timeline-and-condition').hide();
     }
+    if (entry.beforeRender) {
+      entry.beforeRender();
+    }
     this.trigger('inner-template', entry.template);
     return window.setTimeout(function() {
+      if (entry.afterRender) {
+        entry.afterRender();
+      }
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
       ResizeAvia();
       $('#loadWrapBg').hide();
-      return $('body').scrollTop(0);
+      return Utils.scrollTo(0, false);
     }, 100);
   };
 
@@ -590,7 +649,6 @@ ToursResultSet = (function() {
 
   ToursResultSet.prototype.nextEntry = function() {
     var x, _i, _len, _ref;
-    console.log("WHOA");
     _ref = this.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       x = _ref[_i];
@@ -609,7 +667,6 @@ ToursResultSet = (function() {
       return;
     }
     idx = this.data.indexOf(item);
-    console.log(this.data.indexOf(item), item, this.selection());
     if (idx === -1) {
       return;
     }
@@ -636,11 +693,11 @@ ToursResultSet = (function() {
       overview: true,
       panel: dummyPanel
     });
-    return resizeAvia();
+    return ResizeAvia();
   };
 
   ToursResultSet.prototype.buy = function() {
-    var form_html, index, key, params, toBuy, value, x, _i, _j, _len, _len1, _ref;
+    var toBuy, x, _i, _len, _ref;
     toBuy = [];
     _ref = this.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -649,18 +706,7 @@ ToursResultSet = (function() {
         toBuy.push(x.toBuyRequest());
       }
     }
-    form_html = '<form id="buy-form" method="POST" action="/buy">';
-    for (index = _j = 0, _len1 = toBuy.length; _j < _len1; index = ++_j) {
-      params = toBuy[index];
-      for (key in params) {
-        value = params[key];
-        key = "item[" + index + "][" + key + "]";
-        form_html += "<input type=\"hidden\" name=\"" + key + "\" value=\"" + value + "\" />";
-      }
-    }
-    form_html += '</form>';
-    $('body').append(form_html);
-    return $('#buy-form').submit();
+    return Utils.toBuySubmit(toBuy);
   };
 
   return ToursResultSet;
@@ -778,7 +824,6 @@ TourSearchParams = (function(_super) {
       if (data[i] === 'rooms') {
         break;
       }
-      console.log(data[i], data[i + 1], data[i + 2]);
       destination = new DestinationSearchParams();
       destination.city(data[i]);
       destination.dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
@@ -797,7 +842,6 @@ TourSearchParams = (function(_super) {
 
   TourSearchParams.prototype.fromObject = function(data) {
     window.voyanga_debug("Restoring TourSearchParams from object");
-    console.log(data);
     _.each(data.destinations, function(destination) {
       destination = new DestinationSearchParams();
       destination.city(destination.city);
@@ -819,7 +863,6 @@ TourSearchParams = (function(_super) {
       return;
     }
     idx = this.data.indexOf(item);
-    console.log(this.data.indexOf(item), item, this.selection());
     if (idx === -1) {
       return;
     }
