@@ -205,7 +205,7 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.destinationText = function() {
-    return "<span class='left-avia-city'>" + this.results().departureCity + "</span>" + ' &rarr; ' + "<span class='left-avia-city'>" + this.results().arrivalCity + "</span>";
+    return "<span class='left-avia-city'>" + this.results().departureCity + "&rarr;</span> " + "<span class='left-avia-city'>" + this.results().arrivalCity + "</span>";
   };
 
   ToursAviaResultSet.prototype.additionalText = function() {

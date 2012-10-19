@@ -117,7 +117,7 @@ class ToursAviaResultSet extends TourEntry
   # End overview VM
 
   destinationText: =>
-    "<span class='left-avia-city'>" + @results().departureCity + "</span>" + ' &rarr; ' + "<span class='left-avia-city'>" + @results().arrivalCity + "</span>"
+    "<span class='left-avia-city'>" + @results().departureCity + "&rarr;</span> " + "<span class='left-avia-city'>" + @results().arrivalCity + "</span>"
 
   additionalText: =>
     if @selection() == null
