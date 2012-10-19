@@ -637,6 +637,7 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.select = function(room) {
+    var result, _i, _len, _ref;
     console.log(room);
     if (room.roomSets) {
       room = room.roomSets()[0];
@@ -645,11 +646,29 @@ HotelResult = (function() {
     }
     if (this.tours()) {
       this.activeResultId(room.resultId);
+      return this.trigger('select', {
+        roomSet: room,
+        hotel: this
+      });
+    } else {
+      result = {};
+      result.type = 'hotel';
+      result.searchId = this.cacheId;
+      result.searchKey = room.resultId;
+      result.adults = 0;
+      result.age = false;
+      result.cots = 0;
+      _ref = this.parent.rawSP.rooms;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        room = _ref[_i];
+        result.adults += room.adultCount * 1;
+        if (room.childAge) {
+          result.age = room.childAgeage;
+        }
+        result.cots += room.cots * 1;
+      }
+      return Utils.toBuySubmit([result]);
     }
-    return this.trigger('select', {
-      roomSet: room,
-      hotel: this
-    });
   };
 
   HotelResult.prototype.smallMapUrl = function() {
@@ -691,6 +710,7 @@ HotelsResultSet = (function() {
     this.select = __bind(this.select, this);
 
     this._results = {};
+    this.rawSP = this.searchParams;
     this.cacheId = this.searchParams.cacheId;
     this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);

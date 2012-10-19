@@ -660,6 +660,7 @@ AviaResultSet = (function() {
   }
 
   AviaResultSet.prototype.injectSearchParams = function(sp) {
+    this.rawSP = sp;
     this.arrivalCity = sp.destinations[0].arrival;
     this.departureCity = sp.destinations[0].departure;
     this.date = dateUtils.formatDayShortMonth(new Date(sp.destinations[0].date + '+04:00'));
@@ -671,16 +672,22 @@ AviaResultSet = (function() {
     }
   };
 
-  AviaResultSet.prototype.select = function(el) {
-    var result;
+  AviaResultSet.prototype.select = function(ctx) {
+    var result, selection;
+    console.log(ctx);
+    if (ctx.ribbon) {
+      selection = ctx.data;
+    } else {
+      selection = ctx;
+    }
     result = {};
     result.type = 'avia';
-    result.searchId = this.selection().searchId;
-    result.searchKey = this.selection().flightKey();
+    result.searchId = selection.searchId;
+    result.searchKey = selection.flightKey();
     result.adults = this.rawSP.adt;
     result.children = this.rawSP.chd;
     result.infants = this.rawSP.inf;
-    return result;
+    return Utils.toBuySubmit([result]);
   };
 
   AviaResultSet.prototype.postInit = function() {

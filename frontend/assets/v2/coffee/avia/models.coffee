@@ -477,6 +477,7 @@ class AviaResultSet
     
   # Inject search params from response
   injectSearchParams: (sp) =>
+    @rawSP = sp
     @arrivalCity = sp.destinations[0].arrival
     @departureCity = sp.destinations[0].departure
     @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
@@ -487,16 +488,22 @@ class AviaResultSet
       @dateHeadingText += ', ' +@rtDate
   
 
-  select: (el) =>
+  select: (ctx) =>
+    console.log ctx
+    # cheapest click
+    if ctx.ribbon
+      selection = ctx.data
+    else
+      selection = ctx
     result = {}
     result.type = 'avia'
-    result.searchId = @selection().searchId
+    result.searchId = selection.searchId
     # FIXME FIXME FXIME
-    result.searchKey = @selection().flightKey()
+    result.searchKey = selection.flightKey()
     result.adults = @rawSP.adt
     result.children = @rawSP.chd
     result.infants = @rawSP.inf
-    return result
+    Utils.toBuySubmit [result]
 
 
   postInit: =>

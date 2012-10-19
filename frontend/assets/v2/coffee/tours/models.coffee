@@ -413,14 +413,7 @@ class ToursResultSet
       if x.selection()
         toBuy.push x.toBuyRequest()
 
-    form_html = '<form id="buy-form" method="POST" action="/buy">'
-    for params, index in toBuy
-      for key,value of params
-        key = "item[#{index}][#{key}]"
-        form_html += "<input type=\"hidden\" name=\"#{key}\" value=\"#{value}\" />"
-    form_html += '</form>'
-    $('body').append(form_html)
-    $('#buy-form').submit()
+    Utils.toBuySubmit toBuy
   
 # Models for tour search params,
 class DestinationSearchParams

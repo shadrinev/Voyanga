@@ -649,7 +649,7 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.buy = function() {
-    var form_html, index, key, params, toBuy, value, x, _i, _j, _len, _len1, _ref;
+    var toBuy, x, _i, _len, _ref;
     toBuy = [];
     _ref = this.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -658,18 +658,7 @@ ToursResultSet = (function() {
         toBuy.push(x.toBuyRequest());
       }
     }
-    form_html = '<form id="buy-form" method="POST" action="/buy">';
-    for (index = _j = 0, _len1 = toBuy.length; _j < _len1; index = ++_j) {
-      params = toBuy[index];
-      for (key in params) {
-        value = params[key];
-        key = "item[" + index + "][" + key + "]";
-        form_html += "<input type=\"hidden\" name=\"" + key + "\" value=\"" + value + "\" />";
-      }
-    }
-    form_html += '</form>';
-    $('body').append(form_html);
-    return $('#buy-form').submit();
+    return Utils.toBuySubmit(toBuy);
   };
 
   return ToursResultSet;
