@@ -10,7 +10,7 @@
         <!-- ko foreach: data -->
         <li class="items" data-bind="css: {first: $index()==0}">
           <a href="#" data-bind="css: {fly: isAvia(), hotel: isHotel(), active: $parent.selection() == $data ||  $parent.selection().parent == $data, toFrom: rt()}, click: $parent.setActive">
-            <div class="keys" data-bind="click: $parent.removeItem"></div>
+            <div class="keys"><div class="deleteTours" data-bind="click: $parent.removeItem"></div></div>
             <div class="path">
               <div class="where" data-bind="html: destinationText()">С-Пб &rarr; Амстердам</div>
               <div class="time"><span data-bind="html: priceHtml()"></span> <span data-bind="text: additionalText()">7:30 - 12:20</span></div>

@@ -16,7 +16,7 @@ var var_widthMiddleBlockMIN = 585;
 
 var var_widthFilterMAX = 240;
 var var_widthFilterMID = 240;
-var var_widthFilterMIN = 160;
+var var_widthFilterMIN = 200;
 
 var var_paddingLeftMAX = 12;
 var var_paddingLeftMID = 12;
@@ -85,7 +85,9 @@ function ResizeCenterBlock() {
 		var var_calendarGridVoyangaIsset = var_calendarGridVoyanga.length > 0 && var_calendarGridVoyanga.is(':visible');
 
 		var var_descrIsset = var_descrItems.length > 0 && var_descrItems.is(':visible');
-
+		
+		console.log(widthBlock);
+		
 		if (! var_leftBlockIsset &&  ! var_filterBlockIsset && var_mainBlockIsset) {
 			//console.log("THIS IS === 1 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
@@ -228,7 +230,8 @@ function ResizeCenterBlock() {
 				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
-				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
+			console.log("=== 1 === "+widthBlock);
+				widthLeftBlock = Math.floor(220 + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - 220))) );
 				widthMainBlock = Math.floor(var_widthMiddleBlockMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthMiddleBlockMID - var_widthMiddleBlockMIN))) );
 				widthFilterBlock = Math.floor(var_widthFilterMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthFilterMID - var_widthFilterMIN))) );
 
@@ -299,11 +302,12 @@ function ResizeCenterBlock() {
 				paddingLeftInfo = '112px';
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
-				widthLeftBlock = Math.floor(var_widthLeftBlockMIN + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - var_widthLeftBlockMIN))) );
+			console.log("=== 2 === "+widthBlock);
+				widthLeftBlock = Math.floor( (220 + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - 220)))) - 3 );
 
 				widthMainBlock = Math.floor(685 + ( (widthBlock - var_widthMIN) / (var_valueMIN / (910 - 685))) );
 
-				var_margin = 30;
+				var_margin = 39;
 				marginRightMainBlock = var_margin;
 				marginLeftMainBlock = widthLeftBlock + var_margin;
 				marginLeftLeftBlock = 0;
@@ -416,7 +420,7 @@ function ResizeCenterBlock() {
 			var mathWidthRicket = Math.floor(253 + ((widthBlock - var_widthMIN) / (var_valueMIN / (318 - 253))) );
 			$('.recommended-ticket').css('width', mathWidthRicket+'px');
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
-			var_content.find('h1').find('span').hide();
+			var_content.find('h1').find('.hideTitle').hide();
 			var_ticketsItems.find('.ticket-items').addClass('small');
 			$('.block').find('.ticket-items').addClass('small');
 			var_hotelItems.addClass('small');
@@ -427,6 +431,7 @@ function ResizeCenterBlock() {
 			var_ticketsItems.find('.ticket-items').removeClass('small');
 			$('.block').find('.ticket-items').removeClass('small');
 			var_hotelItems.removeClass('small');
+			var_content.find('h1').find('.hideTitle').show();
 		}
 		resizeLeftStage();
 		resizeMainStage();
@@ -488,11 +493,18 @@ function resizeLeftStage() {
 	else {
 		leftPadding = startPosition;
 	}
-	if (leftPadding < 125) {
-		leftStage.find('.path').css('width', '125px');
+	if (leftPadding < 105) {
+		leftStage.find('.path').css('width', '95px');
 	}
 	else {
 		leftStage.find('.path').css('width', leftPadding+'px');
+	}
+	
+	if (leftWidth < 250) {
+		leftStage.addClass('smallBlock');	
+	}
+	else {
+		leftStage.removeClass('smallBlock')
 	}
 
 }
@@ -731,12 +743,10 @@ function ifHeightMinAllBody() {
 	if (var_heightContent < var_heightWindow) {
 		$('#content').css('height', (var_heightWindow - 168) +'px');
 		$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
-		console.log("НУ ЧТО? = "+var_heightContent+ " x "+ (var_heightWindow - 168));
 	}
 	else {
 		$('#content').css('height', 'auto');
 		$('.innerFilter').css('height', '100%');
-		console.log("И ТО? = "+var_heightContent+ " x "+ (var_heightWindow - 168));
 	}
 }
 

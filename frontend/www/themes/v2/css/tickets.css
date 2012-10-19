@@ -953,7 +953,7 @@
 	position: relative;
 	height: 20px;
 	overflow: hidden;
-    max-width: 365px;
+    max-width: 280px;
     padding-right: 25px;
     margin-bottom: 0px;
     letter-spacing: normal;
@@ -995,7 +995,7 @@
 	background: url(../images/gradient-hotel-bottom.png) repeat-x right bottom;
 }
 .hotels-tickets.small .description h2 {
-	overflow: hidden; width: 185px;
+	overflow: hidden; width: 180px;
 }
 .hotels-tickets.small .description .place .street {
 	overflow: hidden; width: 185px;

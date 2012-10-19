@@ -18,7 +18,7 @@ h1 {
 	margin-bottom: 12px;	
 	letter-spacing: 0.001em;
 }
-.main-block h1 {text-shadow: #FFF 0px 1px 0px; margin-bottom: 20px; letter-spacing: -0.05em;}
+.main-block h1 {text-shadow: #FFF 0px 1px 0px; margin-bottom: 20px; letter-spacing: -0.05em; line-height: 26px; margin-top: -4px;}
 .ticket-content h2 {
 	font-size: 18px; text-shadow: 0px 1px 0px #FFF;
 	color: #4b525c; margin-bottom: 20px;
