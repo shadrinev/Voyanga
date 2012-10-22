@@ -88,7 +88,15 @@
 				</div>
 				<!-- END ALL TICKETS DIV -->
 				<div class="theSum">
-					2 авиабилета, 1 гостиница
+					<div class="left">2 авиабилета, 1 гостиница</div>
+					<div class="right">
+						<table>
+							<tr>
+								<td>Итоговая стоимость</td>
+								<td class="tdPrice"><div class="price">12 500 <span class="rur">o</span></div></td>
+							</tr>
+						</table>
+					</div>
 				</div>				
 				<!-- END -->
 			</div>

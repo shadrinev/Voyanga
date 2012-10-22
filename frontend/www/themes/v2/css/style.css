@@ -357,7 +357,7 @@
     padding-top: 17px;
     position: absolute;
     top: 0;
-    width: 839px;
+    width: 948px;
 }
 .condition .whence, .condition .where {
     background: url("../images/slice.png") no-repeat scroll 0 -904px transparent;
@@ -2175,6 +2175,7 @@ input.hotel-input {
 .paybuyContent {
     margin: 0 auto;
     max-width: 950px;
+    color: #1d222b;
 }
 .allTicketsDIV {
     background: none repeat scroll 0 0 #F4F7F9;
@@ -2297,4 +2298,17 @@ input.hotel-input {
 .allTicketsDIV .hotelTickets .tdInfo .name {
 	color: #879094;
 	font-size: 11px;
+}
+.paybuyContent .theSum {
+	overflow: hidden;
+	margin-top: 24px;
+	margin-bottom: 29px;
+	font-size: 17px;
+	color: #1d222b;
+}
+.paybuyContent .theSum .left {
+	float: left;
+}
+.paybuyContent .theSum .right {
+	float: right;
 }
