@@ -816,3 +816,6 @@
     width: 64px;
     z-index: 2;
 }
+.btnTD {
+	width: 90px;
+}
