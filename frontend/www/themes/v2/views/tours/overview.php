@@ -36,11 +36,9 @@ $images = 'themes/v2';
       <div class="hr-bg">
         <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
-      <div class="costItAll">
-	Итого <span class="allCost">86 250 <span class="rur">o</span></span>
-	<a href="#" class="btnGoBuy"></a><br>
-
-	<!--<a href="#" class="detailCost"><img src="<?php echo $images.'/images/detail-cost.png'?>"></a>-->
+      <div class="costItAll" data-bind="visible: someSegmentsSelected">
+    	Итого <span class="allCost"><span data-bind="text: price()">86 250</span> <span class="rur">o</span></span>
+	    <a href="#" class="btnGoBuy"></a><br>
       </div>
     </div>
     <div class="clear"></div>

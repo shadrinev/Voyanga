@@ -464,11 +464,17 @@ ToursHotelsResultSet = (function(_super) {
     return 'orange-two';
   };
 
-  ToursHotelsResultSet.prototype.dateHtml = function() {
+  ToursHotelsResultSet.prototype.dateHtml = function(startOnly) {
     var result;
+    if (startOnly == null) {
+      startOnly = false;
+    }
     result = '<div class="day">';
     result += dateUtils.formatHtmlDayShortMonth(this.results().checkIn);
     result += '</div>';
+    if (startOnly) {
+      return result;
+    }
     result += '<div class="day">';
     result += dateUtils.formatHtmlDayShortMonth(this.results().checkOut);
     return result += '</div>';
@@ -897,7 +903,7 @@ ToursOverviewVM = (function() {
     if (firstResult.isAvia()) {
       return firstResult.results().departureCity;
     } else {
-      return 'Бобруйск';
+      return firstResult.results().city.caseNom;
     }
   };
 

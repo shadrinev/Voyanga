@@ -284,10 +284,12 @@ class ToursHotelsResultSet extends TourEntry
   dateClass: =>
     'orange-two'
 
-  dateHtml: =>
+  dateHtml: (startOnly=false)=>
     result = '<div class="day">'
     result+= dateUtils.formatHtmlDayShortMonth @results().checkIn
     result+='</div>'
+    if startOnly
+      return result
     result+= '<div class="day">'
     result+= dateUtils.formatHtmlDayShortMonth @results().checkOut
     result+= '</div>'
@@ -583,7 +585,7 @@ class ToursOverviewVM
     if firstResult.isAvia()
       firstResult.results().departureCity
     else
-      'Бобруйск'
+      firstResult.results().city.caseNom
 
 
   dateClass: =>
