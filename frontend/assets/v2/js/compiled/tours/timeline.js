@@ -120,7 +120,7 @@ Timeline = (function() {
         return _this.termsActive = true;
       });
       return $('.condition').animate({
-        'top': '-15px'
+        'top': '-16px'
       }, 400).removeClass('hide');
     }
   };
