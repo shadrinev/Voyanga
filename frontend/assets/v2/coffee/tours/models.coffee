@@ -391,6 +391,9 @@ class ToursResultSet
     $('#loadWrapBg').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
+      window.toursOverviewActive = true
+    else
+      window.toursOverviewActive = false
 
     if entry.beforeRender
       entry.beforeRender()
