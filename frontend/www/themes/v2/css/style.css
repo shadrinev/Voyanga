@@ -357,7 +357,7 @@
     padding-top: 17px;
     position: absolute;
     top: 0;
-    width: 839px;
+    width: 948px;
 }
 .condition .whence, .condition .where {
     background: url("../images/slice.png") no-repeat scroll 0 -904px transparent;
@@ -2175,6 +2175,7 @@ input.hotel-input {
 .paybuyContent {
     margin: 0 auto;
     max-width: 950px;
+    color: #1d222b;
 }
 .allTicketsDIV {
     background: none repeat scroll 0 0 #F4F7F9;
@@ -2297,4 +2298,241 @@ input.hotel-input {
 .allTicketsDIV .hotelTickets .tdInfo .name {
 	color: #879094;
 	font-size: 11px;
+}
+.paybuyContent .theSum {
+	overflow: hidden;
+	margin-top: 24px;
+	margin-bottom: 29px;
+	font-size: 17px;
+	color: #1d222b;
+}
+.paybuyContent .theSum .left {
+	float: left;
+}
+.paybuyContent .theSum .right {
+	float: right;
+}
+.paybuyContent .theSum .right .price {
+	width: 135px;
+	display: inline-block;
+	font-size: 22px;
+}
+
+.oneBlock {
+	border-bottom: 1px solid #babbbe;
+	overflow: hidden;
+}
+
+.paybuyContent h2 {
+	color: #1d222b;
+	font-size: 24px;
+	margin-top: 23px;
+	margin-bottom: 17px;
+	letter-spacing: -0.05em;
+    line-height: 26px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.paybuyContent h2 .ico-fly {
+	background: url("../images/ico-fly.png") no-repeat scroll center center transparent;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.paybuyContent h2 .ico-hotel {
+	background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
+	width: 26px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.paybuyContent h3 {
+	font-size: 19px;
+	color: #4b525c;
+}
+.infoPassengers {
+	width: 100%;
+	margin-bottom: 12px;
+}
+.dopInfoPassengers {
+	margin-bottom: 12px;
+}
+.infoPassengers td, .dopInfoPassengers td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.infoPassengers thead, .dopInfoPassengers thead {
+	font-weight: bold;
+	font-size: 14px;
+	color: #1d222b;
+}
+.infoPassengers input[type='text'], .dopInfoPassengers input[type='text'] {
+	background: url("../images/bg-input.png") no-repeat 0px 0px transparent;
+	border: none;
+	height: 31px;
+	overflow: hidden;
+	color: #1d222b;
+	font-size: 15px;
+}
+.infoPassengers .tdName {
+	width: 147px;
+}
+.infoPassengers .tdName input[type='text'] {
+	width: 127px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: 0px 0px;
+	text-transform: uppercase;
+}
+.infoPassengers .tdName input[type='text']:focus {
+	background-position: 0px -33px;
+}
+
+.infoPassengers .tdLastname {
+	width: 206px;
+}
+.infoPassengers .tdLastname input[type='text'] {
+	width: 187px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: -147px 0px;
+	text-transform: uppercase;
+}
+.infoPassengers .tdLastname input[type='text']:focus {
+	background-position: -147px -33px;
+}
+
+.infoPassengers .tdDocumentNumber {
+	width: 140px;
+}
+.infoPassengers .tdDocumentNumber input[type='text'] {
+	width: 120px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: -690px 0px;
+	text-transform: uppercase;
+}
+.infoPassengers .tdDocumentNumber input[type='text']:focus {
+	background-position: -690px -33px;
+}
+.infoPassengers .tdBirthday {
+	width: 130px;
+}
+.infoPassengers .tdDuration {
+	width: 120px;
+}
+.infoPassengers .dd {
+	width: 34px;
+	text-align: center;
+	background-position: -431px 0px !important;
+	float: left;
+	font-size: 12px;
+}
+.infoPassengers .dd:focus {
+	background-position: -431px -33px !important;
+}
+.infoPassengers .mm {
+	width: 33px;
+	text-align: center;
+	background-position: -465px 0px !important;
+	float: left;
+}
+.infoPassengers .mm:focus {
+	background-position: -465px -33px !important;
+}
+.infoPassengers .yy {
+	background-position: -498px 0 !important;
+    float: left;
+    text-align: center;
+    width: 53px;
+}
+.infoPassengers .yy:focus {
+	background-position: -498px -33px !important;
+}
+.infoPassengers .tdNationality {
+	width: 129px;
+}
+.infoPassengers .tdNationality input[type='text'] {
+	width: 109px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: -561px 0px;
+	text-transform: uppercase;
+}
+.infoPassengers .tdNationality input[type='text']:focus {
+	background-position: -561px -33px;
+}
+.tdSex {
+	width: 77px;
+}
+.tdSex .male {
+	width: 34px;
+	height: 33px;
+	background: url("../images/bg-input.png") no-repeat -354px 0px transparent; 
+	cursor: pointer;
+	float: left;
+}
+.tdSex .male:hover {
+	background-position: -354px -66px;
+}
+.tdSex .male.active {
+	background-position: -354px -33px;
+}
+.tdSex .male.active:hover {
+	background-position: -354px -99px;
+}
+.tdSex .female {
+	width: 34px;
+	height: 33px;
+	background: url("../images/bg-input.png") no-repeat -388px 0px transparent; 
+	cursor: pointer;
+	float: left;
+}
+.tdSex .female:hover {
+	background-position: -388px -66px;
+}
+.tdSex .female.active {
+	background-position: -388px -33px;
+}
+.tdSex .female.active:hover {
+	background-position: -388px -99px;
+}
+.addGuest {
+	color: #1d222b;
+	font-size: 14px;
+	border-bottom: 1px dashed;
+	margin-bottom: 18px;
+	display: inline-block;
+}
+
+.dopInfoPassengers .tdEmail {
+	width: 354px;
+}
+.dopInfoPassengers .tdEmail input[type='text'] {
+	width: 334px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: 0px -66px;
+	text-transform: uppercase;
+}
+.dopInfoPassengers .tdEmail input[type='text']:focus {
+	background-position: -0px -99px;
+}
+
+.dopInfoPassengers .tdTelefon {
+	width: 237px;
+}
+.dopInfoPassengers .tdTelefon input[type='text'] {
+	width: 187px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: -431px -66px;
+	text-transform: uppercase;
+}
+.dopInfoPassengers .tdTelefon input[type='text']:focus {
+	background-position: -431px -99px;
+}
+.dopInfoPassengers .tdText {
+	color: #808186;
+	font-size: 13px;
 }
