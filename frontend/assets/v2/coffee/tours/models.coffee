@@ -65,6 +65,7 @@ class ToursAviaResultSet extends TourEntry
         #it is actually recommnd ticket
         res = res.data
       result.selected_key res.key
+      res.parent.filtersConfig = res.parent.filters.getConfig()
       result.selected_best res.best | false
       @overviewTemplate = 'tours-overview-avia-ticket'
       @selection(res)
@@ -175,6 +176,21 @@ class ToursAviaResultSet extends TourEntry
     @results().roundTrip
 
   beforeRender: =>
+    if @results().selectedKey
+      @results().filters.getConfig(@results().filtersConfig)
+
+  afterRender: =>
+    if @results()
+      console.log('avia after rend')
+      if @results().selected_key
+        console.log('Yes, have selected')
+        window.setTimeout(
+          =>
+            if $('.ticket-content .btn-cost.selected').parent().parent().parent().parent().length
+              Utils.scrollTo($('.ticket-content .btn-cost.selected').parent().parent().parent().parent())
+
+          , 50
+        )
 
        
 class ToursHotelsResultSet extends TourEntry
@@ -201,6 +217,21 @@ class ToursHotelsResultSet extends TourEntry
     result.postInit()
     result.select = (hotel) =>
       hotel.parent = result
+      hotel.off 'back'
+      hotel.on 'back', =>
+        @trigger 'setActive', @
+      hotel.off 'select'
+      hotel.on 'select', (roomData) =>
+        @activeHotel  hotel.hotelId
+        @overviewTemplate = 'tours-overview-hotels-ticket'
+        @selection roomData
+        hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
+        hotel.parent.pagesLoad = hotel.parent.showParts()
+        @trigger 'next'
+      @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
+    result.selectFromPopup = (hotel) =>
+      hotel.parent = result
+      hotel.activePopup.close()
       hotel.off 'back'
       hotel.on 'back', =>
         @trigger 'setActive', @

@@ -361,63 +361,117 @@ VoyangaCalendarTimeline.generateEvents = function () {
     //Need width %
     var eventDays = {};
 
-
+    //цикл в котором пробегаемся по всем событиям и группируем их по дням и типам событий
     for (var i in this.calendarEvents) {
         var dt = this.calendarEvents[i].dayStart;
         var dateLabel = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
         if(typeof eventDays[dateLabel] != 'object'){
-            eventDays[dateLabel] = {types: {}, starts: new Array(), count: 0};
+            eventDays[dateLabel] = {types: {}, count: 0};
         }
 
         if(typeof eventDays[dateLabel].types[this.calendarEvents[i].type] != 'object'){
             eventDays[dateLabel].types[this.calendarEvents[i].type] = {s: new Array(), e: new Array()};
         }
         eventDays[dateLabel].types[this.calendarEvents[i].type].s.push(i);
+        eventDays[dateLabel].count++;
 
 
         var dt = this.calendarEvents[i].dayEnd;
         var dateLabel = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
 
         if(typeof eventDays[dateLabel] != 'object'){
-            eventDays[dateLabel] = {types: {}, starts: new Array(), count: 0};
+            eventDays[dateLabel] = {types: {}, count: 0};
         }
 
         if(typeof eventDays[dateLabel].types[this.calendarEvents[i].type] != 'object'){
             eventDays[dateLabel].types[this.calendarEvents[i].type] = {s: new Array(), e: new Array()};
         }
         eventDays[dateLabel].types[this.calendarEvents[i].type].e.push(i);
+        eventDays[dateLabel].count++;
     }
     console.log('eventDays',eventDays);
 
+    // а этот цикл необходим чтобы понять сколько точек будет отображено в обрабатываемом дне
     for(var key in eventDays){
         var endIds = {};
         var startIds = {};
+        var dateLabel = key;
+        var startCity = '';
+        var endCity = '';
+        var centerCities = new Array();
+        var pointsObject = {startPoints: [],centerPoints:[],endPoints: []}
+
         if(typeof eventDays[dateLabel].types['hotel'] == 'object'){
-            for(var fIndS in eventDays[dateLabel].types['flight'].s){
+            for(var fIndS in eventDays[dateLabel].types['hotel'].s){
+                //Если найден отлель который начинается в этот день, то это последняя точка в текущем дне
                 sInd = eventDays[dateLabel].types['hotel'].s[fIndS];
+                pointsObject.endPoints.push(sInd)
                 var find = false;
-                for(var fIndE in eventDays[dateLabel].types['hotel'].e){
-                    eInd = eventDays[dateLabel].types['hotel'].e[fIndE];
-                    if(this.calendarEvents[sInd].cityFrom == this.calendarEvents[eInd].cityTo){
-                        this.calendarEvents[eInd].endPoint = false;
-                        this.calendarEvents[eInd].showEndCity = false;
-                        find = true;
-                        break;
+                //а теперь посмотрим какие самолеты прилетают в этотже город и в этот же день
+                if(typeof eventDays[dateLabel].types['flight'] == 'object'){
+                    for(var fIndE in eventDays[dateLabel].types['flight'].e){
+                        eInd = eventDays[dateLabel].types['flight'].e[fIndE];
+                        if(pointsObject.endPoints.length == 1 && this.calendarEvents[sInd].city == this.calendarEvents[eInd].cityTo){
+                            //нашли авиарейс значит он будет в конце
+                            pointsObject.endPoints.push(eInd);
+                            //точку не нужно отображать
+                            this.calendarEvents[eInd].endInfo.point = false;
+                            find = true;
+                            //break;
+                        }else{
+                            //ну а все остальные прилетающие где-то в середине
+                            pointsObject.centerPoints.push(eInd);
+                        }
+                    }
+                }
+            }
+            for(var fIndE in eventDays[dateLabel].types['hotel'].e){
+                //Если найден отлель который заканчивается в этот день, то это первая точка в текущем дне
+                eInd = eventDays[dateLabel].types['hotel'].e[fIndE];
+                pointsObject.startPoints.push(eInd)
+                //а теперь посмотрим какие самолеты вылетают из этого города и в этот же день
+                if(typeof eventDays[dateLabel].types['flight'] == 'object'){
+                    for(var fIndS in eventDays[dateLabel].types['flight'].s){
+                        sInd = eventDays[dateLabel].types['flight'].e[fIndS];
+                        if(pointsObject.startPoints.length == 1 && this.calendarEvents[eInd].city == this.calendarEvents[sInd].cityFrom){
+                            //нашли авиарейс значит он будет в начале
+                            pointsObject.startPoints.push(sInd);
+                            //точку не нужно отображать
+                            this.calendarEvents[sInd].startInfo.point = false;
+                            find = true;
+                            //break;
+                        }else{
+                            //ну а все остальные вылетающие где-то в середине
+                            pointsObject.centerPoints.push(sInd);
+                        }
                     }
                 }
             }
         }
         if(typeof eventDays[dateLabel].types['flight'] == 'object'){
-            for(var fIndS in eventDays[dateLabel].types['flight'].s){
-                sInd = eventDays[dateLabel].types['flight'].s[fIndS];
-                var find = false;
-                for(var fIndE in eventDays[dateLabel].types['flight'].e){
-                    eInd = eventDays[dateLabel].types['flight'].e[fIndE];
-                    if(this.calendarEvents[sInd].cityFrom == this.calendarEvents[eInd].cityTo){
-                        this.calendarEvents[eInd].endPoint = false;
-                        this.calendarEvents[eInd].showEndCity = false;
-                        find = true;
-                        break;
+            if(pointsObject.centerPoints.length > 0 && (pointsObject.startPoints.length == 0 || pointsObject.endPoints.length == 0)){
+                if(pointsObject.startPoints.length == 0){
+                    var key = 'endPoints';
+                    var otherKey = 'startPoints';
+                    var forKey = 'e';
+                    var forOtherKey = 's';
+                }else{
+                    var key = 'startPoints';
+                    var otherKey = 'endPoints';
+                    var forKey = 's';
+                    var forOtherKey = 'e';
+                }
+                for(var fIndS in eventDays[dateLabel].types['flight'][forKey]){
+                    sInd = eventDays[dateLabel].types['flight'][forKey][fIndS];
+                    var find = false;
+                    for(var fIndE in eventDays[dateLabel].types['flight'].e){
+                        eInd = eventDays[dateLabel].types['flight'].e[fIndE];
+                        if(this.calendarEvents[sInd].cityFrom == this.calendarEvents[eInd].cityTo){
+                            this.calendarEvents[eInd].endPoint = false;
+                            this.calendarEvents[eInd].showEndCity = false;
+                            find = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -551,10 +605,11 @@ VoyangaCalendarTimeline.prepareEvents = function () {
         el.dayStart = Date.fromIso(el.dayStart);
         el.dayEnd = Date.fromIso(el.dayEnd);
         if(el.type == 'flight'){
-            el.startPoint = true;
-            el.endPoint = true;
-            el.showStartCity = true;
-            el.showEndCity = true;
+            el.startInfo = {point: true,city:true,count: 1,position:0};
+            el.endInfo = {point: true,city:true,count: 1,position:0};
+        }else{
+            el.startInfo = {count: 1,position:0};
+            el.endInfo = {count: 1,position:0};
         }
     });
 }

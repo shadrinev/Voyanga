@@ -646,6 +646,7 @@ AviaResultSet = (function() {
     this.best = ko.observable();
     this.data = [];
     this.numResults = ko.observable(0);
+    this.filtersConfig = false;
     _ref2 = this._results;
     for (key in _ref2) {
       result = _ref2[key];

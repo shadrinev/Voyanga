@@ -79,6 +79,8 @@ ToursAviaResultSet = (function(_super) {
   __extends(ToursAviaResultSet, _super);
 
   function ToursAviaResultSet(raw, sp) {
+    this.afterRender = __bind(this.afterRender, this);
+
     this.beforeRender = __bind(this.beforeRender, this);
 
     this.rt = __bind(this.rt, this);
@@ -144,6 +146,7 @@ ToursAviaResultSet = (function(_super) {
         res = res.data;
       }
       result.selected_key(res.key);
+      res.parent.filtersConfig = res.parent.filters.getConfig();
       result.selected_best(res.best | false);
       _this.overviewTemplate = 'tours-overview-avia-ticket';
       _this.selection(res);
@@ -296,7 +299,26 @@ ToursAviaResultSet = (function(_super) {
     return this.results().roundTrip;
   };
 
-  ToursAviaResultSet.prototype.beforeRender = function() {};
+  ToursAviaResultSet.prototype.beforeRender = function() {
+    if (this.results().selectedKey) {
+      return this.results().filters.getConfig(this.results().filtersConfig);
+    }
+  };
+
+  ToursAviaResultSet.prototype.afterRender = function() {
+    var _this = this;
+    if (this.results()) {
+      console.log('avia after rend');
+      if (this.results().selected_key) {
+        console.log('Yes, have selected');
+        return window.setTimeout(function() {
+          if ($('.ticket-content .btn-cost.selected').parent().parent().parent().parent().length) {
+            return Utils.scrollTo($('.ticket-content .btn-cost.selected').parent().parent().parent().parent());
+          }
+        }, 50);
+      }
+    }
+  };
 
   return ToursAviaResultSet;
 
@@ -367,6 +389,28 @@ ToursHotelsResultSet = (function(_super) {
     result.postInit();
     result.select = function(hotel) {
       hotel.parent = result;
+      hotel.off('back');
+      hotel.on('back', function() {
+        return _this.trigger('setActive', _this);
+      });
+      hotel.off('select');
+      hotel.on('select', function(roomData) {
+        _this.activeHotel(hotel.hotelId);
+        _this.overviewTemplate = 'tours-overview-hotels-ticket';
+        _this.selection(roomData);
+        hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
+        hotel.parent.pagesLoad = hotel.parent.showParts();
+        return _this.trigger('next');
+      });
+      return _this.trigger('setActive', {
+        'data': hotel,
+        template: 'hotels-info-template',
+        'parent': _this
+      });
+    };
+    result.selectFromPopup = function(hotel) {
+      hotel.parent = result;
+      hotel.activePopup.close();
       hotel.off('back');
       hotel.on('back', function() {
         return _this.trigger('setActive', _this);

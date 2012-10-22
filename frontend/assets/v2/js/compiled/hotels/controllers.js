@@ -92,8 +92,8 @@ HotelsController = (function() {
           cityFrom: 'MOW',
           cityTo: 'LED'
         }, {
-          dayStart: Date.fromIso('2012-09-23'),
-          dayEnd: Date.fromIso('2012-09-28'),
+          dayStart: Date.fromIso('2012-10-23'),
+          dayEnd: Date.fromIso('2012-10-28'),
           type: 'hotel',
           color: 'red',
           description: 'Californication Hotel2',
