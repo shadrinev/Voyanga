@@ -1,5 +1,6 @@
 # IDE specific folders
 .idea/
+# runtime yii
 /www/assets/
 */www/assets/
 *~
@@ -20,12 +21,11 @@ node_modules
 
 .DS_Store
 
-.DS_Store
-
 markup/.DS_Store
 
 /vendor
 
 frontend/www/themes/v2/assets/js/.DS_Store
 
--p
+# vagrant
+.vagrant
