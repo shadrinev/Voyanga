@@ -657,9 +657,13 @@
     vertical-align: middle;
 }
 .panelTable .how-many-man {
-    background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+
+    height: 68px;
+
+
     display: inline-block;
-    height: 70px;
+
     position: relative;
     float: none;
     margin: auto;
