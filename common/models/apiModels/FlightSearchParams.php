@@ -123,7 +123,7 @@ class FlightSearchParams extends CComponent
         return $routes;
     }
 
-    private function isRoundTrip()
+    public function isRoundTrip()
     {
         if (sizeof($this->routes)==2)
         {

@@ -7,6 +7,8 @@
  */
 class BuyController extends Controller
 {
+    private $keys;
+
     public function actionIndex()
     {
         $this->layout = 'static';
@@ -39,8 +41,8 @@ class BuyController extends Controller
             }
             foreach ($this->results as $result)
             {
-                if ($result->resultId == $searchKey)
-                    $this->addHotelTripElement($result, $flightSearchParams);
+                if ($result->flightKey == $searchKey)
+                    $this->addFlighTripElement($result, $flightSearchParams);
             }
             throw new CException(404, 'No item found');
         }
@@ -69,7 +71,28 @@ class BuyController extends Controller
         throw new CException(500, 'Cache expired');
     }
 
-    public function addHotelTripElement($hotelTripElement, $hotelSearchParams)
+    public function addFlightTripElement(FlightSearchParams $flightSearchParams)
+    {
+        $flightTripElement = new FlightTripElement();
+        $key = md5($flightSearchParams);
+        if (!isset($this->keys[$key]))
+            $this->keys[$key] = 0;
+        if ($this->keys[$key]==1)
+        {
+            $flightTripElement->fillFromSearchParams($flightSearchParams, true);
+        }
+        else
+            $flightTripElement->fillFromSearchParams($flightSearchParams, false);
+        if ($flightSearchParams->isRoundTrip())
+        {
+            $this->keys[$key] = 1;
+            $flightTripElement->setGroupId($key);
+        }
+        $flightTripElement->hotel = $flightTripElement;
+        Yii::app()->shoppingCart->put($flightTripElement);
+    }
+
+    public function addHotelTripElement($hotelSearchParams)
     {
         $hotelTripElement = new HotelTripElement();
         $hotelTripElement->fillFromSearchParams($hotelSearchParams);

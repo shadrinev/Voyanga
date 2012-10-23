@@ -221,4 +221,23 @@ class FlightTripElement extends TripElement
         $fullUrl = $url . '?' . http_build_query($params);
         return $fullUrl;
     }
+    
+    public function fillFromSearchParams(FlightSearchParams $searchParams, $isBack = false)
+    {
+        $ind = $isBack ? 1 : 0;
+        $route = $searchParams->routes[$ind];
+        $departureDate = date('d.m.Y', strtotime($route['date']));
+        $departureCity = City::model()->getCityByCode($route['departure']);
+        if (!$departureCity)
+            $this->sendError(400, 'Incorrect IATA code for deparure city');
+        $arrivalCity = City::model()->getCityByCode($route['arrival']);
+        if (!$arrivalCity)
+            $this->sendError(400, 'Incorrect IATA code for arrival city');
+        $this->departureDate = $departureDate;
+        $this->departureCity = $departureCity;
+        $this->arrivalCity = $arrivalCity;
+        $this->adultCount = $searchParams->adultCount;
+        $this->childCount = $searchParams->childCount;
+        $this->infantCount = $searchParams->infantCount;
+    }
 }
