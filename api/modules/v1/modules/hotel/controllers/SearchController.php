@@ -49,6 +49,7 @@ class SearchController extends ApiController
             $this->sendError(500, 'Error while send Request To Hotel Provider');
             Yii::app()->end();
         }
+
         $cacheId = $this->storeToCache($hotelSearchParams);
 
         $this->results['cacheId'] = $cacheId;
