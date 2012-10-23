@@ -48,15 +48,16 @@ class SearchController extends ApiController
         }
         else
         {
-            $result['flights']['flightVoyages'] = $variants;
             $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
             $cacheId = $this->storeToCache($flightSearchParams);
+            $newVariants = array();
             foreach ($variants as $variant)
             {
                 $el = $variant;
                 $el['cacheId'] = $cacheId;
-                $this->results[] = $el;
+                $newVariants[] = $el;
             }
+            $result['flights']['flightVoyages'] = $newVariants;
             $result['searchParams'] = $flightSearchParams->getJsonObject();
             $this->sendWithCorrectFormat($format, $result);
         }
