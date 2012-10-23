@@ -48,6 +48,7 @@ class BuyController extends Controller
         $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
         if (($flightSearchParams) and ($flightSearchResult))
         {
+            VarDumper::dump($flightSearchParams);
             foreach ($flightSearchResult as $result)
             {
                 if ($result->flightKey == $searchKey)
