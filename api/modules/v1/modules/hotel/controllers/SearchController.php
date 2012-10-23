@@ -68,7 +68,7 @@ class SearchController extends ApiController
 
     public function actionInfo($hotelId, $cacheId, $format = 'json')
     {
-        $hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $cacheId);
+        $hotelSearchResult = gzuncompress(Yii::app()->pCache->get('hotelSearchResult' . $cacheId));
         $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $cacheId);
         if ((!$hotelSearchResult) || (!$hotelSearchParams))
         {
@@ -112,7 +112,7 @@ class SearchController extends ApiController
     {
         $cacheId = md5(serialize($hotelSearchParams));
 
-        Yii::app()->pCache->set('hotelSearchResult' . $cacheId, $this->results, appParams('hotel_search_cache_time'));
+        Yii::app()->pCache->set('hotelSearchResult' . $cacheId, gzcompress($this->results), appParams('hotel_search_cache_time'));
         Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
 
         return $cacheId;
