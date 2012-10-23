@@ -1510,9 +1510,9 @@ input.hotel-input {
     width: 100%;
 }
 .fly-ico {
-    background: url("../images/fly-ico.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/fly-ico-small.png") no-repeat scroll 0 0 transparent;
     bottom: 0;
-    height: 70px;
+    height: 54px;
     left: 26px;
     position: absolute;
     width: 86px;
@@ -1520,7 +1520,7 @@ input.hotel-input {
 .hotel-ico {
     background: url("../images/hotel-ico.png") no-repeat scroll 0 0 transparent;
     bottom: 0;
-    height: 70px;
+    height: 54px;
     left: 26px;
     position: absolute;
     width: 86px;
@@ -1871,6 +1871,9 @@ input.hotel-input {
     width: 100%;
     z-index: 10;
 }
+.slideTours.small {
+	height: 142px;
+}
 .slideTours.mapsView {
     background: url("../images/bg-index-slide.png") repeat-x scroll 0 10px transparent;
 }
@@ -1882,6 +1885,9 @@ input.hotel-input {
     overflow: hidden;
     position: relative;
     white-space: nowrap;
+}
+.slideTours.small .center {
+    height: 136px;
 }
 .maps {
     background: url("../images/bg-index.png") repeat scroll 0 0 transparent;
@@ -1896,7 +1902,7 @@ input.hotel-input {
 .scroll-none {
     overflow: hidden;
 }
-.toursTicketsMain {
+.slideTours .toursTicketsMain {
     background: none repeat scroll 0 0 #F4F7F9;
     color: #262930;
     float: left;
@@ -1907,10 +1913,13 @@ input.hotel-input {
     position: relative;
     width: 15%;
 }
-.toursTicketsMain:hover {
+.slideTours.small .toursTicketsMain {
+	height: 122px;
+}
+.slideTours .toursTicketsMain:hover {
     cursor: pointer;
 }
-.toursTicketsMain .l {
+.slideTours .toursTicketsMain .l {
     background: url("../images/bg-tours-main.png") no-repeat scroll -30px 0 transparent;
     height: 176px;
     left: 0;
@@ -1919,7 +1928,11 @@ input.hotel-input {
     width: 6px;
     z-index: 3;
 }
-.toursTicketsMain .r {
+.slideTours.small .toursTicketsMain .l {
+	height: 122px;
+	background: url("../images/bg-tours-main-small.png") no-repeat scroll -30px 0 transparent;
+}
+.slideTours .toursTicketsMain .r {
     background: url("../images/bg-tours-main.png") no-repeat scroll 0 0 transparent;
     height: 176px;
     position: absolute;
@@ -1928,31 +1941,62 @@ input.hotel-input {
     width: 30px;
     z-index: 3;
 }
-.toursTicketsMain .innerTours {
+.slideTours.small .toursTicketsMain .r {
+	height: 122px;
+	background: url("../images/bg-tours-main-small.png") no-repeat scroll 0 0 transparent;
+}
+.slideTours .toursTicketsMain .innerTours {
     background: none repeat scroll 0 0 #F4F7F9;
     padding: 6px 6px 5px;
     position: relative;
     z-index: 2;
 }
-.imgTours {
+.slideTours .imgTours {
     height: 106px;
     overflow: hidden;
     width: 100%;
 }
-.imgTours img {
+.slideTours.small .imgTours {
+	height: 75px;
+}
+.slideTours .imgTours img {
     vertical-align: middle;
     width: 100%;
 }
-.toursTicketsMain .textTours {
+.slideTours .toursTicketsMain .textTours {
     line-height: 25px;
     padding-left: 10px;
     padding-top: 3px;
 }
-.toursTicketsMain .textTours .price {
+.slideTours.small .toursTicketsMain .textTours {
+	position: relative;
+	line-height: 16px;
+	padding-left: 3px;
+	white-space: normal;
+}
+.slideTours.small .toursTicketsMain .textTours .priceEvent {
+    background: url("../images/bg-small-price-event.png") no-repeat scroll 0 0 transparent;
+    font-size: 11px;
+    height: 22px;
+    left: 0;
+    line-height: 18px;
+    padding-right: 5px;
+    position: absolute;
+    text-align: center;
+    top: -75px;
+    width: 66px;
+}
+.slideTours.small .toursTicketsMain .textTours .price {
+	font-size: 12px;
+}
+.slideTours.small .toursTicketsMain .textTours .rur {
+	font-size: 11px;
+}
+.slideTours .toursTicketsMain .textTours .price {
     font-size: 26px;
     font-weight: bold;
 }
-.toursTicketsMain .textTours .rur {
+.slideTours .toursTicketsMain .textTours .rur {
     font-size: 25px;
     font-weight: bold;
 }

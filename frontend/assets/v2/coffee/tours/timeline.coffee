@@ -29,14 +29,11 @@ class Timeline
       middle_date = start_date.clone().add('days', timeline_length/2)
       if timeline_length < 23
         timeline_length = 23
-      left = timeline_length / 2
-      right = timeline_length /2
-      # odd length
-      if timeline_length % 2
-        right += 1
+      left = Math.round(timeline_length / 2)
+      right = Math.round(timeline_length /2)
       results = []
-      for x in [1..left]
-        obj =  {date: middle_date.clone().subtract('days', left-x)}
+      for x in [2..left]
+        obj =  {date: middle_date.clone().subtract('days', left-x+1)}
         obj.day = obj.date.format('D')
         obj.hotel = false
         obj.avia = false

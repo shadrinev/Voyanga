@@ -46,7 +46,7 @@ class BuyController extends Controller
     {
         $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchKey);
         $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchKey);
-        CVarDumper::dump($flightSearchResult); die();
+        CVarDumper::dump($flightSearchParams); die();
         if (($flightSearchParams) and ($flightSearchResult))
         {
             $this->results = $flightSearchResult;

@@ -61,15 +61,12 @@ Timeline = (function() {
       if (timeline_length < 23) {
         timeline_length = 23;
       }
-      left = timeline_length / 2;
-      right = timeline_length / 2;
-      if (timeline_length % 2) {
-        right += 1;
-      }
+      left = Math.round(timeline_length / 2);
+      right = Math.round(timeline_length / 2);
       results = [];
-      for (x = _j = 1; 1 <= left ? _j <= left : _j >= left; x = 1 <= left ? ++_j : --_j) {
+      for (x = _j = 2; 2 <= left ? _j <= left : _j >= left; x = 2 <= left ? ++_j : --_j) {
         obj = {
-          date: middle_date.clone().subtract('days', left - x)
+          date: middle_date.clone().subtract('days', left - x + 1)
         };
         obj.day = obj.date.format('D');
         obj.hotel = false;
