@@ -2176,6 +2176,14 @@ input.hotel-input {
     margin: 0 auto;
     max-width: 950px;
     color: #1d222b;
+    padding-bottom: 22px;
+}
+.paybuyEnd {
+	margin: 0 auto;
+    max-width: 950px;
+    color: #1d222b;
+    padding-top: 22px;
+    text-align: right;
 }
 .allTicketsDIV {
     background: none repeat scroll 0 0 #F4F7F9;
@@ -2302,7 +2310,6 @@ input.hotel-input {
 .paybuyContent .theSum {
 	overflow: hidden;
 	margin-top: 24px;
-	margin-bottom: 29px;
 	font-size: 17px;
 	color: #1d222b;
 }
@@ -2326,7 +2333,7 @@ input.hotel-input {
 .paybuyContent h2 {
 	color: #1d222b;
 	font-size: 24px;
-	margin-top: 23px;
+	margin-top: 22px;
 	margin-bottom: 17px;
 	letter-spacing: -0.05em;
     line-height: 26px;
@@ -2352,10 +2359,8 @@ input.hotel-input {
 }
 .infoPassengers {
 	width: 100%;
-	margin-bottom: 12px;
 }
 .dopInfoPassengers {
-	margin-bottom: 12px;
 }
 .infoPassengers td, .dopInfoPassengers td {
 	padding-top: 5px;
@@ -2501,7 +2506,6 @@ input.hotel-input {
 	color: #1d222b;
 	font-size: 14px;
 	border-bottom: 1px dashed;
-	margin-bottom: 18px;
 	display: inline-block;
 }
 
@@ -2536,3 +2540,34 @@ input.hotel-input {
 	color: #808186;
 	font-size: 13px;
 }
+.payCardPal {
+	box-shadow: 0 -20px 15px rgba(67, 68, 70, 0.3);
+	height: 500px;
+	width: 100%;
+	background: #FFF;
+	border-top: 1px solid #babbbe; 
+}
+.paybuyEnd .info {
+	width: 690px;
+	padding-left: 27px;
+	background: url(../images/ico-i.png) no-repeat 9px 3px;
+	float: right;
+	color: #626368;
+	font-size: 12px;
+	text-align: left;
+}
+.paybuyEnd .armoring {
+	float: right;
+	text-align: left;
+	width: 230px;
+	color: #32363f;
+}
+.paybuyEnd .armoring .text {
+	margin-top: 8px;
+	white-space: nowrap;
+}
+.paybuyEnd .armoring .btnBlue {
+	cursor: default;
+}
+
+

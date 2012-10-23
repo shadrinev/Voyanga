@@ -1,8 +1,4 @@
-
-
-<div class="center-block">
-	<div class="main-block">
-		<div id="content">
+<div id="content">
 		<!--=== ===-->
 		<div class="oneBlock">
 		<!--=== ===-->
@@ -486,7 +482,34 @@
 		<!--=== ===-->
 		</div>
 		<!--=== ===-->
+		<div class="payCardPal">
+			&nbsp;
 		</div>
-	</div>
+		<div class="paybuyEnd">
+			<div class="info">После нажатия кнопки «Купить» данные пассажиров попадут в систему бронирования, билет будет оформлен и выслан вам на указанный электронный адрес в течение нескольких минут. Нажимая «Купить», вы соглашаетесь с условиями использования, правилами IATA и правилами тарифов.</div>
+			<div class="clear"></div>
+		</div>
+		<div class="paybuyEnd">
+				<div class="btnBlue">
+					<span>Забронировать</span>&nbsp;&nbsp;
+					<span class="price">33 770</span> 
+					<span class="rur">o</span>
+					
+					<span class="l"></span>
+				</div>
+			<div class="clear"></div>
+		</div>
+		<div class="paybuyEnd">
+			<div class="armoring">
+				<div class="btnBlue">
+					<span>Бронирование</span>
+					<div class="dotted"></div>
+					<span class="l"></span>
+				</div>
+				<div class="text">
+					Процесс бронирования может занять до 45 секунд...
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
 </div>
-
