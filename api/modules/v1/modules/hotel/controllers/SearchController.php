@@ -8,6 +8,7 @@
 class SearchController extends ApiController
 {
     public $defaultAction = 'default';
+    private $results;
 
     /**
      * @param string city
@@ -35,40 +36,20 @@ class SearchController extends ApiController
             elseif ($room['chd'] == 0)
                 $hotelSearchParams->addRoom($room['adt'], $room['cots'], false);
             else
+            {
                 $this->sendError(200, 'Only 0 or 1 child at one hotel room accepted');
-        }
-        Yii::import('site.frontend.models.*');
-        Yii::import('site.frontend.components.*');
-        $hotelClient = new HotelBookClient();
-        $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
-        Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
-        $results = array();
-        if ($variants->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
-        {
-            $stack = new HotelStack($variants);
-            $results = $stack->groupBy('hotelId')->mergeSame()->sortBy('rubPrice', 5)->getJsonObject(4);
-            $query = array();
-            foreach ($results['hotels'] as $i => $info)
-            {
-                $query[$info['hotelId']] = $hotelClient->hotelDetail($info['hotelId'], true);
+                Yii::app()->end();
             }
-            $hotelClient->processAsyncRequests();
-            foreach ($query as $hotelId => $responseId)
-            {
-                if (isset($hotelClient->requests[$responseId]['result']))
-                    $this->inject($results, $hotelId, $hotelClient->requests[$responseId]['result']);
-            }
-        }
-        elseif($variants->responseStatus == ResponseStatus::ERROR_CODE_EMPTY)
-        {
-            $results['hotels'] = array();
-        }
-        else
-        {
-            $this->sendError(200, $variants->errorsDescriptions);
         }
 
-        $cacheId = $this->storeToCache($hotelSearchParams, $results);
+        $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
+        if (!$this->results)
+        {
+            $this->sendError(500, 'Error while send Request To Hotel Provider');
+            Yii::app()->end();
+        }
+        $cacheId = $this->storeToCache($hotelSearchParams);
+
         $results['cacheId'] = $cacheId;
         $results['searchParams'] = $hotelSearchParams->getJsonObject();
 
@@ -77,7 +58,10 @@ class SearchController extends ApiController
         elseif ($format == 'xml')
             $this->sendXml($results, 'hotelSearchResults');
         else
+        {
             $this->sendError(400, 'Incorrect response format');
+            Yii::app()->end();
+        }
     }
 
     public function actionInfo($hotelId, $cacheId, $format = 'json')
@@ -93,23 +77,26 @@ class SearchController extends ApiController
 
         foreach ($hotelSearchResult['hotels'] as $hotel)
         {
-            if ($hotel['hotelId']==$hotelId)
+            if ($hotel['hotelId'] == $hotelId)
             {
-                if(!isset($response['hotel'])){
+                if (!isset($response['hotel']))
+                {
                     $response['hotel'] = $hotel;
-
                     $response['hotel']['details'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
                     $response['searchParams'] = $hotelSearchParams->getJsonObject();
                     $response['hotel']['oldHotels'] = array();
                     $response['hotel']['oldHotels'][] = new Hotel($hotel);
-                }else{
+                }
+                else
+                {
                     $response['hotel']['oldHotels'][] = new Hotel($hotel);
                 }
             }
         }
-        if(isset($response)){
+        if (isset($response))
+        {
             $null = null;
-            $hotelClient->hotelSearchDetails($null,$response['hotel']['oldHotels']);
+            $hotelClient->hotelSearchDetails($null, $response['hotel']['oldHotels']);
             if ($format == 'json')
                 $this->sendJson($response);
             elseif ($format == 'xml')
@@ -119,59 +106,13 @@ class SearchController extends ApiController
         $this->sendError(200, 'No hotel with given hotelId found');
     }
 
-    private function storeToCache($hotelSearchParams, $results)
+    private function storeToCache($hotelSearchParams)
     {
         $cacheId = md5(serialize($hotelSearchParams));
 
-        Yii::app()->cache->set('hotelSearchResult' . $cacheId, $results, appParams('hotel_search_cache_time'));
+        Yii::app()->cache->set('hotelSearchResult' . $cacheId, $this->results, appParams('hotel_search_cache_time'));
         Yii::app()->cache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
+
         return $cacheId;
-    }
-
-    private function inject(&$results, $hotelId, $additional)
-    {
-        $newResults = array();
-        $additional = $this->prepare($additional);
-        foreach ($results['hotels'] as $result)
-        {
-            if ($result['hotelId'] == $hotelId)
-            {
-                $element = CMap::mergeArray($result, $additional);
-            }
-            else
-            {
-                $element = $result;
-            }
-            $newResults[] = $element;
-        }
-        $results['hotels'] = $newResults;
-    }
-
-    private function prepare($additional)
-    {
-        if (is_object($additional))
-        {
-            $objectVars = get_object_vars($additional);
-            foreach ($objectVars as $objVar => $objProperties)
-            {
-                if (is_object($additional->$objVar))
-                    $additional->$objVar = $this->prepare($additional->$objVar);
-                elseif (is_array($additional->$objVar))
-                {
-                    $additional->$objVar = $this->prepare($additional->$objVar);
-                }
-                elseif (is_string($additional->$objVar))
-                    $additional->$objVar = strip_tags($additional->$objVar);
-                    if($objVar == 'description'){
-                        $pattern = '/\s?[^.]*?:\s?/';
-                        $replace = "<br>\n";
-                        $additional->$objVar = preg_replace($pattern, $replace, $additional->$objVar);
-                        if(strpos($additional->$objVar,'<br>') === 0){
-                            $additional->$objVar = substr($additional->$objVar,4);
-                        }
-                    }
-            }
-        }
-        return $additional;
     }
 }
