@@ -599,7 +599,7 @@
     box-shadow: 0 1px 5px #000000;
 }
 .leftPageBtn {
-	background: url("../images/navi-index.png") no-repeat scroll 0 0 transparent;
+	background: url("../images/navi-index-small.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     height: 54px;
     left: 0;
@@ -610,10 +610,10 @@
 }
 
 .leftPageBtn:hover {
-	background-position: 0px -70px;
+	background-position: 0px 0px;
 }
 .rightPageBtn {
-	background: url("../images/navi-index.png") no-repeat scroll -26px 0 transparent;
+	background: url("../images/navi-index-small.png") no-repeat scroll -26px 0 transparent;
     cursor: pointer;
     height: 54px;
     position: absolute;
@@ -623,7 +623,7 @@
     z-index: 5;
 }
 .rightPageBtn:hover {
-	background-position: -26px -70px;
+	background-position: -26px -0px;
 }
 
 .constructor-ico {
