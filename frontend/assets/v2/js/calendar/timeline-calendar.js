@@ -351,11 +351,23 @@ VoyangaCalendarTimeline.generateFlightDiv = function (FlightEvent) {
     }
 
     if(totalDays == 1 && FlightEvent.startInfo.position == FlightEvent.endInfo.position){
+        if(false && FlightEvent.startInfo.point || FlightEvent.startInfo.point){
+            var deltaLeft = (dayWidth / FlightEvent.startInfo.count)*(0.5 + FlightEvent.startInfo.position);
+            var outHtml = '<div class="flyTrip" style="width: 0%" data-delta-left="'+deltaLeft+'">';
+            outHtml = outHtml + '<div class="startYourTours"></div></div>';
+            return outHtml;
+        }
         return '';
     }
     var deltaLeft = (dayWidth / FlightEvent.startInfo.count)*(0.5 + FlightEvent.startInfo.position);
     var deltaRight = (totalDays-1)*dayWidth + (dayWidth / FlightEvent.endInfo.count)*(0.5 + FlightEvent.endInfo.position);
     var deltaWidth = deltaRight - deltaLeft;
+    if(FlightEvent.startInfo.count == 3){
+        names[0] = FlightEvent.cityFrom;
+    }
+    if(FlightEvent.endInfo.count == 3){
+        names[1] = FlightEvent.cityTo;
+    }
 
 
     var outHtml = '<div class="'+flyTripClass+'" style="width: ' + (deltaWidth) + '%" data-delta-left="'+deltaLeft+'">';
@@ -531,6 +543,9 @@ VoyangaCalendarTimeline.generateEvents = function () {
             this.calendarEvents[sInd].startInfo.city = needShowCity;
             needShowPoint = false;
             needShowCity = false;
+        }
+        if(centerCities.length > 1){
+            this.calendarEvents[sInd].startInfo.point = true;
         }
         for(var iInd in pointsObject.centerPoints.e){
             sInd = pointsObject.centerPoints.e[iInd];
