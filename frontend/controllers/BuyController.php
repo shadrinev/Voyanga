@@ -64,9 +64,9 @@ class BuyController extends Controller
         $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $searchId);
         if (($hotelSearchParams) and ($hotelSearchResult))
         {
-            foreach ($hotelSearchResult['hotels'] as $result)
+            foreach ($hotelSearchResult->hotels as $result)
             {
-                if ($result['hotelId'] == $searchKey)
+                if ($result->hotelId == $searchKey)
                     $this->addHotelTripElement($result, $hotelSearchParams);
             }
         }
@@ -99,7 +99,7 @@ class BuyController extends Controller
     {
         $hotelTripElement = new HotelTripElement();
         $hotelTripElement->fillFromSearchParams($hotelSearchParams);
-        $hotelTripElement->hotel = new Hotel($hotel);
+        $hotelTripElement->hotel = $hotel;
         Yii::app()->shoppingCart->put($hotelTripElement);
     }
 }

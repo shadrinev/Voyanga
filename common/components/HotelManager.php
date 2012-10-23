@@ -13,6 +13,7 @@ class HotelManager
         Yii::import('site.frontend.components.*');
         $hotelClient = new HotelBookClient();
         $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
+        self::storeToCache($hotelSearchParams, $variants);
         Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
         $results = array();
         if ($variants->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
@@ -90,5 +91,15 @@ class HotelManager
             }
         }
         return $additional;
+    }
+
+    static private function storeToCache($hotelSearchParams, $variants)
+    {
+        $cacheId = md5(serialize($hotelSearchParams));
+
+        Yii::app()->pCache->set('hotelSearchResult' . $cacheId, $variants, appParams('hotel_search_cache_time'));
+        Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
+
+        return $cacheId;
     }
 }
