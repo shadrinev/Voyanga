@@ -48,8 +48,7 @@ class BuyController extends Controller
         $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
         if (($flightSearchParams) and ($flightSearchResult))
         {
-            VarDumper::dump($flightSearchResult);
-            foreach ($flightSearchResult as $result)
+            foreach ($flightSearchResult['flightVoyages'] as $result)
             {
                 if ($result->flightKey == $searchKey)
                     $this->addFlightTripElement($result, $flightSearchParams);
