@@ -62,12 +62,11 @@ class BuyController extends Controller
     {
         $hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $searchId);
         $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $searchId);
-        CVarDumper::dump($hotelSearchResult);
         if (($hotelSearchParams) and ($hotelSearchResult))
         {
             foreach ($hotelSearchResult as $result)
             {
-                if ($result['resultId'] == $searchKey)
+                if ($result['hotelId'] == $searchKey)
                     $this->addHotelTripElement($result, $hotelSearchParams);
             }
             throw new CException(404, 'No item found');
