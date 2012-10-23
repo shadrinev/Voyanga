@@ -730,7 +730,8 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.showOverview = function() {
-    var dummyPanel;
+    var dummyPanel,
+      _this = this;
     dummyPanel = {
       onlyTimeline: true,
       calendarHidden: function() {
@@ -746,7 +747,92 @@ ToursResultSet = (function() {
       overview: true,
       panel: dummyPanel
     });
-    return ResizeAvia();
+    ResizeAvia();
+    return window.setTimeout(function() {
+      console.log('after render tours all tour page');
+      VoyangaCalendarTimeline.calendarEvents = [
+        {
+          dayStart: Date.fromIso('2012-10-23'),
+          dayEnd: Date.fromIso('2012-10-23'),
+          type: 'flight',
+          color: 'red',
+          description: 'Москва || Санкт-Петербург',
+          cityFrom: 'MOW',
+          cityTo: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-10-23'),
+          dayEnd: Date.fromIso('2012-10-28'),
+          type: 'hotel',
+          color: 'red',
+          description: 'Californication Hotel2',
+          city: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-10-28'),
+          dayEnd: Date.fromIso('2012-10-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Санкт-Петербург || Москва',
+          cityFrom: 'LED',
+          cityTo: 'MOW'
+        }, {
+          dayStart: Date.fromIso('2012-10-28'),
+          dayEnd: Date.fromIso('2012-10-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Москва || Санкт-Петербург',
+          cityFrom: 'MOW',
+          cityTo: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-11-21'),
+          dayEnd: Date.fromIso('2012-11-22'),
+          type: 'flight',
+          color: 'red',
+          description: 'Санкт-Петербург || Москва',
+          cityFrom: 'LED',
+          cityTo: 'MOW'
+        }, {
+          dayStart: Date.fromIso('2012-11-21'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'hotel',
+          color: 'red',
+          description: 'Californication Hotel',
+          city: 'MOW'
+        }, {
+          dayStart: Date.fromIso('2012-11-28'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Москва || Санкт-Петербург',
+          cityFrom: 'MOW',
+          cityTo: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-11-28'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Санкт-Петербург || Амстердам',
+          cityFrom: 'LED',
+          cityTo: 'AMS'
+        }, {
+          dayStart: Date.fromIso('2012-11-28'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Амстердам || Санкт-Петербург',
+          cityFrom: 'AMS',
+          cityTo: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-11-28'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Санкт-Петербург || Москва',
+          cityFrom: 'LED',
+          cityTo: 'MOW'
+        }
+      ];
+      return VoyangaCalendarTimeline.init();
+    }, 1000);
   };
 
   ToursResultSet.prototype.buy = function() {
@@ -933,6 +1019,8 @@ ToursOverviewVM = (function() {
 
   function ToursOverviewVM(resultSet) {
     this.resultSet = resultSet;
+    this.afterRender = __bind(this.afterRender, this);
+
     this.dateHtml = __bind(this.dateHtml, this);
 
     this.dateClass = __bind(this.dateClass, this);
@@ -960,6 +1048,8 @@ ToursOverviewVM = (function() {
     firstResult = this.resultSet.data()[0];
     return firstResult.dateHtml(true);
   };
+
+  ToursOverviewVM.prototype.afterRender = function() {};
 
   return ToursOverviewVM;
 
