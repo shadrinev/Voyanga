@@ -1510,9 +1510,9 @@ input.hotel-input {
     width: 100%;
 }
 .fly-ico {
-    background: url("../images/fly-ico.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/fly-ico-small.png") no-repeat scroll 0 0 transparent;
     bottom: 0;
-    height: 70px;
+    height: 54px;
     left: 26px;
     position: absolute;
     width: 86px;
@@ -1520,7 +1520,7 @@ input.hotel-input {
 .hotel-ico {
     background: url("../images/hotel-ico.png") no-repeat scroll 0 0 transparent;
     bottom: 0;
-    height: 70px;
+    height: 54px;
     left: 26px;
     position: absolute;
     width: 86px;
