@@ -23,7 +23,7 @@
  *
  * See {@link CCache} manual for common cache operations that are supported by EMongoDBCache.
  */
-class EMongoDbCache extends CCache
+class MongoDbCache extends CCache
 {
 	/**
 	 * @var string the ID of the dbConnection application component of the YiiMongoDbSuite
