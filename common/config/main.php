@@ -46,7 +46,7 @@ return array(
         ),
 
         'pCache' => array(
-            'class' => 'site.common.extensions.EMongoDbCache.EMongoDbCache',
+            'class' => 'site.common.extensions.MongoDbCache.MongoDbCache',
             'mongoConnectionId' => 'mongodb'
         ),
 

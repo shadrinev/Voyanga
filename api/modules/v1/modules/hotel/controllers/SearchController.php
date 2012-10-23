@@ -43,6 +43,7 @@ class SearchController extends ApiController
         }
 
         $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
+
         if (!$this->results)
         {
             $this->sendError(500, 'Error while send Request To Hotel Provider');
