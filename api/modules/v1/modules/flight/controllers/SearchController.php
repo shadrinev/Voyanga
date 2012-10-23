@@ -44,6 +44,7 @@ class SearchController extends ApiController
         if (!empty($this->errors))
         {
             $this->sendError(200, CVarDumper::dump($errors));
+            Yii::app()->end();
         }
         else
         {
@@ -208,8 +209,8 @@ class SearchController extends ApiController
     private function storeToCache($flightSearchParams)
     {
         $cacheId = md5(serialize($flightSearchParams));
-        Yii::app()->cache->set('flightSearchResult' . $cacheId, $this->results, appParams('hotel_search_cache_time'));
-        Yii::app()->cache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('hotel_search_cache_time'));
+        Yii::app()->cache->set('flightSearchResult' . $cacheId, $this->results, appParams('flight_search_cache_time'));
+        Yii::app()->cache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('flight_search_cache_time'));
         return $cacheId;
     }
 }
