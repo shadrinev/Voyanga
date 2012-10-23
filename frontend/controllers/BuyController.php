@@ -12,7 +12,6 @@ class BuyController extends Controller
     public function actions()
     {
         return array(
-            'showTrip' => array('class'=>'site.common.modules.tour.actions.constructor.ShowTripAction'),
             'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
             'startPayment' => array('class'=>'site.common.modules.tour.actions.constructor.StartPaymentAction'),
             'getPayment' => array('class'=>'site.common.modules.tour.actions.constructor.GetPaymentAction'),
@@ -27,7 +26,7 @@ class BuyController extends Controller
     {
         $this->layout = 'static';
         $this->addItems();
-        $this->redirect('buy/showTrip');
+        $this->redirect('buy/makeBooking');
     }
 
     public function addItems()
