@@ -26,6 +26,7 @@ class BuyController extends Controller
     {
         $this->layout = 'static';
         $this->addItems();
+        Yii::app()->theme = 'v1';
         $this->redirect('buy/makeBooking');
     }
 
