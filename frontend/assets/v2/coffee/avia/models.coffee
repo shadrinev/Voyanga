@@ -465,6 +465,7 @@ class AviaResultSet
     @data = []
 
     @numResults = ko.observable 0
+    @filtersConfig = false
 
 
     for key, result of @_results

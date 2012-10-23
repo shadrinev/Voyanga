@@ -7,8 +7,8 @@
                     <img data-bind="attr: {src: thumb}">
                 </div>
                 <div class="textTours">
-                    <span data-bind="text: title">Пять дней в столице Англии</span><br>
-                    от <span class="price" data-bind="text: minimalPrice()">15 250</span> <span class="rur">o</span>
+                    <span data-bind="text: title">Пять дней в столице Англии</span>
+                    <div class="priceEvent">от <span class="price" data-bind="text: minimalPrice()">15 250</span> <span class="rur">o</span></div>
                 </div>
             </div>
             <div class="l"></div>

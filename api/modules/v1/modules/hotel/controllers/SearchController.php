@@ -43,6 +43,7 @@ class SearchController extends ApiController
         }
 
         $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
+
         if (!$this->results)
         {
             $this->sendError(500, 'Error while send Request To Hotel Provider');
@@ -66,8 +67,8 @@ class SearchController extends ApiController
 
     public function actionInfo($hotelId, $cacheId, $format = 'json')
     {
-        $hotelSearchResult = Yii::app()->cache->get('hotelSearchResult' . $cacheId);
-        $hotelSearchParams = Yii::app()->cache->get('hotelSearchParams' . $cacheId);
+        $hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $cacheId);
+        $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $cacheId);
         if ((!$hotelSearchResult) || (!$hotelSearchParams))
         {
             $this->sendError(200, 'Cache invalidated already.');
@@ -110,8 +111,8 @@ class SearchController extends ApiController
     {
         $cacheId = md5(serialize($hotelSearchParams));
 
-        Yii::app()->cache->set('hotelSearchResult' . $cacheId, $this->results, appParams('hotel_search_cache_time'));
-        Yii::app()->cache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
+        Yii::app()->pCache->set('hotelSearchResult' . $cacheId, $this->results, appParams('hotel_search_cache_time'));
+        Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
 
         return $cacheId;
     }

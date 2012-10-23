@@ -717,6 +717,8 @@ HotelsResultSet = (function() {
 
     this.getDateInterval = __bind(this.getDateInterval, this);
 
+    this.selectFromPopup = __bind(this.selectFromPopup, this);
+
     this.select = __bind(this.select, this);
 
     this._results = {};
@@ -840,6 +842,24 @@ HotelsResultSet = (function() {
     hotel.on('back', function() {
       window.app.render({
         results: ko.observable(_this)
+      }, 'results');
+      return window.setTimeout(function() {
+        Utils.scrollTo(hotel.oldPageTop, false);
+        return console.log(hotel.oldPageTop);
+      }, 50);
+    });
+    hotel.getFullInfo();
+    window.app.render(hotel, 'info-template');
+    return Utils.scrollTo('#content', false);
+  };
+
+  HotelsResultSet.prototype.selectFromPopup = function(hotel, event) {
+    var _this = this;
+    hotel.activePopup.close();
+    hotel.off('back');
+    hotel.on('back', function() {
+      window.app.render({
+        results: ko.observable(hotel.parent)
       }, 'results');
       return window.setTimeout(function() {
         Utils.scrollTo(hotel.oldPageTop, false);

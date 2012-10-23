@@ -48,11 +48,16 @@ class SearchController extends ApiController
         }
         else
         {
-            $result['flights']['flightVoyages'] = $variants;
-            $this->results = $variants;
             $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
             $cacheId = $this->storeToCache($flightSearchParams);
-            $result['cacheId'] = $cacheId;
+            $newVariants = array();
+            foreach ($variants as $variant)
+            {
+                $el = $variant;
+                $el['cacheId'] = $cacheId;
+                $newVariants[] = $el;
+            }
+            $result['flights']['flightVoyages'] = $newVariants;
             $result['searchParams'] = $flightSearchParams->getJsonObject();
             $this->sendWithCorrectFormat($format, $result);
         }
@@ -212,8 +217,8 @@ class SearchController extends ApiController
     private function storeToCache($flightSearchParams)
     {
         $cacheId = md5(serialize($flightSearchParams));
-        Yii::app()->cache->set('flightSearchResult' . $cacheId, $this->results, appParams('flight_search_cache_time'));
-        Yii::app()->cache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('flight_search_cache_time'));
+        Yii::app()->pCache->set('flightSearchResult' . $cacheId, $this->results, appParams('flight_search_cache_time'));
+        Yii::app()->pCache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('flight_search_cache_time'));
         return $cacheId;
     }
 }
