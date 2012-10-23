@@ -52,7 +52,7 @@ class SearchController extends ApiController
             $this->results = $variants;
             $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
             $cacheId = $this->storeToCache($flightSearchParams);
-            $results['cacheId'] = $cacheId;
+            $result['cacheId'] = $cacheId;
             $result['searchParams'] = $flightSearchParams->getJsonObject();
             $this->sendWithCorrectFormat($format, $result);
         }
@@ -203,7 +203,10 @@ class SearchController extends ApiController
         elseif ($format == 'xml')
             $this->sendXml($results, 'aviaSearchResults');
         else
+        {
             $this->sendError(400, 'Incorrect response format');
+            Yii::app()->end();
+        }
     }
 
     private function storeToCache($flightSearchParams)
