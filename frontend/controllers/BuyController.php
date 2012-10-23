@@ -79,7 +79,7 @@ class BuyController extends Controller
     public function addFlightTripElement($flight, FlightSearchParams $flightSearchParams)
     {
         $flightTripElement = new FlightTripElement();
-        $key = md5($flightSearchParams);
+        $key = md5(serialize($flightSearchParams));
         if (!isset($this->keys[$key]))
             $this->keys[$key] = 0;
         if ($this->keys[$key]==1)
