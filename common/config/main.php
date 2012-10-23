@@ -48,7 +48,8 @@ return array(
         'pCache' => array(
             'class' => 'site.common.extensions.MongoDbCache.MongoDbCache',
             'mongoConnectionId' => 'mongodb',
-            'hashKey' => false
+            'hashKey' => false,
+            'serializer' => array('igbinary_serialize', 'igbinary_unserialize')
         ),
 
         'flightBooker' => array(
