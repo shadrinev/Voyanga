@@ -69,21 +69,6 @@ HotelsController = (function() {
     return window.setTimeout(function() {
       VoyangaCalendarTimeline.calendarEvents = [
         {
-          dayStart: Date.fromIso('2012-09-21'),
-          dayEnd: Date.fromIso('2012-09-22'),
-          type: 'flight',
-          color: 'red',
-          description: 'Санкт-Петербург || Москва',
-          cityFrom: 'LED',
-          cityTo: 'MOW'
-        }, {
-          dayStart: Date.fromIso('2012-09-21'),
-          dayEnd: Date.fromIso('2012-09-28'),
-          type: 'hotel',
-          color: 'red',
-          description: 'Californication Hotel',
-          city: 'MOW'
-        }, {
           dayStart: Date.fromIso('2012-10-23'),
           dayEnd: Date.fromIso('2012-10-23'),
           type: 'flight',
@@ -92,12 +77,75 @@ HotelsController = (function() {
           cityFrom: 'MOW',
           cityTo: 'LED'
         }, {
-          dayStart: Date.fromIso('2012-09-23'),
-          dayEnd: Date.fromIso('2012-09-28'),
+          dayStart: Date.fromIso('2012-10-23'),
+          dayEnd: Date.fromIso('2012-10-28'),
           type: 'hotel',
           color: 'red',
           description: 'Californication Hotel2',
           city: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-10-28'),
+          dayEnd: Date.fromIso('2012-10-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Санкт-Петербург || Москва',
+          cityFrom: 'LED',
+          cityTo: 'MOW'
+        }, {
+          dayStart: Date.fromIso('2012-10-28'),
+          dayEnd: Date.fromIso('2012-10-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Москва || Санкт-Петербург',
+          cityFrom: 'MOW',
+          cityTo: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-11-21'),
+          dayEnd: Date.fromIso('2012-11-22'),
+          type: 'flight',
+          color: 'red',
+          description: 'Санкт-Петербург || Москва',
+          cityFrom: 'LED',
+          cityTo: 'MOW'
+        }, {
+          dayStart: Date.fromIso('2012-11-21'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'hotel',
+          color: 'red',
+          description: 'Californication Hotel',
+          city: 'MOW'
+        }, {
+          dayStart: Date.fromIso('2012-11-28'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Москва || Санкт-Петербург',
+          cityFrom: 'MOW',
+          cityTo: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-11-28'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Санкт-Петербург || Амстердам',
+          cityFrom: 'LED',
+          cityTo: 'AMS'
+        }, {
+          dayStart: Date.fromIso('2012-11-28'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Амстердам || Санкт-Петербург',
+          cityFrom: 'AMS',
+          cityTo: 'LED'
+        }, {
+          dayStart: Date.fromIso('2012-11-28'),
+          dayEnd: Date.fromIso('2012-11-28'),
+          type: 'flight',
+          color: 'red',
+          description: 'Санкт-Петербург || Москва',
+          cityFrom: 'LED',
+          cityTo: 'MOW'
         }
       ];
       return VoyangaCalendarTimeline.init();

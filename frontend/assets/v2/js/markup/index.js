@@ -6,27 +6,37 @@ function slideToursSlide() {
 	var var_allWidth = $('.slideTours .center').width();
 	var var_widthTours;
 	if (var_allWidth >= 1390) {
-		var_lengthTours = 6;
+		var_lengthTours = 8;
 		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
 	}
 	else if (var_allWidth < 1390 && var_allWidth > 1290) {
-		var_lengthTours = 5;
+		var_lengthTours = 7;
 		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
 	}
 	else if (var_allWidth < 1290 && var_allWidth > 1000) {
-		var_lengthTours = 4;
+		var_lengthTours = 6;
 		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
 	}
 	else if (var_allWidth <= 1000) {
-		var_widthTours = 248;
+		var_lengthTours = 5;
+		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
 	}
 	var_slideToursBody.find('.toursTicketsMain').css('width',var_widthTours+'px');
 }
 
 function CenterIMGResize() {
 	var HeightAllWindow = $(window).height();
-	HeightAllWindow = HeightAllWindow - 38 - 214;
+	if (HeightAllWindow < 800) {
+		HeightAllWindow = HeightAllWindow - 38 - 162;
+		$('.slideTours').addClass('small');
+	}
+	else {
+		HeightAllWindow = HeightAllWindow - 38 - 214;
+		$('.slideTours').removeClass('small');
+	}
 	$('.innerBlockMain').css('height', HeightAllWindow+'px');
+	
+	
 	var pathIMG = $('.innerBlockMain .IMGmain');
 	var marginPathLeft = 0;
 	var var_allWidth = $('.slideTours .center').width();

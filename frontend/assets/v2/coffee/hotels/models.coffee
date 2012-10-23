@@ -313,6 +313,7 @@ class HotelResult
     window.app.render(hotel, 'info-template')
     Utils.scrollTo('#content',false)
 
+
   showMapDetails: (data, event)=>
     @showDetails(data, event)
     @showMap()
@@ -660,6 +661,22 @@ class HotelsResultSet
     hotel.off 'back'
     hotel.on 'back', =>
       window.app.render({results: ko.observable(@)}, 'results')
+      window.setTimeout(
+        ->
+          Utils.scrollTo(hotel.oldPageTop,false)
+          console.log(hotel.oldPageTop)
+        , 50
+      )
+
+    hotel.getFullInfo()
+    window.app.render(hotel, 'info-template')
+    Utils.scrollTo('#content',false)
+
+  selectFromPopup: (hotel, event) =>
+    hotel.activePopup.close()
+    hotel.off 'back'
+    hotel.on 'back', =>
+      window.app.render({results: ko.observable(hotel.parent)}, 'results')
       window.setTimeout(
         ->
           Utils.scrollTo(hotel.oldPageTop,false)
