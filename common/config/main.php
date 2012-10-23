@@ -49,7 +49,7 @@ return array(
             'class' => 'site.common.extensions.MongoDbCache.MongoDbCache',
             'mongoConnectionId' => 'mongodb',
             'hashKey' => false,
-            'serializer' => array('gzcompress', 'gzuncompress')//array('igbinary_serialize', 'igbinary_unserialize')
+            'serializer' => array('igbinary_serialize', 'igbinary_unserialize')
         ),
 
         'flightBooker' => array(
