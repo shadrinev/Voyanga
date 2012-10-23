@@ -64,6 +64,7 @@ class BuyController extends Controller
         $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $searchId);
         if (($hotelSearchParams) and ($hotelSearchResult))
         {
+            CVarDumper::dump($hotelSearchResult);
             foreach ($hotelSearchResult as $result)
             {
                 if ($result['hotelId'] == $searchKey)
