@@ -297,8 +297,11 @@ VoyangaCalendarTimeline.generateHotelDiv = function (HotelEvent) {
     }
     console.log(totalDays);
     var dayWidth = this.dayCellWidth;
-    var setWidth = dayWidth * totalDays - dayWidth + 0.1;
-    var outHtml = '<div class="yourTrip" style="width: ' + (setWidth) + '%">';
+    var deltaLeft = (dayWidth / HotelEvent.startInfo.count)*(0.5);
+    var deltaRight = (dayWidth / HotelEvent.endInfo.count)*(0.5);
+    //var deltaWidth = deltaRight - deltaLeft;
+    var setWidth = dayWidth * totalDays - dayWidth + 0.1 + (deltaLeft + deltaRight);
+    var outHtml = '<div class="yourTrip" style="width: ' + (setWidth) + '%" data-delta-left="'+deltaLeft+'">';
     outHtml = outHtml + '<div class="startHotel"></div>';
     outHtml = outHtml + '<div class="pathHotel"></div><div class="endHotel"></div>';
     outHtml = outHtml + '<div class="nameHotel">' + HotelEvent.description + '</div>';
@@ -346,20 +349,36 @@ VoyangaCalendarTimeline.generateFlightDiv = function (FlightEvent) {
 
             break;
     }
-    var outHtml = '<div class="'+flyTripClass+'" style="width: ' + (dayWidth * totalDays) + '%"><div class="startYourTours"></div><div class="tripFlyAll">';
-    outHtml = outHtml + '<div class="jetFly'+jetFlyClass+'" style="top: 4px;"></div><img width="100%" height="40" src="'+imgPath+'">';
+
+    if(totalDays == 1 && FlightEvent.startInfo.position == FlightEvent.endInfo.position){
+        return '';
+    }
+    var deltaLeft = (dayWidth / FlightEvent.startInfo.count)*(0.5 + FlightEvent.startInfo.position);
+    var deltaRight = (totalDays-1)*dayWidth + (dayWidth / FlightEvent.endInfo.count)*(0.5 + FlightEvent.endInfo.position);
+    var deltaWidth = deltaRight - deltaLeft;
+
+
+    var outHtml = '<div class="'+flyTripClass+'" style="width: ' + (deltaWidth) + '%" data-delta-left="'+deltaLeft+'">';
+    outHtml = outHtml + (FlightEvent.startInfo.point ? '<div class="startYourTours"></div>' : '');
+    outHtml = outHtml + '<div class="tripFlyAll"><div class="jetFly'+jetFlyClass+'" style="top: 4px;"></div><img width="100%" height="40" src="'+imgPath+'"></div>';
+    outHtml = outHtml + (FlightEvent.startInfo.city ? '<div class="startNameCity">' + names[0] + '</div>' : '');
+    outHtml = outHtml + (FlightEvent.endInfo.city ? '<div class="endNameCity">' + names[1] + '</div>' : '');
+    outHtml = outHtml + (FlightEvent.endInfo.point ? '<div class="endYourTours"></div>' : '');
     outHtml = outHtml + '</div>';
-    outHtml = outHtml + '<div class="startNameCity">' + names[0] + '</div>';
-    outHtml = outHtml + '<div class="endNameCity">' + names[1] + '</div>';
-    outHtml = outHtml + '<div class="endYourTours"><div></div>';
     return outHtml;
 }
 
 VoyangaCalendarTimeline.generateEvents = function () {
     this.dayCellWidth = this.jObj.find('.dayCellVoyanga:first').width() + 2;
-    this.dayCellWidth = 14.28;
+    this.dayCellWidth = 14.2;//14.28;
+    var self = this;
     //Need width %
     var eventDays = {};
+    // код ниже представляет из себя ужасное безобразие
+    // необходимое для того, чтобы корректно можно было
+    // отобразить несколько событий в один день
+    //
+    //
 
     //цикл в котором пробегаемся по всем событиям и группируем их по дням и типам событий
     for (var i in this.calendarEvents) {
@@ -399,83 +418,143 @@ VoyangaCalendarTimeline.generateEvents = function () {
         var startCity = '';
         var endCity = '';
         var centerCities = new Array();
-        var pointsObject = {startPoints: [],centerPoints:[],endPoints: []}
+        var startShowPoint = true;
+        var endShowPoint = true;
+        var pointsObject = {startPoints: [],centerPoints:{s:[],e:[]},endPoints: []}
 
         if(typeof eventDays[dateLabel].types['hotel'] == 'object'){
             for(var fIndS in eventDays[dateLabel].types['hotel'].s){
                 //Если найден отлель который начинается в этот день, то это последняя точка в текущем дне
                 sInd = eventDays[dateLabel].types['hotel'].s[fIndS];
-                pointsObject.endPoints.push(sInd)
-                var find = false;
-                //а теперь посмотрим какие самолеты прилетают в этотже город и в этот же день
-                if(typeof eventDays[dateLabel].types['flight'] == 'object'){
-                    for(var fIndE in eventDays[dateLabel].types['flight'].e){
-                        eInd = eventDays[dateLabel].types['flight'].e[fIndE];
-                        if(pointsObject.endPoints.length == 1 && this.calendarEvents[sInd].city == this.calendarEvents[eInd].cityTo){
-                            //нашли авиарейс значит он будет в конце
-                            pointsObject.endPoints.push(eInd);
-                            //точку не нужно отображать
-                            this.calendarEvents[eInd].endInfo.point = false;
-                            find = true;
-                            //break;
-                        }else{
-                            //ну а все остальные прилетающие где-то в середине
-                            pointsObject.centerPoints.push(eInd);
-                        }
-                    }
-                }
+                pointsObject.endPoints.push(sInd);
+                endCity = this.calendarEvents[sInd].city;
+                endShowPoint = false;
+                break;
             }
             for(var fIndE in eventDays[dateLabel].types['hotel'].e){
                 //Если найден отлель который заканчивается в этот день, то это первая точка в текущем дне
                 eInd = eventDays[dateLabel].types['hotel'].e[fIndE];
-                pointsObject.startPoints.push(eInd)
-                //а теперь посмотрим какие самолеты вылетают из этого города и в этот же день
-                if(typeof eventDays[dateLabel].types['flight'] == 'object'){
-                    for(var fIndS in eventDays[dateLabel].types['flight'].s){
-                        sInd = eventDays[dateLabel].types['flight'].e[fIndS];
-                        if(pointsObject.startPoints.length == 1 && this.calendarEvents[eInd].city == this.calendarEvents[sInd].cityFrom){
-                            //нашли авиарейс значит он будет в начале
-                            pointsObject.startPoints.push(sInd);
-                            //точку не нужно отображать
-                            this.calendarEvents[sInd].startInfo.point = false;
-                            find = true;
-                            //break;
-                        }else{
-                            //ну а все остальные вылетающие где-то в середине
-                            pointsObject.centerPoints.push(sInd);
-                        }
-                    }
-                }
+                pointsObject.startPoints.push(eInd);
+                startCity = this.calendarEvents[eInd].city;
+                startShowPoint = false;
+                break;
             }
         }
         if(typeof eventDays[dateLabel].types['flight'] == 'object'){
-            if(pointsObject.centerPoints.length > 0 && (pointsObject.startPoints.length == 0 || pointsObject.endPoints.length == 0)){
-                if(pointsObject.startPoints.length == 0){
-                    var key = 'endPoints';
-                    var otherKey = 'startPoints';
-                    var forKey = 'e';
-                    var forOtherKey = 's';
+
+            eventDays[dateLabel].types['flight'].s.sort(function(left,right){
+                if(self.calendarEvents[left].sortInd > self.calendarEvents[right].sortInd)
+                    return 1;
+                if(self.calendarEvents[left].sortInd < self.calendarEvents[right].sortInd)
+                    return -1;
+                return 0;
+            });
+            eventDays[dateLabel].types['flight'].e.sort(function(left,right){
+                if(self.calendarEvents[left].sortInd > self.calendarEvents[right].sortInd)
+                    return -1;
+                if(self.calendarEvents[left].sortInd < self.calendarEvents[right].sortInd)
+                    return 1;
+                return 0;
+            });
+            for(var fIndS in eventDays[dateLabel].types['flight'].s){
+                sInd = eventDays[dateLabel].types['flight'].s[fIndS];
+                if(startCity && this.calendarEvents[sInd].cityFrom == startCity){
+                    pointsObject.startPoints.push(sInd);
+                    this.calendarEvents[sInd].startInfo.point = false;
+                }else if(!startCity){
+                    startCity = this.calendarEvents[sInd].cityFrom;
+                    pointsObject.startPoints.push(sInd);
+                    this.calendarEvents[sInd].startInfo.point = true;
+                }else if(endCity && this.calendarEvents[sInd].cityFrom == endCity){
+                    pointsObject.endPoints.push(sInd);
+                    this.calendarEvents[sInd].startInfo.point = false;
                 }else{
-                    var key = 'startPoints';
-                    var otherKey = 'endPoints';
-                    var forKey = 's';
-                    var forOtherKey = 'e';
+                    pointsObject.centerPoints.s.push(sInd);
+                    if(centerCities.indexOf(this.calendarEvents[sInd].cityFrom) == -1){
+                        centerCities.push(this.calendarEvents[sInd].cityFrom);
+                    }
                 }
-                for(var fIndS in eventDays[dateLabel].types['flight'][forKey]){
-                    sInd = eventDays[dateLabel].types['flight'][forKey][fIndS];
-                    var find = false;
-                    for(var fIndE in eventDays[dateLabel].types['flight'].e){
-                        eInd = eventDays[dateLabel].types['flight'].e[fIndE];
-                        if(this.calendarEvents[sInd].cityFrom == this.calendarEvents[eInd].cityTo){
-                            this.calendarEvents[eInd].endPoint = false;
-                            this.calendarEvents[eInd].showEndCity = false;
-                            find = true;
-                            break;
-                        }
+
+            }
+            for(var fIndE in eventDays[dateLabel].types['flight'].e){
+                eInd = eventDays[dateLabel].types['flight'].e[fIndE];
+                if(endCity && this.calendarEvents[eInd].cityTo == endCity){
+                    pointsObject.endPoints.push(eInd);
+                    this.calendarEvents[eInd].endInfo.point = false;
+                }else if(!endCity){
+                    endCity = this.calendarEvents[eInd].cityTo;
+                    pointsObject.endPoints.push(eInd);
+                    this.calendarEvents[eInd].endInfo.point = true;
+                }else if(startCity && this.calendarEvents[eInd].cityTo == startCity){
+                    pointsObject.startPoints.push(eInd);
+                    this.calendarEvents[eInd].endInfo.point = false;
+                }else{
+                    pointsObject.centerPoints.e.push(eInd);
+                    if(centerCities.indexOf(this.calendarEvents[eInd].cityTo) == -1){
+                        centerCities.push(this.calendarEvents[eInd].cityTo);
                     }
                 }
             }
         }
+        var count = 0;
+        if(pointsObject.startPoints.length > 0){
+            var startPosition = count;
+            count++;
+        }
+        if((pointsObject.centerPoints.s.length + pointsObject.centerPoints.e.length) > 0){
+            var centerPosition = count;
+            count++;
+        }
+        if(pointsObject.endPoints.length > 0){
+            var endPosition = count;
+            count++;
+        }
+        for(var iInd in pointsObject.startPoints){
+            sInd = pointsObject.startPoints[iInd];
+            if(this.calendarEvents[sInd].type == 'hotel'){
+                this.calendarEvents[sInd].endInfo.count = count;
+                this.calendarEvents[sInd].endInfo.position = startPosition;
+            }else{
+                this.calendarEvents[sInd].startInfo.count = count;
+                this.calendarEvents[sInd].startInfo.position = startPosition;
+                this.calendarEvents[sInd].startInfo.point = startShowPoint;
+            }
+        }
+        var needShowCity = centerCities.length == 1;
+        var needShowPoint = true;
+        for(var iInd in pointsObject.centerPoints.s){
+            sInd = pointsObject.centerPoints.s[iInd];
+
+            this.calendarEvents[sInd].startInfo.count = count;
+            this.calendarEvents[sInd].startInfo.position = centerPosition;
+            this.calendarEvents[sInd].startInfo.point = needShowPoint;
+            this.calendarEvents[sInd].startInfo.city = needShowCity;
+            needShowPoint = false;
+            needShowCity = false;
+        }
+        for(var iInd in pointsObject.centerPoints.e){
+            sInd = pointsObject.centerPoints.e[iInd];
+
+            this.calendarEvents[sInd].endInfo.count = count;
+            this.calendarEvents[sInd].endInfo.position = centerPosition;
+            this.calendarEvents[sInd].endInfo.point = needShowPoint;
+            this.calendarEvents[sInd].endInfo.city = needShowCity;
+            needShowPoint = false;
+            needShowCity = false;
+        }
+        for(var iInd in pointsObject.endPoints){
+            sInd = pointsObject.endPoints[iInd];
+            if(this.calendarEvents[sInd].type == 'hotel'){
+                this.calendarEvents[sInd].startInfo.count = count;
+                this.calendarEvents[sInd].startInfo.position = endPosition;
+            }else{
+                this.calendarEvents[sInd].endInfo.count = count;
+                this.calendarEvents[sInd].endInfo.position = endPosition;
+                this.calendarEvents[sInd].endInfo.point = endShowPoint;
+            }
+        }
+
+
     }
     console.log('eventDays',eventDays);
     console.log('calendarEvents',this.calendarEvents);
@@ -517,23 +596,25 @@ VoyangaCalendarTimeline.generateEvents = function () {
             //continue;
             while (!endDraw) {
                 var newEventElement = $(hotelDiv);
+                var deltaLeft = newEventElement.data('delta-left');
                 if (firstTime) {
                     var numRender = 7 - this.getDay(tmpDate) -1;
                     //console.log('day:'+TimelineCalendar.getDay(tmpDate));
                     //console.log(numRender);
-                    var leftPos = (7 - numRender) * dayWidth;
+
+                    var leftPos = (7 - numRender) * dayWidth - deltaLeft;
                     //console.log(leftPos);
                     firstTime = false;
                 } else {
                     var numRender = 7;
-                    var leftPos = -renderedLength * dayWidth;
+                    var leftPos = -renderedLength * dayWidth - deltaLeft;
                 }
                 if(firstElem){
                     /*var pointDiv = this.generateStartPoint(this.calendarEvents[i]);
                     var pointDivElement = $(pointDiv);
                     pointDivElement.css('left', leftPos + '%');
                     weekObj.append(pointDivElement);*/
-                    newEventElement.addClass('startPoint');
+                    //newEventElement.addClass('startPoint');
                     firstElem = false;
                 }
                 newEventElement.css('left', leftPos + '%');
@@ -552,25 +633,29 @@ VoyangaCalendarTimeline.generateEvents = function () {
             var endDraw = false;
             var firstTime = true;
             //continue;
+            if(!flightDiv){
+                continue;
+            }
             while (!endDraw) {
                 var newEventElement = $(flightDiv);
+                var deltaLeft = newEventElement.data('delta-left');
                 if (firstTime) {
                     var numRender = 7 - this.getDay(tmpDate);
                     //console.log('day:'+TimelineCalendar.getDay(tmpDate));
                     //console.log(numRender);
-                    var leftPos = (7 - numRender) * dayWidth;
+                    var leftPos = (7 - numRender) * dayWidth + deltaLeft;
                     //console.log(leftPos);
                     firstTime = false;
                 } else {
                     var numRender = 7;
-                    var leftPos = -renderedLength * dayWidth;
+                    var leftPos = -renderedLength * dayWidth + deltaLeft;
                 }
                 if(firstElem){
                     /*var pointDiv = this.generateStartPoint(this.calendarEvents[i]);
                     var pointDivElement = $(pointDiv);
                     pointDivElement.css('left', leftPos + '%');
                     weekObj.append(pointDivElement);*/
-                    newEventElement.addClass('startPoint');
+                    //newEventElement.addClass('startPoint');
                     firstElem = false;
                 }
                 newEventElement.css('left', leftPos + '%');
@@ -607,6 +692,7 @@ VoyangaCalendarTimeline.prepareEvents = function () {
         if(el.type == 'flight'){
             el.startInfo = {point: true,city:true,count: 1,position:0};
             el.endInfo = {point: true,city:true,count: 1,position:0};
+            el.sortInd = ind;
         }else{
             el.startInfo = {count: 1,position:0};
             el.endInfo = {count: 1,position:0};
