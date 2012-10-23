@@ -70,7 +70,8 @@ class BuyController extends Controller
                     $this->addHotelTripElement($result, $hotelSearchParams);
             }
         }
-        throw new CException(500, 'Cache expired');
+        else
+            throw new CException(500, 'Cache expired');
     }
 
     public function addFlightTripElement($flight, FlightSearchParams $flightSearchParams)
