@@ -2163,6 +2163,9 @@ input.hotel-input {
 .secondTd {
     width: 112px;
 }
+.allTripTable .hotels-tickets .full-info {
+   padding: 0 0 0 135px;
+}
 #tour-buy-btn {
     margin-top: 12px;
 }
