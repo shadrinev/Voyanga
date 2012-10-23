@@ -27,7 +27,7 @@ class BuyController extends Controller
     {
         $this->layout = 'static';
         $this->addItems();
-        $this->redirect('showTrip');
+        $this->redirect('buy/showTrip');
     }
 
     public function addItems()
