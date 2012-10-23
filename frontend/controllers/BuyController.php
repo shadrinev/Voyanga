@@ -44,21 +44,15 @@ class BuyController extends Controller
 
     public function addFlightToTrip($searchKey, $searchId)
     {
-        $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchKey);
-        $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchKey);
-        CVarDumper::dump($flightSearchParams); die();
+        $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchId);
+        $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
+        CVarDumper::dump($flightSearchResult);
         if (($flightSearchParams) and ($flightSearchResult))
         {
-            $this->results = $flightSearchResult;
-            if (!$this->results)
+            foreach ($flightSearchResult as $result)
             {
-                throw new CHttpException(500, 'Error while send Request To Hotel Provider');
-                Yii::app()->end();
-            }
-            foreach ($this->results as $result)
-            {
-                if ($result->flightKey == $searchKey)
-                    $this->addFlighTripElement($result, $flightSearchParams);
+                if ($result['flightKey'] == $searchKey)
+                    $this->addFlightTripElement($result, $flightSearchParams);
             }
             throw new CException(404, 'No item found');
         }
@@ -70,17 +64,11 @@ class BuyController extends Controller
     {
         $hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $searchId);
         $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $searchId);
-        if ($hotelSearchParams and $hotelSearchResult)
+        if (($hotelSearchParams) and ($hotelSearchResult))
         {
-            $this->results = $hotelSearchResult;
-            if (!$this->results)
+            foreach ($hotelSearchResult as $result)
             {
-                throw new CException(500, 'Error while send Request To Hotel Provider');
-                Yii::app()->end();
-            }
-            foreach ($this->results as $result)
-            {
-                if ($result->resultId == $searchKey)
+                if ($result['resultId'] == $searchKey)
                     $this->addHotelTripElement($result, $hotelSearchParams);
             }
             throw new CException(404, 'No item found');
@@ -88,10 +76,10 @@ class BuyController extends Controller
         throw new CException(500, 'Cache expired');
     }
 
-    public function addFlightTripElement(FlightSearchParams $flightSearchParams)
+    public function addFlightTripElement($flight, FlightSearchParams $flightSearchParams)
     {
         $flightTripElement = new FlightTripElement();
-        $key = md5($flightSearchParams);
+        $key = md5(serialize($flightSearchParams));
         if (!isset($this->keys[$key]))
             $this->keys[$key] = 0;
         if ($this->keys[$key]==1)
@@ -105,15 +93,15 @@ class BuyController extends Controller
             $this->keys[$key] = 1;
             $flightTripElement->setGroupId($key);
         }
-        $flightTripElement->hotel = $flightTripElement;
+        $flightTripElement->flightVoyage = $flight;
         Yii::app()->shoppingCart->put($flightTripElement);
     }
 
-    public function addHotelTripElement($hotelSearchParams)
+    public function addHotelTripElement($hotel, $hotelSearchParams)
     {
         $hotelTripElement = new HotelTripElement();
         $hotelTripElement->fillFromSearchParams($hotelSearchParams);
-        $hotelTripElement->hotel = $hotelTripElement;
+        $hotelTripElement->hotel = $hotel;
         Yii::app()->shoppingCart->put($hotelTripElement);
     }
 }
