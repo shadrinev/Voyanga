@@ -1,22 +1,26 @@
+
 .btn-selecte {
-	background: url("../images/slice.png") no-repeat 0px -534px;
-	width: 190px; height: 27px;
-	display: inline-block;
-	color: #FFF;
-	font-weight: bold; text-shadow: 0px 1px 0px #0b5b88; font-size: 14px;
-	padding: 10px 0px 0px 14px;
+    background: url("../images/slice.png") no-repeat scroll 0 -534px transparent;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 27px;
+    padding: 10px 0 0 14px;
+    text-shadow: 0 1px 0 #0B5B88;
+    width: 190px;
 }
 .btn-selecte .price {
-	margin-left: 8px;
+    margin-left: 8px;
 }
-.btn-selecte .price, .btn-selecte .rur  {
-	font-size: 26px;
-	vertical-align: top;
+.btn-selecte .price, .btn-selecte .rur {
+    font-size: 26px;
+    vertical-align: top;
 }
 .btn-selecte .rur {
-	display: inline-block;
-	margin-top: -2px;
-	margin-left: 5px;
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: -2px;
 }
 .btn-order {
     background: url("../images/slice.png") no-repeat scroll -211px -534px transparent;
@@ -33,98 +37,103 @@
     width: 143px;
 }
 .btn-order span {
-	display: inline-block;
-	vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
 }
 .btn-order .cost {
-	font-size: 26px; 
-	font-weight: bold;
-	margin-left: 0px;
-	margin-right: 5px;	
+    font-size: 26px;
+    font-weight: bold;
+    margin-left: 0;
+    margin-right: 5px;
 }
 .btn-order .rur {
-	height: 21px;
+    height: 21px;
 }
 .btn-order:hover {
-	text-decoration: none;
-	background: url("../images/slice.png") no-repeat scroll -211px -573px transparent;
+    background: url("../images/slice.png") no-repeat scroll -211px -573px transparent;
+    text-decoration: none;
 }
 .btn-look {
-	background: url(../images/slice.png) no-repeat 0px -612px;
-	width: 117px; height: 26px;
-	cursor: pointer;
-	display: inline-block;
-	text-indent: -9999px;
+    background: url("../images/slice.png") no-repeat scroll 0 -612px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 26px;
+    text-indent: -9999px;
+    width: 117px;
 }
-
 .btn-cost {
-	background: url("../images/slice.png") no-repeat right -690px;
-	min-width: 90px; height: 26px;
-	display: inline-block;
-	color: #FFF;
-	font-weight: bold; text-shadow: 0px 1px 0px #0b5b88; font-size: 14px;
-	padding: 11px 5px 0px 0px;
-	position: relative;
-	line-height: 16px !important;
-	text-align: center;
-	margin-left: 1px;
+    background: url("../images/slice.png") no-repeat scroll right -690px transparent;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 26px;
+    line-height: 16px !important;
+    margin-left: 1px;
+    min-width: 90px;
+    padding: 11px 5px 0 0;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 #0B5B88;
 }
 .btn-cost.selected {
-	background-position: right -1632px;
-	text-shadow: 0px 1px 0px #444d57;
+    background-position: right -1632px;
+    text-shadow: 0 1px 0 #444D57;
 }
-.btn-cost.selected .l  {
-	background-position: left -1632px;
+.btn-cost.selected .l {
+    background-position: left -1632px;
 }
 .btn-cost.selected:hover {
-	background-position: right -1632px;
-	text-shadow: 0px 1px 0px #444d57;
+    background-position: right -1632px;
+    text-shadow: 0 1px 0 #444D57;
 }
-.btn-cost.selected:hover .l  {
-	background-position: left -1632px;
+.btn-cost.selected:hover .l {
+    background-position: left -1632px;
 }
 .btn-cost.hotel {
-	background-position: right -1444px;
+    background-position: right -1444px;
 }
 .btn-cost.hotel:hover {
-	background-position: right -1481px;
-	color: #FFF;
-} 
-.btn-cost.hotel .l  {
-	background-position: left -1444px;
+    background-position: right -1481px;
+    color: #FFFFFF;
+}
+.btn-cost.hotel .l {
+    background-position: left -1444px;
 }
 .btn-cost.hotel:hover .l {
-	background-position: left -1481px;
+    background-position: left -1481px;
 }
 .btn-cost:hover {
-	background-position: right -727px;
-	color: #FFF !important;
+    background-position: right -727px;
+    color: #FFFFFF !important;
 }
 .btn-cost .l {
-	background: url("../images/slice.png") no-repeat scroll left -690px transparent;
+    background: url("../images/slice.png") no-repeat scroll left -690px transparent;
     display: block;
-    height: 37px; width: 10px;
-    left: -3px; top: 0;
+    height: 37px;
+    left: -3px;
     position: absolute;
+    top: 0;
+    width: 10px;
 }
 .btn-cost:hover .l {
-	background-position: left -727px;
+    background-position: left -727px;
 }
-.btn-cost  .price, .btn-cost  .rur  {
-	font-size: 26px;
-	vertical-align: top;
-	position: relative;
-	z-index: 100;
+.btn-cost .price, .btn-cost .rur {
+    font-size: 26px;
+    position: relative;
+    vertical-align: top;
+    z-index: 100;
 }
-.btn-cost  .rur {
-	display: inline-block;
-	margin-top: -3px;
-	margin-left: 2px;
+.btn-cost .rur {
+    display: inline-block;
+    margin-left: 2px;
+    margin-top: -3px;
 }
 .btn-cost .text {
-	position: relative;
-	z-index: 2;
-	margin: 0 2px 0px 0px;
+    margin: 0 2px 0 0;
+    position: relative;
+    z-index: 2;
 }
 .btn-find {
     background: url("../images/slice.png") no-repeat scroll -122px -1014px transparent;
@@ -132,28 +141,29 @@
     display: inline-block;
     height: 47px;
     text-indent: -9999px;
-    width: 83px;
     vertical-align: middle;
+    width: 83px;
 }
 .btn-find:hover {
-	background-position: -122px -1061px;
+    background-position: -122px -1061px;
 }
 .btn-find.inactive {
-	background-position: -205px -1014px;
+    background-position: -205px -1014px;
 }
 .btnDeleteTrip {
-	width: 11px; height: 11px;
-	display: inline-block;
-	cursor: pointer;
-	text-indent: -9999px;
-	background: url(../images/ico-my-trip.png) no-repeat -7px -605px;
-	vertical-align: middle;
+    background: url("../images/ico-my-trip.png") no-repeat scroll -7px -605px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 11px;
+    text-indent: -9999px;
+    vertical-align: middle;
+    width: 11px;
 }
 .btnDeleteTrip:hover {
-	background-position: -7px -663px;
+    background-position: -7px -663px;
 }
 .btnChangeStart {
-	background: url("../images/btnTripAll.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/btnTripAll.png") no-repeat scroll 0 0 transparent;
     color: #FFFFFF;
     display: inline-block;
     font-size: 12px;
@@ -165,12 +175,74 @@
     width: 105px;
 }
 .btnGoBuy {
-	text-indent: -9999px;
-	width: 193px;
-	height: 42px;
+    background: url("../images/slice.png") repeat scroll 0 -1518px transparent;
+    display: inline-block;
+    height: 42px;
+    margin-left: 30px;
+    position: relative;
+    text-indent: -9999px;
+    vertical-align: bottom;
+    width: 193px;
+}
+/* NEW BUTTON */
+.btnBlue {
+    background: url("../images/btn.png") no-repeat scroll right 0 transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    height: 37px;
+    line-height: 34px;
+    padding-left: 3px;
+    padding-right: 10px;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 #0B5B88;
+    vertical-align: middle;
+}
+
+.btnBlue span {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    z-index: 2;
+}
+.btnBlue .price {
+    font-size: 26px;
+}
+.btnBlue .rur {
+    font-size: 25px;
+    margin-top: 6px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	body:first-of-type .btnBlue .rur {
+	    font-size: 25px;
+	    margin-top: 4px;
+	}
+}
+
+.btnBlue .l {
+	background: url("../images/btn.png") no-repeat scroll left 0 transparent;
+	display: block;
+	position: absolute;
+	height: 37px;
+	width: 6px;
+	left: -4px;
+	top: 0px;
+	z-index: 1;
+}
+.btnBlue:hover {
+	background-position: right -37px;
+}
+.btnBlue:hover .l {
+	background-position: left -37px;
+}
+.btnBlue .dotted {
 	display: inline-block;
-	background: url(../images/slice.png) 0px -1518px;
-	vertical-align: bottom;
-	margin-left: 30px;	
-	position: relative;
+	width: 108px;
+	height: 7px;
+	background: url(../images/bg-btn-dotted.png) no-repeat;
+	margin-left: 0px;
 }

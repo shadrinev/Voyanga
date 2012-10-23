@@ -75,7 +75,7 @@ class Timeline
         =>
           $('.slide-tmblr').css('overflow','visible')
           @termsActive = true)
-      $('.condition').animate({'top': '-15px'},400).removeClass('hide')
+      $('.condition').animate({'top': '-16px'},400).removeClass('hide')
 
   showTimeline: (context, event) =>
     el = $(event.currentTarget)

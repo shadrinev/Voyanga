@@ -61,4 +61,11 @@ class HotelSearchParams
         }
         return $jsonObject;
     }
+
+    public function getCheckout()
+    {
+        $date = DateTime::createFromFormat('Y-m-d', $this->checkIn);
+        $end = $date->add(new DateInterval('P'.$this->duration.'D'));
+        return $end->format('Y-m-d');
+    }
 }

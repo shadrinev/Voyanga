@@ -283,7 +283,7 @@
 .slide-tmblr {
 	height: 68px;
     overflow: hidden;
-    width: 839px;
+    width: 948px;
     position: absolute;
     left: 106px;
     top: 0px;
@@ -657,9 +657,9 @@
     vertical-align: middle;
 }
 .panelTable .how-many-man {
-    background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+    height: 68px;
     display: inline-block;
-    height: 70px;
     position: relative;
     float: none;
     margin: auto;
@@ -815,4 +815,7 @@
     top: 0;
     width: 64px;
     z-index: 2;
+}
+.btnTD {
+	width: 90px;
 }

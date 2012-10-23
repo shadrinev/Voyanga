@@ -38,11 +38,16 @@ return array(
             'class'=>'site.common.components.cron.CronComponent'
         ),
 
-        'session'=>array(
+        'session' => array(
             'class'=>'site.common.extensions.EMongoDbHttpSession.EMongoDbHttpSession',
             'connectionString' => $params['mongo.connectionString'],
             'dbName'         => $params['mongo.dbName'],
             'collectionName' => 'session',
+        ),
+
+        'pCache' => array(
+            'class' => 'site.common.extensions.MongoDbCache.MongoDbCache',
+            'mongoConnectionId' => 'mongodb'
         ),
 
         'flightBooker' => array(

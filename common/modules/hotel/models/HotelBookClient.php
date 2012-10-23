@@ -21,18 +21,24 @@ class HotelBookClient
     {
         if ($cacheFileName)
         {
-            self::$saveCache = strpos($url,'vsespo') === false;
+            self::$saveCache = strpos($url, 'vsespo') === false;
 
             $cachePath = Yii::getPathOfAlias('cacheStorage');
             $cacheSubDir = md5($cacheFileName);
-            $cacheSubDir = substr($cacheSubDir,-3);
-            if(!file_exists($cachePath . '/' . $cacheSubDir)){
+            $cacheSubDir = substr($cacheSubDir, -3);
+            if (!is_dir($cachePath))
+            {
+                mkdir($cachePath);
+            }
+            if (!file_exists($cachePath . '/' . $cacheSubDir))
+            {
                 mkdir($cachePath . '/' . $cacheSubDir);
             }
 
             //$cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
-            if(file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml')){
-                rename($cachePath . '/' . $cacheFileName . '.xml',$cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
+            if (file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml'))
+            {
+                rename($cachePath . '/' . $cacheFileName . '.xml', $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
             }
 
             $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
@@ -240,7 +246,8 @@ class HotelBookClient
                                     $params = array($result);
                                     if ((isset($requestInfo['params'])) and ($requestInfo['params']))
                                     {
-                                        foreach ($requestInfo['params'] as $param){
+                                        foreach ($requestInfo['params'] as $param)
+                                        {
                                             $params[] = $param;
                                         }
                                     }
@@ -250,8 +257,8 @@ class HotelBookClient
                                     }
                                     catch (Exception $e)
                                     {
-                                        echo "TryLogging".$e->getMessage();
-                                        Yii::log("HotelBookClient Return Incorrect Response:\nExeption:".$e->getMessage()."\nRequestInfo:" . CVarDumper::dumpAsString($requestInfo) . CVarDumper::dumpAsString($params));
+                                        echo "TryLogging" . $e->getMessage();
+                                        Yii::log("HotelBookClient Return Incorrect Response:\nExeption:" . $e->getMessage() . "\nRequestInfo:" . CVarDumper::dumpAsString($requestInfo) . CVarDumper::dumpAsString($params));
                                     }
                                     unset($this->requests[$i]['function']);
                                 }
@@ -321,7 +328,7 @@ class HotelBookClient
             //try{
             //    self::$lastRequestDescription = Country::getCountryByHotelbookId($countryId)->code;
             //}catch (Exception $e){
-                self::$lastRequestDescription = $countryId;
+            self::$lastRequestDescription = $countryId;
             //}
         }
         $cities = $this->request(Yii::app()->params['HotelBook']['uri'] . 'cities', $getData);
@@ -338,7 +345,7 @@ class HotelBookClient
         return $return;
     }
 
-    public function getHotels($cityId = 0,$cache = true)
+    public function getHotels($cityId = 0, $cache = true)
     {
         $this->synchronize();
         $time = time() + $this->differenceTimestamp;
@@ -350,11 +357,12 @@ class HotelBookClient
         {
             $getData['city_id'] = $cityId;
             self::$lastRequestDescription = $getData['city_id'];
-            if($cache){
-                $cacheFileName = 'Hotels'.$cityId;
+            if ($cache)
+            {
+                $cacheFileName = 'Hotels' . $cityId;
             }
         }
-        $returnXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_list', $getData,null,null,$cacheFileName);
+        $returnXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_list', $getData, null, null, $cacheFileName);
         $hotelsObject = simplexml_load_string($returnXml);
         $return = array();
 
@@ -365,7 +373,8 @@ class HotelBookClient
             $name = trim((string)$objectSXE['name']);
             $city_id = intval((string)$objectSXE['city_id']);
             $assoc = intval((string)$objectSXE['assoc']);
-            if($assoc){
+            if ($assoc)
+            {
                 $return[$id] = array('id' => $id, 'name' => $name, 'cityId' => $city_id);
             }
         }
@@ -670,7 +679,7 @@ class HotelBookClient
         self::$lastRequestMethod = 'HotelSearch';
         self::$lastRequestDescription = '';
         self::$lastRequestCity = City::getCityByHotelbookId($params['cityId']);
-        self::$lastRequestDescription = self::$lastRequestCity->code.' ';
+        self::$lastRequestDescription = self::$lastRequestCity->code . ' ';
         self::$lastRequestCityHaveCoordinates = (self::$lastRequestCity->latitude !== null) && (self::$lastRequestCity->longitude !== null);
         foreach ($params['rooms'] as $room)
         {
@@ -861,7 +870,8 @@ class HotelBookClient
         {
             //echo count($request['result']->hotels).'<br>';
             //die();
-            if(isset($request['result'])){
+            if (isset($request['result']))
+            {
                 if ($request['result']->hotels)
                 {
                     foreach ($request['result']->hotels as $hotel)
@@ -886,7 +896,9 @@ class HotelBookClient
                         $errorDescriptions[] = $desc;
                     }
                 }
-            }else{
+            }
+            else
+            {
                 print_r($request);
                 die();
             }
@@ -899,7 +911,7 @@ class HotelBookClient
         {
             $response->responseStatus = ResponseStatus::ERROR_CODE_NO_ERRORS;
         }
-        else if(!$errorDescriptions)
+        else if (!$errorDescriptions)
         {
             $response->responseStatus = ResponseStatus::ERROR_CODE_EMPTY;
         }
@@ -1341,10 +1353,14 @@ class HotelBookClient
         }
         if ($hotelSXE->City['id'])
         {
-            try{
+            try
+            {
                 //$hotelParams['city'] = City::getCityByHotelbookId((string)$hotelSXE->City['id']);
-            }catch (Exception $e){
-                if(self::$lastRequestCity){
+            }
+            catch (Exception $e)
+            {
+                if (self::$lastRequestCity)
+                {
                     $hotelParams['city'] = self::$lastRequestCity;
                 }
             }

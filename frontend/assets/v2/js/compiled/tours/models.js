@@ -160,7 +160,7 @@ ToursAviaResultSet = (function(_super) {
     var result;
     result = {};
     result.type = 'avia';
-    result.searchId = this.selection().searchId;
+    result.searchId = this.selection().cacheId;
     result.searchKey = this.selection().flightKey();
     result.adults = this.rawSP.adt;
     result.children = this.rawSP.chd;
@@ -508,11 +508,17 @@ ToursHotelsResultSet = (function(_super) {
     return 'orange-two';
   };
 
-  ToursHotelsResultSet.prototype.dateHtml = function() {
+  ToursHotelsResultSet.prototype.dateHtml = function(startOnly) {
     var result;
+    if (startOnly == null) {
+      startOnly = false;
+    }
     result = '<div class="day">';
     result += dateUtils.formatHtmlDayShortMonth(this.results().checkIn);
     result += '</div>';
+    if (startOnly) {
+      return result;
+    }
     result += '<div class="day">';
     result += dateUtils.formatHtmlDayShortMonth(this.results().checkOut);
     return result += '</div>';
@@ -666,6 +672,9 @@ ToursResultSet = (function() {
     $('#loadWrapBg').show();
     if (entry.overview) {
       $('.btn-timeline-and-condition').hide();
+      window.toursOverviewActive = true;
+    } else {
+      window.toursOverviewActive = false;
     }
     if (entry.beforeRender) {
       entry.beforeRender();
@@ -938,7 +947,7 @@ ToursOverviewVM = (function() {
     if (firstResult.isAvia()) {
       return firstResult.results().departureCity;
     } else {
-      return 'Бобруйск';
+      return firstResult.results().city.caseNom;
     }
   };
 

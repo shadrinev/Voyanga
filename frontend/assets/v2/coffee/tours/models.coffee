@@ -76,7 +76,7 @@ class ToursAviaResultSet extends TourEntry
   toBuyRequest: =>
     result = {}
     result.type = 'avia'
-    result.searchId = @selection().searchId
+    result.searchId = @selection().cacheId
     # FIXME FIXME FXIME
     result.searchKey = @selection().flightKey()
     result.adults = @rawSP.adt
@@ -315,10 +315,12 @@ class ToursHotelsResultSet extends TourEntry
   dateClass: =>
     'orange-two'
 
-  dateHtml: =>
+  dateHtml: (startOnly=false)=>
     result = '<div class="day">'
     result+= dateUtils.formatHtmlDayShortMonth @results().checkIn
     result+='</div>'
+    if startOnly
+      return result
     result+= '<div class="day">'
     result+= dateUtils.formatHtmlDayShortMonth @results().checkOut
     result+= '</div>'
@@ -422,6 +424,9 @@ class ToursResultSet
     $('#loadWrapBg').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
+      window.toursOverviewActive = true
+    else
+      window.toursOverviewActive = false
 
     if entry.beforeRender
       entry.beforeRender()
@@ -611,7 +616,7 @@ class ToursOverviewVM
     if firstResult.isAvia()
       firstResult.results().departureCity
     else
-      'Бобруйск'
+      firstResult.results().city.caseNom
 
 
   dateClass: =>

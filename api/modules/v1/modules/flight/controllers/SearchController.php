@@ -8,6 +8,7 @@
 class SearchController extends ApiController
 {
     public $defaultAction = 'default';
+    private $results;
 
     /**
      * @param array $destinations
@@ -43,11 +44,20 @@ class SearchController extends ApiController
         if (!empty($this->errors))
         {
             $this->sendError(200, CVarDumper::dump($errors));
+            Yii::app()->end();
         }
         else
         {
-            $result['flights']['flightVoyages'] = $variants;
             $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
+            $cacheId = $this->storeToCache($flightSearchParams);
+            $newVariants = array();
+            foreach ($variants as $variant)
+            {
+                $el = $variant;
+                $el['cacheId'] = $cacheId;
+                $newVariants[] = $el;
+            }
+            $result['flights']['flightVoyages'] = $newVariants;
             $result['searchParams'] = $flightSearchParams->getJsonObject();
             $this->sendWithCorrectFormat($format, $result);
         }
@@ -198,6 +208,17 @@ class SearchController extends ApiController
         elseif ($format == 'xml')
             $this->sendXml($results, 'aviaSearchResults');
         else
+        {
             $this->sendError(400, 'Incorrect response format');
+            Yii::app()->end();
+        }
+    }
+
+    private function storeToCache($flightSearchParams)
+    {
+        $cacheId = md5(serialize($flightSearchParams));
+        Yii::app()->pCache->set('flightSearchResult' . $cacheId, $this->results, appParams('flight_search_cache_time'));
+        Yii::app()->pCache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('flight_search_cache_time'));
+        return $cacheId;
     }
 }

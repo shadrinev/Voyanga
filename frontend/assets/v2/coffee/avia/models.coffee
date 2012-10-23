@@ -207,6 +207,8 @@ class AviaResult
     @_stacked_data = []
     flights = data.flights
     @searchId = data.searchId
+    @cacheId = data.cacheId
+
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)
     @_stacked = false

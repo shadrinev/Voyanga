@@ -1,3 +1,4 @@
+
 @import "body.css";
 @import "trash.css";
 @import "ico.css";
@@ -6,248 +7,235 @@
 @import "tickets.css";
 @import "checkradio.css";
 @import "scroll.css";
-@charset "UTF-8";
 .wrapper {
-	position: relative;
-	width: 100%; 
-	min-width: 1000px;
-	min-height: 100%;
+    min-height: 100%;
+    min-width: 1000px;
+    position: relative;
+    width: 100%;
 }
-.head { 
-	width: 100%;
-	min-width: 1000px; 
-	height: 38px; 
-	background: url(../images/bg-head.png) repeat-x;
-	z-index: 998;
-	position: relative;
-	box-shadow: 0 0px 5px #000101;
+.head {
+    background: url("../images/bg-head.png") repeat-x scroll 0 0 transparent;
+    box-shadow: 0 0 5px #000101;
+    height: 38px;
+    min-width: 1000px;
+    position: relative;
+    width: 100%;
+    z-index: 998;
 }
 .center-block {
-	min-width: 1000px;
-	max-width: 1390px;
-	margin: 0 auto;
-	width: 100%; 
-	_width: expression( document.body.clientWidth > 1390 ? '1390px' : ( document.body.clientWidth < 1000 ? '1000px' : '100%' ) );
-	position: relative;
+    margin: 0 auto;
+    max-width: 1390px;
+    min-width: 1000px;
+    position: relative;
+    width: 100%;
 }
 #content {
-	padding-top: 35px;
-	padding-bottom: 65px;
-	margin: 0 auto;
-	position: relative;
+    margin: 0 auto;
+    padding-bottom: 65px;
+    padding-top: 35px;
+    position: relative;
 }
-/* LOGO */
 .head .center-block .logo {
-	position: absolute;
-	left:32px;
-	top:7px;
-	width: 122px;
-	height: 27px;
-	background: url(../images/slice.png) no-repeat 0 0;
-	text-indent: -9999px;
-	display: block;
+    background: url("../images/slice.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 27px;
+    left: 32px;
+    position: absolute;
+    text-indent: -9999px;
+    top: 7px;
+    width: 122px;
 }
-/* ABOUT COMPANY WITH LOGO */
 .head .center-block .about {
-	position: absolute;
-	display: block;
-	text-indent: -9999px;
-	width: 76px;
-	height: 27px;
-	left: 154px;
-	top:7px;
-	background: url(../images/slice.png) no-repeat -122px 0;
+    background: url("../images/slice.png") no-repeat scroll -122px 0 transparent;
+    display: block;
+    height: 27px;
+    left: 154px;
+    position: absolute;
+    text-indent: -9999px;
+    top: 7px;
+    width: 76px;
 }
-/* TELEFON */
 .head .center-block .telefon {
-	position: absolute;
-	top:10px;
-	left: 250px;
-	width: 145px;
-	height: 15px;
+    height: 15px;
+    left: 250px;
+    position: absolute;
+    top: 10px;
+    width: 145px;
 }
-/*--- SLIDE TURN MODE ---*/
 .slide-turn-mode {
-	background: url(../images/slide-turn-mode.png) no-repeat 0 0;
-	position: absolute;
-	/* width: 553px; */
-	width: 392px;
-	height: 38px;
-	top:0px;
-	right: ;
+    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 0 transparent;
+    height: 38px;
+    position: absolute;
+    top: 0;
+    width: 392px;
 }
 .slide-turn-mode .switch {
-	position: absolute;
-	height: 31px;
-	top:5px;
-	left: 0px;
-	z-index: 1;
+    height: 31px;
+    left: 0;
+    position: absolute;
+    top: 5px;
+    z-index: 1;
 }
 .slide-turn-mode .switch .l {
-	background: url(../images/slide-turn-mode.png) no-repeat 0 -78px;
-	width:15px;
-	height: 31px;
-	display: inline-block;
-	left: 0px;
-
+    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -78px transparent;
+    display: inline-block;
+    height: 31px;
+    left: 0;
+    width: 15px;
 }
 .slide-turn-mode .switch .r {
-	background: url(../images/slide-turn-mode.png) no-repeat -131px -78px;
-	width:12px;
-	height: 31px;
-	display: inline-block;
-	right: 0px;
+    background: url("../images/slide-turn-mode.png") no-repeat scroll -131px -78px transparent;
+    display: inline-block;
+    height: 31px;
+    right: 0;
+    width: 12px;
 }
 .slide-turn-mode .switch .c {
-	background: url(../images/slide-turn-mode.png) no-repeat 0 -109px;
-	width:15px;
-	height: 31px;
-	display: inline-block;
+    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -109px transparent;
+    display: inline-block;
+    height: 31px;
+    width: 15px;
 }
 .slide-turn-mode .bg-mask {
-	background: url(../images/slide-turn-mode.png) no-repeat 0px -39px;
-	position: absolute;	
-	top:0px;
-	left: 0px;
-	/* width: 553px; */
-	width: 392px;
-	height: 37px;
-	z-index: 2;
+    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -39px transparent;
+    height: 37px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 392px;
+    z-index: 2;
 }
-.slide-turn-mode .planner,.slide-turn-mode .aviatickets,.slide-turn-mode .hotel,.slide-turn-mode .finish-stages {
-	z-index: 3;
-	color: #2e2e2e;
-	position: absolute;
-	font-size: 14px;
-	text-shadow: 0px 1px 0px #86888C;
-	height: 20px;
-    padding: 4px 0px;
+.slide-turn-mode .planner, .slide-turn-mode .aviatickets, .slide-turn-mode .hotel, .slide-turn-mode .finish-stages {
+    color: #2E2E2E;
+    font-size: 14px;
+    height: 20px;
+    padding: 4px 0;
+    position: absolute;
+    text-shadow: 0 1px 0 #86888C;
     top: 6px;
+    z-index: 3;
 }
 .slide-turn-mode .planner {
-	padding-left: 25px !important; 
-	background: url(../images/slide-turn-mode.png) no-repeat 0px -173px;
-	left: 13px;
+    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -173px transparent;
+    left: 13px;
+    padding-left: 25px !important;
 }
 .slide-turn-mode .planner.active {
-	background-position: -520px -173px;
+    background-position: -520px -173px;
 }
 .slide-turn-mode .aviatickets {
-	padding-left: 31px !important; 
-	background: url(../images/slide-turn-mode.png) no-repeat 0px -236px;
-	left: 167px;
+    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -236px transparent;
+    left: 167px;
+    padding-left: 31px !important;
 }
 .slide-turn-mode .aviatickets.active {
-	background-position: -521px -235px;
+    background-position: -521px -235px;
 }
 .slide-turn-mode .hotel {
-	padding-left: 31px !important; 
-	background: url(../images/slide-turn-mode.png) no-repeat 0px -205px;
-	left: 305px;
+    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -205px transparent;
+    left: 305px;
+    padding-left: 31px !important;
 }
 .slide-turn-mode .hotel.active {
-	background-position: -520px -204px;
+    background-position: -520px -204px;
 }
 .slide-turn-mode .finish-stages {
-	padding-left: 32px !important; 
-	background: url(../images/slide-turn-mode.png) no-repeat 0px -142px;
-	left: 416px;
+    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -142px transparent;
+    left: 416px;
+    padding-left: 32px !important;
 }
 .slide-turn-mode .finish-stages.active {
-	background-position: -520px -142px;
+    background-position: -520px -142px;
 }
 .btn {
-	cursor: pointer;
+    cursor: pointer;
 }
 .btn a {
-	text-decoration: none;
+    text-decoration: none;
 }
 .btn a:hover, .btn:hover a {
-	text-decoration: none; color: #101010;
+    color: #101010;
+    text-decoration: none;
 }
 .active:hover a {
-	color: #FFF !important;
+    color: #FFFFFF !important;
 }
 .active a {
-	color: #FFF;
-	text-shadow: 0px 1px 0px #0a5783;
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 #0A5783;
 }
 .active a:hover {
-	color: #FFF !important;
+    color: #FFFFFF !important;
 }
-
-/* END SLIDE TURN MODE */
-/* LOGIN WINDOW */
 .login-window {
-	position: absolute; top: 0px; right: 0px;
-	background: url(../images/bg-head.png) 0px -38px;
-	height: 38px; width: 165px;
-	color: #000;
+    background: url("../images/bg-head.png") repeat scroll 0 -38px transparent;
+    color: #000000;
+    height: 38px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 165px;
 }
 .login-window a {
-	display: block;
-	background: url("../images/slice.png") no-repeat scroll -487px -182px transparent;
-	height: 28px;
-	padding-left: 20px; margin: 10px 0px 0px 10px;
+    background: url("../images/slice.png") no-repeat scroll -487px -182px transparent;
+    display: block;
+    height: 28px;
+    margin: 10px 0 0 10px;
+    padding-left: 20px;
 }
 .login-window a:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 .login-window a span {
-	display: inline-block;
-	vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
 }
 .login-window a span.point {
-	background:  url("../images/slice.png") no-repeat scroll -8px -32px transparent;
-	width: 6px; height: 4px;
+    background: url("../images/slice.png") no-repeat scroll -8px -32px transparent;
+    height: 4px;
+    width: 6px;
 }
-/* PANEL */
-
-
 .btn-timeline-and-condition {
-	float: left;
+    float: left;
     padding-top: 11px;
     width: 76px;
 }
 .btn-timeline-and-condition .btn-timeline {
-	background: url("../images/slice.png") repeat scroll  0 -828px transparent;
+    background: url("../images/slice.png") repeat scroll 0 -828px transparent;
+    color: #636467;
     display: block;
     height: 21px;
     padding-top: 3px;
     text-align: center;
+    text-shadow: 0 1px 0 #0D0E0F;
     width: 76px;
-    color: #636467;
-    text-shadow: 0px 1px 0px #0d0e0f;
-    
-    
 }
 .btn-timeline-and-condition .btn-timeline.active {
-	background-position: -76px -828px;
-	color: #FFF;
-	text-shadow: none;
-
+    background-position: -76px -828px;
+    color: #FFFFFF;
+    text-shadow: none;
 }
 .btn-timeline-and-condition .btn-condition {
-	background: url("../images/slice.png") repeat scroll -76px -852px transparent;
+    background: url("../images/slice.png") repeat scroll -76px -852px transparent;
+    color: #636467;
     display: block;
     height: 21px;
     padding-top: 3px;
     text-align: center;
+    text-shadow: 0 1px 0 #0D0E0F;
     width: 76px;
-    color: #636467;
-    text-shadow: 0px 1px 0px #0d0e0f;
 }
 .btn-timeline-and-condition .btn-condition.active {
-	background-position: 0px -852px;
-    color: #FFF;
-	text-shadow: none;	
+    background-position: 0 -852px;
+    color: #FFFFFF;
+    text-shadow: none;
 }
 .timeline {
     position: absolute;
     top: 0;
 }
 .timeline .left-corners {
-	background: url("../images/bg-timeline.png") repeat-x scroll 0 -19px transparent;
+    background: url("../images/bg-timeline.png") repeat-x scroll 0 -19px transparent;
     bottom: 1px;
     height: 18px;
     left: 18px;
@@ -255,135 +243,152 @@
     width: 10px;
 }
 .timeline .right-corners {
-	background: url("../images/bg-timeline.png") repeat-x scroll -44px -19px transparent;
+    background: url("../images/bg-timeline.png") repeat-x scroll -44px -19px transparent;
     bottom: 1px;
     height: 18px;
-    right: 18px;
     position: absolute;
+    right: 18px;
     width: 10px;
 }
 .timeline .btn-left {
-	background: url("../images/bg-timeline.png") repeat-x scroll -0px -38px transparent;
-	bottom: 1px;
+    background: url("../images/bg-timeline.png") repeat-x scroll 0 -38px transparent;
+    bottom: 1px;
+    cursor: pointer;
     height: 18px;
-    left: 0px;
+    left: 0;
     position: absolute;
     width: 10px;
-    cursor: pointer;
 }
 .timeline .btn-right {
-	background: url("../images/bg-timeline.png") repeat-x scroll -44px -38px transparent;
-	bottom: 1px;
-    height: 18px;
-    right: 0px;
-    position: absolute;
-    width: 10px;	
+    background: url("../images/bg-timeline.png") repeat-x scroll -44px -38px transparent;
+    bottom: 1px;
     cursor: pointer;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    width: 10px;
 }
 .timedatelineOverflow {
-	height: 61px; overflow: hidden; width: 735px; 	margin-left: 28px;
-	margin-right: 28px;
+    height: 61px;
+    margin-left: 28px;
+    margin-right: 28px;
+    overflow: hidden;
+    width: 735px;
 }
-
 .timedateline {
-	height: 61px;
-
+    height: 61px;
 }
 .timedateline li {
-	float: left;
-	background: url(../images/hr-timeline.png) no-repeat right 0px;
-	width: 32px;
-	text-align: center;
-	color: #7b7c7f;
-	text-shadow: 0px 1px 0px #2c3038;
-	height: 61px;
-	position: relative;
+    background: url("../images/hr-timeline.png") no-repeat scroll right 0 transparent;
+    color: #7B7C7F;
+    float: left;
+    height: 61px;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 #2C3038;
+    width: 32px;
 }
-
 .timedateline li .date {
-	position: absolute; bottom: 0px; left: 0px; text-align: center; width: 32px; height: 18px; padding-top: 1px;
-	background: url(../images/bg-timeline.png) repeat-x 0 0;
-	z-index: 2;
+    background: url("../images/bg-timeline.png") repeat-x scroll 0 0 transparent;
+    bottom: 0;
+    height: 18px;
+    left: 0;
+    padding-top: 1px;
+    position: absolute;
+    text-align: center;
+    width: 32px;
+    z-index: 2;
 }
 .timedateline li .icoFlyTimeline {
-	width: 12px;
-	height: 12px;
-	background: url(../images/ico-fly-timeline.png) no-repeat;
-	position: absolute;
-	top: 11px;
-	left: -26px;
+    background: url("../images/ico-fly-timeline.png") no-repeat scroll 0 0 transparent;
+    height: 12px;
+    left: -26px;
+    position: absolute;
+    top: 11px;
+    width: 12px;
 }
 .timedateline li .trip-fly {
-	width: 24px; border: 2px solid #133950; height: 6px;
-	border-radius: 10px;
-	background: url(../images/bg-trip-fly-none.png) repeat-x;
-	position: absolute;
-	top:11px;
-	z-index: 1;
-	left: 2px;
-	cursor: pointer;
+    background: url("../images/bg-trip-fly-none.png") repeat-x scroll 0 0 transparent;
+    border: 2px solid #133950;
+    border-radius: 10px 10px 10px 10px;
+    cursor: pointer;
+    height: 6px;
+    left: 2px;
+    position: absolute;
+    top: 11px;
+    width: 24px;
+    z-index: 1;
 }
 .timedateline li .trip-fly:hover {
-	box-shadow: 0 0 20px #1383C4
+    box-shadow: 0 0 20px #1383C4;
 }
 .timedateline li .trip-fly.active {
-	background: url(../images/bg-trip-fly.png);
-	box-shadow: 0 0 20px #1383C4
+    background: url("../images/bg-trip-fly.png") repeat scroll 0 0 transparent;
+    box-shadow: 0 0 20px #1383C4;
 }
 .timedateline li .icoHotelTimeline {
-	width: 14px;
-	height: 8px;
-	background: url(../images/ico-hotel-timeline.png) no-repeat;
-	position: absolute;
-	top: 27px;
-	left: -12px;
+    background: url("../images/ico-hotel-timeline.png") no-repeat scroll 0 0 transparent;
+    height: 8px;
+    left: -12px;
+    position: absolute;
+    top: 27px;
+    width: 14px;
 }
 .timedateline li .trip-hotel {
-	width: 24px; border: 2px solid #452617; height: 6px;
-	border-radius: 10px;
-	
-	background: url(../images/bg-trip-hotel-none.png) repeat-x;
-	position: absolute;
-	top:27px;
-	z-index: 1;
-	left: 2px;
-	cursor: pointer;
+    background: url("../images/bg-trip-hotel-none.png") repeat-x scroll 0 0 transparent;
+    border: 2px solid #452617;
+    border-radius: 10px 10px 10px 10px;
+    cursor: pointer;
+    height: 6px;
+    left: 2px;
+    position: absolute;
+    top: 27px;
+    width: 24px;
+    z-index: 1;
 }
 .timedateline li .trip-hotel:hover {
-	box-shadow: 0px 0px 20px #f9610e;
+    box-shadow: 0 0 20px #F9610E;
 }
 .timedateline li .trip-hotel.active {
-	background: url(../images/bg-trip-hotel.png);
-	box-shadow: 0px 0px 20px #f9610e;
+    background: url("../images/bg-trip-hotel.png") repeat scroll 0 0 transparent;
+    box-shadow: 0 0 20px #F9610E;
 }
 .condition {
+    padding-top: 17px;
     position: absolute;
     top: 0;
-    padding-top: 17px;
-    width: 839px;
+    width: 948px;
 }
-.condition .whence, .condition  .where {
-	width: 261px; height: 36px;
-	background: url(../images/slice.png) no-repeat 0px -904px;
-	display: inline-block;
-	position: relative;
-	float: left;
-
+.condition .whence, .condition .where {
+    background: url("../images/slice.png") no-repeat scroll 0 -904px transparent;
+    display: inline-block;
+    float: left;
+    height: 36px;
+    position: relative;
+    width: 261px;
 }
-.condition .whence .input, .condition  .where .input {
-	background: none; width: 251px; padding-left: 5px; padding-right: 5px; height: 36px; font-size: 21px; border: none; margin-top: -1px;
+.condition .whence .input, .condition .where .input {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    font-size: 21px;
+    height: 36px;
+    margin-top: -1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 251px;
 }
-.condition .whence.date, .condition  .where.date {
-	background-position: 0px -941px;
+.condition .whence.date, .condition .where.date {
+    background-position: 0 -941px;
 }
-.condition .whence.date .input, .condition  .where.date .input {
-	width: 213px;
+.condition .whence.date .input, .condition .where.date .input {
+    width: 213px;
 }
-.condition .whence .day, .condition  .where .day {
-	display: none;
+.condition .whence .day, .condition .where .day {
+    display: none;
 }
-.condition .whence.date .day, .condition  .where.date .day {
-	color: #FFFFFF;
+.condition .whence.date .day, .condition .where.date .day {
+    color: #FFFFFF;
+    display: block;
     float: right;
     font-size: 11px;
     line-height: 10px;
@@ -391,173 +396,153 @@
     text-align: center;
     text-shadow: 0 1px 0 #0A5783;
     width: 34px;
-    display: block;
 }
-.condition .whence.date .day .f17, .condition  .where.date .day .f17 {
-	font-family: Verdana;
+.condition .whence.date .day .f17, .condition .where.date .day .f17 {
+    font-family: Verdana;
     font-weight: bold;
 }
-
-
-/* END PANEL */
-/* OTHER BLOCK */
 .main-block {
-	min-width: 585px;
-	margin: 0 auto;
+    margin: 0 auto;
+    min-width: 585px;
 }
-/* END */
-/* LEFT BLOCK */
 .left-block {
-	position: absolute; 
-	top:0px; left: 0px; 
-	min-width: 220px; height: 100%;
-	background: #f4f7f9;
-	z-index: 5;	
+    background: none repeat scroll 0 0 #F4F7F9;
+    height: 100%;
+    left: 0;
+    min-width: 220px;
+    position: absolute;
+    top: 0;
+    z-index: 5;
 }
 .left-content {
-	margin-top: 35px;
-	margin-left: 12px;
-	color: #1d222b;
+    color: #1D222B;
+    margin-left: 12px;
+    margin-top: 35px;
 }
 .left-content h1 {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
-/* MY TRIP LIST */
 .my-trip-list .items {
-	margin-top: -1px;
+    margin-top: -1px;
 }
 .my-trip-list .items a {
-	display: block;
-	background: url(../images/bg-line.png) center -1px no-repeat;
-	height: 58px;
-	position: relative;
-	overflow: hidden;
-	color: #2e333b;
-	font-size: 13px;
-	margin-left: -12px;
+    background: url("../images/bg-line.png") no-repeat scroll center -1px transparent;
+    color: #2E333B;
+    display: block;
+    font-size: 13px;
+    height: 58px;
+    margin-left: -12px;
     margin-right: -10px;
+    overflow: hidden;
     padding-left: 12px;
+    position: relative;
 }
 .my-trip-list .items.first .fly .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -0px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 0 transparent;
 }
 .my-trip-list .items.first .fly.toFrom .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -870px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -870px transparent;
 }
 .my-trip-list .items.first .hotel .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -407px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -407px transparent;
 }
 .my-trip-list .items .fly .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -233px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -233px transparent;
 }
 .my-trip-list .items .fly.toFrom .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -928px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -928px transparent;
 }
 .my-trip-list .items .hotel .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -175px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -175px transparent;
 }
 .my-trip-list .items .last .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -291px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -291px transparent;
 }
 .my-trip-list .items a.active {
-    background: url("../images/leftLiActive.png") no-repeat scroll right 0px transparent;
+    background: url("../images/leftLiActive.png") no-repeat scroll right 0 transparent;
     margin-bottom: 1px;
     margin-left: -12px;
     margin-right: -10px;
     padding-left: 12px;
 }
 .my-trip-list .items .hotel.active .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -465px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -465px transparent;
 }
 .my-trip-list .items .fly.active .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -523px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -523px transparent;
 }
 .my-trip-list .items .fly.toFrom.active .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -812px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -812px transparent;
 }
 .my-trip-list .items .last.active .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -349px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -349px transparent;
 }
 .my-trip-list .items a:hover {
-	text-decoration: none !important;
-	background: url(../images/bg-line.png) center -1px no-repeat rgba(185,187,189,0.3);
-	margin-right: 0px;
+    background: url("../images/bg-line.png") no-repeat scroll center -1px rgba(185, 187, 189, 0.3);
+    margin-right: 0;
+    text-decoration: none !important;
 }
 .my-trip-list .items a:hover .date.orange-one, .my-trip-list .items a:hover .date.blue-one {
-	right: 44px;
+    right: 44px;
 }
 .my-trip-list .items a:hover .date.blue-two, .my-trip-list .items a:hover .date.orange-two {
-	right: 10px !important;
+    right: 10px !important;
 }
-/*
-.my-trip-list .items a:hover .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -117px transparent;
-}
-.my-trip-list .items.first a:hover .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -581px transparent;
-}
-.my-trip-list .items a:hover.last .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -291px transparent;
-}
-.my-trip-list .items a:hover.active .keys {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -59px transparent;
-}
-*/
 .my-trip-list .items a.last:hover .keys:hover {
     background: url("../images/ico-my-trip.png") no-repeat scroll 0 -291px transparent;
 }
 .my-trip-list .items a:hover .keys:hover {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -697px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -697px transparent;
 }
 .my-trip-list .items.first a:hover .keys:hover {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -755px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -755px transparent;
 }
-.my-trip-list .items a:hover.active .keys:hover {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -639px transparent;
+.my-trip-list .items a.active:hover .keys:hover {
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -639px transparent;
 }
-.my-trip-list .items a:hover.active {
-	background: url("../images/leftLiActive.png") no-repeat scroll right 0px transparent;
+.my-trip-list .items a.active:hover {
+    background: url("../images/leftLiActive.png") no-repeat scroll right 0 transparent;
     margin-left: -12px;
     margin-right: -10px;
     padding-left: 12px;
 }
-.my-trip-list .items a:hover.active .date.orange-one, .my-trip-list .items a:hover.active .date.blue-one {
-	right: 54px;
+.my-trip-list .items a.active:hover .date.orange-one, .my-trip-list .items a.active:hover .date.blue-one {
+    right: 54px;
 }
-.my-trip-list .items a:hover.active .date.blue-two, .my-trip-list .items a:hover.active .date.orange-two {
-	right: 20px !important;
+.my-trip-list .items a.active:hover .date.blue-two, .my-trip-list .items a.active:hover .date.orange-two {
+    right: 20px !important;
 }
 .my-trip-list .items a .keys .deleteTours {
-	height: 16px;
-	left: 4px;
-	position: absolute;
-	top: 20px;
-	width: 16px;
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    top: 20px;
+    width: 16px;
 }
 .my-trip-list .items a .keys {
-	float: left;
-	position: relative;
-	margin-right: 7px;
-	width: 28px;
+    float: left;
+    margin-right: 7px;
+    position: relative;
+    width: 28px;
 }
 .my-trip-list .items a.fly .keys {
-	display: block;
-	height: 58px;
+    display: block;
+    height: 58px;
 }
 .my-trip-list .items a.hotel .keys {
-	display: block;
-	height: 58px;
+    display: block;
+    height: 58px;
 }
 .my-trip-list .items.end .last .keys {
-	display: block;
-	height: 58px;
+    display: block;
+    height: 58px;
 }
 .my-trip-list .items a .path {
-	float: left;
-	height: 46px;
-	padding-top: 12px;
-	width: 150px;
-	position: relative;
+    float: left;
+    height: 46px;
+    padding-top: 12px;
+    position: relative;
+    width: 150px;
 }
 .my-trip-list .items a .path .where {
     font-weight: bold;
@@ -566,153 +551,155 @@
     white-space: nowrap;
 }
 .my-trip-list .items a .path .time {
-	color: #4b525c;
-	white-space: nowrap;
+    color: #4B525C;
+    white-space: nowrap;
 }
 .my-trip-list .items a .path .time .rub {
-	background-position: 0 0;
-	width: 9px;
-	height: 10px;
+    background-position: 0 0;
+    height: 10px;
+    width: 9px;
 }
 .my-trip-list .items.end .last .path {
-	font-size: 18px;
-	color: #1d222b;
-	padding-top: 20px;
-	height: 39px;
-	white-space: nowrap;
+    color: #1D222B;
+    font-size: 18px;
+    height: 39px;
+    padding-top: 20px;
+    white-space: nowrap;
 }
 .my-trip-list .items a .path .alpha {
-	background: url(../images/gradient-left.png) repeat-y;
-	width: 30px;
-	position: absolute; top: 12px; right: 0px; height: 45px;
+    background: url("../images/gradient-left.png") repeat-y scroll 0 0 transparent;
+    height: 45px;
+    position: absolute;
+    right: 0;
+    top: 12px;
+    width: 30px;
 }
 .my-trip-list .items a:hover .path .alpha {
-	background: url(../images/gradient-left-hovers.png) repeat-y;
-	width: 30px;
-	position: absolute; top: 12px; right: 0px; height: 44px;
+    background: url("../images/gradient-left-hovers.png") repeat-y scroll 0 0 transparent;
+    height: 44px;
+    position: absolute;
+    right: 0;
+    top: 12px;
+    width: 30px;
 }
 .my-trip-list .items a.active .path .alpha {
-	background: url(../images/gradient-left-hover.png) repeat-y; 
-	width: 30px;
-	position: absolute; top: 12px; right: 0px; height: 44px;
+    background: url("../images/gradient-left-hover.png") repeat-y scroll 0 0 transparent;
+    height: 44px;
+    position: absolute;
+    right: 0;
+    top: 12px;
+    width: 30px;
 }
-
-/* DATE MY TRIP */
 .my-trip-list .items a .date {
-	font-size: 11px;
-	line-height: 10px;
-	position: absolute;
-	top:13px;
-	right: 54px;
-	padding-top: 6px;
-	color: #FFF;
+    color: #FFFFFF;
+    font-size: 11px;
+    line-height: 10px;
+    padding-top: 6px;
+    position: absolute;
+    right: 54px;
+    top: 13px;
 }
 .my-trip-list .items a .date .day {
-	text-align: center;
-	width: 37px;
-	float: left;
+    float: left;
+    text-align: center;
+    width: 37px;
 }
 .my-trip-list .items a .date .f17 {
-	font-family: Verdana;
-	font-weight: bold;
+    font-family: Verdana;
+    font-weight: bold;
 }
 .my-trip-list .items a .date.blue-one {
-	width: 37px;
-	height: 30px;
-	background: url(../images/slice.png) no-repeat 0 -440px;
-	text-shadow: 0px 1px 0px #0a5783;
+    background: url("../images/slice.png") no-repeat scroll 0 -440px transparent;
+    height: 30px;
+    text-shadow: 0 1px 0 #0A5783;
+    width: 37px;
 }
 .my-trip-list .items a .date.orange-two {
-	width: 70px;
-	height: 30px;
-	background: url(../images/slice.png) no-repeat -37px -440px;
-	text-shadow: 0px 1px 0px #f55407;
-	right: 20px;
+    background: url("../images/slice.png") no-repeat scroll -37px -440px transparent;
+    height: 30px;
+    right: 20px;
+    text-shadow: 0 1px 0 #F55407;
+    width: 70px;
 }
 .my-trip-list .items a .date.orange-two .day {
-	width: 35px !important;
+    width: 35px !important;
 }
 .my-trip-list .items a .date.blue-two {
-	width: 70px;
-	height: 30px;
-	background: url(../images/slice.png) no-repeat -106px -440px;
-	text-shadow: 0px 1px 0px #0a5783;
-	right: 20px;
+    background: url("../images/slice.png") no-repeat scroll -106px -440px transparent;
+    height: 30px;
+    right: 20px;
+    text-shadow: 0 1px 0 #0A5783;
+    width: 70px;
 }
 .my-trip-list .items a .date.blue-two .day {
-	width: 35px !important;
+    width: 35px !important;
 }
 .my-trip-list .items a .date.orange-one {
-	width: 37px;
-	height: 30px;
-	background: url(../images/slice.png) no-repeat -175px -440px;
-	text-shadow: 0px 1px 0px #f55407;
+    background: url("../images/slice.png") no-repeat scroll -175px -440px transparent;
+    height: 30px;
+    text-shadow: 0 1px 0 #F55407;
+    width: 37px;
 }
-/* */
 .smallBlock .my-trip-list .items .fly {
-	height: 71px;
+    height: 71px;
 }
 .smallBlock .my-trip-list .items .fly .keys {
-	height: 71px;
+    height: 71px;
 }
 .smallBlock .my-trip-list .items .fly .keys {
-	height: 71px;
+    height: 71px;
 }
 .smallBlock .my-trip-list .items .fly .path .where {
-	white-space: normal;
+    white-space: normal;
 }
 .smallBlock .my-trip-list .items .fly .path .where span {
-	display: block;
-	white-space: nowrap;
+    display: block;
+    white-space: nowrap;
 }
 .smallBlock .my-trip-list .items .fly.active {
     background: url("../images/leftLiActive.png") no-repeat scroll right -200px transparent;
 }
 .smallBlock .my-trip-list .items.first a:hover .keys:hover {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -986px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -986px transparent;
 }
 .smallBlock .my-trip-list .items a:hover .keys:hover {
-	background: url("../images/ico-my-trip.png") no-repeat scroll 0 -1057px transparent;
+    background: url("../images/ico-my-trip.png") no-repeat scroll 0 -1057px transparent;
 }
 .hotel-left-short {
-	display: none;
+    display: none;
 }
 .smallBlock .hotel-left-short {
-	display: block;
+    display: block;
 }
 .smallBlock .hotel-left-long {
-	display: none;
+    display: none;
 }
-/* MY TRIP LIST END */
-
-
-
 .finish-result {
-	width: 100%;
-	font-size: 11px;
-	line-height: 20px;	
+    font-size: 11px;
+    line-height: 20px;
+    width: 100%;
 }
 .finish-result .txt {
-	color: #4b525c;
-	width: 60%;
-	font-size: 12px;
+    color: #4B525C;
+    font-size: 12px;
+    width: 60%;
 }
 .finish-result.voyasha td {
-	padding-top: 6px;
-	padding-bottom: 6px;
-	line-height: 16px;
+    line-height: 16px;
+    padding-bottom: 6px;
+    padding-top: 6px;
 }
 .finish-result.voyasha tr:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 .finish-result.voyasha tr:hover .txt {
-	color: #2f3134;
+    color: #2F3134;
 }
 .finish-result .price {
-	width: 40%;
-	text-align: right;
-	padding-right: 12px;
-	color: #1d222b;
+    color: #1D222B;
+    padding-right: 12px;
+    text-align: right;
+    width: 40%;
 }
 .finish-result.voyasha .price div {
     background: url("../images/bg-btn-voyasha-price.png") no-repeat scroll 0 0 transparent;
@@ -721,80 +708,73 @@
     font-size: 11px;
     height: 16px;
     line-height: 17px;
+    padding-left: 10px;
     text-align: center;
     width: 60px;
-    padding-left: 10px;
 }
 .finish-result.voyasha tr:hover .price div {
-	background-position: 0px -16px;
+    background-position: 0 -16px;
 }
-/* SUB HEAD MENU */
 .sub-head {
-	position: relative;
-	padding-bottom: 43px;
-	margin-bottom: -43px;
-	background: url(../images/bg-head.png) repeat-x left bottom;
-	width: 100%;
-	min-width: 1000px;
-	z-index: 4;
+    background: url("../images/bg-head.png") repeat-x scroll left bottom transparent;
+    margin-bottom: -43px;
+    min-width: 1000px;
+    padding-bottom: 43px;
+    position: relative;
+    width: 100%;
+    z-index: 4;
 }
-/* voyasha-text */
 .voyasha-text {
-	position: relative;
-	margin-top: 18px;	
-	min-height: 68px;
-	margin-bottom: 4px;
-	line-height: 18px;
+    line-height: 18px;
+    margin-bottom: 4px;
+    margin-top: 18px;
+    min-height: 68px;
+    position: relative;
 }
 .voyasha-text .ico-voyasha {
-	position: absolute;
-	top: 5px;
+    position: absolute;
+    top: 5px;
 }
 .voyasha-text .inline-block {
-	margin-left: 55px;
-	padding-right: 10px;
+    margin-left: 55px;
+    padding-right: 10px;
 }
 .voyasha-text .inline-block h3 {
-	line-height: 21px;
+    line-height: 21px;
 }
 .voyasha-slider {
-	margin-top: 30px; margin-bottom: 25px;
+    margin-bottom: 25px;
+    margin-top: 30px;
 }
-.div-filter h4 div {margin-right: 4px;}
-/* CONTENT */
-
-
-
-
-/*---- filter-content -----*/
-
+.div-filter h4 div {
+    margin-right: 4px;
+}
 .lineBg {
-	margin-top: -5px;
+    margin-top: -5px;
 }
 .all-list {
-	padding-left: 2px;
     font-family: Arial;
     font-size: 11px;
     line-height: 13px;
     margin-left: -2px;
+    padding-left: 2px;
 }
 .all-list a {
-	color: #2174a3;
-	border-bottom: 1px dashed;
+    border-bottom: 1px dashed;
+    color: #2174A3;
 }
 .ticket-content {
-	color: #3E4C52;
-    margin: 0 auto 32 px;
+    color: #3E4C52;
     position: relative;
 }
 .ticket-content.bg-none {
-	margin-top: 0px;
-	padding-top: 0px;
+    margin-top: 0;
+    padding-top: 0;
 }
 .ticket-content .order-div {
-	letter-spacing: -0.03em;
-	float: right;
-	padding-top: 6px;
+    float: right;
+    letter-spacing: -0.03em;
+    padding-top: 6px;
 }
 .ticket-content .order-div a {
     background: url("../images/btn-recommend-show-hide.png") no-repeat scroll 0 0 transparent;
@@ -810,58 +790,62 @@
     z-index: 5;
 }
 .ticket-content .order-div a.show {
-	background-position: 0px -19px;
+    background-position: 0 -19px;
 }
 .head-content {
-	width: 695px;
-	margin: 35px auto 0;
-	position: relative;
+    margin: 35px auto 0;
+    position: relative;
+    width: 695px;
 }
-
-.hotels { background: none !important}
-.hotels  h1 {text-shadow: #FFF 0px 1px 0px; margin-bottom: 20px; letter-spacing: -0.05em;}
-
+.hotels {
+    background: none repeat scroll 0 0 transparent !important;
+}
+.hotels h1 {
+    letter-spacing: -0.05em;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
 .minimize-rcomended {
-	position: absolute;
-	width: 176px; height: 19px;
-	overflow: hidden;
-	bottom: -19px; 
-	right: 175px;
-	z-index: 800;
+    bottom: -19px;
+    height: 19px;
+    overflow: hidden;
+    position: absolute;
+    right: 175px;
+    width: 176px;
+    z-index: 800;
 }
 .minimize-rcomended .btn-minimizeRecomended {
     background: url("../images/slice.png") no-repeat scroll 0 -807px transparent;
+    cursor: pointer;
     height: 19px;
     padding-left: 28px;
     position: absolute;
     right: 0;
+    top: -19px;
     width: 148px;
     z-index: 400;
-    top: -19px;
-    cursor: pointer;
 }
 .hotel-details {
-    padding: 20px 20px 0px 20px;
-    width: 781px;
+    padding: 20px 20px 0;
     position: relative;
+    width: 781px;
 }
 .hotel-details .book .btn-cost {
-	width: 126px;
+    width: 126px;
 }
-
 #content > .title {
-	padding:0px 45px 10px 0px;
-	position: relative;
-	margin-top: 45px;
+    margin-top: 45px;
+    padding: 0 45px 10px 0;
+    position: relative;
 }
 .hotel-details > .title {
-	padding:0px 45px 5px 0px;
-	position: relative;
+    padding: 0 45px 5px 0;
+    position: relative;
 }
 #content > .title h1, .hotel-details > .title h1 {
-	float: left;
+    float: left;
 }
-#content > .title .rating, .hotel-details > .title .rating{
+#content > .title .rating, .hotel-details > .title .rating {
     color: #202328;
     font-size: 11px;
 }
@@ -876,120 +860,131 @@
     text-align: left;
 }
 .stars {
-	display: inline-block; width: 87px; height: 16px;
-	background: url(../images/slice.png) no-repeat -0px -768px;
-	vertical-align: top;
-	margin-left: 0px;
-	overflow:hidden;
-	margin-top: 2px;
+    background: url("../images/slice.png") no-repeat scroll 0 -768px transparent;
+    display: inline-block;
+    height: 16px;
+    margin-left: 0;
+    margin-top: 2px;
+    overflow: hidden;
+    vertical-align: top;
+    width: 87px;
 }
 .stars.five {
-	width: 87px;
+    width: 87px;
 }
 .stars.four {
-	width: 71px;
+    width: 71px;
 }
 .stars.three {
-	width: 54px;
+    width: 54px;
 }
 .stars.two {
-	width: 36px;
+    width: 36px;
 }
 .stars.one {
-	width: 18px;
+    width: 18px;
 }
 .stars-select {
-	display: inline-block; width: 89px; height: 16px;
-	background: url(../images/slice.png) no-repeat -288px -768px;
-	vertical-align: top;
-	margin-left: 0px;
-	overflow:hidden;
-	margin-top: 2px;
-	position: relative;
+    background: url("../images/slice.png") no-repeat scroll -288px -768px transparent;
+    display: inline-block;
+    height: 16px;
+    margin-left: 0;
+    margin-top: 2px;
+    overflow: hidden;
+    position: relative;
+    vertical-align: top;
+    width: 89px;
 }
 .div-filter .stars-select {
-	background: none;
+    background: none repeat scroll 0 0 transparent;
 }
-.stars-select  .none-select {
-	 width: 89px; height: 16px;
-	 position: absolute;
-	 top:0px;
+.stars-select .none-select {
+    height: 16px;
+    position: absolute;
+    top: 0;
+    width: 89px;
 }
-.stars-select.five .none-select  {
-	width: 87px;
+.stars-select.five .none-select {
+    width: 87px;
 }
 .stars-select.four .none-select {
-	width: 71px;
+    width: 71px;
 }
 .stars-select.three .none-select {
-	width: 54px;
+    width: 54px;
 }
 .stars-select.two .none-select {
-	width: 36px;
+    width: 36px;
 }
 .stars-select.one .none-select {
-	width: 18px;
+    width: 18px;
 }
 .stars-li {
-	overflow: hidden;
-	height: 17px;
-    margin-top: -25px;
-    padding-top: 23px; 
-    position: relative; 
-    z-index: 2;}
-.stars-li li {
-	float: left;
     height: 17px;
+    margin-top: -25px;
+    overflow: hidden;
+    padding-top: 23px;
+    position: relative;
+    z-index: 2;
+}
+.stars-li li {
+    float: left;
+    height: 17px;
+    margin-right: 9px;
     margin-top: -25px;
     padding-top: 23px;
     text-align: center;
     width: 18px;
-    margin-right: 9px;
 }
 .stars-li li input {
-	display: none;
+    display: none;
 }
 .stars-li li label {
-	height: 30px;
-	display: block;
-	width: 18px;
-	text-align: center;
-	margin-top: -25px;
-    padding-top: 25px;
+    background: url("../images/slice.png") no-repeat scroll -288px -762px transparent;
     cursor: pointer;
-    background: url(../images/slice.png) no-repeat -288px -762px;
+    display: block;
+    height: 30px;
+    margin-top: -25px;
+    padding-top: 25px;
+    text-align: center;
+    width: 18px;
 }
 .stars-li li label.active, .stars-li li label.active:hover {
-	background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
+    background: url("../images/stars.png") no-repeat scroll 1px 6px transparent;
 }
 .stars-li li label:hover {
-	background: url("../images/stars-hover.png") no-repeat scroll 0px 6px transparent;
+    background: url("../images/stars-hover.png") no-repeat scroll 0 6px transparent;
 }
 #content > .title > .stars, .hotel-details > .title > .stars {
-	position: absolute; bottom: -6px; left: 0px;
+    bottom: -6px;
+    left: 0;
+    position: absolute;
 }
 #hotels-popup-header1.title > .stars {
-	position: relative; bottom: auto; left: auto; margin-left: 15px;
+    bottom: auto;
+    left: auto;
+    margin-left: 15px;
+    position: relative;
 }
 #hotels-popup-header1.title h1 {
     display: inline-block;
-    margin-bottom: 0px;
+    height: 22px;
+    margin-bottom: 0;
+    max-width: 525px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 525px;
-    height: 22px;
 }
 #hotels-popup-description .service-in-hotel h3 {
-	margin-top: 0px
+    margin-top: 0;
 }
 #content .place-buy, .hotel-details .place-buy {
-	overflow: hidden;
-	padding-left: 0px;
-	padding-right: 4px;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 4px;
 }
 #content .place-buy > .street, .hotel-details .place-buy > .street {
-	color: #292D34;
+    color: #292D34;
     float: left;
     font-size: 14px;
     line-height: 20px;
@@ -998,204 +993,198 @@
     max-width: 450px;
 }
 .title.hotel > h3 {
-	margin-bottom: 10px
+    margin-bottom: 10px;
 }
 .hotel-details .place-buy > .street {
-	width: 260px;
-	max-height: 40px;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 260px;
 }
 #content .place-buy > .book, .hotel-details .place-buy > .book {
-	float: right;
-	color: #202328;
+    color: #202328;
+    float: right;
 }
 #content .place-buy > .book .cost, .hotel-details .place-buy > .book .cost {
-	font-size: 22px;
+    font-size: 22px;
 }
 #content .place-buy > .book .how-cost, .hotel-details .place-buy > .book .how-cost {
-	float: left;
-	margin-top: 10px;
+    float: left;
+    margin-top: 10px;
 }
 #content .place-buy > .book .btn-cost, .hotel-details .place-buy > .book .btn-cost {
-	margin-left: 20px;
+    margin-left: 20px;
 }
 .hotel-details .description {
-	overflow: hidden;
+    overflow: hidden;
 }
 .hotel-details .description .left {
-	color: #4b4b4f;
+    color: #4B4B4F;
 }
 .hotel-details .description .left .right {
-	margin-left: 20px;
+    margin-left: 20px;
 }
 .description > .left > .read-more {
-	border-bottom: 1px dashed;
+    border-bottom: 1px dashed;
     color: #2174A3;
     display: inline-block;
     line-height: 15px;
     margin-bottom: 14px;
 }
 .hotel-details .description .left .text {
-	color: #1a1b1e;
-	line-height: 20px;
-	margin-bottom: 0px;
-	height: auto;
-	overflow: inherit;
+    color: #1A1B1E;
+    height: auto;
+    line-height: 20px;
+    margin-bottom: 0;
+    overflow: inherit;
 }
 .hotel-details .description .smallMaps {
-	color: #5D5F63;
+    color: #5D5F63;
     float: right;
-    width: 312px;
     height: 240px;
-    margin-left: 25px;
     margin-bottom: 5px;
+    margin-left: 25px;
+    width: 312px;
 }
 .hotel-details .description .smallMaps .map-hotel {
-	width: 310px;
-	border: 1px solid #c7c7c7;
-	margin-bottom: 3px;
-	height: 180px;
-	margin-top: 12px;
-	overflow: hidden;
+    border: 1px solid #C7C7C7;
+    height: 180px;
+    margin-bottom: 3px;
+    margin-top: 12px;
+    overflow: hidden;
+    width: 310px;
 }
 .tab .photo-slide-hotel {
-	height: 170px;
-	width: 822px;
+    height: 170px;
+    width: 822px;
 }
 .title.hotel h1 {
-		margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 .tmblr {
-	float: left;
-	margin-top: 11px;
+    float: left;
+    margin-top: 11px;
 }
 .tmblr li {
-	float: left;
-	width: 91px;
-	text-align: center;
-	height: 24px;
-	color: #42464b;
-	line-height: 22px;
-	margin-right: 5px;
+    color: #42464B;
+    float: left;
+    height: 24px;
+    line-height: 22px;
+    margin-right: 5px;
+    text-align: center;
+    width: 91px;
 }
 .tmblr li .ico-descr, .tmblr li .ico-see-map {
-	margin-right: 2px;
-	vertical-align: middle;
+    margin-right: 2px;
+    vertical-align: middle;
 }
 .tmblr li a {
-	border-bottom: 1px dashed;
+    border-bottom: 1px dashed;
 }
 .tmblr li.active {
-	background: url(../images/tmblr-hotel.png) no-repeat 0 0;
+    background: url("../images/tmblr-hotel.png") no-repeat scroll 0 0 transparent;
 }
 .tmblr li.active .ico-descr {
-	background-position: 0px -32px;
+    background-position: 0 -32px;
 }
 .tmblr li.active .ico-see-map {
-	background-position: 0px -11px;
+    background-position: 0 -11px;
 }
 .tmblr li.active a {
-	color: #292b2e;
-	text-shadow: 0px 1px 0px #ffffff;
-	border-bottom: none;
+    border-bottom: medium none;
+    color: #292B2E;
+    text-shadow: 0 1px 0 #FFFFFF;
 }
-.tmblr li:hover a, .tmblr li a:hover, .tmblr li.active a:hover  {
-	color: #292b2e !important;
+.tmblr li:hover a, .tmblr li a:hover, .tmblr li.active a:hover {
+    color: #292B2E !important;
 }
-
 .descr {
-	background: #FFF;
-	padding: 8px;
-	border-radius: 6px;
-	box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2);
-	-moz-box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2); /* Для Firefox */
-    -webkit-box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2); /* Для Safari и Chrome */
-	color: #1a1b1e;
-	margin-top: 18px;
-	overflow: hidden;
-	margin-bottom: 20px;
-	margin-left: 0px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 1px 2px 0 0 rgba(0, 1, 1, 0.2);
+    color: #1A1B1E;
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-top: 18px;
+    overflow: hidden;
+    padding: 8px;
 }
 .descr > .left {
-	float: left;
-	width: 100%;
-} 
+    float: left;
+    width: 100%;
+}
 .photo-slide-hotel {
-	font-size: 11px;
-	line-height: 16px;
-	color: #8f9199;
-	margin-bottom: 11px;
-	/* width: 100%; */
-	overflow: hidden;
-	height: 170px;
+    color: #8F9199;
+    font-size: 11px;
+    height: 170px;
+    line-height: 16px;
+    margin-bottom: 11px;
+    overflow: hidden;
     position: relative;
 }
 .photo-slide-hotel > ul {
-	width: 10000px;
-	overflow: hidden;
-	height: 150px;
-    position: absolute;
-    left: 0px;
     background: none repeat scroll 0 0 #DADCE0;
+    height: 150px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 10000px;
 }
 .photo-slide-hotel > ul > li {
-	float: left;
-	margin-right: 1px;
-} 
+    float: left;
+    margin-right: 1px;
+}
 .photo-slide-hotel > ul > li img {
-	height: 150px;
+    height: 150px;
 }
 .descr > .left .descr-text {
-	padding-left: 3px;
-	width: 100%;
+    padding-left: 3px;
+    width: 100%;
 }
 .description .left .descr-text {
-	width: 100%;
+    width: 100%;
 }
-.descr > .left .descr-text  a {
-	color: #2174a3;
-	border-bottom: 1px dashed;
+.descr > .left .descr-text a {
+    border-bottom: 1px dashed;
+    color: #2174A3;
 }
 .descr > .left .descr-text .text {
-	height: auto;
+    height: auto;
 }
 .descr > .left .descr-text h3 {
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 .descr > .left .right {
-	float: right;
-	width: 312px;
-	color: #5d5f63;
-	margin-bottom: 5px;
-	margin-left: 30px;
+    color: #5D5F63;
+    float: right;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    width: 312px;
 }
 .descr .right .map-hotel {
-	width: 310px;
-	height: 259px;
-	border: 1px solid #c7c7c7;
-	margin-bottom: 3px;
+    border: 1px solid #C7C7C7;
+    height: 259px;
+    margin-bottom: 3px;
+    width: 310px;
 }
 .map-big {
-	width: 100%;
-	height: 454px;
-	overflow: hidden;
-	border: 1px solid #c7c7c7;
-	margin-bottom: 3px;
+    border: 1px solid #C7C7C7;
+    height: 454px;
+    margin-bottom: 3px;
+    overflow: hidden;
+    width: 100%;
 }
 .service-in-hotel {
-	margin-bottom: 20px;
-	padding-left: 0px;
-	/* background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
-	padding-top: 30px; */
+    margin-bottom: 20px;
+    padding-left: 0;
 }
 .hotel-details .service-in-hotel {
-	margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .service-in-room {
-	margin-bottom: 20px;
-	padding-left: 0px;
+    margin-bottom: 20px;
+    padding-left: 0;
 }
 .service-in-hotel ul li, .service-in-room ul li {
     color: #4B4B4F;
@@ -1207,72 +1196,61 @@
     padding-top: 3px;
     width: 25%;
 }
-.service-in-hotel ul li .ico-wi-fi, 
-.service-in-hotel ul li .ico-glass, 
-.service-in-hotel ul li .ico-dog,
-.service-in-room ul li .ico-wi-fi, 
-.service-in-room ul li .ico-glass, 
-.service-in-room ul li .ico-dog  {
-	margin-right: 7px; vertical-align: middle;
+.service-in-hotel ul li .ico-wi-fi, .service-in-hotel ul li .ico-glass, .service-in-hotel ul li .ico-dog, .service-in-room ul li .ico-wi-fi, .service-in-room ul li .ico-glass, .service-in-room ul li .ico-dog {
+    margin-right: 7px;
+    vertical-align: middle;
 }
 .info-trip {
-	padding-left: 0px;
-	margin-bottom: 20px;
-	/*
-background: url("../images/shadow-ticket.png") no-repeat scroll center top transparent;
-	padding-top: 30px;
-*/
+    margin-bottom: 20px;
+    padding-left: 0;
 }
 .service-in-hotel > h3, .hotel-important-info > h3 {
-	margin-top: -10px;
-	margin-bottom: 13px;
+    margin-bottom: 13px;
+    margin-top: -10px;
 }
 .info-trip .date-trip {
-	font-size: 15px;
-	color: #1d222b;
-	line-height: 22px;
-	margin: 0px 0px 7px 0px;
+    color: #1D222B;
+    font-size: 15px;
+    line-height: 22px;
+    margin: 0 0 7px;
 }
 .info-trip h2 {
-	color: #1d222b;
-	font-size: 24px;
-	text-shadow: 0px 1px 0px #FFF;
-	line-height: 22px;
-	margin-bottom: 18px;
+    color: #1D222B;
+    font-size: 24px;
+    line-height: 22px;
+    margin-bottom: 18px;
+    text-shadow: 0 1px 0 #FFFFFF;
 }
 .info-trip h3 {
-	color: #4b525c;
-	font-size: 18px;
-	margin: 0px 0px 7px 0px;
-	text-shadow: 0px 1px 0px #FFF;
-	line-height: 18px;
-	margin-bottom: 13px;
+    color: #4B525C;
+    font-size: 18px;
+    line-height: 18px;
+    margin: 0 0 13px;
+    text-shadow: 0 1px 0 #FFFFFF;
 }
 .block-trip {
-	background: #FFF;
-	padding: 10px;
-	border-radius: 6px;
-	box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2);
-	-moz-box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2); /* Для Firefox */
-    -webkit-box-shadow: 1px 2px 0px 0px rgba(0, 1, 1, 0.2); /* Для Safari и Chrome */
-    margin-bottom: 25px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 1px 2px 0 0 rgba(0, 1, 1, 0.2);
     color: #535353;
+    margin-bottom: 25px;
+    padding: 10px;
 }
 .block-trip table {
-	width: 100%;
+    width: 100%;
 }
 .block-trip table .button {
-	vertical-align: middle;
-	width: 250px;
-	text-align: right;
+    text-align: right;
+    vertical-align: middle;
+    width: 250px;
 }
 .button .btn-cost .cost {
-	font-size: 24px;
+    font-size: 24px;
 }
 .button > .btn-cost {
-	padding-left: 6px;
-	padding-right: 10px;
-	width: 215px;
+    padding-left: 6px;
+    padding-right: 10px;
+    width: 215px;
 }
 .button > .btn-cost .text {
     display: block;
@@ -1287,40 +1265,40 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 1px 0 #A6A7AB;
     line-height: 20px;
+    margin-bottom: 8px;
     padding: 0;
     vertical-align: bottom;
-    margin-bottom: 8px;
 }
 .block-trip .table-hotel-result .td-cost {
     border-left: 1px solid #DFE1E2;
     padding-left: 15px;
+    padding-right: 15px;
     text-align: left;
     vertical-align: middle;
     width: 255px;
-    padding-right: 15px;
 }
 .table-hotel-result .td-cost .left {
-	float: left;
-	font-size: 11px;
-	line-height: 17px;
+    float: left;
+    font-size: 11px;
+    line-height: 17px;
 }
 .table-hotel-result .td-cost .left .text {
-	color: #1d222b;
-	font-size: 14px;
+    color: #1D222B;
+    font-size: 14px;
 }
 .table-hotel-result .td-cost .right {
-	float: right;
+    float: right;
 }
 .block-trip .table-hotel-result .td-cost .btn-cost {
-	width: 132px;
-	padding: 10px 5px 0 0;
-	height: 27px;
+    height: 27px;
+    padding: 10px 5px 0 0;
+    width: 132px;
 }
 .block-trip .table-hotel-result .td-cost .btn-cost .rur {
-	margin-top: -2px;
+    margin-top: -2px;
 }
 .block-trip .table-hotel-result .td-cost .btn-cost .text {
-	margin-right: 5px;
+    margin-right: 5px;
 }
 .block-trip .table-hotel-result .td-cost .btn-cost .cost {
     display: inline-block;
@@ -1361,96 +1339,92 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
     width: 100%;
 }
 .block-trip .table-hotel-result .td-float .float table a.conditionCancel {
-	border-bottom: 1px dashed;
-	font-size: 11px;
-	line-height: 16px;
-	margin-left: 10px;
+    border-bottom: 1px dashed;
+    font-size: 11px;
+    line-height: 16px;
+    margin-left: 10px;
 }
-
 .block-trip table .name ul li span.text {
-	color: #2174a3;
-	text-shadow: 0px 1px 0px #FFF;
-	font-weight: bold;
-	font-size: 16px;
-	margin-right: 10px;	
+    color: #2174A3;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    text-shadow: 0 1px 0 #FFFFFF;
 }
-
-
 .block-trip table .name div.items {
-	border-right: 1px solid #b6bcc4;
-	border-bottom: 1px solid #b6bcc4;
-	padding-bottom: 7px;
-	padding-left: 10px;
-	margin-left: -10px;
-	padding-top: 15px;
-	margin-top: -10px;
-	position: relative;
+    border-bottom: 1px solid #B6BCC4;
+    border-right: 1px solid #B6BCC4;
+    margin-left: -10px;
+    margin-top: -10px;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    padding-top: 15px;
+    position: relative;
 }
 .block-trip table .name div.items:last-child {
-	margin-bottom: -10px; border-bottom: none;
+    border-bottom: medium none;
+    margin-bottom: -10px;
 }
 .block-trip table .name div.items ul li table {
-	width: 100%;
+    width: 100%;
 }
 .block-trip table .name div.items ul li table .change {
-	width: 55px;
-	vertical-align: middle;
-	text-align: center;
-	padding-right: 11px;
+    padding-right: 11px;
+    text-align: center;
+    vertical-align: middle;
+    width: 55px;
 }
 .change-people {
-	width: 53px; height: 24px;
-	overflow: hidden;
+    height: 24px;
+    overflow: hidden;
+    width: 53px;
 }
 .change-people .minus {
-	float: left;
-	cursor: pointer;
-	width: 14px;
-	height: 24px;
-	background: url(../images/slice.png) no-repeat 0px -1200px;
+    background: url("../images/slice.png") no-repeat scroll 0 -1200px transparent;
+    cursor: pointer;
+    float: left;
+    height: 24px;
+    width: 14px;
 }
 .change-people .value {
-	background: url(../images/slice.png) no-repeat -13px -1200px;
-	width: 24px;
-	height: 24px;
-	float: left;
-	overflow: hidden;
+    background: url("../images/slice.png") no-repeat scroll -13px -1200px transparent;
+    float: left;
+    height: 24px;
+    overflow: hidden;
+    width: 24px;
 }
 .change-people .value input {
-	border: none;
-	text-align: center;
-	font-size: 14px;
-	line-height: 16px;
-	color: #0f0f10;
-	font-weight: bold;
-	width: 23px;
-	background: none;
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #0F0F10;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 16px;
+    text-align: center;
+    width: 23px;
 }
-
-@-moz-document url-prefix() {
-	.change-people .value input {
-		border: none;
-		text-align: center;
-		font-size: 15px;
-		line-height: 20px;
-		color: #0f0f10;
-		font-weight: bold;
-		width: 26px;
-		background: none;
-	}
+.change-people .value input {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #0F0F10;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+    width: 26px;
 }
 .change-people .plus {
-	float: left;
-	cursor: pointer;
-	width: 14px;
-	height: 24px;
-	background: url(../images/slice.png) no-repeat -37px -1200px;
+    background: url("../images/slice.png") no-repeat scroll -37px -1200px transparent;
+    cursor: pointer;
+    float: left;
+    height: 24px;
+    width: 14px;
 }
 #hotels-popup-description .photo-slide-hotel .photoNumb {
-	left: 20px;
+    left: 20px;
 }
 #hotels-popup-map {
-	color: #1A1B1E;
+    color: #1A1B1E;
 }
 .otherText {
     background: none repeat scroll 0 0 #FFFFFF;
@@ -1464,16 +1438,15 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
     z-index: 2;
 }
 .otherText a {
-	background: url(../images/podrobnee-point.png) left center no-repeat;
+    background: url("../images/podrobnee-point.png") no-repeat scroll left center transparent;
+    color: #2174A3;
     padding-left: 11px;
-    color: #2174a3;
 }
 .otherText a.active {
-	background: url(../images/podrobnee-point-hover.png) left center no-repeat;
-
+    background: url("../images/podrobnee-point-hover.png") no-repeat scroll left center transparent;
 }
 .otherText a span {
-	border-bottom:  1px dashed #2174a3;
+    border-bottom: 1px dashed #2174A3;
 }
 .hideService {
     height: 34px;
@@ -1481,7 +1454,7 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
     width: 100%;
 }
 .tab .slide {
-    background: none;
+    background: none repeat scroll 0 0 transparent;
     height: 150px;
     margin-bottom: 15px;
     margin-left: -20px;
@@ -1491,26 +1464,40 @@ background: url("../images/shadow-ticket.png") no-repeat scroll center top trans
     width: 821px;
 }
 .photo-slide-hotel .left-navi {
-	position: absolute; top:0px; left: 0px;
-	width: 80px; height: 150px; cursor: pointer;
-	background: url(../images/navigation-slide.png) no-repeat left 0;
-	z-index: 1;
+    background: url("../images/navigation-slide.png") no-repeat scroll left 0 transparent;
+    cursor: pointer;
+    height: 150px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 80px;
+    z-index: 1;
 }
 .photo-slide-hotel .right-navi {
-	position: absolute; top:0px; right: 0px;
-	width: 80px; height: 150px; cursor: pointer;
-	background: url(../images/navigation-slide.png) no-repeat right 0;
-	z-index: 1;
+    background: url("../images/navigation-slide.png") no-repeat scroll right 0 transparent;
+    cursor: pointer;
+    height: 150px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 80px;
+    z-index: 1;
 }
 .photo-slide-hotel .left-opacity {
-	position: absolute; top:0px; left: 0px;
-	width: 40px; height: 150px;
-	z-index: 800;
+    height: 150px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 40px;
+    z-index: 800;
 }
 .photo-slide-hotel .right-opacity {
-	position: absolute; top:0px; right: 0px;
-	width: 40px; height: 150px;
-	z-index: 800;
+    height: 150px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    z-index: 800;
 }
 input.hotel-input {
     background: url("../images/bg-search-hotel-filter.png") no-repeat scroll 0 1px transparent;
@@ -1518,24 +1505,26 @@ input.hotel-input {
     border-radius: 6px 6px 6px 6px;
     font-size: 13px;
     height: 27px;
+    max-width: 183px;
     padding-left: 5px;
     width: 100%;
-    max-width: 183px;
 }
-
-/* MAPS */
-
-
-
 .fly-ico {
-	position: absolute; left: 26px; bottom: 0px; width: 86px; height: 70px;
-	background: url(../images/fly-ico.png) no-repeat;
+    background: url("../images/fly-ico.png") no-repeat scroll 0 0 transparent;
+    bottom: 0;
+    height: 70px;
+    left: 26px;
+    position: absolute;
+    width: 86px;
 }
 .hotel-ico {
-	position: absolute; left: 26px; bottom: 0px; width: 86px; height: 70px;
-	background: url(../images/hotel-ico.png) no-repeat;
+    background: url("../images/hotel-ico.png") no-repeat scroll 0 0 transparent;
+    bottom: 0;
+    height: 70px;
+    left: 26px;
+    position: absolute;
+    width: 86px;
 }
-
 .footer {
     background: url("../images/bg-footer.png") repeat-x scroll 0 0 transparent;
     bottom: 0;
@@ -1560,57 +1549,57 @@ input.hotel-input {
     padding: 7px 20px;
     text-shadow: 0 1px 0 #202226;
 }
-.foot-menu li a {color: #d7d8dd; text-decoration: underline;}
-
-/* TIME LINE */
+.foot-menu li a {
+    color: #D7D8DD;
+    text-decoration: underline;
+}
 .headAndTmblr {
-	overflow: hidden;
-	margin-bottom: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
 }
 .headAndTmblr h1 {
-	float: left;
+    float: left;
 }
 .headAndTmblr .tmblr {
-	margin: 0px 0px 0px 34px;
+    margin: 0 0 0 34px;
 }
-
 .allTrip .block {
-	position: relative;
-	padding-left: 65px;
+    padding-left: 65px;
+    position: relative;
 }
 .allTrip .block .when {
-	position: absolute;
-	width: 65px;
-	height: 100%;
-	top: 0px;
-	left: 0px;
-	background: url(../images/bg-hr-when-trip-all.png) repeat-y;
+    background: url("../images/bg-hr-when-trip-all.png") repeat-y scroll 0 0 transparent;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 65px;
 }
 .allTrip .block.end .when {
-	background: none;
+    background: none repeat scroll 0 0 transparent;
 }
 .allTrip .block .when .date {
-	width: 38px;
-	height: 38px;
-	position: absolute;
-	top: -6px;
-	right: 0px;
-	background: url(../images/slice.png) no-repeat -414px -1406px;
-	text-align: center;
-	color: #FFFFFF;
+    background: url("../images/slice.png") no-repeat scroll -414px -1406px transparent;
+    color: #FFFFFF;
     font-size: 11px;
+    height: 38px;
     line-height: 10px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: -6px;
+    width: 38px;
 }
 .allTrip .block .when .date.blue-one {
-	background-position: -461px -1406px;
+    background-position: -461px -1406px;
 }
 .allTrip .block .when .date.blue-two {
-	background-position: -414px -1330px;
+    background-position: -414px -1330px;
     right: -24px;
     width: 85px;
 }
 .allTrip .block .when .date.orange-two {
-	background-position: -414px -1367px;
+    background-position: -414px -1367px;
     right: -24px;
     width: 85px;
 }
@@ -1619,288 +1608,263 @@ input.hotel-input {
     font-weight: bold;
 }
 .allTrip .block .when .date .day {
-   	float: left;
+    float: left;
     margin-top: 8px;
     text-align: center;
     width: 38px;
 }
 .allTrip .block .when .date .day + .day {
-	margin-left: 10px;
-	width: 37px;
+    margin-left: 10px;
+    width: 37px;
 }
-
 .allTrip .block .headTitle {
-	margin-bottom: 20px;
-	width: 100%;
-	color: #252628;
+    color: #252628;
+    margin-bottom: 20px;
+    width: 100%;
 }
 .allTrip .block .headTitle td.icoTD {
-	width: 35px;
+    width: 35px;
 }
 .allTrip .block .headTitle td.nameTD {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 .allTrip .block .headTitle td.costTD {
-	text-align: right;
-	font-size: 11px; font-family: Arial;
-	text-shadow: 0px 1px 0px rgba(172,186,194, 0.6);
-	vertical-align: middle;
+    font-family: Arial;
+    font-size: 11px;
+    text-align: right;
+    text-shadow: 0 1px 0 rgba(172, 186, 194, 0.6);
+    vertical-align: middle;
 }
 .allTrip .block .headTitle td.costTD .costs {
-	background: none repeat scroll 0 0 #FFFFFF;
+    background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #C4CDD5;
     border-radius: 4px 4px 4px 4px;
     box-shadow: 0 1px 0 #EAEBEC;
     display: inline-block;
     font-size: 12px;
     padding: 2px 5px;
-    text-shadow: 0px 1px 0px rgba(172,186,194, 0.6);
+    text-shadow: 0 1px 0 rgba(172, 186, 194, 0.6);
 }
 .allTrip .block .headTitle td.removeTD {
-	width: 30px;
-	vertical-align: middle;
-	
+    vertical-align: middle;
+    width: 30px;
 }
 .allTrip .block .headTitle td.removeTD .btnDeleteTrip {
-	margin-left: 19px;
+    margin-left: 19px;
 }
-
-
 .allTrip .block .info {
-	padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 .allTrip .block .info > .text {
-	padding-left: 45px;
+    padding-left: 45px;
 }
 .allTrip .block .ico-hotel {
-	width: 26px;
-	height: 26px;
-	background: url(../images/ico-trip-all-hotel.png) no-repeat 6px 0px;
-	display: inline-block;
-	vertical-align: baseline;
-	margin-right: 9px;
+    background: url("../images/ico-trip-all-hotel.png") no-repeat scroll 6px 0 transparent;
+    display: inline-block;
+    height: 26px;
+    margin-right: 9px;
+    vertical-align: baseline;
+    width: 26px;
 }
 .allTrip .block .ico-jet {
-	width: 26px;
-	height: 26px;
-	background: url(../images/ico-trip-all-jet.png) no-repeat center center;
-	display: inline-block;
-	vertical-align: bottom;
-	margin-right: 9px;
+    background: url("../images/ico-trip-all-jet.png") no-repeat scroll center center transparent;
+    display: inline-block;
+    height: 26px;
+    margin-right: 9px;
+    vertical-align: bottom;
+    width: 26px;
 }
 .allTrip .block .title {
-	display: inline-block;
-	font-size: 22px;
-	color: #252628;
-	text-shadow: 0px 1px 0px #FFF;
-	line-height: 24px;	
+    color: #252628;
+    display: inline-block;
+    font-size: 22px;
+    line-height: 24px;
+    text-shadow: 0 1px 0 #FFFFFF;
 }
 .allTrip .block .title span.f13 {
-	font-size: 13px;
+    font-size: 13px;
 }
 .hr-bg {
-	width: 100%;
+    width: 100%;
 }
 .allTrip .block .hr-bg {
     margin-bottom: -15px;
     margin-top: -5px;
 }
 .allTrip .block.end .hr-bg {
-	display: none;
+    display: none;
 }
 .ticketContent {
-	padding-right: 25px;
+    padding-right: 25px;
 }
 .descrTicket {
-	font-size: 13px;
-	color: #6b7076;
-	text-shadow: 0px 1px 0px rgba(255,255,255,0.7);
-	margin-bottom: 20px;
-	width: 100%;
+    color: #6B7076;
+    font-size: 13px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    width: 100%;
 }
 .descrTicket tr td {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 .descrTicket td.text {
-	padding-left: 10px;
+    padding-left: 10px;
 }
 .descrTicket td.buttons {
-	width: 160px;
-	text-align: right;
+    text-align: right;
+    width: 160px;
 }
-
 .costItAll {
-	text-align: right;
-	color: #252628;
-	font-size: 22px;
-	padding-bottom: 70px;
-	padding-right: 112px;
+    color: #252628;
+    font-size: 22px;
+    padding-bottom: 70px;
+    padding-right: 112px;
+    text-align: right;
 }
 .costItAll .allCost {
-	font-weight: bold;
-	font-size: 28px;
+    font-size: 28px;
+    font-weight: bold;
 }
 .detailCost {
-	width: 172px; height: 31px;
-	text-align: center;
-	display: inline-block;
-	margin-top: 9px;
-	margin-right: 13px;
-
+    display: inline-block;
+    height: 31px;
+    margin-right: 13px;
+    margin-top: 9px;
+    text-align: center;
+    width: 172px;
 }
-
-
-/* EVENTS */
 .events {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #131416;
     height: auto;
     min-width: 1000px;
     position: relative;
     width: 100%;
     z-index: 998;
-    background: #FFF;
-    color: #131416;
 }
 .events .center-block {
-	overflow: hidden;
+    overflow: hidden;
 }
 #eventsContent {
-	padding-top: 13px;
-	padding-bottom: 1px;
+    padding-bottom: 1px;
+    padding-top: 13px;
 }
 #eventsContent h1 {
-	font-size: 30px;
-	margin-bottom: 20px;
+    font-size: 30px;
+    margin-bottom: 20px;
 }
-
 #eventsContent .photoAlbum {
-	width: 100%;
-	height: 355px;
-	overflow: hidden;
-	margin-bottom: 20px;
-	margin-top: 20px;
+    height: 355px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    overflow: hidden;
+    width: 100%;
 }
 #eventsContent p {
-	line-height: 20px;
-	margin-bottom: 20px;
+    line-height: 20px;
+    margin-bottom: 20px;
 }
 #eventsContent .rightBlock {
-	float: right;
-	width: 190px;
-	margin-left: 30px;
+    float: right;
+    margin-left: 30px;
+    width: 190px;
 }
-
-
 #eventsContent .rightBlock a {
-	color: #2e333b;
-	border-bottom: 1px dashed;
-	margin: 10px 0px;
-	display: inline-block;
+    border-bottom: 1px dashed;
+    color: #2E333B;
+    display: inline-block;
+    margin: 10px 0;
 }
-
 #eventsContent .rightBlock .price {
-	font-size: 30px;
-	font-family: Verdana;
-	font-weight: bold;
-	display: block;
-	margin-top: -25px;
+    display: block;
+    font-family: Verdana;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: -25px;
 }
 #eventsContent .rightBlock .check {
-	font-size: 11px;
-	color: #5e6064;
-	line-height: 15px;
-	display: block;
-	margin-bottom: 10px;
+    color: #5E6064;
+    display: block;
+    font-size: 11px;
+    line-height: 15px;
+    margin-bottom: 10px;
 }
-
 .toPoint {
-	background: url(../images/toFromPoint.png) no-repeat 0px -31px;
-	width:10px;
-	height: 15px;
-	display: inline-block;
-	vertical-align: middle;
-	margin-left: 0px;
-	margin-right: 0px;
+    background: url("../images/toFromPoint.png") no-repeat scroll 0 -31px transparent;
+    display: inline-block;
+    height: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    vertical-align: middle;
+    width: 10px;
 }
 .fromPoint {
-	background: url(../images/toFromPoint.png) no-repeat 0px -16px;
-	width:10px;
-	height: 15px;
-	display: inline-block;
-	vertical-align: middle;
-	margin-left: 0px;
-	margin-right: 0px;
+    background: url("../images/toFromPoint.png") no-repeat scroll 0 -16px transparent;
+    display: inline-block;
+    height: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    vertical-align: middle;
+    width: 10px;
 }
 .toFromPoint {
-	background: url(../images/toFromPoint.png) no-repeat 0px 0px;
-	width:10px;
-	height: 15px;
-	display: inline-block;
-	vertical-align: middle;
-	margin-left: 0px;
-	margin-right: 0px;
+    background: url("../images/toFromPoint.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    vertical-align: middle;
+    width: 10px;
 }
-
 .autocomplete {
-	background: #FFF url(../images/autocompleteTopBgAvia.png) 0px 0px no-repeat;
-	margin-top: -4px;
-	width: 289px;
-	font-size: 14px;
-	color: #16181a;
-	padding-top: 4px;
-	box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6); 
-	-moz-box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6); /* Для Firefox */
-    -webkit-box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6); /* Для Safari и Chrome */
-	border-radius: 0px 0px 4px 4px;
-	overflow: hidden;
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll 0 0 #FFFFFF;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6);
+    color: #16181A;
+    font-size: 14px;
+    margin-top: -4px;
+    overflow: hidden;
+    padding-top: 4px;
+    width: 289px;
 }
 .autocomplete.hotel {
-	background: #FFF url(../images/autocompleteTopBgHotel.png) 0px 0px no-repeat;
+    background: url("../images/autocompleteTopBgHotel.png") no-repeat scroll 0 0 #FFFFFF;
 }
 .autocomplete.tours {
-	background: #FFF url(../images/autocompleteTopBgTours.png) 0px 0px no-repeat;
+    background: url("../images/autocompleteTopBgTours.png") no-repeat scroll 0 0 #FFFFFF;
 }
 .autocomplete div {
-	padding: 7px 10px;
-	cursor: pointer;
-	position: relative;
-	white-space: nowrap;
-	overflow: hidden;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 7px 10px;
+    position: relative;
+    white-space: nowrap;
 }
-
 .autocomplete div .code {
-	display: block;
-	position: absolute;
-	padding: 7px 0px 7px 5px;
-	background: #FFF;
-	color: #969ba1;
-	font-size: 11px;
-	text-transform: uppercase;
-	right: 0px;
-	top: 0px;
-	width: 36px;
-	text-align: left;
-	-moz-box-shadow: -7px 0 6px rgba(255,255,255,1); /* Для Firefox */
-    -webkit-box-shadow: -7px 0 6px rgba(255,255,255,1); /* Для Safari и Chrome */
-    box-shadow: -7px 0 6px rgba(255,255,255,1); /* Параметры тени */
-    border-radius: 0px 0px 4px 4px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 0 0 4px 4px;
+    box-shadow: -7px 0 6px #FFFFFF;
+    color: #969BA1;
+    display: block;
+    font-size: 11px;
+    padding: 7px 0 7px 5px;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    text-transform: uppercase;
+    top: 0;
+    width: 36px;
 }
 .autocomplete div .country {
-	color: #969ba1;
+    color: #969BA1;
 }
 .autocomplete div:hover, .autocomplete div:hover .code, .autocomplete .selected, .autocomplete .selected .code {
-	background: #e2e5eb;
+    background: none repeat scroll 0 0 #E2E5EB;
 }
 .autocomplete div:hover .code, .autocomplete .selected .code {
-	-moz-box-shadow: -7px 0 6px rgba(226,229,235,1); /* Для Firefox */
-    -webkit-box-shadow: -7px 0 6px rgba(226,229,235,1); /* Для Safari и Chrome */
-    box-shadow: -7px 0 6px rgba(226,229,235,1); /* Параметры тени */
+    box-shadow: -7px 0 6px #E2E5EB;
 }
-
-
-
-/* INDEX */
 .slideTours {
-
     bottom: 31px;
     height: 195px;
     position: absolute;
@@ -1908,167 +1872,167 @@ input.hotel-input {
     z-index: 10;
 }
 .slideTours.mapsView {
-	background: url("../images/bg-index-slide.png") repeat-x scroll 0 10px transparent;
+    background: url("../images/bg-index-slide.png") repeat-x scroll 0 10px transparent;
 }
-.slideTours .center{
-
+.slideTours .center {
     height: 195px;
     margin: 0 auto;
     max-width: 1390px;
     min-width: 1000px;
     overflow: hidden;
     position: relative;
-    white-space: nowrap
+    white-space: nowrap;
 }
 .maps {
-	position: fixed; width: 100%; height: 100%; overflow: hidden;
-	background: url(../images/bg-index.png);
-	z-index: 0;
-    top: 0px; left: 0px;
-
+    background: url("../images/bg-index.png") repeat scroll 0 0 transparent;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 0;
 }
-.scroll-none { overflow: hidden;}
+.scroll-none {
+    overflow: hidden;
+}
 .toursTicketsMain {
-	background: #f4f7f9;
-	width: 15%;
-	height: 175px;
-	position: relative;
-	color: #262930; 
-	float: left;
-	margin-left: 1px;
-	margin-right: 1px;
-	margin-top: 15px;
+    background: none repeat scroll 0 0 #F4F7F9;
+    color: #262930;
+    float: left;
+    height: 175px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 15px;
+    position: relative;
+    width: 15%;
 }
 .toursTicketsMain:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 .toursTicketsMain .l {
-	width: 6px;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	z-index: 3;
-	background: url(../images/bg-tours-main.png) no-repeat -30px 0px;
-	height: 176px;
+    background: url("../images/bg-tours-main.png") no-repeat scroll -30px 0 transparent;
+    height: 176px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 6px;
+    z-index: 3;
 }
 .toursTicketsMain .r {
-	width: 30px;
-	position: absolute;
-	top:0px;
-	right: 0px;
-	z-index: 3;
-	background: url(../images/bg-tours-main.png) no-repeat 0px 0px;
-	height: 176px; 
+    background: url("../images/bg-tours-main.png") no-repeat scroll 0 0 transparent;
+    height: 176px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    z-index: 3;
 }
 .toursTicketsMain .innerTours {
-	background: none repeat scroll 0 0 #F4F7F9;
-    padding: 6px 6px 5px 6px;
+    background: none repeat scroll 0 0 #F4F7F9;
+    padding: 6px 6px 5px;
     position: relative;
     z-index: 2;
 }
 .imgTours {
-	width: 100%;
-	height: 106px;
-	overflow: hidden;
+    height: 106px;
+    overflow: hidden;
+    width: 100%;
 }
 .imgTours img {
-	vertical-align: middle; width: 100%;
+    vertical-align: middle;
+    width: 100%;
 }
 .toursTicketsMain .textTours {
-	line-height: 25px;
+    line-height: 25px;
     padding-left: 10px;
     padding-top: 3px;
 }
 .toursTicketsMain .textTours .price {
-	font-size: 26px;
-	font-weight: bold;
+    font-size: 26px;
+    font-weight: bold;
 }
 .toursTicketsMain .textTours .rur {
-	font-weight: bold;
-	font-size: 25px;
+    font-size: 25px;
+    font-weight: bold;
 }
 .lookEyes {
-	width: 30px;
-	height: 30px;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	background: url(../images/bg-tours-main.png) no-repeat -36px 0px;
-	opacity: 0;
+    background: url("../images/bg-tours-main.png") no-repeat scroll -36px 0 transparent;
+    height: 30px;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 30px;
 }
 .lookEyes:hover {
-	opacity: 1;
+    opacity: 1;
 }
 .toursTicketsMain .triangle {
-	position: absolute;
-	left: 50%;
-	top: 0px;
-	z-index: 0;
-	width: 11px;
-	height: 17px;
+    height: 17px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    width: 11px;
+    z-index: 0;
 }
 .toursTicketsMain .triangle img {
-	margin-left: -11px;
+    margin-left: -11px;
 }
-
 .maps .innerBlockMain {
-	max-width: 100%;
-	min-width: 1000px;
-	margin: 0 auto;
-	margin-top: 38px;
-	position: relative;
+    margin: 38px auto 0;
+    max-width: 100%;
+    min-width: 1000px;
+    position: relative;
 }
 .maps .innerBlockMain .IMGmain {
-	position: absolute;
-	width: 1390px;
-	z-index: 2;
+    position: absolute;
+    width: 1390px;
+    z-index: 2;
 }
-
 .maps .innerBlockMain .IMGmain + .IMGmain {
-	z-index: 1;
+    z-index: 1;
 }
 .maps .innerBlockMain .IMGmain img {
-	width: 1390px;
     position: absolute;
+    width: 1390px;
 }
-
 .maps .mapsBigAll {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: url(../images/mapsBigAll.png) center center repeat-x;
-	z-index: 1;
-	display: none;
-	box-shadow: 0 2px 5px rgba(13,13,14,0.9);
+    background: url("../images/mapsBigAll.png") repeat-x scroll center center transparent;
+    box-shadow: 0 2px 5px rgba(13, 13, 14, 0.9);
+    display: none;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
 }
 .maps .toursBigAll {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	z-index: 2;
-
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
 }
 .maps .toursBigAll .centerTours {
-	position: relative;
-	max-width: 1390px;
-	min-width: 1000px;
-	height: 100%;
-	margin: 0 auto;
-	overflow: hidden;
-	box-shadow: 0 2px 5px rgba(13,13,14,0.9);
+    box-shadow: 0 2px 5px rgba(13, 13, 14, 0.9);
+    height: 100%;
+    margin: 0 auto;
+    max-width: 1390px;
+    min-width: 1000px;
+    overflow: hidden;
+    position: relative;
 }
 .maps .toursBigAll .centerTours .close {
-	position: absolute;
-	z-index: 3;
-	width: 14px;
-	height: 15px;
-	background: url(../images/closeMainPhoto.png) no-repeat 0 0;
-	cursor: pointer;
-	top: 17px;
-	right: 12px;
+    background: url("../images/closeMainPhoto.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 15px;
+    position: absolute;
+    right: 12px;
+    top: 17px;
+    width: 14px;
+    z-index: 3;
 }
 .maps .toursBigAll .centerTours .textTours {
-	bottom: 23px;
+    bottom: 23px;
     color: #FFFFFF;
     display: block;
     font-size: 16px;
@@ -2081,44 +2045,33 @@ input.hotel-input {
     z-index: 3;
 }
 .maps .toursBigAll .centerTours .textTours:hover .txt {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 .maps .toursBigAll .centerTours .textTours .price {
-	font-size: 36px;
-	font-weight: bold;
+    font-size: 36px;
+    font-weight: bold;
 }
 .maps .toursBigAll .centerTours .textTours .rur {
-	font-size: 35px;
-	font-weight: bold;
+    font-size: 35px;
+    font-weight: bold;
 }
-
 .fixed {
     position: fixed;
 }
 .sorting-panel {
-	position: absolute;
-	right: 6px;
-	top: 2px;
-	color: #3e4c52;
+    color: #3E4C52;
+    position: absolute;
+    right: 6px;
+    top: 2px;
 }
 .sorting-panel .hotel-sort-by-item {
-	color: #1c81bb;
-	border-bottom: 1px dashed;
-	cursor: pointer;
+    border-bottom: 1px dashed;
+    color: #1C81BB;
+    cursor: pointer;
 }
 .sorting-panel .hotel-sort-by-item.active {
-	border-bottom: none;
+    border-bottom: medium none;
 }
-.allTicketsDIV {
-	background: #f4f7f9;
-	border-radius: 6px;
-	box-shadow: 0px 1px 1px rgba(26,27,31,0.6);
-	color: #1d222b;
-}
-.allTicketsDIV .aviaTickets {
-	width: 100%;
-}
-
 .backToBack, .backToBackBottom {
     background: url("../images/btn-back-point.png") no-repeat scroll left center transparent;
     color: #2E2F31;
@@ -2128,101 +2081,499 @@ input.hotel-input {
     z-index: 5;
 }
 .backToBackBottom {
-	bottom: 55px;
-	top: auto;
+    bottom: 55px;
+    top: auto;
 }
 .backToBack span, .backToBackBottom span {
-	border-bottom: 1px dotted;
+    border-bottom: 1px dotted;
 }
 .list ul li {
-	line-height: 15px;
+    line-height: 15px;
 }
 .serviceInHotelTable {
-	width: 100%;
-	border-bottom: 1px dotted #4B4B4F;
-	margin-bottom: 13px;
+    border-bottom: 1px dotted #4B4B4F;
+    margin-bottom: 13px;
+    width: 100%;
 }
 .serviceInHotelTable tr td {
-	padding-bottom: 3px;
+    padding-bottom: 3px;
 }
 .serviceInHotelTable .title {
-	width: 210px;
+    width: 210px;
 }
 .serviceInHotelTable .title h3 {
-	font-size: 14px;
-	color: #2f3134;
+    color: #2F3134;
+    font-size: 14px;
 }
 .serviceInHotelTable .list ul li {
-	list-style: disc;
+    list-style: disc outside none;
 }
 .shadowHotel {
-	height: 31px;
-	/* background: url(../images/shadow-hotel.png) no-repeat center top; */
-	width: 100%;
+    height: 31px;
+    width: 100%;
 }
 .hotel-important-info, .service-in-room {
-	color: #4B4B4F;
-	padding-bottom: 10px;
+    color: #4B4B4F;
+    padding-bottom: 10px;
 }
 .hotel-important-info {
-	padding-bottom: 25px;
+    padding-bottom: 25px;
 }
 .miniPopUp {
-	position: absolute;
-	padding: 4px;
-	border-radius: 5px;
-	box-shadow: 0px 0px 4px rgba(0,1,1,0.2);
-	background: #FFF;
-	color: #4B4B4F;
-	font-size: 11px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 4px rgba(0, 1, 1, 0.2);
+    color: #4B4B4F;
+    font-size: 11px;
+    padding: 4px;
+    position: absolute;
 }
 .photoNumb {
     bottom: 0;
     color: #8F9199;
     font-size: 11px;
-    position: absolute; 
+    position: absolute;
 }
 .miniPopUpIndex {
-	background: url(../images/constructor-popup.png) no-repeat;
-	width: 220px;
-	height: 98px;
-	position: absolute;
-	z-index: 200;
-	top: -71px;
-	left: 77px;
+    background: url("../images/constructor-popup.png") no-repeat scroll 0 0 transparent;
+    height: 98px;
+    left: 77px;
+    position: absolute;
+    top: -71px;
+    width: 220px;
+    z-index: 200;
 }
 .deletePopUp {
-	background: none repeat scroll 0 0 #FFFFFF;
+    background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #C4CDD5;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 5px 5px 5px 5px;
     box-shadow: 0 1px 0 #EAEBEC;
+    color: #202329;
     font-size: 11px;
     padding: 2px 5px;
+    position: absolute;
     text-shadow: 0 1px 0 rgba(172, 186, 194, 0.6);
-	position: absolute;
-	z-index: 200;
-	border-radius: 5px;
-	color: #202329;
+    z-index: 200;
 }
-
 .allTripTable {
-	width: 100%;
+    width: 100%;
 }
 .firstTd {
-	
 }
 .secondTd {
-	width: 112px;
+    width: 112px;
 }
-
+.allTripTable .hotels-tickets .full-info {
+   padding: 0 0 0 135px;
+}
+.allTripTable .hotels-tickets {
+   margin-bottom: 21px !important;
+}
 #tour-buy-btn {
-	margin-top: 12px;
+    margin-top: 12px;
 }
-
 .hr-bg.first {
-	margin-top: -10px;
+    margin-top: -10px;
 }
 .hideTitle {
-	display: inline-block;
-	
+    display: inline-block;
 }
+.paybuyContent {
+    margin: 0 auto;
+    max-width: 950px;
+    color: #1d222b;
+    padding-bottom: 22px;
+}
+.paybuyEnd {
+	margin: 0 auto;
+    max-width: 950px;
+    color: #1d222b;
+    padding-top: 22px;
+    text-align: right;
+}
+.allTicketsDIV {
+    background: none repeat scroll 0 0 #F4F7F9;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 1px 1px rgba(26, 27, 31, 0.6);
+    color: #1D222B;
+    overflow: hidden;
+}
+.allTicketsDIV .aviaTickets, .allTicketsDIV .hotelTickets {
+    border-top: 1px solid #808186;
+    font-family: Arial;
+    margin-top: -1px;
+    width: 100%;
+}
+.allTicketsDIV .aviaTickets tr td,  .allTicketsDIV .hotelTickets tr td {
+    line-height: 22px;
+    padding-bottom: 9px;
+    padding-top: 9px;
+}
+.allTicketsDIV .aviaTickets .tdICO {
+    background: url("../images/ico-fly.png") no-repeat scroll center center transparent;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+}
+.allTicketsDIV .aviaTickets .tdFrom, .allTicketsDIV .aviaTickets .tdTo {
+    width: 230px;
+}
+.allTicketsDIV .aviaTickets .tdPath {
+    text-align: center;
+    vertical-align: middle;
+}
+.allTicketsDIV .aviaTickets .tdAvia {
+    color: #1D222B;
+    font-size: 12px;
+    width: 140px;
+}
+.allTicketsDIV .aviaTickets .what {
+    color: #879094;
+    font-size: 11px;
+}
+.allTicketsDIV .aviaTickets .city {
+    color: #1D222B;
+    font-size: 16px;
+}
+.allTicketsDIV .aviaTickets .city .airport {
+    color: #879094;
+    font-size: 12px;
+}
+.allTicketsDIV .aviaTickets .time {
+    color: #1D222B;
+    font-size: 20px;
+}
+.allTicketsDIV .aviaTickets .time .date {
+    color: #4B525C;
+    font-size: 12px;
+}
+.allTicketsDIV .aviaTickets .voyage, .allTicketsDIV .aviaTickets .class {
+    color: #879094;
+    font-size: 11px;
+}
+.allTicketsDIV .aviaTickets .voyage .number, .allTicketsDIV .aviaTickets .class .classMine {
+    color: #1D222B;
+}
+.allTicketsDIV .aviaTickets .tdPrice, .allTicketsDIV .hotelTickets .tdPrice {
+    border-left: 1px solid #DBDCDC;
+    padding-left: 20px;
+    width: 135px;
+}
+.allTicketsDIV .aviaTickets .price, .allTicketsDIV .hotelTickets .price {
+    color: #1D222B;
+    font-size: 22px;
+}
+.allTicketsDIV .aviaTickets .lastPrice, .allTicketsDIV .hotelTickets .lastPrice {
+    color: #C71D1D;
+    display: inline-block;
+    text-decoration: line-through;
+}
+.allTicketsDIV .aviaTickets .priceSale,  .allTicketsDIV .hotelTickets .priceSale {
+    height: 22px;
+}
+.allTicketsDIV .aviaTickets .icoTours, .allTicketsDIV .hotelTickets .icoTours {
+    background: url("../images/icoTours.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 10px;
+    margin-left: 5px;
+    vertical-align: middle;
+    width: 36px;
+}
+.allTicketsDIV .aviaTickets .moreDetails a, .allTicketsDIV .hotelTickets .moreDetails a {
+    border-bottom: 1px dashed;
+    color: #4B525C;
+    font-size: 11px;
+}
+.allTicketsDIV .hotelTickets .tdICO {
+    background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+}
+.allTicketsDIV .hotelTickets .tdHotel {
+	width: 360px;
+}
+.allTicketsDIV .hotelTickets .what {
+    color: #879094;
+    font-size: 11px;
+}
+.allTicketsDIV .hotelTickets .nameHostel {
+	color: #1d222b;
+	font-size: 17px;
+}
+.allTicketsDIV .hotelTickets .howPlace {
+	color: #4b525c;
+	font-size: 15px;
+}
+.allTicketsDIV .hotelTickets .tdInfo {
+	color: #1d222b;
+	font-size: 12px;
+}
+.allTicketsDIV .hotelTickets .tdInfo .name {
+	color: #879094;
+	font-size: 11px;
+}
+.paybuyContent .theSum {
+	overflow: hidden;
+	margin-top: 24px;
+	font-size: 17px;
+	color: #1d222b;
+}
+.paybuyContent .theSum .left {
+	float: left;
+}
+.paybuyContent .theSum .right {
+	float: right;
+}
+.paybuyContent .theSum .right .price {
+	width: 135px;
+	display: inline-block;
+	font-size: 22px;
+}
+
+.oneBlock {
+	border-bottom: 1px solid #babbbe;
+	overflow: hidden;
+}
+
+.paybuyContent h2 {
+	color: #1d222b;
+	font-size: 24px;
+	margin-top: 22px;
+	margin-bottom: 17px;
+	letter-spacing: -0.05em;
+    line-height: 26px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.paybuyContent h2 .ico-fly {
+	background: url("../images/ico-fly.png") no-repeat scroll center center transparent;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.paybuyContent h2 .ico-hotel {
+	background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
+	width: 26px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.paybuyContent h3 {
+	font-size: 19px;
+	color: #4b525c;
+}
+.infoPassengers {
+	width: 100%;
+}
+.dopInfoPassengers {
+}
+.infoPassengers td, .dopInfoPassengers td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.infoPassengers thead, .dopInfoPassengers thead {
+	font-weight: bold;
+	font-size: 14px;
+	color: #1d222b;
+}
+.infoPassengers input[type='text'], .dopInfoPassengers input[type='text'] {
+	background: url("../images/bg-input.png") no-repeat 0px 0px transparent;
+	border: none;
+	height: 31px;
+	overflow: hidden;
+	color: #1d222b;
+	font-size: 15px;
+}
+.infoPassengers .tdName {
+	width: 147px;
+}
+.infoPassengers .tdName input[type='text'] {
+	width: 127px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: 0px 0px;
+	text-transform: uppercase;
+}
+.infoPassengers .tdName input[type='text']:focus {
+	background-position: 0px -33px;
+}
+
+.infoPassengers .tdLastname {
+	width: 206px;
+}
+.infoPassengers .tdLastname input[type='text'] {
+	width: 187px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: -147px 0px;
+	text-transform: uppercase;
+}
+.infoPassengers .tdLastname input[type='text']:focus {
+	background-position: -147px -33px;
+}
+
+.infoPassengers .tdDocumentNumber {
+	width: 140px;
+}
+.infoPassengers .tdDocumentNumber input[type='text'] {
+	width: 120px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: -690px 0px;
+	text-transform: uppercase;
+}
+.infoPassengers .tdDocumentNumber input[type='text']:focus {
+	background-position: -690px -33px;
+}
+.infoPassengers .tdBirthday {
+	width: 130px;
+}
+.infoPassengers .tdDuration {
+	width: 120px;
+}
+.infoPassengers .dd {
+	width: 34px;
+	text-align: center;
+	background-position: -431px 0px !important;
+	float: left;
+	font-size: 12px;
+}
+.infoPassengers .dd:focus {
+	background-position: -431px -33px !important;
+}
+.infoPassengers .mm {
+	width: 33px;
+	text-align: center;
+	background-position: -465px 0px !important;
+	float: left;
+}
+.infoPassengers .mm:focus {
+	background-position: -465px -33px !important;
+}
+.infoPassengers .yy {
+	background-position: -498px 0 !important;
+    float: left;
+    text-align: center;
+    width: 53px;
+}
+.infoPassengers .yy:focus {
+	background-position: -498px -33px !important;
+}
+.infoPassengers .tdNationality {
+	width: 129px;
+}
+.infoPassengers .tdNationality input[type='text'] {
+	width: 109px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: -561px 0px;
+	text-transform: uppercase;
+}
+.infoPassengers .tdNationality input[type='text']:focus {
+	background-position: -561px -33px;
+}
+.tdSex {
+	width: 77px;
+}
+.tdSex .male {
+	width: 34px;
+	height: 33px;
+	background: url("../images/bg-input.png") no-repeat -354px 0px transparent; 
+	cursor: pointer;
+	float: left;
+}
+.tdSex .male:hover {
+	background-position: -354px -66px;
+}
+.tdSex .male.active {
+	background-position: -354px -33px;
+}
+.tdSex .male.active:hover {
+	background-position: -354px -99px;
+}
+.tdSex .female {
+	width: 34px;
+	height: 33px;
+	background: url("../images/bg-input.png") no-repeat -388px 0px transparent; 
+	cursor: pointer;
+	float: left;
+}
+.tdSex .female:hover {
+	background-position: -388px -66px;
+}
+.tdSex .female.active {
+	background-position: -388px -33px;
+}
+.tdSex .female.active:hover {
+	background-position: -388px -99px;
+}
+.addGuest {
+	color: #1d222b;
+	font-size: 14px;
+	border-bottom: 1px dashed;
+	display: inline-block;
+}
+
+.dopInfoPassengers .tdEmail {
+	width: 354px;
+}
+.dopInfoPassengers .tdEmail input[type='text'] {
+	width: 334px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: 0px -66px;
+	text-transform: uppercase;
+}
+.dopInfoPassengers .tdEmail input[type='text']:focus {
+	background-position: -0px -99px;
+}
+
+.dopInfoPassengers .tdTelefon {
+	width: 237px;
+}
+.dopInfoPassengers .tdTelefon input[type='text'] {
+	width: 187px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-position: -431px -66px;
+	text-transform: uppercase;
+}
+.dopInfoPassengers .tdTelefon input[type='text']:focus {
+	background-position: -431px -99px;
+}
+.dopInfoPassengers .tdText {
+	color: #808186;
+	font-size: 13px;
+}
+.payCardPal {
+	box-shadow: 0 -20px 15px rgba(67, 68, 70, 0.3);
+	height: 500px;
+	width: 100%;
+	background: #FFF;
+	border-top: 1px solid #babbbe; 
+}
+.paybuyEnd .info {
+	width: 690px;
+	padding-left: 27px;
+	background: url(../images/ico-i.png) no-repeat 9px 3px;
+	float: right;
+	color: #626368;
+	font-size: 12px;
+	text-align: left;
+}
+.paybuyEnd .armoring {
+	float: right;
+	text-align: left;
+	width: 230px;
+	color: #32363f;
+}
+.paybuyEnd .armoring .text {
+	margin-top: 8px;
+	white-space: nowrap;
+}
+.paybuyEnd .armoring .btnBlue {
+	cursor: default;
+}
+
+
