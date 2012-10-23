@@ -332,19 +332,19 @@ VoyangaCalendarTimeline.generateFlightDiv = function (FlightEvent) {
     switch (totalDays){
         case 1:
             var jetFlyClass = '';
-            var imgPath = '/images/trip-line-01.png';
+            var imgPath = '/themes/v2/images/trip-line-01.png';
             var flyTripClass = 'flyTrip fd1';
 
             break;
         case 2:
             var jetFlyClass = ' twoDays';
-            var imgPath = '/images/trip-line-02.png';
+            var imgPath = '/themes/v2/images/trip-line-02.png';
             var flyTripClass = 'flyTrip fd2';
 
             break;
         case 3:
             var jetFlyClass = ' threeDays';
-            var imgPath = '/images/trip-line-03.png';
+            var imgPath = '/themes/v2/images/trip-line-03.png';
             var flyTripClass = 'flyTrip fd3';
 
             break;
