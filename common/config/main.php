@@ -46,11 +46,11 @@ return array(
         ),
 
         'pCache' => array(
-            'class' => 'site.common.extensions.MongoDbCache.MongoDbCache',
+            'class' => 'CDbCache',
             'keyPrefix' => 'voyanga-',
-            'mongoConnectionId' => 'mongodb',
             'hashKey' => false,
-            'serializer' => array('igbinary_serialize', 'igbinary_unserialize')
+            'serializer' => array('igbinary_serialize', 'igbinary_unserialize'),
+            'cacheTableName' => 'tbl_cache'
         ),
 
         'flightBooker' => array(
