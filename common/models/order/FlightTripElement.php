@@ -227,8 +227,8 @@ class FlightTripElement extends TripElement
         $ind = $isBack ? 1 : 0;
         $route = $searchParams->routes[$ind];
         $departureDate = date('Y-m-d', strtotime($route->departureDate));
-        $departureCity = City::model()->findByPk($route->departureCityId);
-        $arrivalCity = City::model()->findByPk($route->arrivalCityId);
+        $departureCity = $route->departureCityId;
+        $arrivalCity = $route->arrivalCityId;
         $this->departureDate = $departureDate;
         $this->departureCity = $departureCity;
         $this->arrivalCity = $arrivalCity;
