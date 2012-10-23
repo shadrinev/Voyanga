@@ -69,7 +69,6 @@ class BuyController extends Controller
                 if ($result['hotelId'] == $searchKey)
                     $this->addHotelTripElement($result, $hotelSearchParams);
             }
-            throw new CException(404, 'No item found');
         }
         throw new CException(500, 'Cache expired');
     }
