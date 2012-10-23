@@ -51,7 +51,7 @@ class BuyController extends Controller
         {
             foreach ($flightSearchResult as $result)
             {
-                if ($result->flightKey == $searchKey)
+                if ($result['flightKey'] == $searchKey)
                     $this->addFlighTripElement($result, $flightSearchParams);
             }
             throw new CException(404, 'No item found');
@@ -68,7 +68,7 @@ class BuyController extends Controller
         {
             foreach ($hotelSearchResult as $result)
             {
-                if ($result->resultId == $searchKey)
+                if ($result['resultId'] == $searchKey)
                     $this->addHotelTripElement($result, $hotelSearchParams);
             }
             throw new CException(404, 'No item found');
