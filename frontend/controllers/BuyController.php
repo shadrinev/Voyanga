@@ -48,13 +48,7 @@ class BuyController extends Controller
         $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
         if (($flightSearchParams) and ($flightSearchResult))
         {
-            $this->results = $flightSearchResult;
-            if (!$this->results)
-            {
-                throw new CHttpException(500, 'Error while send Request To Avia Provider');
-                Yii::app()->end();
-            }
-            foreach ($this->results as $result)
+            foreach ($flightSearchResult as $result)
             {
                 if ($result->flightKey == $searchKey)
                     $this->addFlighTripElement($result, $flightSearchParams);
@@ -69,15 +63,9 @@ class BuyController extends Controller
     {
         $hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $searchId);
         $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $searchId);
-        if ($hotelSearchParams and $hotelSearchResult)
+        if (($hotelSearchParams) and ($hotelSearchResult))
         {
-            $this->results = $hotelSearchResult;
-            if (!$this->results)
-            {
-                throw new CException(500, 'Error while send Request To Hotel Provider');
-                Yii::app()->end();
-            }
-            foreach ($this->results as $result)
+            foreach ($hotelSearchResult as $result)
             {
                 if ($result->resultId == $searchKey)
                     $this->addHotelTripElement($result, $hotelSearchParams);
