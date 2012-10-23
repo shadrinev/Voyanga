@@ -25,8 +25,17 @@ function slideToursSlide() {
 
 function CenterIMGResize() {
 	var HeightAllWindow = $(window).height();
-	HeightAllWindow = HeightAllWindow - 38 - 214;
+	if (HeightAllWindow < 800) {
+		HeightAllWindow = HeightAllWindow - 38 - 162;
+		$('.slideTours').addClass('small');
+	}
+	else {
+		HeightAllWindow = HeightAllWindow - 38 - 214;
+		$('.slideTours').removeClass('small');
+	}
 	$('.innerBlockMain').css('height', HeightAllWindow+'px');
+	
+	
 	var pathIMG = $('.innerBlockMain .IMGmain');
 	var marginPathLeft = 0;
 	var var_allWidth = $('.slideTours .center').width();
