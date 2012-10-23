@@ -49,6 +49,7 @@ class SearchController extends ApiController
         else
         {
             $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
+            $this->results = $variants;
             $cacheId = $this->storeToCache($flightSearchParams);
             $newVariants = array();
             foreach ($variants as $variant)
