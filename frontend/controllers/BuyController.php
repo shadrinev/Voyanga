@@ -44,8 +44,8 @@ class BuyController extends Controller
 
     public function addFlightToTrip($searchKey, $searchId)
     {
-        $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchKey);
-        $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchKey);
+        $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchId);
+        $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
         CVarDumper::dump($flightSearchParams); die();
         if (($flightSearchParams) and ($flightSearchResult))
         {
