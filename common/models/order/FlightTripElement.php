@@ -226,7 +226,7 @@ class FlightTripElement extends TripElement
     {
         $ind = $isBack ? 1 : 0;
         $route = $searchParams->routes[$ind];
-        $departureDate = date('d.m.Y', strtotime($route['date']));
+        $departureDate = date('Y-m-d', strtotime($route->departureDate));
         $departureCity = City::model()->getCityByCode($route['departure']);
         if (!$departureCity)
             $this->sendError(400, 'Incorrect IATA code for deparure city');
