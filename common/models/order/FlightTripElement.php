@@ -235,6 +235,5 @@ class FlightTripElement extends TripElement
         $this->adultCount = $searchParams->adultCount;
         $this->childCount = $searchParams->childCount;
         $this->infantCount = $searchParams->infantCount;
-        VarDumper::dump($this);
     }
 }
