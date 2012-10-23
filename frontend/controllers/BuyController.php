@@ -91,7 +91,7 @@ class BuyController extends Controller
             $this->keys[$key] = 1;
             $flightTripElement->setGroupId($key);
         }
-        $flightTripElement->flightVoyage = new FlightVoyage($flight);
+        $flightTripElement->flightVoyage = $flight;
         Yii::app()->shoppingCart->put($flightTripElement);
     }
 
