@@ -50,13 +50,13 @@ class SearchController extends ApiController
         }
         $cacheId = $this->storeToCache($hotelSearchParams);
 
-        $results['cacheId'] = $cacheId;
-        $results['searchParams'] = $hotelSearchParams->getJsonObject();
+        $this->results['cacheId'] = $cacheId;
+        $this->results['searchParams'] = $hotelSearchParams->getJsonObject();
 
         if ($format == 'json')
-            $this->sendJson($results);
+            $this->sendJson($this->results);
         elseif ($format == 'xml')
-            $this->sendXml($results, 'hotelSearchResults');
+            $this->sendXml($this->results, 'hotelSearchResults');
         else
         {
             $this->sendError(400, 'Incorrect response format');
