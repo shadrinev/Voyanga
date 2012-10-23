@@ -157,7 +157,7 @@ ToursAviaResultSet = (function(_super) {
     var result;
     result = {};
     result.type = 'avia';
-    result.searchId = this.selection().searchId;
+    result.searchId = this.selection().cacheId;
     result.searchKey = this.selection().flightKey();
     result.adults = this.rawSP.adt;
     result.children = this.rawSP.chd;
