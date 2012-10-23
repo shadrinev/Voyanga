@@ -47,6 +47,7 @@ return array(
 
         'pCache' => array(
             'class' => 'site.common.extensions.MongoDbCache.MongoDbCache',
+            'prefix' => 'voyanga-',
             'mongoConnectionId' => 'mongodb',
             'hashKey' => false,
             'serializer' => array('igbinary_serialize', 'igbinary_unserialize')
