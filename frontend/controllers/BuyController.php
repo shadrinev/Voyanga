@@ -52,7 +52,7 @@ class BuyController extends Controller
             foreach ($flightSearchResult as $result)
             {
                 if ($result['flightKey'] == $searchKey)
-                    $this->addFlightTripElement($result, $flightSearchParams);
+                    $this->addFlightTripElement($flightSearchParams);
             }
             throw new CException(404, 'No item found');
         }
@@ -76,7 +76,7 @@ class BuyController extends Controller
         throw new CException(500, 'Cache expired');
     }
 
-    public function addFlightTripElement(FlightSearchParams $flightSearchParams)
+    public function addFlightTripElement($flight, FlightSearchParams $flightSearchParams)
     {
         $flightTripElement = new FlightTripElement();
         $key = md5($flightSearchParams);
@@ -93,15 +93,15 @@ class BuyController extends Controller
             $this->keys[$key] = 1;
             $flightTripElement->setGroupId($key);
         }
-        $flightTripElement->hotel = $flightTripElement;
+        $flightTripElement->flightVoyage = $flight;
         Yii::app()->shoppingCart->put($flightTripElement);
     }
 
-    public function addHotelTripElement($hotelSearchParams)
+    public function addHotelTripElement($hotel, $hotelSearchParams)
     {
         $hotelTripElement = new HotelTripElement();
         $hotelTripElement->fillFromSearchParams($hotelSearchParams);
-        $hotelTripElement->hotel = $hotelTripElement;
+        $hotelTripElement->hotel = $hotel;
         Yii::app()->shoppingCart->put($hotelTripElement);
     }
 }
