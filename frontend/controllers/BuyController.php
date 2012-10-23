@@ -46,13 +46,12 @@ class BuyController extends Controller
     {
         $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchId);
         $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
-        CVarDumper::dump($flightSearchParams); die();
         if (($flightSearchParams) and ($flightSearchResult))
         {
             $this->results = $flightSearchResult;
             if (!$this->results)
             {
-                throw new CHttpException(500, 'Error while send Request To Hotel Provider');
+                throw new CHttpException(500, 'Error while send Request To Avia Provider');
                 Yii::app()->end();
             }
             foreach ($this->results as $result)
