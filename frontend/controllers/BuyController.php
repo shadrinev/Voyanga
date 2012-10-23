@@ -50,7 +50,7 @@ class BuyController extends Controller
         {
             foreach ($flightSearchResult as $result)
             {
-                if ($result['flightKey'] == $searchKey)
+                if ($result->flightKey == $searchKey)
                     $this->addFlightTripElement($result, $flightSearchParams);
             }
         }
