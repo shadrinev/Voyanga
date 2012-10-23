@@ -1,6 +1,6 @@
 .hotelTable, .panelTable, .constructorTable {
 	width: 100%;
-	height: 54px;
+	height: 64px;
 }
 .hotelTable tr td , .panelTable tr td , .constructorTable tr td {
 	vertical-align: middle;
@@ -305,12 +305,12 @@
 .how-many-man {
 	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
     float: left;
-    height: 52px;
+    height: 62px;
     margin-left: 20px;
     position: relative;
 }
 .how-many-man .btn {
-	width: 16px; height: 52px;
+	width: 16px; height: 62px;
 	background: url("../images/slice.png") no-repeat scroll right -1063px transparent;
 	float: right;
 	margin-left: 0px;
@@ -342,7 +342,7 @@
 	display: block;
 }
 .how-many-man .man {
-	width: 21px; height: 52px; float: left;
+	width: 21px; height: 62px; float: left;
 	background: url("../images/bg-man.png") no-repeat scroll center center transparent;
 }
 .how-many-man .count {
@@ -363,7 +363,7 @@
 	margin-top: -6px; margin-right: 4px;
 }
 .how-many-man .child {
-	width: 21px; height: 52px; float: left;
+	width: 21px; height: 62px; float: left;
 	background: url("../images/bg-child.png") no-repeat scroll center center transparent;
 }
 .how-many-man  .popup .adults, .how-many-man  .popup .childs, .how-many-man  .popup .small-childs {
@@ -554,7 +554,7 @@
 /* board */
 .panel-index {
 	bottom: 0px;
-    height: 54px;
+    height: 64px;
     min-width: 1000px;
     position: absolute;
     width: 100%;
@@ -562,7 +562,7 @@
 }
 .panel-index .sub-head {
 	background: none;
-    height: 54px;
+    height: 64px;
     padding-bottom: 0px;
 }
 
@@ -582,7 +582,7 @@
 }
 .fly-panel {
 	width: 100%;
-	height: 54px;
+	height: 64px;
 	position: relative;
 	background: url("../images/bg-board-small.png") repeat-x scroll 0 0 transparent;
 }
@@ -592,16 +592,16 @@
 .board {
 	background: url("../images/bg-board-small.png") repeat scroll 0 0 transparent;
     bottom: 371px;
-    min-height: 54px;
+    min-height: 64px;
     min-width: 1000px;
     position: absolute;
     width: 100%;
     box-shadow: 0 1px 5px #000000;
 }
 .leftPageBtn {
-	background: url("../images/navi-index-small.png") no-repeat scroll 0 0 transparent;
+	background: url("../images/navi-index.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
-    height: 54px;
+    height: 64px;
     left: 0;
     position: absolute;
     top: 0;
@@ -610,12 +610,12 @@
 }
 
 .leftPageBtn:hover {
-	background-position: 0px 0px;
+	background-position: 0px -70px;
 }
 .rightPageBtn {
-	background: url("../images/navi-index-small.png") no-repeat scroll -26px 0 transparent;
+	background: url("../images/navi-index.png") no-repeat scroll -26px 0 transparent;
     cursor: pointer;
-    height: 54px;
+    height: 64px;
     position: absolute;
     right: 0;
     top: 0;
@@ -623,12 +623,12 @@
     z-index: 5;
 }
 .rightPageBtn:hover {
-	background-position: -26px -0px;
+	background-position: -26px -70px;
 }
 
 .constructor-ico {
 	background: url("../images/constructor-ico.png") no-repeat scroll 0 0 transparent;
-    height: 54px;
+    height: 64px;
     left: 26px;
     position: absolute;
     top: 0;
@@ -636,19 +636,19 @@
 }	
 .constructor {
 	left: 0;
-    min-height: 54px;
+    min-height: 64px;
     position: absolute;
     top: 0;
     width: 100%;
 }
 .board-content {
-	height: 54px;
+	height: 64px;
     position: relative;
 }
 .panel {
 	margin: 0 auto;
 	width: 948px;
-	height: 54px;
+	height: 64px;
 	position: relative;
 }
 
@@ -662,7 +662,7 @@
 }
 .panelTable .how-many-man {
 	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
-    height: 52px;
+    height: 62px;
     display: inline-block;
     position: relative;
     float: none;
@@ -679,7 +679,7 @@
     margin-right: 18px;
 }
 .add-tour:hover {
-	background-position: -401px -1254px;
+	background-position: -401px -1264px;
 }
 
 .board-content.start .panelTable .contTD {
@@ -687,7 +687,7 @@
 }
 .deleteTab {
 	background: url(../images/delete-ico.png) no-repeat;
-	width: 70px; height: 54px;
+	width: 70px; height: 64px;
 	position: absolute;
 	left: 26px;
 	cursor: pointer;
@@ -728,7 +728,7 @@
 .panelTable .data.active .input-path {
     background-position: 0 -1260px;
     border-radius: 4px 0 0 4px;
-    width: 252px;
+    width: 262px;
 }
 .panelTable .data .date {
     display: none;
