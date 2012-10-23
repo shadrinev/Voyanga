@@ -205,4 +205,23 @@ class HotelTripElement extends TripElement
             $this->groupId = uniqid();
         return $this->groupId;
     }
+
+    public function fillFromSearchParams(HotelSearchParams $searchParams)
+    {
+        $this->city = $searchParams->city;
+        $this->checkIn = $searchParams->checkIn;
+        $this->checkOut = $searchParams->getCheckout();
+        $this->rooms = array();
+        foreach ($searchParams->rooms as $room)
+        {
+            $newRoom = array(
+                'adt' => $room->adultCount,
+                'chd' => $room->childCount,
+                'chdAge' => $room->childAge,
+                'cots' => $room->cots
+            );
+            $this->rooms[] = $newRoom;
+        }
+    }
+
 }

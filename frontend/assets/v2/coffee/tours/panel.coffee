@@ -153,7 +153,8 @@ class TourPanel extends SearchPanel
       el.find(".startInputTo").find("input").focus().select()
 
   hideFromCityInput: (panel, event) ->
-    elem = $('.from.active .second-path')
+    elem = $('.startInputTo .second-path')
+    console.log "Hide city input", elem
     if elem.parent().hasClass("overflow")
       elem.parent().animate
         width: "271px"

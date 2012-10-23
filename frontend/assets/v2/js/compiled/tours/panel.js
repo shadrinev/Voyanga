@@ -211,7 +211,8 @@ TourPanel = (function(_super) {
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
     var elem;
-    elem = $('.from.active .second-path');
+    elem = $('.startInputTo .second-path');
+    console.log("Hide city input", elem);
     if (elem.parent().hasClass("overflow")) {
       elem.parent().animate({
         width: "271px"
