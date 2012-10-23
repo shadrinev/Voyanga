@@ -91,7 +91,7 @@ class BuyController extends Controller
             $this->keys[$key] = 1;
             $flightTripElement->setGroupId($key);
         }
-        $flightTripElement->flightVoyage = $flight;
+        $flightTripElement->flightVoyage = new FlightVoyage($flight);
         Yii::app()->shoppingCart->put($flightTripElement);
     }
 
@@ -99,7 +99,7 @@ class BuyController extends Controller
     {
         $hotelTripElement = new HotelTripElement();
         $hotelTripElement->fillFromSearchParams($hotelSearchParams);
-        $hotelTripElement->hotel = $hotel;
+        $hotelTripElement->hotel = new Hotel($hotel);
         Yii::app()->shoppingCart->put($hotelTripElement);
     }
 }
