@@ -70,10 +70,10 @@ class HotelManager
             foreach ($objectVars as $objVar => $objProperties)
             {
                 if (is_object($additional->$objVar))
-                    $additional->$objVar = $this->prepare($additional->$objVar);
+                    $additional->$objVar = self::prepare($additional->$objVar);
                 elseif (is_array($additional->$objVar))
                 {
-                    $additional->$objVar = $this->prepare($additional->$objVar);
+                    $additional->$objVar = self::prepare($additional->$objVar);
                 }
                 elseif (is_string($additional->$objVar))
                     $additional->$objVar = strip_tags($additional->$objVar);
