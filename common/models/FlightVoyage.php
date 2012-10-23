@@ -288,6 +288,7 @@ class FlightVoyage extends CApplicationComponent
 
     public function getTime($departureCity = false)
     {
+        VarDumper::dump($departureCity);
         VarDumper::dump($this);
         if (!$departureCity)
             return strtotime(date('Y-m-d', $this->flights[0]->flightParts[0]->timestampBegin));
