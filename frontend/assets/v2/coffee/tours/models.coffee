@@ -75,7 +75,7 @@ class ToursAviaResultSet extends TourEntry
   toBuyRequest: =>
     result = {}
     result.type = 'avia'
-    result.searchId = @selection().searchId
+    result.searchId = @selection().cacheId
     # FIXME FIXME FXIME
     result.searchKey = @selection().flightKey()
     result.adults = @rawSP.adt
