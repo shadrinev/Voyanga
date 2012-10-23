@@ -53,7 +53,6 @@ class BuyController extends Controller
                 if ($result['flightKey'] == $searchKey)
                     $this->addFlightTripElement($result, $flightSearchParams);
             }
-            throw new CException(404, 'No item found');
         }
         else
             throw new CHttpException(500, 'Cache expired');
