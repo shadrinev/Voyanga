@@ -52,7 +52,7 @@ class BuyController extends Controller
             foreach ($flightSearchResult as $result)
             {
                 if ($result['flightKey'] == $searchKey)
-                    $this->addFlightTripElement($flightSearchParams);
+                    $this->addFlightTripElement($result, $flightSearchParams);
             }
             throw new CException(404, 'No item found');
         }
