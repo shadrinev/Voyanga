@@ -47,7 +47,8 @@ return array(
 
         'pCache' => array(
             'class' => 'site.common.extensions.MongoDbCache.MongoDbCache',
-            'mongoConnectionId' => 'mongodb'
+            'mongoConnectionId' => 'mongodb',
+            'hashKey' => false
         ),
 
         'flightBooker' => array(

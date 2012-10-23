@@ -36,9 +36,9 @@ class BuyController extends Controller
         foreach ($_POST['item'] as $item)
         {
             if ($item['type']=='avia')
-                $this->addFlightToTrip($item['searchId'], $item['searchKey']);
+                $this->addFlightToTrip($item['searchKey'], $item['searchId']);
             if ($item['type']=='hotel')
-                $this->addHotelToTrip($item['searchId'], $item['searchKey']);
+                $this->addHotelToTrip($item['searchKey'], $item['searchId']);
         }
     }
 
@@ -46,7 +46,7 @@ class BuyController extends Controller
     {
         $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchKey);
         $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchKey);
-        CVarDumper::dump($flightSearchParams); die();
+        CVarDumper::dump($flightSearchResult); die();
         if (($flightSearchParams) and ($flightSearchResult))
         {
             $this->results = $flightSearchResult;

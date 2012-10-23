@@ -269,7 +269,7 @@ class MongoDbCache extends CCache
 	 */
 	protected function flushValues()
 	{
-		$this->getCollection()->remove();
+		$this->getCollection()->remove(array());
 		return true;
 	}
 
