@@ -50,7 +50,8 @@ return array(
             'keyPrefix' => 'voyanga-',
             'hashKey' => false,
             'serializer' => array('igbinary_serialize', 'igbinary_unserialize'),
-            'cacheTableName' => 'tbl_cache'
+            'cacheTableName' => 'tbl_cache',
+            'connectionID' => 'db'
         ),
 
         'flightBooker' => array(
