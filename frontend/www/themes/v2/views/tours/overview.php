@@ -30,6 +30,7 @@ $images = 'themes/v2';
       <div class="hr-bg first">
         <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
+      <div class="calToursInner">
       <h3 class="calendarTitle">Календарь поездки</h3>
       <!-- CALENDAR -->
 
@@ -59,7 +60,8 @@ $images = 'themes/v2';
                 </div>
             </div>
         </div>
-
+      
+      </div>
       <br>
       <div class="hr-bg">
         <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">

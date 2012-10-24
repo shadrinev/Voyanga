@@ -1509,27 +1509,11 @@ input.hotel-input {
     padding-left: 5px;
     width: 100%;
 }
-.fly-ico {
-    background: url("../images/fly-ico-small.png") no-repeat scroll 0 0 transparent;
-    bottom: 0;
-    height: 54px;
-    left: 26px;
-    position: absolute;
-    width: 86px;
-}
-.hotel-ico {
-    background: url("../images/hotel-ico.png") no-repeat scroll 0 0 transparent;
-    bottom: 0;
-    height: 54px;
-    left: 26px;
-    position: absolute;
-    width: 86px;
-}
 .footer {
     background: url("../images/bg-footer.png") repeat-x scroll 0 0 transparent;
     bottom: 0;
     clear: both;
-    height: 33px;
+    height: 30px;
     left: 0;
     position: absolute;
     width: 100%;
@@ -1537,7 +1521,7 @@ input.hotel-input {
 }
 .foot-menu {
     background: url("../images/hr-hor-footer.png") no-repeat scroll right top transparent;
-    height: 33px;
+    height: 30px;
     position: absolute;
     right: 0;
     top: 0;
@@ -1545,8 +1529,8 @@ input.hotel-input {
 .foot-menu li {
     background: url("../images/hr-hor-footer.png") no-repeat scroll left top transparent;
     float: left;
-    height: 19px;
-    padding: 7px 20px;
+    height: 20px;
+    padding: 5px 20px;
     text-shadow: 0 1px 0 #202226;
 }
 .foot-menu li a {
@@ -1570,7 +1554,7 @@ input.hotel-input {
 .allTrip .block .when {
     background: url("../images/bg-hr-when-trip-all.png") repeat-y scroll 0 0 transparent;
     height: 100%;
-    left: 0;
+    left: -5px;
     position: absolute;
     top: 0;
     width: 65px;
@@ -1872,7 +1856,7 @@ input.hotel-input {
     z-index: 10;
 }
 .slideTours.small {
-	height: 142px;
+	height: 139px;
 }
 .slideTours.mapsView {
     background: url("../images/bg-index-slide.png") repeat-x scroll 0 10px transparent;

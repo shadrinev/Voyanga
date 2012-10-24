@@ -86,7 +86,6 @@ function ResizeCenterBlock() {
 
 		var var_descrIsset = var_descrItems.length > 0 && var_descrItems.is(':visible');
 		
-		console.log(widthBlock);
 		
 		if (! var_leftBlockIsset &&  ! var_filterBlockIsset && var_mainBlockIsset) {
 			//console.log("THIS IS === 1 === IF ELSE");
@@ -230,7 +229,6 @@ function ResizeCenterBlock() {
 				paddingRightSlide += 165;
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
-			console.log("=== 1 === "+widthBlock);
 				widthLeftBlock = Math.floor(220 + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - 220))) );
 				widthMainBlock = Math.floor(var_widthMiddleBlockMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthMiddleBlockMID - var_widthMiddleBlockMIN))) );
 				widthFilterBlock = Math.floor(var_widthFilterMIN + ((widthBlock - var_widthMIN) / (var_valueMIN / (var_widthFilterMID - var_widthFilterMIN))) );
@@ -302,7 +300,7 @@ function ResizeCenterBlock() {
 				paddingLeftInfo = '112px';
 			}
 			else if (widthBlock < var_widthMID && widthBlock >= var_widthMIN) {
-			console.log("=== 2 === "+widthBlock);
+			
 				widthLeftBlock = Math.floor( (220 + ( (widthBlock - var_widthMIN) / (var_valueMIN / (var_widthLeftBlockMID - 220)))) - 3 );
 
 				widthMainBlock = Math.floor(685 + ( (widthBlock - var_widthMIN) / (var_valueMIN / (910 - 685))) );
@@ -385,7 +383,8 @@ function ResizeCenterBlock() {
 			var_mainBlock.css('width', widthMainBlock+'px').css('margin-left', marginLeftMainBlock).css('margin-right', marginRightMainBlock);
 			var_content.css('width', widthContent+'px').css('margin-left', marginLeftContent).css('margin-right', marginRightContent);
 			var_allTripInfo.css('width', widthAllTripInfo);
-			$('.costItAll').css('padding-right', paddingLeftInfo);			
+			$('.costItAll').css('padding-right', paddingLeftInfo);	
+			$('.calToursInner').css('padding-right', paddingLeftInfo);		
 		}
 		if (var_filterBlockIsset) {
 			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);			
@@ -448,7 +447,6 @@ function smallTicketHeight() {
 	var var_recomendedContent = $('.recomended-content');
 	var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items .content');
 	var var_oneHeight = var_recomendedItems.height();
-	console.log(var_oneHeight);
 	//var_recomendedContent.find('.prices-of-3days .ticket').css('height', var_oneHeight +'px');
 	//var_recomendedItems.css('height', var_oneHeight +'px');
 	
@@ -681,7 +679,7 @@ function scrollValue(what) {
 	if (what == 'avia') {
 		var var_topFilterContent = 73;
 		if ($('.sub-head').css('margin-top') != '-67px') {
-			var diffrentScrollTop = 179;
+			var diffrentScrollTop = 173;
 		}
 		else {
 			var diffrentScrollTop = 110;
@@ -690,7 +688,7 @@ function scrollValue(what) {
 	else {
 		var var_topFilterContent = 23;
 		if ($('.sub-head').css('margin-top') != '-67px') {
-			var diffrentScrollTop = 131;
+			var diffrentScrollTop = 125;
 		}
 		else {
 			var diffrentScrollTop = 61 ;

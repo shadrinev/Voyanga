@@ -27,7 +27,7 @@ function slideToursSlide() {
 function CenterIMGResize() {
 	var HeightAllWindow = $(window).height();
 	if (HeightAllWindow < 800) {
-		HeightAllWindow = HeightAllWindow - 38 - 162;
+		HeightAllWindow = HeightAllWindow - 38 - 158;
 		$('.slideTours').addClass('small');
 	}
 	else {

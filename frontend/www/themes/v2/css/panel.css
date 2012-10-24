@@ -203,6 +203,7 @@
 	width: 341px;
 	position: relative;
 	height: 36px;
+	margin-top: 4px;
 }
 .hotelTable .tdCity div .input-path {
 	width: 322px;
@@ -250,7 +251,6 @@
     position: relative;
     width: 74px;
     vertical-align: middle;
-    margin-top: -1px;
 }
 .tumblr input {display: none;}
 .tumblr .one {
@@ -329,7 +329,7 @@
 	background: url("../images/bg-num-man.png") no-repeat scroll 0 0 transparent;
 }
 .how-many-man .popup {
-	position: absolute; bottom: -86px; left: 0px;
+	position: absolute; bottom: -87px; left: 0px;
 	background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
 	width: 194px; height: 85px;
 	border-right: 1px solid #b7b8bc;
@@ -353,7 +353,7 @@
     height: 33px;
     padding-left: 4px;
     padding-right: 8px;
-    padding-top: 19px;
+    padding-top: 23px;
     text-shadow: 0 1px 0 #111419;
 }
 .how-many-man .count span {
@@ -463,7 +463,7 @@
 	background: none;
 	width: 406px;
 	bottom: auto;
-	top: 69px;
+	top: 63px;
 }
 .number-hotel {
 	width: 198px;
@@ -564,42 +564,43 @@
 	background: none;
     height: 64px;
     padding-bottom: 0px;
+    margin-bottom: none;
 }
 
 .panel-index .sub-head .navi-l {
-	background: url(../images/navi-index.png) no-repeat 0 0; height: 70px; width: 26px; cursor: pointer;
+	background: url(../images/navindex.png) no-repeat 0 0; height: 64px; width: 26px; cursor: pointer;
 	position: absolute; bottom: 0px; left: 0px;
 }
 .panel-index .sub-head .navi-l:hover {
-	background-position: 0px -70px;
+	background-position: 0px -64px;
 }
 .panel-index .sub-head .navi-r {
-	background: url(../images/navi-index.png) no-repeat -26px 0; height: 70px; width: 26px; cursor: pointer;
+	background: url(../images/navindex.png) no-repeat -26px 0; height: 64px; width: 26px; cursor: pointer;
 	position: absolute; bottom: 0px; right: 0px;
 }
 .panel-index .sub-head .navi-r:hover {
-	background-position: -26px -70px;
+	background-position: -26px -64px;
 }
 .fly-panel {
 	width: 100%;
 	height: 64px;
 	position: relative;
-	background: url("../images/bg-board-small.png") repeat-x scroll 0 0 transparent;
+	background: url("../images/bgBoardSmall.png") repeat-x scroll 0 0 transparent;
 }
 
 
 
 .board {
-	background: url("../images/bg-board-small.png") repeat scroll 0 0 transparent;
-    bottom: 371px;
+	background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;
+    bottom: 366px;
     min-height: 64px;
     min-width: 1000px;
     position: absolute;
     width: 100%;
-    box-shadow: 0 1px 5px #000000;
+   /*  box-shadow: 0 0 5px #010101; */
 }
 .leftPageBtn {
-	background: url("../images/navi-index.png") no-repeat scroll 0 0 transparent;
+	background: url("../images/navindex.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     height: 64px;
     left: 0;
@@ -610,10 +611,10 @@
 }
 
 .leftPageBtn:hover {
-	background-position: 0px -70px;
+	background-position: 0px -0px;
 }
 .rightPageBtn {
-	background: url("../images/navi-index.png") no-repeat scroll -26px 0 transparent;
+	background: url("../images/navindex.png") no-repeat scroll -26px 0 transparent;
     cursor: pointer;
     height: 64px;
     position: absolute;
@@ -623,7 +624,7 @@
     z-index: 5;
 }
 .rightPageBtn:hover {
-	background-position: -26px -70px;
+	background-position: -26px -0px;
 }
 
 .constructor-ico {
@@ -642,7 +643,7 @@
     width: 100%;
 }
 .board-content {
-	height: 64px;
+	height: 70px;
     position: relative;
 }
 .panel {
@@ -679,7 +680,7 @@
     margin-right: 18px;
 }
 .add-tour:hover {
-	background-position: -401px -1264px;
+	background-position: -401px -1254px;
 }
 
 .board-content.start .panelTable .contTD {
@@ -822,4 +823,20 @@
 }
 .btnTD {
 	width: 90px;
+}
+.fly-ico {
+    background: url("../images/fly-ico-small.png") no-repeat scroll 0 0 transparent;
+    bottom: 0;
+    height: 64px;
+    left: 26px;
+    position: absolute;
+    width: 86px;
+}
+.hotel-ico {
+    background: url("../images/hotel-ico.png") no-repeat scroll 0 0 transparent;
+    bottom: 0;
+    height: 64px;
+    left: 26px;
+    position: absolute;
+    width: 86px;
 }
