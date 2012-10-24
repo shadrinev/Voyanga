@@ -385,7 +385,8 @@ function ResizeCenterBlock() {
 			var_mainBlock.css('width', widthMainBlock+'px').css('margin-left', marginLeftMainBlock).css('margin-right', marginRightMainBlock);
 			var_content.css('width', widthContent+'px').css('margin-left', marginLeftContent).css('margin-right', marginRightContent);
 			var_allTripInfo.css('width', widthAllTripInfo);
-			$('.costItAll').css('padding-right', paddingLeftInfo);			
+			$('.costItAll').css('padding-right', paddingLeftInfo);	
+			$('.calToursInner').css('padding-right', paddingLeftInfo);		
 		}
 		if (var_filterBlockIsset) {
 			var_filterBlock.css('width', widthFilterBlock+'px').css('margin-right', marginRightFilterBlock);			
