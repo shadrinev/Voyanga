@@ -18,10 +18,13 @@
     width: 100%;
     z-index: 1;
 }
+.panel-index .innerCalendar {
+	height: 29px;
+}
 .innerCalendar {
 
     margin: 0 auto;
-    padding-top: 15px;
+    padding-top: 12px;
     position: relative;
 }
 .innerCalendar h1 {
@@ -57,7 +60,10 @@
     text-align: right;
     text-shadow: 0 1px 0 #FFFFFF;
     text-transform: lowercase;
-    width: 14.28%;
+    width: 14.2%;
+}
+.allTourCal .weekDayVoyanga {
+	width: 14.28%;
 }
 .weekDayVoyanga:last-child {
 	margin-right: -10px;
@@ -94,7 +100,7 @@
     white-space: nowrap;
 }
 .dayCellVoyanga {
-    width: 14.28%;
+    width: 14.2%;
     height: 48px;
     display: inline-block;
     border-right: 1px #d7d7d8 solid;
@@ -104,6 +110,9 @@
     font-family: Tahoma, Arial;
     position: relative;
     cursor: pointer;
+}
+.allTourCal .dayCellVoyanga {
+	width: 14.28%;
 }
 .innerDayCellVoyanga {
 	border: 1px solid #D7D7D8;
@@ -338,37 +347,6 @@
     width: 16px;
     z-index: 210;
 }
-/*
-.startYourTours, .endYourTours {
-	display: none;
-}
-*/
-/*
-.flyTrip.startPoint.fd2 .startYourTours {
-	left: 0%;
-	display: block;
-}
-.flyTrip.startPoint.fd2 .startYourTours {
-	left: 14.28%;
-	display: block;
-}
-.flyTrip.startPoint.fd3 .startYourTours {
-	left: 28.56%;
-	display: block;
-}
-.flyTrip.endPoint.fd1 .endYourTours {
-	right: 0%;
-	display: block;
-}
-.flyTrip.endPoint.fd2 .endYourTours {
-	right: 14.28%;
-	display: block;
-}
-.flyTrip.endPoint.fd3 .endYourTours {
-	right: 28.56%;
-	display: block;
-}
-*/
 .yourTrip {
 	height: 106px;
     padding: 0px;
@@ -417,7 +395,10 @@
     top: 0;
     z-index: 209;
     
-    width: 14.28%;
+    width: 14.2%;
+}
+.allTourCal .flyTrip {
+	width: 14.28%;
 }
 .tripFlyAll {
 	margin-top: 15px;

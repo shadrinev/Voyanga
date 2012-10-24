@@ -679,7 +679,7 @@ function scrollValue(what) {
 	if (what == 'avia') {
 		var var_topFilterContent = 73;
 		if ($('.sub-head').css('margin-top') != '-67px') {
-			var diffrentScrollTop = 179;
+			var diffrentScrollTop = 173;
 		}
 		else {
 			var diffrentScrollTop = 110;
@@ -688,7 +688,7 @@ function scrollValue(what) {
 	else {
 		var var_topFilterContent = 23;
 		if ($('.sub-head').css('margin-top') != '-67px') {
-			var diffrentScrollTop = 131;
+			var diffrentScrollTop = 125;
 		}
 		else {
 			var diffrentScrollTop = 61 ;
