@@ -597,7 +597,7 @@
     min-width: 1000px;
     position: absolute;
     width: 100%;
-    box-shadow: 0 0 5px #010101;
+   /*  box-shadow: 0 0 5px #010101; */
 }
 .leftPageBtn {
 	background: url("../images/navindex.png") no-repeat scroll 0 0 transparent;

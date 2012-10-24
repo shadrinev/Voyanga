@@ -423,6 +423,21 @@
     white-space: nowrap;
     width: 32px;
     z-index: 209;
+    overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.flyTrip.fd1 .startNameCity {
+	width: 60px;
+}
+.flyTrip.fd1 .endNameCity {
+	width: 60px;
+}
+.flyTrip.fd2 .startNameCity {
+	width: 107px;
+}
+.flyTrip.fd2 .endNameCity {
+	width: 107px;
 }
 .flyTrip .endNameCity {
 	color: #252628;
@@ -437,6 +452,9 @@
     white-space: nowrap;
     width: 32px;
     z-index: 209;
+    overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .tripFlyAll .jetFly {
 	background: url("../images/trip-jet-fly.png") no-repeat scroll 0 0 transparent;

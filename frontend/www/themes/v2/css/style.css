@@ -1554,7 +1554,7 @@ input.hotel-input {
 .allTrip .block .when {
     background: url("../images/bg-hr-when-trip-all.png") repeat-y scroll 0 0 transparent;
     height: 100%;
-    left: 0;
+    left: -5px;
     position: absolute;
     top: 0;
     width: 65px;
