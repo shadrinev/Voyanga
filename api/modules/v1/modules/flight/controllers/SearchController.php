@@ -50,15 +50,7 @@ class SearchController extends ApiController
         {
             $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
             $this->results = $variants;
-            $cacheId = $this->storeToCache($flightSearchParams);
-            $newVariants = array();
-            foreach ($variants as $variant)
-            {
-                $el = $variant;
-                $el['cacheId'] = $cacheId;
-                $newVariants[] = $el;
-            }
-            $result['flights']['flightVoyages'] = $newVariants;
+            $result['flights']['flightVoyages'] = $this->results;
             $result['searchParams'] = $flightSearchParams->getJsonObject();
             $this->sendWithCorrectFormat($format, $result);
         }
@@ -155,7 +147,7 @@ class SearchController extends ApiController
         return $newFlights;
     }
 
-    private function inject($flights)
+    private function inject($flights, $cacheId)
     {
         $newFlights = array();
         $searchId = $flights['searchId'];
@@ -164,6 +156,7 @@ class SearchController extends ApiController
         {
             $newFlight = $flight;
             $newFlight['searchId'] = $searchId;
+            $newFlight['cacheId'] = $cacheId;
             $newFlights[] = $newFlight;
         }
         return $newFlights;
@@ -172,8 +165,9 @@ class SearchController extends ApiController
     private function doFlightSearch($flightSearchParams)
     {
         $fs = new FlightSearch();
-        $variants = $fs->sendRequest($flightSearchParams, false);
-        $results = $this->inject($variants->getJsonObject());
+        $this->results = $fs->sendRequest($flightSearchParams, false);
+        $cacheId = $this->storeToCache($flightSearchParams);
+        $results = $this->inject($this->results->getJsonObject(), $cacheId);
         return $results;
     }
 

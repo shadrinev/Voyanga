@@ -12,7 +12,7 @@ class BuyController extends Controller
     public function actions()
     {
         return array(
-            'showTrip' => array('class'=>'site.common.modules.tour.actions.constructor.ShowTripAction'),
+#            'showTrip' => array('class'=>'site.common.modules.tour.actions.constructor.ShowTripAction'),
             'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
             'startPayment' => array('class'=>'site.common.modules.tour.actions.constructor.StartPaymentAction'),
             'getPayment' => array('class'=>'site.common.modules.tour.actions.constructor.GetPaymentAction'),
@@ -27,7 +27,7 @@ class BuyController extends Controller
     {
         $this->layout = 'static';
         $this->addItems();
-        $this->redirect($this->controller->createUrl('showTrip'));
+        $this->redirect('buy/makeBooking');
     }
 
     public function addItems()
@@ -46,15 +46,13 @@ class BuyController extends Controller
     {
         $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchId);
         $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
-        CVarDumper::dump($flightSearchResult);
         if (($flightSearchParams) and ($flightSearchResult))
         {
-            foreach ($flightSearchResult as $result)
+            foreach ($flightSearchResult->flightVoyages as $result)
             {
-                if ($result['flightKey'] == $searchKey)
+                if ($result->flightKey == $searchKey)
                     $this->addFlightTripElement($result, $flightSearchParams);
             }
-            throw new CException(404, 'No item found');
         }
         else
             throw new CHttpException(500, 'Cache expired');
@@ -66,14 +64,14 @@ class BuyController extends Controller
         $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $searchId);
         if (($hotelSearchParams) and ($hotelSearchResult))
         {
-            foreach ($hotelSearchResult as $result)
+            foreach ($hotelSearchResult->hotels as $result)
             {
-                if ($result['resultId'] == $searchKey)
+                if ($result->hotelId == $searchKey)
                     $this->addHotelTripElement($result, $hotelSearchParams);
             }
-            throw new CException(404, 'No item found');
         }
-        throw new CException(500, 'Cache expired');
+        else
+            throw new CException(500, 'Cache expired');
     }
 
     public function addFlightTripElement($flight, FlightSearchParams $flightSearchParams)

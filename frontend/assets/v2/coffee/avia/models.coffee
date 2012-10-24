@@ -500,12 +500,9 @@ class AviaResultSet
       selection = ctx
     result = {}
     result.type = 'avia'
-    result.searchId = selection.searchId
+    result.searchId = selection.cacheId
     # FIXME FIXME FXIME
     result.searchKey = selection.flightKey()
-    result.adults = @rawSP.adt
-    result.children = @rawSP.chd
-    result.infants = @rawSP.inf
     Utils.toBuySubmit [result]
 
 

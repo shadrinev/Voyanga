@@ -50,7 +50,7 @@ class SearchController extends ApiController
             Yii::app()->end();
         }
 
-        $cacheId = $this->storeToCache($hotelSearchParams);
+        $cacheId = md5(serialize($hotelSearchParams));
 
         $this->results['cacheId'] = $cacheId;
         $this->results['searchParams'] = $hotelSearchParams->getJsonObject();
@@ -108,13 +108,4 @@ class SearchController extends ApiController
         $this->sendError(200, 'No hotel with given hotelId found');
     }
 
-    private function storeToCache($hotelSearchParams)
-    {
-        $cacheId = md5(serialize($hotelSearchParams));
-
-        Yii::app()->pCache->set('hotelSearchResult' . $cacheId, $this->results, appParams('hotel_search_cache_time'));
-        Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
-
-        return $cacheId;
-    }
 }
