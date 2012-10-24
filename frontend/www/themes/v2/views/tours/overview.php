@@ -54,9 +54,14 @@ $images = 'themes/v2';
                         </div>
                     </div>
                 </div>
-                <div class="monthLineVoyanga">
-                    <div class="knobUpAllMonth"></div>
-                    <div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div>
+                <div class="monthLineWrapper" style="position: relative;width: 100%">
+                    <div class="monthLineVoyangaYear">
+
+                    </div>
+                    <div class="monthLineVoyanga">
+                        <div class="knobUpAllMonth"></div>
+                        <div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div>
+                    </div>
                 </div>
             </div>
         </div>
