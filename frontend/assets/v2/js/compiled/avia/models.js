@@ -684,11 +684,8 @@ AviaResultSet = (function() {
     }
     result = {};
     result.type = 'avia';
-    result.searchId = selection.searchId;
+    result.searchId = selection.cacheId;
     result.searchKey = selection.flightKey();
-    result.adults = this.rawSP.adt;
-    result.children = this.rawSP.chd;
-    result.infants = this.rawSP.inf;
     return Utils.toBuySubmit([result]);
   };
 

@@ -9,6 +9,7 @@ class MakeBookingAction extends CAction
 {
     public function run()
     {
+        $this->getController()->layout = 'static';
         $dataProvider = new TripDataProvider();
         $items = $dataProvider->getSortedCartItems();
         $elements = array();
