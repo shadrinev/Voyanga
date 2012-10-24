@@ -479,7 +479,50 @@ class ToursResultSet
     window.setTimeout(
       ()=>
         console.log('after render tours all tour page')
-        VoyangaCalendarTimeline.calendarEvents = [
+        console.log(@data());
+        calendarEvents = []
+        for resSet in @data()
+          if resSet.isAvia()
+            console.log('avia',resSet.data.results(),resSet.rawSP);
+            flights = []
+            for dest in resSet.rawSP.destinations
+              flight = {type: 'flight',description:  dest.departure+' || ' + dest.arrival, cityFrom: dest.departure_iata, cityTo: dest.arrival_iata}
+              flight.dayStart = moment(dest.date)._d
+              flight.dayEnd = moment(dest.date)._d
+              flights.push flight
+
+            if resSet.selection()
+              console.log('select:',resSet.selection())
+              aviaRes = resSet.selection()
+              flights[0].dayEnd = aviaRes.arrivalDate();
+              if aviaRes.roundTrip
+                flights[1].dayEnd = aviaRes.rtArrivalDate();
+              console.log('city:',aviaRes.arrivalCity(),'date:',aviaRes.arrivalDate());
+            for flight in flights
+              calendarEvents.push flight
+          if resSet.isHotel()
+            console.log('hotel',resSet.data.results(),resSet.rawSP);
+            checkIn = moment(resSet.rawSP.checkIn).add('h',8);
+            checkOut = moment(resSet.rawSP.checkIn).add('d',resSet.rawSP.duration);
+
+            hotelEvent = {dayStart: checkIn._d,dayEnd: checkOut._d,type: 'hotel',description:  '', city: resSet.rawSP.city}
+            if resSet.selection()
+              console.log('select:',resSet.selection())
+              hotelEvent.description = resSet.selection().hotel.hotelName
+
+            calendarEvents.push hotelEvent
+        calendarEvents.sort(
+          (left,right)->
+            if left.dayStart > right.dayStart
+              return 1
+            if left.dayStart < right.dayStart
+              return -1
+            return 0
+        )
+        console.log(calendarEvents)
+
+
+        ###VoyangaCalendarTimeline.calendarEvents = [
           {dayStart: Date.fromIso('2012-10-23'),dayEnd: Date.fromIso('2012-10-23'),type:'flight',color:'red',description:'Москва || Санкт-Петербург',cityFrom:'MOW',cityTo:'LED'},
           {dayStart: Date.fromIso('2012-10-23'),dayEnd: Date.fromIso('2012-10-28'),type:'hotel',color:'red',description:'Californication Hotel2',city:'LED'},
           {dayStart: Date.fromIso('2012-10-28'),dayEnd: Date.fromIso('2012-10-28'),type:'flight',color:'red',description:'Санкт-Петербург || Москва',cityFrom:'LED',cityTo:'MOW'},
@@ -490,7 +533,9 @@ class ToursResultSet
           {dayStart: Date.fromIso('2012-11-28'),dayEnd: Date.fromIso('2012-11-28'),type:'flight',color:'red',description:'Санкт-Петербург || Амстердам',cityFrom:'LED',cityTo:'AMS'},
           {dayStart: Date.fromIso('2012-11-28'),dayEnd: Date.fromIso('2012-11-28'),type:'flight',color:'red',description:'Амстердам || Санкт-Петербург',cityFrom:'AMS',cityTo:'LED'},
           {dayStart: Date.fromIso('2012-11-28'),dayEnd: Date.fromIso('2012-11-28'),type:'flight',color:'red',description:'Санкт-Петербург || Москва',cityFrom:'LED',cityTo:'MOW'},
-        ]
+        ]###
+        VoyangaCalendarTimeline.calendarEvents = calendarEvents;
+        VoyangaCalendarTimeline.jObj = '#voyanga-calendar-timeline'
         VoyangaCalendarTimeline.init()
       ,1000
     )

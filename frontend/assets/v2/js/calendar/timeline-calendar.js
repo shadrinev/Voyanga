@@ -32,7 +32,7 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
             var newHtml = '<div class="monthNameVoyanga" style="left: '+leftPercent+'%; width: '+widthPercent+'%"><div class="monthWrapper">'+this.monthArray[i].name+'</div></div>';
             this.jObj.find('.monthLineVoyanga').append(newHtml);
         }
-        this.knobWidth = Math.round((this.linesWidth / this.totalLines)*10000)/100;
+        this.knobWidth = Math.round(((this.linesWidth - 1) / this.totalLines)*10000)/100;
         this.jObj.find('.knobVoyanga').css('width',this.knobWidth + '%');
         this.jObj.find('.knobUpAllMonth').css('width',this.knobWidth + '%');
         //VoyangaCalendar.slider.width = VoyangaCalendar.jObj.find('.monthLineVoyanga').width();
@@ -41,8 +41,16 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
 
         this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);});
         //console.log('set wheel actions2');
-        this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);});
-        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);});
+        this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);
+            if(e.preventDefault)
+                e.preventDefault();
+            e.returnValue = false;
+        });
+        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);
+            if (e.preventDefault)
+                e.preventDefault();
+            e.returnValue = false;
+        });
         this.jObj.find('.monthLineVoyanga').mousedown(function(e){self.mouseDown(e);});
         this.jObj.find('.monthLineVoyanga').mouseup(function(e){self.mouseUp(e);});
         //VoyangaCalendar.jObj.find('.monthLineVoyanga .monthNameVoyanga').mouseup(VoyangaCalendar.slider.monthMouseUp);
@@ -175,7 +183,10 @@ VoyangaCalendarTimeline.onCellClick = function(obj,e){
     }*/
 }
 VoyangaCalendarTimeline.generateGrid = function(){
-    var firstDay = new Date();
+    var startMoment = moment(this.minDate);
+    var endMoment = moment(this.maxDate);
+    console.log('dates',this.minDate,this.maxDate);
+    var firstDay = this.minDate;
     //var firstDay = new Date('2012-04-10');
     var dayToday = new Date();
     dayToday.setMinutes(0,0,0);
@@ -186,14 +197,25 @@ VoyangaCalendarTimeline.generateGrid = function(){
 
 
     var startMonth = firstDay.getMonth();
-    var tmpDate = new Date(firstDay.toDateString());
-    tmpDate.setDate(1);
+    var tmpDate = moment(startMoment)._d;
+    //var diff = endMoment.diff(startMoment,'days');
+    var weekDiff  = this.getDay(this.maxDate) - this.getDay(this.minDate);
+    var dateDiff = endMoment.diff(startMoment,'days');
+    console.log('diff',weekDiff,dateDiff);
+    if(weekDiff == dateDiff){
+        console.log(tmpDate);
+        tmpDate.setDate(tmpDate.getDate() - 7);
+        console.log(tmpDate);
+    }
+
+    //tmpDate.setDate(1);
     var weekDay = this.getDay(tmpDate);
     //console.log(weekDay);
     var startDate = firstDay.getDate();
     var startYear = firstDay.getFullYear();
     //console.log(tmpDate);
-    tmpDate.setDate(-this.getDay(tmpDate) + 1);
+    tmpDate.setDate(tmpDate.getDate()-this.getDay(tmpDate) + 1);
+
     //tmpDate.setDate(0);
     //console.log(tmpDate);
     var needStop = false;
@@ -219,10 +241,10 @@ VoyangaCalendarTimeline.generateGrid = function(){
         }
         newHtml = newHtml + '</div>';
         this.jObj.find('.calendarDIVVoyanga').append(newHtml);
-        if(tmpDate.getFullYear() > startYear){
-            if(tmpDate.getMonth() >= startMonth ){
+        if(tmpDate > this.maxDate && lineNumber >= 2){
+            //if(tmpDate.getMonth() >= startMonth ){
                 needStop = true;
-            }
+            //}
         }
         //if(lineNumber > 4){
         //needStop = true;
@@ -230,7 +252,8 @@ VoyangaCalendarTimeline.generateGrid = function(){
         lineNumber++;
     }
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
-    if((lineNumber -lastLineMonth) < 2){
+    //console.log(this.slider.monthArray);
+    if((lineNumber -lastLineMonth) < 2 && this.slider.monthArray.length > 9){
         this.slider.monthArray.pop();
     }
     /*this.jObj.find('.dayCellVoyanga').on('mouseover',function (e) {var obj = this; self.onCellOver(obj,e);});
@@ -361,6 +384,7 @@ VoyangaCalendarTimeline.generateFlightDiv = function (FlightEvent) {
     }
     var deltaLeft = (dayWidth / FlightEvent.startInfo.count)*(0.5 + FlightEvent.startInfo.position);
     var deltaRight = (totalDays-1)*dayWidth + (dayWidth / FlightEvent.endInfo.count)*(0.5 + FlightEvent.endInfo.position);
+    console.log('flightDiv',deltaLeft,deltaRight)
     var deltaWidth = deltaRight - deltaLeft;
     if(FlightEvent.startInfo.count == 3){
         names[0] = FlightEvent.cityFrom;
@@ -494,9 +518,13 @@ VoyangaCalendarTimeline.generateEvents = function () {
                     pointsObject.endPoints.push(eInd);
                     this.calendarEvents[eInd].endInfo.point = false;
                 }else if(!endCity){
-                    endCity = this.calendarEvents[eInd].cityTo;
-                    pointsObject.endPoints.push(eInd);
-                    this.calendarEvents[eInd].endInfo.point = true;
+                    if(centerCities.length == 0 && startCity == this.calendarEvents[eInd].cityTo){
+                        pointsObject.startPoints.push(eInd);
+                    }else{
+                        endCity = this.calendarEvents[eInd].cityTo;
+                        pointsObject.endPoints.push(eInd);
+                        this.calendarEvents[eInd].endInfo.point = true;
+                    }
                 }else if(startCity && this.calendarEvents[eInd].cityTo == startCity){
                     pointsObject.startPoints.push(eInd);
                     this.calendarEvents[eInd].endInfo.point = false;
@@ -521,15 +549,25 @@ VoyangaCalendarTimeline.generateEvents = function () {
             var endPosition = count;
             count++;
         }
+        var needShowCity = true;
+        var needShowPoint = startShowPoint;
         for(var iInd in pointsObject.startPoints){
             sInd = pointsObject.startPoints[iInd];
             if(this.calendarEvents[sInd].type == 'hotel'){
                 this.calendarEvents[sInd].endInfo.count = count;
                 this.calendarEvents[sInd].endInfo.position = startPosition;
             }else{
-                this.calendarEvents[sInd].startInfo.count = count;
-                this.calendarEvents[sInd].startInfo.position = startPosition;
-                this.calendarEvents[sInd].startInfo.point = startShowPoint;
+                if (this.calendarEvents[sInd].startInfo.dateLabel == dateLabel ){
+                    var infoKey = 'startInfo';
+                }else{
+                    var infoKey = 'endInfo';
+                }
+                this.calendarEvents[sInd][infoKey].count = count;
+                this.calendarEvents[sInd][infoKey].position = startPosition;
+                this.calendarEvents[sInd][infoKey].point = needShowPoint;
+                this.calendarEvents[sInd][infoKey].city = needShowCity;
+                needShowCity = false;
+                needShowPoint = false;
             }
         }
         var needShowCity = centerCities.length == 1;
@@ -557,6 +595,8 @@ VoyangaCalendarTimeline.generateEvents = function () {
             needShowPoint = false;
             needShowCity = false;
         }
+        var needShowCity = true;
+        var needShowPoint = endShowPoint;
         for(var iInd in pointsObject.endPoints){
             sInd = pointsObject.endPoints[iInd];
             if(this.calendarEvents[sInd].type == 'hotel'){
@@ -565,7 +605,10 @@ VoyangaCalendarTimeline.generateEvents = function () {
             }else{
                 this.calendarEvents[sInd].endInfo.count = count;
                 this.calendarEvents[sInd].endInfo.position = endPosition;
-                this.calendarEvents[sInd].endInfo.point = endShowPoint;
+                this.calendarEvents[sInd].endInfo.point = needShowPoint;
+                this.calendarEvents[sInd].endInfo.city = needShowCity;
+                needShowPoint = false;
+                needShowCity = false;
             }
         }
 
@@ -701,12 +744,27 @@ VoyangaCalendarTimeline.generateEvents = function () {
 
 VoyangaCalendarTimeline.prepareEvents = function () {
     console.log(this.calendarEvents);
+    var self = this;
     $.each(this.calendarEvents, function (ind, el) {
         el.dayStart = Date.fromIso(el.dayStart);
         el.dayEnd = Date.fromIso(el.dayEnd);
+        if(!self.minDate){
+            self.minDate = el.dayStart;
+        }else if(self.minDate > el.dayStart){
+            self.minDate = el.dayStart;
+        }
+        if(!self.maxDate){
+            self.maxDate = el.dayEnd;
+        }else if(self.maxDate < el.dayEnd){
+            self.maxDate = el.dayEnd;
+        }
         if(el.type == 'flight'){
-            el.startInfo = {point: true,city:true,count: 1,position:0};
-            el.endInfo = {point: true,city:true,count: 1,position:0};
+            var dt = el.dayStart;
+            var dateLabel = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
+            el.startInfo = {point: true,city:true,count: 1,position:0,dateLabel: dateLabel};
+            var dt = el.dayEnd;
+            var dateLabel = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
+            el.endInfo = {point: true,city:true,count: 1,position:0,dateLabel: dateLabel};
             el.sortInd = ind;
         }else{
             el.startInfo = {count: 1,position:0};
@@ -716,6 +774,8 @@ VoyangaCalendarTimeline.prepareEvents = function () {
 }
 
 VoyangaCalendarTimeline.init = function () {
+    VoyangaCalendarTimeline.minDate = false;
+    VoyangaCalendarTimeline.maxDate = false;
     this.prepareEvents();
     this.slider.jObj = this.jObj;
     if(typeof this.jObj == 'string'){

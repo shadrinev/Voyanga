@@ -33,7 +33,7 @@ $images = 'themes/v2';
       <h3 class="calendarTitle">Календарь поездки</h3>
       <!-- CALENDAR -->
 
-        <div class="innerCalendar allTourCal">
+        <div class="allTourCal">
             <div id='voyanga-calendar-timeline' class="hotel">
                 <div class="weekDaysVoyanga">
                     <div class="weekDaysVoyangaInner">

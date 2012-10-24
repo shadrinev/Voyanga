@@ -298,7 +298,7 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
         $(window).on('resize',function(){self.onresize();});
         $(window).load(function(){self.onresize();self.knobMove();});
 
-        this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);});
+        this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);return false});
         //console.log('set wheel actions');
         this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);});
         this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);});
