@@ -432,12 +432,15 @@
 }
 .flyTrip.fd1 .endNameCity {
 	width: 60px;
+	text-align: left;
+	right: -53px;
 }
 .flyTrip.fd2 .startNameCity {
 	width: 107px;
 }
 .flyTrip.fd2 .endNameCity {
 	width: 107px;
+	right: -80px;
 }
 .flyTrip .endNameCity {
 	color: #252628;
