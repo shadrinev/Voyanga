@@ -68,7 +68,7 @@ $images = 'themes/v2';
       
       </div>
       <br>
-      <div class="hr-bg">
+      <div class="hr-bg" data-bind="visible: someSegmentsSelected">
         <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
       <div class="costItAll" data-bind="visible: someSegmentsSelected">
@@ -133,7 +133,7 @@ $images = 'themes/v2';
 	<tr data-bind="if: isAvia()">
 	  <td class="text"><span data-bind="text:selection()?'Или другой':'Выберите'"></span> вариант среди: <span class="f19" data-bind="text:numAirlines()">19</span> авиакомпаний, от <span class="f19"  data-bind="html: minPriceHtml()"></span> до <span class="f19"  data-bind="html: maxPriceHtml()"></span></td>
 	  <td class="buttons">
-            <a class="btn-cost" href="#" data-bind="click: $parents[1].setActive">
+            <a class="btnBlue" href="#" data-bind="click: $parents[1].setActive">
               <span class="l"></span>
               <span class="text">Все авиабилеты</span>
             </a>
@@ -142,7 +142,7 @@ $images = 'themes/v2';
 	<tr data-bind="if: isHotel()">
 	  <td class="text"><span data-bind="text:selection()?'Или другой':'Выберите'"></span> вариант среди: <span class="f19" data-bind="text:numHotels()">189</span> гостиниц, от <span class="f19" data-bind="html: minPriceHtml()"></span> до <span class="f19" data-bind="html: maxPriceHtml()"></span></td>
 	  <td class="buttons">
-            <a class="btn-cost hotel" href="#" data-bind="click: $parents[1].setActive">
+            <a class="btnOrang" href="#" data-bind="click: $parents[1].setActive">
               <span class="l"></span>
               <span class="text">Все отели</span>
             </a>
