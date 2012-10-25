@@ -526,7 +526,7 @@
 .allTourCal .monthLineVoyanga {
     position: absolute;
     top: 0;
-    z-index: 12;
+    z-index: 9;
 }
 .z-indexTop {
 	z-index: 995;
