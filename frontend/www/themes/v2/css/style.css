@@ -2427,10 +2427,10 @@ input.hotel-input {
 }
 
 .infoPassengers .tdLastname {
-	width: 206px;
+	width: 175px;
 }
 .infoPassengers .tdLastname input[type='text'] {
-	width: 187px;
+	width: 169px;
 	padding-left: 5px;
 	padding-right: 5px;
 	background-position: -147px 0px;
@@ -2441,14 +2441,14 @@ input.hotel-input {
 }
 
 .infoPassengers .tdDocumentNumber {
-	width: 140px;
+	width: 165px;
 }
-.infoPassengers .tdDocumentNumber input[type='text'] {
-	width: 120px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-position: -690px 0px;
-	text-transform: uppercase;
+.infoPassengers .tdDocumentNumber input[type="text"] {
+    background-position: -662px 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-transform: uppercase;
+    width: 148px;
 }
 .infoPassengers .tdDocumentNumber input[type='text']:focus {
 	background-position: -690px -33px;
@@ -2462,30 +2462,40 @@ input.hotel-input {
 .infoPassengers .dd {
 	width: 34px;
 	text-align: center;
-	background-position: -431px 0px !important;
+	background-position: -403px 0px !important;
 	float: left;
 	font-size: 12px;
 }
 .infoPassengers .dd:focus {
-	background-position: -431px -33px !important;
+	background-position: -403px -33px !important;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	body:first-of-type .infoPassengers .dd {
+		width: 32px;
+	}
 }
 .infoPassengers .mm {
 	width: 33px;
 	text-align: center;
-	background-position: -465px 0px !important;
+	background-position: -437px 0px !important;
 	float: left;
 }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	body:first-of-type .infoPassengers .mm {
+		width: 31px;
+	}
+}
 .infoPassengers .mm:focus {
-	background-position: -465px -33px !important;
+	background-position: -437px -33px !important;
 }
 .infoPassengers .yy {
-	background-position: -498px 0 !important;
+	background-position: -470px 0 !important;
     float: left;
     text-align: center;
     width: 53px;
 }
 .infoPassengers .yy:focus {
-	background-position: -498px -33px !important;
+	background-position: -470px -33px !important;
 }
 .infoPassengers .tdNationality {
 	width: 129px;
@@ -2494,11 +2504,11 @@ input.hotel-input {
 	width: 109px;
 	padding-left: 5px;
 	padding-right: 5px;
-	background-position: -561px 0px;
+	background-position: -533px 0px;
 	text-transform: uppercase;
 }
 .infoPassengers .tdNationality input[type='text']:focus {
-	background-position: -561px -33px;
+	background-position: -533px -33px;
 }
 .tdSex {
 	width: 77px;
@@ -2506,7 +2516,7 @@ input.hotel-input {
 .tdSex .male {
 	width: 34px;
 	height: 33px;
-	background: url("../images/bg-input.png") no-repeat -354px 0px transparent; 
+	background: url("../images/bg-input.png") no-repeat -326px 0px transparent; 
 	cursor: pointer;
 	float: left;
 }
@@ -2514,7 +2524,7 @@ input.hotel-input {
 	background-position: -354px -66px;
 }
 .tdSex .male.active {
-	background-position: -354px -33px;
+	background-position: -326px -33px;
 }
 .tdSex .male.active:hover {
 	background-position: -354px -99px;
@@ -2522,7 +2532,7 @@ input.hotel-input {
 .tdSex .female {
 	width: 34px;
 	height: 33px;
-	background: url("../images/bg-input.png") no-repeat -388px 0px transparent; 
+	background: url("../images/bg-input.png") no-repeat -360px 0px transparent; 
 	cursor: pointer;
 	float: left;
 }
@@ -2530,7 +2540,7 @@ input.hotel-input {
 	background-position: -388px -66px;
 }
 .tdSex .female.active {
-	background-position: -388px -33px;
+	background-position: -360px -33px;
 }
 .tdSex .female.active:hover {
 	background-position: -388px -99px;

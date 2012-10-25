@@ -122,7 +122,7 @@
 								Гражданство
 							</td>
 							<td class="tdDocumentNumber">
-								Номер документа
+								Серия и № документа
 							</td>
 							<td class="tdDuration">
 								Срок действия
@@ -330,7 +330,7 @@
 								Гражданство
 							</td>
 							<td class="tdDocumentNumber">
-								Номер документа
+								Серия и № документа
 							</td>
 							<td class="tdDuration">
 								Срок действия
