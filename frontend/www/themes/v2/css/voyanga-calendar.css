@@ -451,9 +451,9 @@
 	width: 60px;
 }
 .flyTrip.fd1 .endNameCity {
-	width: 60px;
-	text-align: left;
-	right: -53px;
+    right: -36px;
+    text-align: left;
+    width: 50px;
 }
 .flyTrip.fd2 .startNameCity {
 	width: 107px;
