@@ -38,7 +38,7 @@ TourPanelSet = (function() {
     this.addPanel();
     this.activeCalendarPanel = ko.observable(this.panels()[0]);
     this.height = ko.computed(function() {
-      return 70 * _this.panels().length + 'px';
+      return 64 * _this.panels().length + 'px';
     });
     this.isMaxReached = ko.computed(function() {
       return _this.panels().length > 6;

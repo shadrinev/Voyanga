@@ -22,7 +22,7 @@ class TourPanelSet
     @activeCalendarPanel = ko.observable @panels()[0]
 
     @height = ko.computed =>
-      70 * @panels().length + 'px'
+      64 * @panels().length + 'px'
 
     @isMaxReached = ko.computed =>
       @panels().length > 6
