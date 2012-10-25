@@ -2451,7 +2451,7 @@ input.hotel-input {
     width: 148px;
 }
 .infoPassengers .tdDocumentNumber input[type='text']:focus {
-	background-position: -690px -33px;
+	background-position: -662px -33px;
 }
 .infoPassengers .tdBirthday {
 	width: 130px;
