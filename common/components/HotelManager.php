@@ -23,7 +23,7 @@ class HotelManager
             $query = array();
             foreach ($results['hotels'] as $i => $info)
             {
-                $r = rand(1, 100);
+                $r = rand(1, 500);
                 $query[$info['hotelId']] = $hotelClient->hotelDetail($info['hotelId'], true, $r==1);
             }
             $hotelClient->processAsyncRequests();
