@@ -66,7 +66,7 @@ function CenterIMGResize() {
 if (var_allWidth >= 1390) {
 		marginPathLeft = (1390 - var_allWidth) / 2;
 	}
-	else if (var_allWidth < 1390 && var_allWidth > 1290) {
+	else if (var_allWidth < 1390 && var_allWidth >= 1290) {
 		marginPathLeft = (1390 - var_allWidth) / 2;
 		
 	}
