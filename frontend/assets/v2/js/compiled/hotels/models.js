@@ -215,7 +215,7 @@ RoomSet = (function() {
 
 HotelResult = (function() {
 
-  function HotelResult(data, parent, duration, activeHotel) {
+  function HotelResult(data, parent, duration, activeHotel, hotelDatails) {
     var elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4,
       _this = this;
     this.activeHotel = activeHotel;
@@ -246,14 +246,17 @@ HotelResult = (function() {
     this.isActive = __bind(this.isActive, this);
 
     _.extend(this, Backbone.Events);
+    if (!hotelDatails) {
+      hotelDatails = {};
+    }
     this.tours = parent.tours;
     this.hotelId = data.hotelId;
     this.cacheId = parent.cacheId;
     this.activeResultId = ko.observable(0);
     this.hotelName = data.hotelName;
-    this.address = data.address;
-    this.description = data.description;
-    this.limitDesc = Utils.limitTextLenght(data.description, 195);
+    this.address = hotelDatails.address;
+    this.description = hotelDatails.description;
+    this.limitDesc = Utils.limitTextLenght(this.description, 195);
     this.showMoreDesc = ko.observable(true);
     this.showMoreDescText = ko.computed(function() {
       if (_this.showMoreDesc()) {
@@ -262,10 +265,10 @@ HotelResult = (function() {
         return 'Свернуть';
       }
     });
-    this.photos = data.images;
+    this.photos = hotelDatails.images;
     this.numPhotos = 0;
     this.parent = parent;
-    this.checkInTime = data.earliestCheckInTime;
+    this.checkInTime = hotelDatails.earliestCheckInTime;
     if (this.checkInTime) {
       this.checkInTime = this.checkInTime.substr(0, this.checkInTime.length - 3);
     }
@@ -293,8 +296,8 @@ HotelResult = (function() {
     } else if ((4.8 <= (_ref3 = this.rating) && _ref3 <= 5)) {
       this.ratingName = "великолепный<br>отель";
     }
-    this.lat = data.latitude / 1;
-    this.lng = data.longitude / 1;
+    this.lat = hotelDatails.latitude / 1;
+    this.lng = hotelDatails.longitude / 1;
     this.distanceToCenter = Math.ceil(data.centerDistance / 1000);
     if (this.distanceToCenter > 30) {
       this.distanceToCenter = 30;
@@ -312,12 +315,12 @@ HotelResult = (function() {
         return 'Выбрать';
       }
     });
-    this.hasHotelServices = data.hotelServices ? true : false;
-    this.hotelServices = data.hotelServices;
-    this.hasHotelGroupServices = data.hotelGroupServices ? true : false;
+    this.hasHotelServices = hotelDatails.hotelServices ? true : false;
+    this.hotelServices = hotelDatails.hotelServices;
+    this.hasHotelGroupServices = hotelDatails.hotelGroupServices ? true : false;
     this.hotelGroupServices = [];
-    if (data.hotelGroupServices) {
-      _ref4 = data.hotelGroupServices;
+    if (hotelDatails.hotelGroupServices) {
+      _ref4 = hotelDatails.hotelGroupServices;
       for (groupName in _ref4) {
         elements = _ref4[groupName];
         this.hotelGroupServices.push({
@@ -327,8 +330,8 @@ HotelResult = (function() {
         });
       }
     }
-    this.hasRoomAmenities = data.roomAmenities ? true : false;
-    this.roomAmenities = data.roomAmenities;
+    this.hasRoomAmenities = hotelDatails.roomAmenities ? true : false;
+    this.roomAmenities = hotelDatails.roomAmenities;
     this.roomSets = ko.observableArray([]);
     console.log(this.roomSets());
     this.visible = ko.observable(true);
@@ -696,8 +699,8 @@ HotelResult = (function() {
 
 HotelsResultSet = (function() {
 
-  function HotelsResultSet(rawHotels, searchParams, activeHotel) {
-    var checkIn, checkOut, duration, hotel, key, result, _i, _j, _len, _len1, _ref,
+  function HotelsResultSet(rawData, searchParams, activeHotel) {
+    var checkIn, checkOut, duration, hotel, key, result, _i, _j, _len, _len1, _ref, _ref1, _ref2,
       _this = this;
     this.searchParams = searchParams;
     this.activeHotel = activeHotel;
@@ -733,8 +736,9 @@ HotelsResultSet = (function() {
       duration = this.searchParams.duration;
     }
     if (duration === 0 || typeof duration === 'undefined') {
-      for (_i = 0, _len = rawHotels.length; _i < _len; _i++) {
-        hotel = rawHotels[_i];
+      _ref = rawData.hotels;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        hotel = _ref[_i];
         if (typeof hotel.duration === 'undefined') {
           checkIn = dateUtils.fromIso(hotel.checkIn);
           console.log(checkIn);
@@ -753,15 +757,16 @@ HotelsResultSet = (function() {
     this.wordDays = Utils.wordAfterNum(duration, 'день', 'дня', 'дней');
     this.minPrice = false;
     this.maxPrice = false;
-    for (_j = 0, _len1 = rawHotels.length; _j < _len1; _j++) {
-      hotel = rawHotels[_j];
+    _ref1 = rawData.hotels;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      hotel = _ref1[_j];
       key = hotel.hotelId;
       if (this._results[key]) {
         this._results[key].push(hotel);
         this.minPrice = this._results[key].minPrice < this.minPrice ? this._results[key].minPrice : this.minPrice;
         this.maxPrice = this._results[key].maxPrice > this.maxPrice ? this._results[key].maxPrice : this.maxPrice;
       } else {
-        result = new HotelResult(hotel, this, duration, this.activeHotel);
+        result = new HotelResult(hotel, this, duration, this.activeHotel, rawData.hotelsDetails[key + 'd']);
         this._results[key] = result;
         if (this.minPrice === false) {
           this.minPrice = this._results[key].minPrice;
@@ -777,12 +782,12 @@ HotelsResultSet = (function() {
     this.showLimit = 20;
     this.sortBy = ko.observable('minPrice');
     this.resultsForRender = ko.computed(function() {
-      var limit, results, _k, _len2, _ref;
+      var limit, results, _k, _len2, _ref2;
       limit = _this.showParts() * _this.showLimit;
       results = [];
-      _ref = _this.data();
-      for (_k = 0, _len2 = _ref.length; _k < _len2; _k++) {
-        result = _ref[_k];
+      _ref2 = _this.data();
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        result = _ref2[_k];
         if (result.visible()) {
           results.push(result);
           limit--;
@@ -800,9 +805,9 @@ HotelsResultSet = (function() {
     window.hotelsScrollCallback = function(ev) {
       return _this.checkShowMore(ev);
     };
-    _ref = this._results;
-    for (key in _ref) {
-      result = _ref[key];
+    _ref2 = this._results;
+    for (key in _ref2) {
+      result = _ref2[key];
       if (result.numPhotos) {
         this.data.push(result);
       }

@@ -130,17 +130,19 @@ class RoomSet
 # Stacked hotel, FIXME can we use this as roomset ?
 #
 class HotelResult
-  constructor: (data, parent, duration, @activeHotel) ->
+  constructor: (data, parent, duration, @activeHotel, hotelDatails) ->
     # Mix in events
     _.extend @, Backbone.Events
+    if !hotelDatails
+      hotelDatails = {}
     @tours =  parent.tours
     @hotelId = data.hotelId
     @cacheId = parent.cacheId
     @activeResultId = ko.observable 0 
     @hotelName = data.hotelName
-    @address = data.address
-    @description = data.description
-    @limitDesc = Utils.limitTextLenght(data.description,195)
+    @address = hotelDatails.address
+    @description = hotelDatails.description
+    @limitDesc = Utils.limitTextLenght(@description,195)
     @showMoreDesc = ko.observable(true)
     @showMoreDescText = ko.computed =>
       if @showMoreDesc()
@@ -148,10 +150,10 @@ class HotelResult
       else
         return 'Свернуть'
     # FIXME check if we can get diffirent photos for different rooms in same hotel
-    @photos = data.images
+    @photos = hotelDatails.images
     @numPhotos = 0
     @parent = parent
-    @checkInTime = data.earliestCheckInTime
+    @checkInTime = hotelDatails.earliestCheckInTime
     if @checkInTime
       @checkInTime = @checkInTime.substr(0,@checkInTime.length - 3)
     # FIXME trollface
@@ -179,8 +181,8 @@ class HotelResult
     else if 4.8 <= @rating <= 5
       @ratingName = "великолепный<br>отель"
     # coords
-    @lat = data.latitude / 1
-    @lng = data.longitude / 1
+    @lat = hotelDatails.latitude / 1
+    @lng = hotelDatails.longitude / 1
     @distanceToCenter = Math.ceil(data.centerDistance/1000)
     if @distanceToCenter > 30
       @distanceToCenter = 30
@@ -197,19 +199,19 @@ class HotelResult
       else
         return 'Выбрать'
 
-    @hasHotelServices = if data.hotelServices then true else false
-    @hotelServices = data.hotelServices
-    @hasHotelGroupServices = if data.hotelGroupServices then true else false
+    @hasHotelServices = if hotelDatails.hotelServices then true else false
+    @hotelServices = hotelDatails.hotelServices
+    @hasHotelGroupServices = if hotelDatails.hotelGroupServices then true else false
     @hotelGroupServices = []
-    if data.hotelGroupServices
-      for groupName,elements of data.hotelGroupServices
+    if hotelDatails.hotelGroupServices
+      for groupName,elements of hotelDatails.hotelGroupServices
         @hotelGroupServices.push {groupName: groupName,elements: elements,groupIcon: HOTEL_SERVICE_VERBOSE[groupName]}
     #if @hasHotelServices
     #  for service in @hotelServices
     #    if service == 'Фитнесс-центр'
     #      service = 'Фитнесс'
-    @hasRoomAmenities = if data.roomAmenities then true else false
-    @roomAmenities = data.roomAmenities
+    @hasRoomAmenities = if hotelDatails.roomAmenities then true else false
+    @roomAmenities = hotelDatails.roomAmenities
     @roomSets = ko.observableArray([])
     #@roomSets = []
     console.log(@roomSets())
@@ -554,7 +556,7 @@ class HotelResult
 # Stacks them by price and company
 #
 class HotelsResultSet
-  constructor: (rawHotels, @searchParams, @activeHotel) ->
+  constructor: (rawData, @searchParams, @activeHotel) ->
     @_results = {}
     # FIXME FIXME FIXEM
     @rawSP = @searchParams
@@ -567,7 +569,7 @@ class HotelsResultSet
     if @searchParams.duration
       duration = @searchParams.duration
     if duration == 0 || typeof duration == 'undefined'
-      for hotel in rawHotels
+      for hotel in rawData.hotels
         if typeof hotel.duration == 'undefined'
           checkIn = dateUtils.fromIso hotel.checkIn
           console.log checkIn
@@ -583,14 +585,16 @@ class HotelsResultSet
     @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
     @minPrice = false
     @maxPrice = false
-    for hotel in rawHotels
+    for hotel in rawData.hotels
       key = hotel.hotelId
       if @_results[key]
         @_results[key].push hotel
         @minPrice = if @_results[key].minPrice < @minPrice then @_results[key].minPrice else @minPrice
         @maxPrice = if @_results[key].maxPrice > @maxPrice then @_results[key].maxPrice else @maxPrice
       else
-        result =  new HotelResult hotel, @, duration, @activeHotel
+        #hotelsDetails = false
+        #if
+        result =  new HotelResult hotel, @, duration, @activeHotel, rawData.hotelsDetails[key+'d']
         @_results[key] = result
         if @minPrice == false
           @minPrice = @_results[key].minPrice

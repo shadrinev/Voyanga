@@ -368,7 +368,7 @@ class ToursResultSet
         result =  new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
       else
         variant.searchParams.cacheId = variant.cacheId
-        result = new ToursHotelsResultSet variant.hotels, variant.searchParams
+        result = new ToursHotelsResultSet variant, variant.searchParams
       @data.push result
       result.on 'setActive', (entry)=>
         @setActive entry

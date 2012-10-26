@@ -31,7 +31,7 @@ class HotelsController
 
     # FIXME REALLY RETARDED
     data.searchParams.cacheId = data.cacheId
-    stacked = new HotelsResultSet data.hotels, data.searchParams
+    stacked = new HotelsResultSet data, data.searchParams
     stacked.postInit()
     @results = ko.observable(stacked)
     @render 'results', {'results' : @results}
