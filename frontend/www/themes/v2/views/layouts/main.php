@@ -55,13 +55,14 @@ Yii::app()->clientScript->registerPackage('appJs');
     <!-- BOARD IF WE ARE AT THE MAIN -->
     <!-- ko if:in1 -->
     <div class="panel-index">
+    	<h1 class="title">Спланируй свое путешествие <img src="<?= $theme ?>/images/saleTitle.png"></h1>
         <div class="board" data-bind="style: {height: fakoPanel().height}">
             <!-- ko if:fakoPanel().template=='tour-panel-template' -->
                 <div class="constructor">
                     <!-- BOARD CONTENT -->
                         <div class="board-content" data-bind="template: { name: fakoPanel().template, data: fakoPanel(), afterRender: fakoPanel().afterRender }"></div>
                     <!-- END BOARD CONTENT -->
-                    <div data-bind="attr: {class: fakoPanel().icon}"><div class="miniPopUpIndex"></div></div>
+                    <div data-bind="attr: {class: fakoPanel().icon}"></div>
                 </div>
             <!-- /ko -->
             <!-- ko if:fakoPanel().template!='tour-panel-template' -->
