@@ -15,6 +15,9 @@
 	-webkit-transform:rotate(180deg); /* Safari and Chrome */
 	-o-transform:rotate(180deg); /* Opera */
 }
+.ico-voyasha.active {
+	background-position: -39px 0px;
+}
 .recommended-ticket .ticket .date-time-city .how-long .ico-path {
 	background: url(../images/slice.png) no-repeat -37px -33px;
 	width: 61px; height: 11px;

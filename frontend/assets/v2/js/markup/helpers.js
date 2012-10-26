@@ -198,7 +198,7 @@ bindActions = function() {
 	$('.input-path').click(function() {
 		$('.calendarSlide').animate({'top' :  '0px'}, 400);
 	});
-
+	
 /* НА ГЛАВНОЙ СТРАНИЦЕ ОТВЕЧАЕТ ЗА НАЖАТИЕ НА СТАР ИЗ ГОРОДА! */
 	$('.cityStart .to a').click(function() {
 		var var_parent = $(this).parent().parent();

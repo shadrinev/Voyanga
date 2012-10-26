@@ -57,7 +57,7 @@
       </div>
       <table class="finish-result voyasha">
         <tr>
-          <td class="txt">Мин. стоимость маршрута:</td>
+          <td class="txt">Самый дешевый:</td>
           <td class="price"><div>30 300 <span class="rur">o</span></div></td>
         </tr>
         <tr>
