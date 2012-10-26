@@ -10,18 +10,22 @@ function slideToursSlide() {
 	if (WidthAllWindow <= 1000) {
 		widthSmall = 1000;
 	}
-	else if (WidthAllWindow > 1000 && WidthAllWindow < 1166) {
+	else if (WidthAllWindow > 1000 && WidthAllWindow < 1050) {
 		widthSmall = WidthAllWindow;
 	}
-	else if (WidthAllWindow > 1166 && WidthAllWindow < 1290) {
-		widthSmall = Math.floor(1166 + ( (WidthAllWindow - 1166) / ((1166 - 1000) / (1290 - 1166))) );
+	else if (WidthAllWindow > 1050 && WidthAllWindow < 1290) {
+		widthSmall = Math.floor(1050 + ( (WidthAllWindow - 1050) / ((1290 - 1050) / (1205 - 1050))) );
 	}
 	else if (WidthAllWindow > 1290 && WidthAllWindow < 1390) {
-		widthSmall = Math.floor(1257 + ( (WidthAllWindow - 1290) / ((1390 - 1290) / (1290 - 1257))) );
+		widthSmall = 1205;
 	}
-	else if (WidthAllWindow > 1390) {
-		widthSmall = 1290;
+	else if (WidthAllWindow > 1390 && WidthAllWindow < 1490) {
+		widthSmall = Math.floor(1205 + ( (WidthAllWindow - 1390) / ((1490 - 1390) / (1390 - 1205))) );
 	}
+	else if (WidthAllWindow > 1490) {
+		widthSmall = 1390;
+	}
+	
 	var_slideTours.css('width', widthSmall+'px');
 	$('.slideTours .center').css('width', widthSmall+'px');
 	
