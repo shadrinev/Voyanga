@@ -264,6 +264,10 @@ AviaResult = (function() {
     var fields, flights, name, rtName, _i, _len,
       _this = this;
     this.parent = parent;
+    this.directRating = __bind(this.directRating, this);
+
+    this.chooseActive = __bind(this.chooseActive, this);
+
     this.showDetails = __bind(this.showDetails, this);
 
     this.minimizeRtStacked = __bind(this.minimizeRtStacked, this);
@@ -572,6 +576,24 @@ AviaResult = (function() {
       return;
     }
     return this.activeVoyage(active);
+  };
+
+  AviaResult.prototype.directRating = function() {
+    var base, d;
+    base = 1;
+    if (this.direct()) {
+      base += 1;
+    }
+    if (this.roundTrip) {
+      if (this.rtDirect()) {
+        base += 1;
+      }
+    }
+    d = this.duration();
+    if (this.roundTrip) {
+      d += this.rtDuration();
+    }
+    return d / base;
   };
 
   return AviaResult;

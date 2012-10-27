@@ -167,7 +167,8 @@ class HotelResult
     # for popup
     @activePhoto = @frontPhoto['largeUrl']
     # FIXME check if categoryId matches star rating
-    @stars = STARS_VERBOSE[data.categoryId-1]
+    @starsNumeric = data.categoryId
+    @stars = STARS_VERBOSE[@starsNumeric-1]
     @rating = data.rating
     if @rating == '-'
       @rating = 0

@@ -115,6 +115,8 @@ ToursAviaResultSet = (function(_super) {
 
     this.toBuyRequest = __bind(this.toBuyRequest, this);
 
+    this.select = __bind(this.select, this);
+
     this.newResults = __bind(this.newResults, this);
     ToursAviaResultSet.__super__.constructor.apply(this, arguments);
     this.api = new AviaAPI;
@@ -142,18 +144,22 @@ ToursAviaResultSet = (function(_super) {
     result.recommendTemplate = 'avia-tours-recommend';
     result.tours = true;
     result.select = function(res) {
-      if (res.ribbon) {
-        res = res.data;
-      }
-      result.selected_key(res.key);
-      res.parent.filtersConfig = res.parent.filters.getConfig();
-      result.selected_best(res.best | false);
-      _this.overviewTemplate = 'tours-overview-avia-ticket';
-      _this.selection(res);
+      _this.select(res, result);
       return _this.trigger('next');
     };
     this.avia = true;
     return this.results(result);
+  };
+
+  ToursAviaResultSet.prototype.select = function(res) {
+    if (res.ribbon) {
+      res = res.data;
+    }
+    this.results().selected_key(res.key);
+    res.parent.filtersConfig = res.parent.filters.getConfig();
+    this.results().selected_best(res.best | false);
+    this.overviewTemplate = 'tours-overview-avia-ticket';
+    return this.selection(res);
   };
 
   ToursAviaResultSet.prototype.toBuyRequest = function() {
@@ -362,6 +368,8 @@ ToursHotelsResultSet = (function(_super) {
 
     this.toBuyRequest = __bind(this.toBuyRequest, this);
 
+    this.select = __bind(this.select, this);
+
     this.newResults = __bind(this.newResults, this);
 
     ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
@@ -395,11 +403,7 @@ ToursHotelsResultSet = (function(_super) {
       });
       hotel.off('select');
       hotel.on('select', function(roomData) {
-        _this.activeHotel(hotel.hotelId);
-        _this.overviewTemplate = 'tours-overview-hotels-ticket';
-        _this.selection(roomData);
-        hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
-        hotel.parent.pagesLoad = hotel.parent.showParts();
+        _this.select(roomData);
         return _this.trigger('next');
       });
       return _this.trigger('setActive', {
@@ -417,11 +421,7 @@ ToursHotelsResultSet = (function(_super) {
       });
       hotel.off('select');
       hotel.on('select', function(roomData) {
-        _this.activeHotel(hotel.hotelId);
-        _this.overviewTemplate = 'tours-overview-hotels-ticket';
-        _this.selection(roomData);
-        hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
-        hotel.parent.pagesLoad = hotel.parent.showParts();
+        _this.select(roomData);
         return _this.trigger('next');
       });
       return _this.trigger('setActive', {
@@ -433,6 +433,16 @@ ToursHotelsResultSet = (function(_super) {
     this.hotels = true;
     this.selection(null);
     return this.results(result);
+  };
+
+  ToursHotelsResultSet.prototype.select = function(roomData) {
+    var hotel;
+    hotel = roomData.hotel;
+    this.activeHotel(hotel.hotelId);
+    this.overviewTemplate = 'tours-overview-hotels-ticket';
+    this.selection(roomData);
+    hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
+    return hotel.parent.pagesLoad = hotel.parent.showParts();
   };
 
   ToursHotelsResultSet.prototype.toBuyRequest = function() {
@@ -665,6 +675,10 @@ ToursResultSet = (function() {
       }
     });
     this.vm = new ToursOverviewVM(this);
+    this.voyashki = [];
+    this.voyashki.push(new VoyashaCheapest(this));
+    this.voyashki.push(new VoyashaOptima(this));
+    this.voyashki.push(new VoyashaRich(this));
   }
 
   ToursResultSet.prototype.setActive = function(entry) {

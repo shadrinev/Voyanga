@@ -281,7 +281,8 @@ HotelResult = (function() {
       this.numPhotos = this.photos.length;
     }
     this.activePhoto = this.frontPhoto['largeUrl'];
-    this.stars = STARS_VERBOSE[data.categoryId - 1];
+    this.starsNumeric = data.categoryId;
+    this.stars = STARS_VERBOSE[this.starsNumeric - 1];
     this.rating = data.rating;
     if (this.rating === '-') {
       this.rating = 0;

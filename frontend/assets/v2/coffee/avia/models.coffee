@@ -403,7 +403,7 @@ class AviaResult
     SizeBox('avia-body-popup');
     ResizeBox('avia-body-popup');
 
-  chooseActive: ->
+  chooseActive: =>
     if @visible() == false
       return
     if @activeVoyage().visible()
@@ -414,6 +414,17 @@ class AviaResult
       return
     @activeVoyage active
 
+  directRating: =>
+    base = 1
+    if @direct()
+      base += 1
+    if @roundTrip
+      if @rtDirect()
+        base += 1
+    d = @duration() 
+    if @roundTrip
+      d+= @rtDuration()
+    return d/base
 #
 # Result container
 # Stacks them by price and company
