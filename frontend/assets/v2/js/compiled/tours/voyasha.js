@@ -131,7 +131,7 @@ VoyashaOptima = (function(_super) {
   }
 
   VoyashaOptima.prototype.getTitle = function() {
-    return 'Самый оптимальный';
+    return 'Оптимальный вариант';
   };
 
   VoyashaOptima.prototype.handleAvia = function(item) {
@@ -195,7 +195,7 @@ VoyashaRich = (function(_super) {
   }
 
   VoyashaRich.prototype.getTitle = function() {
-    return 'Самый роскошный';
+    return 'Роскошный вариант';
   };
 
   VoyashaRich.prototype.handleAvia = function(item) {
@@ -208,11 +208,11 @@ VoyashaRich = (function(_super) {
     };
     for (_i = 0, _len = data.length; _i < _len; _i++) {
       item = data[_i];
-      if (item.directRating() > result.directRating) {
+      if (item.directRating() < result.direct) {
         result.direct = item.directRating();
         result.price = item.price;
         result.result = item;
-      } else if (item.directRating() === result.directRating) {
+      } else if (item.directRating() === result.direct) {
         if (item.price < result.price) {
           result.price = item.price;
           result.result = item;
@@ -222,42 +222,42 @@ VoyashaRich = (function(_super) {
     return result.result;
   };
 
+  VoyashaRich.prototype.getRating = function(x) {
+    var hotelRating;
+    hotelRating = Math.abs(4.5 - x.starsNumeric);
+    if (x.rating === '-') {
+      hotelRating += 4;
+    } else {
+      hotelRating = hotelRating + Math.abs(4 - x.rating);
+    }
+    if (x.distanceToCenter > 3) {
+      hotelRating = hotelRating * 4;
+    }
+    return hotelRating;
+  };
+
   VoyashaRich.prototype.handleHotels = function(item) {
-    var data, result, results;
+    var data, result, results,
+      _this = this;
     data = item.results().data();
     result = {
       roomSet: data[0].roomSets()[0],
       hotel: data[0],
       price: data[0].roomSets()[0].price
     };
-    results = _.filter(data, function(x) {
-      return x.distanceToCenter <= 3;
-    });
-    results = _.filter(results, function(x) {
-      return (x.starsNumeric === 4) || (x.starsNumeric === 5);
-    });
+    results = data;
     results.sort(function(a, b) {
-      return a.roomSets()[0].price - b.roomSets()[0].price;
+      var aHotelRating, bHotelRating;
+      aHotelRating = _this.getRating(a);
+      bHotelRating = _this.getRating(b);
+      return a.roomSets()[0].price * aHotelRating - b.roomSets()[0].price * bHotelRating;
     });
-    if (results.length) {
-      data = results[0];
-      result = {
-        roomSet: data.roomSets()[0],
-        hotel: data,
-        price: data.roomSets()[0].price
-      };
-    }
-    results = _.filter(results, function(x) {
-      return x.rating > 2.5;
-    });
-    if (results.length) {
-      data = results[0];
-      result = {
-        roomSet: data.roomSets()[0],
-        hotel: data,
-        price: data.roomSets()[0].price
-      };
-    }
+    data = results[0];
+    result = {
+      roomSet: data.roomSets()[0],
+      hotel: data,
+      price: data.roomSets()[0].price
+    };
     return result;
   };
 

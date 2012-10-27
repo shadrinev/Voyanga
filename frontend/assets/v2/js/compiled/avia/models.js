@@ -319,7 +319,7 @@ AviaResult = (function() {
     this.activeVoyage = ko.observable(this.activeVoyage);
     this.stackedMinimized = ko.observable(true);
     this.rtStackedMinimized = ko.observable(true);
-    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio', 'recommendStopoverIco'];
+    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio', 'recommendStopoverIco'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
       this[name] = (function(name) {
@@ -589,9 +589,9 @@ AviaResult = (function() {
         base += 1;
       }
     }
-    d = this.duration();
+    d = this._duration();
     if (this.roundTrip) {
-      d += this.rtDuration();
+      d += this.rt_duration();
     }
     return d / base;
   };

@@ -438,6 +438,7 @@ ToursHotelsResultSet = (function(_super) {
   ToursHotelsResultSet.prototype.select = function(roomData) {
     var hotel;
     hotel = roomData.hotel;
+    hotel.parent = this.results();
     this.activeHotel(hotel.hotelId);
     this.overviewTemplate = 'tours-overview-hotels-ticket';
     this.selection(roomData);

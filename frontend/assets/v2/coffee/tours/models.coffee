@@ -246,6 +246,7 @@ class ToursHotelsResultSet extends TourEntry
 
   select: (roomData)=>
     hotel = roomData.hotel
+    hotel.parent = @results()
     @activeHotel  hotel.hotelId
     @overviewTemplate = 'tours-overview-hotels-ticket'
     @selection roomData
@@ -424,6 +425,7 @@ class ToursResultSet
       
     @vm = new ToursOverviewVM @
 
+    # FIXME have to resorn after their run
     # set of predefined algoriths for tour selection
     @voyashki = []
     @voyashki.push new VoyashaCheapest @

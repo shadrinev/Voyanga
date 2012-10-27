@@ -237,7 +237,7 @@ class AviaResult
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
-              'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric',
+              'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'departureTimeNumeric',
               'arrivalTimeNumeric','hash', 'stopsRatio', 'recommendStopoverIco']
 
     for name in fields
@@ -421,9 +421,9 @@ class AviaResult
     if @roundTrip
       if @rtDirect()
         base += 1
-    d = @duration() 
+    d = @_duration() 
     if @roundTrip
-      d+= @rtDuration()
+      d+= @rt_duration()
     return d/base
 #
 # Result container
