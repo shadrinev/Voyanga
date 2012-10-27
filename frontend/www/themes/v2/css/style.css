@@ -2614,3 +2614,6 @@ input.hotel-input {
 }
 
 
+.inlineBlock {
+    display: inline-block;
+}
