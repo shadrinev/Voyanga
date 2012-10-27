@@ -116,26 +116,23 @@ class HotelTripElement extends TripElement
 
     public function getPassports()
     {
-        // TODO: Implement getPassports() method.
-        if ($this->passports)
-            return $this->passports;
-        $fake = new HotelPassportForm();
-        $fake->addRoom($this->adultCount,0);
-        $roomPassport = $fake->roomsPassports[0] = new RoomPassportForm();
-        for($i=0; $i<$this->adultCount; $i++)
+        return $this->passports;
+    }
+
+    public function setPassports($booking, $roomsPassports)
+    {
+        $this->passports = new HotelPassportForm();
+        foreach ($roomsPassports as $roomPassport)
         {
-            $roomPassport->adultsPassports[$i] = new HotelAdultPassportForm();
-            $adultForm = FlightAdultPassportForm::fillWithRandomData();
-            $roomPassport->adultsPassports[$i]->lastName = $adultForm->lastName;
-            $roomPassport->adultsPassports[$i]->firstName = $adultForm->firstName;
-            $roomPassport->adultsPassports[$i]->genderId = $adultForm->genderId;
+            $this->passports->addRoom($roomPassport['adults'], $roomPassport['children']);
         }
-        $this->passports = $fake;
-        return $fake;
+        $this->passports->bookingForm = $booking;
     }
 
     public function getId()
     {
+        if ($this->hotel)
+            return $this->hotel->getId();
         return $this->_id;
     }
 
@@ -215,10 +212,10 @@ class HotelTripElement extends TripElement
         foreach ($searchParams->rooms as $room)
         {
             $newRoom = array(
-                'adt' => $room->adultCount,
-                'chd' => $room->childCount,
-                'chdAge' => $room->childAge,
-                'cots' => $room->cots
+                'adt' => $room['adultCount'],
+                'chd' => $room['childCount'],
+                'chdAge' => $room['childAge'],
+                'cots' => $room['cots']
             );
             $this->rooms[] = $newRoom;
         }

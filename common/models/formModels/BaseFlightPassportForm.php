@@ -24,16 +24,18 @@ class BaseFlightPassportForm extends BasePassportForm
     const GENDER_FEMALE = 2;
     public $genderId;
 
-    /** @var dd.MM.YYYY */
-    public $birthday;
-
-    /** @var expritation date for internation passport */
-    public $expirationDate;
-
     public $countryId;
 
-    public $series;
-    public $number;
+    public $series='';
+    public $seriesNumber;
+
+    public $birthdayDay;
+    public $birthdayMonth;
+    public $birthdayYear;
+
+    public $expirationDay;
+    public $expirationMonth;
+    public $expirationYear;
 
     /**
      * Declares the validation rules.
@@ -41,12 +43,27 @@ class BaseFlightPassportForm extends BasePassportForm
     public function rules()
     {
         return CMap::mergeArray(parent::rules(), array(
-            array('documentTypeId, series, number, birthday, countryId', 'required'),
+            array('documentTypeId, seriesNumber, birthdayDay, birthdayMonth, birthdayYear, countryId', 'required'),
             array('documentTypeId', 'in', 'range'=>array_keys(self::getPossibleTypes())),
             array('genderId', 'in', 'range'=>array_keys(self::getPossibleGenders())),
             array('birthday', 'date', 'format' => 'dd.MM.yyyy'),
             array('expirationDate', 'date', 'format' => 'dd.MM.yyyy', 'on'=>'type_'.self::TYPE_INTERNATIONAL),
         ));
+    }
+    
+    public function getBirthday()
+    {
+        return $this->birthdayDay.'.'.$this->birthdayMonth.'.'.$this->birthdayYear;
+    }
+
+    public function getExpirationDate()
+    {
+        return $this->expirationDay.'.'.$this->expirationMonth.'.'.$this->expirationYear;
+    }
+
+    public function getNumber()
+    {
+        return $this->seriesNumber;
     }
 
     /**
@@ -62,6 +79,7 @@ class BaseFlightPassportForm extends BasePassportForm
             'birthday' => 'Дата рождения (ДД.ММ.ГГГГ)',
             'expirationDate' => 'Дата истечения паспорта (ДД.ММ.ГГГГ)',
             'series' => 'Серия',
+            'seriesNumber' => 'Серия и № документа',
             'number' => 'Номер',
             'documentTypeId' => 'Документ',
             'genderId' => 'Пол',
@@ -74,7 +92,7 @@ class BaseFlightPassportForm extends BasePassportForm
         return array(
             self::TYPE_RF => 'Паспорт РФ',
             self::TYPE_INTERNATIONAL => 'Загран. паспорт',
-            self::TYPE_OTHER => 'Паспорт другой страны',
+            self::TYPE_OTHER => 'Другой',
             self::TYPE_BIRTH_CERT => 'Свидетельство о рождении'
         );
     }

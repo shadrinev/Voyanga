@@ -36,6 +36,7 @@ class OrderComponent extends CApplicationComponent
             if ($this->areAllStatusesCorrect())
             {
                 Yii::app()->user->setState('blockedToBook', null);
+                $this->setBookerIds();
                 return $bookedTripElementWorkflow;
             }
             else
@@ -450,5 +451,34 @@ class OrderComponent extends CApplicationComponent
             $hotelBookerComponent->setHotelBookerFromId($hotelBooker->id);
             $hotelBookerComponent->status('transferMoney');
         }
+    }
+
+    public function setBookerIds()
+    {
+        $result = array();
+        foreach ($this->itemsOnePerGroup as $item)
+        {
+            if ($item instanceof FlightTripElement)
+            {
+                $element = array(
+                    'type' => 'avia',
+                    'bookerId' => $item->flightBookerId
+                );
+            }
+            elseif ($item instanceof HotelTripElement)
+            {
+                $element = array(
+                    'type' => 'hotel',
+                    'bookerId' => $item->hotelBookerId
+                );
+            }
+            $result[] = $element;
+        }
+        Yii::app()->user->setState('bookerIds', $result);
+    }
+
+    public function getBookerIds()
+    {
+        return Yii::app()->user->getState('bookerIds');
     }
 }
