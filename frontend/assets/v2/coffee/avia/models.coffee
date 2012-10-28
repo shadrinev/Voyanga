@@ -237,7 +237,7 @@ class AviaResult
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
-              'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', 'direct', 'stopoverText', 'departureTimeNumeric',
+              'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'departureTimeNumeric',
               'arrivalTimeNumeric','hash', 'stopsRatio', 'recommendStopoverIco']
 
     for name in fields
@@ -403,7 +403,7 @@ class AviaResult
     SizeBox('avia-body-popup');
     ResizeBox('avia-body-popup');
 
-  chooseActive: ->
+  chooseActive: =>
     if @visible() == false
       return
     if @activeVoyage().visible()
@@ -414,6 +414,17 @@ class AviaResult
       return
     @activeVoyage active
 
+  directRating: =>
+    base = 1
+    if @direct()
+      base += 1
+    if @roundTrip
+      if @rtDirect()
+        base += 1
+    d = @_duration() 
+    if @roundTrip
+      d+= @rt_duration()
+    return d/base
 #
 # Result container
 # Stacks them by price and company

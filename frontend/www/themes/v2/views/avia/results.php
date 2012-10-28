@@ -14,7 +14,7 @@
 </script>
 <script type="text/html" id="avia-results-inner">
   <h1 data-bind="visible: tours"><div class="hideTitle">Выберите авиабилет</div>
-    <span data-bind="text: departureCity">Санкт-Петербург</span> → <span data-bind="text: arrivalCity">Амстердам</span>, <span data-bind="text: dateHeadingText">19 мая</span></h1>
+    <span data-bind="text: departureCity">Санкт-Петербург</span> → <span data-bind="text: arrivalCity">Амстердам</span>, <div class="inlineBlock"><span data-bind="text: dateHeadingText">19 мая</span></div></h1>
   
   <div class="recomended-content" data-bind="template: {name: recommendTemplate, data: $data}">
   </div>

@@ -103,6 +103,7 @@
     'tours' => array(
         'basePath' => 'frontend.assets.v2.js.compiled.tours',
         'js' => array(
+            'voyasha.js',
             'timeline.js',
             'panel.js',
             'models.js',

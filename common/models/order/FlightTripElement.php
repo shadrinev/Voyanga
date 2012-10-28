@@ -20,6 +20,7 @@ class FlightTripElement extends TripElement
 
     private $_id;
     private $groupId;
+    private $passengerPassports;
 
     public function rules()
     {
@@ -133,25 +134,21 @@ class FlightTripElement extends TripElement
 
     public function getPassports()
     {
-        // TODO: Implement getPassports() method.
-        $fake = new PassengerPassportForm();
-        $fake->adultsPassports = array();
-        $count = 1;
-        if(isset($this->flightVoyage->adultPassengerInfo->count))
-        {
-            $count = $this->flightVoyage->adultPassengerInfo->count;
-        }
-        for($i = 0;$i<$count;$i++)
-        {
-            $fake->adultsPassports[] = FlightAdultPassportForm::fillWithRandomData();
-        }
-        return $fake;
+        return $this->passengerPassports;
+    }
+
+    public function setPassports($adults, $children=array(), $infants=array())
+    {
+        $this->passengerPassports = new PassengerPassportForm();
+        $this->passengerPassports->adultsPassports = $adults;
+        $this->passengerPassports->childrenPassports = $children;
+        $this->passengerPassports->infantPassports = $infants;
     }
 
     public function getId()
     {
-        //if ($this->flightVoyage)
-        //    return $this->flightVoyage->getId();
+        if ($this->flightVoyage)
+            return $this->flightVoyage->getId();
         return $this->_id;
     }
 

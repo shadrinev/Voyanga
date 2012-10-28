@@ -166,9 +166,10 @@
     display: inline-block;
     height: 42px;
     margin-left: 30px;
+    margin-top: -6px;
     position: relative;
     text-indent: -9999px;
-    vertical-align: bottom;
+    vertical-align: middle;
     width: 193px;
 }
 /* NEW BUTTON */

@@ -440,6 +440,12 @@ function ResizeCenterBlock() {
     }).mouseup(function(e){
         e.preventDefault();
     });
+    
+    $('.voyasha td').hover(function() {
+		$('.ico-voyasha').addClass('active');
+	}, function() {
+		$('.ico-voyasha').removeClass('active');
+	});
 }
 function smallTicketHeight() {
     if ($('.recommended-ticket').length > 0 && $('.recommended-ticket').is(':visible')) {

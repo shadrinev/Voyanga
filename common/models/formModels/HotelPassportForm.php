@@ -21,7 +21,15 @@ class HotelPassportForm extends CFormModel
     public function addRoom($adults, $children)
     {
         $roomsPassports = new RoomPassportForm();
-        $roomsPassports->addPassports($adults, $children);
+        $roomsPassports->addPassports(sizeof($adults), sizeof($children));
+        foreach ($roomsPassports->adultsPassports as $i => $adultsPassports)
+        {
+            $adultsPassports->attributes = $adults[$i]->attributes;
+        }
+        foreach ($roomsPassports->childrenPassports as $i => $childPassport)
+        {
+            $childPassport->attributes = $children[$i]->attributes;
+        }
         $this->roomsPassports[] = $roomsPassports;
     }
 }

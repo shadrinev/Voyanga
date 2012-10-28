@@ -60,18 +60,21 @@ class ToursAviaResultSet extends TourEntry
     result.recommendTemplate = 'avia-tours-recommend'
     result.tours = true
     result.select = (res)=>
-      # FIXME looks retardely stupid
-      if res.ribbon
-        #it is actually recommnd ticket
-        res = res.data
-      result.selected_key res.key
-      res.parent.filtersConfig = res.parent.filters.getConfig()
-      result.selected_best res.best | false
-      @overviewTemplate = 'tours-overview-avia-ticket'
-      @selection(res)
+      @select res, result
       @trigger 'next'
     @avia = true
     @results result
+
+  select: (res)=>
+    # FIXME looks retardely stupid
+    if res.ribbon
+      #it is actually recommnd ticket
+      res = res.data
+    @results().selected_key res.key
+    res.parent.filtersConfig = res.parent.filters.getConfig()
+    @results().selected_best res.best | false
+    @overviewTemplate = 'tours-overview-avia-ticket'
+    @selection(res)
 
   toBuyRequest: =>
     result = {}
@@ -222,11 +225,7 @@ class ToursHotelsResultSet extends TourEntry
         @trigger 'setActive', @
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
-        @activeHotel  hotel.hotelId
-        @overviewTemplate = 'tours-overview-hotels-ticket'
-        @selection roomData
-        hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
-        hotel.parent.pagesLoad = hotel.parent.showParts()
+        @select roomData
         @trigger 'next'
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
     result.selectFromPopup = (hotel) =>
@@ -237,17 +236,23 @@ class ToursHotelsResultSet extends TourEntry
         @trigger 'setActive', @
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
-        @activeHotel  hotel.hotelId
-        @overviewTemplate = 'tours-overview-hotels-ticket'
-        @selection roomData
-        hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
-        hotel.parent.pagesLoad = hotel.parent.showParts()
+        @select roomData
         @trigger 'next'
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
     # FIXME WTF
     @hotels = true
     @selection null
     @results result
+
+  select: (roomData)=>
+    hotel = roomData.hotel
+    hotel.parent = @results()
+    @activeHotel  hotel.hotelId
+    @overviewTemplate = 'tours-overview-hotels-ticket'
+    @selection roomData
+    hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
+    hotel.parent.pagesLoad = hotel.parent.showParts()
+
 
   toBuyRequest: =>
     result = {}
@@ -420,6 +425,12 @@ class ToursResultSet
       
     @vm = new ToursOverviewVM @
 
+    # FIXME have to resorn after their run
+    # set of predefined algoriths for tour selection
+    @voyashki = []
+    @voyashki.push new VoyashaCheapest @
+    @voyashki.push new VoyashaOptima @
+    @voyashki.push new VoyashaRich @
   setActive: (entry)=>
     $('#loadWrapBg').show()
     if entry.overview

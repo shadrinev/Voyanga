@@ -66,7 +66,7 @@ class BuyController extends Controller
         {
             foreach ($hotelSearchResult->hotels as $result)
             {
-                if ($result->hotelId == $searchKey)
+                if ($result->resultId == $searchKey)
                     $this->addHotelTripElement($result, $hotelSearchParams);
             }
         }

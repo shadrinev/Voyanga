@@ -55,18 +55,10 @@
           — Я уже составила вашу поездку, просто укажите рамки бюджета
         </div>
       </div>
-      <table class="finish-result voyasha">
+      <table class="finish-result voyasha"  data-bind="foreach: voyashki">
         <tr>
-          <td class="txt">Мин. стоимость маршрута:</td>
-          <td class="price"><div>30 300 <span class="rur">o</span></div></td>
-        </tr>
-        <tr>
-          <td class="txt">Оптимальный вариант:</td>
-          <td class="price"><div>58 200 <span class="rur">o</span></div></td>
-        </tr>
-        <tr>
-          <td class="txt">Роскошный вариант:</td>
-          <td class="price"><div>112 140 <span class="rur">o</span></div></td>
+          <td class="txt" data-bind="text: title">Самый дешевый:</td>
+          <td class="price"><div><span data-bind="text: price, click:choose">30 300</span> <span class="rur">o</span></div></td>
         </tr>
       </table>
     </div>
