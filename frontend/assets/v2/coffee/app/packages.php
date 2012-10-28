@@ -15,6 +15,7 @@
             'moment.js',
             'scroll/jquery.mousewheel.js',
             'scroll/jquery.jscrollpane.min.js',
+            'markerclusterer_compiled.js'
         ),
         'depends' => array('jquery')
     ),
@@ -72,6 +73,7 @@
             'ko.bindings.photoslider.js',
             'ko.bindings.checkbox.js',
             'ko.bindings.swapPanel.js',
+            'ko.bindings.gmap.js',
 
             'travellers.js',
             'searchParams.js',

@@ -419,6 +419,8 @@ class HotelResult
         (data)=>
           #adding info to elements
           window.voyanga_debug 'searchInfo',data
+          if !data.hotel
+            return false
           @initFullInfo()
           for ind,roomSet of data.hotel.details
             set = new RoomSet roomSet, @, @duration
@@ -586,6 +588,7 @@ class HotelsResultSet
     @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
     @fullMapInitialized = false
     @showFullMap = ko.observable false
+
     @minPrice = false
     @maxPrice = false
     for hotel in rawData.hotels
@@ -685,12 +688,31 @@ class HotelsResultSet
     $('#all-hotels-map').show()
     center = new google.maps.LatLng(@city.latitude, @city.longitude);
     options = {'zoom': 11,'center': center,'mapTypeId': google.maps.MapTypeId.ROADMAP}
-    @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
-    @gMapCluter = false;
+
+
+    if !@fullMapInitialized
+      @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
+      @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
+      @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
+      @gMapInfoWin = new google.maps.InfoWindow()
+    else
+      for gMarker in @gMarkers
+        gMarker.setMap(null)
+      @mapCluster.clearMarkers()
+      if($('#all-hotels-map').html().length < 5)
+        @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
+        @fullMapInitialized = false
+        @mapCluster = null
+      @gAllMap.setCenter(center)
+
+
+      #addMarkers(markers:Array.<google.maps.Marker>, opt_nodraw:boolean)
+
+
+
+
     @gMarkers = []
-    @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
-    @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
-    @gMapInfoWin = new google.maps.InfoWindow()
+
     i = 0
     for hotel in @data()
       if hotel.visible()
@@ -701,7 +723,7 @@ class HotelsResultSet
           icon: @markerImage,
           draggable: false
         })
-        hotel1 = hotel;
+        hotel.gMarker = gMarker
         google.maps.event.addListener(
           gMarker,
           'mouseover',
@@ -724,23 +746,37 @@ class HotelsResultSet
               @gMapPointClick(ev,hotel))(hotel)
         )
         @gMarkers.push gMarker
-        console.log 'mm',gMarker,hotel1
+        #console.log 'mm',gMarker
         i++
-        if i > 5
-          break;
+        #if i > 5
+        #  break;
+
+      if !@fullMapInitialized
+        @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers)
+        @fullMapInitialized = true
+      else
+        @mapCluster.addMarkers(@gMarkers)
+
+  hideFullMap: =>
+    $('#all-hotels-results').hide()
+    $('#all-hotels-map').show()
 
   gMapPointShowWin: (event,hotel) =>
-    div = '<div><h3>TT</h3><img src="'+hotel.frontPhoto.largeUrl+'" height="40" width="40"><p>'+hotel.hotelName+'TT</p></div>'
+    div = '<div><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'" height="40" width="40"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> р/ночь</div></div>'
     @gMapInfoWin.setContent(div);
     console.log(div);
     @gMapInfoWin.setPosition(event.latLng)
     @gMapInfoWin.open(@gAllMap)
+    hotel.gMarker.setIcon(@markerImageHover)
 
 
   gMapPointHideWin: (event,hotel) =>
-    #@gMapInfoWin.close()
+    hotel.gMarker.setIcon(@markerImage)
+    @gMapInfoWin.close()
 
   gMapPointClick: (event,hotel) =>
+    @hideFullMap()
+    @select(hotel)
     console.log('gMapEventClick',event,hotel)
 
   selectFromPopup: (hotel, event) =>

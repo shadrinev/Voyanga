@@ -1,7 +1,7 @@
 <script type="text/html" id="event-map">
     <div class="maps">
         <div class="innerBlockMain">
-            <div class="mapsBigAll"></div>
+            <div class="mapsBigAll" data-bind="gMap: {lat:52,lng:10}"></div>
             <div class="toursBigAll" data-bind='with: currentEvent()'>
                 <div class="centerTours">
                     <div class="close" data-bind="click: $parent.closeEventsPhoto"></div>

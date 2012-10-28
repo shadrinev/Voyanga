@@ -75,9 +75,13 @@ class SearchController extends ApiController
             $this->sendError(200, 'Cache invalidated already.');
             Yii::app()->end();
         }
-        $hotelClient = new HotelBookClient();
 
-        foreach ($hotelSearchResult['hotels'] as $hotel)
+        $stack = new HotelStack($hotelSearchResult);
+        $results = $stack->groupBy('hotelId')->mergeSame()->sortBy('rubPrice', 5)->getJsonObject(4);
+        $hotelClient = new HotelBookClient();
+        $response = array();
+
+        foreach ($results['hotels'] as $hotel)
         {
             if ($hotel['hotelId'] == $hotelId)
             {
