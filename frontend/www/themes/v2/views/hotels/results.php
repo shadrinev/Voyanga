@@ -18,6 +18,7 @@
 </script>
 
 <script type="text-html" id="hotels-results-inner">
+<div id="all-hotels-results">
 <h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city.casePre">Амстердам</span><div class="hideTitle">, <span data-bind="text: getDateInterval()">19-26 мая</span></div></h1>
 <div class="ticket-content hotels">
     <h2>Найдено отелей: <span data-bind="text: numResults">##</span></h2>
@@ -95,6 +96,8 @@
     </div>
     <!-- /ko -->
 </div>
+</div>
+    <div id="all-hotels-map" style="display: none; height: 500px"></div>
 </script>
 <script id="photo-popup-template" type="text/html">
 	<div id="body-popup-Photo">

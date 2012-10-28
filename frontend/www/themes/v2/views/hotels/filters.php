@@ -22,7 +22,7 @@
                     <div class="slider-wrapper-div">
                         <input data-bind="priceSlider: price"/>
                     </div>
-                    <a href="#" class="linksFilter">Отели на большой карте</a>
+                    <a href="#" class="linksFilter" data-bind="click: showFullMap">Отели на большой карте</a>
                 </div>
                 <div class="div-filter">
                     <h4>Удаленность от центра</h4>

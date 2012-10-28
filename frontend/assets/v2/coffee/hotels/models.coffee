@@ -583,6 +583,8 @@ class HotelsResultSet
           console.log('yes set')
         break
     @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
+    @fullMapInitialized = false
+    @showFullMap = ko.observable false
     @minPrice = false
     @maxPrice = false
     for hotel in rawData.hotels
@@ -675,6 +677,70 @@ class HotelsResultSet
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
     Utils.scrollTo('#content',false)
+
+  showFullMapFunc: =>
+    console.log('show full map')
+    $('#all-hotels-results').hide()
+    $('#all-hotels-map').show()
+    center = new google.maps.LatLng(@city.latitude, @city.longitude);
+    options = {'zoom': 11,'center': center,'mapTypeId': google.maps.MapTypeId.ROADMAP}
+    @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
+    @gMapCluter = false;
+    @gMarkers = []
+    @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
+    @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
+    @gMapInfoWin = new google.maps.InfoWindow()
+    i = 0
+    for hotel in @data()
+      if hotel.visible()
+        console.log('add hotel marker',hotel.lat, hotel.lng)
+        gMarker = new google.maps.Marker({
+          position: new google.maps.LatLng(hotel.lat, hotel.lng),
+          map: @gAllMap,
+          icon: @markerImage,
+          draggable: false
+        })
+        hotel1 = hotel;
+        google.maps.event.addListener(
+          gMarker,
+          'mouseover',
+          ((hotel)=>
+            return (ev)=>
+              @gMapPointShowWin(ev,hotel))(hotel)
+        )
+        google.maps.event.addListener(
+          gMarker,
+          'mouseout',
+          ((hotel)=>
+            return (ev)=>
+              @gMapPointHideWin(ev,hotel))(hotel)
+        )
+        google.maps.event.addListener(
+          gMarker,
+          'click',
+          ((hotel)=>
+            return (ev)=>
+              @gMapPointClick(ev,hotel))(hotel)
+        )
+        @gMarkers.push gMarker
+        console.log 'mm',gMarker,hotel1
+        i++
+        if i > 5
+          break;
+
+  gMapPointShowWin: (event,hotel) =>
+    div = '<div><h3>TT</h3><img src="'+hotel.frontPhoto.largeUrl+'" height="40" width="40"><p>'+hotel.hotelName+'TT</p></div>'
+    @gMapInfoWin.setContent(div);
+    console.log(div);
+    @gMapInfoWin.setPosition(event.latLng)
+    @gMapInfoWin.open(@gAllMap)
+
+
+  gMapPointHideWin: (event,hotel) =>
+    #@gMapInfoWin.close()
+
+  gMapPointClick: (event,hotel) =>
+    console.log('gMapEventClick',event,hotel)
 
   selectFromPopup: (hotel, event) =>
     hotel.activePopup.close()

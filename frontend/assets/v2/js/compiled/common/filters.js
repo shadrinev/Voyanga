@@ -807,6 +807,8 @@ HotelFiltersT = (function() {
 
     this.updateLimitsHotel = __bind(this.updateLimitsHotel, this);
 
+    this.showFullMap = __bind(this.showFullMap, this);
+
     this.template = 'hotels-filters';
     this.roomFilters = ['price'];
     this.hotelFilters = ['services', 'stars', 'distance', 'hotelName'];
@@ -839,6 +841,12 @@ HotelFiltersT = (function() {
     this.services.addOption('Интернет');
     this.results.postFilters();
   }
+
+  HotelFiltersT.prototype.showFullMap = function() {
+    console.log('FM');
+    console.log();
+    return this.results.showFullMapFunc();
+  };
 
   HotelFiltersT.prototype.updateLimitsHotel = function(result) {
     return this.runFiltersFunc(result, this.hotelFilters, 'updateLimits');

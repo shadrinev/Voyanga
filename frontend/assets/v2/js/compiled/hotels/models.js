@@ -722,6 +722,14 @@ HotelsResultSet = (function() {
 
     this.selectFromPopup = __bind(this.selectFromPopup, this);
 
+    this.gMapPointClick = __bind(this.gMapPointClick, this);
+
+    this.gMapPointHideWin = __bind(this.gMapPointHideWin, this);
+
+    this.gMapPointShowWin = __bind(this.gMapPointShowWin, this);
+
+    this.showFullMapFunc = __bind(this.showFullMapFunc, this);
+
     this.select = __bind(this.select, this);
 
     this._results = {};
@@ -755,6 +763,8 @@ HotelsResultSet = (function() {
       }
     }
     this.wordDays = Utils.wordAfterNum(duration, 'день', 'дня', 'дней');
+    this.fullMapInitialized = false;
+    this.showFullMap = ko.observable(false);
     this.minPrice = false;
     this.maxPrice = false;
     _ref1 = rawData.hotels;
@@ -856,6 +866,83 @@ HotelsResultSet = (function() {
     hotel.getFullInfo();
     window.app.render(hotel, 'info-template');
     return Utils.scrollTo('#content', false);
+  };
+
+  HotelsResultSet.prototype.showFullMapFunc = function() {
+    var center, gMarker, hotel, hotel1, i, options, _i, _len, _ref, _results,
+      _this = this;
+    console.log('show full map');
+    $('#all-hotels-results').hide();
+    $('#all-hotels-map').show();
+    center = new google.maps.LatLng(this.city.latitude, this.city.longitude);
+    options = {
+      'zoom': 11,
+      'center': center,
+      'mapTypeId': google.maps.MapTypeId.ROADMAP
+    };
+    this.gAllMap = new google.maps.Map($('#all-hotels-map')[0], options);
+    this.gMapCluter = false;
+    this.gMarkers = [];
+    this.markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png', new google.maps.Size(31, 31));
+    this.markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png', new google.maps.Size(31, 31));
+    this.gMapInfoWin = new google.maps.InfoWindow();
+    i = 0;
+    _ref = this.data();
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      hotel = _ref[_i];
+      if (hotel.visible()) {
+        console.log('add hotel marker', hotel.lat, hotel.lng);
+        gMarker = new google.maps.Marker({
+          position: new google.maps.LatLng(hotel.lat, hotel.lng),
+          map: this.gAllMap,
+          icon: this.markerImage,
+          draggable: false
+        });
+        hotel1 = hotel;
+        google.maps.event.addListener(gMarker, 'mouseover', (function(hotel) {
+          return function(ev) {
+            return _this.gMapPointShowWin(ev, hotel);
+          };
+        })(hotel));
+        google.maps.event.addListener(gMarker, 'mouseout', (function(hotel) {
+          return function(ev) {
+            return _this.gMapPointHideWin(ev, hotel);
+          };
+        })(hotel));
+        google.maps.event.addListener(gMarker, 'click', (function(hotel) {
+          return function(ev) {
+            return _this.gMapPointClick(ev, hotel);
+          };
+        })(hotel));
+        this.gMarkers.push(gMarker);
+        console.log('mm', gMarker, hotel1);
+        i++;
+        if (i > 5) {
+          break;
+        } else {
+          _results.push(void 0);
+        }
+      } else {
+        _results.push(void 0);
+      }
+    }
+    return _results;
+  };
+
+  HotelsResultSet.prototype.gMapPointShowWin = function(event, hotel) {
+    var div;
+    div = '<div><h3>TT</h3><img src="' + hotel.frontPhoto.largeUrl + '" height="40" width="40"><p>' + hotel.hotelName + 'TT</p></div>';
+    this.gMapInfoWin.setContent(div);
+    console.log(div);
+    this.gMapInfoWin.setPosition(event.latLng);
+    return this.gMapInfoWin.open(this.gAllMap);
+  };
+
+  HotelsResultSet.prototype.gMapPointHideWin = function(event, hotel) {};
+
+  HotelsResultSet.prototype.gMapPointClick = function(event, hotel) {
+    return console.log('gMapEventClick', event, hotel);
   };
 
   HotelsResultSet.prototype.selectFromPopup = function(hotel, event) {

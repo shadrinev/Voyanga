@@ -491,6 +491,10 @@ class HotelFiltersT
     @services.addOption 'Интернет'
     @results.postFilters()
 
+  showFullMap: =>
+    console.log('FM')
+    console.log()
+    @results.showFullMapFunc()
   updateLimitsHotel: (result) =>
     @runFiltersFunc result, @hotelFilters, 'updateLimits'
 
