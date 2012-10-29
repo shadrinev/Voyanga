@@ -1951,11 +1951,21 @@ input.hotel-input {
     padding-left: 10px;
     padding-top: 3px;
 }
+.slideTours .toursTicketsMain .textTours > span {
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .slideTours.small .toursTicketsMain .textTours {
 	position: relative;
 	line-height: 16px;
 	padding-left: 3px;
 	white-space: normal;
+}
+.slideTours.small .toursTicketsMain .textTours > span {
+	width: 100%;
+	display: inherit;
 }
 .slideTours.small .toursTicketsMain .textTours .priceEvent {
     background: url("../images/bg-small-price-event.png") no-repeat scroll 0 0 transparent;

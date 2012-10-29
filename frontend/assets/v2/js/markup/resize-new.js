@@ -568,6 +568,7 @@ function ResizeAvia() {
     ifHeightMinAllBody();
     showMiniPopUp();
     slideToursSlide();
+    smallIMGresizeIndex();
 }
 
 function ResizeFun() {
