@@ -697,6 +697,29 @@ class HotelsResultSet
       @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
       @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
       @gMapInfoWin = new google.maps.InfoWindow()
+      @clusterStyle = [
+        {url: '/themes/v2/images/cluster_one.png',
+        height: 43,
+        width: 31,
+        anchor: [7, 0],
+        textColor: '#000',
+        textSize: 13
+        },
+        {url: '/themes/v2/images/cluster_two.png',
+        height: 54,
+        width: 39,
+        anchor: [12, 0],
+        textColor: '#000',
+        textSize: 13
+        },
+        {url: '/themes/v2/images/cluster_three.png',
+        height: 65,
+        width: 47,
+        anchor: [16, 0],
+        textColor: '#000',
+        textSize: 13
+        }
+      ]
     else
       for gMarker in @gMarkers
         gMarker.setMap(null)
@@ -754,7 +777,7 @@ class HotelsResultSet
         #  break;
 
       if !@fullMapInitialized
-        @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers)
+        @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers,{styles: @clusterStyle})
         @fullMapInitialized = true
       else
         @mapCluster.addMarkers(@gMarkers)

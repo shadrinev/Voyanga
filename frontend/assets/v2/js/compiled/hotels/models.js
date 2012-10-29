@@ -893,6 +893,30 @@ HotelsResultSet = (function() {
       this.markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png', new google.maps.Size(31, 31));
       this.markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png', new google.maps.Size(31, 31));
       this.gMapInfoWin = new google.maps.InfoWindow();
+      this.clusterStyle = [
+        {
+          url: '/themes/v2/images/cluster_one.png',
+          height: 43,
+          width: 31,
+          anchor: [7, 0],
+          textColor: '#000',
+          textSize: 13
+        }, {
+          url: '/themes/v2/images/cluster_two.png',
+          height: 54,
+          width: 39,
+          anchor: [12, 0],
+          textColor: '#000',
+          textSize: 13
+        }, {
+          url: '/themes/v2/images/cluster_three.png',
+          height: 65,
+          width: 47,
+          anchor: [16, 0],
+          textColor: '#000',
+          textSize: 13
+        }
+      ];
     } else {
       _ref = this.gMarkers;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -941,7 +965,9 @@ HotelsResultSet = (function() {
         i++;
       }
       if (!this.fullMapInitialized) {
-        this.mapCluster = new MarkerClusterer(this.gAllMap, this.gMarkers);
+        this.mapCluster = new MarkerClusterer(this.gAllMap, this.gMarkers, {
+          styles: this.clusterStyle
+        });
         _results.push(this.fullMapInitialized = true);
       } else {
         _results.push(this.mapCluster.addMarkers(this.gMarkers));
