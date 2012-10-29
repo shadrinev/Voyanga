@@ -770,6 +770,7 @@ HotelsResultSet = (function() {
     }
     this.wordDays = Utils.wordAfterNum(duration, 'день', 'дня', 'дней');
     this.fullMapInitialized = false;
+    this.fullMapShow = false;
     this.showFullMap = ko.observable(false);
     this.minPrice = false;
     this.maxPrice = false;
@@ -878,6 +879,7 @@ HotelsResultSet = (function() {
     var center, gMarker, hotel, i, options, _i, _j, _len, _len1, _ref, _ref1, _results,
       _this = this;
     console.log('show full map');
+    this.fullMapShow = true;
     $('#all-hotels-results').hide();
     $('#all-hotels-map').show();
     center = new google.maps.LatLng(this.city.latitude, this.city.longitude);
@@ -950,7 +952,8 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.hideFullMap = function() {
     $('#all-hotels-results').hide();
-    return $('#all-hotels-map').show();
+    $('#all-hotels-map').show();
+    return this.fullMapShow = false;
   };
 
   HotelsResultSet.prototype.gMapPointShowWin = function(event, hotel) {
@@ -1078,6 +1081,9 @@ HotelsResultSet = (function() {
         kb = true;
       } else {
         Utils.scrollTo(0, false);
+      }
+      if (_this.fullMapShow) {
+        _this.showFullMapFunc();
       }
       return _this.toursOpened = false;
     }, 50);
