@@ -58,6 +58,7 @@ return CMap::mergeArray(
         'components' => array(
             'cache' => array(
                 'class' => 'CMemCache',
+                'useMemcached'=> true,
                 'servers' => array(
                     array(
                         'host' => 'localhost',

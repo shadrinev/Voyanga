@@ -701,21 +701,21 @@ class HotelsResultSet
         {url: '/themes/v2/images/cluster_one.png',
         height: 43,
         width: 31,
-        anchor: [8, 0],
+        anchor: [7, 0],
         textColor: '#000',
         textSize: 18
         },
         {url: '/themes/v2/images/cluster_two.png',
         height: 54,
         width: 39,
-        anchor: [12, 0],
+        anchor: [11, 0],
         textColor: '#000',
         textSize: 18
         },
         {url: '/themes/v2/images/cluster_three.png',
         height: 65,
         width: 47,
-        anchor: [16, 0],
+        anchor: [15, 0],
         textColor: '#000',
         textSize: 18
         }
