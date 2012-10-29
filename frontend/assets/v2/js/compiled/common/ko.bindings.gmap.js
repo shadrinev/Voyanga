@@ -7,8 +7,15 @@ ko.bindingHandlers.gMap = {
     disp = $(element).css('display');
     $(element).css('display', 'block');
     gMap = new google.maps.Map(element, {
-      'zoom': 2,
-      'mapTypeId': google.maps.MapTypeId.ROADMAP,
+      'mapTypeControl': false,
+      'panControl': false,
+      'zoomControlOptions': {
+        position: google.maps.ControlPosition.LEFT_TOP,
+        style: google.maps.ZoomControlStyle.SMALL
+      },
+      'streetViewControl': false,
+      'zoom': 3,
+      'mapTypeId': google.maps.MapTypeId.TERRAIN,
       'center': new google.maps.LatLng(value.lat, value.lng)
     });
     return window.setTimeout(function() {

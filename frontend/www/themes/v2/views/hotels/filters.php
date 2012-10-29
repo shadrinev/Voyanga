@@ -22,13 +22,13 @@
                     <div class="slider-wrapper-div">
                         <input data-bind="priceSlider: price"/>
                     </div>
-                    <a href="#" class="linksFilter" data-bind="click: showFullMap">Отели на большой карте</a>
                 </div>
                 <div class="div-filter">
                     <h4>Удаленность от центра</h4>
                     <div class="slider-wrapper-div">
                         <input data-bind="singleSlider: distance" data-dimension="км"/>
                     </div>
+                    <a href="#" class="linksFilter" data-bind="click: showFullMap">Отели на большой карте</a>
                 </div>
                 <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: services, if: services.active}, visible: services.active">
                 </div>

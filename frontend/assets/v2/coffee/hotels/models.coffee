@@ -546,7 +546,7 @@ class HotelResult
 
 
   smallMapUrl: =>
-      base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=color:red%7Ccolor:red%7C"
+      base = "http://maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C"
       base += "%7C"
       base += @lat + "," + @lng
       base += "&sensor=false"

@@ -2617,3 +2617,16 @@ input.hotel-input {
 .inlineBlock {
     display: inline-block;
 }
+.hotelMapImage {
+    float: left;
+}
+.hotelMapName {
+    color: #000;
+}
+.mapPriceValue {
+    color: #000;
+    font-size: 15px;
+}
+.mapPriceDiv {
+    color: #000;
+}
