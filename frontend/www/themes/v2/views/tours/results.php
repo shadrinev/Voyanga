@@ -56,9 +56,9 @@
         </div>
       </div>
       <table class="finish-result voyasha"  data-bind="foreach: voyashki">
-        <tr>
+        <tr data-bind="click:choose">
           <td class="txt" data-bind="text: title">Самый дешевый:</td>
-          <td class="price"><div><span data-bind="text: price, click:choose">30 300</span> <span class="rur">o</span></div></td>
+          <td class="price"><div><span data-bind="text: price">30 300</span> <span class="rur">o</span></div></td>
         </tr>
       </table>
     </div>

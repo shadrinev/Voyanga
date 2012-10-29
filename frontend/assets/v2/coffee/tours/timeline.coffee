@@ -32,29 +32,47 @@ class Timeline
       left = Math.round(timeline_length / 2)
       right = Math.round(timeline_length /2)
       results = []
+      has_first_avia = false
+      has_first_hotel = false
       for x in [2..left]
         obj =  {date: middle_date.clone().subtract('days', left-x+1)}
         obj.day = obj.date.format('D')
         obj.hotel = false
         obj.avia = false
+        obj.first = false
         item_avia = avia_map[obj.date.format('M.D')]
         item_hotel = hotel_map[obj.date.format('M.D')]
         if item_hotel
           obj.hotel = item_hotel
+          if has_first_hotel == false
+            obj.first = true
+            has_first_hotel = true
+
         if item_avia
           obj.avia = item_avia
+          if has_first_avia == false
+            obj.first = true
+            has_first_avia = true
         results.push obj
       for x in [0..right]
         obj =  {date: middle_date.clone().add('days', x)}
         obj.day = obj.date.format('D')
         obj.hotel = false
         obj.avia = false
+        obj.first = false
         item_avia = avia_map[obj.date.format('M.D')]
         item_hotel = hotel_map[obj.date.format('M.D')]
         if item_hotel
           obj.hotel = item_hotel
+          if has_first_hotel == false
+            obj.first = true
+            has_first_hotel = true
+
         if item_avia
           obj.avia = item_avia
+          if has_first_avia == false
+            obj.first = true
+            has_first_avia = true
         results.push obj
       return results
                     
