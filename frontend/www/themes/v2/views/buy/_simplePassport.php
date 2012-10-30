@@ -32,11 +32,6 @@
             <tbody>
             <?php foreach($passportForms as $i=>$model):?>
                 <tr>
-                    <td colspan="7">
-                        <?php echo CHtml::errorSummary($model); ?>
-                    </td>
-                </tr>
-                <tr>
                     <td class="tdName">
                         <?php echo CHtml::activeTextField($model, "[$i]firstName"); ?>
                     </td>

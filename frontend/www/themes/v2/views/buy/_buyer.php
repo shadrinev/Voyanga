@@ -8,14 +8,9 @@
                 <td>Адрес электронной почты</td>
                 <td>Номер телефона</td>
                 <td></td>
-            <tr>
+            </tr>
             </thead>
             <tbody>
-            <tr>
-                <td colspan="3">
-                    <?php echo CHtml::errorSummary($model); ?>
-                </td>
-            </tr>
             <tr>
                 <td class="tdEmail">
                     <?php echo CHtml::activeTextField($model, "contactEmail"); ?>
