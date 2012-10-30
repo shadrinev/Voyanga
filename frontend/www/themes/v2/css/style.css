@@ -2396,6 +2396,7 @@ input.hotel-input {
 	height: 20px;
 	display: inline-block;
 	vertical-align: middle;
+	margin-right: 10px;
 }
 .paybuyContent h2 .ico-hotel {
 	background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
@@ -2403,6 +2404,7 @@ input.hotel-input {
 	height: 20px;
 	display: inline-block;
 	vertical-align: middle;
+	margin-right: 10px; 					
 }
 .paybuyContent h3 {
 	font-size: 19px;
@@ -2440,7 +2442,13 @@ input.hotel-input {
 	background-position: 0px 0px;
 	text-transform: uppercase;
 }
-.infoPassengers .tdName input[type='text']:focus {
+.infoPassengers input[type='text']:focus {
+	border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
+    color: #16181A !important;
+    outline: 0 none;
+}
+.infoPassengers .tdName input[type='text'].error {
 	background-position: 0px -33px;
 }
 
@@ -2448,13 +2456,13 @@ input.hotel-input {
 	width: 175px;
 }
 .infoPassengers .tdLastname input[type='text'] {
-	width: 169px;
+	width: 159px;
 	padding-left: 5px;
 	padding-right: 5px;
 	background-position: -147px 0px;
 	text-transform: uppercase;
 }
-.infoPassengers .tdLastname input[type='text']:focus {
+.infoPassengers .tdLastname input[type='text'].error {
 	background-position: -147px -33px;
 }
 
@@ -2468,7 +2476,7 @@ input.hotel-input {
     text-transform: uppercase;
     width: 148px;
 }
-.infoPassengers .tdDocumentNumber input[type='text']:focus {
+.infoPassengers .tdDocumentNumber input[type='text'].error {
 	background-position: -662px -33px;
 }
 .infoPassengers .tdBirthday {
@@ -2484,7 +2492,7 @@ input.hotel-input {
 	float: left;
 	font-size: 12px;
 }
-.infoPassengers .dd:focus {
+.infoPassengers .dd.error {
 	background-position: -403px -33px !important;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -2503,7 +2511,7 @@ input.hotel-input {
 		width: 31px;
 	}
 }
-.infoPassengers .mm:focus {
+.infoPassengers .mm.error {
 	background-position: -437px -33px !important;
 }
 .infoPassengers .yy {
@@ -2512,7 +2520,7 @@ input.hotel-input {
     text-align: center;
     width: 53px;
 }
-.infoPassengers .yy:focus {
+.infoPassengers .yy.error {
 	background-position: -470px -33px !important;
 }
 .infoPassengers .tdNationality {
@@ -2525,7 +2533,7 @@ input.hotel-input {
 	background-position: -533px 0px;
 	text-transform: uppercase;
 }
-.infoPassengers .tdNationality input[type='text']:focus {
+.infoPassengers .tdNationality input[type='text'].error {
 	background-position: -533px -33px;
 }
 .tdSex {
@@ -2538,15 +2546,18 @@ input.hotel-input {
 	cursor: pointer;
 	float: left;
 }
-.tdSex .male:hover {
+.tdSex .male.error {
 	background-position: -354px -66px;
 }
-.tdSex .male.active {
+
+.tdSex .male.active, .tdSex .male:hover {
 	background-position: -326px -33px;
 }
+/*
 .tdSex .male.active:hover {
 	background-position: -354px -99px;
 }
+*/
 .tdSex .female {
 	width: 34px;
 	height: 33px;
@@ -2554,15 +2565,17 @@ input.hotel-input {
 	cursor: pointer;
 	float: left;
 }
-.tdSex .female:hover {
+.tdSex .female.error {
 	background-position: -388px -66px;
 }
-.tdSex .female.active {
+.tdSex .female.active, .tdSex .female:hover {
 	background-position: -360px -33px;
 }
+/*
 .tdSex .female.active:hover {
 	background-position: -388px -99px;
 }
+*/
 .addGuest {
 	color: #1d222b;
 	font-size: 14px;
@@ -2578,10 +2591,16 @@ input.hotel-input {
 	padding-left: 5px;
 	padding-right: 5px;
 	background-position: 0px -66px;
-	text-transform: uppercase;
+	text-transform:none;
 }
-.dopInfoPassengers .tdEmail input[type='text']:focus {
+.dopInfoPassengers .tdEmail input[type='text'].error {
 	background-position: -0px -99px;
+}
+.dopInfoPassengers input[type='text']:focus {
+	border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
+    color: #16181A !important;
+    outline: 0 none;
 }
 
 .dopInfoPassengers .tdTelefon {
@@ -2594,7 +2613,7 @@ input.hotel-input {
 	background-position: -431px -66px;
 	text-transform: uppercase;
 }
-.dopInfoPassengers .tdTelefon input[type='text']:focus {
+.dopInfoPassengers .tdTelefon input[type='text'].error {
 	background-position: -431px -99px;
 }
 .dopInfoPassengers .tdText {
