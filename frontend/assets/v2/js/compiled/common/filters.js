@@ -275,10 +275,12 @@ ListFilter = (function(_super) {
     if (this.selection().length === 0) {
       return true;
     }
+    console.log('servFilters', this.selection());
     _ref = this.keys;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       key = _ref[_i];
       propValue = this.get(result, key);
+      console.log('servFiltersProp', propValue);
       if (typeof propValue !== 'object') {
         if (this.selection().indexOf(propValue) < 0) {
           return false;
@@ -286,10 +288,10 @@ ListFilter = (function(_super) {
       } else {
         if (propValue) {
           values = propValue;
+          find = true;
           _ref1 = this.selection();
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             value = _ref1[_j];
-            find = true;
             find = find && (propValue.indexOf(value) >= 0);
           }
           return find;
@@ -555,7 +557,6 @@ TextFilter = (function(_super) {
   };
 
   TextFilter.prototype.updateResults = function() {
-    ko.processAllDeferredBindingUpdates();
     return this.updateTimeout = null;
   };
 

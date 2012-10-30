@@ -620,13 +620,20 @@ function scrolShowFilter() {
 				'scroll',
 				function()
 				{
-                    var throttleTimeout;
+                    //var throttleTimeout;
                     if (!throttleTimeout) {
+
                         throttleTimeout = setTimeout(
                             function()
                             {
-                                api.reinitialise();
                                 throttleTimeout = null;
+                            },
+                            600
+                        );
+                        setTimeout(
+                            function()
+                            {
+                                api.reinitialise();
                             },
                             300
                         );
@@ -636,8 +643,9 @@ function scrolShowFilter() {
             $('.all-list, .order-hide').live(
                 'click',
                 function()
-                {	
-                    var throttleTimeout;
+                {
+                    console.log('jClick');
+                    //var throttleTimeout;
                     if (!throttleTimeout) {
                         throttleTimeout = setTimeout(
                             function()
@@ -654,7 +662,7 @@ function scrolShowFilter() {
                 'mouseup',
                 function()
                 {	
-                    var throttleTimeout;
+                    //var throttleTimeout;
                     if (!throttleTimeout) {
                         throttleTimeout = setTimeout(
                             function()

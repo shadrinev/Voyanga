@@ -161,16 +161,19 @@ class ListFilter extends Filter
   filter: (result)=>
     if @selection().length == 0
       return true
+    console.log('servFilters',@selection())
+
     for key in @keys
       propValue = @get(result,key)
+      console.log('servFiltersProp',propValue)
       if typeof propValue != 'object'
         if @selection().indexOf(propValue) < 0
           return false
       else
         if propValue
           values = propValue
+          find = true
           for value in @selection()
-            find = true
             find = find && (propValue.indexOf(value) >= 0)
 
           return find
@@ -318,7 +321,7 @@ class TextFilter extends Filter
     return result
 
   updateResults: =>
-    ko.processAllDeferredBindingUpdates()
+    #ko.processAllDeferredBindingUpdates()
     @updateTimeout = null
 
   keyDown: =>
@@ -533,6 +536,7 @@ class HotelFiltersT
 
   filter: =>
     console.log('filters changed')
+    #console.profile('hotelFilters')
     @iterate @filterHotel, @filterRoom
 
   iterate: (onHotel, onRoom) =>
@@ -546,6 +550,7 @@ class HotelFiltersT
         result.visible(someVisible)
       #result.chooseActive()
     console.log('all filters accepted')
+    #console.profileEnd('hotelFilters')
     @results.postFilters()
 
   getConfig: =>
