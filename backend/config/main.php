@@ -129,8 +129,6 @@ return CMap::mergeArray(
                 'errorAction' => 'site/error'
             ),
 
-
-
             'log' => array(
                 'class' => 'CLogRouter',
                 'routes' => array(

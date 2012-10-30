@@ -34,11 +34,6 @@ return array(
             'forceCopy' => YII_DEBUG
         ),
 
-        'sharedMemory' => array(
-            'class' => 'site.frontend.components.SharedMemory',
-            'maxSize' =>  2 * 1024, //2*1024*1024
-        ),
-
         'cron'=>array(
             'class'=>'site.common.components.cron.CronComponent'
         ),
