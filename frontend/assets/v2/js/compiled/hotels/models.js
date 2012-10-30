@@ -975,7 +975,8 @@ HotelsResultSet = (function() {
         this.mapCluster.addMarkers(this.gMarkers);
       }
     }
-    return console.log(this.gAllMap);
+    console.log(this.gAllMap);
+    return console.log(this.gMapInfoWin);
   };
 
   HotelsResultSet.prototype.hideFullMap = function() {
@@ -992,6 +993,7 @@ HotelsResultSet = (function() {
     console.log(div);
     this.gMapInfoWin.setPosition(event.latLng);
     this.gMapInfoWin.open(this.gAllMap);
+    $(this.gMapInfoWin.j[0].b.d).attr('id', 'gMapInfoDiv');
     return hotel.gMarker.setIcon(this.markerImageHover);
   };
 

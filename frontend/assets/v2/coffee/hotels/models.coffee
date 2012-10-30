@@ -785,6 +785,7 @@ class HotelsResultSet
       else
         @mapCluster.addMarkers(@gMarkers)
     console.log(@gAllMap)
+    console.log(@gMapInfoWin)
 
   hideFullMap: =>
     console.log('hideFullMap')
@@ -798,6 +799,7 @@ class HotelsResultSet
     console.log(div);
     @gMapInfoWin.setPosition(event.latLng)
     @gMapInfoWin.open(@gAllMap)
+    $(@gMapInfoWin.j[0].b.d).attr('id','gMapInfoDiv')
     hotel.gMarker.setIcon(@markerImageHover)
 
 
