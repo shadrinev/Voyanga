@@ -18,7 +18,7 @@ Timeline = (function() {
     this.timelinePosition = ko.observable(0);
     this.termsActive = false;
     this.data = ko.computed(function() {
-      var avia_map, end_date, hotel_map, item, item_avia, item_hotel, left, middle_date, obj, results, right, spans, start_date, timeline_length, x, _i, _j, _k, _len, _ref;
+      var avia_map, end_date, has_first_avia, has_first_hotel, hotel_map, item, item_avia, item_hotel, left, middle_date, obj, results, right, spans, start_date, timeline_length, x, _i, _j, _k, _len, _ref;
       spans = [];
       avia_map = {};
       hotel_map = {};
@@ -64,6 +64,8 @@ Timeline = (function() {
       left = Math.round(timeline_length / 2);
       right = Math.round(timeline_length / 2);
       results = [];
+      has_first_avia = false;
+      has_first_hotel = false;
       for (x = _j = 2; 2 <= left ? _j <= left : _j >= left; x = 2 <= left ? ++_j : --_j) {
         obj = {
           date: middle_date.clone().subtract('days', left - x + 1)
@@ -71,13 +73,22 @@ Timeline = (function() {
         obj.day = obj.date.format('D');
         obj.hotel = false;
         obj.avia = false;
+        obj.first = false;
         item_avia = avia_map[obj.date.format('M.D')];
         item_hotel = hotel_map[obj.date.format('M.D')];
         if (item_hotel) {
           obj.hotel = item_hotel;
+          if (has_first_hotel === false) {
+            obj.first = true;
+            has_first_hotel = true;
+          }
         }
         if (item_avia) {
           obj.avia = item_avia;
+          if (has_first_avia === false) {
+            obj.first = true;
+            has_first_avia = true;
+          }
         }
         results.push(obj);
       }
@@ -88,13 +99,22 @@ Timeline = (function() {
         obj.day = obj.date.format('D');
         obj.hotel = false;
         obj.avia = false;
+        obj.first = false;
         item_avia = avia_map[obj.date.format('M.D')];
         item_hotel = hotel_map[obj.date.format('M.D')];
         if (item_hotel) {
           obj.hotel = item_hotel;
+          if (has_first_hotel === false) {
+            obj.first = true;
+            has_first_hotel = true;
+          }
         }
         if (item_avia) {
           obj.avia = item_avia;
+          if (has_first_avia === false) {
+            obj.first = true;
+            has_first_avia = true;
+          }
         }
         results.push(obj);
       }

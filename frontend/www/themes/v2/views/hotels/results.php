@@ -21,7 +21,12 @@
 <div id="all-hotels-results">
 <h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city.casePre">Амстердам</span><div class="hideTitle">, <span data-bind="text: getDateInterval()">19-26 мая</span></div></h1>
 <div class="ticket-content hotels">
-    <h2>Найдено отелей: <span data-bind="text: numResults">##</span></h2>
+    <h2>Найдено отелей: <span data-bind="text: numResults">##</span>
+    	<ul class="tmblr">
+	      <li id="hotel-info-tumblr-description" class="active"><span class="ico-descr"></span> <a href="#descr">Списком</a></li>
+	      <li id="hotel-info-tumblr-map"><span class="ico-see-map"></span> <a href="#map">На карте</a></li>
+	    </ul>
+    </h2>
     <div class="sorting-panel"><span class="hotel-sort-by">сортировать по:</span> <span data-bind="click: sortByPrice,attr:{class: sortByPriceClass()}">&nbsp;цене</span> <span data-bind="click: sortByRating,attr:{class: sortByRatingClass()}">&nbsp;рейтингу</span>  </div>
     <div class="clear"></div>
         <!-- ko foreach: resultsForRender -->

@@ -1065,6 +1065,14 @@
     float: left;
     margin-top: 11px;
 }
+h2 .tmblr {
+	float: none;
+	margin: 0px;
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: 30px;
+	font-size: 12px;
+}
 .tmblr li {
     color: #42464B;
     float: left;
