@@ -591,7 +591,6 @@ class HotelsResultSet
         break
     @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
     @fullMapInitialized = false
-    @fullMapShow = false
     @showFullMap = ko.observable false
 
     @minPrice = false
@@ -689,7 +688,7 @@ class HotelsResultSet
 
   showFullMapFunc: =>
     console.log('show full map')
-    @fullMapShow = true
+    @showFullMap(true)
     $('#all-hotels-results').hide()
     $('#all-hotels-map').show()
     center = new google.maps.LatLng(@city.latitude, @city.longitude);
@@ -787,9 +786,10 @@ class HotelsResultSet
         @mapCluster.addMarkers(@gMarkers)
 
   hideFullMap: =>
-    $('#all-hotels-results').hide()
-    $('#all-hotels-map').show()
-    @fullMapShow = false
+    console.log('hideFullMap')
+    $('#all-hotels-results').show()
+    $('#all-hotels-map').hide()
+    @showFullMap(false)
 
   gMapPointShowWin: (event,hotel) =>
     div = '<div><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'" height="40" width="40"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> р/ночь</div></div>'

@@ -18,17 +18,18 @@
 </script>
 
 <script type="text-html" id="hotels-results-inner">
-<div id="all-hotels-results">
+
 <h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city.casePre">Амстердам</span><div class="hideTitle">, <span data-bind="text: getDateInterval()">19-26 мая</span></div></h1>
 <div class="ticket-content hotels">
     <h2>Найдено отелей: <span data-bind="text: numResults">##</span>
     	<ul class="tmblr">
-	      <li id="hotel-info-tumblr-description" class="active"><span class="ico-descr"></span> <a href="#descr">Списком</a></li>
-	      <li id="hotel-info-tumblr-map"><span class="ico-see-map"></span> <a href="#map">На карте</a></li>
+	      <li id="hotel-info-tumblr-description" data-bind="attr:{class: showFullMap() ? '' : 'active'}"><span class="ico-descr"></span> <a href="#descr" data-bind="click: hideFullMap">Списком</a></li>
+	      <li id="hotel-info-tumblr-map" data-bind="attr:{class: showFullMap() ? 'active' : ''}"><span class="ico-see-map"></span> <a href="#map" data-bind="click: showFullMapFunc">На карте</a></li>
 	    </ul>
     </h2>
     <div class="sorting-panel"><span class="hotel-sort-by">сортировать по:</span> <span data-bind="click: sortByPrice,attr:{class: sortByPriceClass()}">&nbsp;цене</span> <span data-bind="click: sortByRating,attr:{class: sortByRatingClass()}">&nbsp;рейтингу</span>  </div>
     <div class="clear"></div>
+    <div id="all-hotels-results">
         <!-- ko foreach: resultsForRender -->
         <div class="hotels-tickets" data-bind="visible: visible()">
             <div class="content">
@@ -100,9 +101,10 @@
         <span class="bh"></span>
     </div>
     <!-- /ko -->
-</div>
-</div>
+    </div>
     <div id="all-hotels-map" style="display: none; height: 500px"></div>
+</div>
+
 </script>
 <script id="photo-popup-template" type="text/html">
 	<div id="body-popup-Photo">
