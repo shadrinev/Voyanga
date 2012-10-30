@@ -801,6 +801,10 @@ function mapAllPageView() {
 		$('#content').css('height', ($(window).height() - 233)+'px');
 		
 	}
+	else if (_contentHeight < (700 - 134)) {
+		$('#content').css('height', (700 - 233)+'px');
+		
+	}
 	_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
-	_map.css('height', ($(window).height() - (233 + 86))+'px');
+	_map.css('height', ($(window).height() - (233 + 16))+'px');	
 }
