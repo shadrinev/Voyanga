@@ -48,7 +48,9 @@ return CMap::mergeArray(
             'site.common.extensions.order.*',
             'site.backend.extensions.bootstrap.widgets.*',
             'site.common.extensions.yiidebugtb.*', //our extension
-            'site.frontend.extensions.EScriptBoost.*'
+            'site.frontend.extensions.EScriptBoost.*',
+            'site.frontend.models.*',
+            'site.frontend.components.*'
         ),
 
         'modules' => array(

@@ -40,7 +40,9 @@ return CMap::mergeArray(
             'application.models.*',
             'application.helpers.*',
             'application.lib.Dklab.*',
-            'ext.bootstrap.widgets.*'
+            'ext.bootstrap.widgets.*',
+            'site.backend.models.*',
+            'site.backend.components.*'
         ),
 
         'modules' => array(
