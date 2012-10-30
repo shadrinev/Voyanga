@@ -794,7 +794,7 @@ class HotelsResultSet
     @showFullMap(false)
 
   gMapPointShowWin: (event,hotel) =>
-    div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'" height="40" width="40"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> р/ночь</div></div>'
+    div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> р/ночь</div></div>'
     @gMapInfoWin.setContent(div);
     console.log(div);
     @gMapInfoWin.setPosition(event.latLng)

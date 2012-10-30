@@ -220,9 +220,16 @@ class ToursHotelsResultSet extends TourEntry
     result.postInit()
     result.select = (hotel) =>
       hotel.parent = result
+      hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
       hotel.off 'back'
       hotel.on 'back', =>
-        @trigger 'setActive', @
+        @trigger 'setActive', @, false, false
+        window.setTimeout(
+          ->
+            Utils.scrollTo(hotel.oldPageTop,false)
+            console.log(hotel.oldPageTop)
+          , 50
+        )
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
         @select roomData
@@ -231,9 +238,16 @@ class ToursHotelsResultSet extends TourEntry
     result.selectFromPopup = (hotel) =>
       hotel.parent = result
       hotel.activePopup.close()
+      hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
       hotel.off 'back'
       hotel.on 'back', =>
-        @trigger 'setActive', @
+        @trigger 'setActive', @, false, false
+        window.setTimeout(
+          ->
+            Utils.scrollTo(hotel.oldPageTop,false)
+            console.log(hotel.oldPageTop)
+          , 50
+        )
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
         @select roomData
@@ -431,7 +445,7 @@ class ToursResultSet
     @voyashki.push new VoyashaCheapest @
     @voyashki.push new VoyashaOptima @
     @voyashki.push new VoyashaRich @
-  setActive: (entry)=>
+  setActive: (entry, beforeRender = true, afterRender = true)=>
     $('#loadWrapBg').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
@@ -439,12 +453,12 @@ class ToursResultSet
     else
       window.toursOverviewActive = false
 
-    if entry.beforeRender
+    if entry.beforeRender && beforeRender
       entry.beforeRender()
     @trigger 'inner-template', entry.template
     # FIXME 
     window.setTimeout =>
-      if entry.afterRender
+      if entry.afterRender && afterRender
         entry.afterRender()
       @selection entry
       ko.processAllDeferredBindingUpdates()

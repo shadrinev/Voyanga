@@ -397,9 +397,14 @@ ToursHotelsResultSet = (function(_super) {
     result.postInit();
     result.select = function(hotel) {
       hotel.parent = result;
+      hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
       hotel.off('back');
       hotel.on('back', function() {
-        return _this.trigger('setActive', _this);
+        _this.trigger('setActive', _this, false, false);
+        return window.setTimeout(function() {
+          Utils.scrollTo(hotel.oldPageTop, false);
+          return console.log(hotel.oldPageTop);
+        }, 50);
       });
       hotel.off('select');
       hotel.on('select', function(roomData) {
@@ -415,9 +420,14 @@ ToursHotelsResultSet = (function(_super) {
     result.selectFromPopup = function(hotel) {
       hotel.parent = result;
       hotel.activePopup.close();
+      hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
       hotel.off('back');
       hotel.on('back', function() {
-        return _this.trigger('setActive', _this);
+        _this.trigger('setActive', _this, false, false);
+        return window.setTimeout(function() {
+          Utils.scrollTo(hotel.oldPageTop, false);
+          return console.log(hotel.oldPageTop);
+        }, 50);
       });
       hotel.off('select');
       hotel.on('select', function(roomData) {
@@ -682,8 +692,14 @@ ToursResultSet = (function() {
     this.voyashki.push(new VoyashaRich(this));
   }
 
-  ToursResultSet.prototype.setActive = function(entry) {
+  ToursResultSet.prototype.setActive = function(entry, beforeRender, afterRender) {
     var _this = this;
+    if (beforeRender == null) {
+      beforeRender = true;
+    }
+    if (afterRender == null) {
+      afterRender = true;
+    }
     $('#loadWrapBg').show();
     if (entry.overview) {
       $('.btn-timeline-and-condition').hide();
@@ -691,12 +707,12 @@ ToursResultSet = (function() {
     } else {
       window.toursOverviewActive = false;
     }
-    if (entry.beforeRender) {
+    if (entry.beforeRender && beforeRender) {
       entry.beforeRender();
     }
     this.trigger('inner-template', entry.template);
     return window.setTimeout(function() {
-      if (entry.afterRender) {
+      if (entry.afterRender && afterRender) {
         entry.afterRender();
       }
       _this.selection(entry);
