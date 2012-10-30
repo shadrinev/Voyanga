@@ -70,6 +70,11 @@ return CMap::mergeArray(
                 )
             ),
 
+            'sharedMemory' => array(
+                'class' => 'site.frontend.components.SharedMemory',
+                'maxSize' =>  2 * 1024, //2*1024*1024
+            ),
+
             'errorHandler' => array(
                 // use 'site/error' action to display errors
                 'errorAction' => 'error/default'
