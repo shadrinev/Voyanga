@@ -879,7 +879,7 @@ HotelsResultSet = (function() {
   };
 
   HotelsResultSet.prototype.showFullMapFunc = function() {
-    var center, gMarker, hotel, i, options, _i, _j, _len, _len1, _ref, _ref1, _results,
+    var center, gMarker, hotel, i, options, _i, _j, _len, _len1, _ref, _ref1,
       _this = this;
     console.log('show full map');
     this.showFullMap(true);
@@ -937,7 +937,6 @@ HotelsResultSet = (function() {
     this.gMarkers = [];
     i = 0;
     _ref1 = this.data();
-    _results = [];
     for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
       hotel = _ref1[_j];
       if (hotel.visible()) {
@@ -971,12 +970,12 @@ HotelsResultSet = (function() {
         this.mapCluster = new MarkerClusterer(this.gAllMap, this.gMarkers, {
           styles: this.clusterStyle
         });
-        _results.push(this.fullMapInitialized = true);
+        this.fullMapInitialized = true;
       } else {
-        _results.push(this.mapCluster.addMarkers(this.gMarkers));
+        this.mapCluster.addMarkers(this.gMarkers);
       }
     }
-    return _results;
+    return console.log(this.gAllMap);
   };
 
   HotelsResultSet.prototype.hideFullMap = function() {
@@ -988,7 +987,7 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.gMapPointShowWin = function(event, hotel) {
     var div;
-    div = '<div><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '" height="40" width="40"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> р/ночь</div></div>';
+    div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '" height="40" width="40"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> р/ночь</div></div>';
     this.gMapInfoWin.setContent(div);
     console.log(div);
     this.gMapInfoWin.setPosition(event.latLng);
