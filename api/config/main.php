@@ -58,7 +58,7 @@ return CMap::mergeArray(
         'components' => array(
             'cache' => array(
                 'class' => 'CMemCache',
-                'useMemcached'=> true,
+                //'useMemcached'=> true,
                 'servers' => array(
                     array(
                         'host' => 'localhost',
@@ -115,5 +115,6 @@ return CMap::mergeArray(
                 'rules' => $routes,
             ),
         ),
-    )
+    ),
+    $backendMainLocal
 );
