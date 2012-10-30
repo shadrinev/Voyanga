@@ -162,12 +162,16 @@ class Hotel extends CApplicationComponent
 
     public function saveReference($order)
     {
-        $orderHasHotel = new OrderHasHotel();
-        $orderHasHotel->orderId = $order->id;
-        $orderHasHotel->orderHotel = $this->internalId;
-        $orderHasHotel->save();
-        if (!$orderHasHotel->save())
-            throw new CException(VarDumper::dumpAsString($orderHasHotel->errors));
+        $orderHasHotel = OrderHasHotel::model()->findByAttributes(array('orderId'=>$order->id, 'orderHotel'=>$this->internalId));
+        if (!$orderHasHotel)
+        {
+            $orderHasHotel = new OrderHasHotel();
+            $orderHasHotel->orderId = $order->id;
+            $orderHasHotel->orderHotel = $this->internalId;
+            $orderHasHotel->save();
+            if (!$orderHasHotel->save())
+                throw new CException(VarDumper::dumpAsString($orderHasHotel->errors));
+        }
     }
 
     public static function getFromCache($cacheId, $hotelId, $resultId)
