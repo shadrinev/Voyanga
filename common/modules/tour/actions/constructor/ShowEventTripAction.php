@@ -61,7 +61,7 @@ class ShowEventTripAction extends CAction
     private function addNewTabOrAddElementsToExistingTabAndSetFirstTabIndex($item)
     {
         $preparedForFrontendItem = $item->prepareForFrontend();
-        if ($groupId = $item->getGroupId())
+        if (($item instanceof FlightTripElement) and ($groupId = $item->getGroupId()))
         {
             if (!isset($this->tabs[$groupId]))
             {

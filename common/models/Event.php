@@ -329,6 +329,7 @@ class Event extends FrontendActiveRecord
         $condition = new CDbCriteria();
         $condition->limit = $amount;
         $condition->order = new CDbExpression('RAND()');
+        $condition->compare('status', Event::STATUS_ACTIVE);
         $events = self::model()->findAll($condition);
         return $events;
     }

@@ -39,7 +39,9 @@ return CMap::mergeArray(
             'application.controllers.*',
             'application.models.*',
             'application.helpers.*',
-            'site.common.modules.hotel.models.*'
+            'site.common.modules.hotel.models.*',
+            'site.frontend.models.*',
+            'site.frontend.components.*'
         ),
 
         'modules' => array(
@@ -66,11 +68,6 @@ return CMap::mergeArray(
                         'weight' => 60
                     )
                 )
-            ),
-
-            'sharedMemory' => array(
-                'class' => 'site.frontend.components.SharedMemory',
-                'maxSize' =>  2 * 1024, //2*1024*1024
             ),
 
             'errorHandler' => array(
