@@ -173,13 +173,17 @@ class HotelResult
     if @rating == '-'
       @rating = 0
     @ratingName = ''
-    if 0 < @rating <= 2.5
+    if 0 <= @rating < 2
+      @ratingName = "рейтинг<br>отеля"
+    else if 2 <= @rating < 2.5
       @ratingName = "средний<br>отель"
-    else if 2.5 < @rating <= 4
+    else if 2.5 <= @rating < 3.5
+      @ratingName = "неплохой<br>отель"
+    else if 3.5 <= @rating < 4
       @ratingName = "хороший<br>отель"
-    else if 4 < @rating < 4.8
+    else if 4 <= @rating < 4.5
       @ratingName = "очень хороший<br>отель"
-    else if 4.8 <= @rating <= 5
+    else if 4.5 <= @rating <= 5
       @ratingName = "великолепный<br>отель"
     # coords
     @lat = hotelDatails.latitude / 1

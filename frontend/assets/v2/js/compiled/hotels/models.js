@@ -216,7 +216,7 @@ RoomSet = (function() {
 HotelResult = (function() {
 
   function HotelResult(data, parent, duration, activeHotel, hotelDatails) {
-    var elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4,
+    var elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
       _this = this;
     this.activeHotel = activeHotel;
     this.smallMapUrl = __bind(this.smallMapUrl, this);
@@ -288,13 +288,17 @@ HotelResult = (function() {
       this.rating = 0;
     }
     this.ratingName = '';
-    if ((0 < (_ref = this.rating) && _ref <= 2.5)) {
+    if ((0 <= (_ref = this.rating) && _ref < 2)) {
+      this.ratingName = "рейтинг<br>отеля";
+    } else if ((2 <= (_ref1 = this.rating) && _ref1 < 2.5)) {
       this.ratingName = "средний<br>отель";
-    } else if ((2.5 < (_ref1 = this.rating) && _ref1 <= 4)) {
+    } else if ((2.5 <= (_ref2 = this.rating) && _ref2 < 3.5)) {
+      this.ratingName = "неплохой<br>отель";
+    } else if ((3.5 <= (_ref3 = this.rating) && _ref3 < 4)) {
       this.ratingName = "хороший<br>отель";
-    } else if ((4 < (_ref2 = this.rating) && _ref2 < 4.8)) {
+    } else if ((4 <= (_ref4 = this.rating) && _ref4 < 4.5)) {
       this.ratingName = "очень хороший<br>отель";
-    } else if ((4.8 <= (_ref3 = this.rating) && _ref3 <= 5)) {
+    } else if ((4.5 <= (_ref5 = this.rating) && _ref5 <= 5)) {
       this.ratingName = "великолепный<br>отель";
     }
     this.lat = hotelDatails.latitude / 1;
@@ -321,9 +325,9 @@ HotelResult = (function() {
     this.hasHotelGroupServices = hotelDatails.hotelGroupServices ? true : false;
     this.hotelGroupServices = [];
     if (hotelDatails.hotelGroupServices) {
-      _ref4 = hotelDatails.hotelGroupServices;
-      for (groupName in _ref4) {
-        elements = _ref4[groupName];
+      _ref6 = hotelDatails.hotelGroupServices;
+      for (groupName in _ref6) {
+        elements = _ref6[groupName];
         this.hotelGroupServices.push({
           groupName: groupName,
           elements: elements,
@@ -338,11 +342,11 @@ HotelResult = (function() {
     this.visible = ko.observable(true);
     this.wordDays = this.parent.wordDays;
     this.visibleRoomSets = ko.computed(function() {
-      var result, roomSet, _i, _len, _ref5;
+      var result, roomSet, _i, _len, _ref7;
       result = [];
-      _ref5 = _this.roomSets();
-      for (_i = 0, _len = _ref5.length; _i < _len; _i++) {
-        roomSet = _ref5[_i];
+      _ref7 = _this.roomSets();
+      for (_i = 0, _len = _ref7.length; _i < _len; _i++) {
+        roomSet = _ref7[_i];
         if (roomSet.visible()) {
           result.push(roomSet);
         }
@@ -898,21 +902,21 @@ HotelsResultSet = (function() {
           url: '/themes/v2/images/cluster_one.png',
           height: 43,
           width: 31,
-          anchor: [8, 0],
+          anchor: [7, 0],
           textColor: '#000',
           textSize: 18
         }, {
           url: '/themes/v2/images/cluster_two.png',
           height: 54,
           width: 39,
-          anchor: [12, 0],
+          anchor: [11, 0],
           textColor: '#000',
           textSize: 18
         }, {
           url: '/themes/v2/images/cluster_three.png',
           height: 65,
           width: 47,
-          anchor: [16, 0],
+          anchor: [15, 0],
           textColor: '#000',
           textSize: 18
         }
