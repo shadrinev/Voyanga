@@ -50,6 +50,8 @@ class MFlightSearch extends CComponent
      */
     public static function getAllPricesAsJson($flightForm)
     {
+        Yii::import('site.backend.models.*');
+        Yii::import('site.backend.components.*');
         if (!$flightForm instanceof FlightForm)
             throw new CHttpException(500, 'MFlightSearch requires instance of FlightForm as incoming param');
         $flightSearchParams = self::buildSearchParams($flightForm);
