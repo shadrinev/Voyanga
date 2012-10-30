@@ -2650,27 +2650,39 @@ input.hotel-input {
 	cursor: default;
 }
 
-
+.hotelMapInfo {
+	width: 230px;
+	font-family: Arial;
+}
 .inlineBlock {
     display: inline-block;
 }
 .hotelMapImage {
     float: left;
-    width: 60px;
-    height: 60px;
+    height: 70px;
+    margin-right: 15px;
     overflow: hidden;
+    width: 70px;
 }
 .hotelMapImage img {
-	width: 100%;
+    height: 100%;
+    width: auto;
 }
 .hotelMapName {
-    color: #000;
+    color: #202328;
+    font-size: 11px;
+    line-height: 15px;
+    height: 30px;
+    overflow: hidden;
+    margin-top: 3px;
 }
 .mapPriceValue {
-    color: #000;
-    font-size: 15px;
+    color: #202328;
     display: inline-block;
+    font-size: 20px;
 }
 .mapPriceDiv {
-    color: #000;
+    color: #202328;
+    font-size: 11px;
+    margin-top: 3px;
 }

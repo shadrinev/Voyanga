@@ -787,3 +787,19 @@ function readMoreService(obj) {
 		$(obj).removeClass('active') 
 	}
 }
+
+
+function mapAllPageView() {
+	var _map = $('#all-hotels-map');
+	var _contentWidth = $('#content').width();
+	var _contentHeight = $('#content').height();
+	var _mainWidth = $('.main-block').width();
+	
+	var _marginLeftMap = ((_mainWidth - _contentWidth) / 2);
+	
+	if (_contentHeight < ($(window).height() - 134)) {
+		$('#content').css('height', ($(window).height() - 233)+'px');
+		_map.css('height', ($(window).height() - (233 + 86))+'px')
+	}
+	_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
+}
