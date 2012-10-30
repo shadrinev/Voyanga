@@ -2656,6 +2656,12 @@ input.hotel-input {
 }
 .hotelMapImage {
     float: left;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+}
+.hotelMapImage img {
+	width: 100%;
 }
 .hotelMapName {
     color: #000;
@@ -2663,6 +2669,7 @@ input.hotel-input {
 .mapPriceValue {
     color: #000;
     font-size: 15px;
+    display: inline-block;
 }
 .mapPriceDiv {
     color: #000;
