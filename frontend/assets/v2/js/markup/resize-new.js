@@ -809,8 +809,8 @@ function mapAllPageView() {
 				var _windowWidth = $(window).height();
 			}		
 			var offset = $('#content').offset();
-			$('#content').css('height', (_windowWidth - 70)+'px');
-			_map.css('height', (_windowWidth - 123)+'px');
+			$('#content').css('height', (_windowWidth - 100)+'px');
+			_map.css('height', (_windowWidth - 153)+'px');
 			_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
 		}
 		else {
@@ -821,8 +821,8 @@ function mapAllPageView() {
 				var _windowWidth = $(window).height();
 			}		
 			var offset = $('#content').offset();
-			$('#content').css('height', (_windowWidth - 70)+'px');
-			_map.css('height', (_windowWidth - 123)+'px');
+			$('#content').css('height', (_windowWidth - 100)+'px');
+			_map.css('height', (_windowWidth - 153)+'px');
 			_map.css('width', $(window).width()+'px').css('margin-left', '-'+ offset.left +'px');
 		}	
 	
