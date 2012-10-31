@@ -432,7 +432,7 @@
     font-size: 13px;
     height: 58px;
     margin-left: -12px;
-    margin-right: -10px;
+    margin-right: 0px;
     overflow: hidden;
     padding-left: 12px;
     position: relative;
@@ -481,6 +481,12 @@
     background: url("../images/bg-line.png") no-repeat scroll center -1px rgba(185, 187, 189, 0.3);
     margin-right: 0;
     text-decoration: none !important;
+}
+.my-trip-list .items a .date.orange-one, .my-trip-list .items a .date.blue-one {
+    right: 44px;
+}
+.my-trip-list .items a .date.blue-two, .my-trip-list .items a .date.orange-two {
+    right: 10px !important;
 }
 .my-trip-list .items a:hover .date.orange-one, .my-trip-list .items a:hover .date.blue-one {
     right: 44px;
@@ -621,6 +627,9 @@
     text-shadow: 0 1px 0 #F55407;
     width: 70px;
 }
+.my-trip-list .items a.active .date.orange-two {
+	right: 20px !important;
+}
 .my-trip-list .items a .date.orange-two .day {
     width: 35px !important;
 }
@@ -630,6 +639,9 @@
     right: 20px;
     text-shadow: 0 1px 0 #0A5783;
     width: 70px;
+}
+.my-trip-list .items a.active .date.blue-two {
+	right: 20px !important;
 }
 .my-trip-list .items a .date.blue-two .day {
     width: 35px !important;
@@ -2686,3 +2698,12 @@ input.hotel-input {
     font-size: 11px;
     margin-top: 3px;
 }
+
+/*
+#gMapInfoDiv > div {
+	display: none;
+}
+#gMapInfoDiv > div:last-child {
+	display: block;
+}
+*/
