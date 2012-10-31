@@ -569,6 +569,7 @@ function ResizeAvia() {
     showMiniPopUp();
     slideToursSlide();
     smallIMGresizeIndex();
+    mapAllPageView();
 }
 
 function ResizeFun() {
@@ -791,33 +792,42 @@ function readMoreService(obj) {
 
 function mapAllPageView() {
 	var _map = $('#all-hotels-map');
-	var _contentWidth = $('#content').width();
-	var _contentHeight = $('#content').height();
-	var _mainWidth = $('.main-block').width();
-	var _leftBlockIsset = $('.left-block').length > 0 && $('.left-block').is(':visible');
+	var _isset = _map.length > 0 && _map.is(':visible');
+	if (_isset) {
 	
-	if (_leftBlockIsset) {
-		var _marginLeftMap = ((_mainWidth - _contentWidth) / 2);
+		var _contentWidth = $('#content').width();
+		var _contentHeight = $('#content').height();
+		var _mainWidth = $('.main-block').width();
+		var _leftBlockIsset = $('.left-block').length > 0 && $('.left-block').is(':visible');
 		
-		if (_contentHeight < ($(window).height() - 134)) {
-			$('#content').css('height', ($(window).height() - 233)+'px');
-			_map.css('height', ($(window).height() - (233 + 16))+'px');
+		if (_leftBlockIsset) {
+			var _marginLeftMap = ((_mainWidth - _contentWidth) / 2);
+			
+			if ($(window).height() < 670) {
+				var _windowWidth = 670;
+			}
+			else {
+				var _windowWidth = $(window).height();
+			}		
+			var offset = $('#content').offset();
+			$('#content').css('height', (_windowWidth - 70)+'px');
+			_map.css('height', (_windowWidth - 123)+'px');
+			_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
 		}
-		else if (_contentHeight < (700 - 134)) {
-			$('#content').css('height', (700 - 233)+'px');
-			_map.css('height', (700 - (233 + 16))+'px');
-		}
-		_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
+		else {
+			if ($(window).height() < 670) {
+				var _windowWidth = 670;
+			}
+			else {
+				var _windowWidth = $(window).height();
+			}		
+			var offset = $('#content').offset();
+			$('#content').css('height', (_windowWidth - 70)+'px');
+			_map.css('height', (_windowWidth - 123)+'px');
+			_map.css('width', $(window).width()+'px').css('margin-left', '-'+ offset.left +'px');
+		}	
+	
 	}
-	else {
-		Utils.scrollTo('#content');
-		var offset = $('#content').offset();
-		if (_contentHeight < ($(window).height() - 102)) {
-			$('#content').css('height', ($(window).height() - 70)+'px');
-			_map.css('height', ($(window).height() - 123)+'px');
-		}
-		_map.css('width', $(window).width()+'px').css('margin-left', '-'+ offset.left +'px');
-	}	
 }
 
 
