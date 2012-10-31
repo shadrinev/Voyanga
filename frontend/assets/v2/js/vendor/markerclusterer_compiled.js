@@ -1,3 +1,100 @@
+
+
+    function googleInfoDiv() {
+        this.extend(googleInfoDiv, google.maps.OverlayView);
+        this.show = __bind(this.show, this);
+
+        this.hide = __bind(this.hide, this);
+
+        this.getPosFromLatLng_ = __bind(this.getPosFromLatLng_, this);
+
+        this.onAdd = __bind(this.onAdd, this);
+
+        this.draw = __bind(this.draw, this);
+
+        this.setContent = __bind(this.setContent, this);
+
+        this.setPosition = __bind(this.setPosition, this);
+        this.div_ = null;
+        this.latLng = null;
+        this.content = '';
+        googleInfoDiv.prototype.getProjection = google.maps.OverlayView.prototype.getProjection;
+    }
+
+    googleInfoDiv.prototype.extend = function(obj1, obj2) {
+        return (function(object) {
+            for (var property in object.prototype) {
+                this.prototype[property] = object.prototype[property];
+            }
+            return this;
+        }).apply(obj1, [obj2]);
+    };
+
+    googleInfoDiv.prototype.setPosition = function(latLng) {
+        var pos;
+        this.latLng = latLng;
+        pos = this.getPosFromLatLng_(this.latLng);
+        if (this.div_) {
+            this.div_.css({
+                'top': pos.y + 'px',
+                'left': pos.x + 'px'
+            });
+        }
+    };
+
+    googleInfoDiv.prototype.setContent = function(content) {
+        this.content = content;
+        if (this.div_) {
+            this.div_.html(this.content);
+        }
+    };
+
+    googleInfoDiv.prototype.draw = function() {
+        var pos;
+        if (this.div_) {
+            pos = this.getPosFromLatLng_(this.latLng);
+            return this.div_.css({
+                'top': pos.y + 'px',
+                'left': pos.x + 'px'
+            });
+        }
+    };
+
+    googleInfoDiv.prototype.onAdd = function() {
+        var divEl, panes, pos;
+        pos = this.getPosFromLatLng_(this.latLng);
+        divEl = $('<div style=" width: 5px; height: 5px;position: absolute">' + this.content + '</div>');
+        divEl.css({
+            'top': (pos.y - 20) + 'px',
+            'left': pos.x + 'px'
+        });
+        this.div_ = divEl;
+        panes = this.getPanes();
+        $(panes.overlayMouseTarget).append(divEl);
+    };
+
+    googleInfoDiv.prototype.getPosFromLatLng_ = function(LatLng) {
+        var pos;
+        if(this.getProjection()){
+            pos = this.getProjection().fromLatLngToDivPixel(LatLng);
+        }
+        return pos;
+    };
+
+    googleInfoDiv.prototype.hide = function() {
+        if(this.div_){
+            this.div_.hide();
+        }
+    };
+
+    googleInfoDiv.prototype.show = function() {
+        if(this.div_){
+            this.div_.show();
+        }
+    };
+
+
+
 (function(){var d=null;function e(a){return function(b){this[a]=b}}function h(a){return function(){return this[a]}}var j;
 function k(a,b,c){this.extend(k,google.maps.OverlayView);this.c=a;this.a=[];this.f=[];this.ca=[53,56,66,78,90];this.j=[];this.A=!1;c=c||{};this.g=c.gridSize||60;this.l=c.minimumClusterSize||2;this.J=c.maxZoom||d;this.j=c.styles||[];this.X=c.imagePath||this.Q;this.W=c.imageExtension||this.P;this.O=!0;if(c.zoomOnClick!=void 0)this.O=c.zoomOnClick;this.r=!1;if(c.averageCenter!=void 0)this.r=c.averageCenter;l(this);this.setMap(a);this.K=this.c.getZoom();var f=this;google.maps.event.addListener(this.c,
 "zoom_changed",function(){var a=f.c.getZoom();if(f.K!=a)f.K=a,f.m()});google.maps.event.addListener(this.c,"idle",function(){f.i()});b&&b.length&&this.C(b,!1)}j=k.prototype;j.Q="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m";j.P="png";j.extend=function(a,b){return function(a){for(var b in a.prototype)this.prototype[b]=a.prototype[b];return this}.apply(a,[b])};j.onAdd=function(){if(!this.A)this.A=!0,n(this)};j.draw=function(){};

@@ -27,6 +27,46 @@ MEAL_VERBOSE = {
   'Завтрак Шведский стол': 'Завтрак'
 };
 
+/*class googleInfoDiv extends google.maps.OverlayView
+  constructor: ->
+    @div_ = null
+    @latLng = null
+    @content = ''
+  setPosition: (latLng)=>
+    @latLng = latLng
+    pos = getPosFromLatLng_(@latLng)
+    if(@div_)
+      @div_.css({'top': pos.y+'px','left': pos.x+'px'})
+  setContent: (content)=>
+    @content = content
+    if(@div_)
+      @div_.html(@content)
+  draw: ()=>
+    if(@div_)
+      @latLng = latLng
+      pos = getPosFromLatLng_(@latLng)
+      @div_.css({'top': pos.y+'px','left': pos.x+'px'})
+  onAdd: =>
+    pos = getPosFromLatLng_(@latLng)
+    divEl = $('<div style="background-color: #0ff; width: 50px; height: 5px;position: absolute">'+@content+'</div>')
+
+
+    divEl.css({'top': pos.y+'px','left': pos.x+'px'})
+    @div_ = divEl
+    panes = @getPanes()
+    $(panes.overlayMouseTarget).append(divEl)
+  getPosFromLatLng_: (LatLng)=>
+    pos = this.getProjection().fromLatLngToDivPixel(latlng);
+    #pos.x -= parseInt(this.width_ / 2, 10);
+    #pos.y -= parseInt(this.height_ / 2, 10);
+    return pos
+  hide: ()=>
+    @div_.hide()
+  show: ()=>
+    @div_.show()
+*/
+
+
 Room = (function() {
 
   function Room(data) {
@@ -898,11 +938,24 @@ HotelsResultSet = (function() {
       this.gAllMap = new google.maps.Map($('#all-hotels-map')[0], options);
       this.markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png', new google.maps.Size(31, 31));
       this.markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png', new google.maps.Size(31, 31));
-      this.gMapInfoWin = new google.maps.InfoWindow();
+      this.gMapInfoWin = new google.maps.InfoWindow({
+        disableAutoPan: false
+      });
+      this.gMapOverlay = new googleInfoDiv();
+      console.log(this.gMapOverlay);
+      this.gMapOverlay.setPosition(center);
+      this.gMapOverlay.setMap(this.gAllMap);
+      console.log(this.gMapOverlay);
+      this.gMapOverlay.hide();
       google.maps.event.addListener(this.gMapInfoWin, 'domready', function() {
+        console.log('setId');
         $(_this.gMapInfoWin.b.contentNode).attr('id', 'infoWrapperDiv').css('overflow', 'inherit');
-        $(_this.gMapInfoWin.j[0].b.n).find('>div:first-child').css('display', 'none');
-        return $(_this.gMapInfoWin.j[0].b.l).attr('id', 'infoWrapperParentDiv').css('overflow', 'inherit');
+        $(_this.gMapInfoWin.j[0].b.l).attr('id', 'infoWrapperParentDiv').css('overflow', 'inherit');
+        $('#gMapInfoDiv').css('visibility', 'visible');
+        window.setTimeout(function() {
+          return $('#gMapInfoDiv').css('visibility', 'visible');
+        }, 50);
+        return true;
       });
       this.clusterStyle = [
         {
@@ -996,20 +1049,25 @@ HotelsResultSet = (function() {
   };
 
   HotelsResultSet.prototype.gMapPointShowWin = function(event, hotel) {
-    var div, mainDiv;
-    div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> р/ночь</div></div>';
-    this.gMapInfoWin.setContent(div);
-    this.gMapInfoWin.setPosition(event.latLng);
-    this.gMapInfoWin.open(this.gAllMap);
-    $(this.gAllMap.n.panes.floatShadow).children().remove();
-    mainDiv = $(this.gMapInfoWin.j[0].b.d).attr('id', 'gMapInfoDiv');
-    $(this.gMapInfoWin.b.contentNode).attr('id', 'infoWrapperDiv').css('overflow', 'inherit');
+    var div;
+    console.log('showDiv', event);
+    div = '<div id="relInfoPosition"><div id="infoWrapperDiv"><div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> р/ночь</div></div></div></div>';
+    this.gMapOverlay.setContent(div);
+    this.gMapOverlay.setPosition(event.latLng);
+    this.gMapOverlay.show();
+    console.log(this.gMapOverlay);
     return hotel.gMarker.setIcon(this.markerImageHover);
   };
 
   HotelsResultSet.prototype.gMapPointHideWin = function(event, hotel) {
+    var rnd;
     hotel.gMarker.setIcon(this.markerImage);
-    return this.gMapInfoWin.close();
+    console.log('mouseout');
+    rnd = Math.round(Math.random() * 5);
+    this.gMapOverlay.hide();
+    if (rnd === 40) {
+      return this.gMapInfoWin.close();
+    }
   };
 
   HotelsResultSet.prototype.gMapPointClick = function(event, hotel) {
