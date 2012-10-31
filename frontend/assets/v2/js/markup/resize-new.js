@@ -794,7 +794,6 @@ function mapAllPageView() {
 	var _map = $('#all-hotels-map');
 	var _isset = _map.length > 0 && _map.is(':visible');
 	if (_isset) {
-	
 		var _contentWidth = $('#content').width();
 		var _contentHeight = $('#content').height();
 		var _mainWidth = $('.main-block').width();
