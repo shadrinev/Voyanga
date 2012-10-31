@@ -13,7 +13,6 @@ Yii::setPathOfAlias('backend', $root . '/backend');
 Yii::setPathOfAlias('frontend', $root . '/frontend');
 Yii::setPathOfAlias('api', $root . '/api');
 
-
 $backendMainLocal = file_exists('api/config/main-local.php') ? require('api/config/main-local.php') : array();
 
 return CMap::mergeArray(

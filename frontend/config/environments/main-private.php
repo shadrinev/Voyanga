@@ -24,12 +24,27 @@ return array(
 					'filter'=>'CLogFilter',
 					'logFile' => 'applicationError.log',
 				),
-				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'warning, trace, info',
-					'filter'=>'CLogFilter',
-				),
-			),
+                array(
+                    'class' => 'CWebLogRoute',
+                ),
+                array(
+                    'class' => 'CWebLogRoute',
+                    'categories' => 'application, nemo',
+                    'levels' => 'error, warning, trace, profile, info'
+                ),
+                array(
+                    'class' => 'CProfileLogRoute',
+                    'levels' => 'profile',
+                    'enabled' => true
+                ),
+                array( // configuration for the toolbar
+                    'class'=>'XWebDebugRouter',
+                    'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
+                    'levels'=>'error, warning, trace, profile, info',
+                    //'categories' => 'HotelBookerComponent.*, application.simpleWorkflow',
+                    'allowedIPs'=>array('192.168.0.10','192.168.0.74'),
+                ),
+            ),
 		),
 	),
 

@@ -140,22 +140,11 @@ return CMap::mergeArray(
                 'class' => 'CLogRouter',
                 'routes' => array(
                     array(
-                        'class' => 'CWebLogRoute',
-                        'categories' => 'application, nemo',
-                        'levels' => 'error, warning, trace, profile, info'
-                    ),
-
-                    array(
-                        'class' => 'CFileLogRoute',
-                        'levels' => 'trace, info',
-                    ),
-                    array(
                         'class' => 'CFileLogRoute',
                         'levels' => 'trace, info',
                         'categories' => 'nemo',
                         'logFile' => 'nemo.log'
                     ),
-
                     array(
                         'class' => 'CDbLogRoute',
                         'levels' => 'info',
@@ -163,27 +152,6 @@ return CMap::mergeArray(
                         'connectionID' => 'logdb',
                         'autoCreateLogTable' => true,
                         'logTableName' => 'log_table'
-                    ),
-
-                    array(
-                        'class' => 'CProfileLogRoute',
-                        'levels' => 'profile',
-                        'enabled' => true
-                    ),
-
-                    array(
-                        'class' => 'CEmailLogRoute',
-                        'levels' => 'error, warning',
-                        'filter' => 'CLogFilter',
-                        'emails' => 'reports-frontend@voyanga.com,kuklin@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com,kudinov@voyanga.com'
-                    ),
-
-                   array( // configuration for the toolbar
-                        'class'=>'XWebDebugRouter',
-                        'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
-                        'levels'=>'error, warning, trace, profile, info',
-                        //'categories' => 'HotelBookerComponent.*, application.simpleWorkflow',
-                        'allowedIPs'=>array('192.168.0.10','192.168.0.74'),
                     ),
                 )
             ),

@@ -18,13 +18,12 @@ return array(
 					'filter'=>'CLogFilter',
 					'logFile' => 'applicationError.log',
 				),
-				/*
-				array(
-					'class'=>'CEmailLogRoute',
-					'levels'=>'error',
-					'filter'=>'CLogFilter',
-					'emails' => isset($params['email.route']) ? $params['email.route'] : $params['error.emails'], // emails need to be written here, // emails need to be written here, this is set in client params
-				),*/
+                array(
+                    'class' => 'CEmailLogRoute',
+                    'levels' => 'error, warning',
+                    'filter' => 'CLogFilter',
+                    'emails' => 'reports-frontend@voyanga.com,kuklin@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com,kudinov@voyanga.com'
+                ),
 			),
 		),
 	),
