@@ -1502,7 +1502,7 @@
     margin: 0 -20px 0 -19px;
     overflow: hidden;
     position: relative;
-    z-index: 100;
+    z-index: 5;
 }
 .prices-of-3days .two-way .schedule-of-prices {
 	margin: 0px -20px 0px -19px;
@@ -1516,10 +1516,11 @@
 	position: relative;
 	font-family: Verdana;
 	cursor: pointer;
-	z-index: 100;
+	z-index: 5;
 }
 .schedule-of-prices li:hover {
 	background: #dcdfe1;
+	z-index: 5;
 }
 .schedule-of-prices li .price {
 	color: #6D6F72;
@@ -1632,4 +1633,15 @@
     color: #262930;
     font-size: 22px;
     font-weight: bold;
+}
+
+.ticket h3 {
+	position: absolute;
+	display: inline-block;
+	top: 3px;
+	left: 14px;
+	font-size: 11px;
+	font-weight: bold;
+	color: #262930;
+	z-index: 10;
 }

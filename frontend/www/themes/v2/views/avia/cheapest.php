@@ -20,6 +20,7 @@
 <script id="prices-of-3days-template" type="text/html">
 
     <div class="ticket">
+    	<h3>Цены ±3 дня</h3>
       <div class="one-way">
         <ul class="schedule-of-prices">
           <li>

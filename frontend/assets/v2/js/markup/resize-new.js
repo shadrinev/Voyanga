@@ -794,7 +794,6 @@ function mapAllPageView() {
 	var _map = $('#all-hotels-map');
 	var _isset = _map.length > 0 && _map.is(':visible');
 	if (_isset) {
-	
 		var _contentWidth = $('#content').width();
 		var _contentHeight = $('#content').height();
 		var _mainWidth = $('.main-block').width();
@@ -810,8 +809,8 @@ function mapAllPageView() {
 				var _windowWidth = $(window).height();
 			}		
 			var offset = $('#content').offset();
-			$('#content').css('height', (_windowWidth - 70)+'px');
-			_map.css('height', (_windowWidth - 123)+'px');
+			$('#content').css('height', (_windowWidth - 100)+'px');
+			_map.css('height', (_windowWidth - 153)+'px');
 			_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
 		}
 		else {
@@ -822,8 +821,8 @@ function mapAllPageView() {
 				var _windowWidth = $(window).height();
 			}		
 			var offset = $('#content').offset();
-			$('#content').css('height', (_windowWidth - 70)+'px');
-			_map.css('height', (_windowWidth - 123)+'px');
+			$('#content').css('height', (_windowWidth - 100)+'px');
+			_map.css('height', (_windowWidth - 153)+'px');
 			_map.css('width', $(window).width()+'px').css('margin-left', '-'+ offset.left +'px');
 		}	
 	
