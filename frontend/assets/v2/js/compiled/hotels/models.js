@@ -899,6 +899,11 @@ HotelsResultSet = (function() {
       this.markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png', new google.maps.Size(31, 31));
       this.markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png', new google.maps.Size(31, 31));
       this.gMapInfoWin = new google.maps.InfoWindow();
+      google.maps.event.addListener(this.gMapInfoWin, 'domready', function() {
+        $(_this.gMapInfoWin.b.contentNode).attr('id', 'infoWrapperDiv').css('overflow', 'inherit');
+        $(_this.gMapInfoWin.j[0].b.n).find('>div:first-child').css('display', 'none');
+        return $(_this.gMapInfoWin.j[0].b.l).attr('id', 'infoWrapperParentDiv').css('overflow', 'inherit');
+      });
       this.clusterStyle = [
         {
           url: '/themes/v2/images/cluster_one.png',
@@ -979,7 +984,8 @@ HotelsResultSet = (function() {
       }
     }
     console.log(this.gAllMap);
-    return console.log(this.gMapInfoWin);
+    console.log(this.gMapInfoWin);
+    return Utils.scrollTo('#content');
   };
 
   HotelsResultSet.prototype.hideFullMap = function() {
@@ -990,27 +996,20 @@ HotelsResultSet = (function() {
   };
 
   HotelsResultSet.prototype.gMapPointShowWin = function(event, hotel) {
-    var div, mainDiv,
-      _this = this;
+    var div, mainDiv;
     div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> р/ночь</div></div>';
     this.gMapInfoWin.setContent(div);
-    console.log(div);
     this.gMapInfoWin.setPosition(event.latLng);
     this.gMapInfoWin.open(this.gAllMap);
     $(this.gAllMap.n.panes.floatShadow).children().remove();
     mainDiv = $(this.gMapInfoWin.j[0].b.d).attr('id', 'gMapInfoDiv');
-    window.setTimeout(function() {
-      var wrp;
-      wrp = $(_this.gMapInfoWin.j[0].b.n);
-      wrp.find('>div:first-child').css('display', 'none');
-      $(_this.gMapInfoWin.j[0].b.l).attr('id', 'infoWrapperParentDiv').css('overflow', 'inherit');
-      return $(_this.gMapInfoWin.j[0].b.e).attr('id', 'infoWrapperDiv').css('overflow', 'inherit');
-    }, 100);
+    $(this.gMapInfoWin.b.contentNode).attr('id', 'infoWrapperDiv').css('overflow', 'inherit');
     return hotel.gMarker.setIcon(this.markerImageHover);
   };
 
   HotelsResultSet.prototype.gMapPointHideWin = function(event, hotel) {
-    return hotel.gMarker.setIcon(this.markerImage);
+    hotel.gMarker.setIcon(this.markerImage);
+    return this.gMapInfoWin.close();
   };
 
   HotelsResultSet.prototype.gMapPointClick = function(event, hotel) {

@@ -2709,6 +2709,7 @@ input.hotel-input {
 	padding: 10px;
 	background: #FFF;
 	border-radius: 8px;
-	margin-top: 30px;
 	box-shadow: 0px 1px 3px rgba(0,1,1,0.6);
+    position: absolute;
+    top: 30px;
 }

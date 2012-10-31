@@ -703,6 +703,13 @@ class HotelsResultSet
       @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
       @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
       @gMapInfoWin = new google.maps.InfoWindow()
+      google.maps.event.addListener(@gMapInfoWin, 'domready',
+        =>
+          $(@gMapInfoWin.b.contentNode).attr('id','infoWrapperDiv').css('overflow','inherit')
+          $(@gMapInfoWin.j[0].b.n).find('>div:first-child').css('display','none')
+          $(@gMapInfoWin.j[0].b.l).attr('id','infoWrapperParentDiv').css('overflow','inherit')
+          #$(@gMapInfoWin.j[0].b.e).attr('id','infoWrapperDiv').css('overflow','inherit')
+      )
       @clusterStyle = [
         {url: '/themes/v2/images/cluster_one.png',
         height: 43,
@@ -789,6 +796,7 @@ class HotelsResultSet
         @mapCluster.addMarkers(@gMarkers)
     console.log(@gAllMap)
     console.log(@gMapInfoWin)
+    Utils.scrollTo('#content')
 
   hideFullMap: =>
     console.log('hideFullMap')
@@ -799,26 +807,18 @@ class HotelsResultSet
   gMapPointShowWin: (event,hotel) =>
     div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> р/ночь</div></div>'
     @gMapInfoWin.setContent(div);
-    console.log(div);
     @gMapInfoWin.setPosition(event.latLng)
     @gMapInfoWin.open(@gAllMap)
     $(@gAllMap.n.panes.floatShadow).children().remove()
     mainDiv = $(@gMapInfoWin.j[0].b.d).attr('id','gMapInfoDiv')
-    window.setTimeout(
-      =>
-        wrp = $(@gMapInfoWin.j[0].b.n)
-        wrp.find('>div:first-child').css('display','none')
-        $(@gMapInfoWin.j[0].b.l).attr('id','infoWrapperParentDiv').css('overflow','inherit')
-        $(@gMapInfoWin.j[0].b.e).attr('id','infoWrapperDiv').css('overflow','inherit')
-        #console.log(@gMapInfoWin.j[0].b)
-      , 100
-    )
+    $(@gMapInfoWin.b.contentNode).attr('id','infoWrapperDiv').css('overflow','inherit')
+
     hotel.gMarker.setIcon(@markerImageHover)
 
 
   gMapPointHideWin: (event,hotel) =>
     hotel.gMarker.setIcon(@markerImage)
-    #@gMapInfoWin.close()
+    @gMapInfoWin.close()
 
   gMapPointClick: (event,hotel) =>
     @hideFullMap()
