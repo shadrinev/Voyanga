@@ -988,19 +988,27 @@ HotelsResultSet = (function() {
   };
 
   HotelsResultSet.prototype.gMapPointShowWin = function(event, hotel) {
-    var div;
+    var div, mainDiv,
+      _this = this;
     div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> р/ночь</div></div>';
     this.gMapInfoWin.setContent(div);
     console.log(div);
     this.gMapInfoWin.setPosition(event.latLng);
     this.gMapInfoWin.open(this.gAllMap);
-    $(this.gMapInfoWin.j[0].b.d).attr('id', 'gMapInfoDiv');
+    $(this.gAllMap.n.panes.floatShadow).children().remove();
+    mainDiv = $(this.gMapInfoWin.j[0].b.d).attr('id', 'gMapInfoDiv');
+    window.setTimeout(function() {
+      var wrp;
+      wrp = $(_this.gMapInfoWin.j[0].b.n);
+      wrp.find('>div:first-child').css('display', 'none');
+      $(_this.gMapInfoWin.j[0].b.l).attr('id', 'infoWrapperParentDiv').css('overflow', 'inherit');
+      return $(_this.gMapInfoWin.j[0].b.e).attr('id', 'infoWrapperDiv').css('overflow', 'inherit');
+    }, 100);
     return hotel.gMarker.setIcon(this.markerImageHover);
   };
 
   HotelsResultSet.prototype.gMapPointHideWin = function(event, hotel) {
-    hotel.gMarker.setIcon(this.markerImage);
-    return this.gMapInfoWin.close();
+    return hotel.gMarker.setIcon(this.markerImage);
   };
 
   HotelsResultSet.prototype.gMapPointClick = function(event, hotel) {

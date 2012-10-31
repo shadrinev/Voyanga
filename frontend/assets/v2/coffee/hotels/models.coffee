@@ -800,13 +800,23 @@ class HotelsResultSet
     console.log(div);
     @gMapInfoWin.setPosition(event.latLng)
     @gMapInfoWin.open(@gAllMap)
-    $(@gMapInfoWin.j[0].b.d).attr('id','gMapInfoDiv')
+    $(@gAllMap.n.panes.floatShadow).children().remove()
+    mainDiv = $(@gMapInfoWin.j[0].b.d).attr('id','gMapInfoDiv')
+    window.setTimeout(
+      =>
+        wrp = $(@gMapInfoWin.j[0].b.n)
+        wrp.find('>div:first-child').css('display','none')
+        $(@gMapInfoWin.j[0].b.l).attr('id','infoWrapperParentDiv').css('overflow','inherit')
+        $(@gMapInfoWin.j[0].b.e).attr('id','infoWrapperDiv').css('overflow','inherit')
+        #console.log(@gMapInfoWin.j[0].b)
+      , 100
+    )
     hotel.gMarker.setIcon(@markerImageHover)
 
 
   gMapPointHideWin: (event,hotel) =>
     hotel.gMarker.setIcon(@markerImage)
-    @gMapInfoWin.close()
+    #@gMapInfoWin.close()
 
   gMapPointClick: (event,hotel) =>
     @hideFullMap()
