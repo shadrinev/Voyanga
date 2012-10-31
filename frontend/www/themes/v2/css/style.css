@@ -2663,7 +2663,7 @@ input.hotel-input {
 }
 
 .hotelMapInfo {
-	width: 230px;
+	width: 236px;
 	font-family: Arial;
 }
 .inlineBlock {
@@ -2671,10 +2671,10 @@ input.hotel-input {
 }
 .hotelMapImage {
     float: left;
-    height: 70px;
+    height: 76px;
     margin-right: 15px;
     overflow: hidden;
-    width: 70px;
+    width: 76px;
 }
 .hotelMapImage img {
     height: 100%;
@@ -2699,11 +2699,16 @@ input.hotel-input {
     margin-top: 3px;
 }
 
-/*
 #gMapInfoDiv > div {
 	display: none;
 }
 #gMapInfoDiv > div:last-child {
 	display: block;
 }
-*/
+#infoWrapperDiv {
+	padding: 10px;
+	background: #FFF;
+	border-radius: 8px;
+	margin-top: 30px;
+	box-shadow: 0px 1px 3px rgba(0,1,1,0.6);
+}
