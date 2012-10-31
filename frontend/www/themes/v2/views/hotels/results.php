@@ -102,7 +102,7 @@
     </div>
     <!-- /ko -->
     </div>
-    <div id="all-hotels-map" style="display: none; height: 500px"></div>
+    <div id="all-hotels-map" style="display: none;"></div>
 </div>
 
 </script>
@@ -127,7 +127,7 @@
                     <div>
     				    <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
                     </div>
-                    <div class="namePhotoPopUp">
+                    <div class="namePhotoPopUp" data-bind="text: activeDesc()">
                     	Привет привет!
                     </div>
           		</td>

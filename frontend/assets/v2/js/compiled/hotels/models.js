@@ -885,6 +885,7 @@ HotelsResultSet = (function() {
     this.showFullMap(true);
     $('#all-hotels-results').hide();
     $('#all-hotels-map').show();
+    mapAllPageView();
     center = new google.maps.LatLng(this.city.latitude, this.city.longitude);
     options = {
       'zoom': 11,
@@ -988,7 +989,7 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.gMapPointShowWin = function(event, hotel) {
     var div;
-    div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '" height="40" width="40"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> р/ночь</div></div>';
+    div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> р/ночь</div></div>';
     this.gMapInfoWin.setContent(div);
     console.log(div);
     this.gMapInfoWin.setPosition(event.latLng);

@@ -26,6 +26,7 @@ PhotoBox = (function() {
     this.activeIndex = ko.observable(initIndex);
     this.length0 = photos.length - 1;
     this.activePhoto = ko.observable(this.photos[this.activeIndex()]['largeUrl']);
+    this.activeDesc = ko.observable(this.photos[this.activeIndex()]['description']);
     this.busy = false;
     $('body').prepend('<div id="popupOverlayPhoto"></div>');
     $('body').prepend($('#photo-popup-template').html());
@@ -100,7 +101,8 @@ PhotoBox = (function() {
     $('#body-popup-Photo').find('table img').animate({
       opacity: 0
     }, 300, function() {
-      return _this.activePhoto(_this.photos[_this.activeIndex()]['largeUrl']);
+      _this.activePhoto(_this.photos[_this.activeIndex()]['largeUrl']);
+      return _this.activeDesc(_this.photos[_this.activeIndex()]['description']);
     });
     return $('#hotel-img-load').show();
   };

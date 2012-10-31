@@ -400,11 +400,7 @@ ToursHotelsResultSet = (function(_super) {
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
       hotel.off('back');
       hotel.on('back', function() {
-        _this.trigger('setActive', _this, false, false);
-        return window.setTimeout(function() {
-          Utils.scrollTo(hotel.oldPageTop, false);
-          return console.log(hotel.oldPageTop);
-        }, 50);
+        return _this.trigger('setActive', _this, false, false, hotel.oldPageTop);
       });
       hotel.off('select');
       hotel.on('select', function(roomData) {
@@ -423,11 +419,7 @@ ToursHotelsResultSet = (function(_super) {
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
       hotel.off('back');
       hotel.on('back', function() {
-        _this.trigger('setActive', _this, false, false);
-        return window.setTimeout(function() {
-          Utils.scrollTo(hotel.oldPageTop, false);
-          return console.log(hotel.oldPageTop);
-        }, 50);
+        return _this.trigger('setActive', _this, false, false, hotel.oldPageTop);
       });
       hotel.off('select');
       hotel.on('select', function(roomData) {
@@ -620,8 +612,17 @@ ToursResultSet = (function() {
         result = new ToursHotelsResultSet(variant, variant.searchParams);
       }
       this.data.push(result);
-      result.on('setActive', function(entry) {
-        return _this.setActive(entry);
+      result.on('setActive', function(entry, beforeRender, afterRender, scrollTo) {
+        if (beforeRender == null) {
+          beforeRender = true;
+        }
+        if (afterRender == null) {
+          afterRender = true;
+        }
+        if (scrollTo == null) {
+          scrollTo = 0;
+        }
+        return _this.setActive(entry, beforeRender, afterRender, scrollTo);
       });
       result.on('next', function(entry) {
         return _this.nextEntry();
@@ -692,13 +693,16 @@ ToursResultSet = (function() {
     this.voyashki.push(new VoyashaRich(this));
   }
 
-  ToursResultSet.prototype.setActive = function(entry, beforeRender, afterRender) {
+  ToursResultSet.prototype.setActive = function(entry, beforeRender, afterRender, scrollTo) {
     var _this = this;
     if (beforeRender == null) {
       beforeRender = true;
     }
     if (afterRender == null) {
       afterRender = true;
+    }
+    if (scrollTo == null) {
+      scrollTo = 0;
     }
     $('#loadWrapBg').show();
     if (entry.overview) {
@@ -707,19 +711,24 @@ ToursResultSet = (function() {
     } else {
       window.toursOverviewActive = false;
     }
+    console.log('br', beforeRender, afterRender);
     if (entry.beforeRender && beforeRender) {
+      console.log('brin');
       entry.beforeRender();
     }
     this.trigger('inner-template', entry.template);
     return window.setTimeout(function() {
       if (entry.afterRender && afterRender) {
+        console.log('arin');
         entry.afterRender();
       }
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
       ResizeAvia();
       $('#loadWrapBg').hide();
-      return Utils.scrollTo(0, false);
+      if (!(scrollTo === false)) {
+        return Utils.scrollTo(scrollTo, false);
+      }
     }, 100);
   };
 

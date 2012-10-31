@@ -223,13 +223,7 @@ class ToursHotelsResultSet extends TourEntry
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
       hotel.off 'back'
       hotel.on 'back', =>
-        @trigger 'setActive', @, false, false
-        window.setTimeout(
-          ->
-            Utils.scrollTo(hotel.oldPageTop,false)
-            console.log(hotel.oldPageTop)
-          , 50
-        )
+        @trigger 'setActive', @, false, false,hotel.oldPageTop
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
         @select roomData
@@ -241,13 +235,7 @@ class ToursHotelsResultSet extends TourEntry
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
       hotel.off 'back'
       hotel.on 'back', =>
-        @trigger 'setActive', @, false, false
-        window.setTimeout(
-          ->
-            Utils.scrollTo(hotel.oldPageTop,false)
-            console.log(hotel.oldPageTop)
-          , 50
-        )
+        @trigger 'setActive', @, false, false, hotel.oldPageTop
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
         @select roomData
@@ -389,8 +377,8 @@ class ToursResultSet
         variant.searchParams.cacheId = variant.cacheId
         result = new ToursHotelsResultSet variant, variant.searchParams
       @data.push result
-      result.on 'setActive', (entry)=>
-        @setActive entry
+      result.on 'setActive', (entry, beforeRender = true, afterRender = true, scrollTo = 0)=>
+        @setActive entry, beforeRender, afterRender, scrollTo
       result.on 'next', (entry)=>
         @nextEntry()
 
@@ -445,26 +433,29 @@ class ToursResultSet
     @voyashki.push new VoyashaCheapest @
     @voyashki.push new VoyashaOptima @
     @voyashki.push new VoyashaRich @
-  setActive: (entry, beforeRender = true, afterRender = true)=>
+  setActive: (entry,beforeRender = true, afterRender = true,scrollTo = 0)=>
     $('#loadWrapBg').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
       window.toursOverviewActive = true
     else
       window.toursOverviewActive = false
-
+    console.log('br',beforeRender,afterRender)
     if entry.beforeRender && beforeRender
+      console.log('brin')
       entry.beforeRender()
     @trigger 'inner-template', entry.template
     # FIXME 
     window.setTimeout =>
       if entry.afterRender && afterRender
+        console.log('arin')
         entry.afterRender()
       @selection entry
       ko.processAllDeferredBindingUpdates()
       ResizeAvia()
       $('#loadWrapBg').hide()
-      Utils.scrollTo(0,false)
+      if !(scrollTo == false)
+        Utils.scrollTo(scrollTo,false)
     , 100
 
 

@@ -5,6 +5,7 @@ class PhotoBox
     @activeIndex = ko.observable initIndex
     @length0 = photos.length - 1
     @activePhoto = ko.observable @photos[@activeIndex()]['largeUrl']
+    @activeDesc = ko.observable @photos[@activeIndex()]['description']
     # Indicates if we are sliding right now, so no one should be able
     # to request other image
     @busy = false
@@ -76,5 +77,6 @@ class PhotoBox
   _load: (var1, var2)=>
     $('#body-popup-Photo').find('table img').animate {opacity : 0}, 300, =>
       @activePhoto(@photos[@activeIndex()]['largeUrl'])
+      @activeDesc(@photos[@activeIndex()]['description'])
   		$('#hotel-img-load').show()
 	   
