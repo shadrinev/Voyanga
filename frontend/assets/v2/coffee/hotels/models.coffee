@@ -693,7 +693,9 @@ class HotelsResultSet
     $('#all-hotels-map').show()
     mapAllPageView()
     center = new google.maps.LatLng(@city.latitude, @city.longitude);
-    options = {'zoom': 11,'center': center,'mapTypeId': google.maps.MapTypeId.ROADMAP}
+    options = {'zoom': 10,'center': center,'mapTypeId': google.maps.MapTypeId.ROADMAP}
+    @fullMapInitialized = false
+    @mapCluster = null
 
 
     if !@fullMapInitialized

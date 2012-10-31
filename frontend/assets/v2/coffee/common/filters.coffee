@@ -139,7 +139,9 @@ class ListFilter extends Filter
   updateLimits: (item)->
     for key in @keys
       propValue = @get(item, key)
-      if typeof propValue != 'object'
+      if typeof propValue == 'undefined'
+        continue
+      else if typeof propValue != 'object'
         values = []
         values.push propValue
       else

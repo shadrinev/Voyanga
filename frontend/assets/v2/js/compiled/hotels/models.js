@@ -888,10 +888,12 @@ HotelsResultSet = (function() {
     mapAllPageView();
     center = new google.maps.LatLng(this.city.latitude, this.city.longitude);
     options = {
-      'zoom': 11,
+      'zoom': 10,
       'center': center,
       'mapTypeId': google.maps.MapTypeId.ROADMAP
     };
+    this.fullMapInitialized = false;
+    this.mapCluster = null;
     if (!this.fullMapInitialized) {
       this.gAllMap = new google.maps.Map($('#all-hotels-map')[0], options);
       this.markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png', new google.maps.Size(31, 31));
