@@ -813,8 +813,8 @@ function mapAllPageView() {
 		Utils.scrollTo('#content');
 		var offset = $('#content').offset();
 		if (_contentHeight < ($(window).height() - 102)) {
-			$('#content').css('height', ($(window).height() - 102)+'px');
-			_map.css('height', ($(window).height() - 153)+'px');
+			$('#content').css('height', ($(window).height() - 70)+'px');
+			_map.css('height', ($(window).height() - 123)+'px');
 		}
 		_map.css('width', $(window).width()+'px').css('margin-left', '-'+ offset.left +'px');
 	}	
