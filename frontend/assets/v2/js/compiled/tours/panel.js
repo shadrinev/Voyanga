@@ -20,6 +20,8 @@ TourPanelSet = (function() {
 
     this.deletePanel = __bind(this.deletePanel, this);
 
+    this.navigateToNewSearch = __bind(this.navigateToNewSearch, this);
+
     var _this = this;
     _.extend(this, Backbone.Events);
     window.voyanga_debug('Init of TourPanelSet');
@@ -52,16 +54,25 @@ TourPanelSet = (function() {
       };
     });
     this.formFilled = ko.computed(function() {
-      var isFilled, result;
-      isFilled = true;
+      var isFilled;
+      isFilled = _this.startCity();
       _.each(_this.panels(), function(panel) {
-        return isFilled && (isFilled = panel.formFilled());
+        return isFilled = isFilled && panel.formFilled();
       });
-      console.log('IS FILLED ', isFilled);
-      result = _this.startCity && isFilled;
-      return result;
+      return isFilled;
+    });
+    this.formNotFilled = ko.computed(function() {
+      return !_this.formFilled();
     });
   }
+
+  TourPanelSet.prototype.navigateToNewSearch = function() {
+    if (this.formNotFilled()) {
+      return;
+    }
+    _.last(this.panels()).handlePanelSubmit();
+    return _.last(this.panels()).minimizedCalendar(true);
+  };
 
   TourPanelSet.prototype.deletePanel = function(elem) {
     this.sp.destinations.remove(elem.city);
@@ -148,9 +159,7 @@ TourPanel = (function(_super) {
     this.cityReadableAcc = ko.observable('');
     this.oldCalendarState = this.minimizedCalendar();
     this.formFilled = ko.computed(function() {
-      var result;
-      result = _this.city() && _this.checkIn() && _this.checkOut();
-      return result;
+      return _this.city() && _this.checkIn() && _this.checkOut();
     });
     this.formNotFilled = ko.computed(function() {
       return !_this.formFilled();
@@ -176,14 +185,6 @@ TourPanel = (function(_super) {
     return app.navigate(this.sp.getHash(), {
       trigger: true
     });
-  };
-
-  TourPanel.prototype.navigateToNewSearch = function() {
-    if (this.formNotFilled()) {
-      return;
-    }
-    this.handlePanelSubmit();
-    return this.minimizedCalendar(true);
   };
 
   TourPanel.prototype.close = function() {

@@ -34,15 +34,19 @@ class TourPanelSet
       to: @activeCalendarPanel().checkOut()
 
     @formFilled = ko.computed =>
-      isFilled = true
-
+      isFilled = @startCity()
       _.each @panels(), (panel) ->
-        isFilled &&= panel.formFilled()
+        isFilled = isFilled && panel.formFilled()
+      return isFilled
 
-      console.log 'IS FILLED ', isFilled
+    @formNotFilled = ko.computed =>
+      !@formFilled()
 
-      result = @startCity && isFilled
-      return result
+  navigateToNewSearch: =>
+    if (@formNotFilled())
+      return
+    _.last(@panels()).handlePanelSubmit()
+    _.last(@panels()).minimizedCalendar(true)
 
   deletePanel: (elem) =>
     @sp.destinations.remove(elem.city)
@@ -104,8 +108,7 @@ class TourPanel extends SearchPanel
     @oldCalendarState = @minimizedCalendar()
 
     @formFilled = ko.computed =>
-      result = @city() && @checkIn() && @checkOut()
-      return result
+      @city() && @checkIn() && @checkOut()
 
     @formNotFilled = ko.computed =>
       !@formFilled()
@@ -126,12 +129,6 @@ class TourPanel extends SearchPanel
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
-
-  navigateToNewSearch: ->
-    if (@formNotFilled())
-      return
-    @handlePanelSubmit()
-    @minimizedCalendar(true)
 
   close: ->
     $(document.body).unbind 'mousedown'
