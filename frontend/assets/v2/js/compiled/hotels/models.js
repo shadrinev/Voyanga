@@ -1000,7 +1000,7 @@ HotelsResultSet = (function() {
       zoom = zoom2;
     }
     console.log('set to center');
-    this.gAllMap.setZoom(zoom);
+    this.gAllMap.setZoom(zoom(-1));
     return this.gAllMap.panToBounds(this.computedCenter);
   };
 
