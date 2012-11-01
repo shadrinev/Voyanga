@@ -210,22 +210,24 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
-    var elem;
+    var elem, startInput, toInput;
     elem = $('.startInputTo .second-path');
-    console.log("Hide city input", elem);
-    if (elem.parent().hasClass("overflow")) {
-      elem.parent().animate({
+    console.log("Hide city input", elem.parent());
+    startInput = $('div.startInputTo');
+    toInput = $('div.overflow');
+    if (startInput.is(':visible')) {
+      toInput.animate({
         width: "271px"
       }, 300, function() {
-        return $(this).removeClass("overflow");
+        return toInput.removeClass("overflow");
       });
       $(".cityStart").animate({
         width: "115px"
       }, 300);
-      return $(".cityStart").find(".startInputTo").animate({
+      return startInput.animate({
         opacity: "1"
       }, 300, function() {
-        return $(this).hide();
+        return startInput.hide();
       });
     }
   };

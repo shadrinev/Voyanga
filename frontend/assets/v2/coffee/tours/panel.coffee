@@ -154,20 +154,22 @@ class TourPanel extends SearchPanel
 
   hideFromCityInput: (panel, event) ->
     elem = $('.startInputTo .second-path')
-    console.log "Hide city input", elem
-    if elem.parent().hasClass("overflow")
-      elem.parent().animate
+    console.log "Hide city input", elem.parent()
+    startInput = $('div.startInputTo')
+    toInput = $('div.overflow')
+    if startInput.is(':visible')
+      toInput.animate
         width: "271px"
       , 300, ->
-        $(this).removeClass "overflow"
+        toInput.removeClass "overflow"
     
       $(".cityStart").animate
         width: "115px"
       , 300
-      $(".cityStart").find(".startInputTo").animate
+      startInput.animate
         opacity: "1"
       , 300, ->
-        $(this).hide()
+        startInput.hide()
 
   showCalendar: =>
     $('.calenderWindow').show()
