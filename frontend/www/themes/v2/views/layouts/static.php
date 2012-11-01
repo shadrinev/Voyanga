@@ -4,7 +4,7 @@ $cs->reset();
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 $theme = Yii::app()->theme->baseUrl;
 Yii::app()->clientScript->registerPackage('appCss');
-Yii::app()->clientScript->registerCoreScript('jquery');
+Yii::app()->clientScript->registerPackage('appJs');
 Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -33,10 +33,10 @@ Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
                 <div class="bg-mask"></div>
 
                 <ul>
-                    <li id="h-tours-slider" class="planner btn"  data-bind="click: slider.click"><a href="#tours">Планировщик</a></li>
-                    <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#avia">Авиабилеты</a>
+                    <li id="h-tours-slider" class="planner btn <?php if (Yii::app()->user->getState('currentModule')=='tours') echo 'active'?>"><a href="/#tours">Планировщик</a></li>
+                    <li id="h-avia-slider" class="aviatickets btn" <?php if (Yii::app()->user->getState('currentModule')=='avia') echo 'active'?>><a href="/#avia">Авиабилеты</a>
                     </li>
-                    <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
+                    <li id="h-hotels-slider" class="hotel btn" <?php if (Yii::app()->user->getState('currentModule')=='hotels') echo 'active'?>><a href="/#hotels">Отели</a></li>
                 </ul>
             </div>
 
@@ -68,10 +68,6 @@ Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
 </div>
 </div>
 <!-- END WRAPPER -->
-<!-- MAPS -->
-<!-- FIXME -->
-<span data-bind="template: {if: in1, name: 'event-map', data: events}"></span>
-<!-- END MAPS -->
 <div id="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
         <div id="loadGIF"><img src="/themes/v2/images/loading-5frame.gif"></div>

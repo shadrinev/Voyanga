@@ -20,6 +20,8 @@ TourPanelSet = (function() {
 
     this.deletePanel = __bind(this.deletePanel, this);
 
+    this.navigateToNewSearch = __bind(this.navigateToNewSearch, this);
+
     var _this = this;
     _.extend(this, Backbone.Events);
     window.voyanga_debug('Init of TourPanelSet');
@@ -52,16 +54,25 @@ TourPanelSet = (function() {
       };
     });
     this.formFilled = ko.computed(function() {
-      var isFilled, result;
-      isFilled = true;
+      var isFilled;
+      isFilled = _this.startCity();
       _.each(_this.panels(), function(panel) {
-        return isFilled && (isFilled = panel.formFilled());
+        return isFilled = isFilled && panel.formFilled();
       });
-      console.log('IS FILLED ', isFilled);
-      result = _this.startCity && isFilled;
-      return result;
+      return isFilled;
+    });
+    this.formNotFilled = ko.computed(function() {
+      return !_this.formFilled();
     });
   }
+
+  TourPanelSet.prototype.navigateToNewSearch = function() {
+    if (this.formNotFilled()) {
+      return;
+    }
+    _.last(this.panels()).handlePanelSubmit();
+    return _.last(this.panels()).minimizedCalendar(true);
+  };
 
   TourPanelSet.prototype.deletePanel = function(elem) {
     this.sp.destinations.remove(elem.city);
@@ -148,9 +159,7 @@ TourPanel = (function(_super) {
     this.cityReadableAcc = ko.observable('');
     this.oldCalendarState = this.minimizedCalendar();
     this.formFilled = ko.computed(function() {
-      var result;
-      result = _this.city() && _this.checkIn() && _this.checkOut();
-      return result;
+      return _this.city() && _this.checkIn() && _this.checkOut();
     });
     this.formNotFilled = ko.computed(function() {
       return !_this.formFilled();
@@ -178,14 +187,6 @@ TourPanel = (function(_super) {
     });
   };
 
-  TourPanel.prototype.navigateToNewSearch = function() {
-    if (this.formNotFilled()) {
-      return;
-    }
-    this.handlePanelSubmit();
-    return this.minimizedCalendar(true);
-  };
-
   TourPanel.prototype.close = function() {
     $(document.body).unbind('mousedown');
     $('.how-many-man .btn').removeClass('active');
@@ -210,22 +211,24 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
-    var elem;
+    var elem, startInput, toInput;
     elem = $('.startInputTo .second-path');
-    console.log("Hide city input", elem);
-    if (elem.parent().hasClass("overflow")) {
-      elem.parent().animate({
+    console.log("Hide city input", elem.parent());
+    startInput = $('div.startInputTo');
+    toInput = $('div.overflow');
+    if (startInput.is(':visible')) {
+      toInput.animate({
         width: "271px"
       }, 300, function() {
-        return $(this).removeClass("overflow");
+        return toInput.removeClass("overflow");
       });
       $(".cityStart").animate({
         width: "115px"
       }, 300);
-      return $(".cityStart").find(".startInputTo").animate({
+      return startInput.animate({
         opacity: "1"
       }, 300, function() {
-        return $(this).hide();
+        return startInput.hide();
       });
     }
   };

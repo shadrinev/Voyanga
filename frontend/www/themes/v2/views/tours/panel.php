@@ -34,7 +34,7 @@
                          <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}"></span>
                     </td>
                     <td class="tdButton">
-                        <div class="btn-find" data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}"></div>
+                        <div class="btn-find" data-bind="click: $parent.navigateToNewSearch, css: {inactive: $parent.formNotFilled}"></div>
                     </td>
                     <!-- /ko -->
                 </tr>

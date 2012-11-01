@@ -705,6 +705,7 @@ AviaResultSet = (function() {
       selection = ctx;
     }
     result = {};
+    result.module = 'Avia';
     result.type = 'avia';
     result.searchId = selection.cacheId;
     result.searchKey = selection.flightKey();
