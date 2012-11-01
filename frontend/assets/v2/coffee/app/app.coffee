@@ -67,11 +67,6 @@ class Application extends Backbone.Router
     @slider.init()
     @activeModule.subscribe @slider.handler
 
-    ev = []
-    $.each window.eventsRaw, (i, el) ->
-      ev.push new Event(el)
-    @events = new EventSet(ev)
-
   initCalendar: =>
     throw "Deprecated"
 
@@ -125,7 +120,22 @@ class Application extends Backbone.Router
     # Start listening to hash changes
     Backbone.history.start()
     # Call some change handlers with initial values
+    @bindEvents()
     @slider.handler(@activeModule())
+
+  runWithModule: (module) =>
+    # Start listening to hash changes
+    Backbone.history.start()
+    # Call some change handlers with initial values
+    console.log 'slider.handler: ', module
+    @slider.handler(module)
+    window.app.navigate '#'+ module, {'trigger': true}
+
+  bindEvents: =>
+    ev = []
+    $.each window.eventsRaw, (i, el) ->
+      ev.push new Event(el)
+    @events = new EventSet(ev)
 
   # FIXME write better handler
   http404: ->
@@ -152,24 +162,3 @@ class Application extends Backbone.Router
   isEvent: =>
     console.log 'Checking isEvent ', @activeView()
     @activeView() == 'tours-index'
-
-$ ->
-  console.time "App dispatching"
-  window.voyanga_debug = (args...) ->
-    # Chrome does not likes window context for console.log, so we pass itself here
-    console.log.apply console, args
-  # FIXME FIXME FIXME
-  app = new Application()
-  avia = new AviaModule()
-  hotels = new HotelsModule()
-  tour = new ToursModule()
-  window.app = app
-  app.register 'tours', tour, true
-  app.register 'hotels', hotels
-  app.register 'avia', avia
-  app.run()
-  console.timeEnd "App dispatching"
-  console.time "Rendering"
-  ko.applyBindings(app)
-  ko.processAllDeferredBindingUpdates()
-  console.timeEnd "Rendering"

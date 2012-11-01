@@ -560,6 +560,7 @@ class ToursResultSet
     toBuy = []
     for x in @data()
       if x.selection()
+        toBuy.push {module: 'Tours'}
         toBuy.push x.toBuyRequest()
 
     Utils.toBuySubmit toBuy

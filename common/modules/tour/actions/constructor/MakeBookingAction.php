@@ -34,10 +34,13 @@ class MakeBookingAction extends CAction
             }
         }
         $this->bookingForm = new BookingForm();
+        $tripStorage = new TripDataProvider();
+        $trip = $tripStorage->getSortedCartItemsOnePerGroupAsJson();
         $viewData = array(
             'passportForms' => $this->passportForms,
             'ambigousPassports' => $ambigousPassports,
-            'bookingForm' => $this->bookingForm
+            'bookingForm' => $this->bookingForm,
+            'trip' => $trip
         );
         $this->controller->render('makeBooking', $viewData);
     }

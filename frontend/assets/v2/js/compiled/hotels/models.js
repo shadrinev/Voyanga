@@ -713,6 +713,7 @@ HotelResult = (function() {
       });
     } else {
       result = {};
+      result.module = 'Hotels';
       result.type = 'hotel';
       result.searchId = this.cacheId;
       result.searchKey = room.resultId;

@@ -575,6 +575,7 @@ class HotelResult
       @trigger 'select', {roomSet: room, hotel: @}
     else
       result = {}
+      result.module = 'Hotels'
       result.type = 'hotel'
       result.searchId = @cacheId
       # FIXME FIXME FXIME

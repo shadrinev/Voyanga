@@ -881,6 +881,9 @@ ToursResultSet = (function() {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       x = _ref[_i];
       if (x.selection()) {
+        toBuy.push({
+          module: 'Tours'
+        });
         toBuy.push(x.toBuyRequest());
       }
     }

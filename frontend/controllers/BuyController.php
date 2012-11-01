@@ -25,8 +25,13 @@ class BuyController extends Controller
 
     public function actionIndex()
     {
-        $this->layout = 'static';
+        $this->layout = 'main';
         $this->addItems();
+        if (isset($_POST['item'][0]['module']))
+            Yii::app()->user->setState('currentModule', $_POST['item'][0]['module']);
+        else
+            //todo: think what is default here
+            Yii::app()->user->setState('currentModule', 'Tours');
         $this->redirect('buy/makeBooking');
     }
 
@@ -44,8 +49,8 @@ class BuyController extends Controller
 
     public function addFlightToTrip($searchKey, $searchId)
     {
-        $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchId);
-        $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
+        $flightSearchResult = @Yii::app()->pCache->get('flightSearchResult' . $searchId);
+        $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $searchId);
         if (($flightSearchParams) and ($flightSearchResult))
         {
             foreach ($flightSearchResult->flightVoyages as $result)
@@ -60,8 +65,8 @@ class BuyController extends Controller
 
     public function addHotelToTrip($searchKey, $searchId)
     {
-        $hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $searchId);
-        $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $searchId);
+        $hotelSearchResult = @Yii::app()->pCache->get('hotelSearchResult' . $searchId);
+        $hotelSearchParams = @Yii::app()->pCache->get('hotelSearchParams' . $searchId);
         if (($hotelSearchParams) and ($hotelSearchResult))
         {
             foreach ($hotelSearchResult->hotels as $result)
