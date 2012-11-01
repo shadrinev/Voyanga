@@ -807,7 +807,7 @@ class HotelsResultSet
     if zoom2 < zoom
       zoom = zoom2
     console.log('set to center')
-    @gAllMap.setZoom(zoom)
+    @gAllMap.setZoom(zoom -1)
     @gAllMap.panToBounds(@computedCenter)
 
   showFullMapFunc: =>
