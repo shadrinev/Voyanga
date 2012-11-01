@@ -259,6 +259,8 @@ HotelResult = (function() {
     var elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
       _this = this;
     this.activeHotel = activeHotel;
+    this.putToMap = __bind(this.putToMap, this);
+
     this.smallMapUrl = __bind(this.smallMapUrl, this);
 
     this.select = __bind(this.select, this);
@@ -741,6 +743,53 @@ HotelResult = (function() {
     return base;
   };
 
+  HotelResult.prototype.putToMap = function(gMap) {
+    var city, country, gMarker, latLng,
+      _this = this;
+    if (this.lat && this.lng) {
+      console.log('add point to coords', this.lat, this.lng);
+      latLng = new google.maps.LatLng(this.lat, this.lng);
+      this.parent.addMapPoint(latLng);
+      gMarker = new google.maps.Marker({
+        position: latLng,
+        map: gMap,
+        icon: this.parent.markerImage,
+        draggable: false
+      });
+      this.gMarker = gMarker;
+      google.maps.event.addListener(gMarker, 'mouseover', (function(hotel) {
+        return function(ev) {
+          return _this.parent.gMapPointShowWin(ev, hotel);
+        };
+      })(this));
+      google.maps.event.addListener(gMarker, 'mouseout', (function(hotel) {
+        return function(ev) {
+          return _this.parent.gMapPointHideWin(ev, hotel);
+        };
+      })(this));
+      google.maps.event.addListener(gMarker, 'click', (function(hotel) {
+        return function(ev) {
+          return _this.parent.gMapPointClick(ev, hotel);
+        };
+      })(this));
+      return this.parent.gMarkers.push(gMarker);
+    } else {
+      city = this.parent.city.localEn;
+      country = this.parent.city.country ? ', ' + this.parent.city.country : '';
+      return this.parent.gMapGeocoder.geocode({
+        address: this.address + ', ' + city + country
+      }, function(geoInfo, status) {
+        console.log(geoInfo);
+        if (status === google.maps.GeocoderStatus.OK) {
+          _this.lat = geoInfo[0].geometry.location.lat();
+          _this.lng = geoInfo[0].geometry.location.lng();
+          _this.putToMap(gMap);
+          return _this.parent.mapCluster.addMarker(_this.gMarker);
+        }
+      });
+    }
+  };
+
   return HotelResult;
 
 })();
@@ -779,6 +828,12 @@ HotelsResultSet = (function() {
     this.hideFullMap = __bind(this.hideFullMap, this);
 
     this.showFullMapFunc = __bind(this.showFullMapFunc, this);
+
+    this.setFullMapZoom = __bind(this.setFullMapZoom, this);
+
+    this.addMapPoint = __bind(this.addMapPoint, this);
+
+    this.resetMapCenter = __bind(this.resetMapCenter, this);
 
     this.select = __bind(this.select, this);
 
@@ -918,9 +973,38 @@ HotelsResultSet = (function() {
     return Utils.scrollTo('#content', false);
   };
 
+  HotelsResultSet.prototype.resetMapCenter = function() {
+    return this.computedCenter = new google.maps.LatLngBounds();
+  };
+
+  HotelsResultSet.prototype.addMapPoint = function(latLng) {
+    return this.computedCenter.extend(latLng);
+  };
+
+  HotelsResultSet.prototype.setFullMapZoom = function() {
+    var GLOBE_WIDTH, angle, east, north, south, west, zoom, zoom2;
+    GLOBE_WIDTH = 256;
+    west = this.computedCenter.getSouthWest().lng();
+    east = this.computedCenter.getNorthEast().lng();
+    angle = east - west;
+    if (angle < 0) {
+      angle += 360;
+    }
+    zoom = Math.round(Math.log($('#all-hotels-map').width() * 360 / angle / GLOBE_WIDTH) / Math.LN2);
+    south = this.computedCenter.getSouthWest().lat();
+    north = this.computedCenter.getNorthEast().lat();
+    angle = north - south;
+    zoom2 = Math.round(Math.log($('#all-hotels-map').height() * 360 / angle / GLOBE_WIDTH) / Math.LN2);
+    if (zoom2 < zoom) {
+      zoom = zoom2;
+    }
+    console.log('set to center');
+    this.gAllMap.setZoom(zoom);
+    return this.gAllMap.panToBounds(this.computedCenter);
+  };
+
   HotelsResultSet.prototype.showFullMapFunc = function() {
-    var center, gMarker, hotel, i, options, _i, _j, _len, _len1, _ref, _ref1,
-      _this = this;
+    var center, gMarker, hotel, i, options, _i, _j, _len, _len1, _ref, _ref1;
     console.log('show full map');
     this.showFullMap(true);
     $('#all-hotels-results').hide();
@@ -936,27 +1020,17 @@ HotelsResultSet = (function() {
     this.mapCluster = null;
     if (!this.fullMapInitialized) {
       this.gAllMap = new google.maps.Map($('#all-hotels-map')[0], options);
+      window.gmap = this.gAllMap;
       this.markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png', new google.maps.Size(31, 31));
       this.markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png', new google.maps.Size(31, 31));
-      this.gMapInfoWin = new google.maps.InfoWindow({
-        disableAutoPan: false
-      });
+      this.gMapGeocoder = new google.maps.Geocoder();
+      this.resetMapCenter();
       this.gMapOverlay = new googleInfoDiv();
       console.log(this.gMapOverlay);
       this.gMapOverlay.setPosition(center);
       this.gMapOverlay.setMap(this.gAllMap);
       console.log(this.gMapOverlay);
       this.gMapOverlay.hide();
-      google.maps.event.addListener(this.gMapInfoWin, 'domready', function() {
-        console.log('setId');
-        $(_this.gMapInfoWin.b.contentNode).attr('id', 'infoWrapperDiv').css('overflow', 'inherit');
-        $(_this.gMapInfoWin.j[0].b.l).attr('id', 'infoWrapperParentDiv').css('overflow', 'inherit');
-        $('#gMapInfoDiv').css('visibility', 'visible');
-        window.setTimeout(function() {
-          return $('#gMapInfoDiv').css('visibility', 'visible');
-        }, 50);
-        return true;
-      });
       this.clusterStyle = [
         {
           url: '/themes/v2/images/cluster_one.png',
@@ -1001,43 +1075,23 @@ HotelsResultSet = (function() {
     for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
       hotel = _ref1[_j];
       if (hotel.visible()) {
-        console.log('add hotel marker', hotel.lat, hotel.lng);
-        gMarker = new google.maps.Marker({
-          position: new google.maps.LatLng(hotel.lat, hotel.lng),
-          map: this.gAllMap,
-          icon: this.markerImage,
-          draggable: false
-        });
-        hotel.gMarker = gMarker;
-        google.maps.event.addListener(gMarker, 'mouseover', (function(hotel) {
-          return function(ev) {
-            return _this.gMapPointShowWin(ev, hotel);
-          };
-        })(hotel));
-        google.maps.event.addListener(gMarker, 'mouseout', (function(hotel) {
-          return function(ev) {
-            return _this.gMapPointHideWin(ev, hotel);
-          };
-        })(hotel));
-        google.maps.event.addListener(gMarker, 'click', (function(hotel) {
-          return function(ev) {
-            return _this.gMapPointClick(ev, hotel);
-          };
-        })(hotel));
-        this.gMarkers.push(gMarker);
+        hotel.putToMap(this.gAllMap);
         i++;
       }
-      if (!this.fullMapInitialized) {
-        this.mapCluster = new MarkerClusterer(this.gAllMap, this.gMarkers, {
-          styles: this.clusterStyle
-        });
-        this.fullMapInitialized = true;
-      } else {
-        this.mapCluster.addMarkers(this.gMarkers);
-      }
+    }
+    if (!this.fullMapInitialized) {
+      this.mapCluster = new MarkerClusterer(this.gAllMap, this.gMarkers, {
+        styles: this.clusterStyle
+      });
+      this.fullMapInitialized = true;
+    } else {
+      this.mapCluster.addMarkers(this.gMarkers);
     }
     console.log(this.gAllMap);
     console.log(this.gMapInfoWin);
+    if (this.gMarkers.length > 0) {
+      this.setFullMapZoom();
+    }
     return Utils.scrollTo('#content');
   };
 

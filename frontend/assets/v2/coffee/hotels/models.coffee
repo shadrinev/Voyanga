@@ -599,6 +599,54 @@ class HotelResult
       base += "&sensor=false"
       return base
 
+  putToMap: (gMap)=>
+    if(@lat && @lng)
+      console.log('add point to coords',@lat, @lng)
+      latLng = new google.maps.LatLng(@lat, @lng)
+      @parent.addMapPoint(latLng)
+      gMarker = new google.maps.Marker({
+      position: latLng,
+      map: gMap,
+      icon: @parent.markerImage,
+      draggable: false
+      })
+
+      @gMarker = gMarker
+      google.maps.event.addListener(
+        gMarker,
+        'mouseover',
+        ((hotel)=>
+          return (ev)=>
+            @parent.gMapPointShowWin(ev,hotel))(@)
+      )
+      google.maps.event.addListener(
+        gMarker,
+        'mouseout',
+        ((hotel)=>
+          return (ev)=>
+            @parent.gMapPointHideWin(ev,hotel))(@)
+      )
+      google.maps.event.addListener(
+        gMarker,
+        'click',
+        ((hotel)=>
+          return (ev)=>
+            @parent.gMapPointClick(ev,hotel))(@)
+      )
+      @parent.gMarkers.push gMarker
+    else
+      city = @parent.city.localEn
+      country = if @parent.city.country then (', ' + @parent.city.country) else ''
+      @parent.gMapGeocoder.geocode(
+        {address:@address+', '+city+country},
+        (geoInfo,status)=>
+          console.log(geoInfo)
+          if status == google.maps.GeocoderStatus.OK
+            @lat = geoInfo[0].geometry.location.lat()
+            @lng = geoInfo[0].geometry.location.lng()
+            @putToMap(gMap)
+            @parent.mapCluster.addMarker(@gMarker)
+      )
 
 
 #
@@ -729,6 +777,38 @@ class HotelsResultSet
     window.app.render(hotel, 'info-template')
     Utils.scrollTo('#content',false)
 
+  resetMapCenter: ()=>
+    @computedCenter = new google.maps.LatLngBounds()
+    #@summCount = 0
+    #@summLat = 0
+    #@summLng = 0
+    #@mapRadius = 0
+
+  addMapPoint: (latLng)=>
+    @computedCenter.extend(latLng)
+    #@computedCenter = new google.maps.LatLng((@summLat / @summCount), (@summLng / @summCount))
+    #radius = Utils.calculateTheDistance(latLng.lat(),@computedCenter.lat(),latLng.lng(),@computedCenter.lng())
+    #if(@mapRadius < radius)
+    #  @mapRadius = radius
+
+  setFullMapZoom: =>
+    GLOBE_WIDTH = 256
+    west = @computedCenter.getSouthWest().lng()
+    east = @computedCenter.getNorthEast().lng()
+    angle = east - west;
+    if angle < 0
+      angle += 360
+    zoom = Math.round(Math.log($('#all-hotels-map').width() * 360 / angle / GLOBE_WIDTH) / Math.LN2);
+    south = @computedCenter.getSouthWest().lat()
+    north = @computedCenter.getNorthEast().lat()
+    angle = north - south;
+    zoom2 = Math.round(Math.log($('#all-hotels-map').height() * 360 / angle / GLOBE_WIDTH) / Math.LN2);
+    if zoom2 < zoom
+      zoom = zoom2
+    console.log('set to center')
+    @gAllMap.setZoom(zoom)
+    @gAllMap.panToBounds(@computedCenter)
+
   showFullMapFunc: =>
     console.log('show full map')
     @showFullMap(true)
@@ -743,31 +823,20 @@ class HotelsResultSet
 
     if !@fullMapInitialized
       @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
+      window.gmap = @gAllMap
       @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
       @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
-      @gMapInfoWin = new google.maps.InfoWindow({disableAutoPan: false})
+      @gMapGeocoder = new google.maps.Geocoder()
+      @resetMapCenter()
       @gMapOverlay = new googleInfoDiv()
       console.log(@gMapOverlay)
       @gMapOverlay.setPosition(center)
       @gMapOverlay.setMap(@gAllMap)
 
+
       console.log(@gMapOverlay)
       @gMapOverlay.hide()
-      google.maps.event.addListener(@gMapInfoWin, 'domready',
-        =>
-          console.log('setId')
-          $(@gMapInfoWin.b.contentNode).attr('id','infoWrapperDiv').css('overflow','inherit')
-          #$(@gMapInfoWin.j[0].b.n).find('>div:first-child').css('display','none')
-          $(@gMapInfoWin.j[0].b.l).attr('id','infoWrapperParentDiv').css('overflow','inherit')
-          $('#gMapInfoDiv').css('visibility','visible')
-          window.setTimeout(
-            ->
-              $('#gMapInfoDiv').css('visibility','visible')
-            , 50
-          )
-          return true
-          #$(@gMapInfoWin.j[0].b.e).attr('id','infoWrapperDiv').css('overflow','inherit')
-      )
+
       @clusterStyle = [
         {url: '/themes/v2/images/cluster_one.png',
         height: 43,
@@ -812,48 +881,21 @@ class HotelsResultSet
     i = 0
     for hotel in @data()
       if hotel.visible()
-        console.log('add hotel marker',hotel.lat, hotel.lng)
-        gMarker = new google.maps.Marker({
-          position: new google.maps.LatLng(hotel.lat, hotel.lng),
-          map: @gAllMap,
-          icon: @markerImage,
-          draggable: false
-        })
-        hotel.gMarker = gMarker
-        google.maps.event.addListener(
-          gMarker,
-          'mouseover',
-          ((hotel)=>
-            return (ev)=>
-              @gMapPointShowWin(ev,hotel))(hotel)
-        )
-        google.maps.event.addListener(
-          gMarker,
-          'mouseout',
-          ((hotel)=>
-            return (ev)=>
-              @gMapPointHideWin(ev,hotel))(hotel)
-        )
-        google.maps.event.addListener(
-          gMarker,
-          'click',
-          ((hotel)=>
-            return (ev)=>
-              @gMapPointClick(ev,hotel))(hotel)
-        )
-        @gMarkers.push gMarker
+        hotel.putToMap(@gAllMap)
         #console.log 'mm',gMarker
         i++
         #if i > 5
         #  break;
 
-      if !@fullMapInitialized
-        @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers,{styles: @clusterStyle})
-        @fullMapInitialized = true
-      else
-        @mapCluster.addMarkers(@gMarkers)
+    if !@fullMapInitialized
+      @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers,{styles: @clusterStyle})
+      @fullMapInitialized = true
+    else
+      @mapCluster.addMarkers(@gMarkers)
     console.log(@gAllMap)
     console.log(@gMapInfoWin)
+    if @gMarkers.length > 0
+      @setFullMapZoom()
     Utils.scrollTo('#content')
 
   hideFullMap: =>

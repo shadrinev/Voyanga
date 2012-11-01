@@ -219,7 +219,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
     var tmpDate = moment(startMoment)._d;
     //var diff = endMoment.diff(startMoment,'days');
     var weekDiff  = this.getDay(this.maxDate) - this.getDay(this.minDate);
-    var dateDiff = endMoment.diff(startMoment,'days');
+    var dateDiff = Math.floor(endMoment.diff(startMoment,'days',true));
     console.log('diff',weekDiff,dateDiff);
     if(weekDiff == dateDiff){
         console.log(tmpDate);
@@ -233,7 +233,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
     var startDate = firstDay.getDate();
     var startYear = firstDay.getFullYear();
     //console.log(tmpDate);
-    tmpDate.setDate(tmpDate.getDate()-this.getDay(tmpDate) + 1);
+    tmpDate.setDate(tmpDate.getDate()-this.getDay(tmpDate));
 
     //tmpDate.setDate(0);
     //console.log(tmpDate);
@@ -294,7 +294,16 @@ VoyangaCalendarTimeline.generateGrid = function(){
         //}
         lineNumber++;
     }
+    console.log('monthArr', this.slider.monthArray.length,this.slider.monthArray);
+    if(this.slider.monthArray.length == 0){
+        var monthObject = new Object();
+        monthObject.line = 0;
+        tmpDate.setMonth(tmpDate.getMonth() + 1);
+        monthObject.name = this.monthNames[tmpDate.getMonth()];
+        this.slider.monthArray.push(monthObject);
+    }
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
+
     //console.log(this.slider.monthArray);
     if((lastLineNumber - lastLineMonth) < 2 && this.slider.monthArray.length > 9){
         this.slider.monthArray.pop();
