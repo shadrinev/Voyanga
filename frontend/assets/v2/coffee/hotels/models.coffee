@@ -768,9 +768,14 @@ class HotelsResultSet
     hotel.on 'back', =>
       window.app.render({results: ko.observable(@)}, 'results')
       window.setTimeout(
-        ->
-          Utils.scrollTo(hotel.oldPageTop,false)
-          console.log(hotel.oldPageTop)
+        =>
+          if !@showFullMap()
+            Utils.scrollTo(hotel.oldPageTop,false)
+          else
+            @showFullMapFunc()
+            @gAllMap.setCenter(@gMapCenter)
+            @gAllMap.setZoom(@gMapZoom)
+
         , 50
       )
 
@@ -780,39 +785,20 @@ class HotelsResultSet
 
   resetMapCenter: ()=>
     @computedCenter = new google.maps.LatLngBounds()
-    #@summCount = 0
-    #@summLat = 0
-    #@summLng = 0
-    #@mapRadius = 0
 
   addMapPoint: (latLng)=>
     @computedCenter.extend(latLng)
-    #@computedCenter = new google.maps.LatLng((@summLat / @summCount), (@summLng / @summCount))
-    #radius = Utils.calculateTheDistance(latLng.lat(),@computedCenter.lat(),latLng.lng(),@computedCenter.lng())
-    #if(@mapRadius < radius)
-    #  @mapRadius = radius
+
 
   setFullMapZoom: =>
-    GLOBE_WIDTH = 256
-    west = @computedCenter.getSouthWest().lng()
-    east = @computedCenter.getNorthEast().lng()
-    angle = east - west;
-    if angle < 0
-      angle += 360
-    zoom = Math.round(Math.log($('#all-hotels-map').width() * 360 / angle / GLOBE_WIDTH) / Math.LN2);
-    south = @computedCenter.getSouthWest().lat()
-    north = @computedCenter.getNorthEast().lat()
-    angle = north - south;
-    zoom2 = Math.round(Math.log($('#all-hotels-map').height() * 360 / angle / GLOBE_WIDTH) / Math.LN2);
-    if zoom2 < zoom
-      zoom = zoom2
-    console.log('set to center')
-    @gAllMap.setZoom(zoom-1)
-    @gAllMap.panToBounds(@computedCenter)
+    @gAllMap.fitBounds(@computedCenter)
+
+    @gAllMap.setCenter(@computedCenter.getCenter())
 
   showFullMapFunc: =>
     console.log('show full map')
     @showFullMap(true)
+    @oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     $('#all-hotels-results').hide()
     $('#all-hotels-map').show()
     mapAllPageView()
@@ -833,8 +819,6 @@ class HotelsResultSet
       console.log(@gMapOverlay)
       @gMapOverlay.setPosition(center)
       @gMapOverlay.setMap(@gAllMap)
-
-
       console.log(@gMapOverlay)
       @gMapOverlay.hide()
 
@@ -861,32 +845,12 @@ class HotelsResultSet
         textSize: 18
         }
       ]
-    else
-      for gMarker in @gMarkers
-        gMarker.setMap(null)
-      @mapCluster.clearMarkers()
-      if($('#all-hotels-map').html().length < 5)
-        @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
-        @fullMapInitialized = false
-        @mapCluster = null
-      @gAllMap.setCenter(center)
-
-
-      #addMarkers(markers:Array.<google.maps.Marker>, opt_nodraw:boolean)
-
-
 
 
     @gMarkers = []
-
-    i = 0
     for hotel in @data()
       if hotel.visible()
         hotel.putToMap(@gAllMap)
-        #console.log 'mm',gMarker
-        i++
-        #if i > 5
-        #  break;
 
     if !@fullMapInitialized
       @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers,{styles: @clusterStyle})
@@ -904,20 +868,17 @@ class HotelsResultSet
     $('#all-hotels-results').show()
     $('#all-hotels-map').hide()
     @showFullMap(false)
+    ifHeightMinAllBody()
+    Utils.scrollTo(@oldPageTop)
 
   gMapPointShowWin: (event,hotel) =>
     console.log('showDiv',event)
     div = '<div id="relInfoPosition"><div id="infoWrapperDiv"><div class="hotelMapInfo"><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> р/ночь</div></div></div></div>'
-    #@gMapInfoWin.setContent(div)
-    #@gMapInfoWin.setPosition(event.latLng)
     @gMapOverlay.setContent(div)
     @gMapOverlay.setPosition(event.latLng)
     @gMapOverlay.show()
     console.log(@gMapOverlay)
-    #@gMapInfoWin.open(@gAllMap)
-    #$(@gAllMap.n.panes.floatShadow).children().remove()
-    #mainDiv = $(@gMapInfoWin.j[0].b.d).attr('id','gMapInfoDiv')
-    #console.log(@gMapInfoWin.j[0].b.d)
+
     hotel.gMarker.setIcon(@markerImageHover)
 
 
@@ -930,7 +891,9 @@ class HotelsResultSet
       @gMapInfoWin.close()
 
   gMapPointClick: (event,hotel) =>
-    @hideFullMap()
+    #@hideFullMap()
+    @gMapCenter = @gAllMap.getCenter()
+    @gMapZoom = @gAllMap.getZoom()
     @select(hotel)
     console.log('gMapEventClick',event,hotel)
 
@@ -1022,7 +985,7 @@ class HotelsResultSet
 
         else
           Utils.scrollTo(0,false)
-        if @fullMapShow
+        if @showFullMap()
           @showFullMapFunc()
 
         @toursOpened = false
