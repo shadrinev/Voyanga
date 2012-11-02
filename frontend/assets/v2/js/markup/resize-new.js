@@ -839,3 +839,7 @@ function indexIMGresizeCenter() {
 		_indexIMG.css('height', _innerHeight+'px').css('width', 'auto');
 	}
 }
+
+function jsPaneScrollHeight() {
+    console.log('jsPaneScrollHeight');
+}

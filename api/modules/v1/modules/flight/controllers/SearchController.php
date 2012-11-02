@@ -23,7 +23,7 @@ class SearchController extends ApiController
     public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
     {
         $asyncExecutor = new AsyncCurl();
-        $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+        //$this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
         $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
         //$this->addFirstClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
         $responses = $asyncExecutor->send();
