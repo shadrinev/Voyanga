@@ -2046,13 +2046,13 @@ input.hotel-input {
     position: absolute;
     width: 1390px;
     z-index: 2;
+    height: 100%;
 }
 .maps .innerBlockMain .IMGmain + .IMGmain {
     z-index: 1;
 }
 .maps .innerBlockMain .IMGmain img {
     position: absolute;
-    width: 1390px;
 }
 .maps .mapsBigAll {
     background: url("../images/mapsBigAll.png") repeat-x scroll center center transparent;
