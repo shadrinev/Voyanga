@@ -109,7 +109,7 @@ Utils =
     else
       return dateIsoString
 
-  scrollTo: (selector, animation = true)->
+  scrollTo: (selector, animation = true, callback = null)->
     if typeof(selector) == "string"
       oPos = $(selector).offset()
     else if typeof(selector) == "object"
@@ -118,7 +118,11 @@ Utils =
       oPos = {}
       oPos.top = selector
     if animation
-      $("html,body").animate({'scrollTop':oPos.top})
+      if callback
+        $("html,body").animate({'scrollTop':oPos.top}, 1000,callback)
+      else
+        $("html,body").animate({'scrollTop':oPos.top})
+
     else
       $("html,body").scrollTop(oPos.top)
 
@@ -181,6 +185,31 @@ Utils =
     form_html += '</form>'
     $('body').append(form_html)
     $('#buy-form').submit()
+
+  calculateTheDistance: (lat1, lng1, lat2, lng2)=>
+    #координаты в радианы
+    $lat1 = lat1 * Math.PI / 180;
+    $lat2 = lat2 * Math.PI / 180;
+    $long1 = lng1 * Math.PI / 180;
+    $long2 = lng2 * Math.PI / 180;
+
+    #косинусы и синусы широт и разницы долгот
+    $cl1 = Math.cos($lat1);
+    $cl2 = Math.cos($lat2);
+    $sl1 = Math.sin($lat1);
+    $sl2 = Math.sin($lat2);
+    $delta = $long2 - $long1;
+    $cdelta = Math.cos($delta);
+    $sdelta = Math.sin($delta);
+
+    #вычисления длины большого круга
+    $y = Math.sqrt(Math.pow($cl2 * $sdelta, 2) + Math.pow($cl1 * $sl2 - $sl1 * $cl2 * $cdelta, 2));
+    $x = $sl1 * $sl2 + $cl1 * $cl2 * $cdelta;
+    $ad = Math.atan2($y, $x);
+    #6372795 - Earth radius
+    $dist = $ad * 6372795;
+    return $dist;
+
 
 
 

@@ -34,15 +34,19 @@ class TourPanelSet
       to: @activeCalendarPanel().checkOut()
 
     @formFilled = ko.computed =>
-      isFilled = true
-
+      isFilled = @startCity()
       _.each @panels(), (panel) ->
-        isFilled &&= panel.formFilled()
+        isFilled = isFilled && panel.formFilled()
+      return isFilled
 
-      console.log 'IS FILLED ', isFilled
+    @formNotFilled = ko.computed =>
+      !@formFilled()
 
-      result = @startCity && isFilled
-      return result
+  navigateToNewSearch: =>
+    if (@formNotFilled())
+      return
+    _.last(@panels()).handlePanelSubmit()
+    _.last(@panels()).minimizedCalendar(true)
 
   deletePanel: (elem) =>
     @sp.destinations.remove(elem.city)
@@ -104,8 +108,7 @@ class TourPanel extends SearchPanel
     @oldCalendarState = @minimizedCalendar()
 
     @formFilled = ko.computed =>
-      result = @city() && @checkIn() && @checkOut()
-      return result
+      @city() && @checkIn() && @checkOut()
 
     @formNotFilled = ko.computed =>
       !@formFilled()
@@ -126,12 +129,6 @@ class TourPanel extends SearchPanel
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
-
-  navigateToNewSearch: ->
-    if (@formNotFilled())
-      return
-    @handlePanelSubmit()
-    @minimizedCalendar(true)
 
   close: ->
     $(document.body).unbind 'mousedown'
@@ -154,20 +151,22 @@ class TourPanel extends SearchPanel
 
   hideFromCityInput: (panel, event) ->
     elem = $('.startInputTo .second-path')
-    console.log "Hide city input", elem
-    if elem.parent().hasClass("overflow")
-      elem.parent().animate
+    console.log "Hide city input", elem.parent()
+    startInput = $('div.startInputTo')
+    toInput = $('div.overflow')
+    if startInput.is(':visible')
+      toInput.animate
         width: "271px"
       , 300, ->
-        $(this).removeClass "overflow"
+        toInput.removeClass "overflow"
     
       $(".cityStart").animate
         width: "115px"
       , 300
-      $(".cityStart").find(".startInputTo").animate
+      startInput.animate
         opacity: "1"
       , 300, ->
-        $(this).hide()
+        startInput.hide()
 
   showCalendar: =>
     $('.calenderWindow').show()

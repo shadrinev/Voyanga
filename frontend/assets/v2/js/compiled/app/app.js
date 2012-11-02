@@ -18,13 +18,17 @@ Application = (function(_super) {
 
     this.contentRendered = __bind(this.contentRendered, this);
 
+    this.bindEvents = __bind(this.bindEvents, this);
+
+    this.runWithModule = __bind(this.runWithModule, this);
+
     this.render = __bind(this.render, this);
 
     this.reRenderCalendar = __bind(this.reRenderCalendar, this);
 
     this.initCalendar = __bind(this.initCalendar, this);
 
-    var ev, result,
+    var result,
       _this = this;
     window.onerror = function(error) {
       return alert(error);
@@ -87,11 +91,6 @@ Application = (function(_super) {
     this.slider = new Slider();
     this.slider.init();
     this.activeModule.subscribe(this.slider.handler);
-    ev = [];
-    $.each(window.eventsRaw, function(i, el) {
-      return ev.push(new Event(el));
-    });
-    this.events = new EventSet(ev);
   }
 
   Application.prototype.initCalendar = function() {
@@ -145,7 +144,26 @@ Application = (function(_super) {
 
   Application.prototype.run = function() {
     Backbone.history.start();
+    this.bindEvents();
     return this.slider.handler(this.activeModule());
+  };
+
+  Application.prototype.runWithModule = function(module) {
+    Backbone.history.start();
+    console.log('slider.handler: ', module);
+    this.slider.handler(module);
+    return window.app.navigate('#' + module, {
+      'trigger': true
+    });
+  };
+
+  Application.prototype.bindEvents = function() {
+    var ev;
+    ev = [];
+    $.each(window.eventsRaw, function(i, el) {
+      return ev.push(new Event(el));
+    });
+    return this.events = new EventSet(ev);
   };
 
   Application.prototype.http404 = function() {
@@ -184,27 +202,3 @@ Application = (function(_super) {
   return Application;
 
 })(Backbone.Router);
-
-$(function() {
-  var app, avia, hotels, tour;
-  console.time("App dispatching");
-  window.voyanga_debug = function() {
-    var args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    return console.log.apply(console, args);
-  };
-  app = new Application();
-  avia = new AviaModule();
-  hotels = new HotelsModule();
-  tour = new ToursModule();
-  window.app = app;
-  app.register('tours', tour, true);
-  app.register('hotels', hotels);
-  app.register('avia', avia);
-  app.run();
-  console.timeEnd("App dispatching");
-  console.time("Rendering");
-  ko.applyBindings(app);
-  ko.processAllDeferredBindingUpdates();
-  return console.timeEnd("Rendering");
-});

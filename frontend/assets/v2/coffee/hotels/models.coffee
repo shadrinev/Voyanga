@@ -2,6 +2,49 @@ STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
 HOTEL_SERVICE_VERBOSE = {'Сервис':'service','Спорт и отдых':'sport','Туристам':'turist','Интернет':'internet','Развлечения и досуг':'dosug','Парковка':'parkovka','Дополнительно':'dop','В отеле':'in-hotel'}
 MEAL_VERBOSE = {'Американский завтрак':'Завтрак','Английский завтрак':'Завтрак','Завтрак в номер':'Завтрак','Завтрак + обед':'Завтрак и обед','Завтрак + обед + ужин':'Завтрак и обед и ужин','Завтрак + обед + ужин + напитки':'Завтрак и обед и ужин и напитки','Завтрак + ужин':'Завтрак и ужин','Континентальный завтрак':'Завтрак','Завтрак Шведский стол':'Завтрак'}
 
+
+
+###class googleInfoDiv extends google.maps.OverlayView
+  constructor: ->
+    @div_ = null
+    @latLng = null
+    @content = ''
+  setPosition: (latLng)=>
+    @latLng = latLng
+    pos = getPosFromLatLng_(@latLng)
+    if(@div_)
+      @div_.css({'top': pos.y+'px','left': pos.x+'px'})
+  setContent: (content)=>
+    @content = content
+    if(@div_)
+      @div_.html(@content)
+  draw: ()=>
+    if(@div_)
+      @latLng = latLng
+      pos = getPosFromLatLng_(@latLng)
+      @div_.css({'top': pos.y+'px','left': pos.x+'px'})
+  onAdd: =>
+    pos = getPosFromLatLng_(@latLng)
+    divEl = $('<div style="background-color: #0ff; width: 50px; height: 5px;position: absolute">'+@content+'</div>')
+
+
+    divEl.css({'top': pos.y+'px','left': pos.x+'px'})
+    @div_ = divEl
+    panes = @getPanes()
+    $(panes.overlayMouseTarget).append(divEl)
+  getPosFromLatLng_: (LatLng)=>
+    pos = this.getProjection().fromLatLngToDivPixel(latlng);
+    #pos.x -= parseInt(this.width_ / 2, 10);
+    #pos.y -= parseInt(this.height_ / 2, 10);
+    return pos
+  hide: ()=>
+    @div_.hide()
+  show: ()=>
+    @div_.show()###
+
+
+
+
 class Room
   constructor: (data) ->
     @name = data.showName
@@ -532,6 +575,7 @@ class HotelResult
       @trigger 'select', {roomSet: room, hotel: @}
     else
       result = {}
+      result.module = 'Hotels'
       result.type = 'hotel'
       result.searchId = @cacheId
       # FIXME FIXME FXIME
@@ -556,6 +600,54 @@ class HotelResult
       base += "&sensor=false"
       return base
 
+  putToMap: (gMap)=>
+    if(@lat && @lng)
+      console.log('add point to coords',@lat, @lng)
+      latLng = new google.maps.LatLng(@lat, @lng)
+      @parent.addMapPoint(latLng)
+      gMarker = new google.maps.Marker({
+      position: latLng,
+      map: gMap,
+      icon: @parent.markerImage,
+      draggable: false
+      })
+
+      @gMarker = gMarker
+      google.maps.event.addListener(
+        gMarker,
+        'mouseover',
+        ((hotel)=>
+          return (ev)=>
+            @parent.gMapPointShowWin(ev,hotel))(@)
+      )
+      google.maps.event.addListener(
+        gMarker,
+        'mouseout',
+        ((hotel)=>
+          return (ev)=>
+            @parent.gMapPointHideWin(ev,hotel))(@)
+      )
+      google.maps.event.addListener(
+        gMarker,
+        'click',
+        ((hotel)=>
+          return (ev)=>
+            @parent.gMapPointClick(ev,hotel))(@)
+      )
+      @parent.gMarkers.push gMarker
+    else
+      city = @parent.city.localEn
+      country = if @parent.city.country then (', ' + @parent.city.country) else ''
+      @parent.gMapGeocoder.geocode(
+        {address:@address+', '+city+country},
+        (geoInfo,status)=>
+          console.log(geoInfo)
+          if status == google.maps.GeocoderStatus.OK
+            @lat = geoInfo[0].geometry.location.lat()
+            @lng = geoInfo[0].geometry.location.lng()
+            @putToMap(gMap)
+            @parent.mapCluster.addMarker(@gMarker)
+      )
 
 
 #
@@ -636,7 +728,7 @@ class HotelsResultSet
       return results
     @numResults = ko.observable 0
     @filtersConfig = false
-    @pagesLoad = @showParts()
+    @pagesLoad = false
     @toursOpened = false
     window.hotelsScrollCallback = (ev)=>
       @checkShowMore(ev)
@@ -676,9 +768,14 @@ class HotelsResultSet
     hotel.on 'back', =>
       window.app.render({results: ko.observable(@)}, 'results')
       window.setTimeout(
-        ->
-          Utils.scrollTo(hotel.oldPageTop,false)
-          console.log(hotel.oldPageTop)
+        =>
+          if !@showFullMap()
+            Utils.scrollTo(hotel.oldPageTop,false)
+          else
+            @showFullMapFunc()
+            @gAllMap.setCenter(@gMapCenter)
+            @gAllMap.setZoom(@gMapZoom)
+
         , 50
       )
 
@@ -686,130 +783,133 @@ class HotelsResultSet
     window.app.render(hotel, 'info-template')
     Utils.scrollTo('#content',false)
 
+  resetMapCenter: ()=>
+    @computedCenter = new google.maps.LatLngBounds()
+
+  addMapPoint: (latLng)=>
+    @computedCenter.extend(latLng)
+
+
+  setFullMapZoom: =>
+    @gAllMap.fitBounds(@computedCenter)
+
+    @gAllMap.setCenter(@computedCenter.getCenter())
+
   showFullMapFunc: =>
     console.log('show full map')
-    @showFullMap(true)
-    $('#all-hotels-results').hide()
-    $('#all-hotels-map').show()
-    mapAllPageView()
-    center = new google.maps.LatLng(@city.latitude, @city.longitude);
-    options = {'zoom': 11,'center': center,'mapTypeId': google.maps.MapTypeId.ROADMAP}
 
-
-    if !@fullMapInitialized
-      @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
-      @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
-      @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
-      @gMapInfoWin = new google.maps.InfoWindow()
-      @clusterStyle = [
-        {url: '/themes/v2/images/cluster_one.png',
-        height: 43,
-        width: 31,
-        anchor: [7, 0],
-        textColor: '#000',
-        textSize: 18
-        },
-        {url: '/themes/v2/images/cluster_two.png',
-        height: 54,
-        width: 39,
-        anchor: [11, 0],
-        textColor: '#000',
-        textSize: 18
-        },
-        {url: '/themes/v2/images/cluster_three.png',
-        height: 65,
-        width: 47,
-        anchor: [15, 0],
-        textColor: '#000',
-        textSize: 18
-        }
-      ]
-    else
-      for gMarker in @gMarkers
-        gMarker.setMap(null)
-      @mapCluster.clearMarkers()
-      if($('#all-hotels-map').html().length < 5)
-        @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
+    @oldPageTop = $("html").scrollTop() | $("body").scrollTop()
+    Utils.scrollTo('#content')
+    stime = 400
+    offset = $('#content').offset()
+    posTop = $('html').scrollTop() || $('body').scrollTop()
+    if(Math.abs(posTop - offset.top) < 4)
+      stime = 100
+    window.setTimeout(
+      =>
+        @showFullMap(true)
+        $('#all-hotels-results').hide()
+        $('#all-hotels-map').show()
+        mapAllPageView()
+        center = new google.maps.LatLng(@city.latitude, @city.longitude);
+        options = {'zoom': 10,'center': center,'mapTypeId': google.maps.MapTypeId.ROADMAP}
         @fullMapInitialized = false
         @mapCluster = null
-      @gAllMap.setCenter(center)
 
 
-      #addMarkers(markers:Array.<google.maps.Marker>, opt_nodraw:boolean)
+        if !@fullMapInitialized
+          @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
+          window.gmap = @gAllMap
+          @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
+          @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
+          @gMapGeocoder = new google.maps.Geocoder()
+          @resetMapCenter()
+          @gMapOverlay = new googleInfoDiv()
+          console.log(@gMapOverlay)
+          @gMapOverlay.setPosition(center)
+          @gMapOverlay.setMap(@gAllMap)
+          console.log(@gMapOverlay)
+          @gMapOverlay.hide()
+
+          @clusterStyle = [
+            {url: '/themes/v2/images/cluster_one.png',
+            height: 43,
+            width: 31,
+            anchor: [7, 0],
+            textColor: '#000',
+            textSize: 18
+            },
+            {url: '/themes/v2/images/cluster_two.png',
+            height: 54,
+            width: 39,
+            anchor: [11, 0],
+            textColor: '#000',
+            textSize: 18
+            },
+            {url: '/themes/v2/images/cluster_three.png',
+            height: 65,
+            width: 47,
+            anchor: [15, 0],
+            textColor: '#000',
+            textSize: 18
+            }
+          ]
 
 
+        @gMarkers = []
+        for hotel in @data()
+          if hotel.visible()
+            hotel.putToMap(@gAllMap)
+
+        if !@fullMapInitialized
+          @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers,{styles: @clusterStyle})
+          @fullMapInitialized = true
+        else
+          @mapCluster.addMarkers(@gMarkers)
+        console.log(@gAllMap)
+        console.log(@gMapInfoWin)
+        if @gMarkers.length > 0
+          @setFullMapZoom()
+      , stime
+    )
 
 
-    @gMarkers = []
-
-    i = 0
-    for hotel in @data()
-      if hotel.visible()
-        console.log('add hotel marker',hotel.lat, hotel.lng)
-        gMarker = new google.maps.Marker({
-          position: new google.maps.LatLng(hotel.lat, hotel.lng),
-          map: @gAllMap,
-          icon: @markerImage,
-          draggable: false
-        })
-        hotel.gMarker = gMarker
-        google.maps.event.addListener(
-          gMarker,
-          'mouseover',
-          ((hotel)=>
-            return (ev)=>
-              @gMapPointShowWin(ev,hotel))(hotel)
-        )
-        google.maps.event.addListener(
-          gMarker,
-          'mouseout',
-          ((hotel)=>
-            return (ev)=>
-              @gMapPointHideWin(ev,hotel))(hotel)
-        )
-        google.maps.event.addListener(
-          gMarker,
-          'click',
-          ((hotel)=>
-            return (ev)=>
-              @gMapPointClick(ev,hotel))(hotel)
-        )
-        @gMarkers.push gMarker
-        #console.log 'mm',gMarker
-        i++
-        #if i > 5
-        #  break;
-
-      if !@fullMapInitialized
-        @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers,{styles: @clusterStyle})
-        @fullMapInitialized = true
-      else
-        @mapCluster.addMarkers(@gMarkers)
-    console.log(@gAllMap)
-    console.log(@gMapInfoWin)
 
   hideFullMap: =>
     console.log('hideFullMap')
     $('#all-hotels-results').show()
     $('#all-hotels-map').hide()
     @showFullMap(false)
+    window.setTimeout(
+      =>
+        ifHeightMinAllBody()
+        Utils.scrollTo(@oldPageTop)
+      , 50
+    )
 
   gMapPointShowWin: (event,hotel) =>
-    div = '<div class="hotelMapInfo"><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> р/ночь</div></div>'
-    @gMapInfoWin.setContent(div);
-    console.log(div);
-    @gMapInfoWin.setPosition(event.latLng)
-    @gMapInfoWin.open(@gAllMap)
-    $(@gMapInfoWin.j[0].b.d).attr('id','gMapInfoDiv')
+    console.log('showDiv',event)
+    div = '<div id="relInfoPosition"><div id="infoWrapperDiv"><div class="hotelMapInfo"><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> <span class="rur">o</span>/ночь</div></div></div></div>'
+    @gMapOverlay.setContent(div)
+    @gMapOverlay.setPosition(event.latLng)
+    @gMapOverlay.show()
+    console.log(@gMapOverlay)
+
     hotel.gMarker.setIcon(@markerImageHover)
 
 
   gMapPointHideWin: (event,hotel) =>
     hotel.gMarker.setIcon(@markerImage)
-    @gMapInfoWin.close()
+    console.log('mouseout')
+    rnd = Math.round(Math.random() * 5)
+    @gMapOverlay.hide()
+    if rnd == 40
+      @gMapInfoWin.close()
 
   gMapPointClick: (event,hotel) =>
-    @hideFullMap()
+    #@hideFullMap()
+    @gMapCenter = @gAllMap.getCenter()
+    @gMapZoom = @gAllMap.getZoom()
     @select(hotel)
     console.log('gMapEventClick',event,hotel)
 
@@ -840,7 +940,7 @@ class HotelsResultSet
     posTop = $('html').scrollTop() || $('body').scrollTop()
     fullHeight = $('html')[0].scrollHeight || $('body')[0].scrollHeight
     winHeight = $(window).height()
-    if((fullHeight - (posTop+winHeight)) < 2)
+    if((fullHeight - (posTop+winHeight)) < 2) && !@showFullMap()
       if (window.app.activeView() == 'hotels-results') || (window.app.activeView() == 'tours-results' && window.app.activeModuleInstance().innerTemplate == 'hotels-results')
         @showMoreResults()
 
@@ -877,23 +977,28 @@ class HotelsResultSet
   postInit: =>
     @filters = new HotelFiltersT @
 
-  postFilters: =>
+  postFilters: (fromFilters = false)=>
     console.log 'post filters'
     data = _.filter @data(), (el) -> el.visible()
     @numResults data.length
-    if !@pagesLoad
+    if !@pagesLoad || fromFilters
       @showParts 1
     else
       @showParts @pagesLoad
 
-    console.log(@data)
+    console.log(@showParts)
 
     window.setTimeout(
       =>
         ifHeightMinAllBody()
         scrolShowFilter()
+        if(fromFilters)
+          jsPaneScrollHeight()
         if window.app.activeView() == 'hotels-results'
-          Utils.scrollTo('#content')
+          offset = $('#content').offset()
+          posTop = $('html').scrollTop() || $('body').scrollTop()
+          if(posTop > offset.top)
+            Utils.scrollTo('#content')
         else if @toursOpened && @tours() && @filtersConfig
           kb = true
           #if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
@@ -901,7 +1006,7 @@ class HotelsResultSet
 
         else
           Utils.scrollTo(0,false)
-        if @fullMapShow
+        if @showFullMap()
           @showFullMapFunc()
 
         @toursOpened = false

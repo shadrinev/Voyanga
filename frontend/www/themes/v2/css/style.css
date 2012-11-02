@@ -432,7 +432,7 @@
     font-size: 13px;
     height: 58px;
     margin-left: -12px;
-    margin-right: -10px;
+    margin-right: 0px;
     overflow: hidden;
     padding-left: 12px;
     position: relative;
@@ -481,6 +481,12 @@
     background: url("../images/bg-line.png") no-repeat scroll center -1px rgba(185, 187, 189, 0.3);
     margin-right: 0;
     text-decoration: none !important;
+}
+.my-trip-list .items a .date.orange-one, .my-trip-list .items a .date.blue-one {
+    right: 44px;
+}
+.my-trip-list .items a .date.blue-two, .my-trip-list .items a .date.orange-two {
+    right: 10px !important;
 }
 .my-trip-list .items a:hover .date.orange-one, .my-trip-list .items a:hover .date.blue-one {
     right: 44px;
@@ -621,6 +627,9 @@
     text-shadow: 0 1px 0 #F55407;
     width: 70px;
 }
+.my-trip-list .items a.active .date.orange-two {
+	right: 20px !important;
+}
 .my-trip-list .items a .date.orange-two .day {
     width: 35px !important;
 }
@@ -630,6 +639,9 @@
     right: 20px;
     text-shadow: 0 1px 0 #0A5783;
     width: 70px;
+}
+.my-trip-list .items a.active .date.blue-two {
+	right: 20px !important;
 }
 .my-trip-list .items a .date.blue-two .day {
     width: 35px !important;
@@ -2651,7 +2663,7 @@ input.hotel-input {
 }
 
 .hotelMapInfo {
-	width: 230px;
+	width: 236px;
 	font-family: Arial;
 }
 .inlineBlock {
@@ -2659,10 +2671,10 @@ input.hotel-input {
 }
 .hotelMapImage {
     float: left;
-    height: 70px;
+    height: 76px;
     margin-right: 15px;
     overflow: hidden;
-    width: 70px;
+    width: 76px;
 }
 .hotelMapImage img {
     height: 100%;
@@ -2685,4 +2697,24 @@ input.hotel-input {
     color: #202328;
     font-size: 11px;
     margin-top: 3px;
+}
+
+#gMapInfoDiv > div {
+	display: none;
+}
+#gMapInfoDiv > div:last-child {
+	display: block;
+}
+#infoWrapperDiv {
+	padding: 10px;
+	background: #FFF;
+	border-radius: 4px;
+	box-shadow: 0px 1px 3px rgba(0,1,1,0.6);
+    position: absolute;
+    bottom: 50px;
+    left: -100px;
+    z-index: 300;
+}
+#relInfoPosition {
+    position: relative;
 }

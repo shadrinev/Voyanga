@@ -139,7 +139,9 @@ class ListFilter extends Filter
   updateLimits: (item)->
     for key in @keys
       propValue = @get(item, key)
-      if typeof propValue != 'object'
+      if typeof propValue == 'undefined'
+        continue
+      else if typeof propValue != 'object'
         values = []
         values.push propValue
       else
@@ -551,7 +553,7 @@ class HotelFiltersT
       #result.chooseActive()
     console.log('all filters accepted')
     #console.profileEnd('hotelFilters')
-    @results.postFilters()
+    @results.postFilters(true)
 
   getConfig: =>
     config = {}

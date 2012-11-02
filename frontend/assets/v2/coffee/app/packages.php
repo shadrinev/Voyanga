@@ -51,7 +51,8 @@
             'jquery.photoslider.js',
             'loader.js',
             'index.js',
-            'slide-mode.js'
+            'slide-mode.js',
+            'google.info.js'
         ),
         'depends' => array('jquery')
     ),

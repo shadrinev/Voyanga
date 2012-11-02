@@ -569,6 +569,7 @@ function ResizeAvia() {
     showMiniPopUp();
     slideToursSlide();
     smallIMGresizeIndex();
+    mapAllPageView();
 }
 
 function ResizeFun() {
@@ -791,20 +792,50 @@ function readMoreService(obj) {
 
 function mapAllPageView() {
 	var _map = $('#all-hotels-map');
-	var _contentWidth = $('#content').width();
-	var _contentHeight = $('#content').height();
-	var _mainWidth = $('.main-block').width();
-	
-	var _marginLeftMap = ((_mainWidth - _contentWidth) / 2);
-	
-	if (_contentHeight < ($(window).height() - 134)) {
-		$('#content').css('height', ($(window).height() - 233)+'px');
-		_map.css('height', ($(window).height() - (233 + 16))+'px');
-	}
-	else if (_contentHeight < (700 - 134)) {
-		$('#content').css('height', (700 - 233)+'px');
-		_map.css('height', (700 - (233 + 16))+'px');
-	}
-	_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
+	var _isset = _map.length > 0 && _map.is(':visible');
+	if (_isset) {
+		var _contentWidth = $('#content').width();
+		var _contentHeight = $('#content').height();
+		var _mainWidth = $('.main-block').width();
+		var _leftBlockIsset = $('.left-block').length > 0 && $('.left-block').is(':visible');
 		
+		if (_leftBlockIsset) {
+			var _marginLeftMap = ((_mainWidth - _contentWidth) / 2);
+			
+			if ($(window).height() < 670) {
+				var _windowWidth = 670;
+			}
+			else {
+				var _windowWidth = $(window).height();
+			}		
+			var offset = $('#content').offset();
+			$('#content').css('height', (_windowWidth - 100)+'px');
+			_map.css('height', (_windowWidth - 153)+'px');
+			_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
+		}
+		else {
+			if ($(window).height() < 670) {
+				var _windowWidth = 670;
+			}
+			else {
+				var _windowWidth = $(window).height();
+			}		
+			var offset = $('#content').offset();
+			$('#content').css('height', (_windowWidth - 100)+'px');
+			_map.css('height', (_windowWidth - 153)+'px');
+			_map.css('width', $(window).width()+'px').css('margin-left', '-'+ offset.left +'px');
+		}	
+	
+	}
+}
+
+
+function indexIMGresizeCenter() {
+	var _indexIMG = $('.IMGmain img')
+	var _imgHeight = _indexIMG.height();
+	var _innerHeight = $('.innerBlockMain').height();
+	console.log("== ! == "+ _imgHeight+" == / == "+ _innerHeight);
+	if (_innerHeight > _imgHeight) {
+		_indexIMG.css('height', _innerHeight+'px').css('width', 'auto');
+	}
 }

@@ -231,7 +231,9 @@ ListFilter = (function(_super) {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       key = _ref[_i];
       propValue = this.get(item, key);
-      if (typeof propValue !== 'object') {
+      if (typeof propValue === 'undefined') {
+        continue;
+      } else if (typeof propValue !== 'object') {
         values = [];
         values.push(propValue);
       } else {
@@ -920,7 +922,7 @@ HotelFiltersT = (function() {
       }
     }
     console.log('all filters accepted');
-    return this.results.postFilters();
+    return this.results.postFilters(true);
   };
 
   HotelFiltersT.prototype.getConfig = function() {

@@ -1,3 +1,8 @@
+<script type="text/javascript">
+    <?php $tripRaw = 'window.tripRaw = '.$trip; ?>
+    <?php echo $tripRaw ?>;
+    window.currentModule = '<?php echo Yii::app()->user->getState('currentModule'); ?>';
+</script>
 <div id="content">
         <?php $this->renderPartial('_items'); ?>
         <form method="post" id="passport_form">
