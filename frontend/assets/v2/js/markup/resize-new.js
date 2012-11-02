@@ -922,7 +922,11 @@ function scrollValue(what) {
 				$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
 				if(!_jScrollingBootom){
 					_jScrollingBootom = true;
-					$('#scroll-pane').data('jsp').scrollToBottom();
+                    window.setTimeout(function(){
+					        $('#scroll-pane').data('jsp').scrollToBottom();
+                        },
+                        50
+                    );
 					
 					window.setTimeout(
 						function(){
@@ -960,6 +964,8 @@ function scrollValue(what) {
 	}
 }
 
-function jsPaneScrollHeight() {
-    console.log('jsPaneScrollHeight');
+function reInitJScrollPane(){
+    if($('#scroll-pane').data('jsp')){
+        $('#scroll-pane').data('jsp').reinitialise();
+    }
 }

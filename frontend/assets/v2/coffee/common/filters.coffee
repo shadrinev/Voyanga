@@ -198,12 +198,12 @@ class ListFilter extends Filter
       btnText = el.text el.text().replace("Скрыть","Все")
       # Update scroll pane state.
       # FIXME decouple it somehow
-      div.hide('fast', scrollValue)
+      div.hide('fast', reInitJScrollPane)
     else
       btnText = el.text el.text().replace("Все","Скрыть")
       # Update scroll pane state.
       # FIXME decouple it somehow
-      div.show('fast', scrollValue)
+      div.show('fast', reInitJScrollPane)
 
   getConfig: =>
     result = {}
@@ -490,11 +490,11 @@ class HotelFiltersT
 
 
     # FIXME looks ugly
-    @iterate @updateLimitsHotel, @updateLimitsRoom
+    @iterate @updateLimitsHotel, @updateLimitsRoom, false
     @services.addOption 'Фитнесс'
     @services.addOption 'Парковка'
     @services.addOption 'Интернет'
-    @results.postFilters()
+    #@results.postFilters()
 
   showFullMap: =>
     console.log('FM')
@@ -541,7 +541,7 @@ class HotelFiltersT
     #console.profile('hotelFilters')
     @iterate @filterHotel, @filterRoom
 
-  iterate: (onHotel, onRoom) =>
+  iterate: (onHotel, onRoom, fromInt = true) =>
     for result in @results.data()
       onHotel(result)
       if result.visible()
@@ -551,7 +551,7 @@ class HotelFiltersT
           someVisible = someVisible || roomSet.visible()
         result.visible(someVisible)
       #result.chooseActive()
-    console.log('all filters accepted')
+    console.log('all filters accepted',fromInt)
     #console.profileEnd('hotelFilters')
     @results.postFilters(true)
 
