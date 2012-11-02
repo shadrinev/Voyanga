@@ -30,6 +30,10 @@ class MakeBookingAction extends CAction
             if ($this->fillOutPassports($ambigousPassports))
             {
                 $tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItems();
+                // FIXME return status here
+                header("Content-type: application/json");
+                echo '{"status":"success"}';
+                exit;
                 $this->controller->redirect('/buy/startPayment');
             }
         }

@@ -8,15 +8,32 @@
             <?php endif;?>
             <?php $this->renderPartial('_buyer', array('model'=>$bookingForm)); ?>
             <div class="paybuyEnd">
-                <div class="btnBlue" onclick="$('#passport_form').submit()">
+                <div class="btnBlue" id="submit-passport">
                     <span>OK</span>
                 </div>
                 <div class="clear"></div>
             </div>
         </form>
+     <script type="text/javascript">
+       $(function(){
+        $('#submit-passport').click(function(){
+         $.post('/buy/makeBooking', $('#passport_form').serialize(), function(data){
+           if(data.status == 'success') {
+             console.log("STARTENG POYMENT");
+             $.get('/buy/startPayment', function(data) {
+                console.log(data);
+                Utils.submitPayment(data);
+             });
+           } else {
+             alert("ERROR" + data);
+           }
+         });
+        });
+       });
+     </script>
 		<!--=== ===-->
 		<div class="payCardPal">
-			&nbsp;
+		  <iframe id="payment_frame" class="payCardPal"></iframe>
 		</div>
 		<div class="paybuyEnd">
 			<div class="info">После нажатия кнопки «Купить» данные пассажиров попадут в систему бронирования, билет будет оформлен и выслан вам на указанный электронный адрес в течение нескольких минут. Нажимая «Купить», вы соглашаетесь с условиями использования, правилами IATA и правилами тарифов.</div>

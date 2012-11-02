@@ -101,13 +101,47 @@ class OrderComponent extends CApplicationComponent
         return in_array($state, $validStates);
     }
 
+    public function isWaitingForPaymentState($state)
+    {
+        return $this->isCorrectState($state);
+    }
+
     public function logAndThrowException($errorMsg, $codePosition)
     {
         Yii::log($errorMsg, CLogger::LEVEL_ERROR, $codePosition);
         throw new Exception($errorMsg);
     }
 
-    public function startPayment()
+    public function getPaymentFormParams()
+    {
+        $bookerIds = Yii::app()->user->getState('bookerIds');
+        if(!$bookerIds)
+            throw new Exception("No bookers availiable");
+        $bookers = Array();
+        foreach($bookerIds as $entry)
+        {
+            if($entry['type']=='avia'){
+                $flightBookerComponent = new FlightBookerComponent();
+                $flightBookerComponent->setFlightBookerFromId($entry['bookerId']);
+                $bookers[] = $flightBookerComponent;
+            } else {
+                throw new Exception("Unexpected segment type");
+            }
+        }
+        if(count($bookers)===0) {
+            throw new Exception("Nothing to pay for");
+        }
+        foreach($bookers as $booker) {
+            if(!$this->isWaitingForPaymentState($booker->getStatus())){
+                throw new Exception("Wrong segment status " . $booker->getStatus());
+            }
+        }
+        $payments = Yii::app()->payments;
+
+        return $payments->getFormParamsForBooker($bookers[0]->getCurrent());
+    }
+
+    public function startPaymentOld()
     {
         // perekluchaem v state startpayment
         // i proveraem

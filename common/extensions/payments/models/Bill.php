@@ -25,7 +25,7 @@ class Bill extends CActiveRecord
     const STATUS_PAID = 'PAI';
     const STATUS_FAILED = 'FAI';
 
-    public $channel = 'ecommerce';
+    protected $channel = 'ecommerce';
 
     /**
      * Returns the static model of the specified AR class.
@@ -119,5 +119,18 @@ class Bill extends CActiveRecord
     public function getPaymentUrl()
     {
         return "https://secure.payonlinesystem.com/ru/payment/";
+    }
+
+    public function setChannel($channel)
+    {
+        $this->channel = $channel;
+    }
+
+    public function getChannel()
+    {
+        Yii::import("common.extensions.payments.models.Payments_Channel_"  . ucfirst($this->channel));
+        $className = 'Payments_Channel_'. ucfirst($this->channel);
+        # FIXME passing this is hella retarded
+        return new $className($this);
     }
 }

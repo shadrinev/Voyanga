@@ -163,6 +163,15 @@ Utils =
     endLen = (text.replace(re,'')).length
     return startLen - endLen
 
+
+  submitPayment: (params) ->
+    form_html = '<form id="buy-form" method="POST" action="' +  params.url + '" target="payment_frame">'
+    delete params.url
+    for key,value of params
+      form_html += "<input type=\"hidden\" name=\"#{key}\" value=\"#{value}\" />"
+    form_html += '</form>'
+    $(form_html).appendTo('body').submit()
+
   toBuySubmit: (toBuy) ->
     form_html = '<form id="buy-form" method="POST" action="/buy">'
     for params, index in toBuy

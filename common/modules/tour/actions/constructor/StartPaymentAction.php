@@ -10,10 +10,10 @@ class StartPaymentAction extends CAction
 {
     public function run()
     {
-        echo '<pre>';
-        CVarDumper::dump(Yii::app()->user->getState('bookerIds'));
-        echo '</pre>';
-        //VarDumper::dump(Yii::app()->order->startPayment());
+        $params = Yii::app()->order->getPaymentFormParams();
+        // FIXME move to config
+        $params['url']= "https://secure.payonlinesystem.com/ru/payment/ivoyanga/";
+        header("Content-type: application/json");
+        echo json_encode($params);
     }
-
 }
