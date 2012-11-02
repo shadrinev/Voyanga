@@ -130,10 +130,13 @@ Utils = {
       return dateIsoString;
     }
   },
-  scrollTo: function(selector, animation) {
+  scrollTo: function(selector, animation, callback) {
     var oPos;
     if (animation == null) {
       animation = true;
+    }
+    if (callback == null) {
+      callback = null;
     }
     if (typeof selector === "string") {
       oPos = $(selector).offset();
@@ -144,9 +147,15 @@ Utils = {
       oPos.top = selector;
     }
     if (animation) {
-      return $("html,body").animate({
-        'scrollTop': oPos.top
-      });
+      if (callback) {
+        return $("html,body").animate({
+          'scrollTop': oPos.top
+        }, 1000, callback);
+      } else {
+        return $("html,body").animate({
+          'scrollTop': oPos.top
+        });
+      }
     } else {
       return $("html,body").scrollTop(oPos.top);
     }

@@ -109,7 +109,7 @@ Utils =
     else
       return dateIsoString
 
-  scrollTo: (selector, animation = true)->
+  scrollTo: (selector, animation = true, callback = null)->
     if typeof(selector) == "string"
       oPos = $(selector).offset()
     else if typeof(selector) == "object"
@@ -118,7 +118,11 @@ Utils =
       oPos = {}
       oPos.top = selector
     if animation
-      $("html,body").animate({'scrollTop':oPos.top})
+      if callback
+        $("html,body").animate({'scrollTop':oPos.top}, 1000,callback)
+      else
+        $("html,body").animate({'scrollTop':oPos.top})
+
     else
       $("html,body").scrollTop(oPos.top)
 

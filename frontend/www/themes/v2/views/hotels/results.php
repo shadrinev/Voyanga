@@ -30,6 +30,7 @@
     <div class="sorting-panel" data-bind="visible: !showFullMap()"><span class="hotel-sort-by">сортировать по:</span> <span data-bind="click: sortByPrice,attr:{class: sortByPriceClass()}">&nbsp;цене</span> <span data-bind="click: sortByRating,attr:{class: sortByRatingClass()}">&nbsp;рейтингу</span>  </div>
     <div class="clear"></div>
     <div id="all-hotels-results">
+        <!-- ko if: ! showFullMap() -->
         <!-- ko foreach: resultsForRender -->
         <div class="hotels-tickets" data-bind="visible: visible()">
             <div class="content">
@@ -100,6 +101,7 @@
         <span class="rv"></span>
         <span class="bh"></span>
     </div>
+    <!-- /ko -->
     <!-- /ko -->
     </div>
     <div id="all-hotels-map" style="display: none;"></div>

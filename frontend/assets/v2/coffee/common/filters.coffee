@@ -553,7 +553,7 @@ class HotelFiltersT
       #result.chooseActive()
     console.log('all filters accepted')
     #console.profileEnd('hotelFilters')
-    @results.postFilters()
+    @results.postFilters(true)
 
   getConfig: =>
     config = {}

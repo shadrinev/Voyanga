@@ -922,7 +922,7 @@ HotelFiltersT = (function() {
       }
     }
     console.log('all filters accepted');
-    return this.results.postFilters();
+    return this.results.postFilters(true);
   };
 
   HotelFiltersT.prototype.getConfig = function() {
