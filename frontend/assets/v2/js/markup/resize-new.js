@@ -959,7 +959,3 @@ function scrollValue(what) {
 		return false;
 	}
 }
-
-function jsPaneScrollHeight() {
-    console.log('jsPaneScrollHeight');
-}
