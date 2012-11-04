@@ -1635,13 +1635,17 @@
     font-weight: bold;
 }
 
-.ticket h3 {
+.prices-of-3days h3 {
 	position: absolute;
-	display: inline-block;
-	top: 3px;
-	left: 14px;
+	display: block;
+	top: -7px;
+	right: 10px;
 	font-size: 11px;
 	font-weight: bold;
 	color: #262930;
 	z-index: 10;
+	text-indent: -9999px;
+	width: 40px;
+	height: 44px;
+	background: url(../images/threedays.png) no-repeat;	
 }

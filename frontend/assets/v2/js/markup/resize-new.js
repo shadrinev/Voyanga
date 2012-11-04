@@ -746,7 +746,7 @@ function scrollValue2(what) {
 
 $(window).load(function() {
 	$(window).scroll(function() {
-        scrollValue2('avia');
+        scrollValue('avia');
         scrollValue('hotel');
         window.hotelsScrollCallback();
 	});
@@ -842,7 +842,7 @@ function mapAllPageView() {
 
 
 
-var _GoOnScroll = false;
+var _GoOnScroll = true;
 var _jScrollingBootom = false;
 var _jScrollNonBottomInitted = false;
 
@@ -873,6 +873,12 @@ function jsPaneScrollHeight() {
 
 function scrollValue(what) {
 	var filterContent = $('.filter-content.'+what)
+	if (filterContent.length > 0) {
+		_GoOnScroll = true;
+	}
+	else {
+		_GoOnScroll = false;
+	}
 	var innerFilter = filterContent.find('.innerFilter');
 	
 	var var_marginTopSubHead = $('.sub-head').css('margin-top');
