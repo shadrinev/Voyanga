@@ -883,20 +883,7 @@ function jsPaneScrollHeight() {
 
 function scrollValue(what, event) {
 	var filterContent = $('.filter-content.'+ what)
-	
-	if (filterContent.length > 0 && filterContent.is(':visible') && !$(event.target).is('#scroll-pane')) {
-		
-		console.log(event);
-		/*
-if ($(event.target).is('#scroll-pane')) {
-			console.log('==== 1 ====');
-		}
-		else {
-			console.log('==== 2 ====');
-		}
-*/
-
-		
+	if (filterContent.length > 0 && filterContent.is(':visible') && !$(event.target).is('#scroll-pane')) {		
 		var innerFilter = filterContent.find('.innerFilter');
 		var var_marginTopSubHead = $('.sub-head').css('margin-top');
 		var var_scrollValueTop = $(window).scrollTop();
@@ -920,8 +907,7 @@ if ($(event.target).is('#scroll-pane')) {
 			else {
 				var diffrentScrollTop = 61 ;
 			}
-		}
-		
+		}		
 		if (_GoOnScroll) {
 			var needDel = false;
 			if (var_scrollValueTop == 0) {
@@ -935,7 +921,6 @@ if ($(event.target).is('#scroll-pane')) {
 			}
 			else if (var_scrollValueTop > diffrentScrollTop) {		
 				if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 30)) {
-					//console.log(var_scrollValueTop +' === '+ (($('.wrapper').height() - var_heightWindow) - 30) +' === ' + (var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30)));
 					var var_minHeightBottom;
 					filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
 					if ((var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30)) < 30) {
@@ -949,9 +934,7 @@ if ($(event.target).is('#scroll-pane')) {
 						$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
 						
 					}
-					$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
-					//$('#scroll-pane').data('jsp').scrollToY($('#scroll-pane').data('jsp').getContentY() + 32);
-					
+					$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});					
 					if(!_jScrollingBootom && var_scrollValueTop == ($('.wrapper').height() - $('body').height())){
 						_jScrollingBootom = true;
 	                    window.setTimeout(function(){
