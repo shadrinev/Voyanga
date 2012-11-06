@@ -847,6 +847,7 @@ var _jScrollingBootom = false;
 var _jScrollNonBottomInitted = false;
 
 function jsPaneScrollHeight() {
+	console.log("==== GO ON ====");
 	var _content = $('#content');
 	_content.css('height','auto');
 	var _windowHeight = $(window).height();
