@@ -69,7 +69,7 @@ return CMap::mergeArray(
                     'events' => array(
                         'class' => 'application.modules.admin.modules.events.EventAdminModule'
                     ),
-                    'tour' => array(
+                   'tour' => array(
                         'class' => 'application.modules.admin.modules.tour.TourAdminModule',
                         'controllerMap' => array(
                             'basket' => 'site.common.modules.tour.controllers.BasketController',
