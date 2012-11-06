@@ -322,10 +322,10 @@ ListFilter = (function(_super) {
     div = el.parent().parent().find('.more-filters');
     if (!(div.css('display') === 'none')) {
       btnText = el.text(el.text().replace("Скрыть", "Все"));
-      return div.hide('fast', scrollValue);
+      return div.hide('fast', reInitJScrollPane);
     } else {
       btnText = el.text(el.text().replace("Все", "Скрыть"));
-      return div.show('fast', scrollValue);
+      return div.show('fast', reInitJScrollPane);
     }
   };
 
@@ -838,11 +838,10 @@ HotelFiltersT = (function() {
       throttle: 50
     });
     this.refilter.subscribe(this.filter);
-    this.iterate(this.updateLimitsHotel, this.updateLimitsRoom);
+    this.iterate(this.updateLimitsHotel, this.updateLimitsRoom, false);
     this.services.addOption('Фитнесс');
     this.services.addOption('Парковка');
     this.services.addOption('Интернет');
-    this.results.postFilters();
   }
 
   HotelFiltersT.prototype.showFullMap = function() {
@@ -904,8 +903,11 @@ HotelFiltersT = (function() {
     return this.iterate(this.filterHotel, this.filterRoom);
   };
 
-  HotelFiltersT.prototype.iterate = function(onHotel, onRoom) {
+  HotelFiltersT.prototype.iterate = function(onHotel, onRoom, fromInt) {
     var result, roomSet, someVisible, _i, _j, _len, _len1, _ref, _ref1;
+    if (fromInt == null) {
+      fromInt = true;
+    }
     _ref = this.results.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       result = _ref[_i];
@@ -921,7 +923,7 @@ HotelFiltersT = (function() {
         result.visible(someVisible);
       }
     }
-    console.log('all filters accepted');
+    console.log('all filters accepted', fromInt);
     return this.results.postFilters(true);
   };
 

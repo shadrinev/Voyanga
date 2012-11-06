@@ -1,4 +1,3 @@
-
 .btn-selecte {
     background: url("../images/slice.png") no-repeat scroll 0 -534px transparent;
     color: #FFFFFF;
@@ -136,6 +135,7 @@
 }
 .btn-find.inactive {
     background-position: -205px -1014px;
+    cursor: default;
 }
 .btnDeleteTrip {
     background: url("../images/ico-my-trip.png") no-repeat scroll -7px -605px transparent;

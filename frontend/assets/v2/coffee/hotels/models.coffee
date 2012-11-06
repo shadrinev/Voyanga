@@ -771,6 +771,7 @@ class HotelsResultSet
         =>
           if !@showFullMap()
             Utils.scrollTo(hotel.oldPageTop,false)
+            Utils.scrollTo('#hotelResult'+hotel.hotelId)
           else
             @showFullMapFunc()
             @gAllMap.setCenter(@gMapCenter)
@@ -921,6 +922,7 @@ class HotelsResultSet
       window.setTimeout(
         ->
           Utils.scrollTo(hotel.oldPageTop,false)
+          Utils.scrollTo('#hotelResult'+hotel.hotelId)
           console.log(hotel.oldPageTop)
         , 50
       )

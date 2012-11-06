@@ -966,7 +966,8 @@ HotelsResultSet = (function() {
       }, 'results');
       return window.setTimeout(function() {
         if (!_this.showFullMap()) {
-          return Utils.scrollTo(hotel.oldPageTop, false);
+          Utils.scrollTo(hotel.oldPageTop, false);
+          return Utils.scrollTo('#hotelResult' + hotel.hotelId);
         } else {
           _this.showFullMapFunc();
           _this.gAllMap.setCenter(_this.gMapCenter);
@@ -1131,6 +1132,7 @@ HotelsResultSet = (function() {
       }, 'results');
       return window.setTimeout(function() {
         Utils.scrollTo(hotel.oldPageTop, false);
+        Utils.scrollTo('#hotelResult' + hotel.hotelId);
         return console.log(hotel.oldPageTop);
       }, 50);
     });

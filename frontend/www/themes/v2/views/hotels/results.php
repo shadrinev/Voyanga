@@ -32,7 +32,7 @@
     <div id="all-hotels-results">
         <!-- ko if: ! showFullMap() -->
         <!-- ko foreach: resultsForRender -->
-        <div class="hotels-tickets" data-bind="visible: visible()">
+        <div class="hotels-tickets" data-bind="visible: visible(),attr:{id: 'hotelResult'+hotelId}">
             <div class="content">
                 <div class="full-info">
                     <div class="preview-photo">
@@ -40,7 +40,7 @@
                             <li><a href="#" data-bind="click: showPhoto,attr: {'href': frontPhoto.largeUrl}" class="photo"><img data-bind="attr:{src: frontPhoto.largeUrl}"></a></li>
                         </ul>
                         <div class="how-much" data-bind="visible: numPhotos">
-                            <a href="#">Фотографий (<span data-bind="text: numPhotos">11</span>)</a>
+                            <a href="#" data-bind="click: showPhoto">Фотографий (<span data-bind="text: numPhotos">11</span>)</a>
                         </div>
                     </div>
                     <div class="description">
