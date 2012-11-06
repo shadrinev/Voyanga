@@ -729,6 +729,7 @@ AviaResultSet = (function() {
     this.updateCheapest(data);
     this.updateBest(data);
     ko.processAllDeferredBindingUpdates();
+    jsPaneScrollHeight();
     return ResizeAvia();
   };
 

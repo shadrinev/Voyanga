@@ -534,6 +534,7 @@ class AviaResultSet
 
     ko.processAllDeferredBindingUpdates()
     # FIXME
+    jsPaneScrollHeight()
     ResizeAvia()
 
   updateCheapest: (data)=>

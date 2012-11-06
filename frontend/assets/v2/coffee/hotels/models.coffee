@@ -883,10 +883,11 @@ class HotelsResultSet
     @showFullMap(false)
     window.setTimeout(
       =>
-        ifHeightMinAllBody()
+        jsPaneScrollHeight()
         Utils.scrollTo(@oldPageTop)
       , 50
     )
+
 
   gMapPointShowWin: (event,hotel) =>
     console.log('showDiv',event)
