@@ -847,39 +847,107 @@ var _jScrollingBootom = false;
 var _jScrollNonBottomInitted = false;
 
 function jsPaneScrollHeight() {
-	console.log("==== GO ON ====");
+	//console.log("==== * * * * ====");
 	var _content = $('#content');
 	_content.css('height','auto');
 	var _windowHeight = $(window).height();
-	var _contentHeight = _content.height();
+	if (_windowHeight > 670) {
+		_windowHeight = ($(window).height() - 132);
+	}
+	else {
+		_windowHeight = (670 - 132);
+	}
+	var _contentHeight = _content.innerHeight();
 	var _scrollPaneHeight = 0;
 	$('.scrollBlock').find('.div-filter').each(function(e) {
 		_scrollPaneHeight += $(this).innerHeight();
 	});
-
-	if (_contentHeight < _scrollPaneHeight && _contentHeight < _windowHeight && _scrollPaneHeight < _windowHeight) {
-		_content.css('height', (_windowHeight - 225) + 'px');
-		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
-		_GoOnScroll = false;
-	}
-	else if (_contentHeight < _scrollPaneHeight && _scrollPaneHeight > _windowHeight  && _contentHeight < _windowHeight) {
+	//console.log('_contentHeight = '+_contentHeight+' | _scrollPaneHeight = '+_scrollPaneHeight+ ' | _windowHeight = '+_windowHeight);
+	if (_scrollPaneHeight	> _contentHeight  && 
+		_contentHeight		> _windowHeight && 
+		_scrollPaneHeight 	> _windowHeight) {
+		//console.log('=== 1 ===');
 		_content.css('height', _scrollPaneHeight + 'px');
 		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
 		_GoOnScroll = false;
 	}
-	else if (_contentHeight < _scrollPaneHeight && _scrollPaneHeight < 670  && _contentHeight < 670) {
-		_content.css('height', (670 - 225) + 'px');
+	else if 
+		(_scrollPaneHeight	< _contentHeight  && 
+		_contentHeight		> _windowHeight && 
+		_scrollPaneHeight 	> _windowHeight) {
+		//console.log('=== 2 ===');
+		_content.css('height', 'auto');
 		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
-		_GoOnScroll = false;
-	}
-	else if (_contentHeight < _scrollPaneHeight && _scrollPaneHeight > 670  && _contentHeight > 670) {
-		_content.css('height', _scrollPaneHeight + 'px');
-		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
-		_GoOnScroll = false;
-	}
-	else {
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
 		_GoOnScroll = true;
 	}
+	else if 
+		(_scrollPaneHeight	> _contentHeight  && 
+		_contentHeight		< _windowHeight && 
+		_scrollPaneHeight 	> _windowHeight) {
+		//console.log('=== 3 ===');
+		_content.css('height', _scrollPaneHeight + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;
+	}
+	else if 
+		(_scrollPaneHeight	> _contentHeight  && 
+		_contentHeight		> _windowHeight && 
+		_scrollPaneHeight 	< _windowHeight) {	
+		//console.log('=== 4 ===');	
+		_content.css('height', _scrollPaneHeight + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;
+	}
+	else if 
+		(_scrollPaneHeight	< _contentHeight  && 
+		_contentHeight		< _windowHeight && 
+		_scrollPaneHeight 	> _windowHeight) {	
+		//console.log('=== 5 ===');
+		_content.css('height', (_windowHeight - 70) + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;
+	}
+	else if 
+		(_scrollPaneHeight	> _contentHeight  && 
+		_contentHeight		< _windowHeight && 
+		_scrollPaneHeight 	< _windowHeight) {	
+		//console.log('=== 6 ===');	
+		_content.css('height', (_windowHeight - 70) + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;
+	}
+	else if 
+		(_scrollPaneHeight	< _contentHeight  && 
+		_contentHeight		> _windowHeight && 
+		_scrollPaneHeight 	< _windowHeight) {	
+		//console.log('=== 7 ===');
+		_content.css('height', 'auto');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = true;
+	}
+	else if 
+		(_scrollPaneHeight	< _contentHeight  && 
+		_contentHeight		< _windowHeight && 
+		_scrollPaneHeight 	< _windowHeight) {	
+		//console.log('=== 8 ===');
+		_content.css('height', (_windowHeight - 70) + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;	
+	}
+	else {
+	console.log('=== 9 ===');
+		$('.innerFilter').css('height', '100%');
+		_GoOnScroll = true;
+	}
+	//console.log("==== * * * * ====");
 }
 
 function scrollValue(what, event) {
@@ -977,9 +1045,11 @@ function scrollValue(what, event) {
 			}
 		}
 		else {
+			if($('#scroll-pane').data('jsp')){
+				$('#scroll-pane').data('jsp').destroy();
+			}
 			return false;
 		}
-	
 	}
 	else {
 		return false;
