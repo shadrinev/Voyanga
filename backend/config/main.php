@@ -69,14 +69,14 @@ return CMap::mergeArray(
                     'events' => array(
                         'class' => 'application.modules.admin.modules.events.EventAdminModule'
                     ),
-                   /* 'tour' => array(
+                   'tour' => array(
                         'class' => 'application.modules.admin.modules.tour.TourAdminModule',
                         'controllerMap' => array(
                             'basket' => 'site.common.modules.tour.controllers.BasketController',
                             'constructor' => 'site.common.modules.tour.controllers.BackendConstructorController',
                             'viewer' => 'site.common.modules.tour.controllers.BackendViewerController',
                         )
-                    ),*/
+                    ),
                     'statistic' => array(
                         'class' => 'application.modules.admin.modules.statistic.StatisticAdminModule'
                     ),
