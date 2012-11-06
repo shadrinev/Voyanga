@@ -11,7 +11,7 @@ class StartPaymentAction extends CAction
     public function run()
     {
         echo '<pre>';
-        CVarDumper::dump(Yii::app()->user->getState('bookerIds'));
+        CVarDumper::dump(Yii::app()->order->getBookerIds());
         echo '</pre>';
         //VarDumper::dump(Yii::app()->order->startPayment());
     }

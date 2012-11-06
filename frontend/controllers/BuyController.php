@@ -107,4 +107,11 @@ class BuyController extends Controller
         $hotelTripElement->hotel = $hotel;
         Yii::app()->shoppingCart->put($hotelTripElement);
     }
+
+    public function actionTest($id)
+    {
+        Yii::app()->order->initByOrderBookingId($id);
+        CVarDumper::dump(Yii::app()->order->getBookerIds());
+        die();
+    }
 }

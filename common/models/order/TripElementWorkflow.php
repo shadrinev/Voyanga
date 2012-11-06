@@ -46,6 +46,11 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
         $this->saveCredentialsForItem();
     }
 
+    public function updateBookingId()
+    {
+        Yii::app()->shoppingCart->update($this->item, 1);
+    }
+
     protected function createOrderBookingIfNotExist()
     {
         if (!$this->bookingContactInfo)

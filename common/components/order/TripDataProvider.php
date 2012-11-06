@@ -12,9 +12,41 @@ class TripDataProvider
     private $sortedCartItems;
     private $sortedCartItemsOnePerGroup;
 
-    public function __construct()
+    private $bookerIds=array();
+
+    public function __construct($orderBookingId=false)
     {
         $this->usedGroups = array();
+        if (is_numeric($orderBookingId))
+        {
+            $this->restoreFromDb($orderBookingId);
+        }
+    }
+
+    public function restoreFromDb($orderBookingId)
+    {
+        $orderBooking = OrderBooking::model()->findByPk($orderBookingId);
+        if (!$orderBooking)
+            throw new CException("No such order");
+        $flights = $orderBooking->flightBookers;
+        $hotels = $orderBooking->hotelBookers;
+        Yii::app()->{$this->shoppingCartComponent}->clear();
+        foreach ($flights as $flight)
+        {
+            $flightVoyage = unserialize($flight->flightVoyageInfo);
+            $flightTripElement = new FlightTripElement();
+            $flightTripElement->flightVoyage = $flightVoyage;
+            $flightTripElement->flightBookerId = $flight->id;
+            Yii::app()->{$this->shoppingCartComponent}->put($flightTripElement);
+        }
+        foreach ($hotels as $hotel)
+        {
+            $hotelInfo = unserialize($hotel->hotelInfo);
+            $hotelTripElement = new HotelTripElement();
+            $hotelTripElement->hotel = $hotelInfo;
+            $hotelTripElement->hotelBookerId = $hotel->id;
+            Yii::app()->{$this->shoppingCartComponent}->put($hotelTripElement);
+        }
     }
 
     public function getSortedCartItemsOnePerGroup()
@@ -31,7 +63,7 @@ class TripDataProvider
     {
         if (!$this->sortedCartItems)
         {
-            $items = $this->getCartItems();
+            $items = $this->getDbItems();
             $this->sortedCartItems = $this->sortItemsFromCartAndGetThem($items);
         }
         return $this->sortedCartItems;
@@ -49,7 +81,7 @@ class TripDataProvider
         return $this->getJsonWithAdditionalInfo($items);
     }
 
-    private function getCartItems()
+    private function getDbItems()
     {
         return Yii::app()->{$this->shoppingCartComponent}->getPositions();
     }

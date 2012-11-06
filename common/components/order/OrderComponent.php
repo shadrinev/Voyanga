@@ -17,6 +17,12 @@ class OrderComponent extends CApplicationComponent
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
     }
 
+    public function initByOrderBookingId($orderId)
+    {
+        $dataProvider = new TripDataProvider($orderId);
+        $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
+    }
+
     public function bookAndReturnTripElementWorkflowItems()
     {
         try
@@ -31,12 +37,12 @@ class OrderComponent extends CApplicationComponent
                 $this->markItemGroupAsBooked($tripElementWorkflow->getItem());
                 $tripElementWorkflow->runWorkflowAndSetFinalStatus();
                 $this->saveWorkflowState($tripElementWorkflow->finalStatus);
+                $tripElementWorkflow->updateBookingId();
                 $bookedTripElementWorkflow[] = $tripElementWorkflow;
             }
             if ($this->areAllStatusesCorrect())
             {
                 Yii::app()->user->setState('blockedToBook', null);
-                $this->setBookerIds();
                 return $bookedTripElementWorkflow;
             }
             else
@@ -453,7 +459,7 @@ class OrderComponent extends CApplicationComponent
         }
     }
 
-    public function setBookerIds()
+    public function getBookerIds()
     {
         $result = array();
         foreach ($this->itemsOnePerGroup as $item)
@@ -474,11 +480,6 @@ class OrderComponent extends CApplicationComponent
             }
             $result[] = $element;
         }
-        Yii::app()->user->setState('bookerIds', $result);
-    }
-
-    public function getBookerIds()
-    {
-        return Yii::app()->user->getState('bookerIds');
+        return $result;
     }
 }
