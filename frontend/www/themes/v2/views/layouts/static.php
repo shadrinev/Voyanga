@@ -17,8 +17,8 @@ Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
     </script>
     <script type="text/javascript" src="http://api.voyanga.com/API.js"></script>
 </head>
-<body data-bind="css: {fixed: in1}">
-<div class="wrapper" data-bind="css: {'scroll-none': in1}">
+<body>
+<div>
     <div class="head" id="header">
         <!-- CENTER BLOCK -->
         <div class="center-block">

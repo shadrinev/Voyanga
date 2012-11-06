@@ -27,8 +27,8 @@ class BuyController extends Controller
     {
         $this->layout = 'main';
         $this->addItems();
-        if (isset($_POST['item'][0]['module']))
-            Yii::app()->user->setState('currentModule', $_POST['item'][0]['module']);
+        if (isset($_GET['item'][0]['module']))
+            Yii::app()->user->setState('currentModule', $_GET['item'][0]['module']);
         else
             //todo: think what is default here
             Yii::app()->user->setState('currentModule', 'Tours');
@@ -38,7 +38,7 @@ class BuyController extends Controller
     public function addItems()
     {
         Yii::app()->shoppingCart->clear();
-        foreach ($_POST['item'] as $item)
+        foreach ($_GET['item'] as $item)
         {
             if ($item['type']=='avia')
                 $this->addFlightToTrip($item['searchKey'], $item['searchId']);

@@ -210,9 +210,20 @@ Utils = {
     endLen = (text.replace(re, '')).length;
     return startLen - endLen;
   },
+  submitPayment: function(params) {
+    var form_html, key, value;
+    form_html = '<form id="buy-form" method="POST" action="' + params.url + '" target="payment_frame">';
+    delete params.url;
+    for (key in params) {
+      value = params[key];
+      form_html += "<input type=\"hidden\" name=\"" + key + "\" value=\"" + value + "\" />";
+    }
+    form_html += '</form>';
+    return $(form_html).appendTo('body').submit();
+  },
   toBuySubmit: function(toBuy) {
     var form_html, index, key, params, value, _i, _len;
-    form_html = '<form id="buy-form" method="POST" action="/buy">';
+    form_html = '<form id="buy-form" method="GET" action="/buy">';
     for (index = _i = 0, _len = toBuy.length; _i < _len; index = ++_i) {
       params = toBuy[index];
       for (key in params) {

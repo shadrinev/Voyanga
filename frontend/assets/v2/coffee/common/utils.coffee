@@ -177,7 +177,7 @@ Utils =
     $(form_html).appendTo('body').submit()
 
   toBuySubmit: (toBuy) ->
-    form_html = '<form id="buy-form" method="POST" action="/buy">'
+    form_html = '<form id="buy-form" method="GET" action="/buy">'
     for params, index in toBuy
       for key,value of params
         key = "item[#{index}][#{key}]"
