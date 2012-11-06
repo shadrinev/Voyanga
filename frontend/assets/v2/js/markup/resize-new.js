@@ -562,8 +562,8 @@ function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
     smallTicketHeight();
-    scrollValue('avia');
-    scrollValue('hotel');
+    //scrollValue('avia');
+    //scrollValue('hotel');
     CenterIMGResize();
     ifHeightMinAllBody();
     showMiniPopUp();
@@ -745,9 +745,9 @@ function scrollValue2(what) {
 }
 
 $(window).load(function() {
-	$(window).scroll(function() {
-        scrollValue('avia');
-        scrollValue('hotel');
+	$(window).scroll(function(e) {
+        scrollValue('avia', e);
+        scrollValue('hotel', e);
         window.hotelsScrollCallback();
 	});
 });
@@ -881,11 +881,22 @@ function jsPaneScrollHeight() {
 	}
 }
 
-function scrollValue(what) {
-	var filterContent = $('.filter-content.'+what)
+function scrollValue(what, event) {
+	var filterContent = $('.filter-content.'+ what)
 	
-	if (filterContent.length > 0 && filterContent.is(':visible')) {
-	
+	if (filterContent.length > 0 && filterContent.is(':visible') && !$(event.target).is('#scroll-pane')) {
+		
+		console.log(event);
+		/*
+if ($(event.target).is('#scroll-pane')) {
+			console.log('==== 1 ====');
+		}
+		else {
+			console.log('==== 2 ====');
+		}
+*/
+
+		
 		var innerFilter = filterContent.find('.innerFilter');
 		var var_marginTopSubHead = $('.sub-head').css('margin-top');
 		var var_scrollValueTop = $(window).scrollTop();
@@ -923,16 +934,25 @@ function scrollValue(what) {
 				filterContent.css('position','relative').css('top','auto').css('bottom','auto');
 			}
 			else if (var_scrollValueTop > diffrentScrollTop) {		
-				
-				if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - var_topFilterContent)) {
+				if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 30)) {
+					//console.log(var_scrollValueTop +' === '+ (($('.wrapper').height() - var_heightWindow) - 30) +' === ' + (var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30)));
+					var var_minHeightBottom;
 					filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
-					innerFilter.css('height', (var_heightWindow - 85) +'px');
+					if ((var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30)) < 30) {
+						var_minHeightBottom = (var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30));
+					}
+					else {
+						var_minHeightBottom = 30;
+					}
+					innerFilter.css('height', (var_heightWindow - var_minHeightBottom) +'px');
 					if(!$('#scroll-pane').data('jsp')){
 						$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
 						
 					}
 					$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
-					if(!_jScrollingBootom){
+					//$('#scroll-pane').data('jsp').scrollToY($('#scroll-pane').data('jsp').getContentY() + 32);
+					
+					if(!_jScrollingBootom && var_scrollValueTop == ($('.wrapper').height() - $('body').height())){
 						_jScrollingBootom = true;
 	                    window.setTimeout(function(){
 						        $('#scroll-pane').data('jsp').scrollToBottom();
@@ -944,8 +964,9 @@ function scrollValue(what) {
 							function(){
 								_jScrollingBootom = false;
 								_jScrollNonBottomInitted = false;
+								//scrollValue(what, event)
 							}
-							, 1000
+							, 500
 						);
 						
 					}
@@ -960,7 +981,7 @@ function scrollValue(what) {
 					if(!_jScrollNonBottomInitted){
 						_jScrollNonBottomInitted = true;
 						$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
-						$('#scroll-pane').data('jsp').scrollToBottom();
+						//$('#scroll-pane').data('jsp').scrollToBottom();
 					}
 				}
 				
