@@ -20,7 +20,7 @@ class TripStorage
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
     }
 
-    public function  getPrice()
+    public function getPrice()
     {
         $price = 0;
         foreach ($this->itemsOnePerGroup as $item)
