@@ -1057,6 +1057,9 @@
     margin-bottom: 5px;
     margin-left: 25px;
     width: 312px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
 }
 .hotel-details .description .smallMaps .map-hotel {
     border: 1px solid #C7C7C7;
