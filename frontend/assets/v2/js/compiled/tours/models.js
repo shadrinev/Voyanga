@@ -404,7 +404,7 @@ ToursHotelsResultSet = (function(_super) {
           if (!hotel.parent.showFullMap()) {
             return Utils.scrollTo('#hotelResult' + hotel.hotelId);
           } else {
-            return hotel.parent.showFullMapFunc(true);
+            return hotel.parent.showFullMapFunc(null, null, true);
           }
         });
       });

@@ -697,6 +697,7 @@ class HotelsResultSet
           console.log('yes set')
         break
     @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
+    @wordNights = Utils.wordAfterNum(duration,'ночь','ночи','ночей')
     @fullMapInitialized = false
     @showFullMap = ko.observable false
 
@@ -788,7 +789,7 @@ class HotelsResultSet
             Utils.scrollTo(hotel.oldPageTop,false)
             Utils.scrollTo('#hotelResult'+hotel.hotelId)
           else
-            @showFullMapFunc(true)
+            @showFullMapFunc(null,null,true)
             @gAllMap.setCenter(@gMapCenter)
             @gAllMap.setZoom(@gMapZoom)
 
@@ -811,8 +812,8 @@ class HotelsResultSet
 
     @gAllMap.setCenter(@computedCenter.getCenter())
 
-  showFullMapFunc: (fromBackAction = false)=>
-    console.log('show full map')
+  showFullMapFunc: (targetObject,event,fromBackAction = false, fromFilters = false)=>
+    console.log('show full map',fromBackAction,fromFilters)
 
     @oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     Utils.scrollTo('#content')
@@ -889,7 +890,9 @@ class HotelsResultSet
           @gAllMap.setZoom(@gMapZoom)
         else if @gMarkers.length > 0
           @setFullMapZoom()
-
+        if !fromFilters
+          console.log('minimizeFilter')
+          minimizeFilter();
       , stime
     )
 
@@ -1020,7 +1023,7 @@ class HotelsResultSet
           posTop = $('html').scrollTop() || $('body').scrollTop()
           if(posTop > offset.top)
             Utils.scrollTo('#content')
-        else if @toursOpened && @tours() && @filtersConfig
+        else if (@toursOpened && @tours() && @filtersConfig) || (@tours() && @showFullMap())
           kb = true
           #if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
             #Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent())
@@ -1028,7 +1031,7 @@ class HotelsResultSet
         else
           Utils.scrollTo(0,false)
         if @showFullMap()
-          @showFullMapFunc()
+          @showFullMapFunc(null,null,false,true)
 
         @toursOpened = false
       , 50

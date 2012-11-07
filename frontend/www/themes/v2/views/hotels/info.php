@@ -121,7 +121,7 @@
                     <td class="td-cost">
                         <div class="left">
                         	<span class="text" data-bind="text: $parent.selectText"></span><br>
-                        	<span class="grey em">Цена за <span data-bind="text: parent.wordDays"></span></span>
+                        	<span class="grey em">Цена за <span data-bind="text: parent.parent.wordNights"></span></span>
                         </div>
                         <div class="right">
                         	<a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
@@ -170,7 +170,7 @@
                     <td class="td-cost">
                     	<div class="left">
                         	<span class="text" data-bind="text: $parent.selectText"></span><br>
-                        	<span class="grey em">Цена за <span data-bind="text: parent.wordDays"></span></span>
+                        	<span class="grey em">Цена за <span data-bind="text: parent.parent.wordNights"></span></span>
                         </div>
                         <div class="right">
                         	<a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
