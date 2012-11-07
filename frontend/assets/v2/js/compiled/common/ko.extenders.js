@@ -17,13 +17,6 @@ ko.extenders.integerOnly = function(target, config) {
         if (valueToWrite > config.max) {
           valueToWrite = config.max;
         }
-      } else {
-        if (config === "adult" && valueToWrite < 1) {
-          valueToWrite = 1;
-        }
-        if (config === "infant" && valueToWrite > 4) {
-          valueToWrite = 4;
-        }
       }
       if (valueToWrite !== current) {
         target(valueToWrite);

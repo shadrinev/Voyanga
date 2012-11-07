@@ -106,16 +106,24 @@ Passengers = (function(_super) {
     var _this = this;
     this.template = 'passengers-template';
     this.adults = ko.observable(1).extend({
-      integerOnly: 'adult'
+      integerOnly: {
+        min: 1,
+        max: 6
+      }
     });
     this.children = ko.observable(0).extend({
-      integerOnly: true
+      integerOnly: {
+        min: 0,
+        max: 4
+      }
     });
     this.infants = ko.observable(0).extend({
-      integerOnly: 'infant'
+      integerOnly: {
+        min: 0,
+        max: 3
+      }
     });
     this.MAX_TRAVELERS = 9;
-    this.MAX_CHILDREN = 8;
     this.children.subscribe(function(newValue) {
       if (newValue > _this.MAX_TRAVELERS - 1) {
         _this.children(_this.MAX_TRAVELERS - 1);

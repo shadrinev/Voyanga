@@ -78,12 +78,11 @@ class Passengers extends PeopleSelector
   constructor: () ->
     @template = 'passengers-template'
     # Popup inputs
-    @adults = ko.observable(1).extend({integerOnly: 'adult'})
-    @children = ko.observable(0).extend({integerOnly: true})
-    @infants = ko.observable(0).extend({integerOnly: 'infant'})
+    @adults = ko.observable(1).extend({integerOnly: {min:1, max:6}})
+    @children = ko.observable(0).extend({integerOnly: {min:0, max:4}})
+    @infants = ko.observable(0).extend({integerOnly: {min:0, max:3}})
     
     @MAX_TRAVELERS = 9
-    @MAX_CHILDREN = 8
 
     @children.subscribe (newValue) =>
       if newValue > @MAX_TRAVELERS - 1
