@@ -97,6 +97,9 @@ class HotelInfo extends CApplicationComponent
     public $hotelType;
     public $hotelServices;
     public $hotelGroupServices;
+    public $locations;
+    public $metroList;
+
 
     /** @var HotelImage[] */
     public $images;
