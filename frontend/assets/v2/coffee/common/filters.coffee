@@ -279,13 +279,13 @@ class StarsFilter extends Filter
       item.checked(value[item.starName])
 
 
-class ShortStopoverFilter extends Filter
-  constructor: ->
+class MaxStopoverFilter extends Filter
+  constructor: (@value)->
     @selection = ko.observable 0
 
   filter: (item) =>
     if @selection()
-      return item.stopoverLength <= (60*60)*2.5
+      return item.stopoverLength <= (60*60)*@value
     return true
 
 class OnlyDirectFilter extends Filter
@@ -351,8 +351,8 @@ class AviaFiltersT
 
     # Fixme stopover filter will cause filter method to run twice!
     # onlyDirect should actually be result filter
-    @voyageFilters = ['departure', 'arrival', 'shortStopover','onlyDirect']
-    @rtVoyageFilters = ['rtDeparture', 'rtArrival', 'shortStopover','onlyDirect']
+    @voyageFilters = ['departure', 'arrival', 'shortStopover', 'irrelevantlyLong', 'onlyDirect']
+    @rtVoyageFilters = ['rtDeparture', 'rtArrival', 'shortStopover', 'irrelevantlyLong','onlyDirect']
     @resultFilters = ['departureAirport', 'arrivalAirport', 'airline', 'serviceClass']
     
     @departure = new PriceFilter('departureTimeNumeric')
@@ -367,7 +367,9 @@ class AviaFiltersT
     fields = if @rt then ['arrivalAirport','rtDepartureAirport'] else ['arrivalAirport']
     @arrivalAirport = new ListFilter(fields, @results.arrivalCity, 'Все аэропорты')
     @airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании')
-    @shortStopover = new ShortStopoverFilter()
+    @shortStopover = new MaxStopoverFilter(2.5)
+    @irrelevantlyLong = new MaxStopoverFilter(30)
+    @irrelevantlyLong.selection 1
     @onlyDirect = new OnlyDirectFilter()
     @serviceClass = new ServiceClassFilter()
 
