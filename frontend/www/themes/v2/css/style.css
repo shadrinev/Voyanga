@@ -2056,7 +2056,7 @@ input.hotel-input {
     width: 100%;
 }
 .maps .mapsBigAll {
-    background: url("../images/mapsBigAll.png") repeat-x scroll center center transparent;
+    background: url("../images/map-bg.gif") scroll center center transparent;
     box-shadow: 0 2px 5px rgba(13, 13, 14, 0.9);
     display: none;
     height: 100%;
