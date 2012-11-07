@@ -2177,6 +2177,18 @@ input.hotel-input {
 .hotel-important-info {
     padding-bottom: 25px;
 }
+.hotel-important-info ul li {
+	color: #2f3134;
+	line-height: 20px;
+}
+.hotel-important-info ul li a {
+	color: #2f3134;
+}
+.hotel-important-info ul li span.span {
+	color: #64686d;
+	font-style: italic;
+}
+
 .miniPopUp {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 5px 5px 5px 5px;

@@ -951,7 +951,7 @@ function minimizeFilter() {
 	var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
 	if (_issetMaps && ! _issetLeftBlock) {
 		$('.innerFilter').find('.div-filter').each(function(index) {
-			if (index > 2) {
+			if (index > 1) {
 				$(this).hide();
 			}
 		});
@@ -968,5 +968,5 @@ function filterShow() {
 	$('.filter-block').css('height','100%');
 	$('.innerFilter').css('height', '100%');
 	$('.innerFilter').find('.div-filter').show();
-	$('.filter-minimize').hide();
+	$('.filter-minimize').remove();
 }

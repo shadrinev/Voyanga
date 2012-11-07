@@ -259,30 +259,30 @@
   	<div class="shadowHotel"><img src="<?= $theme; ?>/images/shadow-hotel.png"></div>
           <h3>Важная информация</h3>
           <ul>
-              <li>Время заселения: <span data-bind="text: checkInTime"></span></li>
+              <li><span class="span">Время заселения:</span> <span data-bind="text: checkInTime"></span></li>
               <!-- ko if: site -->
-                <li><span class="info-hotel-site">Сайт отеля:</span> <span><a data-bind="text: site,attr:{href: site}"></a></span></li>
+                <li><span class="span">Сайт отеля:</span> <span><a data-bind="text: site,attr:{href: site}"></a></span></li>
               <!-- /ko -->
               <!-- ko if: phone -->
-              <li><span class="info-hotel-phone">Телефон:</span> <span data-bind="text: phone"></span></li>
+              <li><span class="span">Телефон:</span> <span data-bind="text: phone"></span></li>
               <!-- /ko -->
               <!-- ko if: fax -->
-              <li><span class="info-hotel-fax">Факс:</span> <span data-bind="text: fax"></span></li>
+              <li><span class="span">Факс:</span> <span data-bind="text: fax"></span></li>
               <!-- /ko -->
               <!-- ko if: email -->
-              <li><span class="info-hotel-email">Email:</span> <span><a data-bind="text: email,attr:{href: 'mailto:'+email}"></a></span></li>
+              <li><span class="span">Email:</span> <span><a data-bind="text: email,attr:{href: 'mailto:'+email}"></a></span></li>
               <!-- /ko -->
               <!-- ko if: metroList.length -->
-              <li><span class="info-hotel-metro">Ближайшее метро:</span> <span data-bind="foreach: metroList"><span data-bind="text: $index() != 0 ? ', '+$data : $data"></span></span></li>
+              <li><span class="span">Ближайшее метро:</span> <span data-bind="foreach: metroList"><span data-bind="text: $index() != 0 ? ', '+$data : $data"></span></span></li>
               <!-- /ko -->
               <!-- ko if: locations.length -->
-              <li><span class="info-hotel-location">Месторасположение:</span> <span data-bind="foreach: locations"><span data-bind="text: $index() != 0 ? ', '+$data : $data"></span></span></li>
+              <li><span class="span">Месторасположение:</span> <span data-bind="foreach: locations"><span data-bind="text: $index() != 0 ? ', '+$data : $data"></span></span></li>
               <!-- /ko -->
               <!-- ko if: numberFloors -->
-              <li><span class="info-hotel-floors">Число этажей:</span> <span data-bind="text: numberFloors"></span></li>
+              <li><span class="span">Число этажей:</span> <span data-bind="text: numberFloors"></span></li>
               <!-- /ko -->
               <!-- ko if: builtIn -->
-              <li><span class="info-hotel-built">Год постройки:</span> <span data-bind="text: builtIn"></span></li>
+              <li><span class="span">Год постройки:</span> <span data-bind="text: builtIn"></span></li>
               <!-- /ko -->
           </ul>
       </div>
