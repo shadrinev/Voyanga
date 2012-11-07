@@ -471,8 +471,9 @@ MaxStopoverFilter = (function(_super) {
 
   __extends(MaxStopoverFilter, _super);
 
-  function MaxStopoverFilter(value) {
+  function MaxStopoverFilter(value, field) {
     this.value = value;
+    this.field = field != null ? field : 'stopoverLength';
     this.filter = __bind(this.filter, this);
 
     this.selection = ko.observable(0);
@@ -480,7 +481,7 @@ MaxStopoverFilter = (function(_super) {
 
   MaxStopoverFilter.prototype.filter = function(item) {
     if (this.selection()) {
-      return item.stopoverLength <= (60 * 60) * this.value;
+      return this.get(item, this.field) <= (60 * 60) * this.value;
     }
     return true;
   };
@@ -634,7 +635,7 @@ AviaFiltersT = (function() {
     this.arrivalAirport = new ListFilter(fields, this.results.arrivalCity, 'Все аэропорты');
     this.airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании');
     this.shortStopover = new MaxStopoverFilter(2.5);
-    this.irrelevantlyLong = new MaxStopoverFilter(30);
+    this.irrelevantlyLong = new MaxStopoverFilter(30, 'maxStopoverLength');
     this.irrelevantlyLong.selection(1);
     this.onlyDirect = new OnlyDirectFilter();
     this.serviceClass = new ServiceClassFilter();

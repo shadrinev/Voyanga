@@ -280,12 +280,12 @@ class StarsFilter extends Filter
 
 
 class MaxStopoverFilter extends Filter
-  constructor: (@value)->
+  constructor: (@value, @field='stopoverLength')->
     @selection = ko.observable 0
 
   filter: (item) =>
     if @selection()
-      return item.stopoverLength <= (60*60)*@value
+      return @get(item, @field) <= (60*60)*@value
     return true
 
 class OnlyDirectFilter extends Filter
@@ -368,7 +368,7 @@ class AviaFiltersT
     @arrivalAirport = new ListFilter(fields, @results.arrivalCity, 'Все аэропорты')
     @airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании')
     @shortStopover = new MaxStopoverFilter(2.5)
-    @irrelevantlyLong = new MaxStopoverFilter(30)
+    @irrelevantlyLong = new MaxStopoverFilter(30, 'maxStopoverLength')
     @irrelevantlyLong.selection 1
     @onlyDirect = new OnlyDirectFilter()
     @serviceClass = new ServiceClassFilter()
