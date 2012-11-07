@@ -892,7 +892,7 @@ class HotelsResultSet
           @setFullMapZoom()
         if !fromFilters
           console.log('minimizeFilter')
-          minimizeFilter();
+          minimizeFilter()
       , stime
     )
 
@@ -905,6 +905,7 @@ class HotelsResultSet
     @showFullMap(false)
     window.setTimeout(
       =>
+        filterShow()
         jsPaneScrollHeight()
         Utils.scrollTo(@oldPageTop)
       , 50
