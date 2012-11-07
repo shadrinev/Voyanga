@@ -73,7 +73,7 @@ class HotelManager
             //$objectVars = get_object_vars($additional);
             $objectVars = array('address','description','distances','earliestCheckInTime',
                 'email','facilities','fax','hotelGroupServices','hotelServices','images',
-                'latitude','longitude','phone','roomAmenities','site');
+                'latitude','longitude','phone','roomAmenities','site','locations','builtIn','numberFloors','metroList');
             $return = new stdClass();
             foreach ($objectVars as $objVar)
             {

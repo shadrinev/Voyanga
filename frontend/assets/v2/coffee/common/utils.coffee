@@ -117,14 +117,15 @@ Utils =
     else
       oPos = {}
       oPos.top = selector
-    if animation
-      if callback
-        $("html,body").animate({'scrollTop':oPos.top}, 1000,callback)
-      else
-        $("html,body").animate({'scrollTop':oPos.top})
+    if oPos
+      if animation
+        if callback
+          $("html,body").animate({'scrollTop':oPos.top}, 1000,callback)
+        else
+          $("html,body").animate({'scrollTop':oPos.top})
 
-    else
-      $("html,body").scrollTop(oPos.top)
+      else
+        $("html,body").scrollTop(oPos.top)
 
   wordAfterNum: (number,oneWord,fourWord,sevenWord = false) ->
     if !sevenWord

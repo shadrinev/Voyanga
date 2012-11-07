@@ -146,18 +146,20 @@ Utils = {
       oPos = {};
       oPos.top = selector;
     }
-    if (animation) {
-      if (callback) {
-        return $("html,body").animate({
-          'scrollTop': oPos.top
-        }, 1000, callback);
+    if (oPos) {
+      if (animation) {
+        if (callback) {
+          return $("html,body").animate({
+            'scrollTop': oPos.top
+          }, 1000, callback);
+        } else {
+          return $("html,body").animate({
+            'scrollTop': oPos.top
+          });
+        }
       } else {
-        return $("html,body").animate({
-          'scrollTop': oPos.top
-        });
+        return $("html,body").scrollTop(oPos.top);
       }
-    } else {
-      return $("html,body").scrollTop(oPos.top);
     }
   },
   wordAfterNum: function(number, oneWord, fourWord, sevenWord) {

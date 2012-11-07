@@ -2053,6 +2053,7 @@ input.hotel-input {
 }
 .maps .innerBlockMain .IMGmain img {
     position: absolute;
+    width: 100%;
 }
 .maps .mapsBigAll {
     background: url("../images/mapsBigAll.png") repeat-x scroll center center transparent;

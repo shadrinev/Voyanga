@@ -223,7 +223,11 @@ class ToursHotelsResultSet extends TourEntry
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
       hotel.off 'back'
       hotel.on 'back', =>
-        @trigger 'setActive', @, false, false,hotel.oldPageTop
+        @trigger 'setActive', @, false, false,hotel.oldPageTop, =>
+          if !hotel.parent.showFullMap()
+            Utils.scrollTo('#hotelResult'+hotel.hotelId)
+          else
+            hotel.parent.showFullMapFunc(true)
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
         @select roomData
@@ -235,7 +239,10 @@ class ToursHotelsResultSet extends TourEntry
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
       hotel.off 'back'
       hotel.on 'back', =>
-        @trigger 'setActive', @, false, false, hotel.oldPageTop
+
+        @trigger 'setActive', @, false, false, hotel.oldPageTop,=>
+          if !hotel.parent.showFullMap()
+            Utils.scrollTo('#hotelResult'+hotel.hotelId)
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
         @select roomData
@@ -353,8 +360,6 @@ class ToursHotelsResultSet extends TourEntry
       if @activeHotel()
         window.setTimeout(
           =>
-            ifHeightMinAllBody()
-            scrolShowFilter()
             if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
               Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent())
 
@@ -377,8 +382,8 @@ class ToursResultSet
         variant.searchParams.cacheId = variant.cacheId
         result = new ToursHotelsResultSet variant, variant.searchParams
       @data.push result
-      result.on 'setActive', (entry, beforeRender = true, afterRender = true, scrollTo = 0)=>
-        @setActive entry, beforeRender, afterRender, scrollTo
+      result.on 'setActive', (entry, beforeRender = true, afterRender = true, scrollTo = 0,callback = null)=>
+        @setActive entry, beforeRender, afterRender, scrollTo, callback
       result.on 'next', (entry)=>
         @nextEntry()
 
@@ -433,7 +438,7 @@ class ToursResultSet
     @voyashki.push new VoyashaCheapest @
     @voyashki.push new VoyashaOptima @
     @voyashki.push new VoyashaRich @
-  setActive: (entry,beforeRender = true, afterRender = true,scrollTo = 0)=>
+  setActive: (entry,beforeRender = true, afterRender = true,scrollTo = 0,callback = null)=>
     $('#loadWrapBg').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
@@ -456,6 +461,8 @@ class ToursResultSet
       $('#loadWrapBg').hide()
       if !(scrollTo == false)
         Utils.scrollTo(scrollTo,false)
+      if callback
+        callback()
     , 100
 
 

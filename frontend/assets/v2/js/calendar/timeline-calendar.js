@@ -34,21 +34,26 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
         }
         var monthLineWidth = Math.round(((this.totalLines) / this.totalShowLines)*10000)/100;
         this.jObj.find('.monthLineVoyanga').css('width',monthLineWidth + '%');
+        console.log('monthArray',this.monthArray);
+        var tLines = this.totalLines;
+        if(this.totalLines == this.linesWidth){
+            tLines++;
+        }
         for(var i in this.monthArray){
-            var leftPercent = this.monthArray[i].line / (this.totalLines - this.linesWidth);
-            leftPercent =  Math.round((1 - (this.linesWidth / this.totalLines) )*leftPercent*1000 )/10;
+            var leftPercent = this.monthArray[i].line / (tLines - this.linesWidth);
+            leftPercent =  Math.round((1 - (this.linesWidth / tLines) )*leftPercent*1000 )/10;
             if(i < (this.monthArray.length - 1) ){
                 var k=parseInt(i)+1;
 
                 var widthPercent = (this.monthArray[k].line - this.monthArray[i].line) / this.totalLines;
                 //var widthPercent = 4/(VoyangaCalendar.slider.totalLines);
             }else{
-                var widthPercent = (this.totalLines - this.monthArray[i].line) / this.totalLines;
+                var widthPercent = (tLines - this.monthArray[i].line) / tLines;
             }
             widthPercent = Math.round(widthPercent*1000)/10;
 
             var newHtml = '<div class="monthNameVoyanga" style="left: '+leftPercent+'%; width: '+widthPercent+'%"><div class="monthWrapper">'+this.monthArray[i].name+'</div></div>';
-            //this.jObj.find('.monthLineVoyanga').append(newHtml);
+            this.jObj.find('.monthLineVoyanga').append(newHtml);
         }
         console.log('tl:',this.totalLines);
         this.knobWidth = Math.round(((this.linesWidth) / this.totalLines)*10000)/100;
@@ -234,6 +239,9 @@ VoyangaCalendarTimeline.generateGrid = function(){
     var startYear = firstDay.getFullYear();
     //console.log(tmpDate);
     tmpDate.setDate(tmpDate.getDate()-this.getDay(tmpDate));
+    //need for clone start temp date
+    var temp = moment(tmpDate);
+    var startTemp = moment(temp);
 
     //tmpDate.setDate(0);
     //console.log(tmpDate);
@@ -296,10 +304,14 @@ VoyangaCalendarTimeline.generateGrid = function(){
     }
     console.log('monthArr', this.slider.monthArray.length,this.slider.monthArray);
     if(this.slider.monthArray.length == 0){
+        var startMonth = moment(startTemp);
+        //console.log('momomo', startTemp,startMonth);
+        startMonth.date(1);
         var monthObject = new Object();
-        monthObject.line = 0;
-        tmpDate.setMonth(tmpDate.getMonth() + 1);
-        monthObject.name = this.monthNames[tmpDate.getMonth()];
+        //console.log('momomo', startTemp,startMonth);
+        monthObject.line = startMonth.diff(startTemp,'weeks');
+        //tmpDate.setMonth(tmpDate.getMonth() + 1);
+        monthObject.name = this.monthNames[startMonth.month()];
         this.slider.monthArray.push(monthObject);
     }
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;

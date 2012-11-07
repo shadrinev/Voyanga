@@ -11,10 +11,10 @@ ko.bindingHandlers.highlightChange = {
     allBindings = allBindingsAccessor();
     valueUnwrapped = ko.utils.unwrapObservable(value);
     previousImage = allBindings.previousImage;
-    console.log(previousImage(), valueUnwrapped);
     newEl = $('<div class="IMGmain"><img src=""></div>');
     newEl.appendTo(".centerTours");
     $(".IMGmain").eq(0).find('img').attr("src", previousImage());
+    indexIMGresizeCenter(0);
     varLeftPos = $(".IMGmain").eq(1).css("left");
     varTopPos = $(".IMGmain").eq(1).css("top");
     varLeftPos = parseInt(varLeftPos.slice(0, -2));
@@ -23,18 +23,17 @@ ko.bindingHandlers.highlightChange = {
     varTopPosStart = varTopPos;
     $(".IMGmain").eq(1).css("opacity", "0").css("left", varLeftPosStart + "px").css("top", varTopPosStart + "px").find("img").attr("src", valueUnwrapped);
     previousImage(valueUnwrapped);
-    ResizeAvia();
     slideToursSlide();
+    ResizeAvia();
     return $(".IMGmain").eq(1).find("img").load(function() {
+      indexIMGresizeCenter(1);
       $(".IMGmain").eq(0).animate({
         opacity: 0
       }, speedAnimateChangePic, function() {
         return $(".IMGmain:not(:last-child)").eq(0).remove();
       });
       return $(".IMGmain").eq(1).animate({
-        opacity: 1,
-        left: varLeftPos + "px",
-        top: varTopPos + "px"
+        opacity: 1
       }, speedAnimateChangePic);
     });
   }

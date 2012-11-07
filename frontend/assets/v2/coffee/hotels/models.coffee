@@ -100,7 +100,7 @@ class RoomSet
             result.push 'Штраф за отмену не взымается '
         return result.join('<br>')
       else
-        return 'Условия бронирования пока не известны'
+        return 'Условия бронирования не известны'
 
 
     @rooms = []
@@ -194,6 +194,21 @@ class HotelResult
         return 'Свернуть'
     # FIXME check if we can get diffirent photos for different rooms in same hotel
     @photos = hotelDatails.images
+    @site = hotelDatails.site
+    @metroList = []
+    if hotelDatails.metroList
+      for elemId,elements of hotelDatails.metroList
+        @metroList.push elements
+    @locations = []
+    if hotelDatails.locations
+      for elemId,elements of hotelDatails.locations
+        @locations.push elements
+    @phone = hotelDatails.phone
+    @fax = hotelDatails.fax
+    @email = hotelDatails.email
+    @numberFloors = hotelDatails.numberFloors
+    @builtIn = hotelDatails.builtIn
+
     @numPhotos = 0
     @parent = parent
     @checkInTime = hotelDatails.earliestCheckInTime
@@ -773,7 +788,7 @@ class HotelsResultSet
             Utils.scrollTo(hotel.oldPageTop,false)
             Utils.scrollTo('#hotelResult'+hotel.hotelId)
           else
-            @showFullMapFunc()
+            @showFullMapFunc(true)
             @gAllMap.setCenter(@gMapCenter)
             @gAllMap.setZoom(@gMapZoom)
 
@@ -796,7 +811,7 @@ class HotelsResultSet
 
     @gAllMap.setCenter(@computedCenter.getCenter())
 
-  showFullMapFunc: =>
+  showFullMapFunc: (fromBackAction = false)=>
     console.log('show full map')
 
     @oldPageTop = $("html").scrollTop() | $("body").scrollTop()
@@ -869,8 +884,12 @@ class HotelsResultSet
           @mapCluster.addMarkers(@gMarkers)
         console.log(@gAllMap)
         console.log(@gMapInfoWin)
-        if @gMarkers.length > 0
+        if fromBackAction && @gMapCenter && @gMapZoom
+          @gAllMap.setCenter(@gMapCenter)
+          @gAllMap.setZoom(@gMapZoom)
+        else if @gMarkers.length > 0
           @setFullMapZoom()
+
       , stime
     )
 
@@ -883,10 +902,11 @@ class HotelsResultSet
     @showFullMap(false)
     window.setTimeout(
       =>
-        ifHeightMinAllBody()
+        jsPaneScrollHeight()
         Utils.scrollTo(@oldPageTop)
       , 50
     )
+
 
   gMapPointShowWin: (event,hotel) =>
     console.log('showDiv',event)
@@ -911,6 +931,7 @@ class HotelsResultSet
     #@hideFullMap()
     @gMapCenter = @gAllMap.getCenter()
     @gMapZoom = @gAllMap.getZoom()
+    console.log('save map params', @gMapCenter,@gMapZoom)
     @select(hotel)
     console.log('gMapEventClick',event,hotel)
 
@@ -992,8 +1013,6 @@ class HotelsResultSet
 
     window.setTimeout(
       =>
-        ifHeightMinAllBody()
-        scrolShowFilter()
         if(fromFilters)
           jsPaneScrollHeight()
         if window.app.activeView() == 'hotels-results'

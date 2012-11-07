@@ -556,14 +556,10 @@ function resizeMainStage() {
 	}
 }
 
-
-
 function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
     smallTicketHeight();
-    //scrollValue('avia');
-    //scrollValue('hotel');
     CenterIMGResize();
     ifHeightMinAllBody();
     showMiniPopUp();
@@ -575,107 +571,7 @@ function ResizeAvia() {
 function ResizeFun() {
     ResizeAvia();
 }
-function scrolShowFilter() {
 
-/*	$('#scroll-pane').each(
-		function()
-		{
-			$(this).jScrollPane(
-				{
-					showArrows: $(this).is('.arrow')
-				}
-			);
-			var api = $(this).data('jsp');
-			var throttleTimeout;
-
-			$(window).bind(
-				'resize',
-				function()
-				{
-					if ($.browser.msie) {
-						// IE fires multiple resize events while you are dragging the browser window which
-						// causes it to crash if you try to update the scrollpane on every one. So we need
-						// to throttle it to fire a maximum of once every 50 milliseconds...
-						if (!throttleTimeout) {
-							throttleTimeout = setTimeout(
-								function()
-								{
-									api.reinitialise();
-									throttleTimeout = null;
-								},
-								300
-							);
-						}
-					} else {
-						api.reinitialise();
-					}
-				}
-			);
-			$(window).bind(
-				'scroll',
-				function()
-				{
-                    //var throttleTimeout;
-                    if (!throttleTimeout) {
-
-                        throttleTimeout = setTimeout(
-                            function()
-                            {
-                                throttleTimeout = null;
-                            },
-                            600
-                        );
-                        setTimeout(
-                            function()
-                            {
-                                api.reinitialise();
-                            },
-                            300
-                        );
-                    }
-                }
-			);
-            /*
-$('.all-list, .order-hide').live(
-                'click',
-                function()
-                {
-                    console.log('jClick');
-                    //var throttleTimeout;
-                    if (!throttleTimeout) {
-                        throttleTimeout = setTimeout(
-                            function()
-                            {
-                                api.reinitialise();
-                                throttleTimeout = null;
-                            },
-                            100
-                        );
-                    }
-                }
-            );
-            $('.div-filter').live(
-                'mouseup',
-                function()
-                {	
-                    //var throttleTimeout;
-                    if (!throttleTimeout) {
-                        throttleTimeout = setTimeout(
-                            function()
-                            {
-                                api.reinitialise();
-                                throttleTimeout = null;
-                            },
-                            1000
-                        );
-                    }
-                }
-            );
-
-		}
-	);
-	*/
-}
 function OneWidthEquelTwoWidth() {
 	if ($('.jspPane').width() == $('.scrollBlock').width() ) {
 		$('.slide-filter.first').css('padding-right','21px');
@@ -847,56 +743,112 @@ var _jScrollingBootom = false;
 var _jScrollNonBottomInitted = false;
 
 function jsPaneScrollHeight() {
+	//console.log("==== * * * * ====");
 	var _content = $('#content');
 	_content.css('height','auto');
 	var _windowHeight = $(window).height();
-	var _contentHeight = _content.height();
+	if (_windowHeight > 670) {
+		_windowHeight = ($(window).height() - 132);
+	}
+	else {
+		_windowHeight = (670 - 132);
+	}
+	var _contentHeight = _content.innerHeight();
 	var _scrollPaneHeight = 0;
 	$('.scrollBlock').find('.div-filter').each(function(e) {
 		_scrollPaneHeight += $(this).innerHeight();
 	});
-
-	if (_contentHeight < _scrollPaneHeight && _contentHeight < _windowHeight && _scrollPaneHeight < _windowHeight) {
-		_content.css('height', (_windowHeight - 225) + 'px');
-		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
-		_GoOnScroll = false;
-	}
-	else if (_contentHeight < _scrollPaneHeight && _scrollPaneHeight > _windowHeight  && _contentHeight < _windowHeight) {
+	//console.log('_contentHeight = '+_contentHeight+' | _scrollPaneHeight = '+_scrollPaneHeight+ ' | _windowHeight = '+_windowHeight);
+	if (_scrollPaneHeight	> _contentHeight  && 
+		_contentHeight		> _windowHeight && 
+		_scrollPaneHeight 	> _windowHeight) {
+		//console.log('=== 1 ===');
 		_content.css('height', _scrollPaneHeight + 'px');
 		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
 		_GoOnScroll = false;
 	}
-	else if (_contentHeight < _scrollPaneHeight && _scrollPaneHeight < 670  && _contentHeight < 670) {
-		_content.css('height', (670 - 225) + 'px');
+	else if 
+		(_scrollPaneHeight	< _contentHeight  && 
+		_contentHeight		> _windowHeight && 
+		_scrollPaneHeight 	> _windowHeight) {
+		//console.log('=== 2 ===');
+		_content.css('height', 'auto');
 		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
-		_GoOnScroll = false;
-	}
-	else if (_contentHeight < _scrollPaneHeight && _scrollPaneHeight > 670  && _contentHeight > 670) {
-		_content.css('height', _scrollPaneHeight + 'px');
-		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
-		_GoOnScroll = false;
-	}
-	else {
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
 		_GoOnScroll = true;
 	}
+	else if 
+		(_scrollPaneHeight	> _contentHeight  && 
+		_contentHeight		< _windowHeight && 
+		_scrollPaneHeight 	> _windowHeight) {
+		//console.log('=== 3 ===');
+		_content.css('height', _scrollPaneHeight + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;
+	}
+	else if 
+		(_scrollPaneHeight	> _contentHeight  && 
+		_contentHeight		> _windowHeight && 
+		_scrollPaneHeight 	< _windowHeight) {	
+		//console.log('=== 4 ===');	
+		_content.css('height', _scrollPaneHeight + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;
+	}
+	else if 
+		(_scrollPaneHeight	< _contentHeight  && 
+		_contentHeight		< _windowHeight && 
+		_scrollPaneHeight 	> _windowHeight) {	
+		//console.log('=== 5 ===');
+		_content.css('height', (_windowHeight - 70) + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;
+	}
+	else if 
+		(_scrollPaneHeight	> _contentHeight  && 
+		_contentHeight		< _windowHeight && 
+		_scrollPaneHeight 	< _windowHeight) {	
+		//console.log('=== 6 ===');	
+		_content.css('height', (_windowHeight - 70) + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;
+	}
+	else if 
+		(_scrollPaneHeight	< _contentHeight  && 
+		_contentHeight		> _windowHeight && 
+		_scrollPaneHeight 	< _windowHeight) {	
+		//console.log('=== 7 ===');
+		_content.css('height', 'auto');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = true;
+	}
+	else if 
+		(_scrollPaneHeight	< _contentHeight  && 
+		_contentHeight		< _windowHeight && 
+		_scrollPaneHeight 	< _windowHeight) {	
+		//console.log('=== 8 ===');
+		_content.css('height', (_windowHeight - 70) + 'px');
+		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
+		$('.innerFilter').css('height', _scrollPaneHeight +'px');
+		_GoOnScroll = false;	
+	}
+	else {
+	console.log('=== 9 ===');
+		$('.innerFilter').css('height', '100%');
+		_GoOnScroll = true;
+	}
+	//console.log("==== * * * * ====");
 }
 
 function scrollValue(what, event) {
 	var filterContent = $('.filter-content.'+ what)
-	
-	if (filterContent.length > 0 && filterContent.is(':visible') && !$(event.target).is('#scroll-pane')) {
-		
-		console.log(event);
-		/*
-if ($(event.target).is('#scroll-pane')) {
-			console.log('==== 1 ====');
-		}
-		else {
-			console.log('==== 2 ====');
-		}
-*/
-
-		
+	if (filterContent.length > 0 && filterContent.is(':visible') && !$(event.target).is('#scroll-pane')) {		
 		var innerFilter = filterContent.find('.innerFilter');
 		var var_marginTopSubHead = $('.sub-head').css('margin-top');
 		var var_scrollValueTop = $(window).scrollTop();
@@ -920,8 +872,7 @@ if ($(event.target).is('#scroll-pane')) {
 			else {
 				var diffrentScrollTop = 61 ;
 			}
-		}
-		
+		}		
 		if (_GoOnScroll) {
 			var needDel = false;
 			if (var_scrollValueTop == 0) {
@@ -935,7 +886,6 @@ if ($(event.target).is('#scroll-pane')) {
 			}
 			else if (var_scrollValueTop > diffrentScrollTop) {		
 				if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 30)) {
-					//console.log(var_scrollValueTop +' === '+ (($('.wrapper').height() - var_heightWindow) - 30) +' === ' + (var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30)));
 					var var_minHeightBottom;
 					filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
 					if ((var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30)) < 30) {
@@ -949,9 +899,7 @@ if ($(event.target).is('#scroll-pane')) {
 						$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
 						
 					}
-					$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
-					//$('#scroll-pane').data('jsp').scrollToY($('#scroll-pane').data('jsp').getContentY() + 32);
-					
+					$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});					
 					if(!_jScrollingBootom && var_scrollValueTop == ($('.wrapper').height() - $('body').height())){
 						_jScrollingBootom = true;
 	                    window.setTimeout(function(){
@@ -993,9 +941,11 @@ if ($(event.target).is('#scroll-pane')) {
 			}
 		}
 		else {
+			if($('#scroll-pane').data('jsp')){
+				$('#scroll-pane').data('jsp').destroy();
+			}
 			return false;
 		}
-	
 	}
 	else {
 		return false;

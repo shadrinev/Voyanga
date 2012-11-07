@@ -1346,6 +1346,26 @@ class HotelBookClient
                 $hotelParams['roomAmenities'][$id] = (string)$amenitySXE;
             }
         }
+        if (isset($hotelSXE->MetroList->Metro))
+        {
+            $hotelParams['metroList'] = array();
+            UtilsHelper::soapObjectsArray($hotelSXE->MetroList->Metro);
+            foreach ($hotelSXE->MetroList->Metro as $metroSXE)
+            {
+                $id = (int)$metroSXE['id'];
+                $hotelParams['metroList'][$id] = (string)$metroSXE;
+            }
+        }
+        if (isset($hotelSXE->Locations->Location))
+        {
+            $hotelParams['locations'] = array();
+            UtilsHelper::soapObjectsArray($hotelSXE->Locations->Location);
+            foreach ($hotelSXE->Locations->Location as $elemSXE)
+            {
+                $id = (int)$elemSXE['id'];
+                $hotelParams['locations'][$id] = (string)$elemSXE;
+            }
+        }
         if ($hotelSXE->Cat['id'])
         {
             $categoryId = (int)$hotelSXE->Cat['id'];

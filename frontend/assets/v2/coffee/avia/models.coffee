@@ -534,6 +534,7 @@ class AviaResultSet
 
     ko.processAllDeferredBindingUpdates()
     # FIXME
+    jsPaneScrollHeight()
     ResizeAvia()
 
   updateCheapest: (data)=>
@@ -601,10 +602,6 @@ class AviaResultSet
 
   filtersRendered: ->
     ko.processAllDeferredBindingUpdates()
-    scrollValue()
-    $('.scrollBlock').scroll ->
-  		scrollValue()
-    setTimeout scrolShowFilter, 1000;
 
 # Model for avia search params,
 # Used in AviaPanel and search controller
