@@ -299,7 +299,7 @@ class OnlyDirectFilter extends Filter
 
 class ServiceClassFilter extends Filter
   constructor: ->
-    @selection = ko.observable 0
+    @selection = ko.observable 'A'
 
   filter: (item) =>
     lit = @selection()
