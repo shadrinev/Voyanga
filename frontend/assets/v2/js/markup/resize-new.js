@@ -951,7 +951,7 @@ function minimizeFilter() {
 	var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
 	if (_issetMaps && ! _issetLeftBlock) {
 		$('.innerFilter').find('.div-filter').each(function(index) {
-			if (index > 2) {
+			if (index > 1) {
 				$(this).hide();
 			}
 		});

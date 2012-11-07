@@ -513,7 +513,7 @@ ServiceClassFilter = (function(_super) {
 
   function ServiceClassFilter() {
     this.filter = __bind(this.filter, this);
-    this.selection = ko.observable(0);
+    this.selection = ko.observable('A');
   }
 
   ServiceClassFilter.prototype.filter = function(item) {
