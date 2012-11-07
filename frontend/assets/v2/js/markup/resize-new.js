@@ -968,5 +968,5 @@ function filterShow() {
 	$('.filter-block').css('height','100%');
 	$('.innerFilter').css('height', '100%');
 	$('.innerFilter').find('.div-filter').show();
-	$('.filter-minimize').hide();
+	$('.filter-minimize').remove();
 }
