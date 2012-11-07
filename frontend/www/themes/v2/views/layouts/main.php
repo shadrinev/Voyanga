@@ -103,7 +103,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
             </div>
             <!-- END CENTER BLOCK -->
 	    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template', afterRender: reRenderCalendar}" 	
-             style="top: 70px; display: none;"></div>
+             style="top: 64px; display: none;"></div>
         <!--====**********===-->
     </div>
     <!-- /ko -->

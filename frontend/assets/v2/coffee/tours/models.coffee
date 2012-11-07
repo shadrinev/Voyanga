@@ -360,8 +360,6 @@ class ToursHotelsResultSet extends TourEntry
       if @activeHotel()
         window.setTimeout(
           =>
-            ifHeightMinAllBody()
-            scrolShowFilter()
             if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
               Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent())
 

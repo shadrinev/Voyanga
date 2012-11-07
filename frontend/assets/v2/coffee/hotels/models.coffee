@@ -998,8 +998,6 @@ class HotelsResultSet
 
     window.setTimeout(
       =>
-        ifHeightMinAllBody()
-        scrolShowFilter()
         if(fromFilters)
           jsPaneScrollHeight()
         if window.app.activeView() == 'hotels-results'

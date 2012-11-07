@@ -573,8 +573,6 @@ ToursHotelsResultSet = (function(_super) {
     if (this.results()) {
       if (this.activeHotel()) {
         return window.setTimeout(function() {
-          ifHeightMinAllBody();
-          scrolShowFilter();
           if ($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length) {
             return Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent());
           }

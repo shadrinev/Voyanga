@@ -556,14 +556,10 @@ function resizeMainStage() {
 	}
 }
 
-
-
 function ResizeAvia() {
     ResizeCenterBlock();
     inTheTwoLines();
     smallTicketHeight();
-    //scrollValue('avia');
-    //scrollValue('hotel');
     CenterIMGResize();
     ifHeightMinAllBody();
     showMiniPopUp();
@@ -575,107 +571,7 @@ function ResizeAvia() {
 function ResizeFun() {
     ResizeAvia();
 }
-function scrolShowFilter() {
 
-/*	$('#scroll-pane').each(
-		function()
-		{
-			$(this).jScrollPane(
-				{
-					showArrows: $(this).is('.arrow')
-				}
-			);
-			var api = $(this).data('jsp');
-			var throttleTimeout;
-
-			$(window).bind(
-				'resize',
-				function()
-				{
-					if ($.browser.msie) {
-						// IE fires multiple resize events while you are dragging the browser window which
-						// causes it to crash if you try to update the scrollpane on every one. So we need
-						// to throttle it to fire a maximum of once every 50 milliseconds...
-						if (!throttleTimeout) {
-							throttleTimeout = setTimeout(
-								function()
-								{
-									api.reinitialise();
-									throttleTimeout = null;
-								},
-								300
-							);
-						}
-					} else {
-						api.reinitialise();
-					}
-				}
-			);
-			$(window).bind(
-				'scroll',
-				function()
-				{
-                    //var throttleTimeout;
-                    if (!throttleTimeout) {
-
-                        throttleTimeout = setTimeout(
-                            function()
-                            {
-                                throttleTimeout = null;
-                            },
-                            600
-                        );
-                        setTimeout(
-                            function()
-                            {
-                                api.reinitialise();
-                            },
-                            300
-                        );
-                    }
-                }
-			);
-            /*
-$('.all-list, .order-hide').live(
-                'click',
-                function()
-                {
-                    console.log('jClick');
-                    //var throttleTimeout;
-                    if (!throttleTimeout) {
-                        throttleTimeout = setTimeout(
-                            function()
-                            {
-                                api.reinitialise();
-                                throttleTimeout = null;
-                            },
-                            100
-                        );
-                    }
-                }
-            );
-            $('.div-filter').live(
-                'mouseup',
-                function()
-                {	
-                    //var throttleTimeout;
-                    if (!throttleTimeout) {
-                        throttleTimeout = setTimeout(
-                            function()
-                            {
-                                api.reinitialise();
-                                throttleTimeout = null;
-                            },
-                            1000
-                        );
-                    }
-                }
-            );
-
-		}
-	);
-	*/
-}
 function OneWidthEquelTwoWidth() {
 	if ($('.jspPane').width() == $('.scrollBlock').width() ) {
 		$('.slide-filter.first').css('padding-right','21px');

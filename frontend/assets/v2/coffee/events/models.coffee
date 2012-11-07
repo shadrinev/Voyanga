@@ -10,12 +10,11 @@ ko.bindingHandlers.highlightChange =
     # Grab some more data from another binding property
     previousImage = allBindings.previousImage
 
-    console.log(previousImage(), valueUnwrapped)
-
     newEl = $('<div class="IMGmain"><img src=""></div>')
     newEl.appendTo ".centerTours"
 
     $(".IMGmain").eq(0).find('img').attr "src", previousImage()
+    indexIMGresizeCenter(0)
 
     varLeftPos = $(".IMGmain").eq(1).css("left")
     varTopPos = $(".IMGmain").eq(1).css("top")
@@ -27,19 +26,18 @@ ko.bindingHandlers.highlightChange =
     $(".IMGmain").eq(1).css("opacity", "0").css("left", varLeftPosStart + "px").css("top", varTopPosStart + "px").find("img").attr "src", valueUnwrapped
     previousImage(valueUnwrapped)
 
-    ResizeAvia()
     slideToursSlide()
+    ResizeAvia()
 
     $(".IMGmain").eq(1).find("img").load ->
+      indexIMGresizeCenter(1)
       $(".IMGmain").eq(0).animate
         opacity: 0
       , speedAnimateChangePic, ->
-        $(".IMGmain:not(:last-child)").eq(0).remove()
+          $(".IMGmain:not(:last-child)").eq(0).remove()
 
       $(".IMGmain").eq(1).animate
         opacity: 1
-        left: varLeftPos + "px"
-        top: varTopPos + "px"
       , speedAnimateChangePic
 
 class Event extends Backbone.Events
@@ -69,9 +67,7 @@ class EventSet
   constructor: (events) ->
     console.trace()
     @events = ko.observableArray events
-
     @currentTitle = ko.observable 'HUY'
-
     @currentEvent = ko.computed =>
       activeEvents = _.filter @events(), (event) ->
         event.active()
