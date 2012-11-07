@@ -120,7 +120,7 @@ class OrderComponent extends CApplicationComponent
 
     public function getPaymentFormParams()
     {
-        $bookerIds = Yii::app()->user->getState('bookerIds');
+        $bookerIds = $this->getBookerIds();
         if(!$bookerIds)
             throw new Exception("No bookers availiable");
         $bookers = Array();

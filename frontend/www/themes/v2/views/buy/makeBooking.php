@@ -24,10 +24,12 @@
         $('#submit-passport').click(function(){
          $.post('/buy/makeBooking', $('#passport_form').serialize(), function(data){
            if(data.status == 'success') {
-             console.log("STARTENG POYMENT");
              $.get('/buy/startPayment', function(data) {
-                console.log(data);
-                Utils.submitPayment(data);
+                     if(data.error){
+                         throw "Payment error";
+                     } else {
+                         Utils.submitPayment(data);
+                     }
              });
            } else {
              alert("ERROR" + data);
