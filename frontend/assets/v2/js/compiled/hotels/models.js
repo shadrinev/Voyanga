@@ -157,7 +157,7 @@ RoomSet = (function() {
         }
         return result.join('<br>');
       } else {
-        return 'Условия бронирования пока не известны';
+        return 'Условия бронирования не известны';
       }
     });
     this.rooms = [];
@@ -256,7 +256,7 @@ RoomSet = (function() {
 HotelResult = (function() {
 
   function HotelResult(data, parent, duration, activeHotel, hotelDatails) {
-    var elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
+    var elemId, elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8,
       _this = this;
     this.activeHotel = activeHotel;
     this.putToMap = __bind(this.putToMap, this);
@@ -308,6 +308,28 @@ HotelResult = (function() {
       }
     });
     this.photos = hotelDatails.images;
+    this.site = hotelDatails.site;
+    this.metroList = [];
+    if (hotelDatails.metroList) {
+      _ref = hotelDatails.metroList;
+      for (elemId in _ref) {
+        elements = _ref[elemId];
+        this.metroList.push(elements);
+      }
+    }
+    this.locations = [];
+    if (hotelDatails.locations) {
+      _ref1 = hotelDatails.locations;
+      for (elemId in _ref1) {
+        elements = _ref1[elemId];
+        this.locations.push(elements);
+      }
+    }
+    this.phone = hotelDatails.phone;
+    this.fax = hotelDatails.fax;
+    this.email = hotelDatails.email;
+    this.numberFloors = hotelDatails.numberFloors;
+    this.builtIn = hotelDatails.builtIn;
     this.numPhotos = 0;
     this.parent = parent;
     this.checkInTime = hotelDatails.earliestCheckInTime;
@@ -330,17 +352,17 @@ HotelResult = (function() {
       this.rating = 0;
     }
     this.ratingName = '';
-    if ((0 <= (_ref = this.rating) && _ref < 2)) {
+    if ((0 <= (_ref2 = this.rating) && _ref2 < 2)) {
       this.ratingName = "рейтинг<br>отеля";
-    } else if ((2 <= (_ref1 = this.rating) && _ref1 < 2.5)) {
+    } else if ((2 <= (_ref3 = this.rating) && _ref3 < 2.5)) {
       this.ratingName = "средний<br>отель";
-    } else if ((2.5 <= (_ref2 = this.rating) && _ref2 < 3.5)) {
+    } else if ((2.5 <= (_ref4 = this.rating) && _ref4 < 3.5)) {
       this.ratingName = "неплохой<br>отель";
-    } else if ((3.5 <= (_ref3 = this.rating) && _ref3 < 4)) {
+    } else if ((3.5 <= (_ref5 = this.rating) && _ref5 < 4)) {
       this.ratingName = "хороший<br>отель";
-    } else if ((4 <= (_ref4 = this.rating) && _ref4 < 4.5)) {
+    } else if ((4 <= (_ref6 = this.rating) && _ref6 < 4.5)) {
       this.ratingName = "очень хороший<br>отель";
-    } else if ((4.5 <= (_ref5 = this.rating) && _ref5 <= 5)) {
+    } else if ((4.5 <= (_ref7 = this.rating) && _ref7 <= 5)) {
       this.ratingName = "великолепный<br>отель";
     }
     this.lat = hotelDatails.latitude / 1;
@@ -367,9 +389,9 @@ HotelResult = (function() {
     this.hasHotelGroupServices = hotelDatails.hotelGroupServices ? true : false;
     this.hotelGroupServices = [];
     if (hotelDatails.hotelGroupServices) {
-      _ref6 = hotelDatails.hotelGroupServices;
-      for (groupName in _ref6) {
-        elements = _ref6[groupName];
+      _ref8 = hotelDatails.hotelGroupServices;
+      for (groupName in _ref8) {
+        elements = _ref8[groupName];
         this.hotelGroupServices.push({
           groupName: groupName,
           elements: elements,
@@ -384,11 +406,11 @@ HotelResult = (function() {
     this.visible = ko.observable(true);
     this.wordDays = this.parent.wordDays;
     this.visibleRoomSets = ko.computed(function() {
-      var result, roomSet, _i, _len, _ref7;
+      var result, roomSet, _i, _len, _ref9;
       result = [];
-      _ref7 = _this.roomSets();
-      for (_i = 0, _len = _ref7.length; _i < _len; _i++) {
-        roomSet = _ref7[_i];
+      _ref9 = _this.roomSets();
+      for (_i = 0, _len = _ref9.length; _i < _len; _i++) {
+        roomSet = _ref9[_i];
         if (roomSet.visible()) {
           result.push(roomSet);
         }
