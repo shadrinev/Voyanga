@@ -697,6 +697,7 @@ class HotelsResultSet
           console.log('yes set')
         break
     @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
+    @wordNights = Utils.wordAfterNum(duration,'ночь','ночи','ночей')
     @fullMapInitialized = false
     @showFullMap = ko.observable false
 
@@ -889,7 +890,7 @@ class HotelsResultSet
           @gAllMap.setZoom(@gMapZoom)
         else if @gMarkers.length > 0
           @setFullMapZoom()
-
+        minimizeFilter();
       , stime
     )
 
@@ -1020,7 +1021,7 @@ class HotelsResultSet
           posTop = $('html').scrollTop() || $('body').scrollTop()
           if(posTop > offset.top)
             Utils.scrollTo('#content')
-        else if @toursOpened && @tours() && @filtersConfig
+        else if (@toursOpened && @tours() && @filtersConfig) || (@tours() && @showFullMap())
           kb = true
           #if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
             #Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent())

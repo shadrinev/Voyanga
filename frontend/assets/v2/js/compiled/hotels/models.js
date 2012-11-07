@@ -891,6 +891,7 @@ HotelsResultSet = (function() {
       }
     }
     this.wordDays = Utils.wordAfterNum(duration, 'день', 'дня', 'дней');
+    this.wordNights = Utils.wordAfterNum(duration, 'ночь', 'ночи', 'ночей');
     this.fullMapInitialized = false;
     this.showFullMap = ko.observable(false);
     this.minPrice = false;
@@ -1102,10 +1103,11 @@ HotelsResultSet = (function() {
       console.log(_this.gMapInfoWin);
       if (fromBackAction && _this.gMapCenter && _this.gMapZoom) {
         _this.gAllMap.setCenter(_this.gMapCenter);
-        return _this.gAllMap.setZoom(_this.gMapZoom);
+        _this.gAllMap.setZoom(_this.gMapZoom);
       } else if (_this.gMarkers.length > 0) {
-        return _this.setFullMapZoom();
+        _this.setFullMapZoom();
       }
+      return minimizeFilter();
     }, stime);
   };
 
@@ -1260,7 +1262,7 @@ HotelsResultSet = (function() {
         if (posTop > offset.top) {
           Utils.scrollTo('#content');
         }
-      } else if (_this.toursOpened && _this.tours() && _this.filtersConfig) {
+      } else if ((_this.toursOpened && _this.tours() && _this.filtersConfig) || (_this.tours() && _this.showFullMap())) {
         kb = true;
       } else {
         Utils.scrollTo(0, false);
