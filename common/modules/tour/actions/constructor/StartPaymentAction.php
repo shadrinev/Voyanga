@@ -10,7 +10,16 @@ class StartPaymentAction extends CAction
 {
     public function run()
     {
-        $params = Yii::app()->order->getPaymentFormParams();
+        try
+        {
+            $params = Yii::app()->order->getPaymentFormParams();
+        } catch(Exception $e) {
+            header("Content-type: application/json");
+            $params = Array();
+            $params['error'] = $e->getMessage();
+            echo json_encode($params);
+            exit;
+        }
         // FIXME move to config
         $params['url']= "https://secure.payonlinesystem.com/ru/payment/ivoyanga/";
         header("Content-type: application/json");

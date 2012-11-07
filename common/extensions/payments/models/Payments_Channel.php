@@ -29,7 +29,7 @@ class Payments_Channel {
         return $params;
     }
 
-    private function getSignature($params)
+    public function getSignature($params)
     {
         $credentials = $this->credentials;
         $keys = Array('MerchantId', 'DateTime', 'TransactionID', 'OrderId',

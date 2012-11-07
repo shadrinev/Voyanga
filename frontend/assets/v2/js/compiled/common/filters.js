@@ -719,7 +719,9 @@ AviaFiltersT = (function() {
   };
 
   AviaFiltersT.prototype.filter = function() {
-    return this.iterate(this.filterResult, this.filterVoyage, this.filterBackVoyage);
+    this.iterate(this.filterResult, this.filterVoyage, this.filterBackVoyage);
+    ko.processAllDeferredBindingUpdates();
+    return scrollValue('avia', {});
   };
 
   AviaFiltersT.prototype.iterate = function(onResult, onVoyage, onBackVoyage) {
