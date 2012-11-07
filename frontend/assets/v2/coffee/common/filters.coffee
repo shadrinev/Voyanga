@@ -428,6 +428,8 @@ class AviaFiltersT
 
   filter: =>
     @iterate @filterResult, @filterVoyage, @filterBackVoyage
+    ko.processAllDeferredBindingUpdates()
+    scrollValue('avia', {})
 
   iterate: (onResult, onVoyage, onBackVoyage) =>
     for result in @results.data
