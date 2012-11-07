@@ -649,20 +649,7 @@ $(window).load(function() {
 });
 
 function ifHeightMinAllBody() {
-	/*
-$('#content').css('height','auto');
-	var var_heightWindow = $(window).height();
-	var var_heightContent = $('#content').height();
-	
-	if (var_heightContent < var_heightWindow) {
-		$('#content').css('height', (var_heightWindow - 168) +'px');
-		$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
-	}
-	else {
-		$('#content').css('height', 'auto');
-		$('.innerFilter').css('height', '100%');
-	}
-*/
+
 }
 
 function showMiniPopUp() {
@@ -956,4 +943,30 @@ function reInitJScrollPane(){
     if($('#scroll-pane').data('jsp')){
         $('#scroll-pane').data('jsp').reinitialise();
     }
+}
+
+
+function minimizeFilter() {
+	var _issetMaps = $('#all-hotels-map').length > 0 && $('#all-hotels-map').is(':visible');
+	var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
+	if (_issetMaps && ! _issetLeftBlock) {
+		$('.innerFilter').find('.div-filter').each(function(index) {
+			if (index > 2) {
+				$(this).hide();
+			}
+		});
+		$('.innerFilter').css('height', '162px');
+		$('.filter-block').css('height','185px');
+		$('.filter-content').append('<div class="filter-minimize" onclick="filterShow()"></div>');
+	}
+	else {
+		return false;
+	}
+}
+
+function filterShow() {
+	$('.filter-block').css('height','100%');
+	$('.innerFilter').css('height', '100%');
+	$('.innerFilter').find('.div-filter').show();
+	$('.filter-minimize').hide();
 }

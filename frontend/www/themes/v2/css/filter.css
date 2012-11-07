@@ -13,7 +13,14 @@
     width: inherit;
     height: 100%;
 }
-.filter-content.hotel
+.filter-content.hotel .filter-minimize {
+    background: url("../images/maps-minimize.png") no-repeat scroll center 0 transparent;
+    bottom: -18px;
+    cursor: pointer;
+    height: 18px;
+    position: absolute;
+    width: 100%;
+}
 .filter-content a {
 	color: #1c81bb;
 	border-bottom: 1px dashed;
