@@ -831,11 +831,7 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.filtersRendered = function() {
-    ko.processAllDeferredBindingUpdates();
-    scrollValue();
-    $('.scrollBlock').scroll(function() {});
-    scrollValue();
-    return setTimeout(scrolShowFilter, 1000);
+    return ko.processAllDeferredBindingUpdates();
   };
 
   return AviaResultSet;

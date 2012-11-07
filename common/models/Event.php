@@ -324,7 +324,7 @@ class Event extends FrontendActiveRecord
         return $data;
     }
 
-    static public function getRandomEvents($amount = 6)
+    static public function getRandomEvents($amount = 8)
     {
         $condition = new CDbCriteria();
         $condition->limit = $amount;

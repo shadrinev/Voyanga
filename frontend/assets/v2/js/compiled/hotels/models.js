@@ -1251,8 +1251,6 @@ HotelsResultSet = (function() {
     console.log(this.showParts);
     return window.setTimeout(function() {
       var kb, offset, posTop;
-      ifHeightMinAllBody();
-      scrolShowFilter();
       if (fromFilters) {
         jsPaneScrollHeight();
       }
