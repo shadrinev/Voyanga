@@ -128,8 +128,14 @@ class Bill extends CActiveRecord
 
     public function getChannel()
     {
-        Yii::import("common.extensions.payments.models.Payments_Channel_"  . ucfirst($this->channel));
-        $className = 'Payments_Channel_'. ucfirst($this->channel);
+        $parts = explode('_',$this->channel);
+        $ucFirstParts = array();
+        foreach($parts as $part) {
+            $ucFirstParts[] = ucfirst($part);
+        }
+        $className = 'Payments_Channel_'. implode('_', $ucFirstParts);
+
+        Yii::import("common.extensions.payments.models." . $className);
         # FIXME passing this is hella retarded
         return new $className($this);
     }
