@@ -992,7 +992,7 @@ HotelsResultSet = (function() {
           Utils.scrollTo(hotel.oldPageTop, false);
           return Utils.scrollTo('#hotelResult' + hotel.hotelId);
         } else {
-          _this.showFullMapFunc(true);
+          _this.showFullMapFunc(null, null, true);
           _this.gAllMap.setCenter(_this.gMapCenter);
           return _this.gAllMap.setZoom(_this.gMapZoom);
         }
@@ -1016,13 +1016,16 @@ HotelsResultSet = (function() {
     return this.gAllMap.setCenter(this.computedCenter.getCenter());
   };
 
-  HotelsResultSet.prototype.showFullMapFunc = function(fromBackAction) {
+  HotelsResultSet.prototype.showFullMapFunc = function(targetObject, event, fromBackAction, fromFilters) {
     var offset, posTop, stime,
       _this = this;
     if (fromBackAction == null) {
       fromBackAction = false;
     }
-    console.log('show full map');
+    if (fromFilters == null) {
+      fromFilters = false;
+    }
+    console.log('show full map', fromBackAction, fromFilters);
     this.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
     Utils.scrollTo('#content');
     stime = 400;
@@ -1107,7 +1110,10 @@ HotelsResultSet = (function() {
       } else if (_this.gMarkers.length > 0) {
         _this.setFullMapZoom();
       }
-      return minimizeFilter();
+      if (!fromFilters) {
+        console.log('minimizeFilter');
+        return minimizeFilter();
+      }
     }, stime);
   };
 
@@ -1268,7 +1274,7 @@ HotelsResultSet = (function() {
         Utils.scrollTo(0, false);
       }
       if (_this.showFullMap()) {
-        _this.showFullMapFunc();
+        _this.showFullMapFunc(null, null, false, true);
       }
       return _this.toursOpened = false;
     }, 50);

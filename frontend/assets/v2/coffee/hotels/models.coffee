@@ -789,7 +789,7 @@ class HotelsResultSet
             Utils.scrollTo(hotel.oldPageTop,false)
             Utils.scrollTo('#hotelResult'+hotel.hotelId)
           else
-            @showFullMapFunc(true)
+            @showFullMapFunc(null,null,true)
             @gAllMap.setCenter(@gMapCenter)
             @gAllMap.setZoom(@gMapZoom)
 
@@ -812,8 +812,8 @@ class HotelsResultSet
 
     @gAllMap.setCenter(@computedCenter.getCenter())
 
-  showFullMapFunc: (fromBackAction = false)=>
-    console.log('show full map')
+  showFullMapFunc: (targetObject,event,fromBackAction = false, fromFilters = false)=>
+    console.log('show full map',fromBackAction,fromFilters)
 
     @oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     Utils.scrollTo('#content')
@@ -890,7 +890,9 @@ class HotelsResultSet
           @gAllMap.setZoom(@gMapZoom)
         else if @gMarkers.length > 0
           @setFullMapZoom()
-        minimizeFilter();
+        if !fromFilters
+          console.log('minimizeFilter')
+          minimizeFilter();
       , stime
     )
 
@@ -1029,7 +1031,7 @@ class HotelsResultSet
         else
           Utils.scrollTo(0,false)
         if @showFullMap()
-          @showFullMapFunc()
+          @showFullMapFunc(null,null,false,true)
 
         @toursOpened = false
       , 50
