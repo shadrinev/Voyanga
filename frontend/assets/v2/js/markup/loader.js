@@ -1,15 +1,19 @@
 var arr_textLoad = ['Это займет от 5 до 30 секунд', 'Мы ищем среди 450 авиакомпаний','Уже почти готово', 'Ещё секундочку', 'Немного терпения'];
-var pointsInterval, textInterval;
+var pointsInterval, textInterval, started = false;
 function loaderChange(toStart) {
     if (toStart)
     {
+        if (started)
+            return;
         pointsInterval = setInterval(runPoints, 500);
         textInterval = setInterval(runText, 12000);
+        started = true;
     }
     else
     {
         clearInterval(pointsInterval);
         clearInterval(textInterval);
+        started = false;
     }
 }
 
