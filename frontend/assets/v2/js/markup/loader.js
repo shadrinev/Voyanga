@@ -1,8 +1,7 @@
 var arr_textLoad = ['Это займет от 5 до 30 секунд', 'Мы ищем среди 450 авиакомпаний','Уже почти готово', 'Ещё секундочку', 'Немного терпения'];
 var pointsInterval, textInterval, started = false, var_loadTextCounts = 0;
-var loadLight = $('#loadLight');
-var loadText = $('#changeText');
 function loaderChange(toStart) {
+    var loadText = $('#changeText');
     if (toStart)
     {
         if (started)
@@ -21,7 +20,7 @@ function loaderChange(toStart) {
 }
 
 function runPoints() {
-
+    var loadLight = $('#loadLight');
     var ind = loadLight.find('li.active').index();
     ind += 1;
     if (ind == loadLight.find('li').length) {
@@ -32,6 +31,7 @@ function runPoints() {
 }
 
 function runText() {
+    var loadText = $('#changeText');
     var_loadTextCounts += 1;
     if (var_loadTextCounts == arr_textLoad.length) {
         var_loadTextCounts = 0;
