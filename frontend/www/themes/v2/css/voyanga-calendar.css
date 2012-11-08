@@ -306,6 +306,10 @@
     font-size: 12px;
     width: 100%;
 }
+.allTourCal .monthLineWrapper{
+    overflow: hidden;
+}
+
 .allTourCal  .monthLineVoyanga .monthNameVoyanga .monthWrapper {
 	padding-top: 3px;
 	color: #4d4d4d;
