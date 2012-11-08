@@ -1268,7 +1268,7 @@ HotelsResultSet = (function() {
       if (window.app.activeView() === 'hotels-results') {
         offset = $('#content').offset();
         posTop = $('html').scrollTop() || $('body').scrollTop();
-        if (posTop > offset.top) {
+        if ((posTop > offset.top) && !(fromFilters && _this.showFullMap())) {
           Utils.scrollTo('#content');
         }
       } else if ((_this.toursOpened && _this.tours() && _this.filtersConfig) || (_this.tours() && _this.showFullMap())) {

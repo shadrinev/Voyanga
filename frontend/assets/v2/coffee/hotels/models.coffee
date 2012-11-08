@@ -1023,7 +1023,7 @@ class HotelsResultSet
         if window.app.activeView() == 'hotels-results'
           offset = $('#content').offset()
           posTop = $('html').scrollTop() || $('body').scrollTop()
-          if(posTop > offset.top)
+          if((posTop > offset.top) && !(fromFilters && @showFullMap()))
             Utils.scrollTo('#content')
         else if (@toursOpened && @tours() && @filtersConfig) || (@tours() && @showFullMap())
           kb = true
