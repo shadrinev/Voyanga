@@ -7,6 +7,7 @@ function loaderChange(toStart) {
     {
         if (started)
             return;
+        loadText.text(arr_textLoad[var_loadTextCounts]);
         pointsInterval = setInterval(runPoints, 500);
         textInterval = setInterval(runText, 12000);
         started = true;
@@ -31,7 +32,6 @@ function runPoints() {
 }
 
 function runText() {
-    loadText.text(arr_textLoad[var_loadTextCounts]);
     var_loadTextCounts += 1;
     if (var_loadTextCounts == arr_textLoad.length) {
         var_loadTextCounts = 0;
