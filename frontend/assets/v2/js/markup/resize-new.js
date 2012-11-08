@@ -729,6 +729,14 @@ var _jScrollingBootom = false;
 var _jScrollNonBottomInitted = false;
 
 function jsPaneScrollHeight() {
+	
+	var _issetMaps = $('#all-hotels-map').length > 0 && $('#all-hotels-map').is(':visible');
+	var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
+	if (_issetMaps && ! _issetLeftBlock) {
+	
+	}
+	else {
+	
 	//console.log("==== * * * * ====");
 	var _content = $('#content');
 	_content.css('height','auto');
@@ -830,6 +838,8 @@ function jsPaneScrollHeight() {
 		_GoOnScroll = true;
 	}
 	//console.log("==== * * * * ====");
+	
+	}
 }
 
 function scrollValue(what, event) {
