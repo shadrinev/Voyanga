@@ -1,11 +1,12 @@
 var arr_textLoad = ['Это займет от 5 до 30 секунд', 'Мы ищем среди 450 авиакомпаний','Уже почти готово', 'Ещё секундочку', 'Немного терпения'];
-var pointsInterval, textInterval, started = false, var_loadTextCounts = 0;
+var pointsInterval, textInterval, started = false, var_loadTextCounts;
 function loaderChange(toStart) {
     var loadText = $('#changeText');
     if (toStart)
     {
         if (started)
             return;
+        var_loadTextCounts = 0;
         loadText.text(arr_textLoad[var_loadTextCounts]);
         pointsInterval = setInterval(runPoints, 500);
         textInterval = setInterval(runText, 12000);
