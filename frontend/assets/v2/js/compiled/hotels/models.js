@@ -1027,11 +1027,13 @@ HotelsResultSet = (function() {
     }
     console.log('show full map', fromBackAction, fromFilters);
     this.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
-    Utils.scrollTo('#content');
+    if (!this.showFullMap()) {
+      Utils.scrollTo('#content');
+    }
     stime = 400;
     offset = $('#content').offset();
     posTop = $('html').scrollTop() || $('body').scrollTop();
-    if (Math.abs(posTop - offset.top) < 4) {
+    if (!this.showFullMap() || Math.abs(posTop - offset.top) < 4) {
       stime = 100;
     }
     return window.setTimeout(function() {

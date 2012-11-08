@@ -816,11 +816,12 @@ class HotelsResultSet
     console.log('show full map',fromBackAction,fromFilters)
 
     @oldPageTop = $("html").scrollTop() | $("body").scrollTop()
-    Utils.scrollTo('#content')
+    if !@showFullMap()
+      Utils.scrollTo('#content')
     stime = 400
     offset = $('#content').offset()
     posTop = $('html').scrollTop() || $('body').scrollTop()
-    if(Math.abs(posTop - offset.top) < 4)
+    if(!@showFullMap() || Math.abs(posTop - offset.top) < 4 )
       stime = 100
     window.setTimeout(
       =>
