@@ -36,7 +36,7 @@ var var_widthMainBlockMIN = 530;
 window.hotelsScrollCallback = function(){}
 
 function ResizeCenterBlock() {
-    console.log("CENTER")
+    //console.log("CENTER")
 	var block = $('.center-block');
 	var isset = block.length;
 	if (isset) {
@@ -833,7 +833,7 @@ function jsPaneScrollHeight() {
 		_GoOnScroll = false;	
 	}
 	else {
-	console.log('=== 9 ===');
+		//console.log('=== 9 ===');
 		$('.innerFilter').css('height', '100%');
 		_GoOnScroll = true;
 	}
@@ -869,7 +869,6 @@ function scrollValue(what, event) {
 				var diffrentScrollTop = 61 ;
 			}
 		}	
-		console.log(_GoOnScroll);	
 		if (_GoOnScroll) {
 			var needDel = false;
 			if (var_scrollValueTop == 0) {
@@ -994,7 +993,7 @@ function minimizeFilter() {
 
 function filterShow() {
 	$('.filter-block').css('height','100%');
-	$('.innerFilter').css('height', ($(window).height() - 53)+'px');
+	$('.innerFilter').css('height', ($('.wrapper').height() - 175)+'px');
 	$('.innerFilter').find('.div-filter').show();
 	_GoOnScroll = false;
 	if(!$('#scroll-pane').data('jsp')){
@@ -1006,4 +1005,8 @@ function removeFilterShow() {
 	$('.filter-minimize').remove();
 	$('.filter-block').css('height','100%');
 	$('.innerFilter').css('height','100%');
+	$('.innerFilter').find('.div-filter').show();
+	$(window).load(function(e) {
+		scrollValue('hotel', e);
+	});
 }
