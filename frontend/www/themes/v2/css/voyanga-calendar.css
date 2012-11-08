@@ -406,10 +406,13 @@
 	z-index: 209;
 }
 .yourTrip .nameHotel {
-	color: #EAEFF3;
+    color: #EAEFF3;
     left: -10px;
+    overflow: hidden;
     position: absolute;
+    text-overflow: ellipsis;
     top: 49px;
+    width: 100%;
     z-index: 210;
 }
 

@@ -285,7 +285,7 @@ class ToursHotelsResultSet extends TourEntry
   doNewSearch: =>
     @api.search @panel.sp.url(), (data)=>
       data.searchParams.cacheId = data.cacheId
-      @newResults data.hotels, data.searchParams
+      @newResults data, data.searchParams
 
   # Overview VM
   overviewText: =>

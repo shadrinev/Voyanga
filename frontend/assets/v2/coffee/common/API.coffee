@@ -6,6 +6,7 @@ class API
   call: (url, cb, showLoad = true) =>
     if showLoad
       $('#loadWrapBg').show()
+      loaderChange(true)
 
     #  $(document).trigger 'aviaStart'
     #if sessionStorage.getItem("#{@endpoint}#{url}")
@@ -14,17 +15,19 @@ class API
      
     $.ajax
       url: "#{@endpoint}#{url}"
-      dataType: 'json'
+      dataType: 'jsonp'
       timeout: 60000
       success: (data)=>
         #sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
         cb(data)
         if showLoad
           $('#loadWrapBg').hide()
+          loaderChange(false)
       error: ->
         console.log( "ERROR")
         if showLoad
           $('#loadWrapBg').hide()
+          loaderChange(false)
         cb(false)
 
 class ToursAPI extends API

@@ -483,7 +483,7 @@ ToursHotelsResultSet = (function(_super) {
     var _this = this;
     return this.api.search(this.panel.sp.url(), function(data) {
       data.searchParams.cacheId = data.cacheId;
-      return _this.newResults(data.hotels, data.searchParams);
+      return _this.newResults(data, data.searchParams);
     });
   };
 
