@@ -1027,11 +1027,13 @@ HotelsResultSet = (function() {
     }
     console.log('show full map', fromBackAction, fromFilters);
     this.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
-    Utils.scrollTo('#content');
+    if (!this.showFullMap()) {
+      Utils.scrollTo('#content');
+    }
     stime = 400;
     offset = $('#content').offset();
     posTop = $('html').scrollTop() || $('body').scrollTop();
-    if (Math.abs(posTop - offset.top) < 4) {
+    if (!this.showFullMap() || Math.abs(posTop - offset.top) < 4) {
       stime = 100;
     }
     return window.setTimeout(function() {
@@ -1124,7 +1126,7 @@ HotelsResultSet = (function() {
     $('#all-hotels-map').hide();
     this.showFullMap(false);
     return window.setTimeout(function() {
-      filterShow();
+      removeFilterShow();
       jsPaneScrollHeight();
       return Utils.scrollTo(_this.oldPageTop);
     }, 50);
@@ -1266,7 +1268,7 @@ HotelsResultSet = (function() {
       if (window.app.activeView() === 'hotels-results') {
         offset = $('#content').offset();
         posTop = $('html').scrollTop() || $('body').scrollTop();
-        if (posTop > offset.top) {
+        if ((posTop > offset.top) && !(fromFilters && _this.showFullMap())) {
           Utils.scrollTo('#content');
         }
       } else if ((_this.toursOpened && _this.tours() && _this.filtersConfig) || (_this.tours() && _this.showFullMap())) {

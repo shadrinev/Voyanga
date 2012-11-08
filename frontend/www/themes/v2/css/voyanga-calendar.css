@@ -306,6 +306,10 @@
     font-size: 12px;
     width: 100%;
 }
+.allTourCal .monthLineWrapper{
+    overflow: hidden;
+}
+
 .allTourCal  .monthLineVoyanga .monthNameVoyanga .monthWrapper {
 	padding-top: 3px;
 	color: #4d4d4d;
@@ -402,10 +406,13 @@
 	z-index: 209;
 }
 .yourTrip .nameHotel {
-	color: #EAEFF3;
+    color: #EAEFF3;
     left: -10px;
+    overflow: hidden;
     position: absolute;
+    text-overflow: ellipsis;
     top: 49px;
+    width: 100%;
     z-index: 210;
 }
 

@@ -21,6 +21,12 @@
     position: absolute;
     width: 100%;
 }
+.filter-content.hotel .filter-minimize.hide {
+	background: url("../images/minimize-hide.png") no-repeat scroll center 0 transparent;
+	bottom: 25px;
+	height: 38px;
+	width: 100%;
+}
 .filter-content a {
 	color: #1c81bb;
 	border-bottom: 1px dashed;
@@ -76,6 +82,7 @@
 	color: #2174a3;
 	font-size: 11px;
 	text-decoration: underline !important;
+	border-bottom: none !important;
 }
 /*--*/
 .checkbox {

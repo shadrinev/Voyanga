@@ -39,9 +39,9 @@ return CMap::mergeArray(array(
     'hotel_repeat_time' => 120,
 
     'HotelBook' => array(
-        'uri' => 'http://hotelbook.ru/xml/',
-        'login' => 'voyangaXML',
-        'password' => 'BZEFODZoA1!5',
+        'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
+        'login' => 'voyanga',
+        'password' => 'vLP1xe',
         'room' => array(
             'DBL' => 10,
             'TWIN' => 20,
