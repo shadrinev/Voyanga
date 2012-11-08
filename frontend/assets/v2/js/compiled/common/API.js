@@ -18,6 +18,7 @@ API = (function() {
     }
     if (showLoad) {
       $('#loadWrapBg').show();
+      loaderChange(true);
     }
     return $.ajax({
       url: "" + this.endpoint + url,
@@ -26,13 +27,15 @@ API = (function() {
       success: function(data) {
         cb(data);
         if (showLoad) {
-          return $('#loadWrapBg').hide();
+          $('#loadWrapBg').hide();
+          return loaderChange(false);
         }
       },
       error: function() {
         console.log("ERROR");
         if (showLoad) {
           $('#loadWrapBg').hide();
+          loaderChange(false);
         }
         return cb(false);
       }

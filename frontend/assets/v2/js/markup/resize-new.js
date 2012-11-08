@@ -561,7 +561,6 @@ function ResizeAvia() {
     inTheTwoLines();
     smallTicketHeight();
     CenterIMGResize();
-    ifHeightMinAllBody();
     showMiniPopUp();
     slideToursSlide();
     smallIMGresizeIndex();

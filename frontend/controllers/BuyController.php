@@ -12,7 +12,6 @@ class BuyController extends Controller
     public function actions()
     {
         return array(
-#            'showTrip' => array('class'=>'site.common.modules.tour.actions.constructor.ShowTripAction'),
             'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
             'startPayment' => array('class'=>'site.common.modules.tour.actions.constructor.StartPaymentAction'),
             'getPayment' => array('class'=>'site.common.modules.tour.actions.constructor.GetPaymentAction'),
@@ -38,8 +37,10 @@ class BuyController extends Controller
     public function addItems()
     {
         Yii::app()->shoppingCart->clear();
-        foreach ($_GET['item'] as $item)
+        foreach ($_GET['item'] as $i => $item)
         {
+            if (!isset($item['type']))
+                continue;
             if ($item['type']=='avia')
                 $this->addFlightToTrip($item['searchKey'], $item['searchId']);
             if ($item['type']=='hotel')
