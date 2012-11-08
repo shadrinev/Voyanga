@@ -1,6 +1,6 @@
 <?php
 
-class Payments_Channel {
+abstract class Payments_Channel {
     protected $bill;
     protected $name = 'foo';
 
@@ -14,9 +14,16 @@ class Payments_Channel {
         $params = Array();
         $params['MerchantId'] = $credentials['id'];
         //! FIXME: can this amount change?
-        $params['Amount'] = sprintf("%.2f", $this->bill->amount);
+        $params['Amount'] = sprintf("%.2f", 50);//  $this->bill->amount);
         $params['Currency'] = 'RUB';
-        $params['OrderId'] = 'adev-' . $this->bill->id;
+        $params['OrderId'] = $this->bill->id;
+
+        // FIXME
+        $params['Email'] = 'zz@rialabs.org';
+        $params['Phone'] = '79271317518';
+        $params['Country'] = 'Russia';
+        $params['City'] = 'Moscow';
+        $params['Zip'] = '12354';
 
 /*        if ($bill->channel == 'gds_sabre')
         {
@@ -46,8 +53,38 @@ class Payments_Channel {
         return md5($stringToSign);
     }
 
-    public function confirmParams()
+    public function confirm($booker)
     {
+        //! FIXME shuld we only accept bills in certain states ?
+        $url = 'https://secure.payonlinesystem.com/payment/transaction/complete/';
+        $context = array();
+        $context['TransactionId'] = $$this->bill->transactionId;
+        $context['ContentType'] = 'text';
+        $context = $this->contributeToConfirm($context, $booker);
 
+        $context['SecurityKey'] = $this->getSignatureFor($bill->channel, $context);
+        $params = Array();
+        foreach($context as $key=>$value)
+        {
+            $params[]=$key.'='.$value;
+        }
+        $url .= '?';
+        $url.=implode('&', $params);
+        list($code, $data) = Yii::app()->httpClient->get($url);
+        if(strlen($data))
+        {
+            $result = Array();
+            parse_str($data, $result);
+            // FIXME check AMOUNT?
+            if($result['Result'] == 'Ok')
+            {
+                $bill->status = Bill::STATUS_PAID;
+                $bill->save();
+            }
+        }
+    }
+    protected function contributeToConfirm($context, $booker)
+    {
+        return $context;
     }
 }

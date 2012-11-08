@@ -113,14 +113,6 @@ class Bill extends CActiveRecord
         ));
     }
 
-
-
-    //! FIXME MOVE TO COMPONENT
-    public function getPaymentUrl()
-    {
-        return "https://secure.payonlinesystem.com/ru/payment/";
-    }
-
     public function setChannel($channel)
     {
         $this->channel = $channel;
