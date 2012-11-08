@@ -28,7 +28,7 @@
                     <div class="slider-wrapper-div">
                         <input data-bind="singleSlider: distance" data-dimension="км"/>
                     </div>
-                    <a href="#" class="linksFilter" data-bind="click: showFullMap">Отели на большой карте</a>
+                    <a href="#" class="linksFilter" data-bind="click: showFullMap, visible: ! results.showFullMap()">Отели на большой карте</a>
                 </div>
                 <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: services, if: services.active}, visible: services.active">
                 </div>

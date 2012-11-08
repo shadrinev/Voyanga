@@ -858,7 +858,8 @@ function scrollValue(what, event) {
 			else {
 				var diffrentScrollTop = 61 ;
 			}
-		}		
+		}	
+		console.log(_GoOnScroll);	
 		if (_GoOnScroll) {
 			var needDel = false;
 			if (var_scrollValueTop == 0) {
@@ -927,8 +928,16 @@ function scrollValue(what, event) {
 			}
 		}
 		else {
-			if($('#scroll-pane').data('jsp')){
-				$('#scroll-pane').data('jsp').destroy();
+			var _issetMaps = $('#all-hotels-map').length > 0 && $('#all-hotels-map').is(':visible');
+			var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
+			if (_issetMaps && ! _issetLeftBlock) {
+				
+			}
+			else {
+				if($('#scroll-pane').data('jsp')){
+					$('#scroll-pane').data('jsp').destroy();
+				}
+
 			}
 			return false;
 		}
@@ -949,6 +958,7 @@ function minimizeFilter() {
 	var _issetMaps = $('#all-hotels-map').length > 0 && $('#all-hotels-map').is(':visible');
 	var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
 	if (_issetMaps && ! _issetLeftBlock) {
+		
 		$('.innerFilter').find('.div-filter').each(function(index) {
 			if (index > 1) {
 				$(this).hide();
@@ -956,7 +966,16 @@ function minimizeFilter() {
 		});
 		$('.innerFilter').css('height', '162px');
 		$('.filter-block').css('height','185px');
-		$('.filter-content').append('<div class="filter-minimize" onclick="filterShow()"></div>');
+		if ($('.filter-minimize').length > 0 && $('.filter-minimize').is(':visible')) {
+			$('.filter-minimize').removeClass('hide').attr('onclick','filterShow()');
+			if($('#scroll-pane').data('jsp')){
+				$('#scroll-pane').data('jsp').destroy();
+			}
+		}
+		else {
+			$('.filter-content').append('<div class="filter-minimize" onclick="filterShow()"></div>');
+		}
+		_GoOnScroll = false;
 	}
 	else {
 		return false;
@@ -965,7 +984,16 @@ function minimizeFilter() {
 
 function filterShow() {
 	$('.filter-block').css('height','100%');
-	$('.innerFilter').css('height', '100%');
+	$('.innerFilter').css('height', ($(window).height() - 53)+'px');
 	$('.innerFilter').find('.div-filter').show();
+	_GoOnScroll = false;
+	if(!$('#scroll-pane').data('jsp')){
+		$('#scroll-pane').jScrollPane({contentWidth: $('.innerFilter').width()});
+	}
+	$('.filter-minimize').addClass('hide').attr('onclick','minimizeFilter()');
+}
+function removeFilterShow() {
 	$('.filter-minimize').remove();
+	$('.filter-block').css('height','100%');
+	$('.innerFilter').css('height','100%');
 }
