@@ -15,7 +15,7 @@ class API
      
     $.ajax
       url: "#{@endpoint}#{url}"
-      dataType: 'json'
+      dataType: 'jsonp'
       timeout: 60000
       success: (data)=>
         #sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
