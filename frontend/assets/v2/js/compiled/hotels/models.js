@@ -1126,7 +1126,7 @@ HotelsResultSet = (function() {
     $('#all-hotels-map').hide();
     this.showFullMap(false);
     return window.setTimeout(function() {
-      filterShow();
+      removeFilterShow();
       jsPaneScrollHeight();
       return Utils.scrollTo(_this.oldPageTop);
     }, 50);

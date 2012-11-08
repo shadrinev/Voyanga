@@ -906,7 +906,7 @@ class HotelsResultSet
     @showFullMap(false)
     window.setTimeout(
       =>
-        filterShow()
+        removeFilterShow()
         jsPaneScrollHeight()
         Utils.scrollTo(@oldPageTop)
       , 50
