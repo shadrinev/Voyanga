@@ -17,12 +17,24 @@
 	width: 252px;
 	height: 331px;
 	
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	margin-left: -121px;
 	margin-top: -165px;
 	z-index: 801;
 	background: url(../images/loadBg.png) no-repeat;
+}
+#loadContentWinMin {
+	position:relative;
+	width: 145px;
+	height: 145px;
+	
+	top: 30%;
+	left: 50%;
+	margin-left: -72px;
+	margin-top: -72px;
+	z-index: 801;
+	background: url(../images/mini-loading.png) no-repeat;
 }
 #loadGIF {
 	position: absolute;

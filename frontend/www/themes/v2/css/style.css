@@ -2153,7 +2153,7 @@ input.hotel-input {
     line-height: 15px;
 }
 .serviceInHotelTable {
-    border-bottom: 1px dotted #4B4B4F;
+    background: url(../images/table-dotted.png) repeat-x left bottom;
     margin-bottom: 13px;
     width: 100%;
 }
