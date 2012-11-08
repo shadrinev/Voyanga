@@ -6,7 +6,7 @@
     <!-- END FILTER BLOCK -->
     <div class="clear"></div>
   </div>
-</scirpt>
+</script>
 <script id="avia-e500" type="text/html">
   <div class="main-block">
     <div id="content">
