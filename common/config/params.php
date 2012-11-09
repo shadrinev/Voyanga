@@ -74,4 +74,7 @@ return CMap::mergeArray(array(
 
     'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
     'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',
+
+    'hotel.markupPercentage' => 10
+
 ), CMap::mergeArray( $commonParamsEnv, $commonParamsLocal));

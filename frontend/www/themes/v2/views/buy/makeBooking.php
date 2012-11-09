@@ -2,6 +2,9 @@
     <?php $tripRaw = 'window.tripRaw = '.$trip; ?>
     <?php echo $tripRaw ?>;
     window.currentModule = '<?php echo Yii::app()->user->getState('currentModule'); ?>';
+    $(function(){
+        //window.tour = new TourTripResultSet(window.tripRaw);
+    })
 </script>
 <div id="content">
         <?php $this->renderPartial('_items'); ?>

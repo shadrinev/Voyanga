@@ -407,7 +407,7 @@ class HotelBookClient
     private function getHotelFromSXE($hotelSXE)
     {
         $hotelAttrMap = array(
-            'hotelId', 'hotelName', 'resultId', 'confirmation', 'price', 'currency', 'comparePrice', 'specialOffer', 'providerId', 'providerHotelCode',
+            'hotelId', 'hotelName', 'resultId', 'confirmation', 'price', 'currency', 'specialOffer', 'providerId', 'providerHotelCode',
             'categoryId' => 'hotelCatId',
             'categoryName' => 'hotelCatName',
             'address' => 'hotelAddress',
@@ -496,10 +496,18 @@ class HotelBookClient
                 }
             }
         }
+
+        $this->injectOurPrice($hotel);
+
         unset($hotelParams);
         unset($hotelAttrMap);
         unset($roomAttrMap);
         return $hotel;
+    }
+
+    private function injectOurPrice(&$hotel)
+    {
+        $hotel->comparePrice = DiscountManager::calculateHotelPrice($hotel->rubPrice);
     }
 
     private function prepareHotelSearchRequest($params)
