@@ -2,6 +2,9 @@
     <?php $tripRaw = 'window.tripRaw = '.$trip; ?>
     <?php echo $tripRaw ?>;
     window.currentModule = '<?php echo Yii::app()->user->getState('currentModule'); ?>';
+    $(function(){
+        //window.tour = new TourTripResultSet(window.tripRaw);
+    })
 </script>
 <div id="content">
         <?php $this->renderPartial('_items'); ?>
@@ -56,7 +59,43 @@
 				</div>
 			<div class="clear"></div>
 		</div>
-		<div class="paybuyEnd">
+		<div class="paybuyEnd" id="loadPayFly">
+			<div class="loadJet">
+				<!--
+<div class="pathBlock blue">
+					<div class="overflowBlock">
+						<div class="linePath"></div>
+						<div class="cityPoint">
+							Санкт-Петербург
+						</div>
+					</div>
+				</div>
+-->
+				<div class="pathBlock">
+					<div class="overflowBlock">
+						<div class="linePath"></div>
+						<div class="cityPoint" style="left: 5%;">
+							Санкт-Петербург
+						</div>
+						<div class="cityPoint" style="left: 25%;">
+							Санкт-Петербург
+						</div>
+						<div class="cityPoint" style="left: 45%;">
+							Санкт-Петербург
+						</div>
+						<div class="cityPoint" style="left: 65%;">
+							Санкт-Петербург
+						</div>
+						<div class="cityPoint" style="right: 42px;">
+							Санкт-Петербург
+						</div>
+					</div>
+				</div>
+				
+				<div class="jetFly"></div>
+				<div class="bgFinish"></div>
+				<div class="bgGradient"></div>
+			</div>
 			<div class="armoring">
 				<div class="btnBlue">
 					<span>Бронирование</span>

@@ -31,7 +31,10 @@ class HotelManager
             foreach ($query as $hotelId => $responseId)
             {
                 if (isset($hotelClient->requests[$responseId]['result']))
+                {
                     $hotelsDetails[$hotelId.'d'] = self::prepare($hotelClient->requests[$responseId]['result']);
+                    Yii::app()->pCache->set('HotelDetails-'.$hotelId, $hotelsDetails[$hotelId.'d']);
+                }
             }
             $results['hotelsDetails'] = $hotelsDetails;
             return $results;

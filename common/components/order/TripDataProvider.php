@@ -151,5 +151,9 @@ class TripDataProvider
     {
         $element['isFlight'] = isset($element['flightKey']);
         $element['isHotel'] = !isset($element['flightKey']);
+        if ($element['isHotel'])
+        {
+            $element['hotelDetails'] = Yii::app()->pCache->get('HotelDetails-'.$element['hotelId']);
+        }
     }
 }
