@@ -380,7 +380,7 @@ class Hotel extends CApplicationComponent
             'longitude' => $this->longitude,
             'currency' => $this->currency,
             'rubPrice' => $this->getPrice(),
-            'discountPrice' => $this->getOriginalPrice(),
+            'discountPrice' => $this->rubPrice,
             'bestMask' => $this->bestMask,
             'categoryId' => $this->categoryId,
             'checkIn' => $this->checkIn,

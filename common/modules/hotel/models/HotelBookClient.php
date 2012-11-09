@@ -497,7 +497,7 @@ class HotelBookClient
             }
         }
 
-        $hotel->markupPrice = $this->calculateMarkupPrice($hotel->comparePrice);
+        $hotel->markupPrice = $this->calculateMarkupPrice($hotel->rubPrice);
 
         unset($hotelParams);
         unset($hotelAttrMap);
