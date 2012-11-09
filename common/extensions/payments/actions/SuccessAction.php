@@ -15,8 +15,7 @@ class SuccessAction extends CAction
             $params[$key]=$_REQUEST[$key];
         }
 
-        $parts = explode('-', $params['OrderId']);
-        $billId = $parts[0];
+        list($orderId, $billId) = explode('-', $params['OrderId']);
         $bill = Bill::model()->findByPk($billId);
         $channel = $bill->getChannel();
         $sign = $channel->getSignature($params);
@@ -25,10 +24,19 @@ class SuccessAction extends CAction
             throw new Exception("Signature mismatch");
         }
         //! FIXME handle it better for great good
-#        if($bill->transactionId)
-#            throw new Exception("Bill already have transaction id");
+        if($bill->transactionId)
+            throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
+        $bill->booker->setStatus('ticketing');
         $bill->save();
         echo 'Ok';
+        // init order
+#        $order = Yii::app()->order;
+#        $order->initByOrderBookingId($orderId);
+#        $bookers = $order->getBookers();
+#        for($bookers as $booker) {
+
+
+#        }
     }
 }

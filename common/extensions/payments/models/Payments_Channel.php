@@ -4,34 +4,29 @@ abstract class Payments_Channel {
     protected $bill;
     protected $name = 'foo';
 
-    public function __construct($bill) {
+    public function __construct($bill, $booker) {
         $this->bill = $bill;
+        $this->booker = $booker;
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
     }
 
-    public function formParams($booker) {
+    public function formParams() {
         $credentials = $this->credentials;
+        $order = Yii::app()->order->getOrderBooking();
         $params = Array();
         $params['MerchantId'] = $credentials['id'];
         //! FIXME: can this amount change?
         $params['Amount'] = sprintf("%.2f", 50);//  $this->bill->amount);
         $params['Currency'] = 'RUB';
-        $params['OrderId'] = $this->bill->id;
-
+        # FIXME FIXME FIXME FIXME
+        $params['OrderId'] = $order->id . '-' . $this->bill->id;
         // FIXME
-        $params['Email'] = 'zz@rialabs.org';
-        $params['Phone'] = '79271317518';
+        $params['Email'] = $order->email;
+        $params['Phone'] = $order->phone;
         $params['Country'] = 'Russia';
         $params['City'] = 'Moscow';
         $params['Zip'] = '12354';
 
-/*        if ($bill->channel == 'gds_sabre')
-        {
-            //! FIXME: implement commission split
-            $params['Commission'] = sprintf("%.2f", $booker->flightVoyage->commission);
-            $params['PNR'] = $booker->pnr;
-            $params['query'] = $this->generateSabreQuery($booker);
-            } */
         $params['SecurityKey'] = $this->getSignature($params);
         return $params;
     }
@@ -53,24 +48,17 @@ abstract class Payments_Channel {
         return md5($stringToSign);
     }
 
-    public function confirm($booker)
+    public function confirm()
     {
         //! FIXME shuld we only accept bills in certain states ?
         $url = 'https://secure.payonlinesystem.com/payment/transaction/complete/';
         $context = array();
-        $context['TransactionId'] = $$this->bill->transactionId;
+        $context['TransactionId'] = $this->bill->transactionId;
         $context['ContentType'] = 'text';
-        $context = $this->contributeToConfirm($context, $booker);
+        $context = $this->contributeToConfirm($context);
 
         $context['SecurityKey'] = $this->getSignatureFor($bill->channel, $context);
-        $params = Array();
-        foreach($context as $key=>$value)
-        {
-            $params[]=$key.'='.$value;
-        }
-        $url .= '?';
-        $url.=implode('&', $params);
-        list($code, $data) = Yii::app()->httpClient->get($url);
+        list($code, $data) = $this->callApi($url, $context);
         if(strlen($data))
         {
             $result = Array();
@@ -83,8 +71,27 @@ abstract class Payments_Channel {
             }
         }
     }
-    protected function contributeToConfirm($context, $booker)
+
+    public function refund()
+    {
+
+
+    }
+
+    protected function contributeToConfirm($context)
     {
         return $context;
+    }
+
+    protected function callApi($url, $context)
+    {
+        $params = Array();
+        foreach($context as $key=>$value)
+        {
+            $params[]=$key.'='.$value;
+        }
+        $url = '?';
+        $url.= implode('&', $params);
+        return Yii::app()->httpClient->get($url);
     }
 }

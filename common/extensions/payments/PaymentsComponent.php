@@ -69,7 +69,7 @@ class PaymentsComponent extends CApplicationComponent
     {
         $bill = $this->getBillForBooker($booker);
         $channel = $bill->getChannel();
-        return $channel->formParams($booker);
+        return $channel->formParams();
     }
 
 

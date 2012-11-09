@@ -120,28 +120,19 @@ class OrderComponent extends CApplicationComponent
 
     public function getPaymentFormParams()
     {
-        $bookerIds = $this->getBookerIds();
-        if(!$bookerIds)
-            throw new Exception("No bookers availiable");
-        $bookers = Array();
-        foreach($bookerIds as $entry)
+        $bookers = $this->getBookers();
+        if(count($bookers)===0)
         {
-            if($entry['type']=='avia'){
-                $flightBookerComponent = new FlightBookerComponent();
-                $flightBookerComponent->setFlightBookerFromId($entry['bookerId']);
-                $bookers[] = $flightBookerComponent;
-            } else {
-                throw new Exception("Unexpected segment type");
-            }
-        }
-        if(count($bookers)===0) {
             throw new Exception("Nothing to pay for");
         }
-        foreach($bookers as $booker) {
-            if(!$this->isWaitingForPaymentState($booker->getStatus())){
+        foreach($bookers as $booker)
+        {
+            if(!$this->isWaitingForPaymentState($booker->getStatus()))
+            {
                 throw new Exception("Wrong segment status " . $booker->getStatus());
             }
         }
+
         $payments = Yii::app()->payments;
 
         return $payments->getFormParamsForBooker($bookers[0]->getCurrent());
@@ -515,5 +506,24 @@ class OrderComponent extends CApplicationComponent
             $result[] = $element;
         }
         return $result;
+    }
+
+    public function getBookers()
+    {
+        $bookerIds = $this->getBookerIds();
+        if(!$bookerIds)
+            throw new Exception("No bookers availiable");
+        $bookers = Array();
+        foreach($bookerIds as $entry)
+        {
+            if($entry['type']=='avia'){
+                $flightBookerComponent = new FlightBookerComponent();
+                $flightBookerComponent->setFlightBookerFromId($entry['bookerId']);
+                $bookers[] = $flightBookerComponent;
+            } else {
+                throw new Exception("Unexpected segment type");
+            }
+        }
+        return $bookers;
     }
 }

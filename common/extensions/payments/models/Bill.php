@@ -128,7 +128,14 @@ class Bill extends CActiveRecord
         $className = 'Payments_Channel_'. implode('_', $ucFirstParts);
 
         Yii::import("common.extensions.payments.models." . $className);
+        $booker = FlightBooker::model()->findByAttributes(array('billId'=> $this->id));
+        if(!$booker)
+            $booker = HotelBooker::model()->findByAttributes(array('billId'=> $this->id));
+        if(!$booker) {
+            # Would never happen in theory
+            throw new Exception("No booker for given bill");
+        }
         # FIXME passing this is hella retarded
-        return new $className($this);
+        return new $className($this, $booker);
     }
 }
