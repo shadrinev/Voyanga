@@ -2842,3 +2842,88 @@ input.hotel-input {
 .tdPrice.paddingBottom .moreDetails {
 	margin-top: -8px;
 }
+
+.mainWrapBg {
+	background: rgba(38,41,46,0.8);
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	right: 0px;
+	left: 0px;
+	bottom: 0px;
+	z-index: 1000;
+}
+.naviProj {
+	width: 800px;
+	height: 100px;
+	position: absolute;
+	left: 50%;
+	margin-left: -400px;
+	top: 33%;
+	z-index: 1;
+}
+.naviProj .left {
+	width: 35px;
+	height: 98px;
+	background: url(../images/proj-left-point.png) no-repeat;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	cursor: pointer;
+}
+.naviProj .right {
+	width: 35px;
+	height: 98px;
+	background: url(../images/proj-right-point.png) no-repeat;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	cursor: pointer;
+}
+.projectPopUp {
+	background: #f4f7f9;
+	border-radius: 8px;
+	position: absolute;
+	width: 630px;
+	left: 50%;
+	margin-left: -335px;
+	top: 15%;
+	color: #272b31;
+	line-height: 22px;
+	z-index: 2;
+	padding: 20px 20px 10px 20px;
+	font-size: 14px;
+}
+.projectPopUp h3 {
+	font-size: 24px;
+	line-height: 27px;
+}
+.projectPopUp .centerImg {
+	width: 670px;
+	margin: -20px -20px 10px -20px;
+	height: 309px;
+	background: url("../images/map-bg.gif") repeat scroll center center transparent;
+	position: relative;
+	border-radius: 8px 8px 0px 0px;
+	overflow: hidden;
+}
+.counters {
+	text-align: center;
+	line-height: 16px;
+}
+.counters .bgCount {
+	display: inline-block;
+	width: 49px;
+	height: 17px;
+	background: url(../images/bg-counter.png) no-repeat;
+	text-align: center;
+	color: #6e7374;
+	font-size: 10px;
+}
+.counters .bgCount span {
+	color: #2b2e2f;
+}
+.projectPopUp #boxClose {
+	right: 10px;
+}

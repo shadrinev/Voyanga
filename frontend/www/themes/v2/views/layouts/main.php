@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
         <!-- CENTER BLOCK -->
         <div class="center-block">
             <a href="/" class="logo">Voyanga</a>
-            <a href="/" class="about">О проекте</a>
+            <a href="javascript:void(0)" onclick="openPopUpProj()" class="about">О проекте</a>
 
             <div class="telefon">
                 <img src="<?= $theme ?>/images/tel.png">
@@ -156,6 +156,28 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 </div>
 <div id="loadWrapBgMin" class="loadWrapBg" style='display: none;'>
     <div id="loadContentWinMin"></div>
+</div>
+<div class="mainWrapBg" style='display: none;'>
+	<div class="projectPopUp">
+			
+			<div class="centerImg">
+				<img src="<?= $theme ?>/images/about01.jpg">
+			</div>
+			<h3>Анализ динамики за целый месяц</h3>
+			<p>Можно подобрать самый дешевый билет, если вам не столь важна дата поездки.
+	Аналогично  подобрать самый дешевый билет, если вам не столь важна дата поездки.
+	Третья строчка, если вам не столь важна дата поездки.</p>
+		<div class="counters">
+			<div class="bgCount">
+				<span>1</span>/10
+			</div>
+		</div>
+		<div id="boxClose" onclick="closePopUpProj()" ></div>
+	</div>
+	<div class="naviProj">
+		<div class="left"></div>
+		<div class="right"></div>
+	</div>
 </div>
 <?php
 $templates = Yii::app()->params['frontend.app.templates'];

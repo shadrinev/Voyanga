@@ -1044,3 +1044,12 @@ function loadPayFly() {
 	
 	startFlyJet();
 }
+
+
+function openPopUpProj() {
+	$('.mainWrapBg').show();
+}
+
+function closePopUpProj() {
+	$('.mainWrapBg').hide();
+}
