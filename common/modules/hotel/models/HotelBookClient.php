@@ -44,7 +44,7 @@ class HotelBookClient
 
             $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
             self::$cacheFilePath = $cacheFilePath;
-            if (file_exists($cacheFilePath) && ( (filectime($cacheFilePath) + 3600*24*60) > time() ) )
+            if (file_exists($cacheFilePath) && ( (filectime($cacheFilePath) + 3600*24*14) > time() ) )
             {
                 $cacheResult = file_get_contents($cacheFilePath);
                 self::$saveCache = false;
