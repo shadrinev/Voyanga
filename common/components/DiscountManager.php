@@ -10,7 +10,7 @@ class DiscountManager
     public static function calculateHotelPrice($originalPrice)
     {
         $percentage = appParams('hotel.markupPercentage');
-        $cost = ceil($originalPrice * (1 + $percentage/100));
+        $cost = ceil($originalPrice + $originalPrice * $percentage/100);
         return $cost;
     }
 }
