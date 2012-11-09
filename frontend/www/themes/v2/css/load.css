@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* CSS Document */
-#loadWrapBg {
+.loadWrapBg {
 	background: rgba(38,41,46,0.8);
 	position: fixed;
 	width: 100%;
@@ -29,7 +29,7 @@
 	width: 145px;
 	height: 145px;
 	
-	top: 30%;
+	top: 40%;
 	left: 50%;
 	margin-left: -72px;
 	margin-top: -72px;

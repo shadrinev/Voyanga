@@ -216,7 +216,7 @@ return array(
                     'id' => 9377,
                     'key' => 'a51dfb8d-6c57-4ad4-a018-27593cfabddb'
                 ),
-                'gds_sabre' => array(
+                'gds_galileo' => array(
                     'id' => 9378,
                     'key' => '117869db-6a67-4f89-9753-a2fb7ee9bfc3'
                 ),

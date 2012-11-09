@@ -15,7 +15,8 @@ class SuccessAction extends CAction
             $params[$key]=$_REQUEST[$key];
         }
 
-        list($__, $billId) = explode('-', $params['OrderId']);
+        $parts = explode('-', $params['OrderId']);
+        $billId = $parts[0];
         $bill = Bill::model()->findByPk($billId);
         $channel = $bill->getChannel();
         $sign = $channel->getSignature($params);
@@ -24,8 +25,8 @@ class SuccessAction extends CAction
             throw new Exception("Signature mismatch");
         }
         //! FIXME handle it better for great good
-        if($bill->transactionId)
-            throw new Exception("Bill already have transaction id");
+#        if($bill->transactionId)
+#            throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
         $bill->save();
         echo 'Ok';

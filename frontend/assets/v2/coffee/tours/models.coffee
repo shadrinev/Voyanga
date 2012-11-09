@@ -197,12 +197,12 @@ class ToursAviaResultSet extends TourEntry
 
        
 class ToursHotelsResultSet extends TourEntry
-  constructor: (raw, @rawSP)->
+  constructor: (raw, sp)->
     super
     @api = new HotelsAPI
     @panel = new HotelsPanel()
     @panel.handlePanelSubmit = @doNewSearch
-    @panel.sp.fromObject @rawSP
+    @panel.sp.fromObject sp
     @panel.original_template = @panel.template
     @overviewTemplate = 'tours-overview-hotels-no-selection'
     @template = 'hotels-results'
@@ -212,9 +212,10 @@ class ToursHotelsResultSet extends TourEntry
     @results = ko.observable()
     @data = {results: @results}
 
-    @newResults raw, @rawSP
+    @newResults raw, sp
 
   newResults: (data, sp)=>
+    @rawSP = sp
     result = new HotelsResultSet data, sp, @activeHotel
     result.tours true
     result.postInit()
@@ -439,7 +440,7 @@ class ToursResultSet
     @voyashki.push new VoyashaOptima @
     @voyashki.push new VoyashaRich @
   setActive: (entry,beforeRender = true, afterRender = true,scrollTo = 0,callback = null)=>
-    $('#loadWrapBg').show()
+    $('#loadWrapBgMin').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
       window.toursOverviewActive = true
@@ -458,7 +459,7 @@ class ToursResultSet
       @selection entry
       ko.processAllDeferredBindingUpdates()
       ResizeAvia()
-      $('#loadWrapBg').hide()
+      $('#loadWrapBgMin').hide()
       if !(scrollTo == false)
         Utils.scrollTo(scrollTo,false)
       if callback
