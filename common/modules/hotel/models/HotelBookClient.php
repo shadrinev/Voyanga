@@ -497,7 +497,7 @@ class HotelBookClient
             }
         }
 
-        $this->injectOurPrice($hotel);
+        $hotel->markupPrice = $this->calculateMarkupPrice($hotel->comparePrice);
 
         unset($hotelParams);
         unset($hotelAttrMap);
@@ -505,9 +505,9 @@ class HotelBookClient
         return $hotel;
     }
 
-    private function injectOurPrice(&$hotel)
+    private function calculateMarkupPrice($price)
     {
-        $hotel->markupPrice = DiscountManager::calculateHotelPrice($hotel->rubPrice);
+        return DiscountManager::calculateHotelPrice($price);
     }
 
     private function prepareHotelSearchRequest($params)
