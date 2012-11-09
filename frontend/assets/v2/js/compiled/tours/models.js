@@ -334,8 +334,7 @@ ToursHotelsResultSet = (function(_super) {
 
   __extends(ToursHotelsResultSet, _super);
 
-  function ToursHotelsResultSet(raw, rawSP) {
-    this.rawSP = rawSP;
+  function ToursHotelsResultSet(raw, sp) {
     this.afterRender = __bind(this.afterRender, this);
 
     this.beforeRender = __bind(this.beforeRender, this);
@@ -371,12 +370,11 @@ ToursHotelsResultSet = (function(_super) {
     this.select = __bind(this.select, this);
 
     this.newResults = __bind(this.newResults, this);
-
     ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
     this.api = new HotelsAPI;
     this.panel = new HotelsPanel();
     this.panel.handlePanelSubmit = this.doNewSearch;
-    this.panel.sp.fromObject(this.rawSP);
+    this.panel.sp.fromObject(sp);
     this.panel.original_template = this.panel.template;
     this.overviewTemplate = 'tours-overview-hotels-no-selection';
     this.template = 'hotels-results';
@@ -386,12 +384,13 @@ ToursHotelsResultSet = (function(_super) {
     this.data = {
       results: this.results
     };
-    this.newResults(raw, this.rawSP);
+    this.newResults(raw, sp);
   }
 
   ToursHotelsResultSet.prototype.newResults = function(data, sp) {
     var result,
       _this = this;
+    this.rawSP = sp;
     result = new HotelsResultSet(data, sp, this.activeHotel);
     result.tours(true);
     result.postInit();

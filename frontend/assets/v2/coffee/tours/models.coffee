@@ -197,12 +197,12 @@ class ToursAviaResultSet extends TourEntry
 
        
 class ToursHotelsResultSet extends TourEntry
-  constructor: (raw, @rawSP)->
+  constructor: (raw, sp)->
     super
     @api = new HotelsAPI
     @panel = new HotelsPanel()
     @panel.handlePanelSubmit = @doNewSearch
-    @panel.sp.fromObject @rawSP
+    @panel.sp.fromObject sp
     @panel.original_template = @panel.template
     @overviewTemplate = 'tours-overview-hotels-no-selection'
     @template = 'hotels-results'
@@ -212,9 +212,10 @@ class ToursHotelsResultSet extends TourEntry
     @results = ko.observable()
     @data = {results: @results}
 
-    @newResults raw, @rawSP
+    @newResults raw, sp
 
   newResults: (data, sp)=>
+    @rawSP = sp
     result = new HotelsResultSet data, sp, @activeHotel
     result.tours true
     result.postInit()
