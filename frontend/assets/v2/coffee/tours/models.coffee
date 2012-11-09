@@ -716,3 +716,11 @@ class ToursOverviewVM
 
   afterRender: =>
 
+class TourTripResultSet
+  constructor: (@resultSet) =>
+    items = []
+    _.each @resultSet, (item) =>
+      if (item.isFlight)
+        items.push(new Voyage(item, item.valCompany))
+      else if (item.isHotel)
+        items.push(new HotelResult item, @, item.duration, item, item.hotelsDetails)
