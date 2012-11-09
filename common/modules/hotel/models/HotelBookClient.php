@@ -15,6 +15,7 @@ class HotelBookClient
     public static $groupId;
     public static $requestIds;
     public static $saveCache;
+    public static $cacheFilePath;
     public $requests;
 
     public function request($url, $getData = null, $postData = null, $asyncParams = null, $cacheFileName = null)
@@ -42,9 +43,11 @@ class HotelBookClient
             }
 
             $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
-            if (file_exists($cacheFilePath))
+            self::$cacheFilePath = $cacheFilePath;
+            if (file_exists($cacheFilePath) && ( (filectime($cacheFilePath) + 3600*24*60) > time() ) )
             {
                 $cacheResult = file_get_contents($cacheFilePath);
+                self::$saveCache = false;
             }
             else
             {
@@ -52,8 +55,10 @@ class HotelBookClient
             }
 
         }
-        else
+        else{
             $cacheResult = false;
+            self::$cacheFilePath = false;
+        }
         if (!$cacheResult)
         {
             $rCh = curl_init();
@@ -146,11 +151,13 @@ class HotelBookClient
                     $hotelRequest->errorDescription = $this->lastCurlError;
                     $hotelRequest->save();
                 }
-
+                unset($url);
+                unset($hotelRequest);
                 return $sData;
             }
             else
             {
+                unset($url);
                 return $cacheResult;
             }
         }
@@ -170,6 +177,7 @@ class HotelBookClient
                 curl_multi_add_handle($this->multiCurl, $this->requests[$id]['curlHandle']);
                 $this->requests[$id]['id'] = $id;
                 $this->requests[$id] = array_merge($this->requests[$id], $asyncParams);
+                unset($url);
                 return $id;
             }
             else
@@ -206,6 +214,7 @@ class HotelBookClient
                 {
                     $this->requests[$id]['result'] = $cacheResult;
                 }
+                unset($url);
                 return $id;
             }
         }
@@ -1321,12 +1330,50 @@ class HotelBookClient
                 $hotelParams[$paramKey] = (string)$hotelSXE->{$itemKey};
             }
         }
+        $hotelId = (string)$hotelSXE['id'];
         if (isset($hotelSXE->Images->Image))
         {
             $hotelParams['images'] = array();
             UtilsHelper::soapObjectsArray($hotelSXE->Images->Image);
-            foreach ($hotelSXE->Images->Image as $imageSXE)
+            if(self::$saveCache && self::$cacheFilePath){
+                $cacheSubDir = md5('HotelDetail'.$hotelId);
+                $cacheSubDir = substr($cacheSubDir, -3);
+                $storagePath = Yii::getPathOfAlias('imageStorage');
+                if (!is_dir($storagePath))
+                {
+                    mkdir($storagePath);
+                }
+                if (!file_exists($storagePath . '/' . $cacheSubDir))
+                {
+                    mkdir($storagePath . '/' . $cacheSubDir);
+                }
+                if (!file_exists($storagePath . '/' . $cacheSubDir . '/' . $hotelId))
+                {
+                    mkdir($storagePath . '/' . $cacheSubDir. '/' . $hotelId);
+                }
+                $imageSavePath = $storagePath . '/' . $cacheSubDir. '/' . $hotelId;
+            }
+            foreach ($hotelSXE->Images->Image as $ind=>$imageSXE)
             {
+                if(self::$saveCache && self::$cacheFilePath){
+                    $largeUrl = (string)$imageSXE->Large;
+                    $largeFileName = basename($largeUrl);
+                    try{
+                        $imgCont = @file_get_contents($largeUrl);
+                    }catch(Exeption $e){
+                        $imgCont = false;
+                    }
+                    if($imgCont){
+                        //coorect saving folder
+                        file_put_contents($imageSavePath. '/' . $largeFileName,$imgCont);
+                        $imageSXE->Large->{0} = '/image_storage/' . $cacheSubDir. '/' . $hotelId . '/' .$largeFileName;
+                        unset($imgCont);
+                    }else{
+                        //delete element
+                        unset($hotelSXE->Images->Image[$ind]);
+                        continue;
+                    }
+                }
                 if ((int)$imageSXE->Small['width'])
                 {
                     $hotelParams['images'][] = array('description' => (string)$imageSXE->Info, 'smallUrl' => (string)$imageSXE->Small, 'largeUrl' => (string)$imageSXE->Large);
@@ -1392,6 +1439,14 @@ class HotelBookClient
                     $hotelParams['city'] = self::$lastRequestCity;
                 }
             }
+        }
+        if(self::$saveCache && self::$cacheFilePath){
+            file_put_contents(self::$cacheFilePath,$hotelObject->asXML());
+            unset($largeFileName);
+            unset($largeUrl);
+            unset($cacheSubDir);
+            unset($storagePath);
+            unset($hotelObject);
         }
         //VarDumper::dump($hotelSXE);
         //VarDumper::dump($hotelParams);

@@ -64,6 +64,7 @@ EOD;
                         $cityStart = true;
                     }
                     echo "process city with id: {$hotelCity['id']}\n";
+                    echo "Memory usage: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
                     $cityHotels = $HotelClient->getHotels($hotelCity['id']);
                     foreach ($cityHotels as $hotel) {
                         $tryAgain = 3;
@@ -79,6 +80,9 @@ EOD;
                                 if (file_exists($cacheFilePath)) {
                                     unlink($cacheFilePath);
                                 }
+                                unset($cachePath);
+                                unset($cacheSubDir);
+                                unset($cacheFilePath);
                                 if(!$tryAgain){
                                     echo "HotelError hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
                                 }
@@ -92,9 +96,11 @@ EOD;
                             usleep(200000);
                         }
                     }
+                    unset($cityHotels);
                     //echo count($cityHotels) . " hotel completed\n";
                 }
-                echo "Memory usage: " . memory_get_peak_usage() . "\n";
+                unset($hotelCities);
+                echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
             }
 
         }

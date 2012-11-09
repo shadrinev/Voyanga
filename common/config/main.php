@@ -8,6 +8,7 @@
  * For all applications around Voyanga
  */
 Yii::setPathOfAlias('cacheStorage', $root . '/common/cache_storage');
+Yii::setPathOfAlias('imageStorage', $root . '/frontend/www/image_storage');
 
 return array(
     'preload' => array(
