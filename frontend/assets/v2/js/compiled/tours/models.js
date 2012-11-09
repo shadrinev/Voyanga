@@ -717,7 +717,7 @@ ToursResultSet = (function() {
     if (callback == null) {
       callback = null;
     }
-    $('#loadWrapBg').show();
+    $('#loadWrapBgMin').show();
     if (entry.overview) {
       $('.btn-timeline-and-condition').hide();
       window.toursOverviewActive = true;
@@ -738,7 +738,7 @@ ToursResultSet = (function() {
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
       ResizeAvia();
-      $('#loadWrapBg').hide();
+      $('#loadWrapBgMin').hide();
       if (!(scrollTo === false)) {
         Utils.scrollTo(scrollTo, false);
       }

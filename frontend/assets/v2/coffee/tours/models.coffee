@@ -440,7 +440,7 @@ class ToursResultSet
     @voyashki.push new VoyashaOptima @
     @voyashki.push new VoyashaRich @
   setActive: (entry,beforeRender = true, afterRender = true,scrollTo = 0,callback = null)=>
-    $('#loadWrapBg').show()
+    $('#loadWrapBgMin').show()
     if entry.overview
       $('.btn-timeline-and-condition').hide()
       window.toursOverviewActive = true
@@ -459,7 +459,7 @@ class ToursResultSet
       @selection entry
       ko.processAllDeferredBindingUpdates()
       ResizeAvia()
-      $('#loadWrapBg').hide()
+      $('#loadWrapBgMin').hide()
       if !(scrollTo == false)
         Utils.scrollTo(scrollTo,false)
       if callback
