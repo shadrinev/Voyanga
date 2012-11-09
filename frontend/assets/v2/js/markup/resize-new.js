@@ -1010,3 +1010,37 @@ function removeFilterShow() {
 		scrollValue('hotel', e);
 	});
 }
+
+
+
+
+function loadPayFly() {
+	var _loadPayFly = $('#loadPayFly');
+	var offsetPayBlock = _loadPayFly.offset();
+	var _widthLoadPayFly = _loadPayFly.width() - (230 + 60);
+	var _loadJet = $('.loadJet');
+	var _Jet = _loadJet.find('.jetFly');
+	
+	_loadJet.css('margin-left', '-'+offsetPayBlock.left+'px').css('width', (offsetPayBlock.left + _widthLoadPayFly)+'px');
+	_loadJet.find('.overflowBlock').css('width', (offsetPayBlock.left + _widthLoadPayFly)+'px');
+	_loadJet.find('.pathBlock').clone().prependTo('.loadJet').addClass('blue');
+	_loadJet.find('.pathBlock').eq(1).attr('id','grey');
+	
+	function startFlyJet() {
+		_loadJet.find('#grey').animate({'width' : '1%'}, 20200, 'linear', function() {
+			_loadJet.find('#grey').css('opacity','0').css('width', '100%');
+			setTimeout(function() {
+				_loadJet.find('#grey').animate({'opacity':'1'},1000, function() {
+					startFlyJet();
+				});
+			}, 3000);
+		});
+		_Jet.animate({'right' : '0%'}, 20000, 'linear', function() {
+			$(this).animate({'right' : '-241px'}, 4000, 'linear', function() {
+				$(this).css('right', '100%');
+			});
+		});
+	}
+	
+	startFlyJet();
+}

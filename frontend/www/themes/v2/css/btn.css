@@ -228,11 +228,12 @@
 	background-position: left -37px;
 }
 .btnBlue .dotted {
-	display: inline-block;
-	width: 108px;
-	height: 7px;
-	background: url(../images/bg-btn-dotted.png) no-repeat;
-	margin-left: 0px;
+    background: url("../images/booking.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 14px;
+    margin-left: 0;
+    margin-top: 1px;
+    width: 108px;
 }
 /* btnOrang */
 .btnOrang {
