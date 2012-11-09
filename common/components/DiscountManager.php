@@ -9,7 +9,7 @@ class DiscountManager
 {
     public static function calculateHotelPrice($originalPrice)
     {
-        $percentage = appParams('hotel.markupPercentage');
+        $percentage = Yii::app()->params['hotel.markupPercentage'];
         $cost = ceil($originalPrice + $originalPrice * $percentage/100);
         return $cost;
     }

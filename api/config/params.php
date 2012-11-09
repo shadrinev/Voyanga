@@ -7,6 +7,7 @@
 
 $frontendParamsLocal = file_exists('api/config/params-local.php') ? require('api/config/params-local.php') : array();
 $commonParams = require_once ('common/config/params.php');
+print_r($commonParams);
 $environmentParams = require_once (dirname(__FILE__) . '/environments/params-' . $commonParams['env.code'] . '.php');
 return CMap::mergeArray(
     $commonParams,
