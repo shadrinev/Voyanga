@@ -138,7 +138,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 <!-- FIXME -->
 <span data-bind="template: {if: in1, name: 'event-map', data: events}"></span>
 <!-- END MAPS -->
-<div id="loadWrapBg" style='display: none;'>
+<div id="loadWrapBg" class="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
         <div id="loadGIF"><img src="/themes/v2/images/loading-5frame.gif"></div>
         <div id="loadTXT">
@@ -153,6 +153,9 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
             <div id="changeText"></div>
         </div>
     </div>
+</div>
+<div id="loadWrapBgMin" class="loadWrapBg" style='display: none;'>
+    <div id="loadContentWinMin"></div>
 </div>
 <?php
 $templates = Yii::app()->params['frontend.app.templates'];
