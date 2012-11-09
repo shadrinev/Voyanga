@@ -507,7 +507,7 @@ class HotelBookClient
 
     private function injectOurPrice(&$hotel)
     {
-        $hotel->comparePrice = DiscountManager::calculateHotelPrice($hotel->rubPrice);
+        $hotel->markupPrice = DiscountManager::calculateHotelPrice($hotel->rubPrice);
     }
 
     private function prepareHotelSearchRequest($params)

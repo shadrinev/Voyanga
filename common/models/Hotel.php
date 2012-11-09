@@ -63,6 +63,8 @@ class Hotel extends CApplicationComponent
     /** @var float cost of whole booking into RUR */
     public $comparePrice;
 
+    public $markupPrice;
+
     /** @var int is it special offer */
     public $specialOffer;
 
@@ -116,7 +118,7 @@ class Hotel extends CApplicationComponent
      */
     public function getPrice()
     {
-        return $this->comparePrice;
+        return $this->markupPrice;
     }
 
     /**
