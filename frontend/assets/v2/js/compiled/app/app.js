@@ -18,6 +18,8 @@ Application = (function(_super) {
 
     this.contentRendered = __bind(this.contentRendered, this);
 
+    this.bindItemsToBuy = __bind(this.bindItemsToBuy, this);
+
     this.bindEvents = __bind(this.bindEvents, this);
 
     this.runWithModule = __bind(this.runWithModule, this);
@@ -164,6 +166,10 @@ Application = (function(_super) {
       return ev.push(new Event(el));
     });
     return this.events = new EventSet(ev);
+  };
+
+  Application.prototype.bindItemsToBuy = function() {
+    return this.itemsToBuy = new TourTripResultSet(window.tripRaw);
   };
 
   Application.prototype.http404 = function() {

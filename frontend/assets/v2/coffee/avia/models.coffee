@@ -34,7 +34,7 @@ class FlightPart
     
   
 
-class Voyage #Voyage Plus loin que la nuit et le jour
+class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
   constructor: (flight, @airline) ->
     # Wrap flight parts in model
     @parts = []

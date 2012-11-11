@@ -49,6 +49,7 @@ $(function() {
             break;
     }
     app.runWithModule(currentModule);
+    app.bindItemsToBuy()
     ko.applyBindings(app);
     ko.processAllDeferredBindingUpdates();
 });

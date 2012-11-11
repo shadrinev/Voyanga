@@ -178,7 +178,7 @@ class HotelResult
     _.extend @, Backbone.Events
     if !hotelDatails
       hotelDatails = {}
-    @tours =  parent.tours
+    @tours =  parent.tours || @falseFunction
     @hotelId = data.hotelId
     @cacheId = parent.cacheId
     @activeResultId = ko.observable 0 
@@ -296,6 +296,9 @@ class HotelResult
       else
         return 'Посмотреть все результаты'
     @push data
+
+  falseFunction: ->
+    return false
 
   push: (data) ->
     set = new RoomSet data, @, @duration

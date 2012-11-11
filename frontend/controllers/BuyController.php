@@ -50,6 +50,7 @@ class BuyController extends Controller
 
     public function addFlightToTrip($searchKey, $searchId)
     {
+        //to override igbinary_unserialize_long: 64bit long on 32bit platform
         $flightSearchResult = @Yii::app()->pCache->get('flightSearchResult' . $searchId);
         $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $searchId);
         if (($flightSearchParams) and ($flightSearchResult))
@@ -66,6 +67,7 @@ class BuyController extends Controller
 
     public function addHotelToTrip($searchKey, $searchId)
     {
+        //to override igbinary_unserialize_long: 64bit long on 32bit platform
         $hotelSearchResult = @Yii::app()->pCache->get('hotelSearchResult' . $searchId);
         $hotelSearchParams = @Yii::app()->pCache->get('hotelSearchParams' . $searchId);
         if (($hotelSearchParams) and ($hotelSearchResult))
@@ -107,12 +109,5 @@ class BuyController extends Controller
         $hotelTripElement->fillFromSearchParams($hotelSearchParams);
         $hotelTripElement->hotel = $hotel;
         Yii::app()->shoppingCart->put($hotelTripElement);
-    }
-
-    public function actionTest($id)
-    {
-        Yii::app()->order->initByOrderBookingId($id);
-        CVarDumper::dump(Yii::app()->order->getBookerIds());
-        die();
     }
 }

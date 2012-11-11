@@ -291,7 +291,7 @@ HotelResult = (function() {
     if (!hotelDatails) {
       hotelDatails = {};
     }
-    this.tours = parent.tours;
+    this.tours = parent.tours || this.falseFunction;
     this.hotelId = data.hotelId;
     this.cacheId = parent.cacheId;
     this.activeResultId = ko.observable(0);
@@ -432,6 +432,10 @@ HotelResult = (function() {
     });
     this.push(data);
   }
+
+  HotelResult.prototype.falseFunction = function() {
+    return false;
+  };
 
   HotelResult.prototype.push = function(data) {
     var set,
