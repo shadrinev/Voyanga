@@ -2908,6 +2908,18 @@ input.hotel-input {
 	border-radius: 8px 8px 0px 0px;
 	overflow: hidden;
 }
+.projectPopUp .centerImg .load {
+    background: url(../images/load.gif) no-repeat;
+    width: 54px;
+    height: 54px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -27px;
+    margin-top: -27px;
+    z-index: 2;
+}
+
 .counters {
 	text-align: center;
 	line-height: 16px;
