@@ -5,7 +5,7 @@ return array(
         array('id'=>'enterCredentials',         'transition'=> 'booking'),
         array('id'=>'booking',                  'transition'=>'waitingForPayment,bookingError'),
         array('id'=>'bookingError',             'transition'=>'error'),
-        array('id'=>'waitingForPayment',        'transition'=>'waitingForPayment,startPayment,bookingTimeLimitError'),
+        array('id'=>'waitingForPayment',        'transition'=>'paid,waitingForPayment,startPayment,bookingTimeLimitError'),
         array('id'=>'startPayment',             'transition'=>'paid,paymentError,bookingTimeLimitError,waitingForPayment'),
         array('id'=>'paymentError',             'transition'=>'error'),
         array('id'=>'bookingTimeLimitError',    'transition'=>'bookingTimeLimitError,error'),
