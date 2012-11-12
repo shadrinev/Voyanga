@@ -45,6 +45,18 @@ dateUtils = {
     result += " ";
     return result += MONTHS[date.getMonth()];
   },
+  formatDayMonthYear: function(date) {
+    var result;
+    if (date.length === 0) {
+      return;
+    }
+    result = "";
+    result += date.getDate();
+    result += " ";
+    result += MONTHS[date.getMonth()];
+    result += " ";
+    return result += date.getYear();
+  },
   formatDayMonthInterval: function(dateStart, dateEnd) {
     var result;
     if (dateStart.length === 0 || dateEnd.length === 0) {

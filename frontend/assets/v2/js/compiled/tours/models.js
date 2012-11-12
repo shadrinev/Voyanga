@@ -1119,13 +1119,37 @@ TourTripResultSet = (function() {
     var _this = this;
     this.resultSet = resultSet;
     this.items = [];
+    this.hasFlight = false;
+    this.hasHotel = false;
+    this.flightCounter = ko.observable(0);
+    this.hotelCounter = ko.observable(0);
+    this.flightCounterWord = ko.computed(function() {
+      var res;
+      res = Utils.wordAfterNum(_this.flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов');
+      if (_this.hotelCounter() > 0) {
+        res = res + ', ';
+      }
+      return res;
+    });
+    this.hotelCounterWord = ko.computed(function() {
+      return Utils.wordAfterNum(_this.hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц');
+    });
     _.each(this.resultSet.items, function(item) {
       if (item.isFlight) {
-        console.log("Pushing avia to items", item);
-        return _this.items.push(new Voyage(item, item.valCompany));
+        _this.hasFlight = true;
+        _this.flightCounter(_this.flightCounter() + 1);
+        _this.roundTrip = item.flights.length === 2;
+        _this.items.push(new Voyage(item.flights[0], item.valCompany));
+        if (_this.roundTrip) {
+          _this.flightCounter(_this.flightCounter() + 1);
+          return _this.items.push(new Voyage(item.flights[1], item.valCompany));
+        }
       } else if (item.isHotel) {
-        console.log("Pushing hotel to items", item);
-        return _this.items.push(new HotelResult(item, _this, item.duration, item, item.hotelsDetails));
+        _this.hasHotel = true;
+        _this.hotelCounter(_this.hotelCounter() + 1);
+        console.log("Hotel: ", item);
+        _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
+        return _this.items.push(_this.lastHotel);
       }
     });
   }

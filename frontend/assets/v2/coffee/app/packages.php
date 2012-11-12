@@ -13,6 +13,7 @@
             'jquery.autocomplete.js',
             'jquery.dotdotdot-1.5.1.js',
             'moment.js',
+            'moment-ru.js',
             'scroll/jquery.mousewheel.js',
             'scroll/jquery.jscrollpane.min.js',
             'markerclusterer_compiled.js'

@@ -720,10 +720,31 @@ class ToursOverviewVM
 class TourTripResultSet
   constructor: (@resultSet) ->
     @items = []
+    @hasFlight = false
+    @hasHotel = false
+    @flightCounter = ko.observable 0
+    @hotelCounter = ko.observable 0
+
+    @flightCounterWord = ko.computed =>
+      res = Utils.wordAfterNum  @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
+      if (@hotelCounter()>0)
+        res = res + ', '
+      return res
+    @hotelCounterWord = ko.computed =>
+      Utils.wordAfterNum  @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
+
     _.each @resultSet.items, (item) =>
       if (item.isFlight)
-        console.log "Pushing avia to items", item
-        @items.push(new Voyage(item, item.valCompany))
+        @hasFlight = true
+        @flightCounter(@flightCounter()+1)
+        @roundTrip = item.flights.length == 2
+        @items.push new Voyage(item.flights[0], item.valCompany)
+        if @roundTrip
+          @flightCounter(@flightCounter()+1)
+          @items.push new Voyage(item.flights[1], item.valCompany)
       else if (item.isHotel)
-        console.log "Pushing hotel to items", item
-        @items.push(new HotelResult item, @, item.duration, item, item.hotelsDetails)
+        @hasHotel = true
+        @hotelCounter(@hotelCounter()+1)
+        console.log "Hotel: ", item
+        @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
+        @items.push(@lastHotel)

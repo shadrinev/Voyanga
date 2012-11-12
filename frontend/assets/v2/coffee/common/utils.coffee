@@ -36,6 +36,16 @@ dateUtils=
     result+= " "
     result+= MONTHS[date.getMonth()]
 
+  formatDayMonthYear: (date) ->
+    if (date.length==0)
+      return
+    result = ""
+    result+= date.getDate()
+    result+= " "
+    result+= MONTHS[date.getMonth()]
+    result+= " "
+    result+= date.getYear()
+
   formatDayMonthInterval: (dateStart,dateEnd) ->
     if (dateStart.length==0 || dateEnd.length==0)
       return

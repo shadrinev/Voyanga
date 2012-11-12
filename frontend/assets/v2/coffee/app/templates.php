@@ -27,5 +27,10 @@ return array (
     'common.stub',
 
     'event.map',
-    'event.index'
+    'event.index',
+
+    'buy.flightRtPart',
+    'buy.flightPart',
+    'buy.hotelPart',
+    'buy.items'
 );

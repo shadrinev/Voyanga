@@ -137,6 +137,11 @@ class Application extends Backbone.Router
       ev.push new Event(el)
     @events = new EventSet(ev)
 
+  bindItemsToBuy: =>
+    tourTrip = new TourTripResultSet(window.tripRaw)
+    console.log "Tour trip:", tourTrip
+    @itemsToBuy =  tourTrip
+
   # FIXME write better handler
   http404: ->
     alert "Not found"
