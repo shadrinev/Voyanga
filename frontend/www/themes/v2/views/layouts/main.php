@@ -124,7 +124,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     <div class="footer">
         <div class="center-block">
             <ul class="foot-menu">
-                <li><a href="#">О проекте</a></li>
+                <li><a href="javascript:void(0)" onclick="openPopUpProj()">О проекте</a></li>
                 <li><a href="#">Вопросы и ответы</a></li>
                 <li><a href="#">Контакты</a></li>
             </ul>
