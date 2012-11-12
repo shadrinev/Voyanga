@@ -4,7 +4,7 @@ class SuccessAction extends CAction
     public function run()
     {
         Yii::import("common.extensions.payments.models.Bill");
-        $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey");
+        $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey", "RebillAnchorn");
         $params = Array();
         foreach($keys as $key)
         {
@@ -27,7 +27,7 @@ class SuccessAction extends CAction
         if($bill->transactionId)
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
-        $bill->booker->setStatus('ticketing');
+        $bill->booker->setStatus('paid');
         $bill->save();
         echo 'Ok';
         // init order
@@ -35,8 +35,6 @@ class SuccessAction extends CAction
 #        $order->initByOrderBookingId($orderId);
 #        $bookers = $order->getBookers();
 #        for($bookers as $booker) {
-
-
 #        }
     }
 }

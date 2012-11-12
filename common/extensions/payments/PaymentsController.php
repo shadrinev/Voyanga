@@ -14,7 +14,7 @@ class PaymentsController extends CExtController
         {
             if(!isset($_REQUEST[$key]))
             {
-                throw new Exception("Wrong arguments passed to callback $key");
+                throw new Exception("Wrong arguments passed to callback. Expected $key");
             }
             $params[$key]=$_REQUEST[$key];
         }
