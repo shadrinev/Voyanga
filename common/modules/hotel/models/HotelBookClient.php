@@ -15,6 +15,7 @@ class HotelBookClient
     public static $groupId;
     public static $requestIds;
     public static $saveCache;
+    public static $downloadExternal;
     public static $cacheFilePath;
     public $requests;
 
@@ -44,6 +45,7 @@ class HotelBookClient
 
             $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
             self::$cacheFilePath = $cacheFilePath;
+            self::$downloadExternal = $asyncParams ? false : true;
             if (file_exists($cacheFilePath) && ( (filectime($cacheFilePath) + 3600*24*14) > time() ) )
             {
                 $cacheResult = file_get_contents($cacheFilePath);
@@ -1335,7 +1337,7 @@ class HotelBookClient
         {
             $hotelParams['images'] = array();
             UtilsHelper::soapObjectsArray($hotelSXE->Images->Image);
-            if(self::$saveCache && self::$cacheFilePath){
+            if(self::$saveCache && self::$cacheFilePath && self::$downloadExternal){
                 $cacheSubDir = md5('HotelDetail'.$hotelId);
                 $cacheSubDir = substr($cacheSubDir, -3);
                 $storagePath = Yii::getPathOfAlias('imageStorage');
@@ -1355,7 +1357,7 @@ class HotelBookClient
             }
             foreach ($hotelSXE->Images->Image as $ind=>$imageSXE)
             {
-                if(self::$saveCache && self::$cacheFilePath){
+                if(self::$saveCache && self::$cacheFilePath && self::$downloadExternal){
                     $largeUrl = (string)$imageSXE->Large;
                     $largeFileName = basename($largeUrl);
                     try{
@@ -1440,7 +1442,7 @@ class HotelBookClient
                 }
             }
         }
-        if(self::$saveCache && self::$cacheFilePath){
+        if(self::$saveCache && self::$cacheFilePath && self::$downloadExternal){
             file_put_contents(self::$cacheFilePath,$hotelObject->asXML());
             unset($largeFileName);
             unset($largeUrl);

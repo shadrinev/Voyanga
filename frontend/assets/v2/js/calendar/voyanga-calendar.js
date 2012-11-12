@@ -300,8 +300,16 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
 
         this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);return false});
         //console.log('set wheel actions');
-        this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);});
-        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);});
+        this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);
+            if(e.preventDefault)
+                e.preventDefault();
+            e.returnValue = false;
+        });
+        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);
+            if(e.preventDefault)
+                e.preventDefault();
+            e.returnValue = false;
+        });
         //console.log(this);
         this.jObj.find('.monthLineVoyanga').mousedown(function(e){self.mouseDown(e);});
         this.jObj.find('.monthLineVoyanga').mouseup(function(e){self.mouseUp(e);});
@@ -467,6 +475,7 @@ VoyangaCalendarStandart.generateGrid = function(){
     var startYear = firstDay.getFullYear();
     var needStop = false;
     var lineNumber = 0;
+    this.slider.monthArray = new Array();
     while(!needStop)
     {
         var newHtml = '<div class="calendarLineVoyanga" id="weekNum-'+lineNumber+'" data-weeknum="'+lineNumber+'">';
@@ -497,6 +506,7 @@ VoyangaCalendarStandart.generateGrid = function(){
         //}
         lineNumber++;
     }
+    console.log('montharray',this.slider.monthArray);
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
     if((lineNumber -lastLineMonth) < 2){
         this.slider.monthArray.pop();
