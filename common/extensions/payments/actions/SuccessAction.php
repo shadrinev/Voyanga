@@ -4,7 +4,7 @@ class SuccessAction extends CAction
     public function run()
     {
         Yii::import("common.extensions.payments.models.Bill");
-        $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey", "RebillAnchorn");
+        $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey", "RebillAnchor");
         $params = Array();
         foreach($keys as $key)
         {
