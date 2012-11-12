@@ -27,7 +27,7 @@ class SuccessAction extends CAction
         if($bill->transactionId)
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
-        $bill->booker->setStatus('paid');
+        $bill->booker->status('paid');
         $bill->save();
         echo 'Ok';
         // init order
