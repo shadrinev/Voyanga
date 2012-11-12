@@ -2927,3 +2927,6 @@ input.hotel-input {
 .projectPopUp #boxClose {
 	right: 10px;
 }
+.textSlideProj {
+    display: none;
+}
