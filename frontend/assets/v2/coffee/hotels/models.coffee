@@ -79,6 +79,7 @@ class Room
 class RoomSet
   constructor: (data, @parent, duration = 1) ->
     @price = Math.ceil(data.rubPrice)
+    @discountPrice = Math.ceil(data.discountPrice)
     # Used in tours
     @savings = 0
     @resultId = data.resultId
@@ -180,6 +181,9 @@ class HotelResult
       hotelDatails = {}
     @tours =  parent.tours || @falseFunction
     @hotelId = data.hotelId
+    @checkIn = moment(data.checkIn) || false
+    @checkOut = moment(data.checkOut) || false
+    @checkOutText = @checkOut.format('LL')
     @cacheId = parent.cacheId
     @activeResultId = ko.observable 0 
     @hotelName = data.hotelName
@@ -214,6 +218,9 @@ class HotelResult
     @checkInTime = hotelDatails.earliestCheckInTime
     if @checkInTime
       @checkInTime = @checkInTime.substr(0,@checkInTime.length - 3)
+      @checkInText = @checkIn.format('LL') + ", c " + @checkInTime
+    else
+      @checkInText = @checkIn.format('LL')
     # FIXME trollface
     @frontPhoto =
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png'

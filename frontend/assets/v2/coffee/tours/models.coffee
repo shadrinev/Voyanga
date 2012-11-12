@@ -719,11 +719,12 @@ class ToursOverviewVM
 
 class TourTripResultSet
   constructor: (@resultSet) ->
-    @items = ko.observableArray []
+    @items = []
     @hasFlight = false
     @hasHotel = false
     @flightCounter = ko.observable 0
     @hotelCounter = ko.observable 0
+
     @flightCounterWord = ko.computed =>
       res = Utils.wordAfterNum  @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
       if (@hotelCounter()>0)
@@ -731,6 +732,7 @@ class TourTripResultSet
       return res
     @hotelCounterWord = ko.computed =>
       Utils.wordAfterNum  @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
+
     _.each @resultSet.items, (item) =>
       if (item.isFlight)
         @hasFlight = true
@@ -743,6 +745,6 @@ class TourTripResultSet
       else if (item.isHotel)
         @hasHotel = true
         @hotelCounter(@hotelCounter()+1)
+        console.log "Hotel: ", item
         @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
-        console.log item
         @items.push(@lastHotel)

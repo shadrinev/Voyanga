@@ -138,7 +138,9 @@ class Application extends Backbone.Router
     @events = new EventSet(ev)
 
   bindItemsToBuy: =>
-    @itemsToBuy =  new TourTripResultSet(window.tripRaw)
+    tourTrip = new TourTripResultSet(window.tripRaw)
+    console.log "Tour trip:", tourTrip
+    @itemsToBuy =  tourTrip
 
   # FIXME write better handler
   http404: ->

@@ -1118,7 +1118,7 @@ TourTripResultSet = (function() {
   function TourTripResultSet(resultSet) {
     var _this = this;
     this.resultSet = resultSet;
-    this.items = ko.observableArray([]);
+    this.items = [];
     this.hasFlight = false;
     this.hasHotel = false;
     this.flightCounter = ko.observable(0);
@@ -1147,8 +1147,8 @@ TourTripResultSet = (function() {
       } else if (item.isHotel) {
         _this.hasHotel = true;
         _this.hotelCounter(_this.hotelCounter() + 1);
+        console.log("Hotel: ", item);
         _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
-        console.log(item);
         return _this.items.push(_this.lastHotel);
       }
     });

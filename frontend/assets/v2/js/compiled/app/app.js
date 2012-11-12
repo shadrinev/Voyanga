@@ -169,7 +169,10 @@ Application = (function(_super) {
   };
 
   Application.prototype.bindItemsToBuy = function() {
-    return this.itemsToBuy = new TourTripResultSet(window.tripRaw);
+    var tourTrip;
+    tourTrip = new TourTripResultSet(window.tripRaw);
+    console.log("Tour trip:", tourTrip);
+    return this.itemsToBuy = tourTrip;
   };
 
   Application.prototype.http404 = function() {

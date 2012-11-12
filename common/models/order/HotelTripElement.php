@@ -110,7 +110,12 @@ class HotelTripElement extends TripElement
     public function getJsonObject()
     {
         if ($this->hotel)
-            return $this->hotel->getJsonObject();
+        {
+            $json = $this->hotel->getJsonObject();
+            $json['checkIn'] = $this->checkIn;
+            $json['checkOut'] = $this->checkOut;
+            return $json;
+        }
         return $this->attributes;
     }
 

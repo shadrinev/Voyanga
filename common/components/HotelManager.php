@@ -32,8 +32,8 @@ class HotelManager
             {
                 if (isset($hotelClient->requests[$responseId]['result']))
                 {
-                    $hotelsDetails[$hotelId.'d'] = self::prepare($hotelClient->requests[$responseId]['result']);
-                    Yii::app()->pCache->set('HotelDetails-'.$hotelId, $hotelsDetails[$hotelId.'d']);
+                    $hotelsDetails[$hotelId . 'd'] = self::prepare($hotelClient->requests[$responseId]['result']);
+                    Yii::app()->pCache->set('HotelDetails-' . $hotelId, $hotelsDetails[$hotelId . 'd']);
                 }
             }
             $results['hotelsDetails'] = $hotelsDetails;
@@ -74,9 +74,10 @@ class HotelManager
         if (is_object($additional) && $additional instanceof HotelInfo)
         {
             //$objectVars = get_object_vars($additional);
-            $objectVars = array('address','description','distances','earliestCheckInTime',
-                'email','facilities','fax','hotelGroupServices','hotelServices','images',
-                'latitude','longitude','phone','roomAmenities','site','locations','builtIn','numberFloors','metroList');
+            $objectVars = array('address', 'description', 'distances', 'earliestCheckInTime',
+                'email', 'facilities', 'fax', 'hotelGroupServices', 'hotelServices', 'images',
+                'latitude', 'longitude', 'phone', 'roomAmenities', 'site', 'locations', 'builtIn', 'numberFloors', 'metroList'
+            );
             $return = new stdClass();
             foreach ($objectVars as $objVar)
             {
@@ -100,7 +101,9 @@ class HotelManager
                 }
             }
             return $return;
-        }elseif(is_object($additional)){
+        }
+        elseif (is_object($additional))
+        {
             $objectVars = get_object_vars($additional);
 
             foreach ($objectVars as $objVar => $val)

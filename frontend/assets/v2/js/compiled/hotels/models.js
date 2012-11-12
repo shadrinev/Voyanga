@@ -132,6 +132,7 @@ RoomSet = (function() {
     this.checkCount = __bind(this.checkCount, this);
 
     this.price = Math.ceil(data.rubPrice);
+    this.discountPrice = Math.ceil(data.discountPrice);
     this.savings = 0;
     this.resultId = data.resultId;
     this.pricePerNight = Math.ceil(this.price / duration);
@@ -293,6 +294,9 @@ HotelResult = (function() {
     }
     this.tours = parent.tours || this.falseFunction;
     this.hotelId = data.hotelId;
+    this.checkIn = moment(data.checkIn) || false;
+    this.checkOut = moment(data.checkOut) || false;
+    this.checkOutText = this.checkOut.format('LL');
     this.cacheId = parent.cacheId;
     this.activeResultId = ko.observable(0);
     this.hotelName = data.hotelName;
@@ -335,6 +339,9 @@ HotelResult = (function() {
     this.checkInTime = hotelDatails.earliestCheckInTime;
     if (this.checkInTime) {
       this.checkInTime = this.checkInTime.substr(0, this.checkInTime.length - 3);
+      this.checkInText = this.checkIn.format('LL') + ", c " + this.checkInTime;
+    } else {
+      this.checkInText = this.checkIn.format('LL');
     }
     this.frontPhoto = {
       smallUrl: 'http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/200px-Trollface.svg.png',
