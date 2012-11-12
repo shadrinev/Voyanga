@@ -2,6 +2,9 @@
     <?php $tripRaw = 'window.tripRaw = '.$trip; ?>
     <?php echo $tripRaw ?>;
     window.currentModule = '<?php echo Yii::app()->user->getState('currentModule'); ?>';
+    $(function(){
+        initCredentialsPage();
+    })
 </script>
 <div id="content">
         <?php $this->renderPartial('_items'); ?>

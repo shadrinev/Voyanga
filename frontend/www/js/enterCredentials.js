@@ -20,7 +20,7 @@ $(function(){
     });
 });
 
-$(function() {
+initCredentialsPage = function() {
     var app, avia, hotels, tour;
     window.voyanga_debug = function() {
         var args;
@@ -52,4 +52,4 @@ $(function() {
     app.bindItemsToBuy()
     ko.applyBindings(app);
     ko.processAllDeferredBindingUpdates();
-});
+};

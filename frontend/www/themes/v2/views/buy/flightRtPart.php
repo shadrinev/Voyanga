@@ -5,18 +5,18 @@
             <td class="tdICO paddingBottom" rowspan="2"></td>
             <td class="tdFrom paddingBottom">
                 <div class="what">Вылет</div>
-                <div class="city"><span>Санкт-Петербург</span>, <span class="airport">Пулково-1</span></div>
-                <div class="time"><span>2:35</span>, <span class="date">28 мая</span></div>
+                <div class="city"><span data-bind="text: $data[0].departureCity">Санкт-Петербург</span>, <span data-bind="text: $data[0].departureAirport" class="airport">Пулково-1</span></div>
+                <div class="time"><span data-bind="text: $data[0].departureTime()">2:35</span>, <span class="date" data-bind="text: $data[0].departureDayMo()">28 мая</span></div>
             </td>
-            <td class="tdPath paddingBottom"> 3</td>
+            <td class="tdPath paddingBottom" data-bind="text: $data[0].duration()">3</td>
             <td class="tdTo paddingBottom">
                 <div class="what">Прилет</div>
-                <div class="city"><span>Санкт-Петербург</span>, <span class="airport">Пулково-1</span></div>
-                <div class="time"><span>2:35</span>, <span class="date">28 мая</span></div>
+                <div class="city"><span data-bind="text: $data[0].arrivalCity">Санкт-Петербург</span>, <span class="airport" data-bind="text: $data[0].arrivalAirport">Пулково-1</span></div>
+                <div class="time"><span data-bind="text: $data[0].arrivalTime()">2:35</span>, <span class="date" data-bind="text: $data[0].arrivalDayMo()">28 мая</span></div>
             </td>
             <td class="tdAvia paddingBottom">
-                <div class="airline">Аэрофлот</div>
-                <div class="voyage">Рейс: <span class="number">S7-76</span></div>
+                <div class="airline" data-bind="text:$data[0].airlineName">Аэрофлот</div>
+                <div class="voyage">Рейс: <span class="number" data-bind="text: $data[0].flightCode">S7-76</span></div>
                 <div class="class">Класс: <span class="classMine">Эконом</span></div>
             </td>
             <td class="tdPrice paddingBottom" rowspan="2">
@@ -26,24 +26,24 @@
                 </div>
                 <br>
 
-                <div class="moreDetails"><a href="javascript:void(0);">Подробнее</a></div>
+                <div class="moreDetails"><a href="#" data-bind="click: showDetails">Подробнее</a></div>
             </td>
         </tr>
         <tr>
             <td class="tdFrom">
                 <div class="what">Вылет</div>
-                <div class="city"><span>Санкт-Петербург</span>, <span class="airport">Пулково-1</span></div>
-                <div class="time"><span>2:35</span>, <span class="date">28 мая</span></div>
+                <div class="city"><span data-bind="text: $data[1].departureCity">Санкт-Петербург</span>, <span data-bind="text: $data[1].departureAirport" class="airport">Пулково-1</span></div>
+                <div class="time"><span data-bind="text: $data[1].departureTime()">2:35</span>, <span data-bind="text: $data[1].departureDayMo()" class="date">28 мая</span></div>
             </td>
-            <td class="tdPath"> 3</td>
+            <td class="tdPath" data-bind="text: $data[1].duration()">3</td>
             <td class="tdTo">
                 <div class="what">Прилет</div>
-                <div class="city"><span>Санкт-Петербург</span>, <span class="airport">Пулково-1</span></div>
-                <div class="time"><span>2:35</span>, <span class="date">28 мая</span></div>
+                <div class="city"><span data-bind="text: $data[1].arrivalCity">Санкт-Петербург</span>, <span data-bind="text: $data[1].arrivalAirport" class="airport">Пулково-1</span></div>
+                <div class="time"><span data-bind="text: $data[1].arrivalTime()">2:35</span>, <span class="date" data-bind="text: $data[1].arrivalDayMo()">28 мая</span></div>
             </td>
             <td class="tdAvia">
-                <div class="airline">Аэрофлот</div>
-                <div class="voyage">Рейс: <span class="number">S7-76</span></div>
+                <div class="airline" data-bind="text:$data[1].airlineName">Аэрофлот</div>
+                <div class="voyage">Рейс: <span class="number" data-bind="text: $data[1].flightCode">S7-76</span></div>
                 <div class="class">Класс: <span class="classMine">Эконом</span></div>
             </td>
         </tr>
