@@ -27,7 +27,9 @@ class SuccessAction extends CAction
         if($bill->transactionId)
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
-        $channel->booker->status('paid');
+        $booker =  = new FlightBookerComponent();
+        $booker->setFlightBookerFromId($channel->booker->id);
+        $booker->status('paid');
         $bill->save();
         echo 'Ok';
         // init order
@@ -35,6 +37,7 @@ class SuccessAction extends CAction
         $order->initByOrderBookingId($orderId);
         $payments = Yii::app()->payments;
         $bookers = $order->getBookers();
+        return;
         foreach($bookers as $booker)
         {
             if($booker->getStatus()=='paid')
