@@ -34,7 +34,6 @@
     padding-bottom: 65px;
     padding-top: 35px;
     position: relative;
-    min-width: 1000px;
 }
 .head .center-block .logo {
     background: url("../images/slice.png") no-repeat scroll 0 0 transparent;
