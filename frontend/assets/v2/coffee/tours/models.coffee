@@ -731,7 +731,7 @@ class TourTripResultSet
     @flightCounterWord = ko.computed =>
       if @flightCounter()==0
         return
-      res = Utils.wordAfterNum  @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
+      res = Utils.wordAfterNum  @flightCounter(), 'авиабилет', 'авиабилета', 'авиабилетов'
       if (@hotelCounter()>0)
         res = res + ', '
       return res

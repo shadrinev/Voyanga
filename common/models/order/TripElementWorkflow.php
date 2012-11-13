@@ -8,7 +8,7 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
 {
     public $finalStatus = 'notStarted';
 
-    protected $bookingContactInfo;
+    static protected $bookingContactInfo;
 
     protected $item;
 
@@ -53,17 +53,17 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
 
     protected function createOrderBookingIfNotExist()
     {
-        if (!$this->bookingContactInfo)
+        if (!self::$bookingContactInfo)
         {
-            $this->bookingContactInfo = new OrderBooking();
-            $this->bookingContactInfo->attributes = $this->getBookingContactFormData();
-            if (!$this->bookingContactInfo->save())
+            self::$bookingContactInfo = new OrderBooking();
+            self::$bookingContactInfo->attributes = $this->getBookingContactFormData();
+            if (!self::$bookingContactInfo->save())
             {
                 $errMsg = 'Saving of order booking fails: '.CVarDumper::dumpAsString($this->bookingContactInfo->errors);
                 $this->logAndThrowException($errMsg, 'OrderComponent.createOrderBookingIfNotExist');
             }
         }
-        return $this->bookingContactInfo;
+        return self::$bookingContactInfo;
     }
 
     private function getBookingContactFormData()
