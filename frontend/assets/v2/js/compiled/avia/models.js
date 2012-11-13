@@ -57,6 +57,8 @@ Voyage = (function() {
       this.parts.push(new FlightPart(part));
     }
     this.flightKey = flight.flightKey;
+    this.stopoverCount = _.size(this.parts) - 1;
+    this.hasStopover = this.stopoverCount > 1 ? true : false;
     this.stopoverLength = 0;
     this.maxStopoverLength = 0;
     this.direct = this.parts.length === 1;
@@ -286,7 +288,13 @@ AviaResult = (function() {
 
     this.chooseStacked = __bind(this.chooseStacked, this);
 
+    this.rtFlightCodes = __bind(this.rtFlightCodes, this);
+
+    this.flightCodes = __bind(this.flightCodes, this);
+
     this.flightKey = __bind(this.flightKey, this);
+
+    this.rtFlightCodesText = __bind(this.rtFlightCodesText, this);
 
     _.extend(this, Backbone.Events);
     this._data = data;
@@ -319,6 +327,7 @@ AviaResult = (function() {
     this.activeVoyage = ko.observable(this.activeVoyage);
     this.stackedMinimized = ko.observable(true);
     this.rtStackedMinimized = ko.observable(true);
+    this.flightCodesText = _.size(this.activeVoyage().parts) > 1 ? "Рейсы" : "Рейс";
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio', 'recommendStopoverIco'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
@@ -346,11 +355,35 @@ AviaResult = (function() {
     }
   }
 
+  AviaResult.prototype.rtFlightCodesText = function() {
+    if (_.size(this.activeVoyage().activeBackVoyage().parts) > 1) {
+      return "Рейсы";
+    } else {
+      return "Рейс";
+    }
+  };
+
   AviaResult.prototype.flightKey = function() {
     if (this.roundTrip) {
       return this.activeVoyage().activeBackVoyage().flightKey;
     }
     return this.activeVoyage().flightKey;
+  };
+
+  AviaResult.prototype.flightCodes = function() {
+    var codes;
+    codes = _.map(this.activeVoyage().parts, function(flight) {
+      return flight.flightCode;
+    });
+    return Utils.implode(', ', codes);
+  };
+
+  AviaResult.prototype.rtFlightCodes = function() {
+    var codes;
+    codes = _.map(this.activeVoyage().activeBackVoyage().parts, function(flight) {
+      return flight.flightCode;
+    });
+    return Utils.implode(', ', codes);
   };
 
   AviaResult.prototype.isActive = function() {

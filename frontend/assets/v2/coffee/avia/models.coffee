@@ -42,6 +42,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
       @parts.push new FlightPart(part)
 
     @flightKey = flight.flightKey
+    @stopoverCount = _.size(@parts) - 1
+    @hasStopover = if @stopoverCount > 1 then true else false
     @stopoverLength = 0
     @maxStopoverLength = 0 
     @direct = @parts.length == 1
@@ -234,6 +236,7 @@ class AviaResult
     @stackedMinimized = ko.observable true
     @rtStackedMinimized = ko.observable true
 
+    @flightCodesText = if _.size(@activeVoyage().parts)>1 then "Рейсы" else "Рейс"
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
@@ -258,11 +261,21 @@ class AviaResult
                       field
                   )(name)
 
+  rtFlightCodesText: =>
+    if _.size(@activeVoyage().activeBackVoyage().parts)>1 then "Рейсы" else "Рейс"
+
   flightKey: =>
     if @roundTrip
       return @activeVoyage().activeBackVoyage().flightKey
     return @activeVoyage().flightKey
 
+  flightCodes: =>
+    codes = _.map @activeVoyage().parts, (flight) -> flight.flightCode
+    Utils.implode(', ', codes)
+
+  rtFlightCodes: =>
+    codes = _.map @activeVoyage().activeBackVoyage().parts, (flight) -> flight.flightCode
+    Utils.implode(', ', codes)
 
   isActive: ->
     console.log @parent.selected_key(), @key, @parent.selected_best()
@@ -478,7 +491,6 @@ class AviaResultSet
     @numResults = ko.observable 0
     @filtersConfig = false
 
-
     for key, result of @_results
       result.sort()
       result.removeSimilar()
@@ -517,10 +529,8 @@ class AviaResultSet
     result.searchKey = selection.flightKey()
     Utils.toBuySubmit [result]
 
-
   postInit: =>
     @filters = new AviaFiltersT @
-
 
   hideRecommend: (context, event)->
    hideRecomendedBlockTicket.apply(event.currentTarget)

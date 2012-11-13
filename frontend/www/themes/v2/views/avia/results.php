@@ -56,7 +56,7 @@
         </div>
       <div class="ico-path" data-bind="html: stopsRatio()">
       </div>
-      <div class="path" data-bind="text:stopoverText(), css: {'no-wait': direct()}">
+      <div class="path tooltip" data-bind="text:stopoverText(), css: {'no-wait': direct()}" rel="Пересадка в Дублине 1ч. 25м. <br> Пересадка в Москве 1ч. 10м.">
       </div>
     </div>
     <!-- END HOW LONG -->
