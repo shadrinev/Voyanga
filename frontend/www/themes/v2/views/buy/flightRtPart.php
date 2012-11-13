@@ -8,7 +8,12 @@
                 <div class="city"><span data-bind="text: $data[0].departureCity">Санкт-Петербург</span>, <span data-bind="text: $data[0].departureAirport" class="airport">Пулково-1</span></div>
                 <div class="time"><span data-bind="text: $data[0].departureTime()">2:35</span>, <span class="date" data-bind="text: $data[0].departureDayMo()">28 мая</span></div>
             </td>
-            <td class="tdPath paddingBottom" data-bind="text: $data[0].duration()">3</td>
+            <td class="tdPath paddingBottom">
+                    <div class="timeAndPath" rel="сколько занимает пересадка <br> может и быть в две строчки">
+                        <div class="ico-path"><span class="cup"></span><span class="cup"></span><span class="cup"></span></div>
+                        <div class="text">Всего <span data-bind="text: $data[0].duration()"></span></div>
+                    </div>
+            </td>
             <td class="tdTo paddingBottom">
                 <div class="what">Прилет</div>
                 <div class="city"><span data-bind="text: $data[0].arrivalCity">Санкт-Петербург</span>, <span class="airport" data-bind="text: $data[0].arrivalAirport">Пулково-1</span></div>
@@ -35,7 +40,12 @@
                 <div class="city"><span data-bind="text: $data[1].departureCity">Санкт-Петербург</span>, <span data-bind="text: $data[1].departureAirport" class="airport">Пулково-1</span></div>
                 <div class="time"><span data-bind="text: $data[1].departureTime()">2:35</span>, <span data-bind="text: $data[1].departureDayMo()" class="date">28 мая</span></div>
             </td>
-            <td class="tdPath" data-bind="text: $data[1].duration()">3</td>
+            <td class="tdPath" data-bind="text: $data[1].duration()">
+                <div class="timeAndPath" rel="сколько занимает пересадка <br> может и быть в две строчки">
+                    <div class="ico-path"><span class="cup"></span><span class="cup"></span><span class="cup"></span></div>
+                    <div class="text">Всего <span data-bind="text: $data[0].duration()"></span></div>
+                </div>
+            </td>
             <td class="tdTo">
                 <div class="what">Прилет</div>
                 <div class="city"><span data-bind="text: $data[1].arrivalCity">Санкт-Петербург</span>, <span data-bind="text: $data[1].arrivalAirport" class="airport">Пулково-1</span></div>

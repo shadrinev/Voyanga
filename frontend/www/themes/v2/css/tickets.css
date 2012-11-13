@@ -442,6 +442,7 @@
 }
 .ticket-items.small .content .center-ticket .date-time-city .how-long .ico-path {
 	background: url("../images/ico-path.png") no-repeat scroll center -95px transparent;
+    margin-left: -20px;
 }
 .ticket-items.small .content .center-ticket .date-time-city .how-long .ico-path .cup:first-child {
 	display: block;
@@ -564,6 +565,12 @@
     position: relative;
     width: inherit;
 }
+.tdPath .ico-path {
+    background: url("../images/ico-path.png") no-repeat scroll center -95px transparent;
+    height: 15px;
+    position: relative;
+    width: inherit;
+}
 .recommended-ticket .ticket-items .content .how-long .ico-path .cup {
     background: url("../images/ico-path.png") no-repeat scroll 0 -80px transparent;
     display: block;
@@ -573,6 +580,36 @@
     position: relative;
     top: inherit;
     width: 28px;
+}
+.tdPath .ico-path .cup {
+    background: url("../images/ico-path.png") no-repeat scroll 0 -80px #f4f7f9;
+    display: inline-block;
+    height: 15px;
+    left: auto !important;
+    margin: 0 auto;
+    position: relative;
+    top: inherit;
+    width: 28px;
+}
+.tdPath .ico-path .cup + .cup {
+    background-position: -5px -80px;
+    width: 23px;
+}
+.tdPath .ico-path .cup + .cup + .cup {
+    background-position: -5px -80px;
+    width: 23px;
+}
+.tdPath .ico-path .cup + .cup + .cup + .cup {
+    background-position: -5px -80px;
+    width: 23px;
+}
+.tdPath .ico-path .cup + .cup + .cup + .cup + .cup {
+    background-position: -5px -80px;
+    width: 23px;
+}
+.tdPath .text {
+    color: #879094;
+    font-size: 11px;
 }
 .recommended-ticket .ticket-items .content .other-time {
     background: url("../images/bg-other-time.png") repeat scroll 0 0 transparent;

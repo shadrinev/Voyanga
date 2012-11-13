@@ -2388,6 +2388,7 @@ input.hotel-input {
 .allTicketsDIV .aviaTickets .tdPath {
     text-align: center;
     vertical-align: middle;
+    padding-top: 24px;
 }
 .allTicketsDIV .aviaTickets .tdAvia {
     color: #1D222B;
