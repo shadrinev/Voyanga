@@ -1123,7 +1123,8 @@ function ClikLeftProj() {
 }
 
 
-function PopUpInfoPath(_this) {
+function PopUpInfoPath() {
+    var _this = $('.tooltip');
     $(_this).mousemove(function(e) {
         var _text = $(this).attr('rel');
         if ($('.PopUpInfoPath').length > 0 && $('.PopUpInfoPath').is(':visible')) {
@@ -1134,7 +1135,8 @@ function PopUpInfoPath(_this) {
             $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
         }
     });
+    $(_this).mouseout(function() {
+        $('.PopUpInfoPath').remove();
+    })
 }
-function PopUpInfoPathRemove() {
-    $('.PopUpInfoPath').remove();
-}
+$(window).load(PopUpInfoPath);
