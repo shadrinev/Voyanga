@@ -35,14 +35,13 @@ abstract class Payments_Channel {
     public function getSignature($params, $strategy='ignorerebill')
     {
         $credentials = $this->credentials;
-        if($strategy=='ignorerebill')
-            $keys = Array('MerchantId', 'DateTime', 'TransactionID', 'OrderId',
+        if($strategy=='ignorerebill') {
+            $keys = Array('MerchantId', 'DateTime', 'TransactionID','TransactionId', 'OrderId',
                           'IData', 'Amount', 'Currency', 'Commission', 'PNR',
-                          'ValidUntil', 'TransactionId');
-        else
-            $keys = Array('MerchantId', 'RebillAnchor', 'DateTime', 'TransactionID', 'OrderId',
-                          'IData', 'Amount', 'Currency', 'Commission', 'PNR',
-                          'ValidUntil', 'TransactionId');
+                          'ValidUntil');
+        } else {
+            $keys = Array('MerchantId', 'RebillAnchor', 'OrderId', 'Amount', 'Currency');
+        }
         $values = Array();
         foreach($keys as $key)
         {
@@ -78,8 +77,8 @@ abstract class Payments_Channel {
         $params = $this->formParams();
         $params['RebillAnchor'] = $anchor;
         $params['SecurityKey'] = $this->getSignature($params, 'rebill');
-        list($code,$result) = $this->callApi('transaction/rebill');
-        if($result['Status'] == 'Ok')
+        list($code,$result) = $this->callApi('transaction/rebill', $params);
+        if($result['Result'] == 'Ok')
             return true;
         return false;
     }
@@ -87,12 +86,12 @@ abstract class Payments_Channel {
     public function refund()
     {
         $params = Array();
-        $params['MerchantId'] = $credentials['id'];
+        $params['MerchantId'] = $this->credentials['id'];
         //! FIXME: can this amount change?
-        $params['Amount'] = sprintf("%.2f", $this->amount);//  $this->bill->amount);
+//        $params['Amount'] = sprintf("%.2f", $this->amount);//  $this->bill->amount);
         $params['TransactionId'] = $this->bill->transactionId;
         $params['SecurityKey'] = $this->getSignature($params);
-        list($code,$result) = $this->callApi('transaction/refund');
+        list($code,$result) = $this->callApi('transaction/void', $params);
         if($result['Result'] == 'Ok')
             return true;
         return false;
@@ -110,7 +109,7 @@ abstract class Payments_Channel {
         {
             $params[]=$key.'='.$value;
         }
-        $url = '?';
+        $url.= '/?';
         $url.= implode('&', $params);
         list($code, $data) =  Yii::app()->httpClient->get('https://secure.payonlinesystem.com/payment/' . $url);
         $result = array();

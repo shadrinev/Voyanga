@@ -16,6 +16,7 @@ class SuccessAction extends CAction
         }
 
         list($orderId, $billId) = explode('-', $params['OrderId']);
+
         $bill = Bill::model()->findByPk($billId);
         $channel = $bill->getChannel();
         $sign = $channel->getSignature($params);
@@ -24,11 +25,14 @@ class SuccessAction extends CAction
             throw new Exception("Signature mismatch");
         }
         //! FIXME handle it better for great good
-        if($bill->transactionId)
+        if($bill->transactionId && ($params['TransactionID']!=$bill->transactionId))
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
         $booker  = new FlightBookerComponent();
         $booker->setFlightBookerFromId($channel->booker->id);
+        #FIXME logme
+        if($booker->getStatus()!='waitingForPayment')
+            return;
         $booker->status('paid');
         $bill->save();
         echo 'Ok';
@@ -37,14 +41,13 @@ class SuccessAction extends CAction
         $order->initByOrderBookingId($orderId);
         $payments = Yii::app()->payments;
         $bookers = $order->getBookers();
-        foreach($bookers as $rawBooker)
+        foreach($bookers as $booker)
         {
-            $booker  = new FlightBookerComponent();
-            $booker->setFlightBookerFromId($rawBooker->id);
-            if($booker->getStatus()=='paid')
+            if($booker->getStatus()=='paid'){
                 continue;
+            }
             $order->isWaitingForPaymentState($booker->getStatus());
-            $bill = $payments->getBillForBooker($rawBooker);
+            $bill = $payments->getBillForBooker($booker->getCurrent());
             $channel = $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
@@ -64,11 +67,9 @@ class SuccessAction extends CAction
         $payments = Yii::app()->payments;
         $bookers = $order->getBookers();
 
-        foreach($bookers as $rawBooker)
+        foreach($bookers as $booker)
         {
-            $bill = $payments->getBillForBooker($rawBooker);
-            $booker  = new FlightBookerComponent();
-            $booker->setFlightBookerFromId($rawBooker->id);
+            $bill = $payments->getBillForBooker($booker->getCurrent());
             if($booker->getStatus()=='paid') {
                 $bill->getChannel()->refund();
                 $booker->status('refundedError');

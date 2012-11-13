@@ -18,7 +18,7 @@ class FlightTripElementWorkflow extends TripElementWorkflow
         $flightBookerComponent = new FlightBookerComponent();
         $flightBookerComponent->setFlightBookerFromFlightVoyage($this->item->flightVoyage);
         $currentFlightBookerComponent = $flightBookerComponent->getCurrent();
-        $currentFlightBookerComponent->orderBookingId = $this->bookingContactInfo->id;
+        $currentFlightBookerComponent->orderBookingId = self::$bookingContactInfo->id; //$this->bookingContactInfo->id;
         if (!$currentFlightBookerComponent->save())
         {
             $errMsg = "Could not save FlightBooker" . PHP_EOL . CVarDumper::dumpAsString($currentFlightBookerComponent->getErrors());
