@@ -4,7 +4,7 @@ class SuccessAction extends CAction
     public function run()
     {
         Yii::import("common.extensions.payments.models.Bill");
-        $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey");
+        $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey", "RebillAnchor");
         $params = Array();
         foreach($keys as $key)
         {
@@ -27,16 +27,32 @@ class SuccessAction extends CAction
         if($bill->transactionId)
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
-        $bill->booker->setStatus('ticketing');
+        $booker  = new FlightBookerComponent();
+        $booker->setFlightBookerFromId($channel->booker->id);
+        $booker->status('paid');
         $bill->save();
         echo 'Ok';
         // init order
-#        $order = Yii::app()->order;
-#        $order->initByOrderBookingId($orderId);
-#        $bookers = $order->getBookers();
-#        for($bookers as $booker) {
-
-
-#        }
+        $order = Yii::app()->order;
+        $order->initByOrderBookingId($orderId);
+        $payments = Yii::app()->payments;
+        $bookers = $order->getBookers();
+        return;
+        foreach($bookers as $booker)
+        {
+            if($booker->getStatus()=='paid')
+                continue;
+            $order->isWaitingForPaymentState($booker->getStatus());
+            $bill = $payments->getBillForBooker($booker);
+            $channel = $bill->getChannel();
+            if($channel->rebill($_REQUEST['RebillAnchor']))
+            {
+                $booker->status('paid');
+            }
+            else
+            {
+                throw new Exception("REFUND ALL THE THINGS");
+            }
+        }
     }
 }
