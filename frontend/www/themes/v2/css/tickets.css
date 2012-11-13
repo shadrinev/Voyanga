@@ -189,6 +189,7 @@
     color: #4B525C;
     font-size: 11px;
     text-align: left;
+    cursor: pointer;
     
 }
 .date-time-city .how-long .path {

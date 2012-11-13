@@ -2943,3 +2943,13 @@ input.hotel-input {
 .textSlideProj {
     display: none;
 }
+.PopUpInfoPath {
+    background: #FFF;
+    box-shadow: 0 1px 5px rgba(3,4,4,0.7);
+    border: 1px solid #848687;
+    color: #1d222b;
+    line-height: 19px;
+    padding: 5px;
+    position: absolute;
+    z-index: 500;
+}
