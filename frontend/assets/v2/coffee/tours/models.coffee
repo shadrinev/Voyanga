@@ -724,6 +724,9 @@ class TourTripResultSet
     @hasHotel = false
     @flightCounter = ko.observable 0
     @hotelCounter = ko.observable 0
+    @selected_key = ko.observable ''
+    @selected_best = ko.observable ''
+    @totalCost = 0
 
     @flightCounterWord = ko.computed =>
       res = Utils.wordAfterNum  @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
@@ -738,13 +741,14 @@ class TourTripResultSet
         @hasFlight = true
         @flightCounter(@flightCounter()+1)
         @roundTrip = item.flights.length == 2
-        @items.push new Voyage(item.flights[0], item.valCompany)
-        if @roundTrip
-          @flightCounter(@flightCounter()+1)
-          @items.push new Voyage(item.flights[1], item.valCompany)
+        aviaResult = new AviaResult(item, @)
+        aviaResult.sort()
+        @items.push aviaResult
+        @totalCost += aviaResult.price
       else if (item.isHotel)
         @hasHotel = true
         @hotelCounter(@hotelCounter()+1)
         console.log "Hotel: ", item
         @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
         @items.push(@lastHotel)
+        @totalCost += @lastHotel.roomSets()[0].discountPrice

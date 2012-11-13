@@ -27,7 +27,7 @@
  * @property EventCategory[] $categories
  * @property EventLink[] $links
  * @property EventPrice[] $prices
- * @property EventTour[] $tours
+ * @property EventOrder[] $tours
  */
 class Event extends FrontendActiveRecord
 {

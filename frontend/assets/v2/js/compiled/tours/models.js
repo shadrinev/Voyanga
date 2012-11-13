@@ -1123,6 +1123,9 @@ TourTripResultSet = (function() {
     this.hasHotel = false;
     this.flightCounter = ko.observable(0);
     this.hotelCounter = ko.observable(0);
+    this.selected_key = ko.observable('');
+    this.selected_best = ko.observable('');
+    this.totalCost = 0;
     this.flightCounterWord = ko.computed(function() {
       var res;
       res = Utils.wordAfterNum(_this.flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов');
@@ -1135,21 +1138,22 @@ TourTripResultSet = (function() {
       return Utils.wordAfterNum(_this.hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц');
     });
     _.each(this.resultSet.items, function(item) {
+      var aviaResult;
       if (item.isFlight) {
         _this.hasFlight = true;
         _this.flightCounter(_this.flightCounter() + 1);
         _this.roundTrip = item.flights.length === 2;
-        _this.items.push(new Voyage(item.flights[0], item.valCompany));
-        if (_this.roundTrip) {
-          _this.flightCounter(_this.flightCounter() + 1);
-          return _this.items.push(new Voyage(item.flights[1], item.valCompany));
-        }
+        aviaResult = new AviaResult(item, _this);
+        aviaResult.sort();
+        _this.items.push(aviaResult);
+        return _this.totalCost += aviaResult.price;
       } else if (item.isHotel) {
         _this.hasHotel = true;
         _this.hotelCounter(_this.hotelCounter() + 1);
         console.log("Hotel: ", item);
         _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
-        return _this.items.push(_this.lastHotel);
+        _this.items.push(_this.lastHotel);
+        return _this.totalCost += _this.lastHotel.roomSets()[0].discountPrice;
       }
     });
   }

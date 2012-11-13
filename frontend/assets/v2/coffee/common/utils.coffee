@@ -109,6 +109,9 @@ dateUtils=
     hours + " ч. " + minutes + " м."
 
 Utils =
+  implode: ( glue, pieces ) ->
+    (if (pieces instanceof Array) then pieces.join(glue) else pieces)
+
   inRange: (value, range) ->
     range.from <= value && value <= range.to 
 
@@ -220,8 +223,6 @@ Utils =
     #6372795 - Earth radius
     $dist = $ad * 6372795;
     return $dist;
-
-
 
 
 exTrim = (str, charlist) ->

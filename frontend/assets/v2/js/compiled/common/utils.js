@@ -130,6 +130,13 @@ dateUtils = {
 };
 
 Utils = {
+  implode: function(glue, pieces) {
+    if (pieces instanceof Array) {
+      return pieces.join(glue);
+    } else {
+      return pieces;
+    }
+  },
   inRange: function(value, range) {
     return range.from <= value && value <= range.to;
   },
