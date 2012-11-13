@@ -1156,13 +1156,10 @@ function PopUpInfo() {
         }
         $('.PopUpInfo').hover(function() {
             _onHovePopUp = false;
-            console.log(_onHovePopUp)
         }, function() {
             _onHovePopUp = true;
-            console.log(_onHovePopUp)
         });
         $('body').mouseup(function() {
-            console.log(_onHovePopUp)
             if (_onHovePopUp) {
                 $('.PopUpInfo').remove();
                 _onHovePopUp = true;
@@ -1174,6 +1171,12 @@ function PopUpInfo() {
         $('.PopUpInfo').find('.close').click(function() {
             $('.PopUpInfo').remove();
             _onHovePopUp = true;
+        });
+        $(window).on('keydown', function(e){
+            if ($(e.which == 27) ) {
+                $('.PopUpInfo').remove();
+                _onHovePopUp = true;
+            }
         });
     });
 }
