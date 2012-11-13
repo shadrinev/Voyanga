@@ -2597,6 +2597,10 @@ input.hotel-input {
 	font-size: 14px;
 	color: #1d222b;
 }
+.infoPassengers thead span, .dopInfoPassengers thead span {
+    border-bottom: 1px dashed;
+    cursor: pointer;
+}
 .infoPassengers input[type='text'], .dopInfoPassengers input[type='text'] {
 	background: url("../images/bg-input.png") no-repeat 0px 0px transparent;
 	border: none;
@@ -3001,4 +3005,26 @@ input.hotel-input {
     padding: 5px;
     position: absolute;
     z-index: 500;
+}
+.PopUpInfo {
+    background: #FFF;
+    box-shadow: 0 1px 5px rgba(3,4,4,0.7);
+    border: 1px solid #848687;
+    color: #1d222b;
+    line-height: 19px;
+    padding: 10px;
+    position: absolute;
+    z-index: 500;
+    width: 300px;
+}
+.PopUpInfo .close {
+    position: absolute;
+    color: #5c5e64;
+    font-size: 20px;
+    right: 5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background: url(../images/closePopUp.png) no-repeat;
+    cursor: pointer;
 }
