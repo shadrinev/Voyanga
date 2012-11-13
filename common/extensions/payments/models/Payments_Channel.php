@@ -8,6 +8,7 @@ abstract class Payments_Channel {
         $this->bill = $bill;
         $this->booker = $booker;
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
+        $this->amount = 50;
     }
 
     public function formParams() {
@@ -16,7 +17,7 @@ abstract class Payments_Channel {
         $params = Array();
         $params['MerchantId'] = $credentials['id'];
         //! FIXME: can this amount change?
-        $params['Amount'] = sprintf("%.2f", 50);//  $this->bill->amount);
+        $params['Amount'] = sprintf("%.2f", $this->amount);//  $this->bill->amount);
         $params['Currency'] = 'RUB';
         # FIXME FIXME FIXME FIXME
         $params['OrderId'] = $order->id . '-' . $this->bill->id;
@@ -78,15 +79,23 @@ abstract class Payments_Channel {
         $params['RebillAnchor'] = $anchor;
         $params['SecurityKey'] = $this->getSignature($params, 'rebill');
         list($code,$result) = $this->callApi('transaction/rebill');
-        if($result['Status'] == 'Ok') 
+        if($result['Status'] == 'Ok')
             return true;
         return false;
     }
 
     public function refund()
     {
-
-
+        $params = Array();
+        $params['MerchantId'] = $credentials['id'];
+        //! FIXME: can this amount change?
+        $params['Amount'] = sprintf("%.2f", $this->amount);//  $this->bill->amount);
+        $params['TransactionId'] = $this->bill->transactionId;
+        $params['SecurityKey'] = $this->getSignature($params);
+        list($code,$result) = $this->callApi('transaction/refund');
+        if($result['Result'] == 'Ok')
+            return true;
+        return false;
     }
 
     protected function contributeToConfirm($context)

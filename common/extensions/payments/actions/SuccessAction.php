@@ -37,13 +37,14 @@ class SuccessAction extends CAction
         $order->initByOrderBookingId($orderId);
         $payments = Yii::app()->payments;
         $bookers = $order->getBookers();
-        return;
-        foreach($bookers as $booker)
+        foreach($bookers as $rawBooker)
         {
+            $booker  = new FlightBookerComponent();
+            $booker->setFlightBookerFromId($rawBooker->id);
             if($booker->getStatus()=='paid')
                 continue;
             $order->isWaitingForPaymentState($booker->getStatus());
-            $bill = $payments->getBillForBooker($booker);
+            $bill = $payments->getBillForBooker($rawBooker);
             $channel = $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
@@ -51,7 +52,30 @@ class SuccessAction extends CAction
             }
             else
             {
-                throw new Exception("REFUND ALL THE THINGS");
+                $booker->status('paymentError');
+                $this->refund($order);
+            }
+        }
+    }
+
+    //! performs refunds of boookers in given order
+    private function refund($order)
+    {
+        $payments = Yii::app()->payments;
+        $bookers = $order->getBookers();
+
+        foreach($bookers as $rawBooker)
+        {
+            $bill = $payments->getBillForBooker($rawBooker);
+            $booker  = new FlightBookerComponent();
+            $booker->setFlightBookerFromId($rawBooker->id);
+            if($booker->getStatus()=='paid') {
+                $bill->getChannel()->refund();
+                $booker->status('refundedError');
+            } elseif($booker->getStatus()=='waitingForPayment') {
+                $booker->status('paymentCanceledError');
+            } elseif($booker->getStatus()!='paymentError') {
+                throw new Exception("Wrong status");
             }
         }
     }
