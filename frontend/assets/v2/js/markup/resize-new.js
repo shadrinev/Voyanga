@@ -1121,3 +1121,20 @@ function ClikLeftProj() {
     $('.mainWrapBg').find('.itemsProj').empty().append(_textProjEq);
     $('.bgCount').find('span').text(_countSlide);
 }
+
+
+function PopUpInfoPath(_this) {
+    $(_this).mousemove(function(e) {
+        var _text = $(this).attr('rel');
+        if ($('.PopUpInfoPath').length > 0 && $('.PopUpInfoPath').is(':visible')) {
+            $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
+        }
+        else {
+            $('body').prepend('<div class="PopUpInfoPath">'+ _text +'</div> ');
+            $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
+        }
+    });
+}
+function PopUpInfoPathRemove() {
+    $('.PopUpInfoPath').remove();
+}
