@@ -34,6 +34,7 @@
     padding-bottom: 65px;
     padding-top: 35px;
     position: relative;
+    min-width: 1000px;
 }
 .head .center-block .logo {
     background: url("../images/slice.png") no-repeat scroll 0 0 transparent;
@@ -2360,12 +2361,11 @@ input.hotel-input {
     box-shadow: 0 1px 1px rgba(26, 27, 31, 0.6);
     color: #1D222B;
     overflow: hidden;
+    position: relative;
 }
 .allTicketsDIV .aviaTickets, .allTicketsDIV .hotelTickets {
-    border-top: 1px solid #808186;
     font-family: Arial;
-    margin-top: -1px;
-    width: 100%;
+    width: 795px;
 }
 .allTicketsDIV .aviaTickets tr td,  .allTicketsDIV .hotelTickets tr td {
     line-height: 22px;
@@ -2422,25 +2422,38 @@ input.hotel-input {
 .allTicketsDIV .aviaTickets .voyage .number, .allTicketsDIV .aviaTickets .class .classMine {
     color: #1D222B;
 }
-.allTicketsDIV .aviaTickets .tdPrice, .allTicketsDIV .hotelTickets .tdPrice {
+.allTicketsDIV .tdPrice {
     border-left: 1px solid #DBDCDC;
     padding-left: 20px;
     width: 135px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
 }
-
-.allTicketsDIV .aviaTickets .price, .allTicketsDIV .hotelTickets .price {
+.allTicketsDIV .tdPrice .verticalAlign {
+    position: absolute;
+    top: 50%;
+    height: 42px;
+    margin-top: -21px;
+}
+.allTicketsDIV .price {
     color: #1D222B;
     font-size: 22px;
 }
-.allTicketsDIV .aviaTickets .lastPrice, .allTicketsDIV .hotelTickets .lastPrice {
+.allTicketsDIV .price .rur {
+    font-size: 21px;
+}
+.allTicketsDIV .lastPrice {
     color: #C71D1D;
     display: inline-block;
     text-decoration: line-through;
 }
-.allTicketsDIV .aviaTickets .priceSale,  .allTicketsDIV .hotelTickets .priceSale {
-    height: 22px;
+.allTicketsDIV .priceSale {
+    height: 15px;
+    margin-top: -4px;
 }
-.allTicketsDIV .aviaTickets .icoTours, .allTicketsDIV .hotelTickets .icoTours {
+.allTicketsDIV .icoTours {
     background: url("../images/icoTours.png") no-repeat scroll 0 0 transparent;
     display: inline-block;
     height: 10px;
@@ -2448,7 +2461,11 @@ input.hotel-input {
     vertical-align: middle;
     width: 36px;
 }
-.allTicketsDIV .aviaTickets .moreDetails a, .allTicketsDIV .hotelTickets .moreDetails a {
+.allTicketsDIV .moreDetails {
+    position: absolute;
+    bottom: 11px;
+}
+.allTicketsDIV .moreDetails a {
     border-bottom: 1px dashed;
     color: #4B525C;
     font-size: 11px;
@@ -2481,6 +2498,12 @@ input.hotel-input {
 .allTicketsDIV .hotelTickets .tdInfo .name {
 	color: #879094;
 	font-size: 11px;
+}
+.allTicketsDIV .ticketBox {
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid #808186;
+    margin-top: -1px;
 }
 .paybuyContent .theSum {
 	overflow: hidden;

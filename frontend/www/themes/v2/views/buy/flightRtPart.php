@@ -1,4 +1,5 @@
 <script type="text/html" id="flight-rt-part-template">
+    <div class="ticketBox">
     <table class="aviaTickets">
         <tbody>
         <tr>
@@ -29,14 +30,6 @@
                 <div class="airline" data-bind="text:$data[0].airlineName">Аэрофлот</div>
                 <div class="voyage"><span data-bind="text: $data[0].flightCodesText">Рейс</span>: <span class="number" data-bind="text: $data[0].flightCodes()">S7-76</span></div>
                 <div class="class">Класс: <span class="classMine">Эконом</span></div>
-            </td>
-            <td class="tdPrice paddingBottom" rowspan="2">
-                <div class="price"><span data-bind="text:$data[0].price">12 500</span><span class="rur">o</span></div>
-                <div class="priceSale">
-                    <!-- <div class="lastPrice">13 000 <span class="rur">o</span></div> <span class="icoTours"></span> -->
-                </div>
-                <br>
-                <div class="moreDetails"><a href="#" data-bind="click: $data[0].showDetails">Подробнее</a></div>
             </td>
         </tr>
         <tr>
@@ -70,4 +63,14 @@
         </tr>
         </tbody>
     </table>
+    <div class="tdPrice">
+        <div class="verticalAlign">
+            <div class="price"><span data-bind="text:$data[0].price">12 500</span><span class="rur">o</span></div>
+            <div class="priceSale">
+                <!-- <div class="lastPrice">13 000 <span class="rur">o</span></div> <span class="icoTours"></span> -->
+            </div>
+        </div>
+        <div class="moreDetails"><a href="#" data-bind="click: $data[0].showDetails">Подробнее</a></div>
+    </div>
+    </div>
 </script>
