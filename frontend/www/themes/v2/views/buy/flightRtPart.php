@@ -11,13 +11,9 @@
             </td>
             <td class="tdPath">
                 <div class="timeAndPath" rel="сколько занимает пересадка <br> может и быть в две строчки">
-                    <!-- ko if: $data[0].activeVoyage().hasStopover -->
                         <div class="ico-path">
-                            <!-- ko foreach: $data[0].activeVoyage().stopoverCount -->
-                                <span class="cup"></span>
-                            <!-- /ko -->
+                            <span data-bind="html: $data[0].activeVoyage().stopoverHtml()"></span>
                         </div>
-                    <!-- /ko -->
                     <div class="text">Всего <span data-bind="text: $data[0].duration()"></span></div>
                 </div>
             </td>
@@ -28,7 +24,7 @@
             </td>
             <td class="tdAvia paddingBottom">
                 <div class="airline" data-bind="text:$data[0].airlineName">Аэрофлот</div>
-                <div class="voyage"><span data-bind="text: $data[0].flightCodesText">Рейс</span>: <span class="number" data-bind="text: $data[0].flightCodes()">S7-76</span></div>
+                <div class="voyage"><span data-bind="text: $data[0].flightCodesText">Рейс</span>: <span class="number" data-bind="html: $data[0].flightCodes()">S7-76</span></div>
                 <div class="class">Класс: <span class="classMine">Эконом</span></div>
             </td>
         </tr>
@@ -40,13 +36,9 @@
             </td>
             <td class="tdPath">
                 <div class="timeAndPath" rel="сколько занимает пересадка <br> может и быть в две строчки">
-                    <!-- ko if: $data[0].activeVoyage().activeBackVoyage().hasStopover -->
-                        <div class="ico-path">
-                            <!-- ko foreach: $data[0].activeVoyage().activeBackVoyage().stopoverCount -->
-                                <span class="cup"></span>
-                            <!-- /ko -->
-                        </div>
-                    <!-- /ko -->
+                    <div class="ico-path">
+                        <span data-bind="html: $data[0].activeVoyage().activeBackVoyage().stopoverHtml()"></span>
+                    </div>
                     <div class="text">Всего <span data-bind="text: $data[0].rtDuration()"></span></div>
                 </div>
             </td>
@@ -57,7 +49,7 @@
             </td>
             <td class="tdAvia">
                 <div class="airline" data-bind="text:$data[0].rtAirlineName">Аэрофлот</div>
-                <div class="voyage"><span data-bind="text:$data[0].rtFlightCodesText()">Рейс</span>: <span class="number" data-bind="text: $data[0].rtFlightCodes()">S7-76</span></div>
+                <div class="voyage"><span data-bind="text:$data[0].rtFlightCodesText()">Рейс</span>: <span class="number" data-bind="html: $data[0].rtFlightCodes()">S7-76</span></div>
                 <div class="class">Класс: <span class="classMine">Эконом</span></div>
             </td>
         </tr>

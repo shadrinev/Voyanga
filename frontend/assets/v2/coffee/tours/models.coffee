@@ -729,11 +729,16 @@ class TourTripResultSet
     @totalCost = 0
 
     @flightCounterWord = ko.computed =>
+      if @flightCounter()==0
+        return
       res = Utils.wordAfterNum  @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
       if (@hotelCounter()>0)
         res = res + ', '
       return res
+
     @hotelCounterWord = ko.computed =>
+      if @hotelCounter()==0
+        return
       Utils.wordAfterNum  @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
 
     _.each @resultSet.items, (item) =>

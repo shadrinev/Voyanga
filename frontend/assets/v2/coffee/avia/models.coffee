@@ -3,9 +3,11 @@
 # Atomic journey unit.
 class FlightPart
   constructor: (part)->
+    @part = part
     @departureDate = new Date(part.datetimeBegin+'+04:00')
     @arrivalDate = new Date(part.datetimeEnd+'+04:00')
     @departureCity = part.departureCity
+    @departureCityPre = part.departureCityPre
     @departureAirport = part.departureAirport
     @arrivalCity = part.arrivalCity
     @arrivalCityPre = part.arrivalCityPre
@@ -25,6 +27,9 @@ class FlightPart
   duration: ->
     dateUtils.formatDuration @_duration
 
+  departureCityStopoverText: ->
+    "Пересадка в " + @departureCityPre + ", " + @stopoverText()
+
   # calculate stopover length to given anotherPart
   calculateStopoverLength: (anotherPart) ->
     @stopoverLength = Math.floor((anotherPart.departureDate.getTime() - @arrivalDate.getTime())/1000)
@@ -42,7 +47,6 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
       @parts.push new FlightPart(part)
 
     @flightKey = flight.flightKey
-    @stopoverCount = _.size(@parts) - 1
     @hasStopover = if @stopoverCount > 1 then true else false
     @stopoverLength = 0
     @maxStopoverLength = 0 
@@ -130,7 +134,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     result = []
     for part in @parts[0..-2]
       result.push part.arrivalCityPre
-    "Пересадка в " + result.join(', ')
+      "Пересадка в " + result.join(', ')
 
   stopsRatio: ->
     result = []
@@ -152,6 +156,17 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     for left in result
       htmlResult += '<span class="cup" style="left: ' + left + '%;"></span>'
     htmlResult += '<span class="down"></span>'
+
+    return htmlResult
+
+  stopoverHtml: ->
+    if @direct
+      return
+    htmlResult = ""
+
+    for part in @parts[0..-2]
+      if part._duration > 0
+        htmlResult += '<span class="cup tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '"></span>'
 
     return htmlResult
 
@@ -201,6 +216,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 #
 class AviaResult
   constructor: (data, @parent) ->
+    @isFlight = true
+    @isHotel = false
     # Mix in events
     _.extend @, Backbone.Events
 
@@ -270,11 +287,11 @@ class AviaResult
     return @activeVoyage().flightKey
 
   flightCodes: =>
-    codes = _.map @activeVoyage().parts, (flight) -> flight.flightCode
+    codes = _.map @activeVoyage().parts, (flight) -> '<span class="tooltip" rel="' + flight.departureCity + ' - ' + flight.arrivalCity + '"><nobr>' + flight.flightCode + "</nobr></span>"
     Utils.implode(', ', codes)
 
   rtFlightCodes: =>
-    codes = _.map @activeVoyage().activeBackVoyage().parts, (flight) -> flight.flightCode
+    codes = _.map @activeVoyage().activeBackVoyage().parts, (flight) -> '<span class="tooltip" rel="' + flight.departureCity + ' - ' + flight.arrivalCity + '"><nobr>' + flight.flightCode + "</nobr></span>"
     Utils.implode(', ', codes)
 
   isActive: ->

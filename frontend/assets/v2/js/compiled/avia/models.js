@@ -7,9 +7,11 @@ var AviaResult, AviaResultSet, AviaSearchParams, FlightPart, Voyage,
 FlightPart = (function() {
 
   function FlightPart(part) {
+    this.part = part;
     this.departureDate = new Date(part.datetimeBegin + '+04:00');
     this.arrivalDate = new Date(part.datetimeEnd + '+04:00');
     this.departureCity = part.departureCity;
+    this.departureCityPre = part.departureCityPre;
     this.departureAirport = part.departureAirport;
     this.arrivalCity = part.arrivalCity;
     this.arrivalCityPre = part.arrivalCityPre;
@@ -31,6 +33,10 @@ FlightPart = (function() {
 
   FlightPart.prototype.duration = function() {
     return dateUtils.formatDuration(this._duration);
+  };
+
+  FlightPart.prototype.departureCityStopoverText = function() {
+    return "Пересадка в " + this.departureCityPre + ", " + this.stopoverText();
   };
 
   FlightPart.prototype.calculateStopoverLength = function(anotherPart) {
@@ -57,7 +63,6 @@ Voyage = (function() {
       this.parts.push(new FlightPart(part));
     }
     this.flightKey = flight.flightKey;
-    this.stopoverCount = _.size(this.parts) - 1;
     this.hasStopover = this.stopoverCount > 1 ? true : false;
     this.stopoverLength = 0;
     this.maxStopoverLength = 0;
@@ -152,17 +157,19 @@ Voyage = (function() {
   };
 
   Voyage.prototype.stopoverText = function() {
-    var part, result, _i, _len, _ref;
+    var part, result, _i, _len, _ref, _results;
     if (this.direct) {
       return "Без пересадок";
     }
     result = [];
     _ref = this.parts.slice(0, -1);
+    _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
       result.push(part.arrivalCityPre);
+      _results.push("Пересадка в " + result.join(', '));
     }
-    return "Пересадка в " + result.join(', ');
+    return _results;
   };
 
   Voyage.prototype.stopsRatio = function() {
@@ -196,6 +203,22 @@ Voyage = (function() {
       htmlResult += '<span class="cup" style="left: ' + left + '%;"></span>';
     }
     htmlResult += '<span class="down"></span>';
+    return htmlResult;
+  };
+
+  Voyage.prototype.stopoverHtml = function() {
+    var htmlResult, part, _i, _len, _ref;
+    if (this.direct) {
+      return;
+    }
+    htmlResult = "";
+    _ref = this.parts.slice(0, -1);
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      part = _ref[_i];
+      if (part._duration > 0) {
+        htmlResult += '<span class="cup tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '"></span>';
+      }
+    }
     return htmlResult;
   };
 
@@ -296,6 +319,8 @@ AviaResult = (function() {
 
     this.rtFlightCodesText = __bind(this.rtFlightCodesText, this);
 
+    this.isFlight = true;
+    this.isHotel = false;
     _.extend(this, Backbone.Events);
     this._data = data;
     this._stacked_data = [];
@@ -373,7 +398,7 @@ AviaResult = (function() {
   AviaResult.prototype.flightCodes = function() {
     var codes;
     codes = _.map(this.activeVoyage().parts, function(flight) {
-      return flight.flightCode;
+      return '<span class="tooltip" rel="' + flight.departureCity + ' - ' + flight.arrivalCity + '"><nobr>' + flight.flightCode + "</nobr></span>";
     });
     return Utils.implode(', ', codes);
   };
@@ -381,7 +406,7 @@ AviaResult = (function() {
   AviaResult.prototype.rtFlightCodes = function() {
     var codes;
     codes = _.map(this.activeVoyage().activeBackVoyage().parts, function(flight) {
-      return flight.flightCode;
+      return '<span class="tooltip" rel="' + flight.departureCity + ' - ' + flight.arrivalCity + '"><nobr>' + flight.flightCode + "</nobr></span>";
     });
     return Utils.implode(', ', codes);
   };
