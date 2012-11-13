@@ -31,12 +31,17 @@ abstract class Payments_Channel {
         return $params;
     }
 
-    public function getSignature($params)
+    public function getSignature($params, $strategy='ignorerebill')
     {
         $credentials = $this->credentials;
-        $keys = Array('MerchantId', 'DateTime', 'TransactionID', 'OrderId',
-                      'IData', 'Amount', 'Currency', 'Commission', 'PNR',
-                      'ValidUntil', 'TransactionId');
+        if($strategy=='ignorerebill')
+            $keys = Array('MerchantId', 'DateTime', 'TransactionID', 'OrderId',
+                          'IData', 'Amount', 'Currency', 'Commission', 'PNR',
+                          'ValidUntil', 'TransactionId');
+        else
+            $keys = Array('MerchantId', 'RebillAnchor', 'DateTime', 'TransactionID', 'OrderId',
+                          'IData', 'Amount', 'Currency', 'Commission', 'PNR',
+                          'ValidUntil', 'TransactionId');
         $values = Array();
         foreach($keys as $key)
         {
@@ -51,25 +56,31 @@ abstract class Payments_Channel {
     public function confirm()
     {
         //! FIXME shuld we only accept bills in certain states ?
-        $url = 'https://secure.payonlinesystem.com/payment/transaction/complete/';
+        $url = 'transaction/complete/';
         $context = array();
         $context['TransactionId'] = $this->bill->transactionId;
         $context['ContentType'] = 'text';
         $context = $this->contributeToConfirm($context);
 
         $context['SecurityKey'] = $this->getSignatureFor($bill->channel, $context);
-        list($code, $data) = $this->callApi($url, $context);
-        if(strlen($data))
-        {
-            $result = Array();
-            parse_str($data, $result);
+        list($code, $result) = $this->callApi($url, $context);
             // FIXME check AMOUNT?
-            if($result['Result'] == 'Ok')
-            {
-                $bill->status = Bill::STATUS_PAID;
-                $bill->save();
-            }
+        if($result['Result'] == 'Ok')
+        {
+            $bill->status = Bill::STATUS_PAID;
+            $bill->save();
         }
+    }
+
+    public function rebill($anchor)
+    {
+        $params = $this->formParams();
+        $params['RebillAnchor'] = $anchor;
+        $params['SecurityKey'] = $this->getSignature($params, 'rebill');
+        list($code,$result) = $this->callApi('transaction/rebill');
+        if($result['Status'] == 'Ok') 
+            return true;
+        return false;
     }
 
     public function refund()
@@ -92,6 +103,12 @@ abstract class Payments_Channel {
         }
         $url = '?';
         $url.= implode('&', $params);
-        return Yii::app()->httpClient->get($url);
+        list($code, $data) =  Yii::app()->httpClient->get('https://secure.payonlinesystem.com/payment/' . $url);
+        $result = array();
+        if(strlen($data))
+        {
+            parse_str($data, $result);
+        }
+        return Array($code, $result);
     }
 }
