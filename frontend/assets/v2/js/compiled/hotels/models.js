@@ -288,6 +288,8 @@ HotelResult = (function() {
 
     this.isActive = __bind(this.isActive, this);
 
+    this.isFlight = false;
+    this.isHotel = true;
     _.extend(this, Backbone.Events);
     if (!hotelDatails) {
       hotelDatails = {};

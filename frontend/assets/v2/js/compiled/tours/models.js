@@ -1128,6 +1128,9 @@ TourTripResultSet = (function() {
     this.totalCost = 0;
     this.flightCounterWord = ko.computed(function() {
       var res;
+      if (_this.flightCounter() === 0) {
+        return;
+      }
       res = Utils.wordAfterNum(_this.flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов');
       if (_this.hotelCounter() > 0) {
         res = res + ', ';
@@ -1135,6 +1138,9 @@ TourTripResultSet = (function() {
       return res;
     });
     this.hotelCounterWord = ko.computed(function() {
+      if (_this.hotelCounter() === 0) {
+        return;
+      }
       return Utils.wordAfterNum(_this.hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц');
     });
     _.each(this.resultSet.items, function(item) {

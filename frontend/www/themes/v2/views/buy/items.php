@@ -7,8 +7,12 @@
     <!-- /ko -->
     <!-- ko ifnot: $data.roundTrip -->
         <!-- ko foreach: $data.items -->
-            <span data-bind="template: {name: 'flight-part-template', data: $data}"></span>
-            <span data-bind="template: {name: 'hotel-part-template', data: $data}"></span>
+            <!-- ko if:$data.isFlight -->
+                <span data-bind="template: {name: 'flight-part-template', data: $data}"></span>
+            <!-- /ko -->
+            <!-- ko if:$data.isHotel -->
+                <span data-bind="template: {name: 'hotel-part-template', data: $data}"></span>
+            <!-- /ko -->
         <!-- /ko -->
     <!-- /ko -->
 </script>
