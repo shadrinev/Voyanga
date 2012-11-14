@@ -112,6 +112,9 @@ abstract class Payments_Channel {
         $url.= '/?';
         $url.= implode('&', $params);
         list($code, $data) =  Yii::app()->httpClient->get('https://secure.payonlinesystem.com/payment/' . $url);
+        Yii::trace('https://secure.payonlinesystem.com/payment/' . $url, "payments.channel.apicall");
+        Yii::trace($data, "payments.channel.apicall");
+
         $result = array();
         if(strlen($data))
         {
