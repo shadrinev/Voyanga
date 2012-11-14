@@ -106,7 +106,7 @@ class FlightManager
                 $criteria->compare('`dateBack`', $siblingDayBack->format('Y-m-d'));
                 $cacheItem = FlightCache::model()->find($criteria);
                 if ($cacheItem)
-                    $value = $cacheItem->priceBestPrice * $flightSearchParams->totalPassengers;
+                    $value = ceil(($cacheItem->priceBestPrice * $flightSearchParams->totalPassengers) / 2);
                 else
                 {
                     $value = false;
