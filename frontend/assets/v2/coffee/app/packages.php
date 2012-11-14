@@ -17,7 +17,7 @@
             'scroll/jquery.mousewheel.js',
             'scroll/jquery.jscrollpane.min.js',
             'markerclusterer_compiled.js',
-            'chosen/chosen.jquery.min.js'
+            'chosen/chosen.jquery.min.js',
         ),
         'depends' => array('jquery')
     ),
@@ -48,7 +48,7 @@
             'panel-new.js',
             'helpers.js',
             'jquery.select.slider.js',
-            //'jquery.slider.lib.js',
+            'jquery.synctranslit.js',
             'jquery.slider.js',
             'jquery.photoslider.js',
             'loader.js',

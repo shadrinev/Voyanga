@@ -31,9 +31,14 @@
             </thead>
             <tbody>
             <?php foreach($passportForms as $i=>$model):?>
+                <script type="text/javascript">
+                    $(function(){
+                        $('#syncTranslit<?php echo $i ?>').syncTranslit({destination: 'syncTranslit<?php echo $i ?>'});
+                    });
+                </script>
                 <tr>
                     <td class="tdName">
-                        <?php echo CHtml::activeTextField($model, "[$i]firstName"); ?>
+                        <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id'=>'syncTranslit'.$i)); ?>
                     </td>
                     <td class="tdLastname">
                         <?php echo CHtml::activeTextField($model, "[$i]lastName"); ?>
