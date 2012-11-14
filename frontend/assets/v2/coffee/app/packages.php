@@ -16,7 +16,8 @@
             'moment-ru.js',
             'scroll/jquery.mousewheel.js',
             'scroll/jquery.jscrollpane.min.js',
-            'markerclusterer_compiled.js'
+            'markerclusterer_compiled.js',
+            'chosen/chosen.jquery.min.js'
         ),
         'depends' => array('jquery')
     ),
