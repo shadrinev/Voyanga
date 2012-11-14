@@ -582,6 +582,7 @@
     top: inherit;
     width: 28px;
 }
+
 .tdPath .ico-path .cup {
     background: url("../images/ico-path.png") no-repeat scroll 0 -80px #f4f7f9;
     display: inline-block;
@@ -592,6 +593,18 @@
     top: inherit;
     width: 28px;
 }
+
+.tdPath .ico-path .cupLong {
+    background:  url("../images/ico-path.png") no-repeat scroll -41px -15px transparent;
+    display: inline-block;
+    height: 15px;
+    left: auto !important;
+    margin: 0 auto;
+    position: relative;
+    top: inherit;
+    width: 28px;
+}
+
 .tdPath .ico-path .cup + .cup {
     background-position: -5px -80px;
     width: 23px;
