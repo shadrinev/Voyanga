@@ -144,17 +144,17 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
       (memo, part)-> memo + part._duration,
       0
     for part in @parts[0..-2]
-      result.push Math.ceil part._duration/duration*80
+      result.push {left: Math.ceil(part._duration/duration*80), part: part}
     for data, index in result
-      if data < 18
-        data = 18        
+      if data.left < 18
+        data.left = 18        
       if index > 0
-        result[index] = result[index-1]+data
+        result[index].left = result[index-1].left+data.left
       else
-        result[index] = data
+        result[index].left = data.left
     htmlResult = ""
-    for left in result
-      htmlResult += '<span class="cup" style="left: ' + left + '%;"></span>'
+    for data in result
+      htmlResult += @getCupHtmlForPart data.part, data.left
     htmlResult += '<span class="down"></span>'
 
     return htmlResult
@@ -166,10 +166,15 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
     for part in @parts[0..-2]
       if part._duration > 0
-        htmlResult += '<span class="cup tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '"></span>'
-
+        htmlResult += @getCupHtmlForPart(part)
     return htmlResult
 
+  # Returns cup html for flight part 
+  getCupHtmlForPart: (part, style="")->
+    cupClass = if part.stopoverLength < 2.5*60*60 then "cup" else "cupLong"
+    '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>'
+
+  # FIXME prolly should have cupLong here too
   recommendStopoverIco: ->
     if @direct
       return
