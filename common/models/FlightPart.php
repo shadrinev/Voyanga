@@ -103,7 +103,7 @@ class FlightPart
     {
         $aircraft = Aircraft::model()->findByAttributes(array('nIataCode'=>strtolower($this->aircraftCode)));
         if ($aircraft)
-            return $aircraft->getFullTitle();
+            return $aircraft->fullTitle;
         return '';
     }
 }

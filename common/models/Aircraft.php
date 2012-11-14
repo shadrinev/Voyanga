@@ -4,11 +4,8 @@
  *
  * The followings are the available columns in table 'airline':
  * @property integer $id
- * @property integer $iataCode
- * @property integer $manufacturer
- * @property integer $manufacturerRu
- * @property string $model
- * @property string $type
+ * @property integer $code
+ * @property string $fullTitle
  */
 class Aircraft extends CActiveRecord
 {
@@ -33,12 +30,5 @@ class Aircraft extends CActiveRecord
     public function tableName()
     {
         return 'aircraft';
-    }
-
-    public function getFullTitle()
-    {
-        $manufacturer = strlen($this->manufacturerRu) > 0 ? $this->manufacturerRu : $this->manufacturer;
-        $model = $this->model;
-        return $manufacturer." ".$model;
     }
 }
