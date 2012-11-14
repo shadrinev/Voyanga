@@ -173,7 +173,7 @@ Voyage = (function() {
   };
 
   Voyage.prototype.stopsRatio = function() {
-    var data, duration, htmlResult, index, left, part, result, _i, _j, _k, _len, _len1, _len2, _ref;
+    var data, duration, htmlResult, index, part, result, _i, _j, _k, _len, _len1, _len2, _ref;
     result = [];
     if (this.direct) {
       return '<span class="down"></span>';
@@ -184,23 +184,26 @@ Voyage = (function() {
     _ref = this.parts.slice(0, -1);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
-      result.push(Math.ceil(part._duration / duration * 80));
+      result.push({
+        left: Math.ceil(part._duration / duration * 80),
+        part: part
+      });
     }
     for (index = _j = 0, _len1 = result.length; _j < _len1; index = ++_j) {
       data = result[index];
-      if (data < 18) {
-        data = 18;
+      if (data.left < 18) {
+        data.left = 18;
       }
       if (index > 0) {
-        result[index] = result[index - 1] + data;
+        result[index].left = result[index - 1].left + data.left;
       } else {
-        result[index] = data;
+        result[index].left = data.left;
       }
     }
     htmlResult = "";
     for (_k = 0, _len2 = result.length; _k < _len2; _k++) {
-      left = result[_k];
-      htmlResult += '<span class="cup" style="left: ' + left + '%;"></span>';
+      data = result[_k];
+      htmlResult += this.getCupHtmlForPart(data.part, data.left);
     }
     htmlResult += '<span class="down"></span>';
     return htmlResult;
@@ -216,10 +219,19 @@ Voyage = (function() {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
       if (part._duration > 0) {
-        htmlResult += '<span class="cup tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '"></span>';
+        htmlResult += this.getCupHtmlForPart(part);
       }
     }
     return htmlResult;
+  };
+
+  Voyage.prototype.getCupHtmlForPart = function(part, style) {
+    var cupClass;
+    if (style == null) {
+      style = "";
+    }
+    cupClass = part.stopoverLength < 2.5 * 60 * 60 ? "cup" : "cupLong";
+    return '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>';
   };
 
   Voyage.prototype.recommendStopoverIco = function() {
