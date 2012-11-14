@@ -154,7 +154,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
         result[index].left = data.left
     htmlResult = ""
     for data in result
-      htmlResult += @getCupHtmlForPart data.part, data.left
+      htmlResult += @getCupHtmlForPart data.part, "left: " + data.left + '%'
     htmlResult += '<span class="down"></span>'
 
     return htmlResult
@@ -172,7 +172,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
   # Returns cup html for flight part 
   getCupHtmlForPart: (part, style="")->
     cupClass = if part.stopoverLength < 2.5*60*60 then "cup" else "cupLong"
-    '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="left:' + style + '%"></span>'
+    '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>'
 
   # FIXME prolly should have cupLong here too
   recommendStopoverIco: ->

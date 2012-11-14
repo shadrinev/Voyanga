@@ -203,7 +203,7 @@ Voyage = (function() {
     htmlResult = "";
     for (_k = 0, _len2 = result.length; _k < _len2; _k++) {
       data = result[_k];
-      htmlResult += this.getCupHtmlForPart(data.part, data.left);
+      htmlResult += this.getCupHtmlForPart(data.part, "left: " + data.left + '%');
     }
     htmlResult += '<span class="down"></span>';
     return htmlResult;
@@ -231,7 +231,7 @@ Voyage = (function() {
       style = "";
     }
     cupClass = part.stopoverLength < 2.5 * 60 * 60 ? "cup" : "cupLong";
-    return '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="left:' + style + '%"></span>';
+    return '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>';
   };
 
   Voyage.prototype.recommendStopoverIco = function() {
