@@ -31,7 +31,7 @@ class SuccessAction extends CAction
         $booker  = new FlightBookerComponent();
         $booker->setFlightBookerFromId($channel->booker->id);
         //FIXME logme
-        if($this->getStatus($booker)!='paid')
+        if($this->getStatus($booker)=='paid')
             return $this->rebill($orderId);
 
         if($this->getStatus($booker)!='waitingForPayment')
