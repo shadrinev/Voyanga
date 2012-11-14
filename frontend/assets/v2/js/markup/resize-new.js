@@ -1127,6 +1127,7 @@ function PopUpInfoPath() {
     var _this = $('.tooltip');
     $(_this).mousemove(function(e) {
         var _text = $(this).attr('rel');
+        console.log("TOOLTIP FOR:", $(this).attr('rel'));
         if ($('.PopUpInfoPath').length > 0 && $('.PopUpInfoPath').is(':visible')) {
             $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
         }
@@ -1134,6 +1135,9 @@ function PopUpInfoPath() {
             $('body').prepend('<div class="PopUpInfoPath">'+ _text +'</div> ');
             $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
         }
+    });
+    $(_this).mouseout(function() {
+        $('.PopUpInfoPath').remove();
     });
     $('.close').mouseout(function() {
         $('.PopUpInfoPath').remove();

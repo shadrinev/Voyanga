@@ -155,5 +155,10 @@ class TripDataProvider
         {
             $element['hotelDetails'] = Yii::app()->pCache->get('HotelDetails-'.$element['hotelId']);
         }
+        if ($element['isFlight'])
+        {
+            $elements = FlightManager::injectForBe(array($element), true);
+            $element = $elements[0];
+        }
     }
 }
