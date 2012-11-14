@@ -16,7 +16,6 @@ class FlightPart
     public $departureAirport;
     public $arrivalAirportId;
     public $arrivalAirport;
-    public $aircraftName;
     public $aircraftCode;
     public $stopNum;
     public $bookingCodes;
@@ -85,7 +84,8 @@ class FlightPart
             'duration' => $this->duration,
             'departureAirport' => $this->departureAirport->localRu,
             'arrivalAirport' => $this->arrivalAirport->localRu,
-            'aircraftCode'=>$this->aircraftCode,
+            'aircraftCode' => $this->aircraftCode,
+            'aircraftName' => $this->getAircraftName(),
             'stopNum'=>$this->stopNum,
             'bookingCode'=>$this->bookingCodes[0],
         );
@@ -99,4 +99,11 @@ class FlightPart
         return self::SERVICE_CLASS_ECONOM;
     }
 
+    public function getAircraftName()
+    {
+        $aircraft = Aircraft::model()->findByAttributes(array('nIataCode'=>strtolower($this->aircraftCode)));
+        if ($aircraft)
+            return $aircraft->getFullTitle();
+        return '';
+    }
 }
