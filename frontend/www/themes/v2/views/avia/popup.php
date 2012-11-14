@@ -104,7 +104,7 @@
                 <img data-bind="attr: {'src': '/img/airlines/' + transportAirline +'.png'}" height="30" ><br>
                 Номер рейса: <span data-bind="text: flightCode"></span>
                 <br>
-                Самолет: <span data-bind="text: flightCode"></span>
+                Самолет: <span data-bind="text: aircraftName"></span>
             </div>
         </div>
         <!-- ko if: $index() < ($length() - 1) -->

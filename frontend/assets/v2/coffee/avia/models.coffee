@@ -9,6 +9,7 @@ class FlightPart
     @departureCity = part.departureCity
     @departureCityPre = part.departureCityPre
     @departureAirport = part.departureAirport
+    @aircraftName = part.aircraftName
     @arrivalCity = part.arrivalCity
     @arrivalCityPre = part.arrivalCityPre
     @arrivalAirport = part.arrivalAirport

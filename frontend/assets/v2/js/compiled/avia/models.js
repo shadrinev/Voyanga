@@ -13,6 +13,7 @@ FlightPart = (function() {
     this.departureCity = part.departureCity;
     this.departureCityPre = part.departureCityPre;
     this.departureAirport = part.departureAirport;
+    this.aircraftName = part.aircraftName;
     this.arrivalCity = part.arrivalCity;
     this.arrivalCityPre = part.arrivalCityPre;
     this.arrivalAirport = part.arrivalAirport;
