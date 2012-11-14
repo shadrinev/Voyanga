@@ -50,6 +50,7 @@ class SearchController extends ApiController
             $this->results = $variants;
             $result['flights']['flightVoyages'] = $this->results;
             $result['searchParams'] = $flightSearchParams->getJsonObject();
+            $result['siblings'] = FlightManager::createSiblingsData($flightSearchParams);
             $this->sendWithCorrectFormat($format, $result);
         }
     }
@@ -68,6 +69,9 @@ class SearchController extends ApiController
         $asyncExecutor->add($anyClassUrl);
 
     }
+
+
+
     /**
      * @param array $destinations
      *  [Х][departure] - departure city iata code,

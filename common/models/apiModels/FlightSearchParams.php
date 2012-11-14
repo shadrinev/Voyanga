@@ -136,4 +136,9 @@ class FlightSearchParams extends CComponent
         }
         return false;
     }
+
+    public function getTotalPassengers()
+    {
+        return $this->adultCount + $this->childCount + $this->infantCount;
+    }
 }
