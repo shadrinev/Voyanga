@@ -231,7 +231,7 @@ Voyage = (function() {
       style = "";
     }
     cupClass = part.stopoverLength < 2.5 * 60 * 60 ? "cup" : "cupLong";
-    return '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>';
+    return '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="left:' + style + '%"></span>';
   };
 
   Voyage.prototype.recommendStopoverIco = function() {
