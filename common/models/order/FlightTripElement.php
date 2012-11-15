@@ -221,6 +221,7 @@ class FlightTripElement extends TripElement
     
     public function fillFromSearchParams(FlightSearchParams $searchParams, $isBack = false)
     {
+        $this->searchParams = $searchParams;
         $ind = $isBack ? 1 : 0;
         $route = $searchParams->routes[$ind];
         $departureDate = date('Y-m-d', strtotime($route->departureDate));

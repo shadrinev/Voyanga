@@ -9,6 +9,8 @@ abstract class TripElement extends CModel implements IECartPosition, IOrderEleme
 {
     private $_id;
 
+    public $searchParams;
+
     public function getId()
     {
         if (!$this->_id)
@@ -30,6 +32,15 @@ abstract class TripElement extends CModel implements IECartPosition, IOrderEleme
 
     public function getGroupId()
     {
+        return false;
+    }
+
+    public function getJsonObjectForSearchParams()
+    {
+        if (method_exists($this->searchParams, 'getJsonObject'))
+        {
+            return $this->searchParams->getJsonObject();
+        }
         return false;
     }
 }

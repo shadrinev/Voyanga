@@ -294,6 +294,7 @@ HotelResult = (function() {
     if (!hotelDatails) {
       hotelDatails = {};
     }
+    this.totalPeople = 0;
     this.tours = parent.tours || this.falseFunction;
     this.hotelId = data.hotelId;
     this.checkIn = moment(data.checkIn) || false;

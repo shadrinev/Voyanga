@@ -260,6 +260,7 @@ class AviaResult
     @rtStackedMinimized = ko.observable true
 
     @flightCodesText = if _.size(@activeVoyage().parts)>1 then "Рейсы" else "Рейс"
+    @totalPeople = 0
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',

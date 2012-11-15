@@ -748,6 +748,7 @@ class TourTripResultSet
         @roundTrip = item.flights.length == 2
         aviaResult = new AviaResult(item, @)
         aviaResult.sort()
+        aviaResult.totalPeople = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек'
         @items.push aviaResult
         @totalCost += aviaResult.price
       else if (item.isHotel)
@@ -755,5 +756,8 @@ class TourTripResultSet
         @hotelCounter(@hotelCounter()+1)
         console.log "Hotel: ", item
         @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
+        totalPeople = 0
+        _.each item.searchParams.rooms, (room) -> totalPeople += room.adultCount/1 + room.childCount/1 + room.cots/1
+        @lastHotel.totalPeople = Utils.wordAfterNum totalPeople, 'человек', 'человека', 'человек'
         @items.push(@lastHotel)
         @totalCost += @lastHotel.roomSets()[0].discountPrice
