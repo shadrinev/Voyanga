@@ -17,11 +17,10 @@
         <?php $this->renderPartial('_buyer', array('model' => $bookingForm)); ?>
     </form>
     <div class="paybuyEnd">
-        <div class="btnBlue">
+        <div class="btnBlue" id='submit-passport'>
             <span>Забронировать</span>&nbsp;&nbsp;
-            <span class="price" data-bind="text: itemsToBuy.totalCost">33 770</span>
+            <span class="price"data-bind="text: itemsToBuy.totalCost">33 770</span>
             <span class="rur">o</span>
-
             <span class="l"></span>
         </div>
         <div class="clear"></div>
@@ -104,7 +103,7 @@
                 Процесс бронирования может занять до 45 секунд...
             </div>
             <div class="paybuyEnd">
-                <div class="btnBlue" id="submit-passport">
+                <div class="btnBlue">
                     <span>OK</span>
                 </div>
                 <div class="clear"></div>
