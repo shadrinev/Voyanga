@@ -238,16 +238,17 @@ RoomSet = (function() {
   };
 
   RoomSet.prototype.showCancelationRules = function(el, e) {
-    var miniPopUp, widthThisElement;
-    miniPopUp = '<div class="miniPopUp"></div>';
+    var offset, widthThisElement;
     console.log(e);
     widthThisElement = $(e.currentTarget).width();
-    $('body').append(miniPopUp);
-    return $('.miniPopUp').html($(e.currentTarget).attr('rel')).css('left', (e.pageX - (widthThisElement / 2)) + 'px').css('top', (e.pageY + 10) + 'px');
+    this.parent.activeRoomSet(this);
+    this.parent.showRulesPopup(true);
+    offset = $('#content > :eq(0)').offset();
+    return $('.miniPopUp').css('left', (e.pageX - (widthThisElement / 2) - offset.left) + 'px').css('top', (e.pageY + 50 - offset.top) + 'px');
   };
 
   RoomSet.prototype.hideCancelationRules = function(el, ev) {
-    return $('.miniPopUp').remove();
+    return this.parent.showRulesPopup(false);
   };
 
   return RoomSet;
@@ -296,12 +297,21 @@ HotelResult = (function() {
     this.hotelId = data.hotelId;
     this.checkIn = moment(data.checkIn) || false;
     this.checkOut = moment(data.checkOut) || false;
-    this.checkOutText = this.checkOut.format('LL');
+    if (!this.checkOut && this.checkIn && duration) {
+      this.checkOut = moment(this.checkIn);
+      this.checkOut.add('d', duration);
+    }
+    if (this.checkOut) {
+      this.checkOutText = this.checkOut.format('LL');
+    }
     this.cacheId = parent.cacheId;
     this.activeResultId = ko.observable(0);
     this.hotelName = data.hotelName;
     this.address = hotelDatails.address;
     this.description = hotelDatails.description;
+    if (!this.description) {
+      this.description = "";
+    }
     this.limitDesc = Utils.limitTextLenght(this.description, 195);
     this.showMoreDesc = ko.observable(true);
     this.showMoreDescText = ko.computed(function() {
@@ -391,6 +401,8 @@ HotelResult = (function() {
         return 'Выбрать';
       }
     });
+    this.showRulesPopup = ko.observable(false);
+    this.activeRoomSet = ko.observable(null);
     this.hasHotelServices = hotelDatails.hotelServices ? true : false;
     this.hotelServices = hotelDatails.hotelServices;
     this.hasHotelGroupServices = hotelDatails.hotelGroupServices ? true : false;
@@ -461,6 +473,7 @@ HotelResult = (function() {
       this.maxPrice = set.pricePerNight > this.maxPrice ? set.pricePerNight : this.maxPrice;
     }
     this.roomSets.push(set);
+    this.activeRoomSet(set);
     return this.roomSets.sort(function(left, right) {
       if (left.price > right.price) {
         return 1;

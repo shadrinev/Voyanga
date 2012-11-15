@@ -561,7 +561,6 @@ function ResizeAvia() {
     inTheTwoLines();
     smallTicketHeight();
     CenterIMGResize();
-    showMiniPopUp();
     slideToursSlide();
     smallIMGresizeIndex();
     mapAllPageView();
@@ -649,17 +648,6 @@ $(window).load(function() {
 
 function ifHeightMinAllBody() {
 
-}
-
-function showMiniPopUp() {
-	var miniPopUp = '<div class="miniPopUp"></div>';
-	$('.conditionCancel').hover(function(e) {
-		var widthThisElement = $(this).width();
-		$('body').append(miniPopUp);
-		$('.miniPopUp').text($(this).attr('rel')).css('left', (e.pageX - (widthThisElement / 2))+'px').css('top', (e.pageY + 10)+'px');
-	}, function() {
-		$('.miniPopUp').remove();
-	});
 }
 
 function readMoreService(obj) {

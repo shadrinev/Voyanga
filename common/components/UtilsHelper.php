@@ -3,6 +3,8 @@ class UtilsHelper
 {
 
     public static $sng = array('RU','UA','BY');
+    public static $sortKey;
+    public static $orderSort;
 
 
     /**
@@ -706,5 +708,50 @@ class UtilsHelper
         // join
         $canonical_name = implode(" ", $filtered_parts);
         return trim($canonical_name);
+    }
+
+    private static function compareByKey($a, $b){
+        if($a[self::$sortKey] == $b[self::$sortKey])
+            return 0;
+        return ($a[self::$sortKey] > $b[self::$sortKey] ? 1 : -1)*self::$orderSort;
+    }
+
+    private static function compareByMethod($a, $b){
+        if($a->{self::$sortKey}() == $b->{self::$sortKey}())
+            return 0;
+        return ($a->{self::$sortKey}() > $b->{self::$sortKey}() ? 1 : -1)*self::$orderSort;
+    }
+
+    private static function compareByProperty($a, $b){
+        if($a->{self::$sortKey} == $b->{self::$sortKey})
+            return 0;
+        return ($a->{self::$sortKey} > $b->{self::$sortKey} ? 1 : -1)*self::$orderSort;
+    }
+
+    /**
+     * Sorting elements by key (key may be property, array key, or method)
+     */
+    public static function sortBy(&$sortingArray,$sortByKey,$orderAsc = true, $saveIndexes = false)
+    {
+        //
+        //self::$sortingArray = null;
+        self::$sortKey = $sortByKey;
+        $function_name = '';
+        self::$orderSort = $orderAsc ? 1 : -1;
+        foreach($sortingArray as $firstElem)
+            break;
+        if(is_array($firstElem)){
+            $function_name = 'UtilsHelper::compareByKey';
+        }
+        if(is_object($firstElem)){
+            if(method_exists($firstElem,$sortByKey))
+                $function_name = 'UtilsHelper::compareByMethod';
+            else
+                $function_name = 'UtilsHelper::compareByProperty';
+        }
+        if($saveIndexes)
+            uasort($sortingArray,$function_name);
+        else
+            usort($sortingArray,$function_name);
     }
 }

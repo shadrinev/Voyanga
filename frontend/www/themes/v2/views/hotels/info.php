@@ -111,7 +111,7 @@
                         		</tr>
                                 <!-- ko if: last()-->
                                 <tr>
-                                    <td colspan="2"><a href="javascript:void(0)" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: 'Идет запрос на получение информации...'},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
+                                    <td colspan="2"><a href="javascript:void(0)" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: 'Идет один запрос на получение информации...'},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
                                 </tr>
                                 <!-- /ko -->
                         	</table>
@@ -183,6 +183,7 @@
       </div>
       <!-- /ko -->
     <!-- /ko -->
+
     
     <!-- ko if: false -->
       <h3>Или подберите свое сочетание из всех возможных вариантов</h3>
@@ -288,4 +289,5 @@
       </div>
   <a href="#back" data-bind="click: back" class="backToBackBottom"><span>Назад к результатам поиска</span></a>
 </div>
+<div class="miniPopUp" data-bind="visible: showRulesPopup, html: activeRoomSet().cancelText"></div>
 </script>

@@ -8,6 +8,9 @@
  * @property string $name
  * @property integer $userId
  * @property string $createdAt
+ *
+ * @property OrderFlightVoyage[] $flightItems
+ * @property OrderHotel[] $hotelItems
  */
 class Order extends FrontendActiveRecord
 {

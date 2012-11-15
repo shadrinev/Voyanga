@@ -23,21 +23,57 @@ class TripDataProvider
         }
     }
 
-    public function restoreFromDb($orderBookingId)
+    public function restoreFromDb($orderId)
+    {
+        Yii::app()->shoppingCart->clear();
+        $order = Order::model()->findByPk($orderId);
+        if (!$order)
+            throw new CException("No such order");
+        $items = $order->flightItems();
+        foreach ($items as $item)
+        {
+            $flightTripElement = new FlightTripElement();
+            $flightTripElement->departureDate = $item->departureDate;
+            $flightTripElement->departureCity = $item->departureCity;
+            $flightTripElement->arrivalCity = $item->arrivalCity;
+            $object = @unserialize($item->object);
+            if ($object)
+            {
+                $flightTripElement->flightVoyage = $object;
+            }
+            Yii::app()->shoppingCart->put($flightTripElement);
+        }
+        $items = $order->hotelItems();
+        foreach ($items as $item)
+        {
+            $hotelTripElement = new HotelTripElement();
+            $city = City::model()->findByPk($item->cityId);
+            $hotelTripElement->city = $city;
+            $hotelTripElement->checkIn = $item->checkIn;
+            $object = @unserialize($item->object);
+            if ($object)
+            {
+                $hotelTripElement->hotel = $object;
+            }
+            Yii::app()->shoppingCart->put($hotelTripElement);
+        }
+    }
+
+    public function getItemsByOrderId($orderBookingId)
     {
         $orderBooking = OrderBooking::model()->findByPk($orderBookingId);
         if (!$orderBooking)
             throw new CException("No such order");
         $flights = $orderBooking->flightBookers;
         $hotels = $orderBooking->hotelBookers;
-        Yii::app()->{$this->shoppingCartComponent}->clear();
+        $elements = array();
         foreach ($flights as $flight)
         {
             $flightVoyage = unserialize($flight->flightVoyageInfo);
             $flightTripElement = new FlightTripElement();
             $flightTripElement->flightVoyage = $flightVoyage;
             $flightTripElement->flightBookerId = $flight->id;
-            Yii::app()->{$this->shoppingCartComponent}->put($flightTripElement);
+            $elements[] = $flightTripElement;
         }
         foreach ($hotels as $hotel)
         {
@@ -45,23 +81,23 @@ class TripDataProvider
             $hotelTripElement = new HotelTripElement();
             $hotelTripElement->hotel = $hotelInfo;
             $hotelTripElement->hotelBookerId = $hotel->id;
-            Yii::app()->{$this->shoppingCartComponent}->put($hotelTripElement);
+            $elements[] = $hotelTripElement;
         }
     }
 
-    public function getSortedCartItemsOnePerGroup()
+    public function getSortedCartItemsOnePerGroup($cache = true)
     {
-        if (!$this->sortedCartItemsOnePerGroup)
+        if (!$this->sortedCartItemsOnePerGroup || !$cache)
         {
-            $items = $this->getSortedCartItems();
+            $items = $this->getSortedCartItems($cache);
             $this->sortedCartItemsOnePerGroup = $this->getItemsOnePerGroup($items);
         }
-        return $this->sortedCartItemsOnePerGroup;
+        return $this->getWithAdditionalInfo($this->sortedCartItemsOnePerGroup);
     }
 
-    public function getSortedCartItems()
+    public function getSortedCartItems($cache = true)
     {
-        if (!$this->sortedCartItems)
+        if (!$this->sortedCartItems  || !$cache)
         {
             $items = $this->getDbItems();
             $this->sortedCartItems = $this->sortItemsFromCartAndGetThem($items);
@@ -71,8 +107,7 @@ class TripDataProvider
 
     public function getSortedCartItemsOnePerGroupAsJson()
     {
-        $items = $this->getSortedCartItemsOnePerGroup();
-        return $this->getJsonWithAdditionalInfo($items);
+        return json_encode($this->getSortedCartItemsOnePerGroup());
     }
 
     public function getSortedCartItemsAsJson()
@@ -104,6 +139,19 @@ class TripDataProvider
             $out['items'][] = $prepared;
         }
         return json_encode($out);
+    }
+
+    private function getWithAdditionalInfo($items)
+    {
+        $out = array();
+        foreach ($items as $item)
+        {
+            $prepared = $item->getJsonObject();
+            $prepared['isLinked'] = $item->isLinked();
+            TripDataProvider::injectAdditionalInfo($prepared);
+            $out['items'][] = $prepared;
+        }
+        return $out;
     }
 
     private function getItemsOnePerGroup($items)
@@ -149,11 +197,16 @@ class TripDataProvider
 
     public static function injectAdditionalInfo(&$element)
     {
+        Yii::import('site.common.modules.hotel.models.*');
+        $hotelClient = new HotelBookClient();
+
         $element['isFlight'] = isset($element['flightKey']);
         $element['isHotel'] = !isset($element['flightKey']);
         if ($element['isHotel'])
         {
-            $element['hotelDetails'] = Yii::app()->pCache->get('HotelDetails-'.$element['hotelId']);
+            $element['hotelDetails'] = $hotelClient->hotelDetail($element['hotelId']);
         }
+
+
     }
 }

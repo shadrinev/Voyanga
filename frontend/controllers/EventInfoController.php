@@ -17,9 +17,48 @@ class EventInfoController extends Controller
     public function actionInfo($eventId)
     {
         $event = Event::model()->findByPk($eventId);
+        $defaultCityId = 4466;
 
+        $pricesData = array();
         $this->layout = 'static';
+        foreach($event->prices as $price){
+            $pricesData[$price->city->id] = array('price'=>floor($price->bestPrice),'cityName'=>$price->city->localRu,'cityId'=>$price->city->id,'updateTime'=>$price->updated);
+        }
 
-        $this->render('info',array('event'=>$event));
+
+        $tours = array();
+        $dataProvider = new TripDataProvider();
+        $cities = array();
+        foreach($event->tours as $tour){
+
+            $tours[$tour->startCityId] = array();
+            $dataProvider->restoreFromDb($tour->orderId);
+            //echo $tour->orderId.'dsf';
+
+            $items = $dataProvider->getSortedCartItemsOnePerGroup(false);
+            //print_r($items);
+            $tours[$tour->startCityId] = $items;
+            $tours[$tour->startCityId]['city'] = City::getCityByPk($tour->startCityId)->getAttributes();
+            $cities[$tour->startCityId] = City::getCityByPk($tour->startCityId)->getAttributes();
+        }
+        if(!isset($cities[$defaultCityId])){
+            foreach($cities as $defaultCityId=>$city)
+                break;
+        }
+        //need search params
+        $twoCities = array();
+        $twoCities[$defaultCityId] = $cities[$defaultCityId];
+        foreach($cities as $cityId=>$city)
+            if(!isset($twoCities[$cityId])){
+                $twoCities[$cityId] = $city;
+                break;
+            }
+
+
+
+        //$tArr = array(array('test'=>3),array('test'=>1),array('test'=>2));
+        //UtilsHelper::sortBy($tArr,'test');
+
+        $this->render('info',array('event'=>$event,'priceData'=>$pricesData,'defaultCity'=>$defaultCityId,'tours'=>$tours,'cities'=>$cities,'twoCities'=>$twoCities));
     }
 }
