@@ -15,9 +15,7 @@
  * @property integer $cityId
  * @property string $checkIn
  * @property integer $duration
- * @property integer $adultCount
- * @property integer $childCount
- * @property integer $cotsCount
+ * @property integer $searchParams
  * @property string $object
  */
 class OrderHotel extends CActiveRecord

@@ -17,6 +17,7 @@ class BasketController extends Controller
             case FlightVoyage::TYPE:
                 /** @var $flight FlightVoyage */
                 $flight = FlightVoyage::getFromCache($key, $searchId);
+                $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $searchId);
                 if ($flight)
                 {
                     $id = time();
@@ -24,10 +25,8 @@ class BasketController extends Controller
                     foreach ($flight->flights as $flightElement)
                     {
                         $item = new FlightTripElement();
+                        $item->fillFromSearchParams($flightSearchParams);
                         $item->flightVoyage = $flight;
-                        $item->departureCity = $flightElement->getDepartureCity()->id;
-                        $item->arrivalCity = $flightElement->getArrivalCity()->id;
-                        $item->departureDate = date('d.m.Y', strtotime($flightElement->departureDate));
                         $item->groupId = $flight->getId();
                         $item->id = $id++;
                         Yii::app()->shoppingCart->put($item);
@@ -39,15 +38,12 @@ class BasketController extends Controller
             case Hotel::TYPE:
                 /** @var $hotel Hotel */
                 $hotel = Hotel::getFromCache($key, $searchId, $searchId2);
+                $hotelSearchParams = @Yii::app()->pCache->get('hotelSearchParams' . $searchId);
                 if ($hotel)
                 {
                     $item = new HotelTripElement();
+                    $item->fillFromSearchParams($hotelSearchParams);
                     $item->hotel = $hotel;
-
-                    $item->city = City::getCityByHotelbookId($hotel->cityId)->id;
-                    $checkInTimestamp = strtotime($hotel->checkIn);
-                    $item->checkIn = date('d.m.Y', $checkInTimestamp);
-                    $item->checkOut = date('d.m.Y', $checkInTimestamp + $hotel->duration * 3600 * 24);
                     $item->id = time();
                     Yii::app()->shoppingCart->put($item);
                 }
