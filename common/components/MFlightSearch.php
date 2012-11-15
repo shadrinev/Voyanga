@@ -60,8 +60,7 @@ class MFlightSearch extends CComponent
         $fs->requestId = '1';
         $fs->data = '{}';
         $variants = $fs->sendRequest($flightSearchParams, false);
-        $json = $variants->getAsJson();
-        $json['pCacheId'] = $cacheId;
+        $json = $variants->getAsJson(array('pCacheId'=>$cacheId));
         return $json;
     }
 
