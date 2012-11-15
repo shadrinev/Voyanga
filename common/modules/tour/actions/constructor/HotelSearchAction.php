@@ -41,6 +41,8 @@ class HotelSearchAction extends CAction
                         $hotelSearchParams->addRoom($room->adultCount, $room->cots, false);
                 }
                 $HotelClient = new HotelBookClient();
+                $cacheId = md5(serialize($hotelSearchParams));
+                Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
                 $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
                 Yii::app()->hotelsRating->injectRating($resultSearch->hotels, $hotelSearchParams->city);
                 $cacheId = substr(md5(uniqid('', true)), 0, 10);

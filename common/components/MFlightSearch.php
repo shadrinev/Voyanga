@@ -53,6 +53,8 @@ class MFlightSearch extends CComponent
         if (!$flightForm instanceof FlightForm)
             throw new CHttpException(500, 'MFlightSearch requires instance of FlightForm as incoming param');
         $flightSearchParams = self::buildSearchParams($flightForm);
+        $cacheId = md5(serialize($flightSearchParams));
+        Yii::app()->pCache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('flight_search_cache_time'));
         $fs = new FlightSearch();
         $fs->status = 1;
         $fs->requestId = '1';
