@@ -56,7 +56,7 @@
         </div>
       <div class="ico-path" data-bind="html: stopsRatio()">
       </div>
-      <div class="path tooltip" data-bind="text:stopoverText(), css: {'no-wait': direct()}" rel="Пересадка в Дублине 1ч. 25м. <br> Пересадка в Москве 1ч. 10м.">
+      <div class="path tooltip" data-bind="text:stopoverText(), css: {'no-wait': direct()}, attr:{'rel': stopoverRelText()}">
       </div>
     </div>
     <!-- END HOW LONG -->
@@ -131,7 +131,7 @@
       </div>
       <div class="ico-path" data-bind="html: rtStopsRatio()">
       </div>
-      <div class="path" data-bind="text:rtStopoverText(), css: {'no-wait': rtDirect()}">
+      <div class="path tooltip" data-bind="text:rtStopoverText(), css: {'no-wait': rtDirect()}, attr:{'rel': rtStopoverRelText()}">
       </div>
     </div>
     <!-- END HOW LONG -->
