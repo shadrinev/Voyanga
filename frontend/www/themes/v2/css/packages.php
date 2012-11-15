@@ -13,7 +13,8 @@
             'voyanga-calendar.css',
             'checkradio.css',
             'load.css',
-            'jquery.jscrollpane.css'
+            'jquery.jscrollpane.css',
+            'chosen.css'
         ),
     )
 );

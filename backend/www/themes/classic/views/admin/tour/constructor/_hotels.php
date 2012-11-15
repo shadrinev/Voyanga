@@ -10,14 +10,14 @@
     </tr>
     </thead>
     <tbody>
-    {{#each hotels}}
+    {{#each hotels.hotels}}
     <tr>
         <td>{{hotelName}}</td>
         <td>{{category}}</td>
         <td>{{rating}}</td>
         <td>{{rubPrice}} руб.</td>
         <td>
-            <a class='btn btn-success choose' href="#{{hotelId}}" data-resultid="{{resultId}}">выбрать</a>
+            <a class='btn btn-success choose' href="#{{hotelId}}" data-resultid="{{resultId}}" data-pcacheid="{{../pCacheId}}">выбрать</a>
         </td>
     </tr>
     {{/each}}

@@ -153,6 +153,7 @@
 
     function refreshEventsInformation(newEventId)
     {
+        return;
         $.ajax({
             url: '/event/event/getAllEvents',
             dataType: 'json',

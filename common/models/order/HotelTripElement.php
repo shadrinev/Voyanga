@@ -39,7 +39,11 @@ class HotelTripElement extends TripElement
     public function saveToOrderDb()
     {
         if ($this->hotel)
-            return $this->hotel->saveToOrderDb();
+        {
+            $order = $this->hotel->saveToOrderDb();
+            $order->searchParams = serialize($this->searchParams);
+            return $order->update(array('searchParams'));
+        }
         else
         {
             //we have only search params now
@@ -47,6 +51,7 @@ class HotelTripElement extends TripElement
             $order->cityId = $this->city;
             $order->checkIn = $this->checkIn;
             $order->duration = $this->getDuration();
+            $order->searchParams = serialize($this->searchParams);
             if ($order->save())
                 return $order;
         }
@@ -210,6 +215,7 @@ class HotelTripElement extends TripElement
 
     public function fillFromSearchParams(HotelSearchParams $searchParams)
     {
+        $this->searchParams = $searchParams;
         $this->city = $searchParams->city;
         $this->checkIn = $searchParams->checkIn;
         $this->checkOut = $searchParams->getCheckout();
@@ -226,4 +232,34 @@ class HotelTripElement extends TripElement
         }
     }
 
+    public function getAdultCount()
+    {
+        $result = 0;
+        var_dump($this->rooms);
+        foreach ($this->rooms as $room)
+        {
+            $result += $room['adt'];
+        }
+        return $result;
+    }
+
+    public function getChildCount()
+    {
+        $result = 0;
+        foreach ($this->rooms as $room)
+        {
+            $result += $room['chd'];
+        }
+        return $result;
+    }
+
+    public function getCotsCount()
+    {
+        $result = 0;
+        foreach ($this->rooms as $room)
+        {
+            $result += $room['cots'];
+        }
+        return $result;
+    }
 }

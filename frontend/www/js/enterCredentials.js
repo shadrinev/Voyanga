@@ -18,6 +18,20 @@ $(function(){
         $this.addClass('active');
         field.val(value);
     });
+    $(".chzn-select").chosen({
+        no_results_text: "Нет соответствий"
+    });
+    $('input.next').keyup(function(){
+        var $this= $(this),
+            value = $this.val(),
+            len = value.length,
+            next = $this.next();
+        if ($this.attr('maxlength')<=len)
+        {
+            next.select();
+            next.focus();
+        }
+    });
 });
 
 initCredentialsPage = function() {

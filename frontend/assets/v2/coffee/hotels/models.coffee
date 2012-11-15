@@ -181,6 +181,7 @@ class HotelResult
     _.extend @, Backbone.Events
     if !hotelDatails
       hotelDatails = {}
+    @totalPeople = 0
     @tours =  parent.tours || @falseFunction
     @hotelId = data.hotelId
     @checkIn = moment(data.checkIn) || false

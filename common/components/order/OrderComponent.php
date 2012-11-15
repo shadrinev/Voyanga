@@ -25,21 +25,45 @@ class OrderComponent extends CApplicationComponent
 
     public function bookAndReturnTripElementWorkflowItems()
     {
+        $asyncExecutor = new AsyncCurl();
+        foreach ($this->itemsOnePerGroup as $i => $item)
+        {
+            $url = Yii::app()->createAbsoluteUrl('/buy/makeBookingForItem');
+            $query = http_build_query(array(
+                'index' => $i,
+            ));
+            $url = $url . '?' . $query;
+            $asyncExecutor->add($url);
+        }
+        $responses = $asyncExecutor->send();
+        foreach ($responses as $response)
+        {
+            if ($httpCode=$response->headers['http_code'] != 200)
+                $errors[] = "Error ".$httpCode."\n".$response->body;
+        }
+        if (!empty($this->errors))
+        {
+            Yii::app()->user->setState('blockedToBook', null);
+            throw new CHttpException(500, 'Errors while booking:'.CVarDumper::dumpAsString($errors));
+        }
+        Yii::app()->user->setState('blockedToBook', null);
+    }
+
+    public function bookAndReturnTripElementWorkflowItem($index)
+    {
         try
         {
             $bookedTripElementWorkflow = array();
-            foreach ($this->itemsOnePerGroup as $item)
-            {
-                if ($this->isDoubleRequest($item))
-                    continue;
-                $tripElementWorkflow = $item->createTripElementWorkflow();
-                $tripElementWorkflow->bookItem();
-                $this->markItemGroupAsBooked($tripElementWorkflow->getItem());
-                $tripElementWorkflow->runWorkflowAndSetFinalStatus();
-                $this->saveWorkflowState($tripElementWorkflow->finalStatus);
-                $tripElementWorkflow->updateBookingId();
-                $bookedTripElementWorkflow[] = $tripElementWorkflow;
-            }
+            $item = $this->itemsOnePerGroup[$index];
+            if ($this->isDoubleRequest($item))
+                throw new CHttpException(400, 'Double request');
+            $tripElementWorkflow = $item->createTripElementWorkflow();
+            $tripElementWorkflow->bookItem();
+            $this->markItemGroupAsBooked($tripElementWorkflow->getItem());
+            $tripElementWorkflow->runWorkflowAndSetFinalStatus();
+            $this->saveWorkflowState($tripElementWorkflow->finalStatus);
+            $tripElementWorkflow->updateBookingId();
+            $bookedTripElementWorkflow[] = $tripElementWorkflow;
             if ($this->areAllStatusesCorrect())
             {
                 Yii::app()->user->setState('blockedToBook', null);
@@ -47,13 +71,12 @@ class OrderComponent extends CApplicationComponent
             }
             else
             {
-                throw new CException('At least one of workflow status at step 1 is incorrect:'.CVarDumper::dumpAsString($this->finalWorkflowStatuses));
+                throw new CHttpException(500, 'At least one of workflow status at step 1 is incorrect:'.CVarDumper::dumpAsString($this->finalWorkflowStatuses));
             }
         }
         catch (Exception $e)
         {
-            Yii::app()->user->setState('blockedToBook', null);
-            throw $e;
+            throw new CHttpException(500, 'We can not book '.$index.'-th item: '.$e->getMessage());
         }
     }
 

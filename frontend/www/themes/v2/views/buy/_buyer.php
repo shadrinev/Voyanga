@@ -13,10 +13,10 @@
             <tbody>
             <tr>
                 <td class="tdEmail">
-                    <?php echo CHtml::activeTextField($model, "contactEmail"); ?>
+                    <?php echo CHtml::activeTextField($model, "contactEmail", array('id' => 'contactEmail')); ?>
                 </td>
                 <td class="tdTelefon">
-                    <?php echo CHtml::activeTextField($model, "contactPhone"); ?>
+                    <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone')); ?>
                 </td>
                 <td class="tdText">
                     Чтобы мы знали куда прислать электронный билет и куда звонить в случае каких-либо изменений

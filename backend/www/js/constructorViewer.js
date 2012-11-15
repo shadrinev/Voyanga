@@ -60,6 +60,7 @@ constructorViewer.init = function () {
                         $(this).find('.buy').data('cartElemId', cartElemId);
                         $(this).find('.buy').live('click', function () {
                             var key1 = $(this).attr('href'),
+                                pCacheId = $(this).data('pcacheid'),
                                 pos = key1.indexOf('key/'),
                                 $this = $(this);
                             if (pos > 0) {
@@ -71,7 +72,7 @@ constructorViewer.init = function () {
                                 var key2 = key1.slice(pos + 1);
                             }
                             cartElemId = $(this).data('cartElemId');
-                            $.getJSON('/admin/tour/basket/fillCartElement/type/' + constructorViewer.flightTypeConst + '/cartElementId/' + cartElemId + '/key/' + key2 + '/searchId/' + searchId)
+                            $.getJSON('/admin/tour/basket/fillCartElement/type/' + constructorViewer.flightTypeConst + '/cartElementId/' + cartElemId + '/key/' + key2 + '/searchId/' + searchId + '/pCacheId/' + pCacheId)
                                 .done(function (data) {
                                     $this.text('Выбрано').removeClass('btn-success').addClass('btn-danger');
                                     console.log(data);
@@ -121,7 +122,7 @@ constructorViewer.init = function () {
                 })
                     .done(function (data) {
                         console.log(data);
-                        var html = hotelSearchResult(data.hotels);
+                        var html = hotelSearchResult(data);
                         $(this).html(html);
 
                         cartElemId = $(this).attr('id');
@@ -132,11 +133,12 @@ constructorViewer.init = function () {
                         $(this).find('.choose').live('click', function () {
                             var cacheId = $(this).data('cacheId'),
                                 resultId = $(this).data('resultid'),
+                                pCacheId = $(this).data('pcacheid'),
                                 $this = $(this);
                             btn = $(this);
 
                             cartElemId = $(this).data('cartElemId');
-                            $.getJSON('/admin/tour/basket/fillCartElement/type/' + constructorViewer.hotelTypeConst + '/cartElementId/' + cartElemId + '/key/' + resultId + '/searchId/' + cacheId)
+                            $.getJSON('/admin/tour/basket/fillCartElement/type/' + constructorViewer.hotelTypeConst + '/cartElementId/' + cartElemId + '/key/' + resultId + '/searchId/' + cacheId + '/pCacheId/' + pCacheId)
                                 .done(function (data) {
                                     $this.text('Выбрано').removeClass('btn-success').addClass('btn-danger');
                                     console.log(data);

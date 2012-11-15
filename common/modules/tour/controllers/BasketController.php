@@ -10,24 +10,23 @@ class BasketController extends Controller
 {
     public $orderId;
 
-    public function actionAdd($type, $key, $searchId = '', $searchId2 = '')
+    public function actionAdd($type, $key, $searchId = '', $searchId2 = '', $pCacheId='')
     {
         switch ($type)
         {
             case FlightVoyage::TYPE:
                 /** @var $flight FlightVoyage */
                 $flight = FlightVoyage::getFromCache($key, $searchId);
+                $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $pCacheId);
                 if ($flight)
                 {
                     $id = time();
                     //todo: add count of flightVoyageFlights Items
-                    foreach ($flight->flights as $flightElement)
+                    foreach ($flight->flights as $i=>$flightElement)
                     {
                         $item = new FlightTripElement();
+                        $item->fillFromSearchParams($flightSearchParams, $i>0);
                         $item->flightVoyage = $flight;
-                        $item->departureCity = $flightElement->getDepartureCity()->id;
-                        $item->arrivalCity = $flightElement->getArrivalCity()->id;
-                        $item->departureDate = date('d.m.Y', strtotime($flightElement->departureDate));
                         $item->groupId = $flight->getId();
                         $item->id = $id++;
                         Yii::app()->shoppingCart->put($item);
@@ -39,15 +38,12 @@ class BasketController extends Controller
             case Hotel::TYPE:
                 /** @var $hotel Hotel */
                 $hotel = Hotel::getFromCache($key, $searchId, $searchId2);
+                $hotelSearchParams = @Yii::app()->pCache->get('hotelSearchParams' . $pCacheId);
                 if ($hotel)
                 {
                     $item = new HotelTripElement();
+                    $item->fillFromSearchParams($hotelSearchParams);
                     $item->hotel = $hotel;
-
-                    $item->city = City::getCityByHotelbookId($hotel->cityId)->id;
-                    $checkInTimestamp = strtotime($hotel->checkIn);
-                    $item->checkIn = date('d.m.Y', $checkInTimestamp);
-                    $item->checkOut = date('d.m.Y', $checkInTimestamp + $hotel->duration * 3600 * 24);
                     $item->id = time();
                     Yii::app()->shoppingCart->put($item);
                 }
@@ -57,7 +53,7 @@ class BasketController extends Controller
         }
     }
 
-    public function actionFillCartElement($cartElementId, $type, $key, $searchId = '', $searchId2 = '')
+    public function actionFillCartElement($cartElementId, $type, $key, $searchId = '', $searchId2 = '', $pCacheId='')
     {
         $dataProvider = new TripDataProvider();
         $allPositions = $dataProvider->getSortedCartItems();
@@ -76,7 +72,6 @@ class BasketController extends Controller
             {
                 case FlightVoyage::TYPE:
                     $needPositions = array();
-
                     $groupId = $needPosition->getGroupId();
                     foreach ($allPositions as $item)
                     {
@@ -95,6 +90,8 @@ class BasketController extends Controller
                         //updating all cartElements
                         foreach ($needPositions as $item)
                         {
+                            $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $pCacheId);
+                            $item->fillFromSearchParams($flightSearchParams);
                             $item->flightVoyage = $flight;
                             Yii::app()->shoppingCart->update($item, 1);
                         }
@@ -112,7 +109,8 @@ class BasketController extends Controller
                     $hotel = Hotel::getFromCache($searchId, null, $key);
                     if ($hotel)
                     {
-                        //$needPosition = new HotelTripElement();
+                        $hotelSearchParams = @Yii::app()->pCache->get('hotelSearchParams' . $pCacheId);
+                        $needPosition->fillFromSearchParams($hotelSearchParams);
                         $needPosition->hotel = $hotel;
                         Yii::app()->shoppingCart->update($needPosition, 1);
                         $json = CJSON::encode($hotel->getJsonObject());

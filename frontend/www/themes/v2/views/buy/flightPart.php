@@ -27,6 +27,7 @@
                 <div class="class">Класс: <span class="classMine">Эконом</span></div>
             </td>
             <td class="tdPrice">
+                <div class="people" data-bind="text: $data.totalPeople">2 человека</div>
                 <div class="price">12 500 <span class="rur">o</span></div>
                 <div class="priceSale">
                     <!-- <div class="lastPrice">13 000 <span class="rur">o</span></div> <span class="icoTours"></span> -->

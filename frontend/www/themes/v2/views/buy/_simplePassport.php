@@ -31,12 +31,18 @@
             </thead>
             <tbody>
             <?php foreach($passportForms as $i=>$model):?>
+                <script type="text/javascript">
+                    $(function(){
+                        $('#syncTranslitFirstName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitFirstName<?php echo $i ?>'});
+                        $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
+                    });
+                </script>
                 <tr>
                     <td class="tdName">
-                        <?php echo CHtml::activeTextField($model, "[$i]firstName"); ?>
+                        <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id'=>'syncTranslitFirstName'.$i)); ?>
                     </td>
                     <td class="tdLastname">
-                        <?php echo CHtml::activeTextField($model, "[$i]lastName"); ?>
+                        <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id'=>'syncTranslitLastName'.$i)); ?>
                     </td>
                     <td class="tdSex">
                         <?php echo CHtml::activeHiddenField($model, "[$i]genderId", array('class'=>'genderField')); ?>
@@ -46,12 +52,12 @@
                     <td class="tdBirthday">
                         <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
                             "placeholder" => "ДД",
-                            "class" => "dd",
+                            "class" => "dd next",
                             "maxlength" => "2"
                         )); ?>
                         <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
                             "placeholder" => "ММ",
-                            "class" => "mm",
+                            "class" => "mm next",
                             "maxlength" => "2"
                         )); ?>
                         <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
@@ -61,7 +67,17 @@
                         )); ?>
                     </td>
                     <td class="tdNationality">
-                        <?php echo CHtml::activeDropDownList($model, "[$i]countryId", array('1' => 'Россия')); ?>
+                        <?php echo CHtml::activeDropDownList(
+                            $model,
+                            "[$i]countryId",
+                            Country::model()->findAllOrderedByPopularity(),
+                            array(
+                                'data-placeholder'=> "Страна...",
+                                'prompt'=> "",
+                                'class' => "chzn-select",
+                                'style' => "width:140px;"
+                            )
+                    ); ?>
                     </td>
                     <td class="tdDocumentNumber">
                         <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
@@ -69,12 +85,12 @@
                     <td class="tdDuration">
                         <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
                             "placeholder" => "ДД",
-                            "class" => "dd",
+                            "class" => "dd next",
                             "maxlength" => "2"
                         )); ?>
                         <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
                             "placeholder" => "ММ",
-                            "class" => "mm",
+                            "class" => "mm next",
                             "maxlength" => "2"
                         )); ?>
                         <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(

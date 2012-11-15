@@ -383,6 +383,7 @@ AviaResult = (function() {
     this.stackedMinimized = ko.observable(true);
     this.rtStackedMinimized = ko.observable(true);
     this.flightCodesText = _.size(this.activeVoyage().parts) > 1 ? "Рейсы" : "Рейс";
+    this.totalPeople = 0;
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio', 'recommendStopoverIco'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];

@@ -15,6 +15,7 @@
  * @property integer $cityId
  * @property string $checkIn
  * @property integer $duration
+ * @property integer $searchParams
  * @property string $object
  */
 class OrderHotel extends CActiveRecord
