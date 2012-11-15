@@ -41,29 +41,24 @@ class HotelSearchAction extends CAction
                         $hotelSearchParams->addRoom($room->adultCount, $room->cots, false);
                 }
                 $HotelClient = new HotelBookClient();
-                $cacheId = md5(serialize($hotelSearchParams));
-                Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
+                $pCacheId = md5(serialize($hotelSearchParams));
+                Yii::app()->pCache->set('hotelSearchParams' . $pCacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
                 $resultSearch = $HotelClient->fullHotelSearch($hotelSearchParams);
                 Yii::app()->hotelsRating->injectRating($resultSearch->hotels, $hotelSearchParams->city);
                 $cacheId = substr(md5(uniqid('', true)), 0, 10);
                 Yii::app()->cache->set('hotelResult'.$cacheId, $resultSearch,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelSearchParams'.$cacheId, $hotelSearchParams,appParams('hotel_search_cache_time'));
                 Yii::app()->cache->set('hotelForm'.$cacheId, $hotelForm,appParams('hotel_search_cache_time'));
-                //Yii::app()->user->setState('hotel.cacheId', $cacheId);
-                //$this->redirect('/booking/hotel/result/cacheId/'.$cacheId);
                 if($resultSearch['hotels'])
                 {
                     $hotelStack = new HotelStack($resultSearch);
                     $results = $hotelStack->groupBy('hotelId')->groupBy('roomSizeId')
                         ->groupBy('rubPrice')->sortBy('rubPrice',2)->getJsonObject();
-                    //VarDumper::dump($hotelStack);die();
-
-                    echo json_encode(array('cacheId'=>$cacheId,'hotels'=>$results));
+                    echo json_encode(array('pCacheId'=>$pCacheId, 'cacheId'=>$cacheId,'hotels'=>$results));
                 }
                 else
                 {
                     echo json_encode(array('cacheId'=>$cacheId,'hotels'=>array()));
-                    //throw new CHttpException(500, CHtml::errorSummary($hotelForm));
                 }
 
             }

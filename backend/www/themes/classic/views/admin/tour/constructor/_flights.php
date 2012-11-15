@@ -19,7 +19,7 @@
         <td><img src='http://test.voyanga.com/img/airlines/{{valCompany}}.png'></td>
         <td>{{price}} руб.</td>
         <td><a class="btn btn-info detail-view" data-key='{{flightKey}}'>Подробнее</a>
-            <a class="btn btn-mini btn-success buy" href='/admin/booking/flight/buy/key/{{../searchId}}_{{flightKey}}'>Выбрать</a></td>
+            <a class="btn btn-mini btn-success buy" href='/admin/booking/flight/buy/key/{{../searchId}}_{{flightKey}}' data-pcacheid="{{../pCacheId}}">Выбрать</a></td>
     </tr>
     <td colspan="6">
         <table class="table table-bordered" id='detail-{{flightKey}}' style='display: none; background-color: #f0f0f0'>

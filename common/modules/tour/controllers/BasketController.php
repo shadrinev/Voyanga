@@ -10,14 +10,14 @@ class BasketController extends Controller
 {
     public $orderId;
 
-    public function actionAdd($type, $key, $searchId = '', $searchId2 = '')
+    public function actionAdd($type, $key, $searchId = '', $searchId2 = '', $pCacheId='')
     {
         switch ($type)
         {
             case FlightVoyage::TYPE:
                 /** @var $flight FlightVoyage */
                 $flight = FlightVoyage::getFromCache($key, $searchId);
-                $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $searchId);
+                $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $pCacheId);
                 if ($flight)
                 {
                     $id = time();
@@ -38,7 +38,7 @@ class BasketController extends Controller
             case Hotel::TYPE:
                 /** @var $hotel Hotel */
                 $hotel = Hotel::getFromCache($key, $searchId, $searchId2);
-                $hotelSearchParams = @Yii::app()->pCache->get('hotelSearchParams' . $searchId);
+                $hotelSearchParams = @Yii::app()->pCache->get('hotelSearchParams' . $pCacheId);
                 if ($hotel)
                 {
                     $item = new HotelTripElement();

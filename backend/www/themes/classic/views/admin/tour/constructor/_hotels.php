@@ -17,7 +17,7 @@
         <td>{{rating}}</td>
         <td>{{rubPrice}} руб.</td>
         <td>
-            <a class='btn btn-success choose' href="#{{hotelId}}" data-resultid="{{resultId}}">выбрать</a>
+            <a class='btn btn-success choose' href="#{{hotelId}}" data-resultid="{{resultId}}" data-pCacheId="{{../pCacheId}}">выбрать</a>
         </td>
     </tr>
     {{/each}}
