@@ -22,10 +22,10 @@ class BasketController extends Controller
                 {
                     $id = time();
                     //todo: add count of flightVoyageFlights Items
-                    foreach ($flight->flights as $flightElement)
+                    foreach ($flight->flights as $i=>$flightElement)
                     {
                         $item = new FlightTripElement();
-                        $item->fillFromSearchParams($flightSearchParams);
+                        $item->fillFromSearchParams($flightSearchParams, $i>0);
                         $item->flightVoyage = $flight;
                         $item->groupId = $flight->getId();
                         $item->id = $id++;
@@ -53,7 +53,7 @@ class BasketController extends Controller
         }
     }
 
-    public function actionFillCartElement($cartElementId, $type, $key, $searchId = '', $searchId2 = '')
+    public function actionFillCartElement($cartElementId, $type, $key, $searchId = '', $searchId2 = '', $pCacheId='')
     {
         $dataProvider = new TripDataProvider();
         $allPositions = $dataProvider->getSortedCartItems();
@@ -72,7 +72,6 @@ class BasketController extends Controller
             {
                 case FlightVoyage::TYPE:
                     $needPositions = array();
-
                     $groupId = $needPosition->getGroupId();
                     foreach ($allPositions as $item)
                     {
@@ -91,6 +90,8 @@ class BasketController extends Controller
                         //updating all cartElements
                         foreach ($needPositions as $item)
                         {
+                            $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $pCacheId);
+                            $item->fillFromSearchParams($flightSearchParams);
                             $item->flightVoyage = $flight;
                             Yii::app()->shoppingCart->update($item, 1);
                         }
@@ -108,7 +109,8 @@ class BasketController extends Controller
                     $hotel = Hotel::getFromCache($searchId, null, $key);
                     if ($hotel)
                     {
-                        //$needPosition = new HotelTripElement();
+                        $hotelSearchParams = @Yii::app()->pCache->get('hotelSearchParams' . $pCacheId);
+                        $needPosition->fillFromSearchParams($hotelSearchParams);
                         $needPosition->hotel = $hotel;
                         Yii::app()->shoppingCart->update($needPosition, 1);
                         $json = CJSON::encode($hotel->getJsonObject());
