@@ -8,6 +8,7 @@ abstract class Payments_Channel {
         $this->bill = $bill;
         $this->booker = $booker;
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
+        $this->amount = 50;
     }
 
     public function formParams() {
@@ -16,7 +17,7 @@ abstract class Payments_Channel {
         $params = Array();
         $params['MerchantId'] = $credentials['id'];
         //! FIXME: can this amount change?
-        $params['Amount'] = sprintf("%.2f", 50);//  $this->bill->amount);
+        $params['Amount'] = sprintf("%.2f", $this->amount);//  $this->bill->amount);
         $params['Currency'] = 'RUB';
         # FIXME FIXME FIXME FIXME
         $params['OrderId'] = $order->id . '-' . $this->bill->id;
@@ -34,14 +35,13 @@ abstract class Payments_Channel {
     public function getSignature($params, $strategy='ignorerebill')
     {
         $credentials = $this->credentials;
-        if($strategy=='ignorerebill')
-            $keys = Array('MerchantId', 'DateTime', 'TransactionID', 'OrderId',
+        if($strategy=='ignorerebill') {
+            $keys = Array('MerchantId', 'DateTime', 'TransactionID','TransactionId', 'OrderId',
                           'IData', 'Amount', 'Currency', 'Commission', 'PNR',
-                          'ValidUntil', 'TransactionId');
-        else
-            $keys = Array('MerchantId', 'RebillAnchor', 'DateTime', 'TransactionID', 'OrderId',
-                          'IData', 'Amount', 'Currency', 'Commission', 'PNR',
-                          'ValidUntil', 'TransactionId');
+                          'ValidUntil');
+        } else {
+            $keys = Array('MerchantId', 'RebillAnchor', 'OrderId', 'Amount', 'Currency');
+        }
         $values = Array();
         foreach($keys as $key)
         {
@@ -77,16 +77,24 @@ abstract class Payments_Channel {
         $params = $this->formParams();
         $params['RebillAnchor'] = $anchor;
         $params['SecurityKey'] = $this->getSignature($params, 'rebill');
-        list($code,$result) = $this->callApi('transaction/rebill');
-        if($result['Status'] == 'Ok') 
+        list($code,$result) = $this->callApi('transaction/rebill', $params);
+        if($result['Result'] == 'Ok')
             return true;
         return false;
     }
 
     public function refund()
     {
-
-
+        $params = Array();
+        $params['MerchantId'] = $this->credentials['id'];
+        //! FIXME: can this amount change?
+//        $params['Amount'] = sprintf("%.2f", $this->amount);//  $this->bill->amount);
+        $params['TransactionId'] = $this->bill->transactionId;
+        $params['SecurityKey'] = $this->getSignature($params);
+        list($code,$result) = $this->callApi('transaction/void', $params);
+        if($result['Result'] == 'Ok')
+            return true;
+        return false;
     }
 
     protected function contributeToConfirm($context)
@@ -101,9 +109,12 @@ abstract class Payments_Channel {
         {
             $params[]=$key.'='.$value;
         }
-        $url = '?';
+        $url.= '/?';
         $url.= implode('&', $params);
         list($code, $data) =  Yii::app()->httpClient->get('https://secure.payonlinesystem.com/payment/' . $url);
+        Yii::trace('https://secure.payonlinesystem.com/payment/' . $url, "payments.channel.apicall");
+        Yii::trace($data, "payments.channel.apicall");
+
         $result = array();
         if(strlen($data))
         {

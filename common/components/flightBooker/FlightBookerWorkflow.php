@@ -5,11 +5,15 @@ return array(
         array('id'=>'enterCredentials',         'transition'=> 'booking'),
         array('id'=>'booking',                  'transition'=>'waitingForPayment,bookingError'),
         array('id'=>'bookingError',             'transition'=>'error'),
-        array('id'=>'waitingForPayment',        'transition'=>'paid,waitingForPayment,startPayment,bookingTimeLimitError'),
-        array('id'=>'startPayment',             'transition'=>'paid,paymentError,bookingTimeLimitError,waitingForPayment'),
+        array('id'=>'waitingForPayment',        'transition'=>'paid,waitingForPayment,paymentCanceledError,paymentError,startPayment,bookingTimeLimitError'),
+        array('id'=>'startPayment',             'transition'=>'paid,paymentError,paymentCanceledError,bookingTimeLimitError,waitingForPayment'),
         array('id'=>'paymentError',             'transition'=>'error'),
+        //! payment canceled due to other segment failure
+        array('id'=>'paymentCanceledError',      'transition'=>'error'),
+        array('id'=>'paid',                     'transition'=>'ticketing,refundedError'),
+        //! refunded duo to error in process not a user request
+        array('id'=>'refundedError',            'transition'=>'error'),
         array('id'=>'bookingTimeLimitError',    'transition'=>'bookingTimeLimitError,error'),
-        array('id'=>'paid',                     'transition'=>'ticketing'),
         array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat'),
         array('id'=>'ticketReady',              'transition'=>'confirmMoney, done'),
         array('id'=>'ticketingRepeat',          'transition'=>'ticketingRepeat,ticketingError,ticketReady,manualProcessing'),

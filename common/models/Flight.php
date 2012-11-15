@@ -28,9 +28,10 @@ class Flight extends CComponent
                 $this->arrivalCityId = $oPart->arrivalCityId;
                 $this->departureDate = $oPart->datetimeBegin;
                 $this->arrivalDate = $oPart->datetimeEnd;
-            } else
+            }
+            else
             {
-                $oLastPart = &$this->flightParts[count($this->flightParts) - 1];
+                $oLastPart = & $this->flightParts[count($this->flightParts) - 1];
                 $aTransit = array();
                 $aTransit['timeForTransit'] = $oPart->timestampBegin - $oLastPart->timestampEnd;
                 $aTransit['cityId'] = $oPart->departureCityId;
@@ -41,7 +42,8 @@ class Flight extends CComponent
                 $this->fullDuration += $aTransit['timeForTransit'];
             }
             $this->fullDuration += $oPart->duration;
-        } else
+        }
+        else
         {
             throw new CException(Yii::t('application', 'Required param type FlightPart'));
         }
@@ -53,7 +55,8 @@ class Flight extends CComponent
         {
             $this->departureCity = City::getCityByPk($this->departureCityId);
             if (!$this->departureCity) throw new CException(Yii::t('application', 'Departure city not found. City with id {city_id} not set in db.', array(
-                '{city_id}' => $this->departureCityId)));
+                '{city_id}' => $this->departureCityId
+            )));
         }
         return $this->departureCity;
     }
@@ -64,7 +67,8 @@ class Flight extends CComponent
         {
             $this->arrivalCity = City::getCityByPk($this->arrivalCityId);
             if (!$this->arrivalCity) throw new CException(Yii::t('application', 'Arrival city not found. City with id {city_id} not set in db.', array(
-                '{city_id}' => $this->arrivalCityId)));
+                '{city_id}' => $this->arrivalCityId
+            )));
         }
         return $this->arrivalCity;
     }
@@ -99,9 +103,11 @@ class Flight extends CComponent
             'fullDuration' => $this->fullDuration,
             'flightParts' => array()
         );
-        foreach($this->flightParts as $flightPart){
+        foreach ($this->flightParts as $flightPart)
+        {
             $ret['flightParts'][] = $flightPart->getJsonObject();
         }
+        $ret['serviceClass'] = $this->flightParts[0]->serviceClass;
         return $ret;
     }
 

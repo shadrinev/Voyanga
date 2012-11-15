@@ -16,7 +16,6 @@ class FlightPart
     public $departureAirport;
     public $arrivalAirportId;
     public $arrivalAirport;
-    public $aircraftName;
     public $aircraftCode;
     public $stopNum;
     public $bookingCodes;
@@ -32,6 +31,15 @@ class FlightPart
     public $weekDays;
     public $code;
     public $tariffs = array();
+    public $serviceClass;
+
+    const SERVICE_CLASS_BUSINESS = 'B';
+    const SERVICE_CLASS_ECONOM = 'E';
+
+    static public function getBusinessCodes()
+    {
+        return array("P", "F", "A", "C", "J", "D", "Z", "I");
+    }
 
     public function __construct($oParams)
     {
@@ -56,6 +64,7 @@ class FlightPart
         $this->arrivalAirport = $oParams->arrival_airport;
         $this->stopNum = $oParams->stopNum;
         $this->bookingCodes = $oParams->aBookingCodes;
+        $this->serviceClass = $this->detectClass();
     }
 
     public function getJsonObject()
@@ -75,12 +84,26 @@ class FlightPart
             'duration' => $this->duration,
             'departureAirport' => $this->departureAirport->localRu,
             'arrivalAirport' => $this->arrivalAirport->localRu,
-            'aircraftCode'=>$this->aircraftCode,
+            'aircraftCode' => $this->aircraftCode,
+            'aircraftName' => $this->getAircraftName(),
             'stopNum'=>$this->stopNum,
             'bookingCode'=>$this->bookingCodes[0],
         );
         return $ret;
-
     }
 
+    private function detectClass()
+    {
+        if (in_array($this->bookingCodes[0], self::getBusinessCodes()))
+            return self::SERVICE_CLASS_BUSINESS;
+        return self::SERVICE_CLASS_ECONOM;
+    }
+
+    public function getAircraftName()
+    {
+        $aircraft = Aircraft::model()->findByAttributes(array('nIataCode'=>strtolower($this->aircraftCode)));
+        if ($aircraft)
+            return $aircraft->fullTitle;
+        return '';
+    }
 }

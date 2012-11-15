@@ -210,6 +210,7 @@ class HotelTripElement extends TripElement
 
     public function fillFromSearchParams(HotelSearchParams $searchParams)
     {
+        $this->searchParams = $searchParams;
         $this->city = $searchParams->city;
         $this->checkIn = $searchParams->checkIn;
         $this->checkOut = $searchParams->getCheckout();

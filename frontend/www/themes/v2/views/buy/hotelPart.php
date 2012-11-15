@@ -25,7 +25,9 @@
         </tbody>
     </table>
     <div class="tdPrice">
+
         <div class="verticalAlign">
+            <div class="people" data-bind="text: totalPeople">2 человека</div>
             <div class="price"><span data-bind="text: roomSets()[0].discountPrice"></span><span class="rur">o</span></div>
             <div class="priceSale">
                 <div class="lastPrice"><span data-bind="text: roomSets()[0].price"></span><span class="rur">o</span></div>

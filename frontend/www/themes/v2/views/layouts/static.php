@@ -19,7 +19,7 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
     <script type="text/javascript" src="http://api.voyanga.com/API.js"></script>
 </head>
 <body>
-<div>
+<div class="wrapper">
     <div class="head" id="header">
         <!-- CENTER BLOCK -->
         <div class="center-block">

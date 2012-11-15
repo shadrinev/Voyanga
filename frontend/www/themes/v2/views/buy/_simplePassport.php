@@ -22,18 +22,23 @@
                     Гражданство
                 </td>
                 <td class="tdDocumentNumber">
-                    Серия и № документа
+                    <span class="tooltipClose" rel="Для полетов внутри России подходит российский паспорт или загранпаспорт (для детей и младенцев — свидетельство о рождении или загранпаспорт). Для полетов за рубежом нужен загранпаспорт. Обратите внимание, что помимо загранпаспорта, для въезда во многие страны требуется соответствующая виза.">Серия и № документа</span>
                 </td>
                 <td class="tdDuration">
-                    Срок действия
+                    <span class="tooltipClose" rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
                 </td>
             </tr>
             </thead>
             <tbody>
             <?php foreach($passportForms as $i=>$model):?>
+                <script type="text/javascript">
+                    $(function(){
+                        $('#syncTranslit<?php echo $i ?>').syncTranslit({destination: 'syncTranslit<?php echo $i ?>'});
+                    });
+                </script>
                 <tr>
                     <td class="tdName">
-                        <?php echo CHtml::activeTextField($model, "[$i]firstName"); ?>
+                        <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id'=>'syncTranslit'.$i)); ?>
                     </td>
                     <td class="tdLastname">
                         <?php echo CHtml::activeTextField($model, "[$i]lastName"); ?>
@@ -46,12 +51,12 @@
                     <td class="tdBirthday">
                         <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
                             "placeholder" => "ДД",
-                            "class" => "dd",
+                            "class" => "dd next",
                             "maxlength" => "2"
                         )); ?>
                         <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
                             "placeholder" => "ММ",
-                            "class" => "mm",
+                            "class" => "mm next",
                             "maxlength" => "2"
                         )); ?>
                         <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
@@ -61,7 +66,17 @@
                         )); ?>
                     </td>
                     <td class="tdNationality">
-                        <?php echo CHtml::activeDropDownList($model, "[$i]countryId", array('1' => 'Россия')); ?>
+                        <?php echo CHtml::activeDropDownList(
+                            $model,
+                            "[$i]countryId",
+                            Country::model()->findAllOrderedByPopularity(),
+                            array(
+                                'data-placeholder'=> "Страна...",
+                                'prompt'=> "",
+                                'class' => "chzn-select",
+                                'style' => "width:140px;"
+                            )
+                    ); ?>
                     </td>
                     <td class="tdDocumentNumber">
                         <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
@@ -69,12 +84,12 @@
                     <td class="tdDuration">
                         <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
                             "placeholder" => "ДД",
-                            "class" => "dd",
+                            "class" => "dd next",
                             "maxlength" => "2"
                         )); ?>
                         <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
                             "placeholder" => "ММ",
-                            "class" => "mm",
+                            "class" => "mm next",
                             "maxlength" => "2"
                         )); ?>
                         <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(

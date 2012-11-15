@@ -1128,23 +1128,30 @@ TourTripResultSet = (function() {
     this.totalCost = 0;
     this.flightCounterWord = ko.computed(function() {
       var res;
-      res = Utils.wordAfterNum(_this.flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов');
+      if (_this.flightCounter() === 0) {
+        return;
+      }
+      res = Utils.wordAfterNum(_this.flightCounter(), 'авиабилет', 'авиабилета', 'авиабилетов');
       if (_this.hotelCounter() > 0) {
         res = res + ', ';
       }
       return res;
     });
     this.hotelCounterWord = ko.computed(function() {
+      if (_this.hotelCounter() === 0) {
+        return;
+      }
       return Utils.wordAfterNum(_this.hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц');
     });
     _.each(this.resultSet.items, function(item) {
-      var aviaResult;
+      var aviaResult, totalPeople;
       if (item.isFlight) {
         _this.hasFlight = true;
         _this.flightCounter(_this.flightCounter() + 1);
         _this.roundTrip = item.flights.length === 2;
         aviaResult = new AviaResult(item, _this);
         aviaResult.sort();
+        aviaResult.totalPeople = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек');
         _this.items.push(aviaResult);
         return _this.totalCost += aviaResult.price;
       } else if (item.isHotel) {
@@ -1152,6 +1159,11 @@ TourTripResultSet = (function() {
         _this.hotelCounter(_this.hotelCounter() + 1);
         console.log("Hotel: ", item);
         _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
+        totalPeople = 0;
+        _.each(item.searchParams.rooms, function(room) {
+          return totalPeople += room.adultCount / 1 + room.childCount / 1 + room.cots / 1;
+        });
+        _this.lastHotel.totalPeople = Utils.wordAfterNum(totalPeople, 'человек', 'человека', 'человек');
         _this.items.push(_this.lastHotel);
         return _this.totalCost += _this.lastHotel.roomSets()[0].discountPrice;
       }

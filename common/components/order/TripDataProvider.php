@@ -135,6 +135,7 @@ class TripDataProvider
         {
             $prepared = $item->getJsonObject();
             $prepared['isLinked'] = $item->isLinked();
+            $prepared['searchParams'] = $item->getJsonObjectForSearchParams();
             TripDataProvider::injectAdditionalInfo($prepared);
             $out['items'][] = $prepared;
         }

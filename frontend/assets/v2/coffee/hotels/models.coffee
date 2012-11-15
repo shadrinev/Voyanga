@@ -181,10 +181,13 @@ class RoomSet
 #
 class HotelResult
   constructor: (data, parent, duration, @activeHotel, hotelDatails) ->
-    # Mix in events
+    @isFlight = false
+    @isHotel = true
+  # Mix in events
     _.extend @, Backbone.Events
     if !hotelDatails
       hotelDatails = {}
+    @totalPeople = 0
     @tours =  parent.tours || @falseFunction
     @hotelId = data.hotelId
     @checkIn = moment(data.checkIn) || false

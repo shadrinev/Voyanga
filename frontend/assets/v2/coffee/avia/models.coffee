@@ -3,10 +3,13 @@
 # Atomic journey unit.
 class FlightPart
   constructor: (part)->
+    @part = part
     @departureDate = new Date(part.datetimeBegin+'+04:00')
     @arrivalDate = new Date(part.datetimeEnd+'+04:00')
     @departureCity = part.departureCity
+    @departureCityPre = part.departureCityPre
     @departureAirport = part.departureAirport
+    @aircraftName = part.aircraftName
     @arrivalCity = part.arrivalCity
     @arrivalCityPre = part.arrivalCityPre
     @arrivalAirport = part.arrivalAirport
@@ -25,6 +28,9 @@ class FlightPart
   duration: ->
     dateUtils.formatDuration @_duration
 
+  departureCityStopoverText: ->
+    "Пересадка в " + @departureCityPre + ", " + @stopoverText()
+
   # calculate stopover length to given anotherPart
   calculateStopoverLength: (anotherPart) ->
     @stopoverLength = Math.floor((anotherPart.departureDate.getTime() - @arrivalDate.getTime())/1000)
@@ -42,7 +48,6 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
       @parts.push new FlightPart(part)
 
     @flightKey = flight.flightKey
-    @stopoverCount = _.size(@parts) - 1
     @hasStopover = if @stopoverCount > 1 then true else false
     @stopoverLength = 0
     @maxStopoverLength = 0 
@@ -130,7 +135,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     result = []
     for part in @parts[0..-2]
       result.push part.arrivalCityPre
-    "Пересадка в " + result.join(', ')
+      "Пересадка в " + result.join(', ')
 
   stopsRatio: ->
     result = []
@@ -140,21 +145,37 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
       (memo, part)-> memo + part._duration,
       0
     for part in @parts[0..-2]
-      result.push Math.ceil part._duration/duration*80
+      result.push {left: Math.ceil(part._duration/duration*80), part: part}
     for data, index in result
-      if data < 18
-        data = 18        
+      if data.left < 18
+        data.left = 18        
       if index > 0
-        result[index] = result[index-1]+data
+        result[index].left = result[index-1].left+data.left
       else
-        result[index] = data
+        result[index].left = data.left
     htmlResult = ""
-    for left in result
-      htmlResult += '<span class="cup" style="left: ' + left + '%;"></span>'
+    for data in result
+      htmlResult += @getCupHtmlForPart data.part, "left: " + data.left + '%'
     htmlResult += '<span class="down"></span>'
 
     return htmlResult
 
+  stopoverHtml: ->
+    if @direct
+      return
+    htmlResult = ""
+
+    for part in @parts[0..-2]
+      if part._duration > 0
+        htmlResult += @getCupHtmlForPart(part)
+    return htmlResult
+
+  # Returns cup html for flight part 
+  getCupHtmlForPart: (part, style="")->
+    cupClass = if part.stopoverLength < 2.5*60*60 then "cup" else "cupLong"
+    '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>'
+
+  # FIXME prolly should have cupLong here too
   recommendStopoverIco: ->
     if @direct
       return
@@ -201,6 +222,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 #
 class AviaResult
   constructor: (data, @parent) ->
+    @isFlight = true
+    @isHotel = false
     # Mix in events
     _.extend @, Backbone.Events
 
@@ -237,6 +260,7 @@ class AviaResult
     @rtStackedMinimized = ko.observable true
 
     @flightCodesText = if _.size(@activeVoyage().parts)>1 then "Рейсы" else "Рейс"
+    @totalPeople = 0
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
@@ -270,11 +294,11 @@ class AviaResult
     return @activeVoyage().flightKey
 
   flightCodes: =>
-    codes = _.map @activeVoyage().parts, (flight) -> flight.flightCode
+    codes = _.map @activeVoyage().parts, (flight) -> '<span class="tooltip" rel="' + flight.departureCity + ' - ' + flight.arrivalCity + '"><nobr>' + flight.flightCode + "</nobr></span>"
     Utils.implode(', ', codes)
 
   rtFlightCodes: =>
-    codes = _.map @activeVoyage().activeBackVoyage().parts, (flight) -> flight.flightCode
+    codes = _.map @activeVoyage().activeBackVoyage().parts, (flight) -> '<span class="tooltip" rel="' + flight.departureCity + ' - ' + flight.arrivalCity + '"><nobr>' + flight.flightCode + "</nobr></span>"
     Utils.implode(', ', codes)
 
   isActive: ->
