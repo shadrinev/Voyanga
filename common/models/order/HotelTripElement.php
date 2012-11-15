@@ -39,7 +39,13 @@ class HotelTripElement extends TripElement
     public function saveToOrderDb()
     {
         if ($this->hotel)
-            return $this->hotel->saveToOrderDb();
+        {
+            $order = $this->hotel->saveToOrderDb();
+            $order->adultCount = $this->getAdultCount();
+            $order->childCount = $this->getChildCount();
+            $order->cotsCount = $this->getCotsCount();
+            return $order->update(array('adultCount', 'childCount', 'cotsCount'));
+        }
         else
         {
             //we have only search params now
@@ -47,6 +53,9 @@ class HotelTripElement extends TripElement
             $order->cityId = $this->city;
             $order->checkIn = $this->checkIn;
             $order->duration = $this->getDuration();
+            $order->adultCount = $this->getAdultCount();
+            $order->childCount = $this->getChildCount();
+            $order->cotsCount = $this->getCotsCount();
             if ($order->save())
                 return $order;
         }
@@ -227,4 +236,33 @@ class HotelTripElement extends TripElement
         }
     }
 
+    public function getAdultCount()
+    {
+        $result = 0;
+        foreach ($this->rooms as $room)
+        {
+            $result += $room['adt'];
+        }
+        return $result;
+    }
+
+    public function getChildCount()
+    {
+        $result = 0;
+        foreach ($this->rooms as $room)
+        {
+            $result += $room['chd'];
+        }
+        return $result;
+    }
+
+    public function getCotsCount()
+    {
+        $result = 0;
+        foreach ($this->rooms as $room)
+        {
+            $result += $room['cots'];
+        }
+        return $result;
+    }
 }

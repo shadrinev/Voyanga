@@ -9,6 +9,9 @@
  * @property string $departureDate
  * @property integer $departureCity
  * @property integer $arrivalCity
+ * @property integer $adultCount
+ * @property integer $childCount
+ * @property integer $infantCount
  * @property string $object
  */
 class OrderFlightVoyage extends FrontendActiveRecord
