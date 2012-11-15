@@ -10,7 +10,7 @@
     </tr>
     </thead>
     <tbody>
-    {{#each hotels}}
+    {{#each hotels.hotels}}
     <tr>
         <td>{{hotelName}}</td>
         <td>{{category}}</td>

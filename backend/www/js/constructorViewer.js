@@ -122,7 +122,7 @@ constructorViewer.init = function () {
                 })
                     .done(function (data) {
                         console.log(data);
-                        var html = hotelSearchResult(data.hotels);
+                        var html = hotelSearchResult(data);
                         $(this).html(html);
 
                         cartElemId = $(this).attr('id');
