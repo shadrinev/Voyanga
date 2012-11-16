@@ -74,8 +74,12 @@ abstract class Payments_Channel {
 
     public function rebill($anchor)
     {
-        $params = $this->formParams();
+        $allParams = $this->formParams();
+        $params['MerchantId'] = $allParams['MerchantId'];
         $params['RebillAnchor'] = $anchor;
+        $params['OrderId'] = $allParams['OrderId'];
+        $params['Amount'] = $allParams['Amount'];
+        $params['Currency'] = $allParams['Currency'];
         $params['SecurityKey'] = $this->getSignature($params, 'rebill');
         list($code,$result) = $this->callApi('transaction/rebill', $params);
         if($result['Result'] == 'Ok')
@@ -107,7 +111,7 @@ abstract class Payments_Channel {
         $params = Array();
         foreach($context as $key=>$value)
         {
-            $params[]=$key.'='.$value;
+            $params[]=$key.'='.urlencode($value);
         }
         $url.= '/?';
         $url.= implode('&', $params);
