@@ -7,7 +7,8 @@
  */
 
 
-VoyangaCalendarTimeline = new VoyangaCalendarClass({jObj:'#voyanga-calendar-timeline',values:new Array(),twoSelect: true});
+VoyangaCalendarTimeline = new VoyangaCalendarClass({jObj:'#voyanga-calendar-timeline',values:new Array(),twoSelect: true,
+    monthNames: new Array('ЯНВ','ФЕВ','МАР','АПР','МАЙ','ИЮН','ИЮЛ','АВГ','СЕН','ОКТ','НОЯ','ДЕК')});
 VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
     init: function(){
         //console.log(this.monthArray);
@@ -18,6 +19,9 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
         var self = this;
         var monthLineWidth = Math.round(((this.totalLines) / this.totalShowLines)*10000)/100;
         this.jObj.find('.monthLineVoyanga').css('width',monthLineWidth + '%');
+        var leftPercent = this.startLine / (this.totalShowLines);
+        leftPercent =  Math.round(leftPercent*1000 )/10;
+        this.jObj.find('.monthLineVoyanga').css('left',leftPercent + '%');
         var tLines = this.totalLines;
         if(this.totalLines == this.linesWidth){
             tLines++;
@@ -34,11 +38,16 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
             widthPercent = Math.round(widthPercent*1000)/10;
 
             var newHtml = $('<div class="monthNameVoyanga" style="left: '+leftPercent+'%; width: '+widthPercent+'%"><div class="monthWrapper">'+this.monthShowArray[i].name+'</div></div>');
-            if(this.monthShowArray[i].line < this.totalLines && (this.totalLines != this.linesWidth)){
-                leftPercent = this.monthShowArray[i].line / (tLines - this.linesWidth);
+            //add only 3 lines condition
+            if((this.monthShowArray[i].line >= (this.startLine - 3)) && (this.monthShowArray[i].line < (this.startLine+this.totalLines)) && (this.totalLines != this.linesWidth)){
+                if(!this.monthShowArray[i].lineReal)
+                    this.monthShowArray[i].lineReal = 0;
+                leftPercent = this.monthShowArray[i].lineReal / (tLines - this.linesWidth);
+                console.log('mmmm',this.monthShowArray[i].lineReal,tLines,this.linesWidth);
                 leftPercent =  Math.round((1 - (this.linesWidth / tLines) )*leftPercent*1000 )/10;
                 newHtml.data('clickable',true);
                 newHtml.data('leftPos',leftPercent);
+                newHtml.addClass('highlited');
             }else{
                 newHtml.data('clickable',false);
             }
@@ -99,6 +108,27 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
                 });
         }
     },
+    knobMove: function(){
+        var pWidth = this.knobWidth;
+        //console.log(pWidth);
+        var pLeft = this.knobPos;
+        //console.log(pLeft);
+        var pRight = pLeft + pWidth;
+        var self = this;
+        this.jObj.find('.monthNameVoyanga').each(function(){
+            //var pMonthLeft = self.getPercent($(this).css('left'));
+            var pMonthWidth = self.getPercent($(this).css('width'));
+            /*if( ( (pRight - pMonthLeft) > (pMonthWidth * 0.6) ) && ( (pMonthLeft + pMonthWidth - pLeft) > (pMonthWidth * 0.6) )){
+                //$(this).addClass('highlited');
+                //console.log((pRight - pMonthLeft));
+
+            }else{
+                //$(this).removeClass('highlited');
+            }*/
+        });
+    },
+    weekDays: new Array('Пн1','Вт','Ср','Чт','Пт','Сб','Вс'),
+    monthNames: new Array('Январь1','Февраль1','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'),
 
     linesWidth:3
 });
@@ -224,6 +254,8 @@ VoyangaCalendarTimeline.onCellClick = function(obj,e){
 VoyangaCalendarTimeline.generateGrid = function(){
     var startMoment = moment(this.minDate);
     var endMoment = moment(this.maxDate);
+    var startDraw = moment(startMoment);
+    var endDraw = moment(endMoment);
     console.log('dates',this.minDate,this.maxDate);
     var firstDay = this.minDate;
     //var firstDay = new Date('2012-04-10');
@@ -242,16 +274,36 @@ VoyangaCalendarTimeline.generateGrid = function(){
     var dateDiff = Math.floor(endMoment.diff(startMoment,'days',true));
     console.log('diff',weekDiff,dateDiff);
     if(weekDiff == dateDiff){
-        console.log(tmpDate);
-        tmpDate.setDate(tmpDate.getDate() - 7);
-        console.log(tmpDate);
+        //console.log(tmpDate);
+        //tmpDate.setDate(tmpDate.getDate() - 7);
+        //console.log(tmpDate);
+        startDraw.sub('d',7);
     }
+    startDraw.date(startDraw.date()-this.getDay(startDraw._d));
+    dateDiff = Math.floor(endDraw.diff(startDraw,'days',true));
+    if(dateDiff <= 14){
+        endDraw.add('d',7);
+    }
+    if(dateDiff % 7 != 0){
+        endDraw.add('d',dateDiff % 7);
+    }
+    dateDiff = Math.floor(endDraw.diff(startDraw,'days',true));
+    var centerDiff = Math.floor((365 - dateDiff)/2)
+    tmpDate = moment(startMoment)._d;
+    tmpDate.setDate(tmpDate.getDate() - centerDiff);
+    tmpDate.setDate(1);
+    var stopDate = moment(endDraw)._d;
+    stopDate.setDate(stopDate.getDate() + centerDiff + 3);
+    stopDate.setDate(1);
+    stopDate.setDate(0);
+    stopDate.setDate(stopDate.getDate()-this.getDay(stopDate));
+    stopDate.setDate(stopDate.getDate() + 7);
 
-    //tmpDate.setDate(1);
+
     var weekDay = this.getDay(tmpDate);
     //console.log(weekDay);
-    var startDate = firstDay.getDate();
-    var startYear = firstDay.getFullYear();
+    var startDate = tmpDate.getDate();
+    var startYear = tmpDate.getFullYear();
     //console.log(tmpDate);
     tmpDate.setDate(tmpDate.getDate()-this.getDay(tmpDate));
     //need for clone start temp date
@@ -262,12 +314,15 @@ VoyangaCalendarTimeline.generateGrid = function(){
     //console.log(tmpDate);
     var needStop = false;
     var lineNumber = 0;
+    var lineNumberReal = 0;
     var fullYear  = false;
+    console.log('date params',tmpDate,'st',startDraw,'en',endDraw,'stp', stopDate);
     this.slider.monthArray = new Array();
     this.slider.monthShowArray = new Array();
-    while((!needStop) || (!fullYear))
+    this.slider.startLine = false;
+    while(tmpDate < stopDate)
     {
-        if(!needStop){
+        if((tmpDate < endDraw._d)&&(tmpDate >= startDraw)){
             var newHtml = '<div class="calendarLineVoyanga" id="weekNum-'+lineNumber+'" data-weeknum="'+lineNumber+'">';
             for(var i=0;i<7;i++){
 
@@ -278,9 +333,13 @@ VoyangaCalendarTimeline.generateGrid = function(){
                     label = label + ' <div class="monthLabel">' + this.monthNames[tmpDate.getMonth()] +'</div>';
                     var monthObject = new Object();
                     monthObject.line = lineNumber;
+                    monthObject.lineReal = lineNumberReal;
                     monthObject.name = this.monthNames[tmpDate.getMonth()];
                     this.slider.monthArray.push(monthObject);
                     this.slider.monthShowArray.push(monthObject);
+                }else if(this.slider.startLine === false){
+                    this.slider.startLine = lineNumber;
+                    label = label + ' <div class="monthLabel">' + this.monthNames[tmpDate.getMonth()] +'</div>';
                 }
                 var dateLabel = tmpDate.getFullYear()+'-'+(tmpDate.getMonth()+1)+'-'+tmpDate.getDate();
                 newHtml = newHtml + '<div class="dayCellVoyanga'+((tmpDate < dayToday) ? ' inactive' : '')+((i>=5 && i<7) ? ' weekEnd' : '')+'" id="dayCell-'+dateLabel+'" data-cell-date="'+dateLabel+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
@@ -288,12 +347,8 @@ VoyangaCalendarTimeline.generateGrid = function(){
             }
             newHtml = newHtml + '</div>';
             this.jObj.find('.calendarDIVVoyanga').append(newHtml);
-            if(tmpDate > this.maxDate && lineNumber >= 2){
-                //if(tmpDate.getMonth() >= startMonth ){
-                    needStop = true;
-                    var lastLineNumber = lineNumber + 1;
-                //}
-            }
+
+            lineNumberReal++;
         }else{
             for(var i=0;i<7;i++){
                 if(tmpDate.getDate() == 1){
@@ -306,12 +361,12 @@ VoyangaCalendarTimeline.generateGrid = function(){
             }
         }
 
-        if(tmpDate.getFullYear() > startYear){
+        /*if(tmpDate.getFullYear() > startYear){
             if(tmpDate.getMonth() >= startMonth ){
                 needStop = true;
                 fullYear = true;
             }
-        }
+        }*/
         //if(lineNumber > 4){
         //needStop = true;
         //}
@@ -319,7 +374,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
     }
     console.log('monthArr', this.slider.monthArray.length,this.slider.monthArray);
     //if(this.slider.monthArray.length == 0){
-    var startMonth = moment(startTemp);
+    /*var startMonth = moment(startTemp);
     //console.log('momomo', startTemp,startMonth);
     startMonth.date(1);
 
@@ -332,15 +387,15 @@ VoyangaCalendarTimeline.generateGrid = function(){
         monthObject.name = this.monthNames[startMonth.month()];
         this.slider.monthArray.unshift(monthObject);
         this.slider.monthShowArray.unshift(monthObject);
-    }
+    }*/
 
     //}
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
 
     //console.log(this.slider.monthArray);
-    if((lastLineNumber - lastLineMonth) < 2 && this.slider.monthArray.length > 9){
+    /*if((lastLineNumber - lastLineMonth) < 2 && this.slider.monthArray.length > 9){
         this.slider.monthArray.pop();
-    }
+    }*/
 
     var lastLineMonth = this.slider.monthShowArray[this.slider.monthShowArray.length - 1].line;
     //console.log(this.slider.monthArray);
@@ -352,7 +407,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
     this.jObj.find('.dayCellVoyanga').hover(function (e) {var obj = this; self.onCellOver(obj,e);},function (e) {var obj = this; self.onCellOut(obj,e);});
     this.jObj.find('.dayCellVoyanga').on('click',function (e) {var obj = this; self.onCellClick(obj,e);});
 
-    this.slider.totalLines = lastLineNumber;
+    this.slider.totalLines = lineNumberReal;
     this.slider.totalShowLines = lineNumber;
     console.log(this.slider.totalLines);
 }

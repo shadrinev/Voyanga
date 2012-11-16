@@ -99,6 +99,9 @@ VoyangaCalendarSlider = function(options){
             if(this.knobSlideAction){
                 obj.data('xStart', e.pageX);
                 obj.data('posStart', this.knobPos);
+                if(this.width < 100){
+                    this.onresize();
+                }
             }
         },
         endEvent: function(e,obj){
@@ -179,11 +182,9 @@ VoyangaCalendarSlider = function(options){
                 }
                 pos = pos.substr(0, pos.length -2);
                 pos = Math.round((pos / this.width)*10000)/100;
-                pos = pos;
             }else if(pos.indexOf('%') != -1){
                 pos = pos.substr(0, pos.length -1);
                 pos = Math.round((pos)*100)/100;
-                pos = pos;
             }
             return pos;
         },
@@ -217,6 +218,9 @@ VoyangaCalendarSlider = function(options){
                 newPos = this.getPercent(newPos)+'%';
                 //var newPos = $(this).css('left');
                 var self = this;
+                if(this.width < 100){
+                    this.onresize();
+                }
                 this.jObj.find('.knobVoyanga').animate({
                         left: [newPos, 'easeOutCubic']
                     },

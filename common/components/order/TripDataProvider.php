@@ -59,32 +59,6 @@ class TripDataProvider
         }
     }
 
-    public function getItemsByOrderId($orderBookingId)
-    {
-        $orderBooking = OrderBooking::model()->findByPk($orderBookingId);
-        if (!$orderBooking)
-            throw new CException("No such order");
-        $flights = $orderBooking->flightBookers;
-        $hotels = $orderBooking->hotelBookers;
-        $elements = array();
-        foreach ($flights as $flight)
-        {
-            $flightVoyage = unserialize($flight->flightVoyageInfo);
-            $flightTripElement = new FlightTripElement();
-            $flightTripElement->flightVoyage = $flightVoyage;
-            $flightTripElement->flightBookerId = $flight->id;
-            $elements[] = $flightTripElement;
-        }
-        foreach ($hotels as $hotel)
-        {
-            $hotelInfo = unserialize($hotel->hotelInfo);
-            $hotelTripElement = new HotelTripElement();
-            $hotelTripElement->hotel = $hotelInfo;
-            $hotelTripElement->hotelBookerId = $hotel->id;
-            $elements[] = $hotelTripElement;
-        }
-    }
-
     public function getSortedCartItemsOnePerGroup($cache = true)
     {
         if (!$this->sortedCartItemsOnePerGroup || !$cache)
@@ -149,6 +123,7 @@ class TripDataProvider
         {
             $prepared = $item->getJsonObject();
             $prepared['isLinked'] = $item->isLinked();
+            $prepared['searchParams'] = $item->getJsonObjectForSearchParams();
             TripDataProvider::injectAdditionalInfo($prepared);
             $out['items'][] = $prepared;
         }
@@ -207,7 +182,10 @@ class TripDataProvider
         {
             $element['hotelDetails'] = $hotelClient->hotelDetail($element['hotelId']);
         }
-
-
+        if ($element['isFlight'])
+        {
+            $elements = FlightManager::injectForBe(array($element), true);
+            $element = $elements[0];
+        }
     }
 }

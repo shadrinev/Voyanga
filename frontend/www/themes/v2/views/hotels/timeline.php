@@ -3,13 +3,13 @@
         <div id='voyanga-calendar-timeline' class="hotel">
             <div class="weekDaysVoyanga">
                 <div class="weekDaysVoyangaInner">
-                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Понедельник</span></div></div>
-                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Вторник</span></div></div>
-                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Среда</span></div></div>
-                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Четверг</span></div></div>
-                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Пятница</span></div></div>
-                    <div class="weekDayVoyanga weekEnd "><div class="weekDayBorder"><span>Суббота</span></div></div>
-                    <div class="weekDayVoyanga weekEnd "><div class="weekDayBorder"><span>Воскресенье</span></div></div>
+                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Пн</span></div></div>
+                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Вт</span></div></div>
+                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Ср</span></div></div>
+                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Чт</span></div></div>
+                    <div class="weekDayVoyanga"><div class="weekDayBorder"><span>Пт</span></div></div>
+                    <div class="weekDayVoyanga weekEnd "><div class="weekDayBorder"><span>Сб</span></div></div>
+                    <div class="weekDayVoyanga weekEnd "><div class="weekDayBorder"><span>Вс</span></div></div>
                 </div>
             </div>
             <div class="calendarUnscrollVoyanga">

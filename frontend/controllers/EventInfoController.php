@@ -36,7 +36,7 @@ class EventInfoController extends Controller
             //echo $tour->orderId.'dsf';
 
             $items = $dataProvider->getSortedCartItemsOnePerGroup(false);
-            //print_r($items);
+            print_r($items);
             $tours[$tour->startCityId] = $items;
             $tours[$tour->startCityId]['city'] = City::getCityByPk($tour->startCityId)->getAttributes();
             $cities[$tour->startCityId] = City::getCityByPk($tour->startCityId)->getAttributes();
