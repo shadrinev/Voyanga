@@ -159,13 +159,19 @@ class RoomSet
       @cancelRules(roomSetData.cancelCharges)
 
   showCancelationRules: (el,e)=>
-    miniPopUp = '<div class="miniPopUp"></div>'
+    #miniPopUp = '<div class="miniPopUp"></div>'
     console.log(e)
     widthThisElement = $(e.currentTarget).width()
-    $('body').append(miniPopUp)
-    $('.miniPopUp').html($(e.currentTarget).attr('rel')).css('left', (e.pageX - (widthThisElement / 2))+'px').css('top', (e.pageY + 10)+'px')
+    @parent.activeRoomSet(@)
+    @parent.showRulesPopup(true)
+    #$('body').append(miniPopUp)
+    #$('.miniPopUp').html($(e.currentTarget).attr('rel'))
+    offset = $('#content > :eq(0)').offset();
+
+    $('.miniPopUp').css('left', (e.pageX - (widthThisElement / 2) - offset.left)+'px').css('top', (e.pageY + 50 - offset.top)+'px')
+
   hideCancelationRules: (el,ev)=>
-    $('.miniPopUp').remove()
+    @parent.showRulesPopup(false)
   #price: ->
   #  console.log prm
   #  console.log 'tt'
@@ -186,12 +192,18 @@ class HotelResult
     @hotelId = data.hotelId
     @checkIn = moment(data.checkIn) || false
     @checkOut = moment(data.checkOut) || false
-    @checkOutText = @checkOut.format('LL')
+    if !@checkOut && @checkIn && duration
+      @checkOut = moment(@checkIn)
+      @checkOut.add('d', duration)
+    if @checkOut
+      @checkOutText = @checkOut.format('LL')
     @cacheId = parent.cacheId
-    @activeResultId = ko.observable 0 
+    @activeResultId = ko.observable 0
     @hotelName = data.hotelName
     @address = hotelDatails.address
     @description = hotelDatails.description
+    if !@description
+      @description = ""
     @limitDesc = Utils.limitTextLenght(@description,195)
     @showMoreDesc = ko.observable(true)
     @showMoreDescText = ko.computed =>
@@ -272,6 +284,8 @@ class HotelResult
       else
         return 'Выбрать'
 
+    @showRulesPopup = ko.observable false
+    @activeRoomSet = ko.observable(null)
     @hasHotelServices = if hotelDatails.hotelServices then true else false
     @hotelServices = hotelDatails.hotelServices
     @hasHotelGroupServices = if hotelDatails.hotelGroupServices then true else false
@@ -324,6 +338,7 @@ class HotelResult
       @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
       @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
+    @activeRoomSet(set)
     #@roomSets = _.sortBy @roomSets, (entry)-> entry.price
     @roomSets.sort (left,right)=>
       if left.price > right.price

@@ -18,6 +18,8 @@ Application = (function(_super) {
 
     this.contentRendered = __bind(this.contentRendered, this);
 
+    this.bindItemsToEvent = __bind(this.bindItemsToEvent, this);
+
     this.bindItemsToBuy = __bind(this.bindItemsToBuy, this);
 
     this.bindEvents = __bind(this.bindEvents, this);
@@ -171,6 +173,13 @@ Application = (function(_super) {
   Application.prototype.bindItemsToBuy = function() {
     var tourTrip;
     tourTrip = new TourTripResultSet(window.tripRaw);
+    console.log("Tour trip:", tourTrip);
+    return this.itemsToBuy = tourTrip;
+  };
+
+  Application.prototype.bindItemsToEvent = function() {
+    var tourTrip;
+    tourTrip = new EventTourResultSet(window.tripRaw);
     console.log("Tour trip:", tourTrip);
     return this.itemsToBuy = tourTrip;
   };

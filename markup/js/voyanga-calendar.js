@@ -105,7 +105,10 @@ VoyangaCalendarSlider = function(options){
             if(this.knobSlideAction){
                 var xDelta = e.pageX - obj.data('xStart');
                 var posDelta = Math.round((xDelta / this.width)*10000)/100;
+                console.log('xfind',xDelta,posDelta);
                 this.knobPos = obj.data('posStart') + posDelta;
+                console.log('xfindp',this.knobPos);
+
                 if(this.knobPos < 0) this.knobPos = 0;
                 if(this.knobPos > (100 - this.knobWidth)) this.knobPos = (100 - this.knobWidth);
                 this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
@@ -148,11 +151,9 @@ VoyangaCalendarSlider = function(options){
             if(pos.indexOf('px') != -1){
                 pos = pos.substr(0, pos.length -2);
                 pos = Math.round((pos / this.width)*10000)/100;
-                pos = pos;
             }else if(pos.indexOf('%') != -1){
                 pos = pos.substr(0, pos.length -1);
                 pos = Math.round((pos)*100)/100;
-                pos = pos;
             }
             return pos;
         },

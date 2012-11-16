@@ -7,6 +7,9 @@
  * @property integer $eventId
  * @property integer $startCityId
  * @property integer $orderId
+ *
+ * @property Event $event
+ * @property Order $order
  */
 class EventOrder extends CActiveRecord
 {

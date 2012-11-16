@@ -151,6 +151,12 @@ class City extends CActiveRecord
         ));
     }
 
+    /**
+     * @static
+     * @param $id
+     * @return City
+     * @throws CException
+     */
     public static function getCityByPk($id)
     {
         if (isset(City::$cities[$id]))
