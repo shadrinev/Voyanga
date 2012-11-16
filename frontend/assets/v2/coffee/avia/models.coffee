@@ -133,9 +133,20 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     if @direct
       return "Без пересадок"
     result = []
+    if @parts.length == 2
+      part = @parts[0]
+      return "Пересадка в " + part.arrivalCityPre + ", " + @parts[0].stopoverText()
     for part in @parts[0..-2]
       result.push part.arrivalCityPre
-      "Пересадка в " + result.join(', ')
+    "Пересадка в " + result.join(', ')
+    
+  stopoverRelText: ->
+    if @direct
+      return "Без пересадок"
+    result = []
+    for part in @parts[0..-2]
+      result.push 'Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText()
+    result.join('<br />')
 
   stopsRatio: ->
     result = []
@@ -166,8 +177,10 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     htmlResult = ""
 
     for part in @parts[0..-2]
-      if part._duration > 0
+      console.log part
+      if part.stopoverLength  > 0
         htmlResult += @getCupHtmlForPart(part)
+
     return htmlResult
 
   # Returns cup html for flight part 
@@ -264,7 +277,7 @@ class AviaResult
 
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
-              'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'departureTimeNumeric',
+              'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric',
               'arrivalTimeNumeric','hash', 'stopsRatio', 'recommendStopoverIco']
 
     for name in fields

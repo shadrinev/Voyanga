@@ -13,6 +13,7 @@ class BuyController extends Controller
     {
         return array(
             'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
+            'makeBookingForItem' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingForItemAction'),
             'startPayment' => array('class'=>'site.common.modules.tour.actions.constructor.StartPaymentAction'),
             'getPayment' => array('class'=>'site.common.modules.tour.actions.constructor.GetPaymentAction'),
             'new' => array('class'=>'site.common.modules.tour.actions.constructor.NewAction'),
@@ -24,6 +25,7 @@ class BuyController extends Controller
 
     public function actionIndex()
     {
+        Yii::app()->user->setState('blockedToBook', null);
         $this->layout = 'main';
         $this->addItems();
         if (isset($_GET['item'][0]['module']))

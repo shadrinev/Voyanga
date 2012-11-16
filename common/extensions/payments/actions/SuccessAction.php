@@ -15,8 +15,10 @@ class SuccessAction extends CAction
             $params[$key]=$_REQUEST[$key];
         }
 
-        list($orderId, $billId) = explode('-', $params['OrderId']);
-
+        $parts = explode('-', $params['OrderId']);
+        if(count($parts)<2)
+            return;
+        list($orderId, $billId) = $parts;
         $bill = Bill::model()->findByPk($billId);
         $channel = $bill->getChannel();
         $sign = $channel->getSignature($params);
@@ -54,12 +56,13 @@ class SuccessAction extends CAction
                 continue;
             }
             if($this->getStatus($booker)!='waitingForPayment'){
-                continue;
+                return $this->refund($order);
             }
             
             $order->isWaitingForPaymentState($booker->getStatus());
             $bill = $payments->getBillForBooker($booker->getCurrent());
-            $channel = $bill->getChannel();
+            $bill->channel = 'ltr';
+            $channel =  $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
                 $booker->status('paid');
@@ -67,7 +70,7 @@ class SuccessAction extends CAction
             else
             {
                 $booker->status('paymentError');
-                $this->refund($order);
+                return $this->refund($order);
             }
         }
 //     throw new Exception("done");
@@ -82,9 +85,11 @@ class SuccessAction extends CAction
         foreach($bookers as $booker)
         {
             $bill = $payments->getBillForBooker($booker->getCurrent());
-            if($booker->getStatus()=='paid') {
-                $bill->getChannel()->refund();
-                $booker->status('refundedError');
+            if($this->getStatus($booker)=='paid') {
+                if($bill->getChannel()->refund())
+                    $booker->status('refundedError');
+                else
+                    throw new Exception("Refund error");
             } elseif($this->getStatus($booker)=='waitingForPayment') {
                 $booker->status('paymentCanceledError');
             } elseif($this->getStatus($booker)!='paymentError') {

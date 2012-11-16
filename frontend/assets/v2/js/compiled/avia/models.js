@@ -158,19 +158,35 @@ Voyage = (function() {
   };
 
   Voyage.prototype.stopoverText = function() {
-    var part, result, _i, _len, _ref, _results;
+    var part, result, _i, _len, _ref;
+    if (this.direct) {
+      return "Без пересадок";
+    }
+    result = [];
+    if (this.parts.length === 2) {
+      part = this.parts[0];
+      return "Пересадка в " + part.arrivalCityPre + ", " + this.parts[0].stopoverText();
+    }
+    _ref = this.parts.slice(0, -1);
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      part = _ref[_i];
+      result.push(part.arrivalCityPre);
+    }
+    return "Пересадка в " + result.join(', ');
+  };
+
+  Voyage.prototype.stopoverRelText = function() {
+    var part, result, _i, _len, _ref;
     if (this.direct) {
       return "Без пересадок";
     }
     result = [];
     _ref = this.parts.slice(0, -1);
-    _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
-      result.push(part.arrivalCityPre);
-      _results.push("Пересадка в " + result.join(', '));
+      result.push('Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText());
     }
-    return _results;
+    return result.join('<br />');
   };
 
   Voyage.prototype.stopsRatio = function() {
@@ -219,7 +235,8 @@ Voyage = (function() {
     _ref = this.parts.slice(0, -1);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
-      if (part._duration > 0) {
+      console.log(part);
+      if (part.stopoverLength > 0) {
         htmlResult += this.getCupHtmlForPart(part);
       }
     }
@@ -367,7 +384,7 @@ AviaResult = (function() {
     this.rtStackedMinimized = ko.observable(true);
     this.flightCodesText = _.size(this.activeVoyage().parts) > 1 ? "Рейсы" : "Рейс";
     this.totalPeople = 0;
-    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio', 'recommendStopoverIco'];
+    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio', 'recommendStopoverIco'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
       this[name] = (function(name) {

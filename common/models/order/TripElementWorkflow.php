@@ -68,12 +68,7 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
 
     private function getBookingContactFormData()
     {
-        //todo: implement returning booking form here
-        return $this->getTestBookingContactFormData();
-    }
-
-    private function getTestBookingContactFormData()
-    {
-        return array('email' => 'test@test.ru', 'phone' => '9213546576');
+        $bookingForm = Yii::app()->user->getState('bookingForm');
+        return array('email'=>$bookingForm->contactEmail, 'phone'=>$bookingForm->contactPhone);
     }
 }

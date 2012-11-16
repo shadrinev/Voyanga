@@ -29,6 +29,8 @@ class MakeBookingAction extends CAction
             $this->fillOutBookingForm();
             if ($this->fillOutPassports($ambigousPassports))
             {
+                Yii::app()->user->setState('passportForms', $this->passportForms);
+                Yii::app()->user->setState('bookingForm', $this->bookingForm);
                 $tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItems();
                 // FIXME return status here
                 header("Content-type: application/json");
@@ -115,6 +117,7 @@ class MakeBookingAction extends CAction
                 if ($item instanceof FlightTripElement)
                 {
                     $item->setPassports($adultsPassports, $childrenPassports, $infantsPassports);
+                    Yii::app()->shoppingCart->update($item, 1);
                 }
                 if ($item instanceof HotelTripElement)
                 {
@@ -128,6 +131,7 @@ class MakeBookingAction extends CAction
                         $roomPassports[] = $roomPassport;
                     }
                     $item->setPassports($this->bookingForm, $roomPassports);
+                    Yii::app()->shoppingCart->update($item, 1);
                 }
             }
             return true;

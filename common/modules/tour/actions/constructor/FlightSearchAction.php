@@ -24,7 +24,6 @@ class FlightSearchAction extends CAction
             }
             if ($flightForm->validate())
             {
-                //$this->storeSearches($flightForm->departureCityId, $flightForm->arrivalCityId, $flightForm->departureDate, $flightForm->adultCount, $flightForm->childCount, $flightForm->infantCount);
                 $result = MFlightSearch::getAllPricesAsJson($flightForm);
                 echo $result;
             }

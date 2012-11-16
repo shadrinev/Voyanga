@@ -68,7 +68,11 @@ class FlightTripElement extends TripElement
     public function saveToOrderDb()
     {
         if ($this->flightVoyage)
-            return $this->flightVoyage->saveToOrderDb($this->groupId);
+        {
+            $order = $this->flightVoyage->saveToOrderDb($this->groupId);
+            $order->searchParams = serialize($this->searchParams);
+            return $order->update(array('searchParams'));
+        }
         else
         {
             //we have only search params now
@@ -77,6 +81,7 @@ class FlightTripElement extends TripElement
             $order->departureCity = $this->departureCity;
             $order->arrivalCity = $this->arrivalCity;
             $order->departureDate = $this->departureDate;
+            $order->searchParams = serialize($this->searchParams);
             if ($order->save())
                 return $order;
         }

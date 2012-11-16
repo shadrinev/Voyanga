@@ -219,13 +219,14 @@ class FlightVoyageStack
         return $aVariantsStacks;
     }
 
-    public function getAsJson()
+    public function getAsJson($inject=array())
     {
         $ret = array('searchId' => $this->fsKey, 'flightVoyages' => array());
         foreach ($this->flightVoyages as $flightVoyage)
         {
             $ret['flightVoyages'][] = $flightVoyage->getJsonObject();
         }
+        $ret = CMap::mergeArray($ret, $inject);
         return json_encode($ret);
     }
 

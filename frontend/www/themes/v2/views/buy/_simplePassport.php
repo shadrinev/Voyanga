@@ -33,15 +33,16 @@
             <?php foreach($passportForms as $i=>$model):?>
                 <script type="text/javascript">
                     $(function(){
-                        $('#syncTranslit<?php echo $i ?>').syncTranslit({destination: 'syncTranslit<?php echo $i ?>'});
+                        $('#syncTranslitFirstName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitFirstName<?php echo $i ?>'});
+                        $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
                     });
                 </script>
                 <tr>
                     <td class="tdName">
-                        <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id'=>'syncTranslit'.$i)); ?>
+                        <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id'=>'syncTranslitFirstName'.$i)); ?>
                     </td>
                     <td class="tdLastname">
-                        <?php echo CHtml::activeTextField($model, "[$i]lastName"); ?>
+                        <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id'=>'syncTranslitLastName'.$i)); ?>
                     </td>
                     <td class="tdSex">
                         <?php echo CHtml::activeHiddenField($model, "[$i]genderId", array('class'=>'genderField')); ?>
