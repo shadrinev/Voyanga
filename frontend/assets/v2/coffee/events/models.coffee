@@ -189,6 +189,7 @@ class EventTourResultSet
     @selectedCity.subscribe (newCityId)=>
       @reinit(window.toursArr[newCityId])
     @startCity = ko.observable resultSet.city.localRu
+    @activePanel = ko.observable(null)
 
     @reinit(resultSet)
 
@@ -201,6 +202,8 @@ class EventTourResultSet
     @selected_key = ko.observable ''
     @selected_best = ko.observable ''
     @totalCost = 0
+    panelSet = new TourPanelSet()
+    @activePanel(panelSet)
     @startCity(@resultSet.city.localRu)
     console.log('reinitEventData',@)
     @flightCounterWord = ko.computed =>

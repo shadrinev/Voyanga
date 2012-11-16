@@ -66,7 +66,7 @@ class TripDataProvider
             $items = $this->getSortedCartItems($cache);
             $this->sortedCartItemsOnePerGroup = $this->getItemsOnePerGroup($items);
         }
-        return $this->getWithAdditionalInfo($this->sortedCartItemsOnePerGroup);
+        return $this->sortedCartItemsOnePerGroup;
     }
 
     public function getSortedCartItems($cache = true)
@@ -81,7 +81,7 @@ class TripDataProvider
 
     public function getSortedCartItemsOnePerGroupAsJson()
     {
-        return json_encode($this->getSortedCartItemsOnePerGroup());
+        return json_encode($this->getWithAdditionalInfo($this->getSortedCartItemsOnePerGroup()));
     }
 
     public function getSortedCartItemsAsJson()
@@ -116,7 +116,7 @@ class TripDataProvider
         return json_encode($out);
     }
 
-    private function getWithAdditionalInfo($items)
+    public function getWithAdditionalInfo($items)
     {
         $out = array();
         foreach ($items as $item)
