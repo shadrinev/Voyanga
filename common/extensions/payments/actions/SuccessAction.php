@@ -15,8 +15,10 @@ class SuccessAction extends CAction
             $params[$key]=$_REQUEST[$key];
         }
 
-        list($orderId, $billId) = explode('-', $params['OrderId']);
-
+        $parts = explode('-', $params['OrderId']);
+        if(count($parts)<2)
+            return;
+        list($orderId, $billId) = $parts;
         $bill = Bill::model()->findByPk($billId);
         $channel = $bill->getChannel();
         $sign = $channel->getSignature($params);
@@ -59,7 +61,8 @@ class SuccessAction extends CAction
             
             $order->isWaitingForPaymentState($booker->getStatus());
             $bill = $payments->getBillForBooker($booker->getCurrent());
-            $channel = $bill->getChannel();
+            $bill->channel = 'ltr';
+            $channel =  $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
                 $booker->status('paid');
