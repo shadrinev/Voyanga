@@ -109,10 +109,12 @@
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Добавить' : 'Сохранить',
 		)); ?>
-        <?php $this->widget('bootstrap.widgets.BootButton', array(
-            'url'=>Yii::app()->createUrl('/admin/tour/constructor/create', array('eventId'=>$model->id)),
-            'label'=>'Составить тур',
-        )); ?>
+        <?php if (!$model->isNewRecord): ?>
+            <?php $this->widget('bootstrap.widgets.BootButton', array(
+                'url'=>Yii::app()->createUrl('/admin/tour/constructor/create', array('eventId'=>$model->id)),
+                'label'=>'Составить тур',
+            )); ?>
+        <?php endif ?>
         <?php $this->widget('bootstrap.widgets.BootButton', array(
             'url'=>$model->isNewRecord ? array('admin') : array('view','id'=>$model->id),
             'label'=>'Отмена',
