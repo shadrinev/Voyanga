@@ -1124,8 +1124,7 @@ function ClikLeftProj() {
 
 
 function PopUpInfoPath() {
-    var _this = $('.tooltip');
-    $(_this).mousemove(function(e) {
+    $(document).on('mousemove', '.tooltip', function(e) {
         var _text = $(this).attr('rel');
         console.log("TOOLTIP FOR:", $(this).attr('rel'));
         if ($('.PopUpInfoPath').length > 0 && $('.PopUpInfoPath').is(':visible')) {
@@ -1136,10 +1135,10 @@ function PopUpInfoPath() {
             $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
         }
     });
-    $(_this).mouseout(function() {
+    $(document).on('mouseout', '.tooltip', function() {
         $('.PopUpInfoPath').remove();
     });
-    $('.close').mouseout(function() {
+    $(document).on('mouseout', '.close', function() {
         $('.PopUpInfoPath').remove();
     });
 }
