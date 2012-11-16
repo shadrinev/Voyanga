@@ -46,7 +46,7 @@ abstract class Payments_Channel {
         foreach($keys as $key)
         {
             if(isset($params[$key]))
-                $values[]= $key.'='.urlencode($params[$key]);
+                $values[]= $key.'='.$params[$key];
         }
         $values[] = 'PrivateSecurityKey='.$credentials['key'];
         $stringToSign = implode('&', $values);
@@ -111,7 +111,7 @@ abstract class Payments_Channel {
         $params = Array();
         foreach($context as $key=>$value)
         {
-            $params[]=$key.'='.$value;
+            $params[]=$key.'='.urlencode($value);
         }
         $url.= '/?';
         $url.= implode('&', $params);
