@@ -25,6 +25,40 @@ class OrderComponent extends CApplicationComponent
 
     public function bookAndReturnTripElementWorkflowItems()
     {
+        try
+        {
+            $bookedTripElementWorkflow = array();
+            foreach ($this->itemsOnePerGroup as $item)
+            {
+                if ($this->isDoubleRequest($item))
+                    continue;
+                $tripElementWorkflow = $item->createTripElementWorkflow();
+                $tripElementWorkflow->bookItem();
+                $this->markItemGroupAsBooked($tripElementWorkflow->getItem());
+                $tripElementWorkflow->runWorkflowAndSetFinalStatus();
+                $this->saveWorkflowState($tripElementWorkflow->finalStatus);
+                $tripElementWorkflow->updateBookingId();
+                $bookedTripElementWorkflow[] = $tripElementWorkflow;
+            }
+            if ($this->areAllStatusesCorrect())
+            {
+                Yii::app()->user->setState('blockedToBook', null);
+                return $bookedTripElementWorkflow;
+            }
+            else
+            {
+                throw new CException('At least one of workflow status at step 1 is incorrect:'.CVarDumper::dumpAsString($this->finalWorkflowStatuses));
+            }
+        }
+        catch (Exception $e)
+        {
+            Yii::app()->user->setState('blockedToBook', null);
+            throw $e;
+        }
+    }
+
+    public function bookAndReturnTripElementWorkflowItemsAsync()
+    {
         $asyncExecutor = new AsyncCurl();
         foreach ($this->itemsOnePerGroup as $i => $item)
         {
