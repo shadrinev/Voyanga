@@ -23,6 +23,7 @@ class TripStorage
     public function getPrice()
     {
         $price = 0;
+        VarDumper::dump($this->itemsOnePerGroup); die();
         foreach ($this->itemsOnePerGroup as $item)
             $price += $item->getPrice();
         return $price;
