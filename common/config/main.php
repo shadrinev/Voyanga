@@ -221,7 +221,7 @@ return array(
                     'id' => 9378,
                     'key' => '117869db-6a67-4f89-9753-a2fb7ee9bfc3'
                 ),
-                'lts' => array(
+                'ltr' => array(
                     'id' => 9739,
                     'key' => 'dbaf1d76-3540-40aa-af13-4e05c4a776d2'
                 ),
