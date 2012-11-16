@@ -213,6 +213,8 @@ return array(
         'payments' => array(
             'class' => 'common.extensions.payments.PaymentsComponent',
             'credentials' => array(
+/*
+
                 'gds_galileo'=> array(
                     'id' => 9377,
                     'key' => 'a51dfb8d-6c57-4ad4-a018-27593cfabddb'
@@ -229,7 +231,7 @@ return array(
                     'id' => 9387,
                     'key' => '71eedb90-01d6-4ba9-b058-d965d98ecc64'
                 )
-/*
+*/
                 'ltr'=> array(
                     'id' => 9377,
                     'key' => 'a51dfb8d-6c57-4ad4-a018-27593cfabddb'
@@ -246,7 +248,6 @@ return array(
                     'id' => 9387,
                     'key' => '71eedb90-01d6-4ba9-b058-d965d98ecc64'
                 )
-*/
             )
         ),
 
