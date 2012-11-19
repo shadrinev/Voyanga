@@ -2988,6 +2988,7 @@ input.hotel-input {
 .counters {
 	text-align: center;
 	line-height: 16px;
+    margin-top: 8px;
 }
 .counters .bgCount {
 	display: inline-block;
