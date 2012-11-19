@@ -1077,6 +1077,11 @@ function openPopUpProj() {
             return;
         }
     });
+    $(window).on('keydown', function(e){
+        if ($(e.which == 27) ) {
+            closePopUpProj();
+        }
+    });
 }
 
 function closePopUpProj() {
