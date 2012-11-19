@@ -2920,22 +2920,22 @@ input.hotel-input {
 	z-index: 1;
 }
 .naviProj .left {
-	width: 35px;
-	height: 98px;
-	background: url(../images/proj-left-point.png) no-repeat;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	cursor: pointer;
+    background: url("../images/proj-left-point.png") no-repeat scroll left center transparent;
+    cursor: pointer;
+    height: 120px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 65px;
 }
 .naviProj .right {
-	width: 35px;
-	height: 98px;
-	background: url(../images/proj-right-point.png) no-repeat;
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	cursor: pointer;
+    background: url("../images/proj-right-point.png") no-repeat scroll right center transparent;
+    cursor: pointer;
+    height: 120px;
+    right: 0;
+    position: absolute;
+    top: 0;
+    width: 65px;
 }
 .projectPopUp {
 	background: #f4f7f9;
