@@ -41,12 +41,12 @@ class PaymentsComponent extends CApplicationComponent
             if($booker->flightVoyage->webService=='SABRE')
             {
                 $channel = $booker->flightVoyage->valAirline->payableViaSabre?'gds_sabre':'ltr';
-                $channel = 'ltr';
+                //           $channel = 'ltr';
             }
             if($booker->flightVoyage->webService=='GALILEO')
             {
                 $channel = $booker->flightVoyage->valAirline->payableViaGalileo?'gds_galileo':'ltr';
-                $channel = 'ltr';
+                //$channel = 'ltr';
             }
 
         }
