@@ -7,7 +7,7 @@
   *display: inline;
 }
 .chzn-container .chzn-drop {
-  background: #fff;
+  background: #f6f6f6;
   border-bottom: 1px solid #aaa;
   border-top: 0;
   position: absolute;
@@ -80,20 +80,18 @@
   margin: 0;
   padding: 0;
   outline: 0;
-  border: 0px solid #aaa;
   font-family: sans-serif;
   font-size: 14px;
   box-shadow: none !important;
   background: none #f6f6f6;
-  text-transform: none;
-  border-bottom: 1px solid #EAEAEA;
-  border-right: 1px solid #EAEAEA;
-  border-left: 1px solid #EAEAEA;
+  text-transform: none !important;
+  border: none !important;
+  border-bottom: 1px solid #babbbe !important;
 }
 .chzn-container-single .chzn-drop {
-  -webkit-border-radius: 0 0 4px 4px;
-  -moz-border-radius   : 0 0 4px 4px;
-  border-radius        : 0 0 4px 4px;
+  -webkit-border-radius: 0;
+  -moz-border-radius   : 0;
+  border-radius        : 0;
   -moz-background-clip   : padding;
   -webkit-background-clip: padding-box;
   background-clip        : padding-box;
@@ -211,7 +209,7 @@
 .chzn-container .chzn-results {
   margin: 0;
   max-height: 240px;
-  padding: 0 0 0 4px;
+  padding: 0 0 0 0px;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
