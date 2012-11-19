@@ -75,7 +75,7 @@
                                 'data-placeholder'=> "Страна...",
                                 'prompt'=> "",
                                 'class' => "chzn-select",
-                                'style' => "width:140px;"
+                                'style' => "width:120px;"
                             )
                     ); ?>
                     </td>

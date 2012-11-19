@@ -303,11 +303,13 @@ EventTourResultSet = (function() {
       return _this.reinit(window.toursArr[newCityId]);
     });
     this.startCity = ko.observable(resultSet.city.localRu);
+    this.activePanel = ko.observable(null);
     this.reinit(resultSet);
   }
 
   EventTourResultSet.prototype.reinit = function(resultSet) {
-    var _this = this;
+    var panelSet,
+      _this = this;
     this.resultSet = resultSet;
     this.hasFlight = false;
     this.hasHotel = false;
@@ -317,6 +319,8 @@ EventTourResultSet = (function() {
     this.selected_key = ko.observable('');
     this.selected_best = ko.observable('');
     this.totalCost = 0;
+    panelSet = new TourPanelSet();
+    this.activePanel(panelSet);
     this.startCity(this.resultSet.city.localRu);
     console.log('reinitEventData', this);
     this.flightCounterWord = ko.computed(function() {
