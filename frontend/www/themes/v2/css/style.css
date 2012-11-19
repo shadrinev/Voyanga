@@ -2667,7 +2667,7 @@ input.hotel-input {
 	text-align: center;
 	background-position: -403px 0px !important;
 	float: left;
-	font-size: 12px;
+	font-size: 12px !important;
 }
 .infoPassengers .dd.error {
 	background-position: -403px -33px !important;
@@ -2682,6 +2682,7 @@ input.hotel-input {
 	text-align: center;
 	background-position: -437px 0px !important;
 	float: left;
+    font-size: 12px !important;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 	body:first-of-type .infoPassengers .mm {
@@ -2696,6 +2697,7 @@ input.hotel-input {
     float: left;
     text-align: center;
     width: 53px;
+    font-size: 12px !important;
 }
 .infoPassengers .yy.error {
 	background-position: -470px -33px !important;
@@ -2937,6 +2939,8 @@ input.hotel-input {
 }
 .projectPopUp {
 	background: #f4f7f9;
+    -webkit-border-radius: 8px;
+    -moz-border-radius   : 8px;
 	border-radius: 8px;
 	position: absolute;
 	width: 630px;
@@ -2959,8 +2963,15 @@ input.hotel-input {
 	height: 309px;
 	background: url("../images/map-bg.gif") repeat scroll center center transparent;
 	position: relative;
+    -webkit-border-radius: 8px 8px 0px 0px;
+    -moz-border-radius   : 8px 8px 0px 0px;
 	border-radius: 8px 8px 0px 0px;
 	overflow: hidden;
+}
+.projectPopUp .centerImg img {
+    -webkit-border-radius: 8px 8px 0px 0px;
+    -moz-border-radius   : 8px 8px 0px 0px;
+    border-radius: 8px 8px 0px 0px;
 }
 .projectPopUp .centerImg .load {
     background: url(../images/load.gif) no-repeat;
@@ -2998,8 +3009,8 @@ input.hotel-input {
 }
 .PopUpInfoPath {
     background: #FFF;
-    box-shadow: 0 1px 5px rgba(3,4,4,0.7);
-    border: 1px solid #848687;
+    box-shadow: 0 1px 5px rgba(3,4,4,0.6);
+    border: 0px solid #848687;
     color: #1d222b;
     line-height: 19px;
     padding: 5px;
@@ -3008,8 +3019,8 @@ input.hotel-input {
 }
 .PopUpInfo {
     background: #FFF;
-    box-shadow: 0 1px 5px rgba(3,4,4,0.7);
-    border: 1px solid #848687;
+    box-shadow: 0 1px 5px rgba(3,4,4,0.6);
+    border: 0px solid #848687;
     color: #1d222b;
     line-height: 19px;
     padding: 10px;
