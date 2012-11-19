@@ -1039,6 +1039,15 @@ function openPopUpProj() {
     var _centerImg = $('.mainWrapBg').find('.centerImg');
     var _itemsProj = $('.mainWrapBg').find('.itemsProj');
     var lenSlideProj = _textSlideProj.find('li').length;
+    var imagesList = new Array();
+    _textSlideProj.find('li').each(function(index) {
+        imagesList[index] = [$(this).attr('rel')];
+    });
+    var aImages = [];
+    for (var i = 0, len = imagesList.length; i < len; i++) {
+        aImages[i] = new Image();
+        aImages[i].src = imagesList[i];
+    }
     var _imgProjEq0 = _textSlideProj.find('li').eq(0).attr('rel');
     var _textProjEq0 = _textSlideProj.find('li').eq(0).html();
     $('.bgCount').empty().append('<span>1</span>/'+lenSlideProj);
