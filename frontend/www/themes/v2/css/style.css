@@ -2376,7 +2376,7 @@ input.hotel-input {
     height: 100%;
 }
 .allTicketsDIV .aviaTickets tr td,  .allTicketsDIV .hotelTickets tr td {
-    line-height: 22px;
+    line-height: 20px;
     padding-bottom: 9px;
     padding-top: 9px;
 }
@@ -2544,21 +2544,21 @@ input.hotel-input {
 	float: right;
 }
 .paybuyContent .theSum .right .price {
-	width: 135px;
+	width: 155px;
 	display: inline-block;
 	font-size: 22px;
 }
 
 .oneBlock {
 	border-bottom: 1px solid #babbbe;
-	overflow: hidden;
+
 }
 
 .paybuyContent h2 {
 	color: #1d222b;
 	font-size: 24px;
 	margin-top: 22px;
-	margin-bottom: 17px;
+	margin-bottom: 15px;
 	letter-spacing: -0.05em;
     line-height: 26px;
     text-shadow: 0 1px 0 #FFFFFF;
@@ -2590,7 +2590,7 @@ input.hotel-input {
 }
 .infoPassengers td, .dopInfoPassengers td {
 	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-bottom: 3px;
 }
 .infoPassengers thead, .dopInfoPassengers thead {
 	font-weight: bold;
@@ -2667,7 +2667,7 @@ input.hotel-input {
 	text-align: center;
 	background-position: -403px 0px !important;
 	float: left;
-	font-size: 12px;
+	font-size: 12px !important;
 }
 .infoPassengers .dd.error {
 	background-position: -403px -33px !important;
@@ -2682,6 +2682,7 @@ input.hotel-input {
 	text-align: center;
 	background-position: -437px 0px !important;
 	float: left;
+    font-size: 12px !important;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 	body:first-of-type .infoPassengers .mm {
@@ -2696,6 +2697,7 @@ input.hotel-input {
     float: left;
     text-align: center;
     width: 53px;
+    font-size: 12px !important;
 }
 .infoPassengers .yy.error {
 	background-position: -470px -33px !important;
@@ -2798,7 +2800,7 @@ input.hotel-input {
 	font-size: 13px;
 }
 .payCardPal {
-	box-shadow: 0 -20px 15px rgba(67, 68, 70, 0.3);
+	/*box-shadow: 0 -20px 15px rgba(67, 68, 70, 0.3);*/
 	height: 500px;
 	width: 100%;
 	background: #FFF;
@@ -2899,55 +2901,71 @@ input.hotel-input {
 
 .mainWrapBg {
 	background: rgba(38,41,46,0.8);
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	top: 0px;
-	right: 0px;
-	left: 0px;
-	bottom: 0px;
-	z-index: 1000;
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 0px 0 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.wrapDiv {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    margin-left: -400px;
+    padding-bottom: 20px;
+    width: 800px;
 }
 .naviProj {
 	width: 800px;
-	height: 100px;
+	height: 120px;
 	position: absolute;
-	left: 50%;
-	margin-left: -400px;
-	top: 33%;
+	left: 0%;
+	top: 160px;
 	z-index: 1;
 }
 .naviProj .left {
-	width: 35px;
-	height: 98px;
-	background: url(../images/proj-left-point.png) no-repeat;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	cursor: pointer;
+    background: url("../images/proj-left-point.png") no-repeat scroll left center transparent;
+    cursor: pointer;
+    height: 120px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 65px;
 }
 .naviProj .right {
-	width: 35px;
-	height: 98px;
-	background: url(../images/proj-right-point.png) no-repeat;
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	cursor: pointer;
+    background: url("../images/proj-right-point.png") no-repeat scroll right center transparent;
+    cursor: pointer;
+    height: 120px;
+    right: 0;
+    position: absolute;
+    top: 0;
+    width: 65px;
+}
+.naviProj .right.inactive, .naviProj .left.inactive {
+    opacity: 0.3;
+    cursor: default;
 }
 .projectPopUp {
-	background: #f4f7f9;
+	background:  none;
+    -webkit-border-radius: 8px;
+    -moz-border-radius   : 8px;
 	border-radius: 8px;
-	position: absolute;
-	width: 630px;
-	left: 50%;
-	margin-left: -335px;
-	top: 15%;
+	width: 670px;
+    margin: 0 auto;
+    position: relative;
 	color: #272b31;
 	line-height: 22px;
 	z-index: 2;
-	padding: 20px 20px 10px 20px;
+	padding: 0px;
 	font-size: 14px;
+}
+.centerText {
+    background: #f4f7f9;
+    padding: 10px 20px 10px 20px;
 }
 .projectPopUp h3 {
 	font-size: 24px;
@@ -2955,12 +2973,23 @@ input.hotel-input {
 }
 .projectPopUp .centerImg {
 	width: 670px;
-	margin: -20px -20px 10px -20px;
+	margin: 0px;
 	height: 309px;
-	background: url("../images/map-bg.gif") repeat scroll center center transparent;
+	/*background: url("../images/map-bg.gif") repeat scroll center center transparent;*/
 	position: relative;
+    -webkit-border-radius: 8px 8px 0px 0px;
+    -moz-border-radius   : 8px 8px 0px 0px;
 	border-radius: 8px 8px 0px 0px;
 	overflow: hidden;
+}
+.projectPopUp .centerImg img {
+    -webkit-border-radius: 8px 8px 0px 0px;
+    -moz-border-radius   : 8px 8px 0px 0px;
+    border-radius: 8px 8px 0px 0px;
+    cursor: pointer;
+}
+.projectPopUp .centerImg img:last-child {
+    cursor: default;
 }
 .projectPopUp .centerImg .load {
     background: url(../images/load.gif) no-repeat;
@@ -2977,6 +3006,7 @@ input.hotel-input {
 .counters {
 	text-align: center;
 	line-height: 16px;
+    margin-top: 8px;
 }
 .counters .bgCount {
 	display: inline-block;
@@ -2998,8 +3028,8 @@ input.hotel-input {
 }
 .PopUpInfoPath {
     background: #FFF;
-    box-shadow: 0 1px 5px rgba(3,4,4,0.7);
-    border: 1px solid #848687;
+    box-shadow: 0 1px 5px rgba(3,4,4,0.6);
+    border: 0px solid #848687;
     color: #1d222b;
     line-height: 19px;
     padding: 5px;
@@ -3008,8 +3038,8 @@ input.hotel-input {
 }
 .PopUpInfo {
     background: #FFF;
-    box-shadow: 0 1px 5px rgba(3,4,4,0.7);
-    border: 1px solid #848687;
+    box-shadow: 0 1px 5px rgba(3,4,4,0.6);
+    border: 0px solid #848687;
     color: #1d222b;
     line-height: 19px;
     padding: 10px;

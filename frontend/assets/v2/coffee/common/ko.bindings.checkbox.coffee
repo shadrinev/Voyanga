@@ -25,9 +25,15 @@ ko.bindingHandlers.checkbox =
       el = $(@)
       if el.find('.ui-control').hasClass('on') != true
         checkVoybox(el)
-        checked(true)
+        if _.isFunction checked
+          checked(true)
+        else
+          $(element).attr 'checked', 'checked'
       else
-        checked(false)
+        if _.isFunction checked
+          checked(false)
+        else
+          $(element).removeAttr 'checked'
         uncheckVoybox(el)
 
     el.after(new_el)

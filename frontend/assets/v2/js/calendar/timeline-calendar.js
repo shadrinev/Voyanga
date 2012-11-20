@@ -270,7 +270,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
     var dateDiff = Math.floor(endMoment.diff(startMoment,'days',true));
     console.log('diff',weekDiff,dateDiff);
     if(weekDiff == dateDiff){
-        startDraw.sub('d',7);
+        startDraw.subtract('d',7);
     }
     startDraw.date(startDraw.date()-this.getDay(startDraw._d));
     dateDiff = Math.floor(endDraw.diff(startDraw,'days',true));
