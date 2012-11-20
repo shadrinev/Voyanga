@@ -1033,8 +1033,11 @@ function loadPayFly() {
 	startFlyJet();
 }
 
+var clickYes = false;
 function openPopUpProj() {
+    clickYes = true;
     $('.mainWrapBg').show();
+    $('body').css('overflow', 'hidden');
     var _textSlideProj = $('.textSlideProj');
     var _centerImg = $('.mainWrapBg').find('.centerImg');
     var _itemsProj = $('.mainWrapBg').find('.itemsProj');
@@ -1074,17 +1077,19 @@ function openPopUpProj() {
         }
     });
     $(window).on('keydown', function(e){
-        if (e.which == 27) {
-            closePopUpProj();
-        }
-        else if (e.which == 39) {
-            ClikRightProj();
-        }
-        else if (e.which == 37) {
-            ClikLeftProj();
-        }
-        else {
-            return false;
+        if (clickYes) {
+            if (e.which == 27) {
+                closePopUpProj();
+            }
+            else if (e.which == 39) {
+                ClikRightProj();
+            }
+            else if (e.which == 37) {
+                ClikLeftProj();
+            }
+            else {
+                return false;
+            }
         }
     });
     $('.mainWrapBg').find('.centerImg').click(function() {
@@ -1094,6 +1099,8 @@ function openPopUpProj() {
 
 function closePopUpProj() {
     $('.mainWrapBg').hide();
+    $('body').css('overflow', 'auto');
+    clickYes = false;
 }
 function ClikRightProj() {
 

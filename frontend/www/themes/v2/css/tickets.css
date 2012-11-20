@@ -1286,6 +1286,7 @@
 	width: 430px;
 	overflow: hidden;
 	height: 30px;
+    line-height: 28px;
 }
 .tickets-details .content .information .finish-fly .icon {
 	background-position: 0px -158px;
