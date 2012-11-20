@@ -7,7 +7,6 @@ class Sibling
     @data = []
     @nodata = false
     @isActive = ko.observable isActive
-    @initialActive = isActive
 
     @scaledHeight = ko.computed =>
       spacing = 30
@@ -15,10 +14,8 @@ class Sibling
       @height/scale + spacing - 10
 
   columnValue: ->
-    if @initialActive
-      return @price
-    return @delta
-
+    return @price
+    
   background: ->
     if @nodata
        @graphHeight()

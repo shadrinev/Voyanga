@@ -20,7 +20,6 @@ Sibling = (function() {
     this.data = [];
     this.nodata = false;
     this.isActive = ko.observable(isActive);
-    this.initialActive = isActive;
     this.scaledHeight = ko.computed(function() {
       var scale, spacing;
       spacing = 30;
@@ -30,10 +29,7 @@ Sibling = (function() {
   }
 
   Sibling.prototype.columnValue = function() {
-    if (this.initialActive) {
-      return this.price;
-    }
-    return this.delta;
+    return this.price;
   };
 
   Sibling.prototype.background = function() {
