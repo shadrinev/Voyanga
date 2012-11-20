@@ -2544,7 +2544,7 @@ input.hotel-input {
 	float: right;
 }
 .paybuyContent .theSum .right .price {
-	width: 135px;
+	width: 155px;
 	display: inline-block;
 	font-size: 22px;
 }
@@ -2558,7 +2558,7 @@ input.hotel-input {
 	color: #1d222b;
 	font-size: 24px;
 	margin-top: 22px;
-	margin-bottom: 17px;
+	margin-bottom: 15px;
 	letter-spacing: -0.05em;
     line-height: 26px;
     text-shadow: 0 1px 0 #FFFFFF;
@@ -2590,7 +2590,7 @@ input.hotel-input {
 }
 .infoPassengers td, .dopInfoPassengers td {
 	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-bottom: 3px;
 }
 .infoPassengers thead, .dopInfoPassengers thead {
 	font-weight: bold;
@@ -2800,7 +2800,7 @@ input.hotel-input {
 	font-size: 13px;
 }
 .payCardPal {
-	box-shadow: 0 -20px 15px rgba(67, 68, 70, 0.3);
+	/*box-shadow: 0 -20px 15px rgba(67, 68, 70, 0.3);*/
 	height: 500px;
 	width: 100%;
 	background: #FFF;
@@ -2950,18 +2950,22 @@ input.hotel-input {
     cursor: default;
 }
 .projectPopUp {
-	background: #f4f7f9;
+	background:  none;
     -webkit-border-radius: 8px;
     -moz-border-radius   : 8px;
 	border-radius: 8px;
-	width: 630px;
+	width: 670px;
     margin: 0 auto;
     position: relative;
 	color: #272b31;
 	line-height: 22px;
 	z-index: 2;
-	padding: 20px 20px 10px 20px;
+	padding: 0px;
 	font-size: 14px;
+}
+.centerText {
+    background: #f4f7f9;
+    padding: 10px 20px 10px 20px;
 }
 .projectPopUp h3 {
 	font-size: 24px;
@@ -2969,9 +2973,9 @@ input.hotel-input {
 }
 .projectPopUp .centerImg {
 	width: 670px;
-	margin: -20px -20px 10px -20px;
+	margin: 0px;
 	height: 309px;
-	background: url("../images/map-bg.gif") repeat scroll center center transparent;
+	/*background: url("../images/map-bg.gif") repeat scroll center center transparent;*/
 	position: relative;
     -webkit-border-radius: 8px 8px 0px 0px;
     -moz-border-radius   : 8px 8px 0px 0px;
