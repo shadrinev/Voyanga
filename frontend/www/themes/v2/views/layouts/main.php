@@ -164,7 +164,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
                 <div class="centerImg">
 
                 </div>
-                <div class="centerText"
+                <div class="centerText">
                     <div class="itemsProj">
 
                     </div>

@@ -2380,14 +2380,34 @@ input.hotel-input {
     padding-bottom: 9px;
     padding-top: 9px;
 }
-.allTicketsDIV .aviaTickets .tdICO {
+.allTicketsDIV .aviaTickets .tdICO .ico {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
     background: url("../images/ico-fly.png") no-repeat scroll center center transparent;
+}
+.allTicketsDIV .hotelTickets .tdICO .ico {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
+}
+.allTicketsDIV .aviaTickets .tdICO.paddingBottom .ico {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url("../images/ico-fly-to-froms.png") no-repeat scroll center center transparent;
+}
+.allTicketsDIV .aviaTickets .tdICO .ico:hover, .allTicketsDIV .aviaTickets .tdICO.paddingBottom .ico:hover, .allTicketsDIV .hotelTickets .tdICO .ico:hover {
+    background: url(../images/close-pass.png) center center no-repeat;
+    cursor: pointer;
+}
+.allTicketsDIV .aviaTickets .tdICO {
     text-align: center;
     vertical-align: middle;
     width: 60px;
 }
 .allTicketsDIV .aviaTickets .tdICO.paddingBottom {
-    background: url("../images/ico-fly-to-froms.png") no-repeat scroll center center transparent;
     padding-bottom: 9px;
 }
 .allTicketsDIV .aviaTickets .tdFrom, .allTicketsDIV .aviaTickets .tdTo {
@@ -2491,7 +2511,7 @@ input.hotel-input {
     font-size: 11px;
 }
 .allTicketsDIV .hotelTickets .tdICO {
-    background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
+    /*background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;*/
     text-align: center;
     vertical-align: middle;
     width: 60px;
@@ -2530,6 +2550,9 @@ input.hotel-input {
     overflow: hidden;
     border-top: 1px solid #808186;
     margin-top: -1px;
+}
+.allTicketsDIV .ticketBox:hover {
+    background: #eceff1;
 }
 .paybuyContent .theSum {
 	overflow: hidden;
@@ -2966,6 +2989,9 @@ input.hotel-input {
 .centerText {
     background: #f4f7f9;
     padding: 10px 20px 10px 20px;
+    -webkit-border-radius: 0px 0px 8px 8px;
+    -moz-border-radius   : 0px 0px 8px 8px;
+    border-radius: 0px 0px 8px 8px;
 }
 .projectPopUp h3 {
 	font-size: 24px;
