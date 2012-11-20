@@ -1594,6 +1594,7 @@
 .schedule-of-prices li .price.question {
     background: url("../images/question.png") center 0 no-repeat;
     height: 30px;
+    text-indent: -9999px;
 }
 .schedule-of-prices li .price.margin {
 	margin: 0 -3px;
