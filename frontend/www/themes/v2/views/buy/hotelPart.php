@@ -3,7 +3,9 @@
     <table class="hotelTickets">
         <tbody>
         <tr>
-            <td class="tdICO"></td>
+            <td class="tdICO">
+                <div class="ico"></div>
+            </td>
             <td class="tdHotel">
                 <div class="what">Гостиница</div>
                 <div class="nameHostel" data-bind="text:hotelName">Коринтия Крестовский Парк</div>

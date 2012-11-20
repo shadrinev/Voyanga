@@ -2,7 +2,9 @@
     <table class="aviaTickets">
         <tbody>
         <tr>
-            <td class="tdICO"></td>
+            <td class="tdICO">
+                <div class="ico"></div>
+            </td>
             <td class="tdFrom">
                 <div class="what">Вылет</div>
                 <div class="city"><span data-bind="text: $data.departureCity()">Санкт-Петербург</span>, <span data-bind="text: $data.departureAirport()" class="airport">Пулково-1</span></div>
