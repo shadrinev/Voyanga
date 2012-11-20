@@ -90,6 +90,7 @@
         'basePath' => 'frontend.assets.v2.js.compiled.avia',
         'js' => array(
             'panel.js',
+            'siblings.js',
             'models.js',
             'controllers.js',
             'module.js',

@@ -16,8 +16,9 @@ class AviaController
     window.voyanga_debug "AVIA: Invoking searchAction", args
     # update search params with values in route
     @searchParams.fromList(args)
+    do @search
 
-    # tempoprary development cache
+  search: =>
     @api.search  @searchParams.url(), @handleResults
 
   handleResults: (data) =>
@@ -25,7 +26,7 @@ class AviaController
     # temporary development cache
     console.log data
     try
-      stacked = new AviaResultSet data.flights.flightVoyages
+      stacked = new AviaResultSet data.flights.flightVoyages, data.siblings
       stacked.injectSearchParams data.searchParams
       stacked.postInit()
     catch err

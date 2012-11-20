@@ -480,7 +480,7 @@ class AviaResult
 # Stacks them by price and company
 #
 class AviaResultSet
-  constructor: (rawVoyages) ->
+  constructor: (rawVoyages, @siblings=false) ->
     @recommendTemplate = 'avia-cheapest-result'
     # Indicates if we need to alter our rendering to fix tours template
     @tours = false
@@ -537,19 +537,22 @@ class AviaResultSet
       left.price - right.price
 
     @postFilters()
+
     
   # Inject search params from response
   injectSearchParams: (sp) =>
     @rawSP = sp
     @arrivalCity = sp.destinations[0].arrival
     @departureCity = sp.destinations[0].departure
+    @rawDate = moment(new Date(sp.destinations[0].date+'+04:00'))
     @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
     @dateHeadingText = @date
     @roundTrip = sp.isRoundTrip
     if @roundTrip
       @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+'+04:00')
-      @dateHeadingText += ', ' +@rtDate
-  
+      @rawRtDate = moment(new Date(sp.destinations[1].date+'+04:00'))
+
+      @dateHeadingText += ', ' +@rtDate      
 
   select: (ctx) =>
     console.log ctx
@@ -568,6 +571,40 @@ class AviaResultSet
 
   postInit: =>
     @filters = new AviaFiltersT @
+    if @siblings
+      do @processSiblings
+
+
+  processSiblings: =>
+    @updateCheapest @data
+    helper = (root, sibs) =>
+      for price,index in sibs
+        if price == false
+          fill = Math.floor((Math.random()*2))
+          if fill
+            price = Math.floor((Math.random()*10000)+3000)
+        root[index] = {price: price, siblings:[]}
+      root[3] = {price: @cheapest().price, siblings: []}
+      
+    if @siblings[3].length
+      siblings = []
+      helper(siblings, @siblings[3])
+      for sibs,index in @siblings
+        helper(siblings[index].siblings, sibs)
+        
+    else
+      siblings = []
+      for price,index in @siblings
+        if price == false
+          fill = Math.floor((Math.random()*2))
+          if fill
+            price = Math.floor((Math.random()*10000)+3000)
+        siblings[index] = {price: price, siblings:[]}
+
+      @updateCheapest @data
+      siblings[3] = {price: @cheapest().price, siblings: []}
+
+    @siblings = new Siblings(siblings, @roundTrip,  @rawDate, @rawRtDate)    
 
   hideRecommend: (context, event)->
    hideRecomendedBlockTicket.apply(event.currentTarget)

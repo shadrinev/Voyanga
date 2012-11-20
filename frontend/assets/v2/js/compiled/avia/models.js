@@ -691,7 +691,10 @@ AviaResult = (function() {
 
 AviaResultSet = (function() {
 
-  function AviaResultSet(rawVoyages) {
+  function AviaResultSet(rawVoyages, siblings) {
+    var filteredVoyages, flight, flightVoyage, item, key, part, result, _i, _interlines, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2,
+      _this = this;
+    this.siblings = siblings != null ? siblings : false;
     this.setBest = __bind(this.setBest, this);
 
     this.updateBest = __bind(this.updateBest, this);
@@ -700,14 +703,14 @@ AviaResultSet = (function() {
 
     this.postFilters = __bind(this.postFilters, this);
 
+    this.processSiblings = __bind(this.processSiblings, this);
+
     this.postInit = __bind(this.postInit, this);
 
     this.select = __bind(this.select, this);
 
     this.injectSearchParams = __bind(this.injectSearchParams, this);
 
-    var filteredVoyages, flight, flightVoyage, item, key, part, result, _i, _interlines, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2,
-      _this = this;
     this.recommendTemplate = 'avia-cheapest-result';
     this.tours = false;
     this.selected_key = ko.observable('');
@@ -776,11 +779,13 @@ AviaResultSet = (function() {
     this.rawSP = sp;
     this.arrivalCity = sp.destinations[0].arrival;
     this.departureCity = sp.destinations[0].departure;
+    this.rawDate = moment(new Date(sp.destinations[0].date + '+04:00'));
     this.date = dateUtils.formatDayShortMonth(new Date(sp.destinations[0].date + '+04:00'));
     this.dateHeadingText = this.date;
     this.roundTrip = sp.isRoundTrip;
     if (this.roundTrip) {
       this.rtDate = dateUtils.formatDayShortMonth(new Date(sp.destinations[1].date + '+04:00'));
+      this.rawRtDate = moment(new Date(sp.destinations[1].date + '+04:00'));
       return this.dateHeadingText += ', ' + this.rtDate;
     }
   };
@@ -802,7 +807,67 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.postInit = function() {
-    return this.filters = new AviaFiltersT(this);
+    this.filters = new AviaFiltersT(this);
+    if (this.siblings) {
+      return this.processSiblings();
+    }
+  };
+
+  AviaResultSet.prototype.processSiblings = function() {
+    var fill, helper, index, price, siblings, sibs, _i, _j, _len, _len1, _ref, _ref1,
+      _this = this;
+    this.updateCheapest(this.data);
+    helper = function(root, sibs) {
+      var fill, index, price, _i, _len;
+      for (index = _i = 0, _len = sibs.length; _i < _len; index = ++_i) {
+        price = sibs[index];
+        if (price === false) {
+          fill = Math.floor(Math.random() * 2);
+          if (fill) {
+            price = Math.floor((Math.random() * 10000) + 3000);
+          }
+        }
+        root[index] = {
+          price: price,
+          siblings: []
+        };
+      }
+      return root[3] = {
+        price: _this.cheapest().price,
+        siblings: []
+      };
+    };
+    if (this.siblings[3].length) {
+      siblings = [];
+      helper(siblings, this.siblings[3]);
+      _ref = this.siblings;
+      for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
+        sibs = _ref[index];
+        helper(siblings[index].siblings, sibs);
+      }
+    } else {
+      siblings = [];
+      _ref1 = this.siblings;
+      for (index = _j = 0, _len1 = _ref1.length; _j < _len1; index = ++_j) {
+        price = _ref1[index];
+        if (price === false) {
+          fill = Math.floor(Math.random() * 2);
+          if (fill) {
+            price = Math.floor((Math.random() * 10000) + 3000);
+          }
+        }
+        siblings[index] = {
+          price: price,
+          siblings: []
+        };
+      }
+      this.updateCheapest(this.data);
+      siblings[3] = {
+        price: this.cheapest().price,
+        siblings: []
+      };
+    }
+    return this.siblings = new Siblings(siblings, this.roundTrip, this.rawDate, this.rawRtDate);
   };
 
   AviaResultSet.prototype.hideRecommend = function(context, event) {
