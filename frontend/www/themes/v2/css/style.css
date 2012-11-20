@@ -2989,6 +2989,9 @@ input.hotel-input {
 .centerText {
     background: #f4f7f9;
     padding: 10px 20px 10px 20px;
+    -webkit-border-radius: 0px 0px 8px 8px;
+    -moz-border-radius   : 0px 0px 8px 8px;
+    border-radius: 0px 0px 8px 8px;
 }
 .projectPopUp h3 {
 	font-size: 24px;
