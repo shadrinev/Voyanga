@@ -51,7 +51,7 @@
       </div>
       
       <div class="blockText">
-        <div class="txt" data-bind="visible: !selection()">Данные получены на основании поисковых запросов и могут отличаться от актуальных значений</div>
+        <div class="txt" data-bind="visible: !selection().price">Данные получены на основании поисковых запросов и могут отличаться от актуальных значений</div>
         <div class="txtCena" data-bind="visible: selection().price">
 	  <div class="leftFloat">
 	    Итого <span class="price" data-bind="text: selection().price">4150</span> <span class="rur">o</span>
