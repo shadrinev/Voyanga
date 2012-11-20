@@ -28,9 +28,17 @@ ko.bindingHandlers.checkbox = {
       el = $(this);
       if (el.find('.ui-control').hasClass('on') !== true) {
         checkVoybox(el);
-        return checked(true);
+        if (_.isFunction(checked)) {
+          return checked(true);
+        } else {
+          return $(element).attr('checked', 'checked');
+        }
       } else {
-        checked(false);
+        if (_.isFunction(checked)) {
+          checked(false);
+        } else {
+          $(element).removeAttr('checked');
+        }
         return uncheckVoybox(el);
       }
     });
