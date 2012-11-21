@@ -139,12 +139,10 @@ class Application extends Backbone.Router
 
   bindItemsToBuy: =>
     tourTrip = new TourTripResultSet(window.tripRaw)
-    console.log "Tour trip:", tourTrip
     @itemsToBuy =  tourTrip
 
   bindItemsToEvent: =>
     tourTrip = new EventTourResultSet(window.tripRaw)
-    console.log "Tour trip:", tourTrip
     @itemsToBuy =  tourTrip
 
   # FIXME write better handler

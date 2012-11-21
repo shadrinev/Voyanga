@@ -31,12 +31,11 @@ class MakeBookingAction extends CAction
             {
                 Yii::app()->user->setState('passportForms', $this->passportForms);
                 Yii::app()->user->setState('bookingForm', $this->bookingForm);
-                $tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItems();
+                //$tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItems();
                 // FIXME return status here
                 header("Content-type: application/json");
                 echo '{"status":"success"}';
                 exit;
-                $this->controller->redirect('/buy/startPayment');
             }
         }
         $this->bookingForm = new BookingForm();

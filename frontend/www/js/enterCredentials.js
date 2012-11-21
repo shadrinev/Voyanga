@@ -32,7 +32,76 @@ $(function(){
             next.focus();
         }
     });
+    $(function () {
+        $('#submit-passport').click(function () {
+            var formData = $('#passport_form').serialize();
+            var statuses = [];
+            $('input').each(function() {
+                $(this).attr({'disabled': 'disabled'});
+            });
+            $('#submit-passport').hide();
+            $('#loadPayFly').find('.armoring').show();
+            loadPayFly();
+            $('#loadPayFly').find('.loadJet').show();
+            $.ajax({
+                type: 'POST',
+                url: '/buy/makeBooking',
+                data: formData,
+                dataType: 'json'
+            })
+                .success(function(){
+                    _.each(window.tripRaw.items, function(item, i){
+                        statuses[i] = 0;
+                        $.ajax({
+                            type: 'POST',
+                            url: '/buy/makeBookingForItem?index='+i,
+                            data: formData,
+                            dataType: 'json'
+                        })
+                            .success(function(){
+                                statuses[i] = 1;
+                                checkStatuses(statuses);
+                            })
+                            .error(function(){
+                                statuses[i] = -1;
+                                checkStatuses(statuses);
+                            });
+                    })
+                })
+                .error(function(){
+                    alert("ERROR: " + data);
+                })
+            });
+        });
 });
+
+function checkStatuses(statuses)
+{
+    var errors = '';
+    _.each(statuses, function(el, i){
+        if (el == 0)
+            return;
+        if (el == -1)
+            errors += 'Error while booking segment number ' + (i+1) + '. ';
+    });
+    if (errors.length>0)
+    {
+        alert(errors);
+        return;
+    }
+    //if everything is ok then go to payment
+    $('#loadPayFly').find('.armoring').hide();
+    $('#loadPayFly').find('.loadJet').hide();
+    $('.payCardPal').show();
+    $('.paybuyEnd').show();
+    $.get('/buy/startPayment', function (data) {
+        if (data.error) {
+            throw "Payment error";
+        } else {
+            Utils.submitPayment(data);
+        }
+    });
+}
 
 initCredentialsPage = function() {
     var app, avia, hotels, tour;
