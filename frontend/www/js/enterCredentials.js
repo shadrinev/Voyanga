@@ -62,14 +62,14 @@ $(function(){
                                 statuses[i] = 1;
                                 checkStatuses(statuses);
                             })
-                            .error(function(){
-                                statuses[i] = -1;
+                            .error(function(xhr, ajaxOptions, thrownError){
+                                statuses[i] = xhr.responseText;
                                 checkStatuses(statuses);
                             });
                     })
                 })
-                .error(function(){
-                    alert("ERROR: " + data);
+                .error(function(xhr, ajaxOptions, thrownError){
+                    alert("ERROR: " + xhr.responseText);
                 })
             });
         });
@@ -81,9 +81,10 @@ function checkStatuses(statuses)
     _.each(statuses, function(el, i){
         if (el == 0)
             return;
-        if (el == -1)
-            errors += 'Error while booking segment number ' + (i+1) + '. ';
+        if (_.isString(el))
+            errors += 'Error while booking segment number ' + (i+1) + ' = ' + el + '. ';
     });
+    $.get('/buy/done');
     if (errors.length>0)
     {
         alert(errors);
@@ -131,8 +132,8 @@ initCredentialsPage = function() {
             currentModule = 'hotels';
             break;
     }
-    app.runWithModule(currentModule);
     app.bindItemsToBuy()
     ko.applyBindings(app);
     ko.processAllDeferredBindingUpdates();
+    app.runWithModule(currentModule);
 };

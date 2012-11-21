@@ -128,7 +128,7 @@ class Application extends Backbone.Router
     Backbone.history.start()
     # Call some change handlers with initial values
     console.log 'slider.handler: ', module
-    @slider.handler(module)
+    #@slider.handler(module)
     window.app.navigate '#'+ module, {'trigger': true}
 
   bindEvents: =>
