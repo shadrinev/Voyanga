@@ -4,12 +4,11 @@ var Sibling, Siblings,
 
 Sibling = (function() {
 
-  function Sibling(graphHeight, parent, price, delta, date, isActive) {
+  function Sibling(graphHeight, parent, price, date, isActive) {
     var _this = this;
     this.graphHeight = graphHeight;
     this.parent = parent;
     this.price = price;
-    this.delta = delta;
     if (isActive == null) {
       isActive = false;
     }
@@ -20,6 +19,12 @@ Sibling = (function() {
     this.data = [];
     this.nodata = false;
     this.isActive = ko.observable(isActive);
+    this.initialActive = isActive;
+    console.log("************");
+    console.log(this.parent, this.parent.price, this.price);
+    if (this.parent.price) {
+      this.price = this.price * 2 - this.parent.price;
+    }
     this.scaledHeight = ko.computed(function() {
       var scale, spacing;
       spacing = 30;
@@ -53,22 +58,23 @@ Siblings = (function() {
 
     this.handleSearch = __bind(this.handleSearch, this);
 
+    this.priceDisplay = __bind(this.priceDisplay, this);
+
+    this.showPrice = __bind(this.showPrice, this);
+
+    this.showControls = __bind(this.showControls, this);
+
     this.select = __bind(this.select, this);
 
     this.data = [];
     this.graphHeight = ko.observable(50);
-    this.populate(this.data, siblings, todayDate, rtTodayDate);
+    this.populate(this, siblings, todayDate, rtTodayDate);
     this.active = ko.observable(this.data[3]);
-    this.selection = ko.observable({
-      price: 0
-    });
+    this.selection = ko.observable(false);
   }
 
   Siblings.prototype.select = function(sibling) {
     var entry, sib, _i, _j, _len, _len1, _ref, _ref1;
-    if (sibling.nodata) {
-      return;
-    }
     if (sibling.data.length) {
       this.active(sibling);
       _ref = sibling.data;
@@ -82,12 +88,43 @@ Siblings = (function() {
     } else {
       this.selection(sibling);
     }
-    _ref1 = sibling.parent;
+    _ref1 = sibling.parent.data;
     for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
       entry = _ref1[_j];
       entry.isActive(false);
     }
     return sibling.isActive(true);
+  };
+
+  Siblings.prototype.showControls = function() {
+    if (!this.selection()) {
+      return false;
+    }
+    if (this.active().initialActive && this.selection().initialActive) {
+      return false;
+    }
+    return true;
+  };
+
+  Siblings.prototype.showPrice = function() {
+    if (!this.selection()) {
+      return false;
+    }
+    if (this.active().nodata || this.selection().nodata) {
+      return false;
+    }
+    return true;
+  };
+
+  Siblings.prototype.priceDisplay = function() {
+    if (!this.showPrice()) {
+      return '';
+    }
+    if (this.roundTrip) {
+      return this.active().price + this.selection().price;
+    } else {
+      return this.selection().price;
+    }
   };
 
   Siblings.prototype.handleSearch = function(date, rtDate) {
@@ -115,8 +152,11 @@ Siblings = (function() {
   };
 
   Siblings.prototype.populate = function(root, siblings, todayDate, rtTodayDate) {
-    var absDelta, date, index, isActive, item, maxPrice, minPrice, newsib, prevMonth, showMonth, sib, siblingPrice, todayPrice, _i, _j, _len, _len1, _results;
+    var absDelta, date, index, isActive, item, maxPrice, minPrice, newsib, prevMonth, showMonth, sib, siblingPrice, todayPrice, _i, _j, _len, _len1, _ref, _results;
     todayPrice = siblings[3].price;
+    if (todayPrice === false) {
+      todayPrice = 1;
+    }
     for (index = _i = 0, _len = siblings.length; _i < _len; index = ++_i) {
       sib = siblings[index];
       siblingPrice = sib.price;
@@ -135,30 +175,31 @@ Siblings = (function() {
       } else {
         isActive = false;
       }
-      newsib = new Sibling(this.graphHeight, root, siblingPrice, siblingPrice - todayPrice, date, isActive);
+      newsib = new Sibling(this.graphHeight, root, siblingPrice, date, isActive);
       if (sib.price === false) {
         newsib.nodata = true;
       }
       newsib.showMonth = showMonth;
-      root.push(newsib);
+      root.data.push(newsib);
       if (sib.siblings.length) {
-        this.populate(newsib.data, sib.siblings, rtTodayDate);
+        this.populate(newsib, sib.siblings, rtTodayDate);
       }
     }
-    minPrice = _.min(root, function(item) {
+    minPrice = _.min(root.data, function(item) {
       if (item.price === false) {
         return todayPrice;
       } else {
         return item.price;
       }
     });
-    maxPrice = _.max(root, function(item) {
+    maxPrice = _.max(root.data, function(item) {
       if (item.price === false) {
         return todayPrice;
       } else {
         return item.price;
       }
     });
+    console.log(maxPrice, root.data, minPrice);
     if (maxPrice.price === false) {
       maxPrice = {
         price: todayPrice
@@ -170,9 +211,10 @@ Siblings = (function() {
       };
     }
     absDelta = maxPrice.price - minPrice.price;
+    _ref = root.data;
     _results = [];
-    for (_j = 0, _len1 = root.length; _j < _len1; _j++) {
-      item = root[_j];
+    for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+      item = _ref[_j];
       item.height = maxPrice.price - item.price;
       _results.push(item.absDelta = absDelta);
     }

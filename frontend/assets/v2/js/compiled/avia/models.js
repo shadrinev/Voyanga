@@ -814,7 +814,7 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.processSiblings = function() {
-    var fill, helper, index, price, siblings, sibs, todayPrices, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2,
+    var helper, index, min, siblings, sibs, todayPrices, _i, _j, _len, _len1, _ref, _ref1,
       _this = this;
     this.updateCheapest(this.data);
     helper = function(root, sibs, today) {
@@ -833,31 +833,31 @@ AviaResultSet = (function() {
       return _results;
     };
     if (this.siblings[3].length) {
+      siblings = [];
+      if (this.roundTrip) {
+        this.siblings[3][3] = Math.ceil(this.cheapest().price / 2);
+      } else {
+        this.siblings[3] = this.cheapest().price;
+      }
+      todayPrices = [];
       _ref = this.siblings;
       for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
         sibs = _ref[index];
-        for (index = _j = 0, _len1 = sibs.length; _j < _len1; index = ++_j) {
-          price = sibs[index];
-          if (price === false) {
-            fill = Math.floor(Math.random() * 2);
-            if (fill || index === 3) {
-              price = Math.floor((Math.random() * 10000) + 3000);
-            }
-          }
-          sibs[index] = price;
+        sibs = _.filter(sibs, function(item) {
+          return item !== false;
+        });
+        if (sibs.length) {
+          min = _.min(sibs);
+        } else {
+          min = false;
         }
+        todayPrices[index] = min;
       }
-      siblings = [];
-      todayPrices = [];
-      _ref1 = this.siblings;
-      for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
-        sibs = _ref1[_k];
-        todayPrices.push(sibs[3]);
-      }
+      console.log('[[[', todayPrices, ']]]');
       helper(siblings, todayPrices, true);
-      _ref2 = this.siblings;
-      for (index = _l = 0, _len3 = _ref2.length; _l < _len3; index = ++_l) {
-        sibs = _ref2[index];
+      _ref1 = this.siblings;
+      for (index = _j = 0, _len1 = _ref1.length; _j < _len1; index = ++_j) {
+        sibs = _ref1[index];
         helper(siblings[index].siblings, sibs);
       }
     } else {

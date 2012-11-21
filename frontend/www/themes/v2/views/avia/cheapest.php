@@ -51,10 +51,10 @@
       </div>
       
       <div class="blockText">
-        <div class="txt" data-bind="visible: !selection().price">Данные получены на основании поисковых запросов и могут отличаться от актуальных значений</div>
-        <div class="txtCena" data-bind="visible: selection().price">
-	  <div class="leftFloat">
-	    Итого <span class="price" data-bind="text: selection().price">4150</span> <span class="rur">o</span>
+        <div class="txt" data-bind="visible: !showControls()">Данные получены на основании поисковых запросов и могут отличаться от актуальных значений</div>
+        <div class="txtCena" data-bind="visible: showControls()">
+	  <div class="leftFloat" data-bind="visible: showPrice()">
+	    Итого <span class="price" data-bind="text: priceDisplay()">4150</span> <span class="rur">o</span>
 	  </div>
 	  <div class="rightFloat">
 	    <a class="btnLook" href="#" data-bind="click: search">Посмотреть</a>

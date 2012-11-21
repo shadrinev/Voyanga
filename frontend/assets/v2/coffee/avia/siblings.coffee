@@ -1,5 +1,5 @@
 class Sibling
-  constructor: (@graphHeight, @parent, @price, @delta, date, isActive=false)->
+  constructor: (@graphHeight, @parent, @price, date, isActive=false)->
     @rawDate = date
     @date = date.format('D')
     @dow = date.format('dd')
@@ -7,6 +7,11 @@ class Sibling
     @data = []
     @nodata = false
     @isActive = ko.observable isActive
+    @initialActive = isActive
+    console.log "************"
+    console.log @parent, @parent.price, @price
+    if @parent.price
+      @price = @price * 2 - @parent.price
 
     @scaledHeight = ko.computed =>
       spacing = 30
@@ -25,14 +30,12 @@ class Siblings
   constructor: (siblings, @roundTrip, todayDate, rtTodayDate)->
     @data = []
     @graphHeight = ko.observable 50
-    @populate @data, siblings, todayDate, rtTodayDate
+    @populate @, siblings, todayDate, rtTodayDate
     @active = ko.observable @data[3]
-    @selection = ko.observable {price: 0}
+    @selection = ko.observable false
     
   # click handler
   select: (sibling) =>
-    if sibling.nodata
-      return
     if sibling.data.length
       @active sibling
       for sib in sibling.data
@@ -41,9 +44,32 @@ class Siblings
           break
     else
       @selection sibling
-    for entry in sibling.parent
+    for entry in sibling.parent.data
       entry.isActive false
     sibling.isActive true
+
+  showControls: =>
+    if !@selection()
+      return false
+    if @active().initialActive && @selection().initialActive
+      return false
+    return true
+
+  showPrice: =>
+    if !@selection()
+      return false
+    if @active().nodata || @selection().nodata
+      return false
+    return true
+    
+  priceDisplay: =>
+    if !@showPrice()
+      return ''
+  
+    if @roundTrip
+      @active().price + @selection().price
+    else
+     @selection().price
 
   handleSearch: (date, rtDate=false)=>
     app = window.app
@@ -63,6 +89,9 @@ class Siblings
   populate: (root, siblings, todayDate, rtTodayDate) =>
     # middle segment price
     todayPrice = siblings[3].price
+    if todayPrice == false
+      # FIXME FIXME FIXME
+      todayPrice = 1
     for sib, index in siblings
       siblingPrice = sib.price
       date = todayDate.clone().subtract('days', 3-index)
@@ -78,23 +107,24 @@ class Siblings
         isActive = true
       else
         isActive = false
-      newsib = new Sibling(@graphHeight, root, siblingPrice, siblingPrice - todayPrice, date, isActive)
+      newsib = new Sibling(@graphHeight, root, siblingPrice,  date, isActive)
 
       if sib.price==false
         newsib.nodata = true
       newsib.showMonth = showMonth
-      root.push newsib
+      root.data.push newsib
       if sib.siblings.length
-        @populate newsib.data, sib.siblings, rtTodayDate
-    minPrice = _.min root, (item)-> if item.price==false then todayPrice else item.price 
-    maxPrice = _.max root, (item)-> if item.price==false then todayPrice else item.price
+        @populate newsib, sib.siblings, rtTodayDate
+    minPrice = _.min root.data, (item)-> if item.price==false then todayPrice else item.price 
+    maxPrice = _.max root.data, (item)-> if item.price==false then todayPrice else item.price
+    console.log maxPrice, root.data, minPrice
     if maxPrice.price == false
       maxPrice = {price: todayPrice}
     if minPrice.price == false
       minPrice = {price: todayPrice}
     absDelta = maxPrice.price - minPrice.price
 
-    for item in root
+    for item in root.data
       item.height = (maxPrice.price - item.price)
       item.absDelta = absDelta
       

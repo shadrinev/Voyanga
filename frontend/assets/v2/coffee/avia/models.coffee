@@ -579,34 +579,29 @@ class AviaResultSet
     @updateCheapest @data
     helper = (root, sibs, today=false) =>
       for price,index in sibs
-#        if price == false
-#          fill = Math.floor((Math.random()*2))
-#          if fill
-#            price = Math.floor((Math.random()*10000)+3000)
         root[index] = {price: price, siblings:[]}
-#      if today
-#        root[3] = {price: @cheapest().price, siblings: []}
       
     if @siblings[3].length
-      for sibs,index in @siblings
-        for price, index in sibs
-          if price == false
-            fill = Math.floor((Math.random()*2))
-            if fill || index==3
-              price = Math.floor((Math.random()*10000)+3000)
-          sibs[index]=price
       siblings = []
+      if @roundTrip
+        @siblings[3][3] = Math.ceil(@cheapest().price/2)
+      else
+        @siblings[3] = @cheapest().price
       todayPrices = []
-      for sibs in @siblings
-        todayPrices.push sibs[3]
+      for sibs, index in @siblings
+        sibs = _.filter sibs, (item)->item!=false
+        if sibs.length
+          min = _.min sibs
+        else
+          min = false
+        todayPrices[index] = min
+      console.log '[[[', todayPrices, ']]]'
       helper(siblings, todayPrices,true)
       for sibs,index in @siblings
         helper(siblings[index].siblings, sibs)
-        
     else
       siblings = []
       helper(siblings, @siblings,true)
-
     @siblings = new Siblings(siblings, @roundTrip,  @rawDate, @rawRtDate)    
 
   hideRecommend: (context, event)->
