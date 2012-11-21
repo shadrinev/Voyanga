@@ -44,6 +44,7 @@ return array(
             'connectionString' => $params['mongo.connectionString'],
             'dbName'         => $params['mongo.dbName'],
             'collectionName' => 'session',
+            'timeout' => 3600 //1hr to store items inside cache
         ),
 
         'pCache' => array(

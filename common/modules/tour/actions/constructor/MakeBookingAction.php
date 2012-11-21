@@ -20,6 +20,9 @@ class MakeBookingAction extends CAction
         $dataProvider = new TripDataProvider();
         $this->tripItems = $dataProvider->getSortedCartItems();
 
+        if (sizeof($this->tripItems)==0)
+            Yii::app()->request->redirect('/');
+
         if ($this->areNotAllItemsLinked())
             throw new CHttpException(500, 'There are exists element inside trip that are not linked. You cannot continue booking');
 
