@@ -112,4 +112,9 @@ class BuyController extends Controller
         $hotelTripElement->hotel = $hotel;
         Yii::app()->shoppingCart->put($hotelTripElement);
     }
+
+    public function actionDone()
+    {
+        Yii::app()->user->setState('blockedToBook', null);
+    }
 }

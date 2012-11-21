@@ -7,7 +7,6 @@ class Sibling
     @data = []
     @nodata = false
     @isActive = ko.observable isActive
-    @initialActive = isActive
 
     @scaledHeight = ko.computed =>
       spacing = 30
@@ -15,13 +14,11 @@ class Sibling
       @height/scale + spacing - 10
 
   columnValue: ->
-    if @initialActive
-      return @price
-    return @delta
-
+    return @price
+    
   background: ->
     if @nodata
-       @graphHeight()
+      return "center " + @graphHeight() + "px"
     "center " + @scaledHeight() + "px"
 
 class Siblings
@@ -38,6 +35,10 @@ class Siblings
       return
     if sibling.data.length
       @active sibling
+      for sib in sibling.data
+        if sib.isActive()
+          @selection sib
+          break
     else
       @selection sibling
     for entry in sibling.parent
@@ -87,6 +88,8 @@ class Siblings
         @populate newsib.data, sib.siblings, rtTodayDate
     minPrice = _.min root, (item)-> if item.price==false then todayPrice else item.price 
     maxPrice = _.max root, (item)-> if item.price==false then todayPrice else item.price
+    if maxPrice.price == false
+      maxPrice = {price: todayPrice}
     if minPrice.price == false
       minPrice = {price: todayPrice}
     absDelta = maxPrice.price - minPrice.price

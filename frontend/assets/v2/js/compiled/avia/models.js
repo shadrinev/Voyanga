@@ -814,58 +814,55 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.processSiblings = function() {
-    var fill, helper, index, price, siblings, sibs, _i, _j, _len, _len1, _ref, _ref1,
+    var fill, helper, index, price, siblings, sibs, todayPrices, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2,
       _this = this;
     this.updateCheapest(this.data);
-    helper = function(root, sibs) {
-      var fill, index, price, _i, _len;
+    helper = function(root, sibs, today) {
+      var index, price, _i, _len, _results;
+      if (today == null) {
+        today = false;
+      }
+      _results = [];
       for (index = _i = 0, _len = sibs.length; _i < _len; index = ++_i) {
         price = sibs[index];
-        if (price === false) {
-          fill = Math.floor(Math.random() * 2);
-          if (fill) {
-            price = Math.floor((Math.random() * 10000) + 3000);
-          }
-        }
-        root[index] = {
+        _results.push(root[index] = {
           price: price,
           siblings: []
-        };
+        });
       }
-      return root[3] = {
-        price: _this.cheapest().price,
-        siblings: []
-      };
+      return _results;
     };
     if (this.siblings[3].length) {
-      siblings = [];
-      helper(siblings, this.siblings[3]);
       _ref = this.siblings;
       for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
         sibs = _ref[index];
+        for (index = _j = 0, _len1 = sibs.length; _j < _len1; index = ++_j) {
+          price = sibs[index];
+          if (price === false) {
+            fill = Math.floor(Math.random() * 2);
+            if (fill || index === 3) {
+              price = Math.floor((Math.random() * 10000) + 3000);
+            }
+          }
+          sibs[index] = price;
+        }
+      }
+      siblings = [];
+      todayPrices = [];
+      _ref1 = this.siblings;
+      for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+        sibs = _ref1[_k];
+        todayPrices.push(sibs[3]);
+      }
+      helper(siblings, todayPrices, true);
+      _ref2 = this.siblings;
+      for (index = _l = 0, _len3 = _ref2.length; _l < _len3; index = ++_l) {
+        sibs = _ref2[index];
         helper(siblings[index].siblings, sibs);
       }
     } else {
       siblings = [];
-      _ref1 = this.siblings;
-      for (index = _j = 0, _len1 = _ref1.length; _j < _len1; index = ++_j) {
-        price = _ref1[index];
-        if (price === false) {
-          fill = Math.floor(Math.random() * 2);
-          if (fill) {
-            price = Math.floor((Math.random() * 10000) + 3000);
-          }
-        }
-        siblings[index] = {
-          price: price,
-          siblings: []
-        };
-      }
-      this.updateCheapest(this.data);
-      siblings[3] = {
-        price: this.cheapest().price,
-        siblings: []
-      };
+      helper(siblings, this.siblings, true);
     }
     return this.siblings = new Siblings(siblings, this.roundTrip, this.rawDate, this.rawRtDate);
   };

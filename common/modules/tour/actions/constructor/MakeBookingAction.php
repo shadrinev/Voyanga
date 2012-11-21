@@ -20,6 +20,9 @@ class MakeBookingAction extends CAction
         $dataProvider = new TripDataProvider();
         $this->tripItems = $dataProvider->getSortedCartItems();
 
+        if (sizeof($this->tripItems)==0)
+            Yii::app()->request->redirect('/');
+
         if ($this->areNotAllItemsLinked())
             throw new CHttpException(500, 'There are exists element inside trip that are not linked. You cannot continue booking');
 
@@ -31,12 +34,11 @@ class MakeBookingAction extends CAction
             {
                 Yii::app()->user->setState('passportForms', $this->passportForms);
                 Yii::app()->user->setState('bookingForm', $this->bookingForm);
-                $tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItems();
+                //$tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItems();
                 // FIXME return status here
                 header("Content-type: application/json");
                 echo '{"status":"success"}';
                 exit;
-                $this->controller->redirect('/buy/startPayment');
             }
         }
         $this->bookingForm = new BookingForm();

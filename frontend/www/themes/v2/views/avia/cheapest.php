@@ -25,8 +25,8 @@
         <ul class="schedule-of-prices" data-bind="foreach: $data">
           <li data-bind="css: {active: isActive}, click: $parent.select">
             <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+45) + 'px'}, text: columnValue(), visible: !nodata">-100</div>
-            <div class="chart" data-bind="style: {backgroundPosition: background()}" ></div>
-	    <div class="price" data-bind="visible:nodata" style="bottom: 40px">?</div>
+            <div class="chart" data-bind="style: {backgroundPosition: background(), height: $parent.graphHeight() + 'px'}" ></div>
+	    <div class="price question" data-bind="visible:nodata" style="bottom: 40px">?</div>
             <div class="week" data-bind="text: dow">пн</div>
             <div class="date" data-bind="text: date">16</div>
             <div class="month" data-bind="visible: showMonth, text: month">
@@ -39,8 +39,8 @@
         <ul class="schedule-of-prices" data-bind="foreach: active">
           <li data-bind="css: {active: isActive}, click: $parent.select">
             <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+45) + 'px'}, text: columnValue(), visible: !nodata">-100</div>
-            <div class="chart" data-bind="style: {backgroundPosition: background()}" ></div>
-	    <div class="price" data-bind="visible:nodata" style="bottom: 40px">?</div>
+            <div class="chart" data-bind="style: {backgroundPosition: background(), height: $parent.graphHeight() + 'px'}" ></div>
+	    <div class="price question" data-bind="visible:nodata" style="bottom: 40px">?</div>
             <div class="week" data-bind="text: dow">пн</div>
             <div class="date" data-bind="text: date">16</div>
             <div class="month" data-bind="visible: showMonth, text: month">

@@ -128,7 +128,7 @@ class Application extends Backbone.Router
     Backbone.history.start()
     # Call some change handlers with initial values
     console.log 'slider.handler: ', module
-    @slider.handler(module)
+    #@slider.handler(module)
     window.app.navigate '#'+ module, {'trigger': true}
 
   bindEvents: =>
@@ -139,12 +139,10 @@ class Application extends Backbone.Router
 
   bindItemsToBuy: =>
     tourTrip = new TourTripResultSet(window.tripRaw)
-    console.log "Tour trip:", tourTrip
     @itemsToBuy =  tourTrip
 
   bindItemsToEvent: =>
     tourTrip = new EventTourResultSet(window.tripRaw)
-    console.log "Tour trip:", tourTrip
     @itemsToBuy =  tourTrip
 
   # FIXME write better handler

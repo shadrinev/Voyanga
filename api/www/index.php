@@ -6,6 +6,7 @@ if (YII_DEBUG)
 {
     error_reporting(-1);
     ini_set('display_errors', true);
+    header("Access-Control-Allow-Origin: *");
 }
 
 date_default_timezone_set('Europe/Moscow');

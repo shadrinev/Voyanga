@@ -155,7 +155,6 @@ Application = (function(_super) {
   Application.prototype.runWithModule = function(module) {
     Backbone.history.start();
     console.log('slider.handler: ', module);
-    this.slider.handler(module);
     return window.app.navigate('#' + module, {
       'trigger': true
     });
@@ -173,14 +172,12 @@ Application = (function(_super) {
   Application.prototype.bindItemsToBuy = function() {
     var tourTrip;
     tourTrip = new TourTripResultSet(window.tripRaw);
-    console.log("Tour trip:", tourTrip);
     return this.itemsToBuy = tourTrip;
   };
 
   Application.prototype.bindItemsToEvent = function() {
     var tourTrip;
     tourTrip = new EventTourResultSet(window.tripRaw);
-    console.log("Tour trip:", tourTrip);
     return this.itemsToBuy = tourTrip;
   };
 
