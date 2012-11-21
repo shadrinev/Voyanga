@@ -32,6 +32,27 @@ $(function(){
             next.focus();
         }
     });
+    $(function () {
+        $('#submit-passport').click(function () {
+            $('#submit-passport').hide();
+            $('#loadPayFly').find('.armoring').show();
+            loadPayFly();
+            $('#loadPayFly').find('.loadJet').show();
+            $.post('/buy/makeBooking', $('#passport_form').serialize(), function (data) {
+                if (data.status == 'success') {
+                    $.get('/buy/startPayment', function (data) {
+                        if (data.error) {
+                            throw "Payment error";
+                        } else {
+                            Utils.submitPayment(data);
+                        }
+                    });
+                } else {
+                    alert("ERROR" + data);
+                }
+            });
+        });
+    });
 });
 
 initCredentialsPage = function() {

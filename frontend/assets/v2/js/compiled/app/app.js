@@ -173,14 +173,12 @@ Application = (function(_super) {
   Application.prototype.bindItemsToBuy = function() {
     var tourTrip;
     tourTrip = new TourTripResultSet(window.tripRaw);
-    console.log("Tour trip:", tourTrip);
     return this.itemsToBuy = tourTrip;
   };
 
   Application.prototype.bindItemsToEvent = function() {
     var tourTrip;
     tourTrip = new EventTourResultSet(window.tripRaw);
-    console.log("Tour trip:", tourTrip);
     return this.itemsToBuy = tourTrip;
   };
 

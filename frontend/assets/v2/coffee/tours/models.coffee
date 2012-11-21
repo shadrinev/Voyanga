@@ -720,6 +720,7 @@ class ToursOverviewVM
 class TourTripResultSet
   constructor: (@resultSet) ->
     @items = []
+    @cities = []
     @hasFlight = false
     @hasHotel = false
     @flightCounter = ko.observable 0
@@ -749,15 +750,29 @@ class TourTripResultSet
         aviaResult = new AviaResult(item, @)
         aviaResult.sort()
         aviaResult.totalPeople = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек'
+        if (@roundTrip)
+          @cities.push {isLast: false, cityName: item.flights[0].departureCity}
+          @cities.push {isLast: false, cityName: item.flights[0].arrivalCity}
+          @cities.push {isLast: false, cityName: item.flights[0].departureCity}
+        else
+          @cities.push {isLast: false, cityName: item.flights[0].departureCity}
         @items.push aviaResult
         @totalCost += aviaResult.price
       else if (item.isHotel)
         @hasHotel = true
         @hotelCounter(@hotelCounter()+1)
-        console.log "Hotel: ", item
         @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
+        @cities.push {cityName: @lastHotel.activeHotel.city}
         totalPeople = 0
         _.each item.searchParams.rooms, (room) -> totalPeople += room.adultCount/1 + room.childCount/1 + room.cots/1
         @lastHotel.totalPeople = Utils.wordAfterNum totalPeople, 'человек', 'человека', 'человек'
         @items.push(@lastHotel)
         @totalCost += @lastHotel.roomSets()[0].discountPrice
+
+    _.each @cities, (city, i) =>
+        if (i == (@cities.length - 1))
+          city.isLast = true
+        else
+          city.left = Math.round((100 / @cities.length) * (i + 1)) + '%'
+
+    console.log @cities

@@ -1119,6 +1119,7 @@ TourTripResultSet = (function() {
     var _this = this;
     this.resultSet = resultSet;
     this.items = [];
+    this.cities = [];
     this.hasFlight = false;
     this.hasHotel = false;
     this.flightCounter = ko.observable(0);
@@ -1152,13 +1153,34 @@ TourTripResultSet = (function() {
         aviaResult = new AviaResult(item, _this);
         aviaResult.sort();
         aviaResult.totalPeople = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек');
+        if (_this.roundTrip) {
+          _this.cities.push({
+            isLast: false,
+            cityName: item.flights[0].departureCity
+          });
+          _this.cities.push({
+            isLast: false,
+            cityName: item.flights[0].arrivalCity
+          });
+          _this.cities.push({
+            isLast: false,
+            cityName: item.flights[0].departureCity
+          });
+        } else {
+          _this.cities.push({
+            isLast: false,
+            cityName: item.flights[0].departureCity
+          });
+        }
         _this.items.push(aviaResult);
         return _this.totalCost += aviaResult.price;
       } else if (item.isHotel) {
         _this.hasHotel = true;
         _this.hotelCounter(_this.hotelCounter() + 1);
-        console.log("Hotel: ", item);
         _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
+        _this.cities.push({
+          cityName: _this.lastHotel.activeHotel.city
+        });
         totalPeople = 0;
         _.each(item.searchParams.rooms, function(room) {
           return totalPeople += room.adultCount / 1 + room.childCount / 1 + room.cots / 1;
@@ -1168,6 +1190,14 @@ TourTripResultSet = (function() {
         return _this.totalCost += _this.lastHotel.roomSets()[0].discountPrice;
       }
     });
+    _.each(this.cities, function(city, i) {
+      if (i === (_this.cities.length - 1)) {
+        return city.isLast = true;
+      } else {
+        return city.left = Math.round((100 / _this.cities.length) * (i + 1)) + '%';
+      }
+    });
+    console.log(this.cities);
   }
 
   return TourTripResultSet;
