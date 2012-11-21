@@ -155,7 +155,6 @@ Application = (function(_super) {
   Application.prototype.runWithModule = function(module) {
     Backbone.history.start();
     console.log('slider.handler: ', module);
-    this.slider.handler(module);
     return window.app.navigate('#' + module, {
       'trigger': true
     });

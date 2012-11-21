@@ -24,6 +24,7 @@ Slider = (function() {
     if (activeLIindex === -1) {
       activeLIindex = 1;
     }
+    console.log("activeLIindex", activeLIindex);
     this.switchSlide = $('.slide-turn-mode').find('.switch');
     this.valueWidth = [this.plannerWidth, this.aviaticketsWidth, this.hotelWidth, this.finishStagesWidth];
     this.switchSlide.css('width', this.valueWidth[activeLIindex][0] + 'px').css('left', this.valueWidth[activeLIindex][1] + 'px');
@@ -43,6 +44,7 @@ Slider = (function() {
       console.error('HANDLER RECIEVED EMPTY MODUEL NAME');
       return;
     }
+    console.log("HANDLER: ", newValue);
     activeLI = $('#h-' + newValue + '-slider');
     activeLIindex = activeLI.index();
     $('.btn').removeClass('active');
