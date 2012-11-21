@@ -577,32 +577,35 @@ class AviaResultSet
 
   processSiblings: =>
     @updateCheapest @data
-    helper = (root, sibs) =>
+    helper = (root, sibs, today=false) =>
       for price,index in sibs
-        if price == false
-          fill = Math.floor((Math.random()*2))
-          if fill
-            price = Math.floor((Math.random()*10000)+3000)
+#        if price == false
+#          fill = Math.floor((Math.random()*2))
+#          if fill
+#            price = Math.floor((Math.random()*10000)+3000)
         root[index] = {price: price, siblings:[]}
-      root[3] = {price: @cheapest().price, siblings: []}
+#      if today
+#        root[3] = {price: @cheapest().price, siblings: []}
       
     if @siblings[3].length
+      for sibs,index in @siblings
+        for price, index in sibs
+          if price == false
+            fill = Math.floor((Math.random()*2))
+            if fill || index==3
+              price = Math.floor((Math.random()*10000)+3000)
+          sibs[index]=price
       siblings = []
-      helper(siblings, @siblings[3])
+      todayPrices = []
+      for sibs in @siblings
+        todayPrices.push sibs[3]
+      helper(siblings, todayPrices,true)
       for sibs,index in @siblings
         helper(siblings[index].siblings, sibs)
         
     else
       siblings = []
-      for price,index in @siblings
-        if price == false
-          fill = Math.floor((Math.random()*2))
-          if fill
-            price = Math.floor((Math.random()*10000)+3000)
-        siblings[index] = {price: price, siblings:[]}
-
-      @updateCheapest @data
-      siblings[3] = {price: @cheapest().price, siblings: []}
+      helper(siblings, @siblings,true)
 
     @siblings = new Siblings(siblings, @roundTrip,  @rawDate, @rawRtDate)    
 

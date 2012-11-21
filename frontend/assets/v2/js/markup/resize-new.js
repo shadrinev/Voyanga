@@ -469,7 +469,6 @@ function smallTicketHeight() {
 	// fixme bzv this method itself called twice on avia result
 	var siblings = ko.contextFor($('.prices-of-3days .ticket  .schedule-of-prices')[0]);
 	siblings = siblings['$data'];
-	console.log("DAFQ", siblings);
 	if(siblings.graphHeight) {
 	    siblings.graphHeight(heightGraf);
 	}
