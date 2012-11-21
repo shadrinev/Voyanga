@@ -472,7 +472,7 @@ function smallTicketHeight() {
 	if(siblings.graphHeight) {
 	    siblings.graphHeight(heightGraf);
 	}
-	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
+//	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
     }
 }
 
