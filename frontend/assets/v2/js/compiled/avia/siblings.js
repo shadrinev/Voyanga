@@ -34,7 +34,7 @@ Sibling = (function() {
 
   Sibling.prototype.background = function() {
     if (this.nodata) {
-      this.graphHeight();
+      return "center " + this.graphHeight() + "px";
     }
     return "center " + this.scaledHeight() + "px";
   };
@@ -65,18 +65,26 @@ Siblings = (function() {
   }
 
   Siblings.prototype.select = function(sibling) {
-    var entry, _i, _len, _ref;
+    var entry, sib, _i, _j, _len, _len1, _ref, _ref1;
     if (sibling.nodata) {
       return;
     }
     if (sibling.data.length) {
       this.active(sibling);
+      _ref = sibling.data;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        sib = _ref[_i];
+        if (sib.isActive()) {
+          this.selection(sib);
+          break;
+        }
+      }
     } else {
       this.selection(sibling);
     }
-    _ref = sibling.parent;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      entry = _ref[_i];
+    _ref1 = sibling.parent;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      entry = _ref1[_j];
       entry.isActive(false);
     }
     return sibling.isActive(true);
@@ -151,6 +159,11 @@ Siblings = (function() {
         return item.price;
       }
     });
+    if (maxPrice.price === false) {
+      maxPrice = {
+        price: todayPrice
+      };
+    }
     if (minPrice.price === false) {
       minPrice = {
         price: todayPrice
