@@ -774,5 +774,3 @@ class TourTripResultSet
           city.isLast = true
         else
           city.left = Math.round((100 / @cities.length) * (i + 1)) + '%'
-
-    console.log @cities

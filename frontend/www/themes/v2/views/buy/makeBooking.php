@@ -59,10 +59,10 @@
         <div class="clear"></div>
     </div>
     <!--=== ===-->
-    <div class="payCardPal">
+    <div class="payCardPal" style="display: none">
         <iframe id="payment_frame" class="payCardPal"></iframe>
     </div>
-    <div class="paybuyEnd">
+    <div class="paybuyEnd" style="display: none">
         <div class="info">После нажатия кнопки «Купить» данные пассажиров попадут в систему бронирования, билет будет
             оформлен и выслан вам на указанный электронный адрес в течение нескольких минут. Нажимая «Купить», вы
             соглашаетесь с условиями использования, правилами IATA и правилами тарифов.

@@ -1197,7 +1197,6 @@ TourTripResultSet = (function() {
         return city.left = Math.round((100 / _this.cities.length) * (i + 1)) + '%';
       }
     });
-    console.log(this.cities);
   }
 
   return TourTripResultSet;
