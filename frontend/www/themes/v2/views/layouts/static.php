@@ -35,7 +35,8 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
                 <div class="bg-mask"></div>
 
                 <ul>
-                    <?php $currentModule = strtolower(Yii::app()->user->getState('currentModule')) ?>
+                    <?php $currentModule = trim(strtolower(Yii::app()->user->getState('currentModule'))) ?>
+                    <?php echo '!'.$currentModule.'!' ?>
                     <li id="h-tours-slider" class="planner btn<?php if ($currentModule=='tours') echo ' active'?>"><a href="/#tours">Планировщик</a></li>
                     <li id="h-avia-slider" class="aviatickets btn<?php if ($currentModule=='avia') echo ' active'?>"><a href="/#avia">Авиабилеты</a>
                     </li>
