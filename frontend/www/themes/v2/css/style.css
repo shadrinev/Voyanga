@@ -12,6 +12,7 @@
     min-width: 1000px;
     position: relative;
     width: 100%;
+    padding-bottom: 1px;
 }
 .head {
     background: url("../images/bg-head.png") repeat-x scroll 0 0 transparent;
@@ -3083,4 +3084,298 @@ input.hotel-input {
     height: 10px;
     background: url(../images/closePopUp.png) no-repeat;
     cursor: pointer;
+}
+
+/* pARK PAGE */
+.headBlockOne {
+    background: #f4f7f9;
+    padding-top: 25px;
+    color: #1d222b;
+}
+.headBlockOne .center-block, .headBlockTwo .center-block {
+    max-width: 960px !important;
+    color: #1d222b;
+}
+.headBlockOne h1 {
+    color: #1d222b;
+    font-size: 24px;
+    line-height: 22px;
+}
+.headBlockOne .center-block h2, .headBlockTwo .center-block h2 {
+    font-size: 18px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+hr {
+    background: #afb4b8;
+    height: 1px;
+    border: 0px solid #afb4b8;
+    margin: 0px;
+    padding: 0px;
+}
+.floatLeft {
+    float: left;
+}
+.floatRight {
+    float: right;
+}
+.grafik {
+    height: 118px;
+}
+.grafik .grafikMean {
+    width: 43px;
+    height: 118px;
+    float: left;
+    text-align: center;
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+.grafik.first-child .grafikMean:hover {
+    background: url('../images/bg-grafikHover.png') no-repeat -43px -0px;
+}
+.grafik.first-child .grafikMean.active {
+    background: url('../images/bg-grafikHover.png') no-repeat -0px -0px;
+}
+.grafik.second-child .grafikMean:hover {
+    background: url('../images/bg-grafikHover.png') no-repeat -43px -6px;
+}
+.grafik.second-child .grafikMean.active {
+    background: url('../images/bg-grafikHover.png') no-repeat -0px -6px;
+}
+.grafik .grafikMean .price {
+    position: absolute;
+    bottom: 0px;
+    width: 43px;
+    text-align: center;
+    font-size: 10px;
+    color: #6d6f72;
+    font-weight: bold;
+    z-index: 2;
+}
+.grafik .grafikMean.inactive .price {
+    color: #9da1a5;
+}
+.grafik .grafikMean.min .price {
+    color: #287705;
+}
+.grafik .grafikMean .statusBar {
+    position: absolute;
+    bottom: 0px;
+    width: 43px;
+    height: 100px;
+    background: url(../images/bg-statusbar.png) no-repeat -43px top;
+    z-index: 1;
+}
+.grafik .grafikMean.active .statusBar {
+    background-position: 0px top;
+}
+.grafik .grafikMean.min .statusBar {
+    background-position: -86px top;
+}
+.grafik .grafikMean.inactive .statusBar {
+    background-position: -129px top;
+}
+.textBlockPrice {
+    line-height: 18px;
+    font-size: 12px;
+    width: 200px;
+}
+.textBlockPrice a {
+    color: #1c81bb;
+    text-decoration: underline;
+}
+.textBlockPrice .cena {
+    font-size: 20px;
+}
+.textBlockPrice .price {
+    font-size: 35px;
+}
+.textBlockPrice .rur {
+    font-size: 34px;
+}
+.bgDate {
+    height: 58px;
+    background: url('../images/bg-dateParkPage.png') repeat-x;
+}
+.date li {
+    width: 42px;
+    border-left: 1px solid #adb2b6;
+    text-align: center;
+    position: relative;
+    line-height: 16px;
+    height: 36px;
+    padding-top: 22px;
+    font-size: 11px;
+    font-family: Verdana;
+    float: left;
+}
+.date li.newMonth {
+    border-left: 1px solid #4f5257;
+}
+.date li:last-child {
+    border-right: 1px solid #adb2b6;
+}
+.date li .month {
+    position: absolute;
+    top: 5px;
+    width: 43px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+    color: #262930;
+}
+.date li .day {
+    width: 31px;
+    height: 32px;
+    display: block;
+    margin: 0 auto;
+    color: #6d6f72;
+    line-height: 14px;
+}
+.date li .day.min, .date li .day.min span {
+    color: #287705;
+}
+.date li .day span {
+    font-size: 14px;
+    color: #262930;
+}
+.date li .day.today {
+    background: url(../images/bg-dateToday.png) no-repeat;
+}
+a.whereData {
+    display: inline-block;
+    padding-left: 30px;
+    font-size: 12px;
+    color: #494c53;
+    background: url(../images/ico-whereData.png) no-repeat left center;
+    text-decoration: none;
+    margin-top: 23px;
+}
+a.whereData span {
+    border-bottom: 1px dashed;
+}
+.textSeo {
+    font-size: 13px;
+    line-height: 20px;
+}
+.textSeo p {
+    margin-bottom: 15px;
+}
+.tableFlight {
+    width: 50%;
+    float: left;
+}
+.tableFlight td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    vertical-align: middle;
+}
+.tableFlight thead {
+    color: #70747a;
+    font-size: 12px;
+}
+.tableFlight .tdFlight {
+    width: 295px;
+}
+.tableFlight .tdFlight div {
+    width: 285px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.tableFlight .tdFlight span.toFrom {
+    display: inline-block;
+    width: 11px;
+    height: 10px;
+    vertical-align: middle;
+    background: url(../images/ico-toFrom.png) no-repeat center center;
+    margin: 0 2px;
+}
+.tableFlight .tdFlight span.to {
+    display: inline-block;
+    width: 11px;
+    height: 10px;
+    vertical-align: middle;
+    background: url(../images/ico-to.png) no-repeat center center;
+    margin: 0 2px;
+}
+.tableFlight .tdFlight span.from {
+    display: inline-block;
+    width: 11px;
+    height: 10px;
+    vertical-align: middle;
+    background: url(../images/ico-from.png) no-repeat center center;
+    margin: 0 2px;
+}
+.tableFlight .tdTo {
+    width: 65px;
+}
+.tableFlight .tdFrom {
+    width: 65px;
+}
+.tableFlight .tdPrice {
+    width: 75px;
+    border-right: 1px solid #c9cece;
+}
+.tableFlight .tdPrice a {
+    color: #1c81bb;
+    text-decoration: underline;
+}
+.tableFlight tr.select {
+    background: #e6eaec;
+}
+.tableFlight.second .tdPrice {
+    border: none;
+}
+.tableFlight.second .tdFlight {
+    padding-left: 10px;
+    width: 285px;
+}
+.tableH2 {
+    border-right: 1px solid #C9CECE;
+    margin: -25px 0 0 !important;
+    padding-bottom: 15px;
+    padding-top: 25px;
+    width: 499px;
+}
+.hotels-tickets.parkPage {
+    float: left;
+    width: 310px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.hotels-tickets.parkPage h4 {
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 4px;
+    margin-top: 2px;
+}
+.hotels-tickets.parkPage .full-info {
+    padding-right: 0px !important;
+    margin-bottom: 0px !important;
+    margin-top: 2px;
+}
+.hotels-tickets.parkPage .full-info .stars {
+    margin-top: 0px;
+}
+.hotels-tickets.parkPage .full-info .street {
+    line-height: 14px;
+    font-size: 11px;
+    color: #4e5053;
+}
+.hotels-tickets.parkPage .full-info .how-cost {
+    font-size: 12px;
+    margin-top: 2px;
+}
+.hotels-tickets.parkPage .full-info .how-cost .cost {
+    font-size: 20px;
+}
+.hotels-tickets.parkPage .full-info .how-cost .rur {
+    font-size: 19px;
+}
+.hotels-tickets.parkPage .full-info .overflowBlock {
+    height: 80px;
+    overflow: hidden;
+    width: 100%;
 }
