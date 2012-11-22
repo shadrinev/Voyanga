@@ -807,16 +807,44 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.postInit = function() {
+    var bCheapest, data, eCheapest;
     this.filters = new AviaFiltersT(this);
     if (this.siblings) {
-      return this.processSiblings();
+      eCheapest = _.reduce(this.data, function(el1, el2) {
+        if (el1.price < el2.price) {
+          return el1;
+        } else {
+          return el2;
+        }
+      }, this.data[0]);
+      data = _.filter(this.data, function(item) {
+        return item.serviceClass === 'B';
+      });
+      bCheapest = _.reduce(data, function(el1, el2) {
+        if (el1.price < el2.price) {
+          return el1;
+        } else {
+          return el2;
+        }
+      }, data[0]);
+      if (!eCheapest) {
+        eCheapest = {
+          price: 0
+        };
+      }
+      if (!bCheapest) {
+        bCheapest = {
+          price: 0
+        };
+      }
+      this.ESiblings = this.processSiblings(this.siblings.E, eCheapest);
+      return this.siblings = ko.observable(this.ESiblings);
     }
   };
 
-  AviaResultSet.prototype.processSiblings = function() {
-    var helper, index, min, siblings, sibs, todayPrices, _i, _j, _len, _len1, _ref, _ref1,
+  AviaResultSet.prototype.processSiblings = function(rawSiblings, cheapest) {
+    var helper, index, min, siblings, sibs, todayPrices, _i, _j, _len, _len1,
       _this = this;
-    this.updateCheapest(this.data);
     helper = function(root, sibs, today) {
       var index, price, _i, _len, _results;
       if (today == null) {
@@ -832,17 +860,16 @@ AviaResultSet = (function() {
       }
       return _results;
     };
-    if (this.siblings[3].length) {
+    if (rawSiblings[3].length) {
       siblings = [];
       if (this.roundTrip) {
-        this.siblings[3][3] = Math.ceil(this.cheapest().price / 2);
+        rawSiblings[3][3] = Math.ceil(cheapest.price / 2);
       } else {
-        this.siblings[3] = this.cheapest().price;
+        rawSiblings[3] = cheapest.price;
       }
       todayPrices = [];
-      _ref = this.siblings;
-      for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
-        sibs = _ref[index];
+      for (index = _i = 0, _len = rawSiblings.length; _i < _len; index = ++_i) {
+        sibs = rawSiblings[index];
         sibs = _.filter(sibs, function(item) {
           return item !== false;
         });
@@ -853,18 +880,16 @@ AviaResultSet = (function() {
         }
         todayPrices[index] = min;
       }
-      console.log('[[[', todayPrices, ']]]');
       helper(siblings, todayPrices, true);
-      _ref1 = this.siblings;
-      for (index = _j = 0, _len1 = _ref1.length; _j < _len1; index = ++_j) {
-        sibs = _ref1[index];
+      for (index = _j = 0, _len1 = rawSiblings.length; _j < _len1; index = ++_j) {
+        sibs = rawSiblings[index];
         helper(siblings[index].siblings, sibs);
       }
     } else {
       siblings = [];
-      helper(siblings, this.siblings, true);
+      helper(siblings, rawSiblings, true);
     }
-    return this.siblings = new Siblings(siblings, this.roundTrip, this.rawDate, this.rawRtDate);
+    return new Siblings(siblings, this.roundTrip, this.rawDate, this.rawRtDate);
   };
 
   AviaResultSet.prototype.hideRecommend = function(context, event) {

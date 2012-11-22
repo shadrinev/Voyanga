@@ -2,7 +2,12 @@ class GenericPopup
   constructor: (@id, data)->
     @inside = false
     $('body').prepend('<div id="popupOverlay"></div>')
-    el = $($(@id+'-template').html())
+    el = $(@id+'-template')
+    if el[0] == undefined
+      throw "Wrong popup template"
+      return
+    el = $(el.html())
+    
     $('body').prepend(el)
     ko.applyBindings({data: data, close:@close}, el[0])
     ko.processAllDeferredBindingUpdates()

@@ -22,8 +22,8 @@ API = (function() {
     }
     return $.ajax({
       url: "" + this.endpoint + url,
-      dataType: 'jsonp',
-      timeout: 60000,
+      dataType: 'json',
+      timeout: 90000,
       success: function(data) {
         cb(data);
         if (showLoad) {

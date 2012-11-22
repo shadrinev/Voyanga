@@ -63,6 +63,7 @@
         'js' => array(
             //! Our application logic
             'genericpopup.js',
+            'errorpopup.js',
             'photobox.js',
             'module.slider.js',
             'utils.js', 
@@ -84,6 +85,7 @@
             'filters.js',
             'searchPanel.js',
             'autocomplete.js',
+            'API.js'
         )
     ),
     'avia' => array(

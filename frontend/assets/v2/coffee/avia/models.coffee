@@ -572,37 +572,50 @@ class AviaResultSet
   postInit: =>
     @filters = new AviaFiltersT @
     if @siblings
-      do @processSiblings
+      eCheapest = _.reduce @data,
+        (el1, el2)->
+          if el1.price < el2.price then el1 else el2
+        ,@data[0]
+      data = _.filter @data, (item)-> item.serviceClass=='B'
+      bCheapest = _.reduce data,
+        (el1, el2)->
+          if el1.price < el2.price then el1 else el2
+        ,data[0]
+      if !eCheapest
+        eCheapest = {price: 0} 
+      if !bCheapest
+        bCheapest = {price: 0} 
 
+      @ESiblings = @processSiblings @siblings.E, eCheapest
+#      @BSiblings = @processSiblings @siblings.B, bCheapest
+      @siblings = ko.observable @ESiblings
 
-  processSiblings: =>
-    @updateCheapest @data
+  processSiblings: (rawSiblings, cheapest)=>
     helper = (root, sibs, today=false) =>
       for price,index in sibs
         root[index] = {price: price, siblings:[]}
       
-    if @siblings[3].length
+    if rawSiblings[3].length
       siblings = []
       if @roundTrip
-        @siblings[3][3] = Math.ceil(@cheapest().price/2)
+        rawSiblings[3][3] = Math.ceil(cheapest.price/2)
       else
-        @siblings[3] = @cheapest().price
+        rawSiblings[3] = cheapest.price
       todayPrices = []
-      for sibs, index in @siblings
+      for sibs, index in rawSiblings
         sibs = _.filter sibs, (item)->item!=false
         if sibs.length
           min = _.min sibs
         else
           min = false
         todayPrices[index] = min
-      console.log '[[[', todayPrices, ']]]'
       helper(siblings, todayPrices,true)
-      for sibs,index in @siblings
+      for sibs,index in rawSiblings
         helper(siblings[index].siblings, sibs)
     else
       siblings = []
-      helper(siblings, @siblings,true)
-    @siblings = new Siblings(siblings, @roundTrip,  @rawDate, @rawRtDate)    
+      helper(siblings, rawSiblings,true)
+    return new Siblings(siblings, @roundTrip,  @rawDate, @rawRtDate)    
 
   hideRecommend: (context, event)->
    hideRecomendedBlockTicket.apply(event.currentTarget)

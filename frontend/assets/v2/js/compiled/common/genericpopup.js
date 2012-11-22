@@ -12,7 +12,12 @@ GenericPopup = (function() {
 
     this.inside = false;
     $('body').prepend('<div id="popupOverlay"></div>');
-    el = $($(this.id + '-template').html());
+    el = $(this.id + '-template');
+    if (el[0] === void 0) {
+      throw "Wrong popup template";
+      return;
+    }
+    el = $(el.html());
     $('body').prepend(el);
     ko.applyBindings({
       data: data,
