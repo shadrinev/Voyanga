@@ -8,19 +8,22 @@ class Sibling
     @nodata = false
     @isActive = ko.observable isActive
     @initialActive = isActive
-    if @parent.price
-      @price = @price * 2 - @parent.price
+    if @price != false
+      if @parent.price
+        @price = @price * 2 - @parent.price
 
     @scaledHeight = ko.computed =>
       # nodata shortcut is not available here yet
       if @price == false
         return 0
-      spacing = 30
+      spacing = 10
       # limit it to 0...0.6
       ratio = @height/@absDelta
-      if ratio > 1
-        ratio = 1
       ratio = ratio*0.6
+      
+      if ratio > 0
+        if ratio < 0.1
+          console.error @height, @absDelta, @price
       ratio * (@graphHeight() - spacing) + spacing - 10
 
   columnValue: ->
@@ -93,10 +96,12 @@ class Siblings
 
   populate: (root, siblings, todayDate, rtTodayDate) =>
     # middle segment price
-    todayPrice = siblings[3].price
-    if todayPrice == false
+    todayPrice = _.filter siblings, (item) -> item.price != false
+    if todayPrice.length == 0
       # FIXME FIXME FIXME
       todayPrice = 1
+    else
+      todayPrice = todayPrice[0].price
     for sib, index in siblings
       siblingPrice = sib.price
       date = todayDate.clone().subtract('days', 3-index)
@@ -127,7 +132,6 @@ class Siblings
     if minPrice.price == false
       minPrice = {price: todayPrice}
     absDelta = maxPrice.price - minPrice.price
-
     for item in root.data
       if item.price == false
         item.height = 0

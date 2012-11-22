@@ -20,20 +20,24 @@ Sibling = (function() {
     this.nodata = false;
     this.isActive = ko.observable(isActive);
     this.initialActive = isActive;
-    if (this.parent.price) {
-      this.price = this.price * 2 - this.parent.price;
+    if (this.price !== false) {
+      if (this.parent.price) {
+        this.price = this.price * 2 - this.parent.price;
+      }
     }
     this.scaledHeight = ko.computed(function() {
       var ratio, spacing;
       if (_this.price === false) {
         return 0;
       }
-      spacing = 30;
+      spacing = 10;
       ratio = _this.height / _this.absDelta;
-      if (ratio > 1) {
-        ratio = 1;
-      }
       ratio = ratio * 0.6;
+      if (ratio > 0) {
+        if (ratio < 0.1) {
+          console.error(_this.height, _this.absDelta, _this.price);
+        }
+      }
       return ratio * (_this.graphHeight() - spacing) + spacing - 10;
     });
   }
@@ -158,9 +162,13 @@ Siblings = (function() {
 
   Siblings.prototype.populate = function(root, siblings, todayDate, rtTodayDate) {
     var absDelta, date, index, isActive, item, maxPrice, minPrice, newsib, prevMonth, showMonth, sib, siblingPrice, todayPrice, _i, _j, _len, _len1, _ref, _results;
-    todayPrice = siblings[3].price;
-    if (todayPrice === false) {
+    todayPrice = _.filter(siblings, function(item) {
+      return item.price !== false;
+    });
+    if (todayPrice.length === 0) {
       todayPrice = 1;
+    } else {
+      todayPrice = todayPrice[0].price;
     }
     for (index = _i = 0, _len = siblings.length; _i < _len; index = ++_i) {
       sib = siblings[index];
