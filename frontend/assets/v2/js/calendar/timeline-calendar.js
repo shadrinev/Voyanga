@@ -37,7 +37,7 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
             }
             widthPercent = Math.round(widthPercent*1000)/10;
 
-            var newHtml = $('<div class="monthNameVoyanga" style="left: '+leftPercent+'%; width: '+widthPercent+'%"><div class="monthWrapper">'+this.monthShowArray[i].name+'</div></div>');
+            var newHtml = $('<div class="monthNameVoyangaSplit" style="left: '+leftPercent+'%; width: '+widthPercent+'%"></div><div class="monthNameVoyanga" style="left: '+leftPercent+'%; width: '+widthPercent+'%"><div class="monthWrapper">'+this.monthShowArray[i].name+'</div></div>');
             //add only 3 lines condition
             if((this.monthShowArray[i].line >= (this.startLine - 3)) && (this.monthShowArray[i].line < (this.startLine+this.totalLines)) && (this.totalLines != this.linesWidth)){
                 if(!this.monthShowArray[i].lineReal)
