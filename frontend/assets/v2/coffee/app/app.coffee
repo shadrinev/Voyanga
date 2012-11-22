@@ -124,12 +124,9 @@ class Application extends Backbone.Router
     @slider.handler(@activeModule())
 
   runWithModule: (module) =>
-    # Start listening to hash changes
-    Backbone.history.start()
-    # Call some change handlers with initial values
-    console.log 'slider.handler: ', module
-    #@slider.handler(module)
-    window.app.navigate '#'+ module, {'trigger': true}
+    # set default module
+    Backbone.history.start({silent: true})
+    window.app.navigate '#'+ module, {replace: true}
 
   bindEvents: =>
     ev = []

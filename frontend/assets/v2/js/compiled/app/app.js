@@ -153,10 +153,11 @@ Application = (function(_super) {
   };
 
   Application.prototype.runWithModule = function(module) {
-    Backbone.history.start();
-    console.log('slider.handler: ', module);
+    Backbone.history.start({
+      silent: true
+    });
     return window.app.navigate('#' + module, {
-      'trigger': true
+      replace: true
     });
   };
 
