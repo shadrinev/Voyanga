@@ -185,8 +185,10 @@ $images = '/themes/v2';
     <tr>
         <td class="firstTd">
             <div data-bind="template: {name: 'print-event-trip', data: itemsToBuy}"></div>
+            <div class="btn-find" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
         </td>
         <td class="secondTd">
+
         </td>
     </tr>
 </table>
