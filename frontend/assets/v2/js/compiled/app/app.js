@@ -28,7 +28,11 @@ Application = (function(_super) {
 
     this.render = __bind(this.render, this);
 
+    this.reRenderCalendarEvent = __bind(this.reRenderCalendarEvent, this);
+
     this.reRenderCalendar = __bind(this.reRenderCalendar, this);
+
+    this.minimizeCalendar = __bind(this.minimizeCalendar, this);
 
     this.initCalendar = __bind(this.initCalendar, this);
 
@@ -39,6 +43,7 @@ Application = (function(_super) {
     };
     this.activeModule = ko.observable(null);
     this.activeModuleInstance = ko.observable(null);
+    this.activeSearchPanel = ko.observable(null);
     result = {
       template: '',
       data: {},
@@ -101,8 +106,27 @@ Application = (function(_super) {
     throw "Deprecated";
   };
 
+  Application.prototype.minimizeCalendar = function() {
+    return this.activeSearchPanel().minimizedCalendar(true);
+  };
+
   Application.prototype.reRenderCalendar = function(elements) {
-    return VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
+    var _this = this;
+    VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
+    this.fakoPanel.subscribe(function(newPanel) {
+      if (newPanel.panels) {
+        return _this.activeSearchPanel(_.last(newPanel.panels()));
+      }
+    });
+    if (this.fakoPanel().panels) {
+      return this.activeSearchPanel(_.last(this.fakoPanel().panels()));
+    }
+  };
+
+  Application.prototype.reRenderCalendarEvent = function(elements) {
+    $('.calenderWindow').css('position', 'static').find('.calendarSlide').css('position', 'static');
+    VoyangaCalendarStandart.init(this.itemsToBuy.activePanel, elements[1]);
+    return this.activeSearchPanel(_.last(this.itemsToBuy.activePanel().panels()));
   };
 
   Application.prototype.render = function(data, view) {

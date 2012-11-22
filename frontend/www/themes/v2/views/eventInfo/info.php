@@ -5,8 +5,10 @@ $images = '/themes/v2';
     window.toursArr = <?php echo json_encode($tours); ?>;
     window.defaultCity = <?php echo $defaultCity; ?>;
     window.tripRaw = window.toursArr[window.defaultCity];
+    window.eventPhotos = <?php echo json_encode($pictures); ?>;
     $(document).ready(function(){
         initEventPage();
+        //eventPhotos = new EventPhotoBox(window.eventPhotos);
     })
 </script>
 <!-- EVENTS -->
@@ -17,9 +19,17 @@ $images = '/themes/v2';
             <div id="eventsContent">
                 <h1><?php echo $event->title;?></h1>
                 <em class="f17"><?php echo $event->preview;?></em>
+                <!-- ko if: itemsToBuy.photoBox.boxHeight() > 0 -->
+                <div class="photoGallery" data-bind="template: {name: 'event-photo-box', data: itemsToBuy.photoBox, afterRender: itemsToBuy.photoBox.afterRender},style:{height: itemsToBuy.photoBox.boxHeight() + 'px'}">
+                </div>
+                <div data-bind="style:{height: itemsToBuy.photoBox.boxHeight()+'px'}" style="width: 100%"></div>
+                <!-- /ko -->
+                <!-- ko if: itemsToBuy.photoBox.boxHeight() == 0 -->
                 <div class="photoAlbum">
                     <img src="<?php echo (isset($event->pictureBig) ? $event->imgSrc.$event->pictureBig->url : $event->defaultBigImageUrl);?>">
                 </div>
+                <!-- /ko -->
+
                 <div class="clear"></div>
                 <div class="rightBlock">
                     <h3>Вылет из:</h3>
@@ -30,10 +40,10 @@ $images = '/themes/v2';
                         <?php endforeach;?>
                     </select>
                     </div>
-                    <a href="#">Другой город</a>
+                    <a href="#" data-bind="click: itemsToBuy.gotoAndShowPanel">Другой город</a>
                     <img src="/themes/v2/images/hr-gradient-events.png">
                     <span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 <span class="rur">o</span></span>
-                    <a href="#" style="margin-top:0px;">Цена за 2 взрослых</a>
+                    <a href="#" style="margin-top:0px;" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2 взрослых</a>
                     <span class="check">Последняя проверка цены<br>выполнена 29 сентября, 18:04</span>
                     <img src="/themes/v2/images/hr-gradient-events.png">
                 </div>
@@ -46,26 +56,128 @@ $images = '/themes/v2';
 <!-- END EVENTS -->
 <!--====**********===-->
 <!-- SUB HEAD -->
-<div class="sub-head" style="margin-top:-66px;">
+
     <!-- CENTER BLOCK -->
     <div class="center-block">
         <!-- PANEL -->
-        <div class="panel">
-            <div class="btn-timeline-and-condition">
-                <a href="#" class="btn-timeline active">Таймлайн</a>
-                <a href="#" class="btn-condition">Условия</a>
+        <div class="panel" style="height: auto;width: auto;">
+
+            <div class="board"  style="position: static;">
+                <div class="constructor" style="position: static;">
+                    <!-- BOARD CONTENT -->
+                    <div class="board-content" data-bind="with: itemsToBuy.activePanel()" style="position: static;height: auto;">
+                        <!-- ko foreach: $data.panels -->
+                        <!-- ko if: $index()!=0 -->
+                        <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
+                        <!-- /ko -->
+                        <div class="panel">
+                            <table class="constructorTable">
+                                <tbody><tr>
+                                    <td class="tdCity">
+                                        <div class="cityStart">
+                                            <!-- ko if: ($parent.isFirst()) -->
+                                            <div class="to">
+                                                Старт из:
+                                                <a href="#"><span data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербурга</span></a>
+                                            </div>
+                                            <div class="startInputTo">
+                                                <input type="text" tabindex="-1" class="input-path" data-bind="blur: hideFromCityInput">
+                                                <input type="text" placeholder="Санкт-Петербург" class="second-path" data-bind="blur: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen}" autocomplete="off" style="">
+                                            </div>
+                                            <!-- /ko -->
+                                        </div>
+                                        <div class="from" data-bind="css: {active: checkIn()}">
+                                            <input type="text" tabindex="-1" class="input-path">
+                                            <input type="text" placeholder="Куда едем?" class="second-path" data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}" autocomplete="off">
+                                            <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
+                                            <div class="date noDate" data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
+                                        </div>
+                                        <!-- ko if: ($data.isLast) -->
+                                        <a href="#" class="add-tour" data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
+                                        <!-- /ko -->
+                                    </td>
+                                    <!-- ko if: ($data.isLast) -->
+                                    <td class="tdPeople">
+                         <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}">
+  <div class="how-many-man hotel">
+      <!-- ko foreach: rawRooms -->
+      <div class="content" data-bind="click: $parent.show">
+          <span class="num" data-bind="text: $index() + 1">1</span>
+          <div class="man" data-repeat-index="0"></div><!--ko_repeatplaceholder-->
+          <!--ko_repeatplaceholder-->
+      </div>
+      <!-- /ko -->
+      <div class="btn" data-bind="click: show"></div>
+      <div class="popup">
+          <!-- ko foreach: {data: roomsView, afterRender: afterRender } -->
+          <div class="float">
+              <!-- ko template: {name: 'room-template', foreach: $data} -->
+              <div class="number-hotel">
+                  <a href="#" class="del-hotel" data-bind="click:removeRoom">удалить</a>
+                  <h5>Номер <span data-bind="text: index + 1">1</span></h5>
+                  <div class="one-str">
+                      <div class="adults">
+                          <div class="inputDIV">
+                              <input type="text" data-bind="value: adults, css:{active: adults}" class="active">
+                              <a href="#" class="plusOne" data-bind="click:plusOne" rel="adults">+</a>
+                              <a href="#" class="minusOne" data-bind="click:minusOne" rel="adults">-</a>
+                          </div>
+                          взрослых
+                      </div>
+                      <div class="childs">
+                          <div class="inputDIV">
+                              <input type="text" data-bind="value: children, css:{active: children}" name="adult2" class="">
+                              <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
+                              <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
+                          </div>
+                          детей от 12 до 18 лет
+                      </div>
+                  </div>
+                  <div class="one-str" data-bind="foreach: ages, visible: ages().length" style="display: none;"></div>
+                  <a href="#" data-bind="click: addRoom, visible: last() &amp;&amp; index&lt;3" class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер.</a>
+              </div>
+
+              <!-- /ko -->
+          </div>
+          <!-- /ko -->
+      </div>
+  </div>
+</span>
+                                    </td>
+                                    <td class="tdButton">
+                                        <div class="btn-find inactive" data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
+                                    </td>
+                                    <!-- /ko -->
+                                </tr>
+                                </tbody></table>
+                        </div>
+
+
+                        <!-- /ko -->
+                    </div>
+                    <!-- END BOARD CONTENT -->
+
+                </div>
+
+
+
+                <!-- END CONSTRUCTOR -->
+
             </div>
             <div class="clear"></div>
             <!-- BTN MINIMIZE -->
-            <a href="#" class="btn-minimizePanel"><span></span> свернуть</a>
+            <a href="#" class="btn-minimizePanel" data-bind="click: itemsToBuy.togglePanel,html: '<span></span>'+itemsToBuy.showPanelText()"><span></span></a>
             <div class="minimize-rcomended">
                 <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
             </div>
         </div>
         <!-- END PANEL -->
+        <!-- CALENDAR -->
+        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarEvent}" style="top: -302px; overflow: hidden; height: 341px;">
+        </div>
+        <!-- END CALENDAR -->
     </div>
     <!-- END CENTER BLOCK -->
-</div>
 <!-- END SUB HEAD -->
 <!--====**********===-->
 
@@ -121,7 +233,7 @@ $images = '/themes/v2';
                                 <div class="title" data-bind="html: overviewText()"></div>
                             </td>
                             <td class="costTD">
-                                <span data-bind="text: 7"></span>
+                                <span data-bind="text: $parent.overviewPeople()"></span>
                                 <span class="costs" data-bind="html: priceHtml()"></span>
                             </td>
                         </tr>
@@ -329,5 +441,12 @@ $images = '/themes/v2';
         <span class="rv"></span>
         <span class="bh"></span>
     </div>
+
+</script>
+<script id="event-photo-box" type="text/html">
+
+            <div class="leftButton" data-bind="click: prev"></div>
+            <div class="centerPosition"></div>
+            <div class="rightButton" data-bind="click: next"></div>
 
 </script>

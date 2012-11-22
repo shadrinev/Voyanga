@@ -475,6 +475,20 @@ class AviaResult
     if @roundTrip
       d+= @rt_duration()
     return d/base
+
+  getParams: =>
+    result = {}
+    if @activeVoyage()
+      result.airlineCode = @airline
+      result.rt = if @roundTrip then 'true' else 'false'
+      result.departureDateTime = @departureDate()
+      result.arrivalDateTime = @arrivalDate()
+      if @roundTrip
+        result.rtDepartureDateTime = @rtDepartureDate()
+        result.rtArrivalDateTime = @rtArrivalDate()
+
+    return JSON.stringify(result)
+
 #
 # Result container
 # Stacks them by price and company

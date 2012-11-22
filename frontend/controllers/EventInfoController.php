@@ -36,7 +36,7 @@ class EventInfoController extends Controller
             //echo $tour->orderId.'dsf';
 
             $items = $dataProvider->getWithAdditionalInfo($dataProvider->getSortedCartItemsOnePerGroup(false));
-            print_r($items);
+            //print_r($items);
             $tours[$tour->startCityId] = $items;
             $tours[$tour->startCityId]['city'] = City::getCityByPk($tour->startCityId)->getAttributes();
             $cities[$tour->startCityId] = City::getCityByPk($tour->startCityId)->getAttributes();
@@ -58,7 +58,11 @@ class EventInfoController extends Controller
 
         //$tArr = array(array('test'=>3),array('test'=>1),array('test'=>2));
         //UtilsHelper::sortBy($tArr,'test');
+        $pictures = array();
+        foreach($event->pictures as $picture){
+            $pictures[] = array('url'=>$picture->getUrl());
+        }
 
-        $this->render('info',array('event'=>$event,'priceData'=>$pricesData,'defaultCity'=>$defaultCityId,'tours'=>$tours,'cities'=>$cities,'twoCities'=>$twoCities));
+        $this->render('info',array('event'=>$event,'priceData'=>$pricesData,'defaultCity'=>$defaultCityId,'tours'=>$tours,'cities'=>$cities,'twoCities'=>$twoCities,'pictures'=>$pictures));
     }
 }

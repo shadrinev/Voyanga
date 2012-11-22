@@ -556,16 +556,26 @@ VoyangaCalendarStandart.init = function (panel, element){
     this.jObj =  $(element);
     VoyangaCalendarStandart.slider.jObj = this.jObj;
     this.panel = panel;
+    console.log('init calendar');
     panel.subscribe(function(newPanel) {
-	// recet calendar on panel change
-	if(newPanel.template) {
-	    if(VoyangaCalendarStandart.subscription)
-		VoyangaCalendarStandart.subscription.dispose();
-	    VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
-	    VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
-//	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
-	}
+        console.log('panelChanged');
+	    // recet calendar on panel change
+        if(newPanel.template) {
+            if(VoyangaCalendarStandart.subscription)
+            VoyangaCalendarStandart.subscription.dispose();
+            VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
+            VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
+        //	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
+        }
     });
+    newPanel = panel();
+    if(newPanel.template) {
+        if(VoyangaCalendarStandart.subscription)
+            VoyangaCalendarStandart.subscription.dispose();
+        VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
+        VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
+        //	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
+    }
     VoyangaCalendarStandart.generateGrid();
     VoyangaCalendarStandart.slider.init();
 }.bind(VoyangaCalendarStandart);

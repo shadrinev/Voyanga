@@ -33,9 +33,9 @@ class TripDataProvider
         foreach ($items as $item)
         {
             $flightTripElement = new FlightTripElement();
-            $flightTripElement->departureDate = $item->departureDate;
-            $flightTripElement->departureCity = $item->departureCity;
-            $flightTripElement->arrivalCity = $item->arrivalCity;
+            $searchParams = @unserialize($item->searchParams);
+            if ($searchParams)
+                $flightTripElement->fillFromSearchParams($searchParams);
             $object = @unserialize($item->object);
             if ($object)
             {
@@ -47,13 +47,20 @@ class TripDataProvider
         foreach ($items as $item)
         {
             $hotelTripElement = new HotelTripElement();
-            $city = City::model()->findByPk($item->cityId);
+            $searchParams = @unserialize($item->searchParams);
+            if ($searchParams)
+                $hotelTripElement->fillFromSearchParams($searchParams);
+            /*$city = City::model()->findByPk($item->cityId);
             $hotelTripElement->city = $city;
-            $hotelTripElement->checkIn = $item->checkIn;
+            $hotelTripElement->checkIn = $item->checkIn;*/
             $object = @unserialize($item->object);
             if ($object)
             {
                 $hotelTripElement->hotel = $object;
+            }
+            if (false && $hotelTripElement->searchParams && $hotelTripElement->searchParams['cityFull'])
+            {
+                //$hotelTripElement->searchParams->cityFull = $hotelTripElement->searchParams->cityFull->getAttributes();
             }
             Yii::app()->shoppingCart->put($hotelTripElement);
         }

@@ -74,6 +74,12 @@ class Room
       @mealIcon = "ico-breakfast-dinner"
   key: =>
     return @nameNemo + @name + @meal
+  getParams: =>
+    result = {}
+    result.showName = @name
+    result.nemoName = @nameNemo
+    result.meal = @meal
+    return result
 
 
 class RoomSet
@@ -120,6 +126,11 @@ class RoomSet
       else
         return 'Выбрать'
 
+  getParams: =>
+    roomsArr = []
+    for room in @rooms
+      roomsArr.push room.getParams()
+    return roomsArr
 
   checkCount: (newValue)=>
     count = parseInt(newValue)
@@ -192,6 +203,7 @@ class HotelResult
     @hotelId = data.hotelId
     @checkIn = moment(data.checkIn) || false
     @checkOut = moment(data.checkOut) || false
+    @cityCode = data.cityCode || false
     if !@checkOut && @checkIn && duration
       @checkOut = moment(@checkIn)
       @checkOut.add('d', duration)
@@ -691,6 +703,13 @@ class HotelResult
             @putToMap(gMap)
             @parent.mapCluster.addMarker(@gMarker)
       )
+  getParams: =>
+    result = {}
+
+    result.hotelId = @hotelId
+    result.roomSet = @roomSets()[0].getParams()
+
+    return JSON.stringify(result)
 
 
 #

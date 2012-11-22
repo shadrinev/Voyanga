@@ -17,6 +17,7 @@ class TourPanelSet
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
     @panels = ko.observableArray []
+    @lastPanel = null
     @i = 0
     @addPanel()
     @activeCalendarPanel = ko.observable @panels()[0]
@@ -48,6 +49,13 @@ class TourPanelSet
     _.last(@panels()).handlePanelSubmit()
     _.last(@panels()).minimizedCalendar(true)
 
+  navigateToNewSearchMainPage: =>
+    if (@formNotFilled())
+      return
+    if @selectedParams
+      _.last(@panels()).selectedParams = @selectedParams
+    _.last(@panels()).handlePanelSubmit(false)
+
   deletePanel: (elem) =>
     @sp.destinations.remove(elem.city)
     @panels.remove(elem)
@@ -66,6 +74,7 @@ class TourPanelSet
     newPanel.on "tourPanel:hasFocus", (args...) =>
       @showPanelCalendar(args)
     @panels.push newPanel
+    @lastPanel = newPanel
     @i = @panels().length
     VoyangaCalendarStandart.clear()
 
@@ -81,6 +90,7 @@ class TourPanelSet
       @activeCalendarPanel().checkIn values[0]
       if values.length > 1
         @activeCalendarPanel().checkOut values[1]
+
 
   calendarHidden: =>
 #    console.error("HANDLE ME")
@@ -127,8 +137,17 @@ class TourPanel extends SearchPanel
     @city.subscribe (newValue) =>
       @showCalendar()
 
-  handlePanelSubmit: =>
-    app.navigate @sp.getHash(), {trigger: true}
+  handlePanelSubmitToMain: =>
+    handlePanelSubmit(false)
+
+  handlePanelSubmit: (onlyHash = true)=>
+    console.log('onlyHash',onlyHash)
+    if onlyHash
+      app.navigate @sp.getHash(), {trigger: true}
+    else
+      console.log('go url',@sp.getHash(),JSON.stringify(@selectedParams))
+      return
+      window.location.href = '/#'+@sp.getHash()
 
   close: ->
     $(document.body).unbind 'mousedown'

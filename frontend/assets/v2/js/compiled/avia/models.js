@@ -319,6 +319,8 @@ AviaResult = (function() {
     var fields, flights, name, rtName, _i, _len,
       _this = this;
     this.parent = parent;
+    this.getParams = __bind(this.getParams, this);
+
     this.directRating = __bind(this.directRating, this);
 
     this.chooseActive = __bind(this.chooseActive, this);
@@ -683,6 +685,22 @@ AviaResult = (function() {
       d += this.rt_duration();
     }
     return d / base;
+  };
+
+  AviaResult.prototype.getParams = function() {
+    var result;
+    result = {};
+    if (this.activeVoyage()) {
+      result.airlineCode = this.airline;
+      result.rt = this.roundTrip ? 'true' : 'false';
+      result.departureDateTime = this.departureDate();
+      result.arrivalDateTime = this.arrivalDate();
+      if (this.roundTrip) {
+        result.rtDepartureDateTime = this.rtDepartureDate();
+        result.rtArrivalDateTime = this.rtArrivalDate();
+      }
+    }
+    return JSON.stringify(result);
   };
 
   return AviaResult;

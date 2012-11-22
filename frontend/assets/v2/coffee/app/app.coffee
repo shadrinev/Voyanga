@@ -15,6 +15,7 @@ class Application extends Backbone.Router
     # FIXME
     @activeModule = ko.observable null #ko.observable window.activeModule || 'avia'
     @activeModuleInstance = ko.observable null
+    @activeSearchPanel = ko.observable null
 
     result =
       template:''
@@ -73,9 +74,23 @@ class Application extends Backbone.Router
     #if (!@calendarInitialized)
     #  new Calendar(@fakoPanel)
     #  @calendarInitialized = true
+  minimizeCalendar: =>
+    @activeSearchPanel().minimizedCalendar(true)
+
 
   reRenderCalendar:(elements) =>
     VoyangaCalendarStandart.init @fakoPanel, elements[1]
+    @fakoPanel.subscribe( (newPanel)=>
+      if newPanel.panels
+        @activeSearchPanel(_.last(newPanel.panels()))
+    )
+    if @fakoPanel().panels
+      @activeSearchPanel(_.last(@fakoPanel().panels()))
+
+  reRenderCalendarEvent:(elements) =>
+    $('.calenderWindow').css('position','static').find('.calendarSlide').css('position','static')
+    VoyangaCalendarStandart.init @itemsToBuy.activePanel, elements[1]
+    @activeSearchPanel(_.last(@itemsToBuy.activePanel().panels()))
 
   render: (data, view)=>
 #    $('#loadWrapBg').show()

@@ -190,6 +190,21 @@ class EventTourResultSet
       @reinit(window.toursArr[newCityId])
     @startCity = ko.observable resultSet.city.localRu
     @activePanel = ko.observable(null)
+    @overviewPeople = ko.observable 0
+    @overviewPricePeople = ko.observable('')
+    @photoBox = new EventPhotoBox(window.eventPhotos)
+    @visiblePanel = ko.observable(false)
+    @visiblePanel.subscribe((newValue)=>
+      if newValue
+        @showPanel()
+      else
+        @hidePanel()
+    )
+    @showPanelText = ko.computed =>
+      if @visiblePanel()
+        return "свернуть"
+      else
+        return "развернуть"
 
     @reinit(resultSet)
 
@@ -204,6 +219,9 @@ class EventTourResultSet
     @totalCost = 0
     panelSet = new TourPanelSet()
     @activePanel(panelSet)
+    @activePanel().startCity(@resultSet.city.code)
+    @activePanel().selectedParams = []
+
     @startCity(@resultSet.city.localRu)
     console.log('reinitEventData',@)
     @flightCounterWord = ko.computed =>
@@ -226,9 +244,12 @@ class EventTourResultSet
         aviaResult.overviewTemplate = 'tours-event-avia-ticket'
         aviaResult.dateClass = ko.observable(if @roundTrip then 'blue-two' else 'blue-one')
         aviaResult.isAvia = ko.observable(item.isFlight)
-        aviaResult.isHotel = ko.observable(item.isisHotel)
+        aviaResult.isHotel = ko.observable(item.isHotel)
         aviaResult.startDate = aviaResult.departureDate()
         aviaResult.dateHtml = ko.observable('<div class="day">'+dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate())+'</div>' + (if @roundTrip then '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' else '') )
+        @activePanel().selectedParams.push aviaResult.getParams()
+
+        aviaResult.overviewPeople = ko.observable
 
         @items.push aviaResult
         @totalCost += aviaResult.price
@@ -237,14 +258,17 @@ class EventTourResultSet
         @hotelCounter(@hotelCounter()+1)
         console.log "Hotel: ", item
         @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
-        @lastHotel.priceHtml = ko.observable(@lastHotel.price + '<span class="rur">o</span>')
-        @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.address + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
+        @lastHotel.priceHtml = ko.observable(@lastHotel.roomSets()[0].price + '<span class="rur">o</span>')
+
         @lastHotel.dateClass = ko.observable('orange-two')
         @lastHotel.overviewTemplate = 'tours-event-hotels-ticket'
         @lastHotel.isAvia = ko.observable(item.isFlight)
-        @lastHotel.isHotel = ko.observable(item.isisHotel)
+        @lastHotel.isHotel = ko.observable(item.isHotel)
         @lastHotel.startDate = @lastHotel.checkIn
+        @lastHotel.serachParams = item.searchParams
+        @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
         @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn)+'</div>'+'<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut)+'</div>')
+        @activePanel().selectedParams.push @lastHotel.getParams()
         @items.push(@lastHotel)
         @totalCost += @lastHotel.roomSets()[0].discountPrice
     _.sortBy(
@@ -252,6 +276,208 @@ class EventTourResultSet
       (item)->
         return item.startDate
     )
+
     @startDate = @items()[0].startDate
     @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate)+'</div>')
+    firstHotel = true
+    console.log('items',@items())
+    for item in @items()
+      if item.isHotel()
+        if !firstHotel
+          @activePanel.addPanel()
+        else
+          #@activePanel().sp.rooms = item.serachParams.rooms
+          #@activePanel().sp.rooms([])
+          i = 0
+          for room in item.serachParams.rooms
+            if !@activePanel().sp.rooms()[i]
+              @activePanel().sp.addSpRoom()
+            @activePanel().sp.rooms()[i].adults(room.adultCount)
+            @activePanel().sp.rooms()[i].children(room.childCount)
+            @activePanel().sp.rooms()[i].ages(room.childAge)
+            i++
+          firstHotel = false
+
+        @activePanel().lastPanel.checkIn(moment(item.checkIn)._d)
+        @activePanel().lastPanel.checkOut(moment(item.checkOut)._d)
+        @activePanel().lastPanel.city(item.cityCode)
+        console.log('try set destData',moment(item.checkIn)._d,moment(item.checkOut)._d,item.cityCode,'to',@activePanel().lastPanel,@activePanel().lastPanel.checkIn())
+    @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(),'человек','человека','человек'))
+    @overviewPricePeople(
+      'Цена за ' +  (if @activePanel().sp.adults() then Utils.wordAfterNum(@activePanel().sp.adults(),'взрослого','взрослых','взрослых')
+      else '') + (if @activePanel().sp.children() then ' '+Utils.wordAfterNum(@activePanel().sp.children(),'ребенка','детей','детей')
+      else '')
+    )
+    console.log('activePanel',@activePanel())
+
+
     @fullPrice(@totalCost)
+  gotoAndShowPanel: =>
+    Utils.scrollTo('.panel .board')
+    @visiblePanel(true)
+  togglePanel: =>
+    @visiblePanel(!@visiblePanel())
+  showPanel: =>
+    $('.panel .board').show('slow')
+  hidePanel: =>
+    $('.panel .board').hide('slow')
+
+
+
+class EventPhotoBox
+  constructor: (picturesRaw)->
+    @photos = ko.observableArray([])
+    @imagesServer = ko.observable 'http://backend.oleg.voyanga'
+    @totalCount = 0
+    @unloadedCount = 0
+
+    @activeIndex = ko.observable(0)
+    @picturesPadding = ko.observable(5)
+    @animation = false
+    @boxHeight = ko.observable(0)
+    @picturesLoaded = false
+    @afterRendered = false
+    @renderedPhotos = ko.computed =>
+      result = []
+
+    pictures = []
+    for photoObj in picturesRaw
+      picture = new Image()
+
+      @unloadedCount++;
+      $(picture).bind(
+        'load error',
+        (e)=>
+          console.log('image is loaded',e,@);
+          if e.type == 'load'
+            @totalCount++;
+            photo = {}
+            photo.url = e.srcElement.src;
+            photo.height = e.srcElement.height;
+            photo.width = e.srcElement.width;
+            if @boxHeight() < photo.height
+              @boxHeight(photo.height)
+            @photos.push photo
+
+          @unloadedCount--;
+          if(@unloadedCount <= 0 )
+            @picturesLoaded = true
+            @afterLoad()
+      )
+      picture.src = @imagesServer() + photoObj.url
+  getIndex: (ind)=>
+    result = ind % @totalCount
+    if result < 0
+      result = @totalCount + result
+    return result
+  afterRender: =>
+    @afterRendered = true
+    @afterLoad()
+
+  afterLoad: =>
+    if @afterRendered && @picturesLoaded
+      @renderedDivs = []
+      console.log('phts',@photos(),@boxHeight())
+      for i in [-2..2]
+        divInfo = {}
+        console.log('cmpW',i,'out',@getIndex(i))
+        divInfo.div = $('<div class="eventPhoto"><img src="'+@photos()[@getIndex(i)].url+'" /></div>')
+        divInfo.prevInd = @getIndex(i-1)
+        divInfo.nextInd = @getIndex(i+1)
+        divInfo.thisInd = @getIndex(i)
+        @renderedDivs.push divInfo
+      dw = Math.round(@photos()[@renderedDivs[2].thisInd].width / 2)
+      tmpdw = dw+@picturesPadding()
+      @renderedDivs[2].left = -dw
+      for i in [3..4]
+        @renderedDivs[i].left = tmpdw
+        tmpdw += @photos()[@renderedDivs[i].thisInd].width + @picturesPadding()
+      tmpdw = -dw
+      for i in [1..0]
+        tmpdw -= @photos()[@renderedDivs[i].thisInd].width + @picturesPadding()
+        @renderedDivs[i].left = tmpdw
+
+      for elem in @renderedDivs
+        elem.div.css('left',elem.left + 'px')
+        $('#eventsContent .photoGallery .centerPosition').append(elem.div);
+      console.log('all loaded',@renderedDivs)
+      $('.center-block').css('position','static')
+
+  onAnimate: (pos,info)=>
+    deltaLeft = pos - info.start
+    for elem in @renderedDivs
+      elem.div.css('left',(elem.left+deltaLeft) + 'px')
+
+
+  onComplete: ()=>
+    console.log('animation complete')
+    for elem in @renderedDivs
+      elem.left = elem.left + @delta
+    if @delta < 0
+      console.log('next')
+      @renderedDivs[0].div.remove()
+      @renderedDivs.shift()
+      i = @renderedDivs[3].nextInd
+      left = @renderedDivs[3].left + @photos()[@renderedDivs[3].thisInd].width + @picturesPadding()
+    else
+      console.log('prev')
+      @renderedDivs[4].div.remove()
+      @renderedDivs.pop()
+      i = @renderedDivs[0].prevInd
+      left = @renderedDivs[0].left - @photos()[i].width - @picturesPadding()
+
+    divInfo = {}
+    divInfo.div = $('<div class="eventPhoto"><img src="'+@photos()[@getIndex(i)].url+'" /></div>')
+    divInfo.prevInd = @getIndex(i-1)
+    divInfo.nextInd = @getIndex(i+1)
+    divInfo.thisInd = @getIndex(i)
+    divInfo.left = left;
+    divInfo.div.css('left',divInfo.left+'px');
+
+    if @delta < 0
+      @renderedDivs.push(divInfo)
+      $('#eventsContent .photoGallery .centerPosition').append(divInfo.div)
+    else
+      @renderedDivs.unshift(divInfo)
+      $('#eventsContent .photoGallery .centerPosition').prepend(divInfo.div)
+    console.log('divs',@renderedDivs)
+    @animation = false
+
+
+  onResize: =>
+    console.log('resize')
+
+  prev: =>
+    if !@animation
+      @animation = true
+      dw = -Math.round(@photos()[@renderedDivs[1].thisInd].width / 2)
+      @delta = dw - @renderedDivs[1].left
+      console.log('delta',@delta)
+      @renderedDivs[1].div.animate(
+        {left: (dw) + 'px'},
+        {
+        step: (pos,info)=>
+          @onAnimate(pos,info)
+        ,
+        complete: =>
+          @onComplete()
+        }
+      )
+  next: =>
+    if !@animation
+      @animation = true
+      dw = -Math.round(@photos()[@renderedDivs[3].thisInd].width / 2)
+      @delta = dw - @renderedDivs[3].left
+      console.log('delta',@delta)
+      @renderedDivs[3].div.animate(
+        {left: (dw) + 'px'},
+        {
+        step: (pos,info)=>
+          @onAnimate(pos,info)
+        ,
+        complete: =>
+          @onComplete()
+
+        }
+      )
+

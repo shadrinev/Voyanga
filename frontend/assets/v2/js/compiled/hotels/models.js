@@ -70,6 +70,8 @@ MEAL_VERBOSE = {
 Room = (function() {
 
   function Room(data) {
+    this.getParams = __bind(this.getParams, this);
+
     this.key = __bind(this.key, this);
     this.name = data.showName;
     this.nameNemo = data.roomNemoName;
@@ -104,6 +106,15 @@ Room = (function() {
     return this.nameNemo + this.name + this.meal;
   };
 
+  Room.prototype.getParams = function() {
+    var result;
+    result = {};
+    result.showName = this.name;
+    result.nemoName = this.nameNemo;
+    result.meal = this.meal;
+    return result;
+  };
+
   return Room;
 
 })();
@@ -130,6 +141,8 @@ RoomSet = (function() {
     this.plusCount = __bind(this.plusCount, this);
 
     this.checkCount = __bind(this.checkCount, this);
+
+    this.getParams = __bind(this.getParams, this);
 
     this.price = Math.ceil(data.rubPrice);
     this.discountPrice = Math.ceil(data.discountPrice);
@@ -183,6 +196,17 @@ RoomSet = (function() {
       }
     });
   }
+
+  RoomSet.prototype.getParams = function() {
+    var room, roomsArr, _i, _len, _ref;
+    roomsArr = [];
+    _ref = this.rooms;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      room = _ref[_i];
+      roomsArr.push(room.getParams());
+    }
+    return roomsArr;
+  };
 
   RoomSet.prototype.checkCount = function(newValue) {
     var count;
@@ -261,6 +285,8 @@ HotelResult = (function() {
     var elemId, elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8,
       _this = this;
     this.activeHotel = activeHotel;
+    this.getParams = __bind(this.getParams, this);
+
     this.putToMap = __bind(this.putToMap, this);
 
     this.smallMapUrl = __bind(this.smallMapUrl, this);
@@ -300,6 +326,7 @@ HotelResult = (function() {
     this.hotelId = data.hotelId;
     this.checkIn = moment(data.checkIn) || false;
     this.checkOut = moment(data.checkOut) || false;
+    this.cityCode = data.cityCode || false;
     if (!this.checkOut && this.checkIn && duration) {
       this.checkOut = moment(this.checkIn);
       this.checkOut.add('d', duration);
@@ -838,6 +865,14 @@ HotelResult = (function() {
         }
       });
     }
+  };
+
+  HotelResult.prototype.getParams = function() {
+    var result;
+    result = {};
+    result.hotelId = this.hotelId;
+    result.roomSet = this.roomSets()[0].getParams();
+    return JSON.stringify(result);
   };
 
   return HotelResult;

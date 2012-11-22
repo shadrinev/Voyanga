@@ -386,7 +386,8 @@ class Hotel extends CApplicationComponent
             'checkIn' => $this->checkIn,
             'checkOut' => $this->getCheckOut(),
             'duration' => $this->duration,
-            'city' => ($city = City::model()->getCityByHotelbookId($this->cityId)) ? $city->localRu : '',
+            'city' => ($this->city) ? $this->city->localRu : '',
+            'cityCode' => ($this->city) ? $this->city->code : '',
             'rating' => $this->rating,
             'rooms' => array()
         );

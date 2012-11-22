@@ -20,6 +20,8 @@ TourPanelSet = (function() {
 
     this.deletePanel = __bind(this.deletePanel, this);
 
+    this.navigateToNewSearchMainPage = __bind(this.navigateToNewSearchMainPage, this);
+
     this.navigateToNewSearch = __bind(this.navigateToNewSearch, this);
 
     var _this = this;
@@ -36,6 +38,7 @@ TourPanelSet = (function() {
     this.startCityReadableGen = ko.observable('');
     this.startCityReadableAcc = ko.observable('');
     this.panels = ko.observableArray([]);
+    this.lastPanel = null;
     this.i = 0;
     this.addPanel();
     this.activeCalendarPanel = ko.observable(this.panels()[0]);
@@ -74,6 +77,16 @@ TourPanelSet = (function() {
     return _.last(this.panels()).minimizedCalendar(true);
   };
 
+  TourPanelSet.prototype.navigateToNewSearchMainPage = function() {
+    if (this.formNotFilled()) {
+      return;
+    }
+    if (this.selectedParams) {
+      _.last(this.panels()).selectedParams = this.selectedParams;
+    }
+    return _.last(this.panels()).handlePanelSubmit(false);
+  };
+
   TourPanelSet.prototype.deletePanel = function(elem) {
     this.sp.destinations.remove(elem.city);
     this.panels.remove(elem);
@@ -103,6 +116,7 @@ TourPanelSet = (function() {
       return _this.showPanelCalendar(args);
     });
     this.panels.push(newPanel);
+    this.lastPanel = newPanel;
     this.i = this.panels().length;
     return VoyangaCalendarStandart.clear();
   };
@@ -141,6 +155,8 @@ TourPanel = (function(_super) {
     this.showCalendar = __bind(this.showCalendar, this);
 
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
+
+    this.handlePanelSubmitToMain = __bind(this.handlePanelSubmitToMain, this);
 
     var _this = this;
     window.voyanga_debug("TourPanel created");
@@ -181,10 +197,24 @@ TourPanel = (function(_super) {
     });
   }
 
-  TourPanel.prototype.handlePanelSubmit = function() {
-    return app.navigate(this.sp.getHash(), {
-      trigger: true
-    });
+  TourPanel.prototype.handlePanelSubmitToMain = function() {
+    return handlePanelSubmit(false);
+  };
+
+  TourPanel.prototype.handlePanelSubmit = function(onlyHash) {
+    if (onlyHash == null) {
+      onlyHash = true;
+    }
+    console.log('onlyHash', onlyHash);
+    if (onlyHash) {
+      return app.navigate(this.sp.getHash(), {
+        trigger: true
+      });
+    } else {
+      console.log('go url', this.sp.getHash(), JSON.stringify(this.selectedParams));
+      return;
+      return window.location.href = '/#' + this.sp.getHash();
+    }
   };
 
   TourPanel.prototype.close = function() {

@@ -942,6 +942,8 @@ TourSearchParams = (function(_super) {
   function TourSearchParams() {
     this.removeItem = __bind(this.removeItem, this);
 
+    this.addSpRoom = __bind(this.addSpRoom, this);
+
     var _this = this;
     TourSearchParams.__super__.constructor.call(this);
     this.startCity = ko.observable('LED');
@@ -958,8 +960,32 @@ TourSearchParams = (function(_super) {
       }
       return result;
     });
+    this.adults = ko.computed(function() {
+      var result, room, _i, _len, _ref;
+      result = 0;
+      _ref = _this.rooms();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        room = _ref[_i];
+        result += room.adults();
+      }
+      return result;
+    });
+    this.children = ko.computed(function() {
+      var result, room, _i, _len, _ref;
+      result = 0;
+      _ref = _this.rooms();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        room = _ref[_i];
+        result += room.children();
+      }
+      return result;
+    });
     this.returnBack = ko.observable(1);
   }
+
+  TourSearchParams.prototype.addSpRoom = function() {
+    return this.rooms.push(new SpRoom(this));
+  };
 
   TourSearchParams.prototype.url = function() {
     var params, result,

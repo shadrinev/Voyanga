@@ -601,8 +601,21 @@ class TourSearchParams extends SearchParams
         result += room.adults()
         result += room.children()
       return result
+    @adults = ko.computed =>
+      result = 0
+      for room in @rooms()
+        result += room.adults()
+      return result
+    @children = ko.computed =>
+      result = 0
+      for room in @rooms()
+        result += room.children()
+      return result
 
     @returnBack = ko.observable 1
+
+  addSpRoom: =>
+    @rooms.push new SpRoom(@)
 
   url: ->
     result = 'tour/search?'
