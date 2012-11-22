@@ -78,6 +78,11 @@
     text-align: right;
     padding-right: 15px;
 }
+.allTourCal .weekDayVoyanga span {
+    text-align: left;
+    padding-left: 15px;
+    text-transform: capitalize;
+}
 .calendarGridVoyanga{
     /* may be in percents??*/
     /*width: 950px;*/
@@ -110,6 +115,10 @@
     font-family: Tahoma, Arial;
     position: relative;
     cursor: pointer;
+}
+
+.allTourCal .dayCellVoyanga.inactive {
+    background: none repeat scroll 0 0 #F5F5F6;
 }
 .allTourCal .dayCellVoyanga {
 	width: 14.28%;
@@ -179,8 +188,8 @@
 }
 .dayCellVoyanga.selectDay {
 	background: none repeat scroll 0 0 #E1E8EC;
-}	
-.monthLineVoyanga{
+}
+.monthLineVoyanga {
     width: 99.987%;
     height: 29px;
     position: relative;
@@ -194,10 +203,22 @@
         color: #767b84;
 }
 .monthLineVoyangaYear .monthNameVoyanga{
+     position: absolute;
+     z-index: 10;
+     text-align: center;
+     color: #767b84;
+ }
+.allTourCal .monthLineVoyangaYear .monthNameVoyanga {
+    text-transform: lowercase;
+}
+.monthLineVoyangaYear .monthNameVoyangaSplit {
+    border-right: 1px solid #C9C9C9;
+    color: #767B84;
+    height: 23px;
+    margin-top: 2px;
     position: absolute;
-    z-index: 10;
     text-align: center;
-    color: #767b84;
+    z-index: 9;
 }
 .monthLineVoyanga .monthNameVoyanga .monthWrapper{
     padding: 5px;
@@ -267,7 +288,7 @@
 }
 .hotel .dayCellVoyanga.selectDay {
 	background: none repeat scroll 0 0 #f5e9e0;
-}	
+}
 .hotel .dayCellVoyanga.startMonth.selectData .dayLabel, .hotel .dayCellVoyanga.startMonth.selectData .monthLabel {
 	color: #fb7d20 !important;
 }
@@ -300,10 +321,10 @@
 	overflow: hidden;
 }
 .allTourCal .monthLineVoyangaYear {
-    background: url(../images/bg-foot-calendare.png) repeat-x;
-    height: 25px;
-    overflow: hidden;
+    background: url("../images/bg-foot-calendare.png") repeat-x scroll 0 0 transparent;
     font-size: 12px;
+    height: 28px;
+    overflow: hidden;
     width: 100%;
 }
 .allTourCal .monthLineWrapper{
@@ -325,9 +346,13 @@
 .allTourCal .monthLineVoyanga .knobVoyanga {
 	height: 25px;
 	border-radius: 0px;
-	background: url(../images/knobAllTours.png) repeat-x;
-	box-shadow: 0px 0px 15px #000;	
+	background: none;
 }
+.allTourCal .monthLineVoyanga .knobVoyanga img {
+    width: 100%;
+    height: 24px;
+    margin-top: 0px;
+}}
 .allTourCal .dayCellVoyanga {
 	background: #f2f6f8;
 }
@@ -335,6 +360,7 @@
 	font-family: Verdana; font-size: 12px;
 	padding-top: 5px;
 	padding-right: 8px;
+    text-transform: lowercase;
 }
 
 .allTourCal .innerDayCellVoyanga.startMonth .dayLabel {
@@ -376,8 +402,8 @@
     padding: 0px;
     position: absolute;
     top: 0;
-    z-index: 210;   
-    
+    z-index: 210;
+
     left: 9%;
     width: 29%;
 }
@@ -421,7 +447,7 @@
     position: absolute;
     top: 0;
     z-index: 209;
-    
+
     width: 14.2%;
 }
 .allTourCal .flyTrip {
@@ -436,6 +462,7 @@
 .tripFlyAll img {
 	position: relative;
 	z-index: 209;
+    margin-top: 6px;
 }
 .flyTrip .startNameCity {
 	color: #252628;
@@ -497,7 +524,7 @@
 }
 .tripFlyAll .jetFly.twoDays {
 	top:4px;
-} 
+}
 .tripFlyAll .jetFly.threeDays {
 	top: 9px;
 }
@@ -533,7 +560,19 @@
 .allTourCal .monthLineVoyanga {
     position: absolute;
     top: 0;
-    z-index: 9;
+    z-index: 10;
+    background: url(../images/bg-foot-calendare-hover.png) repeat-x;
+    border-left: 1px solid #999a9d;
+}
+.allTourCal .monthLineVoyanga.BackPlane {
+    z-index: 9 !important;
+    border-right: 1px solid #999a9d;
+}
+.allTourCal .monthWrapper.inactive {
+    color: #9D9EA1 !important;
+}
+.allTourCal .startNameCity, .allTourCal .endNameCity {
+    text-transform: capitalize;
 }
 .z-indexTop {
 	z-index: 995;

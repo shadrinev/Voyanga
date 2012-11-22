@@ -1579,7 +1579,7 @@
 	z-index: 5;
 }
 .schedule-of-prices li:hover {
-	background: #dcdfe1;
+	background: #eef2f4 ;
 	z-index: 5;
 }
 .schedule-of-prices li .price {
@@ -1637,7 +1637,6 @@
 }
 .schedule-of-prices li.active .price, .schedule-of-prices li.active .week, .schedule-of-prices li.active .date {
 	color: #1275ae;
-	font-family: Arial;
 }
 .schedule-of-prices li.active .chart {
 	background: url(../images/bg-schedule-of-prices-hover.png) no-repeat 0px 0px;
