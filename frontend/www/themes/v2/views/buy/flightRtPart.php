@@ -3,7 +3,9 @@
     <table class="aviaTickets">
         <tbody>
         <tr>
-            <td class="tdICO paddingBottom" rowspan="2"></td>
+            <td class="tdICO paddingBottom" rowspan="2">
+                <div class="ico"></div>
+            </td>
             <td class="tdFrom paddingBottom">
                 <div class="what">Вылет</div>
                 <div class="city"><span data-bind="text: $data[0].departureCity()">Санкт-Петербург</span>, <span data-bind="text: $data[0].departureAirport()" class="airport">Пулково-1</span></div>

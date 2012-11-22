@@ -22,7 +22,7 @@ class HotelTripElementWorkflow extends TripElementWorkflow
         $hotelBookerComponent = new HotelBookerComponent();
         $hotelBookerComponent->setHotelBookerFromHotel($this->item->hotel);
         $currentHotelBooker = $hotelBookerComponent->getCurrent();
-        $currentHotelBooker->orderBookingId = $this->bookingContactInfo->id;
+        $currentHotelBooker->orderBookingId = self::$bookingContactInfo->id;
         $currentHotelBooker->status = 'enterCredentials';
         if (!$currentHotelBooker->save())
         {

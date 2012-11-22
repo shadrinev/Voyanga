@@ -15,6 +15,8 @@ AviaController = (function() {
 
     this.handleResults = __bind(this.handleResults, this);
 
+    this.search = __bind(this.search, this);
+
     this.searchAction = __bind(this.searchAction, this);
 
     this.api = new AviaAPI;
@@ -31,26 +33,26 @@ AviaController = (function() {
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("AVIA: Invoking searchAction", args);
     this.searchParams.fromList(args);
+    return this.search();
+  };
+
+  AviaController.prototype.search = function() {
     return this.api.search(this.searchParams.url(), this.handleResults);
   };
 
   AviaController.prototype.handleResults = function(data) {
     var stacked;
     window.voyanga_debug("searchAction: handling results", data);
-    console.log(data);
     try {
-      stacked = new AviaResultSet(data.flights.flightVoyages);
+      stacked = new AviaResultSet(data.flights.flightVoyages, data.siblings);
       stacked.injectSearchParams(data.searchParams);
       stacked.postInit();
     } catch (err) {
       if (err === '404') {
-        this.render('e404', {});
+        new ErrorPopup('e404');
         return;
       }
-      console.log('error', err);
-      this.render('e500', {
-        msg: err
-      });
+      new ErrorPopup('e500');
       return;
     }
     this.render('results', {

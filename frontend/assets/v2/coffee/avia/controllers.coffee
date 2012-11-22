@@ -16,24 +16,24 @@ class AviaController
     window.voyanga_debug "AVIA: Invoking searchAction", args
     # update search params with values in route
     @searchParams.fromList(args)
+    do @search
 
-    # tempoprary development cache
+  search: =>
     @api.search  @searchParams.url(), @handleResults
 
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
     # temporary development cache
-    console.log data
+#    if true
     try
-      stacked = new AviaResultSet data.flights.flightVoyages
+      stacked = new AviaResultSet data.flights.flightVoyages, data.siblings
       stacked.injectSearchParams data.searchParams
       stacked.postInit()
     catch err
       if err=='404'
-        @render 'e404', {}
+        new ErrorPopup 'e404'
         return
-      console.log 'error', err
-      @render 'e500', {msg: err}
+      new ErrorPopup 'e500'
       return
     # we need observable here to be compatible with tours
     @render 'results', {results: ko.observable(stacked)}

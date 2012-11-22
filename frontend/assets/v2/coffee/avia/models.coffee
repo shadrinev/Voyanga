@@ -494,12 +494,14 @@ class AviaResult
 # Stacks them by price and company
 #
 class AviaResultSet
-  constructor: (rawVoyages) ->
+  constructor: (rawVoyages, @siblings=false) ->
     @recommendTemplate = 'avia-cheapest-result'
     # Indicates if we need to alter our rendering to fix tours template
     @tours = false
     @selected_key = ko.observable ''
     @selected_best = ko.observable false
+    # if we want to show best flight instead of +-3 days
+    @showBest = ko.observable false
     
     @_results = {}
 
@@ -551,19 +553,22 @@ class AviaResultSet
       left.price - right.price
 
     @postFilters()
+
     
   # Inject search params from response
   injectSearchParams: (sp) =>
     @rawSP = sp
     @arrivalCity = sp.destinations[0].arrival
     @departureCity = sp.destinations[0].departure
+    @rawDate = moment(new Date(sp.destinations[0].date+'+04:00'))
     @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
     @dateHeadingText = @date
     @roundTrip = sp.isRoundTrip
     if @roundTrip
       @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+'+04:00')
-      @dateHeadingText += ', ' +@rtDate
-  
+      @rawRtDate = moment(new Date(sp.destinations[1].date+'+04:00'))
+
+      @dateHeadingText += ', ' +@rtDate      
 
   select: (ctx) =>
     console.log ctx
@@ -582,6 +587,56 @@ class AviaResultSet
 
   postInit: =>
     @filters = new AviaFiltersT @
+    @filters.serviceClass.selection.subscribe (newValue)=>
+      if newValue == 'B'
+        @showBest true
+        return
+      @showBest false
+    if @siblings
+      eCheapest = _.reduce @data,
+        (el1, el2)->
+          if el1.price < el2.price then el1 else el2
+        ,@data[0]
+      data = _.filter @data, (item)-> item.serviceClass=='B'
+      bCheapest = _.reduce data,
+        (el1, el2)->
+          if el1.price < el2.price then el1 else el2
+        ,data[0]
+      if !eCheapest
+        eCheapest = {price: 0} 
+      if !bCheapest
+        bCheapest = {price: 0} 
+
+      @ESiblings = @processSiblings @siblings.E, eCheapest
+#      @BSiblings = @processSiblings @siblings.B, bCheapest
+      @siblings = ko.observable @ESiblings
+
+  processSiblings: (rawSiblings, cheapest)=>
+    helper = (root, sibs, today=false) =>
+      for price,index in sibs
+        root[index] = {price: price, siblings:[]}
+      
+    if rawSiblings[3].length
+      siblings = []
+      if @roundTrip
+        rawSiblings[3][3] = Math.ceil(cheapest.price/2)
+      else
+        rawSiblings[3] = cheapest.price
+      todayPrices = []
+      for sibs, index in rawSiblings
+        sibs = _.filter sibs, (item)->item!=false
+        if sibs.length
+          min = _.min sibs
+        else
+          min = false
+        todayPrices[index] = min
+      helper(siblings, todayPrices,true)
+      for sibs,index in rawSiblings
+        helper(siblings[index].siblings, sibs)
+    else
+      siblings = []
+      helper(siblings, rawSiblings,true)
+    return new Siblings(siblings, @roundTrip,  @rawDate, @rawRtDate)    
 
   hideRecommend: (context, event)->
    hideRecomendedBlockTicket.apply(event.currentTarget)

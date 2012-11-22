@@ -23,10 +23,10 @@ class HotelsController
   handleResults: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data
     if data.error
-      @render 'e500', {msg: data.error}
+      new ErrorPopup 'e500'#, {msg: data.error}
       return
     if !data.hotels
-      @render 'e404'
+      new ErrorPopup 'e404'
       return
 
     # FIXME REALLY RETARDED

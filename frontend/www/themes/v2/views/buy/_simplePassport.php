@@ -75,7 +75,7 @@
                                 'data-placeholder'=> "Страна...",
                                 'prompt'=> "",
                                 'class' => "chzn-select",
-                                'style' => "width:140px;"
+                                'style' => "width:120px;"
                             )
                     ); ?>
                     </td>
@@ -102,8 +102,7 @@
                 </tr>
                 <tr>
                     <td class="tdName">
-                        <input type="checkbox" name="bonus" id="bonus">
-                        <label for="bonus">Есть бонусная карта</label>
+                        <!--<input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта', checked: 0}" checked="checked" name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">-->
                     </td>
                     <td class="tdLastname"></td>
                     <td class="tdSex"></td>
@@ -111,8 +110,7 @@
                     <td class="tdNationality"></td>
                     <td class="tdDocumentNumber"></td>
                     <td class="tdDuration">
-                        <input type="checkbox" checked="checked" name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
-                        <label for="srok<?php echo $i;?>">Без срока</label>
+                        <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}" checked="checked" name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
                     </td>
                 </tr>
             <?php endforeach; ?>

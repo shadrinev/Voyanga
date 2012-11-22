@@ -307,3 +307,11 @@
 .btnBlue.inactive:hover .l, .btnOrang.inactive:hover .l, .btn-cost.selected:hover .l {
 	background-position: left -148px;
 }
+.btnBackMain {
+    width: 180px;
+    height: 37px;
+    background: url(../images/btn.png) no-repeat -0px -185px;
+    cursor: pointer;
+    text-indent: -9999px;
+    display: inline-block;
+}

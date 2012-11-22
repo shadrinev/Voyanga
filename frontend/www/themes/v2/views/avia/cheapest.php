@@ -2,8 +2,11 @@
   <div class="recommendedBlock">
     <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:cheapest(), ribbon:'ribbon-cheapest'}}">
     </div>
-    <div class="prices-of-3days" data-bind="template:{name: 'prices-of-3days-template', data:$data}">
+    <div class="prices-of-3days" data-bind="template:{name: 'prices-of-3days-template', data:$data}, visible: !showBest()">
     </div>
+    <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:best(), ribbon:'ribbon-optima'}}, visible: showBest" style="float: right">
+    </div>
+
     <div class="clear"></div>
   </div>
   <div class="backgroundLineRec"> </div>
@@ -19,115 +22,45 @@
 
 <script id="prices-of-3days-template" type="text/html">
 	<h3>Цены ±3 дня</h3>
-    <div class="ticket">
+    <div class="ticket" data-bind="with:siblings">
     	
       <div class="one-way">
-        <ul class="schedule-of-prices">
-          <li>
-            <div class="price" style="bottom: 80px">-100</div>
-            <div class="chart" style="background-position: center 55px;"></div>
-            <div class="week">пн</div>
-            <div class="date">16</div>
-          </li>
-          <li>
-            <div class="price" style="bottom: 55px">-100</div>
-            <div class="chart" style="background-position: center 80px;"></div>
-            <div class="week">вт</div>
-            <div class="date">17</div>
-          </li>
-          <li>
-            <div class="price" style="bottom: 75px">-100</div>
-            <div class="chart" style="background-position: center 60px;"></div>
-            <div class="week">ср</div>
-            <div class="date">18</div>
-          </li>
-          <li class="active">
-            <div class="price" style="bottom: 85px">3 250</div>
-            <div class="chart" style="background-position: center 50px;"></div>
-            <div class="week">чт</div>
-            <div class="date">19</div>
-          </li>
-          <li>
-            <div class="price" style="bottom: 75px">-100</div>
-            <div class="chart" style="background-position: center 60px;"></div>
-            <div class="week">пт</div>
-            <div class="date">20</div>
-          </li>
-          <li>
-            <div class="price" style="bottom: 110px">-100</div>
-            <div class="chart" style="background-position: center 25px;"></div>
-            <div class="week">сб</div>
-            <div class="date">21</div>
-          </li>
-          <li>
-            <div class="price" style="top: 45px">-100</div>
-            <div class="chart" style="background-position: center 60px;"></div>
-            <div class="week">вс</div>
-            <div class="date">22</div>
+        <ul class="schedule-of-prices" data-bind="foreach: $data">
+          <li data-bind="css: {active: isActive}, click: $parent.select">
+            <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+45) + 'px'}, text: columnValue(), visible: !nodata">-100</div>
+            <div class="chart" data-bind="style: {backgroundPosition: background(), height: $parent.graphHeight() + 'px'}" ></div>
+	    <div class="price question" data-bind="visible:nodata" style="bottom: 40px">?</div>
+            <div class="week" data-bind="text: dow">пн</div>
+            <div class="date" data-bind="text: date">16</div>
+            <div class="month" data-bind="visible: showMonth, text: month">
+              Май
+            </div>
           </li>
         </ul>
-        <div class="month">
-          Май
-        </div>
       </div>
       <div class="two-way" data-bind="visible: roundTrip">
-        <ul class="schedule-of-prices">
-          <li>
-            <div class="price" style="bottom: 80px">-100</div>
-            <div class="chart" style="background-position: center 55px;"></div>
-            <div class="week">пн</div>
-            <div class="date">16</div>
-          </li>
-          <li>
-            <div class="price" style="bottom: 55px">-100</div>
-            <div class="chart" style="background-position: center 80px;"></div>
-            <div class="week">вт</div>
-            <div class="date">17</div>
-          </li>
-          <li>
-            <div class="price" style="bottom: 75px">-100</div>
-            <div class="chart" style="background-position: center 60px;"></div>
-            <div class="week">ср</div>
-            <div class="date">18</div>
-          </li>
-          <li class="active">
-            <div class="price" style="bottom: 85px">3 250</div>
-            <div class="chart" style="background-position: center 50px;"></div>
-            <div class="week">чт</div>
-            <div class="date">19</div>
-          </li>
-          <li>
-            <div class="price" style="bottom: 75px">-100</div>
-            <div class="chart" style="background-position: center 60px;"></div>
-            <div class="week">пт</div>
-            <div class="date">20</div>
-          </li>
-          <li>
-            <div class="price" style="bottom: 110px">-100</div>
-            <div class="chart" style="background-position: center 25px;"></div>
-            <div class="week">сб</div>
-            <div class="date">21</div>
-          </li>
-          <li>
-            <div class="price" style="top: 45px">-100</div>
-            <div class="chart" style="background-position: center 60px;"></div>
-            <div class="week">вс</div>
-            <div class="date">22</div>
+        <ul class="schedule-of-prices" data-bind="foreach: active">
+          <li data-bind="css: {active: isActive}, click: $parent.select">
+            <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+45) + 'px'}, text: columnValue(), visible: !nodata">-100</div>
+            <div class="chart" data-bind="style: {backgroundPosition: background(), height: $parent.graphHeight() + 'px'}" ></div>
+	    <div class="price question" data-bind="visible:nodata" style="bottom: 40px">?</div>
+            <div class="week" data-bind="text: dow">пн</div>
+            <div class="date" data-bind="text: date">16</div>
+            <div class="month" data-bind="visible: showMonth, text: month">
+              Май
+            </div>
           </li>
         </ul>
-        <div class="month">
-          Май
-        </div>
       </div>
       
       <div class="blockText">
-        <div class="txt">Данные получены на основании поисковых запросов и могут отличаться от актуальных значений</div>
-        <div class="txtCena" style="display:none">
-	  <div class="leftFloat">
-	    Итого <span class="price">4150</span> <span class="rur">o</span>
+        <div class="txt" data-bind="visible: !showControls()">Данные получены на основании поисковых запросов и могут отличаться от актуальных значений</div>
+        <div class="txtCena" data-bind="visible: showControls()">
+	  <div class="leftFloat" data-bind="visible: showPrice()">
+	    Итого <span class="price" data-bind="text: priceDisplay()">4150</span> <span class="rur">o</span>
 	  </div>
 	  <div class="rightFloat">
-	    <a class="btnLook" href="#">Посмотреть</a>
+	    <a class="btnLook" href="#" data-bind="click: search">Посмотреть</a>
 	  </div>
 	  <div class="clear"></div>
         </div>

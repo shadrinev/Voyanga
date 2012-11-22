@@ -1286,6 +1286,7 @@
 	width: 430px;
 	overflow: hidden;
 	height: 30px;
+    line-height: 28px;
 }
 .tickets-details .content .information .finish-fly .icon {
 	background-position: 0px -158px;
@@ -1578,7 +1579,7 @@
 	z-index: 5;
 }
 .schedule-of-prices li:hover {
-	background: #dcdfe1;
+	background: #eef2f4 ;
 	z-index: 5;
 }
 .schedule-of-prices li .price {
@@ -1589,6 +1590,11 @@
     position: absolute;
     text-align: center;
     width: 45px;
+}
+.schedule-of-prices li .price.question {
+    background: url("../images/question.png") center 0 no-repeat;
+    height: 30px;
+    text-indent: -9999px;
 }
 .schedule-of-prices li .price.margin {
 	margin: 0 -3px;
@@ -1601,14 +1607,19 @@
 	border-bottom: 1px solid #acb0b5;
 }
 .prices-of-3days .ticket .month {
-	height: 22px;
-	font-family: Verdana; font-size: 11px; font-weight: bold;
-	position: absolute;
-	bottom: 26px; left: -8px;
-	z-index: 103;
-	cursor: default;
-	color: #262930;
-} 
+    bottom: 26px;
+    color: #262930;
+    cursor: default;
+    font-family: Verdana;
+    font-size: 11px;
+    font-weight: bold;
+    height: 22px;
+    left: 50%;
+    margin-left: -16px;
+    position: absolute;
+    width: 32px;
+    z-index: 103;
+}
 .schedule-of-prices li .week {
 	font-size: 11px;
 	position: absolute; bottom:19px;
@@ -1626,7 +1637,6 @@
 }
 .schedule-of-prices li.active .price, .schedule-of-prices li.active .week, .schedule-of-prices li.active .date {
 	color: #1275ae;
-	font-family: Arial;
 }
 .schedule-of-prices li.active .chart {
 	background: url(../images/bg-schedule-of-prices-hover.png) no-repeat 0px 0px;

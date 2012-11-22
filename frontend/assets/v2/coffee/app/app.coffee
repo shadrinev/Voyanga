@@ -139,12 +139,9 @@ class Application extends Backbone.Router
     @slider.handler(@activeModule())
 
   runWithModule: (module) =>
-    # Start listening to hash changes
-    Backbone.history.start()
-    # Call some change handlers with initial values
-    console.log 'slider.handler: ', module
-    @slider.handler(module)
-    window.app.navigate '#'+ module, {'trigger': true}
+    # set default module
+    Backbone.history.start({silent: true})
+    window.app.navigate '#'+ module, {replace: true}
 
   bindEvents: =>
     ev = []
@@ -154,12 +151,10 @@ class Application extends Backbone.Router
 
   bindItemsToBuy: =>
     tourTrip = new TourTripResultSet(window.tripRaw)
-    console.log "Tour trip:", tourTrip
     @itemsToBuy =  tourTrip
 
   bindItemsToEvent: =>
     tourTrip = new EventTourResultSet(window.tripRaw)
-    console.log "Tour trip:", tourTrip
     @itemsToBuy =  tourTrip
 
   # FIXME write better handler

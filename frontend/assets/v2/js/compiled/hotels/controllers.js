@@ -40,13 +40,11 @@ HotelsController = (function() {
     var stacked;
     window.voyanga_debug("HOTELS: searchAction: handling results", data);
     if (data.error) {
-      this.render('e500', {
-        msg: data.error
-      });
+      new ErrorPopup('e500');
       return;
     }
     if (!data.hotels) {
-      this.render('e404');
+      new ErrorPopup('e404');
       return;
     }
     data.searchParams.cacheId = data.cacheId;

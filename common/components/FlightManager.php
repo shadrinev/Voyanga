@@ -10,22 +10,29 @@ class FlightManager
     static public function injectForBe($flightVoyages, $injectSearchParams=false)
     {
         $newFlights = array();
-        foreach ($flightVoyages as $key => $flight)
-        {
-            $newFlight = $flight;
-            if ($injectSearchParams)
+        try{
+            foreach ($flightVoyages as $key => $flight)
             {
-                $newFlight['serviceClass'] = $flight['flights'][0]['serviceClass'];
-                $newFlight['freeWeight'] = ($newFlight['serviceClass'] == 'E') ? $flight['economFreeWeight'] : $flight['businessFreeWeight'];
-                $newFlight['freeWeightDescription'] = ($newFlight['serviceClass'] == 'E') ? $flight['economDescription'] : $flight['businessDescription'];
-                unset($newFlight['economFreeWeight']);
-                unset($newFlight['businessFreeWeight']);
-                unset($newFlight['economDescription']);
-                unset($newFlight['businessDescription']);
+                $newFlight = $flight;
+                if ($injectSearchParams)
+                {
+                    $newFlight['serviceClass'] = $flight['flights'][0]['serviceClass'];
+                    $newFlight['freeWeight'] = ($newFlight['serviceClass'] == 'E') ? $flight['economFreeWeight'] : $flight['businessFreeWeight'];
+                    $newFlight['freeWeightDescription'] = ($newFlight['serviceClass'] == 'E') ? $flight['economDescription'] : $flight['businessDescription'];
+                    unset($newFlight['economFreeWeight']);
+                    unset($newFlight['businessFreeWeight']);
+                    unset($newFlight['economDescription']);
+                    unset($newFlight['businessDescription']);
+                }
+                $newFlights[] = $newFlight;
             }
-            $newFlights[] = $newFlight;
+            return $newFlights;
         }
-        return $newFlights;
+        catch (Exception $e)
+        {
+            Yii::log('Error: '.$e->getMessage(),". Data: ".CVarDumper::dumpAsString($flightVoyages), CLogger::LEVEL_ERROR);
+            throw $e;
+        }
     }
 
     static public function createSiblingsData(FlightSearchParams $flightSearchParams)
