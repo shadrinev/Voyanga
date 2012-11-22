@@ -2,8 +2,11 @@
   <div class="recommendedBlock">
     <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:cheapest(), ribbon:'ribbon-cheapest'}}">
     </div>
-    <div class="prices-of-3days" data-bind="template:{name: 'prices-of-3days-template', data:$data}">
+    <div class="prices-of-3days" data-bind="template:{name: 'prices-of-3days-template', data:$data}, visible: !showBest()">
     </div>
+    <div class="recommended-ticket" data-bind="template:{name: 'recommend-ticket-template', data:{data:best(), ribbon:'ribbon-optima'}}, visible: showBest" style="float: right">
+    </div>
+
     <div class="clear"></div>
   </div>
   <div class="backgroundLineRec"> </div>

@@ -486,6 +486,8 @@ class AviaResultSet
     @tours = false
     @selected_key = ko.observable ''
     @selected_best = ko.observable false
+    # if we want to show best flight instead of +-3 days
+    @showBest = ko.observable false
     
     @_results = {}
 
@@ -571,6 +573,11 @@ class AviaResultSet
 
   postInit: =>
     @filters = new AviaFiltersT @
+    @filters.serviceClass.selection.subscribe (newValue)=>
+      if newValue == 'B'
+        @showBest true
+        return
+      @showBest false
     if @siblings
       eCheapest = _.reduce @data,
         (el1, el2)->

@@ -715,6 +715,7 @@ AviaResultSet = (function() {
     this.tours = false;
     this.selected_key = ko.observable('');
     this.selected_best = ko.observable(false);
+    this.showBest = ko.observable(false);
     this._results = {};
     if (!rawVoyages.length) {
       throw "404";
@@ -807,8 +808,16 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.postInit = function() {
-    var bCheapest, data, eCheapest;
+    var bCheapest, data, eCheapest,
+      _this = this;
     this.filters = new AviaFiltersT(this);
+    this.filters.serviceClass.selection.subscribe(function(newValue) {
+      if (newValue === 'B') {
+        _this.showBest(true);
+        return;
+      }
+      return _this.showBest(false);
+    });
     if (this.siblings) {
       eCheapest = _.reduce(this.data, function(el1, el2) {
         if (el1.price < el2.price) {
