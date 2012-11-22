@@ -30,12 +30,26 @@
     position: relative;
     width: 780px;
 }
+.pv_cont.error {
+    margin: 0 auto;
+    padding: 10px 0 0;
+    position: relative;
+    width: 530px;
+}
 #pv_box {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 6px 6px 6px 6px;
     padding: 1px 0 25px;
     position: relative;
     overflow: hidden;
+}
+#pv_box .content {
+    margin: 20px 20px 0;
+}
+#pv_box .content p {
+    line-height: 22px;
+    color: #1d222b;
+    font-size: 14px;
 }
 .pv_switch {
     height: 5px;

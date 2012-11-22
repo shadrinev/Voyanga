@@ -574,6 +574,9 @@
 .allTourCal .startNameCity, .allTourCal .endNameCity {
     text-transform: capitalize;
 }
+.allTourCal .startNameCity.uppercase, .allTourCal .endNameCity.uppercase {
+    text-transform: uppercase;
+}
 .z-indexTop {
 	z-index: 995;
 }
