@@ -20,16 +20,21 @@ Sibling = (function() {
     this.nodata = false;
     this.isActive = ko.observable(isActive);
     this.initialActive = isActive;
-    console.log("************");
-    console.log(this.parent, this.parent.price, this.price);
     if (this.parent.price) {
       this.price = this.price * 2 - this.parent.price;
     }
     this.scaledHeight = ko.computed(function() {
-      var scale, spacing;
+      var ratio, spacing;
+      if (_this.price === false) {
+        return 0;
+      }
       spacing = 30;
-      scale = _this.absDelta / (_this.graphHeight() - spacing);
-      return _this.height / scale + spacing - 10;
+      ratio = _this.height / _this.absDelta;
+      if (ratio > 1) {
+        ratio = 1;
+      }
+      ratio = ratio * 0.6;
+      return ratio * (_this.graphHeight() - spacing) + spacing - 10;
     });
   }
 
@@ -199,7 +204,6 @@ Siblings = (function() {
         return item.price;
       }
     });
-    console.log(maxPrice, root.data, minPrice);
     if (maxPrice.price === false) {
       maxPrice = {
         price: todayPrice
@@ -215,7 +219,11 @@ Siblings = (function() {
     _results = [];
     for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
       item = _ref[_j];
-      item.height = maxPrice.price - item.price;
+      if (item.price === false) {
+        item.height = 0;
+      } else {
+        item.height = maxPrice.price - item.price;
+      }
       _results.push(item.absDelta = absDelta);
     }
     return _results;

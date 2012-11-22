@@ -8,15 +8,20 @@ class Sibling
     @nodata = false
     @isActive = ko.observable isActive
     @initialActive = isActive
-    console.log "************"
-    console.log @parent, @parent.price, @price
     if @parent.price
       @price = @price * 2 - @parent.price
 
     @scaledHeight = ko.computed =>
+      # nodata shortcut is not available here yet
+      if @price == false
+        return 0
       spacing = 30
-      scale = @absDelta /(@graphHeight() - spacing)
-      @height/scale + spacing - 10
+      # limit it to 0...0.6
+      ratio = @height/@absDelta
+      if ratio > 1
+        ratio = 1
+      ratio = ratio*0.6
+      ratio * (@graphHeight() - spacing) + spacing - 10
 
   columnValue: ->
     return @price
@@ -117,7 +122,6 @@ class Siblings
         @populate newsib, sib.siblings, rtTodayDate
     minPrice = _.min root.data, (item)-> if item.price==false then todayPrice else item.price 
     maxPrice = _.max root.data, (item)-> if item.price==false then todayPrice else item.price
-    console.log maxPrice, root.data, minPrice
     if maxPrice.price == false
       maxPrice = {price: todayPrice}
     if minPrice.price == false
@@ -125,6 +129,9 @@ class Siblings
     absDelta = maxPrice.price - minPrice.price
 
     for item in root.data
-      item.height = (maxPrice.price - item.price)
+      if item.price == false
+        item.height = 0
+      else
+        item.height = (maxPrice.price - item.price)
       item.absDelta = absDelta
       
