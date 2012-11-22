@@ -50,9 +50,7 @@ class SearchController extends ApiController
             $this->results = $variants;
             $result['flights']['flightVoyages'] = $this->results;
             $result['searchParams'] = $flightSearchParams->getJsonObject();
-            $siblingsBusiness = FlightManager::createSiblingsData($flightSearchParams);
-            $siblingsEconom = $siblingsBusiness;
-            $result['siblings']['B'] = $siblingsBusiness;
+            $siblingsEconom = FlightManager::createSiblingsData($flightSearchParams);
             $result['siblings']['E'] = $siblingsEconom;
             $this->sendWithCorrectFormat($format, $result);
         }
