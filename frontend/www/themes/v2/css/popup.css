@@ -43,10 +43,10 @@
     position: relative;
     overflow: hidden;
 }
-#pv_box .content {
+#pv_box .contentText {
     margin: 20px 20px 0;
 }
-#pv_box .content p {
+#pv_box .contentText p {
     line-height: 22px;
     color: #1d222b;
     font-size: 14px;
