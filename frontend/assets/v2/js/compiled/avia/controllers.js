@@ -43,20 +43,16 @@ AviaController = (function() {
   AviaController.prototype.handleResults = function(data) {
     var stacked;
     window.voyanga_debug("searchAction: handling results", data);
-    console.log(data);
     try {
       stacked = new AviaResultSet(data.flights.flightVoyages, data.siblings);
       stacked.injectSearchParams(data.searchParams);
       stacked.postInit();
     } catch (err) {
       if (err === '404') {
-        this.render('e404', {});
+        new ErrorPopup('e404');
         return;
       }
-      console.log('error', err);
-      this.render('e500', {
-        msg: err
-      });
+      new ErrorPopup('e500');
       return;
     }
     this.render('results', {
