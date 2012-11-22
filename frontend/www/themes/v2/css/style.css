@@ -3379,3 +3379,38 @@ a.whereData span {
     overflow: hidden;
     width: 100%;
 }
+
+#eventsContent .photoGallery {
+    width: 100%;
+    position: absolute;
+    overflow-x: hidden;
+    left: 0;
+}
+#eventsContent .photoGallery .leftButton{
+    width: 70px;
+    height: 200px;
+    position: absolute;
+    background-color: #ff0000;
+    opacity: 0.1;
+    left: 0;
+    z-index: 5;
+}
+#eventsContent .photoGallery .rightButton{
+    width: 70px;
+    height: 200px;
+    position: absolute;
+    background-color: #ff0000;
+    opacity: 0.1;
+    right: 0;
+    top: 0;
+    z-index: 5;
+}
+#eventsContent .photoGallery .centerPosition{
+    width: 1px;
+    height: 200px;
+    position: relative;
+    left: 50%;
+}
+#eventsContent .photoGallery .centerPosition .eventPhoto{
+    position: absolute;
+}
