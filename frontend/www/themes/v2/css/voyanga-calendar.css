@@ -568,8 +568,11 @@
     z-index: 9 !important;
     border-right: 1px solid #999a9d;
 }
-.allTourCal .monthWrapper.inactive {
+.allTourCal .monthNameVoyanga .monthWrapper {
     color: #9D9EA1 !important;
+}
+.allTourCal .monthNameVoyanga.highlited .monthWrapper {
+    color: #4D4D4D !important;
 }
 .allTourCal .startNameCity, .allTourCal .endNameCity {
     text-transform: capitalize;
