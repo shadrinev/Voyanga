@@ -615,13 +615,14 @@ class AviaResultSet
     helper = (root, sibs, today=false) =>
       for price,index in sibs
         root[index] = {price: price, siblings:[]}
+
+    if @roundTrip
+      rawSiblings[3][3] = Math.ceil(cheapest.price/2)
+    else
+      rawSiblings[3] = cheapest.price
       
     if rawSiblings[3].length
       siblings = []
-      if @roundTrip
-        rawSiblings[3][3] = Math.ceil(cheapest.price/2)
-      else
-        rawSiblings[3] = cheapest.price
       todayPrices = []
       for sibs, index in rawSiblings
         sibs = _.filter sibs, (item)->item!=false

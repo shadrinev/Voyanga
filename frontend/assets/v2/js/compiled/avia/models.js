@@ -887,13 +887,13 @@ AviaResultSet = (function() {
       }
       return _results;
     };
+    if (this.roundTrip) {
+      rawSiblings[3][3] = Math.ceil(cheapest.price / 2);
+    } else {
+      rawSiblings[3] = cheapest.price;
+    }
     if (rawSiblings[3].length) {
       siblings = [];
-      if (this.roundTrip) {
-        rawSiblings[3][3] = Math.ceil(cheapest.price / 2);
-      } else {
-        rawSiblings[3] = cheapest.price;
-      }
       todayPrices = [];
       for (index = _i = 0, _len = rawSiblings.length; _i < _len; index = ++_i) {
         sibs = rawSiblings[index];
