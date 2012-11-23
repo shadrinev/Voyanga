@@ -9,7 +9,8 @@ class Timeline
       avia_map = {}
       hotel_map = {}
       for item in @toursData()
-        obj =  {start: moment(item.timelineStart()), end: moment(item.timelineEnd())}
+#        obj =  {start: moment(item.timelineStart()), end: moment(item.timelineEnd())}
+        obj =  {start: moment(item.timelineStart()).clone().hours(0).minutes(5), end: moment(item.timelineEnd()).clone().hours(0).minutes(5)}
         spans.push obj
         if item.isHotel()
           hotel_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days'), item: item}
@@ -17,13 +18,12 @@ class Timeline
           avia_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days'), item: item}
       start_date = spans[0].start
       end_date = spans[spans.length-1].end
-
       # FIXME FIXME FIXME
       if true#@searchParams.returnBack
         item = @toursData()[0]
         if item.isAvia()
           if item.rt()
-            end_date = moment(item.rtTimelineStart())
+            end_date = moment(item.rtTimelineStart()).clone().hours(0).minutes(5)
             avia_map[end_date.format('M.D')] = {duration: 1, item: item}
       timeline_length = end_date.diff(start_date, 'days')
       middle_date = start_date.clone().add('days', timeline_length/2)
