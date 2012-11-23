@@ -148,16 +148,16 @@ HotelsController = (function() {
       ];
       VoyangaCalendarTimeline.calendarEvents = [
         {
-          dayStart: Date.fromIso('2012-10-23'),
-          dayEnd: Date.fromIso('2012-10-23'),
+          dayStart: Date.fromIso('2012-11-29'),
+          dayEnd: Date.fromIso('2012-11-29'),
           type: 'flight',
           color: 'red',
           description: 'Москва || Санкт-Петербург',
           cityFrom: 'MOW',
           cityTo: 'LED'
         }, {
-          dayStart: Date.fromIso('2012-10-23'),
-          dayEnd: Date.fromIso('2012-11-28'),
+          dayStart: Date.fromIso('2012-11-29'),
+          dayEnd: Date.fromIso('2012-12-01'),
           type: 'hotel',
           color: 'red',
           description: 'Californication Hotel2',

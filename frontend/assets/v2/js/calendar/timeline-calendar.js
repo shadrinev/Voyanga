@@ -189,8 +189,9 @@ VoyangaCalendarTimeline.generateGrid = function(){
     }
     console.log('ds',startDraw,'de',endDraw,dateDiff);
     if(dateDiff % 7 != 0){
-        endDraw.add('d',dateDiff % 7);
+        endDraw.add('d',7 - (dateDiff % 7));
     }
+    console.log('ds',startDraw,'de',endDraw,dateDiff);
     dateDiff = Math.floor(endDraw.diff(startDraw,'days',true))+1;
     var centerDiff = Math.floor((365 - dateDiff)/2)
     tmpDate = moment(startMoment)._d;
