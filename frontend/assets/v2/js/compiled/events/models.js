@@ -484,7 +484,7 @@ EventPhotoBox = (function() {
     var photoObj, picture, pictures, _i, _len,
       _this = this;
     this.photos = ko.observableArray([]);
-    this.imagesServer = ko.observable('http://backend.oleg.voyanga');
+    this.imagesServer = ko.observable('');
     this.totalCount = 0;
     this.unloadedCount = 0;
     this.activeIndex = ko.observable(0);
@@ -508,9 +508,9 @@ EventPhotoBox = (function() {
         if (e.type === 'load') {
           _this.totalCount++;
           photo = {};
-          photo.url = e.srcElement.src;
-          photo.height = e.srcElement.height;
-          photo.width = e.srcElement.width;
+          photo.url = e.currentTarget.src;
+          photo.height = e.currentTarget.height;
+          photo.width = e.currentTarget.width;
           if (_this.boxHeight() < photo.height) {
             _this.boxHeight(photo.height);
           }

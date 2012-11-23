@@ -17,14 +17,21 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
             this.jObj = $(this.jObj);
         }
         var self = this;
-        var monthLineWidth = Math.round(((this.totalLines) / this.totalShowLines)*10000)/100;
+        this.monthLineWidth = (this.totalLines) / this.totalShowLines;
+        var monthLineWidth = Math.round((this.monthLineWidth)*10000)/100;
         this.jObj.find('.monthLineVoyanga').css('width',monthLineWidth + '%');
         var leftPercent = this.startLine / (this.totalShowLines);
+        this.monthLineLeftPercent = leftPercent;
         leftPercent =  Math.round(leftPercent*1000 )/10;
         this.jObj.find('.monthLineVoyanga').css('left',leftPercent + '%');
         var tLines = this.totalLines;
         if(this.totalLines == this.linesWidth){
+            this.jObj.find('.knobVoyanga').css('display','none');
+            this.jObj.find('.knobUpAllMonth').css('display','none');
             tLines++;
+        }else{
+            this.jObj.find('.knobVoyanga').css('display','block');
+            this.jObj.find('.knobUpAllMonth').css('display','block');
         }
         for(var i in this.monthShowArray){
             var leftPercent = this.monthShowArray[i].line / (this.totalShowLines - this.linesWidth);
@@ -57,7 +64,9 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
 
         this.knobWidth = Math.round(((this.linesWidth) / this.totalLines)*10000)/100;
         this.jObj.find('.knobVoyanga').css('width',this.knobWidth + '%');
-        this.jObj.find('.knobUpAllMonth').css('width',this.knobWidth + '%');
+        knobUpWidth = Math.round(((this.linesWidth) / this.totalLines)*this.monthLineWidth*10000)/100;
+        this.jObj.find('.knobUpAllMonth').css('width',knobUpWidth + '%');
+        this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
         //VoyangaCalendar.slider.width = VoyangaCalendar.jObj.find('.monthLineVoyanga').width();
         $(window).on('resize',function(){self.onresize();});
         $(window).load(function(){self.onresize();self.knobMove();});
@@ -83,6 +92,11 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
             endEvent: function (e,obj){self.endEvent(e,obj);},
             dragEvent: function (e,obj){self.dragEvent(e,obj);}
         });
+    },
+    getKnobUpLeft: function(){
+        //this.monthLineLeftPercent;
+        leftPerc = Math.round( (this.monthLineLeftPercent*100 + this.knobPos*this.monthLineWidth)*10 )/10
+        return leftPerc + '%';
     },
     monthMouseUp: function(obj,e){
         var clickable = $(obj).parent().data('clickable');
@@ -131,122 +145,17 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
 });
 console.log(this.jObj);
 VoyangaCalendarTimeline.onCellOver = function(obj,e){
-    /*var jCell = $(obj);
-    if(!jCell.hasClass('inactive')){
-        var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if(this.values.length == 1){
-            if(cellDate < this.values[0]){
-                jCell.addClass('from');
-            }else{
-                if(this.twoSelect){
-                    jCell.addClass('to');
-                }else{
-                    jCell.addClass('from');
-                }
-            }
 
-        }else{
-            jCell.addClass('from');
-        }
-        if(cellDate.getDate() == 1){
-            jCell.addClass('startMonth');
-        }
-    }*/
 }
 VoyangaCalendarTimeline.onCellOut = function(obj,e){
-    /*var jCell = $(obj);
-    if(!jCell.hasClass('inactive')){
-        var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if(this.values.length == 1){
-            if(cellDate < this.values[0]){
-                jCell.removeClass('from');
-            }else{
-                if(this.twoSelect){
-                    jCell.removeClass('to');
-                }else{
-                    jCell.removeClass('from');
-                }
-            }
 
-        }else{
-            jCell.removeClass('from');
-        }
-        if(cellDate.getDate() == 1){
-            jCell.removeClass('startMonth');
-        }
-        if(this.values.length > 0){
-            if(this.values[0].valueOf() == cellDate.valueOf()){
-                jCell.addClass('selectData from');
-                if(cellDate.getDate() == 1){
-                    jCell.addClass('startMonth');
-                }
-            }
-        }
-        if(this.values.length > 1){
-            if(this.values[1].valueOf() == cellDate.valueOf()){
-                jCell.addClass('selectData to');
-                if(cellDate.getDate() == 1){
-                    jCell.addClass('startMonth');
-                }
-            }
-        }
-    }*/
 }
 VoyangaCalendarTimeline.getCellByDate = function(oDate){
     var dateLabel = oDate.getFullYear()+'-'+(oDate.getMonth()+1)+'-'+oDate.getDate();
     return $('#dayCell-'+dateLabel);
 }
 VoyangaCalendarTimeline.onCellClick = function(obj,e){
-    /*var jCell = $(obj);
-    if(!jCell.hasClass('inactive')){
-        var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if(this.twoSelect){
-            if(this.values.length == 2){
 
-                this.getCellByDate(this.values[0]).removeClass('selectData from startMonth');
-                var tmpDate = new Date(this.values[0].toDateString());
-                tmpDate.setDate(tmpDate.getDate()+1);
-                while(tmpDate < this.values[1]){
-                    this.getCellByDate(tmpDate).removeClass('selectDay');
-                    tmpDate.setDate(tmpDate.getDate()+1);
-                }
-
-                this.getCellByDate(this.values[1]).removeClass('selectData to startMonth');
-                this.values = new Array();
-            }else if(this.values.length == 1){
-
-                if(cellDate < this.values[0]){
-                    this.getCellByDate(this.values[0]).removeClass('selectData from startMonth');
-                    this.values = new Array();
-                }else{
-                    this.values.push(cellDate);
-                    jCell.addClass('selectData to');
-                    if(cellDate.getDate() == 1){
-                        jCell.addClass('startMonth');
-                    }
-                    var tmpDate = new Date(this.values[0].toDateString());
-                    tmpDate.setDate(tmpDate.getDate()+1);
-                    while(tmpDate < this.values[1]){
-                        this.getCellByDate(tmpDate).addClass('selectDay');
-                        tmpDate.setDate(tmpDate.getDate()+1);
-                    }
-                }
-
-            }
-        }else{
-            if(this.values.length == 1){
-                this.getCellByDate(this.values[0]).removeClass('selectData from startMonth');
-                this.values = new Array();
-            }
-        }
-        if(this.values.length == 0){
-            this.values.push(cellDate);
-            jCell.addClass('selectData from');
-            if(cellDate.getDate() == 1){
-                jCell.addClass('startMonth');
-            }
-        }
-    }*/
 }
 VoyangaCalendarTimeline.generateGrid = function(){
     var startMoment = moment(this.minDate);
@@ -271,16 +180,19 @@ VoyangaCalendarTimeline.generateGrid = function(){
     console.log('diff',weekDiff,dateDiff);
     if(weekDiff == dateDiff){
         startDraw.subtract('d',7);
-    }
-    startDraw.date(startDraw.date()-this.getDay(startDraw._d));
-    dateDiff = Math.floor(endDraw.diff(startDraw,'days',true));
-    if(dateDiff <= 14){
         endDraw.add('d',7);
     }
-    if(dateDiff % 7 != 0){
-        endDraw.add('d',dateDiff % 7);
+    startDraw.date(startDraw.date()-this.getDay(startDraw._d));
+    dateDiff = Math.floor(endDraw.diff(startDraw,'days',true)) + 1;
+    if(dateDiff <= 14){
+
     }
-    dateDiff = Math.floor(endDraw.diff(startDraw,'days',true));
+    console.log('ds',startDraw,'de',endDraw,dateDiff);
+    if(dateDiff % 7 != 0){
+        endDraw.add('d',7 - (dateDiff % 7));
+    }
+    console.log('ds',startDraw,'de',endDraw,dateDiff);
+    dateDiff = Math.floor(endDraw.diff(startDraw,'days',true))+1;
     var centerDiff = Math.floor((365 - dateDiff)/2)
     tmpDate = moment(startMoment)._d;
     tmpDate.setDate(tmpDate.getDate() - centerDiff);
@@ -331,7 +243,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
                     //label = label + ' <div class="monthLabel">' + this.monthNames[tmpDate.getMonth()] +'</div>';
                     label = label + this.monthNames[tmpDate.getMonth()];
                 }
-                label = '<div class="dayLabel'+((i>=5 && i<7) ? ' weekEnd' : '')+'">' + label + ' ' + tmpDate.getDate()+'</div>';
+                label = '<div class="dayLabel'+((i>=5 && i<7) ? ' weekEnd' : '')+'">' + tmpDate.getDate()+ ' ' +label + '</div>';
                 var dateLabel = tmpDate.getFullYear()+'-'+(tmpDate.getMonth()+1)+'-'+tmpDate.getDate();
                 newHtml = newHtml + '<div class="dayCellVoyanga'+((tmpDate < dayToday) ? ' inactive' : '')+((i>=5 && i<7) ? ' weekEnd' : '')+'" id="dayCell-'+dateLabel+'" data-cell-date="'+dateLabel+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
                 tmpDate.setDate(tmpDate.getDate()+1);

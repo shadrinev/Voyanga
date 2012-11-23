@@ -1,3 +1,7 @@
+<?php
+
+$theme = Yii::app()->theme->baseUrl;
+?>
 <script type="text/html" id="hotels-timeline-template">
     <div class="innerCalendar allTourCal">
         <div id='voyanga-calendar-timeline' class="hotel">
@@ -21,12 +25,14 @@
             </div>
             <div class="monthLineWrapper" style="position: relative;width: 100%">
                 <div class="monthLineVoyangaYear">
-
-                </div>
-                <div class="monthLineVoyanga">
+                    <div class="monthLineVoyanga BackPlane">
+                    </div>
+                    <div class="monthLineVoyanga">
+                        <div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"><img src="<?php echo $theme ?>/images/bg-knob.png" width="100%"></div>
+                    </div>
                     <div class="knobUpAllMonth"></div>
-                    <div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"></div>
                 </div>
+
             </div>
         </div>
     </div>
