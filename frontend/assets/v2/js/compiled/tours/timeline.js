@@ -26,8 +26,8 @@ Timeline = (function() {
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         obj = {
-          start: moment(item.timelineStart()),
-          end: moment(item.timelineEnd())
+          start: moment(item.timelineStart()).clone().hours(0).minutes(5),
+          end: moment(item.timelineEnd()).clone().hours(0).minutes(5)
         };
         spans.push(obj);
         if (item.isHotel()) {
@@ -48,7 +48,7 @@ Timeline = (function() {
         item = _this.toursData()[0];
         if (item.isAvia()) {
           if (item.rt()) {
-            end_date = moment(item.rtTimelineStart());
+            end_date = moment(item.rtTimelineStart()).clone().hours(0).minutes(5);
             avia_map[end_date.format('M.D')] = {
               duration: 1,
               item: item

@@ -709,7 +709,9 @@ class AviaResultSet
       result.voyages = _.filter result.voyages, (el)->el.maxStopoverLength <60*60*3
       _.each result.voyages, (voyage)->
     #    voyage.activeBackVoyage = ko.observable voyage.activeBackVoyage()
-        voyage._backVoyages = _.filter voyage._backVoyages, (el)->el.maxStopoverLength <60*60*3
+        voyage._backVoyages = _.filter voyage._backVoyages, (el)-> el.maxStopoverLength <60*60*3
+    result.chooseStacked oldresult.activeVoyage()
+    
     if @best() == undefined
       @best result
       return
