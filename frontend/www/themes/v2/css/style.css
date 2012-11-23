@@ -3332,12 +3332,26 @@ a.whereData span {
     padding-left: 10px;
     width: 285px;
 }
+.headBlockOne .tableFlight.first.up thead .tdPrice {
+    border-right: 1px solid transparent;
+}
+.headBlockOne .tableFlight.first.up thead td {
+    border-bottom: 1px solid #c9cece;
+}
+.headBlockOne .tableFlight.second.up thead td {
+    border-bottom: 1px solid #c9cece;
+}
 .tableH2 {
     border-right: 1px solid #C9CECE;
     margin: -25px 0 0 !important;
     padding-bottom: 15px;
     padding-top: 25px;
     width: 499px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    body:first-of-type .tableH2  {
+        width: 498px;
+    }
 }
 .hotels-tickets.parkPage {
     float: left;
@@ -3413,4 +3427,48 @@ a.whereData span {
 }
 #eventsContent .photoGallery .centerPosition .eventPhoto{
     position: absolute;
+}
+
+.cityChoise {
+    background: none;
+    height: 23px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 21px;
+    font-size: 14px;
+    color: #24272d;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-weight: normal !important;
+    text-shadow: none !important;
+}
+.cityChoise.active {
+    background: url(../images/bg-linkCity.png) repeat-x;
+    height: 23px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 21px;
+    font-size: 14px;
+    color: #24272d;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+.cityChoise span {
+    border-bottom: 1px dashed;
+}
+.cityChoise.active span {
+    border-bottom: none;
+}
+.headBlockOne .center-block h3 {
+    text-shadow: none;
+}
+.headBlockTwo .center-block h3 {
+    text-shadow: none;
+    margin-bottom: 20px;
 }
