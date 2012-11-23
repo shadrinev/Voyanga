@@ -60,9 +60,9 @@ $theme = Yii::app()->theme->baseUrl;
                         <div class="monthLineVoyanga BackPlane">
                         </div>
                         <div class="monthLineVoyanga">
-                            <div class="knobUpAllMonth"></div>
                             <div class="knobVoyanga" id="voyangaCalendarKnob" style="left: 0%;"><img src="<?= $theme ?>/images/bg-knob.png" width="100%"></div>
                         </div>
+                        <div class="knobUpAllMonth"></div>
                     </div>
 
                 </div>

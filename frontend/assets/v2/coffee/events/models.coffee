@@ -327,7 +327,7 @@ class EventTourResultSet
 class EventPhotoBox
   constructor: (picturesRaw)->
     @photos = ko.observableArray([])
-    @imagesServer = ko.observable 'http://backend.oleg.voyanga'
+    @imagesServer = ko.observable ''
     @totalCount = 0
     @unloadedCount = 0
 
@@ -352,9 +352,9 @@ class EventPhotoBox
           if e.type == 'load'
             @totalCount++;
             photo = {}
-            photo.url = e.srcElement.src;
-            photo.height = e.srcElement.height;
-            photo.width = e.srcElement.width;
+            photo.url = e.currentTarget.src;
+            photo.height = e.currentTarget.height;
+            photo.width = e.currentTarget.width;
             if @boxHeight() < photo.height
               @boxHeight(photo.height)
             @photos.push photo

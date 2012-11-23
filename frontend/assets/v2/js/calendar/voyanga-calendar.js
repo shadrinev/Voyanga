@@ -117,7 +117,7 @@ VoyangaCalendarSlider = function(options){
                 if(this.knobPos < 0) this.knobPos = 0;
                 if(this.knobPos > (100 - this.knobWidth)) this.knobPos = (100 - this.knobWidth);
                 this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
-                this.jObj.find('.knobUpAllMonth').css('left',this.knobPos + '%');
+                this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
                 var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
                 this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
@@ -169,11 +169,14 @@ VoyangaCalendarSlider = function(options){
                 var posLeft = now;
             }
             this.knobPos = posLeft;
-            this.jObj.find('.knobUpAllMonth').css('left',this.knobPos + '%');
+            this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
             var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
             var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
             this.knobMove();
+        },
+        getKnobUpLeft: function(){
+            return this.knobPos + '%'
         },
         getPercent: function (pos){
             if(pos.indexOf('px') != -1){
@@ -237,7 +240,7 @@ VoyangaCalendarSlider = function(options){
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
                 this.knobPos = Math.round((this.jObj.find('.calendarGridVoyanga').scrollTop() / scrollHeight)*1000)/10;
                 this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
-                this.jObj.find('.knobUpAllMonth').css('left',this.knobPos + '%');
+                this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
                 this.knobMove();
             }
         },
