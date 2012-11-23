@@ -64,7 +64,7 @@ class FlightVoyage extends CApplicationComponent
     {
         $key = $this->getId();
         $order = OrderFlightVoyage::model()->findByAttributes(array('key' => $key));
-        if (size($this->flights)==1)
+        if (sizeof($this->flights)==1)
         {
             //we try to save same flight
             $order->delete();
