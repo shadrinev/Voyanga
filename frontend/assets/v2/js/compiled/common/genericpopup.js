@@ -4,10 +4,11 @@ var GenericPopup,
 
 GenericPopup = (function() {
 
-  function GenericPopup(id, data) {
+  function GenericPopup(id, data, modal) {
     var el,
       _this = this;
     this.id = id;
+    this.modal = modal != null ? modal : false;
     this.close = __bind(this.close, this);
 
     this.inside = false;
@@ -24,20 +25,20 @@ GenericPopup = (function() {
       close: this.close
     }, el[0]);
     ko.processAllDeferredBindingUpdates();
+    if (this.modal) {
+      return;
+    }
     $(window).keyup(function(e) {
       if (e.keyCode === 27) {
         return _this.close();
       }
     });
     $(el.find('table')[0]).hover(function() {
-      console.log("INSIDE");
       return _this.inside = true;
     }, function() {
-      console.log("OUTSIDE");
       return _this.inside = false;
     });
     el.click(function() {
-      console.log("CLEAK");
       if (!_this.inside) {
         return _this.close();
       }
@@ -45,7 +46,9 @@ GenericPopup = (function() {
   }
 
   GenericPopup.prototype.close = function() {
-    $(window).unbind('keyup');
+    if (!this.modal) {
+      $(window).unbind('keyup');
+    }
     $(this.id).remove();
     $('#popupOverlay').remove();
     return btnClosePopUp();

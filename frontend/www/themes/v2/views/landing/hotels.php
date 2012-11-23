@@ -1,6 +1,6 @@
 <div class="headBlockTwo">
-<div class="center-block">
-<h2>Отели в Лондоне</h2>
+<div class="center-block" style="margin-top: 25px">
+<h1>Отели в Лондоне</h1>
 <h3>Избранные отели столицы Великобритании</h3>
 <div class="hotels-tickets parkPage">
     <div class="content">
