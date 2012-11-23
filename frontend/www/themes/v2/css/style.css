@@ -3187,6 +3187,7 @@ hr {
 }
 .textBlockPrice .cena {
     font-size: 20px;
+    height: 35px;
 }
 .textBlockPrice .price {
     font-size: 35px;
