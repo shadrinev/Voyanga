@@ -14,6 +14,7 @@ initEventPage = function() {
     app.register('hotels', hotels);
     app.register('avia', avia);
     app.runWithModule('tours');
+    app.activeModule('tours');
     app.bindItemsToEvent();
     ko.applyBindings(app);
     ko.processAllDeferredBindingUpdates();

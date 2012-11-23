@@ -221,6 +221,8 @@ class EventTourResultSet
     @activePanel(panelSet)
     @activePanel().startCity(@resultSet.city.code)
     @activePanel().selectedParams = []
+    @activePanel().sp.calendarActivated(false)
+    window.app.fakoPanel(panelSet)
 
     @startCity(@resultSet.city.localRu)
     console.log('reinitEventData',@)
@@ -231,6 +233,7 @@ class EventTourResultSet
       return res
     @hotelCounterWord = ko.computed =>
       Utils.wordAfterNum  @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
+
 
     _.each @resultSet.items, (item) =>
       if (item.isFlight)
@@ -309,11 +312,21 @@ class EventTourResultSet
       else '')
     )
     console.log('activePanel',@activePanel())
+    @activePanel().saveStartParams()
+    _.last(@activePanel().panels()).minimizedCalendar(true)
+    window.setTimeout(
+      =>
+        @activePanel().sp.calendarActivated(true)
+      , 1000
+    )
+
+    $('.panel .board').hide()
+
 
 
     @fullPrice(@totalCost)
   gotoAndShowPanel: =>
-    Utils.scrollTo('.panel .board')
+    Utils.scrollTo('.panel')
     @visiblePanel(true)
   togglePanel: =>
     @visiblePanel(!@visiblePanel())
