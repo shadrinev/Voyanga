@@ -575,10 +575,7 @@
     color: #4D4D4D !important;
 }
 .allTourCal .startNameCity, .allTourCal .endNameCity {
-    text-transform: capitalize;
-}
-.allTourCal .startNameCity.uppercase, .allTourCal .endNameCity.uppercase {
-    text-transform: uppercase;
+    text-transform: none;
 }
 .z-indexTop {
 	z-index: 995;
