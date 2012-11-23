@@ -561,21 +561,22 @@
     position: absolute;
     top: 0;
     z-index: 10;
-    background: url(../images/bg-foot-calendare-hover.png) repeat-x;
+    background: none repeat scroll 0 0 transparent;
     border-left: 1px solid #999a9d;
 }
 .allTourCal .monthLineVoyanga.BackPlane {
     z-index: 9 !important;
     border-right: 1px solid #999a9d;
+    background: url("../images/bg-foot-calendare-hover.png") repeat-x scroll 0 0 transparent;
 }
-.allTourCal .monthWrapper.inactive {
+.allTourCal .monthNameVoyanga .monthWrapper {
     color: #9D9EA1 !important;
 }
-.allTourCal .startNameCity, .allTourCal .endNameCity {
-    text-transform: capitalize;
+.allTourCal .monthNameVoyanga.highlited .monthWrapper {
+    color: #4D4D4D !important;
 }
-.allTourCal .startNameCity.uppercase, .allTourCal .endNameCity.uppercase {
-    text-transform: uppercase;
+.allTourCal .startNameCity, .allTourCal .endNameCity {
+    text-transform: none;
 }
 .z-indexTop {
 	z-index: 995;
