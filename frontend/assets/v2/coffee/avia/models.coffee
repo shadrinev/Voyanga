@@ -1,4 +1,7 @@
+AVIA_TICKET_TIMELIMIT  = 1*60 - 59
+
 # FIXME use mixins for most getters(?)
+# TODO aviaresult.grep could be usefull
 
 # Atomic journey unit.
 class FlightPart
@@ -88,6 +91,10 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
   # Helper function, returns hash to check equality for first flight
   hash: ->
     @departureTime() + @arrivalTime()
+
+  # helper function for result selection on validation/back button/events
+  similarityHash: ->
+    @hash() + @airline
 
   # pushes available back flight variants
   push: (voyage)->
@@ -278,7 +285,7 @@ class AviaResult
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
               'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric',
-              'arrivalTimeNumeric','hash', 'stopsRatio', 'recommendStopoverIco']
+              'arrivalTimeNumeric','hash', 'similarityHash', 'stopsRatio', 'recommendStopoverIco']
 
     for name in fields
       @[name] = ((name) =>
@@ -502,6 +509,7 @@ class AviaResultSet
     @selected_best = ko.observable false
     # if we want to show best flight instead of +-3 days
     @showBest = ko.observable false
+    @creationMoment = moment()
     
     @_results = {}
 
@@ -577,13 +585,38 @@ class AviaResultSet
       selection = ctx.data
     else
       selection = ctx
-    result = {}
-    result.module = 'Avia'
-    result.type = 'avia'
-    result.searchId = selection.cacheId
-    # FIXME FIXME FXIME
-    result.searchKey = selection.flightKey()
-    Utils.toBuySubmit [result]
+
+    ticketValidCheck = $.Deferred()
+    ticketValidCheck.done (selection)->
+      result = {}
+      result.module = 'Avia'
+      result.type = 'avia'
+      result.searchId = selection.cacheId
+      # FIXME FIXME FXIME
+      result.searchKey = selection.flightKey()
+      Utils.toBuySubmit [result]
+      
+    @checkTicket selection, ticketValidCheck
+
+  findAndSelect: (result)=>
+    hash = result.similarityHash()
+    for result in @data
+      for voyage in result.voyages
+        if voyage.similarityHash()==hash
+          if @tours
+            alert 'unimplemented'
+          if !@roundTrip
+            return true
+          result.activeVoyage voyage
+          backHash = voyage.activeBackVoyage().similarityHash()
+          for backVoyage in voyage._backVoyages
+            if backVoyage.similarityHash() == backHash
+              if @tours
+                alert 'unimplemented'
+              voyage.activeBackVoyage backVoyage
+              return result
+    return false
+          
 
   postInit: =>
     @filters = new AviaFiltersT @

@@ -8,11 +8,12 @@ ErrorPopup = (function(_super) {
 
   __extends(ErrorPopup, _super);
 
-  function ErrorPopup(code, message) {
+  function ErrorPopup(code, message, onclose) {
     var id;
     if (message == null) {
       message = false;
     }
+    this.onclose = onclose != null ? onclose : false;
     this.close = __bind(this.close, this);
 
     id = 'errorpopup-' + code;
@@ -24,9 +25,13 @@ ErrorPopup = (function(_super) {
 
   ErrorPopup.prototype.close = function() {
     ErrorPopup.__super__.close.apply(this, arguments);
-    return window.app.navigate(window.app.activeModule(), {
-      trigger: true
-    });
+    if (this.onclose) {
+      return this.onclose();
+    } else {
+      return window.app.navigate(window.app.activeModule(), {
+        trigger: true
+      });
+    }
   };
 
   return ErrorPopup;
