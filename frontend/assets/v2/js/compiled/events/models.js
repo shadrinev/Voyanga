@@ -292,7 +292,9 @@ EventTourSet = (function() {
 
 EventTourResultSet = (function() {
 
-  function EventTourResultSet(resultSet) {
+  function EventTourResultSet(resultSet, eventId) {
+    var _this = this;
+    this.eventId = eventId;
     this.hidePanel = __bind(this.hidePanel, this);
 
     this.showPanel = __bind(this.showPanel, this);
@@ -303,7 +305,6 @@ EventTourResultSet = (function() {
 
     this.reinit = __bind(this.reinit, this);
 
-    var _this = this;
     this.items = ko.observableArray([]);
     this.selectedCity = ko.observable(resultSet.city.id);
     this.fullPrice = ko.observable(0);
@@ -315,7 +316,7 @@ EventTourResultSet = (function() {
     this.overviewPeople = ko.observable(0);
     this.overviewPricePeople = ko.observable('');
     this.photoBox = new EventPhotoBox(window.eventPhotos);
-    this.visiblePanel = ko.observable(false);
+    this.visiblePanel = ko.observable(true);
     this.visiblePanel.subscribe(function(newValue) {
       if (newValue) {
         return _this.showPanel();
@@ -348,7 +349,10 @@ EventTourResultSet = (function() {
     panelSet = new TourPanelSet();
     this.activePanel(panelSet);
     this.activePanel().startCity(this.resultSet.city.code);
-    this.activePanel().selectedParams = [];
+    this.activePanel().selectedParams = {
+      ticketParams: [],
+      eventId: this.eventId
+    };
     this.activePanel().sp.calendarActivated(false);
     window.app.fakoPanel(panelSet);
     this.startCity(this.resultSet.city.localRu);
@@ -380,7 +384,7 @@ EventTourResultSet = (function() {
         aviaResult.isHotel = ko.observable(item.isHotel);
         aviaResult.startDate = aviaResult.departureDate();
         aviaResult.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate()) + '</div>' + (_this.roundTrip ? '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' : ''));
-        _this.activePanel().selectedParams.push(aviaResult.getParams());
+        _this.activePanel().selectedParams.ticketParams.push(aviaResult.getParams());
         aviaResult.overviewPeople = ko.observable;
         _this.items.push(aviaResult);
         return _this.totalCost += aviaResult.price;
@@ -398,7 +402,7 @@ EventTourResultSet = (function() {
         _this.lastHotel.serachParams = item.searchParams;
         _this.lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + _this.lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + _this.lastHotel.address + "</span>");
         _this.lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkOut) + '</div>');
-        _this.activePanel().selectedParams.push(_this.lastHotel.getParams());
+        _this.activePanel().selectedParams.ticketParams.push(_this.lastHotel.getParams());
         _this.items.push(_this.lastHotel);
         return _this.totalCost += _this.lastHotel.roomSets()[0].discountPrice;
       }
@@ -443,9 +447,14 @@ EventTourResultSet = (function() {
     this.activePanel().saveStartParams();
     _.last(this.activePanel().panels()).minimizedCalendar(true);
     window.setTimeout(function() {
+      console.log('calendar activated');
       return _this.activePanel().sp.calendarActivated(true);
     }, 1000);
-    $('.panel .board').hide();
+    if (this.visiblePanel()) {
+      $('.panel .board').show();
+    } else {
+      $('.panel .board').hide();
+    }
     return this.fullPrice(this.totalCost);
   };
 

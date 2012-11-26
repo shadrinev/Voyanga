@@ -673,11 +673,21 @@ class TourSearchParams extends SearchParams
       @destinations.push destination
 
     i = i + 1
+    oldSelection = false
     while i < data.length
+      if data[i] == 'oldSelecton'
+        oldSelection = true
+        break
       room = new SpRoom(@)
       room.fromList(data[i])
       @rooms.push room
       i++
+    if oldSelection
+      console.log('really have oldParams')
+      i++;
+      console.log('old params is',data[i])
+      @oldParams = JSON.parse(decodeURIComponent(data[i]))
+      console.log(@oldParams)
     window.voyanga_debug 'Result', @
 
   fromObject: (data)->

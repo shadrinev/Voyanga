@@ -6,6 +6,7 @@ $images = '/themes/v2';
     window.defaultCity = <?php echo $defaultCity; ?>;
     window.tripRaw = window.toursArr[window.defaultCity];
     window.eventPhotos = <?php echo json_encode($pictures); ?>;
+    window.eventId = <?php echo $event->id; ?>;
     $(document).ready(function(){
         initEventPage();
         //eventPhotos = new EventPhotoBox(window.eventPhotos);
@@ -75,7 +76,7 @@ $images = '/themes/v2';
                                 <tbody><tr>
                                     <td class="tdCity">
                                         <div class="cityStart">
-                                            <!-- ko if: ($parent.isFirst()) -->
+                                            <!-- ko if: $index()==0 || ($parent.isFirst()) -->
                                             <div class="to">
                                                 Старт из:
                                                 <a href="#"><span data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербурга</span></a>
@@ -173,7 +174,7 @@ $images = '/themes/v2';
         </div>
         <!-- END PANEL -->
         <!-- CALENDAR -->
-        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarEvent}" style="top: -302px; overflow: hidden; height: 341px;">
+        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarEvent}" style="top: -302px; overflow: hidden; height: 341px;display:none;">
         </div>
         <!-- END CALENDAR -->
     </div>

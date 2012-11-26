@@ -154,7 +154,7 @@ class Application extends Backbone.Router
     @itemsToBuy =  tourTrip
 
   bindItemsToEvent: =>
-    tourTrip = new EventTourResultSet(window.tripRaw)
+    tourTrip = new EventTourResultSet(window.tripRaw,window.eventId)
     @itemsToBuy =  tourTrip
 
   # FIXME write better handler

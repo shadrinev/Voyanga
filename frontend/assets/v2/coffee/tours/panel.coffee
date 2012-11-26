@@ -163,10 +163,11 @@ class TourPanel extends SearchPanel
 
       url = '/#'+@sp.getHash()
       if @startParams == url
+        # Need save data to server, because get have limit 2048 bytes
         url += 'oldSelecton/'+encodeURIComponent(JSON.stringify(@selectedParams))
 
       console.log('go url',url,'length', url.length)
-      return
+      #return
       window.location.href = url
 
   saveStartParams: ()=>
@@ -212,6 +213,7 @@ class TourPanel extends SearchPanel
         startInput.hide()
 
   showCalendar: =>
+    console.log('calendar show trigger')
     $('.calenderWindow').show()
     @trigger "tourPanel:showCalendar", @
     if @minimizedCalendar()
