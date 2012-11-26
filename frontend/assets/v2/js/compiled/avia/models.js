@@ -734,7 +734,6 @@ AviaResultSet = (function() {
     this.selected_key = ko.observable('');
     this.selected_best = ko.observable(false);
     this.showBest = ko.observable(false);
-    this.creationMoment = moment();
     this._results = {};
     if (!rawVoyages.length) {
       throw "404";

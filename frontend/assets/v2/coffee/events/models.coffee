@@ -287,7 +287,7 @@ class EventTourResultSet
     for item in @items()
       if item.isHotel()
         if !firstHotel
-          @activePanel.addPanel()
+          @activePanel().addPanel()
         else
           #@activePanel().sp.rooms = item.serachParams.rooms
           #@activePanel().sp.rooms([])

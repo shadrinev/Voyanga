@@ -415,7 +415,7 @@ EventTourResultSet = (function() {
       item = _ref[_i];
       if (item.isHotel()) {
         if (!firstHotel) {
-          this.activePanel.addPanel();
+          this.activePanel().addPanel();
         } else {
           i = 0;
           _ref1 = item.serachParams.rooms;
