@@ -1,4 +1,5 @@
 $(function(){
+    window.toursOverviewActive = true;
     $('.genderField').each(function(){
         var $this = $(this),
             value = $this.val(),

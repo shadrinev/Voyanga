@@ -751,6 +751,9 @@ class TourTripResultSet
     @selected_key = ko.observable ''
     @selected_best = ko.observable ''
     @totalCost = 0
+    @totalCostWithDiscount = 0
+    @totalCostWithoutDiscount = 0
+    @tour = false
 
     @flightCounterWord = ko.computed =>
       if @flightCounter()==0
@@ -767,6 +770,7 @@ class TourTripResultSet
 
     _.each @resultSet.items, (item) =>
       if (item.isFlight)
+        @tour = true
         @hasFlight = true
         @flightCounter(@flightCounter()+1)
         @roundTrip = item.flights.length == 2
@@ -790,10 +794,15 @@ class TourTripResultSet
         _.each item.searchParams.rooms, (room) -> totalPeople += room.adultCount/1 + room.childCount/1 + room.cots/1
         @lastHotel.totalPeople = Utils.wordAfterNum totalPeople, 'человек', 'человека', 'человек'
         @items.push(@lastHotel)
-        @totalCost += @lastHotel.roomSets()[0].discountPrice
+        @totalCostWithDiscount += @lastHotel.roomSets()[0].discountPrice
+        @totalCostWithoutDiscount += @lastHotel.roomSets()[0].price
 
     _.each @cities, (city, i) =>
         if (i == (@cities.length - 1))
           city.isLast = true
         else
           city.left = Math.round((100 / @cities.length) * (i + 1)) + '%'
+    if @tour
+        @totalCost = @totalCostWithDiscount
+    else
+        @totalCost = @totalCostWithoutDiscount
