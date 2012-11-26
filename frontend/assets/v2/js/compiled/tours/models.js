@@ -1153,6 +1153,9 @@ TourTripResultSet = (function() {
     this.selected_key = ko.observable('');
     this.selected_best = ko.observable('');
     this.totalCost = 0;
+    this.totalCostWithDiscount = 0;
+    this.totalCostWithoutDiscount = 0;
+    this.tour = false;
     this.flightCounterWord = ko.computed(function() {
       var res;
       if (_this.flightCounter() === 0) {
@@ -1173,6 +1176,7 @@ TourTripResultSet = (function() {
     _.each(this.resultSet.items, function(item) {
       var aviaResult, totalPeople;
       if (item.isFlight) {
+        _this.tour = true;
         _this.hasFlight = true;
         _this.flightCounter(_this.flightCounter() + 1);
         _this.roundTrip = item.flights.length === 2;
@@ -1213,7 +1217,8 @@ TourTripResultSet = (function() {
         });
         _this.lastHotel.totalPeople = Utils.wordAfterNum(totalPeople, 'человек', 'человека', 'человек');
         _this.items.push(_this.lastHotel);
-        return _this.totalCost += _this.lastHotel.roomSets()[0].discountPrice;
+        _this.totalCostWithDiscount += _this.lastHotel.roomSets()[0].discountPrice;
+        return _this.totalCostWithoutDiscount += _this.lastHotel.roomSets()[0].price;
       }
     });
     _.each(this.cities, function(city, i) {
@@ -1223,6 +1228,11 @@ TourTripResultSet = (function() {
         return city.left = Math.round((100 / _this.cities.length) * (i + 1)) + '%';
       }
     });
+    if (this.tour) {
+      this.totalCost = this.totalCostWithDiscount;
+    } else {
+      this.totalCost = this.totalCostWithoutDiscount;
+    }
   }
 
   return TourTripResultSet;
