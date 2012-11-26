@@ -9,7 +9,7 @@ class SearchPanel
     @oldCalendarState = @minimizedCalendar()
 
     @togglePanel @minimized()
-    @toggleCalendar @minimizedCalendar()
+    @toggleCalendar @minimizedCalendar(), true
 
     @minimized.subscribe (minimized) =>
       @togglePanel(minimized)
@@ -26,24 +26,32 @@ class SearchPanel
     else
       $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
 
-  toggleCalendar: (minimizedCalendar) =>
+  toggleCalendar: (minimizedCalendar,initialize = false) =>
     speed =  500
     heightSubHead = $('.sub-head').height()
     heightCalendar1 = $('.calenderWindow').height()
     heightCalendar2 = heightSubHead
+    console.log('toggle calendarRR')
 
     if !minimizedCalendar
       ResizeAvia()
       @calendarHidden(false)
-      $('.calenderWindow .calendarSlide').animate {'top' : '0px'}
-      $('.calenderWindow').animate {'height' : '341px'}, speed
+      if !initialize
+        $('.calenderWindow .calendarSlide').animate {'top' : '0px'}
+        $('.calenderWindow').animate {'height' : '341px'}, speed
     else
       ResizeAvia()
       @calendarShadow(true)
-      $('.calenderWindow .calendarSlide').animate {'top' : '-341px'}
-      $('.calenderWindow').animate {'height' : '0px'}, speed, () =>
-      @calendarHidden(true)
-      @calendarShadow(false)
+      if !initialize
+        @calendarShadow(true)
+        $('.calenderWindow .calendarSlide').animate {'top' : '-341px'}
+        $('.calenderWindow').animate {'height' : '0px'}, speed, () =>
+          @calendarHidden(true)
+          @calendarShadow(false)
+      else
+        @calendarHidden(true)
+        @calendarShadow(false)
+
 
   # Minimize button click handler
   minimize: =>

@@ -240,7 +240,6 @@ TourPanel = (function(_super) {
         url += 'oldSelecton/' + encodeURIComponent(JSON.stringify(this.selectedParams));
       }
       console.log('go url', url, 'length', url.length);
-      return;
       return window.location.href = url;
     }
   };
@@ -298,6 +297,7 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.showCalendar = function() {
+    console.log('calendar show trigger');
     $('.calenderWindow').show();
     this.trigger("tourPanel:showCalendar", this);
     if (this.minimizedCalendar()) {

@@ -1036,7 +1036,7 @@ TourSearchParams = (function(_super) {
   };
 
   TourSearchParams.prototype.fromList = function(data) {
-    var destination, doingrooms, i, room, _i, _ref;
+    var destination, doingrooms, i, oldSelection, room, _i, _ref;
     window.voyanga_debug("Restoring TourSearchParams from list");
     this.startCity(data[0]);
     this.returnBack(data[1]);
@@ -1054,11 +1054,23 @@ TourSearchParams = (function(_super) {
       this.destinations.push(destination);
     }
     i = i + 1;
+    oldSelection = false;
     while (i < data.length) {
+      if (data[i] === 'oldSelecton') {
+        oldSelection = true;
+        break;
+      }
       room = new SpRoom(this);
       room.fromList(data[i]);
       this.rooms.push(room);
       i++;
+    }
+    if (oldSelection) {
+      console.log('really have oldParams');
+      i++;
+      console.log('old params is', data[i]);
+      this.oldParams = JSON.parse(decodeURIComponent(data[i]));
+      console.log(this.oldParams);
     }
     return window.voyanga_debug('Result', this);
   };

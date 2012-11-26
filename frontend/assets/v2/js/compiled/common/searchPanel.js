@@ -29,7 +29,7 @@ SearchPanel = (function() {
     this.calendarShadow = ko.observable(this.minimizedCalendar);
     this.oldCalendarState = this.minimizedCalendar();
     this.togglePanel(this.minimized());
-    this.toggleCalendar(this.minimizedCalendar());
+    this.toggleCalendar(this.minimizedCalendar(), true);
     this.minimized.subscribe(function(minimized) {
       return _this.togglePanel(minimized);
     });
@@ -53,33 +53,46 @@ SearchPanel = (function() {
     }
   };
 
-  SearchPanel.prototype.toggleCalendar = function(minimizedCalendar) {
+  SearchPanel.prototype.toggleCalendar = function(minimizedCalendar, initialize) {
     var heightCalendar1, heightCalendar2, heightSubHead, speed,
       _this = this;
+    if (initialize == null) {
+      initialize = false;
+    }
     speed = 500;
     heightSubHead = $('.sub-head').height();
     heightCalendar1 = $('.calenderWindow').height();
     heightCalendar2 = heightSubHead;
+    console.log('toggle calendarRR');
     if (!minimizedCalendar) {
       ResizeAvia();
       this.calendarHidden(false);
-      $('.calenderWindow .calendarSlide').animate({
-        'top': '0px'
-      });
-      return $('.calenderWindow').animate({
-        'height': '341px'
-      }, speed);
+      if (!initialize) {
+        $('.calenderWindow .calendarSlide').animate({
+          'top': '0px'
+        });
+        return $('.calenderWindow').animate({
+          'height': '341px'
+        }, speed);
+      }
     } else {
       ResizeAvia();
       this.calendarShadow(true);
-      $('.calenderWindow .calendarSlide').animate({
-        'top': '-341px'
-      });
-      $('.calenderWindow').animate({
-        'height': '0px'
-      }, speed, function() {});
-      this.calendarHidden(true);
-      return this.calendarShadow(false);
+      if (!initialize) {
+        this.calendarShadow(true);
+        $('.calenderWindow .calendarSlide').animate({
+          'top': '-341px'
+        });
+        return $('.calenderWindow').animate({
+          'height': '0px'
+        }, speed, function() {
+          _this.calendarHidden(true);
+          return _this.calendarShadow(false);
+        });
+      } else {
+        this.calendarHidden(true);
+        return this.calendarShadow(false);
+      }
     }
   };
 

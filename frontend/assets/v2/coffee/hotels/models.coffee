@@ -244,8 +244,8 @@ class HotelResult
     @phone = hotelDatails.phone
     @fax = hotelDatails.fax
     @email = hotelDatails.email
-    @numberFloors = hotelDatails.numberFloors
-    @builtIn = hotelDatails.builtIn
+    @numberFloors = parseInt(hotelDatails.numberFloors)
+    @builtIn = parseInt(hotelDatails.builtIn)
 
     @numPhotos = 0
     @parent = parent
