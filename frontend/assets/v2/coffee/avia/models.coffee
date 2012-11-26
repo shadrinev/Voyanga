@@ -1,5 +1,3 @@
-AVIA_TICKET_TIMELIMIT  = 1*60 - 59
-
 # FIXME use mixins for most getters(?)
 # TODO aviaresult.grep could be usefull
 
