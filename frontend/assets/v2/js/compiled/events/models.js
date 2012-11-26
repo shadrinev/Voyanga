@@ -349,6 +349,8 @@ EventTourResultSet = (function() {
     this.activePanel(panelSet);
     this.activePanel().startCity(this.resultSet.city.code);
     this.activePanel().selectedParams = [];
+    this.activePanel().sp.calendarActivated(false);
+    window.app.fakoPanel(panelSet);
     this.startCity(this.resultSet.city.localRu);
     console.log('reinitEventData', this);
     this.flightCounterWord = ko.computed(function() {
@@ -413,7 +415,7 @@ EventTourResultSet = (function() {
       item = _ref[_i];
       if (item.isHotel()) {
         if (!firstHotel) {
-          this.activePanel.addPanel();
+          this.activePanel().addPanel();
         } else {
           i = 0;
           _ref1 = item.serachParams.rooms;
@@ -438,11 +440,17 @@ EventTourResultSet = (function() {
     this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
     this.overviewPricePeople('Цена за ' + (this.activePanel().sp.adults() ? Utils.wordAfterNum(this.activePanel().sp.adults(), 'взрослого', 'взрослых', 'взрослых') : '') + (this.activePanel().sp.children() ? ' ' + Utils.wordAfterNum(this.activePanel().sp.children(), 'ребенка', 'детей', 'детей') : ''));
     console.log('activePanel', this.activePanel());
+    this.activePanel().saveStartParams();
+    _.last(this.activePanel().panels()).minimizedCalendar(true);
+    window.setTimeout(function() {
+      return _this.activePanel().sp.calendarActivated(true);
+    }, 1000);
+    $('.panel .board').hide();
     return this.fullPrice(this.totalCost);
   };
 
   EventTourResultSet.prototype.gotoAndShowPanel = function() {
-    Utils.scrollTo('.panel .board');
+    Utils.scrollTo('.panel');
     return this.visiblePanel(true);
   };
 

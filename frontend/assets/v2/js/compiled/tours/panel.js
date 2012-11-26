@@ -20,6 +20,8 @@ TourPanelSet = (function() {
 
     this.deletePanel = __bind(this.deletePanel, this);
 
+    this.saveStartParams = __bind(this.saveStartParams, this);
+
     this.navigateToNewSearchMainPage = __bind(this.navigateToNewSearchMainPage, this);
 
     this.navigateToNewSearch = __bind(this.navigateToNewSearch, this);
@@ -38,6 +40,16 @@ TourPanelSet = (function() {
     this.startCityReadableGen = ko.observable('');
     this.startCityReadableAcc = ko.observable('');
     this.panels = ko.observableArray([]);
+    this.activeCity = ko.observable('');
+    this.sp.calendarActivated = ko.observable(true);
+    this.calendarText = ko.computed(function() {
+      var result;
+      result = 'Выберите даты пребывания в городе';
+      if (_this.activeCity()) {
+        result += ' ' + _this.activeCity();
+      }
+      return result;
+    });
     this.lastPanel = null;
     this.i = 0;
     this.addPanel();
@@ -87,6 +99,10 @@ TourPanelSet = (function() {
     return _.last(this.panels()).handlePanelSubmit(false);
   };
 
+  TourPanelSet.prototype.saveStartParams = function() {
+    return _.last(this.panels()).saveStartParams();
+  };
+
   TourPanelSet.prototype.deletePanel = function(elem) {
     this.sp.destinations.remove(elem.city);
     this.panels.remove(elem);
@@ -108,11 +124,13 @@ TourPanelSet = (function() {
     newPanel.on("tourPanel:showCalendar", function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      _this.activeCity(newPanel.cityReadable());
       return _this.showPanelCalendar(args);
     });
     newPanel.on("tourPanel:hasFocus", function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      _this.activeCity(newPanel.cityReadable());
       return _this.showPanelCalendar(args);
     });
     this.panels.push(newPanel);
@@ -154,6 +172,8 @@ TourPanel = (function(_super) {
 
     this.showCalendar = __bind(this.showCalendar, this);
 
+    this.saveStartParams = __bind(this.saveStartParams, this);
+
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
 
     this.handlePanelSubmitToMain = __bind(this.handlePanelSubmitToMain, this);
@@ -193,7 +213,10 @@ TourPanel = (function(_super) {
       return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
-      return _this.showCalendar();
+      console.log('city changed!!!!!!!!');
+      if (_this.sp.calendarActivated()) {
+        return _this.showCalendar();
+      }
     });
   }
 
@@ -202,6 +225,7 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.handlePanelSubmit = function(onlyHash) {
+    var url;
     if (onlyHash == null) {
       onlyHash = true;
     }
@@ -211,10 +235,20 @@ TourPanel = (function(_super) {
         trigger: true
       });
     } else {
-      console.log('go url', this.sp.getHash(), JSON.stringify(this.selectedParams));
+      url = '/#' + this.sp.getHash();
+      if (this.startParams === url) {
+        url += 'oldSelecton/' + encodeURIComponent(JSON.stringify(this.selectedParams));
+      }
+      console.log('go url', url, 'length', url.length);
       return;
-      return window.location.href = '/#' + this.sp.getHash();
+      return window.location.href = url;
     }
+  };
+
+  TourPanel.prototype.saveStartParams = function() {
+    var url;
+    url = '/#' + this.sp.getHash();
+    return this.startParams = url;
   };
 
   TourPanel.prototype.close = function() {

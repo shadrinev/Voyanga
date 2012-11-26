@@ -17,6 +17,14 @@ class TourPanelSet
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
     @panels = ko.observableArray []
+    @activeCity = ko.observable('')
+    @sp.calendarActivated = ko.observable(true)
+    @calendarText = ko.computed =>
+      result = 'Выберите даты пребывания в городе'
+      if @activeCity()
+        result += ' ' + @activeCity()
+      return result
+
     @lastPanel = null
     @i = 0
     @addPanel()
@@ -56,6 +64,9 @@ class TourPanelSet
       _.last(@panels()).selectedParams = @selectedParams
     _.last(@panels()).handlePanelSubmit(false)
 
+  saveStartParams: =>
+    _.last(@panels()).saveStartParams()
+
   deletePanel: (elem) =>
     @sp.destinations.remove(elem.city)
     @panels.remove(elem)
@@ -70,8 +81,10 @@ class TourPanelSet
       _.last(@panels()).isLast(false)
     newPanel = new TourPanel(@sp, @i, @i==0)
     newPanel.on "tourPanel:showCalendar", (args...) =>
+      @activeCity(newPanel.cityReadable())
       @showPanelCalendar(args)
     newPanel.on "tourPanel:hasFocus", (args...) =>
+      @activeCity(newPanel.cityReadable())
       @showPanelCalendar(args)
     @panels.push newPanel
     @lastPanel = newPanel
@@ -135,7 +148,9 @@ class TourPanel extends SearchPanel
       @trigger "tourPanel:hasFocus", @
 
     @city.subscribe (newValue) =>
-      @showCalendar()
+      console.log('city changed!!!!!!!!')
+      if @sp.calendarActivated()
+        @showCalendar()
 
   handlePanelSubmitToMain: =>
     handlePanelSubmit(false)
@@ -145,9 +160,18 @@ class TourPanel extends SearchPanel
     if onlyHash
       app.navigate @sp.getHash(), {trigger: true}
     else
-      console.log('go url',@sp.getHash(),JSON.stringify(@selectedParams))
+
+      url = '/#'+@sp.getHash()
+      if @startParams == url
+        url += 'oldSelecton/'+encodeURIComponent(JSON.stringify(@selectedParams))
+
+      console.log('go url',url,'length', url.length)
       return
-      window.location.href = '/#'+@sp.getHash()
+      window.location.href = url
+
+  saveStartParams: ()=>
+    url = '/#'+@sp.getHash()
+    @startParams = url
 
   close: ->
     $(document.body).unbind 'mousedown'
