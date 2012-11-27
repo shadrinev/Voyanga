@@ -202,7 +202,7 @@ Application = (function(_super) {
 
   Application.prototype.bindItemsToEvent = function() {
     var tourTrip;
-    tourTrip = new EventTourResultSet(window.tripRaw);
+    tourTrip = new EventTourResultSet(window.tripRaw, window.eventId);
     return this.itemsToBuy = tourTrip;
   };
 

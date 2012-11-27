@@ -134,6 +134,8 @@ RoomSet = (function() {
 
     this.addCancelationRules = __bind(this.addCancelationRules, this);
 
+    this.similarityHash = __bind(this.similarityHash, this);
+
     this.key = __bind(this.key, this);
 
     this.minusCount = __bind(this.minusCount, this);
@@ -231,6 +233,17 @@ RoomSet = (function() {
   RoomSet.prototype.key = function() {
     var result, room, _i, _len, _ref;
     result = this.price;
+    _ref = this.rooms;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      room = _ref[_i];
+      result += room.key();
+    }
+    return result;
+  };
+
+  RoomSet.prototype.similarityHash = function() {
+    var result, room, _i, _len, _ref;
+    result = "";
     _ref = this.rooms;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
@@ -372,8 +385,8 @@ HotelResult = (function() {
     this.phone = hotelDatails.phone;
     this.fax = hotelDatails.fax;
     this.email = hotelDatails.email;
-    this.numberFloors = hotelDatails.numberFloors;
-    this.builtIn = hotelDatails.builtIn;
+    this.numberFloors = parseInt(hotelDatails.numberFloors);
+    this.builtIn = parseInt(hotelDatails.builtIn);
     this.numPhotos = 0;
     this.parent = parent;
     this.checkInTime = hotelDatails.earliestCheckInTime;
@@ -776,7 +789,8 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.select = function(room) {
-    var result, _i, _len, _ref;
+    var ticketValidCheck,
+      _this = this;
     console.log(room);
     if (room.roomSets) {
       room = room.roomSets()[0];
@@ -790,24 +804,29 @@ HotelResult = (function() {
         hotel: this
       });
     } else {
-      result = {};
-      result.module = 'Hotels';
-      result.type = 'hotel';
-      result.searchId = this.cacheId;
-      result.searchKey = room.resultId;
-      result.adults = 0;
-      result.age = false;
-      result.cots = 0;
-      _ref = this.parent.rawSP.rooms;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        room = _ref[_i];
-        result.adults += room.adultCount * 1;
-        if (room.childAge) {
-          result.age = room.childAgeage;
+      ticketValidCheck = $.Deferred();
+      ticketValidCheck.done(function(roomSet) {
+        var result, _i, _len, _ref;
+        result = {};
+        result.module = 'Hotels';
+        result.type = 'hotel';
+        result.searchId = roomSet.parent.cacheId;
+        result.searchKey = roomSet.resultId;
+        result.adults = 0;
+        result.age = false;
+        result.cots = 0;
+        _ref = _this.parent.rawSP.rooms;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          room = _ref[_i];
+          result.adults += room.adultCount * 1;
+          if (room.childAge) {
+            result.age = room.childAgeage;
+          }
+          result.cots += room.cots * 1;
         }
-        result.cots += room.cots * 1;
-      }
-      return Utils.toBuySubmit([result]);
+        return Utils.toBuySubmit([result]);
+      });
+      return this.parent.checkTicket(room, ticketValidCheck);
     }
   };
 
@@ -920,11 +939,20 @@ HotelsResultSet = (function() {
 
     this.resetMapCenter = __bind(this.resetMapCenter, this);
 
+    this.findAndSelect = __bind(this.findAndSelect, this);
+
     this.select = __bind(this.select, this);
 
     this._results = {};
+    if (rawData.error) {
+      throw "500";
+    }
+    if (!rawData.hotels) {
+      throw "404";
+    }
+    this.creationMoment = moment();
     this.rawSP = this.searchParams;
-    this.cacheId = this.searchParams.cacheId;
+    this.cacheId = rawData.cacheId;
     this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);
@@ -1063,6 +1091,24 @@ HotelsResultSet = (function() {
     hotel.getFullInfo();
     window.app.render(hotel, 'info-template');
     return Utils.scrollTo('#content', false);
+  };
+
+  HotelsResultSet.prototype.findAndSelect = function(roomSet) {
+    var hotel, possibleRoomSet, _i, _j, _len, _len1, _ref, _ref1;
+    _ref = this.data();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      hotel = _ref[_i];
+      if (hotel.hotelId === roomSet.parent.hotelId) {
+        _ref1 = hotel.roomSets();
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          possibleRoomSet = _ref1[_j];
+          if (possibleRoomSet.similarityHash() === roomSet.similarityHash()) {
+            return possibleRoomSet;
+          }
+        }
+      }
+    }
+    return false;
   };
 
   HotelsResultSet.prototype.resetMapCenter = function() {
@@ -1321,7 +1367,6 @@ HotelsResultSet = (function() {
     } else {
       this.showParts(this.pagesLoad);
     }
-    console.log(this.showParts);
     return window.setTimeout(function() {
       var kb, offset, posTop;
       if (fromFilters) {

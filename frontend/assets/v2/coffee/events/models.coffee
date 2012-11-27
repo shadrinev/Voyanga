@@ -182,7 +182,7 @@ class EventTourSet
 
 
 class EventTourResultSet
-  constructor: (resultSet) ->
+  constructor: (resultSet,@eventId) ->
     @items = ko.observableArray([])
     @selectedCity = ko.observable(resultSet.city.id)
     @fullPrice = ko.observable 0
@@ -193,7 +193,7 @@ class EventTourResultSet
     @overviewPeople = ko.observable 0
     @overviewPricePeople = ko.observable('')
     @photoBox = new EventPhotoBox(window.eventPhotos)
-    @visiblePanel = ko.observable(false)
+    @visiblePanel = ko.observable(true)
     @visiblePanel.subscribe((newValue)=>
       if newValue
         @showPanel()
@@ -220,7 +220,7 @@ class EventTourResultSet
     panelSet = new TourPanelSet()
     @activePanel(panelSet)
     @activePanel().startCity(@resultSet.city.code)
-    @activePanel().selectedParams = []
+    @activePanel().selectedParams = {ticketParams:[],eventId:@eventId}
     @activePanel().sp.calendarActivated(false)
     window.app.fakoPanel(panelSet)
 
@@ -250,7 +250,7 @@ class EventTourResultSet
         aviaResult.isHotel = ko.observable(item.isHotel)
         aviaResult.startDate = aviaResult.departureDate()
         aviaResult.dateHtml = ko.observable('<div class="day">'+dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate())+'</div>' + (if @roundTrip then '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' else '') )
-        @activePanel().selectedParams.push aviaResult.getParams()
+        @activePanel().selectedParams.ticketParams.push aviaResult.getParams()
 
         aviaResult.overviewPeople = ko.observable
 
@@ -271,7 +271,7 @@ class EventTourResultSet
         @lastHotel.serachParams = item.searchParams
         @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
         @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn)+'</div>'+'<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut)+'</div>')
-        @activePanel().selectedParams.push @lastHotel.getParams()
+        @activePanel().selectedParams.ticketParams.push @lastHotel.getParams()
         @items.push(@lastHotel)
         @totalCost += @lastHotel.roomSets()[0].discountPrice
     _.sortBy(
@@ -316,11 +316,16 @@ class EventTourResultSet
     _.last(@activePanel().panels()).minimizedCalendar(true)
     window.setTimeout(
       =>
+        console.log('calendar activated')
         @activePanel().sp.calendarActivated(true)
+
       , 1000
     )
+    if @visiblePanel()
+      $('.panel .board').show()
+    else
+      $('.panel .board').hide()
 
-    $('.panel .board').hide()
 
 
 

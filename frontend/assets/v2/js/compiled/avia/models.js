@@ -103,6 +103,10 @@ Voyage = (function() {
     return this.departureTime() + this.arrivalTime();
   };
 
+  Voyage.prototype.similarityHash = function() {
+    return this.hash() + this.airline;
+  };
+
   Voyage.prototype.push = function(voyage) {
     return this._backVoyages.push(voyage);
   };
@@ -386,7 +390,7 @@ AviaResult = (function() {
     this.rtStackedMinimized = ko.observable(true);
     this.flightCodesText = _.size(this.activeVoyage().parts) > 1 ? "Рейсы" : "Рейс";
     this.totalPeople = 0;
-    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'stopsRatio', 'recommendStopoverIco'];
+    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'similarityHash', 'stopsRatio', 'recommendStopoverIco'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
       this[name] = (function(name) {
@@ -725,6 +729,8 @@ AviaResultSet = (function() {
 
     this.postInit = __bind(this.postInit, this);
 
+    this.findAndSelect = __bind(this.findAndSelect, this);
+
     this.select = __bind(this.select, this);
 
     this.injectSearchParams = __bind(this.injectSearchParams, this);
@@ -734,6 +740,7 @@ AviaResultSet = (function() {
     this.selected_key = ko.observable('');
     this.selected_best = ko.observable(false);
     this.showBest = ko.observable(false);
+    this.creationMoment = moment();
     this._results = {};
     if (!rawVoyages.length) {
       throw "404";
@@ -810,19 +817,59 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.select = function(ctx) {
-    var result, selection;
+    var selection, ticketValidCheck;
     console.log(ctx);
     if (ctx.ribbon) {
       selection = ctx.data;
     } else {
       selection = ctx;
     }
-    result = {};
-    result.module = 'Avia';
-    result.type = 'avia';
-    result.searchId = selection.cacheId;
-    result.searchKey = selection.flightKey();
-    return Utils.toBuySubmit([result]);
+    ticketValidCheck = $.Deferred();
+    ticketValidCheck.done(function(selection) {
+      var result;
+      result = {};
+      result.module = 'Avia';
+      result.type = 'avia';
+      result.searchId = selection.cacheId;
+      result.searchKey = selection.flightKey();
+      return Utils.toBuySubmit([result]);
+    });
+    return this.checkTicket(selection, ticketValidCheck);
+  };
+
+  AviaResultSet.prototype.findAndSelect = function(result) {
+    var backHash, backVoyage, hash, voyage, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    hash = result.similarityHash();
+    _ref = this.data;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      result = _ref[_i];
+      _ref1 = result.voyages;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        voyage = _ref1[_j];
+        if (voyage.similarityHash() === hash) {
+          if (this.tours) {
+            alert('unimplemented');
+          }
+          if (!this.roundTrip) {
+            return true;
+          }
+          result.activeVoyage(voyage);
+          backHash = voyage.activeBackVoyage().similarityHash();
+          _ref2 = voyage._backVoyages;
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            backVoyage = _ref2[_k];
+            if (backVoyage.similarityHash() === backHash) {
+              if (this.tours) {
+                alert('unimplemented');
+              }
+              voyage.activeBackVoyage(backVoyage);
+              return result;
+            }
+          }
+        }
+      }
+    }
+    return false;
   };
 
   AviaResultSet.prototype.postInit = function() {

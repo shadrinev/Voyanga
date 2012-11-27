@@ -10,6 +10,8 @@ class HotelsController
       '/timeline/': @timelineAction,
       '': @indexAction
 
+    @results = ko.observable()
+
     # Mix in events
     _.extend @, Backbone.Events
 
@@ -18,23 +20,48 @@ class HotelsController
     # update search params with values in route
 
     @searchParams.fromList(args)
-    @api.search @searchParams.url(), @handleResults
+    @api.search @searchParams.url(), (data)=>
+      try
+        stacked = @handleResults data
+      catch err
+        if err=='e404'
+          new ErrorPopup 'e404'
+          return
+        alert err
+        new ErrorPopup 'e500'#, {msg: data.error}
+        return
+        
+      @results stacked
+      @render 'results', {'results' : @results}
 
   handleResults: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data
-    if data.error
-      new ErrorPopup 'e500'#, {msg: data.error}
-      return
-    if !data.hotels
-      new ErrorPopup 'e404'
-      return
-
     # FIXME REALLY RETARDED
-    data.searchParams.cacheId = data.cacheId
     stacked = new HotelsResultSet data, data.searchParams
     stacked.postInit()
-    @results = ko.observable(stacked)
-    @render 'results', {'results' : @results}
+    stacked.checkTicket = @checkTicketAction
+    return stacked
+    
+  checkTicketAction: (roomSet, resultDeferred)=>
+    now = moment()
+    diff = now.diff(@results().creationMoment, 'seconds')
+    if diff < HOTEL_TICKET_TIMELIMIT
+      resultDeferred.resolve(roomSet)
+      return
+
+    @api.search  @searchParams.url(), (data)=>
+      try
+        stacked = @handleResults(data)
+      catch err
+        new ErrorPopup 'e500', "Не удалось проверить наличие билета."
+        return
+      result = stacked.findAndSelect(roomSet)
+      if result
+        resultDeferred.resolve(result)
+      else
+        new ErrorPopup 'e500', "Билет не найден, выберите другой.", ->
+        @results stacked
+
 
   indexAction: =>
     window.voyanga_debug "HOTELS: indexAction"
