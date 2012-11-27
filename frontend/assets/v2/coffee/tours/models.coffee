@@ -644,6 +644,7 @@ class TourSearchParams extends SearchParams
   getHash: ->
     parts =  [@startCity(), @returnBack()]
     _.each @destinations(), (destination) ->
+      console.log('destination',destination)
       parts.push destination.city()
       parts.push moment(destination.dateFrom()).format('D.M.YYYY')
       parts.push moment(destination.dateTo()).format('D.M.YYYY')

@@ -267,7 +267,8 @@ VoyangaCalendarClass = function(options){
                 dayNum = dayNum - 1;
             }
             return dayNum;
-        }
+        },
+        minimalDate: new Date()
     };
     options = $.extend({},defaults,options);
     for(key in options){
@@ -327,6 +328,10 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
             endEvent: function (e,obj){self.endEvent(e,obj);},
             dragEvent: function (e,obj){self.dragEvent(e,obj);}
         });
+        if(this.minimalLine){
+            var scrollTop = (this.minimalLine / this.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
+            this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
+        }
     }
 });
 
@@ -460,12 +465,6 @@ VoyangaCalendarStandart.onCellClick = function(obj){
     } 
     VoyangaCalendarStandart.update(dontset);
 }
-function getMonday(d) {
-    d = new Date(d);
-    var day = d.getDay(),
-        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-    return new Date(d.setDate(diff));
-}
 
 VoyangaCalendarStandart.generateGrid = function(){
     var firstDay = new Date();
@@ -474,9 +473,12 @@ VoyangaCalendarStandart.generateGrid = function(){
     dayToday.setHours(0);
     var self = this;
     var startMonth = firstDay.getMonth();
-    var firstDayOfMonth = new Date();
-    firstDayOfMonth.setFullYear(firstDay.getFullYear(), startMonth, 1);
-    var tmpDate = getMonday(firstDayOfMonth);
+    //var firstDayOfMonth = new Date();
+    //firstDayOfMonth.setFullYear(firstDay.getFullYear(), startMonth, 1);
+    //var tmpDate = getMonday(firstDayOfMonth);
+    var tmpDate =  moment(moment(firstDay))._d;//clone Date object
+    tmpDate.setDate(1);
+    tmpDate.setDate(tmpDate.getDate() - this.getDay(tmpDate));//set Monday
     var weekDay = this.getDay(tmpDate);
     var startDate = firstDay.getDate();
     var startYear = firstDay.getFullYear();
@@ -521,12 +523,53 @@ VoyangaCalendarStandart.generateGrid = function(){
     this.jObj.find('.dayCellVoyanga').hover(function (e) {var obj = this; self.onCellOver(obj,e);},function (e) {var obj = this; self.onCellOut(obj,e);});
     this.jObj.find('.dayCellVoyanga').click(function (e) {var obj = this; self.onCellClick(obj,e);});
 
+    dateLabel = this.minimalDate.getFullYear()+'-'+(this.minimalDate.getMonth()+1)+'-'+this.minimalDate.getDate();
+    this.slider.minimalLine = $('#dayCell-'+dateLabel).parent().data('weeknum');
+
+
     this.slider.totalLines = lineNumber;
 }
 
 VoyangaCalendarStandart.clear = function(){
     VoyangaCalendarStandart.values = [];
     VoyangaCalendarStandart.update(true);
+}
+
+VoyangaCalendarStandart.minimalDateUpdated = function(){
+    console.log('minimalDate Updated',this.minimalDate);
+    dateLabel = this.minimalDate.getFullYear()+'-'+(this.minimalDate.getMonth()+1)+'-'+this.minimalDate.getDate();
+    this.slider.minimalLine = $('#dayCell-'+dateLabel).parent().data('weeknum');
+
+
+    var scrollTop = (this.slider.minimalLine / this.slider.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
+    this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
+    dayCell = this.jObj.find('#weekNum-0 .dayCellVoyanga:eq(0)');
+    if(dayCell.length){
+        var dd = Date.fromIso(dayCell.data('cell-date'));
+        var stop = false;
+        var lineNumber = 0;
+        while(!stop){
+            for(var i = 0;i < 7;i++){
+                var dateLabel = dd.getFullYear()+'-'+(dd.getMonth()+1)+'-'+dd.getDate();
+                if(dd < this.minimalDate){
+                    $('#dayCell-'+ dateLabel).addClass('inactive');
+                }else{
+                    if($('#dayCell-'+ dateLabel).hasClass('inactive')){
+                        $('#dayCell-'+ dateLabel).removeClass('inactive');
+                    }else{
+                        stop = true;
+                        break;
+                    }
+                }
+                dd.setDate(dd.getDate() + 1);
+            }
+        }
+    }
+
+
+    console.log('dayCell',dayCell);
+
+
 }
 
 VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
@@ -544,12 +587,40 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
 //    VoyangaCalendarStandart.values.push(newCalendarValue.from);
 //    if(newCalendarValue.twoSelect)
 //	VoyangaCalendarStandart.values.push(newCalendarValue.to);
+    if(newCalendarValue.activeSearchPanel){
+        if(newCalendarValue.activeSearchPanel.prevSearchPanel()){
+            console.log('prevPanel',newCalendarValue.activeSearchPanel.prevSearchPanel());
+            minDt = newCalendarValue.activeSearchPanel.prevSearchPanel().checkOut();
+            if(VoyangaCalendarStandart.minimalDate != minDt){
+                VoyangaCalendarStandart.minimalDate = minDt;
+                VoyangaCalendarStandart.minimalDateChanged = true;
+            }
+            console.log('set New Min Value',this.minimalDate,newCalendarValue.activeSearchPanel.prevSearchPanel());
+        }else{
+            minDt = new Date();
+            minDt.setHours(0);
+            minDt.setMinutes(0);
+            minDt.setSeconds(0);
+            if(VoyangaCalendarStandart.minimalDate != minDt){
+                VoyangaCalendarStandart.minimalDate = minDt;
+                VoyangaCalendarStandart.minimalDateChanged = true;
+            }
+        }
+        if(VoyangaCalendarStandart.alreadyInited && VoyangaCalendarStandart.minimalDateChanged){
+            VoyangaCalendarStandart.minimalDateUpdated();
+        }else if(VoyangaCalendarStandart.alreadyInited){
+            console.log('not inited',VoyangaCalendarStandart.minimalDateChanged);
+        }
+    }else{
+        console.log('else????')
+    }
     if (!newCalendarValue.from || !newCalendarValue.to)
 	return;
     VoyangaCalendarStandart.values = new Array();
     VoyangaCalendarStandart.values.push(newCalendarValue.from);
     if(newCalendarValue.twoSelect)
 	VoyangaCalendarStandart.values.push(newCalendarValue.to);
+
 
       VoyangaCalendarStandart.update(true);
 }
@@ -558,27 +629,45 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
 VoyangaCalendarStandart.init = function (panel, element){
     this.jObj =  $(element);
     VoyangaCalendarStandart.slider.jObj = this.jObj;
-    this.panel = panel;
-    console.log('init calendar');
-    panel.subscribe(function(newPanel) {
-        console.log('panelChanged');
-	    // recet calendar on panel change
+    this.alreadyInited = false;
+    this.minimalDateChanged = false;
+    if(!this.panel || (this.panel && panel() != this.panel() ) ){
+        this.panel = panel;
+        console.log('init calendar');
+        panel.subscribe(function(newPanel) {
+            console.log('panelChanged');
+            // recet calendar on panel change
+            if(newPanel.template) {
+                if(VoyangaCalendarStandart.subscription)
+                VoyangaCalendarStandart.subscription.dispose();
+                VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
+                VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
+            //	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
+            }
+
+            console.log('prevPanel2',newPanel);
+        });
+        newPanel = panel();
         if(newPanel.template) {
             if(VoyangaCalendarStandart.subscription)
-            VoyangaCalendarStandart.subscription.dispose();
+                VoyangaCalendarStandart.subscription.dispose();
             VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
             VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
-        //	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
+            //	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
+
         }
-    });
-    newPanel = panel();
-    if(newPanel.template) {
-        if(VoyangaCalendarStandart.subscription)
-            VoyangaCalendarStandart.subscription.dispose();
-        VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
-        VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
-        //	    VoyangaCalendarStandart.newValueHandler2(newPanel.calendarValue());
+        console.log('prevPanel1',newPanel);
+    }else{
+        console.log('Else');
     }
+
     VoyangaCalendarStandart.generateGrid();
     VoyangaCalendarStandart.slider.init();
+    if(this.minimalDateChanged){
+        console.log('try start MDU');
+        this.minimalDateUpdated();
+    }else{
+        console.log('not changed');
+    }
+    this.alreadyInited = true;
 }.bind(VoyangaCalendarStandart);
