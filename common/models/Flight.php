@@ -107,7 +107,6 @@ class Flight extends CComponent
         {
             $ret['flightParts'][] = $flightPart->getJsonObject();
         }
-        $ret['serviceClass'] = $this->flightParts[0]->serviceClass;
         return $ret;
     }
 

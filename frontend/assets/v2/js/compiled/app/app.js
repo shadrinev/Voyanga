@@ -112,6 +112,7 @@ Application = (function(_super) {
 
   Application.prototype.reRenderCalendar = function(elements) {
     var _this = this;
+    console.log('rerender calendar');
     VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
     this.fakoPanel.subscribe(function(newPanel) {
       if (newPanel.panels) {
@@ -124,6 +125,7 @@ Application = (function(_super) {
   };
 
   Application.prototype.reRenderCalendarEvent = function(elements) {
+    console.log('rerender calendar');
     $('.calenderWindow').css('position', 'static').find('.calendarSlide').css('position', 'static');
     VoyangaCalendarStandart.init(this.itemsToBuy.activePanel, elements[1]);
     return this.activeSearchPanel(_.last(this.itemsToBuy.activePanel().panels()));

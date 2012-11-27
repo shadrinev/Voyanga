@@ -1760,6 +1760,7 @@ input.hotel-input {
 #eventsContent h1 {
     font-size: 30px;
     margin-bottom: 20px;
+    margin-top: 15px;
 }
 #eventsContent .photoAlbum {
     height: 355px;
@@ -1777,16 +1778,39 @@ input.hotel-input {
     margin-left: 30px;
     width: 190px;
 }
-#eventsContent .rightBlock a {
+#eventsContent .rightBlock a.otherCity {
     border-bottom: 1px dashed;
     color: #2E333B;
     display: inline-block;
-    margin: 10px 0;
+    margin-top: 10px;
+    line-height: 12px;
+    margin-bottom: 12px;
+}
+#eventsContent .slidecheckbox ul li a {
+    border: medium none !important;
+    color: #2E333B;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 0 #FFFFFF;
+    white-space: nowrap;
+    width: 80%;
+}
+#eventsContent .slidecheckbox ul li.active a {
+    color: #FFF;
+    text-shadow: none;
 }
 #eventsContent .rightBlock .price {
-    display: block;
+    display: inline-block;
     font-family: Verdana;
     font-size: 30px;
+    font-weight: bold;
+    margin-top: -25px;
+}
+#eventsContent .rightBlock .rur {
+    display: inline-block;
+    font-size: 29px;
     font-weight: bold;
     margin-top: -25px;
 }
@@ -3472,4 +3496,25 @@ a.whereData span {
 .headBlockTwo .center-block h3 {
     text-shadow: none;
     margin-bottom: 20px;
+}
+.textBlock {
+    width: 700px;
+}
+
+
+.allTripEvent {
+    width: 900px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+.allTripEvent > h2 {
+    font-size: 24px;
+    color: #1d222b;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+.hr-bg.big {
+    width: 120%;
+    margin-top: 20px;
 }

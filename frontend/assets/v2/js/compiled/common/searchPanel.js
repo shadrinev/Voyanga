@@ -27,6 +27,8 @@ SearchPanel = (function() {
     this.minimizedCalendar = ko.observable(hideCalendar);
     this.calendarHidden = ko.observable(this.minimizedCalendar);
     this.calendarShadow = ko.observable(this.minimizedCalendar);
+    this.prevSearchPanel = ko.observable(null);
+    this.nextSearchPanel = ko.observable(null);
     this.oldCalendarState = this.minimizedCalendar();
     this.togglePanel(this.minimized());
     this.toggleCalendar(this.minimizedCalendar(), true);
