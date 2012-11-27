@@ -58,10 +58,9 @@ $images = '/themes/v2';
 <!--====**********===-->
 <!-- SUB HEAD -->
 
-    <!-- CENTER BLOCK -->
-    <div class="center-block">
+
         <!-- PANEL -->
-        <div class="panel" style="height: auto;width: auto;">
+        <div class="sub-head event" style="height: auto;width: auto;">
 
             <div class="board"  style="position: static;">
                 <div class="constructor" style="position: static;">
@@ -73,7 +72,7 @@ $images = '/themes/v2';
                         <!-- /ko -->
                         <div class="panel">
                             <table class="constructorTable">
-                                <tbody><tr>
+                                <tbody><tr>         
                                     <td class="tdCity">
                                         <div class="cityStart">
                                             <!-- ko if: $index()==0 || ($parent.isFirst()) -->
@@ -142,7 +141,7 @@ $images = '/themes/v2';
           </div>
           <!-- /ko -->
       </div>
-  </div>
+
 </span>
                                     </td>
                                     <td class="tdButton">
@@ -177,9 +176,9 @@ $images = '/themes/v2';
         <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarEvent}" style="top: -302px; overflow: hidden; height: 341px;display:none;">
         </div>
         <!-- END CALENDAR -->
-    </div>
+
     <!-- END CENTER BLOCK -->
-<!-- END SUB HEAD -->
+
 <!--====**********===-->
 <div class="center-block">
     <div class="allTripEvent">
