@@ -60,7 +60,7 @@ $images = '/themes/v2';
 
 
         <!-- PANEL -->
-        <div class="sub-head" style="height: auto;width: auto;">
+        <div class="sub-head event" style="height: auto;width: auto;">
 
             <div class="board"  style="position: static;">
                 <div class="constructor" style="position: static;">
