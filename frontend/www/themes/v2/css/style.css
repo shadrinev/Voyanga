@@ -1760,6 +1760,7 @@ input.hotel-input {
 #eventsContent h1 {
     font-size: 30px;
     margin-bottom: 20px;
+    margin-top: 15px;
 }
 #eventsContent .photoAlbum {
     height: 355px;
