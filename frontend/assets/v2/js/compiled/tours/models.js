@@ -115,7 +115,11 @@ ToursAviaResultSet = (function(_super) {
 
     this.toBuyRequest = __bind(this.toBuyRequest, this);
 
+    this._selectResult = __bind(this._selectResult, this);
+
     this.select = __bind(this.select, this);
+
+    this.findAndSelect = __bind(this.findAndSelect, this);
 
     this.newResults = __bind(this.newResults, this);
     ToursAviaResultSet.__super__.constructor.apply(this, arguments);
@@ -151,10 +155,23 @@ ToursAviaResultSet = (function(_super) {
     return this.results(result);
   };
 
+  ToursAviaResultSet.prototype.findAndSelect = function(result) {
+    result = this.results().findAndSelect(result);
+    if (!result) {
+      return false;
+    }
+    this._selectResult(result);
+    return result;
+  };
+
   ToursAviaResultSet.prototype.select = function(res) {
     if (res.ribbon) {
       res = res.data;
     }
+    return this._selectResult(res);
+  };
+
+  ToursAviaResultSet.prototype._selectResult = function(res) {
     this.results().selected_key(res.key);
     res.parent.filtersConfig = res.parent.filters.getConfig();
     this.results().selected_best(res.best | false);
@@ -367,7 +384,11 @@ ToursHotelsResultSet = (function(_super) {
 
     this.toBuyRequest = __bind(this.toBuyRequest, this);
 
+    this._selectRoomSet = __bind(this._selectRoomSet, this);
+
     this.select = __bind(this.select, this);
+
+    this.findAndSelect = __bind(this.findAndSelect, this);
 
     this.newResults = __bind(this.newResults, this);
     ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
@@ -446,13 +467,28 @@ ToursHotelsResultSet = (function(_super) {
     return this.results(result);
   };
 
+  ToursHotelsResultSet.prototype.findAndSelect = function(result) {
+    result = this.results().findAndSelect(result.roomSet);
+    if (!result) {
+      return false;
+    }
+    return this._selectRoomSet(result);
+  };
+
   ToursHotelsResultSet.prototype.select = function(roomData) {
+    return this._selectRoomSet(roomData.roomSet);
+  };
+
+  ToursHotelsResultSet.prototype._selectRoomSet = function(roomSet) {
     var hotel;
-    hotel = roomData.hotel;
+    hotel = roomSet.parent;
     hotel.parent = this.results();
     this.activeHotel(hotel.hotelId);
     this.overviewTemplate = 'tours-overview-hotels-ticket';
-    this.selection(roomData);
+    this.selection({
+      roomSet: roomSet,
+      hotel: hotel
+    });
     hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
     return hotel.parent.pagesLoad = hotel.parent.showParts();
   };
@@ -590,6 +626,8 @@ ToursResultSet = (function() {
     var result, variant, _i, _len, _ref,
       _this = this;
     this.searchParams = searchParams;
+    this.findAndSelect = __bind(this.findAndSelect, this);
+
     this.buy = __bind(this.buy, this);
 
     this.showOverview = __bind(this.showOverview, this);
@@ -605,6 +643,7 @@ ToursResultSet = (function() {
     this.setActive = __bind(this.setActive, this);
 
     _.extend(this, Backbone.Events);
+    this.creationMoment = moment();
     this.data = ko.observableArray();
     _ref = raw.allVariants;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -615,7 +654,6 @@ ToursResultSet = (function() {
       if (variant.flights) {
         result = new ToursAviaResultSet(variant.flights.flightVoyages, variant.searchParams);
       } else {
-        variant.searchParams.cacheId = variant.cacheId;
         result = new ToursHotelsResultSet(variant, variant.searchParams);
       }
       this.data.push(result);
@@ -891,19 +929,37 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.buy = function() {
-    var toBuy, x, _i, _len, _ref;
-    toBuy = [];
-    _ref = this.data();
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      x = _ref[_i];
-      if (x.selection()) {
-        toBuy.push({
-          module: 'Tours'
-        });
-        toBuy.push(x.toBuyRequest());
+    var ticketValidCheck,
+      _this = this;
+    ticketValidCheck = $.Deferred();
+    ticketValidCheck.done(function(resultSet) {
+      var toBuy, x, _i, _len, _ref;
+      toBuy = [];
+      _ref = resultSet.data();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        x = _ref[_i];
+        if (x.selection()) {
+          toBuy.push({
+            module: 'Tours'
+          });
+          toBuy.push(x.toBuyRequest());
+        }
+      }
+      return Utils.toBuySubmit(toBuy);
+    });
+    return this.checkTicket(this.data(), ticketValidCheck);
+  };
+
+  ToursResultSet.prototype.findAndSelect = function(data) {
+    var entry, index, success, _i, _len;
+    success = true;
+    for (index = _i = 0, _len = data.length; _i < _len; index = ++_i) {
+      entry = data[index];
+      if (!this.data()[index].findAndSelect(entry.selection())) {
+        success = false;
       }
     }
-    return Utils.toBuySubmit(toBuy);
+    return success;
   };
 
   return ToursResultSet;

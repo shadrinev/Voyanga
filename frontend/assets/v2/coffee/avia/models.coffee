@@ -601,16 +601,12 @@ class AviaResultSet
     for result in @data
       for voyage in result.voyages
         if voyage.similarityHash()==hash
-          if @tours
-            alert 'unimplemented'
           if !@roundTrip
             return true
           result.activeVoyage voyage
           backHash = voyage.activeBackVoyage().similarityHash()
           for backVoyage in voyage._backVoyages
             if backVoyage.similarityHash() == backHash
-              if @tours
-                alert 'unimplemented'
               voyage.activeBackVoyage backVoyage
               return result
     return false

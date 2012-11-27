@@ -11,6 +11,8 @@ ToursController = (function() {
 
   function ToursController(searchParams) {
     this.searchParams = searchParams;
+    this.checkTicketAction = __bind(this.checkTicketAction, this);
+
     this.handleResults = __bind(this.handleResults, this);
 
     this.searchAction = __bind(this.searchAction, this);
@@ -36,33 +38,61 @@ ToursController = (function() {
   };
 
   ToursController.prototype.searchAction = function() {
-    var args;
+    var args,
+      _this = this;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     args[0] = exTrim(args[0], '/');
     args = args[0].split('/');
     window.voyanga_debug("TOURS: Invoking searchAction", args);
     this.searchParams.fromList(args);
-    return this.api.search(this.searchParams.url(), this.handleResults);
+    return this.api.search(this.searchParams.url(), function(data) {
+      if (!data || data.error) {
+        console.error('sup');
+        alert('HANDLE ME');
+      }
+      _this.stacked = _this.handleResults(data);
+      _this.stacked.on('inner-template', function(data) {
+        return _this.trigger('inner-template', data);
+      });
+      _this.trigger("results", _this.stacked);
+      _this.render('results', _this.stacked);
+      return ko.processAllDeferredBindingUpdates();
+    });
   };
 
   ToursController.prototype.handleResults = function(data) {
-    var stacked,
-      _this = this;
+    var stacked;
     console.log("Handling results", data);
-    if (!data || data.error) {
-      this.render('e500', {
-        msg: data.error
-      });
+    stacked = new ToursResultSet(data, this.searchParams);
+    stacked.checkTicket = this.checkTicketAction;
+    return stacked;
+  };
+
+  ToursController.prototype.checkTicketAction = function(toursData, resultDeferred) {
+    var diff, now,
+      _this = this;
+    now = moment();
+    diff = now.diff(this.stacked.creationMoment, 'seconds');
+    if (diff < TOURS_TICKET_TIMELIMIT) {
+      resultDeferred.resolve(data);
       return;
     }
-    stacked = new ToursResultSet(data, this.searchParams);
-    stacked.off('inner-template');
-    stacked.on('inner-template', function(data) {
-      return _this.trigger('inner-template', data);
+    return this.api.search(this.searchParams.url(), function(data) {
+      var result, stacked;
+      try {
+        stacked = _this.handleResults(data);
+      } catch (err) {
+        new ErrorPopup('e500', "Не удалось проверить наличие билета.");
+        return;
+      }
+      result = stacked.findAndSelect(toursData);
+      if (result) {
+        return resultDeferred.resolve(stacked);
+      } else {
+        new ErrorPopup('e500', "Билет не найден, выберите другой.", function() {});
+        return _this.results(stacked);
+      }
     });
-    this.trigger("results", stacked);
-    this.render('results', stacked);
-    return ko.processAllDeferredBindingUpdates();
   };
 
   ToursController.prototype.render = function(view, data) {
