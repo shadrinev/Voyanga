@@ -41,14 +41,14 @@ $images = '/themes/v2';
                         <?php endforeach;?>
                     </select>
                     </div>
-                    <a href="#" data-bind="click: itemsToBuy.gotoAndShowPanel">Другой город</a>
+                    <a href="#" data-bind="click: itemsToBuy.gotoAndShowPanel" class="otherCity">Другой город</a>
                     <img src="/themes/v2/images/hr-gradient-events.png">
-                    <span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 <span class="rur">o</span></span>
-                    <a href="#" style="margin-top:0px;" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2 взрослых</a>
+                    <span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span> <span class="rur">o</span>
+                    <a href="#" style="margin-top:0px;" class="otherCity" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2 взрослых</a>
                     <span class="check">Последняя проверка цены<br>выполнена 29 сентября, 18:04</span>
                     <img src="/themes/v2/images/hr-gradient-events.png">
                 </div>
-                <div><?php echo $event->description;?></div>
+                <div class="textBlock"><?php echo $event->description;?></div>
             </div>
             <!-- end eventsContent -->
         </div>
@@ -181,19 +181,25 @@ $images = '/themes/v2';
     <!-- END CENTER BLOCK -->
 <!-- END SUB HEAD -->
 <!--====**********===-->
+<div class="center-block">
+    <div class="allTripEvent">
+        <h2>Ваша поездка во всех подробностях</h2>
+        <table class="allTripTable">
+            <tr>
+                <td class="firstTd">
+                    <div data-bind="template: {name: 'print-event-trip', data: itemsToBuy}"></div>
+                    <div class="hr-bg big">
+                        <img width="100%" height="31" src="/themes/v2/images/shadow-hotel.png">
+                    </div>
+                    <div class="btn-check" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
+                </td>
+                <td class="secondTd">
 
-<table class="allTripTable">
-    <tr>
-        <td class="firstTd">
-            <div data-bind="template: {name: 'print-event-trip', data: itemsToBuy}"></div>
-            <div class="btn-find" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
-        </td>
-        <td class="secondTd">
-
-        </td>
-    </tr>
-</table>
-
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 <script type="text/html" id="print-event-trip">
     <div class="allTrip" data-bind="foreach: items">
         <div class="block" data-bind="if: $index()==0">
