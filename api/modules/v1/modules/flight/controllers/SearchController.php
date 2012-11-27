@@ -23,7 +23,8 @@ class SearchController extends ApiController
     public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
     {
         $asyncExecutor = new AsyncCurl();
-        $this->addAnyClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+        $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+        $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
         $responses = $asyncExecutor->send();
         $errors = array();
         $variants = array();
@@ -56,22 +57,33 @@ class SearchController extends ApiController
         }
     }
 
-    private function addAnyClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
+    private function addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
     {
-        $anyClassUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $businessUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
         $query = http_build_query(array(
             'destinations' => $destinations,
             'adt' => $adt,
             'chd' => $chd,
             'inf' => $inf,
-            'serviceClass' => 'A',
+            'serviceClass' => 'B',
         ));
-        $anyClassUrl = $anyClassUrl . '?' . $query;
-        $asyncExecutor->add($anyClassUrl);
-
+        $businessUrl = $businessUrl . '?' . $query;
+        $asyncExecutor->add($businessUrl);
     }
 
-
+    private function addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
+    {
+        $businessUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $query = http_build_query(array(
+            'destinations' => $destinations,
+            'adt' => $adt,
+            'chd' => $chd,
+            'inf' => $inf,
+            'serviceClass' => 'E',
+        ));
+        $businessUrl = $businessUrl . '?' . $query;
+        $asyncExecutor->add($businessUrl);
+    }
 
     /**
      * @param array $destinations

@@ -12,6 +12,8 @@ class SearchController extends ApiController
     private $variants;
     private $errors;
 
+    private $asyncExecutor;
+
     /**
      * @param array $destinations
      *  [Х][city] - city iata code,
@@ -24,7 +26,7 @@ class SearchController extends ApiController
      *  [Х][chdAge]
      *  [Х][cots]
      */
-    public function actionDefault($start, array $destinations, array $rooms, $format='json')
+    public function actionDefault($start, array $destinations, array $rooms, $format = 'json')
     {
         $tourSearchParams = $this->buildSearchParams($start, $destinations, $rooms);
         $this->buildTour($tourSearchParams);
@@ -34,6 +36,65 @@ class SearchController extends ApiController
         else
             $this->sendError(200, CVarDumper::dumpAsString($this->errors));
         Yii::app()->end();
+    }
+
+    public function actionComplex($format = 'json')
+    {
+        $items = $_REQUEST['items'];
+        $this->asyncExecutor = new AsyncCurl();
+        foreach ($items as $item)
+        {
+            if ($item['type'] == 'avia')
+                $this->addAviaAsyncRequest($item);
+            elseif ($item['type'] == 'hotel')
+                $this->addHotelAsyncRequest($item);
+        }
+        $responses = $this->asyncExecutor->send();
+        $result = array();
+        foreach ($responses as $response)
+        {
+            if ($httpCode = $response->headers['http_code'] == 200)
+            {
+                $result[] = CJSON::decode($response->body);
+            }
+            else
+                $errors[] = 'Error ' . $httpCode;
+        }
+        if (!empty($this->errors))
+        {
+            $this->sendError(200, CVarDumper::dump($errors));
+            Yii::app()->end();
+        }
+        else
+        {
+            $this->sendWithCorrectFormat($format, $result);
+        }
+    }
+
+    private function addAviaAsyncRequest($sp)
+    {
+        $url = Yii::app()->createAbsoluteUrl('/v1/flight/search/BE');
+        $query = http_build_query(array(
+            'destinations' => $sp['destinations'],
+            'adt' => $sp['adt'],
+            'chd' => $sp['chd'],
+            'inf' => $sp['inf'],
+        ));
+        $url = $url . '?' . $query;
+        $this->asyncExecutor->add($url);
+    }
+
+    private function addHotelAsyncRequest($sp)
+    {
+        $url = Yii::app()->createAbsoluteUrl('/v1/hotel/search');
+        $query = http_build_query(array(
+            'city' => $sp['city'],
+            'checkIn' => $sp['checkIn'],
+            'duration' => $sp['duration'],
+            'rooms' => $sp['rooms'],
+        ));
+        $url = $url . '?' . $query;
+        $this->asyncExecutor->add($url);
     }
 
     private function buildSearchParams($start, $destinations, $rooms)
@@ -101,7 +162,8 @@ class SearchController extends ApiController
             {
                 $url = FlightTripElement::getUrlToAllVariants($group);
                 $asyncExecutor->add($url);
-            } else if ($group[0] instanceof HotelTripElement)
+            }
+            else if ($group[0] instanceof HotelTripElement)
             {
                 $itemVariantsUrl = $group[0]->getUrlToAllVariants();
                 $asyncExecutor->add($itemVariantsUrl);
@@ -111,12 +173,12 @@ class SearchController extends ApiController
         $this->errors = array();
         foreach ($responses as $response)
         {
-            if ($httpCode=$response->headers['http_code'] == 200)
+            if ($httpCode = $response->headers['http_code'] == 200)
             {
                 $this->variants[] = CJSON::decode($response->body);
             }
             else
-                $this->errors[] = 'Error '.$httpCode;
+                $this->errors[] = 'Error ' . $httpCode;
         }
     }
 
@@ -143,7 +205,7 @@ class SearchController extends ApiController
             if (isset($variant['flightVoyages']))
                 $current[] = $this->filterFlight($variant, $mask);
             else
-                $current[] = $this->filterHotel($variant,  $mask);
+                $current[] = $this->filterHotel($variant, $mask);
         }
         return $current;
     }
@@ -168,7 +230,7 @@ class SearchController extends ApiController
         $clone = $variants['hotels'];
         foreach ($variants['hotels'] as $i => $variant)
         {
-            if ($i>0)
+            if ($i > 0)
             {
                 unset($clone[$i]);
             }

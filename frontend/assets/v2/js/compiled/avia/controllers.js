@@ -11,6 +11,8 @@ AviaController = (function() {
 
   function AviaController(searchParams) {
     this.searchParams = searchParams;
+    this.checkTicketAction = __bind(this.checkTicketAction, this);
+
     this.indexAction = __bind(this.indexAction, this);
 
     this.handleResults = __bind(this.handleResults, this);
@@ -25,6 +27,7 @@ AviaController = (function() {
       '/search/:from/:to/:when/:adults/:children/:infants/': this.searchAction,
       '': this.indexAction
     };
+    this.results = ko.observable();
     _.extend(this, Backbone.Events);
   }
 
@@ -37,33 +40,67 @@ AviaController = (function() {
   };
 
   AviaController.prototype.search = function() {
-    return this.api.search(this.searchParams.url(), this.handleResults);
+    var _this = this;
+    return this.api.search(this.searchParams.url(), function(data) {
+      var stacked;
+      try {
+        stacked = _this.handleResults(data);
+      } catch (err) {
+        if (err === '404') {
+          new ErrorPopup('e404');
+          return;
+        }
+        new ErrorPopup('e500');
+        return;
+      }
+      _this.results(stacked);
+      _this.render('results', {
+        results: _this.results
+      });
+      return ko.processAllDeferredBindingUpdates();
+    });
   };
 
   AviaController.prototype.handleResults = function(data) {
     var stacked;
     window.voyanga_debug("searchAction: handling results", data);
-    try {
-      stacked = new AviaResultSet(data.flights.flightVoyages, data.siblings);
-      stacked.injectSearchParams(data.searchParams);
-      stacked.postInit();
-    } catch (err) {
-      if (err === '404') {
-        new ErrorPopup('e404');
-        return;
-      }
-      new ErrorPopup('e500');
-      return;
-    }
-    this.render('results', {
-      results: ko.observable(stacked)
-    });
-    return ko.processAllDeferredBindingUpdates();
+    stacked = new AviaResultSet(data.flights.flightVoyages, data.siblings);
+    stacked.injectSearchParams(data.searchParams);
+    stacked.postInit();
+    stacked.checkTicket = this.checkTicketAction;
+    return stacked;
   };
 
   AviaController.prototype.indexAction = function() {
     window.voyanga_debug("AVIA: invoking indexAction");
     return this.render("index", {});
+  };
+
+  AviaController.prototype.checkTicketAction = function(result, resultDeferred) {
+    var diff, now,
+      _this = this;
+    now = moment();
+    diff = now.diff(this.results().creationMoment, 'seconds');
+    if (diff < AVIA_TICKET_TIMELIMIT) {
+      resultDeferred.resolve(result);
+      return;
+    }
+    return this.api.search(this.searchParams.url(), function(data) {
+      var stacked;
+      try {
+        stacked = _this.handleResults(data);
+      } catch (err) {
+        new ErrorPopup('e500', "Не удалось проверить наличие билета.");
+        return;
+      }
+      result = stacked.findAndSelect(result);
+      if (result) {
+        return resultDeferred.resolve(result);
+      } else {
+        new ErrorPopup('e500', "Билет не найден, выберите другой.");
+        return _this.results(stacked);
+      }
+    });
   };
 
   AviaController.prototype.render = function(view, data) {

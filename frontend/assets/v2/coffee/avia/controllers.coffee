@@ -9,6 +9,8 @@ class AviaController
       '/search/:from/:to/:when/:adults/:children/:infants/': @searchAction
       '': @indexAction
 
+    @results = do ko.observable 
+
     # Mix in events
     _.extend @, Backbone.Events
 
@@ -19,29 +21,54 @@ class AviaController
     do @search
 
   search: =>
-    @api.search  @searchParams.url(), @handleResults
+    @api.search  @searchParams.url(), (data)=>
+      try
+        stacked = @handleResults(data)
+      catch err
+        if err=='404'
+          new ErrorPopup 'e404'
+          return
+        new ErrorPopup 'e500'
+        return
+      @results stacked
+
+      @render 'results', {results: @results}
+      ko.processAllDeferredBindingUpdates()
 
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
-    # temporary development cache
-#    if true
-    try
-      stacked = new AviaResultSet data.flights.flightVoyages, data.siblings
-      stacked.injectSearchParams data.searchParams
-      stacked.postInit()
-    catch err
-      if err=='404'
-        new ErrorPopup 'e404'
-        return
-      new ErrorPopup 'e500'
-      return
-    # we need observable here to be compatible with tours
-    @render 'results', {results: ko.observable(stacked)}
-    ko.processAllDeferredBindingUpdates()
+    stacked = new AviaResultSet data.flights.flightVoyages, data.siblings
+    stacked.injectSearchParams data.searchParams
+    stacked.postInit()
+    stacked.checkTicket = @checkTicketAction
+    return stacked
 
   indexAction: =>
     window.voyanga_debug "AVIA: invoking indexAction"
     @render "index", {}
 
+  
+  checkTicketAction: (result, resultDeferred)=>
+    now = moment()
+    diff = now.diff(@results().creationMoment, 'seconds')
+    if diff < AVIA_TICKET_TIMELIMIT
+      resultDeferred.resolve(result)
+      return
+
+    @api.search  @searchParams.url(), (data)=>
+      try
+        stacked = @handleResults(data)
+      catch err
+        new ErrorPopup 'e500', "Не удалось проверить наличие билета."
+        return
+      result = stacked.findAndSelect(result)
+      if result
+        resultDeferred.resolve(result)
+      else
+        new ErrorPopup 'e500', "Билет не найден, выберите другой."
+        @results stacked
+
   render: (view, data) ->
     @trigger "viewChanged", view, data
+
+

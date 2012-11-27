@@ -15,6 +15,8 @@ HotelsController = (function() {
 
     this.indexAction = __bind(this.indexAction, this);
 
+    this.checkTicketAction = __bind(this.checkTicketAction, this);
+
     this.handleResults = __bind(this.handleResults, this);
 
     this.searchAction = __bind(this.searchAction, this);
@@ -25,34 +27,69 @@ HotelsController = (function() {
       '/timeline/': this.timelineAction,
       '': this.indexAction
     };
+    this.results = ko.observable();
     _.extend(this, Backbone.Events);
   }
 
   HotelsController.prototype.searchAction = function() {
-    var args;
+    var args,
+      _this = this;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("HOTELS: Invoking searchAction", args);
     this.searchParams.fromList(args);
-    return this.api.search(this.searchParams.url(), this.handleResults);
+    return this.api.search(this.searchParams.url(), function(data) {
+      var stacked;
+      try {
+        stacked = _this.handleResults(data);
+      } catch (err) {
+        if (err === 'e404') {
+          new ErrorPopup('e404');
+          return;
+        }
+        alert(err);
+        new ErrorPopup('e500');
+        return;
+      }
+      _this.results(stacked);
+      return _this.render('results', {
+        'results': _this.results
+      });
+    });
   };
 
   HotelsController.prototype.handleResults = function(data) {
     var stacked;
     window.voyanga_debug("HOTELS: searchAction: handling results", data);
-    if (data.error) {
-      new ErrorPopup('e500');
-      return;
-    }
-    if (!data.hotels) {
-      new ErrorPopup('e404');
-      return;
-    }
-    data.searchParams.cacheId = data.cacheId;
     stacked = new HotelsResultSet(data, data.searchParams);
     stacked.postInit();
-    this.results = ko.observable(stacked);
-    return this.render('results', {
-      'results': this.results
+    stacked.checkTicket = this.checkTicketAction;
+    return stacked;
+  };
+
+  HotelsController.prototype.checkTicketAction = function(roomSet, resultDeferred) {
+    var diff, now,
+      _this = this;
+    now = moment();
+    diff = now.diff(this.results().creationMoment, 'seconds');
+    if (diff < HOTEL_TICKET_TIMELIMIT) {
+      resultDeferred.resolve(roomSet);
+      return;
+    }
+    return this.api.search(this.searchParams.url(), function(data) {
+      var result, stacked;
+      try {
+        stacked = _this.handleResults(data);
+      } catch (err) {
+        new ErrorPopup('e500', "Не удалось проверить наличие билета.");
+        return;
+      }
+      result = stacked.findAndSelect(roomSet);
+      if (result) {
+        return resultDeferred.resolve(result);
+      } else {
+        new ErrorPopup('e500', "Билет не найден, выберите другой.", function() {});
+        return _this.results(stacked);
+      }
     });
   };
 

@@ -74,6 +74,7 @@ class Room
       @mealIcon = "ico-breakfast-dinner"
   key: =>
     return @nameNemo + @name + @meal
+    
   getParams: =>
     result = {}
     result.showName = @name
@@ -148,6 +149,12 @@ class RoomSet
 
   key: =>
     result = @price
+    for room in @rooms
+      result +=room.key()
+    return result
+
+  similarityHash: =>
+    result = ""
     for room in @rooms
       result +=room.key()
     return result
@@ -629,23 +636,28 @@ class HotelResult
       @activeResultId room.resultId
       @trigger 'select', {roomSet: room, hotel: @}
     else
-      result = {}
-      result.module = 'Hotels'
-      result.type = 'hotel'
-      result.searchId = @cacheId
-      # FIXME FIXME FXIME
-      result.searchKey = room.resultId
-      result.adults = 0
-      result.age = false
-      result.cots = 0
-      for room in @parent.rawSP.rooms
-        result.adults += room.adultCount*1
-        # FIXME looks like this could be array
-        if room.childAge
-          result.age = room.childAgeage
+
+      ticketValidCheck = $.Deferred()
+      ticketValidCheck.done (roomSet)=>
+        result = {}
+        result.module = 'Hotels'
+        result.type = 'hotel'
+        result.searchId = roomSet.parent.cacheId
+        # FIXME FIXME FXIME
+        result.searchKey = roomSet.resultId
+        result.adults = 0
+        result.age = false
+        result.cots = 0
+        for room in @parent.rawSP.rooms
+          result.adults += room.adultCount*1
+          # FIXME looks like this could be array
+          if room.childAge
+            result.age = room.childAgeage
       
-        result.cots += room.cots*1
-      Utils.toBuySubmit [result]
+          result.cots += room.cots*1
+        Utils.toBuySubmit [result]
+      
+      @parent.checkTicket room, ticketValidCheck
 
 
   smallMapUrl: =>
@@ -719,9 +731,14 @@ class HotelResult
 class HotelsResultSet
   constructor: (rawData, @searchParams, @activeHotel) ->
     @_results = {}
+    if rawData.error
+      throw "500"
+    if !rawData.hotels
+      throw "404"
+    @creationMoment = moment()
     # FIXME FIXME FIXEM
     @rawSP = @searchParams
-    @cacheId = @searchParams.cacheId
+    @cacheId = rawData.cacheId
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
@@ -847,7 +864,15 @@ class HotelsResultSet
     window.app.render(hotel, 'info-template')
     Utils.scrollTo('#content',false)
 
-  resetMapCenter: ()=>
+  findAndSelect: (roomSet)=>
+    for hotel in @data()
+      if hotel.hotelId == roomSet.parent.hotelId
+        for possibleRoomSet in hotel.roomSets()
+          if possibleRoomSet.similarityHash() == roomSet.similarityHash()
+            return possibleRoomSet
+    return false
+
+  resetMapCenter: =>
     @computedCenter = new google.maps.LatLngBounds()
 
   addMapPoint: (latLng)=>
@@ -1060,8 +1085,6 @@ class HotelsResultSet
       @showParts 1
     else
       @showParts @pagesLoad
-
-    console.log(@showParts)
 
     window.setTimeout(
       =>

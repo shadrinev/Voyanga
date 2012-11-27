@@ -1,5 +1,5 @@
 class ErrorPopup extends GenericPopup
-  constructor: (code, message=false)->
+  constructor: (code, message=false, @onclose=false)->
     id = 'errorpopup-'+code
     super '#' + id, message, true
     ko.processAllDeferredBindingUpdates()
@@ -9,4 +9,8 @@ class ErrorPopup extends GenericPopup
 
   close: =>
     super
-    window.app.navigate window.app.activeModule(), {trigger: true}
+    if @onclose
+      @onclose()
+    else
+      # goto index
+      window.app.navigate window.app.activeModule(), {trigger: true}
