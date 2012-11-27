@@ -1022,6 +1022,7 @@ TourSearchParams = (function(_super) {
     var hash, parts;
     parts = [this.startCity(), this.returnBack()];
     _.each(this.destinations(), function(destination) {
+      console.log('destination', destination);
       parts.push(destination.city());
       parts.push(moment(destination.dateFrom()).format('D.M.YYYY'));
       return parts.push(moment(destination.dateTo()).format('D.M.YYYY'));

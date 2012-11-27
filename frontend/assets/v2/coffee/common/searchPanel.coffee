@@ -4,6 +4,8 @@ class SearchPanel
     @minimizedCalendar = ko.observable hideCalendar
     @calendarHidden = ko.observable @minimizedCalendar
     @calendarShadow = ko.observable @minimizedCalendar
+    @prevSearchPanel = ko.observable (null)
+    @nextSearchPanel = ko.observable (null)
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()

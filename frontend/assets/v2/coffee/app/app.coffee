@@ -79,6 +79,7 @@ class Application extends Backbone.Router
 
 
   reRenderCalendar:(elements) =>
+    console.log('rerender calendar')
     VoyangaCalendarStandart.init @fakoPanel, elements[1]
     @fakoPanel.subscribe( (newPanel)=>
       if newPanel.panels
@@ -88,6 +89,7 @@ class Application extends Backbone.Router
       @activeSearchPanel(_.last(@fakoPanel().panels()))
 
   reRenderCalendarEvent:(elements) =>
+    console.log('rerender calendar')
     $('.calenderWindow').css('position','static').find('.calendarSlide').css('position','static')
     VoyangaCalendarStandart.init @itemsToBuy.activePanel, elements[1]
     @activeSearchPanel(_.last(@itemsToBuy.activePanel().panels()))

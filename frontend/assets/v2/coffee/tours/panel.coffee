@@ -41,6 +41,9 @@ class TourPanelSet
       hotels: true
       from: @activeCalendarPanel().checkIn()
       to: @activeCalendarPanel().checkOut()
+      activeSearchPanel: @activeCalendarPanel()
+
+
 
     @formFilled = ko.computed =>
       isFilled = @startCity()
@@ -79,13 +82,18 @@ class TourPanelSet
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
+      prevPanel = _.last(@panels())
     newPanel = new TourPanel(@sp, @i, @i==0)
     newPanel.on "tourPanel:showCalendar", (args...) =>
       @activeCity(newPanel.cityReadable())
       @showPanelCalendar(args)
+    #need remove focusOut(blur)
     newPanel.on "tourPanel:hasFocus", (args...) =>
       @activeCity(newPanel.cityReadable())
       @showPanelCalendar(args)
+    if prevPanel
+      newPanel.prevSearchPanel(prevPanel)
+      prevPanel.nextSearchPanel(newPanel)
     @panels.push newPanel
     @lastPanel = newPanel
     @i = @panels().length
@@ -101,8 +109,14 @@ class TourPanelSet
     console.log 'Calendar selected:', values
     if values && values.length
       @activeCalendarPanel().checkIn values[0]
+      maxDate = @activeCalendarPanel().checkIn()
       if values.length > 1
         @activeCalendarPanel().checkOut values[1]
+        if maxDate < @activeCalendarPanel().checkOut()
+          maxDate = @activeCalendarPanel().checkOut()
+      if(@activeCalendarPanel().nextSearchPanel() && maxDate > @activeCalendarPanel().nextSearchPanel().checkIn())
+        @activeCalendarPanel().nextSearchPanel().checkIn(null)
+        @activeCalendarPanel().nextSearchPanel().checkOut(null)
 
 
   calendarHidden: =>
@@ -160,7 +174,6 @@ class TourPanel extends SearchPanel
     if onlyHash
       app.navigate @sp.getHash(), {trigger: true}
     else
-
       url = '/#'+@sp.getHash()
       if @startParams == url
         # Need save data to server, because get have limit 2048 bytes
