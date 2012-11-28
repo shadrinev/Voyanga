@@ -3425,24 +3425,25 @@ a.whereData span {
     overflow-x: hidden;
     left: 0;
 }
-#eventsContent .photoGallery .leftButton{
-    width: 70px;
-    height: 200px;
-    position: absolute;
-    background-color: #ff0000;
-    opacity: 0.1;
+#eventsContent .photoGallery .leftButton {
+    background: url(../images/event-point-left.png) left center no-repeat;
+    height: 400px;
+    top: 0;
     left: 0;
+    position: absolute;
+    width: 108px;
     z-index: 5;
+    cursor: pointer;
 }
 #eventsContent .photoGallery .rightButton{
-    width: 70px;
-    height: 200px;
-    position: absolute;
-    background-color: #ff0000;
-    opacity: 0.1;
-    right: 0;
+    background: url(../images/event-point-right.png) right center no-repeat;
+    height: 400px;
     top: 0;
+    right: 0;
+    position: absolute;
+    width: 108px;
     z-index: 5;
+    cursor: pointer;
 }
 #eventsContent .photoGallery .centerPosition{
     width: 1px;
@@ -3503,7 +3504,7 @@ a.whereData span {
 
 
 .allTripEvent {
-    width: 900px;
+    width: 945px;
     margin: 0 auto;
     padding-bottom: 60px;
 }
@@ -3513,7 +3514,9 @@ a.whereData span {
     margin-top: 25px;
     margin-bottom: 30px;
 }
-
+.allTripEvent .secondTd {
+    width: 98px;
+}
 .hr-bg.big {
     width: 120%;
     margin-top: 20px;
