@@ -20,6 +20,7 @@ $images = '/themes/v2';
             <div id="eventsContent">
                 <h1><?php echo $event->title;?></h1>
                 <em class="f17"><?php echo $event->preview;?></em>
+                <div class="clear" style="margin-top: 20px"></div>
                 <!-- ko if: itemsToBuy.photoBox.boxHeight() > 0 -->
                 <div class="photoGallery" data-bind="template: {name: 'event-photo-box', data: itemsToBuy.photoBox, afterRender: itemsToBuy.photoBox.afterRender},style:{height: itemsToBuy.photoBox.boxHeight() + 'px'}">
                 </div>
@@ -31,7 +32,7 @@ $images = '/themes/v2';
                 </div>
                 <!-- /ko -->
 
-                <div class="clear"></div>
+                <div class="clear" style="margin-top: 20px"></div>
                 <div class="rightBlock">
                     <h3>Вылет из:</h3>
                     <div>

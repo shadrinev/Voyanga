@@ -19,7 +19,33 @@ class TripDataProvider
         $this->usedGroups = array();
         if (is_numeric($orderBookingId))
         {
-            $this->restoreFromDb($orderBookingId);
+            $this->restoreOrderBookingFromDb($orderBookingId);
+        }
+    }
+
+    public function restoreOrderBookingFromDb($orderBookingId)
+    {
+        $orderBooking = OrderBooking::model()->findByPk($orderBookingId);
+        if (!$orderBooking)
+            throw new CException("No such order");
+        $flights = $orderBooking->flightBookers;
+        $hotels = $orderBooking->hotelBookers;
+        Yii::app()->{$this->shoppingCartComponent}->clear();
+        foreach ($flights as $flight)
+        {
+            $flightVoyage = unserialize($flight->flightVoyageInfo);
+            $flightTripElement = new FlightTripElement();
+            $flightTripElement->flightVoyage = $flightVoyage;
+            $flightTripElement->flightBookerId = $flight->id;
+            Yii::app()->{$this->shoppingCartComponent}->put($flightTripElement);
+        }
+        foreach ($hotels as $hotel)
+        {
+            $hotelInfo = unserialize($hotel->hotelInfo);
+            $hotelTripElement = new HotelTripElement();
+            $hotelTripElement->hotel = $hotelInfo;
+            $hotelTripElement->hotelBookerId = $hotel->id;
+            Yii::app()->{$this->shoppingCartComponent}->put($hotelTripElement);
         }
     }
 
