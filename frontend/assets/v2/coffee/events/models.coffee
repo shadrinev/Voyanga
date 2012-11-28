@@ -46,6 +46,8 @@ class Event extends Backbone.Events
     @endDate = ko.observable new Date(data.endDate)
     @address = ko.observable data.address
     @contact = ko.observable data.contact
+    @eventId = data.id
+    @eventPageUrl = '/eventInfo/info/eventId/'+ @eventId
     @preview = ko.observable data.preview
     @description = ko.observable data.description
     @title = ko.observable data.title
@@ -193,7 +195,7 @@ class EventTourResultSet
     @overviewPeople = ko.observable 0
     @overviewPricePeople = ko.observable('')
     @photoBox = new EventPhotoBox(window.eventPhotos)
-    @visiblePanel = ko.observable(true)
+    @visiblePanel = ko.observable(false)
     @visiblePanel.subscribe((newValue)=>
       if newValue
         @showPanel()
@@ -321,12 +323,19 @@ class EventTourResultSet
 
       , 1000
     )
-    if @visiblePanel()
-      $('.panel .board').show()
-    else
-      $('.panel .board').hide()
 
+    window.setTimeout(
+      =>
+        if @visiblePanel()
+          console.log('need showPanel')
+          $('.sub-head.event').css('margin-top','0px')
+        else
+          $('.sub-head.event').stop(true);
+          $('.sub-head.event').css('margin-top', (-@activePanel().heightPanelSet() + 4)+'px')
+          console.log('need hidePanel',$('.sub-head.event'),@activePanel().heightPanelSet(),$('.sub-head.event').css('margin-top'))
 
+      , 200
+    )
 
 
     @fullPrice(@totalCost)
@@ -336,9 +345,11 @@ class EventTourResultSet
   togglePanel: =>
     @visiblePanel(!@visiblePanel())
   showPanel: =>
-    $('.panel .board').show('slow')
+    console.log('showPanel')
+    $('.sub-head.event').animate({'margin-top': '0px'})
   hidePanel: =>
-    $('.panel .board').hide('slow')
+    console.log('hidePanel',@activePanel().heightPanelSet())
+    $('.sub-head.event').animate({'margin-top': (-@activePanel().heightPanelSet() + 4)+'px'})
 
 
 

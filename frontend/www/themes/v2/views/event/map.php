@@ -8,7 +8,7 @@
                     <div class="IMGmain">
                         <img data-bind="highlightChange: image, previousImage: $parent.previousImage">
                     </div>
-                    <a href="#" class="textTours">
+                    <a href="#" class="textTours" data-bind="attr:{href: eventPageUrl}">
                         <span class="txt" data-bind="text: title()">Гран-при Италии, гонки F1 на самой быстрой трассе сезона</span><br>
 					<span class="priceSelect">
 						<span class="price" data-bind="text: minimalPrice()">15 250</span> <span class="rur">o</span>

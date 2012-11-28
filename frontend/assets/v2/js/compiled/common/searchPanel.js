@@ -4,10 +4,13 @@ var SearchPanel,
 
 SearchPanel = (function() {
 
-  function SearchPanel(hideCalendar) {
+  function SearchPanel(hideCalendar, fromTourPanel) {
     var _this = this;
     if (hideCalendar == null) {
       hideCalendar = true;
+    }
+    if (fromTourPanel == null) {
+      fromTourPanel = false;
     }
     this.afterRender = __bind(this.afterRender, this);
 
@@ -30,9 +33,9 @@ SearchPanel = (function() {
     this.prevSearchPanel = ko.observable(null);
     this.nextSearchPanel = ko.observable(null);
     this.oldCalendarState = this.minimizedCalendar();
-    this.togglePanel(this.minimized());
+    this.togglePanel(this.minimized(), fromTourPanel);
     this.toggleCalendar(this.minimizedCalendar(), true);
-    this.minimized.subscribe(function(minimized) {
+    this.toggleSubscribers = this.minimized.subscribe(function(minimized) {
       return _this.togglePanel(minimized);
     });
     this.minimizedCalendar.subscribe(function(minimizedCalendar) {
@@ -40,18 +43,29 @@ SearchPanel = (function() {
     });
   }
 
-  SearchPanel.prototype.togglePanel = function(minimized) {
+  SearchPanel.prototype.togglePanel = function(minimized, fromTourPanel) {
     var heightSubHead, speed;
-    speed = 300;
-    heightSubHead = $('.sub-head').height();
-    if (!minimized) {
-      return $('.sub-head').animate({
-        'margin-top': '0px'
-      }, speed);
-    } else {
-      return $('.sub-head').animate({
-        'margin-top': '-' + (heightSubHead - 4) + 'px'
-      }, speed);
+    if (fromTourPanel == null) {
+      fromTourPanel = false;
+    }
+    if (!fromTourPanel) {
+      if (minimized) {
+        console.log('hidePanel1');
+      } else {
+        console.log('showPanel1');
+      }
+      speed = 300;
+      heightSubHead = $('.sub-head').height();
+      console.log('change oSubHead', this, minimized);
+      if (!minimized) {
+        return $('.sub-head').animate({
+          'margin-top': '-5px'
+        }, speed);
+      } else {
+        return $('.sub-head').animate({
+          'margin-top': '-' + (heightSubHead - 4) + 'px'
+        }, speed);
+      }
     }
   };
 

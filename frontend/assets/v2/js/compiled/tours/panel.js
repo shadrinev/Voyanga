@@ -57,6 +57,9 @@ TourPanelSet = (function() {
     this.height = ko.computed(function() {
       return 64 * _this.panels().length + 'px';
     });
+    this.heightPanelSet = ko.computed(function() {
+      return 64 * _this.panels().length;
+    });
     this.isMaxReached = ko.computed(function() {
       return _this.panels().length > 6;
     });
@@ -170,7 +173,9 @@ TourPanelSet = (function() {
     }
   };
 
-  TourPanelSet.prototype.calendarHidden = function() {};
+  TourPanelSet.prototype.calendarHidden = function() {
+    return this.activeCalendarPanel().calendarHidden();
+  };
 
   return TourPanelSet;
 
@@ -195,7 +200,9 @@ TourPanel = (function(_super) {
 
     var _this = this;
     window.voyanga_debug("TourPanel created");
-    TourPanel.__super__.constructor.call(this, isFirst);
+    TourPanel.__super__.constructor.call(this, isFirst, true);
+    this.toggleSubscribers.dispose();
+    console.log('try dispose subscribe');
     _.extend(this, Backbone.Events);
     this.hasfocus = ko.observable(false);
     this.sp = sp;

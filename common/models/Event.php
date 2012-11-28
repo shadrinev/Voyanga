@@ -305,6 +305,7 @@ class Event extends FrontendActiveRecord
     public function getJsonObject()
     {
         $data = array(
+            'id' => $this->id,
             'active' => false,
             "startDate" => DateTimeHelper::formatForJs($this->startDate),
             "endDate" => DateTimeHelper::formatForJs($this->endDate),

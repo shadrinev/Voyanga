@@ -49,6 +49,8 @@ Event = (function(_super) {
     this.endDate = ko.observable(new Date(data.endDate));
     this.address = ko.observable(data.address);
     this.contact = ko.observable(data.contact);
+    this.eventId = data.id;
+    this.eventPageUrl = '/eventInfo/info/eventId/' + this.eventId;
     this.preview = ko.observable(data.preview);
     this.description = ko.observable(data.description);
     this.title = ko.observable(data.title);
@@ -316,7 +318,7 @@ EventTourResultSet = (function() {
     this.overviewPeople = ko.observable(0);
     this.overviewPricePeople = ko.observable('');
     this.photoBox = new EventPhotoBox(window.eventPhotos);
-    this.visiblePanel = ko.observable(true);
+    this.visiblePanel = ko.observable(false);
     this.visiblePanel.subscribe(function(newValue) {
       if (newValue) {
         return _this.showPanel();
@@ -450,11 +452,16 @@ EventTourResultSet = (function() {
       console.log('calendar activated');
       return _this.activePanel().sp.calendarActivated(true);
     }, 1000);
-    if (this.visiblePanel()) {
-      $('.panel .board').show();
-    } else {
-      $('.panel .board').hide();
-    }
+    window.setTimeout(function() {
+      if (_this.visiblePanel()) {
+        console.log('need showPanel');
+        return $('.sub-head.event').css('margin-top', '0px');
+      } else {
+        $('.sub-head.event').stop(true);
+        $('.sub-head.event').css('margin-top', (-_this.activePanel().heightPanelSet() + 4) + 'px');
+        return console.log('need hidePanel', $('.sub-head.event'), _this.activePanel().heightPanelSet(), $('.sub-head.event').css('margin-top'));
+      }
+    }, 200);
     return this.fullPrice(this.totalCost);
   };
 
@@ -468,11 +475,17 @@ EventTourResultSet = (function() {
   };
 
   EventTourResultSet.prototype.showPanel = function() {
-    return $('.panel .board').show('slow');
+    console.log('showPanel');
+    return $('.sub-head.event').animate({
+      'margin-top': '0px'
+    });
   };
 
   EventTourResultSet.prototype.hidePanel = function() {
-    return $('.panel .board').hide('slow');
+    console.log('hidePanel', this.activePanel().heightPanelSet());
+    return $('.sub-head.event').animate({
+      'margin-top': (-this.activePanel().heightPanelSet() + 4) + 'px'
+    });
   };
 
   return EventTourResultSet;

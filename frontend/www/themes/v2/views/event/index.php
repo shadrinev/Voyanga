@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="l"></div>
-            <div class="r"><a href="#1" class="lookEyes"></a></div>
+            <div class="r"><a href="#1" class="lookEyes" data-bind="attr:{href: eventPageUrl}"></a></div>
         </div>
     </div>
 </script>
