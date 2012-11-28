@@ -56,7 +56,7 @@ class EnterCredentials extends StageAction
             //saving booking data
             /** @var BookingForm  */
             $bookingForm = $form->bookingForm;
-            $bookingModel = new OrderBooking();
+            $bookingModel =     new OrderBooking();
             $bookingModel->email = $bookingForm->contactEmail;
             $bookingModel->phone = $bookingForm->contactPhone;
             $bookingModel->timestamp = new CDbExpression('NOW()');

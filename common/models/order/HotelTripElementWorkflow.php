@@ -48,9 +48,9 @@ class HotelTripElementWorkflow extends TripElementWorkflow
         }
     }
 
-    public function createBookingInfoForItem()
+    public function updateBookingInfoForItem()
     {
-        $this->createOrderBookingIfNotExist();
+        $this->updateOrderBookingInfo();
     }
 
     private function saveAdultsPassports($i, $roomPassport, $hotelBookerId)

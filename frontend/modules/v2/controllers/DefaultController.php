@@ -9,6 +9,8 @@ class DefaultController extends CController
 {
     public function actionIndex()
     {
+        Yii::app()->user->setState('orderBookingId', null);
+        Yii::app()->user->setState('todayOrderId', null);
         $events = Event::getRandomEvents();
         $eventsJsonObject = array();
         foreach ($events as $event)

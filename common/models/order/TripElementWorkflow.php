@@ -41,7 +41,7 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
 
     public function bookItem()
     {
-        $this->createBookingInfoForItem();
+        $this->updateBookingInfoForItem();
         $this->createWorkflowAndLinkItWithItem();
         $this->saveCredentialsForItem();
     }
@@ -51,16 +51,20 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
         Yii::app()->shoppingCart->update($this->item, 1);
     }
 
-    protected function createOrderBookingIfNotExist()
+    protected function updateOrderBookingInfo()
     {
         if (!self::$bookingContactInfo)
         {
-            self::$bookingContactInfo = new OrderBooking();
+            $orderBookingId = Yii::app()->user->getState('orderBookingId');
+            $orderBooking = OrderBooking::model()->findByPk($orderBookingId);
+            if (!$orderBooking)
+                throw new CHttpException(500, "Your order is gone away");
+            self::$bookingContactInfo = $orderBooking;
             self::$bookingContactInfo->attributes = $this->getBookingContactFormData();
             if (!self::$bookingContactInfo->save())
             {
                 $errMsg = 'Saving of order booking fails: '.CVarDumper::dumpAsString($this->bookingContactInfo->errors);
-                $this->logAndThrowException($errMsg, 'OrderComponent.createOrderBookingIfNotExist');
+                $this->logAndThrowException($errMsg, 'OrderComponent.updateOrderBookingInfo');
             }
         }
         return self::$bookingContactInfo;

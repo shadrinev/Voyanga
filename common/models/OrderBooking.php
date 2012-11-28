@@ -246,4 +246,11 @@ class OrderBooking extends CActiveRecord
         }
         return $price;
     }
+
+    public static function  buildReadableNumber($number)
+    {
+        $prefix = date('md', time());
+        $suffix = sprintf('%04d', $number);
+        return $prefix.$suffix;
+    }
 }

@@ -7,7 +7,7 @@
     })
 </script>
 <div id="content">
-    <?php $this->renderPartial('_items'); ?>
+    <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>
         <?php $this->renderPartial('_ambigousPassports', array('passportForms' => $passportForms)); ?>

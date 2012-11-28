@@ -41,7 +41,7 @@ class FlightTripElementWorkflow extends TripElementWorkflow
 
     public function createBookingInfoForItem()
     {
-        $this->createOrderBookingIfNotExist();
+        $this->updateOrderBookingInfo();
     }
 
     private function savePassports()

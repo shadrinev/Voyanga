@@ -26,6 +26,8 @@ class MakeBookingAction extends CAction
         if ($this->areNotAllItemsLinked())
             throw new CHttpException(500, 'There are exists element inside trip that are not linked. You cannot continue booking');
 
+        $orderBookingId = $this->createNewOrderBooking();
+
         $ambigousPassports = $this->generatePassportForms();
         if ($this->weGotPassportsAndBooking())
         {
@@ -48,7 +50,8 @@ class MakeBookingAction extends CAction
             'passportForms' => $this->passportForms,
             'ambigousPassports' => $ambigousPassports,
             'bookingForm' => $this->bookingForm,
-            'trip' => $trip
+            'trip' => $trip,
+            'orderId' => $orderBookingId
         );
         $this->controller->render('makeBooking', $viewData);
     }
@@ -286,5 +289,19 @@ class MakeBookingAction extends CAction
         {
             return $item->isLinked();
         });
+    }
+
+    private function createNewOrderBooking()
+    {
+        if (is_numeric(Yii::app()->user->getState('todayOrderId')))
+            return Yii::app()->user->getState('todayOrderId');
+        $orderBooking = new OrderBooking();
+        $orderBooking->save();
+        $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
+        $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);
+        $orderBooking->saveAttributes(array('readableId'=>$readableNumber));
+        Yii::app()->user->setState('orderBookingId', $orderBooking->id);
+        Yii::app()->user->setState('todayOrderId', $readableNumber);
+        return $readableNumber;
     }
 }
