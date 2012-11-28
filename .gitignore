@@ -26,6 +26,7 @@ markup/.DS_Store
 /vendor
 
 frontend/www/themes/v2/assets/js/.DS_Store
+frontend/www/resources/
 
 # vagrant
 .vagrant
