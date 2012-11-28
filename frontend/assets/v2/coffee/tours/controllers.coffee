@@ -51,13 +51,13 @@ class ToursController
       try
         stacked = @handleResults(data)
       catch err
-        new ErrorPopup 'e500', "Не удалось проверить наличие билета."
+        new ErrorPopup 'avia500'
         return
       result = stacked.findAndSelect(toursData)
       if result
         resultDeferred.resolve(stacked)
       else
-        new ErrorPopup 'e500', "Билет не найден, выберите другой.", ->
+        new ErrorPopup 'toursNoTicketOnValidation', false, ->
         @results stacked
     
   render: (view, data) ->

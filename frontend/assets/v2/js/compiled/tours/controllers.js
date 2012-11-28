@@ -82,14 +82,14 @@ ToursController = (function() {
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
-        new ErrorPopup('e500', "Не удалось проверить наличие билета.");
+        new ErrorPopup('avia500');
         return;
       }
       result = stacked.findAndSelect(toursData);
       if (result) {
         return resultDeferred.resolve(stacked);
       } else {
-        new ErrorPopup('e500', "Билет не найден, выберите другой.", function() {});
+        new ErrorPopup('toursNoTicketOnValidation', false, function() {});
         return _this.results(stacked);
       }
     });
