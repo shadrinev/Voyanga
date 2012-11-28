@@ -33,6 +33,9 @@ class TourPanelSet
     @height = ko.computed =>
       64 * @panels().length + 'px'
 
+    @heightPanelSet = ko.computed =>
+      64 * @panels().length
+
     @isMaxReached = ko.computed =>
       @panels().length > 6
 
@@ -120,13 +123,15 @@ class TourPanelSet
 
 
   calendarHidden: =>
+    @activeCalendarPanel().calendarHidden()
 #    console.error("HANDLE ME")
 
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
     window.voyanga_debug "TourPanel created"
-    super(isFirst)
-
+    super(isFirst,true)
+    @toggleSubscribers.dispose();
+    console.log('try dispose subscribe');
     _.extend @, Backbone.Events
 
     @hasfocus = ko.observable false

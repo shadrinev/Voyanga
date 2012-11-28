@@ -1,5 +1,5 @@
 class SearchPanel
-  constructor: (hideCalendar = true) ->
+  constructor: (hideCalendar = true,fromTourPanel = false) ->
     @minimized = ko.observable !hideCalendar
     @minimizedCalendar = ko.observable hideCalendar
     @calendarHidden = ko.observable @minimizedCalendar
@@ -10,23 +10,28 @@ class SearchPanel
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
 
-    @togglePanel @minimized()
+    @togglePanel @minimized(),fromTourPanel
     @toggleCalendar @minimizedCalendar(), true
 
-    @minimized.subscribe (minimized) =>
+    @toggleSubscribers = @minimized.subscribe (minimized) =>
       @togglePanel(minimized)
 
     @minimizedCalendar.subscribe (minimizedCalendar) =>
       @toggleCalendar(minimizedCalendar)
 
-  togglePanel: (minimized) =>
-    speed =  300
-    heightSubHead = $('.sub-head').height()
-
-    if !minimized
-      $('.sub-head').animate {'margin-top' : '0px'}, speed
-    else
-      $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
+  togglePanel: (minimized,fromTourPanel = false) =>
+    if(!fromTourPanel)
+      if minimized
+        console.log('hidePanel1')
+      else
+        console.log('showPanel1')
+      speed =  300
+      heightSubHead = $('.sub-head').height()
+      console.log('change oSubHead', @,minimized)
+      if !minimized
+        $('.sub-head').animate {'margin-top' : '-5px'}, speed
+      else
+        $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
 
   toggleCalendar: (minimizedCalendar,initialize = false) =>
     speed =  500

@@ -60,16 +60,16 @@ $images = '/themes/v2';
 
 
         <!-- PANEL -->
-        <div class="sub-head event" style="height: auto;width: auto;">
+        <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !itemsToBuy.activePanel().calendarHidden()}">
 
             <div class="board"  style="position: static;">
                 <div class="constructor" style="position: static;">
                     <!-- BOARD CONTENT -->
                     <div class="board-content" data-bind="with: itemsToBuy.activePanel()" style="position: static;height: auto;">
                         <!-- ko foreach: $data.panels -->
-                        <!-- ko if: $index()!=0 -->
-                        <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
-                        <!-- /ko -->
+                            <!-- ko if: $index()!=0 -->
+                            <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
+                            <!-- /ko -->
                         <div class="panel">
                             <table class="constructorTable">
                                 <tbody><tr>         
@@ -98,58 +98,58 @@ $images = '/themes/v2';
                                     </td>
                                     <!-- ko if: ($data.isLast) -->
                                     <td class="tdPeople">
-                         <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}">
-  <div class="how-many-man hotel">
-      <!-- ko foreach: rawRooms -->
-      <div class="content" data-bind="click: $parent.show">
-          <span class="num" data-bind="text: $index() + 1">1</span>
-          <div class="man" data-repeat-index="0"></div><!--ko_repeatplaceholder-->
-          <!--ko_repeatplaceholder-->
-      </div>
-      <!-- /ko -->
-      <div class="btn" data-bind="click: show"></div>
-      <div class="popup">
-          <!-- ko foreach: {data: roomsView, afterRender: afterRender } -->
-          <div class="float">
-              <!-- ko template: {name: 'room-template', foreach: $data} -->
-              <div class="number-hotel">
-                  <a href="#" class="del-hotel" data-bind="click:removeRoom">удалить</a>
-                  <h5>Номер <span data-bind="text: index + 1">1</span></h5>
-                  <div class="one-str">
-                      <div class="adults">
-                          <div class="inputDIV">
-                              <input type="text" data-bind="value: adults, css:{active: adults}" class="active">
-                              <a href="#" class="plusOne" data-bind="click:plusOne" rel="adults">+</a>
-                              <a href="#" class="minusOne" data-bind="click:minusOne" rel="adults">-</a>
-                          </div>
-                          взрослых
-                      </div>
-                      <div class="childs">
-                          <div class="inputDIV">
-                              <input type="text" data-bind="value: children, css:{active: children}" name="adult2" class="">
-                              <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
-                              <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
-                          </div>
-                          детей от 12 до 18 лет
-                      </div>
-                  </div>
-                  <div class="one-str" data-bind="foreach: ages, visible: ages().length" style="display: none;"></div>
-                  <a href="#" data-bind="click: addRoom, visible: last() &amp;&amp; index&lt;3" class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер.</a>
-              </div>
+                                        <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}">
+                                          <div class="how-many-man hotel">
+                                              <!-- ko foreach: rawRooms -->
+                                              <div class="content" data-bind="click: $parent.show">
+                                                  <span class="num" data-bind="text: $index() + 1">1</span>
+                                                  <div class="man" data-repeat-index="0"></div><!--ko_repeatplaceholder-->
+                                                  <!--ko_repeatplaceholder-->
+                                              </div>
+                                              <!-- /ko -->
+                                              <div class="btn" data-bind="click: show"></div>
+                                              <div class="popup">
+                                                  <!-- ko foreach: {data: roomsView, afterRender: afterRender } -->
+                                                  <div class="float">
+                                                      <!-- ko template: {name: 'room-template', foreach: $data} -->
+                                                      <div class="number-hotel">
+                                                          <a href="#" class="del-hotel" data-bind="click:removeRoom">удалить</a>
+                                                          <h5>Номер <span data-bind="text: index + 1">1</span></h5>
+                                                          <div class="one-str">
+                                                              <div class="adults">
+                                                                  <div class="inputDIV">
+                                                                      <input type="text" data-bind="value: adults, css:{active: adults}" class="active">
+                                                                      <a href="#" class="plusOne" data-bind="click:plusOne" rel="adults">+</a>
+                                                                      <a href="#" class="minusOne" data-bind="click:minusOne" rel="adults">-</a>
+                                                                  </div>
+                                                                  взрослых
+                                                              </div>
+                                                              <div class="childs">
+                                                                  <div class="inputDIV">
+                                                                      <input type="text" data-bind="value: children, css:{active: children}" name="adult2" class="">
+                                                                      <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
+                                                                      <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
+                                                                  </div>
+                                                                  детей от 12 до 18 лет
+                                                              </div>
+                                                          </div>
+                                                          <div class="one-str" data-bind="foreach: ages, visible: ages().length" style="display: none;"></div>
+                                                          <a href="#" data-bind="click: addRoom, visible: last() &amp;&amp; index&lt;3" class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер.</a>
+                                                      </div>
 
-              <!-- /ko -->
-          </div>
-          <!-- /ko -->
-      </div>
-
-</span>
+                                                      <!-- /ko -->
+                                                  </div>
+                                                  <!-- /ko -->
+                                              </div>
+                                           </div>
+                                        </span>
                                     </td>
                                     <td class="tdButton">
                                         <div class="btn-find inactive" data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
                                     </td>
                                     <!-- /ko -->
                                 </tr>
-                                </tbody></table>
+                            </tbody></table>
                         </div>
 
 
