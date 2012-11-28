@@ -59,7 +59,7 @@ $images = '/themes/v2';
 <!--====**********===-->
 <!-- SUB HEAD -->
 
-
+        <!-- ko if: itemsToBuy.correctTour() -->
         <!-- PANEL -->
         <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !itemsToBuy.activePanel().calendarHidden()}">
 
@@ -177,11 +177,12 @@ $images = '/themes/v2';
         <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarEvent}" style="top: -302px; overflow: hidden; height: 341px;display:none;">
         </div>
         <!-- END CALENDAR -->
+        <!-- /ko -->
 
     <!-- END CENTER BLOCK -->
 
 <!--====**********===-->
-<div class="center-block">
+<div class="center-block" data-bind="if: itemsToBuy.correctTour()">
     <div class="allTripEvent">
         <h2>Ваша поездка во всех подробностях</h2>
         <table class="allTripTable">

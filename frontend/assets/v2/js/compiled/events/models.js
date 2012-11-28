@@ -103,6 +103,9 @@ EventSet = (function() {
 
   EventSet.prototype.setActive = function(valueAccessor, event) {
     var _this = this;
+    if ($(event.target).hasClass('lookEyes')) {
+      return true;
+    }
     if (this.activeMaps === 1) {
       this.closeEventsMaps();
     }
@@ -347,6 +350,7 @@ EventTourResultSet = (function() {
     this.hotelCounter = ko.observable(0);
     this.selected_key = ko.observable('');
     this.selected_best = ko.observable('');
+    this.correctTour = ko.observable(false);
     this.totalCost = 0;
     panelSet = new TourPanelSet();
     this.activePanel(panelSet);
@@ -370,98 +374,105 @@ EventTourResultSet = (function() {
     this.hotelCounterWord = ko.computed(function() {
       return Utils.wordAfterNum(_this.hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц');
     });
-    _.each(this.resultSet.items, function(item) {
-      var aviaResult;
-      if (item.isFlight) {
-        _this.hasFlight = true;
-        _this.flightCounter(_this.flightCounter() + 1);
-        _this.roundTrip = item.flights.length === 2;
-        aviaResult = new AviaResult(item, _this);
-        aviaResult.sort();
-        aviaResult.priceHtml = ko.observable(aviaResult.price + '<span class="rur">o</span>');
-        aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity());
-        aviaResult.overviewTemplate = 'tours-event-avia-ticket';
-        aviaResult.dateClass = ko.observable(_this.roundTrip ? 'blue-two' : 'blue-one');
-        aviaResult.isAvia = ko.observable(item.isFlight);
-        aviaResult.isHotel = ko.observable(item.isHotel);
-        aviaResult.startDate = aviaResult.departureDate();
-        aviaResult.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate()) + '</div>' + (_this.roundTrip ? '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' : ''));
-        _this.activePanel().selectedParams.ticketParams.push(aviaResult.getParams());
-        aviaResult.overviewPeople = ko.observable;
-        _this.items.push(aviaResult);
-        return _this.totalCost += aviaResult.price;
-      } else if (item.isHotel) {
-        _this.hasHotel = true;
-        _this.hotelCounter(_this.hotelCounter() + 1);
-        console.log("Hotel: ", item);
-        _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
-        _this.lastHotel.priceHtml = ko.observable(_this.lastHotel.roomSets()[0].price + '<span class="rur">o</span>');
-        _this.lastHotel.dateClass = ko.observable('orange-two');
-        _this.lastHotel.overviewTemplate = 'tours-event-hotels-ticket';
-        _this.lastHotel.isAvia = ko.observable(item.isFlight);
-        _this.lastHotel.isHotel = ko.observable(item.isHotel);
-        _this.lastHotel.startDate = _this.lastHotel.checkIn;
-        _this.lastHotel.serachParams = item.searchParams;
-        _this.lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + _this.lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + _this.lastHotel.address + "</span>");
-        _this.lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkOut) + '</div>');
-        _this.activePanel().selectedParams.ticketParams.push(_this.lastHotel.getParams());
-        _this.items.push(_this.lastHotel);
-        return _this.totalCost += _this.lastHotel.roomSets()[0].discountPrice;
-      }
-    });
-    _.sortBy(this.items(), function(item) {
-      return item.startDate;
-    });
-    this.startDate = this.items()[0].startDate;
-    this.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(this.startDate) + '</div>');
-    firstHotel = true;
-    console.log('items', this.items());
-    _ref = this.items();
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      item = _ref[_i];
-      if (item.isHotel()) {
-        if (!firstHotel) {
-          this.activePanel().addPanel();
-        } else {
-          i = 0;
-          _ref1 = item.serachParams.rooms;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            room = _ref1[_j];
-            if (!this.activePanel().sp.rooms()[i]) {
-              this.activePanel().sp.addSpRoom();
-            }
-            this.activePanel().sp.rooms()[i].adults(room.adultCount);
-            this.activePanel().sp.rooms()[i].children(room.childCount);
-            this.activePanel().sp.rooms()[i].ages(room.childAge);
-            i++;
-          }
-          firstHotel = false;
+    try {
+      _.each(this.resultSet.items, function(item) {
+        var aviaResult;
+        if (item.isFlight) {
+          _this.hasFlight = true;
+          _this.flightCounter(_this.flightCounter() + 1);
+          _this.roundTrip = item.flights.length === 2;
+          aviaResult = new AviaResult(item, _this);
+          aviaResult.sort();
+          aviaResult.priceHtml = ko.observable(aviaResult.price + '<span class="rur">o</span>');
+          aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity());
+          aviaResult.overviewTemplate = 'tours-event-avia-ticket';
+          aviaResult.dateClass = ko.observable(_this.roundTrip ? 'blue-two' : 'blue-one');
+          aviaResult.isAvia = ko.observable(item.isFlight);
+          aviaResult.isHotel = ko.observable(item.isHotel);
+          aviaResult.startDate = aviaResult.departureDate();
+          aviaResult.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate()) + '</div>' + (_this.roundTrip ? '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' : ''));
+          _this.activePanel().selectedParams.ticketParams.push(aviaResult.getParams());
+          aviaResult.overviewPeople = ko.observable;
+          _this.items.push(aviaResult);
+          return _this.totalCost += aviaResult.price;
+        } else if (item.isHotel) {
+          _this.hasHotel = true;
+          _this.hotelCounter(_this.hotelCounter() + 1);
+          console.log("Hotel: ", item);
+          _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
+          _this.lastHotel.priceHtml = ko.observable(_this.lastHotel.roomSets()[0].price + '<span class="rur">o</span>');
+          _this.lastHotel.dateClass = ko.observable('orange-two');
+          _this.lastHotel.overviewTemplate = 'tours-event-hotels-ticket';
+          _this.lastHotel.isAvia = ko.observable(item.isFlight);
+          _this.lastHotel.isHotel = ko.observable(item.isHotel);
+          _this.lastHotel.startDate = _this.lastHotel.checkIn;
+          _this.lastHotel.serachParams = item.searchParams;
+          _this.lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + _this.lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + _this.lastHotel.address + "</span>");
+          _this.lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkOut) + '</div>');
+          _this.activePanel().selectedParams.ticketParams.push(_this.lastHotel.getParams());
+          console.log("Add to items hotel ", _this.lastHotel);
+          _this.items.push(_this.lastHotel);
+          return _this.totalCost += _this.lastHotel.roomSets()[0].discountPrice;
         }
-        this.activePanel().lastPanel.checkIn(moment(item.checkIn)._d);
-        this.activePanel().lastPanel.checkOut(moment(item.checkOut)._d);
-        this.activePanel().lastPanel.city(item.cityCode);
-        console.log('try set destData', moment(item.checkIn)._d, moment(item.checkOut)._d, item.cityCode, 'to', this.activePanel().lastPanel, this.activePanel().lastPanel.checkIn());
+      });
+      _.sortBy(this.items(), function(item) {
+        return item.startDate;
+      });
+      this.startDate = this.items()[0].startDate;
+      this.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(this.startDate) + '</div>');
+      firstHotel = true;
+      console.log('items', this.items());
+      _ref = this.items();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (item.isHotel()) {
+          if (!firstHotel) {
+            this.activePanel().addPanel();
+          } else {
+            i = 0;
+            _ref1 = item.serachParams.rooms;
+            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+              room = _ref1[_j];
+              if (!this.activePanel().sp.rooms()[i]) {
+                this.activePanel().sp.addSpRoom();
+              }
+              this.activePanel().sp.rooms()[i].adults(room.adultCount);
+              this.activePanel().sp.rooms()[i].children(room.childCount);
+              this.activePanel().sp.rooms()[i].ages(room.childAge);
+              i++;
+            }
+            firstHotel = false;
+          }
+          this.activePanel().lastPanel.checkIn(moment(item.checkIn)._d);
+          this.activePanel().lastPanel.checkOut(moment(item.checkOut)._d);
+          this.activePanel().lastPanel.city(item.cityCode);
+          console.log('try set destData', moment(item.checkIn)._d, moment(item.checkOut)._d, item.cityCode, 'to', this.activePanel().lastPanel, this.activePanel().lastPanel.checkIn());
+        }
       }
+      this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
+      this.overviewPricePeople('Цена за ' + (this.activePanel().sp.adults() ? Utils.wordAfterNum(this.activePanel().sp.adults(), 'взрослого', 'взрослых', 'взрослых') : '') + (this.activePanel().sp.children() ? ' ' + Utils.wordAfterNum(this.activePanel().sp.children(), 'ребенка', 'детей', 'детей') : ''));
+      console.log('activePanel', this.activePanel());
+      this.activePanel().saveStartParams();
+      _.last(this.activePanel().panels()).minimizedCalendar(true);
+      window.setTimeout(function() {
+        console.log('calendar activated');
+        return _this.activePanel().sp.calendarActivated(true);
+      }, 1000);
+      window.setTimeout(function() {
+        if (_this.visiblePanel()) {
+          console.log('need showPanel');
+          return $('.sub-head.event').css('margin-top', '0px');
+        } else {
+          $('.sub-head.event').stop(true);
+          $('.sub-head.event').css('margin-top', (-_this.activePanel().heightPanelSet() + 4) + 'px');
+          return console.log('need hidePanel', $('.sub-head.event'), _this.activePanel().heightPanelSet(), $('.sub-head.event').css('margin-top'));
+        }
+      }, 200);
+      this.correctTour(true);
+    } catch (exept) {
+      console.log("Cannot process tour");
+      this.correctTour(false);
     }
-    this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
-    this.overviewPricePeople('Цена за ' + (this.activePanel().sp.adults() ? Utils.wordAfterNum(this.activePanel().sp.adults(), 'взрослого', 'взрослых', 'взрослых') : '') + (this.activePanel().sp.children() ? ' ' + Utils.wordAfterNum(this.activePanel().sp.children(), 'ребенка', 'детей', 'детей') : ''));
-    console.log('activePanel', this.activePanel());
-    this.activePanel().saveStartParams();
-    _.last(this.activePanel().panels()).minimizedCalendar(true);
-    window.setTimeout(function() {
-      console.log('calendar activated');
-      return _this.activePanel().sp.calendarActivated(true);
-    }, 1000);
-    window.setTimeout(function() {
-      if (_this.visiblePanel()) {
-        console.log('need showPanel');
-        return $('.sub-head.event').css('margin-top', '0px');
-      } else {
-        $('.sub-head.event').stop(true);
-        $('.sub-head.event').css('margin-top', (-_this.activePanel().heightPanelSet() + 4) + 'px');
-        return console.log('need hidePanel', $('.sub-head.event'), _this.activePanel().heightPanelSet(), $('.sub-head.event').css('margin-top'));
-      }
-    }, 200);
     return this.fullPrice(this.totalCost);
   };
 
