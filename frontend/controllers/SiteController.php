@@ -736,4 +736,9 @@ class SiteController extends FrontendController
         //echo dirname(Yii::app()->basePath);
         $this->render('calendar', array());
     }
+
+    public function actionParse()
+    {
+
+    }
 }

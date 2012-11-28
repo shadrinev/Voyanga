@@ -70,7 +70,7 @@ $(function(){
                     })
                 })
                 .error(function(xhr, ajaxOptions, thrownError){
-                    alert("ERROR: " + xhr.responseText);
+                    new ErrorPopup('e500', false, function(){alert('Ушли назад')}); //ошибка, когда мы не смогли сохранить паспортные данные
                 })
             });
         });
@@ -83,12 +83,12 @@ function checkStatuses(statuses)
         if (el == 0)
             return;
         if (_.isString(el))
-            errors += 'Error while booking segment number ' + (i+1) + ' = ' + el + '. ';
+            errors += 'Ошибка бронирования сегмента номер ' + (i+1) + ' = ' + el + '.<br>';
     });
     $.get('/buy/done');
     if (errors.length>0)
     {
-        alert(errors);
+        new ErrorPopup('e500', errors);
         return;
     }
     //if everything is ok then go to payment
@@ -98,7 +98,7 @@ function checkStatuses(statuses)
     $('.paybuyEnd').show();
     $.get('/buy/startPayment', function (data) {
         if (data.error) {
-            throw "Payment error";
+            new ErrorPopup('e500', false); //ошибка бронирования
         } else {
             Utils.submitPayment(data);
         }
