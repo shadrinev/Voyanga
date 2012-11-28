@@ -14,7 +14,7 @@ class SuccessAction extends CAction
             }
             $params[$key]=$_REQUEST[$key];
         }
-
+        
         $parts = explode('-', $params['OrderId']);
         if(count($parts)<2)
             return;
@@ -30,20 +30,25 @@ class SuccessAction extends CAction
         if($bill->transactionId && ($params['TransactionID']!=$bill->transactionId))
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
-        $booker  = new FlightBookerComponent();
-        $booker->setFlightBookerFromId($channel->booker->id);
+        if($channel->booker instanceof FlightBooker) {
+            $booker  = new FlightBookerComponent();
+            $booker->setFlightBookerFromId($channel->booker->id);
+        } else {
+            $booker  = new HotelBookerComponent();
+            $booker->setHotelBookerFromId($channel->booker->id);
+        }
         //FIXME logme
         if($this->getStatus($booker)=='paid')
             return $this->rebill($orderId);
 
-        if($this->getStatus($booker)!='waitingForPayment')
+        if(!$this->isWaitingForPayment($booker))
             throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
         $booker->status('paid');
         $bill->save();
         echo 'Ok';
         $this->rebill($orderId);
-
     }
+
     private function rebill($orderId){
         // init order
         $order = Yii::app()->order;
@@ -55,11 +60,12 @@ class SuccessAction extends CAction
             if($this->getStatus($booker)=='paid'){
                 continue;
             }
+
             if($this->getStatus($booker)!='waitingForPayment'){
                 return $this->refund($order);
             }
-            
-            $order->isWaitingForPaymentState($booker->getStatus());
+
+//            $order->isWaitingForPaymentState($booker->getStatus());
             $bill = $payments->getBillForBooker($booker->getCurrent());
             $bill->channel = 'ltr';
             $channel =  $bill->getChannel();
@@ -96,6 +102,16 @@ class SuccessAction extends CAction
                 throw new Exception("Wrong status: " . $booker->getStatus());
             }
         }
+    }
+
+    private function isWaitingForPayment($booker)
+    {
+        if($this->getStatus($booker)=='waitingForPayment')
+            return true;
+        # FIXME FIXME FIXME
+        if($this->getStatus($booker)=='hardWaitingForPayment')
+            return true;
+        return false;
     }
 
     //! helper function returns last segment of 2 segment statuses
