@@ -290,3 +290,15 @@ exTrim = function(str, charlist) {
   re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g");
   return str.replace(re, "");
 };
+
+String.prototype.format = function() {
+  var args;
+  args = arguments;
+  return this.replace(/{(\d+)}/g, function(match, number) {
+    if (typeof args[number] !== 'undefined') {
+      return args[number];
+    } else {
+      return match;
+    }
+  });
+};

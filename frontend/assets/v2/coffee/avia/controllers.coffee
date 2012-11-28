@@ -26,9 +26,9 @@ class AviaController
         stacked = @handleResults(data)
       catch err
         if err=='404'
-          new ErrorPopup 'e404'
+          new ErrorPopup 'avia404'
           return
-        new ErrorPopup 'e500'
+        new ErrorPopup 'avia500'
         return
       @results stacked
 

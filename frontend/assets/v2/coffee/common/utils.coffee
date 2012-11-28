@@ -233,3 +233,9 @@ exTrim = (str, charlist) ->
   charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
   re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g")
   str.replace re, ""
+
+
+String.prototype.format = ->
+  args = arguments;
+  @replace /{(\d+)}/g, (match, number) -> 
+    if typeof args[number] != 'undefined' then  args[number]else match

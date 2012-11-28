@@ -47,10 +47,10 @@ AviaController = (function() {
         stacked = _this.handleResults(data);
       } catch (err) {
         if (err === '404') {
-          new ErrorPopup('e404');
+          new ErrorPopup('avia404');
           return;
         }
-        new ErrorPopup('e500');
+        new ErrorPopup('avia500');
         return;
       }
       _this.results(stacked);
