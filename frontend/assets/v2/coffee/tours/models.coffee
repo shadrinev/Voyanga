@@ -65,17 +65,28 @@ class ToursAviaResultSet extends TourEntry
     @avia = true
     @results result
 
+  findAndSelect: (result)=>
+    result = @results().findAndSelect(result)
+    if !result
+      return false
+    @_selectResult(result)
+    return result
+
   select: (res)=>
     # FIXME looks retardely stupid
     if res.ribbon
       #it is actually recommnd ticket
       res = res.data
+    @_selectResult(res)
+
+  _selectResult: (res)=>
     @results().selected_key res.key
     res.parent.filtersConfig = res.parent.filters.getConfig()
     @results().selected_best res.best | false
     @overviewTemplate = 'tours-overview-avia-ticket'
     @selection(res)
 
+    
   toBuyRequest: =>
     result = {}
     result.type = 'avia'
@@ -254,12 +265,21 @@ class ToursHotelsResultSet extends TourEntry
     @selection null
     @results result
 
+  findAndSelect: (result) =>
+    result = @results().findAndSelect(result.roomSet)
+    if !result
+      return false
+    @_selectRoomSet result
+      
   select: (roomData)=>
-    hotel = roomData.hotel
+    @_selectRoomSet roomData.roomSet
+
+  _selectRoomSet: (roomSet)=>
+    hotel = roomSet.parent
     hotel.parent = @results()
     @activeHotel  hotel.hotelId
     @overviewTemplate = 'tours-overview-hotels-ticket'
-    @selection roomData
+    @selection {roomSet: roomSet, hotel: hotel}
     hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
     hotel.parent.pagesLoad = hotel.parent.showParts()
 
@@ -372,6 +392,7 @@ class ToursResultSet
   constructor: (raw, @searchParams)->
     # Mix in events
     _.extend @, Backbone.Events
+    @creationMoment = moment()
 
     @data = ko.observableArray()
     for variant in raw.allVariants
@@ -380,7 +401,6 @@ class ToursResultSet
       if variant.flights
         result =  new ToursAviaResultSet variant.flights.flightVoyages, variant.searchParams
       else
-        variant.searchParams.cacheId = variant.cacheId
         result = new ToursHotelsResultSet variant, variant.searchParams
       @data.push result
       result.on 'setActive', (entry, beforeRender = true, afterRender = true, scrollTo = 0,callback = null)=>
@@ -439,6 +459,7 @@ class ToursResultSet
     @voyashki.push new VoyashaCheapest @
     @voyashki.push new VoyashaOptima @
     @voyashki.push new VoyashaRich @
+    
   setActive: (entry,beforeRender = true, afterRender = true,scrollTo = 0,callback = null)=>
     $('#loadWrapBgMin').show()
     if entry.overview
@@ -565,14 +586,24 @@ class ToursResultSet
     )
 
   buy: =>
-    toBuy = []
-    for x in @data()
-      if x.selection()
-        toBuy.push {module: 'Tours'}
-        toBuy.push x.toBuyRequest()
+    ticketValidCheck = $.Deferred()
+    ticketValidCheck.done (resultSet)=>
+      toBuy = []
+      for x in resultSet.data()
+        if x.selection()
+          toBuy.push {module: 'Tours'}
+          toBuy.push x.toBuyRequest()
+      Utils.toBuySubmit toBuy
+      
+    @checkTicket @data(), ticketValidCheck
 
-    Utils.toBuySubmit toBuy
-  
+  findAndSelect: (data) =>
+    success = true
+    for entry, index in data
+      if !@data()[index].findAndSelect(entry.selection())
+        success = false
+    return success
+    
 # Models for tour search params,
 class DestinationSearchParams
   constructor: ->
@@ -644,6 +675,7 @@ class TourSearchParams extends SearchParams
   getHash: ->
     parts =  [@startCity(), @returnBack()]
     _.each @destinations(), (destination) ->
+      console.log('destination',destination)
       parts.push destination.city()
       parts.push moment(destination.dateFrom()).format('D.M.YYYY')
       parts.push moment(destination.dateTo()).format('D.M.YYYY')

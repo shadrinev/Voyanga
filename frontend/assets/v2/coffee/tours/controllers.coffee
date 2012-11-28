@@ -23,25 +23,42 @@ class ToursController
     args = args[0].split('/')
     window.voyanga_debug "TOURS: Invoking searchAction", args
     @searchParams.fromList(args)
-    @api.search @searchParams.url(), @handleResults
+    @api.search @searchParams.url(), (data) =>
+      if !data || data.error
+        console.error 'sup'
+        alert 'HANDLE ME'
+      @stacked = @handleResults data
+      @stacked.on 'inner-template', (data)=>
+        @trigger 'inner-template', data
+      @trigger "results", @stacked
+      @render 'results', @stacked
+      ko.processAllDeferredBindingUpdates()
 
   handleResults: (data) =>
     console.log "Handling results", data
-    if !data || data.error
-      @render 'e500', {msg: data.error}
+    stacked = new ToursResultSet data, @searchParams
+    stacked.checkTicket = @checkTicketAction
+    return stacked
+
+  checkTicketAction: (toursData, resultDeferred)=>
+    now = moment()
+    diff = now.diff(@stacked.creationMoment, 'seconds')
+    if diff < TOURS_TICKET_TIMELIMIT
+      resultDeferred.resolve(data)
       return
 
-    stacked = new ToursResultSet data, @searchParams
-    stacked.off 'inner-template'
-    stacked.on 'inner-template', (data)=>
-      @trigger 'inner-template', data
-      
-    @trigger "results", stacked
-    @render 'results', stacked
-
-
-#    @trigger "sidebarChanged", filters
-    ko.processAllDeferredBindingUpdates()
-
+    @api.search  @searchParams.url(), (data)=>
+      try
+        stacked = @handleResults(data)
+      catch err
+        new ErrorPopup 'e500', "Не удалось проверить наличие билета."
+        return
+      result = stacked.findAndSelect(toursData)
+      if result
+        resultDeferred.resolve(stacked)
+      else
+        new ErrorPopup 'e500', "Билет не найден, выберите другой.", ->
+        @results stacked
+    
   render: (view, data) ->
     @trigger "viewChanged", view, data

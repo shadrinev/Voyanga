@@ -65,7 +65,8 @@ TourPanelSet = (function() {
         twoSelect: true,
         hotels: true,
         from: _this.activeCalendarPanel().checkIn(),
-        to: _this.activeCalendarPanel().checkOut()
+        to: _this.activeCalendarPanel().checkOut(),
+        activeSearchPanel: _this.activeCalendarPanel()
       };
     });
     this.formFilled = ko.computed(function() {
@@ -114,11 +115,12 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.addPanel = function() {
-    var newPanel,
+    var newPanel, prevPanel,
       _this = this;
     this.sp.destinations.push(new DestinationSearchParams());
     if (_.last(this.panels())) {
       _.last(this.panels()).isLast(false);
+      prevPanel = _.last(this.panels());
     }
     newPanel = new TourPanel(this.sp, this.i, this.i === 0);
     newPanel.on("tourPanel:showCalendar", function() {
@@ -133,6 +135,10 @@ TourPanelSet = (function() {
       _this.activeCity(newPanel.cityReadable());
       return _this.showPanelCalendar(args);
     });
+    if (prevPanel) {
+      newPanel.prevSearchPanel(prevPanel);
+      prevPanel.nextSearchPanel(newPanel);
+    }
     this.panels.push(newPanel);
     this.lastPanel = newPanel;
     this.i = this.panels().length;
@@ -146,11 +152,20 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.setDate = function(values) {
+    var maxDate;
     console.log('Calendar selected:', values);
     if (values && values.length) {
       this.activeCalendarPanel().checkIn(values[0]);
+      maxDate = this.activeCalendarPanel().checkIn();
       if (values.length > 1) {
-        return this.activeCalendarPanel().checkOut(values[1]);
+        this.activeCalendarPanel().checkOut(values[1]);
+        if (maxDate < this.activeCalendarPanel().checkOut()) {
+          maxDate = this.activeCalendarPanel().checkOut();
+        }
+      }
+      if (this.activeCalendarPanel().nextSearchPanel() && maxDate > this.activeCalendarPanel().nextSearchPanel().checkIn()) {
+        this.activeCalendarPanel().nextSearchPanel().checkIn(null);
+        return this.activeCalendarPanel().nextSearchPanel().checkOut(null);
       }
     }
   };
