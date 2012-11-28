@@ -577,6 +577,10 @@ class OrderComponent extends CApplicationComponent
                 $flightBookerComponent = new FlightBookerComponent();
                 $flightBookerComponent->setFlightBookerFromId($entry['bookerId']);
                 $bookers[] = $flightBookerComponent;
+            } else if ($entry['type']=='hotel') {
+                $hotelBookerComponent = new HotelBookerComponent();
+                $hotelBookerComponent->setHotelBookerFromId($entry['bookerId']);
+                $bookers[] = $hotelBookerComponent;
             } else {
                 throw new Exception("Unexpected segment type");
             }
