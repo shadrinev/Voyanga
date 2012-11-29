@@ -2848,11 +2848,11 @@ input.hotel-input {
 	font-size: 13px;
 }
 .payCardPal {
-	/*box-shadow: 0 -20px 15px rgba(67, 68, 70, 0.3);*/
-	height: 500px;
-	width: 100%;
-	background: #FFF;
-	border-top: 1px solid #babbbe; 
+    height: 513px;
+    width: 100%;
+    background: white;
+    border-top: 1px solid #BABBBE;
+    overflow: hidden;
 }
 .paybuyEnd .info {
 	width: 690px;
