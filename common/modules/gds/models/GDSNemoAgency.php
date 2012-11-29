@@ -240,7 +240,7 @@ class GDSNemoAgency extends CComponent
                 $needSave = true;
                 $eTicket = true;
                 //Yii::beginProfile('processingSegments');
-                $markAirlineCodes = array();
+                $supposedValAirlineCode = '';
                 UtilsHelper::soapObjectsArray($oSoapFlight->Segments->Segment);
                 foreach ($oSoapFlight->Segments->Segment as $arrKey => $oSegment)
                 {
@@ -258,9 +258,9 @@ class GDSNemoAgency extends CComponent
                         $oPart->arrival_city = $oPart->arrival_airport->city;
                         $oPart->departure_terminal_code = isset($oSegment->DepTerminal) ? UtilsHelper::soapElementValue($oSegment->DepTerminal) : '';
                         $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal) ? UtilsHelper::soapElementValue($oSegment->ArrTerminal) : '';
-                        if (!$markAirlineCodes)
+                        if (strlen($supposedValAirlineCode)==0)
                         {
-                            $markAirlineCodes[$oSegment->MarkAirline] = $oSegment->MarkAirline;
+                            $supposedValAirlineCode = $oSegment->MarkAirline;
                         }
 
                         $oPart->markAirline = Airline::getAirlineByCode($oSegment->MarkAirline);
@@ -413,18 +413,7 @@ class GDSNemoAgency extends CComponent
                 }
                 else
                 {
-                    if (count($markAirlineCodes) == 1)
-                    {
-                        $oFlight->valAirline = Airline::getAirlineByCode(implode($markAirlineCodes));
-                    }
-                    else
-                    {
-                        Yii::log(Yii::t('application', 'Validation airline not set. Market airlines codes: {codes}. FlightId: {flightId}', array(
-                            '{codes}' => implode(', ', $markAirlineCodes),
-                            '{flightId}' => $oSoapFlight->FlightId
-                        )), 'info', 'nemo');
-                        $needSave = false;
-                    }
+                    $oFlight->valAirline = Airline::getAirlineByCode($supposedValAirlineCode);
                 }
                 $oFlight->flight_key = $oSoapFlight->FlightId;
                 $oFlight->parts = $aNewParts;

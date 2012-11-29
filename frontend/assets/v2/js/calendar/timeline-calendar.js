@@ -268,8 +268,6 @@ VoyangaCalendarTimeline.generateGrid = function(){
     }
     console.log('monthArr', this.slider.monthArray.length,this.slider.monthArray);
 
-    var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
-
 
     var lastLineMonth = this.slider.monthShowArray[this.slider.monthShowArray.length - 1].line;
     //console.log(this.slider.monthArray);

@@ -206,7 +206,9 @@ class HotelRoom extends CApplicationComponent
             'view'=>null,
             'breakfast'=>null,
             'refundable'=>null,
-            'roomNameCanonical'=>null
+            'roomNameCanonical'=>null,
+            'offer'=>null,
+            'smoke'=>null
         );
         /* TODO: функцию можно сильно ускорить если разбить всю roomName на слова,
          * и вначале проверять на налчие того, или иного слова
@@ -218,7 +220,7 @@ class HotelRoom extends CApplicationComponent
        /* if(self::stripWords($roomName,array(' 1 bedroom',' one bedroom'))){
 
         }*/
-        $roomName = str_replace(';','',$roomName);
+        $roomName = str_replace(array(';',',','=','-','(',')'),'',$roomName);
         self::stripWords($roomName,array(' room'));
 
         //self::stripWords($roomName,array(' classic','classic',' offer',' offer-','offer','offer-'));
