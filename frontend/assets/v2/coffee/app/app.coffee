@@ -142,12 +142,15 @@ class Application extends Backbone.Router
     # Call some change handlers with initial values
     @bindEvents()
     @slider.handler(@activeModule())
-
+    
   runWithModule: (module) =>
     # set default module
     Backbone.history.start({silent: true})
     window.app.navigate '#'+ module, {replace: true}
     @activeModule module
+    $(window).unbind 'resize'
+    $(window).resize ResizeAvia
+
 
   bindEvents: =>
     ev = []

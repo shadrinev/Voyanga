@@ -187,7 +187,9 @@ Application = (function(_super) {
     window.app.navigate('#' + module, {
       replace: true
     });
-    return this.activeModule(module);
+    this.activeModule(module);
+    $(window).unbind('resize');
+    return $(window).resize(ResizeAvia);
   };
 
   Application.prototype.bindEvents = function() {
