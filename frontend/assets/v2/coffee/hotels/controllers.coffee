@@ -25,10 +25,9 @@ class HotelsController
         stacked = @handleResults data
       catch err
         if err=='e404'
-          new ErrorPopup 'e404'
+          new ErrorPopup 'hotels404'
           return
-        alert err
-        new ErrorPopup 'e500'#, {msg: data.error}
+        new ErrorPopup 'avia500'#, {msg: data.error}
         return
         
       @results stacked
@@ -53,13 +52,13 @@ class HotelsController
       try
         stacked = @handleResults(data)
       catch err
-        new ErrorPopup 'e500', "Не удалось проверить наличие билета."
+        new ErrorPopup 'avia500'
         return
       result = stacked.findAndSelect(roomSet)
       if result
         resultDeferred.resolve(result)
       else
-        new ErrorPopup 'e500', "Билет не найден, выберите другой.", ->
+        new ErrorPopup 'hotelsNoTicketOnValidation', false,  ->
         @results stacked
 
 

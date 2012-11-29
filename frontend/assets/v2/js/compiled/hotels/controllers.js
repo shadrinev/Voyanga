@@ -43,11 +43,10 @@ HotelsController = (function() {
         stacked = _this.handleResults(data);
       } catch (err) {
         if (err === 'e404') {
-          new ErrorPopup('e404');
+          new ErrorPopup('hotels404');
           return;
         }
-        alert(err);
-        new ErrorPopup('e500');
+        new ErrorPopup('avia500');
         return;
       }
       _this.results(stacked);
@@ -80,14 +79,14 @@ HotelsController = (function() {
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
-        new ErrorPopup('e500', "Не удалось проверить наличие билета.");
+        new ErrorPopup('avia500');
         return;
       }
       result = stacked.findAndSelect(roomSet);
       if (result) {
         return resultDeferred.resolve(result);
       } else {
-        new ErrorPopup('e500', "Билет не найден, выберите другой.", function() {});
+        new ErrorPopup('hotelsNoTicketOnValidation', false, function() {});
         return _this.results(stacked);
       }
     });

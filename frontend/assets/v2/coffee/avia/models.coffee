@@ -601,9 +601,9 @@ class AviaResultSet
     for result in @data
       for voyage in result.voyages
         if voyage.similarityHash()==hash
-          if !@roundTrip
-            return true
           result.activeVoyage voyage
+          if !@roundTrip
+            return result
           backHash = voyage.activeBackVoyage().similarityHash()
           for backVoyage in voyage._backVoyages
             if backVoyage.similarityHash() == backHash

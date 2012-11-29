@@ -47,10 +47,10 @@ AviaController = (function() {
         stacked = _this.handleResults(data);
       } catch (err) {
         if (err === '404') {
-          new ErrorPopup('e404');
+          new ErrorPopup('avia404');
           return;
         }
-        new ErrorPopup('e500');
+        new ErrorPopup('avia500');
         return;
       }
       _this.results(stacked);
@@ -90,14 +90,14 @@ AviaController = (function() {
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
-        new ErrorPopup('e500', "Не удалось проверить наличие билета.");
+        new ErrorPopup('avia500');
         return;
       }
       result = stacked.findAndSelect(result);
       if (result) {
         return resultDeferred.resolve(result);
       } else {
-        new ErrorPopup('e500', "Билет не найден, выберите другой.");
+        new ErrorPopup('aviaNoTicketOnValidation', "Билет не найден, выберите другой.", false, function() {});
         return _this.results(stacked);
       }
     });

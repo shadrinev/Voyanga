@@ -847,10 +847,10 @@ AviaResultSet = (function() {
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         voyage = _ref1[_j];
         if (voyage.similarityHash() === hash) {
-          if (!this.roundTrip) {
-            return true;
-          }
           result.activeVoyage(voyage);
+          if (!this.roundTrip) {
+            return result;
+          }
           backHash = voyage.activeBackVoyage().similarityHash();
           _ref2 = voyage._backVoyages;
           for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
