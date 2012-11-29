@@ -41,7 +41,6 @@ Slider = (function() {
   Slider.prototype.handler = function(newValue) {
     var activeLI, activeLIindex;
     if (!newValue) {
-      console.error('HANDLER RECIEVED EMPTY MODUEL NAME');
       return;
     }
     console.log("HANDLER: ", newValue);

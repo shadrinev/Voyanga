@@ -18,6 +18,8 @@ Application = (function(_super) {
 
     this.contentRendered = __bind(this.contentRendered, this);
 
+    this.handle404 = __bind(this.handle404, this);
+
     this.bindItemsToEvent = __bind(this.bindItemsToEvent, this);
 
     this.bindItemsToBuy = __bind(this.bindItemsToBuy, this);
@@ -39,7 +41,7 @@ Application = (function(_super) {
     var result,
       _this = this;
     window.onerror = function(error) {
-      return alert(error);
+      return new ErrorPopup('e500withText', [error]);
     };
     this.activeModule = ko.observable(null);
     this.activeModuleInstance = ko.observable(null);
@@ -182,9 +184,10 @@ Application = (function(_super) {
     Backbone.history.start({
       silent: true
     });
-    return window.app.navigate('#' + module, {
+    window.app.navigate('#' + module, {
       replace: true
     });
+    return this.activeModule(module);
   };
 
   Application.prototype.bindEvents = function() {
@@ -208,8 +211,8 @@ Application = (function(_super) {
     return this.itemsToBuy = tourTrip;
   };
 
-  Application.prototype.http404 = function() {
-    return alert("Not found");
+  Application.prototype.handle404 = function() {
+    return new ErrorPopup('avia500');
   };
 
   Application.prototype.route = function(route, name, callback) {

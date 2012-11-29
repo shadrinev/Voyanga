@@ -35,6 +35,11 @@ ERRORS = {
     title: "Не подтвердился выбранный вариант",
     text: "При проверке доступности, некоторые из сегментов не подтвердились: TODO Попробуйте выбрать другой вариант.",
     buttonText: "Ok"
+  },
+  e500withText: {
+    title: "Упс",
+    text: "При обработке запроса произошла внутренняя ошибка сервера. Мы работаем над устранением данной неисправности, попробуйте повторить запрос позже.: {0}",
+    buttonText: "Перейти на главную"
   }
 };
 
@@ -67,9 +72,7 @@ ErrorPopup = (function(_super) {
     if (this.onclose) {
       return this.onclose();
     } else {
-      return window.app.navigate(window.app.activeModule(), {
-        trigger: true
-      });
+      return window.location = '/#' + (window.app.activeModule() || 'tours');
     }
   };
 

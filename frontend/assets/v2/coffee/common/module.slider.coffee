@@ -33,7 +33,7 @@ class Slider
   # handles app.activeModule changes
   handler: (newValue)=>
     if !newValue
-      console.error('HANDLER RECIEVED EMPTY MODUEL NAME')
+#      console.error('HANDLER RECIEVED EMPTY MODUEL NAME')
       return
     console.log "HANDLER: ", newValue
     activeLI = $('#h-' + newValue + '-slider')

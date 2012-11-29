@@ -70,7 +70,7 @@ $(function(){
                     })
                 })
                 .error(function(xhr, ajaxOptions, thrownError){
-                    new ErrorPopup('e500', false, function(){alert('Ушли назад')}); //ошибка, когда мы не смогли сохранить паспортные данные
+                    new ErrorPopup('avia500', false, function(){alert('Ушли назад')}); //ошибка, когда мы не смогли сохранить паспортные данные
                 })
             });
         });
@@ -79,6 +79,7 @@ $(function(){
 function checkStatuses(statuses)
 {
     var errors = '';
+    var errorText='';
     _.each(statuses, function(el, i){
         if (el == 0)
             return;
@@ -88,7 +89,8 @@ function checkStatuses(statuses)
     $.get('/buy/done');
     if (errors.length>0)
     {
-        new ErrorPopup('e500', errors);
+	errorText = errors;
+        new ErrorPopup('e500withText', [errorText]);
         return;
     }
     //if everything is ok then go to payment

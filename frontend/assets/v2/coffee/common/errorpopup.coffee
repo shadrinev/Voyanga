@@ -25,6 +25,10 @@ ERRORS =
     title: "Не подтвердился выбранный вариант"
     text: "При проверке доступности, некоторые из сегментов не подтвердились: TODO Попробуйте выбрать другой вариант."
     buttonText: "Ok"
+  e500withText:
+    title: "Упс"
+    text: "При обработке запроса произошла внутренняя ошибка сервера. Мы работаем над устранением данной неисправности, попробуйте повторить запрос позже.: {0}"
+    buttonText: "Перейти на главную"
 
 class ErrorPopup extends GenericPopup
   constructor: (key, params = false, @onclose=false)->
@@ -45,4 +49,5 @@ class ErrorPopup extends GenericPopup
       @onclose()
     else
       # goto index
-      window.app.navigate window.app.activeModule(), {trigger: true}
+      window.location = '/#' + (window.app.activeModule()||'tours')
+#      window.app.navigate window.app.activeModule(), {trigger: true}

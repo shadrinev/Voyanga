@@ -4,7 +4,8 @@
 class Application extends Backbone.Router
   constructor: ->
     # FIXME
-    window.onerror = (error)-> alert(error)
+    window.onerror = (error)-> new ErrorPopup('e500withText', [error]);
+
     # register url hash changes handler
 #    hasher.initialized.add @navigate
 #    hasher.changed.add @navigate
@@ -134,6 +135,8 @@ class Application extends Backbone.Router
         ko.processAllDeferredBindingUpdates()
 
   run: ->
+#    @route ':path', 'h404', @handle404
+#    @route ':path/*path', 'h404', @handle404
     # Start listening to hash changes
     Backbone.history.start()
     # Call some change handlers with initial values
@@ -144,6 +147,7 @@ class Application extends Backbone.Router
     # set default module
     Backbone.history.start({silent: true})
     window.app.navigate '#'+ module, {replace: true}
+    @activeModule module
 
   bindEvents: =>
     ev = []
@@ -160,8 +164,8 @@ class Application extends Backbone.Router
     @itemsToBuy =  tourTrip
 
   # FIXME write better handler
-  http404: ->
-    alert "Not found"
+  handle404: =>
+    new ErrorPopup 'avia500'
 
   # beforeroute event, cuz backbone cant do this for us
   route: (route, name, callback) ->
