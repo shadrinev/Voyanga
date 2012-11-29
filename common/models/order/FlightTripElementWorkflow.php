@@ -39,7 +39,7 @@ class FlightTripElementWorkflow extends TripElementWorkflow
         $this->savePassports();
     }
 
-    public function createBookingInfoForItem()
+    public function updateBookingInfoForItem()
     {
         $this->updateOrderBookingInfo();
     }
