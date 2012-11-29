@@ -1807,6 +1807,7 @@ input.hotel-input {
     font-size: 30px;
     font-weight: bold;
     margin-top: -25px;
+    height: 25px;
 }
 #eventsContent .rightBlock .rur {
     display: inline-block;
@@ -3071,7 +3072,7 @@ input.hotel-input {
 .counters .bgCount span {
 	color: #2b2e2f;
 }
-.projectPopUp #boxClose {
+.projectPopUp .boxClose {
 	right: 10px;
 }
 .textSlideProj {
@@ -3453,7 +3454,12 @@ a.whereData span {
 }
 #eventsContent .photoGallery .centerPosition .eventPhoto{
     position: absolute;
+
 }
+/*#eventsContent .photoGallery .centerPosition .eventPhoto img{*/
+    /*height: 400px;*/
+    /*width: auto;*/
+/*}*/
 
 .cityChoise {
     background: none;

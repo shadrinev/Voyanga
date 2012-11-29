@@ -1214,3 +1214,70 @@ function PopUpInfo() {
     });
 }
 $(window).load(PopUpInfo);
+
+
+function openPopUpContact() {
+    clickYes = true;
+    $('.contentWrapBg').show();
+    $('body').css('overflow', 'hidden');
+    // Проверка на закрытие вне области
+    var mouseHover = true;
+    $('.wrapDiv').hover(function() {
+            mouseHover = false;
+        },
+        function() {
+            mouseHover = true;
+        }
+    );
+    $('.contentWrapBg').mouseup(function() {
+        if (mouseHover) {
+            closePopUpContact();
+        }
+        else {
+            return;
+        }
+    });
+    var scrollTopCount = $('.contentWrapBg').scrollTop();
+    var heightWinAll = $(window).height();
+    var heightPopAll = $('.contentWrapBg .wrapDiv').innerHeight();
+    var offset = $('.contentWrapBg .wrapDiv').offset();
+    var scrollMean = (heightPopAll + offset.top) - heightWinAll;
+    var scrollNull = 0;
+    $(window).on('keydown', function(e){
+        if (clickYes) {
+            if (e.which == 27) {
+                closePopUpContact();
+            }
+            else if (e.which == 38) {
+                scrollTopCount -= 15;
+                if (scrollTopCount > -14) {
+                    $('.contentWrapBg').scrollTop(scrollTopCount);
+                }
+                else {
+                    scrollTopCount = 0;
+                    return;
+                }
+            }
+            else if (e.which == 40) {
+                scrollTopCount += 15;
+                if ((scrollMean + 15) > scrollTopCount) {
+                    $('.contentWrapBg').scrollTop(scrollTopCount);
+                    scrollNull = scrollTopCount;
+                }
+                else {
+                    scrollTopCount = scrollNull;
+                    return;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+    });
+}
+
+function closePopUpContact() {
+    $('.contentWrapBg').hide();
+    $('body').css('overflow', 'auto');
+    clickYes = false;
+}
