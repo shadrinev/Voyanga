@@ -1242,7 +1242,6 @@ function openPopUpContact() {
     var heightPopAll = $('.contentWrapBg .wrapDiv').innerHeight();
     var offset = $('.contentWrapBg .wrapDiv').offset();
     var scrollMean = (heightPopAll + offset.top) - heightWinAll;
-    var scrollNull = 0;
     $(window).on('keydown', function(e){
         if (clickYes) {
             if (e.which == 27) {
@@ -1259,13 +1258,13 @@ function openPopUpContact() {
                 }
             }
             else if (e.which == 40) {
+                console.log((scrollMean + 15) +' '+ scrollTopCount);
                 scrollTopCount += 15;
                 if ((scrollMean + 15) > scrollTopCount) {
                     $('.contentWrapBg').scrollTop(scrollTopCount);
-                    scrollNull = scrollTopCount;
                 }
                 else {
-                    scrollTopCount = scrollNull;
+                    scrollTopCount = scrollMean;
                     return;
                 }
             }
