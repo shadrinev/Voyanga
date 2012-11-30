@@ -142,7 +142,7 @@
     height: 50px;
     width: 20px;
 }
-#boxClose {
+#boxClose, .boxClose {
     background: url("../images/btn-close.png") no-repeat scroll 0 0 transparent;
     color: #444444;
     cursor: pointer;
@@ -155,4 +155,97 @@
     top: 10px;
     width: 17px;
     z-index: 10000;
+}
+
+.contentWrapBg {
+    background: rgba(38,41,46,0.8);
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 0px 0 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.contentWrapBg .wrapDiv {
+    margin-left: -335px;
+    width: 670px;
+}
+.wrapContent {
+    -webkit-border-radius: 8px;
+    -moz-border-radius   : 8px;
+    border-radius: 8px;
+    background: #f4f7f9;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    width: 600px;
+    color: #272b31;
+    line-height: 18px;
+    font-size: 14px;
+}
+.wrapContent h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+.wrapContent .floatLeft {
+    width: 235px;
+    font-style: italic;
+}
+.wrapContent .floatRight {
+    width: 359px;
+    margin-left: 6px;
+}
+.wrapContent .floatRight img {
+    vertical-align: middle;
+}
+.wrapContent .floatRight a {
+    color: #1c81bb;
+    text-decoration: underline;
+}
+.wrapContent .textBlock {
+    overflow: hidden;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 600px;
+}
+.wrapContent .textBlock.telefon .floatLeft {
+    background: url("../images/bg-contacts-line01.png") no-repeat right 10px;
+}
+.wrapContent .textBlock.telefon .floatRight {
+    font-size: 50px;
+    letter-spacing: -0.02em;
+    line-height: 40px;
+}
+.wrapContent .textBlock.hEmail .floatLeft {
+    background: url("../images/bg-contacts-line02.png") no-repeat right 10px;
+}
+.wrapContent .textBlock.oEmail .floatLeft {
+    background: url("../images/bg-contacts-line03.png") no-repeat right 10px;
+}
+.wrapContent .textBlock.hEmail .floatRight a {
+    font-size: 22px;
+    line-height: 22px;
+    color: #1c81bb;
+    text-decoration: underline;
+}
+.wrapContent .textBlock.oEmail .floatRight a {
+    font-size: 22px;
+    line-height: 22px;
+    color: #1c81bb;
+    text-decoration: underline;
+}
+.shadowContact {
+    background: url(../images/shadow-contacts.png) no-repeat;
+    width: 639px;
+    height: 34px;
+    margin-left: -20px;
+    margin-right: -19px;
+    margin-bottom: -20px;
+}
+.lh28 {
+    line-height: 28px;
 }
