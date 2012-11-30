@@ -33,6 +33,9 @@ Sibling = (function() {
       spacing = 10;
       ratio = _this.height / _this.absDelta;
       ratio = ratio * 0.6;
+      if (isNaN(ratio)) {
+        ratio = 0;
+      }
       if (ratio > 0) {
         if (ratio < 0.1) {
           console.error(_this.height, _this.absDelta, _this.price);
