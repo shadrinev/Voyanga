@@ -79,6 +79,7 @@ Application = (function(_super) {
         result = ko.utils.unwrapObservable(result);
         if (result !== null) {
           _this.fakoPanel(result);
+          _this.activeSearchPanel(_this.fakoPanel());
           return ko.processAllDeferredBindingUpdates();
         }
       }

@@ -75,7 +75,8 @@ HotelsPanel = (function(_super) {
         twoSelect: true,
         hotels: true,
         from: _this.checkIn(),
-        to: _this.checkOut()
+        to: _this.checkOut(),
+        activeSearchPanel: _this
       };
     });
   }

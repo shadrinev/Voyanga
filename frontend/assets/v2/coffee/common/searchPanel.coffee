@@ -21,15 +21,10 @@ class SearchPanel
 
   togglePanel: (minimized,fromTourPanel = false) =>
     if(!fromTourPanel)
-      if minimized
-        console.log('hidePanel1')
-      else
-        console.log('showPanel1')
       speed =  300
       heightSubHead = $('.sub-head').height()
-      console.log('change oSubHead', @,minimized)
       if !minimized
-        $('.sub-head').animate {'margin-top' : '-5px'}, speed
+        $('.sub-head').animate {'margin-top' : '0px'}, speed
       else
         $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
 

@@ -49,17 +49,11 @@ SearchPanel = (function() {
       fromTourPanel = false;
     }
     if (!fromTourPanel) {
-      if (minimized) {
-        console.log('hidePanel1');
-      } else {
-        console.log('showPanel1');
-      }
       speed = 300;
       heightSubHead = $('.sub-head').height();
-      console.log('change oSubHead', this, minimized);
       if (!minimized) {
         return $('.sub-head').animate({
-          'margin-top': '-5px'
+          'margin-top': '0px'
         }, speed);
       } else {
         return $('.sub-head').animate({

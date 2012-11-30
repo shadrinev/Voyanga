@@ -440,7 +440,7 @@ class EventPhotoBox
         elem.div.css('left',elem.left + 'px')
         $('#eventsContent .photoGallery .centerPosition').append(elem.div);
       console.log('all loaded',@renderedDivs)
-      $('.center-block').css('position','static')
+      $('.events .center-block').css('position','static')
 
   onAnimate: (pos,info)=>
     deltaLeft = pos - info.start

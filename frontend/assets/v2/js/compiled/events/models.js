@@ -614,7 +614,7 @@ EventPhotoBox = (function() {
         $('#eventsContent .photoGallery .centerPosition').append(elem.div);
       }
       console.log('all loaded', this.renderedDivs);
-      return $('.center-block').css('position', 'static');
+      return $('.events .center-block').css('position', 'static');
     }
   };
 

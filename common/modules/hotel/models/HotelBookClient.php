@@ -494,6 +494,15 @@ class HotelBookClient
 
             }
         }
+        if (isset($hotelSXE->SpecialOffers->SpecialOffer))
+        {
+            $hotelParams['offerText'] = '';
+            UtilsHelper::soapObjectsArray($hotelSXE->SpecialOffers->SpecialOffer);
+            foreach ($hotelSXE->SpecialOffers->SpecialOffer as $specialOfferSXE)
+            {
+                $hotelParams['offerText'] = (string)$specialOfferSXE;
+            }
+        }
 
         $hotel = new Hotel($hotelParams);
         if (self::$lastRequestCityHaveCoordinates)

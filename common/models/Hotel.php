@@ -207,6 +207,12 @@ class Hotel extends CApplicationComponent
         {
             foreach($params['rooms'] as $roomParams)
             {
+                if($this->specialOffer){
+                    $roomParams['specialOffer'] = true;
+                    if(isset($params['offerText'])){
+                        $roomParams['offerText'] = $params['offerText'];
+                    }
+                }
                 $this->rooms[] = new HotelRoom($roomParams);
             }
         }

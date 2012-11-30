@@ -56,7 +56,7 @@ class RoomNamesNemo extends CActiveRecord
             array('roomNameCanonical', 'length', 'max'=>200),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, roomTypeId, roomSizeId, roomNameCanonical, roomNameRusId', 'safe', 'on'=>'search'),
+            array('id, roomTypeId, roomSizeId, roomNameCanonical, roomNameRusId', 'safe'),
         );
     }
 

@@ -40,6 +40,7 @@ class Application extends Backbone.Router
         result = ko.utils.unwrapObservable result
         if result != null
           @fakoPanel result
+          @activeSearchPanel(@fakoPanel())
           ko.processAllDeferredBindingUpdates()
 
     @_view = ko.observable false
