@@ -453,14 +453,12 @@ function smallTicketHeight() {
 	var var_recomendedContent = $('.recomended-content');
 	var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items .content');
 	var var_oneHeight = var_recomendedItems.height();
-	//var_recomendedContent.find('.prices-of-3days .ticket').css('height', var_oneHeight +'px');
-	//var_recomendedItems.css('height', var_oneHeight +'px');
 	
 	var heightTwoTicket= 0;
 	if ($('.two-way').css('display')!=='none') {
-	    heightTwoTicket = (var_oneHeight - 32) / 2;				
+	    heightTwoTicket = (var_oneHeight - 22) / 2;
 	} else {
-	    heightTwoTicket = (var_oneHeight - 32);
+	    heightTwoTicket = (var_oneHeight - 22);
 	}
 	heightTwoTicket = Math.floor(heightTwoTicket);
 	//console.log(heightTwoTicket);
@@ -476,7 +474,6 @@ function smallTicketHeight() {
 		siblings.graphHeight(heightGraf);
 	    }
 	}
-	//	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
     }
 }
 
