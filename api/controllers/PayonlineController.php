@@ -7,6 +7,7 @@ class PayonlineController extends CController {
     {
         return array(
             'success' => array('class'=>'common.extensions.payments.actions.SuccessAction'),
+            'failure' => array('class'=>'common.extensions.payments.actions.FailureAction'),
         );
     }
 
