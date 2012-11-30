@@ -1281,7 +1281,7 @@ function closePopUpContact() {
     clickYes = false;
 }
 
-
+var scrollTrue = true;
 function resizeFAQ() {
     var _marginLeftWrapFAQ;
     if ($(window).width() <= 1000) {
@@ -1290,8 +1290,18 @@ function resizeFAQ() {
     else if ($(window).width() > 1000) {
         _marginLeftWrapFAQ = ($(window).width() - 977) / 2.615;
     }
-
     $('.wrapFAQ').css('margin-left', _marginLeftWrapFAQ+'px');
+
+    $('.tableFAQ').each(function(index) {
+        $('.listFAQ').find('li').eq(index).attr('rel', $(this).offset().top);
+    });
+    scrollFAQ();
+    $('.listFAQ').find('li').find('a').click(function() {
+        scrollTrue = false;
+        $('.listFAQ').find('li').removeClass('active');
+        $(this).parent().addClass('active');
+        setTimeout(function() { scrollTrue = true; }, 650);
+    });
 }
 function scrollFAQ() {
     if ($(window).scrollTop() > 64) {
@@ -1300,6 +1310,14 @@ function scrollFAQ() {
     else {
         $('.listFAQ').css('top','0px');
     }
+
+    // ScrollMenu
+    $('.listFAQ').find('li').each(function(index) {
+       if (scrollTrue && ($(window).scrollTop() + 68) >= $(this).attr('rel')) {
+           $('.listFAQ').find('li').removeClass('active');
+           $(this).addClass('active');
+       }
+    });
 }
 $(window).load(resizeFAQ);
 $(window).resize(resizeFAQ);

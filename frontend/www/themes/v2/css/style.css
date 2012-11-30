@@ -3620,6 +3620,7 @@ a.whereData span {
     color: #292b2e;
     text-shadow: 0px 1px 0px rgba(255,255,255, 0.3);
 }
-.listFAQ li a:hover, .listFAQ li a.active {
+.listFAQ li a:hover, .listFAQ li.active a {
     background: url(../images/bg-faq-q.png) no-repeat;
+    color: #292b2e !important;
 }
