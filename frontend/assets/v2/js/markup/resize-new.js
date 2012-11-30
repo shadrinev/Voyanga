@@ -456,9 +456,9 @@ function smallTicketHeight() {
 	
 	var heightTwoTicket= 0;
 	if ($('.two-way').css('display')!=='none') {
-	    heightTwoTicket = (var_oneHeight - 22) / 2;
+	    heightTwoTicket = (var_oneHeight - 24) / 2;
 	} else {
-	    heightTwoTicket = (var_oneHeight - 22);
+	    heightTwoTicket = (var_oneHeight - 24);
 	}
 	heightTwoTicket = Math.floor(heightTwoTicket);
 	//console.log(heightTwoTicket);
