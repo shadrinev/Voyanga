@@ -3527,3 +3527,89 @@ a.whereData span {
     width: 120%;
     margin-top: 20px;
 }
+
+/* FAQ */
+.wrapFAQ {
+    width: 980px;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+.wrapFAQ .floatLeft {
+    width: 230px;
+}
+.wrapFAQ .floatRight {
+    width: 750px;
+}
+.wrapFAQ h2 {
+    color: #1d222b;
+    text-shadow: #ffffff 0px 1px 0px;
+    margin-bottom: 3px;
+    letter-spacing: 0.001em;
+    font-size: 24px;
+}
+.tableFAQ {
+    width: 100%;
+    margin-bottom: 50px;
+}
+.tableFAQ thead td {
+    vertical-align: middle;
+    padding-top: 0px;
+    padding-bottom: 3px;
+}
+.tableFAQ td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.tableFAQ .tdNumb {
+    width: 50px;
+    text-align: right;
+    padding-right: 10px;
+}
+.tableFAQ .tdNumb span.ico-numb {
+    display: inline-block;
+    background: url(../images/bg-faq-numb.png) no-repeat;
+    width: 29px;
+    height: 28px;
+    line-height: 26px;
+    text-align: center;
+    font-size: 14px;
+    color: #1d222b;
+    text-shadow: 0px 1px 0px #FFF;
+}
+.tableFAQ .tdMain h3 {
+    font-size: 18px;
+    line-height: 26px;
+    margin-bottom: 12px;
+}
+.tableFAQ .tdMain {
+    font-size: 12px;
+    color: #4b5059;
+    line-height: 20px;
+}
+.tableFAQ .tdMain hr {
+    margin-top: 15px;
+    background: url(../images/bg-faq-hr.png) no-repeat center top;
+    border: none;
+    height: 31px;
+    margin-bottom: -9px;
+}
+.listFAQ li {
+    margin-bottom: 6px;
+}
+.listFAQ li a {
+    display: block;
+    line-height: 24px;
+    height: 24px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 210px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #292b2e;
+    text-shadow: 0px 1px 0px rgba(255,255,255, 0.3);
+}
+.listFAQ li a:hover, .listFAQ li a.active {
+    background: url(../images/bg-faq-q.png) no-repeat;
+}
