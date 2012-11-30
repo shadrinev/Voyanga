@@ -1603,11 +1603,11 @@
 	width: inherit; height: 100px;
 	background: url(../images/bg-schedule-of-prices.png) no-repeat center 0px;
 	position: absolute;
-	bottom: 45px; left: 0px;
+	bottom: 35px; left: 0px;
 	border-bottom: 1px solid #acb0b5;
 }
 .prices-of-3days .ticket .month {
-    bottom: 26px;
+    bottom: 13px;
     color: #262930;
     cursor: default;
     font-family: Verdana;
@@ -1625,12 +1625,15 @@
 	position: absolute; bottom:19px;
 	width: inherit;
 	text-align: center; color: #6d6f72;
+    display: none;
 }
 .schedule-of-prices li .date {
-	font-size: 16px;
-	position: absolute; bottom: 4px;
-	width: inherit;
-	text-align: center; color: #262930;
+    bottom: 2px;
+    color: #262930;
+    font-size: 11px;
+    position: absolute;
+    text-align: center;
+    width: inherit;
 }
 .schedule-of-prices li.active {
 	background: #dcdfe1;
@@ -1647,12 +1650,12 @@
 	vertical-align: middle; margin-left: 5px;
 }
 .prices-of-3days .blockText {
-	color: #191c21;
-	font-size: 11px;
-	font-family: Arial;
-	line-height: 18px;
-	margin-top: 6px;
-	margin-bottom: 6px;	
+    color: #191C21;
+    font-family: Arial;
+    font-size: 11px;
+    line-height: 18px;
+    margin-bottom: 3px;
+    margin-top: 3px;
 }
 .prices-of-3days .blockText .txtCena {
 	margin-top: 11px;
