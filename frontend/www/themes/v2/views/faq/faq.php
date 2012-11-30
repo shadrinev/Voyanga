@@ -1,13 +1,14 @@
+
 <div class="wrapFAQ">
     <div class="floatLeft">
         <ul class="listFAQ">
-            <li><a href="#">1. Работа сайта и наши услуги</a></li>
-            <li><a href="#">2. Бронирование и выписка билетов</a></li>
-            <li><a href="#">3. Оплата</a></li>
+            <li><a href="javascript:void(0)" onclick="Utils.scrollTo('#q01')">1. Работа сайта и наши услуги</a></li>
+            <li><a href="javascript:void(0)" onclick="Utils.scrollTo('#q02')">2. Бронирование и выписка билетов</a></li>
+            <li><a href="javascript:void(0)" onclick="Utils.scrollTo('#q03')">3. Оплата</a></li>
         </ul>
     </div>
     <div class="floatRight">
-        <table class="tableFAQ">
+        <table class="tableFAQ" id="q01">
             <thead>
                 <tr>
                     <td class="tdNumb"><span class="ico-numb">1</span></td>
@@ -33,7 +34,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="tableFAQ">
+        <table class="tableFAQ" id="q02">
             <thead>
             <tr>
                 <td class="tdNumb"><span class="ico-numb">2</span></td>
@@ -53,7 +54,7 @@
             </tr>
             </tbody>
         </table>
-        <table class="tableFAQ">
+        <table class="tableFAQ" id="03">
             <thead>
             <tr>
                 <td class="tdNumb"><span class="ico-numb">3</span></td>

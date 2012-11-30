@@ -1280,3 +1280,27 @@ function closePopUpContact() {
     $('body').css('overflow', 'auto');
     clickYes = false;
 }
+
+
+function resizeFAQ() {
+    var _marginLeftWrapFAQ;
+    if ($(window).width() <= 1000) {
+        _marginLeftWrapFAQ = 10;
+    }
+    else if ($(window).width() > 1000) {
+        _marginLeftWrapFAQ = ($(window).width() - 977) / 2.615;
+    }
+
+    $('.wrapFAQ').css('margin-left', _marginLeftWrapFAQ+'px');
+}
+function scrollFAQ() {
+    if ($(window).scrollTop() > 64) {
+        $('.listFAQ').css('top', ($(window).scrollTop() - 64) +'px');
+    }
+    else {
+        $('.listFAQ').css('top','0px');
+    }
+}
+$(window).load(resizeFAQ);
+$(window).resize(resizeFAQ);
+$(window).scroll(scrollFAQ);
