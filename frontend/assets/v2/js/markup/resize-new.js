@@ -1327,8 +1327,8 @@ function gradientResize() {
         var offset = _content.offset();
         var _leftContent = $(window).width() - offset.left;
         var _rightContent = offset.left + _content.width();
-        $('.gShR').show().css('left', _rightContent+'px');
-        $('.gShL').show().css('right', _leftContent+'px');
+        $('.gShR').show().css('left', (_rightContent - 180) +'px');
+        $('.gShL').show().css('right', (_leftContent - 70) +'px');
         console.log(_leftContent+' '+_rightContent);
     }
     else {
