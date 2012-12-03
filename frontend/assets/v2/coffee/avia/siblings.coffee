@@ -20,12 +20,14 @@ class Sibling
       # limit it to 0...0.6
       ratio = @height/@absDelta
       ratio = ratio*0.6
-      
+#      console.log @height, @absDelta, @price, ratio, ']]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]'
+      if isNaN(ratio)
+        ratio = 0
       if ratio > 0
         if ratio < 0.1
           console.error @height, @absDelta, @price
       ratio * (@graphHeight() - spacing) + spacing - 10
-
+  
   columnValue: ->
     return @price
     
@@ -138,4 +140,5 @@ class Siblings
       else
         item.height = (maxPrice.price - item.price)
       item.absDelta = absDelta
+      #item.scaledHeight()
       

@@ -68,6 +68,7 @@ class AviaPanel extends SearchPanel
       from: @departureDate()
       to: @rtDate()
       hotels: false
+      activeSearchPanel: @
 
     @departureDateDay = ko.computed =>
       dateUtils.formatDay(@departureDate())

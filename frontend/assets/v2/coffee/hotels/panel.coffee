@@ -51,6 +51,7 @@ class HotelsPanel extends SearchPanel
       hotels: true
       from: @checkIn()
       to: @checkOut()
+      activeSearchPanel: @
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
