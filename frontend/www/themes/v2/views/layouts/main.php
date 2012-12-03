@@ -56,7 +56,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     <!-- BOARD IF WE ARE AT THE MAIN -->
     <!-- ko if:in1 -->
     <div class="panel-index">
-    	<h1 class="title">Спланируй свое путешествие <img src="<?= $theme ?>/images/saleTitle.png"></h1>
+    	<h1 class="title"><span data-bind="html: fakoPanel().mainLabel"></span></h1>
         <div class="board" data-bind="style: {height: fakoPanel().height}">
             <!-- ko if:fakoPanel().template=='tour-panel-template' -->
                 <div class="constructor">
