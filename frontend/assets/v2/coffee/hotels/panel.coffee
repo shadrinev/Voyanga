@@ -6,7 +6,7 @@ class HotelsPanel extends SearchPanel
     @prevPanel = 'avia'
     @nextPanel = 'tours'
     @icon = 'hotel-ico';
-    @mainLabel = 'Поиск гостиниц'
+    @mainLabel = 'Поиск отелей'
     @indexMode = ko.observable true
 
     @sp = new HotelsSearchParams()

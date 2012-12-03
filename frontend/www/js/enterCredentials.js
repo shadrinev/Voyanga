@@ -70,7 +70,7 @@ $(function(){
                     })
                 })
                 .error(function(xhr, ajaxOptions, thrownError){
-                    new ErrorPopup('avia500', false, function(){alert('Ушли назад')}); //ошибка, когда мы не смогли сохранить паспортные данные
+                    new ErrorPopup('passport500'); //ошибка, когда мы не смогли сохранить паспортные данные
                 })
             });
         });
@@ -90,7 +90,7 @@ function checkStatuses(statuses)
     if (errors.length>0)
     {
 	errorText = errors;
-        new ErrorPopup('e500withText', [errorText]);
+        new ErrorPopup('passportBookingError', [errorText]);
         return;
     }
     //if everything is ok then go to payment
@@ -100,7 +100,7 @@ function checkStatuses(statuses)
     $('.paybuyEnd').show();
     $.get('/buy/startPayment', function (data) {
         if (data.error) {
-            new ErrorPopup('e500', false); //ошибка бронирования
+            new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
         } else {
             Utils.submitPayment(data);
         }
