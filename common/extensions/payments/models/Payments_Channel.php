@@ -8,7 +8,7 @@ abstract class Payments_Channel {
         $this->bill = $bill;
         $this->booker = $booker;
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
-        $this->amount = 50;
+        $this->amount = 10;
     }
 
     public function formParams() {

@@ -453,14 +453,12 @@ function smallTicketHeight() {
 	var var_recomendedContent = $('.recomended-content');
 	var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items .content');
 	var var_oneHeight = var_recomendedItems.height();
-	//var_recomendedContent.find('.prices-of-3days .ticket').css('height', var_oneHeight +'px');
-	//var_recomendedItems.css('height', var_oneHeight +'px');
 	
 	var heightTwoTicket= 0;
 	if ($('.two-way').css('display')!=='none') {
-	    heightTwoTicket = (var_oneHeight - 32) / 2;				
+	    heightTwoTicket = (var_oneHeight - 24) / 2;
 	} else {
-	    heightTwoTicket = (var_oneHeight - 32);
+	    heightTwoTicket = (var_oneHeight - 24);
 	}
 	heightTwoTicket = Math.floor(heightTwoTicket);
 	//console.log(heightTwoTicket);
@@ -476,7 +474,6 @@ function smallTicketHeight() {
 		siblings.graphHeight(heightGraf);
 	    }
 	}
-	//	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices li .chart').css('height', heightGraf +'px');
     }
 }
 
@@ -1280,3 +1277,45 @@ function closePopUpContact() {
     $('body').css('overflow', 'auto');
     clickYes = false;
 }
+
+var scrollTrue = true;
+function resizeFAQ() {
+    var _marginLeftWrapFAQ;
+    if ($(window).width() <= 1000) {
+        _marginLeftWrapFAQ = 10;
+    }
+    else if ($(window).width() > 1000) {
+        _marginLeftWrapFAQ = ($(window).width() - 977) / 2.615;
+    }
+    $('.wrapFAQ').css('margin-left', _marginLeftWrapFAQ+'px');
+
+    $('.tableFAQ').each(function(index) {
+        $('.listFAQ').find('li').eq(index).attr('rel', $(this).offset().top);
+    });
+    scrollFAQ();
+    $('.listFAQ').find('li').find('a').click(function() {
+        scrollTrue = false;
+        $('.listFAQ').find('li').removeClass('active');
+        $(this).parent().addClass('active');
+        setTimeout(function() { scrollTrue = true; }, 650);
+    });
+}
+function scrollFAQ() {
+    if ($(window).scrollTop() > 64) {
+        $('.listFAQ').css('top', ($(window).scrollTop() - 64) +'px');
+    }
+    else {
+        $('.listFAQ').css('top','0px');
+    }
+
+    // ScrollMenu
+    $('.listFAQ').find('li').each(function(index) {
+       if (scrollTrue && ($(window).scrollTop() + 68) >= $(this).attr('rel')) {
+           $('.listFAQ').find('li').removeClass('active');
+           $(this).addClass('active');
+       }
+    });
+}
+$(window).load(resizeFAQ);
+$(window).resize(resizeFAQ);
+$(window).scroll(scrollFAQ);
