@@ -3634,6 +3634,7 @@ a.whereData span {
     top: 0;
     width: 100%;
     z-index: 0;
+    display: none;
 }
 .gShL {
     background: url("../images/gradient-shadow-left.png") repeat-y scroll right center transparent;
@@ -3643,4 +3644,5 @@ a.whereData span {
     top: 0;
     width: 100%;
     z-index: 0;
+    display: none;
 }
