@@ -23,6 +23,7 @@ AviaPanel = (function(_super) {
     AviaPanel.__super__.constructor.call(this);
     this.prevPanel = 'tours';
     this.nextPanel = 'hotels';
+    this.mainLabel = 'Поиск авиабилетов';
     this.icon = 'fly-ico';
     this.template = 'avia-panel-template';
     window.voyanga_debug("AviaPanel created");
