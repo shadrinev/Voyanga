@@ -571,6 +571,7 @@ function ResizeAvia() {
     slideToursSlide();
     smallIMGresizeIndex();
     mapAllPageView();
+    gradientResize();
 }
 
 function ResizeFun() {
@@ -1319,3 +1320,15 @@ function scrollFAQ() {
 $(window).load(resizeFAQ);
 $(window).resize(resizeFAQ);
 $(window).scroll(scrollFAQ);
+
+function gradientResize() {
+    if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
+        var _content = $('.wrapper .main-block').find('#content');
+        var offset = _content.offset();
+        var _leftContent = $(window).width() - offset.left;
+        var _rightContent = offset.left + _content.width();
+        $('.gShR').css('left', _rightContent+'px');
+        $('.gShL').css('right', _leftContent+'px');
+        console.log(_leftContent+' '+_rightContent);
+    }
+}

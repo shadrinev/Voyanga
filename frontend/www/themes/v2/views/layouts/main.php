@@ -84,7 +84,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
             <div class="rightPageBtn" data-bind="swapPanel: {to: fakoPanel().nextPanel}"></div>
         </div>
         <!-- CALENDAR -->
-        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendar}" style="top: -302px; height: 0;"></div>
+        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendar}" style="top: -302px; display: none;"></div>
         <!-- END CALENDAR -->
     </div>
     <!-- /ko -->
@@ -130,8 +130,12 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
         </div>
     </div>
     <!-- END FOOTER-->
+
 </div>
-</div>
+<div class="gShL"></div>
+<div class="gShR"></div>
+
+
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
