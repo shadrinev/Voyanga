@@ -1272,7 +1272,8 @@ TourTripResultSet = (function() {
           });
         }
         _this.items.push(aviaResult);
-        return _this.totalCost += aviaResult.price;
+        _this.totalCostWithDiscount += aviaResult.price;
+        return _this.totalCostWithoutDiscount = _this.totalCostWithDiscount;
       } else if (item.isHotel) {
         _this.hasHotel = true;
         _this.hotelCounter(_this.hotelCounter() + 1);

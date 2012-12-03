@@ -816,7 +816,8 @@ class TourTripResultSet
         else
           @cities.push {isLast: false, cityName: item.flights[0].departureCity}
         @items.push aviaResult
-        @totalCost += aviaResult.price
+        @totalCostWithDiscount += aviaResult.price
+        @totalCostWithoutDiscount = @totalCostWithDiscount
       else if (item.isHotel)
         @hasHotel = true
         @hotelCounter(@hotelCounter()+1)
