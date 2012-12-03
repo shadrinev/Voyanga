@@ -552,9 +552,9 @@ EventPhotoBox = (function() {
           photo.url = e.currentTarget.src;
           photo.height = e.currentTarget.height;
           photo.width = e.currentTarget.width;
-          if (_this.boxHeight() < photo.height) {
-            _this.boxHeight(photo.height);
-          }
+          photo.width = Math.round(photo.width * (400 / photo.height));
+          photo.height = 400;
+          _this.boxHeight(400);
           _this.photos.push(photo);
         }
         _this.unloadedCount--;
@@ -589,7 +589,7 @@ EventPhotoBox = (function() {
       for (i = _i = -2; _i <= 2; i = ++_i) {
         divInfo = {};
         console.log('cmpW', i, 'out', this.getIndex(i));
-        divInfo.div = $('<div class="eventPhoto"><img src="' + this.photos()[this.getIndex(i)].url + '" /></div>');
+        divInfo.div = $('<div class="eventPhoto"><img src="' + this.photos()[this.getIndex(i)].url + '" height="400"/></div>');
         divInfo.prevInd = this.getIndex(i - 1);
         divInfo.nextInd = this.getIndex(i + 1);
         divInfo.thisInd = this.getIndex(i);
@@ -652,7 +652,7 @@ EventPhotoBox = (function() {
       left = this.renderedDivs[0].left - this.photos()[i].width - this.picturesPadding();
     }
     divInfo = {};
-    divInfo.div = $('<div class="eventPhoto"><img src="' + this.photos()[this.getIndex(i)].url + '" /></div>');
+    divInfo.div = $('<div class="eventPhoto"><img src="' + this.photos()[this.getIndex(i)].url + '" height="400"/></div>');
     divInfo.prevInd = this.getIndex(i - 1);
     divInfo.nextInd = this.getIndex(i + 1);
     divInfo.thisInd = this.getIndex(i);

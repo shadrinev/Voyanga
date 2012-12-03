@@ -394,8 +394,11 @@ class EventPhotoBox
             photo.url = e.currentTarget.src;
             photo.height = e.currentTarget.height;
             photo.width = e.currentTarget.width;
-            if @boxHeight() < photo.height
-              @boxHeight(photo.height)
+            photo.width = Math.round(photo.width * (400 / photo.height))
+            photo.height = 400
+            #if @boxHeight() < photo.height
+            #  @boxHeight(photo.height)
+            @boxHeight(400)
             @photos.push photo
 
           @unloadedCount--;
@@ -420,7 +423,7 @@ class EventPhotoBox
       for i in [-2..2]
         divInfo = {}
         console.log('cmpW',i,'out',@getIndex(i))
-        divInfo.div = $('<div class="eventPhoto"><img src="'+@photos()[@getIndex(i)].url+'" /></div>')
+        divInfo.div = $('<div class="eventPhoto"><img src="'+@photos()[@getIndex(i)].url+'" height="400"/></div>')
         divInfo.prevInd = @getIndex(i-1)
         divInfo.nextInd = @getIndex(i+1)
         divInfo.thisInd = @getIndex(i)
@@ -466,7 +469,7 @@ class EventPhotoBox
       left = @renderedDivs[0].left - @photos()[i].width - @picturesPadding()
 
     divInfo = {}
-    divInfo.div = $('<div class="eventPhoto"><img src="'+@photos()[@getIndex(i)].url+'" /></div>')
+    divInfo.div = $('<div class="eventPhoto"><img src="'+@photos()[@getIndex(i)].url+'" height="400"/></div>')
     divInfo.prevInd = @getIndex(i-1)
     divInfo.nextInd = @getIndex(i+1)
     divInfo.thisInd = @getIndex(i)
