@@ -2,11 +2,11 @@
 var AVIA_TICKET_TIMELIMIT, HOTEL_TICKET_TIMELIMIT, MONTHS, SHORT_MONTHS, SHORT_WEEKDAYS, TOURS_TICKET_TIMELIMIT, Utils, dateUtils, exTrim,
   _this = this;
 
-AVIA_TICKET_TIMELIMIT = 1 * 60 - 59;
+AVIA_TICKET_TIMELIMIT = 15 * 60;
 
-HOTEL_TICKET_TIMELIMIT = 1 * 60 - 59;
+HOTEL_TICKET_TIMELIMIT = 15 * 60;
 
-TOURS_TICKET_TIMELIMIT = 1 * 60 - 59;
+TOURS_TICKET_TIMELIMIT = 15 * 60;
 
 MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентрября', 'октября', 'ноября', 'декабря'];
 

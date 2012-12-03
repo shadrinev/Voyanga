@@ -550,6 +550,7 @@ VoyangaCalendarStandart.minimalDateUpdated = function(){
                 var dateLabel = dd.getFullYear()+'-'+(dd.getMonth()+1)+'-'+dd.getDate();
                 if(dd < this.minimalDate){
                     $('#dayCell-'+ dateLabel).addClass('inactive');
+                    console.log('inactive'+i, dd, this.minimalDate );
                 }else{
                     if($('#dayCell-'+ dateLabel).hasClass('inactive')){
                         $('#dayCell-'+ dateLabel).removeClass('inactive');
@@ -598,6 +599,7 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
             minDt.setHours(0);
             minDt.setMinutes(0);
             minDt.setSeconds(0);
+            minDt.setMilliseconds(0);
             if(VoyangaCalendarStandart.minimalDate != minDt){
                 VoyangaCalendarStandart.minimalDate = minDt;
                 VoyangaCalendarStandart.minimalDateChanged = true;
