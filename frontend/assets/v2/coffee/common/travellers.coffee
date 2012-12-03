@@ -149,7 +149,7 @@ class Roomers
     target = $(event.currentTarget).attr('rel')
     @[target] @[target]() + 1
 
-  minusOne: (context, el) =>
+  minusOne: (context, event) =>
     target = $(event.currentTarget).attr('rel')
     if @[target]() > 0
       @[target] @[target]() - 1

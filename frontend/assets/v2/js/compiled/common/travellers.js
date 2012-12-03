@@ -216,7 +216,7 @@ Roomers = (function() {
     return this[target](this[target]() + 1);
   };
 
-  Roomers.prototype.minusOne = function(context, el) {
+  Roomers.prototype.minusOne = function(context, event) {
     var target;
     target = $(event.currentTarget).attr('rel');
     if (this[target]() > 0) {
