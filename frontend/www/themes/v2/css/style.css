@@ -29,6 +29,7 @@
     min-width: 1000px;
     position: relative;
     width: 100%;
+    z-index: 1;
 }
 #content {
     margin: 0 auto;
@@ -3623,4 +3624,25 @@ a.whereData span {
 .listFAQ li a:hover, .listFAQ li.active a {
     background: url(../images/bg-faq-q.png) no-repeat;
     color: #292b2e !important;
+}
+
+.gShR {
+    background: url("../images/gradient-shadow-right.png") repeat-y scroll left center transparent;
+    height: 100%;
+    left: 1177px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+    display: none;
+}
+.gShL {
+    background: url("../images/gradient-shadow-left.png") repeat-y scroll right center transparent;
+    height: 100%;
+    position: fixed;
+    right: 1417px;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+    display: none;
 }
