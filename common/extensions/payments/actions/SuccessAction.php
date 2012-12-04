@@ -30,7 +30,8 @@ class SuccessAction extends CAction
         if($bill->transactionId && ($params['TransactionID']!=$bill->transactionId))
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
-        if($channel->booker instanceof FlightBooker) {
+        $booker = $channel->booker;
+        if($booker instanceof FlightBooker) {
             $booker  = new FlightBookerComponent();
             $booker->setFlightBookerFromId($channel->booker->id);
         } else {

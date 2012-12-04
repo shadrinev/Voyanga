@@ -7,6 +7,8 @@
  * @copyright Copyright (c) 2012, EasyTrip LLC
  * @package payments
  */
+Yii::import("common.extensions.payments.models.Payments_MetaBooker");
+
 class PaymentsComponent extends CApplicationComponent
 {
     /**
@@ -41,12 +43,11 @@ class PaymentsComponent extends CApplicationComponent
             if($booker->flightVoyage->webService=='SABRE')
             {
                 $channel = $booker->flightVoyage->valAirline->payableViaSabre?'gds_sabre':'ltr';
-                //           $channel = 'ltr';
+                $channel = 'ltr';
             }
             if($booker->flightVoyage->webService=='GALILEO')
             {
                 $channel = $booker->flightVoyage->valAirline->payableViaGalileo?'gds_galileo':'ltr';
-                //$channel = 'ltr';
             }
 
         }
@@ -58,6 +59,7 @@ class PaymentsComponent extends CApplicationComponent
         $bill = new Bill();
         $bill->setChannel($channel);
         $bill->status = Bill::STATUS_NEW;
+
         $bill->amount = $booker->price;
         $bill->save();
         $booker->billId = $bill->id;
@@ -73,5 +75,29 @@ class PaymentsComponent extends CApplicationComponent
         return $channel->formParams();
     }
 
-
+    /**
+       prepare bookers for payments component,
+       ATM only wraps hotels into Payments_MetaBooker
+     */
+    public function preProcessBookers($bookers)
+    {
+        $rest = array();
+        $hotels = array();
+        foreach($bookers as $booker){
+            if($booker instanceof HotelBookerComponent)
+                $hotels[] = $booker;
+            else
+                $rest[] = $booker;
+        }
+        if(count($hotels)) {
+            $billId = $hotels[0]->getCurrent()->billId;
+            foreach($hotels as $hotel) {
+                if($hotel->getCurrent()->billId != $billId)
+                    throw new Exception("Hotel set for payment is broken");
+            }
+            $metaBooker = new Payments_MetaBooker($hotels, $billId);
+            $rest[]=$metaBooker;
+        }
+        return $rest;
+    }
 }
