@@ -178,8 +178,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   stopoverHtml: ->
     if @direct
-      return
-    htmlResult = '<span class="path"></span>'
+      return '<span class="path"></span>'
+    htmlResult = ''
 
     for part in @parts[0..-2]
       console.log part
