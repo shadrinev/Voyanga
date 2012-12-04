@@ -9,7 +9,17 @@ class Payments_MetaBooker extends CComponent{
     private $_billId;
     public function __construct($bookers, $billId)
     {
-        $this->bookers = $bookers;
+        $this->bookers = array();
+        foreach ($bookers as $booker) {
+            if($booker instanceof FlightBooker) {
+                $bookerComp  = new FlightBookerComponent();
+                $bookerComp->setFlightBookerFromId($booker->id);
+            } else {
+                $bookerComp  = new HotelBookerComponent();
+                $bookerComp->setHotelBookerFromId($booker->id);
+            }
+            $this->bookers[] = $bookerComp;
+        }
         $this->_billId = $billId;
     }
 
