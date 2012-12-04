@@ -190,7 +190,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   # Returns cup html for flight part 
   getCupHtmlForPart: (part, style="")->
-    cupClass = if part.stopoverLength < 2.5*60*60 then "cup" else "cupLong"
+    cupClass = if part.stopoverLength < 2.5*60*60 then "cup" else "cup long"
     '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>'
 
   # FIXME prolly should have cupLong here too

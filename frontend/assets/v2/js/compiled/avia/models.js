@@ -252,7 +252,7 @@ Voyage = (function() {
     if (style == null) {
       style = "";
     }
-    cupClass = part.stopoverLength < 2.5 * 60 * 60 ? "cup" : "cupLong";
+    cupClass = part.stopoverLength < 2.5 * 60 * 60 ? "cup" : "cup long";
     return '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>';
   };
 
