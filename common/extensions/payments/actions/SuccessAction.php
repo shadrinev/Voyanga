@@ -108,8 +108,6 @@ class SuccessAction extends CAction
         if($this->getStatus($booker)=='waitingForPayment')
             return true;
         # FIXME FIXME FIXME
-        if($this->getStatus($booker)=='waitingForPayment')
-            return true;
         return false;
     }
 
