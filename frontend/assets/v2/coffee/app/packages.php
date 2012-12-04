@@ -54,7 +54,8 @@
             'loader.js',
             'index.js',
             'slide-mode.js',
-            'google.info.js'
+            'google.info.js',
+            'jquery.maskedinput-1.3.js'
         ),
         'depends' => array('jquery')
     ),
