@@ -40,11 +40,12 @@ class ToursController
     stacked.checkTicket = @checkTicketAction
     return stacked
 
+  # FIXME reread
   checkTicketAction: (toursData, resultDeferred)=>
     now = moment()
     diff = now.diff(@stacked.creationMoment, 'seconds')
     if diff < TOURS_TICKET_TIMELIMIT
-      resultDeferred.resolve(data)
+      resultDeferred.resolve(@stacked)
       return
 
     @api.search  @searchParams.url(), (data)=>

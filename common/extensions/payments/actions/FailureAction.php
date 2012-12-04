@@ -40,11 +40,13 @@ class FailureAction extends SuccessAction
             $booker  = new HotelBookerComponent();
             $booker->setHotelBookerFromId($channel->booker->id);
         }
-        $bill->channel = 'ltr';
-        if(!$this->isWaitingForPayment($booker))
-            throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
-        $bill->save();
-        echo 'Ok';
-        $this->rebill($orderId);
+        if($bill->channel == 'gds_galileo'){
+            $bill->channel = 'ltr';
+            if(!$this->isWaitingForPayment($booker))
+                throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
+            $bill->save();
+            $this->rebill($orderId);
+        }
+            echo 'Ok';
     }
 }

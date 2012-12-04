@@ -189,10 +189,10 @@ class OrderComponent extends CApplicationComponent
                 throw new Exception("Wrong segment status " . $booker->getStatus());
             }
         }
-
         $payments = Yii::app()->payments;
+        $bookers = $payments->preProcessBookers($bookers);
 
-        return $payments->getFormParamsForBooker($bookers[0]->getCurrent());
+        return $payments->getFormParamsForBooker($bookers[0]);
     }
 
     public function startPaymentOld()
