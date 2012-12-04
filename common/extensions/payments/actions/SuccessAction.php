@@ -19,6 +19,9 @@ class SuccessAction extends CAction
         if(count($parts)<2)
             return;
         list($orderId, $billId) = $parts;
+        # FIXME temporary 
+        if($orderId == 585)
+            return;
         $bill = Bill::model()->findByPk($billId);
         $channel = $bill->getChannel();
         $sign = $channel->getSignature($params);

@@ -2225,13 +2225,14 @@ input.hotel-input {
 }
 
 .miniPopUp {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 0 4px rgba(0, 1, 1, 0.2);
-    color: #4B4B4F;
-    font-size: 11px;
-    padding: 4px;
+    background: #FFF;
+    box-shadow: 0 1px 5px rgba(3,4,4,0.6);
+    border: 0px solid #848687;
+    color: #1d222b;
+    line-height: 19px;
+    padding: 5px;
     position: absolute;
+    z-index: 500;
 }
 .photoNumb {
     bottom: 0;
