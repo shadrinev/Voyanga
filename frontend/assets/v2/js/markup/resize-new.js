@@ -1303,10 +1303,10 @@ function resizeFAQ() {
 }
 function scrollFAQ() {
     if ($(window).scrollTop() > 64) {
-        $('.listFAQ').css('top', ($(window).scrollTop() - 64) +'px');
+        $('.listFAQ').css('position', 'fixed').css('top', '4px');
     }
     else {
-        $('.listFAQ').css('top','0px');
+        $('.listFAQ').css('position','absolute');
     }
 
     // ScrollMenu

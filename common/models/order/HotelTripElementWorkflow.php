@@ -43,6 +43,8 @@ class HotelTripElementWorkflow extends TripElementWorkflow
         $hotelBookerId = $this->item->hotelBookerId;
         foreach ($passports->roomsPassports as $i => $roomPassport)
         {
+            if ($i>0)
+                break;
             $this->saveAdultsPassports($i, $roomPassport, $hotelBookerId);
             $this->saveChildrenPassports($i, $roomPassport, $hotelBookerId);
         }
