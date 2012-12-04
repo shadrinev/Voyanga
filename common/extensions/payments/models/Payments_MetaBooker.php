@@ -14,11 +14,14 @@ class Payments_MetaBooker extends CComponent{
             if($booker instanceof FlightBooker) {
                 $bookerComp  = new FlightBookerComponent();
                 $bookerComp->setFlightBookerFromId($booker->id);
-            } else {
+                $this->bookers[] = $bookerComp;
+            } elseif ($booker instanceof HotelBooker) {
                 $bookerComp  = new HotelBookerComponent();
                 $bookerComp->setHotelBookerFromId($booker->id);
+                $this->bookers[] = $bookerComp;
+            } else {
+                $this->bookers[] = $booker;
             }
-            $this->bookers[] = $bookerComp;
         }
         $this->_billId = $billId;
     }
