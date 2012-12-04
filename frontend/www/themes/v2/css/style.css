@@ -1769,6 +1769,10 @@ input.hotel-input {
     margin-top: 20px;
     overflow: hidden;
     width: 100%;
+    text-align: center;
+}
+#eventsContent .photoAlbum > img {
+    height: 400px;
 }
 #eventsContent p {
     line-height: 20px;
@@ -2384,6 +2388,8 @@ input.hotel-input {
 .allTicketsDIV {
     background: none repeat scroll 0 0 #F4F7F9;
     border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius:  6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
     box-shadow: 0 1px 1px rgba(26, 27, 31, 0.6);
     color: #1D222B;
     overflow: hidden;
@@ -2577,6 +2583,45 @@ input.hotel-input {
     overflow: hidden;
     border-top: 1px solid #808186;
     margin-top: -1px;
+}
+.allTicketsDIV .ticketBox.first-child  {
+    border-radius: 6px 6px 0px 0px;
+}
+.allTicketsDIV .ticketBox.last-child {
+    border-radius: 0px 0px 6px 6px;
+}
+.allTicketsDIV .ticketBox .tdPath .timeAndPath {
+    margin-left: -25px;
+}
+.allTicketsDIV .ticketBox .tdPath .ico-path {
+    background: none;
+    height: 16px;
+}
+.allTicketsDIV .ticketBox .tdPath .ico-path .path {
+    background: url("../images/ico-path.png") no-repeat scroll -0px -148px transparent;
+    height: 16px;
+    width: 13px;
+    left: auto !important;
+    margin: 0 auto;
+    position: relative;
+    top: inherit;
+    display: inline-block;
+}
+.allTicketsDIV .ticketBox .tdPath .ico-path .cup.long {
+    background: url("../images/ico-path.png") no-repeat scroll -0px -110px transparent;
+    height: 16px;
+    width: 32px;
+}
+.allTicketsDIV .ticketBox .tdPath .ico-path .cup {
+    background: url("../images/ico-path.png") no-repeat scroll -0px -132px transparent;
+    display: inline-block;
+    height: 16px;
+    left: auto !important;
+    margin: 0 auto;
+    position: relative;
+    top: inherit;
+    width: 28px;
+    margin-right: -5px;
 }
 .allTicketsDIV .ticketBox:hover {
     background: #eceff1;
