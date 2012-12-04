@@ -194,7 +194,7 @@ Voyage = (function() {
   };
 
   Voyage.prototype.stopsRatio = function() {
-    var data, duration, htmlResult, index, part, result, _i, _j, _k, _len, _len1, _len2, _ref;
+    var data, duration, htmlResult, index, part, result, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1;
     result = [];
     if (this.direct) {
       return '<span class="down"></span>';
@@ -228,17 +228,16 @@ Voyage = (function() {
     }
     htmlResult += '<span class="down"></span>';
     return htmlResult;
-  };
-
-  Voyage.prototype.stopoverHtml = function() {
-    var htmlResult, part, _i, _len, _ref;
+    ({
+      stopoverHtml: function() {}
+    });
     if (this.direct) {
-      return;
+      return '<span class="path"></span>';
     }
-    htmlResult = '<span class="path"></span>';
-    _ref = this.parts.slice(0, -1);
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      part = _ref[_i];
+    htmlResult = '';
+    _ref1 = this.parts.slice(0, -1);
+    for (_l = 0, _len3 = _ref1.length; _l < _len3; _l++) {
+      part = _ref1[_l];
       console.log(part);
       if (part.stopoverLength > 0) {
         htmlResult += this.getCupHtmlForPart(part);
