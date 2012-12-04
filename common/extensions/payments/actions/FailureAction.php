@@ -26,7 +26,7 @@ class FailureAction extends SuccessAction
         $sign = $channel->getSignature($params);
         if($sign!=$params['SecurityKey'])
         {
-            throw new Exception("Signature mismatch");
+            //throw new Exception("Signature mismatch");
         }
         //! FIXME LOG TRANSACTION
         //! FIXME handle it better for great good
@@ -40,13 +40,16 @@ class FailureAction extends SuccessAction
             $booker  = new HotelBookerComponent();
             $booker->setHotelBookerFromId($channel->booker->id);
         }
-        if($bill->channel == 'gds_galileo'){
+
+        if($this->getStatus($booker)=='paid')
+            return $this->rebill($orderId);
+
+        if($bill->getChannel()->getName() == 'gds_galileo'){
             $bill->channel = 'ltr';
             if(!$this->isWaitingForPayment($booker))
                 throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
-            $bill->save();
             $this->rebill($orderId);
+            $bill->save();
         }
-            echo 'Ok';
     }
 }

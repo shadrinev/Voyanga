@@ -11,6 +11,11 @@ abstract class Payments_Channel {
         $this->amount = 10;
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function formParams() {
         $credentials = $this->credentials;
         $order = Yii::app()->order->getOrderBooking();
@@ -74,6 +79,10 @@ abstract class Payments_Channel {
 
     public function rebill($anchor)
     {
+        # FIXME FIXME FIXME doublecheck status
+        if($this->bill->transactionId)
+            return true;
+
         $allParams = $this->formParams();
         $params['MerchantId'] = $allParams['MerchantId'];
         $params['RebillAnchor'] = $anchor;
@@ -82,6 +91,7 @@ abstract class Payments_Channel {
         $params['Currency'] = $allParams['Currency'];
         $params['SecurityKey'] = $this->getSignature($params, 'rebill');
         list($code,$result) = $this->callApi('transaction/rebill', $params);
+        
         if($result['Result'] == 'Ok')
             return true;
         return false;
@@ -126,4 +136,6 @@ abstract class Payments_Channel {
         }
         return Array($code, $result);
     }
+
+
 }

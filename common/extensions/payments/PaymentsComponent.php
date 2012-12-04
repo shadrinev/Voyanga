@@ -38,6 +38,11 @@ class PaymentsComponent extends CApplicationComponent
     public function getBillForBooker($booker)
     {
         $channel = 'ecommerce';
+        if($booker instanceof FlightBookerComponent)
+        {
+            $booker = $booker->getCurrent();
+        }
+
         if($booker instanceof FlightBooker)
         {
             if($booker->flightVoyage->webService=='SABRE')

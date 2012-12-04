@@ -56,10 +56,14 @@ class SuccessAction extends CAction
         $order = Yii::app()->order;
         $order->initByOrderBookingId($orderId);
         $payments = Yii::app()->payments;
-        $bookers = $order->getBookers();
+        $bookers = $payments->preProcessBookers($order->getBookers());
         foreach($bookers as $booker)
         {
             if($this->getStatus($booker)=='paid'){
+                continue;
+            }
+            if($booker instanceof FlightBookerComponent) {
+                $booker->status('paid');
                 continue;
             }
 
@@ -68,8 +72,7 @@ class SuccessAction extends CAction
             }
 
 //            $order->isWaitingForPaymentState($booker->getStatus());
-            $bill = $payments->getBillForBooker($booker->getCurrent());
-            $bill->channel = 'ltr';
+            $bill = $payments->getBillForBooker($booker);
             $channel =  $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
