@@ -34,10 +34,8 @@ class SuccessAction extends CAction
         if($booker instanceof FlightBooker) {
             $booker  = new FlightBookerComponent();
             $booker->setFlightBookerFromId($channel->booker->id);
-        } else {
-            $booker  = new HotelBookerComponent();
-            $booker->setHotelBookerFromId($channel->booker->id);
-        }
+        }         // Hoteles are allways wrapped into metabooker
+
         //FIXME logme
         if($this->getStatus($booker)=='paid')
             return $this->rebill($orderId);
@@ -110,7 +108,7 @@ class SuccessAction extends CAction
         if($this->getStatus($booker)=='waitingForPayment')
             return true;
         # FIXME FIXME FIXME
-        if($this->getStatus($booker)=='hardWaitingForPayment')
+        if($this->getStatus($booker)=='waitingForPayment')
             return true;
         return false;
     }
