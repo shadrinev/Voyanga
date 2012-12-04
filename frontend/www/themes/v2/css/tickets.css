@@ -594,7 +594,7 @@
     width: 28px;
 }
 
-.tdPath .ico-path .cupLong {
+.tdPath .ico-path .cup.long {
     background:  url("../images/ico-path.png") no-repeat scroll -41px -15px transparent;
     display: inline-block;
     height: 15px;

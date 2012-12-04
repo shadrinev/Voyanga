@@ -14,11 +14,14 @@ class Payments_MetaBooker extends CComponent{
             if($booker instanceof FlightBooker) {
                 $bookerComp  = new FlightBookerComponent();
                 $bookerComp->setFlightBookerFromId($booker->id);
-            } else {
+                $this->bookers[] = $bookerComp;
+            } elseif ($booker instanceof HotelBooker) {
                 $bookerComp  = new HotelBookerComponent();
                 $bookerComp->setHotelBookerFromId($booker->id);
+                $this->bookers[] = $bookerComp;
+            } else {
+                $this->bookers[] = $booker;
             }
-            $this->bookers[] = $bookerComp;
         }
         $this->_billId = $billId;
     }
@@ -46,9 +49,45 @@ class Payments_MetaBooker extends CComponent{
         }
     }
 
+    public function getStatus() {
+        $waitingForPayment = true;
+        foreach ($this->bookers as $booker) {
+            if (!$this->isWaitingForPayment($booker)) {
+                $waitingForPayment = false;
+            }
+        }
+        if($waitingForPayment)
+            return 'waitingForPayment';
+        //! FIXME temporary
+        return $this->bookers[0]->getStatus();
+    }
+
     public function status($status) {
         foreach($this->bookers as $booker){
             $booker->status($status);
         }
+    }
+
+    /**
+       Almost copy pasted from success action, move to payments?
+    */
+    protected function isWaitingForPayment($booker)
+    {
+        if($this->getBookerStatus($booker)=='hardWaitingForPayment')
+            return true;
+        # FIXME FIXME FIXME
+        if($this->getBookerStatus($booker)=='softWaitingForPayment')
+            return true;
+        return false;
+    }
+
+    //! helper function returns last segment of 2 segment statuses
+    protected function getBookerStatus($booker)
+    {
+        $status = $booker->getStatus();
+        $parts = explode("/", $status);
+        if(count($parts)==2)
+            return $parts[1];
+        return $parts[0];
     }
 }

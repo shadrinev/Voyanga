@@ -247,3 +247,36 @@ function deletePopUp(obj) {
 function deletePopUpHide() {
 	$('.deletePopUp').remove();
 }
+
+function telefonLoad() {
+    if ($('#contactPhone').length > 0 && $('#contactPhone').is(':visible')) {
+        $("#contactPhone").mask("+7 (999) 999 99 99");
+    }
+    else {
+        return
+    }
+    
+    if ($('.allTicketsDIV .ticketBox').length > 0 && $('.allTicketsDIV .ticketBox').is(':visible')) {
+        var _ticketBoxLen = $('.allTicketsDIV .ticketBox').length;
+        if (_ticketBoxLen == 1) {
+            $('.allTicketsDIV .ticketBox').addClass('first-child').addClass('last-child');
+        }
+        else {
+            for (i = 0; i < _ticketBoxLen; i++) {
+                if (i == 0) {
+                    $('.allTicketsDIV .ticketBox').eq(i).addClass('first-child');
+                }
+                else if (i == (_ticketBoxLen - 1)) {
+                    $('.allTicketsDIV .ticketBox').eq(i).addClass('last-child');
+                }
+                else {
+                    return true;
+                }
+            }
+        }
+    }
+    else {
+        return;
+    }
+}
+$(window).load(telefonLoad);

@@ -1,0 +1,10 @@
+.frontside .numbercard {
+	width: 75px !important;
+}
+.grey {
+	color: #7f7f7f;
+}
+.frontside .firstLastName, .frontside .month, .frontside .year, .backside .nameBank {
+	height: 28px;
+	padding-top: 3px;
+}
