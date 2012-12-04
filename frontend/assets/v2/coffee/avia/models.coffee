@@ -176,7 +176,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
     return htmlResult
 
-    stopoverHtml: ->
+  stopoverHtml: ->
     if @direct
       return '<span class="path"></span>'
     htmlResult = ''
