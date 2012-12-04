@@ -18,6 +18,8 @@
  * @copyright Copyright (c) 2012 EasyTrip LLC
  *
  */
+Yii::import("common.extensions.payments.models.Payments_MetaBooker");
+
 class Bill extends CActiveRecord
 {
     const STATUS_NEW = 'NEW';
@@ -129,8 +131,11 @@ class Bill extends CActiveRecord
 
         Yii::import("common.extensions.payments.models." . $className);
         $booker = FlightBooker::model()->findByAttributes(array('billId'=> $this->id));
-        if(!$booker)
-            $booker = HotelBooker::model()->findByAttributes(array('billId'=> $this->id));
+        if(!$booker) {
+            $bookers = HotelBooker::model()->findAllByAttributes(array('billId'=> $this->id));
+            if(count($bookers))
+                $booker = new Payments_MetaBooker($bookers, $this->id);
+        }
         if(!$booker) {
             # Would never happen in theory
             throw new Exception("No booker for given bill");
