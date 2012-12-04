@@ -50,7 +50,7 @@ class SuccessAction extends CAction
         $this->rebill($orderId);
     }
 
-    private function rebill($orderId){
+    protected function rebill($orderId){
         // init order
         $order = Yii::app()->order;
         $order->initByOrderBookingId($orderId);
@@ -84,7 +84,7 @@ class SuccessAction extends CAction
     }
 
     //! performs refunds of boookers in given order
-    private function refund($order)
+    protected function refund($order)
     {
         $payments = Yii::app()->payments;
         $bookers = $order->getBookers();
@@ -105,7 +105,7 @@ class SuccessAction extends CAction
         }
     }
 
-    private function isWaitingForPayment($booker)
+    protected function isWaitingForPayment($booker)
     {
         if($this->getStatus($booker)=='waitingForPayment')
             return true;
@@ -116,7 +116,7 @@ class SuccessAction extends CAction
     }
 
     //! helper function returns last segment of 2 segment statuses
-    private function getStatus($booker)
+    protected function getStatus($booker)
     {
         $status = $booker->getStatus();
         $parts = explode("/", $status);
