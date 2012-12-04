@@ -235,7 +235,7 @@ Voyage = (function() {
     if (this.direct) {
       return;
     }
-    htmlResult = "";
+    htmlResult = '<span class="path"></span>';
     _ref = this.parts.slice(0, -1);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
