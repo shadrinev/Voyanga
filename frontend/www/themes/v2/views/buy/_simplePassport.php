@@ -73,7 +73,6 @@
                             Country::model()->findAllOrderedByPopularity(),
                             array(
                                 'data-placeholder'=> "Страна...",
-                                'prompt'=> "",
                                 'class' => "chzn-select",
                                 'style' => "width:120px;"
                             )

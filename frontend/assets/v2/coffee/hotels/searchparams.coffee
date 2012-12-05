@@ -41,8 +41,9 @@ class SpRoom
 
   getHash: =>
     parts = [@adults(), @children()]
+
     for age in @ages()
-      parts.push age
+      parts.push age.age()
     return parts.join(':')
 
   getUrl: (i)=>
