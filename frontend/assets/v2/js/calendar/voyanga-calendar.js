@@ -589,7 +589,7 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
         if(newCalendarValue.activeSearchPanel.prevSearchPanel()){
             console.log('prevPanel',newCalendarValue.activeSearchPanel.prevSearchPanel());
             minDt = newCalendarValue.activeSearchPanel.prevSearchPanel().checkOut();
-            if(VoyangaCalendarStandart.minimalDate != minDt){
+            if(minDt && VoyangaCalendarStandart.minimalDate != minDt){
                 VoyangaCalendarStandart.minimalDate = minDt;
                 VoyangaCalendarStandart.minimalDateChanged = true;
             }

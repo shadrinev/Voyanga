@@ -78,6 +78,7 @@ class EventSet
       return activeEvents[0]
     @previousImage = ko.observable ''
     @activeMaps = 0;
+    @mapsInited = false
 
   setActive: (valueAccessor, event) =>
     if($(event.target).hasClass('lookEyes'))
@@ -104,6 +105,8 @@ class EventSet
       $(this).css "display", "none"
 
     $(".mapsBigAll").show()
+    if !@mapsInited
+      @mapsInit()
     $(".mapsBigAll").animate
       opacity: 1
     , 700
@@ -121,6 +124,16 @@ class EventSet
       opacity: 1
     , 700
     @activeMaps = 0
+
+  mapsInit: =>
+    value = {lat:52,lng:10}
+    @mapsInited = true
+    element = $(".mapsBigAll")[0]
+    gMap = new google.maps.Map(element,{'mapTypeControl':false,'panControl':false,'zoomControlOptions':{position: google.maps.ControlPosition.LEFT_TOP,style:google.maps.ZoomControlStyle.SMALL},'streetViewControl':false,'zoom': 3,'mapTypeId': google.maps.MapTypeId.TERRAIN,'center': new google.maps.LatLng(value.lat,value.lng)})
+
+  afterRender: =>
+    @mapsInited = false
+
 
 class EventCategory
   constructor: (data) ->

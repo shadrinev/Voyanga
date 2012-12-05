@@ -185,7 +185,8 @@ VoyangaCalendarTimeline.generateGrid = function(){
     startDraw.date(startDraw.date()-this.getDay(startDraw._d));
     dateDiff = Math.floor(endDraw.diff(startDraw,'days',true)) + 1;
     if(dateDiff <= 14){
-
+        endDraw.add('d',7);
+        dateDiff = Math.floor(endDraw.diff(startDraw,'days',true)) + 1;
     }
     console.log('ds',startDraw,'de',endDraw,dateDiff);
     if(dateDiff % 7 != 0){

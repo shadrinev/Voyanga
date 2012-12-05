@@ -791,9 +791,25 @@ class HotelsResultSet
     @showParts = ko.observable 1
     @showLimit = 20
     @sortBy = ko.observable( 'minPrice')
+    @ordBy = ko.observable 1
+    @data.subscribe (value)=>
+      console.log('now changed fv:',value[0],window.hrs.data()[0])
+
+
+
     @resultsForRender = ko.computed =>
       limit = @showParts() * @showLimit
       results = []
+      sortKey = @sortBy()
+      ordKey = @ordBy()
+
+
+      @data.sort (left, right)=>
+        if left[sortKey] < right[sortKey]
+          return -1*ordKey
+        if left[sortKey] > right[sortKey]
+          return  1*ordKey
+        return 0
       for result in @data()
         if result.visible()
           results.push result
@@ -839,6 +855,8 @@ class HotelsResultSet
       if left.minPrice > right.minPrice
         return  1
       return 0
+
+    window.hrs = @
 
 
   select: (hotel, event) =>
@@ -1033,8 +1051,18 @@ class HotelsResultSet
     dateUtils.formatDayMonthInterval(@checkIn._d,@checkOut._d)
 
   showMoreResults: =>
+    fv = @data()[0]
+    sv = @data()[1]
+    console.log('before more results',fv,sv,@showParts())
+
     if @numResults() > (@showParts() * @showLimit)
       @showParts(@showParts()+1)
+
+    fv = @data()[0]
+    sv = @data()[1]
+    console.log('after more results',fv,sv,@showParts())
+
+
 
   checkShowMore: (ev)=>
     posTop = $('html').scrollTop() || $('body').scrollTop()
@@ -1049,24 +1077,15 @@ class HotelsResultSet
   sortByPrice:  =>
     if @sortBy() != 'minPrice'
       @sortBy('minPrice')
-      @data.sort (left, right)->
-        if left.minPrice < right.minPrice
-          return -1
-        if left.minPrice > right.minPrice
-          return  1
-        return 0
+      @ordBy(1)
       @showParts 1
+
       #ko.processAllDeferredBindingUpdates()
 
   sortByRating:  =>
     if @sortBy() != 'rating'
       @sortBy('rating')
-      @data.sort (left, right)->
-        if left.rating > right.rating
-          return -1
-        if left.rating < right.rating
-          return  1
-        return 0
+      @ordBy(-1)
       @showParts 1
       #console.log(@data())
       #ko.processAllDeferredBindingUpdates()
@@ -1078,7 +1097,10 @@ class HotelsResultSet
     @filters = new HotelFiltersT @
 
   postFilters: (fromFilters = false)=>
-    console.log 'post filters'
+    fv = @data()[0]
+    sv = @data()[1]
+    #console.log('before more results',fv,sv,@showParts())
+    console.log 'post filters',fv,sv,fromFilters
     data = _.filter @data(), (el) -> el.visible()
     @numResults data.length
     if !@pagesLoad || fromFilters
@@ -1088,6 +1110,10 @@ class HotelsResultSet
 
     window.setTimeout(
       =>
+        fv = @data()[0]
+        sv = @data()[1]
+        #console.log('before more results',fv,sv,@showParts())
+        console.log 'post filters timeout',fv,sv,fromFilters
         if(fromFilters)
           jsPaneScrollHeight()
         if window.app.activeView() == 'hotels-results'
@@ -1106,8 +1132,16 @@ class HotelsResultSet
           @showFullMapFunc(null,null,false,true)
 
         @toursOpened = false
+        fv = @data()[0]
+        sv = @data()[1]
+        #console.log('before more results',fv,sv,@showParts())
+        console.log 'post filters timeoutEnd',fv,sv,fromFilters
       , 50
     )
+    fv = @data()[0]
+    sv = @data()[1]
+    #console.log('before more results',fv,sv,@showParts())
+    console.log 'post filters end',fv,sv,fromFilters
     #ko.processAllDeferredBindingUpdates()
     # FIXME
     #ResizeAvia()

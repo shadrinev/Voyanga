@@ -474,6 +474,7 @@ class ToursResultSet
     @trigger 'inner-template', entry.template
     # FIXME 
     window.setTimeout =>
+      console.log('TourOut',window.hrs.data()[0])
       if entry.afterRender && afterRender
         console.log('arin')
         entry.afterRender()
@@ -485,6 +486,7 @@ class ToursResultSet
         Utils.scrollTo(scrollTo,false)
       if callback
         callback()
+      console.log('TourOut2',window.hrs.data()[0])
     , 100
 
 

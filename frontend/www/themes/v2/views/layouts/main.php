@@ -135,7 +135,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
-<span data-bind="template: {if: in1, name: 'event-map', data: events}"></span>
+<span data-bind="template: {if: in1, name: 'event-map', data: events, afterRender: events.afterRender}"></span>
 <!-- END MAPS -->
 <div id="loadWrapBg" class="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">

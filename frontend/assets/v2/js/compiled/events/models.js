@@ -78,6 +78,10 @@ Event = (function(_super) {
 EventSet = (function() {
 
   function EventSet(events) {
+    this.afterRender = __bind(this.afterRender, this);
+
+    this.mapsInit = __bind(this.mapsInit, this);
+
     this.closeEventsMaps = __bind(this.closeEventsMaps, this);
 
     this.closeEventsPhoto = __bind(this.closeEventsPhoto, this);
@@ -99,6 +103,7 @@ EventSet = (function() {
     });
     this.previousImage = ko.observable('');
     this.activeMaps = 0;
+    this.mapsInited = false;
   }
 
   EventSet.prototype.setActive = function(valueAccessor, event) {
@@ -133,6 +138,9 @@ EventSet = (function() {
       return $(this).css("display", "none");
     });
     $(".mapsBigAll").show();
+    if (!this.mapsInited) {
+      this.mapsInit();
+    }
     $(".mapsBigAll").animate({
       opacity: 1
     }, 700);
@@ -151,6 +159,32 @@ EventSet = (function() {
       opacity: 1
     }, 700);
     return this.activeMaps = 0;
+  };
+
+  EventSet.prototype.mapsInit = function() {
+    var element, gMap, value;
+    value = {
+      lat: 52,
+      lng: 10
+    };
+    this.mapsInited = true;
+    element = $(".mapsBigAll")[0];
+    return gMap = new google.maps.Map(element, {
+      'mapTypeControl': false,
+      'panControl': false,
+      'zoomControlOptions': {
+        position: google.maps.ControlPosition.LEFT_TOP,
+        style: google.maps.ZoomControlStyle.SMALL
+      },
+      'streetViewControl': false,
+      'zoom': 3,
+      'mapTypeId': google.maps.MapTypeId.TERRAIN,
+      'center': new google.maps.LatLng(value.lat, value.lng)
+    });
+  };
+
+  EventSet.prototype.afterRender = function() {
+    return this.mapsInited = false;
   };
 
   return EventSet;

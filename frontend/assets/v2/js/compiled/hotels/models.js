@@ -1010,10 +1010,25 @@ HotelsResultSet = (function() {
     this.showParts = ko.observable(1);
     this.showLimit = 20;
     this.sortBy = ko.observable('minPrice');
+    this.ordBy = ko.observable(1);
+    this.data.subscribe(function(value) {
+      return console.log('now changed fv:', value[0], window.hrs.data()[0]);
+    });
     this.resultsForRender = ko.computed(function() {
-      var limit, results, _k, _len2, _ref2;
+      var limit, ordKey, results, sortKey, _k, _len2, _ref2;
       limit = _this.showParts() * _this.showLimit;
       results = [];
+      sortKey = _this.sortBy();
+      ordKey = _this.ordBy();
+      _this.data.sort(function(left, right) {
+        if (left[sortKey] < right[sortKey]) {
+          return -1 * ordKey;
+        }
+        if (left[sortKey] > right[sortKey]) {
+          return 1 * ordKey;
+        }
+        return 0;
+      });
       _ref2 = _this.data();
       for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
         result = _ref2[_k];
@@ -1066,6 +1081,7 @@ HotelsResultSet = (function() {
       }
       return 0;
     });
+    window.hrs = this;
   }
 
   HotelsResultSet.prototype.select = function(hotel, event) {
@@ -1294,9 +1310,16 @@ HotelsResultSet = (function() {
   };
 
   HotelsResultSet.prototype.showMoreResults = function() {
+    var fv, sv;
+    fv = this.data()[0];
+    sv = this.data()[1];
+    console.log('before more results', fv, sv, this.showParts());
     if (this.numResults() > (this.showParts() * this.showLimit)) {
-      return this.showParts(this.showParts() + 1);
+      this.showParts(this.showParts() + 1);
     }
+    fv = this.data()[0];
+    sv = this.data()[1];
+    return console.log('after more results', fv, sv, this.showParts());
   };
 
   HotelsResultSet.prototype.checkShowMore = function(ev) {
@@ -1314,15 +1337,7 @@ HotelsResultSet = (function() {
   HotelsResultSet.prototype.sortByPrice = function() {
     if (this.sortBy() !== 'minPrice') {
       this.sortBy('minPrice');
-      this.data.sort(function(left, right) {
-        if (left.minPrice < right.minPrice) {
-          return -1;
-        }
-        if (left.minPrice > right.minPrice) {
-          return 1;
-        }
-        return 0;
-      });
+      this.ordBy(1);
       return this.showParts(1);
     }
   };
@@ -1330,15 +1345,7 @@ HotelsResultSet = (function() {
   HotelsResultSet.prototype.sortByRating = function() {
     if (this.sortBy() !== 'rating') {
       this.sortBy('rating');
-      this.data.sort(function(left, right) {
-        if (left.rating > right.rating) {
-          return -1;
-        }
-        if (left.rating < right.rating) {
-          return 1;
-        }
-        return 0;
-      });
+      this.ordBy(-1);
       return this.showParts(1);
     }
   };
@@ -1352,12 +1359,14 @@ HotelsResultSet = (function() {
   };
 
   HotelsResultSet.prototype.postFilters = function(fromFilters) {
-    var data,
+    var data, fv, sv,
       _this = this;
     if (fromFilters == null) {
       fromFilters = false;
     }
-    console.log('post filters');
+    fv = this.data()[0];
+    sv = this.data()[1];
+    console.log('post filters', fv, sv, fromFilters);
     data = _.filter(this.data(), function(el) {
       return el.visible();
     });
@@ -1367,8 +1376,11 @@ HotelsResultSet = (function() {
     } else {
       this.showParts(this.pagesLoad);
     }
-    return window.setTimeout(function() {
+    window.setTimeout(function() {
       var kb, offset, posTop;
+      fv = _this.data()[0];
+      sv = _this.data()[1];
+      console.log('post filters timeout', fv, sv, fromFilters);
       if (fromFilters) {
         jsPaneScrollHeight();
       }
@@ -1386,8 +1398,14 @@ HotelsResultSet = (function() {
       if (_this.showFullMap()) {
         _this.showFullMapFunc(null, null, false, true);
       }
-      return _this.toursOpened = false;
+      _this.toursOpened = false;
+      fv = _this.data()[0];
+      sv = _this.data()[1];
+      return console.log('post filters timeoutEnd', fv, sv, fromFilters);
     }, 50);
+    fv = this.data()[0];
+    sv = this.data()[1];
+    return console.log('post filters end', fv, sv, fromFilters);
   };
 
   return HotelsResultSet;
