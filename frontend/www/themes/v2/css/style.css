@@ -989,6 +989,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-shadow: none;
 }
 #hotels-popup-description .service-in-hotel h3 {
     margin-top: 0;
@@ -1127,7 +1128,7 @@ h2 .tmblr {
 .descr {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 6px 6px 6px 6px;
-    box-shadow: 1px 2px 0 0 rgba(0, 1, 1, 0.2);
+    box-shadow: 1px 1px 0 0 rgba(0, 1, 1, 0.2);
     color: #1A1B1E;
     margin-bottom: 20px;
     margin-left: 0;
@@ -1180,6 +1181,7 @@ h2 .tmblr {
 .descr > .left .descr-text h3 {
     display: inline-block;
     margin-right: 10px;
+    text-shadow: none;
 }
 .descr > .left .right {
     color: #5D5F63;
@@ -1855,7 +1857,7 @@ input.hotel-input {
     width: 10px;
 }
 .autocomplete {
-    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll 0 0 #FFFFFF;
+    background: #FFFFFF;
     border-radius: 0 0 4px 4px;
     box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6);
     color: #16181A;
@@ -3673,7 +3675,17 @@ a.whereData span {
 }
 
 .gShR {
-    background: url("../images/gradient-shadow-right.png") repeat-y scroll left center transparent;
+    /*background: url("../images/gradient-shadow-right.png") repeat-y scroll left center transparent;*/
+    background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(0,0,0,0.55) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(0,0,0,0.55))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.55) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.55) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.55) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.55) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#8c000000',GradientType=1 ); /* IE6-9 */
+
+
+
     height: 100%;
     left: 1177px;
     position: fixed;
@@ -3683,7 +3695,17 @@ a.whereData span {
     display: none;
 }
 .gShL {
-    background: url("../images/gradient-shadow-left.png") repeat-y scroll right center transparent;
+    /*background: url("../images/gradient-shadow-left.png") repeat-y scroll right center transparent;*/
+    background: -moz-linear-gradient(left,  rgba(0,0,0,0.6) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0.6)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(0,0,0,0.6) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(0,0,0,0.6) 0%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(0,0,0,0.6) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(0,0,0,0.6) 0%,rgba(255,255,255,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99000000', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+
+
+
     height: 100%;
     position: fixed;
     right: 1417px;
@@ -3691,4 +3713,32 @@ a.whereData span {
     width: 100%;
     z-index: 0;
     display: none;
+}
+
+.autocomplete-w1 {
+    position: relative;
+}
+.autocomplete-w1 .left {
+    width: 5%;
+    height: 8px;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll left 0 #FFFFFF;
+}
+.autocomplete-w1 .right {
+    width: 5%;
+    height: 8px;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll right 0 #FFFFFF;
+}
+.autocomplete-w1 .center {
+    width: 90%;
+    height: 8px;
+    position: absolute;
+    top: 0%;
+    left: 5%;
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll 7% 0 #FFFFFF;
 }

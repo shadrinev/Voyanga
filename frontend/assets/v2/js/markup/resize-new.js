@@ -1327,8 +1327,8 @@ function gradientResize() {
         var offset = _content.offset();
         var _leftContent = $(window).width() - offset.left;
         var _rightContent = offset.left + _content.width();
-        $('.gShR').show().css('left', (_rightContent - 180) +'px');
-        $('.gShL').show().css('right', (_leftContent - 70) +'px');
+        $('.gShR').show().css('left', (_rightContent - 180) +'px').css('width', ($(window).width() - (_rightContent - 180)) +'px');;
+        $('.gShL').show().css('right', (_leftContent - 40) +'px').css('width', (offset.left + 40) +'px');
         console.log(_leftContent+' '+_rightContent);
     }
     else {

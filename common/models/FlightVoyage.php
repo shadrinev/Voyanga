@@ -283,7 +283,8 @@ class FlightVoyage extends CApplicationComponent
             'economDescription' => trim($this->valAirline->economDescription),
             'businessFreeWeight' => $this->valAirline->businessFreeWeight,
             'businessDescription' => trim($this->valAirline->businessDescription),
-            'flights' => array()
+            'service' => trim($this->webService),
+            'flights' => array(),
         );
         foreach ($this->flights as $flight)
         {
