@@ -19,6 +19,9 @@ class SuccessAction extends CAction
         if(count($parts)<2)
             return;
         list($orderId, $billId) = $parts;
+        # FIXME temporary 
+        if($orderId == 585)
+            return;
         $bill = Bill::model()->findByPk($billId);
         $channel = $bill->getChannel();
         $sign = $channel->getSignature($params);
@@ -30,13 +33,12 @@ class SuccessAction extends CAction
         if($bill->transactionId && ($params['TransactionID']!=$bill->transactionId))
             throw new Exception("Bill already have transaction id");
         $bill->transactionId = $params['TransactionID'];
-        if($channel->booker instanceof FlightBooker) {
+        $booker = $channel->booker;
+        if($booker instanceof FlightBooker) {
             $booker  = new FlightBookerComponent();
             $booker->setFlightBookerFromId($channel->booker->id);
-        } else {
-            $booker  = new HotelBookerComponent();
-            $booker->setHotelBookerFromId($channel->booker->id);
-        }
+        }         // Hoteles are allways wrapped into metabooker
+
         //FIXME logme
         if($this->getStatus($booker)=='paid')
             return $this->rebill($orderId);
@@ -45,19 +47,28 @@ class SuccessAction extends CAction
             throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
         $booker->status('paid');
         $bill->save();
+        if($booker instanceof FlightBookerComponent) {
+            $booker->status('ticketing');
+        }
+
         echo 'Ok';
         $this->rebill($orderId);
     }
 
-    private function rebill($orderId){
+    protected function rebill($orderId){
         // init order
         $order = Yii::app()->order;
         $order->initByOrderBookingId($orderId);
         $payments = Yii::app()->payments;
-        $bookers = $order->getBookers();
+        $bookers = $payments->preProcessBookers($order->getBookers());
         foreach($bookers as $booker)
         {
             if($this->getStatus($booker)=='paid'){
+                continue;
+            }
+            if($booker instanceof FlightBookerComponent) {
+                $booker->status('paid');
+                $booker->status('ticketing');
                 continue;
             }
 
@@ -66,8 +77,7 @@ class SuccessAction extends CAction
             }
 
 //            $order->isWaitingForPaymentState($booker->getStatus());
-            $bill = $payments->getBillForBooker($booker->getCurrent());
-            $bill->channel = 'ltr';
+            $bill = $payments->getBillForBooker($booker);
             $channel =  $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
@@ -83,7 +93,7 @@ class SuccessAction extends CAction
     }
 
     //! performs refunds of boookers in given order
-    private function refund($order)
+    protected function refund($order)
     {
         $payments = Yii::app()->payments;
         $bookers = $order->getBookers();
@@ -104,18 +114,16 @@ class SuccessAction extends CAction
         }
     }
 
-    private function isWaitingForPayment($booker)
+    protected function isWaitingForPayment($booker)
     {
         if($this->getStatus($booker)=='waitingForPayment')
             return true;
         # FIXME FIXME FIXME
-        if($this->getStatus($booker)=='hardWaitingForPayment')
-            return true;
         return false;
     }
 
     //! helper function returns last segment of 2 segment statuses
-    private function getStatus($booker)
+    protected function getStatus($booker)
     {
         $status = $booker->getStatus();
         $parts = explode("/", $status);

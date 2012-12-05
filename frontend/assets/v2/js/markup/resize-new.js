@@ -571,6 +571,7 @@ function ResizeAvia() {
     slideToursSlide();
     smallIMGresizeIndex();
     mapAllPageView();
+    gradientResize();
 }
 
 function ResizeFun() {
@@ -1302,10 +1303,10 @@ function resizeFAQ() {
 }
 function scrollFAQ() {
     if ($(window).scrollTop() > 64) {
-        $('.listFAQ').css('top', ($(window).scrollTop() - 64) +'px');
+        $('.listFAQ').css('position', 'fixed').css('top', '4px');
     }
     else {
-        $('.listFAQ').css('top','0px');
+        $('.listFAQ').css('position','absolute');
     }
 
     // ScrollMenu
@@ -1319,3 +1320,18 @@ function scrollFAQ() {
 $(window).load(resizeFAQ);
 $(window).resize(resizeFAQ);
 $(window).scroll(scrollFAQ);
+
+function gradientResize() {
+    if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
+        var _content = $('.wrapper .main-block').find('#content');
+        var offset = _content.offset();
+        var _leftContent = $(window).width() - offset.left;
+        var _rightContent = offset.left + _content.width();
+        $('.gShR').show().css('left', (_rightContent - 180) +'px').css('width', ($(window).width() - (_rightContent - 180)) +'px');;
+        $('.gShL').show().css('right', (_leftContent - 40) +'px').css('width', (offset.left + 40) +'px');
+        console.log(_leftContent+' '+_rightContent);
+    }
+    else {
+        return
+    }
+}

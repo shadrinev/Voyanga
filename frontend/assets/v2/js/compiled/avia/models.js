@@ -233,9 +233,9 @@ Voyage = (function() {
   Voyage.prototype.stopoverHtml = function() {
     var htmlResult, part, _i, _len, _ref;
     if (this.direct) {
-      return;
+      return '<span class="path"></span>';
     }
-    htmlResult = "";
+    htmlResult = '';
     _ref = this.parts.slice(0, -1);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       part = _ref[_i];
@@ -252,7 +252,7 @@ Voyage = (function() {
     if (style == null) {
       style = "";
     }
-    cupClass = part.stopoverLength < 2.5 * 60 * 60 ? "cup" : "cupLong";
+    cupClass = part.stopoverLength < 2.5 * 60 * 60 ? "cup" : "cup long";
     return '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>';
   };
 

@@ -27,7 +27,6 @@ class MakeBookingAction extends CAction
             throw new CHttpException(500, 'There are exists element inside trip that are not linked. You cannot continue booking');
 
         $orderBookingId = $this->createNewOrderBooking();
-
         $ambigousPassports = $this->generatePassportForms();
         if ($this->weGotPassportsAndBooking())
         {

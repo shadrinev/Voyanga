@@ -27,6 +27,7 @@ HotelsPanel = (function(_super) {
     this.prevPanel = 'avia';
     this.nextPanel = 'tours';
     this.icon = 'hotel-ico';
+    this.mainLabel = 'Поиск отелей';
     this.indexMode = ko.observable(true);
     this.sp = new HotelsSearchParams();
     this.calendarHidden = ko.observable(true);

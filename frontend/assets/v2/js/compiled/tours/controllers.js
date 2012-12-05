@@ -74,7 +74,7 @@ ToursController = (function() {
     now = moment();
     diff = now.diff(this.stacked.creationMoment, 'seconds');
     if (diff < TOURS_TICKET_TIMELIMIT) {
-      resultDeferred.resolve(data);
+      resultDeferred.resolve(this.stacked);
       return;
     }
     return this.api.search(this.searchParams.url(), function(data) {

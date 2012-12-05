@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Voyanga v.0.1 - Trip Flight Rework</title>
+<link href="css/reset.style.css" rel="stylesheet" type="text/css" />
+<link href="css/paycard.css" rel="stylesheet" type="text/css" />
+<!--[if IE]>
+<link href="css/ie.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.maskedinput-1.3.js"></script>
+<script type="text/javascript" src="js/jquery.synctranslit.js"></script>
+<script type="text/javascript" src="js/paycard.js"></script>
+
+</head>
+
+<body>
+
+<div class="payCardDiv">
+	
+	<div class="frontside">
+		<input class="numbercard ch01" name="numbercard" type="text">
+		<input class="numbercard ch02" name="numbercard" type="text">
+		<input class="numbercard ch03" name="numbercard" type="text">
+		<input class="numbercard ch04" name="numbercard" type="text">
+		<input class="firstLastName" id="slug" name="FIO" type="text" onfocus="this.value = this.value;">
+		<input class="month" type="text" name="month" placeholder="ММ">
+		<input class="year" type="text" name="year" placeholder="ГГ">
+	</div>
+	<div class="backside">
+		<input class="CVV" name="cvv" type="text">
+		<input class="nameBank" id='slug2' name="bank" type="text">
+	</div>
+	<div class="clear"></div>
+	<div class="infoText">
+		<div class="save">Данные вашей банковской карты обрабатываются процессинговым центром PayOnline и передаются по защищенному протоколу в банк-эквайер в зашифрованном виде.</div>
+		<div class="saveInfo">Вы можете найти этот платеж в вашей банковской выписке по идентификатору «voyanga.com».</div>
+	</div>
+	<div class="finished">
+		<a class="btn-order" href="#">		
+			<span class="text">Оплатить</span>
+		</a>
+		<span class="allCena">Сумма платежа: <strong>37 500 <span class="rur">o</span></strong></span>
+		Заказ №1625
+	</div>
+</div>
+
+</body>
+</html>

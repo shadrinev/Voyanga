@@ -178,8 +178,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   stopoverHtml: ->
     if @direct
-      return
-    htmlResult = ""
+      return '<span class="path"></span>'
+    htmlResult = ''
 
     for part in @parts[0..-2]
       console.log part
@@ -190,7 +190,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   # Returns cup html for flight part 
   getCupHtmlForPart: (part, style="")->
-    cupClass = if part.stopoverLength < 2.5*60*60 then "cup" else "cupLong"
+    cupClass = if part.stopoverLength < 2.5*60*60 then "cup" else "cup long"
     '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>'
 
   # FIXME prolly should have cupLong here too

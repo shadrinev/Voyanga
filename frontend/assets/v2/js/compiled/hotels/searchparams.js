@@ -80,7 +80,7 @@ SpRoom = (function() {
     _ref = this.ages();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       age = _ref[_i];
-      parts.push(age);
+      parts.push(age.age());
     }
     return parts.join(':');
   };
