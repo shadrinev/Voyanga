@@ -689,7 +689,7 @@ class GDSNemoAgency extends CComponent
             )
         );
 
-        $response = null; //self::request('Ticketing', $aParams, $bCache = FALSE, $iExpiration = 0);
+        $response = self::request('Ticketing', $aParams, $bCache = FALSE, $iExpiration = 0);
         $flightTicketingResponse = new FlightTicketingResponse();
 
         if (isset($response->Response->Error))
