@@ -47,6 +47,10 @@ class SuccessAction extends CAction
             throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
         $booker->status('paid');
         $bill->save();
+        if($booker instanceof FlightBookerComponent) {
+            $booker->status('ticketing');
+        }
+
         echo 'Ok';
         $this->rebill($orderId);
     }
@@ -64,6 +68,7 @@ class SuccessAction extends CAction
             }
             if($booker instanceof FlightBookerComponent) {
                 $booker->status('paid');
+                $booker->status('ticketing');
                 continue;
             }
 
