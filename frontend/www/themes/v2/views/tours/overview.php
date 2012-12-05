@@ -75,8 +75,8 @@ $theme = Yii::app()->theme->baseUrl;
         <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
       <div class="costItAll" data-bind="visible: someSegmentsSelected">
-    	Итого <span class="allCost"><span data-bind="text: price()">86 250</span> <span class="rur">o</span></span>
-	    <a href="#" class="btnGoBuy"></a><br>
+	Итого <span class="allCost"><span data-bind="text: price()">86 250</span> <span class="rur">o</span></span>
+        <a href="#" class="btnGoBuy" data-bind="click:buy"></a><br>
       </div>
     </div>
     <div class="clear"></div>
@@ -92,12 +92,13 @@ $theme = Yii::app()->theme->baseUrl;
       <table class="headTitle">
 	<tr>
 	  <td class="icoTD">
-            <div class="ico-hotel"></div>      </td>
-      <td class="nameTD">
+            <div class="ico-hotel"></div>   
+	  </td>
+	  <td class="nameTD">
             <div class="title"><span  data-bind="text:vm.startCity()">Санкт-Петербург</span><span class="f13"> &mdash; начало путешествия</span></div>
 	  </td>
 	  <td class="costTD"></td>
-      <td class="removeTD"></td>
+	  <td class="removeTD"></td>
 	</tr>
       </table>
     </div>
