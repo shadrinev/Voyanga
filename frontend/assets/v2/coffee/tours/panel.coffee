@@ -104,7 +104,6 @@ class TourPanelSet
     VoyangaCalendarStandart.clear()
 
   showPanelCalendar: (args) =>
-    VoyangaCalendarStandart.clear()
     @activeCalendarPanel  args[0]
     console.log 'showPanelCalendar', args
 
