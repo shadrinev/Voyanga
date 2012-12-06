@@ -1,6 +1,6 @@
 class API
   constructor: ->
-    @endpoint = 'http://api.oleg.voyanga/v1/'
+    @endpoint = 'http://api.voyanga.com/v1/'
     #@endpoint = 'http://api.misha.voyanga/v1/'
 
   call: (url, cb, showLoad = true) =>
