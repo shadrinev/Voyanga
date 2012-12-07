@@ -80,11 +80,9 @@ class SuccessAction extends CAction
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
                 $booker->status('paid');
-                if($booker instanceof FlightBookerComponent) {
-                    $payments->notifyNemo($booker, $bill);
-                    $booker->status('ticketing');
+                $payments->notifyNemo($booker, $bill);
+                $booker->status('ticketing');
                     continue;
-                }
             }
             else
             {

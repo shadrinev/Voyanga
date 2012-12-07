@@ -108,10 +108,14 @@ class PaymentsComponent extends CApplicationComponent
     }
 
     //! tell nemo we are done with payment for given pnr
-    public function notifyNemo($flightBookerComponent, $bill)
+    public function notifyNemo($booker, $bill)
     {
-        $fbc = $flightBookerComponent;
-        $fb = $fbc->getCurrent();
+        if($booker instanceof FlightBookerComponent)
+        {
+            $booker = $booker->getCurrent();
+        }
+
+       $fb = $booker;
         $params['locator'] = $fb->pnr;
         $params['type']='FLIGHTS';
         $params['booking_id']=$fb->nemoBookId;
