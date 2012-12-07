@@ -121,7 +121,7 @@ class PaymentsComponent extends CApplicationComponent
         $params['booking_id']=$fb->nemoBookId;
         $params['user_id']='44710';
         $params['ext_id'] = $bill->transactionId;
-        $stringToSign = implod('', $params);
+        $stringToSign = implode('', $params);
         $stringToSign .= $this->nemoCallbackSecret;
         $params['sig'] = md5($stringToSign);
         $requestParams = Array();
