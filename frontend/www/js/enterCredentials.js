@@ -135,7 +135,7 @@ initCredentialsPage = function() {
             currentModule = 'hotels';
             break;
     }
-    app.bindItemsToBuy()
+    app.bindItemsToBuy();
     ko.applyBindings(app);
     ko.processAllDeferredBindingUpdates();
     app.runWithModule(currentModule);

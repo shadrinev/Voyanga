@@ -23,6 +23,7 @@ class TripDataProvider
         }
     }
 
+
     public function restoreOrderBookingFromDb($orderBookingId)
     {
         $orderBooking = OrderBooking::model()->findByPk($orderBookingId);

@@ -150,7 +150,6 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
-    VoyangaCalendarStandart.clear();
     this.activeCalendarPanel(args[0]);
     return console.log('showPanelCalendar', args);
   };

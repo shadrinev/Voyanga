@@ -118,6 +118,7 @@ Application = (function(_super) {
     console.log('rerender calendar');
     VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
     this.fakoPanel.subscribe(function(newPanel) {
+      console.log('now set new panel', newPanel);
       if (newPanel.panels) {
         return _this.activeSearchPanel(_.last(newPanel.panels()));
       }

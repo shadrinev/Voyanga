@@ -2,7 +2,7 @@
     <!--=== ===-->
     <div class="paybuyContent">
         <h2><span class="ico-fly"></span>Ввод данных</h2>
-        <h3>Данные пассажиров</h3>
+        <!--<h3>Данные пассажиров</h3>-->
         <table class="infoPassengers">
             <thead>
             <tr>

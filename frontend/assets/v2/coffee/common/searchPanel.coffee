@@ -6,6 +6,7 @@ class SearchPanel
     @calendarShadow = ko.observable @minimizedCalendar
     @prevSearchPanel = ko.observable (null)
     @nextSearchPanel = ko.observable (null)
+    @aPanelId = Math.floor(Math.random()*10000)
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()

@@ -16,7 +16,10 @@
         </div>
         <!-- END ALL CONTENT -->
 </script>
-
+<script type="text-html" id="hotels-results-inner-data">
+    <!-- ko template: {name: 'hotels-results-inner', data: $data()} -->
+    <!-- /ko -->
+</script>
 <script type="text-html" id="hotels-results-inner">
 
 <h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city.casePre">Амстердам</span><div class="hideTitle">, <span data-bind="text: getDateInterval()">19-26 мая</span></div></h1>
