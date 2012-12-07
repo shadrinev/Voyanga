@@ -49,10 +49,6 @@ class SuccessAction extends CAction
         
         $bill->save();
         $payments = Yii::app()->payments;
-        if($booker instanceof FlightBookerComponent) {
-            $payments->notifyNemo($booker, $bill);
-            $booker->status('ticketing');
-        }
         
         echo 'Ok';
         $this->rebill($orderId);
@@ -79,10 +75,10 @@ class SuccessAction extends CAction
             $channel =  $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
-                $booker->status('paid');
                 $payments->notifyNemo($booker, $bill);
+                $booker->status('paid');
                 $booker->status('ticketing');
-                    continue;
+                continue;
             }
             else
             {
