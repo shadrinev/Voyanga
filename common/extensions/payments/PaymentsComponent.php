@@ -17,6 +17,7 @@ class PaymentsComponent extends CApplicationComponent
      * @var array
      */
     private $_credentials;
+    public $nemoCallbackSecret;
 
     public function setCredentials($value)
     {
