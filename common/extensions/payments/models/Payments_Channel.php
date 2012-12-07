@@ -94,6 +94,7 @@ abstract class Payments_Channel {
         
         if($result['Result'] == 'Ok')
             return true;
+        throw new Exception(print_r($result, true));
         return false;
     }
 
