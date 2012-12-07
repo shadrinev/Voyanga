@@ -92,9 +92,9 @@ abstract class Payments_Channel {
         $params['SecurityKey'] = $this->getSignature($params, 'rebill');
         list($code,$result) = $this->callApi('transaction/rebill', $params);
         
-        if($result['Result'] == 'Ok')
+        if(strtolower($result['Result']) == 'ok')
             return true;
-        throw new Exception(print_r($result, true));
+//        throw new Exception(print_r($result, true));
         return false;
     }
 
