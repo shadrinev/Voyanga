@@ -46,11 +46,14 @@ class SuccessAction extends CAction
         if(!$this->isWaitingForPayment($booker))
             throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
         $booker->status('paid');
+        
         $bill->save();
+        $payments = Yii::app()->payments;
         if($booker instanceof FlightBookerComponent) {
+            $payments->notifyNemo($booker, $bill);
             $booker->status('ticketing');
         }
-
+        
         echo 'Ok';
         $this->rebill($orderId);
     }
@@ -66,11 +69,6 @@ class SuccessAction extends CAction
             if($this->getStatus($booker)=='paid'){
                 continue;
             }
-            if($booker instanceof FlightBookerComponent) {
-                $booker->status('paid');
-                $booker->status('ticketing');
-                continue;
-            }
 
             if($this->getStatus($booker)!='waitingForPayment'){
                 return $this->refund($order);
@@ -82,6 +80,11 @@ class SuccessAction extends CAction
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
                 $booker->status('paid');
+                if($booker instanceof FlightBookerComponent) {
+                    $payments->notifyNemo($booker, $bill);
+                    $booker->status('ticketing');
+                    continue;
+                }
             }
             else
             {

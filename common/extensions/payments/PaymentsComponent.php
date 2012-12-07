@@ -105,4 +105,30 @@ class PaymentsComponent extends CApplicationComponent
         }
         return $rest;
     }
+
+    //! tell nemo we are done with payment for given pnr
+    public function notifyNemo($flightBookerComponent, $bill)
+    {
+        $fbc = $flightBookerComponent;
+        $fb = $fbc->getCurrent();
+        $params['locator'] = $fb->pnr;
+        $params['type']='FLIGHTS';
+        $params['booking_id']=$fb->nemoBookId;
+        $params['user_id']='44710';
+        $params['ext_id'] = $bill->transactionId;
+        $stringToSign = implod('', $params);
+        $stringToSign .= $this->nemoCallbackSecret;
+        $params['sig'] = md5($stringToSign);
+        $requestParams = Array();
+        foreach ($params as $key => $value) {
+            $requestParams[]=$key.'='.urlencode($value);
+        }
+        $url = '/index.php?go=payment/bill&';
+        $url.= implode('&', $requestParams);
+        list($code, $data) =  Yii::app()->httpClient->get('http://easytrip.nemo-ibe.com' . $url);
+        if($code!=200)
+            return false;
+//            throw new Exception("Nemo callback failure");
+        return true;
+    }
 }
