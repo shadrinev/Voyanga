@@ -295,12 +295,14 @@ class MakeBookingAction extends CAction
         if (is_numeric(Yii::app()->user->getState('todayOrderId')))
             return Yii::app()->user->getState('todayOrderId');
         $orderBooking = new OrderBooking();
+        $orderBooking->secretKey = md5(microtime().time().appParams('salt'));
         $orderBooking->save();
         $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
         $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);
         $orderBooking->saveAttributes(array('readableId'=>$readableNumber));
         Yii::app()->user->setState('orderBookingId', $orderBooking->id);
         Yii::app()->user->setState('todayOrderId', $readableNumber);
+        Yii::app()->user->setState('secretKey', $orderBooking->secretKey);
         return $readableNumber;
     }
 }

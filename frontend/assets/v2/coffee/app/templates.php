@@ -32,5 +32,11 @@ return array (
     'buy.flightRtPart',
     'buy.flightPart',
     'buy.hotelPart',
-    'buy.items'
+   
+    'buy.completedFlightRtPart',
+    'buy.completedFlightPart',
+    'buy.completedHotelPart',
+
+    'buy.items',
+    'buy.completedItems'
 );
