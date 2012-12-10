@@ -35,17 +35,23 @@ class TripDataProvider
         foreach ($flights as $flight)
         {
             $flightVoyage = unserialize($flight->flightVoyageInfo);
+            $searchParams = @unserialize($flight->searchParams);
             $flightTripElement = new FlightTripElement();
             $flightTripElement->flightVoyage = $flightVoyage;
             $flightTripElement->flightBookerId = $flight->id;
+            if ($searchParams)
+                $flightTripElement->fillFromSearchParams($searchParams);
             Yii::app()->{$this->shoppingCartComponent}->put($flightTripElement);
         }
         foreach ($hotels as $hotel)
         {
             $hotelInfo = unserialize($hotel->hotelInfo);
+            $searchParams = @unserialize($hotel->searchParams);
             $hotelTripElement = new HotelTripElement();
             $hotelTripElement->hotel = $hotelInfo;
             $hotelTripElement->hotelBookerId = $hotel->id;
+            if ($searchParams)
+                $hotelTripElement->fillFromSearchParams($searchParams);
             Yii::app()->{$this->shoppingCartComponent}->put($hotelTripElement);
         }
     }

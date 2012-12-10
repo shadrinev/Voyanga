@@ -29,7 +29,7 @@ return CMap::mergeArray(
         'defaultController' => $params['app.defaultController'],
         'preload' => array(
             'log',
-            'bootstrap'
+            'RSentryException'
         ),
         'onBeginRequest' => function($event){
             Partner::setPartnerByKey();

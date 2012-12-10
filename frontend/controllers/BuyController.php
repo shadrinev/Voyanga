@@ -36,8 +36,9 @@ class BuyController extends Controller
         $this->redirect('buy/makeBooking');
     }
 
-    public function actionComplete($secretKey)
+    public function actionOrder($id)
     {
+        $secretKey = $id;
         $this->layout = 'static';
         $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
         if (!$orderBooking)

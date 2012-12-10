@@ -16,7 +16,7 @@ class FlightTripElementWorkflow extends TripElementWorkflow
     {
         Yii::trace("Create FlightBooker", "FlightTripElementWorkflow.createFlightBookerWorkflow");
         $flightBookerComponent = new FlightBookerComponent();
-        $flightBookerComponent->setFlightBookerFromFlightVoyage($this->item->flightVoyage);
+        $flightBookerComponent->setFlightBookerFromFlightVoyage($this->item->flightVoyage, $this->item->searchParams);
         $currentFlightBookerComponent = $flightBookerComponent->getCurrent();
         $currentFlightBookerComponent->orderBookingId = self::$bookingContactInfo->id;
         if (!$currentFlightBookerComponent->save())
