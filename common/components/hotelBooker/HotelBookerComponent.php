@@ -447,13 +447,19 @@ class HotelBookerComponent extends CApplicationComponent
         $this->hotelBooker->hotel = $this->hotel;
     }
 
-    public function setHotelBookerFromHotel(Hotel $hotel)
+    public function setHotelBookerFromHotel(Hotel $hotel, $searchParams)
     {
         $this->hotelBooker = new HotelBooker();
         $this->hotelBooker->hotel = $hotel;
+        $this->hotelBooker->searchParams = serialize($searchParams);
         $this->hotelBooker->setHotelBookerComponent($this);
         $this->hotel = $hotel;
     }
+
+    public function setHotelBookerSearchParams($searchParams)
+    {
+
+   }
 
     public function getHotelBookerId()
     {

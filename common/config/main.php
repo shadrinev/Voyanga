@@ -213,26 +213,8 @@ return array(
 
         'payments' => array(
             'class' => 'common.extensions.payments.PaymentsComponent',
+            'nemoCallbackSecret' => 'onetwotripnegovno',
             'credentials' => array(
-/*
-
-                'gds_galileo'=> array(
-                    'id' => 9377,
-                    'key' => 'a51dfb8d-6c57-4ad4-a018-27593cfabddb'
-                ),
-                'gds_sabre' => array(
-                    'id' => 9378,
-                    'key' => '117869db-6a67-4f89-9753-a2fb7ee9bfc3'
-                ),
-                'ltr' => array(
-                    'id' => 9739,
-                    'key' => 'dbaf1d76-3540-40aa-af13-4e05c4a776d2'
-                ),
-                'ecommerce' => array(
-                    'id' => 9387,
-                    'key' => '71eedb90-01d6-4ba9-b058-d965d98ecc64'
-                )
-*/
                 'ltr'=> array(
                     'id' => 9377,
                     'key' => 'a51dfb8d-6c57-4ad4-a018-27593cfabddb'

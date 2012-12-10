@@ -258,6 +258,7 @@ class AviaResult
     @roundTrip = flights.length == 2
     @visible = ko.observable true
     @airline = data.valCompany
+    @searchService = data.service
     @airlineName = data.valCompanyNameEn
     @serviceClass = data.serviceClass
     @refundable = data.refundable

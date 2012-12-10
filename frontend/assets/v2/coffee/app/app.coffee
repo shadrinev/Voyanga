@@ -84,6 +84,7 @@ class Application extends Backbone.Router
     console.log('rerender calendar')
     VoyangaCalendarStandart.init @fakoPanel, elements[1]
     @fakoPanel.subscribe( (newPanel)=>
+      console.log('now set new panel',newPanel)
       if newPanel.panels
         @activeSearchPanel(_.last(newPanel.panels()))
     )

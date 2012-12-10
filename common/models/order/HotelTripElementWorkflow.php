@@ -20,7 +20,7 @@ class HotelTripElementWorkflow extends TripElementWorkflow
     private function createHotelBookerComponent()
     {
         $hotelBookerComponent = new HotelBookerComponent();
-        $hotelBookerComponent->setHotelBookerFromHotel($this->item->hotel);
+        $hotelBookerComponent->setHotelBookerFromHotel($this->item->hotel, $this->item->searchParams);
         $currentHotelBooker = $hotelBookerComponent->getCurrent();
         $currentHotelBooker->orderBookingId = self::$bookingContactInfo->id;
         $currentHotelBooker->status = 'enterCredentials';
@@ -43,8 +43,6 @@ class HotelTripElementWorkflow extends TripElementWorkflow
         $hotelBookerId = $this->item->hotelBookerId;
         foreach ($passports->roomsPassports as $i => $roomPassport)
         {
-            if ($i>0)
-                break;
             $this->saveAdultsPassports($i, $roomPassport, $hotelBookerId);
             $this->saveChildrenPassports($i, $roomPassport, $hotelBookerId);
         }

@@ -368,6 +368,7 @@ AviaResult = (function() {
     this.roundTrip = flights.length === 2;
     this.visible = ko.observable(true);
     this.airline = data.valCompany;
+    this.searchService = data.service;
     this.airlineName = data.valCompanyNameEn;
     this.serviceClass = data.serviceClass;
     this.refundable = data.refundable;

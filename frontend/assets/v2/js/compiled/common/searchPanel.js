@@ -32,6 +32,7 @@ SearchPanel = (function() {
     this.calendarShadow = ko.observable(this.minimizedCalendar);
     this.prevSearchPanel = ko.observable(null);
     this.nextSearchPanel = ko.observable(null);
+    this.aPanelId = Math.floor(Math.random() * 10000);
     this.oldCalendarState = this.minimizedCalendar();
     this.togglePanel(this.minimized(), fromTourPanel);
     this.toggleCalendar(this.minimizedCalendar(), true);
