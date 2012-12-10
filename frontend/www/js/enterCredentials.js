@@ -135,8 +135,26 @@ initCredentialsPage = function() {
             currentModule = 'hotels';
             break;
     }
-    app.bindItemsToBuy();
+    app.bindItemsToBuy()
     ko.applyBindings(app);
     ko.processAllDeferredBindingUpdates();
     app.runWithModule(currentModule);
 };
+function InputCheckOn() {
+    $('.tdDuration input[type="checkbox"]').each(function(index) {
+        if ($(this).attr('checked') == 'checked') {
+            $(this).parent().parent().parent().find('.checkOn').find('input').attr('disabled', 'disabled');
+        }
+        else {
+            $(this).parent().parent().parent().find('.checkOn').find('input').removeAttr('disabled');
+        }
+    });
+}
+function InputActiveFinishDate() {
+    InputCheckOn();
+
+    $('.tdDuration label.ui-hover').click(function() {
+        InputCheckOn();
+    });
+}
+$(window).load(InputActiveFinishDate);

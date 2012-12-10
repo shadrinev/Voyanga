@@ -84,7 +84,7 @@
                         <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
                     </td>
                     <td class="tdDuration">
-                        <div class="divInputBirthday">
+                        <div class="divInputBirthday checkOn">
                             <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
                                 "placeholder" => "ДД",
                                 "class" => "dd next",
