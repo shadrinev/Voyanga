@@ -2776,6 +2776,9 @@ input.hotel-input {
     background: url("../images/bg-input.png") no-repeat scroll -403px 0 transparent;
 
 }
+.divInputBirthday.active {
+    background: url("../images/bg-input.png") no-repeat scroll -830px -66px transparent;
+}
 .infoPassengers .dd {
 	width: 34px;
 	text-align: center;

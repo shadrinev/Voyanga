@@ -144,9 +144,11 @@ function InputCheckOn() {
     $('.tdDuration input[type="checkbox"]').each(function(index) {
         if ($(this).attr('checked') == 'checked') {
             $(this).parent().parent().parent().find('.checkOn').find('input').attr('disabled', 'disabled');
+            $(this).parent().parent().parent().find('.checkOn').addClass('active');
         }
         else {
             $(this).parent().parent().parent().find('.checkOn').find('input').removeAttr('disabled');
+            $(this).parent().parent().parent().find('.checkOn').removeClass('active');
         }
     });
 }
