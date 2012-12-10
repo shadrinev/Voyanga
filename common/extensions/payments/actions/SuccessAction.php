@@ -45,11 +45,11 @@ class SuccessAction extends CAction
 
         if(!$this->isWaitingForPayment($booker))
             throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
+        $payments = Yii::app()->payments;
         $payments->notifyNemo($booker, $bill);
         $booker->status('paid');
         $booker->status('ticketing');
         $bill->save();
-        $payments = Yii::app()->payments;
         
         echo 'Ok';
         $this->rebill($orderId);
