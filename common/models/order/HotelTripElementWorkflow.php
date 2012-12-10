@@ -13,7 +13,7 @@ class HotelTripElementWorkflow extends TripElementWorkflow
 
     public function runWorkflowAndSetFinalStatus()
     {
-        $this->workflow->status('analyzing');
+        $this->workflow->status('waitingForPayment');
         $this->finalStatus = $this->workflow->getCurrent()->swGetStatus()->toString();
     }
 
