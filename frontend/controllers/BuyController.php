@@ -36,6 +36,20 @@ class BuyController extends Controller
         $this->redirect('buy/makeBooking');
     }
 
+    public function actionOrder($id)
+    {
+        $secretKey = $id;
+        $this->layout = 'static';
+        $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
+        if (!$orderBooking)
+            throw new CHttpException(404, 'Page not found');
+        $tripStorage = new TripDataProvider($orderBooking->id);
+        $trip = $tripStorage->getSortedCartItemsOnePerGroupAsJson();
+        $orderId = Yii::app()->user->getState('orderBookingId');
+        $readableOrderId = Yii::app()->user->getState('todayOrderId');
+        $this->render('complete', array('trip'=>$trip, 'readableOrderId'=>$readableOrderId, 'orderId'=>$orderId));
+    }
+
     public function addItems()
     {
         Yii::app()->shoppingCart->clear();

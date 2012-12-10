@@ -317,12 +317,13 @@ class FlightBookerComponent extends CApplicationComponent
         $this->flightBooker->setFlightBookerComponent($this);
     }
 
-    public function setFlightBookerFromFlightVoyage(FlightVoyage $flightVoyage)
+    public function setFlightBookerFromFlightVoyage(FlightVoyage $flightVoyage, $searchParams)
     {
         $this->flightBooker = new FlightBooker();
         $this->flightBooker->flightVoyage = $flightVoyage;
         $this->flightBooker->status = 'enterCredentials';
         $this->flightBooker->price = $flightVoyage->price;
+        $this->flightBooker->searchParams = serialize($searchParams);
         $this->flightBooker->setFlightBookerComponent($this);
     }
 

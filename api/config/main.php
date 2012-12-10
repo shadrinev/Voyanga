@@ -26,7 +26,7 @@ return CMap::mergeArray(
 
         'preload' => array(
             'log',
-            'bootstrap'
+            'RSentryException'
         ),
 
         // autoloading model and component classes
@@ -78,7 +78,10 @@ return CMap::mergeArray(
                 // use 'site/error' action to display errors
                 'errorAction' => 'error/default'
             ),
-
+            'RSentryException'=> array(
+                'dsn'=> 'http://0a8a5a8f752047b4817d033007109c46:dcc2ccf28f654f9da5f151178b6886b6@mihan007.ru/2',
+                'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
+            ),
             'log' => array(
                 'class' => 'CLogRouter',
                 'routes' => array(
@@ -105,7 +108,13 @@ return CMap::mergeArray(
                         'class' => 'CEmailLogRoute',
                         'levels' => 'error, warning',
                         'filter' => 'CLogFilter',
-                        'emails' => 'reports-backend@voyanga.com,kuklin@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com,kudinov@voyanga.com'
+                        'emails' => 'reports-backend@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com'
+                    ),
+                    array(
+                        'class' => 'common.extensions.yii-sentry-log.RSentryLog',
+                        'levels' => 'error, warning',
+                        'filter' => 'CLogFilter',
+                        'dsn' => 'http://0a8a5a8f752047b4817d033007109c46:dcc2ccf28f654f9da5f151178b6886b6@mihan007.ru/2',
                     ),
                 )
             ),

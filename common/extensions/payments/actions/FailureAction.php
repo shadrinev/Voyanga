@@ -48,10 +48,10 @@ class FailureAction extends SuccessAction
 
         if($bill->getChannel()->getName() == 'gds_galileo'){
             $bill->channel = 'ltr';
+            $bill->save();
             if(!$this->isWaitingForPayment($booker))
                 throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
             $this->rebill($orderId);
-            $bill->save();
         }
     }
 }

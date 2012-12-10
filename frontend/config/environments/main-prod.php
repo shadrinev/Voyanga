@@ -9,6 +9,10 @@
  */
 return array(
 	'components'=>array(
+        'RSentryException'=> array(
+            'dsn'=> 'http://0a8a5a8f752047b4817d033007109c46:dcc2ccf28f654f9da5f151178b6886b6@mihan007.ru/2',
+            'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
+        ),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -22,7 +26,13 @@ return array(
                     'class' => 'CEmailLogRoute',
                     'levels' => 'error, warning',
                     'filter' => 'CLogFilter',
-                    'emails' => 'reports-frontend@voyanga.com,kuklin@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com,kudinov@voyanga.com'
+                    'emails' => 'reports-frontend@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com'
+                ),
+                array(
+                    'class' => 'common.extensions.yii-sentry-log.RSentryLog',
+                    'levels' => 'error, warning',
+                    'filter' => 'CLogFilter',
+                    'dsn' => 'http://0a8a5a8f752047b4817d033007109c46:dcc2ccf28f654f9da5f151178b6886b6@mihan007.ru/2',
                 ),
 			),
 		),
