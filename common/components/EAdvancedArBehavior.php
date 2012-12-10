@@ -107,7 +107,13 @@ class EAdvancedArBehavior extends CActiveRecordBehavior
 
             foreach ($owner->getTableSchema()->columns as $column)
             {
-                $value = trim($owner->getAttribute($column->name));
+                $attribute = $owner->getAttribute($column->name);
+                if (!is_string($attribute))
+                {
+                    Yii::log('It should be string here:'.CVarDumper::dumpAsString($attribute), CLogger::LEVEL_WARNING);
+                    continue;
+                }
+                $value = trim($attribute);
                 if (($column->allowNull && $value === '') // set nullable empty fields to NULL
                     ||
                     ($mysqlOnly == 1 && ($owner->isNewRecord && $value == $this->timestampDefault && $column->name != $this->onUpdateColumn // set insert-time field to NULL
