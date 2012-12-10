@@ -73,10 +73,7 @@ class Payments_MetaBooker extends CComponent{
     */
     protected function isWaitingForPayment($booker)
     {
-        if($this->getBookerStatus($booker)=='hardWaitingForPayment')
-            return true;
-        # FIXME FIXME FIXME
-        if($this->getBookerStatus($booker)=='softWaitingForPayment')
+        if($this->getBookerStatus($booker)=='waitingForPayment')
             return true;
         return false;
     }
