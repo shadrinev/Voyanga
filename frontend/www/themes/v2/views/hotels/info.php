@@ -102,6 +102,7 @@
                         		<tr>
                         			<td class="tdOrigText">
                         				<span data-bind="text: nameNemo" class="textOriginal"></span>
+                                        <span data-bind="visible: debugInfo(),text: debugInfo(),click: printDebug"></span>
                         			</td>
                         			<td>
                       				 	<!-- ko if: hasMeal -->
@@ -151,6 +152,7 @@
                         		<tr>
                         			<td class="tdOrigText">
                         				<span data-bind="text: nameNemo" class="textOriginal"></span>
+                                        <span data-bind="visible: debugInfo(),text: debugInfo(),click: printDebug"></span>
                         			</td>
                         			<td>
                       				 	<!-- ko if: hasMeal -->

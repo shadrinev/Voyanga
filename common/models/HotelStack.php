@@ -192,6 +192,7 @@ class HotelStack
     public function mergeStep(){
         if($this->hotelStacks){
             if($this->groupKey == 'providerId'){
+
                 $maxCountKey = false;
                 $maxCount = false;
                 $mergedStacks = array();
@@ -201,12 +202,15 @@ class HotelStack
                         $maxCountKey = $key;
                     }
                 }
+                $pricesMap = array();
                 /** @var $hotel Hotel */
                 foreach($this->hotelStacks[$maxCountKey]->_hotels as $hotel){
                     //echo "innn loop;";
-                    $newHotelStack = new HotelStack();
-                    $newHotelStack->addHotel($hotel);
-                    $mergedStacks[] = $newHotelStack;
+                    if(!isset($mergedStacks[$hotel->price])){
+                        $newHotelStack = new HotelStack();
+                        $newHotelStack->addHotel($hotel);
+                        $mergedStacks[$hotel->price] = $newHotelStack;
+                    }
                 }
 
                 $mCount=0;
@@ -272,10 +276,80 @@ class HotelStack
         }
     }
 
+    public function mergeStepV2(){
+        if($this->_hotels){
+
+            $mergedStacks = array();
+            $needStop = false;
+            $firstElem = true;
+
+            //foreach($this->hotelStacks as $keyStack=>$hotelStack){
+                foreach($this->_hotels as $hotelKey=>$otherHotel)
+                {
+                    if($firstElem){
+                        $newHotelStack = new HotelStack();
+
+                        $newHotelStack->addHotel($otherHotel);
+                        $mergedStacks[] = $newHotelStack;
+                        $firstElem = false;
+                    }else{
+                        $found = false;
+                        foreach($mergedStacks as $workHotelStackKey=>$workHotelStack){
+                            $tmpHotel = $workHotelStack->getHotel();
+                            $same = $tmpHotel->getMergeMetricV2($otherHotel);
+                            if($same){
+                                $found = true;
+                                //may be add to hotel stack...
+                                $mergedStacks[$workHotelStackKey]->addHotel($otherHotel);
+                                break;
+                            }else{
+                                if(false && $otherHotel->hotelId == '65664'){
+                                    echo Hotel::$compereDesc."hotelId: {$otherHotel->hotelId}<br>";
+                                    //VarDumper::dump($otherHotel);
+                                    $needStop = true;
+
+                                }
+                            }
+                        }
+                        if(!$found){
+                            $newHotelStack = new HotelStack();
+
+                            $newHotelStack->addHotel($otherHotel);
+                            $mergedStacks[] = $newHotelStack;
+                        }
+
+                    }
+                }
+            //}
+            if($needStop){
+                exit();
+            }
+            //$this->groupKey = 'merged';
+            //foreach()
+            $this->_hotels = null;
+            $this->groupKey = 'merged';
+            $this->hotelStacks = $mergedStacks;
+
+                //}
+
+
+        }else{
+            foreach($this->hotelStacks as $hotelStack){
+                $hotelStack->mergeStepV2();
+            }
+        }
+        $this->groupDeep++;
+        return $this;
+    }
+
     public function mergeSame(){
         //$startDeep = $this->groupDeep;
-        $this->groupBy('providerId');
-        $this->mergeStep();
+        //$this->groupBy('providerId');
+
+
+
+        $this->mergeStepV2();
+
         return $this;
     }
 
@@ -374,6 +448,9 @@ class HotelStack
     public function getHotels($deep = 0)
     {
         if($this->_hotels){
+            foreach($this->_hotels as $hotel){
+                $hotel->groupKey = $this->groupKey;
+            }
             return $this->_hotels;
         }elseif($this->hotelStacks){
             $hotels = array();
@@ -388,12 +465,15 @@ class HotelStack
                 }
                 else
                 {
-                    $stackHotels = $this->hotelStacks[$i]->getHotels();
-                    foreach($stackHotels as $hotel)
-                    {
-                        $hotels[] = $hotel;
-                        break;
-                    }
+                    //$stackHotels = $this->hotelStacks[$i]->getHotels();
+                    //foreach($stackHotels as $hotel)
+                    //{
+                    //    $hotels[] = $hotel;
+                    //    break;
+                    //}
+                    $hotel = $this->hotelStacks[$i]->getHotel();
+                    $hotel->groupKey = $this->groupKey;
+                    $hotels[] = $this->hotelStacks[$i]->getHotel();
                 }
             }
             return $hotels;
@@ -438,12 +518,35 @@ class HotelStack
         return $ret;
     }
 
-    public function printStack()
+    public function printStack($limit = 200)
     {
-        foreach($this->hotelStacks as $key=>$hotelStack)
-        {
-            echo "key: $key <br>";
+        $cnt = $limit;
+        $return = array();
+        if($this->_hotels){
+            $return['hotels'] = array();
+            foreach($this->_hotels as $hotel){
+                if($cnt <= 0){
+                    break;
+                }
+                $return['hotels'][] = $hotel->hotelId.'||'.$hotel->rubPrice;//$hotel->getJsonObject();
+                $cnt--;
+            }
+            return $return;
+        }else{
+            $return['groupKey'] = $this->groupKey;
+            $return['groupDeep'] = $this->groupDeep;
+            $return['hotelStack'] = array();
+            foreach($this->hotelStacks as $key=>$hotelStack)
+            {
+                if($cnt <= 0){
+                    break;
+                }
+                $return['hotelStack'][$key] = $hotelStack->printStack($limit);
+                $cnt--;
+            }
+            return $return;
         }
+
     }
 
     /**

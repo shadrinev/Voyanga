@@ -103,6 +103,7 @@ Application = (function(_super) {
     this.slider = new Slider();
     this.slider.init();
     this.activeModule.subscribe(this.slider.handler);
+    this.debugMode = ko.observable(false);
   }
 
   Application.prototype.initCalendar = function() {

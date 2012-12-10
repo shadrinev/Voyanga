@@ -19,6 +19,30 @@ $this->menu=array(
     </select>
     <input type="submit" name="smb" value="Ok">
 </form>
+<script>
+    function convertRoomNameToCanoical(){
+        var roomName = $('#originalRoomName').val()
+        if(roomName){
+            $.ajax({
+                url: "/admin/hotels/roomNames/getCanonicalName/roomName/"+ roomName,
+                dataType: 'json',
+                type: 'post',
+                beforeSend: function(){
+                    $('#roomNameCanonicalResult').val('Идет запрос...');
+                },
+                success: function(data, textStatus, jqXHR){
+                    $('#roomNameCanonicalResult').val(data.roomNameCanonical);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    $('#roomNameCanonicalResult').val('Ошибка!');
+                }
+            });
+        }
+    }
+</script>
+<input type="text" id="originalRoomName" placeholder="Room name">
+<input type="text" id="roomNameCanonicalResult" placeholder="Room Name Canonical">
+<input type="submit" onclick="convertRoomNameToCanoical()" value="Преобразовать">
 
 <form method="post">
 <?php $this->widget('bootstrap.widgets.BootGridView',array(

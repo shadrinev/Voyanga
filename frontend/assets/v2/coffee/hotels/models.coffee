@@ -56,6 +56,7 @@ class Room
     else
       @haveNemoName = false
       @nameNemo = ''
+    @roomData = data
 
     @meal = data.meal
     if data.mealName
@@ -72,8 +73,19 @@ class Room
     @hasMeal = (@meal != 'Без питания' && @meal != 'Не известно')
     if @hasMeal && @meal != 'Завтрак'
       @mealIcon = "ico-breakfast-dinner"
+
+    @debugInfo = ko.computed =>
+      if window.app.debugMode()
+        text = 'debugInfo:{'
+        for propName,propVal of @roomData
+          text += propName+'='+propVal + ', '
+        text += '}'
+        return text
+      return false
   key: =>
     return @nameNemo + @name + @meal
+  printDebug: =>
+    console.log('room data:',@roomData);
     
   getParams: =>
     result = {}
