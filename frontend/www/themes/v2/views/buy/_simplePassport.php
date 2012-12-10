@@ -50,21 +50,23 @@
                         <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_FEMALE?> female" data-value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"></div>
                     </td>
                     <td class="tdBirthday">
-                        <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
-                            "placeholder" => "ДД",
-                            "class" => "dd next",
-                            "maxlength" => "2"
-                        )); ?>
-                        <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
-                            "placeholder" => "ММ",
-                            "class" => "mm next",
-                            "maxlength" => "2"
-                        )); ?>
-                        <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
-                            "placeholder" => "ГГГГ",
-                            "class" => "yy",
-                            "maxlength" => "4"
-                        )); ?>
+                        <div class="divInputBirthday">
+                            <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
+                                "placeholder" => "ДД",
+                                "class" => "dd next",
+                                "maxlength" => "2"
+                            )); ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
+                                "placeholder" => "ММ",
+                                "class" => "mm next",
+                                "maxlength" => "2"
+                            )); ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
+                                "placeholder" => "ГГГГ",
+                                "class" => "yy",
+                                "maxlength" => "4"
+                            )); ?>
+                        </div>
                     </td>
                     <td class="tdNationality">
                         <?php echo CHtml::activeDropDownList(
@@ -82,21 +84,23 @@
                         <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
                     </td>
                     <td class="tdDuration">
-                        <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
-                            "placeholder" => "ДД",
-                            "class" => "dd next",
-                            "maxlength" => "2"
-                        )); ?>
-                        <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
-                            "placeholder" => "ММ",
-                            "class" => "mm next",
-                            "maxlength" => "2"
-                        )); ?>
-                        <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
-                            "placeholder" => "ГГГГ",
-                            "class" => "yy",
-                            "maxlength" => "4"
-                        )); ?>
+                        <div class="divInputBirthday">
+                            <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
+                                "placeholder" => "ДД",
+                                "class" => "dd next",
+                                "maxlength" => "2"
+                            )); ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
+                                "placeholder" => "ММ",
+                                "class" => "mm next",
+                                "maxlength" => "2"
+                            )); ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
+                                "placeholder" => "ГГГГ",
+                                "class" => "yy",
+                                "maxlength" => "4"
+                            )); ?>
+                        </div>
                     </td>
                 </tr>
                 <tr>
