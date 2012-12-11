@@ -11,3 +11,5 @@ class SignatureError extends PaymentError{}
 class WrongOrderStateError extends PaymentError{}
 // Segment refund failed
 class RefundError extends PaymentError{}
+// Rebill failed
+class RebillError extends PaymentError{}
