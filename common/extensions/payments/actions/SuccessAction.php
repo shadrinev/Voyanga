@@ -46,9 +46,7 @@ class SuccessAction extends CAction
         if(!$this->isWaitingForPayment($booker))
             throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
         $payments = Yii::app()->payments;
-        $payments->notifyNemo($booker, $bill);
         $booker->status('paid');
-        $booker->status('ticketing');
         $bill->save();
         
         echo 'Ok';
@@ -76,16 +74,23 @@ class SuccessAction extends CAction
             $channel =  $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
-                $payments->notifyNemo($booker, $bill);
+//                $payments->notifyNemo($booker, $bill);
                 $booker->status('paid');
-                $booker->status('ticketing');
+//                $booker->status('ticketing');
                 continue;
             }
-            else
+            if ($channel->getName() == 'gds_galileo')
             {
-                $booker->status('paymentError');
-                return $this->refund($order);
+                $bill->channel = 'ltr';
+                $channel =  $bill->getChannel();
+                $bill->save();
+                if($channel->rebill($_REQUEST['RebillAnchor'])){
+                    $booker->status('paid');
+                    continue;
+                }
             }
+            $booker->status('paymentError');
+            return $this->refund($order);
         }
 //     throw new Exception("done");
     }
