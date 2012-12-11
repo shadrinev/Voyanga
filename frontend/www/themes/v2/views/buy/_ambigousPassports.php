@@ -2,8 +2,8 @@
 <div class="oneBlock">
     <!--=== ===-->
     <div class="paybuyContent">
-        <h2><span class="ico-hotel"></span> Перелет Санкт-Петербург - Москва</h2>
-        <h3>Данные гостей	</h3>
+        <h2><span class="<?php echo $icon; ?>"></span><?php echo $header; ?></h2>
+        <h3>Данные гостей</h3>
         <table class="infoPassengers">
             <thead>
             <tr>
@@ -171,9 +171,11 @@
                     <input type="text" name="documentNumber">
                 </td>
                 <td class="tdDuration">
-                    <input type="text" name="dd" placeholder="ДД" class="dd" maxlength="2">
-                    <input type="text" name="mm" placeholder="ММ" class="mm" maxlength="2">
-                    <input type="text" name="yy" placeholder="ГГГГ" class="yy" maxlength="4">
+                    <div class="divInputBirthday checkOn">
+                        <input type="text" name="dd" placeholder="ДД" class="dd" maxlength="2">
+                        <input type="text" name="mm" placeholder="ММ" class="mm" maxlength="2">
+                        <input type="text" name="yy" placeholder="ГГГГ" class="yy" maxlength="4">
+                    </div>
                 </td>
             </tr>
             <tr>

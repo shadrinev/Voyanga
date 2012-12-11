@@ -228,4 +228,34 @@ class TripDataProvider
             $element = $elements[0];
         }
     }
+
+    public function getIconAndTextForPassports()
+    {
+        $items = $this->getDbItems();
+        $onlyFlights = true;
+        $onlyHotels = true;
+        foreach ($items as $item)
+        {
+            if ($item instanceof FlightTripElement)
+                $onlyHotels = false;
+            if ($item instanceof HotelTripElement)
+                $onlyFlights = false;
+        }
+        if ($onlyFlights)
+        {
+            $icon = 'ico-fly';
+            $message = 'Пассажиры';
+        }
+        elseif ($onlyHotels)
+        {
+            $icon = 'ico-hotel';
+            $message = 'Гости';
+        }
+        else
+        {
+            $icon = 'ico-fly';
+            $message = 'Пассажиры';
+        }
+        return array($icon, $message);
+    }
 }

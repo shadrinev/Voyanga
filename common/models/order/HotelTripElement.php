@@ -235,7 +235,6 @@ class HotelTripElement extends TripElement
     public function getAdultCount()
     {
         $result = 0;
-        var_dump($this->rooms);
         foreach ($this->rooms as $room)
         {
             $result += $room['adt'];

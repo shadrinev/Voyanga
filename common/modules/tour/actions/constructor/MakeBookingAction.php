@@ -8,6 +8,7 @@
 class MakeBookingAction extends CAction
 {
     private $counters = array();
+    private $roomCounters = array();
     private $passportForms = array();
     private $tripItems;
     private $valid = true;
@@ -45,12 +46,16 @@ class MakeBookingAction extends CAction
         $this->bookingForm = new BookingForm();
         $tripStorage = new TripDataProvider();
         $trip = $tripStorage->getSortedCartItemsOnePerGroupAsJson();
+        list ($icon, $header) = $tripStorage->getIconAndTextForPassports();
         $viewData = array(
             'passportForms' => $this->passportForms,
             'ambigousPassports' => $ambigousPassports,
             'bookingForm' => $this->bookingForm,
             'trip' => $trip,
-            'orderId' => $orderBookingId
+            'orderId' => $orderBookingId,
+            'icon' => $icon,
+            'header' => $header,
+            'roomCounters' => (sizeof($this->roomCounters) > 0) ? $this->roomCounters : false
         );
         $this->controller->render('makeBooking', $viewData);
     }
@@ -221,6 +226,7 @@ class MakeBookingAction extends CAction
             'childCount' => 0,
             'infantCount' => 0
         );
+        $this->roomCounters = array();
         foreach ($this->tripItems as $item)
         {
             if ($item instanceof FlightTripElement)
@@ -234,11 +240,19 @@ class MakeBookingAction extends CAction
             }
             elseif ($item instanceof HotelTripElement)
             {
+                $hotelRoom = reset($item->hotel->rooms);
                 foreach ($item->rooms as $room)
                 {
+                    $roomCounters = array(
+                        'adult' => $room['adt'],
+                        'child' => $room['chd'],
+                        'label' => $hotelRoom->roomName
+                    );
                     $this->counters['adultCount'] += $room['adt'];
                     $this->counters['childCount'] += $room['chd'];
                     $this->counters['infantCount'] += ($room['cots'] > 0) ? 1 : 0;
+                    $this->roomCounters[] = $roomCounters;
+                    $hotelRoom = next($item->hotel->rooms);
                 }
                 break;
             }
