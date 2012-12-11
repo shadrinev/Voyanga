@@ -94,7 +94,9 @@ abstract class Payments_Channel {
         
         if(strtolower($result['Result']) == 'ok')
             return true;
-//        throw new Exception(print_r($result, true));
+        
+        $e = new RebillError($this->rawResponse);
+        yii::app()->RSentryException->logException($e);
         return false;
     }
 
@@ -130,6 +132,8 @@ abstract class Payments_Channel {
         Yii::trace('https://secure.payonlinesystem.com/payment/' . $url, "payments.channel.apicall");
         Yii::trace($data, "payments.channel.apicall");
 
+        //! FIXME TEMPORARY
+        $this->rawResponse = $data;
         $result = array();
         if(strlen($data))
         {
