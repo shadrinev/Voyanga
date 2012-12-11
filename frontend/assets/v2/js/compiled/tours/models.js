@@ -1213,7 +1213,8 @@ ToursOverviewVM = (function() {
 TourTripResultSet = (function() {
 
   function TourTripResultSet(resultSet) {
-    var _this = this;
+    var newCity,
+      _this = this;
     this.resultSet = resultSet;
     this.items = [];
     this.cities = [];
@@ -1272,6 +1273,10 @@ TourTripResultSet = (function() {
             isLast: false,
             cityName: item.flights[0].departureCity
           });
+          _this.cities.push({
+            isLast: false,
+            cityName: item.flights[0].arrivalCity
+          });
         }
         _this.items.push(aviaResult);
         _this.totalCostWithDiscount += aviaResult.price;
@@ -1293,6 +1298,18 @@ TourTripResultSet = (function() {
         return _this.totalCostWithoutDiscount += _this.lastHotel.roomSets()[0].price;
       }
     });
+    newCity = [];
+    _.each(this.cities, function(city, i) {
+      var a;
+      a = _.last(newCity);
+      if (!_.isObject(a)) {
+        newCity.push(city);
+      }
+      if (_.last(newCity).cityName !== city.cityName) {
+        return newCity.push(city);
+      }
+    });
+    this.cities = newCity;
     _.each(this.cities, function(city, i) {
       if (i === (_this.cities.length - 1)) {
         return city.isLast = true;
