@@ -2907,14 +2907,33 @@ input.hotel-input {
 .dopInfoPassengers .tdTelefon {
 	width: 237px;
 }
-.dopInfoPassengers .tdTelefon input[type='text'] {
-	width: 187px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-position: -431px -66px;
-	text-transform: uppercase;
+.divInputTelefon {
+    background: url("../images/bg-input.png") no-repeat -431px -66px transparent;
+    position: relative;
+    height: 32px;
+    width: 197px;
 }
-.dopInfoPassengers .tdTelefon input[type='text'].error {
+.dopInfoPassengers .tdTelefon .plusSeven {
+    width: 25px;
+    padding-left: 5px;
+    position: relative;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 33px;
+    z-index: 1;
+}
+.dopInfoPassengers .tdTelefon #contactPhone {
+    background: none repeat scroll 0 0 transparent;
+    left: 0;
+    padding-left: 31px;
+    padding-right: 5px;
+    position: absolute;
+    text-transform: uppercase;
+    width: 161px;
+    z-index: 2;
+}
+.dopInfoPassengers .tdTelefon #contactPhone.error {
 	background-position: -431px -99px;
 }
 .dopInfoPassengers .tdText {

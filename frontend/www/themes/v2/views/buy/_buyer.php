@@ -16,7 +16,10 @@
                     <?php echo CHtml::activeTextField($model, "contactEmail", array('id' => 'contactEmail')); ?>
                 </td>
                 <td class="tdTelefon">
-                    <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone')); ?>
+                    <div class="divInputTelefon">
+                        <input disabled="disabled" value="+7" class="plusSeven" name="plusSeven" type="text">
+                        <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone')); ?>
+                    </div>
                 </td>
                 <td class="tdText">
                     Чтобы мы знали куда прислать электронный билет и куда звонить в случае каких-либо изменений
