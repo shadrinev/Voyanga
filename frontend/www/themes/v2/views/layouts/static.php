@@ -7,7 +7,6 @@ Yii::app()->clientScript->registerPackage('appCss');
 Yii::app()->clientScript->registerPackage('appJs');
 Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
 Yii::app()->clientScript->registerScriptFile('/js/completed.js');
-Yii::app()->clientScript->registerScriptFile('/assets/v2/js/markup/resize-new.js');
 Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
