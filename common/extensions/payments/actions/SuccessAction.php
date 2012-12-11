@@ -50,13 +50,13 @@ class SuccessAction extends CAction
         //! FIXME handle it better for great good
         // This could lead to data loss in current implementation
         // and thus not allowed
-        if($bill->transactionId && ($params['TransactionID']!=$bill->transactionId)) {
+        if($bill->transactionId && ($_REQUEST['TransactionID']!=$bill->transactionId)) {
             //! Fixme more specific exception?
             $e = new RequestError("Bill #" . $bill->id . " already have transaction id");
             yii::app()->RSentryException->logException($e);
             return;
         }
-        $bill->transactionId = $params['TransactionID'];
+        $bill->transactionId = $_REQUEST['TransactionID'];
 
         //FIXME logme
         if($this->getStatus($booker)=='paid')
