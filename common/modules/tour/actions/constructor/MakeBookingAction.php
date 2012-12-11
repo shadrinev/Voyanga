@@ -45,12 +45,15 @@ class MakeBookingAction extends CAction
         $this->bookingForm = new BookingForm();
         $tripStorage = new TripDataProvider();
         $trip = $tripStorage->getSortedCartItemsOnePerGroupAsJson();
+        list ($icon, $header) = $tripStorage->getIconAndTextForPassports();
         $viewData = array(
             'passportForms' => $this->passportForms,
             'ambigousPassports' => $ambigousPassports,
             'bookingForm' => $this->bookingForm,
             'trip' => $trip,
-            'orderId' => $orderBookingId
+            'orderId' => $orderBookingId,
+            'icon' => $icon,
+            'header' => $header
         );
         $this->controller->render('makeBooking', $viewData);
     }

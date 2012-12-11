@@ -1,7 +1,7 @@
 <div class="oneBlock">
     <!--=== ===-->
     <div class="paybuyContent">
-        <h2><span class="ico-fly"></span>Ввод данных</h2>
+        <h2><span class="<?php echo $icon ?>"></span><?php echo $header ?></h2>
         <!--<h3>Данные пассажиров</h3>-->
         <table class="infoPassengers">
             <thead>
