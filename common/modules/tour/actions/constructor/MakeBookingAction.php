@@ -55,6 +55,7 @@ class MakeBookingAction extends CAction
             'orderId' => $orderBookingId,
             'icon' => $icon,
             'header' => $header,
+            'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
             'roomCounters' => (sizeof($this->roomCounters) > 0) ? $this->roomCounters : false
         );
         $this->controller->render('makeBooking', $viewData);
@@ -201,17 +202,13 @@ class MakeBookingAction extends CAction
             {
                 foreach ($item->rooms as $room)
                 {
-                    for ($i = 0; $i < $room->adultCount; $i++)
+                    for ($i = 0; $i < $room['adt']; $i++)
                     {
                         $this->passportForms[] = new HotelAdultPassportForm();
                     }
-                    for ($i = 0; $i < $room->childCount; $i++)
+                    for ($i = 0; $i < $room['chd']; $i++)
                     {
                         $this->passportForms[] = new HotelChildPassportForm();
-                    }
-                    for ($i = 0; $i < $room->infantCount; $i++)
-                    {
-                        $this->passportForms[] = new HotelInfantPassportForm();
                     }
                 }
             }

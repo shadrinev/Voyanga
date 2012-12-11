@@ -10,7 +10,7 @@
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>
-            <?php $this->renderPartial('_ambigousPassports', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header)); ?>
+            <?php $this->renderPartial('_ambigousPassports', array('passportForms' => $passportForms, 'headers'=>$headersForAmbigous, 'roomCounters'=>$roomCounters)); ?>
         <?php else: ?>
             <?php $this->renderPartial('_simplePassport', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header, 'roomCounters'=>$roomCounters)); ?>
         <?php endif;?>
