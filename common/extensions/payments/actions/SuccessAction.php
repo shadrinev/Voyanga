@@ -34,7 +34,7 @@ class SuccessAction extends CAction
         {
             $e = new  SignatureError("Signature mismatch actual: ". $params['SecurityKey'] . ". Expected: " . $sign . ".");
             yii::app()->RSentryException->logException($e);
-            return;
+//            return;
         }
 
        $booker = $channel->booker;
