@@ -12,7 +12,7 @@
         <?php if ($ambigousPassports): ?>
             <?php $this->renderPartial('_ambigousPassports', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header)); ?>
         <?php else: ?>
-            <?php $this->renderPartial('_simplePassport', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header)); ?>
+            <?php $this->renderPartial('_simplePassport', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header, 'roomCounters'=>$roomCounters)); ?>
         <?php endif;?>
         <?php $this->renderPartial('_buyer', array('model' => $bookingForm)); ?>
     </form>

@@ -143,12 +143,22 @@ initCredentialsPage = function() {
 function InputCheckOn() {
     $('.tdDuration input[type="checkbox"]').each(function(index) {
         if ($(this).attr('checked') == 'checked') {
-            $(this).parent().parent().parent().find('.checkOn').find('input').attr('disabled', 'disabled');
-            $(this).parent().parent().parent().find('.checkOn').addClass('active');
+            $(this)
+                .closest('tr')
+                .prev()
+                .find('.checkOn')
+                .addClass('active')
+                .find('input')
+                .attr('disabled', 'disabled');
         }
         else {
-            $(this).parent().parent().parent().find('.checkOn').find('input').removeAttr('disabled');
-            $(this).parent().parent().parent().find('.checkOn').removeClass('active');
+            $(this)
+                .closest('tr')
+                .prev()
+                .find('.checkOn')
+                .removeClass('active')
+                .find('input')
+                .removeAttr('disabled');
         }
     });
 }

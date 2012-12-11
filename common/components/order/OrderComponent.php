@@ -158,8 +158,7 @@ class OrderComponent extends CApplicationComponent
     {
         $validStates = array(
             'swFlightBooker/waitingForPayment',
-            'swHotelBooker/softWaitingForPayment',
-            'swHotelBooker/hardWaitingForPayment',
+            'swHotelBooker/waitingForPayment',
         );
         return in_array($state, $validStates);
     }
