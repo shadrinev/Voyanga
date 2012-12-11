@@ -253,6 +253,18 @@ class FlightVoyage extends CApplicationComponent
         return false;
     }
 
+    public function isRoundTrip()
+    {
+        $countFlights = count($this->flights);
+        if ($countFlights == 2)
+        {
+            $condition = ($this->flights[0]->getDepartureCity()->id == $this->flights[1]->getArrivalCity()->id);
+            if ($condition)
+                return true;
+        }
+        return false;
+    }
+
     public function getTransportAirlines()
     {
         $airlines = array();

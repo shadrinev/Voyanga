@@ -229,6 +229,37 @@ class TripDataProvider
         }
     }
 
+    public function getHeadersForPassportDataPage()
+    {
+        $items = $this->getDbItems();
+        $headers = array(
+            'flights' => array(),
+            'hotels' => array()
+        );
+        $f = 0;
+        $h = 0;
+        foreach ($items as $i => $item)
+        {
+            if ($item instanceof FlightTripElement)
+            {
+                $isBack = $item->flightVoyage->isRoundTrip() ? ' и обратно' : '';
+                $headers['flights'][$f++] = 'Перелёт из '.$item->getDepartureCityModel()->caseGen.' в '.$item->getArrivalCityModel()->caseAcc.$isBack;
+            }
+            if ($item instanceof HotelTripElement)
+            {
+                $headers['hotels'][$h]['common'] = 'Гости отеля '.$item->hotel->hotelName;
+                $headers['hotels'][$h]['rooms'] = array();
+                foreach ($item->hotel->rooms as $i => $room)
+                {
+                    $headers['hotels'][$h]['rooms'][$i] = array('counter'=>0, 'name'=>'');
+                    $headers['hotels'][$h]['rooms'][$i]['counter']++;
+                    $headers['hotels'][$h++]['rooms'][$i]['name'] = 'Номер '.($i+1).' ('.$room->roomName.')';
+                }
+            }
+        }
+        return $headers;
+    }
+
     public function getIconAndTextForPassports()
     {
         $items = $this->getDbItems();
