@@ -240,16 +240,19 @@ class MakeBookingAction extends CAction
             }
             elseif ($item instanceof HotelTripElement)
             {
+                $hotelRoom = reset($item->hotel->rooms);
                 foreach ($item->rooms as $room)
                 {
                     $roomCounters = array(
                         'adult' => $room['adt'],
                         'child' => $room['chd'],
+                        'label' => $hotelRoom->roomName
                     );
                     $this->counters['adultCount'] += $room['adt'];
                     $this->counters['childCount'] += $room['chd'];
                     $this->counters['infantCount'] += ($room['cots'] > 0) ? 1 : 0;
                     $this->roomCounters[] = $roomCounters;
+                    $hotelRoom = next($item->hotel->rooms);
                 }
                 break;
             }

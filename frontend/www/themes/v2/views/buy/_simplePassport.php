@@ -34,7 +34,7 @@
             <?php $currentRoomId = 0; $currentRoomAdults = 0; $currentRoomChild = 0; ?>
             <?php if ($roomCounters): ?>
                 <tr>
-                    <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?></h3></td>
+                    <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?> (<?php echo $roomCounters[$currentRoomId]['label'] ?>)</h3></td>
                 </tr>
             <?php endif ?>
             <?php foreach ($passportForms as $i => $model): ?>
@@ -54,7 +54,7 @@
                 ?>
                 <?php if ($roomCounters and ($currentRoomAdults == 0)): ?>
                     <tr>
-                        <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?></h3></td>
+                        <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?> (<?php echo $roomCounters[$currentRoomId]['label'] ?>)</h3></td>
                     </tr>
                 <?php endif ?>
                 <script type="text/javascript">
