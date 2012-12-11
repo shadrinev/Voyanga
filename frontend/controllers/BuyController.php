@@ -131,4 +131,11 @@ class BuyController extends Controller
     {
         Yii::app()->user->setState('blockedToBook', null);
     }
+
+    public function actionWaitpayment()
+    {
+        echo "WAITING FOR PAYMENTS";
+        exit;
+
+    }
 }
