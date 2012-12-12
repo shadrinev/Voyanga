@@ -7,6 +7,19 @@
  */
 class UserController extends CController
 {
+    public $layout = 'static';
+
+    public function actionCreateTestUser()
+    {
+        /* add demo users */
+        $demoUser = new FrontendUser();
+        $demoUser->username = "mihan007";
+        $demoUser->email = "mihan007@ya.ru";
+        $demoUser->password = "clevertech";
+        $demoUser->save();
+        VarDumper::dump($demoUser->errors);
+    }
+
     public function actionNewPassword($key=false)
     {
         if ($key)
@@ -24,7 +37,7 @@ class UserController extends CController
                         $user->recover_pwd_key = '';
                         $user->recover_pwd_expiration = date('Y-m-d h:i:s', time()-1);
                         if ($user->save())
-                            Yii::app()->user->setFlash('success', 'You have successfully changed your password. You may now use it to login to Present Value.');
+                            Yii::app()->user->setFlash('success', 'Вы успешно изменили ваш пароль и теперь можете войти на сайт, используя его.');
                         else
                             $model->addErrors($user->errors);
                     }
@@ -47,7 +60,7 @@ class UserController extends CController
                     $user = FrontendUser::model()->findByAttributes(array('email'=>$model->email));
                     if ($user)
                     {
-                        Yii::app()->user->setFlash('success', 'You will receive an email shortly with instructions to create a new password.');
+                        Yii::app()->user->setFlash('success', 'Вы получите письмо с инструкциями как восстановить ваш пароль.');
                         EmailManager::sendRecoveryPassword($user);
                         $this->refresh();
                     }

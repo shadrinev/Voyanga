@@ -50,7 +50,6 @@ class FrontendUser extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('recover_pwd_expiration', 'required'),
 			array('requires_new_password, login_attempts, login_time, create_id, create_time, update_id, update_time', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>45),
 			array('password, salt, email, validation_key', 'length', 'max'=>255),
@@ -61,6 +60,34 @@ class FrontendUser extends CActiveRecord
 			array('id, username, password, salt, password_strategy, requires_new_password, email, login_attempts, login_time, login_ip, validation_key, create_id, create_time, update_id, update_time, recover_pwd_key, recover_pwd_expiration', 'safe', 'on'=>'search'),
 		);
 	}
+
+    /**
+     * Behaviors
+     * @return array
+     */
+    public function behaviors()
+    {
+        Yii::import('common.extensions.YiiPasswords.*');
+        return array(
+            // Password behavior strategy
+            "APasswordBehavior" => array(
+                "class" => "APasswordBehavior",
+                "strategyAttribute" => "password_strategy",
+                "defaultStrategyName" => "bcrypt",
+                "strategies" => array(
+                    "bcrypt" => array(
+                        "class" => "ABcryptPasswordStrategy",
+                        "workFactor" => 14,
+                        "minLength" => 6
+                    ),
+                    "legacy" => array(
+                        "class" => "ALegacyMd5PasswordStrategy",
+                        'minLength' => 6
+                    )
+                ),
+            ),
+        );
+    }
 
 	/**
 	 * @return array relational rules.
@@ -99,37 +126,22 @@ class FrontendUser extends CActiveRecord
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * Generates a new validation key (additional security for cookie)
+     */
+    public function regenerateValidationKey()
+    {
+        $this->saveAttributes(array(
+            'validation_key' => md5(mt_rand() . mt_rand() . mt_rand()),
+        ));
+    }
 
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('salt',$this->salt,true);
-		$criteria->compare('password_strategy',$this->password_strategy,true);
-		$criteria->compare('requires_new_password',$this->requires_new_password);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('login_attempts',$this->login_attempts);
-		$criteria->compare('login_time',$this->login_time);
-		$criteria->compare('login_ip',$this->login_ip,true);
-		$criteria->compare('validation_key',$this->validation_key,true);
-		$criteria->compare('create_id',$this->create_id);
-		$criteria->compare('create_time',$this->create_time);
-		$criteria->compare('update_id',$this->update_id);
-		$criteria->compare('update_time',$this->update_time);
-		$criteria->compare('recover_pwd_key',$this->recover_pwd_key,true);
-		$criteria->compare('recover_pwd_expiration',$this->recover_pwd_expiration,true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+    public function generateKey()
+    {
+        $key = md5($this->password.$this->salt);
+        $this->recover_pwd_key = $key;
+        $this->recover_pwd_expiration = date('Y-m-d H:i:s', time() + 2 * 7 * 3600);
+        $this->update(array('recover_pwd_key', 'recover_pwd_expiration'));
+        return $key;
+    }
 }

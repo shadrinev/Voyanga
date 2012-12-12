@@ -5,6 +5,7 @@
  * Date: 12.12.12
  * Time: 9:06
  */
+Yii::import('common.extensions.yii-mail.*');
 class EmailManager
 {
     static public function sendOrderInfo()

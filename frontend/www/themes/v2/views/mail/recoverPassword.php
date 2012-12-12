@@ -1,4 +1,4 @@
-<?php $link = Yii::app()->createAbsoluteUrl('/site/newPassword', array('key'=>$key)); ?>
+<?php $link = Yii::app()->createAbsoluteUrl('/user/newPassword', array('key'=>$key)); ?>
 <p>Кажется вы забыли свой пароль на сайте <?php Yii::app()->createAbsoluteUrl('/'); ?>?</p>
 <p>Чтобы создать новый пароль нажмите по ссылке ниже:</p>
 <p><?php echo CHtml::link($link, $link); ?>. </p>
