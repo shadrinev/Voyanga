@@ -81,4 +81,7 @@ return CMap::mergeArray(array(
 
     'adminEmail' => 'support@voyanga.com',
     'adminEmailName' => 'Voyanga',
+
+    'autoAssignCurrentOrders' => true,
+
 ), CMap::mergeArray( $commonParamsEnv, $commonParamsLocal));

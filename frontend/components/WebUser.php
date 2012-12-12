@@ -31,4 +31,32 @@ class WebUser extends CWebUser
         }
         return $this->_id;
     }
+
+    public function getUserWithEmail($email)
+    {
+        $user = $this->checkIfExists($email);
+        if (!$user)
+            $user = $this->createNew($email);
+        return $user;
+    }
+
+    public function checkIfExists($email)
+    {
+        $user = FrontendUser::model()->findByAttributes(array('email'=>$email));
+        return $user;
+    }
+    public function createNew($email)
+    {
+        $newUser = new FrontendUser();
+        $newUser->username = $email;
+        $newUser->email = $email;
+        $password = PasswordGenerator::createSimple();
+        $newUser->password = $password;
+        $newUser->save();
+        if ($newUser->save())
+        {
+            EmailManager::sendUserInfo($newUser, $password);
+        }
+        return $newUser;
+    }
 }

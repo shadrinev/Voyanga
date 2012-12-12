@@ -27,4 +27,19 @@ class EmailManager
         ), 'text/html');
         Yii::app()->mail->send($msg);
     }
+
+    static public function sendUserInfo(FrontendUser $user, $password)
+    {
+        $msg = new YiiMailMessage();
+        $msg->view = 'newUser';
+        $msg
+            ->setFrom(appParams('adminEmail'), appParams('adminEmailName'))
+            ->setTo($user->email)
+            ->setSubject('Ваши учётные данные');
+        $msg->setBody(array(
+            'email' => $user->email,
+            'password'=> $password,
+        ), 'text/html');
+        Yii::app()->mail->send($msg);
+    }
 }
