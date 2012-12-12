@@ -15,9 +15,17 @@ class UserController extends CController
         $demoUser = new FrontendUser();
         $demoUser->username = "mihan007";
         $demoUser->email = $email;
-        $demoUser->password = $email.'123';
+        $password = $email.'123';
+        $demoUser->password = $password;
         $demoUser->save();
+        echo 'Ошибки:';
         VarDumper::dump($demoUser->errors);
+        if (sizeof($demoUser->errors)==0)
+        {
+            echo '<h1>Новый пользователь успешно создан</h1>';
+            echo '<h2>Логин:'.$email.'</h2>';
+            echo '<h2>Пароль:'.$password.'</h2>';
+        }
     }
 
     public function actionNewPassword($key=false)
