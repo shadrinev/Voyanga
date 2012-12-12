@@ -81,6 +81,7 @@ return CMap::mergeArray(array(
 
     'adminEmail' => 'support@voyanga.com',
     'adminEmailName' => 'Voyanga',
+
     'smtp.host' => 'smtp.yandex.ru',
     'smtp.username' => 'support@voyanga.com',
     'smtp.password' => 'supportteam',
