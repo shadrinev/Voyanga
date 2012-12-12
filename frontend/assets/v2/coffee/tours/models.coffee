@@ -845,8 +845,13 @@ class TourTripResultSet
       if (i == (@cities.length - 1))
         city.isLast = true
       else
-        city.left = Math.round((100 / @cities.length) * (i + 1)) + '%'
+        city.left = Math.round((100 / @cities.length) * (i + 1) - 8.4);
+        if (city.left<0)
+          city.left =  '0%'
+        else
+          city.left = city.left + '%'
     if @tour
         @totalCost = @totalCostWithDiscount
     else
         @totalCost = @totalCostWithoutDiscount
+    console.log "City:", @cities

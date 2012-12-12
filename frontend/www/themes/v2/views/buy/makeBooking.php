@@ -23,7 +23,7 @@
                     <div class="linePath"></div>
                     <!-- ko foreach: itemsToBuy.cities -->
                         <!-- ko if: $data.isLast -->
-                            <div class="cityPoint" style="right: 42px;" data-bind='text: $data.cityName'>
+                            <div class="cityPoint last" style="right: 42px;" data-bind='text: $data.cityName'>
                                 Санкт-Петербург
                             </div>
                         <!-- /ko -->
