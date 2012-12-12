@@ -35,17 +35,16 @@ class SearchPanel
     heightCalendar1 = $('.calenderWindow').height()
     heightCalendar2 = heightSubHead
     console.log('toggle calendarRR')
-
     if !minimizedCalendar
-      ResizeAvia()
       @calendarHidden(false)
       if !initialize
+        ResizeAvia()
         $('.calenderWindow .calendarSlide').animate {'top' : '0px'}
         $('.calenderWindow').animate {'height' : '341px'}, speed
     else
-      ResizeAvia()
       @calendarShadow(true)
       if !initialize
+        ResizeAvia()
         @calendarShadow(true)
         $('.calenderWindow .calendarSlide').animate {'top' : '-341px'}
         $('.calenderWindow').animate {'height' : '0px'}, speed, () =>
