@@ -115,13 +115,13 @@ return array(
             'viewPath' => 'frontend.www.themes.v2.views.mail',
             'logging' => true,
             'dryRun' => false,
-            /* 'transportOptions' => array(
+            'transportOptions' => array(
                 'host' => $params['smtp.host'],
                 'username' => $params['smtp.username'],
                 'password' => $params['smtp.password'],
                 'port' => $params['smtp.port'],
                 //   'encryption' => 'tls',
-            ),*/
+            ),
         ),
 
         'configManager' => array (
