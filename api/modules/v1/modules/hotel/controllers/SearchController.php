@@ -44,6 +44,7 @@ class SearchController extends ApiController
 
         $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
 
+
         if (!$this->results)
         {
             $this->sendError(500, 'Error while send Request To Hotel Provider');
@@ -77,7 +78,7 @@ class SearchController extends ApiController
         }
 
         $stack = new HotelStack($hotelSearchResult);
-        $results = $stack->groupBy('hotelId')->mergeSame()->sortBy('rubPrice', 5)->getJsonObject(4);
+        $results = $stack->groupBy('hotelId')->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
         $hotelClient = new HotelBookClient();
         $response = array();
 
@@ -88,7 +89,10 @@ class SearchController extends ApiController
                 if (!isset($response['hotel']))
                 {
                     $response['hotel'] = $hotel;
-                    $response['hotel']['details'] = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
+                    $allHotels = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
+                    $newStack = new HotelStack(array('hotels'=>$allHotels));
+                    $hotelsOut = $newStack->groupBy('hotelId')->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
+                    $response['hotel']['details'] = array();//$hotelsOut['hotels'];
                     $response['searchParams'] = $hotelSearchParams->getJsonObject();
                     $response['hotel']['oldHotels'] = array();
                     $response['hotel']['oldHotels'][] = new Hotel($hotel);
@@ -102,6 +106,7 @@ class SearchController extends ApiController
         if (isset($response))
         {
             $null = null;
+            //$allhotels = array_merge($response['hotel']['oldHotels'],$response['hotel']['details']);
             $hotelClient->hotelSearchDetails($null, $response['hotel']['oldHotels']);
             if ($format == 'json')
                 $this->sendJson($response);

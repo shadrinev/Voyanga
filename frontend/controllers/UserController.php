@@ -19,10 +19,16 @@ class UserController extends CController
     public function accessRules()
     {
         return array(
-            array('allow', 'actions' => array('createTestUser', 'newPassword', 'login')),
+            array('allow', 'actions' => array('test','createTestUser', 'newPassword', 'login')),
             array('allow', 'actions' => array('orders', 'logout'), 'users' => array('@')),
             array('deny'),
         );
+    }
+
+    public function actionTest()
+    {
+        $user = FrontendUser::model()->findByPk(8);
+        EmailManager::sendUserInfo($user, '12134234');
     }
 
     public function actionCreateTestUser($email)
@@ -98,7 +104,16 @@ class UserController extends CController
 
     public function actionOrders()
     {
-        echo 'Тут будут заказы';
+        $criteria = new CDbCriteria();
+        $criteria->order = 'timestamp desc';
+        $criteria->addColumnCondition(array('userId'=>Yii::app()->user->id));
+
+        $dataProvider = new CActiveDataProvider('OrderBooking', array(
+            'criteria' => $criteria
+        ));
+        $this->render('orders', array(
+            'model' => $dataProvider
+        ));
     }
 
     /**

@@ -1,4 +1,8 @@
-
+<script>
+  $(function(){
+    window.app.runWithModule('tours');
+  });
+</script>
 <div class="wrapFAQ">
     <div class="floatLeft">
         <ul class="listFAQ">

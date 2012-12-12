@@ -1,4 +1,13 @@
 $(function(){
+    var avia, hotels, tour;
+    window.app = new Application();
+    avia = new AviaModule();
+    hotels = new HotelsModule();
+    tour = new ToursModule();
+    window.app.register('tours', tour, true);
+    window.app.register('hotels', hotels);
+    window.app.register('avia', avia);
+
     window.toursOverviewActive = true;
     $('.genderField').each(function(){
         var $this = $(this),
@@ -109,20 +118,6 @@ function checkStatuses(statuses)
 }
 
 initCredentialsPage = function() {
-    var app, avia, hotels, tour;
-    window.voyanga_debug = function() {
-        var args;
-        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        return console.log.apply(console, args);
-    };
-    app = new Application();
-    avia = new AviaModule();
-    hotels = new HotelsModule();
-    tour = new ToursModule();
-    window.app = app;
-    app.register('tours', tour, true);
-    app.register('hotels', hotels);
-    app.register('avia', avia);
     var currentModule;
     switch (window.currentModule)
     {
@@ -136,10 +131,10 @@ initCredentialsPage = function() {
             currentModule = 'hotels';
             break;
     }
-    app.bindItemsToBuy()
-    ko.applyBindings(app);
+    window.app.bindItemsToBuy();
+    ko.applyBindings(window.app);
     ko.processAllDeferredBindingUpdates();
-    app.runWithModule(currentModule);
+    window.app.runWithModule(currentModule);
 };
 function InputCheckOn() {
     $('.tdDuration input[type="checkbox"]').each(function(index) {

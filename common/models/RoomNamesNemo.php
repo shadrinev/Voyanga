@@ -95,6 +95,9 @@ class RoomNamesNemo extends CActiveRecord
      */
     public static function getNamesByParams($roomNameCanonical,$roomSizeId = null,$roomTypeId = null)
     {
+        $startTime = microtime(true);
+        HotelBookClient::$countFunc++;
+
         if($roomSizeId and $roomTypeId)
         {
             $roomParamsKey = $roomNameCanonical.'|'.$roomSizeId.'|'.$roomTypeId;
@@ -106,6 +109,11 @@ class RoomNamesNemo extends CActiveRecord
         if($roomParamsKey){
             if(isset(RoomNamesNemo::$paramsIdMap[$roomParamsKey]))
             {
+                $endTime = microtime(true);
+                $fullTime = $endTime - $startTime;
+                if($fullTime > HotelBookClient::$maxMicrotime)
+                    HotelBookClient::$maxMicrotime = $fullTime;
+                HotelBookClient::$totalMicrotime += $fullTime;
                 return RoomNamesNemo::$roomNames[RoomNamesNemo::$paramsIdMap[$roomParamsKey]];
             }
             else
@@ -115,10 +123,16 @@ class RoomNamesNemo extends CActiveRecord
                     'roomSizeId'=> $roomSizeId,
                     'roomTypeId'=> $roomTypeId
                 ));
+                HotelBookClient::$countSql++;
             }
         }elseif($roomNameCanonical){
             if(isset(RoomNamesNemo::$nameIdMap[$roomNameCanonical]))
             {
+                $endTime = microtime(true);
+                $fullTime = $endTime - $startTime;
+                if($fullTime > HotelBookClient::$maxMicrotime)
+                    HotelBookClient::$maxMicrotime = $fullTime;
+                HotelBookClient::$totalMicrotime += $fullTime;
                 return RoomNamesNemo::$roomNames[RoomNamesNemo::$nameIdMap[$roomNameCanonical]];
             }
             else
@@ -126,8 +140,14 @@ class RoomNamesNemo extends CActiveRecord
                 $roomNameNemo = RoomNamesNemo::model()->findByAttributes(array(
                     'roomNameCanonical' => $roomNameCanonical
                 ));
+                HotelBookClient::$countSql++;
             }
         }else{
+            $endTime = microtime(true);
+            $fullTime = $endTime - $startTime;
+            if($fullTime > HotelBookClient::$maxMicrotime)
+                HotelBookClient::$maxMicrotime = $fullTime;
+            HotelBookClient::$totalMicrotime += $fullTime;
             return false;
         }
 
@@ -141,8 +161,18 @@ class RoomNamesNemo extends CActiveRecord
             if($roomNameNemo->roomNameCanonical){
                 RoomNamesNemo::$nameIdMap[$roomNameNemo->roomNameCanonical] = $roomNameNemo->id;
             }
+            $endTime = microtime(true);
+            $fullTime = $endTime - $startTime;
+            if($fullTime > HotelBookClient::$maxMicrotime)
+                HotelBookClient::$maxMicrotime = $fullTime;
+            HotelBookClient::$totalMicrotime += $fullTime;
             return $roomNameNemo;
         }else{
+            $endTime = microtime(true);
+            $fullTime = $endTime - $startTime;
+            if($fullTime > HotelBookClient::$maxMicrotime)
+                HotelBookClient::$maxMicrotime = $fullTime;
+            HotelBookClient::$totalMicrotime += $fullTime;
             return false;
         }
     }

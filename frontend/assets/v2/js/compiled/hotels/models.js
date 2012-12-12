@@ -72,7 +72,11 @@ Room = (function() {
   function Room(data) {
     this.getParams = __bind(this.getParams, this);
 
+    this.printDebug = __bind(this.printDebug, this);
+
     this.key = __bind(this.key, this);
+
+    var _this = this;
     this.name = data.showName;
     this.nameNemo = data.roomNemoName;
     if (!this.nameNemo || data.roomName) {
@@ -84,6 +88,7 @@ Room = (function() {
       this.haveNemoName = false;
       this.nameNemo = '';
     }
+    this.roomData = data;
     this.meal = data.meal;
     if (data.mealName) {
       this.meal = data.mealName;
@@ -100,10 +105,28 @@ Room = (function() {
     if (this.hasMeal && this.meal !== 'Завтрак') {
       this.mealIcon = "ico-breakfast-dinner";
     }
+    this.debugInfo = ko.computed(function() {
+      var propName, propVal, text, _ref;
+      if (window.app.debugMode()) {
+        text = 'debugInfo:{';
+        _ref = _this.roomData;
+        for (propName in _ref) {
+          propVal = _ref[propName];
+          text += propName + '=' + propVal + ', ';
+        }
+        text += '}';
+        return text;
+      }
+      return false;
+    });
   }
 
   Room.prototype.key = function() {
     return this.nameNemo + this.name + this.meal;
+  };
+
+  Room.prototype.printDebug = function() {
+    return console.log('room data:', this.roomData);
   };
 
   Room.prototype.getParams = function() {

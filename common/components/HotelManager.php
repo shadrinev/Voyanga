@@ -12,31 +12,68 @@ class HotelManager
         Yii::import('site.frontend.models.*');
         Yii::import('site.frontend.components.*');
         $hotelClient = new HotelBookClient();
-        $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
-        self::storeToCache($hotelSearchParams, $variants);
-        Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
+        //if(false && $variants = Yii::app()->pCache->get('variantsHotels')){
+
+        //}else{
+            $startTime = microtime(true);
+            $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
+            $endTime = microtime(true);
+
+            Header('ExecutionTimeFullSearch:'.($endTime - $startTime));
+            $startTime = microtime(true);
+            self::storeToCache($hotelSearchParams, $variants);
+            $endTime = microtime(true);
+
+            Header('ExecutionTimeStoreToCache:'.($endTime - $startTime));
+            $startTime = microtime(true);
+            Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
+            $endTime = microtime(true);
+
+            Header('ExecutionTimeRateInject:'.($endTime - $startTime));
+            //Yii::app()->pCache->set('variantsHotels',$variants,3600);
+        //}
         $results = array();
         if ($variants->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
         {
+            $startTime = microtime(true);
             $stack = new HotelStack($variants);
-            $results = $stack->groupBy('hotelId')->mergeSame()->sortBy('rubPrice', 5)->getJsonObject(4);
+
+            //$results = $stack->groupBy('hotelId')->mergeSame()->sortBy('rubPrice', 5)->getJsonObject(2);
+            $results = $stack->groupBy('hotelId',117501)->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
+            //echo "END";
+            //die();
+            $nStack = new HotelStack();
+            $nStack->_hotels = $stack->getHotels(1);
+
+            //print_r($stack->printStack(3000));
+            //print_r($nStack->groupBy('hotelId')->printStack(3000));
+            //die();
+
+
             $resultsHotels = $stack->getJsonObject();
             $query = array();
             foreach ($resultsHotels['hotels'] as $i => $info)
             {
                 $query[$info['hotelId']] = $hotelClient->hotelDetail($info['hotelId'], true);
             }
+
             $hotelClient->processAsyncRequests();
+            $endTime = microtime(true);
+
+            Header('ExecutionTimeSortAndDetails:'.($endTime - $startTime));
+
             $hotelsDetails = array();
             foreach ($query as $hotelId => $responseId)
             {
                 if (isset($hotelClient->requests[$responseId]['result']))
                 {
                     $hotelsDetails[$hotelId . 'd'] = self::prepare($hotelClient->requests[$responseId]['result']);
-                    Yii::app()->pCache->set('HotelDetails-' . $hotelId, $hotelsDetails[$hotelId . 'd']);
+                    Yii::app()->cache->set('HotelDetails-' . $hotelId, $hotelsDetails[$hotelId . 'd']);
                 }
             }
+
             $results['hotelsDetails'] = $hotelsDetails;
+
             return $results;
         }
         elseif ($variants->responseStatus == ResponseStatus::ERROR_CODE_EMPTY)

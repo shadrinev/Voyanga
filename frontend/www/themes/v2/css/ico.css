@@ -38,15 +38,21 @@
     width: 12px;
 }
 .ico-breakfast-dinner {
-    background: url("../images/ico.png") no-repeat scroll 0 -97px transparent;
+    background: url("../images/ico.png") no-repeat scroll 0 -82px transparent;
     display: inline-block;
     height: 15px;
-    width: 12px;
+    margin-right: 4px;
+    margin-top: -5px;
+    vertical-align: middle;
+    width: 12px;;
 }
 .ico-breakfast-lunch-dinner {
-    background: url("../images/ico.png") no-repeat scroll 0 -97px transparent;
+    background: url("../images/ico.png") no-repeat scroll 0 -82px transparent;
     display: inline-block;
     height: 15px;
+    margin-right: 4px;
+    margin-top: -5px;
+    vertical-align: middle;
     width: 12px;
 }
 .ico-descr {

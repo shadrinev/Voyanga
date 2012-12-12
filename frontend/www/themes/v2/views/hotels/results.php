@@ -47,63 +47,63 @@
                         </div>
                     </div>
                     <div class="description">
-                    <div class="title">
-                        <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span></h2>
-                        <div data-bind="attr: {class: 'stars ' + stars}"></div>
-                    </div>
-                    <div class="place">
-                        <div class="street">
-                            <span data-bind="text:address">Санкт-Петребург. ул. Морская Набережная, 31/2</span>
-                            <span class="gradient"></span>
+                        <div class="title">
+                            <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span></h2>
+                            <div data-bind="attr: {class: 'stars ' + stars}"></div>
                         </div>
-                        <a href="#"  data-bind="click: showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
+                        <div class="place">
+                            <div class="street">
+                                <span data-bind="text:address">Санкт-Петребург. ул. Морская Набережная, 31/2</span>
+                                <span class="gradient"></span>
+                            </div>
+                            <a href="#"  data-bind="click: showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
+                        </div>
+                        <div class="text">
+                            <span data-bind="html: limitDesc.startText">Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...</span><span data-bind="visible: limitDesc.isBigText">...</span>
+                        </div>
                     </div>
-                    <div class="text">
-                        <span data-bind="html: limitDesc.startText">Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...</span><span data-bind="visible: limitDesc.isBigText">...</span>
+                    <div class="choose-a-hotel">
+                        <div class="rating"  data-bind="visible: rating">
+                            <div class="textRating" onmouseover="ratingHoverActive(this)" onmouseout="ratingHoverNoActive(this)">
+                                <span class="value" data-bind="text: rating"></span>
+                                <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
+                            </div>
+                            <div class="descrRating">
+                                <strong><span data-bind="text: rating"></span> из 5 баллов</strong>
+                                Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
+                            </div>
+                        </div>
+                        <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours() ? isActive():false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
+                        <a class="details" data-bind="click: showDetails" href="#">Подробнее об отеле</a>
                     </div>
+                    <div class="clear"></div>
                 </div>
-                <div class="choose-a-hotel">
-                    <div class="rating"  data-bind="visible: rating">
-                    	<div class="textRating" onmouseover="ratingHoverActive(this)" onmouseout="ratingHoverNoActive(this)">
-	                        <span class="value" data-bind="text: rating"></span>
-	                        <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
-                        </div>
-                        <div class="descrRating">
-                        	<strong><span data-bind="text: rating"></span> из 5 баллов</strong>
-                        	Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
-                        </div>
-                    </div>
-                    <a href="#" class="btn-cost" data-bind="click:$parent.select, css:{selected: tours() ? isActive():false}"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
-                    <a class="details" data-bind="click: showDetails" href="#">Подробнее об отеле</a>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="details">
-                <ul data-bind="foreach: visibleRoomSets()">
-                    <!-- ko if: $index() < 2 -->
-                    <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: $data}" />
-                    <!-- /ko -->
-                </ul>
-                <div class="hidden-roomSets">
+                <div class="details">
                     <ul data-bind="foreach: visibleRoomSets()">
-                        <!-- ko if: $index() >= 2 -->
+                        <!-- ko if: $index() < 2 -->
                         <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: $data}" />
                         <!-- /ko -->
                     </ul>
+                    <div class="hidden-roomSets">
+                        <ul data-bind="foreach: visibleRoomSets()">
+                            <!-- ko if: $index() >= 2 -->
+                            <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: $data}" />
+                            <!-- /ko -->
+                        </ul>
+                    </div>
+                    <div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
+                        <a href="#" data-bind="click: showAllResults,text: showAllText(),attr:{class: isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
+                    </div>
+                    <span class="lv"></span>
+                    <span class="rv"></span>
                 </div>
-                <div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
-                    <a href="#" data-bind="click: showAllResults,text: showAllText(),attr:{class: isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
-                </div>
-                <span class="lv"></span>
-                <span class="rv"></span>
             </div>
+            <span class="lt"></span>
+            <span class="rt"></span>
+            <span class="lv"></span>
+            <span class="rv"></span>
+            <span class="bh"></span>
         </div>
-        <span class="lt"></span>
-        <span class="rt"></span>
-        <span class="lv"></span>
-        <span class="rv"></span>
-        <span class="bh"></span>
-    </div>
     <!-- /ko -->
     <!-- /ko -->
     </div>
@@ -159,6 +159,7 @@
                         		<tr>
                         			<td class="tdOrigText">
                         				<span data-bind="text: nameNemo" class="textOriginal"></span>
+                                        <span data-bind="visible: debugInfo(),text: debugInfo(),click: printDebug"></span>
                         			</td>
                         			<td>
                       				 	<!-- ko if: hasMeal -->

@@ -103,6 +103,7 @@ Application = (function(_super) {
     this.slider = new Slider();
     this.slider.init();
     this.activeModule.subscribe(this.slider.handler);
+    this.debugMode = ko.observable(false);
   }
 
   Application.prototype.initCalendar = function() {
@@ -191,7 +192,8 @@ Application = (function(_super) {
     });
     this.activeModule(module);
     $(window).unbind('resize');
-    return $(window).resize(ResizeAvia);
+    $(window).resize(ResizeAvia);
+    return $(window).resize();
   };
 
   Application.prototype.bindEvents = function() {
@@ -251,3 +253,9 @@ Application = (function(_super) {
   return Application;
 
 })(Backbone.Router);
+
+window.voyanga_debug = function() {
+  var args;
+  args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  return console.log.apply(console, args);
+};

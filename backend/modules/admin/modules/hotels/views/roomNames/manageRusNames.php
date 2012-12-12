@@ -10,6 +10,10 @@ $this->menu=array(
 ?>
 
 <h1>Русские названия отелей</h1>
+<form method="get">
+    <input type="text" name="filterName" value="<?php echo $filterName; ?>">
+    <input type="submit" name="smb" value="Ok">
+</form>
 
 <form method="post">
 <?php $this->widget('bootstrap.widgets.BootGridView',array(
