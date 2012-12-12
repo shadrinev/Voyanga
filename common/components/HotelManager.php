@@ -12,9 +12,9 @@ class HotelManager
         Yii::import('site.frontend.models.*');
         Yii::import('site.frontend.components.*');
         $hotelClient = new HotelBookClient();
-        if(false && $variants = Yii::app()->pCache->get('variantsHotels')){
+        //if(false && $variants = Yii::app()->pCache->get('variantsHotels')){
 
-        }else{
+        //}else{
             $startTime = microtime(true);
             $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
             $endTime = microtime(true);
@@ -30,8 +30,8 @@ class HotelManager
             $endTime = microtime(true);
 
             Header('ExecutionTimeRateInject:'.($endTime - $startTime));
-            Yii::app()->pCache->set('variantsHotels',$variants,3600);
-        }
+            //Yii::app()->pCache->set('variantsHotels',$variants,3600);
+        //}
         $results = array();
         if ($variants->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
         {

@@ -53,7 +53,7 @@
                     <?php
                     $firstPart = true;
                     $date = "";
-
+                    foreach( $flight->flightParts as $keyPart=>$flightPart)
                     ?>
                     <table class="fly start">
                         <tr class="startFly">
