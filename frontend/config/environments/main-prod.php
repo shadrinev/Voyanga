@@ -28,12 +28,6 @@ return array(
                     'filter' => 'CLogFilter',
                     'emails' => 'reports-frontend@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com'
                 ),
-                array(
-                    'class' => 'common.extensions.yii-sentry-log.RSentryLog',
-                    'levels' => 'error, warning',
-                    'filter' => 'CLogFilter',
-                    'dsn' => 'http://0a8a5a8f752047b4817d033007109c46:dcc2ccf28f654f9da5f151178b6886b6@mihan007.ru/2',
-                ),
 			),
 		),
 	),

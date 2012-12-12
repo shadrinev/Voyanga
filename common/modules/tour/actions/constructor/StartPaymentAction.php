@@ -22,7 +22,8 @@ class StartPaymentAction extends CAction
         }
         // FIXME move to config
         $params['url']= "https://secure.payonlinesystem.com/ru/payment/ivoyanga/";
-        $params['FailUrl'] = "https://api.voyanga.com/fail";
+        $params['SuccessUrl'] = "https://test.voyanga.com/buy/waitpayment";
+        $params['FailUrl'] = "https://test.voyanga.com/buy/waitpayment";
         header("Content-type: application/json");
         echo json_encode($params);
     }

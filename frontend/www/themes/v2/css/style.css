@@ -2577,7 +2577,7 @@ input.hotel-input {
 	font-size: 12px;
 }
 .allTicketsDIV .hotelTickets .tdInfo .adress {
-    width: 100%;
+    width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2711,10 +2711,11 @@ input.hotel-input {
 .infoPassengers input[type='text'], .dopInfoPassengers input[type='text'] {
 	background: url("../images/bg-input.png") no-repeat 0px 0px transparent;
 	border: none;
-	height: 31px;
+	height: 33px;
 	overflow: hidden;
 	color: #1d222b;
 	font-size: 15px;
+    padding: 0px;
 }
 .infoPassengers .tdName {
 	width: 147px;
@@ -2769,45 +2770,59 @@ input.hotel-input {
 .infoPassengers .tdDuration {
 	width: 120px;
 }
+.divInputBirthday {
+    position: relative;
+    height: 33px;
+    background: url("../images/bg-input.png") no-repeat scroll -403px 0 transparent;
+
+}
+.divInputBirthday.active {
+    background: url("../images/bg-input.png") no-repeat scroll -830px -66px transparent;
+}
 .infoPassengers .dd {
 	width: 34px;
 	text-align: center;
-	background-position: -403px 0px !important;
+	background: none !important;
 	float: left;
-	font-size: 12px !important;
+    position: relative;
+    padding: 0px;
+    z-index: 1;
+}
+.infoPassengers .dd:focus {
+    z-index: 2;
 }
 .infoPassengers .dd.error {
-	background-position: -403px -33px !important;
+	background: url("../images/bg-input.png") no-repeat scroll -403px -33px !important;
 }
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	body:first-of-type .infoPassengers .dd {
-		width: 32px;
-	}
-}
+
 .infoPassengers .mm {
 	width: 33px;
 	text-align: center;
-	background-position: -437px 0px !important;
+    background: none !important;
 	float: left;
-    font-size: 12px !important;
+    position: relative;
+    z-index: 1;
 }
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	body:first-of-type .infoPassengers .mm {
-		width: 31px;
-	}
+.infoPassengers .mm:focus {
+    z-index: 2;
 }
+
 .infoPassengers .mm.error {
-	background-position: -437px -33px !important;
+    background: url("../images/bg-input.png") no-repeat scroll -437px -33px !important;
 }
 .infoPassengers .yy {
-	background-position: -470px 0 !important;
+    background: none !important;
     float: left;
     text-align: center;
     width: 53px;
-    font-size: 12px !important;
+    position: relative;
+    z-index: 1;
+}
+.infoPassengers .yy:focus {
+    z-index: 2;
 }
 .infoPassengers .yy.error {
-	background-position: -470px -33px !important;
+    background: url("../images/bg-input.png") no-repeat scroll -470px -33px !important;
 }
 .infoPassengers .tdNationality {
 	width: 129px;
@@ -2892,14 +2907,33 @@ input.hotel-input {
 .dopInfoPassengers .tdTelefon {
 	width: 237px;
 }
-.dopInfoPassengers .tdTelefon input[type='text'] {
-	width: 187px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-position: -431px -66px;
-	text-transform: uppercase;
+.divInputTelefon {
+    background: url("../images/bg-input.png") no-repeat -431px -66px transparent;
+    position: relative;
+    height: 32px;
+    width: 197px;
 }
-.dopInfoPassengers .tdTelefon input[type='text'].error {
+.dopInfoPassengers .tdTelefon .plusSeven {
+    width: 25px;
+    padding-left: 5px;
+    position: relative;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 33px;
+    z-index: 1;
+}
+.dopInfoPassengers .tdTelefon #contactPhone {
+    background: none repeat scroll 0 0 transparent;
+    left: 0;
+    padding-left: 31px;
+    padding-right: 5px;
+    position: absolute;
+    text-transform: uppercase;
+    width: 161px;
+    z-index: 2;
+}
+.dopInfoPassengers .tdTelefon #contactPhone.error {
 	background-position: -431px -99px;
 }
 .dopInfoPassengers .tdText {

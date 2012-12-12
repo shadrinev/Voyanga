@@ -1,10 +1,32 @@
-<!--=== ===-->
+<?php $flightHeaderPrinted = false; $hotelHeaderPrinted = false; $flightCounter = 0; $hotelCounter = 0; $curNumCounter = 0; $curNum = 0; ?>
 <div class="oneBlock">
-    <!--=== ===-->
-    <div class="paybuyContent">
-        <h2><span class="ico-hotel"></span> Перелет Санкт-Петербург - Москва</h2>
-        <h3>Данные гостей	</h3>
-        <table class="infoPassengers">
+<!--=== ===-->
+<div class="paybuyContent">
+<table class="infoPassengers">
+<?php foreach ($passportForms as $i => $model): ?>
+    <?php if (($model instanceof HotelAdultPassportForm) or ($model instanceof HotelChildPassportForm)): ?>
+        <?php if (!$hotelHeaderPrinted): ?>
+            <tr>
+                <td colspan="7">
+                    <h2><span class="ico-hotel"></span><?php echo $headers['hotels'][$hotelCounter]['common'] ?></h2>
+                </td>
+            </tr>
+        <?php endif ?>
+        <?php if ($curNumCounter == 0): ?>
+            <tr>
+                <td colspan="7">
+                    <h3><?php echo $headers['hotels'][$hotelCounter]['rooms'][$curNum]['name'] ?></h3>
+                    <?php if (++$curNumCounter >= $headers['hotels'][$hotelCounter]['rooms'][$curNum]['counter'])
+                    {
+                        $curNumCounter = 0;
+                        $curNum++;
+                    }?>
+                    </h3>
+                </td>
+            </tr>
+        <?php endif ?>
+        <?php $hotelCounter++ ?>
+        <?php if (!$hotelHeaderPrinted): ?>
             <thead>
             <tr>
                 <td class="tdName">
@@ -17,58 +39,55 @@
 
                 </td>
                 <td class="tdBirthday">
-
                 </td>
                 <td class="tdNationality">
-
                 </td>
                 <td class="tdDocumentNumber">
-
                 </td>
                 <td class="tdDuration">
-
                 </td>
             </tr>
             </thead>
-            <tbody>
+        <?php endif ?>
+        <?php $hotelHeaderPrinted = true; ?>
+        <tbody>
+        <tr>
+            <td class="tdName">
+                <input type="text" name="name">
+            </td>
+            <td class="tdLastname">
+                <input type="text" name="lastname">
+            </td>
+            <td class="tdSex">
+
+            </td>
+            <td class="tdBirthday">
+
+            </td>
+            <td class="tdNationality">
+
+            </td>
+            <td class="tdDocumentNumber">
+
+            </td>
+            <td class="tdDuration">
+
+            </td>
+        </tr>
+        </tbody>
+    <?php endif ?>
+    <?php if (($model instanceof FlightAdultPassportForm) or ($model instanceof FlightChildPassportForm) or ($model instanceof FlightInfantPassportForm)): ?>
+        <?php if (!$flightHeaderPrinted): ?>
+            <thead>
             <tr>
-                <td class="tdName">
-                    <input type="text" name="name">
-                </td>
-                <td class="tdLastname">
-                    <input type="text" name="lastname">
-                </td>
-                <td class="tdSex">
+                <td colspan="7">
+                    <h3>Данные пассажиров</h3>
 
-                </td>
-                <td class="tdBirthday">
-
-                </td>
-                <td class="tdNationality">
-
-                </td>
-                <td class="tdDocumentNumber">
-
-                </td>
-                <td class="tdDuration">
-
+                    <h2><span class="ico-fly"></span><?php echo $headers['flights'][$flightCounter++]; ?></h2>
                 </td>
             </tr>
-            </tbody>
-        </table>
-        <a href="#" class="addGuest">Добавить имена остальных гостей</a>
-    </div>
-    <!--=== ===-->
-</div>
-<!--=== ===-->
-<!--=== ===-->
-<div class="oneBlock">
-    <!--=== ===-->
-    <div class="paybuyContent">
-        <h2><span class="ico-fly"></span> Перелет Санкт-Петербург - Москва</h2>
-        <h3>Данные пассажиров</h3>
-        <table class="infoPassengers">
-            <thead>
+        <?php endif ?>
+        <?php if (!$flightHeaderPrinted): ?>
             <tr>
                 <td class="tdName">
                     Имя
@@ -86,124 +105,113 @@
                     Гражданство
                 </td>
                 <td class="tdDocumentNumber">
-                    Серия и № документа
+                    <span class="tooltipClose"
+                          rel="Для полетов внутри России подходит российский паспорт или загранпаспорт (для детей и младенцев — свидетельство о рождении или загранпаспорт). Для полетов за рубежом нужен загранпаспорт. Обратите внимание, что помимо загранпаспорта, для въезда во многие страны требуется соответствующая виза.">Серия и № документа</span>
                 </td>
                 <td class="tdDuration">
-                    Срок действия
+                    <span class="tooltipClose"
+                          rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
                 </td>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td class="tdName">
-                    <input type="text" name="name">
-                </td>
-                <td class="tdLastname">
-                    <input type="text" name="lastname">
-                </td>
-                <td class="tdSex">
-                    <div class="male active"></div>
-                    <div class="female"></div>
-                </td>
-                <td class="tdBirthday">
-                    <input type="text" name="dd" placeholder="ДД" class="dd" maxlength="2">
-                    <input type="text" name="mm" placeholder="ММ" class="mm" maxlength="2">
-                    <input type="text" name="yy" placeholder="ГГГГ" class="yy" maxlength="4">
-                </td>
-                <td class="tdNationality">
-                    <input type="text" name="nationality">
-                </td>
-                <td class="tdDocumentNumber">
-                    <input type="text" name="documentNumber">
-                </td>
-                <td class="tdDuration">
-                    <input type="text" name="dd" placeholder="ДД" class="dd" maxlength="2">
-                    <input type="text" name="mm" placeholder="ММ" class="mm" maxlength="2">
-                    <input type="text" name="yy" placeholder="ГГГГ" class="yy" maxlength="4">
-                </td>
-            </tr>
-            <tr>
-                <td class="tdName">
-                    <input type="checkbox" name="bonus" id="bonus">
-                    <label for="bonus">Есть бонусная карта</label>
-                </td>
-                <td class="tdLastname">
+        <?php endif ?>
+        <?php $flightHeaderPrinted = true; ?>
+        <tbody>
+        <tr>
+            <td class="tdName">
+                <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i)); ?>
+            </td>
+            <td class="tdLastname">
+                <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
+            </td>
+            <td class="tdSex">
+                <?php echo CHtml::activeHiddenField($model, "[$i]genderId", array('class' => 'genderField')); ?>
+                <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_MALE?> male"
+                     data-value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"></div>
+                <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_FEMALE?> female"
+                     data-value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"></div>
+            </td>
+            <td class="tdBirthday">
+                <div class="divInputBirthday">
+                    <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
+                        "placeholder" => "ДД",
+                        "class" => "dd next",
+                        "maxlength" => "2"
+                    )); ?>
+                    <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
+                        "placeholder" => "ММ",
+                        "class" => "mm next",
+                        "maxlength" => "2"
+                    )); ?>
+                    <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
+                        "placeholder" => "ГГГГ",
+                        "class" => "yy",
+                        "maxlength" => "4"
+                    )); ?>
+                </div>
+            </td>
+            <td class="tdNationality">
+                <?php echo CHtml::activeDropDownList(
+                    $model,
+                    "[$i]countryId",
+                    Country::model()->findAllOrderedByPopularity(),
+                    array(
+                        'data-placeholder' => "Страна...",
+                        'class' => "chzn-select",
+                        'style' => "width:120px;"
+                    )
+                ); ?>
+            </td>
+            <td class="tdDocumentNumber">
+                <input type="text" name="documentNumber">
+            </td>
+            <td class="tdDuration">
+                <div class="divInputBirthday">
+                    <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
+                        "placeholder" => "ДД",
+                        "class" => "dd next",
+                        "maxlength" => "2"
+                    )); ?>
+                    <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
+                        "placeholder" => "ММ",
+                        "class" => "mm next",
+                        "maxlength" => "2"
+                    )); ?>
+                    <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
+                        "placeholder" => "ГГГГ",
+                        "class" => "yy",
+                        "maxlength" => "4"
+                    )); ?>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdName">
+            </td>
+            <td class="tdLastname">
 
-                </td>
-                <td class="tdSex">
+            </td>
+            <td class="tdSex">
 
-                </td>
-                <td class="tdBirthday">
+            </td>
+            <td class="tdBirthday">
 
-                </td>
-                <td class="tdNationality">
+            </td>
+            <td class="tdNationality">
 
-                </td>
-                <td class="tdDocumentNumber">
+            </td>
+            <td class="tdDocumentNumber">
 
-                </td>
-                <td class="tdDuration">
-                    <input type="checkbox" checked="checked" name="srok" id="srok">
-                    <label for="srok">Без срока</label>
-                </td>
-            </tr>
-            <!-- NEW USER -->
-            <tr>
-                <td class="tdName">
-                    <input type="text" name="name">
-                </td>
-                <td class="tdLastname">
-                    <input type="text" name="lastname">
-                </td>
-                <td class="tdSex">
-                    <div class="male active"></div>
-                    <div class="female"></div>
-                </td>
-                <td class="tdBirthday">
-                    <input type="text" name="dd" placeholder="ДД" class="dd" maxlength="2">
-                    <input type="text" name="mm" placeholder="ММ" class="mm" maxlength="2">
-                    <input type="text" name="yy" placeholder="ГГГГ" class="yy" maxlength="4">
-                </td>
-                <td class="tdNationality">
-                    <input type="text" name="nationality">
-                </td>
-                <td class="tdDocumentNumber">
-                    <input type="text" name="documentNumber">
-                </td>
-                <td class="tdDuration">
-                    <input type="text" name="dd" placeholder="ДД" class="dd" maxlength="2">
-                    <input type="text" name="mm" placeholder="ММ" class="mm" maxlength="2">
-                    <input type="text" name="yy" placeholder="ГГГГ" class="yy" maxlength="4">
-                </td>
-            </tr>
-            <tr>
-                <td class="tdName">
-                    <input type="checkbox" name="bonus" id="bonus">
-                    <label for="bonus">Есть бонусная карта</label>
-                </td>
-                <td class="tdLastname">
-
-                </td>
-                <td class="tdSex">
-
-                </td>
-                <td class="tdBirthday">
-
-                </td>
-                <td class="tdNationality">
-
-                </td>
-                <td class="tdDocumentNumber">
-
-                </td>
-                <td class="tdDuration">
-                    <input type="checkbox" checked="checked" name="srok" id="srok">
-                    <label for="srok">Без срока</label>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <!--=== ===-->
+            </td>
+            <td class="tdDuration">
+                <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}" checked="checked"
+                       name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
+            </td>
+        </tr>
+        </tbody>
+    <?php endif ?>
+<?php endforeach ?>
+</table>
 </div>
 <!--=== ===-->
+</div>

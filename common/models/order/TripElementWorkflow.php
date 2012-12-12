@@ -61,10 +61,18 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
                 throw new CHttpException(500, "Your order is gone away");
             self::$bookingContactInfo = $orderBooking;
             self::$bookingContactInfo->attributes = $this->getBookingContactFormData();
+            $user = Yii::app()->user->getUserWithEmail(self::$bookingContactInfo->email);
+            self::$bookingContactInfo->userId = $user->id;
             if (!self::$bookingContactInfo->save())
             {
                 $errMsg = 'Saving of order booking fails: '.CVarDumper::dumpAsString($this->bookingContactInfo->errors);
                 $this->logAndThrowException($errMsg, 'OrderComponent.updateOrderBookingInfo');
+            }
+            if (appParams('autoAssignCurrentOrders'))
+            {
+                $criteria = new CDbCriteria();
+                $criteria->addColumnCondition(array('email'=>self::$bookingContactInfo->email));
+                OrderBooking::model()->updateAll(array('userId'=>$user->id), $criteria);
             }
         }
         return self::$bookingContactInfo;

@@ -1,57 +1,76 @@
 <?php
+Yii::import("common.extensions.payments.Exceptions", true);
+Yii::import("common.extensions.payments.models.Bill");
+
 class SuccessAction extends CAction
 {
+    protected $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey", "RebillAnchor"); 
     public function run()
     {
-        Yii::import("common.extensions.payments.models.Bill");
-        $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey", "RebillAnchor");
         $params = Array();
-        foreach($keys as $key)
+        foreach($this->keys as $key)
         {
             if(!isset($_REQUEST[$key]))
             {
-                throw new Exception("Wrong arguments passed to callback. Expected $key");
+                $e = new RequestError("$key not found.");
+                yii::app()->RSentryException->logException($e);
+                return;
             }
             $params[$key]=$_REQUEST[$key];
         }
-        
+
         $parts = explode('-', $params['OrderId']);
-        if(count($parts)<2)
+        if(count($parts)<2) {
+            $e = new RequestError("Wrong OrderId format: " . $params['OrderId']);
+            yii::app()->RSentryException->logException($e);
             return;
+        }
         list($orderId, $billId) = $parts;
-        # FIXME temporary 
-        if($orderId == 585)
-            return;
+
         $bill = Bill::model()->findByPk($billId);
         $channel = $bill->getChannel();
         $sign = $channel->getSignature($params);
         if($sign!=$params['SecurityKey'])
         {
-            throw new Exception("Signature mismatch");
+            $e = new  SignatureError("Signature mismatch actual: ". $params['SecurityKey'] . ". Expected: " . $sign . ".");
+            yii::app()->RSentryException->logException($e);
+//            return;
         }
-        //! FIXME handle it better for great good
-        if($bill->transactionId && ($params['TransactionID']!=$bill->transactionId))
-            throw new Exception("Bill already have transaction id");
-        $bill->transactionId = $params['TransactionID'];
-        $booker = $channel->booker;
+
+       $booker = $channel->booker;
         if($booker instanceof FlightBooker) {
             $booker  = new FlightBookerComponent();
             $booker->setFlightBookerFromId($channel->booker->id);
         }         // Hoteles are allways wrapped into metabooker
 
+        $this->handle($bill, $booker, $channel, $orderId);
+    }
+    protected function handle($bill, $booker, $channel, $orderId)
+    {
+        //! FIXME handle it better for great good
+        // This could lead to data loss in current implementation
+        // and thus not allowed
+        if($bill->transactionId && ($_REQUEST['TransactionID']!=$bill->transactionId)) {
+            //! Fixme more specific exception?
+            $e = new RequestError("Bill #" . $bill->id . " already have transaction id");
+            yii::app()->RSentryException->logException($e);
+            return;
+        }
+        $bill->transactionId = $_REQUEST['TransactionID'];
+
         //FIXME logme
         if($this->getStatus($booker)=='paid')
             return $this->rebill($orderId);
 
-        if(!$this->isWaitingForPayment($booker))
-            throw new Exception("Cant resume payment when booker status is " . $this->getStatus($booker));
+        if(!$this->isWaitingForPayment($booker)) {
+           $e = new WrongOrderStateError("Wrong status" . $this->getStatus($booker));
+            yii::app()->RSentryException->logException($e);
+            return;
+        }
         $payments = Yii::app()->payments;
-        $payments->notifyNemo($booker, $bill);
         $booker->status('paid');
-        $booker->status('ticketing');
         $bill->save();
-        
-        echo 'Ok';
+
         $this->rebill($orderId);
     }
 
@@ -76,16 +95,23 @@ class SuccessAction extends CAction
             $channel =  $bill->getChannel();
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
-                $payments->notifyNemo($booker, $bill);
+//                $payments->notifyNemo($booker, $bill);
                 $booker->status('paid');
-                $booker->status('ticketing');
+//                $booker->status('ticketing');
                 continue;
             }
-            else
+            if ($channel->getName() == 'gds_galileo')
             {
-                $booker->status('paymentError');
-                return $this->refund($order);
+                $bill->channel = 'ltr';
+                $channel =  $bill->getChannel();
+                $bill->save();
+                if($channel->rebill($_REQUEST['RebillAnchor'])){
+                    $booker->status('paid');
+                    continue;
+                }
             }
+            $booker->status('paymentError');
+            return $this->refund($order);
         }
 //     throw new Exception("done");
     }
@@ -102,12 +128,15 @@ class SuccessAction extends CAction
             if($this->getStatus($booker)=='paid') {
                 if($bill->getChannel()->refund())
                     $booker->status('refundedError');
-                else
-                    throw new Exception("Refund error");
+                else {
+                    $e =  new RefundError("For bill" . $bill->id);
+                    yii::app()->RSentryException->logException($e);
+                }
             } elseif($this->getStatus($booker)=='waitingForPayment') {
                 $booker->status('paymentCanceledError');
             } elseif($this->getStatus($booker)!='paymentError') {
-                throw new Exception("Wrong status: " . $booker->getStatus());
+                $e = new WrongOrderStateError("Wrong status" . $this->getStatus($booker));
+                yii::app()->RSentryException->logException($e);
             }
         }
     }

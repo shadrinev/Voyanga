@@ -170,12 +170,6 @@ return CMap::mergeArray(
                         'filter' => 'CLogFilter',
                         'emails' => 'reports-backend@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com'
                     ),
-                    array(
-                        'class' => 'common.extensions.yii-sentry-log.RSentryLog',
-                        'levels' => 'error, warning',
-                        'filter' => 'CLogFilter',
-                        'dsn' => 'http://0a8a5a8f752047b4817d033007109c46:dcc2ccf28f654f9da5f151178b6886b6@mihan007.ru/2',
-                    ),
                 )
             ),
 
@@ -183,10 +177,15 @@ return CMap::mergeArray(
                 'class' => 'packages.sysinfo.ASystemInformation'
             ),
 
-            'user' => array(
-                // enable cookie-based authentication
-                'allowAutoLogin' => true,
+            'user'=>array(
+                'class'=>'common.components.VUser',
+                'behaviors'=>array(
+                    'AUserBehavior' => array(
+                        'class' => 'packages.users.behaviors.AUserBehavior'
+                    )
+                ),
                 'loginUrl' => '/users/user/login',
+                'allowAutoLogin'=>true
             ),
 
             'urlManager' => array(

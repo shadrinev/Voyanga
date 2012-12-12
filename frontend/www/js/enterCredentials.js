@@ -98,6 +98,7 @@ function checkStatuses(statuses)
     $('#loadPayFly').find('.loadJet').hide();
     $('.payCardPal').show();
     $('.paybuyEnd').show();
+    Utils.scrollTo('.payCardPal',true);
     $.get('/buy/startPayment', function (data) {
         if (data.error) {
             new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
@@ -135,8 +136,38 @@ initCredentialsPage = function() {
             currentModule = 'hotels';
             break;
     }
-    app.bindItemsToBuy();
+    app.bindItemsToBuy()
     ko.applyBindings(app);
     ko.processAllDeferredBindingUpdates();
     app.runWithModule(currentModule);
 };
+function InputCheckOn() {
+    $('.tdDuration input[type="checkbox"]').each(function(index) {
+        if ($(this).attr('checked') == 'checked') {
+            $(this)
+                .closest('tr')
+                .prev()
+                .find('.checkOn')
+                .addClass('active')
+                .find('input')
+                .attr('disabled', 'disabled');
+        }
+        else {
+            $(this)
+                .closest('tr')
+                .prev()
+                .find('.checkOn')
+                .removeClass('active')
+                .find('input')
+                .removeAttr('disabled');
+        }
+    });
+}
+function InputActiveFinishDate() {
+    InputCheckOn();
+
+    $('.tdDuration label.ui-hover').click(function() {
+        InputCheckOn();
+    });
+}
+$(window).load(InputActiveFinishDate);

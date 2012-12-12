@@ -14,22 +14,22 @@
 class RSentryComponent extends CApplicationComponent
 {
     /**
-	 * @var string Sentry DSN value
-	 */
-	public $dsn;
+     * @var string Sentry DSN value
+     */
+    public $dsn;
 
-	/**
-	 * @var class Sentry stored connection
-	 */
-	protected $_client;
+    /**
+     * @var class Sentry stored connection
+     */
+    protected $_client;
 
-	/**
-	 * Initializes the connection.
-	 */
-	public function init()
-	{
-		parent::init();
-		
+    /**
+     * Initializes the connection.
+     */
+    public function init()
+    {
+        parent::init();
+
         if(!class_exists('Raven_Autoloader', false)) {
             # Turn off our amazing library autoload
             spl_autoload_unregister(array('YiiBase','autoload'));
@@ -44,17 +44,20 @@ class RSentryComponent extends CApplicationComponent
         }
 
         if($this->_client===null)
-			$this->_client = new Raven_Client($this->dsn);
+            $this->_client = new Raven_Client($this->dsn);
 
         Yii::app()->attachEventHandler('onException',array($this,'handleException'));
-	}
+    }
 
     /**
      * logs exception
-     * @param	CEvent	$event	Description
+     * @param CEvent $event Description
      */
     public function handleException($event) {
         $this->_client=$this->_client->captureException($event->exception);
     }
 
+    public function logException($exception) {
+        $this->_client=$this->_client->captureException($exception);
+    }
 }

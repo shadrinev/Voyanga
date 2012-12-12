@@ -1,8 +1,7 @@
 <div class="oneBlock">
     <!--=== ===-->
     <div class="paybuyContent">
-        <h2><span class="ico-fly"></span>Ввод данных</h2>
-        <!--<h3>Данные пассажиров</h3>-->
+        <h2><span class="<?php echo $icon ?>"></span><?php echo $header ?></h2>
         <table class="infoPassengers">
             <thead>
             <tr>
@@ -22,49 +21,80 @@
                     Гражданство
                 </td>
                 <td class="tdDocumentNumber">
-                    <span class="tooltipClose" rel="Для полетов внутри России подходит российский паспорт или загранпаспорт (для детей и младенцев — свидетельство о рождении или загранпаспорт). Для полетов за рубежом нужен загранпаспорт. Обратите внимание, что помимо загранпаспорта, для въезда во многие страны требуется соответствующая виза.">Серия и № документа</span>
+                    <span class="tooltipClose"
+                          rel="Для полетов внутри России подходит российский паспорт или загранпаспорт (для детей и младенцев — свидетельство о рождении или загранпаспорт). Для полетов за рубежом нужен загранпаспорт. Обратите внимание, что помимо загранпаспорта, для въезда во многие страны требуется соответствующая виза.">Серия и № документа</span>
                 </td>
                 <td class="tdDuration">
-                    <span class="tooltipClose" rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
+                    <span class="tooltipClose"
+                          rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
                 </td>
             </tr>
             </thead>
             <tbody>
-            <?php foreach($passportForms as $i=>$model):?>
+            <?php $currentRoomId = 0; $currentRoomAdults = 0; $currentRoomChild = 0; ?>
+            <?php if ($roomCounters): ?>
+                <tr>
+                    <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?> (<?php echo $roomCounters[$currentRoomId]['label'] ?>)</h3></td>
+                </tr>
+            <?php endif ?>
+            <?php foreach ($passportForms as $i => $model): ?>
+                <?php
+                if ($roomCounters)
+                {
+                    if (($roomCounters[$currentRoomId]['adult'] == $currentRoomAdults) and ($roomCounters[$currentRoomId]['child'] == $currentRoomChild))
+                    {
+                        $currentRoomId++;
+                        $currentRoomAdults = 0;
+                    }
+                    elseif ($model instanceof FlightAdultPassportForm)
+                        $currentRoomAdults++;
+                    elseif ($model instanceof FlightChildPassportForm)
+                        $currentRoomChild++;
+                }
+                ?>
+                <?php if ($roomCounters and ($currentRoomAdults == 0)): ?>
+                    <tr>
+                        <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?> (<?php echo $roomCounters[$currentRoomId]['label'] ?>)</h3></td>
+                    </tr>
+                <?php endif ?>
                 <script type="text/javascript">
-                    $(function(){
+                    $(function () {
                         $('#syncTranslitFirstName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitFirstName<?php echo $i ?>'});
                         $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
                     });
                 </script>
                 <tr>
                     <td class="tdName">
-                        <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id'=>'syncTranslitFirstName'.$i)); ?>
+                        <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i)); ?>
                     </td>
                     <td class="tdLastname">
-                        <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id'=>'syncTranslitLastName'.$i)); ?>
+                        <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
                     </td>
                     <td class="tdSex">
-                        <?php echo CHtml::activeHiddenField($model, "[$i]genderId", array('class'=>'genderField')); ?>
-                        <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_MALE?> male" data-value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"></div>
-                        <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_FEMALE?> female" data-value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"></div>
+                        <?php echo CHtml::activeHiddenField($model, "[$i]genderId", array('class' => 'genderField')); ?>
+                        <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_MALE?> male"
+                             data-value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"></div>
+                        <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_FEMALE?> female"
+                             data-value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"></div>
                     </td>
                     <td class="tdBirthday">
-                        <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
-                            "placeholder" => "ДД",
-                            "class" => "dd next",
-                            "maxlength" => "2"
-                        )); ?>
-                        <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
-                            "placeholder" => "ММ",
-                            "class" => "mm next",
-                            "maxlength" => "2"
-                        )); ?>
-                        <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
-                            "placeholder" => "ГГГГ",
-                            "class" => "yy",
-                            "maxlength" => "4"
-                        )); ?>
+                        <div class="divInputBirthday">
+                            <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
+                                "placeholder" => "ДД",
+                                "class" => "dd next",
+                                "maxlength" => "2"
+                            )); ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
+                                "placeholder" => "ММ",
+                                "class" => "mm next",
+                                "maxlength" => "2"
+                            )); ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
+                                "placeholder" => "ГГГГ",
+                                "class" => "yy",
+                                "maxlength" => "4"
+                            )); ?>
+                        </div>
                     </td>
                     <td class="tdNationality">
                         <?php echo CHtml::activeDropDownList(
@@ -72,31 +102,33 @@
                             "[$i]countryId",
                             Country::model()->findAllOrderedByPopularity(),
                             array(
-                                'data-placeholder'=> "Страна...",
+                                'data-placeholder' => "Страна...",
                                 'class' => "chzn-select",
                                 'style' => "width:120px;"
                             )
-                    ); ?>
+                        ); ?>
                     </td>
                     <td class="tdDocumentNumber">
                         <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
                     </td>
                     <td class="tdDuration">
-                        <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
-                            "placeholder" => "ДД",
-                            "class" => "dd next",
-                            "maxlength" => "2"
-                        )); ?>
-                        <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
-                            "placeholder" => "ММ",
-                            "class" => "mm next",
-                            "maxlength" => "2"
-                        )); ?>
-                        <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
-                            "placeholder" => "ГГГГ",
-                            "class" => "yy",
-                            "maxlength" => "4"
-                        )); ?>
+                        <div class="divInputBirthday checkOn">
+                            <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
+                                "placeholder" => "ДД",
+                                "class" => "dd next",
+                                "maxlength" => "2"
+                            )); ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
+                                "placeholder" => "ММ",
+                                "class" => "mm next",
+                                "maxlength" => "2"
+                            )); ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
+                                "placeholder" => "ГГГГ",
+                                "class" => "yy",
+                                "maxlength" => "4"
+                            )); ?>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -109,7 +141,8 @@
                     <td class="tdNationality"></td>
                     <td class="tdDocumentNumber"></td>
                     <td class="tdDuration">
-                        <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}" checked="checked" name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
+                        <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}" checked="checked"
+                               name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
                     </td>
                 </tr>
             <?php endforeach; ?>
