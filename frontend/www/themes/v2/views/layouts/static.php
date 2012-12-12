@@ -44,12 +44,8 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
                 </ul>
             </div>
 
-            <div class="login-window full" style="display:none;">
-                <a href="#">
-                    <span class="text">Регистрация и вход</span>
-                    <span class="point"></span>
-                </a>
-            </div>
+            <?php $this->renderPartial('//layouts/_userbar'); ?>
+
         </div>
         <!-- END CENTER BLOCK -->
     </div>
