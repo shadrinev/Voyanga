@@ -102,7 +102,8 @@ return CMap::mergeArray(
             ),
             'user' => array(
                 'allowAutoLogin' => true,
-                'class' => 'frontend.components.WebUser'
+                'class' => 'frontend.components.WebUser',
+                'loginUrl' => '/user/login',
             ),
             'urlManager' => array(
                 'urlFormat' => 'path',

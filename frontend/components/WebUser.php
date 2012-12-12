@@ -15,7 +15,7 @@ class WebUser extends CWebUser
         {
             if (!$this->_model)
             {
-                $this->_model = User::model()->findByAttributes(array('username'=>$this->name));
+                $this->_model = FrontendUser::model()->findByAttributes(array('username'=>$this->name));
             }
         }
         return $this->_model;
@@ -45,6 +45,7 @@ class WebUser extends CWebUser
         $user = FrontendUser::model()->findByAttributes(array('email'=>$email));
         return $user;
     }
+    
     public function createNew($email)
     {
         $newUser = new FrontendUser();

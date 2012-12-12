@@ -177,16 +177,6 @@ return array(
             'charset' => 'utf8',
         ),
 
-        'user'=>array(
-            'class'=>'common.components.VUser',
-            'behaviors'=>array(
-                'AUserBehavior' => array(
-                    'class' => 'packages.users.behaviors.AUserBehavior'
-                )
-            ),
-            'allowAutoLogin'=>true
-        ),
-
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(
