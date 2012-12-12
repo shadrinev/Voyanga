@@ -27,7 +27,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
             <a href="javascript:void(0)" onclick="openPopUpProj()" class="about">О проекте</a>
 
             <div class="telefon">
-                <img src="<?= $theme ?>/images/tel.png">
+                <span class="prefix">+7 (499)</span> 533-09-33
             </div>
             <div class="slide-turn-mode">
                 <div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
@@ -41,8 +41,12 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
                 </ul>
             </div>
 
-            <?php $this->renderPartial('//layouts/_userbar'); ?>
-
+            <div class="login-window full" style="display:none;">
+                <a href="#">
+                    <span class="text">Регистрация и вход</span>
+                    <span class="point"></span>
+                </a>
+            </div>
         </div>
         <!-- END CENTER BLOCK -->
     </div>
