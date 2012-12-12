@@ -111,17 +111,17 @@ return array(
 
         'mail' => array(
             'class' => 'common.extensions.yii-mail.YiiMail',
-            'transportType' => 'php', // change to 'php' when running in real domain.
+            'transportType' => 'smtp', // change to 'php' when running in real domain.
             'viewPath' => 'frontend.www.themes.v2.views.mail',
             'logging' => true,
             'dryRun' => false,
-            /* 'transportOptions' => array(
+            'transportOptions' => array(
                 'host' => $params['smtp.host'],
                 'username' => $params['smtp.username'],
                 'password' => $params['smtp.password'],
                 'port' => $params['smtp.port'],
-                //   'encryption' => 'tls',
-            ),*/
+                //'encryption' => 'tls',
+            ),
         ),
 
         'configManager' => array (

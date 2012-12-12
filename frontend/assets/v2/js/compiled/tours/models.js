@@ -1314,7 +1314,12 @@ TourTripResultSet = (function() {
       if (i === (_this.cities.length - 1)) {
         return city.isLast = true;
       } else {
-        return city.left = Math.round((100 / _this.cities.length) * (i + 1)) + '%';
+        city.left = Math.round((100 / _this.cities.length) * (i + 1) - 8.4);
+        if (city.left < 0) {
+          return city.left = '0%';
+        } else {
+          return city.left = city.left + '%';
+        }
       }
     });
     if (this.tour) {
@@ -1322,6 +1327,7 @@ TourTripResultSet = (function() {
     } else {
       this.totalCost = this.totalCostWithoutDiscount;
     }
+    console.log("City:", this.cities);
   }
 
   return TourTripResultSet;
