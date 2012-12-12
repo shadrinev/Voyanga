@@ -60,7 +60,10 @@ class SuccessAction extends CAction
 
         //FIXME logme
         if($this->getStatus($booker)=='paid')
-            return $this->rebill($orderId);
+            return;
+        if($this->getStatus($booker)=='rebillInProgress')
+            return;
+//      return $this->rebill($orderId);
 
         if(!$this->isWaitingForPayment($booker)) {
            $e = new WrongOrderStateError("Wrong status" . $this->getStatus($booker));
@@ -93,6 +96,7 @@ class SuccessAction extends CAction
 //            $order->isWaitingForPaymentState($booker->getStatus());
             $bill = $payments->getBillForBooker($booker);
             $channel =  $bill->getChannel();
+            $booker->status('rebillInProgress');
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
 //                $payments->notifyNemo($booker, $bill);
