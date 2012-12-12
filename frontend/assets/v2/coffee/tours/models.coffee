@@ -817,6 +817,7 @@ class TourTripResultSet
           @cities.push {isLast: false, cityName: item.flights[0].departureCity}
         else
           @cities.push {isLast: false, cityName: item.flights[0].departureCity}
+          @cities.push {isLast: false, cityName: item.flights[0].arrivalCity}
         @items.push aviaResult
         @totalCostWithDiscount += aviaResult.price
         @totalCostWithoutDiscount = @totalCostWithDiscount
@@ -832,11 +833,19 @@ class TourTripResultSet
         @totalCostWithDiscount += @lastHotel.roomSets()[0].discountPrice
         @totalCostWithoutDiscount += @lastHotel.roomSets()[0].price
 
+    newCity = []
     _.each @cities, (city, i) =>
-        if (i == (@cities.length - 1))
-          city.isLast = true
-        else
-          city.left = Math.round((100 / @cities.length) * (i + 1)) + '%'
+        a = _.last(newCity)
+        if not _.isObject(a)
+          newCity.push city
+        if _.last(newCity).cityName != city.cityName
+          newCity.push city
+    @cities = newCity
+    _.each @cities, (city, i) =>
+      if (i == (@cities.length - 1))
+        city.isLast = true
+      else
+        city.left = Math.round((100 / @cities.length) * (i + 1)) + '%'
     if @tour
         @totalCost = @totalCostWithDiscount
     else

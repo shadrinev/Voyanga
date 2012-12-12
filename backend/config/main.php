@@ -177,10 +177,15 @@ return CMap::mergeArray(
                 'class' => 'packages.sysinfo.ASystemInformation'
             ),
 
-            'user' => array(
-                // enable cookie-based authentication
-                'allowAutoLogin' => true,
+            'user'=>array(
+                'class'=>'common.components.VUser',
+                'behaviors'=>array(
+                    'AUserBehavior' => array(
+                        'class' => 'packages.users.behaviors.AUserBehavior'
+                    )
+                ),
                 'loginUrl' => '/users/user/login',
+                'allowAutoLogin'=>true
             ),
 
             'urlManager' => array(

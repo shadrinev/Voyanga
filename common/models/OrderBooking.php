@@ -57,6 +57,7 @@ class OrderBooking extends CActiveRecord
         return array(
             //array('timestamp', 'required'),
             array('email, phone, userId, partnerId', 'length', 'max' => 45),
+            array('email', 'email'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, email, phone, userId, timestamp, partnerId', 'safe', 'on' => 'search'),

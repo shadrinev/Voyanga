@@ -98,6 +98,7 @@ function checkStatuses(statuses)
     $('#loadPayFly').find('.loadJet').hide();
     $('.payCardPal').show();
     $('.paybuyEnd').show();
+    Utils.scrollTo('.payCardPal',true);
     $.get('/buy/startPayment', function (data) {
         if (data.error) {
             new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
