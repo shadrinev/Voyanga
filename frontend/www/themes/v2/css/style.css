@@ -61,8 +61,15 @@
     height: 15px;
     left: 250px;
     position: absolute;
-    top: 10px;
-    width: 145px;
+    top: 9px;
+    width: 170px;
+    font-size: 18px;
+    font-family: Tahoma;
+    color: #2c2d35;
+    text-shadow: 0 1px 0px rgba(255,255,255,0.5);
+}
+.head .center-block .telefon .prefix {
+    color: #5d6067;
 }
 .slide-turn-mode {
     background: url("../images/slide-turn-mode.png") no-repeat scroll 0 0 transparent;

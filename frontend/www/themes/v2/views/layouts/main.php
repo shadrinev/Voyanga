@@ -27,7 +27,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
             <a href="javascript:void(0)" onclick="openPopUpProj()" class="about">О проекте</a>
 
             <div class="telefon">
-                <img src="<?= $theme ?>/images/tel.png">
+                <span class="prefix">+7 (499)</span> 533-09-33
             </div>
             <div class="slide-turn-mode">
                 <div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
@@ -41,8 +41,12 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
                 </ul>
             </div>
 
-            <?php $this->renderPartial('//layouts/_userbar'); ?>
-
+            <div class="login-window full" style="display:none;">
+                <a href="#">
+                    <span class="text">Регистрация и вход</span>
+                    <span class="point"></span>
+                </a>
+            </div>
         </div>
         <!-- END CENTER BLOCK -->
     </div>
@@ -270,21 +274,19 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     <div class="wrapContent">
         <h2>Контактная информация</h2>
         <div class="textBlock telefon">
-            <div class="floatLeft">Бесплатная<br> линия</div>
-            <div class="floatRight">8 800 646-80-80</div>
+            <div class="floatLeft">Служба<br> поддержки</div>
+            <div class="floatRight">+7 (499) 533-09-33</div>
         </div>
         <div class="textBlock hEmail">
             <div class="floatLeft">
                 По вопросам бронирования и<br>
-                возврата, просьба указывать<br>
-                номер бронирования</div>
-            <div class="floatRight"><a href="mailto:hello@voyanga.com">hello@voyanga.com</a></div>
+                возврата</div>
+            <div class="floatRight"><a href="mailto:support@voyanga.com">support@voyanga.com</a></div>
         </div>
         <div class="textBlock oEmail">
             <div class="floatLeft">
-                По любым вопросам<br>
-                (сотрудничество, реклама,<br>
-                вопросы, предложения)</div>
+                По любым вопросам,<br>
+                мы всегда открыты</div>
             <div class="floatRight"><a href="mailto:hello@voyanga.com">hello@voyanga.com</a></div>
         </div>
         <div class="shadowContact"></div>
@@ -293,9 +295,9 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
                 Представительства<br>
                 в трех городах</div>
             <div class="floatRight lh28">
-                Москва, ул. Ленина, 81<br>
-                Санкт-Петербург, ул. 7-ая линия, 76<br>
-                Нижний Новгород, ул. Чкалова, 15
+                Москва, ул. Профсоюзная 26/44<br>
+                С-Петербург, 7-ая линия 76, оф. 419<br>
+                Н-Новгород, ул. Б.Покровская 62/5, оф. 501
             </div>
         </div>
         <div class="shadowContact"></div>
@@ -312,13 +314,13 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
         <div class="textBlock ">
             <div class="floatLeft">Реквизиты</div>
             <div class="floatRight lh28">
-                ООО «Трип Кит»<br>
-                ИНН 124576945682<br>
-                КПП 247769656824<br>
-                ОГРН 656824247769
+                ООО «Изитрип»<br>
+                ИНН 7728799455<br>
+                ОГРН 1127746124373
             </div>
         </div>
         <div class="boxClose" onclick="closePopUpContact()" ></div>
+    </div>
     </div>
     </div>
 </div>
