@@ -422,6 +422,43 @@ class OrderComponent extends CApplicationComponent
 
     }
 
+
+    public function sendNotifications(){
+        $pdfDoc = "";
+        $tickets = array();
+        foreach ($this->itemsOnePerGroup as $item)
+        {
+            if ($item instanceof HotelTripElement)
+            {
+                if ($item->hotelBookerId)
+                {
+                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
+                    if ($hotelBooker)
+                    {
+                        //$status = $hotelBooker->status;
+                        //$endSates[$status] = $status;
+                        $tickets[] = array('type'=>'hotel','ticket'=>$hotelBooker->hotel);
+                    }
+                }
+            }
+            elseif ($item instanceof FlightTripElement)
+            {
+                if ($item->flightBookerId)
+                {
+                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
+                    if ($flightBooker)
+                    {
+                        $tickets[] = array('type'=>'avia','ticket'=>$flightBooker->flightVoyage);
+
+                    }
+                }
+            }
+        }
+        if($tickets){
+
+        }
+    }
+
     public function getOrderBooking()
     {
         foreach ($this->itemsOnePerGroup as $item)

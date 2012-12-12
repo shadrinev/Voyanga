@@ -109,6 +109,21 @@ return array(
             'useCursor'         => false,
         ),
 
+        'mail' => array(
+            'class' => 'common.extensions.yii-mail.YiiMail',
+            'transportType' => 'smtp', // change to 'php' when running in real domain.
+            'viewPath' => 'frontend.www.themes.v2.views.mail',
+            'logging' => true,
+            'dryRun' => false,
+            'transportOptions' => array(
+                'host' => $params['smtp.host'],
+                'username' => $params['smtp.username'],
+                'password' => $params['smtp.password'],
+                'port' => $params['smtp.port'],
+                //'encryption' => 'tls',
+            ),
+        ),
+
         'configManager' => array (
             'class' => 'ConfigurationManager',
         ),
@@ -160,16 +175,6 @@ return array(
             'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
             'enableParamLogging' => true,
             'charset' => 'utf8',
-        ),
-
-        'user'=>array(
-            'class'=>'common.components.VUser',
-            'behaviors'=>array(
-                'AUserBehavior' => array(
-                    'class' => 'packages.users.behaviors.AUserBehavior'
-                )
-            ),
-            'allowAutoLogin'=>true
         ),
 
         'log' => array(

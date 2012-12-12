@@ -23,7 +23,7 @@ return CMap::mergeArray(
         'id' => 'frontend.voyanga.com',
         'name' => 'Voyanga',
         'basePath' => 'frontend',
-        'params'  => $params,
+        'params' => $params,
         'language' => 'ru',
         'theme' => $params['app.theme'],
         'defaultController' => $params['app.defaultController'],
@@ -31,7 +31,8 @@ return CMap::mergeArray(
             'log',
             'RSentryException'
         ),
-        'onBeginRequest' => function($event){
+        'onBeginRequest' => function ($event)
+        {
             Partner::setPartnerByKey();
         },
 
@@ -68,8 +69,7 @@ return CMap::mergeArray(
             'gds' => array(
                 'class' => 'site.common.modules.gds.GdsModule',
             ),
-            'booking' => array(
-            ),
+            'booking' => array(),
             'tour' => array(
                 'controllerMap' => array(
                     'basket' => 'site.common.modules.tour.controllers.BasketController',
@@ -78,33 +78,32 @@ return CMap::mergeArray(
                 )
             ),
             'event' => array(
-                'class'=>'site.frontend.modules.event.EventModule'
+                'class' => 'site.frontend.modules.event.EventModule'
             ),
-            'sandbox' => array(
-
-            ),
+            'sandbox' => array(),
             'v2' => array(
-                'class'=>'site.frontend.modules.v2.ProductionModule'
+                'class' => 'site.frontend.modules.v2.ProductionModule'
             )
         ),
 
         // application components
         'components' => array(
-            'assetManager'=>array(
-                'class'=> 'VAssetManager',
+            'assetManager' => array(
+                'class' => 'VAssetManager',
             ),
-/*            'clientScript' => array(
-                'class'=> YII_DEBUG ? 'EClientScriptBoost' : 'EClientScriptBoost',
-                'cacheDuration'=>30,
-            ),*/
+            /*            'clientScript' => array(
+                            'class'=> YII_DEBUG ? 'EClientScriptBoost' : 'EClientScriptBoost',
+                            'cacheDuration'=>30,
+                        ),*/
             'bootstrap' => array(
                 'class' => 'site.backend.extensions.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
                 'responsiveCss' => true,
                 'debug' => true
             ),
             'user' => array(
-                // enable cookie-based authentication
-                'allowAutoLogin' => true
+                'allowAutoLogin' => true,
+                'class' => 'frontend.components.WebUser',
+                'loginUrl' => '/user/login',
             ),
             'urlManager' => array(
                 'urlFormat' => 'path',
@@ -133,7 +132,7 @@ return CMap::mergeArray(
 
             'sharedMemory' => array(
                 'class' => 'site.frontend.components.SharedMemory',
-                'maxSize' => 2*1024*1024,
+                'maxSize' => 2 * 1024 * 1024,
             ),
 
             'log' => array(
@@ -160,8 +159,8 @@ return CMap::mergeArray(
             ),
         ),
         'controllerMap' => array(
-            'payments'=>array(
-                'class'=>'common.extensions.payments.PaymentsController'
+            'payments' => array(
+                'class' => 'common.extensions.payments.PaymentsController'
             )
         ),
     ),

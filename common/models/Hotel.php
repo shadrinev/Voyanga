@@ -14,6 +14,7 @@ class Hotel extends CApplicationComponent
 
     public static $categoryIdHotelbook = array(1=>'5*',2=>'3*',3=>'4*',4=>'2*',5=>'1*',6=>'-');
     public static $categoryIdMapHotelbook = array(6=>0,5=>1,4=>2,2=>3,3=>4,1=>5);
+    public static $compereDesc = "";
 
     /** @var string hotelBook search identifier */
     public $searchId;
@@ -99,6 +100,8 @@ class Hotel extends CApplicationComponent
     /** @var where do we get if from */
     public $cacheId;
 
+    public $groupKey;
+
     /** @var hotel rating */
     private $_rating;
 
@@ -106,6 +109,8 @@ class Hotel extends CApplicationComponent
     private $_city;
 
     private $internalId;
+
+
 
     //implementation of ICartPosition
     public function getId()
@@ -213,7 +218,11 @@ class Hotel extends CApplicationComponent
                         $roomParams['offerText'] = $params['offerText'];
                     }
                 }
-                $this->rooms[] = new HotelRoom($roomParams);
+
+                $hotelRoom = new HotelRoom($roomParams);
+                $hotelRoom->providerId = $this->providerId;
+                $this->rooms[] = $hotelRoom;
+
             }
         }
         if(isset($params['categoryId']))
@@ -395,6 +404,7 @@ class Hotel extends CApplicationComponent
             'city' => ($this->city) ? $this->city->localRu : '',
             'cityCode' => ($this->city) ? $this->city->code : '',
             'rating' => $this->rating,
+            'groupKey'=>$this->groupKey,
             'rooms' => array()
         );
 
@@ -459,18 +469,24 @@ class Hotel extends CApplicationComponent
         foreach($this->rooms as $roomKey=>$thisRoom){
             if(isset($otherHotel->rooms[$roomKey])){
                 $otherRoom = $otherHotel->rooms[$roomKey];
-                if($thisRoom->showName != $otherRoom->showName){
+                /*if($thisRoom->showName != $otherRoom->showName){
                     $metrica+=3000;
+                    //echo "others name";
+                }else{
+                    $metrica= $metrica/1.1;
+                }*/
+                if($thisRoom->roomInfo['roomNameCanonical'] != $otherRoom->roomInfo['roomNameCanonical']){
+                    $metrica+=400;
                     //echo "others name";
                 }else{
                     $metrica= $metrica/1.1;
                 }
                 //if()
-                if($thisRoom->sizeName != $otherRoom->sizeName){
+                /*if($thisRoom->sizeName != $otherRoom->sizeName){
                     $metrica+=200;
                 }else{
                     $metrica= $metrica/1.1;
-                }
+                }*/
                 if($thisRoom->typeName != $otherRoom->typeName){
                     $metrica+=200;
                 }else{
@@ -486,11 +502,164 @@ class Hotel extends CApplicationComponent
                 }else{
                     $metrica= $metrica/1.1;
                 }
+                if($thisRoom->roomInfo['refundable'] !== null && $otherRoom->roomInfo['refundable'] !== null){
+                    if($thisRoom->roomInfo['refundable'] != $otherRoom->roomInfo['refundable']){
+                        $metrica+=200;
+                    }else{
+                        $metrica= $metrica/1.1;
+                    }
+                }
+                if($thisRoom->roomInfo['offer'] !== null && $otherRoom->roomInfo['offer'] !== null){
+                    if($thisRoom->roomInfo['offer'] != $otherRoom->roomInfo['offer']){
+                        $metrica+=200;
+                    }else{
+                        $metrica= $metrica/1.1;
+                    }
+                }
+                if($thisRoom->roomInfo['breakfast'] !== null && $otherRoom->roomInfo['breakfast'] !== null){
+                    if($thisRoom->roomInfo['breakfast'] != $otherRoom->roomInfo['breakfast']){
+                        $metrica+=200;
+                    }else{
+                        $metrica= $metrica/1.1;
+                    }
+                }
+                if($thisRoom->roomInfo['smoke'] !== null && $otherRoom->roomInfo['smoke'] !== null){
+                    if($thisRoom->roomInfo['smoke'] != $otherRoom->roomInfo['smoke']){
+                        $metrica+=200;
+                    }else{
+                        $metrica= $metrica/1.1;
+                    }
+                }
+                if($thisRoom->roomInfo['sizeId'] !== null && $otherRoom->roomInfo['sizeId'] !== null){
+                    if($thisRoom->roomInfo['sizeId'] != $otherRoom->roomInfo['sizeId']){
+                        $metrica+=200;
+                    }else{
+                        $metrica= $metrica/1.1;
+                    }
+                }
+
+
             }
 
         }
 
         return $metrica;
+    }
+
+    public function getMergeMetricV2(Hotel $otherHotel)
+    {
+        //$same = true;
+
+        if($this->hotelId != $otherHotel->hotelId){
+            return false;
+        }
+
+        $isOtherProvider = $this->providerId != $otherHotel->providerId;
+
+        foreach($this->rooms as $roomKey=>$thisRoom){
+            if(isset($otherHotel->rooms[$roomKey])){
+                $otherRoom = $otherHotel->rooms[$roomKey];
+                /*if($thisRoom->showName != $otherRoom->showName){
+                    $metrica+=3000;
+                    //echo "others name";
+                }else{
+                    $metrica= $metrica/1.1;
+                }*/
+                if( ($thisRoom->rusNameFound && $otherRoom->rusNameFound) ){
+                    if($thisRoom->showName != $otherRoom->showName){
+                        //self::$compereDesc = "not same show names:".$thisRoom->showName." and ".$otherRoom->showName;
+                        return false;
+                    }else{
+                        //more tests (DBL and Twin flag)
+                        if($thisRoom->roomInfo['size'] != $otherRoom->roomInfo['size']){
+                            //self::$compereDesc = "not same size:".$thisRoom->roomInfo['size']." and ".$otherRoom->roomInfo['size'];
+                            return false;
+                        }
+                    }
+                }else{
+                    if($thisRoom->roomInfo['roomNameCanonical'] != $otherRoom->roomInfo['roomNameCanonical']){
+                            //self::$compereDesc = "not same roomNameCanonical:".$thisRoom->roomInfo['roomNameCanonical']." and ".$otherRoom->roomInfo['roomNameCanonical'];
+                            return false;
+                    }
+                }
+
+                if($thisRoom->roomInfo['offer'] !== null && $otherRoom->roomInfo['offer'] !== null){
+                    if($thisRoom->roomInfo['offer'] != $otherRoom->roomInfo['offer']){
+                        //self::$compereDesc = "not same offer:".$thisRoom->roomInfo['offer']." and ".$otherRoom->roomInfo['offer'];
+                        return false;
+                    }else{
+
+                    }
+                }
+                if($thisRoom->roomInfo['smoke'] !== null && $otherRoom->roomInfo['smoke'] !== null){
+                    if($thisRoom->roomInfo['smoke'] != $otherRoom->roomInfo['smoke']){
+                        //self::$compereDesc = "not same smoke:".$thisRoom->roomInfo['smoke']." and ".$otherRoom->roomInfo['smoke'];
+                        return false;
+                    }
+                }
+                if($thisRoom->roomInfo['view'] !== null && $otherRoom->roomInfo['view'] !== null){
+                    if($thisRoom->roomInfo['view'] != $otherRoom->roomInfo['view']){
+                        //self::$compereDesc = "not same view:".$thisRoom->roomInfo['view']." and ".$otherRoom->roomInfo['view'];
+                        return false;
+                    }
+                }
+                $thisFactor = 0;
+                $otherFactor = 0;
+                if($thisRoom->roomInfo['refundable'] !== null && $otherRoom->roomInfo['refundable'] !== null){
+                    if($thisRoom->roomInfo['refundable'] != $otherRoom->roomInfo['refundable']){
+                        //self::$compereDesc = "not same refundable:".$thisRoom->roomInfo['refundable']." and ".$otherRoom->roomInfo['refundable'];
+                        if($thisRoom->roomInfo['refundable']){
+                            $thisFactor++;
+                        }else{
+                            $otherFactor++;
+                        }
+                    }
+                }
+
+
+
+                $thisBreakfast = false;
+                $otherBreakfast = false;
+                if($thisRoom->mealName){
+                    if(isset(HotelRoom::$showMealValue[$thisRoom->mealName])){
+                        $thisBreakfast = HotelRoom::$showMealValue[$thisRoom->mealName];
+                    }else{
+                        $thisBreakfast = $thisRoom->mealName;
+                    }
+                }
+                if($otherRoom->mealName){
+                    if(isset(HotelRoom::$showMealValue[$otherRoom->mealName])){
+                        $otherBreakfast = HotelRoom::$showMealValue[$otherRoom->mealName];
+                    }else{
+                        $thisBreakfast = $otherRoom->mealName;
+                    }
+                }
+
+                if($thisBreakfast !== $otherBreakfast){
+                    //self::$compereDesc = "not same meal:".$thisBreakfast." and ".$otherBreakfast;
+                    //return false;
+                    if(!$otherBreakfast){
+                        $thisFactor++;
+                    }elseif(!$thisBreakfast){
+                        $otherFactor++;
+                    }elseif($otherBreakfast == 'Завтрак'){
+                        $thisFactor++;
+                    }elseif($thisBreakfast == 'Завтрак'){
+                        $otherFactor++;
+                    }else{
+                        return false;
+                    }
+                }
+                if(($thisFactor > $otherFactor) && ($this->rubPrice > $otherHotel->rubPrice)){
+                    return false;
+                }elseif(($thisFactor < $otherFactor) && ($this->rubPrice < $otherHotel->rubPrice)){
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
     }
 
     /**

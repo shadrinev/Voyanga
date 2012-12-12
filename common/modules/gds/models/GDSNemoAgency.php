@@ -675,7 +675,7 @@ class GDSNemoAgency extends CComponent
             'Request' => array(
                 'Ticketing' => array(
                     'BookID' => $flightTicketingRequest->nemoBookId,
-                    'ValCompany' => '',
+                    //'ValCompany' => '',
                     'Commision' => array(
                         'Percent' => '2'
                     )

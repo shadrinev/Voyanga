@@ -248,7 +248,7 @@ class RoomNamesController extends ABaseAdminController
         ));
     }
 
-    public function actionRusNamesManage()
+    public function actionRusNamesManage($filterName = '')
     {
 
         if(isset($_POST['smbset']) and $_POST['smbset']){
@@ -268,6 +268,29 @@ class RoomNamesController extends ABaseAdminController
         }
 
         $selectCriteria = new CDbCriteria();
+        if($filterName){
+
+            $words = explode(' ',$filterName);
+            $words = array_map('trim',$words);
+            $aWords = array();
+            foreach($words as $word){
+                if($word){
+                    $aWords[] = $word;
+                }
+            }
+            $queries = array();
+
+            $combWords = self::recombineArray($aWords);
+            foreach($combWords as $comb){
+                $queries[] = '%'.implode('%',$comb).'%';
+            }
+
+            foreach($queries as $key=>$query1){
+                $selectCriteria->params[':roomNameRus'.$key] = $query1;
+                $selectCriteria->addCondition('t.roomNameRus LIKE :roomNameRus'.$key,'OR');
+            }
+            //$selectCriteria->addSearchCondition('roomNameRus', $filterName, false);
+        }
         $dataProvider=new CActiveDataProvider(
             'RoomNamesRus',
             array(
@@ -279,6 +302,7 @@ class RoomNamesController extends ABaseAdminController
         );
         $this->render('manageRusNames',array(
             'dataProvider'=>$dataProvider,
+            'filterName'=>$filterName
         ));
     }
 
@@ -296,10 +320,53 @@ class RoomNamesController extends ABaseAdminController
         }
     }
 
+    public static function recombineArray($arr1,$firstElem = null) {
+        $ret = array();
+        if(count($arr1) > 1){
+            foreach($arr1 as $key=>$elem){
+                $param = $arr1;
+                unset($param[$key]);
+                $res = self::recombineArray($param,$elem);
+                foreach($res as $line){
+                    if($firstElem){
+                        array_unshift($line,$firstElem);
+                    }
+                    $ret[] = $line;
+                }
+            }
+        }else{
+
+                if($firstElem){
+                    array_unshift($arr1,$firstElem);
+                }
+                $ret[] = $arr1;
+                return $ret;
+        }
+        return $ret;
+    }
+
     public function actionRusRoomNames($query, $return = false)
     {
+
+
         $currentLimit = appParams('autocompleteLimit');
+        $currentLimit = 100;
         $items = Yii::app()->cache->get('autocompleteRusRoomNames'.$query);
+        //$query = str_replace(' ','%',$query);
+        $words = explode(' ',$query);
+        $words = array_map('trim',$words);
+        $aWords = array();
+        foreach($words as $word){
+            if($word){
+                $aWords[] = $word;
+            }
+        }
+        $queries = array();
+
+        $combWords = self::recombineArray($aWords);
+        foreach($combWords as $comb){
+            $queries[] = '%'.implode('%',$comb).'%';
+        }
 
         $items = array();
         if(!$items)
@@ -310,10 +377,10 @@ class RoomNamesController extends ABaseAdminController
 
             $criteria = new CDbCriteria();
             $criteria->limit = $currentLimit;
-            $criteria->params[':roomNameRus'] = '%'.$query.'%';
-            //$criteria->params[':localEn'] = $query.'%';
-
-            $criteria->addCondition('t.roomNameRus LIKE :roomNameRus');
+            foreach($queries as $key=>$query1){
+                $criteria->params[':roomNameRus'.$key] = $query1;
+                $criteria->addCondition('t.roomNameRus LIKE :roomNameRus'.$key,'OR');
+            }
             /** @var  RusNamesRus[] $roomNamesRus  */
             $roomNamesRus = RoomNamesRus::model()->findAll($criteria);
 
@@ -336,6 +403,16 @@ class RoomNamesController extends ABaseAdminController
         }
         header('Content-type: application/json');
         echo json_encode($items);
+        die();
+    }
+
+    public function actionGetCanonicalName($roomName)
+    {
+
+        $response = array();
+        header('Content-type: application/json');
+        $response = HotelRoom::parseRoomNameStatic($roomName);
+        echo json_encode($response);
         die();
     }
 

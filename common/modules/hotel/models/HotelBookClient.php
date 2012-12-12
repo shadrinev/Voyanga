@@ -17,6 +17,10 @@ class HotelBookClient
     public static $saveCache;
     public static $downloadExternal;
     public static $cacheFilePath;
+    public static $totalMicrotime = 0;
+    public static $maxMicrotime = 0;
+    public static $countSql = 0;
+    public static $countFunc = 0;
     public $requests;
 
     public function request($url, $getData = null, $postData = null, $asyncParams = null, $cacheFileName = null)
@@ -244,10 +248,13 @@ class HotelBookClient
                                 //Process response
                                 $result = curl_multi_getcontent($requestInfo['curlHandle']);
                                 curl_close($requestInfo['curlHandle']);
-
+                                $startTime1 = microtime(true);
                                 $requestInfo['hotelRequestLog']->executionTime = ($endTime - $startTime);
                                 $requestInfo['hotelRequestLog']->responseXml = UtilsHelper::formatXML($result);
                                 $requestInfo['hotelRequestLog']->save();
+                                $endTime1 = microtime(true);
+                                Header('ExecutionTimeSaveToMongo:'.($endTime1 - $startTime1));
+
                                 if ($requestInfo['cacheFilePath'] && self::$saveCache)
                                 {
                                     file_put_contents($requestInfo['cacheFilePath'], $result);
@@ -417,6 +424,7 @@ class HotelBookClient
 
     private function getHotelFromSXE($hotelSXE)
     {
+
         $hotelAttrMap = array(
             'hotelId', 'hotelName', 'resultId', 'confirmation', 'price', 'currency', 'specialOffer', 'providerId', 'providerHotelCode',
             'categoryId' => 'hotelCatId',
@@ -494,6 +502,9 @@ class HotelBookClient
 
             }
         }
+        if($hotelParams['specialOffer']){
+            $hotelParams['specialOffer'] = ($hotelParams['specialOffer'] == 'false' ? false : true);
+        }
         if (isset($hotelSXE->SpecialOffers->SpecialOffer))
         {
             $hotelParams['offerText'] = '';
@@ -504,7 +515,9 @@ class HotelBookClient
             }
         }
 
+
         $hotel = new Hotel($hotelParams);
+
         if (self::$lastRequestCityHaveCoordinates)
         {
             if (($hotel->latitude !== null) && ($hotel->longitude !== null))
@@ -618,7 +631,11 @@ class HotelBookClient
 
     private function processHotelSearchResponse($hotelsXml, $checkIn, $duration)
     {
+        $startTime = microtime(true);
         $hotelsObject = simplexml_load_string($hotelsXml);
+        $endTime = microtime(true);
+        Header('ExecutionTimeSimpleLoad:'.($endTime - $startTime));
+
         //$hotelsObject = simplexml_load_file('/srv/www/oleg.voyanga/public_html/frontend/runtime/resp.xml');
         $response = new HotelSearchResponse();
         if ($hotelsObject)
@@ -653,15 +670,30 @@ class HotelBookClient
             if (isset($hotelsObject->Hotels->Hotel))
             {
                 UtilsHelper::soapObjectsArray($hotelsObject->Hotels->Hotel);
+                $startTime1 = microtime(true);
+                $cnt = 0;
                 foreach ($hotelsObject->Hotels->Hotel as $hotelItem)
                 {
+                    $startTime2 = microtime(true);
                     $hotel = $this->getHotelFromSXE($hotelItem);
                     $hotel->searchId = $searchId;
                     $hotel->checkIn = $checkIn;
                     $hotel->duration = $duration;
                     $hotel->cityId = (string)$hotelsObject->HotelSearch['cityId'];
                     $response->hotels[] = $hotel;
+                    $endTime2 = microtime(true);
+
+                    Header('ExecutionTimeHotelInitFull:'.($endTime2 - $startTime2));
+                    $cnt++;
                 }
+                $endTime1 = microtime(true);
+
+                Header('ExecutionTimeLoopHotelInit:'.$cnt.'cnt'.($endTime1 - $startTime1));
+                Header('ExecutionTimeTotalXml:'.self::$totalMicrotime);
+                Header('ExecutionContFunc:'.self::$countFunc);
+                Header('ExecutionCountSql:'.self::$countSql);
+                Header('ExecutionMaxTime:'.self::$maxMicrotime);
+
             }
             if (isset($hotelsObject->Errors->Error))
             {
@@ -691,6 +723,9 @@ class HotelBookClient
             $response->errorStatus = 2;
             $response->errorsDescriptions[] = array('code' => '', 'description' => 'Empty response from remote server');
         }
+        $endTime = microtime(true);
+
+        Header('ExecutionTimeProcess:'.($endTime - $startTime));
         return $response;
     }
 
@@ -889,7 +924,11 @@ class HotelBookClient
             $this->hotelSearch($params, true);
         }
         //run all requests
+        $startTime = microtime(true);
         $this->processAsyncRequests();
+        $endTime = microtime(true);
+
+        Header('ExecutionTimeProcessAsync:'.($endTime - $startTime));
         self::$groupId = null;
         $hotels = array();
         $errorDescriptions = array();
