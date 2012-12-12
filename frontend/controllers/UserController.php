@@ -9,13 +9,13 @@ class UserController extends CController
 {
     public $layout = 'static';
 
-    public function actionCreateTestUser()
+    public function actionCreateTestUser($email)
     {
         /* add demo users */
         $demoUser = new FrontendUser();
         $demoUser->username = "mihan007";
-        $demoUser->email = "mihan007@ya.ru";
-        $demoUser->password = "clevertech";
+        $demoUser->email = $email;
+        $demoUser->password = $email.'123';
         $demoUser->save();
         VarDumper::dump($demoUser->errors);
     }
