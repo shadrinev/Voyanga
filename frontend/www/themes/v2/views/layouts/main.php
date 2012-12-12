@@ -280,15 +280,13 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
         <div class="textBlock hEmail">
             <div class="floatLeft">
                 По вопросам бронирования и<br>
-                возврата (просьба указывать<br>
-                номер заказа)</div>
+                возврата</div>
             <div class="floatRight"><a href="mailto:support@voyanga.com">support@voyanga.com</a></div>
         </div>
         <div class="textBlock oEmail">
             <div class="floatLeft">
-                По любым вопросам<br>
-                (сотрудничество, реклама,<br>
-                предложения, СМИ)</div>
+                По любым вопросам,<br>
+                мы всегда открыты</div>
             <div class="floatRight"><a href="mailto:hello@voyanga.com">hello@voyanga.com</a></div>
         </div>
         <div class="shadowContact"></div>
@@ -297,9 +295,9 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
                 Представительства<br>
                 в трех городах</div>
             <div class="floatRight lh28">
-                юр.адрес: Москва, ул. ул. Профсоюзная, 26/44<br>
-                фактический: Санкт-Петербург, 7-ая линия, 76, офис 419<br>
-                коллцентр: Нижний Новгород, ул. Б.Покровская, 62/5, офис 501
+                Москва, ул. Профсоюзная 26/44<br>
+                С-Петербург, 7-ая линия 76, оф. 419<br>
+                Н-Новгород, ул. Б.Покровская 62/5, оф. 501
             </div>
         </div>
         <div class="shadowContact"></div>
@@ -318,7 +316,6 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
             <div class="floatRight lh28">
                 ООО «Изитрип»<br>
                 ИНН 7728799455<br>
-                КПП 772801001<br>
                 ОГРН 1127746124373
             </div>
         </div>
