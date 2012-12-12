@@ -134,8 +134,22 @@ class BuyController extends Controller
 
     public function actionWaitpayment()
     {
-        echo "WAITING FOR PAYMENTS";
-        exit;
-
+        $this->layout = false;
+        $this->render('waiting');
+    }
+    public function actionPaymentstatus() {
+        $order = Yii::app()->order;
+        $payments = Yii::app()->payments;
+        $bookers = $payments->preProcessBookers($order->getBookers());
+        $paid = true;
+        $error = false;
+        foreach($bookers as $booker)
+        {
+            if($payments->getStatus($booker)!='paid'){
+                $paid = false;
+            }
+        }
+        header("Content-type: application/json");
+        echo json_encode(Array("paid"=>$paid, "error"=>$error));
     }
 }

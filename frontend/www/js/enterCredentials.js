@@ -105,14 +105,14 @@ function checkStatuses(statuses)
     //if everything is ok then go to payment
     $('#loadPayFly').find('.armoring').hide();
     $('#loadPayFly').find('.loadJet').hide();
-    $('.payCardPal').show();
-    $('.paybuyEnd').show();
     Utils.scrollTo('.payCardPal',true);
     $.get('/buy/startPayment', function (data) {
         if (data.error) {
             new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
         } else {
             Utils.submitPayment(data);
+	    $('.payCardPal').show();
+	    $('.paybuyEnd').show();
         }
     });
 }

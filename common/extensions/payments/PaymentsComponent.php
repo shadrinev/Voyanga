@@ -136,4 +136,13 @@ class PaymentsComponent extends CApplicationComponent
 //            throw new Exception("Nemo callback failure");
         return true;
     }
+    //! FIXME MOVE TO ORDER?
+    public function getStatus($booker)
+    {
+        $status = $booker->getStatus();
+        $parts = explode("/", $status);
+        if(count($parts)==2)
+            return $parts[1];
+        return $parts[0];
+    }
 }
