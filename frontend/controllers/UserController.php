@@ -104,7 +104,16 @@ class UserController extends CController
 
     public function actionOrders()
     {
-        echo 'Тут будут заказы';
+        $criteria = new CDbCriteria();
+        $criteria->order = 'timestamp desc';
+        $criteria->addColumnCondition(array('userId'=>Yii::app()->user->id));
+
+        $dataProvider = new CActiveDataProvider('OrderBooking', array(
+            'criteria' => $criteria
+        ));
+        $this->render('orders', array(
+            'model' => $dataProvider
+        ));
     }
 
     /**
