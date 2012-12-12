@@ -102,17 +102,18 @@ function checkStatuses(statuses)
         new ErrorPopup('passportBookingError', [errorText]);
         return;
     }
-    //if everything is ok then go to payment
-    $('#loadPayFly').find('.armoring').hide();
-    $('#loadPayFly').find('.loadJet').hide();
-    Utils.scrollTo('.payCardPal',true);
     $.get('/buy/startPayment', function (data) {
         if (data.error) {
             new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
         } else {
+	    //if everything is ok then go to payment
+	    $('#loadPayFly').find('.armoring').hide();
+	    $('#loadPayFly').find('.loadJet').hide();
+
             Utils.submitPayment(data);
 	    $('.payCardPal').show();
 	    $('.paybuyEnd').show();
+	    Utils.scrollTo('.payCardPal',true);
         }
     });
 }
