@@ -98,17 +98,11 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 <div class="gShL"></div>
 <div class="gShR"></div>
 
-
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
 <span data-bind="template: {if: in1, name: 'event-map', data: events, afterRender: events.afterRender}"></span>
 <!-- END MAPS -->
-
-
-
-
-
 
 <?php
 $templates = Yii::app()->params['frontend.app.templates'];
