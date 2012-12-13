@@ -30,7 +30,8 @@ h1.title {
     padding: 9px 10px 0;
     position: absolute;
     text-shadow: none;
-    top: -430px;
+    top: -60px;
+    white-space: nowrap;
 }
 h1.title img {
     margin-bottom: -8px;
