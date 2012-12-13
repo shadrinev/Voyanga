@@ -62,7 +62,7 @@ TourPanelSet = (function() {
       return 64 * _this.panels().length;
     });
     this.isMaxReached = ko.computed(function() {
-      return _this.panels().length > 6;
+      return _this.panels().length > 4;
     });
     this.calendarValue = ko.computed(function() {
       return {
