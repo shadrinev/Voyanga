@@ -60,9 +60,8 @@
     <tr>
         <td>
             <?php echo $content; ?>
-            <p>Вы можете <?php echo CHtml::mailto('связаться с нами', appParams('adminEmail')); ?> в любое удобное время.<br/>
-            С уважением, <br />
-            команда проекта Voyanga</p>
+            <p>С уважением, <br />
+            команда проекта <?php echo CHtml::link('Voyanga', Yii::app()->createAbsoluteUrl('/')); ?> </p>
         </td>
     </tr>
 </table>

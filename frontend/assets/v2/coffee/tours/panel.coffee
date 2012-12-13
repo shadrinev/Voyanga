@@ -38,7 +38,7 @@ class TourPanelSet
       64 * @panels().length
 
     @isMaxReached = ko.computed =>
-      @panels().length > 6
+      @panels().length > 4
 
     @calendarValue = ko.computed =>
       twoSelect: true

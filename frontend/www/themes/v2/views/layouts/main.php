@@ -26,8 +26,9 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     <!-- BOARD IF WE ARE AT THE MAIN -->
     <!-- ko if:in1 -->
     <div class="panel-index">
-    	<h1 class="title"><span data-bind="html: fakoPanel().mainLabel"></span></h1>
+
         <div class="board" data-bind="style: {height: fakoPanel().height}">
+            <h1 class="title"><span data-bind="html: fakoPanel().mainLabel"></span></h1>
             <!-- ko if:fakoPanel().template=='tour-panel-template' -->
                 <div class="constructor">
                     <!-- BOARD CONTENT -->
@@ -98,17 +99,11 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 <div class="gShL"></div>
 <div class="gShR"></div>
 
-
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
 <span data-bind="template: {if: in1, name: 'event-map', data: events, afterRender: events.afterRender}"></span>
 <!-- END MAPS -->
-
-
-
-
-
 
 <?php
 $templates = Yii::app()->params['frontend.app.templates'];

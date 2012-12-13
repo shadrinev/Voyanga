@@ -1,5 +1,10 @@
 <?php $link = Yii::app()->createAbsoluteUrl('/user/newPassword', array('key'=>$key)); ?>
-<p>Кажется вы забыли свой пароль на сайте <?php echo CHtml::link('Voyanga.com', Yii::app()->createAbsoluteUrl('/')); ?>?</p>
-<p>Чтобы создать новый пароль нажмите по ссылке ниже:</p>
-<p><?php echo CHtml::link($link, $link); ?>. </p>
-<p>Эта ссылка будет активна до <?php echo $date; ?>.</p>
+<p>Дорогой друг!</p>
+<p>Кажется Вы забыли свой пароль от личного кабинета на сайте <?php echo CHtml::link('Voyanga.com', Yii::app()->createAbsoluteUrl('/')); ?>?</p> <br />
+Чтобы создать новый пароль нажмите по ссылке: <?php echo CHtml::link('восстановить пароль', $link); ?>. <br />
+Эта ссылка будет активна до <?php echo $date; ?>.</p>
+<p>Если же Вы не теряли пароль или мы случайно ошиблись - просто удалите это письмо.</p>
+
+
+
+

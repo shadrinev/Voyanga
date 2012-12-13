@@ -1,6 +1,12 @@
 <?php $link = Yii::app()->createAbsoluteUrl('/user/orders'); ?>
-<p>Вы зарегистрированы на сайте <?php echo CHtml::link('Voyanga.com', Yii::app()->createAbsoluteUrl('/')); ?></p>
-<p>Ваш логин: <?php echo $email ?></p>
-<p>Ваш пароль: <?php echo $password ?></p>
-<p>Все ваши заказы на нашем сайте доступны по адресу: <?php echo CHtml::link($link, $link); ?>. </p>
-<p>Спасибо!</p>
+<p>Дорогой друг!</p>
+<p>Для Вас создан личный кабинет на сайте Voyanga: <?php echo CHtml::link($link, $link); ?> <br />
+Там будет храниться информация обо всех Ваших заказах и их статусах. <br />
+</p> 
+
+<p>Параметры для входа в <?php echo CHtml::link('личный кабинет', $link); ?>: <br />
+--------- <br />
+адрес электронной почты: <?php echo $email ?> <br />
+пароль: <?php echo $password ?> <br />
+---------</p>
+
