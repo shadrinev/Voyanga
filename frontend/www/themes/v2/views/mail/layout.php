@@ -60,10 +60,8 @@
     <tr>
         <td>
             <?php echo $content; ?>
-            <?php $link = Yii::app()->createAbsoluteUrl('/'); ?>
-            
             <p>С уважением, <br />
-            команда проекта <?php echo CHtml::link('Voyanga', $link); ?> </p>
+            команда проекта <?php echo CHtml::link('Voyanga', Yii::app()->createAbsoluteUrl('/')); ?> </p>
         </td>
     </tr>
 </table>
