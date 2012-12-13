@@ -233,10 +233,8 @@
                     </div>
                 </div>
                 <div class="rememberEnter">
-                    <a href="#" class="btnRegLogin">Регистрация</a>
-                </div>
-                <div class="links">
                     <a href="#" class="enterOpen">Войти</a>
+                    <a href="#" class="btnRegLogin">Регистрация</a>
                 </div>
             </div>
             <div onclick="closePopUpLogIn()" class="boxClose"></div>

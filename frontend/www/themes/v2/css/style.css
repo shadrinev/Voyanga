@@ -185,18 +185,27 @@
     top: 0;
     width: 152px;
 }
-.login-window a {
+.login-window .logInLinks {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
     background: url("../images/slice.png") no-repeat scroll -487px -182px transparent;
     display: block;
-    height: 28px;
+    height: 17px;
     margin: 10px 0 0 10px;
     padding-left: 20px;
+}
+.login-window .logInLinks.user {
+    background: url("../images/ico.png") no-repeat scroll -0px -248px transparent;
+}
+.login-window .logInLinks.user span {
+    border-bottom: 1px dashed;
 }
 .login-window a:hover {
     text-decoration: none;
 }
 .login-window a span {
-    display: inline-block;
     vertical-align: middle;
 }
 .login-window a span.point {

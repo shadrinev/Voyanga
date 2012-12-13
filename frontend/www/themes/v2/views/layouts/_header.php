@@ -20,7 +20,7 @@
         </div>
 
         <div class="login-window full">
-            <a href="javascript:void(0)" onclick="openPopUpLogIn()">
+            <a href="javascript:void(0)" onclick="openPopUpLogIn()" class="logInLinks">
                 <span class="text">Регистрация и вход</span>
             </a>
         </div>
