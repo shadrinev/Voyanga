@@ -82,12 +82,22 @@ $images = '/themes/v2';
                                                 <a href="#"><span data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербурга</span></a>
                                             </div>
                                             <div class="startInputTo">
+                                                <div class="bgInput">
+                                                    <div class="left"></div>
+                                                    <div class="center"></div>
+                                                    <div class="right"></div>
+                                                </div>
                                                 <input type="text" tabindex="-1" class="input-path" data-bind="blur: hideFromCityInput">
                                                 <input type="text" placeholder="Санкт-Петербург" class="second-path" data-bind="blur: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen}" autocomplete="off" style="">
                                             </div>
                                             <!-- /ko -->
                                         </div>
                                         <div class="from" data-bind="css: {active: checkIn()}">
+                                            <div class="bgInput">
+                                                <div class="left"></div>
+                                                <div class="center"></div>
+                                                <div class="right"></div>
+                                            </div>
                                             <input type="text" tabindex="-1" class="input-path">
                                             <input type="text" placeholder="Куда едем?" class="second-path" data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}" autocomplete="off">
                                             <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
