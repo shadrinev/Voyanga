@@ -61,7 +61,7 @@ $(function(){
             })
                 .success(function(){
                     _.each(window.tripRaw.items, function(item, i){
-                            statuses[i] = 0;
+                        statuses[i] = 0;
                     });
                     _.each(window.tripRaw.items, function(item, i){
                         $.ajax({
@@ -89,18 +89,21 @@ $(function(){
 
 function checkStatuses(statuses)
 {
-    var errors = '';
-    var errorText='';
+    var errors = '',
+        errorText='',
+        completed = true;
     _.each(statuses, function(el, i){
         if (el == 0)
-            return;
+            completed = false;
         if (_.isString(el))
             errors += 'Ошибка бронирования сегмента номер ' + (i+1) + ' = ' + el + '.<br>';
     });
+    if (!completed)
+        return;
     $.get('/buy/done');
     if (errors.length>0)
     {
-	errorText = errors;
+	    errorText = errors;
         new ErrorPopup('passportBookingError', [errorText]);
         return;
     }
