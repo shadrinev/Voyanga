@@ -78,11 +78,11 @@ $(function(){
                                 statuses[i] = xhr.responseText;
                                 checkStatuses(statuses);
                             });
-                    })
+                    });
                 })
                 .error(function(xhr, ajaxOptions, thrownError){
                     new ErrorPopup('passport500'); //ошибка, когда мы не смогли сохранить паспортные данные
-                })
+                });
             });
         });
 });
@@ -109,13 +109,15 @@ function checkStatuses(statuses)
             new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
         } else {
 	    //if everything is ok then go to payment
-	    $('#loadPayFly').find('.armoring').hide();
-	    $('#loadPayFly').find('.loadJet').hide();
+	    $('iframe').load(function(){
+		$('#loadPayFly').find('.armoring').hide();
+		$('#loadPayFly').find('.loadJet').hide();
 
+		$('.payCardPal').show();
+		$('.paybuyEnd').show();
+		Utils.scrollTo('.payCardPal',true);
+	    });
             Utils.submitPayment(data);
-	    $('.payCardPal').show();
-	    $('.paybuyEnd').show();
-	    Utils.scrollTo('.payCardPal',true);
         }
     });
 }
