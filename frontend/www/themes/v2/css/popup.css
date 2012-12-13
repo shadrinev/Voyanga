@@ -157,7 +157,7 @@
     z-index: 10000;
 }
 
-.contentWrapBg {
+.contentWrapBg, .loginWrapBg {
     background: rgba(38,41,46,0.8);
     height: 100%;
     left: 0;
@@ -248,4 +248,104 @@
 }
 .lh28 {
     line-height: 24px;
+}
+.mainWrapBg {
+    background: rgba(38,41,46,0.8);
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 0px 0 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.wrapDiv {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    margin-left: -400px;
+    padding-bottom: 20px;
+    width: 800px;
+}
+/* LOGIN */
+.loginWrapBg .wrapDiv {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -162px;
+    margin-top: -150px;
+    padding-bottom: 20px;
+    width: 325px;
+    height: 300px;
+}
+.loginWrapBg .wrapDiv .wrapContent {
+    -webkit-border-radius: 8px;
+    -moz-border-radius   : 8px;
+    border-radius: 8px;
+    background: #f4f7f9;
+    padding:32px;
+    width: 261px;
+    height: 236px;
+    color: #010101;
+    line-height: 18px;
+    font-size: 12px;
+    background: url(../images/bg-login-pass.png) repeat-x;
+}
+.loginWrapBg .wrapDiv .wrapContent h2 {
+    font-size: 24px;
+    text-shadow: 0 1px 0 #FFF;
+}
+.loginWrapBg .wrapDiv .wrapContent .divInput {
+    width: 100%;
+    height: 36px;
+    position: relative;
+    margin-top: 22px;
+}
+.loginWrapBg .wrapDiv .wrapContent .divInput input {
+    padding: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 36px;
+    font-size: 19px;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: none;
+    border: none;
+    z-index: 2;
+    width: 245px;
+}
+.loginWrapBg .wrapDiv .wrapContent .divInput input:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
+    color: #16181A !important;
+    outline: 0 none;
+}
+.loginWrapBg .wrapDiv .wrapContent .rememberEnter {
+    line-height: 31px;
+    margin-top: 22px;
+}
+.loginWrapBg .wrapDiv .wrapContent .btnEnterLogin {
+    width: 84px;
+    height: 31px;
+    line-height: 30px;
+    background: url(../images/btn-enterLogin.png) no-repeat;
+    text-align: center;
+    font-size: 14px;
+    color: #FFF;
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}
+.loginWrapBg .wrapDiv .wrapContent .links {
+    margin-top: 16px;
+    line-height: 24px;
+}
+.loginWrapBg .wrapDiv .wrapContent .links a {
+    text-decoration: underline;
 }
