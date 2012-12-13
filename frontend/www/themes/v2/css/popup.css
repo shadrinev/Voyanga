@@ -292,6 +292,7 @@
     line-height: 18px;
     font-size: 12px;
     background: url(../images/bg-login-pass.png) repeat-x;
+    position: relative;
 }
 .loginWrapBg .wrapDiv .wrapContent h2 {
     font-size: 24px;
@@ -329,6 +330,7 @@
 .loginWrapBg .wrapDiv .wrapContent .rememberEnter {
     line-height: 31px;
     margin-top: 22px;
+    height: 31px;
 }
 .loginWrapBg .wrapDiv .wrapContent .btnEnterLogin {
     width: 84px;
@@ -342,10 +344,34 @@
     float: right;
     vertical-align: middle;
 }
+.loginWrapBg .wrapDiv .wrapContent .btnRegLogin {
+    width: 104px;
+    height: 31px;
+    line-height: 30px;
+    background: url(../images/btn-regLogin.png) no-repeat;
+    text-align: center;
+    font-size: 14px;
+    color: #FFF;
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}
 .loginWrapBg .wrapDiv .wrapContent .links {
     margin-top: 16px;
     line-height: 24px;
 }
 .loginWrapBg .wrapDiv .wrapContent .links a {
     text-decoration: underline;
+}
+.loginWrapBg .wrapDiv .wrapContent .enter {
+    position: absolute;
+    width: 261px;
+}
+.loginWrapBg .wrapDiv .wrapContent .registrate {
+    position: absolute;
+    width: 262px;
+}
+.loginWrapBg .wrapDiv .wrapContent .boxClose {
+    top: 18px;
+    right: 18px;
 }

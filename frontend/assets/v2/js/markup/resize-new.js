@@ -1369,6 +1369,15 @@ function openPopUpLogIn() {
             }
         }
     });
+
+    $('.registerOpen').click(function() {
+        $('.enter').fadeOut();
+        $('.registrate').fadeIn();
+    });
+    $('.enterOpen').click(function() {
+        $('.registrate').fadeOut();
+        $('.enter').fadeIn();
+    });
 }
 
 function closePopUpLogIn() {
