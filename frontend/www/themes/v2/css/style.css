@@ -199,14 +199,12 @@
 .login-window .logInLinks.user {
     background: url("../images/ico.png") no-repeat scroll -0px -248px transparent;
 }
-.login-window .logInLinks.user span {
-    border-bottom: 1px dashed;
-}
 .login-window a:hover {
     text-decoration: none;
 }
 .login-window a span {
     vertical-align: middle;
+    border-bottom: 1px dotted;
 }
 .login-window a span.point {
     background: url("../images/slice.png") no-repeat scroll -8px -32px transparent;
