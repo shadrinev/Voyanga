@@ -113,4 +113,25 @@ class SiteController extends FrontendController
         }
     }
 
+    public function actionIata()
+    {
+        $this->layout = 'static';
+        $this->render('iata');
+        exit;
+    }
+
+    public function actionAgreement_avia()
+    {
+        $this->layout = 'static';
+        $this->render('agreement_avia');
+        exit;
+    }
+
+    public function actionAgreement_hotel()
+    {
+        $this->layout = 'static';
+        $this->render('agreement_hotel');
+        exit;
+    }
+
 }
