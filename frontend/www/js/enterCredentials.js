@@ -61,7 +61,9 @@ $(function(){
             })
                 .success(function(){
                     _.each(window.tripRaw.items, function(item, i){
-                        statuses[i] = 0;
+                            statuses[i] = 0;
+                    });
+                    _.each(window.tripRaw.items, function(item, i){
                         $.ajax({
                             type: 'POST',
                             url: '/buy/makeBookingForItem?index='+i,

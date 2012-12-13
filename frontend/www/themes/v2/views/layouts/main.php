@@ -20,38 +20,8 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 <body data-bind="css: {fixed: in1}">
 <?php echo $content; ?>
 <div class="wrapper" data-bind="css: {'scroll-none': in1}">
-    <div class="head" id="header">
-        <!-- CENTER BLOCK -->
-        <div class="center-block">
-            <a href="/" class="logo">Voyanga</a>
-            <a href="javascript:void(0)" onclick="openPopUpProj()" class="about">О проекте</a>
 
-            <div class="telefon">
-                <span class="prefix">+7 (499)</span> 533-09-33
-            </div>
-            <div class="slide-turn-mode">
-                <div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
-                <div class="bg-mask"></div>
-
-                <ul>
-                    <li id="h-tours-slider" class="planner btn"  data-bind="click: slider.click"><a href="#tours">Планировщик</a></li>
-                    <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="#avia">Авиабилеты</a>
-                    </li>
-                    <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="#hotels">Отели</a></li>
-                </ul>
-            </div>
-
-            <div class="login-window full" style="display:none;">
-                <a href="#">
-                    <span class="text">Регистрация и вход</span>
-                    <span class="point"></span>
-                </a>
-            </div>
-        </div>
-        <!-- END CENTER BLOCK -->
-    </div>
-    <!-- END HEAD -->
-    <!--====**********===-->
+    <?php echo $this->renderPartial('//layouts/_header'); ?>
 
     <!-- BOARD IF WE ARE AT THE MAIN -->
     <!-- ko if:in1 -->
@@ -119,16 +89,9 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     <div class="slideTours" data-bind="template: {name: 'event-index', data: events, afterRender: mapRendered}"></div>
     <!-- /ko -->
     <!-- END SLIDE TOURS -->
+
     <!-- FOOTER -->
-    <div class="footer">
-        <div class="center-block">
-            <ul class="foot-menu">
-                <li><a href="javascript:void(0)" onclick="openPopUpProj()">О проекте</a></li>
-                <li><a href="/faq">Вопросы и ответы</a></li>
-                <li><a href="javascript:void(0)" onclick="openPopUpContact()">Контакты</a></li>
-            </ul>
-        </div>
-    </div>
+    <?php echo $this->renderPartial('//layouts/_footer'); ?>
     <!-- END FOOTER-->
 
 </div>
@@ -156,5 +119,6 @@ foreach ($templates as $template)
     echo "<!-- END OF TEMPLATE $template -->\n";
 }
 ?>
+<?php echo $this->renderPartial('//layouts/_popup', array('theme'=>$theme)); ?>
 </body>
 </html>

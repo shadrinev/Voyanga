@@ -1,4 +1,3 @@
-/* Load Big */
 <div id="loadWrapBg" class="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
         <div id="loadGIF"><img src="/themes/v2/images/loading-5frame.gif"></div>
@@ -16,13 +15,10 @@
     </div>
 </div>
 
-
-/* Load Small */
 <div id="loadWrapBgMin" class="loadWrapBg" style='display: none;'>
     <div id="loadContentWinMin"></div>
 </div>
 
-/* About Project */
 <div class="mainWrapBg" style='display: none;'>
     <div class="wrapDiv">
         <div class="projectPopUp">
@@ -133,7 +129,6 @@
     </div>
 </div>
 
-/* CONTACTS */
 <div class="contentWrapBg" style='display: none;'>
     <div class="wrapDiv">
         <div class="wrapContent">
