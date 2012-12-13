@@ -112,6 +112,7 @@ return CMap::mergeArray(
             ),
             'cache' => array(
                 'class' => 'CMemCache',
+                'useMemcached' => $params['enableMemcached'],
                 'servers' => array(
                     array(
                         'host' => '127.0.0.1',
