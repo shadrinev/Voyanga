@@ -43,11 +43,12 @@ $images = '/themes/v2';
                     </select>
                     </div>
                     <a href="#" data-bind="click: itemsToBuy.gotoAndShowPanel" class="otherCity">Другой город</a>
-                    <img src="/themes/v2/images/hr-gradient-events.png">
-                    <span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span> <span class="rur">o</span>
+                    <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
+                    <div class="divPrice"><span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span> <span class="rur">o</span></div>
                     <a href="#" style="margin-top:0px;" class="otherCity" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2 взрослых</a>
                     <span class="check">Последняя проверка цены<br>выполнена 29 сентября, 18:04</span>
-                    <img src="/themes/v2/images/hr-gradient-events.png">
+                    <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
+                    <div class="btn-check" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
                 </div>
                 <div class="textBlock"><?php echo $event->description;?></div>
             </div>

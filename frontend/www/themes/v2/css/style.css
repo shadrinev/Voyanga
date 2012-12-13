@@ -1796,7 +1796,7 @@ input.hotel-input {
     border-bottom: 1px dashed;
     color: #2E333B;
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 6px;
     line-height: 12px;
     margin-bottom: 12px;
 }
@@ -1820,14 +1820,22 @@ input.hotel-input {
     font-family: Verdana;
     font-size: 30px;
     font-weight: bold;
-    margin-top: -25px;
     height: 25px;
 }
 #eventsContent .rightBlock .rur {
     display: inline-block;
     font-size: 29px;
     font-weight: bold;
-    margin-top: -25px;
+}
+#eventsContent .rightBlock .divPrice {
+    margin-top: -20px;
+}
+#eventsContent .rightBlock .btn-check {
+    float: left;
+    margin-bottom: 20px;
+    margin-top: -20px;
+    position: relative;
+    z-index: 2;
 }
 #eventsContent .rightBlock .check {
     color: #5E6064;
