@@ -22,7 +22,6 @@
         <div class="login-window full">
             <a href="javascript:void(0)" onclick="openPopUpLogIn()">
                 <span class="text">Регистрация и вход</span>
-                <span class="point"></span>
             </a>
         </div>
     </div>

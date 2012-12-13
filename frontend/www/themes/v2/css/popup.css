@@ -366,10 +366,12 @@
 .loginWrapBg .wrapDiv .wrapContent .enter {
     position: absolute;
     width: 261px;
+    top: 32px;
 }
 .loginWrapBg .wrapDiv .wrapContent .registrate {
     position: absolute;
     width: 262px;
+    top: 32px;
 }
 .loginWrapBg .wrapDiv .wrapContent .boxClose {
     top: 18px;
