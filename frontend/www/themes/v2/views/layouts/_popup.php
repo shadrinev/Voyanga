@@ -183,3 +183,35 @@
         </div>
     </div>
 </div>
+
+<div class="loginWrapBg" style="display: none;">
+    <div class="wrapDiv">
+        <div class="wrapContent">
+            <h2>Вход в Voyanga</h2>
+            <div class="divInput">
+                <input type="text" class="email" name="email" placeholder="Эл. почта">
+                <div class="bgInput">
+                    <div class="left"></div>
+                    <div class="center"></div>
+                    <div class="right"></div>
+                </div>
+            </div>
+            <div class="divInput">
+                <input type="password" class="email" name="email" placeholder="Пароль">
+                <div class="bgInput">
+                    <div class="left"></div>
+                    <div class="center"></div>
+                    <div class="right"></div>
+                </div>
+            </div>
+            <div class="rememberEnter">
+                <input type="checkbox" name="remember" id="rememberCheck"> <label for="rememberCheck">Запомнить меня</label>
+                <a href="#" class="btnEnterLogin">Войти</a>
+            </div>
+            <div class="links">
+                <a href="#">Забыли пароль?</a><br>
+                <a href="#">Регистрация</a>
+            </div>
+        </div>
+    </div>
+</div>
