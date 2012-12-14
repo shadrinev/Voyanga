@@ -3788,3 +3788,29 @@ a.whereData span {
     left: 5%;
     background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll 7% 0 #FFFFFF;
 }
+.black {
+    color: #1D222B;
+}
+.grid-view {
+    background: #FFF;
+    border-radius: 4px;
+    padding: 10px;
+    width: 50%;
+}
+.grid-view .items {
+    width: 100%;
+}
+.grid-view .items tr td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.grid-view .items thead {
+    font-size: 16px;
+}
+.grid-view .items thead tr th {
+    padding-bottom: 8px;
+}
+.grid-view .items tbody tr td a {
+    color: #1C81BB;
+    text-decoration: underline;
+}

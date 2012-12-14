@@ -332,18 +332,24 @@
     margin-top: 22px;
     height: 31px;
 }
-.loginWrapBg .wrapDiv .wrapContent .btnEnterLogin {
-    width: 84px;
-    height: 31px;
-    line-height: 30px;
-    background: url(../images/btn-enterLogin.png) no-repeat;
-    text-align: center;
-    font-size: 14px;
-    color: #FFF;
+.loginWrapBg .wrapDiv .wrapContent .btnEnterLogin, .loginWrapBg .wrapDiv .wrapContent .btnEnterLogin:active, .loginWrapBg .wrapDiv .wrapContent .btnEnterLogin:hover {
+    background: url("../images/btn-enterLogin.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #FFFFFF;
     display: inline-block;
     float: right;
+    font-size: 14px;
+    height: 31px;
+    line-height: 30px;
+    padding-bottom: 4px;
+    text-align: center;
     vertical-align: middle;
+    width: 84px;
+    cursor: pointer;
+    margin: 0;
+    text-shadow: 0 1px 0 rgba(1,1,1,0.5);
 }
+
 .loginWrapBg .wrapDiv .wrapContent .btnRegLogin {
     width: 104px;
     height: 31px;
@@ -355,7 +361,9 @@
     display: inline-block;
     float: right;
     vertical-align: middle;
+    cursor: pointer;
 }
+
 .loginWrapBg .wrapDiv .wrapContent .links {
     margin-top: 16px;
     line-height: 24px;

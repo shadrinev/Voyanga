@@ -189,30 +189,32 @@
         <div class="wrapContent">
             <div class="enter">
                 <h2>Вход в Voyanga</h2>
-                <div class="divInput">
-                    <input type="text" class="email" name="email" placeholder="Эл. почта">
-                    <div class="bgInput">
-                        <div class="left"></div>
-                        <div class="center"></div>
-                        <div class="right"></div>
+                <form method="post" action="/user/login" id="login-form" class="login-form">
+                    <div class="divInput">
+                        <input type="text" maxlength="125" id="LoginForm_email" name="LoginForm[email]" class="email" placeholder="Эл. почта">
+                        <div class="bgInput">
+                            <div class="left"></div>
+                            <div class="center"></div>
+                            <div class="right"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="divInput">
-                    <input type="password" class="email" name="email" placeholder="Пароль">
-                    <div class="bgInput">
-                        <div class="left"></div>
-                        <div class="center"></div>
-                        <div class="right"></div>
+                    <div class="divInput">
+                        <input type="password" maxlength="50" id="LoginForm_password" name="LoginForm[password]" class="email" placeholder="Пароль">
+                        <div class="bgInput">
+                            <div class="left"></div>
+                            <div class="center"></div>
+                            <div class="right"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="rememberEnter">
-                    <input type="checkbox" name="remember" id="rememberCheck"> <label for="rememberCheck">Запомнить меня</label>
-                    <a href="#" class="btnEnterLogin">Войти</a>
-                </div>
-                <div class="links">
-                    <a href="#">Забыли пароль?</a><br>
-                    <a href="#" class="registerOpen">Регистрация</a>
-                </div>
+                    <div class="rememberEnter">
+                        <label for="LoginForm_rememberMe"><input type="checkbox" value="1" id="LoginForm_rememberMe" name="LoginForm[rememberMe]">&nbsp;Запомнить меня</label>
+                        <input type="submit" value="Войти" name="yt0" class="btnEnterLogin">
+                    </div>
+                    <div class="links">
+                        <a href="/user/newPassword">Забыли пароль?</a><br>
+                        <a href="#" class="registerOpen">Регистрация</a>
+                    </div>
+                </forms>
             </div>
             <div class="registrate" style="display: none;">
                 <h2>Регистрация</h2>
