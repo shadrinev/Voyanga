@@ -19,10 +19,16 @@
             </ul>
         </div>
 
-        <div class="login-window full">
-            <a href="javascript:void(0)" onclick="openPopUpLogIn()" class="logInLinks">
-                <span class="text">Регистрация и вход</span>
-            </a>
+        <div class="login-window full" onclick="openPopUpLogIn()">
+            <div class="registerForm">
+                <a href="javascript:void(0)" class="logInLinks">
+                    <span class="text">Регистрация и вход</span>
+                </a>
+            </div>
+            <div class="popupDown">
+                <a href="#">Мои заказы</a>
+                <a href="#">Выйти</a>
+            </div>
         </div>
     </div>
     <!-- END CENTER BLOCK -->

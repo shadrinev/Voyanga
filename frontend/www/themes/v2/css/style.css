@@ -177,24 +177,58 @@
     color: #FFFFFF !important;
 }
 .login-window {
-    background: url("../images/bg-head.png") repeat scroll 0 -38px transparent;
+    /**/
     color: #000000;
     height: 38px;
+    line-height: 45px;
     position: absolute;
     right: 0;
     top: 0;
     width: 152px;
+    cursor: pointer;
+}
+.login-window .registerForm {
+    background: url("../images/bg-head.png") repeat scroll 0 -38px transparent;
+    box-shadow: 0 1px 0 rgba(120, 121, 124, 0.9);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+.login-window .popupDown {
+    left: 1px;
+    position: absolute;
+    top: 38px;
+    width: 99%;
+    z-index: 1;
+    box-shadow: 0 1px 3px rgba(1,1,1, 0.6);
+    display: none;
+}
+.login-window .popupDown a {
+    display: block;
+    height: 38px;
+    line-height: 41px;
+    padding-left: 13px;
+    font-size: 13px;
+    color: #3e3f42;
+    background: url(../images/bg-loginPopUpDown.png) repeat-x 0px -39px;
+}
+.login-window .popupDown a:hover {
+    background-position: 0px 0px;
 }
 .login-window .logInLinks {
+    background: url("../images/ico.png") no-repeat scroll -0px -265px transparent;
+    display: inline-block;
+    height: 17px;
+    line-height: 16px;
+    max-width: 115px;
     overflow: hidden;
+    padding-left: 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 120px;
-    background: url("../images/slice.png") no-repeat scroll -487px -182px transparent;
-    display: block;
-    height: 17px;
-    margin: 10px 0 0 10px;
-    padding-left: 20px;
+    margin-left: 10px;
 }
 .login-window .logInLinks.user {
     background: url("../images/ico.png") no-repeat scroll -0px -248px transparent;
@@ -2326,6 +2360,57 @@ input.hotel-input {
     padding-top: 22px;
     text-align: right;
     position: relative;
+    margin-bottom: 22px;
+}
+.paybuyEnd .agreeConditions {
+    display: inline-block;
+    margin-right: 25px;
+    vertical-align: middle;
+}
+.paybuyEnd .agreeConditions span {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    color: #2e333b;
+}
+.paybuyEnd .agreeConditions span a {
+    text-decoration: underline;
+}
+.mainTable {
+    width: 100%;
+}
+
+.mainTable .tdIframe {
+    width: 720px;
+    padding-left: 20px;
+}
+.aviaAllPrice, .hotelAllPrice {
+    width: 100%;
+    margin-top: 15px;
+}
+.aviaAllPrice tr td, .hotelAllPrice tr td {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.aviaAllPrice thead tr td {
+    color: #5b5d62;
+}
+.aviaAllPrice tbody tr td.price, .hotelAllPrice tbody tr td.price {
+    color: #18181b;
+    width: 75px;
+    background: url(../images/dottedIframe_07.png) repeat-x 0px 10px;
+}
+.aviaAllPrice tbody tr td.price div, .hotelAllPrice tbody tr td.price div {
+    background: #FFF;
+    padding-right: 3px;
+    display: inline-block;
+}
+.aviaAllPrice tbody tr td.text, .hotelAllPrice tbody tr td.text {
+    color: #82848a;
+}
+.whyQuest {
+    border-bottom: 1px dashed;
+    cursor: pointer;
 }
 .paybuyEnd .loadJet {
 	position: absolute;
@@ -2344,6 +2429,7 @@ input.hotel-input {
 	top: 0px;
 	z-index: 2;
 }
+
 .paybuyEnd .loadJet .pathBlock.blue {
 	z-index: 1;
 } 
@@ -2963,11 +3049,41 @@ input.hotel-input {
 	font-size: 13px;
 }
 .payCardPal {
-    height: 513px;
     width: 100%;
     background: white;
     border-top: 1px solid #BABBBE;
     overflow: hidden;
+}
+.centerBlock {
+    width: 950px;
+    margin: 0 auto;
+    color: #1d222b;
+    padding-top: 23px;
+}
+.headerTitle {
+    margin-bottom: 23px;
+    width: 100%;
+}
+.headerTitle tr td {
+    vertical-align: bottom;
+}
+.headerTitle .h1 {
+    font-size: 24px;
+}
+.headerTitle .h1 .grey {
+    font-size: 12px;
+    color: #8e9096;
+}
+.headerTitle .h1 a {
+    font-size: 12px;
+    text-decoration: underline;
+}
+.headerTitle .time {
+    text-align: right;
+}
+.payCardPal .payCardPaliFrame {
+    width: 720px;
+    height: 520px;
 }
 .paybuyEnd .info {
 	width: 690px;

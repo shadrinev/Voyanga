@@ -1385,3 +1385,7 @@ function closePopUpLogIn() {
     $('body').css('overflow', 'auto');
     clickYes = false;
 }
+
+function loginPopSlideDown() {
+    $('.login-window .popupDown').slideDown();
+}

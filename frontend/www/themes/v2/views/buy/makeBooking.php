@@ -39,6 +39,12 @@
             <div class="bgFinish"></div>
             <div class="bgGradient"></div>
         </div>
+        <div class="agreeConditions">
+            <label for="agreeChek">
+                <input type="checkbox" name="agree" id="agreeChek"> <span> Я согласен с условиямис <a href="#">условиями использования</a>,<br>
+                <a href="#">правилами IATA</a> и <a href="#">правилами тарифов</a>.</span>
+            </label>
+        </div>
         <div class="btnBlue" id='submit-passport'>
             <span>Забронировать</span>&nbsp;&nbsp;
             <span class="price"data-bind="text: itemsToBuy.totalCost">33 770</span>
@@ -59,8 +65,74 @@
         <div class="clear"></div>
     </div>
     <!--=== ===-->
-    <div class="payCardPal" style="display: none">
-        <iframe id="payment_frame" class="payCardPal"></iframe>
+    <div class="payCardPal" style="display: none;">
+        <div class="centerBlock">
+            <table class="headerTitle">
+                <tr>
+                    <td class="h1">Оплатить <span class="grey">или</span>  <a href="#">вернуться к выбору вариантов</a></td>
+                    <td class="time">Ваши билеты забронированы, необходимо оплатить за 1 ч. 58 м.</td>
+                </tr>
+            </table>
+            <table class="mainTable">
+                <tr>
+                    <td class="tdInfoText">
+                        Сумма может быть списана в несколько транзакций. <span class="whyQuest tooltipClose" rel="А вот потому!">Почему?</span>
+
+                        <table class="aviaAllPrice">
+                            <thead>
+                                <tr>
+                                    <td colspan="2">Перелет LED - MOW:</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="price"><div>5 500 <span class="rur">o</span></div></td>
+                                    <td class="text">тариф и таксы</td>
+                                </tr>
+                                <tr>
+                                    <td class="price"><div>5 500 <span class="rur">o</span></div></td>
+                                    <td class="text">тариф и таксы</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <table class="aviaAllPrice">
+                            <thead>
+                            <tr>
+                                <td colspan="2">Перелет MOW - LED:</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="price"><div>5 500 <span class="rur">o</span></div></td>
+                                <td class="text">тариф и таксы</td>
+                            </tr>
+                            <tr>
+                                <td class="price"><div>5 500 <span class="rur">o</span></div></td>
+                                <td class="text">тариф и таксы</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+                        <table class="hotelAllPrice">
+                            <tbody>
+                            <tr>
+                                <td class="price"><div>14 500 <span class="rur">o</span></div></td>
+                                <td class="text">гостиницы</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </td>
+                    <td class="tdIframe">
+                        <iframe id="payment_frame" class="payCardPaliFrame"></iframe>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
     </div>
     <div class="paybuyEnd" style="display: none">
         <div class="info">После нажатия кнопки «Купить» данные пассажиров попадут в систему бронирования, билет будет
