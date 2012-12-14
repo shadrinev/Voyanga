@@ -1,0 +1,392 @@
+
+@charset "UTF-8";
+@font-face {
+    font-family: "ALSRublRegular";
+    src: local("ALS Rubl"), local("ALSRubl"), url("rouble.woff") format("woff"), url("rouble.ttf") format("truetype"), url("rouble.svg#ALSRubl") format("svg");
+}
+.rur {
+    font-family: 'ALSRublRegular',sans-serif;
+    font-size: inherit;
+    font-weight: normal;
+    line-height: normal;
+}
+.f16 {
+    font-size: 15px;
+}
+body {
+    color: #000000;
+}
+.pages {
+    min-height: 1130px;
+    padding: 33px 53px;
+    position: relative;
+    width: 732px;
+}
+.pages .content {
+    padding-bottom: 15px;
+}
+.header {
+    margin-bottom: 30px;
+    width: 100%;
+}
+.header tr td {
+    font-size: 14px;
+    line-height: 18px;
+    vertical-align: middle;
+}
+.header .tdLogo {
+    width: 231px;
+}
+.header .tdEticket {
+    width: 140px;
+}
+.header .tdTelefon {
+    font-size: 18px;
+    width: 230px;
+}
+.hederInfo {
+    font-size: 13px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+.hederInfo .tdNumberVoyanga {
+    width: 251px;
+}
+.hederInfo .tdReserve {
+    width: 251px;
+}
+.hederInfo thead tr td {
+    line-height: 16px;
+}
+.hederInfo tbody tr td {
+    font-size: 16px;
+    line-height: 23px;
+    padding-top: 4px;
+}
+.hr {
+    height: 1px;
+    vertical-align: middle;
+    width: 100%;
+}
+h2 {
+    font-size: 24px;
+    line-height: 22px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.lastPriceInfo {
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 20px;
+    margin-top: 15px;
+    width: 100%;
+}
+.lastPriceInfo .tdInfo {
+    width: 345px;
+}
+.lastPriceInfo .tdPrice {
+    font-size: 12px;
+    padding-left: 30px;
+}
+.lastPriceInfo .tdPrice .price {
+    font-size: 14px;
+}
+.lastPriceInfo .tdPrice .price .rur {
+    font-size: 25px;
+}
+.floatRight {
+    float: right;
+}
+.tickets {
+    margin-bottom: 20px;
+    overflow: hidden;
+    padding-left: 0;
+    position: relative;
+}
+.date {
+    border-right: 1px solid #000000;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 57px;
+}
+.date .number {
+    font-size: 12px;
+    padding-bottom: 20px;
+    padding-top: 12px;
+    position: absolute;
+    width: 57px;
+}
+.date .number + .number, .date .number + .number + .number, .date .number + .number + .number + .number {
+    border-top: 1px solid #000000;
+}
+.fly {
+    width: 100%;
+}
+.fly tr td {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+.fly tr.waitFly td {
+    padding-bottom: 8px;
+    padding-top: 6px;
+}
+.fly tr.endFly .tdTime, .fly tr.endFly .tdIco, .fly tr.endFly .tdCity, .fly tr.startFly .tdAvia, .fly tr.startFly .tdTarif {
+    border-bottom: 1px solid #9B9B9B;
+    padding-bottom: 8px;
+    padding-top: 6px;
+}
+.fly.end tr.endFly .tdTime, .fly.end tr.endFly .tdIco, .fly.end tr.endFly .tdCity, .fly.end tr.startFly .tdAvia, .fly.end tr.startFly .tdTarif {
+    border-bottom: 1px solid #FFFFFF;
+    padding-bottom: 6px;
+    padding-top: 8px;
+}
+.fly tr.startFly .tdTime, .fly tr.startFly .tdIco, .fly tr.startFly .tdCity, .fly tr.startFly .tdAvia, .fly tr.startFly .tdTarif {
+    border-top: 1px solid #9B9B9B;
+    padding-bottom: 8px;
+    padding-top: 6px;
+}
+.fly.start tr.startFly .tdTime, .fly.start tr.startFly .tdIco, .fly.start tr.startFly .tdCity, .fly.start tr.startFly .tdAvia, .fly.start tr.startFly .tdTarif {
+    border-top: 1px solid #FFFFFF;
+    padding-bottom: 6px;
+    padding-top: 8px;
+}
+
+.fly .tdTime {
+    font-size: 16px;
+    padding-left: 19px;
+    vertical-align: middle;
+    width: 65px;
+}
+.fly .tdIco {
+    vertical-align: middle;
+    width: 20px;
+}
+.fly .tdCity {
+    font-size: 13px;
+}
+
+.fly.end tr.waitFly td, .fly.end tr.waitFly td {
+    padding-bottom: 2px;
+    padding-top: 8px;
+}
+.fly.end .endFly .tdIco {
+    background-position: 0 -157px;
+}
+
+.fly tr.startFly .tdCity,.fly tr.endFly .tdCity {
+    font-size: 16px;
+    padding-left: 20px;
+    width: 300px;
+}
+.fly tr.startFly .tdCity .airport,.fly tr.endFly .tdCity .airport {
+    font-size: 13px;
+}
+.fly.start tr.startFly .tdTime, .fly.end tr.endFly .tdTime {
+    font-size: 20px;
+}
+.fly.start tr.startFly .tdCity, .fly.end tr.endFly .tdCity {
+    font-size: 20px;
+    padding-left: 20px;
+    width: 300px;
+}
+.fly.start tr.startFly .tdCity .airport, .fly.end td.endFly .tdCity .airport {
+    font-size: 13px;
+}
+
+.fly tr.timeFly .tdCity {
+    padding-left: 20px;
+    width: 300px;
+}
+.fly.start tr.startFly .tdIco {
+    background-position: 0 8px;
+}
+.fly.end tr.timeFly .tdIco, .fly tr.waitFly .tdIco {
+    background-position: 0 -30px;
+}
+.fly .tdAvia {
+    font-size: 12px;
+    line-height: 20px;
+    padding-left: 5px;
+    width: 125px;
+}
+.fly .tdTarif {
+    font-size: 12px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+.wait {
+    width: 100%;
+}
+.wait tr td {
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+.wait .tdTime {
+    padding-left: 19px;
+    width: 65px;
+}
+.wait .tdIco {
+    vertical-align: middle;
+    width: 20px;
+}
+.wait .tdCity {
+    font-size: 12px;
+    padding-left: 20px;
+}
+.wait .tdDate {
+    border-right: 1px solid #000000;
+    font-size: 12px;
+    width: 82px;
+}
+.fly .tdTime .number {
+    font-size: 12px;
+    left: 0;
+    margin-top: -9px;
+    padding-bottom: 20px;
+    padding-top: 12px;
+    position: absolute;
+    width: 57px;
+}
+.fly .tdDate {
+    border-right: 1px solid #000000;
+    font-size: 12px;
+    vertical-align: bottom;
+    width: 82px;
+}
+.fly.end .tdTime .number, .fly.middle .tdTime .number {
+    border-top: 1px solid #000000;
+    margin-top: -10px;
+}
+.fly.middle tr.waitFly .tdTime .number {
+    margin-top: -8px;
+}
+.fly.end tr.waitFly .tdTime .number {
+    margin-top: -10px;
+}
+body:first-of-type .fly.middle tr.waitFly .tdTime .number {
+    margin-top: -7px;
+}
+body:first-of-type .fly.end tr.waitFly .tdTime .number {
+    margin-top: -9px;
+}
+tr.waitFly .tdDate, tr.endFly .tdDate {
+    border-top: 1px solid #000000;
+}
+.f13 {
+    font-size: 13px;
+}
+.tdTitle {
+    width: 250px;
+}
+.tableLastInfo tr td {
+    padding-bottom: 1px;
+    padding-top: 1px;
+}
+.finishPrice {
+    margin-bottom: 13px;
+}
+.finishPrice table {
+    width: 100%;
+}
+.finishPrice table tr td.tdTitle {
+    font-size: 16px;
+    vertical-align: bottom;
+    width: 190px;
+}
+.finishPrice table tr td.tdPrice {
+    font-size: 16px;
+    padding-left: 0;
+    text-align: right;
+}
+.finishPrice table tr td.tdPrice span {
+    font-size: 22px;
+    font-weight: bold;
+}
+.lastPriceInfo .tdPrice h3 {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.tableLastInfo {
+    width: 100%;
+}
+.tableLastInfo .tdPrice {
+    padding-left: 0;
+    text-align: right;
+}
+.lastWords {
+    bottom: 15px;
+    font-size: 20px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.passenger {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.passenger:last-child {
+    margin-bottom: 0px;
+}
+.weekDay {
+    font-size: 14px;
+}
+h3 {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+.hotelGuests {
+    line-height: 17px;
+    margin-bottom: 11px;
+}
+.guest {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.service {
+    font-size: 13px;
+    margin-bottom: 9px;
+    line-height: 18px;
+}
+.bron {
+    font-size: 13px;
+    line-height: 18px;
+    margin-bottom: 9px;
+}
+.finishPriceHotel {
+    font-size: 16px ;
+    text-align: right;
+    line-height: 22px;
+}
+.finishPriceHotel .price {
+    font-size: 22px !important;
+    font-weight: bold;
+}
+.finishPriceHotel .done {
+    font-size: 13px;
+}
+.maps {
+    width: 356px;
+    height: 245px;
+    overflow: hidden;
+}
+.tdMaps {
+    width: 376px;
+}
+.street {
+    font-size: 16px;
+    line-height: 22px;
+}
+.hotelInfo {
+    margin-bottom: 15px;
+}
+.dates {
+    font-size: 13px;
+    vertical-align: middle;
+}
+.f20 {
+    font-size: 20px;
+}
