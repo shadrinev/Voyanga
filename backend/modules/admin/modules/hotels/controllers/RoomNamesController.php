@@ -273,9 +273,15 @@ class RoomNamesController extends ABaseAdminController
             $words = explode(' ',$filterName);
             $words = array_map('trim',$words);
             $aWords = array();
+            $i = 0;
             foreach($words as $word){
                 if($word){
                     $aWords[] = $word;
+                    $i++;
+                    if($i > 6){
+                        $aWords = array($filterName);
+                        break;
+                    }
                 }
             }
             $queries = array();
@@ -351,14 +357,21 @@ class RoomNamesController extends ABaseAdminController
 
         $currentLimit = appParams('autocompleteLimit');
         $currentLimit = 100;
-        $items = Yii::app()->cache->get('autocompleteRusRoomNames'.$query);
+        $cacheKey = md5($query);
+        $items = Yii::app()->cache->get('autocompleteRusRoomNames'.$cacheKey);
         //$query = str_replace(' ','%',$query);
         $words = explode(' ',$query);
         $words = array_map('trim',$words);
         $aWords = array();
+        $i = 0;
         foreach($words as $word){
             if($word){
                 $aWords[] = $word;
+                $i++;
+                if($i > 6){
+                    $aWords = array($query);
+                    break;
+                }
             }
         }
         $queries = array();
@@ -399,7 +412,7 @@ class RoomNamesController extends ABaseAdminController
             $currentLimit -= count($items);
 
 
-            Yii::app()->cache->set('autocompleteRusRoomNames'.$query,$items,appParams('autocompleteCacheTime'));
+            Yii::app()->cache->set('autocompleteRusRoomNames'.$cacheKey,$items,appParams('autocompleteCacheTime'));
         }
         header('Content-type: application/json');
         echo json_encode($items);

@@ -15,6 +15,7 @@
  * @property integer $countryId
  * @property string $expiration
  * @property integer $genderId
+ * @property string $ticketNumber
  * @property string $timestamp
  *
  * The followings are the available model relations:
@@ -52,10 +53,11 @@ class FlightBookingPassport extends CActiveRecord
             array('firstName', 'required'),
             array('flightBookingId, documentTypeId, countryId, genderId', 'numerical', 'integerOnly'=>true),
             array('firstName, lastName, birthday, series, number', 'length', 'max'=>45),
+            array('ticketNumber','length','max'=>15),
             array('expiration, timestamp', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, firstName, lastName, birthday, series, number, flightBookingId, documentTypeId, countryId, expiration, genderId, timestamp', 'safe', 'on'=>'search'),
+            array('id, firstName, lastName, birthday, series, number, flightBookingId, documentTypeId, countryId, expiration, genderId, ticketNumber, timestamp', 'safe', 'on'=>'search'),
         );
     }
 
@@ -89,6 +91,7 @@ class FlightBookingPassport extends CActiveRecord
             'countryId' => 'Country',
             'expiration' => 'Expiration',
             'genderId' => 'Gender',
+            'ticketNumber' => 'Ticket Number',
             'timestamp' => 'Timestamp',
         );
     }
@@ -115,6 +118,7 @@ class FlightBookingPassport extends CActiveRecord
         $criteria->compare('countryId',$this->countryId);
         $criteria->compare('expiration',$this->expiration,true);
         $criteria->compare('genderId',$this->genderId);
+        $criteria->compare('ticketNumber',$this->ticketNumber,true);
         $criteria->compare('timestamp',$this->timestamp,true);
 
         return new CActiveDataProvider($this, array(
@@ -131,6 +135,7 @@ class FlightBookingPassport extends CActiveRecord
         $this->number = $passport->number;
         $this->series = $passport->series;
         $this->genderId = $passport->genderId;
+        $this->ticketNumber = $passport->ticketNumber;
         $this->documentTypeId = $passport->documentTypeId;
         $this->flightBookingId = $flightBookerId;        
     }

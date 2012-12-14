@@ -71,6 +71,7 @@ return CMap::mergeArray(array(
 	),
 	
 	'php.exePath' => '/usr/bin/php',
+    'pdfConverterPath' => '/usr/bin/wkhtmltopdf',
 
     'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
     'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',

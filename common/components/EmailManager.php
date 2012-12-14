@@ -42,4 +42,22 @@ class EmailManager
         ), 'text/html');
         Yii::app()->mail->send($msg);
     }
+
+    static public function sendEmailOrderInfo($params,$pdfFileNames)
+    {
+        $msg = new YiiMailMessage();
+        $msg->view = 'orderInfo';
+        $msg
+            ->setFrom(appParams('adminEmail'), appParams('adminEmailName'))
+            ->setTo('maximov@danechka.com')
+            ->setSubject('Ваш заказ готов');
+        $msg->setBody($params, 'text/html');
+        foreach($pdfFileNames as $key=>$pdfInfo){
+            $attachment = Swift_Attachment::fromPath($pdfInfo['filename']);
+            $attachment->setFilename('ticket_'.$pdfInfo['type'].'_'.$key.'.pdf');
+            $msg->attach($attachment);
+        }
+
+        Yii::app()->mail->send($msg);
+    }
 }

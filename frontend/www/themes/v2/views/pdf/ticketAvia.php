@@ -1,3 +1,8 @@
+<?php
+    $dayOfWeek = array('Вс','Пн','Вт','Ср','Чт','Пт','Сб');
+    $monthNames = array('','янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек');
+
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -21,163 +26,165 @@
                 </tr>
             </table>
             <table class="hederInfo">
+                <thead>
                 <tr>
                     <td class="tdNumberVoyanga">
                         Номер заказа в системе Voyanga<br>
-                        Booking number<br>
-                        <strong><?php echo $bookingId; ?></strong>
+                        Order Id
                     </td>
                     <td class="tdReserve">
-                        Номер бронирования<br>
-                        Booking number<br>
-                        <strong><?php echo $pnr.($ticket->webService ? " ({$ticket->webService})":''); ?></strong>
+                        Номер билета<br>
+                        Ticket number
                     </td>
                     <td class="tdInfoPassenger">
                         Сведения о пассажирах<br>
-                        Traveler Information<br>
-                        <strong>SHADRIN EUGENE MR<br>
-                            4704973481</strong>
+                        Traveler Information
                     </td>
                 </tr>
+                </thead>
+                <tbody>
+                <?php foreach($flightPassports as $pKey=>$passport):?>
+                    <tr>
+                        <td class="tdNumberVoyanga">
+                            <?php if($pKey===0): ?>
+                                <strong><?php echo $bookingId; ?></strong>
+                            <?php endif; ?>
+                        </td>
+                        <td class="tdReserve">
+                            <strong><?php echo $passport->ticketNumber; ?></strong>
+                        </td>
+                        <td class="tdInfoPassenger">
+                            <div class="passenger"><?php echo strtoupper($passport->lastName.' '.$passport->firstName.' '.($passport->genderId == Passport::GENDER_M ? 'MR' : 'MS')); ?><br>
+                                <?php echo $passport->series.$passport->number; ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
             </table>
-            <hr>
+            <img src="images/vertLine.png" class="hr">
             <?php if(count($ticket->flights)!=2):?>
-                <h2>Маршрут</h2>
+                <h2>Маршрут<?php echo count($ticket->flights);?></h2>
             <?php endif; ?>
             <?php foreach($ticket->flights as $key=>$flight):?>
-                <h2>Туда</h2>
-                <?php if(count($ticket->flights)==2):?>
+                <?php if( count($ticket->flights) === 2):?>
                     <h2><?php echo ($key==0 ? "Туда" : "Обратно");?></h2>
                 <?php endif; ?>
                 <div class="tickets">
                     <?php
                     $firstPart = true;
                     $date = "";
-                    foreach( $flight->flightParts as $keyPart=>$flightPart)
-                    ?>
-                    <table class="fly start">
-                        <tr class="startFly">
-                            <td class="tdDate"><span class="f16">25</span> май</td>
-                            <td class="tdTime">9:40</td>
-                            <td class="tdIco">
-                                <img src="images/ico-fly.png">
-                            </td>
-                            <td class="tdCity">Санкт-Петербург, <span class="airport">Пулково-2</span></td>
-                            <td rowspan="3" class="tdAvia">
-                                <img src="images/logoAvia.png"><br>
-                                Рейс: AZW1545<br>
+                    $dayFormat = "d|n|w";
+                    $lastKey = count($flight->flightParts) - 1;
 
-                            </td>
-                            <td rowspan="3" class="tdTarif">
-                                Тариф: L (HK)
-                            </td>
-                        </tr>
-                        <tr class="timeFly">
-                            <td class="tdDate"></td>
-                            <td class="tdTime"></td>
-                            <td class="tdIco"></td>
-                            <td class="tdCity">Перелет продлится 1 ч. 50 м.</td>
-                        </tr>
-                        <tr class="waitFly">
-                            <td class="tdDate"  style="border-top:1px solid #fff"></td>
-                            <td class="tdTime">9:40</td>
-                            <td class="tdIco"></td>
-                            <td class="tdCity">Нью-Йорк, <span class="airport">NYC-1 Airport</span></td>
-                        </tr>
-                    </table>
-                    <table class="wait">
-                        <tr>
-                            <td class="tdDate"></td>
-                            <td class="tdTime"></td>
-                            <td class="tdIco">
-                                <img src="images/ico-cup.png">
-                            </td>
-                            <td class="tdCity">Пересадка: между рейсами 1 ч. 30 м.</td>
-                        </tr>
-                    </table>
-                    <table class="fly middle">
-                        <tr class="waitFly start">
-                            <td class="tdDate"><span class="f16">25</span> май</td>
-                            <td class="tdTime">9:40</td>
-                            <td class="tdIco"></td>
-                            <td class="tdCity">Санкт-Петербург, <span class="airport">Пулково-2</span></td>
-                            <td rowspan="3" class="tdAvia">
-                                <img src="images/logoAvia.png"><br>
-                                Рейс: AZW1545<br>
-                            </td>
-                            <td rowspan="3" class="tdTarif">
-                                Тариф: L (HK)
-                            </td>
-                        </tr>
-                        <tr class="timeFly">
-                            <td class="tdDate"></td>
-                            <td class="tdTime"></td>
-                            <td class="tdIco"></td>
-                            <td class="tdCity">Перелет продлится 1 ч. 50 м.</td>
-                        </tr>
-                        <tr class="waitFly end">
-                            <td class="tdDate"><span class="f16">25</span> май</td>
-                            <td class="tdTime">9:40</td>
-                            <td class="tdIco"></td>
-                            <td class="tdCity">Нью-Йорк, <span class="airport">NYC-1 Airport</span></td>
-                        </tr>
-                    </table>
-                    <table class="wait">
-                        <tr>
-                            <td class="tdDate"></td>
-                            <td class="tdTime"></td>
-                            <td class="tdIco"><img src="images/ico-cup.png"></td>
-                            <td class="tdCity">Пересадка: между рейсами 1 ч. 30 м.</td>
-                        </tr>
-                    </table>
-                    <table class="fly end">
-                        <tr class="waitFly">
-                            <td class="tdDate"><span class="f16">25</span> май</td>
-                            <td class="tdTime">9:40</td>
-                            <td class="tdIco"></td>
-                            <td class="tdCity">Санкт-Петербург, <span class="airport">Пулково-2</span></td>
-                            <td rowspan="3" class="tdAvia">
-                                <img src="images/logoAvia.png"><br>
-                                Рейс: AZW1545<br>
-                            </td>
-                            <td rowspan="3" class="tdTarif">
-                                Тариф: L (HK)
-                            </td>
-                        </tr>
-                        <tr class="timeFly">
-                            <td class="tdDate"></td>
-                            <td class="tdTime"></td>
-                            <td class="tdIco"></td>
-                            <td class="tdCity">Перелет продлится 1 ч. 50 м.</td>
-                        </tr>
-                        <tr class="endFly">
-                            <td class="tdDate"><span class="f16">25</span> май</td>
-                            <td class="tdTime">9:40</td>
-                            <td class="tdIco"><img src="images/ico-fly.png"></td>
-                            <td class="tdCity">Нью-Йорк, <span class="airport">NYC-1 Airport</span></td>
-                        </tr>
-                    </table>
+                    foreach( $flight->flightParts as $keyPart=>$flightPart):
+                    ?>
+                        <?php if(!$firstPart): ?>
+                            <table class="wait">
+                                <tr>
+                                    <td class="tdDate"></td>
+                                    <td class="tdTime"></td>
+                                    <td class="tdIco">
+                                        <img src="images/ico-cup.png">
+                                    </td>
+                                    <td class="tdCity">Пересадка: между рейсами <?php echo UtilsHelper::durationToTime($flight->transits[($keyPart - 1)]->timeForTransit);?></td>
+                                </tr>
+                            </table>
+                        <?php endif; ?>
+                        <?php
+                        $dayPrint = date($dayFormat,$flightPart->timestampBegin);
+                        $dateString ='';
+                        if($dayPrint!=$date){
+                            $date = $dayPrint;
+                            list($dd,$mm,$ww) = explode('|',$dayPrint);
+                            $dateString ="<span class='f16'>$dd</span> {$monthNames[$mm]}, <span class='weekDay'>{$dayOfWeek[$ww]}</span>";
+                        }
+                        ?>
+                        <table class="fly<?php echo ($keyPart==0 ? " start" : '').($keyPart==$lastKey ? " end" : "");?>">
+                            <tr class="startFly">
+                                <td class="tdDate"<?php echo ($dateString ? '' : ' style="border-top:1px solid #fff"');?>><?php echo $dateString;?></td>
+                                <td class="tdTime"><?php echo date('H:i',$flightPart->timestampBegin);?></td>
+                                <td class="tdIco">
+                                    <?php if($keyPart==0): ?>
+                                        <img src="images/ico-fly.png">
+                                    <?php endif; ?>
+                                </td>
+                                <td class="tdCity"><?php echo City::getCityByPk($flightPart->departureCityId)->localRu;?>, <span class="airport"><?php echo $flightPart->departureAirport->localRu?><?php echo ($flightPart->departureTerminalCode ? " ({$flightPart->departureTerminalCode})" : '');?></span></td>
+                                <td rowspan="3" class="tdAvia">
+                                    <img src="img/airline_logos/<?php echo $flightPart->transportAirlineCode;?>.png"><br>
+                                    Рейс: <?php echo $flightPart->transportAirlineCode.' '.$flightPart->code;?><br>
+
+                                </td>
+                                <td rowspan="3" class="tdTarif">
+                                    <?php if(implode(',',$flightPart->tariffs)):?>
+                                    Тариф: <?php echo implode(',',$flightPart->tariffs);?>
+                                    <?php endif;?>
+                                </td>
+                            </tr>
+                            <tr class="timeFly">
+                                <td class="tdDate"></td>
+                                <td class="tdTime"></td>
+                                <td class="tdIco"></td>
+                                <td class="tdCity">Перелет продлится <?php echo UtilsHelper::durationToTime($flightPart->duration);?></td>
+                            </tr>
+                            <?php
+                            $dayPrint = date($dayFormat,$flightPart->timestampBegin);
+                            $dateString ='';
+                            if($dayPrint!=$date){
+                                $date = $dayPrint;
+                                list($dd,$mm,$ww) = explode('|',$dayPrint);
+                                $dateString ="<span class='f16'>$dd</span> {$monthNames[$mm]}, <span class='weekDay'>{$dayOfWeek[$ww]}</span>";
+                            }
+                            ?>
+                            <tr class="endFly">
+                                <td class="tdDate"<?php echo ($dateString ? '' : ' style="border-top:1px solid #fff"');?>><?php echo $dateString;?></td>
+                                <td class="tdTime"><?php echo date('H:i',$flightPart->timestampEnd);?></td>
+                                <td class="tdIco">
+                                    <?php if($keyPart==$lastKey): ?>
+                                        <img src="images/ico-fly.png">
+                                    <?php endif; ?>
+                                </td>
+                                <td class="tdCity"><?php echo City::getCityByPk($flightPart->arrivalCityId)->localRu;?>, <span class="airport"><?php echo $flightPart->arrivalAirport->localRu?><?php echo ($flightPart->arrivalTerminalCode ? " ({$flightPart->arrivalTerminalCode})" : '');?></span></td>
+                            </tr>
+                        </table>
+                    <?php endforeach; ?>
                 </div>
             <?php endforeach;?>
-            <hr>
+
+            <img src="images/vertLine.png" class="hr">
             <table class="lastPriceInfo">
                 <tr>
-                    <td class="tdPrice">
-                        <div class="f13"> Сведения об оплате / Payment Information</div>
+                    <td class="tdInfo">
+                        Билет <?php echo ($ticket->refundable ? "возвратный" : "невозвратный");?>.<br>
                         <br>
+                        <?php echo $ticket->valAirline->economDescription;?><br>
+                        <br>
+                        Время отправления и прибытия местное.
+                    </td>
+                    <td class="tdPrice">
+                        <div class="finishPrice">
+                            <table>
+                                <tr>
+                                    <td class="tdTitle">Итоговая стоимость</td>
+                                    <td class="tdPrice"><span><?php echo UtilsHelper::formatPrice($ticket->price);?></span> RUB</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <h3> Сведения об оплате / Payment Information</h3>
 
                         <table class="tableLastInfo">
                             <tr>
                                 <td class="tdTitle">Тариф / Fare</td>
-                                <td class="tdPrice">8150,00 RUB</td>
+                                <td class="tdPrice"><?php echo UtilsHelper::formatPrice($ticket->price);?> RUB</td>
                             </tr>
                             <tr>
                                 <td class="tdTitle">Таксы и сборы / Taxes and fees</td>
-                                <td class="tdPrice">3277,33 RUB</td>
+                                <td class="tdPrice"><?php echo $ticket->taxes;?> RUB</td>
                             </tr>
                             <tr>
                                 <td class="tdTitle">Коммисия / Agency Fee</td>
-                                <td class="tdPrice">334,15 RUB</td>
+                                <td class="tdPrice"><?php echo $ticket->commission;?> RUB</td>
                             </tr>
                             <tr>
                                 <td class="tdTitle">Форма оплаты / Paid by Invoice</td>
@@ -188,24 +195,17 @@
                                 <td class="tdPrice">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td class="tdTitle">Итоговая стоимость / Total price</td>
-                                <td class="tdPrice"><div class="price"> 63 250 RUB</div></td>
+
                             </tr>
                         </table>
                     </td>
-                    <td class="tdInfo">
-                        Билет возвратный.<br>
-                        <br>
-                        Норма провоза бесплатного багажа у авиакомпании Aigle Azur в экономическом классе: багаж не должен превышать по весу 40 кг и по сумме трех измерений 158 см на человека.<br>
-                        <br>
-                        Время отправления и прибытия местное.
-                    </td>
+
 
                 </tr>
-            </table><br>
-            <br>
-            <p align="center">Желаем приятного полета</p>
+            </table>
+
         </div>
+        <div class="lastWords">Желаем вам ярких эмоций и хорошего отдыха</div>
     </div>
 </body>
 </html>

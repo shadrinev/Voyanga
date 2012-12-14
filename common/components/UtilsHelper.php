@@ -754,4 +754,8 @@ class UtilsHelper
         else
             usort($sortingArray,$function_name);
     }
+
+    public static function formatPrice($price){
+        return number_format(ceil($price), 0, '', ' ');
+    }
 }

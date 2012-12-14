@@ -1288,6 +1288,7 @@ class HotelBookClient
         $hotelObject = simplexml_load_string($hotelDetailXml);
         //VarDumper::dump($hotelsObject);
         if (!$hotelObject) return false;
+        if (!isset($hotelObject->HotelDetail)) return false;
         $hotelSXE = $hotelObject->HotelDetail;
 
 
@@ -1675,6 +1676,27 @@ class HotelBookClient
         self::$lastRequestMethod = 'confirmOrder';
         self::$lastRequestDescription = (string)$orderId;
         $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'confirm_order', $getData);
+        $responseObject = simplexml_load_string($response);
+        $hotelOrderConfirmResponse = new HotelOrderConfirmResponse();
+        $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order->Id;
+        $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
+        $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
+        $hotelOrderConfirmResponse->error = 0;
+        if (isset($responseObject->Errors->Error))
+        {
+            throw new CException('Internal confirmOrder hotelBook error: ' . CVarDumper::dumpAsString($responseObject->Errors));
+        }
+        return $hotelOrderConfirmResponse;
+    }
+
+    public function voucher($orderId)
+    {
+        $this->synchronize();
+        $time = time() + $this->differenceTimestamp;
+        $getData = array('login' => Yii::app()->params['HotelBook']['login'], 'time' => $time, 'checksum' => $this->getChecksum($time), 'order_id' => $orderId);
+        self::$lastRequestMethod = 'voucher';
+        self::$lastRequestDescription = (string)$orderId;
+        $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'voucher_info', $getData);
         $responseObject = simplexml_load_string($response);
         $hotelOrderConfirmResponse = new HotelOrderConfirmResponse();
         $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order->Id;

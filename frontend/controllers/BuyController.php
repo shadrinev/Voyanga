@@ -41,6 +41,12 @@ class BuyController extends Controller
         $secretKey = $id;
         $this->layout = 'static';
         $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
+        if(!Yii::app()->order){
+            Yii::app()->order->initByOrderBookingId($id);
+        }
+        Yii::app()->order->initByOrderBookingId($id);
+        Yii::app()->order->sendNotifications();
+        die();
         if (!$orderBooking)
             throw new CHttpException(404, 'Page not found');
         $tripStorage = new TripDataProvider($orderBooking->id);

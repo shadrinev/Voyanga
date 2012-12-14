@@ -32,4 +32,21 @@ class Controller extends CController
     {
         return parent::render($view, $data, $return);
     }
+
+    public function renderPdf($view,$data = null){
+        $pdfPath = Yii::getPathOfAlias('pdfOutDir');
+        $converterPath = Yii::app()->params['pdfConverterPath'];
+        $htmlText = $this->renderPartial($view,$data,true);
+        $htmlFileName = $view.'_'.substr(md5(uniqid('',true)),0,6);
+        $isWritten = file_put_contents($pdfPath.'/'.$htmlFileName.'.html',$htmlText);
+        if($isWritten){
+            exec($converterPath.' '.$pdfPath.'/'.$htmlFileName.'.html '.$pdfPath.'/'.$htmlFileName.'.pdf');
+            if(file_exists($pdfPath.'/'.$htmlFileName.'.pdf')){
+                unlink($pdfPath.'/'.$htmlFileName.'.html');
+                return $pdfPath.'/'.$htmlFileName.'.pdf';
+            }
+        }else{
+            return false;
+        }
+    }
 }
