@@ -61,8 +61,15 @@
     height: 15px;
     left: 250px;
     position: absolute;
-    top: 10px;
-    width: 145px;
+    top: 9px;
+    width: 180px;
+    font-size: 18px;
+    font-family: Tahoma;
+    color: #2c2d35;
+    text-shadow: 0 1px 0px rgba(255,255,255,0.5);
+}
+.head .center-block .telefon .prefix {
+    color: #5d6067;
 }
 .slide-turn-mode {
     background: url("../images/slide-turn-mode.png") no-repeat scroll 0 0 transparent;
@@ -176,21 +183,28 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 165px;
+    width: 152px;
 }
-.login-window a {
+.login-window .logInLinks {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
     background: url("../images/slice.png") no-repeat scroll -487px -182px transparent;
     display: block;
-    height: 28px;
+    height: 17px;
     margin: 10px 0 0 10px;
     padding-left: 20px;
+}
+.login-window .logInLinks.user {
+    background: url("../images/ico.png") no-repeat scroll -0px -248px transparent;
 }
 .login-window a:hover {
     text-decoration: none;
 }
 .login-window a span {
-    display: inline-block;
     vertical-align: middle;
+    border-bottom: 1px dotted;
 }
 .login-window a span.point {
     background: url("../images/slice.png") no-repeat scroll -8px -32px transparent;
@@ -1789,7 +1803,7 @@ input.hotel-input {
     border-bottom: 1px dashed;
     color: #2E333B;
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 6px;
     line-height: 12px;
     margin-bottom: 12px;
 }
@@ -1813,14 +1827,22 @@ input.hotel-input {
     font-family: Verdana;
     font-size: 30px;
     font-weight: bold;
-    margin-top: -25px;
     height: 25px;
 }
 #eventsContent .rightBlock .rur {
     display: inline-block;
     font-size: 29px;
     font-weight: bold;
-    margin-top: -25px;
+}
+#eventsContent .rightBlock .divPrice {
+    margin-top: -20px;
+}
+#eventsContent .rightBlock .btn-check {
+    float: left;
+    margin-bottom: 20px;
+    margin-top: -20px;
+    position: relative;
+    z-index: 2;
 }
 #eventsContent .rightBlock .check {
     color: #5E6064;
@@ -3040,26 +3062,7 @@ input.hotel-input {
 	margin-top: -8px;
 }
 
-.mainWrapBg {
-	background: rgba(38,41,46,0.8);
-    height: 100%;
-    left: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 0 0px 0 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-.wrapDiv {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    margin-left: -400px;
-    padding-bottom: 20px;
-    width: 800px;
-}
+
 .naviProj {
 	width: 800px;
 	height: 120px;
@@ -3784,4 +3787,30 @@ a.whereData span {
     top: 0%;
     left: 5%;
     background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll 7% 0 #FFFFFF;
+}
+.black {
+    color: #1D222B;
+}
+.grid-view {
+    background: #FFF;
+    border-radius: 4px;
+    padding: 10px;
+    width: 50%;
+}
+.grid-view .items {
+    width: 100%;
+}
+.grid-view .items tr td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.grid-view .items thead {
+    font-size: 16px;
+}
+.grid-view .items thead tr th {
+    padding-bottom: 8px;
+}
+.grid-view .items tbody tr td a {
+    color: #1C81BB;
+    text-decoration: underline;
 }

@@ -59,7 +59,7 @@ return CMap::mergeArray(
         'components' => array(
             'cache' => array(
                 'class' => 'CMemCache',
-                //'useMemcached'=> true,
+                'useMemcached' => $params['enableMemcached'],
                 'servers' => array(
                     array(
                         'host' => 'localhost',

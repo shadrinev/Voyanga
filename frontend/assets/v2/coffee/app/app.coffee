@@ -111,6 +111,7 @@ class Application extends Backbone.Router
   # @param controler - controller to register
   register: (prefix, module, isDefault=false)->
     controller = module.controller
+
     # Change view when controller wants to
     controller.on "viewChanged", (view, data)=>
       @render(data, view)
@@ -153,7 +154,7 @@ class Application extends Backbone.Router
     @activeModule module
     $(window).unbind 'resize'
     $(window).resize ResizeAvia
-
+    $(window).resize()
 
   bindEvents: =>
     ev = []
@@ -194,3 +195,6 @@ class Application extends Backbone.Router
   isEvent: =>
     console.log 'Checking isEvent ', @activeView()
     @activeView() == 'tours-index'
+
+window.voyanga_debug = (args...)->
+  console.log.apply(console, args)

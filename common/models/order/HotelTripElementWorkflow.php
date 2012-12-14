@@ -9,6 +9,7 @@ class HotelTripElementWorkflow extends TripElementWorkflow
     public function createWorkflowAndLinkItWithItem()
     {
         $this->workflow = $this->createHotelBookerComponent();
+        $this->item->hotelBookerId = $this->workflow->getHotelBookerId();
     }
 
     public function runWorkflowAndSetFinalStatus()
@@ -33,7 +34,6 @@ class HotelTripElementWorkflow extends TripElementWorkflow
         {
             Yii::trace("HotelBooker successfully saved. It's id:" . $hotelBookerComponent->getCurrent()->id, 'HotelTripElementWorkflow.createWorkflowAndLinkItWithItem');
         }
-        $this->item->hotelBookerId = $currentHotelBooker->getPrimaryKey();
         return $hotelBookerComponent;
     }
 

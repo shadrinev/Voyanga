@@ -7,5 +7,5 @@
  */
 return array(
     'app.theme'=>'v2',
-    'app.defaultController'=>'v2'
+    'app.defaultController'=>'v2',
 );

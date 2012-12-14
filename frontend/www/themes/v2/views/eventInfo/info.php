@@ -43,11 +43,12 @@ $images = '/themes/v2';
                     </select>
                     </div>
                     <a href="#" data-bind="click: itemsToBuy.gotoAndShowPanel" class="otherCity">Другой город</a>
-                    <img src="/themes/v2/images/hr-gradient-events.png">
-                    <span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span> <span class="rur">o</span>
+                    <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
+                    <div class="divPrice"><span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span> <span class="rur">o</span></div>
                     <a href="#" style="margin-top:0px;" class="otherCity" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2 взрослых</a>
                     <span class="check">Последняя проверка цены<br>выполнена 29 сентября, 18:04</span>
-                    <img src="/themes/v2/images/hr-gradient-events.png">
+                    <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
+                    <div class="btn-check" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
                 </div>
                 <div class="textBlock"><?php echo $event->description;?></div>
             </div>
@@ -82,12 +83,22 @@ $images = '/themes/v2';
                                                 <a href="#"><span data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербурга</span></a>
                                             </div>
                                             <div class="startInputTo">
+                                                <div class="bgInput">
+                                                    <div class="left"></div>
+                                                    <div class="center"></div>
+                                                    <div class="right"></div>
+                                                </div>
                                                 <input type="text" tabindex="-1" class="input-path" data-bind="blur: hideFromCityInput">
                                                 <input type="text" placeholder="Санкт-Петербург" class="second-path" data-bind="blur: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen}" autocomplete="off" style="">
                                             </div>
                                             <!-- /ko -->
                                         </div>
                                         <div class="from" data-bind="css: {active: checkIn()}">
+                                            <div class="bgInput">
+                                                <div class="left"></div>
+                                                <div class="center"></div>
+                                                <div class="right"></div>
+                                            </div>
                                             <input type="text" tabindex="-1" class="input-path">
                                             <input type="text" placeholder="Куда едем?" class="second-path" data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}" autocomplete="off">
                                             <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>

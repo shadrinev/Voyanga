@@ -817,12 +817,12 @@
     left: 0px;
 }
 .bgInput .center {
-    background: url(../images/inputPanel.png) 5% 0 no-repeat;
-    width: 90%;
+    background: url("../images/inputPanel.png") no-repeat scroll 5% 0 transparent;
     height: 36px;
+    left: 3%;
     position: absolute;
-    top: 0px;
-    left: 5%;
+    top: 0;
+    width: 94%;
 }
 .bgInput .right {
     background: url(../images/inputPanel.png) right 0 no-repeat;

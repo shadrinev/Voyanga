@@ -53,10 +53,16 @@ class WebUser extends CWebUser
         $newUser->email = $email;
         $password = PasswordGenerator::createSimple();
         $newUser->password = $password;
-        $newUser->save();
-        if ($newUser->save())
+        try
         {
-            EmailManager::sendUserInfo($newUser, $password);
+            if ($newUser->save())
+            {
+                EmailManager::sendUserInfo($newUser, $password);
+            }
+        }
+        catch (Exception $e)
+        {
+            return $this->checkIfExists($email);
         }
         return $newUser;
     }

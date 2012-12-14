@@ -42,7 +42,11 @@ class SuccessAction extends CAction
             $booker  = new FlightBookerComponent();
             $booker->setFlightBookerFromId($channel->booker->id);
         }         // Hoteles are allways wrapped into metabooker
-
+        //FIXME logme
+        if($this->getStatus($booker)=='paid')
+            return;
+        if($this->getStatus($booker)=='paymentInProgress')
+            return;
         $this->handle($bill, $booker, $channel, $orderId);
     }
     protected function handle($bill, $booker, $channel, $orderId)
@@ -58,9 +62,7 @@ class SuccessAction extends CAction
         }
         $bill->transactionId = $_REQUEST['TransactionID'];
 
-        //FIXME logme
-        if($this->getStatus($booker)=='paid')
-            return $this->rebill($orderId);
+//      return $this->rebill($orderId);
 
         if(!$this->isWaitingForPayment($booker)) {
            $e = new WrongOrderStateError("Wrong status" . $this->getStatus($booker));
@@ -68,6 +70,7 @@ class SuccessAction extends CAction
             return;
         }
         $payments = Yii::app()->payments;
+        $booker->status('paymentInProgress');
         $booker->status('paid');
         $bill->save();
 
@@ -93,6 +96,7 @@ class SuccessAction extends CAction
 //            $order->isWaitingForPaymentState($booker->getStatus());
             $bill = $payments->getBillForBooker($booker);
             $channel =  $bill->getChannel();
+            $booker->status('paymentInProgress');
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
 //                $payments->notifyNemo($booker, $bill);
@@ -149,6 +153,7 @@ class SuccessAction extends CAction
         return false;
     }
 
+    //! FIXME moved to payments, refactor
     //! helper function returns last segment of 2 segment statuses
     protected function getStatus($booker)
     {

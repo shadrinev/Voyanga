@@ -32,5 +32,6 @@ return array(
     'mongo.connectionString' => 'mongodb://109.236.87.123',
     'mongo.dbName'=> 'voyanga',
 
-    'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)'
+    'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)',
+    'enableMemcached' => false
 );

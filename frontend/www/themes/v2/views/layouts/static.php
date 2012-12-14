@@ -22,68 +22,17 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
 </head>
 <body>
 <div class="wrapper">
-    <div class="head" id="header">
-        <!-- CENTER BLOCK -->
-        <div class="center-block">
-            <a href="/" class="logo">Voyanga</a>
-            <a href="/" class="about">О проекте</a>
 
-            <div class="telefon">
-                <img src="<?= $theme ?>/images/tel.png">
-            </div>
-            <div class="slide-turn-mode">
-                <div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
-                <div class="bg-mask"></div>
-
-                <ul>
-                    <?php $currentModule = trim(strtolower(Yii::app()->user->getState('currentModule'))) ?>
-                    <li id="h-tours-slider" class="planner btn<?php if ($currentModule=='tours') echo ' active'?>"><a href="/#tours">Планировщик</a></li>
-                    <li id="h-avia-slider" class="aviatickets btn<?php if ($currentModule=='avia') echo ' active'?>"><a href="/#avia">Авиабилеты</a>
-                    </li>
-                    <li id="h-hotels-slider" class="hotel btn<?php if ($currentModule=='hotels') echo ' active'?>"><a href="/#hotels">Отели</a></li>
-                </ul>
-            </div>
-
-            <?php $this->renderPartial('//layouts/_userbar'); ?>
-
-        </div>
-        <!-- END CENTER BLOCK -->
-    </div>
-    <!-- END HEAD -->
-    <!--====**********===-->
+    <?php echo $this->renderPartial('//layouts/_header'); ?>
 
     <?php echo $content; ?>
 
     <!-- FOOTER -->
-    <div class="footer">
-        <div class="center-block">
-            <ul class="foot-menu">
-                <li><a href="#">О проекте</a></li>
-                <li><a href="#">Вопросы и ответы</a></li>
-                <li><a href="#">Контакты</a></li>
-            </ul>
-        </div>
-    </div>
+    <?php echo $this->renderPartial('//layouts/_footer'); ?>
     <!-- END FOOTER-->
 </div>
 </div>
 <!-- END WRAPPER -->
-<div id="loadWrapBg" style='display: none;'>
-    <div id="loadContentWin">
-        <div id="loadGIF"><img src="/themes/v2/images/loading-5frame.gif"></div>
-        <div id="loadTXT">
-            Voyanga ищет <br> лучшие предложения...<br>
-            <ul id="loadLight">
-                <li class=""></li>
-                <li class=""></li>
-                <li class=""></li>
-                <li class=""></li>
-                <li class="active"></li>
-            </ul>
-            <div id="changeText"></div>
-        </div>
-    </div>
-</div>
 <?php
 $templates = Yii::app()->params['frontend.app.templates'];
 foreach ($templates as $template)
@@ -93,5 +42,6 @@ foreach ($templates as $template)
     echo "<!-- END OF TEMPLATE $template -->\n";
 }
 ?>
+<?php echo $this->renderPartial('//layouts/_popup', array('theme'=>$theme)); ?>
 </body>
 </html>

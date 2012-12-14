@@ -1335,3 +1335,53 @@ function gradientResize() {
         return
     }
 }
+
+
+function openPopUpLogIn() {
+    clickYes = true;
+    $('.loginWrapBg').show();
+    $('body').css('overflow', 'hidden');
+    // Проверка на закрытие вне области
+    var mouseHover = true;
+    $('.wrapDiv').hover(function() {
+            mouseHover = false;
+        },
+        function() {
+            mouseHover = true;
+        }
+    );
+    $('.loginWrapBg').mouseup(function() {
+        if (mouseHover) {
+            closePopUpLogIn();
+        }
+        else {
+            return;
+        }
+    });
+    var heightWinAll = $(window).height();
+    var heightPopAll = $('.contentWrapBg .wrapDiv').innerHeight();
+    var offset = $('.contentWrapBg .wrapDiv').offset();
+    var scrollMean = (heightPopAll + offset.top) - heightWinAll;
+    $(window).on('keydown', function(e){
+        if (clickYes) {
+            if (e.which == 27) {
+                closePopUpLogIn();
+            }
+        }
+    });
+
+    $('.registerOpen').click(function() {
+        $('.enter').fadeOut();
+        $('.registrate').fadeIn();
+    });
+    $('.enterOpen').click(function() {
+        $('.registrate').fadeOut();
+        $('.enter').fadeIn();
+    });
+}
+
+function closePopUpLogIn() {
+    $('.loginWrapBg').hide();
+    $('body').css('overflow', 'auto');
+    clickYes = false;
+}

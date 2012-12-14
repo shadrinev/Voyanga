@@ -4,7 +4,8 @@ return array(
     'node' => array(
         array('id'=>'enterCredentials',         'transition'=>'waitingForPayment'),
         //! FIXME do we need timelimit state
-        array('id'=>'waitingForPayment',        'transition'=>'bookingTimeLimitError,paid'),
+        array('id'=>'waitingForPayment',        'transition'=>'bookingTimeLimitError,paymentInProgress'),
+        array('id'=>'paymentInProgress',        'transition'=>'paid,paymentCanceledError,paymentError,startPayment,bookingTimeLimitError'),
         array('id'=>'bookingTimeLimitError',    'transition'=>'error'),
         array('id'=>'paid',                     'transition'=>'ticketing'),
         array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat,ticketingError'),

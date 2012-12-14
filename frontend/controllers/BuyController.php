@@ -41,12 +41,6 @@ class BuyController extends Controller
         $secretKey = $id;
         $this->layout = 'static';
         $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
-        if(!Yii::app()->order){
-            Yii::app()->order->initByOrderBookingId($id);
-        }
-        Yii::app()->order->initByOrderBookingId($id);
-        Yii::app()->order->sendNotifications();
-        die();
         if (!$orderBooking)
             throw new CHttpException(404, 'Page not found');
         $tripStorage = new TripDataProvider($orderBooking->id);
@@ -140,8 +134,22 @@ class BuyController extends Controller
 
     public function actionWaitpayment()
     {
-        echo "WAITING FOR PAYMENTS";
-        exit;
-
+        $this->layout = false;
+        $this->render('waiting');
+    }
+    public function actionPaymentstatus() {
+        $order = Yii::app()->order;
+        $payments = Yii::app()->payments;
+        $bookers = $payments->preProcessBookers($order->getBookers());
+        $paid = true;
+        $error = false;
+        foreach($bookers as $booker)
+        {
+            if($payments->getStatus($booker)!='paid'){
+                $paid = false;
+            }
+        }
+        header("Content-type: application/json");
+        echo json_encode(Array("paid"=>$paid, "error"=>$error));
     }
 }
