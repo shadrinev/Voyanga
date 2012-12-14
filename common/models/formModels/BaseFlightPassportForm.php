@@ -36,6 +36,7 @@ class BaseFlightPassportForm extends BasePassportForm
     public $expirationDay;
     public $expirationMonth;
     public $expirationYear;
+    public $ticketNumber='';
 
     /**
      * Declares the validation rules.
