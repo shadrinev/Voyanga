@@ -205,8 +205,8 @@ class FlightBookerComponent extends CApplicationComponent
                         if(isset($ticketInfo['documentNumber']) and isset($docSortPassports[$ticketInfo['documentNumber']])){
                             //TODO: add ticketNumber field to DB (FlightBookingPassport) and save it;
                             //$docSortPassports[$ticketInfo['documentNumber']]->
-                            $docSortPassports[$ticketInfo['documentNumber']]->ticketNumber = $ticketInfo['ticketNumber'];
-                            $docSortPassports[$ticketInfo['documentNumber']]->save();
+                            //$docSortPassports[$ticketInfo['documentNumber']]->ticketNumber = $ticketInfo['ticketNumber'];
+                            //$docSortPassports[$ticketInfo['documentNumber']]->save();
                         }
                     }
                 }
