@@ -461,57 +461,10 @@ class OrderComponent extends CApplicationComponent
 
     public function getOrderBooking()
     {
-        foreach ($this->itemsOnePerGroup as $item)
-        {
-            if ($item instanceof HotelTripElement)
-            {
-                if ($item->hotelBookerId)
-                {
-                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
-                    if ($hotelBooker)
-                    {
-                        //$status = $hotelBooker->status;
-                        //$endSates[$status] = $status;
-                        if (!isset($bookingModel))
-                        {
-                            $bookingModel = OrderBooking::model()->findByPk($hotelBooker->orderBookingId);
-                            if ($bookingModel)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            elseif ($item instanceof FlightTripElement)
-            {
-                if ($item->flightBookerId)
-                {
-                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
-                    if ($flightBooker)
-                    {
-                        //$status = $flightBooker->status;
-                        //$endSates[$status] = $status;
-                        if (!isset($bookingModel))
-                        {
-                            $bookingModel = OrderBooking::model()->findByPk($flightBooker->orderBookingId);
-                            if ($bookingModel)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (!isset($bookingModel))
-        {
-            return false;
-        }
-        else
-        {
-            return $bookingModel;
-        }
+        $orderBookingId = Yii::app()->user->getState('orderBookingId');
+        if ($orderBookingId)
+            return OrderBooking::model()->findByPk($orderBookingId);
+        return false;
     }
 
     public function returnMoney($haveProblems = false)
@@ -580,22 +533,23 @@ class OrderComponent extends CApplicationComponent
     public function getBookerIds()
     {
         $result = array();
-        foreach ($this->itemsOnePerGroup as $item)
+        $orderBooking = $this->getOrderBooking();
+        if (!$orderBooking)
+            return $result;
+        foreach ($orderBooking->flightBookers as $item)
         {
-            if ($item instanceof FlightTripElement)
-            {
-                $element = array(
-                    'type' => 'avia',
-                    'bookerId' => $item->flightBookerId
-                );
-            }
-            elseif ($item instanceof HotelTripElement)
-            {
-                $element = array(
-                    'type' => 'hotel',
-                    'bookerId' => $item->hotelBookerId
-                );
-            }
+            $element = array(
+                'type' => 'avia',
+                'bookerId' => $item->id
+            );
+            $result[] = $element;
+        }
+        foreach ($orderBooking->hotelBookers as $item)
+        {
+            $element = array(
+                'type' => 'hotel',
+                'bookerId' => $item->id
+            );
             $result[] = $element;
         }
         return $result;
