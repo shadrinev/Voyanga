@@ -1,4 +1,4 @@
-var arr_textLoad = ['Это займет от 5 до 30 секунд', 'Мы ищем среди 450 авиакомпаний','Уже почти готово', 'Ещё секундочку', 'Немного терпения'];
+var arr_textLoad = ['Это займет от 5 до 30 секунд', 'Мы ищем среди 500 авиакомпаний','Уже почти готово', 'Ещё секундочку', 'Немного терпения'];
 var pointsInterval, textInterval, started = false, var_loadTextCounts;
 function loaderChange(toStart) {
     var loadText = $('#changeText');
