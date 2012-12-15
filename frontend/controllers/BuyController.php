@@ -131,7 +131,6 @@ class BuyController extends Controller
     {
         $ids = explode(',', $ids);
         Yii::app()->order->setBookerIds($ids);
-        CVarDumper::dump(Yii::app()->shoppingCart->getPositions()); die();
         Yii::app()->user->setState('blockedToBook', null);
     }
 
