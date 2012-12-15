@@ -19,7 +19,7 @@
             </ul>
         </div>
 
-        <div class="login-window full" onclick="openPopUpLogIn()">
+        <div class="login-window full" onclick="openPopUpLogIn('enter')">
             <div class="registerForm">
                 <a href="javascript:void(0)" class="logInLinks">
                     <span class="text">Регистрация и вход</span>

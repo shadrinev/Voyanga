@@ -33,6 +33,18 @@ h1.title {
     top: -60px;
     white-space: nowrap;
 }
+#content h2 {
+    color: #1D222B;
+    font-size: 24px;
+    letter-spacing: 0.001em;
+    margin-bottom: 3px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+#content h3 {
+    font-size: 18px;
+    line-height: 26px;
+    margin-bottom: 12px;
+}
 h1.title img {
     margin-bottom: -8px;
     margin-right: -10px;

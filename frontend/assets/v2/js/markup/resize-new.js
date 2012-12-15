@@ -1337,10 +1337,15 @@ function gradientResize() {
 }
 
 
-function openPopUpLogIn() {
+function openPopUpLogIn(what) {
+    var _this = what;
+
     clickYes = true;
     $('.loginWrapBg').show();
     $('body').css('overflow', 'hidden');
+
+    $('.loginWrapBg').find('.wrapContent > div').hide();
+    $('.loginWrapBg').find('.wrapContent > div.'+_this).show();
     // Проверка на закрытие вне области
     var mouseHover = true;
     $('.wrapDiv').hover(function() {
@@ -1372,11 +1377,19 @@ function openPopUpLogIn() {
 
     $('.registerOpen').click(function() {
         $('.enter').fadeOut();
+        $('.fogoten').fadeOut();
         $('.registrate').fadeIn();
     });
     $('.enterOpen').click(function() {
         $('.registrate').fadeOut();
+        $('.fogoten').fadeOut();
         $('.enter').fadeIn();
+
+    });
+    $('.fogotenOpen').click(function() {
+        $('.registrate').fadeOut();
+        $('.enter').fadeOut();
+        $('.fogoten').fadeIn();
     });
 }
 
