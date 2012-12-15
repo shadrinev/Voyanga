@@ -71,10 +71,10 @@
                     </td>
                     <td class="tdSex">
                         <label class="male" for="male">
-                            <input type="radio" name="sex" id="male">
+                            <input type="radio" name="sex" id="male" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>">
                         </label>
                         <label class="female" for="female">
-                            <input type="radio" name="sex" id="female">
+                            <input type="radio" name="sex" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>">
                         </label>
 <!--                        --><?php //echo CHtml::activeHiddenField($model, "[$i]genderId", array('class' => 'genderField')); ?>
 <!--                        <div class="gender gender---><?php //echo BaseFlightPassportForm::GENDER_MALE?><!-- male"-->
