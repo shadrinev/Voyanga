@@ -3,7 +3,7 @@
     window.app.runWithModule('tours');
   });
 </script>
-<div class="centr-block">
+<div class="center-block">
 <div class="main-block" id="content">
 
     <h2>Условия договора и другие важные уведомления</h2>
