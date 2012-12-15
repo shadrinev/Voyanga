@@ -2366,6 +2366,10 @@ input.hotel-input {
     display: inline-block;
     margin-right: 25px;
     vertical-align: middle;
+    width: 251px;
+}
+.paybuyEnd .agreeConditions .ui-label a {
+    text-decoration: underline;
 }
 .paybuyEnd .agreeConditions span {
     display: inline-block;
@@ -2835,6 +2839,9 @@ input.hotel-input {
 	background-position: 0px 0px;
 	text-transform: uppercase;
 }
+.infoPassengers .tdName input.inactive[type="text"] {
+    background-position: 0 -165px;
+}
 .infoPassengers input[type='text']:focus {
 	border-color: rgba(82, 168, 236, 0.8);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
@@ -2855,6 +2862,9 @@ input.hotel-input {
 	background-position: -147px 0px;
 	text-transform: uppercase;
 }
+.infoPassengers .tdLastname input.inactive[type='text'] {
+    background-position: -147px -165px;
+}
 .infoPassengers .tdLastname input[type='text'].error {
 	background-position: -147px -33px;
 }
@@ -2868,6 +2878,9 @@ input.hotel-input {
     padding-right: 5px;
     text-transform: uppercase;
     width: 148px;
+}
+.infoPassengers .tdDocumentNumber input.inactive[type="text"] {
+    background-position: -662px -132px;
 }
 .infoPassengers .tdDocumentNumber input[type='text'].error {
 	background-position: -662px -33px;
@@ -2886,6 +2899,9 @@ input.hotel-input {
 }
 .divInputBirthday.active {
     background: url("../images/bg-input.png") no-repeat scroll -830px -66px transparent;
+}
+.divInputBirthday.inactive {
+    background-position: -403px 165px;
 }
 .infoPassengers .dd {
 	width: 34px;
@@ -2949,16 +2965,27 @@ input.hotel-input {
 	width: 77px;
 }
 .tdSex .male {
-	width: 34px;
-	height: 33px;
-	background: url("../images/bg-input.png") no-repeat -326px 0px transparent; 
-	cursor: pointer;
-	float: left;
+    background: url("../images/bg-input.png") no-repeat scroll -326px 0 transparent;
+    cursor: pointer;
+    float: left;
+    height: 33px;
+    overflow: hidden;
+    width: 34px;
+    display: block;
+    border-radius: 4px 0px 0px 4px;
+    z-index: 1;
 }
 .tdSex .male.error {
 	background-position: -354px -66px;
 }
-
+.tdSex .male.focus, .tdSex .female.focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
+    color: #16181A !important;
+    outline: 0 none;
+    position: relative;
+    z-index: 2;
+}
 .tdSex .male.active, .tdSex .male:hover {
 	background-position: -326px -33px;
 }
@@ -2973,6 +3000,13 @@ input.hotel-input {
 	background: url("../images/bg-input.png") no-repeat -360px 0px transparent; 
 	cursor: pointer;
 	float: left;
+    overflow: hidden;
+    display: block;
+    border-radius: 0px 4px 4px 0px;
+    z-index: 1;
+}
+.tdSex .female input, .tdSex .male input {
+    margin-top: -50px;
 }
 .tdSex .female.error {
 	background-position: -388px -66px;
