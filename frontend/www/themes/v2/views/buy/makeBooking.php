@@ -1,3 +1,4 @@
+<!---
 <script type="text/javascript">
     <?php $tripRaw = 'window.tripRaw = ' . $trip; ?>
     <?php echo $tripRaw ?>;
@@ -6,6 +7,14 @@
         initCredentialsPage();
     })
 </script>
+--->
+
+<script type="text/javascript">
+  $(function(){
+    window.app.runWithModule('tours');
+  });
+</script>
+
 <div id="content">
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
