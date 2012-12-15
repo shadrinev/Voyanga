@@ -103,7 +103,8 @@
                             array(
                                 'data-placeholder' => "Страна...",
                                 'class' => "chzn-select",
-                                'style' => "width:120px;"
+                                'style' => "width:120px;",
+                                'tabindex' => '-1',
                             )
                         ); ?>
                     </td>
