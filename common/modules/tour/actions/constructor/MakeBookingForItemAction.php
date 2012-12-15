@@ -29,8 +29,9 @@ class MakeBookingForItemAction extends CAction
         if ($this->weGotPassportsAndBooking())
         {
             $tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItem($this->index);
+            $bookerId = $tripElementsWorkflow[0]->getBookerId();
             header("Content-type: application/json");
-            echo '{"status":"success"}';
+            echo '{"status":"success", "bookerId":"'.$bookerId.'"}';
             exit;
         }
 

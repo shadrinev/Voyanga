@@ -83,4 +83,9 @@ class FlightTripElementWorkflow extends TripElementWorkflow
             $flightPassport->save();
         }
     }
+
+    public function getBookerId()
+    {
+        return $this->item->flightBookerId;
+    }
 }

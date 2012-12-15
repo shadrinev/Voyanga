@@ -8,11 +8,6 @@
 Yii::import('common.extensions.yii-mail.*');
 class EmailManager
 {
-    static public function sendOrderInfo()
-    {
-
-    }
-
     static public function sendRecoveryPassword($user)
     {
         $msg = new YiiMailMessage();

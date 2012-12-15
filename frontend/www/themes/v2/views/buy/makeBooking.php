@@ -40,9 +40,8 @@
             <div class="bgGradient"></div>
         </div>
         <div class="agreeConditions">
-            <label for="agreeChek">
-                <input type="checkbox" name="agree" id="agreeChek"> <span> Я согласен с условиямис <a href="#">условиями использования</a>,<br>
-                <a href="#">правилами IATA</a> и <a href="#">правилами тарифов</a>.</span>
+            <label for="agreeCheck">
+                <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'#\'>условиями использования</a>,<br><a href=\'#\'>правилами IATA</a> и <a href=\'#\'>правилами тарифов</a>', checked: 0}" name="agree" id="agreeCheck"> <span> .</span>
             </label>
         </div>
         <div class="btnBlue" id='submit-passport'>

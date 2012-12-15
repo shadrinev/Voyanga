@@ -261,4 +261,10 @@ class HotelTripElement extends TripElement
         }
         return $result;
     }
+
+
+    public function setBookerId($id)
+    {
+        $this->hotelBookerId = $id;
+    }
 }

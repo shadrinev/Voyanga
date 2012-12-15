@@ -239,4 +239,9 @@ class FlightTripElement extends TripElement
         $this->childCount = $searchParams->childCount;
         $this->infantCount = $searchParams->infantCount;
     }
+
+    public function setBookerId($id)
+    {
+        $this->flightBookerId = $id;
+    }
 }

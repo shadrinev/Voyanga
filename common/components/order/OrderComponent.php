@@ -57,32 +57,6 @@ class OrderComponent extends CApplicationComponent
         }
     }
 
-    public function bookAndReturnTripElementWorkflowItemsAsync()
-    {
-        $asyncExecutor = new AsyncCurl();
-        foreach ($this->itemsOnePerGroup as $i => $item)
-        {
-            $url = Yii::app()->createAbsoluteUrl('/buy/makeBookingForItem');
-            $query = http_build_query(array(
-                'index' => $i,
-            ));
-            $url = $url . '?' . $query;
-            $asyncExecutor->add($url);
-        }
-        $responses = $asyncExecutor->send();
-        foreach ($responses as $response)
-        {
-            if ($httpCode=$response->headers['http_code'] != 200)
-                $errors[] = "Error ".$httpCode."\n".$response->body;
-        }
-        if (!empty($this->errors))
-        {
-            Yii::app()->user->setState('blockedToBook', null);
-            throw new CHttpException(500, 'Errors while booking:'.CVarDumper::dumpAsString($errors));
-        }
-        Yii::app()->user->setState('blockedToBook', null);
-    }
-
     public function bookAndReturnTripElementWorkflowItem($index)
     {
         try
@@ -97,6 +71,7 @@ class OrderComponent extends CApplicationComponent
             $tripElementWorkflow->runWorkflowAndSetFinalStatus();
             $this->saveWorkflowState($tripElementWorkflow->finalStatus);
             $tripElementWorkflow->updateBookingId();
+            Yii::app()->shoppingCart->update($item, 1);
             $bookedTripElementWorkflow[] = $tripElementWorkflow;
             if ($this->areAllStatusesCorrect())
             {
@@ -559,26 +534,34 @@ class OrderComponent extends CApplicationComponent
         }
     }
 
+    public function setBookerIds($ids)
+    {
+        foreach ($this->itemsOnePerGroup as $i=>$item)
+        {
+            $item->setBookerId($ids[$i]);
+            Yii::app()->shoppingCart->update($item, 1);
+        }
+    }
+
     public function getBookerIds()
     {
         $result = array();
-        $orderBooking = $this->getOrderBooking();
-        if (!$orderBooking)
-            return $result;
-        foreach ($orderBooking->flightBookers as $item)
+        foreach ($this->itemsOnePerGroup as $item)
         {
-            $element = array(
-                'type' => 'avia',
-                'bookerId' => $item->id
-            );
-            $result[] = $element;
-        }
-        foreach ($orderBooking->hotelBookers as $item)
-        {
-            $element = array(
-                'type' => 'hotel',
-                'bookerId' => $item->id
-            );
+            if ($item instanceof FlightTripElement)
+            {
+                $element = array(
+                    'type' => 'avia',
+                    'bookerId' => $item->flightBookerId
+                );
+            }
+            elseif ($item instanceof HotelTripElement)
+            {
+                $element = array(
+                    'type' => 'hotel',
+                    'bookerId' => $item->hotelBookerId
+                );
+            }
             $result[] = $element;
         }
         return $result;

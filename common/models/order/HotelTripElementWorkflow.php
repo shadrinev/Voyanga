@@ -89,4 +89,9 @@ class HotelTripElementWorkflow extends TripElementWorkflow
             }
         }
     }
+
+    public function getBookerId()
+    {
+        return $this->item->hotelBookerId;
+    }
 }

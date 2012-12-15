@@ -127,8 +127,11 @@ class BuyController extends Controller
         Yii::app()->shoppingCart->put($hotelTripElement);
     }
 
-    public function actionDone()
+    public function actionDone($ids)
     {
+        $ids = explode(',', $ids);
+        Yii::app()->order->setBookerIds($ids);
+        CVarDumper::dump(Yii::app()->shoppingCart->getPositions()); die();
         Yii::app()->user->setState('blockedToBook', null);
     }
 

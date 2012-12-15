@@ -3,38 +3,37 @@
     <div class="paybuyContent">
         <h2><span class="<?php echo $icon ?>"></span><?php echo $header ?></h2>
         <table class="infoPassengers">
-            <thead>
-            <tr>
-                <td class="tdName">
-                    Имя
-                </td>
-                <td class="tdLasname">
-                    Фамилия
-                </td>
-                <td class="tdSex">
-                    Пол
-                </td>
-                <td class="tdBirthday">
-                    Дата рождения
-                </td>
-                <td class="tdNationality">
-                    Гражданство
-                </td>
-                <td class="tdDocumentNumber">
-                    <span class="tooltipClose"
-                          rel="Для полетов внутри России подходит российский паспорт или загранпаспорт (для детей и младенцев — свидетельство о рождении или загранпаспорт). Для полетов за рубежом нужен загранпаспорт. Обратите внимание, что помимо загранпаспорта, для въезда во многие страны требуется соответствующая виза.">Серия и № документа</span>
-                </td>
-                <td class="tdDuration">
-                    <span class="tooltipClose"
-                          rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
-                </td>
-            </tr>
-            </thead>
+
             <tbody>
             <?php $currentRoomId = 0; $currentRoomAdults = 0; $currentRoomChild = 0; ?>
             <?php if ($roomCounters): ?>
                 <tr>
-                    <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?> (<?php echo $roomCounters[$currentRoomId]['label'] ?>)</h3></td>
+                    <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?>: <?php echo $roomCounters[$currentRoomId]['label'] ?></h3></td>
+                </tr>
+                <tr>
+                    <td class="tdName">
+                        Имя
+                    </td>
+                    <td class="tdLasname">
+                        Фамилия
+                    </td>
+                    <td class="tdSex">
+                        Пол
+                    </td>
+                    <td class="tdBirthday">
+                        Дата рождения
+                    </td>
+                    <td class="tdNationality">
+                        Гражданство
+                    </td>
+                    <td class="tdDocumentNumber">
+                    <span class="tooltipClose"
+                          rel="Для полетов внутри России подходит российский паспорт или загранпаспорт (для детей и младенцев — свидетельство о рождении или загранпаспорт). Для полетов за рубежом нужен загранпаспорт. Обратите внимание, что помимо загранпаспорта, для въезда во многие страны требуется соответствующая виза.">Серия и № документа</span>
+                    </td>
+                    <td class="tdDuration">
+                    <span class="tooltipClose"
+                          rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
+                    </td>
                 </tr>
             <?php endif ?>
             <?php foreach ($passportForms as $i => $model): ?>

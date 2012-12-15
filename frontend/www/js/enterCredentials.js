@@ -43,9 +43,13 @@ $(function(){
         }
     });
     $(function () {
+        $('.agreeConditions').on('click', function(){
+            console.log($('#agreeCheck').is(':checked'));
+        });
         $('#submit-passport').click(function () {
             var formData = $('#passport_form').serialize();
-            var statuses = [];
+            var statuses = [],
+                ids = [];
             $('input').each(function() {
                 $(this).attr({'disabled': 'disabled'});
             });
@@ -70,13 +74,14 @@ $(function(){
                             data: formData,
                             dataType: 'json'
                         })
-                            .success(function(){
+                            .success(function(response){
                                 statuses[i] = 1;
-                                checkStatuses(statuses);
+                                ids[i] = response.bookerId;
+                                checkStatuses(statuses, ids);
                             })
                             .error(function(xhr, ajaxOptions, thrownError){
                                 statuses[i] = xhr.responseText;
-                                checkStatuses(statuses);
+                                checkStatuses(statuses, ids);
                             });
                     });
                 })
@@ -87,7 +92,7 @@ $(function(){
         });
 });
 
-function checkStatuses(statuses)
+function checkStatuses(statuses, ids)
 {
     var errors = '',
         errorText='',
@@ -100,29 +105,36 @@ function checkStatuses(statuses)
     });
     if (!completed)
         return;
-    $.get('/buy/done');
+    $.get('/buy/done', {ids: ids.join(',')})
+        .done(function(){
+            $.get('/buy/startPayment', function (data) {
+                console.log('DATA AFTER START PAYMENT: ', data);
+                if (data.error) {
+                    new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
+                } else {
+                    //if everything is ok then go to payment
+                    $('iframe').load(function(){
+                        $('#loadPayFly').find('.armoring').hide();
+                        $('#loadPayFly').find('.loadJet').hide();
+
+                        $('.payCardPal').show();
+                        $('.paybuyEnd').show();
+                        Utils.scrollTo('.payCardPal',true);
+                    });
+                    Utils.submitPayment(data);
+                }
+            });
+        })
+        .error(function(){
+            console.log('ERROR WHILE /buy/done')
+        });
     if (errors.length>0)
     {
 	    errorText = errors;
         new ErrorPopup('passportBookingError', [errorText]);
         return;
     }
-    $.get('/buy/startPayment', function (data) {
-        if (data.error) {
-            new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
-        } else {
-	    //if everything is ok then go to payment
-	    $('iframe').load(function(){
-		$('#loadPayFly').find('.armoring').hide();
-		$('#loadPayFly').find('.loadJet').hide();
 
-		$('.payCardPal').show();
-		$('.paybuyEnd').show();
-		Utils.scrollTo('.payCardPal',true);
-	    });
-            Utils.submitPayment(data);
-        }
-    });
 }
 
 initCredentialsPage = function() {
@@ -173,4 +185,5 @@ function InputActiveFinishDate() {
         InputCheckOn();
     });
 }
+
 $(window).load(InputActiveFinishDate);
