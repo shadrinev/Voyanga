@@ -477,3 +477,45 @@ function ParseChar(sStr, sChar)
 
     return sNewStr;
 }
+
+
+
+function onFocusInput() {
+    $('#male').focus(function() {
+        $(this).parent().addClass('focus');
+    });
+    $('#male').blur(function() {
+        $(this).parent().removeClass('focus');
+        $(this).removeAttr('disabled');
+        $('#female').removeAttr('disabled');
+    });
+    $('#male').change(function() {
+        if ($(this).attr('checked') == 'checked') {
+            $(this).parent().addClass('active');
+            $('.female').removeClass('active');
+            $('.tdBirthday input.dd').focus();
+        }
+        else {
+            $(this).parent().removeClass('active');
+        }
+    });
+    $('#female').focus(function() {
+        $(this).parent().addClass('focus');
+    });
+    $('#female').blur(function() {
+        $(this).parent().removeClass('focus');
+        $(this).removeAttr('disabled');
+        $('#male').removeAttr('disabled');
+    });
+    $('#female').change(function() {
+        if ($(this).attr('checked') == 'checked') {
+            $(this).parent().addClass('active');
+            $('.male').removeClass('active');
+            $('.tdBirthday input.dd').focus();
+        }
+        else {
+            $(this).parent().removeClass('active');
+        }
+    });
+}
+$(window).load(onFocusInput);
