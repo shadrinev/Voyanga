@@ -44,7 +44,11 @@ $(function(){
     });
     $(function () {
         $('.agreeConditions').on('click', function(){
-            console.log($('#agreeCheck').is(':checked'));
+            var checked = ($('#agreeCheck').is(':checked'));
+            if (!checked)
+                $('#submit-passport').removeClass('inactive');
+            else
+                $('#submit-passport').addClass('inactive');
         });
         $('#submit-passport').click(function () {
             var formData = $('#passport_form').serialize();

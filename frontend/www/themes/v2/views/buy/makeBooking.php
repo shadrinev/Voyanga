@@ -46,7 +46,7 @@
                 <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'#\'>условиями использования</a>,<br><a href=\'#\'>правилами IATA</a> и <a href=\'#\'>правилами тарифов</a>', checked: 0}" name="agree" id="agreeCheck"> <span> .</span>
             </label>
         </div>
-        <div class="btnBlue" id='submit-passport'>
+        <div class="btnBlue inactive" id='submit-passport'>
             <span>Забронировать</span>&nbsp;&nbsp;
             <span class="price"data-bind="text: itemsToBuy.totalCost">33 770</span>
             <span class="rur">o</span>
