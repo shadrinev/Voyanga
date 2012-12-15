@@ -1341,12 +1341,18 @@ function openPopUpLogIn(what) {
     var _this = what;
 
     clickYes = true;
+    if ($('.loginWrapBg').length > 0 && $('.loginWrapBg').is(':visible')) {
+        $('.loginWrapBg').find('.wrapContent > div:not(.boxClose)').hide();
+        $('.loginWrapBg').find('.wrapContent > div.'+_this).show();
 
-    $('.loginWrapBg').show();
-    $('body').css('overflow', 'hidden');
+    }
+    else {
+        $('.loginWrapBg').show();
+        $('body').css('overflow', 'hidden');
 
-    $('.loginWrapBg').find('.wrapContent > div').hide();
-    $('.loginWrapBg').find('.wrapContent > div.'+_this).show();
+        $('.loginWrapBg').find('.wrapContent > div:not(.boxClose)').hide();
+        $('.loginWrapBg').find('.wrapContent > div.'+_this).show();
+    }
     // Проверка на закрытие вне области
     var mouseHover = true;
     $('.wrapDiv').hover(function() {
@@ -1379,17 +1385,20 @@ function openPopUpLogIn(what) {
     $('.registerOpen').click(function() {
         $('.enter').fadeOut();
         $('.fogoten').fadeOut();
+        $('.reapetPass').fadeOut();
         $('.registrate').fadeIn();
     });
     $('.enterOpen').click(function() {
         $('.registrate').fadeOut();
         $('.fogoten').fadeOut();
+        $('.reapetPass').fadeOut();
         $('.enter').fadeIn();
 
     });
     $('.fogotenOpen').click(function() {
         $('.registrate').fadeOut();
         $('.enter').fadeOut();
+        $('.reapetPass').fadeOut();
         $('.fogoten').fadeIn();
     });
 }

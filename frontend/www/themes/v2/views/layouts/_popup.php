@@ -254,6 +254,29 @@
                     <a href="#" class="btnFogLogin">Восстановить пароль</a>
                 </div>
             </div>
+            <div class="reapetPass" style="display: none;">
+                <h2>Новый пароль</h2>
+                <div class="divInput">
+                    <input type="text" class="email" name="email" placeholder="Пароль">
+                    <div class="bgInput">
+                        <div class="left"></div>
+                        <div class="center"></div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+                <div class="divInput">
+                    <input type="password" class="email" name="email" placeholder="Повторите пароль">
+                    <div class="bgInput">
+                        <div class="left"></div>
+                        <div class="center"></div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+                <div class="rememberEnter">
+                    <a href="#" class="enterOpen">Войти</a>
+                    <a href="#" class="btnRegLogin">Регистрация</a>
+                </div>
+            </div>
             <div onclick="closePopUpLogIn()" class="boxClose"></div>
         </div>
     </div>
