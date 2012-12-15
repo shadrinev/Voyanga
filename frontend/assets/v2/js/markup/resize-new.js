@@ -1341,6 +1341,7 @@ function openPopUpLogIn(what) {
     var _this = what;
 
     clickYes = true;
+
     $('.loginWrapBg').show();
     $('body').css('overflow', 'hidden');
 
