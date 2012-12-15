@@ -6,7 +6,7 @@
 
 <p>Параметры для входа в <?php echo CHtml::link('личный кабинет', $link); ?>: <br />
 --------- <br />
-адрес электронной почты: <?php echo $email ?> <br />
-пароль: <?php echo $password ?> <br />
+адрес электронной почты: <?php echo $email ?><br />
+пароль: <?php echo $password ?><br />
 ---------</p>
 
