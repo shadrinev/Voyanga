@@ -34,10 +34,10 @@
         </table>
         <div class="tdPrice">
             <div class="verticalAlign">
-                <div class="people" data-bind="text: $data[0].totalPeople">2 человека</div>
-                <div class="price"><span data-bind="text:$data[0].price">12 500</span><span class="rur">o</span></div>
+                <div class="people" data-bind="text: $data.totalPeople">2 человека</div>
+                <div class="price"><span data-bind="text:$data.price">12 500</span><span class="rur">o</span></div>
             </div>
-            <div class="moreDetails"><a href="#" data-bind="click: $data[0].showDetails">Подробнее</a></div>
+            <div class="moreDetails"><a href="#" data-bind="click: $data.showDetails">Подробнее</a></div>
         </div>
     </div>
 </script>
