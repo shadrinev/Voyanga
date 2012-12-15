@@ -272,7 +272,7 @@
 /* LOGIN */
 .loginWrapBg .wrapDiv {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     margin-left: -162px;
     margin-top: -150px;
@@ -363,6 +363,19 @@
     vertical-align: middle;
     cursor: pointer;
 }
+.loginWrapBg .wrapDiv .wrapContent .btnFogLogin {
+    background: url("../images/btn-fogLogin.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    font-size: 14px;
+    height: 31px;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    width: 160px;
+}
 
 .loginWrapBg .wrapDiv .wrapContent .links {
     margin-top: 16px;
@@ -376,7 +389,7 @@
     width: 261px;
     top: 32px;
 }
-.loginWrapBg .wrapDiv .wrapContent .registrate {
+.loginWrapBg .wrapDiv .wrapContent .registrate, .loginWrapBg .wrapDiv .wrapContent .fogoten  {
     position: absolute;
     width: 262px;
     top: 32px;

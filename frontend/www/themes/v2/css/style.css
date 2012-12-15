@@ -3061,7 +3061,7 @@ input.hotel-input {
     padding-top: 23px;
 }
 .headerTitle {
-    margin-bottom: 23px;
+    margin-bottom: 3px;
     width: 100%;
 }
 .headerTitle tr td {
@@ -3082,8 +3082,12 @@ input.hotel-input {
     text-align: right;
 }
 .payCardPal .payCardPaliFrame {
-    width: 720px;
-    height: 520px;
+    width: 760px;
+    height: 530px;
+    border: none;
+}
+mainTable. .tdInfoText {
+    padding-top: 20px;
 }
 .paybuyEnd .info {
 	width: 690px;

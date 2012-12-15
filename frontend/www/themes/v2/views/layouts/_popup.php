@@ -187,7 +187,7 @@
 <div class="loginWrapBg" style="display: none;">
     <div class="wrapDiv">
         <div class="wrapContent">
-            <div class="enter">
+            <div class="enter" >
                 <h2>Вход в Voyanga</h2>
                 <form method="post" action="/user/login" id="login-form" class="login-form">
                     <div class="divInput">
@@ -211,7 +211,7 @@
                         <input type="submit" value="Войти" name="yt0" class="btnEnterLogin">
                     </div>
                     <div class="links">
-                        <a href="/user/newPassword">Забыли пароль?</a><br>
+                        <a href="#" class="fogotenOpen">Забыли пароль?</a><br>
                         <a href="#" class="registerOpen">Регистрация</a>
                     </div>
                 </forms>
@@ -228,6 +228,44 @@
                 </div>
                 <div class="divInput">
                     <input type="password" class="email" name="email" placeholder="Пароль">
+                    <div class="bgInput">
+                        <div class="left"></div>
+                        <div class="center"></div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+                <div class="rememberEnter">
+                    <a href="#" class="enterOpen">Войти</a>
+                    <a href="#" class="btnRegLogin">Регистрация</a>
+                </div>
+            </div>
+            <div class="fogoten" style="display: none;">
+                <h2>Забыли пароль?</h2>
+                <div class="divInput" style="margin-top: 80px;">
+                    <input type="password" class="email" name="email" placeholder="Пароль">
+                    <div class="bgInput">
+                        <div class="left"></div>
+                        <div class="center"></div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+                <div class="rememberEnter">
+                    <a href="#" class="enterOpen">Войти</a>
+                    <a href="#" class="btnFogLogin">Восстановить пароль</a>
+                </div>
+            </div>
+            <div class="reapetPass" style="display: none;">
+                <h2>Новый пароль</h2>
+                <div class="divInput">
+                    <input type="text" class="email" name="email" placeholder="Пароль">
+                    <div class="bgInput">
+                        <div class="left"></div>
+                        <div class="center"></div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+                <div class="divInput">
+                    <input type="password" class="email" name="email" placeholder="Повторите пароль">
                     <div class="bgInput">
                         <div class="left"></div>
                         <div class="center"></div>

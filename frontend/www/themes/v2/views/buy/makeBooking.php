@@ -6,6 +6,8 @@
         initCredentialsPage();
     })
 </script>
+
+
 <div id="content">
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
@@ -68,14 +70,14 @@
         <div class="centerBlock">
             <table class="headerTitle">
                 <tr>
-                    <td class="h1">Оплатить <span class="grey">или</span>  <a href="#">вернуться к выбору вариантов</a></td>
+                    <td class="h1">Оплатить <span class="grey">или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
                     <td class="time">Ваши билеты забронированы, необходимо оплатить за 1 ч. 58 м.</td>
                 </tr>
             </table>
             <table class="mainTable">
                 <tr>
                     <td class="tdInfoText">
-                        Сумма может быть списана в несколько транзакций. <span class="whyQuest tooltipClose" rel="А вот потому!">Почему?</span>
+                        Сумма может быть списана в несколько транзакций. <span class="whyQuest tooltipClose" rel="Это сделано для удобства и экономии ваших денег. На каждую составляющую вашей поездки мы делаем отдельное списание, а данные платежной карточки вы вводите один раз. Это позволяет экономить: мы меньше тратим на эквайринг, вы - получаете более привлекательные цены. Так же это дает дополнительное удобство в случае, если после оплаты всего заказа вы решите отказаться только от отеля, не отменяя авиабилет. В этом случае нам не надо будет отменять весь заказ целиком.">Почему?</span>
 
                         <table class="aviaAllPrice">
                             <thead>

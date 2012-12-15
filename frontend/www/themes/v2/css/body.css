@@ -33,6 +33,59 @@ h1.title {
     top: -60px;
     white-space: nowrap;
 }
+.innerPage {
+    color: #1D222B;
+}
+.innerPage h1 {
+    margin: 0 0 12px;
+    color: #1D222B;
+    letter-spacing: 0.001em;
+    text-shadow: 0 1px 0 #FFFFFF;
+    font-size: 26px;
+}
+.innerPage h2 {
+    font-size: 22px;
+    line-height: 30px;
+    margin: 0 0 12px;
+    color: #1D222B;
+    letter-spacing: 0.001em;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.innerPage h3 {
+    font-size: 18px;
+    line-height: 26px;
+    margin-bottom: 12px;
+    letter-spacing: 0.001em;
+    text-shadow: none;
+    color: #1D222B;
+}
+.innerPage h4 {
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0 0 6px;
+    letter-spacing: 0.001em;
+    text-shadow: none;
+    color: #1D222B;
+}
+.innerPage p {
+    margin: 0 0 12px;
+}
+.innerPage ol, .innerPage ul {
+    margin: 12px 0 12px 25px;
+}
+.innerPage ol li, .innerPage ul li {
+    margin: 0 0 8px;
+    list-style: decimal outside;
+    display: list-item;
+}
+.innerPage ol ul {
+    margin-bottom: 8px;
+    margin-top: 4px;
+}
+.innerPage ol ul li {
+    margin: 0 0 4px;
+    list-style: disc outside;
+}
 h1.title img {
     margin-bottom: -8px;
     margin-right: -10px;
