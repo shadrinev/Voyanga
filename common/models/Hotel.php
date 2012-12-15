@@ -383,6 +383,7 @@ class Hotel extends CApplicationComponent
         public $cancelExpiration;
         */
         $ret = array(
+            'key' => $this->getId(),
             'hotelId' => $this->hotelId,
             'hotelName' => $this->hotelName,
             'searchId'=>$this->searchId,

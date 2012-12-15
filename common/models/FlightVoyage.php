@@ -282,6 +282,7 @@ class FlightVoyage extends CApplicationComponent
     public function getJsonObject()
     {
         $ret = array(
+            'key' => $this->getId(),
             'flightKey' => $this->flightKey,
             'price' => $this->price,
             'commission' => $this->commission,

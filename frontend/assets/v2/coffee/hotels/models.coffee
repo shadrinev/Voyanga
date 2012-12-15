@@ -223,6 +223,7 @@ class HotelResult
     @checkIn = moment(data.checkIn) || false
     @checkOut = moment(data.checkOut) || false
     @cityCode = data.cityCode || false
+    @key = data.key
     if !@checkOut && @checkIn && duration
       @checkOut = moment(@checkIn)
       @checkOut.add('d', duration)

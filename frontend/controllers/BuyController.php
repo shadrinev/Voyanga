@@ -9,6 +9,22 @@ class BuyController extends Controller
 {
     private $keys;
 
+    public function filters()
+    {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array('allow', 'actions' => array('makeBooking','makeBookingForItem', 'startPayment', 'getPayment', 'new', 'flightSearch','hotelSearch','showBasket','index','done','waitpayment','status')),
+            array('allow', 'actions' => array('order'), 'users' => array('@')),
+            array('deny'),
+        );
+    }
+
     public function actions()
     {
         return array(
@@ -43,11 +59,44 @@ class BuyController extends Controller
         $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
         if (!$orderBooking)
             throw new CHttpException(404, 'Page not found');
+        if ($orderBooking->userId != Yii::app()->user->id)
+            throw new CHttpException(403, 'Доступ запрещён');
         $tripStorage = new TripDataProvider($orderBooking->id);
         $trip = $tripStorage->getSortedCartItemsOnePerGroupAsJson();
-        $orderId = Yii::app()->user->getState('orderBookingId');
-        $readableOrderId = Yii::app()->user->getState('todayOrderId');
-        $this->render('complete', array('trip'=>$trip, 'readableOrderId'=>$readableOrderId, 'orderId'=>$orderId));
+        $orderId = $orderBooking->id;
+        $readableOrderId = $orderBooking->readableId;
+        $this->render('complete', array('trip'=>$trip, 'readableOrderId'=>$readableOrderId, 'orderId'=>$orderId, 'secretKey' => $secretKey));
+    }
+
+    public function actionStatus($id)
+    {
+        $secretKey = $id;
+        $this->layout = 'static';
+        $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
+        if (!$orderBooking)
+            throw new CHttpException(404, 'Page not found');
+        $statuses = array();
+        foreach ($orderBooking->flightBookers as $flightBooker)
+        {
+            $flightVoyage = $flightBooker->getFlightVoyage();
+            $id = $flightVoyage->getId();
+            $statuses[$id] = $this->normalizeStatus($flightBooker->status);
+        }
+        foreach ($orderBooking->hotelBookers as $hotelBooker)
+        {
+            $hotel = $hotelBooker->getHotel();
+            $id = $hotel->getId();
+            $statuses[$id] = $this->normalizeStatus($hotelBooker->status);
+        }
+        echo json_encode($statuses);
+    }
+
+    private function normalizeStatus($status)
+    {
+        $pos = strpos($status, '/');
+        if ($pos !== false)
+            $status = substr($status, $pos+1);
+        return $status;
     }
 
     public function addItems()

@@ -251,6 +251,7 @@ class AviaResult
     flights = data.flights
     @searchId = data.searchId
     @cacheId = data.cacheId
+    @key = data.key
 
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)

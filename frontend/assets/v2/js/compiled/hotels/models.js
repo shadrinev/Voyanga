@@ -363,6 +363,7 @@ HotelResult = (function() {
     this.checkIn = moment(data.checkIn) || false;
     this.checkOut = moment(data.checkOut) || false;
     this.cityCode = data.cityCode || false;
+    this.key = data.key;
     if (!this.checkOut && this.checkIn && duration) {
       this.checkOut = moment(this.checkIn);
       this.checkOut.add('d', duration);

@@ -27,7 +27,7 @@
         </tbody>
     </table>
     <div class="tdPrice">
-        Статус заказа: <span id='status' style="font-weight: bold">в обработке</span>
+        Статус заказа: <span data-bind='attr: {id: $data.key}' style="font-weight: bold">в обработке</span>
     </div>
     </div>
 </script>
