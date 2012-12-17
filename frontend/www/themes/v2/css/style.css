@@ -2615,7 +2615,8 @@ input.hotel-input {
 }
 .allTicketsDIV .tdPrice .verticalAlign {
     height: 24px;
-    margin-top: -16px;
+    line-height: 22px;
+    margin-top: -12px;
     position: absolute;
     top: 50%;
     width: 100%;
@@ -2624,16 +2625,16 @@ input.hotel-input {
     color: #1D222B;
     font-size: 11px;
     height: 14px;
+    line-height: 14px;
     position: absolute;
-    top: -16px;
+    top: -18px;
 }
 .allTicketsDIV .price {
     color: #1D222B;
     display: inline-block;
     font-size: 22px;
-    height: 17px;
+    height: 20px;
     margin-right: 5px;
-    vertical-align: middle;
 }
 .allTicketsDIV .price .rur {
     font-size: 21px;
