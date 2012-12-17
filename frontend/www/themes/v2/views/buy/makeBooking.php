@@ -126,7 +126,7 @@
                         </table>
                     </td>
                     <td class="tdIframe">
-                        <iframe id="payment_frame" class="payCardPaliFrame"></iframe>
+                        <iframe id="payment_frame" name="payment_frame" class="payCardPaliFrame"></iframe>
                     </td>
                 </tr>
             </table>
