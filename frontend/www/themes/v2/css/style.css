@@ -2366,7 +2366,7 @@ input.hotel-input {
     display: inline-block;
     margin-right: 25px;
     vertical-align: middle;
-    width: 251px;
+    width: 255px;
 }
 .paybuyEnd .agreeConditions .ui-label a {
     text-decoration: underline;
@@ -2614,16 +2614,17 @@ input.hotel-input {
     color: #1D222B;
 }
 .allTicketsDIV .tdPrice .verticalAlign {
-    height: 30px;
-    margin-top: -15px;
+    height: 24px;
+    margin-top: -16px;
     position: absolute;
     top: 50%;
     width: 100%;
 }
 .allTicketsDIV .tdPrice .people {
-    position: absolute;
+    color: #1D222B;
     font-size: 11px;
-    color: #1d222b;
+    height: 14px;
+    position: absolute;
     top: -16px;
 }
 .allTicketsDIV .price {
