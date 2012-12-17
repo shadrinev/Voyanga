@@ -25,10 +25,10 @@ EOD;
                     $bill = $payments->getBillForBooker($booker->getCurrent());
                     $payments->notifyNemo($booker, $bill);
                 }
-                echo $payments->getStatus($booker) . "\n";
+                echo $payments->getStatus($booker) . "=>\n";
                 $booker->status('ticketing');
                 echo $payments->getStatus($booker) . "\n";
-                echo "----------------------------------";
+                echo "--------------------------------\n";
             }
         }
         else
