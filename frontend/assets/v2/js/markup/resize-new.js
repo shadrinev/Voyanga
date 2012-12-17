@@ -1412,3 +1412,14 @@ function closePopUpLogIn() {
 function loginPopSlideDown() {
     $('.login-window .popupDown').slideDown();
 }
+
+function hoverPayCard() {
+    $('.paycard > div').hover(function() {
+        $(this).find('.black').animate({'opacity': 0},400);
+        $(this).find('.color').animate({'opacity': 1},400);
+    }, function() {
+        $(this).find('.black').animate({'opacity': 1},300);
+        $(this).find('.color').animate({'opacity': 0},300);
+    });
+}
+$(window).load(hoverPayCard);
