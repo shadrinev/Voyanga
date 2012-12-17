@@ -29,6 +29,7 @@ class MakeBookingAction extends CAction
         $passportManager->tripItems = $this->tripItems;
         $orderBookingId = $this->createNewOrderBooking();
         $ambigousPassports = $passportManager->generatePassportForms();
+        $this->passportForms = $passportManager->passportForms;
         if ($this->weGotPassportsAndBooking())
         {
             $this->fillOutBookingForm();
