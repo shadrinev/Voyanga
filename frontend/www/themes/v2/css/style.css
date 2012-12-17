@@ -3121,9 +3121,10 @@ input.hotel-input {
     width: 760px;
     height: 530px;
     border: none;
+    margin-right: -20px;
 }
-mainTable. .tdInfoText {
-    padding-top: 20px;
+.mainTable .tdInfoText {
+    padding-top: 50px;
 }
 .paybuyEnd .info {
 	width: 690px;
