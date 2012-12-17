@@ -125,11 +125,12 @@
                 <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
             </td>
             <td class="tdSex">
-                <?php echo CHtml::activeHiddenField($model, "[$i]genderId", array('class' => 'genderField')); ?>
-                <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_MALE?> male"
-                     data-value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"></div>
-                <div class="gender gender-<?php echo BaseFlightPassportForm::GENDER_FEMALE?> female"
-                     data-value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"></div>
+                <label class="male" for="male">
+                    <input type="radio" name="sex" id="male" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>">
+                </label>
+                <label class="female" for="female">
+                    <input type="radio" name="sex" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>">
+                </label>
             </td>
             <td class="tdBirthday">
                 <div class="divInputBirthday">

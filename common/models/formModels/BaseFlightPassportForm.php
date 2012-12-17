@@ -57,14 +57,35 @@ class BaseFlightPassportForm extends BasePassportForm
         return $this->birthdayDay.'.'.$this->birthdayMonth.'.'.$this->birthdayYear;
     }
 
+    public function setBirthday($value)
+    {
+        $utime = strtotime($value);
+        $this->birthdayDay = date('d', $utime);
+        $this->birthdayMonth = date('m', $utime);
+        $this->birthdayYear = date('Y', $utime);
+    }
+
     public function getExpirationDate()
     {
         return $this->expirationDay.'.'.$this->expirationMonth.'.'.$this->expirationYear;
     }
 
+    public function setExpirationDate($value)
+    {
+        $utime = strtotime($value);
+        $this->expirationDay = date('d', $utime);
+        $this->expirationMonth = date('m', $utime);
+        $this->expirationYear = date('Y', $utime);
+    }
+
     public function getNumber()
     {
         return $this->seriesNumber;
+    }
+
+    public function setNumber($value)
+    {
+        $this->seriesNumber = $value;
     }
 
     /**

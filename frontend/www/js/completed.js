@@ -1,5 +1,8 @@
 $(function(){
     window.toursOverviewActive = true;
+    $('input').each(function(){
+        $(this).attr('disabled', 'disabled');
+    })
 });
 
 initCompletedPage = function() {
@@ -23,3 +26,40 @@ initCompletedPage = function() {
     ko.processAllDeferredBindingUpdates();
     app.runWithModule(currentModule);
 };
+
+var initDate = new Date(); // Or get the user login date from an HTML element (i.e. hidden input)
+var interval;
+
+function keepAlive() {
+    $('#updateStatus').fadeIn();
+    $.ajax({
+        url: '/buy/status/id/'+window.orderId,
+        dataType: 'json'
+    })
+        .done(function(response){
+            _.each(window.tripRaw.items, function(el, i){
+                var ind = el.key,
+                    newStatus = response[ind];
+                $('#'+ind).text(newStatus);
+            });
+            $('#updateStatus').fadeOut();
+        })
+        .error(function(){
+            $('#updateStatus').fadeOut();
+        });
+}
+
+window.onload = function () {
+    keepAlive();
+
+    interval = window.setInterval(function () {
+        var now = new Date();
+        if (now.getTime() - initDate.getTime() < 30 * 60 * 1000 && now.getDate() == initDate.getDate()) {
+            keepAlive();
+        }
+        else {
+            // Stop the interval
+            window.clearInterval(interval);
+        }
+    }, 15 * 1000);
+}

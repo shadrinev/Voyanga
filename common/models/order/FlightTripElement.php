@@ -142,6 +142,18 @@ class FlightTripElement extends TripElement
         return $this->passengerPassports;
     }
 
+    public function getPassportsFromDb()
+    {
+        $flightBookerId = $this->flightBookerId;
+        return FlightBookingPassport::model()->findAll(
+            array(
+                'condition'=>'flightBookingId=:fbid',
+                'params'=>array(':fbid'=>$flightBookerId),
+                'order'=>'id'
+            )
+        );
+    }
+
     public function setPassports($adults, $children=array(), $infants=array())
     {
         $this->passengerPassports = new PassengerPassportForm();

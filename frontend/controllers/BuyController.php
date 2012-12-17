@@ -65,7 +65,22 @@ class BuyController extends Controller
         $trip = $tripStorage->getSortedCartItemsOnePerGroupAsJson();
         $orderId = $orderBooking->id;
         $readableOrderId = $orderBooking->readableId;
-        $this->render('complete', array('trip'=>$trip, 'readableOrderId'=>$readableOrderId, 'orderId'=>$orderId, 'secretKey' => $secretKey));
+        list ($passports, $ambigous, $roomCounters) = $this->getPassports($tripStorage);
+        list ($icon, $header) = $tripStorage->getIconAndTextForPassports();
+        $this->render('complete',
+            array(
+                'trip'=>$trip,
+                'readableOrderId'=>$readableOrderId,
+                'orderId'=>$orderId,
+                'secretKey' => $secretKey,
+                'ambigousPassports' => $ambigous,
+                'passportForms' => $passports,
+                'bookingForm' => $this->getBookingForm($orderBooking),
+                'icon' => $icon,
+                'header' => $header,
+                'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
+                'roomCounters' => $roomCounters
+            ));
     }
 
     public function actionStatus($id)
@@ -188,7 +203,9 @@ class BuyController extends Controller
         $this->layout = false;
         $this->render('waiting');
     }
-    public function actionPaymentstatus() {
+
+    public function actionPaymentstatus()
+    {
         $order = Yii::app()->order;
         $payments = Yii::app()->payments;
         $bookers = $payments->preProcessBookers($order->getBookers());
@@ -202,5 +219,38 @@ class BuyController extends Controller
         }
         header("Content-type: application/json");
         echo json_encode(Array("paid"=>$paid, "error"=>$error));
+    }
+
+    private function getPassports($tripStorage)
+    {
+        $items = $tripStorage->getSortedCartItems();
+        $passportManager = new PassportManager();
+        $passportManager->tripItems = $items;
+        $ambigousPassports = $passportManager->generatePassportForms();
+        $passports = $this->restorePassportsFromDb($items, $ambigousPassports);
+        $passportManager->fillFromArray($passports);
+        $roomCounters = (sizeof($passportManager->roomCounters) > 0) ? $passportManager->roomCounters : false;
+        return array($passportManager->passportForms, $ambigousPassports, $roomCounters);
+    }
+
+    private function restorePassportsFromDb($items, $ambigous)
+    {
+        if (!$ambigous)
+        {
+            $passports = array();
+            foreach ($items as $item)
+            {
+                $passports = array_merge($passports, $item->getPassportsFromDb());
+            }
+        }
+        return $passports;
+    }
+
+    private function getBookingForm($model)
+    {
+        $bookingForm = new BookingForm();
+        $bookingForm->contactEmail = $model->email;
+        $bookingForm->contactPhone = $model->phone;
+        return $bookingForm;
     }
 }
