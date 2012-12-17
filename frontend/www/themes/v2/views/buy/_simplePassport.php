@@ -1,6 +1,6 @@
 <div class="oneBlock">
     <!--=== ===-->
-    <div class="paybuyContent">
+    <div class="paybuyContent" id="tableStartRun">
         <h2><span class="<?php echo $icon ?>"></span><?php echo $header ?></h2>
         <table class="infoPassengers">
 
@@ -71,11 +71,16 @@
                     </td>
                     <td class="tdSex">
                         <label class="male" for="male">
-                            <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="male" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+                            <input type="radio" name="sex" id="male" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>">
                         </label>
                         <label class="female" for="female">
-                            <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+                            <input type="radio" name="sex" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>">
                         </label>
+<!--                        --><?php //echo CHtml::activeHiddenField($model, "[$i]genderId", array('class' => 'genderField')); ?>
+<!--                        <div class="gender gender---><?php //echo BaseFlightPassportForm::GENDER_MALE?><!-- male"-->
+<!--                             data-value="--><?php //echo BaseFlightPassportForm::GENDER_MALE?><!--"></div>-->
+<!--                        <div class="gender gender---><?php //echo BaseFlightPassportForm::GENDER_FEMALE?><!-- female"-->
+<!--                             data-value="--><?php //echo BaseFlightPassportForm::GENDER_FEMALE?><!--"></div>-->
                     </td>
                     <td class="tdBirthday">
                         <div class="divInputBirthday">

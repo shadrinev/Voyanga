@@ -2768,7 +2768,9 @@ input.hotel-input {
 	display: inline-block;
 	font-size: 22px;
 }
-
+.paybuyContent .theSum .right .price .rur {
+    font-size: 21px;
+}
 .oneBlock {
 	border-bottom: 1px solid #babbbe;
 
@@ -3975,6 +3977,7 @@ a.whereData span {
     position: absolute;
     height: 30px;
     width: 400px;
+    padding-left: 15px;
 }
 .paycard > div .color {
     top: 0px;
@@ -3995,7 +3998,7 @@ a.whereData span {
     margin-top: 7px;
     position: relative;
     width: 51px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 .paycard .visa .whiteblack {
     width: 51px;
@@ -4013,7 +4016,7 @@ a.whereData span {
     margin-top: 9px;
     position: relative;
     width: 72px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 .paycard .mastercard .whiteblack {
     width: 72px;

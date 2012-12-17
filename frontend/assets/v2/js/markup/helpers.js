@@ -283,6 +283,10 @@ function telefonLoad() {
     else {
         return;
     }
+
+    $('.infoPassengers:eq(0) tbody .tdName:eq(0) input').focus(function() {
+        Utils.scrollTo('#tableStartRun');
+    });
 }
 $(window).load(telefonLoad);
 

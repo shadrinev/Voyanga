@@ -1676,16 +1676,18 @@
 .prices-of-3days .blockText .rightFloat {
 	float: right;
 }
-.prices-of-3days .blockText  .btnLook {
-	background: url("../images/btn-look.png") repeat scroll 0 0 transparent;
-    color: #FFFFFF;
+.prices-of-3days .blockText .btnLook {
+    background: url("../images/btn-look.png") repeat scroll 0 0 transparent;
+    color: white;
     display: inline-block;
     font-size: 15px;
-    height: 23px;
-    padding-top: 5px;
+    height: 28px;
     text-align: center;
     text-shadow: 0 1px 0 #0B5B88;
     width: 116px;
+    line-height: 28px;
+    position: relative;
+    z-index: 3;
 }
 .hidden-roomSets {
     display:none;
