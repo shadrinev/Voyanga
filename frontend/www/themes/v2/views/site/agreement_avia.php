@@ -4,6 +4,9 @@
   });
 </script>
 
+<div class="center-block">
+<div class="main-block innerPage" id="content">
+
 <h2>Соглашение между пользователем системы бронирования Eviterra.com и компанией ООО «Эвитерра Трэвел»</h2>
 <ol>
 <li>
@@ -118,3 +121,6 @@
     </ol>
 </li>
 </ol>
+
+</div>
+</div>
