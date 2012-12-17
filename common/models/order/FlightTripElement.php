@@ -145,10 +145,13 @@ class FlightTripElement extends TripElement
     public function getPassportsFromDb()
     {
         $flightBookerId = $this->flightBookerId;
+        $flightBooker = FlightBooker::model()->findByPk($flightBookerId);
+        if (!$flightBooker)
+            return array();
         return FlightBookingPassport::model()->findAll(
             array(
                 'condition'=>'flightBookingId=:fbid',
-                'params'=>array(':fbid'=>$flightBookerId),
+                'params'=>array(':fbid'=>$flightBooker->id),
                 'order'=>'id'
             )
         );

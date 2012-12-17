@@ -165,8 +165,9 @@ class PassportManager
         foreach($passports as $passport)
         {
             $this->passportForms[$cnt]->attributes = $passport->attributes;
-            if (property_exists($this->passportForms[$cnt], 'seriesNumber'))
-                $this->passportForms[$cnt]->seriesNumber = $passport->number;
+            if ((property_exists($this->passportForms[$cnt], 'seriesNumber')) &&
+                (property_exists($passport, 'number')))
+                    $this->passportForms[$cnt]->seriesNumber = $passport->number;
             $cnt++;
         }
         return $this->passportForms;
