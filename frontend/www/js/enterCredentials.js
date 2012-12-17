@@ -51,6 +51,8 @@ $(function(){
                 $('#submit-passport').addClass('inactive');
         });
         $('#submit-passport').click(function () {
+            if ($(this).hasClass('inactive'))
+                return;
             var formData = $('#passport_form').serialize();
             var statuses = [],
                 ids = [];
@@ -58,6 +60,7 @@ $(function(){
                 $(this).attr({'disabled': 'disabled'});
             });
             $('#submit-passport').hide();
+            $('.agreeConditions').hide();
             $('#loadPayFly').find('.armoring').show();
             loadPayFly();
             $('#loadPayFly').find('.loadJet').show();
