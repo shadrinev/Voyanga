@@ -162,11 +162,13 @@ class PassportManager
     public function fillFromArray($passports)
     {
         $cnt = 0;
-        foreach($passports as $passport)
+        foreach($passports as $i => $passport)
         {
+            if ($i>=sizeof($this->passportForms))
+                break;
             $this->passportForms[$cnt]->attributes = $passport->attributes;
             if ((property_exists($this->passportForms[$cnt], 'seriesNumber')) &&
-                (property_exists($passport, 'number')))
+                ($passport->hasAttribute('number')))
                     $this->passportForms[$cnt]->seriesNumber = $passport->number;
             $cnt++;
         }
