@@ -19,7 +19,7 @@ class BuyController extends Controller
     public function accessRules()
     {
         return array(
-            array('allow', 'actions' => array('makeBooking','makeBookingForItem', 'startPayment', 'getPayment', 'new', 'flightSearch','hotelSearch','showBasket','index','done','waitpayment','status')),
+            array('allow', 'actions' => array('makeBooking','makeBookingForItem', 'startPayment', 'getPayment', 'new', 'flightSearch','hotelSearch','showBasket','index','done','waitpayment','status', 'paymentStatus')),
             array('allow', 'actions' => array('order'), 'users' => array('@')),
             array('deny'),
         );
