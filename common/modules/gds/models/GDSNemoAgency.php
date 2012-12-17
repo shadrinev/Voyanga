@@ -701,9 +701,9 @@ class GDSNemoAgency extends CComponent
         }
         else
         {
-            if (isset($response->Response->BookFlight->Status))
+            if (isset($response->Response->Ticketing->Status))
             {
-                $status = $response->Response->BookFlight->Status;
+                $status = $response->Response->Ticketing->Status;
             }
             elseif (isset($response->Error->_))
             {
@@ -723,8 +723,8 @@ class GDSNemoAgency extends CComponent
         if ($status == 'ticket')
         {
             $flightTicketingResponse->status = 1;
-            UtilsHelper::soapObjectsArray($response->BookFlight->Travellers->Traveller);
-            foreach ($response->BookFlight->Travellers->Traveller as $traveller)
+            UtilsHelper::soapObjectsArray($response->Response->Ticketing->Travellers->Traveller);
+            foreach ($response->Response->Ticketing->Travellers->Traveller as $traveller)
             {
                 $ticket = array('ticketNumber' => $traveller->Ticket->TickectNum, 'documentNumber' => $traveller->DocumentInfo->DocNum);
 
@@ -813,4 +813,3 @@ class GDSNemoAgency extends CComponent
         else return null;
     }
 }
-
