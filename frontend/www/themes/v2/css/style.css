@@ -3121,6 +3121,7 @@ input.hotel-input {
     width: 760px;
     height: 530px;
     border: none;
+    margin-right: -20px;
 }
 .mainTable .tdInfoText {
     padding-top: 50px;
