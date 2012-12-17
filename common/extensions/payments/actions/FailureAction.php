@@ -22,6 +22,8 @@ class FailureAction extends SuccessAction
                 return;
             }
             $this->rebill($orderId);
-        }
+       } else {
+           $booker->status('paymentError');
+       }
     }
 }

@@ -10,6 +10,7 @@ class OrderComponent extends CApplicationComponent
     private $itemsOnePerGroup = array();
     private $bookedItems = array();
     private $finalWorkflowStatuses = array();
+    private $currentOrderId = 0;
 
     public function init()
     {
@@ -19,6 +20,7 @@ class OrderComponent extends CApplicationComponent
 
     public function initByOrderBookingId($orderId)
     {
+        $this->currentOrderId = $orderId;
         $dataProvider = new TripDataProvider($orderId);
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
     }
@@ -466,6 +468,8 @@ class OrderComponent extends CApplicationComponent
     public function getOrderBooking()
     {
         $orderBookingId = Yii::app()->user->getState('orderBookingId');
+        if(!$orderBookingId)
+            $orderBookingId = $this->currentOrderId;
         if ($orderBookingId)
             return OrderBooking::model()->findByPk($orderBookingId);
         return false;

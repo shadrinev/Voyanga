@@ -129,6 +129,21 @@ class HotelTripElement extends TripElement
         return $this->passports;
     }
 
+    public function getPassportsFromDb()
+    {
+        $hotelBookerId = $this->hotelBookerId;
+        $hotelBooker = HotelBooker::model()->findByPk($hotelBookerId);
+        if (!$hotelBooker)
+            return array();
+        return HotelBookingPassport::model()->findAll(
+            array(
+                'condition'=>'hotelBookingId=:hbid',
+                'params'=>array(':hbid'=>$hotelBooker->id),
+                'order'=>'id'
+            )
+        );
+    }
+
     public function setPassports($booking, $roomsPassports)
     {
         $this->passports = new HotelPassportForm();
