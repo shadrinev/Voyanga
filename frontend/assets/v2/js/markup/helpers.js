@@ -531,3 +531,32 @@ function onFocusInput() {
     });
 }
 $(window).load(onFocusInput);
+
+function showUserMenu()
+{
+    $('.popupDown').slideDown();
+    // Проверка на закрытие вне области
+    var mouseHover = true;
+    $('.login-window').hover(function() {
+            mouseHover = false;
+        },
+        function() {
+            mouseHover = true;
+        }
+    );
+    $('.popupDown').hover(function() {
+            mouseHover = false;
+        },
+        function() {
+            mouseHover = true;
+        }
+    );
+    $('body').mouseup(function() {
+        if (mouseHover) {
+            $('.popupDown').slideUp();
+        }
+        else {
+            return;
+        }
+    });
+}
