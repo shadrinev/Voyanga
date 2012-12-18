@@ -7,7 +7,7 @@
  */
 class DefaultController extends CController
 {
-    public function actionIndex($openLogin=false)
+    public function actionIndex($open=false)
     {
         Yii::app()->user->setState('orderBookingId', null);
         Yii::app()->user->setState('todayOrderId', null);
@@ -18,8 +18,8 @@ class DefaultController extends CController
         $eventsJsonObject[0]['active'] = true;
         $this->render('frontend.www.themes.v2.views.default.index',
             array(
-                'events'=>$eventsJsonObject,
-                'openLogin'=>$openLogin
+                'events' => $eventsJsonObject,
+                'open' => $open
             ));
     }
 

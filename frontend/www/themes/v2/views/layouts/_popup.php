@@ -246,31 +246,36 @@
             <div class="registrate" style="display: none;">
                 <h2>Регистрация</h2>
 
-                <div class="divInput">
-                    <input type="text" class="email" name="email" placeholder="Эл. почта">
+                <div id='signup-errors' style='display: none;'>
+                </div>
+                <form id='signup-form' action="/user/signup" method="post">
+                    <div class="divInput">
+                        <input type="text" class="email" name="SignUpForm[email]" placeholder="Эл. почта">
 
-                    <div class="bgInput">
-                        <div class="left"></div>
-                        <div class="center"></div>
-                        <div class="right"></div>
+                        <div class="bgInput">
+                            <div class="left"></div>
+                            <div class="center"></div>
+                            <div class="right"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="divInput">
-                    <input type="password" class="email" name="email" placeholder="Пароль">
+                    <div class="divInput">
+                        <input type="password" class="email" name="SignUpForm[password]" placeholder="Пароль">
 
-                    <div class="bgInput">
-                        <div class="left"></div>
-                        <div class="center"></div>
-                        <div class="right"></div>
+                        <div class="bgInput">
+                            <div class="left"></div>
+                            <div class="center"></div>
+                            <div class="right"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="rememberEnter">
-                    <a href="#" class="enterOpen">Войти</a>
-                    <a href="#" class="btnRegLogin">Регистрация</a>
-                </div>
+                    <div class="rememberEnter">
+                        <a href="#" class="enterOpen">Войти</a>
+                        <a href="#" class="btnRegLogin">Регистрация</a>
+                    </div>
+                </form>
             </div>
             <div class="fogoten" style="display: none;">
                 <h2>Забыли пароль?</h2>
+
                 <div id='forget-errors' style='display: none;'>
                 </div>
                 <form id='forget-pwd-form' action="/user/newPassword" method="post">
@@ -289,31 +294,25 @@
                     </div>
                 </form>
             </div>
-            <div class="reapetPass" style="display: none;">
+            <div class="newPassword" style="display: none;">
                 <h2>Новый пароль</h2>
+                <div id='new-pwd-errors' style='display: none;'>
+                </div>
+                <form id='new-pwd-form' action="/user/newPassword" method="post">
+                    <div class="divInput">
+                        <input type="password" class="email" name="NewPasswordForm[password]"
+                               placeholder="Новый пароль">
 
-                <div class="divInput">
-                    <input type="text" class="email" name="email" placeholder="Пароль">
-
-                    <div class="bgInput">
-                        <div class="left"></div>
-                        <div class="center"></div>
-                        <div class="right"></div>
+                        <div class="bgInput">
+                            <div class="left"></div>
+                            <div class="center"></div>
+                            <div class="right"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="divInput">
-                    <input type="password" class="email" name="email" placeholder="Повторите пароль">
-
-                    <div class="bgInput">
-                        <div class="left"></div>
-                        <div class="center"></div>
-                        <div class="right"></div>
+                    <div class="rememberEnter">
+                        <a href="#" class="btnNewPwd">Сохранить</a>
                     </div>
-                </div>
-                <div class="rememberEnter">
-                    <a href="#" class="enterOpen">Войти</a>
-                    <a href="#" class="btnRegLogin">Регистрация</a>
-                </div>
+                </form>
             </div>
             <div onclick="closePopUpLogIn()" class="boxClose"></div>
         </div>
