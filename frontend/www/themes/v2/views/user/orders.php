@@ -9,7 +9,7 @@
         <?php $this->widget('zii.widgets.grid.CGridView', array(
             'id' => 'drives-grid',
             'dataProvider' => $model,
-            'template' => "{pager}\n{items}\n{pager}",
+            'template' => "{items}",
             'columns' => array(
                 array(
                     'header' => 'Дата заказа',

@@ -109,7 +109,10 @@ class UserController extends CController
         $criteria->addColumnCondition(array('userId'=>Yii::app()->user->id));
 
         $dataProvider = new CActiveDataProvider('OrderBooking', array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => 100
+            )
         ));
         $this->render('orders', array(
             'model' => $dataProvider

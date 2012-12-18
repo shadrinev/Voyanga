@@ -1370,6 +1370,7 @@ function openPopUpLogIn(what) {
             return;
         }
     });
+    $('div.'+_this).find('input').eq(0).focus();
     var heightWinAll = $(window).height();
     var heightPopAll = $('.contentWrapBg .wrapDiv').innerHeight();
     var offset = $('.contentWrapBg .wrapDiv').offset();

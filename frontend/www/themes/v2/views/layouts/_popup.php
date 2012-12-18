@@ -189,7 +189,7 @@
         <div class="wrapContent">
             <div class="enter" >
                 <h2>Вход в Voyanga</h2>
-                <div id='login-errors' style='display: none; color: red'>
+                <div id='login-errors' style='display: none;'>
                 </div>
                 <form method="post" action="/user/login" id="login-form" class="login-form">
                     <div class="divInput">
