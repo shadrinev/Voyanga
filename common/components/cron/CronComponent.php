@@ -97,8 +97,8 @@ class CronComponent extends CApplicationComponent
             $time = date('h:i A d.m.Y', $time);
         else
             $time = date('h:i A d.m.Y', strtotime($time));
-        $commandAt = $command.' | at '.$time;
-        return 'echo '.$commandAt;
+        $commandAt = 'echo "' . $command.'" | at '.$time;
+        return $commandAt;
     }
 
     private function prepareParams($params)
