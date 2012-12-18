@@ -22,21 +22,25 @@
         </div>
 
         <?php if (Yii::app()->user->isGuest): ?>
-            <div class="login-window full" onclick="openPopUpLogIn('enter')">
-                <div class="registerForm">
-                    <a href="javascript:void(0)" class="logInLinks">
-                        <span class="text">Регистрация и вход</span>
-                    </a>
-                </div>
+        <div class="login-window full" onclick="openPopUpLogIn('enter')">
+            <div class="registerForm">
+                <a href="javascript:void(0)" class="logInLinks">
+                    <span class="text">Регистрация и вход</span>
+                </a>
             </div>
+        </div>
         <?php else: ?>
-            <div class="login-window full">
-                <div class="registerForm">
-                    <a href="/user/orders" class="logInLinks"><?php echo Yii::app()->user->model->email ?></a>
-                    <a href="/user/orders" class="logInLinks">Мои заказы</a>
-                    <a href="/user/logout" class="logInLinks">Выйти</a>
-                </div>
+        <div class="login-window full" onclick="openPopUpLogIn('enter')">
+            <div class="registerForm">
+                <a href="javascript:void(0)" class="logInLinks user">
+                    <span class="text"><?php echo Yii::app()->user->model->email; ?></span>
+                </a>
             </div>
+            <div class="popupDown">
+                <a href="#">Мои заказы</a>
+                <a href="#">Выйти</a>
+            </div>
+        </div>
         <?php endif ?>
     </div>
     <!-- END CENTER BLOCK -->
