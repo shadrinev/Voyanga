@@ -104,6 +104,7 @@ return CMap::mergeArray(
                 'allowAutoLogin' => true,
                 'class' => 'frontend.components.WebUser',
                 'loginUrl' => '/user/login',
+                'returnUrl' => '/user/orders'
             ),
             'urlManager' => array(
                 'urlFormat' => 'path',

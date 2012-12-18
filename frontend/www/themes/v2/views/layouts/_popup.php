@@ -189,6 +189,8 @@
         <div class="wrapContent">
             <div class="enter" >
                 <h2>Вход в Voyanga</h2>
+                <div id='login-errors' style='display: none; color: red'>
+                </div>
                 <form method="post" action="/user/login" id="login-form" class="login-form">
                     <div class="divInput">
                         <input type="text" maxlength="125" id="LoginForm_email" name="LoginForm[email]" class="email" placeholder="Эл. почта">
@@ -214,7 +216,7 @@
                         <a href="#" class="fogotenOpen">Забыли пароль?</a><br>
                         <a href="#" class="registerOpen">Регистрация</a>
                     </div>
-                </forms>
+                </form>
             </div>
             <div class="registrate" style="display: none;">
                 <h2>Регистрация</h2>
@@ -242,7 +244,7 @@
             <div class="fogoten" style="display: none;">
                 <h2>Забыли пароль?</h2>
                 <div class="divInput" style="margin-top: 80px;">
-                    <input type="password" class="email" name="email" placeholder="Пароль">
+                    <input type="password" class="email" name="email" placeholder="Эл. почта">
                     <div class="bgInput">
                         <div class="left"></div>
                         <div class="center"></div>

@@ -1423,3 +1423,28 @@ function hoverPayCard() {
     });
 }
 $(window).load(hoverPayCard);
+$(function(){
+    $('.btnEnterLogin').on('click', function(){
+        $('#login-errors').html('').hide();
+        $.ajax({
+            url: '/user/validate',
+            dataType: 'json',
+            data: $('#login-form').serialize(),
+            type: 'POST'
+        })
+            .done(function(response){
+                if (response.status != 'ok')
+                {
+                    $('#login-errors').html('Неверный логин/пароль').show();
+                }
+                else
+                {
+                    $('#login-form').submit();
+                }
+            })
+            .error(function(){
+                $('#login-errors').html('Ошибка при проверке логина/пароля.').show()
+            });
+        return false;
+    });
+})
