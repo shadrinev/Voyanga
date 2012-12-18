@@ -1,5 +1,5 @@
 <script type="text/html" id="completed-flight-rt-part-template">
-    <div class="ticketBox">
+    <div class="ticketBox inactive">
         <table class="aviaTickets">
             <tbody>
             <tr>
