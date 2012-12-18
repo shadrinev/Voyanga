@@ -133,5 +133,10 @@ class SiteController extends FrontendController
         $this->render('agreement_hotel');
         exit;
     }
-
+    public function actionAgreement()
+    {
+        $this->layout = 'static';
+        $this->render('agreement');
+        exit;
+    }
 }

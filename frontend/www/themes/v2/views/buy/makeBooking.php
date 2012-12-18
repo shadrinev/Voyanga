@@ -10,11 +10,23 @@
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>
-            <?php $this->renderPartial('_ambigousPassports', array('passportForms' => $passportForms, 'headers'=>$headersForAmbigous, 'roomCounters'=>$roomCounters)); ?>
+            <?php $this->renderPartial('_ambigousPassports', array(
+                'passportForms' => $passportForms,
+                'headers'=>$headersForAmbigous,
+                'roomCounters'=>$roomCounters,
+                'hide' => false
+            )); ?>
         <?php else: ?>
-            <?php $this->renderPartial('_simplePassport', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header, 'roomCounters'=>$roomCounters)); ?>
+            <?php $this->renderPartial('_simplePassport', array(
+                'passportForms' => $passportForms,
+                'icon'=>$icon,
+                'header'=>$header,
+                'roomCounters'=>$roomCounters,
+                'hide' => false
+            ));
+            ?>
         <?php endif;?>
-        <?php $this->renderPartial('_buyer', array('model' => $bookingForm)); ?>
+        <?php $this->renderPartial('_buyer', array('model' => $bookingForm, 'hide'=>false)); ?>
     </form>
     <div class="paybuyEnd" id="loadPayFly">
         <div class="loadJet" style="display: none">
@@ -41,7 +53,7 @@
         </div>
         <div class="agreeConditions">
            <label for="agreeCheck">
-               <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement_avia\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и правилами тарифов', checked: 0}" name="agree" id="agreeCheck">
+               <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и правилами тарифов', checked: 0}" name="agree" id="agreeCheck">
            </label>
         </div>
         <div class="btnBlue inactive" id='submit-passport'>

@@ -1424,6 +1424,8 @@ function hoverPayCard() {
     });
 }
 $(window).load(hoverPayCard);
+
+//functions for private space popups
 $(function(){
     $('.btnEnterLogin').on('click', function(){
         $('#login-errors').html('').hide();
@@ -1445,6 +1447,97 @@ $(function(){
             })
             .error(function(){
                 $('#login-errors').html('Ошибка при проверке логина/пароля.').show()
+            });
+        return false;
+    });
+});
+
+$(function(){
+    $('.btnFogLogin').on('click', function(){
+        $('#forget-errors').html('').hide();
+        $.ajax({
+            url: '/user/validateForgetPassword',
+            dataType: 'json',
+            data: $('#forget-pwd-form').serialize(),
+            type: 'POST'
+        })
+            .done(function(response){
+                if (response.status != 'ok')
+                {
+                    $('#forget-errors').html(response.errors).show();
+                }
+                else
+                {
+                    $.ajax({
+                        url: '/user/newPassword',
+                        data: $('#forget-pwd-form').serialize(),
+                        type: 'POST'
+                    })
+                        .done(function(){
+                            $('#forget-pwd-form')
+                                .html('Запрос на восстановление пароля выслан на указанный e-mail');
+                        })
+                        .error(function(){
+                            $('#forget-errors').html('Ошибка при восстановлении пароля.').show()
+                        });
+                }
+            })
+            .error(function(){
+                $('#forget-errors').html('Ошибка при восстановлении пароля.').show()
+            });
+        return false;
+    });
+})
+
+$(function(){
+    $('.btnRegLogin').on('click', function(){
+        $('#signup-errors').html('').hide();
+        $.ajax({
+            url: '/user/signup',
+            dataType: 'json',
+            data: $('#signup-form').serialize(),
+            type: 'POST'
+        })
+            .done(function(response){
+                if (response.status != 'ok')
+                {
+                    $('#signup-errors').html(response.error).show();
+                }
+                else
+                {
+                    $('#signup-form')
+                        .html('Вы зарегистрированы на сайте и можете авторизоваться используя ваш логин и пароль');
+                }
+            })
+            .error(function(){
+                $('#signup-errors').html('Ошибка при регистрации.').show()
+            });
+        return false;
+    });
+})
+
+$(function(){
+    $('.btnNewPwd').on('click', function(){
+        $('#new-pwd-errors').html('').hide();
+        $.ajax({
+            url: '/user/newPassword/key/' + window.pwdKey,
+            dataType: 'json',
+            data: $('#new-pwd-form').serialize(),
+            type: 'POST'
+        })
+            .done(function(response){
+                if (response.status != 'ok')
+                {
+                    $('#new-pwd-errors').html(response.errors).show();
+                }
+                else
+                {
+                    $('#new-pwd-form')
+                        .html('Новый пароль установлен');
+                }
+            })
+            .error(function(){
+                $('#new-pwd-form').html('Ошибка во время установки пароля').show()
             });
         return false;
     });

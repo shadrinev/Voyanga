@@ -19,16 +19,59 @@ class UserController extends CController
     public function accessRules()
     {
         return array(
-            array('allow', 'actions' => array('test','createTestUser', 'newPassword', 'login', 'validate')),
+            array('allow', 'actions' => array('test','createTestUser', 'newPassword', 'login', 'validate', 'validateForgetPassword', 'signup')),
             array('allow', 'actions' => array('orders', 'logout'), 'users' => array('@')),
             array('deny'),
         );
     }
 
-    public function actionTest()
+    public function actionSignup()
     {
-        $user = FrontendUser::model()->findByPk(8);
-        EmailManager::sendUserInfo($user, '12134234');
+        $model = new SignUpForm();
+        if (isset($_POST['SignUpForm']))
+        {
+            $model->attributes = $_POST['SignUpForm'];
+            if ($model->validate())
+            {
+                $user = new FrontendUser();
+                $user->username = $model->email;
+                $user->email = $model->email;
+                $user->password = $model->password;
+                $isExist = FrontendUser::model()->find(array(
+                    'condition' => 'email = :email OR username = :username',
+                    'params' => array(
+                        ':email' => $user->email,
+                        ':username' => $user->email
+                    )
+                ));
+                if ($isExist)
+                {
+                    echo json_encode(array(
+                        'status' => 'error',
+                        'error' => 'Пользователь с указанным e-mail уже зарегистрирован на сайте'
+                    ));
+                }
+                elseif ($user->save())
+                {
+                    EmailManager::sendUserInfo($user, $model->password);
+                    echo '{"status" : "ok"}';
+                }
+                else
+                {
+                    echo json_encode(array(
+                        'status' => 'error',
+                        'error' => CHtml::errorSummary($user)
+                    ));
+                }
+            }
+            else
+            {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'error' => CHtml::errorSummary($model)
+                ));
+            }
+        }
     }
 
     public function actionCreateTestUser($email)
@@ -67,12 +110,19 @@ class UserController extends CController
                         $user->recover_pwd_key = '';
                         $user->recover_pwd_expiration = date('Y-m-d h:i:s', time() - 1);
                         if ($user->save())
-                            Yii::app()->user->setFlash('success', 'Вы успешно изменили ваш пароль и теперь можете войти на сайт, используя его.');
+                            echo '{"status": "ok"}';
                         else
-                            $model->addErrors($user->errors);
+                            echo json_encode(array(
+                                'status' => 'fail',
+                                'errors' => CHtml::errorSummary($user)
+                            ));
                     }
+                    else
+                        echo json_encode(array(
+                            'status' => 'fail',
+                            'errors' => CHtml::errorSummary($model)
+                        ));
                 }
-                $this->render('newPassword', array('model' => $model));
             }
             else
             {
@@ -127,6 +177,7 @@ class UserController extends CController
         $model = new LoginForm;
 
         // collect user input data
+
         if (isset($_POST['LoginForm']))
         {
             $model->attributes = $_POST['LoginForm'];
@@ -140,8 +191,8 @@ class UserController extends CController
                     $this->redirect($url);
             }
         }
-        // display the login form
-        $this->render('login', array('model' => $model));
+
+        $this->redirect('/');
     }
 
     public function actionValidate()
@@ -167,6 +218,40 @@ class UserController extends CController
         }
         echo '{status: "fail", errors: "Необходимо указать логин и пароль"}';
     }
+
+    public function actionValidateForgetPassword()
+    {
+        $model = new ForgotPasswordForm();
+        if (isset($_POST['ForgotPasswordForm']))
+        {
+            $model->attributes = $_POST['ForgotPasswordForm'];
+            $email = $model->email;
+            $user = FrontendUser::model()->findByAttributes(array('email'=>$email));
+            if (!$model->validate())
+            {
+                echo json_encode(array(
+                    'status' => "fail",
+                    'errors' => CHtml::error($model, 'email')
+                ));
+                Yii::app()->end();
+            }
+            elseif (!$user)
+            {
+                echo json_encode(array(
+                    'status' => "fail",
+                    'errors' => 'Пользователь с таким e-mail не зарегистрирован'
+                ));
+                Yii::app()->end();
+            }
+            else
+            {
+                echo '{"status" : "ok"}';
+                Yii::app()->end();
+            }
+        }
+        echo '{status: "fail", errors: "Ошибка восстановления пароля"}';
+    }
+
 
     /**
      * Logs out the current user and redirect to homepage.

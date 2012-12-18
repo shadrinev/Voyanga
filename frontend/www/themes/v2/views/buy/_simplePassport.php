@@ -3,13 +3,41 @@
     <div class="paybuyContent" id="tableStartRun">
         <h2><span class="<?php echo $icon ?>"></span><?php echo $header ?></h2>
         <table class="infoPassengers">
-
-            <tbody>
+            <thead>
             <?php $currentRoomId = 0; $currentRoomAdults = 0; $currentRoomChild = 0; ?>
             <?php if ($roomCounters): ?>
-                <tr>
-                    <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?>: <?php echo $roomCounters[$currentRoomId]['label'] ?></h3></td>
-                </tr>
+            <tr>
+                <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?>
+                        : <?php echo $roomCounters[$currentRoomId]['label'] ?></h3></td>
+            </tr>
+            <tr>
+                <td class="tdName">
+                    Имя
+                </td>
+                <td class="tdLasname">
+                    Фамилия
+                </td>
+                <td class="tdSex">
+                    Пол
+                </td>
+                <td class="tdBirthday">
+                    Дата рождения
+                </td>
+                <td class="tdNationality">
+                    Гражданство
+                </td>
+                <td class="tdDocumentNumber">
+                    <span class="tooltipClose"
+                          rel="Для полетов внутри России подходит российский паспорт или загранпаспорт (для детей и младенцев — свидетельство о рождении или загранпаспорт). Для полетов за рубежом нужен загранпаспорт. Обратите внимание, что помимо загранпаспорта, для въезда во многие страны требуется соответствующая виза.">Серия и № документа</span>
+                </td>
+                <td class="tdDuration">
+                    <span class="tooltipClose"
+                          rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
+                </td>
+            </tr>
+            </thead>
+            <?php else: ?>
+                <thead>
                 <tr>
                     <td class="tdName">
                         Имя
@@ -35,25 +63,24 @@
                           rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
                     </td>
                 </tr>
+                </thead>
             <?php endif ?>
+            <tbody>
             <?php foreach ($passportForms as $i => $model): ?>
                 <?php
-                if ($roomCounters)
-                {
-                    if (($roomCounters[$currentRoomId]['adult'] == $currentRoomAdults) and ($roomCounters[$currentRoomId]['child'] == $currentRoomChild))
-                    {
+                if ($roomCounters) {
+                    if (($roomCounters[$currentRoomId]['adult'] == $currentRoomAdults) and ($roomCounters[$currentRoomId]['child'] == $currentRoomChild)) {
                         $currentRoomId++;
                         $currentRoomAdults = 0;
-                    }
-                    elseif ($model instanceof FlightAdultPassportForm)
-                        $currentRoomAdults++;
-                    elseif ($model instanceof FlightChildPassportForm)
+                    } elseif ($model instanceof FlightAdultPassportForm)
+                        $currentRoomAdults++; elseif ($model instanceof FlightChildPassportForm)
                         $currentRoomChild++;
                 }
                 ?>
                 <?php if ($roomCounters and ($currentRoomAdults == 0)): ?>
                     <tr>
-                        <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?> (<?php echo $roomCounters[$currentRoomId]['label'] ?>)</h3></td>
+                        <td colspan="7"><h3>Номер <?php echo $currentRoomId + 1 ?>
+                                (<?php echo $roomCounters[$currentRoomId]['label'] ?>)</h3></td>
                     </tr>
                 <?php endif ?>
                 <script type="text/javascript">
@@ -71,14 +98,18 @@
                     </td>
                     <td class="tdSex">
                         <label class="male" for="male">
-                            <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+                            <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="male"
+                                   value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
+                                   <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                         </label>
                         <label class="female" for="female">
-                            <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+                            <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="female"
+                                   value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"
+                                <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                         </label>
                     </td>
                     <td class="tdBirthday">
-                        <div class="divInputBirthday">
+                        <div class="divInputBirthday <?php if ($hide) echo 'active' ?>">
                             <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
                                 "placeholder" => "ДД",
                                 "class" => "dd next",
@@ -97,22 +128,27 @@
                         </div>
                     </td>
                     <td class="tdNationality">
-                        <?php echo CHtml::activeDropDownList(
-                            $model,
-                            "[$i]countryId",
-                            Country::model()->findAllOrderedByPopularity(),
-                            array(
-                                'data-placeholder' => "Страна...",
-                                'class' => "chzn-select",
-                                'style' => "width:120px;",
-                            )
-                        ); ?>
+                        <?php if ($hide): ?>
+                            <input type='text' disabled="disabled"
+                                   value="<?php $c=Country::model()->findByPk($model->countryId); echo CHtml::value($c,'localRu') ?>">
+                        <?php else: ?>
+                            <?php echo CHtml::activeDropDownList(
+                                $model,
+                                "[$i]countryId",
+                                Country::model()->findAllOrderedByPopularity(),
+                                array(
+                                    'data-placeholder' => "Страна...",
+                                    'class' => "chzn-select",
+                                    'style' => "width:120px;",
+                                )
+                            ); ?>
+                        <?php endif ?>
                     </td>
                     <td class="tdDocumentNumber">
                         <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
                     </td>
                     <td class="tdDuration">
-                        <div class="divInputBirthday checkOn">
+                        <div class="divInputBirthday checkOn <?php if ($hide) echo 'active' ?>">
                             <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
                                 "placeholder" => "ДД",
                                 "class" => "dd next",
@@ -131,20 +167,23 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td class="tdName">
-                        <!--<input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта', checked: 0}" checked="checked" name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">-->
-                    </td>
-                    <td class="tdLastname"></td>
-                    <td class="tdSex"></td>
-                    <td class="tdBirthday"></td>
-                    <td class="tdNationality"></td>
-                    <td class="tdDocumentNumber"></td>
-                    <td class="tdDuration">
-                        <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}" checked="checked"
-                               name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
-                    </td>
-                </tr>
+                <?php if (!$hide): ?>
+                    <tr>
+                        <td class="tdName">
+                            <!--<input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта', checked: 0}" checked="checked" name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">-->
+                        </td>
+                        <td class="tdLastname"></td>
+                        <td class="tdSex"></td>
+                        <td class="tdBirthday"></td>
+                        <td class="tdNationality"></td>
+                        <td class="tdDocumentNumber"></td>
+                        <td class="tdDuration">
+                            <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}"
+                                   checked="checked"
+                                   name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
+                        </td>
+                    </tr>
+                <?php endif ?>
             <?php endforeach; ?>
             <!-- NEW USER -->
             </tbody>

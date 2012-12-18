@@ -187,7 +187,7 @@ Utils =
 
 
   submitPayment: (params) ->
-    form_html = '<form id="buy-form" method="POST" action="' +  params.url + '" target="payment_frame">'
+    form_html = '<form id="buy-form" method="GET" action="' +  params.url + '" target="payment_frame">'
     delete params.url
     for key,value of params
       form_html += "<input type=\"hidden\" name=\"#{key}\" value=\"#{value}\" />"
@@ -239,3 +239,7 @@ String.prototype.format = ->
   args = arguments;
   @replace /{(\d+)}/g, (match, number) -> 
     if typeof args[number] != 'undefined' then  args[number]else match
+
+isEmail = (email) ->
+  emailPatterh = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
+  email.match emailPattern

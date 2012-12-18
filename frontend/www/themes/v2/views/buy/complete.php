@@ -12,12 +12,12 @@
         array(
             'orderId' => $readableOrderId,
         )); ?>
+    <form method="post" id="passport_form">
+        <?php if ($ambigousPassports): ?>
+            <?php $this->renderPartial('_ambigousPassports', array('passportForms' => $passportForms, 'headers'=>$headersForAmbigous, 'roomCounters'=>$roomCounters, 'hide' => true)); ?>
+        <?php else: ?>
+            <?php $this->renderPartial('_simplePassport', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header, 'roomCounters'=>$roomCounters, 'hide' => true)); ?>
+        <?php endif;?>
+        <?php $this->renderPartial('_buyer', array('model' => $bookingForm, 'hide' => true)); ?>
+    </form>
 </div>
-<form method="post" id="passport_form">
-    <?php if ($ambigousPassports): ?>
-        <?php $this->renderPartial('_ambigousPassports', array('passportForms' => $passportForms, 'headers'=>$headersForAmbigous, 'roomCounters'=>$roomCounters)); ?>
-    <?php else: ?>
-        <?php $this->renderPartial('_simplePassport', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header, 'roomCounters'=>$roomCounters)); ?>
-    <?php endif;?>
-    <?php $this->renderPartial('_buyer', array('model' => $bookingForm)); ?>
-</form>
