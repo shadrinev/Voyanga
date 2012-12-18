@@ -2851,7 +2851,7 @@ input.hotel-input {
 	background-position: 0px 0px;
 	text-transform: uppercase;
 }
-.infoPassengers .tdName input.inactive[type="text"] {
+.infoPassengers .tdName input[type="text"][disabled="disabled"] {
     background-position: 0 -165px;
 }
 .infoPassengers input[type='text']:focus {
@@ -2874,7 +2874,7 @@ input.hotel-input {
 	background-position: -147px 0px;
 	text-transform: uppercase;
 }
-.infoPassengers .tdLastname input.inactive[type='text'] {
+.infoPassengers .tdLastname input[type='text'][disabled="disabled"] {
     background-position: -147px -165px;
 }
 .infoPassengers .tdLastname input[type='text'].error {
@@ -2891,7 +2891,7 @@ input.hotel-input {
     text-transform: uppercase;
     width: 148px;
 }
-.infoPassengers .tdDocumentNumber input.inactive[type="text"] {
+.infoPassengers .tdDocumentNumber input[type="text"][disabled="disabled"] {
     background-position: -662px -132px;
 }
 .infoPassengers .tdDocumentNumber input[type='text'].error {
@@ -3038,8 +3038,8 @@ input.hotel-input {
 .tdSex .female.active.inactive, .tdSex .female.active.inactive:hover {
     background-position: -360px -165px;
 }
-.chzn-single.inactive {
-    background-position: -534px -166px;
+.chzn-container-single .chzn-single.inactive {
+    background-position: -534px -165px;
 }
 .addGuest {
 	color: #1d222b;
@@ -3057,6 +3057,9 @@ input.hotel-input {
 	padding-right: 5px;
 	background-position: 0px -66px;
 	text-transform:none;
+}
+.dopInfoPassengers .tdEmail input[type='text'][disabled="disabled"] {
+    background-position: 0px -132px;
 }
 .dopInfoPassengers .tdEmail input[type='text'].error {
 	background-position: -0px -99px;
@@ -3077,6 +3080,9 @@ input.hotel-input {
     height: 32px;
     width: 197px;
 }
+.divInputTelefon.inactive {
+    background-position: -431px -132px;
+}
 .dopInfoPassengers .tdTelefon .plusSeven {
     width: 25px;
     padding-left: 5px;
@@ -3086,6 +3092,7 @@ input.hotel-input {
     left: 0px;
     height: 33px;
     z-index: 1;
+    background: none;
 }
 .dopInfoPassengers .tdTelefon #contactPhone {
     background: none repeat scroll 0 0 transparent;
