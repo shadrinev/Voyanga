@@ -1601,6 +1601,7 @@ class HotelBookClient
   <Items>
     <HotelItem>
       <Search resultId="' . $hotelOrderParams->hotel->resultId . '" searchId="' . $hotelOrderParams->hotel->searchId . '" />
+      <PayForm>cashless<PayForm>
       <Rooms>
       </Rooms>
     </HotelItem>
@@ -1697,11 +1698,31 @@ class HotelBookClient
         self::$lastRequestMethod = 'voucher';
         self::$lastRequestDescription = (string)$orderId;
         $response = $this->request(Yii::app()->params['HotelBook']['uri'] . 'voucher_info', $getData);
+        /*
+         * <BookingDetails>
+            <Supplier>Kuoni</Supplier>
+            <Reference>152336046</Reference>
+          </BookingDetails>
+         */
         $responseObject = simplexml_load_string($response);
         $hotelOrderConfirmResponse = new HotelOrderConfirmResponse();
         $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order->Id;
         $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
         $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
+        if($responseObject->Order->ItemList){
+            UtilsHelper::soapObjectsArray($responseObject->Order->ItemList->Item);
+            foreach($responseObject->Order->ItemList->Item as $key=>$itemSXE){
+
+                if($itemSXE->Voucher->BookingDetails->Supplier)
+                    $hotelOrderConfirmResponse->suppliers[$key] = (string)$itemSXE->Voucher->BookingDetails->Supplier;
+                if($itemSXE->Voucher->BookingDetails->Reference)
+                    $hotelOrderConfirmResponse->references[$key] = (string)$itemSXE->Voucher->BookingDetails->Reference;
+                $hotelOrderConfirmResponse->voucherAvailable[$key] = (string)$itemSXE->VoucherAvailable;
+            }
+
+        }
+
+
         $hotelOrderConfirmResponse->error = 0;
         if (isset($responseObject->Errors->Error))
         {

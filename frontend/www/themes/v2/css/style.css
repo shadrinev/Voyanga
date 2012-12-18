@@ -2533,6 +2533,44 @@ input.hotel-input {
     top: 0px;
     height: 100%;
 }
+.allTicketsDIV .tdPrice .statusOrder {
+    font-size: 11px;
+    height: 44px;
+    margin-top: -22px;
+    position: absolute;
+    top: 50%;
+}
+.allTicketsDIV .tdPrice .statusOrder .price {
+    font-size: 11px !important;
+}
+.allTicketsDIV .tdPrice .statusOrder .rur {
+    font-size: 10px;
+}
+.status.wait {
+    background: url("../images/bg-orderWait.png") no-repeat scroll 0 0 transparent;
+    height: 22px;
+    line-height: 21px;
+    overflow: hidden;
+    padding-left: 28px;
+    text-overflow: ellipsis;
+    width: 114px;
+    white-space: nowrap;
+    color: #FFF;
+    display: block;
+}
+.status.download {
+    background: url("../images/bg-downloadPdf.png") no-repeat scroll 0 0 transparent;
+    height: 22px;
+    line-height: 21px;
+    overflow: hidden;
+    padding-left: 28px;
+    text-overflow: ellipsis;
+    width: 85px;
+    white-space: nowrap;
+    color: #FFF;
+    cursor: pointer;
+    display: block;
+}
 .allTicketsDIV .aviaTickets tr td,  .allTicketsDIV .hotelTickets tr td {
     line-height: 20px;
     padding-bottom: 9px;

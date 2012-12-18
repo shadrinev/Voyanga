@@ -10,11 +10,23 @@
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>
-            <?php $this->renderPartial('_ambigousPassports', array('passportForms' => $passportForms, 'headers'=>$headersForAmbigous, 'roomCounters'=>$roomCounters)); ?>
+            <?php $this->renderPartial('_ambigousPassports', array(
+                'passportForms' => $passportForms,
+                'headers'=>$headersForAmbigous,
+                'roomCounters'=>$roomCounters,
+                'hide' => false
+            )); ?>
         <?php else: ?>
-            <?php $this->renderPartial('_simplePassport', array('passportForms' => $passportForms, 'icon'=>$icon, 'header'=>$header, 'roomCounters'=>$roomCounters)); ?>
+            <?php $this->renderPartial('_simplePassport', array(
+                'passportForms' => $passportForms,
+                'icon'=>$icon,
+                'header'=>$header,
+                'roomCounters'=>$roomCounters,
+                'hide' => false
+            ));
+            ?>
         <?php endif;?>
-        <?php $this->renderPartial('_buyer', array('model' => $bookingForm)); ?>
+        <?php $this->renderPartial('_buyer', array('model' => $bookingForm, 'hide'=>false)); ?>
     </form>
     <div class="paybuyEnd" id="loadPayFly">
         <div class="loadJet" style="display: none">

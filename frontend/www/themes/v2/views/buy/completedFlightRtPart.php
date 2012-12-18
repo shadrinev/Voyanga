@@ -58,7 +58,12 @@
             </tbody>
         </table>
         <div class="tdPrice">
-            Статус заказа: <span data-bind='attr: {id: $data[0].key}' style="font-weight: bold">в обработке</span>
+            <div class="statusOrder">
+                <span class="price">122 500</span><span class="rur">o</span> за 22 человека
+                <div class="status wait">
+                    <span data-bind='attr: {id: $data[0].key}' style="font-weight: bold">в обработке</span>
+                </div>
+            </div>
         </div>
     </div>
 </script>

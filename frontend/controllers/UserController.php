@@ -27,13 +27,51 @@ class UserController extends CController
 
     public function actionSignup()
     {
-
-    }
-
-    public function actionTest()
-    {
-        $user = FrontendUser::model()->findByPk(8);
-        EmailManager::sendUserInfo($user, '12134234');
+        $model = new SignUpForm();
+        if (isset($_POST['SignUpForm']))
+        {
+            $model->attributes = $_POST['SignUpForm'];
+            if ($model->validate())
+            {
+                $user = new FrontendUser();
+                $user->username = $model->email;
+                $user->email = $model->email;
+                $user->password = $model->password;
+                $isExist = FrontendUser::model()->find(array(
+                    'condition' => 'email = :email OR username = :username',
+                    'params' => array(
+                        ':email' => $user->email,
+                        ':username' => $user->email
+                    )
+                ));
+                if ($isExist)
+                {
+                    echo json_encode(array(
+                        'status' => 'error',
+                        'error' => 'Пользователь с указанным e-mail уже зарегистрирован на сайте'
+                    ));
+                }
+                elseif ($user->save())
+                {
+                    EmailManager::sendUserInfo($user, $model->password);
+                    echo '{"status" : "ok"}';
+                }
+                else
+                {
+                    echo json_encode(array(
+                        'status' => 'error',
+                        'error' => CHtml::errorSummary($user)
+                    ));
+                }
+            }
+            else
+            {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'error' => CHtml::errorSummary($model)
+                ));
+            }
+        }
     }
 
     public function actionCreateTestUser($email)
@@ -72,12 +110,19 @@ class UserController extends CController
                         $user->recover_pwd_key = '';
                         $user->recover_pwd_expiration = date('Y-m-d h:i:s', time() - 1);
                         if ($user->save())
-                            Yii::app()->user->setFlash('success', 'Вы успешно изменили ваш пароль и теперь можете войти на сайт, используя его.');
+                            echo '{"status": "ok"}';
                         else
-                            $model->addErrors($user->errors);
+                            echo json_encode(array(
+                                'status' => 'fail',
+                                'errors' => CHtml::errorSummary($user)
+                            ));
                     }
+                    else
+                        echo json_encode(array(
+                            'status' => 'fail',
+                            'errors' => CHtml::errorSummary($model)
+                        ));
                 }
-                $this->render('newPassword', array('model' => $model));
             }
             else
             {
@@ -181,7 +226,7 @@ class UserController extends CController
         {
             $model->attributes = $_POST['ForgotPasswordForm'];
             $email = $model->email;
-            $user = User::model()->findByAttributes(array('email'=>$email));
+            $user = FrontendUser::model()->findByAttributes(array('email'=>$email));
             if (!$model->validate())
             {
                 echo json_encode(array(
