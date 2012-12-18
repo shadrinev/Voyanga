@@ -187,6 +187,11 @@
     width: 152px;
     cursor: pointer;
 }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    body:first-of-type .login-window {
+        line-height: 38px;
+    }
+}
 .login-window .registerForm {
     background: url("../images/bg-head.png") repeat scroll 0 -38px transparent;
     box-shadow: 0 1px 0 rgba(120, 121, 124, 0.9);
@@ -2528,6 +2533,44 @@ input.hotel-input {
     top: 0px;
     height: 100%;
 }
+.allTicketsDIV .tdPrice .statusOrder {
+    font-size: 11px;
+    height: 44px;
+    margin-top: -22px;
+    position: absolute;
+    top: 50%;
+}
+.allTicketsDIV .tdPrice .statusOrder .price {
+    font-size: 11px !important;
+}
+.allTicketsDIV .tdPrice .statusOrder .rur {
+    font-size: 10px;
+}
+.status.wait {
+    background: url("../images/bg-orderWait.png") no-repeat scroll 0 0 transparent;
+    height: 22px;
+    line-height: 21px;
+    overflow: hidden;
+    padding-left: 28px;
+    text-overflow: ellipsis;
+    width: 114px;
+    white-space: nowrap;
+    color: #FFF;
+    display: block;
+}
+.status.download {
+    background: url("../images/bg-downloadPdf.png") no-repeat scroll 0 0 transparent;
+    height: 22px;
+    line-height: 21px;
+    overflow: hidden;
+    padding-left: 28px;
+    text-overflow: ellipsis;
+    width: 85px;
+    white-space: nowrap;
+    color: #FFF;
+    cursor: pointer;
+    display: block;
+}
 .allTicketsDIV .aviaTickets tr td,  .allTicketsDIV .hotelTickets tr td {
     line-height: 20px;
     padding-bottom: 9px;
@@ -2749,7 +2792,10 @@ input.hotel-input {
     margin-right: -5px;
 }
 .allTicketsDIV .ticketBox:hover {
-    background: #eceff1;
+     background: #eceff1;
+ }
+.allTicketsDIV .ticketBox.inactive:hover {
+    background: inherit !important;
 }
 .paybuyContent .theSum {
 	overflow: hidden;
@@ -2843,7 +2889,7 @@ input.hotel-input {
 	background-position: 0px 0px;
 	text-transform: uppercase;
 }
-.infoPassengers .tdName input.inactive[type="text"] {
+.infoPassengers .tdName input[type="text"][disabled="disabled"] {
     background-position: 0 -165px;
 }
 .infoPassengers input[type='text']:focus {
@@ -2866,7 +2912,7 @@ input.hotel-input {
 	background-position: -147px 0px;
 	text-transform: uppercase;
 }
-.infoPassengers .tdLastname input.inactive[type='text'] {
+.infoPassengers .tdLastname input[type='text'][disabled="disabled"] {
     background-position: -147px -165px;
 }
 .infoPassengers .tdLastname input[type='text'].error {
@@ -2883,7 +2929,7 @@ input.hotel-input {
     text-transform: uppercase;
     width: 148px;
 }
-.infoPassengers .tdDocumentNumber input.inactive[type="text"] {
+.infoPassengers .tdDocumentNumber input[type="text"][disabled="disabled"] {
     background-position: -662px -132px;
 }
 .infoPassengers .tdDocumentNumber input[type='text'].error {
@@ -2993,6 +3039,12 @@ input.hotel-input {
 .tdSex .male.active, .tdSex .male:hover {
 	background-position: -326px -33px;
 }
+.tdSex .male.inactive, .tdSex .male.inactive:hover {
+    background-position: -354px -132px;
+}
+.tdSex .male.active.inactive, .tdSex .male.active.inactive:hover {
+    background-position: -326px -165px;
+}
 /*
 .tdSex .male.active:hover {
 	background-position: -354px -99px;
@@ -3018,11 +3070,15 @@ input.hotel-input {
 .tdSex .female.active, .tdSex .female:hover {
 	background-position: -360px -33px;
 }
-/*
-.tdSex .female.active:hover {
-	background-position: -388px -99px;
+.tdSex .female.inactive, .tdSex .female.inactive:hover {
+    background-position: -388px -132px;
 }
-*/
+.tdSex .female.active.inactive, .tdSex .female.active.inactive:hover {
+    background-position: -360px -165px;
+}
+.chzn-container-single .chzn-single.inactive {
+    background-position: -534px -165px;
+}
 .addGuest {
 	color: #1d222b;
 	font-size: 14px;
@@ -3039,6 +3095,9 @@ input.hotel-input {
 	padding-right: 5px;
 	background-position: 0px -66px;
 	text-transform:none;
+}
+.dopInfoPassengers .tdEmail input[type='text'][disabled="disabled"] {
+    background-position: 0px -132px;
 }
 .dopInfoPassengers .tdEmail input[type='text'].error {
 	background-position: -0px -99px;
@@ -3059,6 +3118,9 @@ input.hotel-input {
     height: 32px;
     width: 197px;
 }
+.divInputTelefon.inactive {
+    background-position: -431px -132px;
+}
 .dopInfoPassengers .tdTelefon .plusSeven {
     width: 25px;
     padding-left: 5px;
@@ -3068,6 +3130,7 @@ input.hotel-input {
     left: 0px;
     height: 33px;
     z-index: 1;
+    background: none;
 }
 .dopInfoPassengers .tdTelefon #contactPhone {
     background: none repeat scroll 0 0 transparent;

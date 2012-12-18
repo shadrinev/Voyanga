@@ -75,7 +75,6 @@ class SuccessAction extends CAction
         $bill->save();
 
         $this->rebill($orderId);
-        $this->scheduleTicketing($orderId);
     }
 
     protected function rebill($orderId){
@@ -117,6 +116,7 @@ class SuccessAction extends CAction
             return $this->refund($order);
         }
 //     throw new Exception("done");
+        $this->scheduleTicketing($orderId);
     }
 
     //! performs refunds of boookers in given order

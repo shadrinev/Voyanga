@@ -267,15 +267,17 @@
                             <div class="right"></div>
                         </div>
                     </div>
-                    <div class="rememberEnter">
-                        <a href="#" class="enterOpen">Войти</a>
-                        <a href="#" class="btnRegLogin">Регистрация</a>
-                    </div>
-                </form>
+                </div>
+                <div class="rememberEnter">
+                    <a href="#" class="enterOpen">Войти</a>
+                    <a href="#" class="btnRegLogin">Регистрация</a>
+                </div>
+                <div class="links">
+                    <a href="/agreement/" target='_blank'>Условия использования</a>
+                </div>
             </div>
             <div class="fogoten" style="display: none;">
                 <h2>Забыли пароль?</h2>
-
                 <div id='forget-errors' style='display: none;'>
                 </div>
                 <form id='forget-pwd-form' action="/user/newPassword" method="post">

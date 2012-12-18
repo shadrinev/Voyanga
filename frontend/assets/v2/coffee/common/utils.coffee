@@ -187,7 +187,7 @@ Utils =
 
 
   submitPayment: (params) ->
-    form_html = '<form id="buy-form" method="POST" action="' +  params.url + '" target="payment_frame">'
+    form_html = '<form id="buy-form" method="GET" action="' +  params.url + '" target="payment_frame">'
     delete params.url
     for key,value of params
       form_html += "<input type=\"hidden\" name=\"#{key}\" value=\"#{value}\" />"
