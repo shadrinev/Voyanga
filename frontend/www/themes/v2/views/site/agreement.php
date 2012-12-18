@@ -4,6 +4,9 @@
   });
 </script>
 
+<div class="center-block">
+<div class="main-block innerPage agreement" id="content">
+
 <h1>Соглашение между пользователем и компанией ООО «Изитрип»</h1>
 <ol>
 <li>

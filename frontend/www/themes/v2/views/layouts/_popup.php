@@ -268,6 +268,9 @@
                     <a href="#" class="enterOpen">Войти</a>
                     <a href="#" class="btnRegLogin">Регистрация</a>
                 </div>
+                <div class="links">
+                    <a href="/agreement/" target='_blank'>Условия использования</a>
+                </div>
             </div>
             <div class="fogoten" style="display: none;">
                 <h2>Забыли пароль?</h2>
