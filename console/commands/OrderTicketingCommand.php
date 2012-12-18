@@ -17,6 +17,8 @@ EOD;
             Yii::app()->user->setState('orderBookingId', $orderId);
             $order = Yii::app()->order;
             $order->initByOrderBookingId($orderId);
+            $order->sendNotifications();
+            exit;
             $payments = Yii::app()->payments;
             $bookers = $payments->preProcessBookers($order->getBookers());
             foreach($bookers as $booker){
