@@ -4045,3 +4045,11 @@ a.whereData span {
     height: 17px;
     background: url(../images/ico-payonline.png) 0px -17px;
 }
+#login-errors {
+    color: red;
+    position: absolute;
+    top: 78px;
+}
+.enterOpen {
+    text-decoration: underline;
+}
