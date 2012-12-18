@@ -3038,11 +3038,9 @@ input.hotel-input {
 .tdSex .female.active.inactive, .tdSex .female.active.inactive:hover {
     background-position: -360px -165px;
 }
-/*
-.tdSex .female.active:hover {
-	background-position: -388px -99px;
+.chzn-single.inactive {
+    background-position: -534px -166px;
 }
-*/
 .addGuest {
 	color: #1d222b;
 	font-size: 14px;
