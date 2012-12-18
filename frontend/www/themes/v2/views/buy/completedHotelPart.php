@@ -1,5 +1,5 @@
 <script type="text/html" id="completed-hotel-part-template">
-    <div class="ticketBox">
+    <div class="ticketBox inactive">
     <table class="hotelTickets">
         <tbody>
         <tr>
