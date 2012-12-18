@@ -414,15 +414,17 @@ class OrderComponent extends CApplicationComponent
                 {
                     $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
 
+
                     $hotelPassports = HotelBookingPassport::model()->findAllByAttributes(array('hotelBookingId'=>$item->hotelBookerId));
                     if ($hotelBooker)
                     {
+                        $voucherInfo = $hotelClient->voucher($hotelBooker->orderId);
                         $hotelInfo = $hotelClient->hotelDetail($hotelBooker->hotel->hotelId);
                         $hotelClient->hotelSearchDetails($hotelBooker->hotel);
                         if(!$orderBookingId) $orderBookingId = $hotelBooker->orderBookingId;
                         $pdfFileName = $controller->renderPdf('ticketHotel',array('type'=>'hotel','ticket'=>$hotelBooker->hotel,
                             'bookingId'=>$orderBookingId,
-                            'pnr'=>'TestPnr',
+                            'pnr'=>implode(', ',$voucherInfo->references),
                             'hotelPassports'=>$hotelPassports,
                             'hotelInfo'=>$hotelInfo
                         ));
@@ -444,7 +446,7 @@ class OrderComponent extends CApplicationComponent
                         if(!$orderBookingId) $orderBookingId = $flightBooker->orderBookingId;
                         $pdfFileName = $controller->renderPdf('ticketAvia',array('type'=>'avia','ticket'=>$flightBooker->flightVoyage,
                         'bookingId'=>$flightBooker->orderBookingId,
-                        'pnr'=>'TestPnr',
+                        'pnr'=>$flightBooker->pnr,
                         'flightPassports'=>$flightPassports,
                         ));
                         if($pdfFileName){
@@ -457,7 +459,8 @@ class OrderComponent extends CApplicationComponent
                 }
             }
         }
-        EmailManager::sendEmailOrderInfo(array('orderBookingId'=>$orderBookingId),$pdfFileNames);
+        $orderBooking = $this->getOrderBooking();
+        EmailManager::sendEmailOrderInfo(array('orderBookingId'=>$orderBookingId,'email'=>$orderBooking->email),$pdfFileNames);
         foreach($pdfFileNames as $pdfInfo){
             if(file_exists($pdfInfo['filename'])){
                 unlink($pdfInfo['filename']);
