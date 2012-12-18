@@ -239,7 +239,7 @@ Utils = {
   },
   submitPayment: function(params) {
     var form_html, key, value;
-    form_html = '<form id="buy-form" method="POST" action="' + params.url + '" target="payment_frame">';
+    form_html = '<form id="buy-form" method="GET" action="' + params.url + '" target="payment_frame">';
     delete params.url;
     for (key in params) {
       value = params[key];
