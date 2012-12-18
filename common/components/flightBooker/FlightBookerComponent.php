@@ -185,8 +185,7 @@ class FlightBookerComponent extends CApplicationComponent
         SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
         GDSNemoAgency::$requestIds = array();
 
-        //VarDumper::dump($flightTicketingResponse);
-        //die();
+#        VarDumper::dump($flightTicketingResponse);
         if($flightTicketingResponse->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
         {
             //saving tickets numbers to DB
@@ -228,6 +227,9 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageTicketingRepeat()
     {
+        $this->status('ticketingError');
+        return;
+//pass;
         $this->flightBooker->tryCount++;
         $this->flightBooker->save();
         if ($this->flightBooker->tryCount > 3)

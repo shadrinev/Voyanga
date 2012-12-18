@@ -41,7 +41,7 @@
         </div>
         <div class="agreeConditions">
            <label for="agreeCheck">
-               <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'#\'>условиями использования</a>,<br><a href=\'#\'>правилами IATA</a> и <a href=\'#\'>правилами тарифов</a>', checked: 0}" name="agree" id="agreeCheck">
+               <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement_avia\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и правилами тарифов', checked: 0}" name="agree" id="agreeCheck">
            </label>
         </div>
         <div class="btnBlue inactive" id='submit-passport'>

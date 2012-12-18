@@ -38,7 +38,7 @@ class EShoppingCart extends CMap
      */
     public function restoreFromSession()
     {
-        $data = unserialize(Yii::app()->getUser()->getState($this->cartId));
+        $data = unserialize(Yii::app()->user->getState($this->cartId));
         if (is_array($data) || $data instanceof Traversable)
             foreach ($data as $key => $product)
                 parent::add($key, $product);
@@ -130,7 +130,8 @@ class EShoppingCart extends CMap
      */
     protected function saveState()
     {
-        Yii::app()->getUser()->setState($this->cartId, serialize($this->toArray()));
+        
+        Yii::app()->user->setState($this->cartId, serialize($this->toArray()));
     }
 
     /**

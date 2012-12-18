@@ -12,24 +12,36 @@
             <div class="bg-mask"></div>
 
             <ul>
-                <li id="h-tours-slider" class="planner btn"  data-bind="click: slider.click"><a href="/#tours">Планировщик</a></li>
+                <li id="h-tours-slider" class="planner btn" data-bind="click: slider.click"><a href="/#tours">Планировщик</a>
+                </li>
                 <li id="h-avia-slider" class="aviatickets btn" data-bind="click: slider.click"><a href="/#avia">Авиабилеты</a>
                 </li>
-                <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="/#hotels">Отели</a></li>
+                <li id="h-hotels-slider" class="hotel btn" data-bind="click: slider.click"><a href="/#hotels">Отели</a>
+                </li>
             </ul>
         </div>
 
+        <?php if (Yii::app()->user->isGuest): ?>
         <div class="login-window full" onclick="openPopUpLogIn('enter')">
             <div class="registerForm">
                 <a href="javascript:void(0)" class="logInLinks">
                     <span class="text">Регистрация и вход</span>
                 </a>
             </div>
+        </div>
+        <?php else: ?>
+        <div class="login-window full" onclick="showUserMenu()">
+            <div class="registerForm">
+                <a href="javascript:void(0)" class="logInLinks user">
+                    <span class="text"><?php echo Yii::app()->user->model->email; ?></span>
+                </a>
+            </div>
             <div class="popupDown">
-                <a href="#">Мои заказы</a>
-                <a href="#">Выйти</a>
+                <a href="/user/orders">Мои заказы</a>
+                <a href="/user/logout">Выйти</a>
             </div>
         </div>
+        <?php endif ?>
     </div>
     <!-- END CENTER BLOCK -->
 </div>

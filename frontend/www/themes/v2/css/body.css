@@ -86,6 +86,46 @@ h1.title {
     margin: 0 0 4px;
     list-style: disc outside;
 }
+.agreement ol li {
+    list-style: none !important;
+}
+.agreement ol ol {
+    counter-reset: list2;
+    list-style-type: none !important;
+    margin-left: 3em;
+}
+.agreement ol ol > li:before {
+    content: counter(list1, decimal) "." counter(list2, decimal);
+    counter-increment: list2;
+    margin-left: -3em;
+    position: absolute;
+    text-align: right;
+    width: 2.3em;
+}
+.article li {
+    margin: 0 0 8px;
+}
+.agreement ol ol ul {
+    margin-left: 16px;
+}
+.agreement ul li {
+    list-style: disc outside none !important;
+}
+.agreement ol > li h2:before {
+    content: counter(list1, decimal) ". ";
+}
+.agreement h2 {
+    font-size: 22px;
+    line-height: 30px;
+    margin: 0 0 12px;
+    color: #1D222B;
+    letter-spacing: 0.001em;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.agreement > ol > li {
+    counter-increment: list1;
+    margin-left: 0;
+}
 h1.title img {
     margin-bottom: -8px;
     margin-right: -10px;

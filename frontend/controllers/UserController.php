@@ -19,7 +19,7 @@ class UserController extends CController
     public function accessRules()
     {
         return array(
-            array('allow', 'actions' => array('test','createTestUser', 'newPassword', 'login')),
+            array('allow', 'actions' => array('test','createTestUser', 'newPassword', 'login', 'validate')),
             array('allow', 'actions' => array('orders', 'logout'), 'users' => array('@')),
             array('deny'),
         );
@@ -109,7 +109,10 @@ class UserController extends CController
         $criteria->addColumnCondition(array('userId'=>Yii::app()->user->id));
 
         $dataProvider = new CActiveDataProvider('OrderBooking', array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => 100
+            )
         ));
         $this->render('orders', array(
             'model' => $dataProvider
@@ -123,23 +126,46 @@ class UserController extends CController
     {
         $model = new LoginForm;
 
-        // if it is ajax validation request
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-
         // collect user input data
         if (isset($_POST['LoginForm']))
         {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login())
-                $this->redirect(Yii::app()->user->returnUrl);
+            {
+                $url = Yii::app()->user->returnUrl;
+                if ($url == '/index.php')
+                    $this->redirect('/user/orders');
+                else
+                    $this->redirect($url);
+            }
         }
         // display the login form
         $this->render('login', array('model' => $model));
+    }
+
+    public function actionValidate()
+    {
+        $model = new LoginForm();
+        if (isset($_POST['LoginForm']))
+        {
+            $model->attributes = $_POST['LoginForm'];
+            // validate user input and redirect to the previous page if valid
+            if ($model->validate())
+            {
+                echo '{"status" : "ok"}';
+                Yii::app()->end();
+            }
+            else
+            {
+                echo json_encode(array(
+                    'status' => "fail",
+                    'errors' => CHtml::errorSummary($model)
+                ));
+                Yii::app()->end();
+            }
+        }
+        echo '{status: "fail", errors: "Необходимо указать логин и пароль"}';
     }
 
     /**

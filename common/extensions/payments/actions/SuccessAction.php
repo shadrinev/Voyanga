@@ -75,6 +75,7 @@ class SuccessAction extends CAction
         $bill->save();
 
         $this->rebill($orderId);
+        $this->scheduleTicketing($orderId);
     }
 
     protected function rebill($orderId){
@@ -99,9 +100,7 @@ class SuccessAction extends CAction
             $booker->status('paymentInProgress');
             if($channel->rebill($_REQUEST['RebillAnchor']))
             {
-//                $payments->notifyNemo($booker, $bill);
                 $booker->status('paid');
-//                $booker->status('ticketing');
                 continue;
             }
             if ($channel->getName() == 'gds_galileo')
@@ -162,5 +161,17 @@ class SuccessAction extends CAction
         if(count($parts)==2)
             return $parts[1];
         return $parts[0];
+    }
+
+    protected function scheduleTicketing($orderId) {
+        $order = Yii::app()->order;
+        $order->initByOrderBookingId($orderId);
+        $payments = Yii::app()->payments;
+        $bookers = $payments->preProcessBookers($order->getBookers());
+        foreach($bookers as $booker){
+            if(!$this->getStatus($booker)=='paid')
+                return false;
+        }
+        $res = Yii::app()->cron->add(time() + 5, 'orderticketing', 'cron', array('orderId'=>$orderId));
     }
 }

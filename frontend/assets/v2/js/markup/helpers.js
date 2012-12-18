@@ -283,6 +283,10 @@ function telefonLoad() {
     else {
         return;
     }
+
+    $('.infoPassengers:eq(0) tbody .tdName:eq(0) input').focus(function() {
+        Utils.scrollTo('#tableStartRun');
+    });
 }
 $(window).load(telefonLoad);
 
@@ -481,6 +485,14 @@ function ParseChar(sStr, sChar)
 
 
 function onFocusInput() {
+    if ($('#male').attr('checked')=='checked')
+    {
+        $('#male').closest('label').addClass('active');
+    }
+    if ($('#female').attr('checked')=='checked')
+    {
+        $('#female').closest('label').addClass('active');
+    }
     $('#male').focus(function() {
         $(this).parent().addClass('focus');
     });
@@ -519,3 +531,32 @@ function onFocusInput() {
     });
 }
 $(window).load(onFocusInput);
+
+function showUserMenu()
+{
+    $('.popupDown').slideDown();
+    // Проверка на закрытие вне области
+    var mouseHover = true;
+    $('.login-window').hover(function() {
+            mouseHover = false;
+        },
+        function() {
+            mouseHover = true;
+        }
+    );
+    $('.popupDown').hover(function() {
+            mouseHover = false;
+        },
+        function() {
+            mouseHover = true;
+        }
+    );
+    $('body').mouseup(function() {
+        if (mouseHover) {
+            $('.popupDown').slideUp();
+        }
+        else {
+            return;
+        }
+    });
+}
