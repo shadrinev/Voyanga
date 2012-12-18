@@ -32,6 +32,7 @@
         <?php else: ?>
             <div class="login-window full">
                 <div class="registerForm">
+                    <a href="/user/orders" class="logInLinks"><?php echo Yii::app()->user->model->email ?></a>
                     <a href="/user/orders" class="logInLinks">Мои заказы</a>
                     <a href="/user/logout" class="logInLinks">Выйти</a>
                 </div>
