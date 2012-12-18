@@ -126,10 +126,10 @@
             </td>
             <td class="tdSex">
                 <label class="male" for="male">
-                    <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="male" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
                 <label class="female" for="female">
-                    <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                 </label>
             </td>
             <td class="tdBirthday">

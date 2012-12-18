@@ -1370,6 +1370,7 @@ function openPopUpLogIn(what) {
             return;
         }
     });
+    $('div.'+_this).find('input').eq(0).focus();
     var heightWinAll = $(window).height();
     var heightPopAll = $('.contentWrapBg .wrapDiv').innerHeight();
     var offset = $('.contentWrapBg .wrapDiv').offset();
@@ -1423,6 +1424,8 @@ function hoverPayCard() {
     });
 }
 $(window).load(hoverPayCard);
+
+//functions for private space popups
 $(function(){
     $('.btnEnterLogin').on('click', function(){
         $('#login-errors').html('').hide();
@@ -1444,6 +1447,43 @@ $(function(){
             })
             .error(function(){
                 $('#login-errors').html('Ошибка при проверке логина/пароля.').show()
+            });
+        return false;
+    });
+});
+
+$(function(){
+    $('.btnFogLogin').on('click', function(){
+        $('#forget-errors').html('').hide();
+        $.ajax({
+            url: '/user/validateForgetPassword',
+            dataType: 'json',
+            data: $('#forget-pwd-form').serialize(),
+            type: 'POST'
+        })
+            .done(function(response){
+                if (response.status != 'ok')
+                {
+                    $('#forget-errors').html(response.errors).show();
+                }
+                else
+                {
+                    $.ajax({
+                        url: '/user/newPassword',
+                        data: $('#forget-pwd-form').serialize(),
+                        type: 'POST'
+                    })
+                        .done(function(){
+                            $('#forget-pwd-form')
+                                .html('Запрос на восстановление пароля выслан на указанный e-mail');
+                        })
+                        .error(function(){
+                            $('#forget-errors').html('Ошибка при восстановлении пароля.').show()
+                        });
+                }
+            })
+            .error(function(){
+                $('#forget-errors').html('Ошибка при восстановлении пароля.').show()
             });
         return false;
     });

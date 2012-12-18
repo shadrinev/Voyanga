@@ -30,15 +30,15 @@
             </div>
         </div>
         <?php else: ?>
-        <div class="login-window full" onclick="openPopUpLogIn('enter')">
+        <div class="login-window full" onclick="showUserMenu()">
             <div class="registerForm">
                 <a href="javascript:void(0)" class="logInLinks user">
                     <span class="text"><?php echo Yii::app()->user->model->email; ?></span>
                 </a>
             </div>
             <div class="popupDown">
-                <a href="#">Мои заказы</a>
-                <a href="#">Выйти</a>
+                <a href="/user/orders">Мои заказы</a>
+                <a href="/user/logout">Выйти</a>
             </div>
         </div>
         <?php endif ?>

@@ -239,3 +239,7 @@ String.prototype.format = ->
   args = arguments;
   @replace /{(\d+)}/g, (match, number) -> 
     if typeof args[number] != 'undefined' then  args[number]else match
+
+isEmail = (email) ->
+  emailPatterh = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
+  email.match emailPattern

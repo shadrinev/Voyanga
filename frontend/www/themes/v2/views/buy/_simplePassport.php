@@ -76,11 +76,6 @@
                         <label class="female" for="female">
                             <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>">
                         </label>
-<!--                        --><?php //echo CHtml::activeHiddenField($model, "[$i]genderId", array('class' => 'genderField')); ?>
-<!--                        <div class="gender gender---><?php //echo BaseFlightPassportForm::GENDER_MALE?><!-- male"-->
-<!--                             data-value="--><?php //echo BaseFlightPassportForm::GENDER_MALE?><!--"></div>-->
-<!--                        <div class="gender gender---><?php //echo BaseFlightPassportForm::GENDER_FEMALE?><!-- female"-->
-<!--                             data-value="--><?php //echo BaseFlightPassportForm::GENDER_FEMALE?><!--"></div>-->
                     </td>
                     <td class="tdBirthday">
                         <div class="divInputBirthday">

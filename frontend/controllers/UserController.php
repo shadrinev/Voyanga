@@ -19,10 +19,15 @@ class UserController extends CController
     public function accessRules()
     {
         return array(
-            array('allow', 'actions' => array('test','createTestUser', 'newPassword', 'login', 'validate')),
+            array('allow', 'actions' => array('test','createTestUser', 'newPassword', 'login', 'validate', 'validateForgetPassword', 'signup')),
             array('allow', 'actions' => array('orders', 'logout'), 'users' => array('@')),
             array('deny'),
         );
+    }
+
+    public function actionSignup()
+    {
+
     }
 
     public function actionTest()
@@ -109,7 +114,10 @@ class UserController extends CController
         $criteria->addColumnCondition(array('userId'=>Yii::app()->user->id));
 
         $dataProvider = new CActiveDataProvider('OrderBooking', array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => 100
+            )
         ));
         $this->render('orders', array(
             'model' => $dataProvider
@@ -124,6 +132,7 @@ class UserController extends CController
         $model = new LoginForm;
 
         // collect user input data
+
         if (isset($_POST['LoginForm']))
         {
             $model->attributes = $_POST['LoginForm'];
@@ -137,8 +146,8 @@ class UserController extends CController
                     $this->redirect($url);
             }
         }
-        // display the login form
-        $this->render('login', array('model' => $model));
+
+        $this->redirect('/');
     }
 
     public function actionValidate()
@@ -164,6 +173,40 @@ class UserController extends CController
         }
         echo '{status: "fail", errors: "Необходимо указать логин и пароль"}';
     }
+
+    public function actionValidateForgetPassword()
+    {
+        $model = new ForgotPasswordForm();
+        if (isset($_POST['ForgotPasswordForm']))
+        {
+            $model->attributes = $_POST['ForgotPasswordForm'];
+            $email = $model->email;
+            $user = User::model()->findByAttributes(array('email'=>$email));
+            if (!$model->validate())
+            {
+                echo json_encode(array(
+                    'status' => "fail",
+                    'errors' => CHtml::error($model, 'email')
+                ));
+                Yii::app()->end();
+            }
+            elseif (!$user)
+            {
+                echo json_encode(array(
+                    'status' => "fail",
+                    'errors' => 'Пользователь с таким e-mail не зарегистрирован'
+                ));
+                Yii::app()->end();
+            }
+            else
+            {
+                echo '{"status" : "ok"}';
+                Yii::app()->end();
+            }
+        }
+        echo '{status: "fail", errors: "Ошибка восстановления пароля"}';
+    }
+
 
     /**
      * Logs out the current user and redirect to homepage.
