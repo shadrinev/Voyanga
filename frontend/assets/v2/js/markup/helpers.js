@@ -485,45 +485,45 @@ function ParseChar(sStr, sChar)
 
 
 function onFocusInput() {
-    if ($('#male').attr('checked')=='checked')
+    if ($('.male input').attr('checked')=='checked')
     {
-        $('#male').closest('label').addClass('active');
+        $('.male input').closest('label').addClass('active');
     }
-    if ($('#female').attr('checked')=='checked')
+    if ($('.female input').attr('checked')=='checked')
     {
-        $('#female').closest('label').addClass('active');
+        $('.female input').closest('label').addClass('active');
     }
-    $('#male').focus(function() {
+    $('.male input').focus(function() {
         $(this).parent().addClass('focus');
     });
-    $('#male').blur(function() {
+    $('.male input').blur(function() {
         $(this).parent().removeClass('focus');
         $(this).removeAttr('disabled');
-        $('#female').removeAttr('disabled');
+        $('.female input').removeAttr('disabled');
     });
-    $('#male').change(function() {
+    $('.male input').change(function() {
         if ($(this).attr('checked') == 'checked') {
             $(this).parent().addClass('active');
             $('.female').removeClass('active');
-            $('.tdBirthday input.dd').focus();
+            $(this).parent().parent().next().find('input.dd').focus();
         }
         else {
             $(this).parent().removeClass('active');
         }
     });
-    $('#female').focus(function() {
+    $('.female input').focus(function() {
         $(this).parent().addClass('focus');
     });
-    $('#female').blur(function() {
+    $('.female input').blur(function() {
         $(this).parent().removeClass('focus');
         $(this).removeAttr('disabled');
-        $('#male').removeAttr('disabled');
+        $('.male input').removeAttr('disabled');
     });
-    $('#female').change(function() {
+    $('.female input').change(function() {
         if ($(this).attr('checked') == 'checked') {
             $(this).parent().addClass('active');
             $('.male').removeClass('active');
-            $('.tdBirthday input.dd').focus();
+            $(this).parent().parent().next().find('input.dd').focus();
         }
         else {
             $(this).parent().removeClass('active');
@@ -531,32 +531,3 @@ function onFocusInput() {
     });
 }
 $(window).load(onFocusInput);
-
-function showUserMenu()
-{
-    $('.popupDown').slideDown();
-    // Проверка на закрытие вне области
-    var mouseHover = true;
-    $('.login-window').hover(function() {
-            mouseHover = false;
-        },
-        function() {
-            mouseHover = true;
-        }
-    );
-    $('.popupDown').hover(function() {
-            mouseHover = false;
-        },
-        function() {
-            mouseHover = true;
-        }
-    );
-    $('body').mouseup(function() {
-        if (mouseHover) {
-            $('.popupDown').slideUp();
-        }
-        else {
-            return;
-        }
-    });
-}
