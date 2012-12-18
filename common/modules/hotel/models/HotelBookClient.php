@@ -1601,7 +1601,7 @@ class HotelBookClient
   <Items>
     <HotelItem>
       <Search resultId="' . $hotelOrderParams->hotel->resultId . '" searchId="' . $hotelOrderParams->hotel->searchId . '" />
-      <PayForm>cashless<PayForm>
+      <PayForm>cashless</PayForm>
       <Rooms>
       </Rooms>
     </HotelItem>
