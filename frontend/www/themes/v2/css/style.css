@@ -2556,6 +2556,7 @@ input.hotel-input {
     width: 114px;
     white-space: nowrap;
     color: #FFF;
+    display: block;
 }
 .status.download {
     background: url("../images/bg-downloadPdf.png") no-repeat scroll 0 0 transparent;
@@ -2568,6 +2569,7 @@ input.hotel-input {
     white-space: nowrap;
     color: #FFF;
     cursor: pointer;
+    display: block;
 }
 .allTicketsDIV .aviaTickets tr td,  .allTicketsDIV .hotelTickets tr td {
     line-height: 20px;
