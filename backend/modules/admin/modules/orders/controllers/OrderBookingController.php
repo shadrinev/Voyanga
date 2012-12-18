@@ -102,7 +102,7 @@ class OrderBookingController extends Controller
             $retArr['bookings'][] = $booking;
         }
 
-        echo json_encode($retArr);die();
+        echo json_encode($retArr);
     }
 
     private function getOrderInfo($id)

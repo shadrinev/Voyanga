@@ -12,5 +12,8 @@ class HotelOrderConfirmResponse
     public $tag;
     public $orderId;
     public $error;
+    public $references;
+    public $suppliers;
+    public $voucherAvailable;
 
 }
