@@ -44,7 +44,7 @@ class EmailManager
         $msg->view = 'orderInfo';
         $msg
             ->setFrom(appParams('adminEmail'), appParams('adminEmailName'))
-            ->setTo('maximov@danechka.com')
+            ->setTo($params['email'])
             ->setSubject('Ваш заказ готов');
         $msg->setBody($params, 'text/html');
         foreach($pdfFileNames as $key=>$pdfInfo){
