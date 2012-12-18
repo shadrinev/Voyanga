@@ -86,6 +86,10 @@ h1.title {
     margin: 0 0 4px;
     list-style: disc outside;
 }
+.innerPage a {
+    color: #1C81BB;
+    text-decoration: underline;
+}
 .agreement ol li {
     list-style: none !important;
 }
