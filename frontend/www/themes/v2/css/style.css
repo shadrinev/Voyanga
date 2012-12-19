@@ -3008,6 +3008,9 @@ input.hotel-input {
 	background-position: -533px 0px;
 	text-transform: uppercase;
 }
+.infoPassengers .tdNationality input[type='text'][disabled="disabled"] {
+    background: url("../images/bg-input.png") no-repeat scroll -533px -165px transparent;
+}
 .infoPassengers .tdNationality input[type='text'].error {
 	background-position: -533px -33px;
 }
