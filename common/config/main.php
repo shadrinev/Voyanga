@@ -70,7 +70,7 @@ return array(
         ),
 
         'pdfGenerator' => array(
-            'class'=>'site.common.components.pdfGenerator'
+            'class'=>'site.common.components.PdfGenerator'
         ),
 
         'observer' => array(
