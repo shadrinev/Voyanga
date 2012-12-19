@@ -422,9 +422,10 @@ class OrderComponent extends CApplicationComponent
                         $hotelInfo = $hotelClient->hotelDetail($hotelBooker->hotel->hotelId);
                         $hotelClient->hotelSearchDetails($hotelBooker->hotel);
                         if(!$orderBookingId) $orderBookingId = $hotelBooker->orderBookingId;
+                        print_r($voucherInfo);
                         $pdfFileName = $controller->renderPdf('ticketHotel',array('type'=>'hotel','ticket'=>$hotelBooker->hotel,
                             'bookingId'=>$orderBookingId,
-                            'pnr'=>implode(', ',$voucherInfo->references).'('.implode(', ',$voucherInfo->suppliers).')',
+                            'pnr'=>implode(', ',$voucherInfo->references),
                             'hotelPassports'=>$hotelPassports,
                             'hotelInfo'=>$hotelInfo
                         ));
