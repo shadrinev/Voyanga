@@ -123,9 +123,6 @@ return CMap::mergeArray (
             'gdsAdapter' => array(
                 'class' => 'GDSAdapter'
             ),
-            'user'=> array(
-                'class' => 'ConsoleUser'
-            ),
 
             'cache' => $params['cache.core'],
             'contentCache' => $params['cache.content'],

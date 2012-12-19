@@ -431,7 +431,7 @@ class OrderComponent extends CApplicationComponent
                         if($pdfFileName){
                             $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileName);
                         }
-                        print_r($hotelBooker);
+//                        print_r($hotelBooker);
                     }
                 }
             }
@@ -452,7 +452,7 @@ class OrderComponent extends CApplicationComponent
                         if($pdfFileName){
                             $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileName);
                         }
-                        print_r($flightBooker->flightVoyage);
+                        //                      print_r($flightBooker->flightVoyage);
                         //$tickets[] = array('type'=>'avia','ticket'=>$flightBooker->flightVoyage);
 
                     }

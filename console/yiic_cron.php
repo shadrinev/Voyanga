@@ -11,6 +11,7 @@ $common=$root.'/common';
 require_once('common/components/Yii.php');
 $config='console/config/main.php'; 
 require_once('common/lib/global.php');
+require_once('console/components/ConsoleApplication.php');
 
 if($argc > 2){
     $uniqKey = $argv[1];
@@ -47,7 +48,7 @@ register_shutdown_function('__shutdown');
 
 if(isset($config))
 {
-	$app=Yii::createConsoleApplication($config);
+	$app=Yii::createApplication('ConsoleApplication', $config);
 	$app->commandRunner->addCommands(YII_PATH.'/cli/commands');
 	$env=@getenv('YII_CONSOLE_COMMANDS');
 	if(!empty($env))

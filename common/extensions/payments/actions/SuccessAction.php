@@ -38,13 +38,13 @@ class SuccessAction extends CAction
         }
 
        $booker = $channel->booker;
-        if($booker instanceof FlightBooker) {
+       if($booker instanceof FlightBooker) {
             $booker  = new FlightBookerComponent();
             $booker->setFlightBookerFromId($channel->booker->id);
         }         // Hoteles are allways wrapped into metabooker
         //FIXME logme
-        if($this->getStatus($booker)=='paid')
-            return;
+#        if($this->getStatus($booker)=='paid')
+#            return;
         if($this->getStatus($booker)=='paymentInProgress')
             return;
         $this->handle($bill, $booker, $channel, $orderId);
@@ -58,7 +58,7 @@ class SuccessAction extends CAction
             //! Fixme more specific exception?
             $e = new RequestError("Bill #" . $bill->id . " already have transaction id");
             yii::app()->RSentryException->logException($e);
-            return;
+#            return;
         }
         $bill->transactionId = $_REQUEST['TransactionID'];
 
@@ -73,7 +73,6 @@ class SuccessAction extends CAction
         $booker->status('paymentInProgress');
         $booker->status('paid');
         $bill->save();
-
         $this->rebill($orderId);
     }
 
@@ -148,6 +147,9 @@ class SuccessAction extends CAction
     {
         if($this->getStatus($booker)=='waitingForPayment')
             return true;
+        if($this->getStatus($booker)=='paid')
+            return true;
+
         # FIXME FIXME FIXME
         return false;
     }
@@ -172,6 +174,6 @@ class SuccessAction extends CAction
             if(!$this->getStatus($booker)=='paid')
                 return false;
         }
-        $res = Yii::app()->cron->add(time() + 5, 'orderticketing', 'cron', array('orderId'=>$orderId));
+        $res = Yii::app()->cron->add(time() + 75, 'orderticketing', 'cron', array('orderId'=>$orderId));
     }
 }

@@ -54,24 +54,24 @@ return CMap::mergeArray(array(
     'autocompleteCacheTime' => 3600,
 
     'cache.core'=>extension_loaded('apc') ?
-		array(
-			'class' => 'CApcCache',
-		) :
-		array(
-			'class' => 'CDbCache',
-			'connectionID' => 'db',
-			'autoCreateCacheTable' => true,
-			'cacheTableName' => 'cache',
-		),
-	'cache.content' => array(
-		'class' => 'CDbCache',
-		'connectionID' => 'db',
-		'autoCreateCacheTable' => true,
-		'cacheTableName' => 'cache',
-	),
-	
-	'php.exePath' => '/usr/bin/php',
-    'pdfConverterPath' => '/usr/bin/wkhtmltopdf',
+        array(
+            'class' => 'CApcCache',
+        ) :
+        array(
+            'class' => 'CDbCache',
+            'connectionID' => 'db',
+            'autoCreateCacheTable' => true,
+            'cacheTableName' => 'cache',
+        ),
+    'cache.content' => array(
+        'class' => 'CDbCache',
+        'connectionID' => 'db',
+        'autoCreateCacheTable' => true,
+        'cacheTableName' => 'cache',
+    ),
+
+    'php.exePath' => '/usr/bin/php',
+    'pdfConverterPath' => '/usr/local/bin/wkhtmltopdf',
 
     'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
     'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',

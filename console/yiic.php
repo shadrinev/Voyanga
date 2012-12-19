@@ -8,10 +8,11 @@ $root=dirname(__FILE__);
 require_once('common/components/Yii.php');
 $config='console/config/main.php'; 
 require_once('common/lib/global.php');
+require_once('console/components/ConsoleApplication.php');
 
 if(isset($config))
 {
-	$app=Yii::createConsoleApplication($config);
+	$app=Yii::createApplication('ConsoleApplication',$config);
 	$app->commandRunner->addCommands(YII_PATH.'/cli/commands');
 	$env=@getenv('YII_CONSOLE_COMMANDS');
 	if(!empty($env))

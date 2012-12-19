@@ -219,8 +219,8 @@ class CUrlManager extends CApplicationComponent
 			$hash=md5(serialize($this->rules));
 			if(($data=$cache->get(self::CACHE_KEY))!==false && isset($data[1]) && $data[1]===$hash)
 			{
-				$this->_rules=$data[0];
-				return;
+//				$this->_rules=$data[0];
+//				return;
 			}
 		}
 		foreach($this->rules as $pattern=>$route)
@@ -366,7 +366,7 @@ class CUrlManager extends CApplicationComponent
 				if(is_array($rule))
 					$this->_rules[$i]=$rule=Yii::createComponent($rule);
 				if(($r=$rule->parseUrl($this,$request,$pathInfo,$rawPathInfo))!==false)
-					return isset($_GET[$this->routeVar]) ? $_GET[$this->routeVar] : $r;
+					return $r;//isset($_GET[$this->routeVar]) ? $_GET[$this->routeVar] : $r;
 			}
 			if($this->useStrictParsing)
 				throw new CHttpException(404,Yii::t('yii','Unable to resolve the request "{route}".',
@@ -798,6 +798,9 @@ class CUrlRule extends CBaseUrlRule
 	 */
 	public function parseUrl($manager,$request,$pathInfo,$rawPathInfo)
 	{
+        if($this->pattern != "/^(?P<action>(agreement_avia|agreement_hotel|iata|agreement))\/$/u")
+            return false;
+
 		if($this->verb!==null && !in_array($request->getRequestType(), $this->verb, true))
 			return false;
 
@@ -821,7 +824,6 @@ class CUrlRule extends CBaseUrlRule
 			$pathInfo=strtolower($request->getHostInfo()).rtrim('/'.$pathInfo,'/');
 
 		$pathInfo.='/';
-
 		if(preg_match($this->pattern.$case,$pathInfo,$matches))
 		{
 			foreach($this->defaultParams as $name=>$value)
@@ -837,6 +839,7 @@ class CUrlRule extends CBaseUrlRule
 				else if(isset($this->params[$key]))
 					$_REQUEST[$key]=$_GET[$key]=$value;
 			}
+
 			if($pathInfo!==$matches[0]) // there're additional GET params
 				$manager->parsePathInfo(ltrim(substr($pathInfo,strlen($matches[0])),'/'));
 			if($this->routePattern!==null)
