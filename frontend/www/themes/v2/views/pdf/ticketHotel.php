@@ -156,7 +156,7 @@ $dayFormat = "d|n|w";
                 $dateString ="$dd {$monthNames[$mm]}  {$dayOfWeek[$ww]}";
 
                 ?>
-                При отмене после <?php echo $dateString;?> удерживается <?php echo UtilsHelper::formatPrice($charge->price); ?> RUB.
+                При отмене после <?php echo $dateString;?> удерживается <?php echo UtilsHelper::formatPrice($charge['price']); ?> RUB.
             <?php endforeach; ?>
 
         </div>
