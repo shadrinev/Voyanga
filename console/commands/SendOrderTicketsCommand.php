@@ -17,6 +17,7 @@ EOD;
             $order = Yii::app()->order;
             $order->initByOrderBookingId($orderId);
             $order->sendNotifications();
+            echo "all sended";
         }
         else
         {
