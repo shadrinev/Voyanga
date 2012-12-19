@@ -7,7 +7,7 @@
  */
 return array(
     'HotelBook' => array(
-        'uri' => ' http://test.hotelbook.vsespo.ru/xml/',
+        'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
         'login' => 'voyanga',
         'password' => 'vLP1xe',
         'room' => array(
