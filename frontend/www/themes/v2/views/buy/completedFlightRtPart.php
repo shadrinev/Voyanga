@@ -59,7 +59,10 @@
         </table>
         <div class="tdPrice">
             <div class="statusOrder">
-                <span class="price">122 500</span><span class="rur">o</span> за 22 человека
+                <span class="price">
+                    <span data-bind="text:$data[0].price">12 500</span> руб. за
+                    <span data-bind="text: $data[0].totalPeopleGen">2 человека</span>
+                </span>
                 <div class="status wait">
                     <span data-bind='attr: {id: $data[0].key}' style="font-weight: bold">в обработке</span>
                 </div>

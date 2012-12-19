@@ -811,6 +811,7 @@ class TourTripResultSet
         aviaResult = new AviaResult(item, @)
         aviaResult.sort()
         aviaResult.totalPeople = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек'
+        aviaResult.totalPeopleGen = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек'
         if (@roundTrip)
           @cities.push {isLast: false, cityName: item.flights[0].departureCity}
           @cities.push {isLast: false, cityName: item.flights[0].arrivalCity}
@@ -829,6 +830,7 @@ class TourTripResultSet
         totalPeople = 0
         _.each item.searchParams.rooms, (room) -> totalPeople += room.adultCount/1 + room.childCount/1 + room.cots/1
         @lastHotel.totalPeople = Utils.wordAfterNum totalPeople, 'человек', 'человека', 'человек'
+        @lastHotel.totalPeopleGen = Utils.wordAfterNum totalPeople, 'человека', 'человек', 'человек'
         @items.push(@lastHotel)
         @totalCostWithDiscount += @lastHotel.roomSets()[0].discountPrice
         @totalCostWithoutDiscount += @lastHotel.roomSets()[0].price
@@ -854,4 +856,3 @@ class TourTripResultSet
         @totalCost = @totalCostWithDiscount
     else
         @totalCost = @totalCostWithoutDiscount
-    console.log "City:", @cities

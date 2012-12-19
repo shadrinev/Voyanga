@@ -1255,6 +1255,7 @@ TourTripResultSet = (function() {
         aviaResult = new AviaResult(item, _this);
         aviaResult.sort();
         aviaResult.totalPeople = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек');
+        aviaResult.totalPeopleGen = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек');
         if (_this.roundTrip) {
           _this.cities.push({
             isLast: false,
@@ -1293,6 +1294,7 @@ TourTripResultSet = (function() {
           return totalPeople += room.adultCount / 1 + room.childCount / 1 + room.cots / 1;
         });
         _this.lastHotel.totalPeople = Utils.wordAfterNum(totalPeople, 'человек', 'человека', 'человек');
+        _this.lastHotel.totalPeopleGen = Utils.wordAfterNum(totalPeople, 'человека', 'человек', 'человек');
         _this.items.push(_this.lastHotel);
         _this.totalCostWithDiscount += _this.lastHotel.roomSets()[0].discountPrice;
         return _this.totalCostWithoutDiscount += _this.lastHotel.roomSets()[0].price;
@@ -1327,7 +1329,6 @@ TourTripResultSet = (function() {
     } else {
       this.totalCost = this.totalCostWithoutDiscount;
     }
-    console.log("City:", this.cities);
   }
 
   return TourTripResultSet;

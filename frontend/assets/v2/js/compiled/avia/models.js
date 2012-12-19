@@ -364,6 +364,7 @@ AviaResult = (function() {
     this.searchId = data.searchId;
     this.cacheId = data.cacheId;
     this.key = data.key;
+    this.pdfLink = '/buy/pdf/id/' + this.key;
     this.price = Math.ceil(data.price);
     this._stacked = false;
     this.roundTrip = flights.length === 2;

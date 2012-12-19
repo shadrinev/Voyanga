@@ -18,21 +18,17 @@
                     Фамилия
                 </td>
                 <td class="tdSex">
-                    Пол
+
                 </td>
                 <td class="tdBirthday">
-                    Дата рождения
+
                 </td>
                 <td class="tdNationality">
-                    Гражданство
+
                 </td>
                 <td class="tdDocumentNumber">
-                    <span class="tooltipClose"
-                          rel="Для полетов внутри России подходит российский паспорт или загранпаспорт (для детей и младенцев — свидетельство о рождении или загранпаспорт). Для полетов за рубежом нужен загранпаспорт. Обратите внимание, что помимо загранпаспорта, для въезда во многие страны требуется соответствующая виза.">Серия и № документа</span>
                 </td>
                 <td class="tdDuration">
-                    <span class="tooltipClose"
-                          rel="Если вы путешествуете с российским паспортом или свидетельством о рождении, то срок действия указывать не нужно, так как эти документы его не имеют. В загранпаспорте же проставлена дата окончания его действия — ее необходимо указать.">Срок действия</span>
                 </td>
             </tr>
             </thead>
@@ -97,74 +93,85 @@
                         <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
                     </td>
                     <td class="tdSex">
-                        <label class="male" for="male">
-                            <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="male"
-                                   value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
-                                   <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
-                        </label>
-                        <label class="female" for="female">
-                            <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="female"
-                                   value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"
-                                <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
-                        </label>
+                        <?php if (!$roomCounters): ?>
+                            <label class="male <?php if ($hide) echo 'inactive' ?>" for="male">
+                                <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="male"
+                                       value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
+                                    <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+                            </label>
+                            <label class="female <?php if ($hide) echo 'inactive' ?>" for="female">
+                                <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]"
+                                       id="female"
+                                       value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"
+                                    <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+                            </label>
+                        <?php endif ?>
                     </td>
                     <td class="tdBirthday">
-                        <div class="divInputBirthday <?php if ($hide) echo 'active' ?>">
-                            <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
-                                "placeholder" => "ДД",
-                                "class" => "dd next",
-                                "maxlength" => "2"
-                            )); ?>
-                            <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
-                                "placeholder" => "ММ",
-                                "class" => "mm next",
-                                "maxlength" => "2"
-                            )); ?>
-                            <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
-                                "placeholder" => "ГГГГ",
-                                "class" => "yy",
-                                "maxlength" => "4"
-                            )); ?>
-                        </div>
+                        <?php if (!$roomCounters): ?>
+                            <div class="divInputBirthday <?php if ($hide) echo 'active' ?>">
+                                <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
+                                    "placeholder" => "ДД",
+                                    "class" => "dd next",
+                                    "maxlength" => "2"
+                                )); ?>
+                                <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
+                                    "placeholder" => "ММ",
+                                    "class" => "mm next",
+                                    "maxlength" => "2"
+                                )); ?>
+                                <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
+                                    "placeholder" => "ГГГГ",
+                                    "class" => "yy",
+                                    "maxlength" => "4"
+                                )); ?>
+                            </div>
+                        <?php endif ?>
                     </td>
-                    <td class="tdNationality">
-                        <?php if ($hide): ?>
-                            <input type='text' disabled="disabled"
-                                   value="<?php $c=Country::model()->findByPk($model->countryId); echo CHtml::value($c,'localRu') ?>">
-                        <?php else: ?>
-                            <?php echo CHtml::activeDropDownList(
-                                $model,
-                                "[$i]countryId",
-                                Country::model()->findAllOrderedByPopularity(),
-                                array(
-                                    'data-placeholder' => "Страна...",
-                                    'class' => "chzn-select",
-                                    'style' => "width:120px;",
-                                )
-                            ); ?>
+                    <td class="tdNationality <?php if ($hide) echo "inactive" ?>">
+                        <?php if (!$roomCounters): ?>
+                            <?php if ($hide): ?>
+                                <input type='text' disabled="disabled"
+                                       value="<?php $c = Country::model()->findByPk($model->countryId); echo CHtml::value($c, 'localRu') ?>">
+                            <?php else: ?>
+                                <?php echo CHtml::activeDropDownList(
+                                    $model,
+                                    "[$i]countryId",
+                                    Country::model()->findAllOrderedByPopularity(),
+                                    array(
+                                        'data-placeholder' => "Страна...",
+                                        'class' => "chzn-select",
+                                        'style' => "width:120px;",
+                                    )
+                                ); ?>
+                            <?php endif ?>
                         <?php endif ?>
                     </td>
                     <td class="tdDocumentNumber">
-                        <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
+                        <?php if (!$roomCounters): ?>
+                            <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
+                        <?php endif ?>
                     </td>
                     <td class="tdDuration">
-                        <div class="divInputBirthday checkOn <?php if ($hide) echo 'active' ?>">
-                            <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
-                                "placeholder" => "ДД",
-                                "class" => "dd next",
-                                "maxlength" => "2"
-                            )); ?>
-                            <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
-                                "placeholder" => "ММ",
-                                "class" => "mm next",
-                                "maxlength" => "2"
-                            )); ?>
-                            <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
-                                "placeholder" => "ГГГГ",
-                                "class" => "yy",
-                                "maxlength" => "4"
-                            )); ?>
-                        </div>
+                        <?php if (!$roomCounters): ?>
+                            <div class="divInputBirthday checkOn <?php if ($hide) echo 'active' ?>">
+                                <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
+                                    "placeholder" => "ДД",
+                                    "class" => "dd next",
+                                    "maxlength" => "2"
+                                )); ?>
+                                <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
+                                    "placeholder" => "ММ",
+                                    "class" => "mm next",
+                                    "maxlength" => "2"
+                                )); ?>
+                                <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
+                                    "placeholder" => "ГГГГ",
+                                    "class" => "yy",
+                                    "maxlength" => "4"
+                                )); ?>
+                            </div>
+                        <?php endif ?>
                     </td>
                 </tr>
                 <?php if (!$hide): ?>
