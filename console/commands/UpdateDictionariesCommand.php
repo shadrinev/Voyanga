@@ -753,6 +753,7 @@ EOD;
         {
             Yii::import('site.common.modules.hotel.models.*');
             $HotelClient = new HotelBookClient();
+            phpinfo();
 
             $criteria=new CDbCriteria;
             $criteria->condition='hotelbookId IS NOT NULL';
