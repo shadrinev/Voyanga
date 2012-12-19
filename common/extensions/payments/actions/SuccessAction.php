@@ -171,8 +171,8 @@ class SuccessAction extends CAction
         $payments = Yii::app()->payments;
         $bookers = $payments->preProcessBookers($order->getBookers());
         foreach($bookers as $booker){
-            if(!$this->getStatus($booker)=='paid')
-                return false;
+//            if(!$this->getStatus($booker)=='paid')
+//                return false;
         }
         $res = Yii::app()->cron->add(time() + 75, 'orderticketing', 'cron', array('orderId'=>$orderId));
     }
