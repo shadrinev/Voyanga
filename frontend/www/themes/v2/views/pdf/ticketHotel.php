@@ -149,7 +149,7 @@ $dayFormat = "d|n|w";
 
             <?php foreach($ticket->cancelCharges as $charge): ?>
                 <?php
-                $timestamp = $charge->fromTimestamp;
+                $timestamp = $charge['fromTimestamp'];
                 $dayPrint = date('d|n|Y',$timestamp);
                 $dateString ='';
                 list($dd,$mm,$yy) = explode('|',$dayPrint);
