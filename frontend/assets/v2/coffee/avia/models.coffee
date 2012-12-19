@@ -257,6 +257,8 @@ class AviaResult
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)
     @_stacked = false
+    if !flights
+      console.log('data',data)
     @roundTrip = flights.length == 2
     @visible = ko.observable true
     @airline = data.valCompany

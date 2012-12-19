@@ -6,11 +6,8 @@ Slider = (function() {
 
   function Slider() {
     this.handler = __bind(this.handler, this);
-
     this.click = __bind(this.click, this);
-
-    this.init = __bind(this.init, this);
-    this.speed = 400;
+    this.init = __bind(this.init, this);    this.speed = 400;
     this.plannerWidth = [143, 0];
     this.aviaticketsWidth = [135, 155];
     this.hotelWidth = [95, 295];

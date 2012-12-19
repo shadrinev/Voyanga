@@ -10,17 +10,11 @@ HotelsPanel = (function(_super) {
 
   function HotelsPanel() {
     this.afterRender = __bind(this.afterRender, this);
-
     this.setDate = __bind(this.setDate, this);
-
     this.haveDates = __bind(this.haveDates, this);
-
     this.checkOutHtml = __bind(this.checkOutHtml, this);
-
     this.checkInHtml = __bind(this.checkInHtml, this);
-
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
-
     var _this = this;
     this.template = 'hotels-panel-template';
     HotelsPanel.__super__.constructor.call(this);

@@ -8,23 +8,14 @@ TourEntry = (function() {
 
   function TourEntry() {
     this.beforeRender = __bind(this.beforeRender, this);
-
     this.rt = __bind(this.rt, this);
-
     this.savings = __bind(this.savings, this);
-
     this.maxPriceHtml = __bind(this.maxPriceHtml, this);
-
     this.minPriceHtml = __bind(this.minPriceHtml, this);
-
     this.priceHtml = __bind(this.priceHtml, this);
-
     this.price = __bind(this.price, this);
-
     this.isHotel = __bind(this.isHotel, this);
-
-    this.isAvia = __bind(this.isAvia, this);
-    _.extend(this, Backbone.Events);
+    this.isAvia = __bind(this.isAvia, this);    _.extend(this, Backbone.Events);
   }
 
   TourEntry.prototype.isAvia = function() {
@@ -80,49 +71,27 @@ ToursAviaResultSet = (function(_super) {
 
   function ToursAviaResultSet(raw, sp) {
     this.afterRender = __bind(this.afterRender, this);
-
     this.beforeRender = __bind(this.beforeRender, this);
-
     this.rt = __bind(this.rt, this);
-
     this.timelineEnd = __bind(this.timelineEnd, this);
-
     this.rt = __bind(this.rt, this);
-
     this.rtTimelineStart = __bind(this.rtTimelineStart, this);
-
     this.timelineStart = __bind(this.timelineStart, this);
-
     this.dateHtml = __bind(this.dateHtml, this);
-
     this.dateClass = __bind(this.dateClass, this);
-
     this.additionalText = __bind(this.additionalText, this);
-
     this.destinationText = __bind(this.destinationText, this);
-
     this.maxPrice = __bind(this.maxPrice, this);
-
     this.minPrice = __bind(this.minPrice, this);
-
     this.numAirlines = __bind(this.numAirlines, this);
-
     this.overviewPeople = __bind(this.overviewPeople, this);
-
     this.overviewText = __bind(this.overviewText, this);
-
     this.doNewSearch = __bind(this.doNewSearch, this);
-
     this.toBuyRequest = __bind(this.toBuyRequest, this);
-
     this._selectResult = __bind(this._selectResult, this);
-
     this.select = __bind(this.select, this);
-
     this.findAndSelect = __bind(this.findAndSelect, this);
-
-    this.newResults = __bind(this.newResults, this);
-    ToursAviaResultSet.__super__.constructor.apply(this, arguments);
+    this.newResults = __bind(this.newResults, this);    ToursAviaResultSet.__super__.constructor.apply(this, arguments);
     this.api = new AviaAPI;
     this.template = 'avia-results';
     this.overviewTemplate = 'tours-overview-avia-no-selection';
@@ -353,45 +322,25 @@ ToursHotelsResultSet = (function(_super) {
 
   function ToursHotelsResultSet(raw, sp) {
     this.afterRender = __bind(this.afterRender, this);
-
     this.beforeRender = __bind(this.beforeRender, this);
-
     this.timelineEnd = __bind(this.timelineEnd, this);
-
     this.timelineStart = __bind(this.timelineStart, this);
-
     this.dateHtml = __bind(this.dateHtml, this);
-
     this.dateClass = __bind(this.dateClass, this);
-
     this.additionalText = __bind(this.additionalText, this);
-
     this.price = __bind(this.price, this);
-
     this.destinationText = __bind(this.destinationText, this);
-
     this.maxPrice = __bind(this.maxPrice, this);
-
     this.minPrice = __bind(this.minPrice, this);
-
     this.numHotels = __bind(this.numHotels, this);
-
     this.overviewPeople = __bind(this.overviewPeople, this);
-
     this.overviewText = __bind(this.overviewText, this);
-
     this.doNewSearch = __bind(this.doNewSearch, this);
-
     this.toBuyRequest = __bind(this.toBuyRequest, this);
-
     this._selectRoomSet = __bind(this._selectRoomSet, this);
-
     this.select = __bind(this.select, this);
-
     this.findAndSelect = __bind(this.findAndSelect, this);
-
-    this.newResults = __bind(this.newResults, this);
-    ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
+    this.newResults = __bind(this.newResults, this);    ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
     this.api = new HotelsAPI;
     this.panel = new HotelsPanel();
     this.panel.handlePanelSubmit = this.doNewSearch;
@@ -468,7 +417,13 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.findAndSelect = function(result) {
-    result = this.results().findAndSelect(result.roomSet);
+    console.log('find THRS ', result);
+    if (result.roomSet) {
+      result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSet));
+    } else {
+      console.log(ko.utils.unwrapObservable(result.roomSets));
+      result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0]);
+    }
     if (!result) {
       return false;
     }
@@ -626,22 +581,15 @@ ToursResultSet = (function() {
     var result, variant, _i, _len, _ref,
       _this = this;
     this.searchParams = searchParams;
+    this.findAndSelectItems = __bind(this.findAndSelectItems, this);
     this.findAndSelect = __bind(this.findAndSelect, this);
-
     this.buy = __bind(this.buy, this);
-
     this.showOverview = __bind(this.showOverview, this);
-
     this.removeItem = __bind(this.removeItem, this);
-
     this.nextEntry = __bind(this.nextEntry, this);
-
     this.setActiveTimelineHotels = __bind(this.setActiveTimelineHotels, this);
-
     this.setActiveTimelineAvia = __bind(this.setActiveTimelineAvia, this);
-
     this.setActive = __bind(this.setActive, this);
-
     _.extend(this, Backbone.Events);
     this.creationMoment = moment();
     this.data = ko.observableArray();
@@ -954,10 +902,25 @@ ToursResultSet = (function() {
 
   ToursResultSet.prototype.findAndSelect = function(data) {
     var entry, index, success, _i, _len;
+    console.log('findAndSelect');
     success = true;
     for (index = _i = 0, _len = data.length; _i < _len; index = ++_i) {
       entry = data[index];
       if (!this.data()[index].findAndSelect(entry.selection())) {
+        success = false;
+      }
+    }
+    return success;
+  };
+
+  ToursResultSet.prototype.findAndSelectItems = function(items) {
+    var entry, index, success, _i, _len;
+    console.log('findAndSelectItems', items);
+    success = true;
+    for (index = _i = 0, _len = items.length; _i < _len; index = ++_i) {
+      entry = items[index];
+      console.log('findAndSelectItems entry', entry, ' in ', index, this.data()[index]);
+      if (!this.data()[index].findAndSelect(entry)) {
         success = false;
       }
     }
@@ -999,9 +962,7 @@ TourSearchParams = (function(_super) {
 
   function TourSearchParams() {
     this.removeItem = __bind(this.removeItem, this);
-
     this.addSpRoom = __bind(this.addSpRoom, this);
-
     var _this = this;
     TourSearchParams.__super__.constructor.call(this);
     this.startCity = ko.observable('LED');
@@ -1059,6 +1020,9 @@ TourSearchParams = (function(_super) {
     _.each(this.rooms(), function(room, ind) {
       return params.push(room.getUrl(ind));
     });
+    if (this.eventId) {
+      params.push('eventId=' + this.eventId);
+    }
     result += params.join("&");
     window.voyanga_debug("Generated search url for tours", result);
     return result;
@@ -1115,7 +1079,7 @@ TourSearchParams = (function(_super) {
     i = i + 1;
     oldSelection = false;
     while (i < data.length) {
-      if (data[i] === 'oldSelecton') {
+      if (data[i] === 'eventId') {
         oldSelection = true;
         break;
       }
@@ -1128,8 +1092,25 @@ TourSearchParams = (function(_super) {
       console.log('really have oldParams');
       i++;
       console.log('old params is', data[i]);
-      this.oldParams = JSON.parse(decodeURIComponent(data[i]));
-      console.log(this.oldParams);
+      this.eventId = data[i];
+      /*@oldParams = JSON.parse(decodeURIComponent(data[i]))
+      @oldItems = []
+      for elem in @oldParams.ticketParams
+        params = JSON.parse(elem);
+        if(params.hotelId)
+          console.log('try make hotel from params:',params)
+          hotelItem = new HotelResult(params,null,false,null,null);
+          @oldItems.push( hotelItem)
+        else
+          console.log('try make avia from params:',params)
+          aviaItem = new AviaResult(params,null);
+          @oldItems.push(aviaItem)
+      console.log('items',@oldItems)
+      
+      
+      console.log(@oldParams)
+      */
+
     }
     return window.voyanga_debug('Result', this);
   };
@@ -1147,6 +1128,9 @@ TourSearchParams = (function(_super) {
       room = new SpRoom(this);
       return this.rooms.push(this.room.fromObject(room));
     });
+    if (data.eventId) {
+      this.eventId = data.eventId;
+    }
     return window.voyanga_debug('Result', this);
   };
 
@@ -1175,13 +1159,9 @@ ToursOverviewVM = (function() {
   function ToursOverviewVM(resultSet) {
     this.resultSet = resultSet;
     this.afterRender = __bind(this.afterRender, this);
-
     this.dateHtml = __bind(this.dateHtml, this);
-
     this.dateClass = __bind(this.dateClass, this);
-
     this.startCity = __bind(this.startCity, this);
-
   }
 
   ToursOverviewVM.prototype.startCity = function() {

@@ -10,11 +10,8 @@ Voyasha = (function() {
     var _this = this;
     this.toursResultSet = toursResultSet;
     this.choose = __bind(this.choose, this);
-
     this.handleHotels = __bind(this.handleHotels, this);
-
     this.handleAvia = __bind(this.handleAvia, this);
-
     this.selected = ko.computed(function() {
       var item, result, _i, _len, _ref;
       result = [];
@@ -74,11 +71,8 @@ VoyashaCheapest = (function(_super) {
 
   function VoyashaCheapest() {
     this.handleHotels = __bind(this.handleHotels, this);
-
     this.handleAvia = __bind(this.handleAvia, this);
-
-    this.getTitle = __bind(this.getTitle, this);
-    return VoyashaCheapest.__super__.constructor.apply(this, arguments);
+    this.getTitle = __bind(this.getTitle, this);    return VoyashaCheapest.__super__.constructor.apply(this, arguments);
   }
 
   VoyashaCheapest.prototype.getTitle = function() {
@@ -123,11 +117,8 @@ VoyashaOptima = (function(_super) {
 
   function VoyashaOptima() {
     this.handleHotels = __bind(this.handleHotels, this);
-
     this.handleAvia = __bind(this.handleAvia, this);
-
-    this.getTitle = __bind(this.getTitle, this);
-    return VoyashaOptima.__super__.constructor.apply(this, arguments);
+    this.getTitle = __bind(this.getTitle, this);    return VoyashaOptima.__super__.constructor.apply(this, arguments);
   }
 
   VoyashaOptima.prototype.getTitle = function() {
@@ -187,11 +178,8 @@ VoyashaRich = (function(_super) {
 
   function VoyashaRich() {
     this.handleHotels = __bind(this.handleHotels, this);
-
     this.handleAvia = __bind(this.handleAvia, this);
-
-    this.getTitle = __bind(this.getTitle, this);
-    return VoyashaRich.__super__.constructor.apply(this, arguments);
+    this.getTitle = __bind(this.getTitle, this);    return VoyashaRich.__super__.constructor.apply(this, arguments);
   }
 
   VoyashaRich.prototype.getTitle = function() {

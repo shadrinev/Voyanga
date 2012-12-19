@@ -26,11 +26,28 @@ class SearchController extends ApiController
      *  [Х][chdAge]
      *  [Х][cots]
      */
-    public function actionDefault($start, array $destinations, array $rooms, $format = 'json')
+    public function actionDefault($start, array $destinations, array $rooms, $format = 'json', $eventId = null)
     {
+
         $tourSearchParams = $this->buildSearchParams($start, $destinations, $rooms);
+        if($eventId){
+            $event = Event::model()->findByPk($eventId);
+            $dataProvider = new TripDataProvider();
+            foreach($event->tours as $tour){
+                if($tourSearchParams->getStartCityId() == $tour->startCityId){
+                    $dataProvider->restoreFromDb($tour->orderId);
+                    //echo $tour->orderId.'dsf';
+
+                    $items = $dataProvider->getWithAdditionalInfo($dataProvider->getSortedCartItemsOnePerGroup(false));
+                    //print_r($items);
+                }
+            }
+        }
         $this->buildTour($tourSearchParams);
         $results = $this->searchTourVariants();
+        if(isset($items)){
+            $results['items'] = $items['items'];
+        }
         if (empty($this->errors))
             $this->sendWithCorrectFormat($format, $results);
         else

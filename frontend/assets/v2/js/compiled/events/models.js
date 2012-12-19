@@ -79,15 +79,10 @@ EventSet = (function() {
 
   function EventSet(events) {
     this.afterRender = __bind(this.afterRender, this);
-
     this.mapsInit = __bind(this.mapsInit, this);
-
     this.closeEventsMaps = __bind(this.closeEventsMaps, this);
-
     this.closeEventsPhoto = __bind(this.closeEventsPhoto, this);
-
     this.setActive = __bind(this.setActive, this);
-
     var _this = this;
     console.trace();
     this.events = ko.observableArray(events);
@@ -335,15 +330,10 @@ EventTourResultSet = (function() {
     var _this = this;
     this.eventId = eventId;
     this.hidePanel = __bind(this.hidePanel, this);
-
     this.showPanel = __bind(this.showPanel, this);
-
     this.togglePanel = __bind(this.togglePanel, this);
-
     this.gotoAndShowPanel = __bind(this.gotoAndShowPanel, this);
-
     this.reinit = __bind(this.reinit, this);
-
     this.items = ko.observableArray([]);
     this.selectedCity = ko.observable(resultSet.city.id);
     this.fullPrice = ko.observable(0);
@@ -541,21 +531,13 @@ EventPhotoBox = (function() {
 
   function EventPhotoBox(picturesRaw) {
     this.next = __bind(this.next, this);
-
     this.prev = __bind(this.prev, this);
-
     this.onResize = __bind(this.onResize, this);
-
     this.onComplete = __bind(this.onComplete, this);
-
     this.onAnimate = __bind(this.onAnimate, this);
-
     this.afterLoad = __bind(this.afterLoad, this);
-
     this.afterRender = __bind(this.afterRender, this);
-
     this.getIndex = __bind(this.getIndex, this);
-
     var photoObj, picture, pictures, _i, _len,
       _this = this;
     this.photos = ko.observableArray([]);

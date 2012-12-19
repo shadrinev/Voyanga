@@ -353,6 +353,8 @@ class HotelResult
         return 'Посмотреть все результаты'
     @push data
 
+
+
   falseFunction: ->
     return false
 
@@ -896,6 +898,7 @@ class HotelsResultSet
     Utils.scrollTo('#content',false)
 
   findAndSelect: (roomSet)=>
+    console.log('find roomSet', roomSet)
     for hotel in @data()
       if hotel.hotelId == roomSet.parent.hotelId
         for possibleRoomSet in hotel.roomSets()
