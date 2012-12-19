@@ -753,39 +753,6 @@ EOD;
         {
             Yii::import('site.common.modules.hotel.models.*');
             $HotelClient = new HotelBookClient();
-            phpinfo();
-            $rCh = curl_init();
-            $url = 'http://ya.ru/';
-
-
-            curl_setopt($rCh, CURLOPT_HEADER, true);
-            curl_setopt($rCh, CURLOPT_RETURNTRANSFER, true);
-
-            curl_setopt($rCh, CURLOPT_TIMEOUT, 80);
-
-
-
-            curl_setopt($rCh, CURLOPT_URL, $url);
-
-            $sData = curl_exec($rCh);
-
-
-            if ($sData !== FALSE)
-            {
-                list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
-                if (strpos($sHeaders, 'Continue') !== FALSE)
-                {
-                    list($sHeaders, $sData) = explode("\r\n\r\n", $sData, 2);
-                }
-                echo "headers: ".$sHeaders;
-                echo "response: ".$sData;
-
-
-            }
-            else
-            {
-                echo "curlError:".curl_error($rCh);
-            }
 
             $criteria=new CDbCriteria;
             $criteria->condition='hotelbookId IS NOT NULL';
