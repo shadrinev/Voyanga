@@ -65,19 +65,12 @@ Siblings = (function() {
   function Siblings(siblings, roundTrip, todayDate, rtTodayDate) {
     this.roundTrip = roundTrip;
     this.populate = __bind(this.populate, this);
-
     this.search = __bind(this.search, this);
-
     this.handleSearch = __bind(this.handleSearch, this);
-
     this.priceDisplay = __bind(this.priceDisplay, this);
-
     this.showPrice = __bind(this.showPrice, this);
-
     this.showControls = __bind(this.showControls, this);
-
     this.select = __bind(this.select, this);
-
     this.data = [];
     this.graphHeight = ko.observable(50);
     this.populate(this, siblings, todayDate, rtTodayDate);

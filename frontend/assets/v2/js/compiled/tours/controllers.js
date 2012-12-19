@@ -12,13 +12,9 @@ ToursController = (function() {
   function ToursController(searchParams) {
     this.searchParams = searchParams;
     this.checkTicketAction = __bind(this.checkTicketAction, this);
-
     this.handleResults = __bind(this.handleResults, this);
-
     this.searchAction = __bind(this.searchAction, this);
-
     this.indexAction = __bind(this.indexAction, this);
-
     this.api = new ToursAPI;
     this.routes = {
       '/search/*rest': this.searchAction,
@@ -61,9 +57,23 @@ ToursController = (function() {
   };
 
   ToursController.prototype.handleResults = function(data) {
-    var stacked;
+    var hotel, item, items, stacked, _i, _len, _ref;
     console.log("Handling results", data);
     stacked = new ToursResultSet(data, this.searchParams);
+    if (data.items) {
+      items = [];
+      _ref = data.items;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (item.isHotel) {
+          hotel = new HotelResult(item, stacked, item.duration, item, item.hotelDetails);
+          items.push(hotel);
+        } else {
+          items.push(new AviaResult(item, stacked));
+        }
+      }
+      console.log('ssseeellleecctt', items, stacked.findAndSelectItems(items));
+    }
     stacked.checkTicket = this.checkTicketAction;
     return stacked;
   };

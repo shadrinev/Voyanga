@@ -12,15 +12,10 @@ AviaController = (function() {
   function AviaController(searchParams) {
     this.searchParams = searchParams;
     this.checkTicketAction = __bind(this.checkTicketAction, this);
-
     this.indexAction = __bind(this.indexAction, this);
-
     this.handleResults = __bind(this.handleResults, this);
-
     this.search = __bind(this.search, this);
-
     this.searchAction = __bind(this.searchAction, this);
-
     this.api = new AviaAPI;
     this.routes = {
       '/search/:from/:to/:when/:adults/:children/:infants/:rtwhen/': this.searchAction,

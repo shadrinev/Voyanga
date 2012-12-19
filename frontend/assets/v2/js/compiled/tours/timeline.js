@@ -8,13 +8,9 @@ Timeline = (function() {
     var _this = this;
     this.toursData = toursData;
     this.scrollTimelineLeft = __bind(this.scrollTimelineLeft, this);
-
     this.scrollTimelineRight = __bind(this.scrollTimelineRight, this);
-
     this.showTimeline = __bind(this.showTimeline, this);
-
     this.showConditions = __bind(this.showConditions, this);
-
     this.timelinePosition = ko.observable(0);
     this.termsActive = false;
     this.data = ko.computed(function() {

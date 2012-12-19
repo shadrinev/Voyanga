@@ -266,7 +266,12 @@ class ToursHotelsResultSet extends TourEntry
     @results result
 
   findAndSelect: (result) =>
-    result = @results().findAndSelect(result.roomSet)
+    console.log('find THRS ',result)
+    if result.roomSet
+      result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSet))
+    else
+      console.log(ko.utils.unwrapObservable(result.roomSets))
+      result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0])
     if !result
       return false
     @_selectRoomSet result
@@ -600,9 +605,19 @@ class ToursResultSet
     @checkTicket @data(), ticketValidCheck
 
   findAndSelect: (data) =>
+    console.log('findAndSelect')
     success = true
     for entry, index in data
       if !@data()[index].findAndSelect(entry.selection())
+        success = false
+    return success
+
+  findAndSelectItems: (items) =>
+    console.log('findAndSelectItems',items)
+    success = true
+    for entry, index in items
+      console.log('findAndSelectItems entry',entry,' in ',index,@data()[index])
+      if !@data()[index].findAndSelect(entry)
         success = false
     return success
     
@@ -662,6 +677,8 @@ class TourSearchParams extends SearchParams
     _.each @rooms(), (room, ind) =>
       params.push room.getUrl(ind)
 
+    if(@eventId)
+      params.push 'eventId='+@eventId
     result += params.join "&"
     window.voyanga_debug "Generated search url for tours", result
     return result
@@ -709,7 +726,7 @@ class TourSearchParams extends SearchParams
     i = i + 1
     oldSelection = false
     while i < data.length
-      if data[i] == 'oldSelecton'
+      if data[i] == 'eventId'
         oldSelection = true
         break
       room = new SpRoom(@)
@@ -720,8 +737,23 @@ class TourSearchParams extends SearchParams
       console.log('really have oldParams')
       i++;
       console.log('old params is',data[i])
-      @oldParams = JSON.parse(decodeURIComponent(data[i]))
-      console.log(@oldParams)
+      @eventId = data[i]
+      ###@oldParams = JSON.parse(decodeURIComponent(data[i]))
+      @oldItems = []
+      for elem in @oldParams.ticketParams
+        params = JSON.parse(elem);
+        if(params.hotelId)
+          console.log('try make hotel from params:',params)
+          hotelItem = new HotelResult(params,null,false,null,null);
+          @oldItems.push( hotelItem)
+        else
+          console.log('try make avia from params:',params)
+          aviaItem = new AviaResult(params,null);
+          @oldItems.push(aviaItem)
+      console.log('items',@oldItems)
+
+
+      console.log(@oldParams)###
     window.voyanga_debug 'Result', @
 
   fromObject: (data)->
@@ -737,6 +769,9 @@ class TourSearchParams extends SearchParams
     _.each data.rooms, (room) ->
       room = new SpRoom(@)
       @rooms.push @room.fromObject(room)
+
+    if(data.eventId)
+      @eventId = data.eventId
 
     window.voyanga_debug 'Result', @
 

@@ -37,6 +37,20 @@ class ToursController
   handleResults: (data) =>
     console.log "Handling results", data
     stacked = new ToursResultSet data, @searchParams
+
+    if data.items
+      items = []
+      for item in data.items
+        if(item.isHotel)
+          hotel = new HotelResult item, stacked, item.duration, item, item.hotelDetails
+
+          items.push hotel
+        else
+          items.push new AviaResult(item, stacked)
+
+      console.log('ssseeellleecctt',items,stacked.findAndSelectItems(items))
+
+
     stacked.checkTicket = @checkTicketAction
     return stacked
 
@@ -60,6 +74,9 @@ class ToursController
       else
         new ErrorPopup 'toursNoTicketOnValidation', false, ->
         @results stacked
+
+
+
     
   render: (view, data) ->
     @trigger "viewChanged", view, data

@@ -182,7 +182,9 @@ class TourPanel extends SearchPanel
       url = '/#'+@sp.getHash()
       if @startParams == url
         # Need save data to server, because get have limit 2048 bytes
-        url += 'oldSelecton/'+encodeURIComponent(JSON.stringify(@selectedParams))
+        #url += 'oldSelecton/'+encodeURIComponent(JSON.stringify(@selectedParams))
+        url += 'eventId/'+@selectedParams.eventId
+
 
       console.log('go url',url,'length', url.length)
       #return

@@ -8,9 +8,7 @@ Filter = (function() {
 
   function Filter() {
     this.setConfig = __bind(this.setConfig, this);
-
     this.getConfig = __bind(this.getConfig, this);
-
   }
 
   Filter.prototype.filter = function(item) {
@@ -49,9 +47,7 @@ TimeFilter = (function(_super) {
   function TimeFilter(key) {
     this.key = key;
     this.setConfig = __bind(this.setConfig, this);
-
     this.filter = __bind(this.filter, this);
-
     this.limits = ko.rangeObservable(1440, 0);
     this.selection = ko.rangeObservable(0, 1440);
     this.element = false;
@@ -93,9 +89,7 @@ PriceFilter = (function(_super) {
   function PriceFilter(key) {
     this.key = key;
     this.setConfig = __bind(this.setConfig, this);
-
     this.filter = __bind(this.filter, this);
-
     this.limits = ko.rangeObservable(999000, 0);
     this.selection = ko.rangeObservable(0, 999000);
     this.element = false;
@@ -137,9 +131,7 @@ DistancesFilter = (function(_super) {
   function DistancesFilter(key) {
     this.key = key;
     this.setConfig = __bind(this.setConfig, this);
-
     this.filter = __bind(this.filter, this);
-
     this.limits = ko.rangeObservable(999000, 0);
     this.selection = ko.observable(999000);
     this.element = false;
@@ -184,15 +176,10 @@ ListFilter = (function(_super) {
     this.caption = caption;
     this.moreLabel = moreLabel;
     this.setConfig = __bind(this.setConfig, this);
-
     this.getConfig = __bind(this.getConfig, this);
-
     this.showMore = __bind(this.showMore, this);
-
     this.reset = __bind(this.reset, this);
-
     this.filter = __bind(this.filter, this);
-
     this.options = ko.observableArray();
     this._known = {};
     this.active = ko.computed(function() {
@@ -385,11 +372,8 @@ StarsFilter = (function(_super) {
     this.caption = caption;
     this.moreLabel = moreLabel;
     this.setConfig = __bind(this.setConfig, this);
-
     this.getConfig = __bind(this.getConfig, this);
-
     this.filter = __bind(this.filter, this);
-
     this.options = ko.observableArray();
     for (i = _i = 1; _i <= 5; i = ++_i) {
       this.options.push(new StarOption(i));
@@ -475,7 +459,6 @@ MaxStopoverFilter = (function(_super) {
     this.value = value;
     this.field = field != null ? field : 'stopoverLength';
     this.filter = __bind(this.filter, this);
-
     this.selection = ko.observable(0);
   }
 
@@ -495,8 +478,7 @@ OnlyDirectFilter = (function(_super) {
   __extends(OnlyDirectFilter, _super);
 
   function OnlyDirectFilter() {
-    this.filter = __bind(this.filter, this);
-    this.selection = ko.observable(0);
+    this.filter = __bind(this.filter, this);    this.selection = ko.observable(0);
   }
 
   OnlyDirectFilter.prototype.filter = function(item) {
@@ -515,8 +497,7 @@ ServiceClassFilter = (function(_super) {
   __extends(ServiceClassFilter, _super);
 
   function ServiceClassFilter() {
-    this.filter = __bind(this.filter, this);
-    this.selection = ko.observable('A');
+    this.filter = __bind(this.filter, this);    this.selection = ko.observable('A');
   }
 
   ServiceClassFilter.prototype.filter = function(item) {
@@ -541,11 +522,8 @@ TextFilter = (function(_super) {
     this.key = key;
     this.caption = caption;
     this.keyDown = __bind(this.keyDown, this);
-
     this.updateResults = __bind(this.updateResults, this);
-
     this.filter = __bind(this.filter, this);
-
     this.selection = ko.observable('');
     this.updateTimeout = null;
   }
@@ -586,29 +564,17 @@ AviaFiltersT = (function() {
       _this = this;
     this.results = results;
     this.setConfig = __bind(this.setConfig, this);
-
     this.getConfig = __bind(this.getConfig, this);
-
     this.iterate = __bind(this.iterate, this);
-
     this.filter = __bind(this.filter, this);
-
     this.runFiltersFunc = __bind(this.runFiltersFunc, this);
-
     this.runFilters = __bind(this.runFilters, this);
-
     this.filterBackVoyage = __bind(this.filterBackVoyage, this);
-
     this.filterVoyage = __bind(this.filterVoyage, this);
-
     this.filterResult = __bind(this.filterResult, this);
-
     this.updateLimitsBackVoyage = __bind(this.updateLimitsBackVoyage, this);
-
     this.updateLimitsVoyage = __bind(this.updateLimitsVoyage, this);
-
     this.updateLimitsResult = __bind(this.updateLimitsResult, this);
-
     this.template = 'avia-filters';
     this.rt = this.results.roundTrip;
     this.showRt = ko.observable(0);
@@ -798,27 +764,16 @@ HotelFiltersT = (function() {
     var _this = this;
     this.results = results;
     this.setConfig = __bind(this.setConfig, this);
-
     this.getConfig = __bind(this.getConfig, this);
-
     this.iterate = __bind(this.iterate, this);
-
     this.filter = __bind(this.filter, this);
-
     this.runFiltersFunc = __bind(this.runFiltersFunc, this);
-
     this.runFilters = __bind(this.runFilters, this);
-
     this.filterRoom = __bind(this.filterRoom, this);
-
     this.filterHotel = __bind(this.filterHotel, this);
-
     this.updateLimitsRoom = __bind(this.updateLimitsRoom, this);
-
     this.updateLimitsHotel = __bind(this.updateLimitsHotel, this);
-
     this.showFullMap = __bind(this.showFullMap, this);
-
     this.template = 'hotels-filters';
     this.roomFilters = ['price'];
     this.hotelFilters = ['services', 'stars', 'distance', 'hotelName'];

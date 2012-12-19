@@ -187,6 +187,9 @@ class BuyController extends Controller
     {
         $hotelTripElement = new HotelTripElement();
         $hotelTripElement->fillFromSearchParams($hotelSearchParams);
+        Yii::import('site.common.modules.hotel.models.*');
+        $hotelClient = new HotelBookClient();
+        $hotelClient->hotelSearchDetails($hotel);
         $hotelTripElement->hotel = $hotel;
         Yii::app()->shoppingCart->put($hotelTripElement);
     }
