@@ -424,7 +424,7 @@ class OrderComponent extends CApplicationComponent
                         if(!$orderBookingId) $orderBookingId = $hotelBooker->orderBookingId;
                         $pdfFileName = $controller->renderPdf('ticketHotel',array('type'=>'hotel','ticket'=>$hotelBooker->hotel,
                             'bookingId'=>$orderBookingId,
-                            'pnr'=>implode(', ',$voucherInfo->references),
+                            'pnr'=>implode(', ',$voucherInfo->references).'('.implode(', ',$voucherInfo->suppliers).')',
                             'hotelPassports'=>$hotelPassports,
                             'hotelInfo'=>$hotelInfo
                         ));

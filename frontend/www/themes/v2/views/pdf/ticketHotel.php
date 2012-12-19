@@ -50,7 +50,7 @@ $dayFormat = "d|n|w";
                         <?php endif; ?>
                     </td>
                     <td class="tdReserve">
-                        <strong>145-RZ (GTA)</strong>
+                        <strong><?php echo $pnr; ?></strong>
                     </td>
                     <td class="tdInfoPassenger">
                         <div class="passenger"><?php echo strtoupper($passport->lastName.' '.$passport->firstName.' '.($passport->genderId == Passport::GENDER_M ? 'MR' : 'MS')); ?></div>
@@ -156,7 +156,7 @@ $dayFormat = "d|n|w";
                 $dateString ="$dd {$monthNames[$mm]}  {$dayOfWeek[$ww]}";
 
                 ?>
-                При отмене после <?php echo $dateString;?> удерживается <?php echo UtilsHelper::formatPrice($charge['price']); ?> RUB.
+                При отмене после <?php echo $dateString;?> удерживается <?php echo UtilsHelper::formatPrice($charge['price']); ?> RUB.<br>
             <?php endforeach; ?>
 
         </div>
