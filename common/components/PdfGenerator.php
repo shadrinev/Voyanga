@@ -25,13 +25,17 @@ class PdfGenerator extends CApplicationComponent
             $voucherInfo = $this->hotelClient->voucher($hotelBooker->orderId);
             $hotelInfo = $this->hotelClient->hotelDetail($hotelBooker->hotel->hotelId);
             $this->hotelClient->hotelSearchDetails($hotelBooker->hotel);
+            $pnr = implode(', ',$voucherInfo->references);
+            if($voucherInfo->suppliers){
+                $pnr .= ' ('.implode(', ',$voucherInfo->suppliers).')';
+            }
             if(!$this->orderBookingId)
                 $this->orderBookingId = $hotelBooker->orderBookingId;
             $pdfFileName = $this->controller->renderPdf('ticketHotel',array(
                 'type'=>'hotel',
                 'ticket'=>$hotelBooker->hotel,
                 'bookingId'=>$this->orderBookingId,
-                'pnr'=>implode(', ',$voucherInfo->references),
+                'pnr'=>$pnr,
                 'hotelPassports'=>$hotelPassports,
                 'hotelInfo'=>$hotelInfo
             ));
