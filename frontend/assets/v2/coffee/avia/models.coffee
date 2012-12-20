@@ -252,6 +252,7 @@ class AviaResult
     @searchId = data.searchId
     @cacheId = data.cacheId
     @key = data.key
+    @pdfLink = '/buy/pdf/id/' + @key
 
     #! FIXME should magically work w/o ceil
     @price = Math.ceil(data.price)

@@ -324,21 +324,37 @@ AviaResult = (function() {
       _this = this;
     this.parent = parent;
     this.getParams = __bind(this.getParams, this);
+
     this.directRating = __bind(this.directRating, this);
+
     this.chooseActive = __bind(this.chooseActive, this);
+
     this.showDetails = __bind(this.showDetails, this);
+
     this.minimizeRtStacked = __bind(this.minimizeRtStacked, this);
+
     this.minimizeStacked = __bind(this.minimizeStacked, this);
+
     this.chooseNextRtStacked = __bind(this.chooseNextRtStacked, this);
+
     this.choosePrevRtStacked = __bind(this.choosePrevRtStacked, this);
+
     this.chooseRtStacked = __bind(this.chooseRtStacked, this);
+
     this.chooseNextStacked = __bind(this.chooseNextStacked, this);
+
     this.choosePrevStacked = __bind(this.choosePrevStacked, this);
+
     this.chooseStacked = __bind(this.chooseStacked, this);
+
     this.rtFlightCodes = __bind(this.rtFlightCodes, this);
+
     this.flightCodes = __bind(this.flightCodes, this);
+
     this.flightKey = __bind(this.flightKey, this);
+
     this.rtFlightCodesText = __bind(this.rtFlightCodesText, this);
+
     this.isFlight = true;
     this.isHotel = false;
     _.extend(this, Backbone.Events);
@@ -348,6 +364,7 @@ AviaResult = (function() {
     this.searchId = data.searchId;
     this.cacheId = data.cacheId;
     this.key = data.key;
+    this.pdfLink = '/buy/pdf/id/' + this.key;
     this.price = Math.ceil(data.price);
     this._stacked = false;
     if (!flights) {
@@ -707,14 +724,23 @@ AviaResultSet = (function() {
       _this = this;
     this.siblings = siblings != null ? siblings : false;
     this.setBest = __bind(this.setBest, this);
+
     this.updateBest = __bind(this.updateBest, this);
+
     this.updateCheapest = __bind(this.updateCheapest, this);
+
     this.postFilters = __bind(this.postFilters, this);
+
     this.processSiblings = __bind(this.processSiblings, this);
+
     this.postInit = __bind(this.postInit, this);
+
     this.findAndSelect = __bind(this.findAndSelect, this);
+
     this.select = __bind(this.select, this);
+
     this.injectSearchParams = __bind(this.injectSearchParams, this);
+
     this.recommendTemplate = 'avia-cheapest-result';
     this.tours = false;
     this.selected_key = ko.observable('');

@@ -12,9 +12,13 @@ ToursController = (function() {
   function ToursController(searchParams) {
     this.searchParams = searchParams;
     this.checkTicketAction = __bind(this.checkTicketAction, this);
+
     this.handleResults = __bind(this.handleResults, this);
+
     this.searchAction = __bind(this.searchAction, this);
+
     this.indexAction = __bind(this.indexAction, this);
+
     this.api = new ToursAPI;
     this.routes = {
       '/search/*rest': this.searchAction,

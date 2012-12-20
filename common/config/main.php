@@ -66,8 +66,12 @@ return array(
         ),
 
         'workflow'=> array(
-                    'class'=>'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',
-            ),
+            'class'=>'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',
+        ),
+
+        'pdfGenerator' => array(
+            'class'=>'site.common.components.PdfGenerator'
+        ),
 
         'observer' => array(
             'class' => 'site.common.components.observer.ObserverComponent',

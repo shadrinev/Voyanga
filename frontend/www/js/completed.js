@@ -2,6 +2,41 @@ $(function(){
     window.toursOverviewActive = true;
 });
 
+function mapping(status)
+{
+    var dictionary = {
+        "booking" : "Бронирование",
+        "bookingError" : "Ошибка бронирования",
+        "waitingForPayment" : "Ожидание оплаты",
+        "paymentInProgress" : "Ожидание оплаты",
+        "paymentError" : "Ошибка оплаты",
+        "paymentCanceledError" : "Ошибка оплаты",
+        "paid" : "Ожидание оплаты",
+        "refundedError" : "Ошибка оплаты",
+        "bookingTimeLimitError" : "Ошибка бронирования",
+        "ticketing" : "Выписка билета",
+        "ticketReady" : "Выписка билета",
+        "ticketingRepeat" : "Выписка билета",
+        "manualProcessing" : "Выписка билета",
+        "manualTicketing" : "Выписка билета",
+        "ticketingError" : "Ошибка выписки",
+        "manualError" : "Ошибка выписки",
+        "moneyReturn" : "Возврат денег",
+        "manualSuccess" : "скачать PDF",
+        "confirmMoney" : "Ожидание оплаты",
+        "done" : "скачать PDF",
+        "error" : "Ошибка"
+    }
+    if (dictionary[status] != "undefined")
+        return dictionary[status];
+    return status;
+}
+
+function isSuccess(status)
+{
+    return ((status == 'manualSuccess') || (status =='done'));
+}
+
 initCompletedPage = function() {
     var app, avia, hotels, tour;
     window.voyanga_debug = function() {
@@ -39,7 +74,18 @@ initCompletedPage = function() {
                 _.each(window.tripRaw.items, function(el, i){
                     var ind = el.key,
                         newStatus = response[ind];
-                    $('#'+ind).text(newStatus);
+                    statusReadable = mapping(newStatus);
+                    if (isSuccess(newStatus))
+                    {
+                        var link = "<a href='/buy/pdf/id/" + el.key + "'>" + statusReadable + "</a>";
+                        $('#'+ind).html(link);
+                        $('#'+ind).parent().removeClass('wait').addClass('download');
+                    }
+                    else
+                    {
+                        $('#'+ind).text(statusReadable);
+                        $('#'+ind).parent().removeClass('download').addClass('wait');
+                    }
                 });
                 $('#updateStatus').fadeOut();
             })

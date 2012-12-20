@@ -9,14 +9,23 @@ TourPanelSet = (function() {
 
   function TourPanelSet() {
     this.calendarHidden = __bind(this.calendarHidden, this);
+
     this.setDate = __bind(this.setDate, this);
+
     this.showPanelCalendar = __bind(this.showPanelCalendar, this);
+
     this.addPanel = __bind(this.addPanel, this);
+
     this.isFirst = __bind(this.isFirst, this);
+
     this.deletePanel = __bind(this.deletePanel, this);
+
     this.saveStartParams = __bind(this.saveStartParams, this);
+
     this.navigateToNewSearchMainPage = __bind(this.navigateToNewSearchMainPage, this);
+
     this.navigateToNewSearch = __bind(this.navigateToNewSearch, this);
+
     var _this = this;
     _.extend(this, Backbone.Events);
     window.voyanga_debug('Init of TourPanelSet');
@@ -178,11 +187,17 @@ TourPanel = (function(_super) {
 
   function TourPanel(sp, ind, isFirst) {
     this.checkOutHtml = __bind(this.checkOutHtml, this);
+
     this.checkInHtml = __bind(this.checkInHtml, this);
+
     this.showCalendar = __bind(this.showCalendar, this);
+
     this.saveStartParams = __bind(this.saveStartParams, this);
+
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
+
     this.handlePanelSubmitToMain = __bind(this.handlePanelSubmitToMain, this);
+
     var _this = this;
     window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this, isFirst, true);
