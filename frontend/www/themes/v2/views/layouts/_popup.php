@@ -246,8 +246,7 @@
             <div class="registrate" style="display: none;">
                 <h2>Регистрация</h2>
 
-                <div id='signup-errors' style='display: none;'>
-                </div>
+                <div id='signup-errors' style='display: none;'></div>
                 <form id='signup-form' action="/user/signup" method="post">
                     <div class="divInput">
                         <input type="text" class="email" name="SignUpForm[email]" placeholder="Эл. почта">
@@ -267,7 +266,7 @@
                             <div class="right"></div>
                         </div>
                     </div>
-                </div>
+                </form>
                 <div class="rememberEnter">
                     <a href="#" class="enterOpen">Войти</a>
                     <a href="#" class="btnRegLogin">Регистрация</a>
