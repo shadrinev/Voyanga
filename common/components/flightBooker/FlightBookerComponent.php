@@ -338,8 +338,11 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function getPriceBreakdown()
     {
-        return Array(Array("title" => "билет", "price" => $this->flightBooker->price),
-                     Array("title" => "тарифы и сборы", "price" => "123"));//$this->flightBooker->getFlightVoyage()->taxes;
+        $result = Array();
+        $result[] = Array("title" => "билет", "price" => $this->flightBooker->price);
+        if($this->flightBooker->charges > 0 )
+           $result[] = Array("title" => "тарифы и сборы", "price" => $this->flightBooker->charges);
+        return $result;
     }
 
     //! return MOW - LED
