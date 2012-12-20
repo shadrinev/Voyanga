@@ -35,11 +35,11 @@
         <div class="tdPrice">
             <div class="statusOrder">
                 <span class="price">
-                    <span data-bind="text:$data[0].price">12 500</span> руб. за
-                    <span data-bind="text: $data[0].totalPeopleGen">2 человека</span>
+                    <span data-bind="text:$data.price">12 500</span> руб. за
+                    <span data-bind="text: $data.totalPeopleGen">2 человека</span>
                 </span>
                 <div class="status wait">
-                    <span data-bind='attr: {id: $data[0].key}' style="font-weight: bold">в обработке</span>
+                    <span data-bind='attr: {id: $data.key}' style="font-weight: bold">в обработке</span>
                 </div>
             </div>
         </div>

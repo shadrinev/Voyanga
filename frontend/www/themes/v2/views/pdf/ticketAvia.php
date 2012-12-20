@@ -63,6 +63,7 @@
                 </tbody>
             </table>
             <img src="images/vertLine.png" class="hr">
+            <?php //print_r($ticket);?>
             <?php if(count($ticket->flights)!=2):?>
                 <h2>Маршрут<?php echo count($ticket->flights);?></h2>
             <?php endif; ?>

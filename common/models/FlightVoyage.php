@@ -13,11 +13,12 @@ class FlightVoyage extends CApplicationComponent
     const MASK_BEST_PRICETIME = 2;
 
     public $price;
-    public $taxes;
+    //public $taxes;
     public $flightKey;
     /** @var Airline */
     public $valAirline;
-    public $commission;
+    //public $commission;
+    public $charges;
     public $flights;
     public $adultPassengerInfo;
     public $childPassengerInfo;
@@ -58,6 +59,24 @@ class FlightVoyage extends CApplicationComponent
     public function getIsPayable()
     {
         return true;
+    }
+
+    public function getTaxes()
+    {
+        $totalFare = 0;
+        $baseFare = 0;
+        $totalFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->priceDetail;
+        $baseFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->baseFare;
+        $totalFare += $this->childPassengerInfo->count*$this->childPassengerInfo->priceDetail;
+        $baseFare += $this->childPassengerInfo->count*$this->childPassengerInfo->baseFare;
+        $totalFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->priceDetail;
+        $baseFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->baseFare;
+        return ($totalFare - $baseFare);
+    }
+
+    public function getCommission()
+    {
+        return $this->charges;
     }
 
     public function saveToOrderDb($groupId = null)
@@ -129,10 +148,11 @@ class FlightVoyage extends CApplicationComponent
     public function __construct($oParams)
     {
         $this->price = $oParams->full_sum;
-        $this->taxes = $oParams->commission_price;
+        //$this->taxes = $oParams->commission_price;
         $this->flightKey = $oParams->flight_key;
-        $this->commission = $oParams->commission_price;
+        //$this->commission = $oParams->commission_price;
         $this->webService = $oParams->webService;
+        $this->charges = $oParams->charges;
         $this->refundable = $oParams->refundable;
         $this->flights = array();
         //$this->searchKey = $oParams->searchId;
