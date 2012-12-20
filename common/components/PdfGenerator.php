@@ -7,6 +7,7 @@ class PdfGenerator extends CApplicationComponent
 {
     private $hotelClient;
     public $orderBookingId=false;
+    public $orderBooking=false;
     private $controller;
 
     public function init()
@@ -16,7 +17,7 @@ class PdfGenerator extends CApplicationComponent
         $this->controller = new Controller('pdf');
     }
 
-    public function forHotelItem($item,$readableNumber)
+    public function forHotelItem($item)
     {
         $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
         $hotelPassports = HotelBookingPassport::model()->findAllByAttributes(array('hotelBookingId'=>$item->hotelBookerId));
@@ -29,12 +30,14 @@ class PdfGenerator extends CApplicationComponent
             if($voucherInfo->suppliers){
                 $pnr .= ' ('.implode(', ',$voucherInfo->suppliers).')';
             }
-            if(!$this->orderBookingId)
+            if(!$this->orderBookingId){
                 $this->orderBookingId = $hotelBooker->orderBookingId;
+                $this->orderBooking = OrderBooking::model()->findByPk($this->orderBookingId);
+            }
             $pdfFileName = $this->controller->renderPdf('ticketHotel',array(
                 'type'=>'hotel',
                 'ticket'=>$hotelBooker->hotel,
-                'bookingId'=>$readableNumber,
+                'bookingId'=>$this->orderBooking->readableId,
                 'pnr'=>$pnr,
                 'hotelPassports'=>$hotelPassports,
                 'hotelInfo'=>$hotelInfo
@@ -43,18 +46,20 @@ class PdfGenerator extends CApplicationComponent
         }
     }
 
-    public function forFlightItem($item,$readableNumber)
+    public function forFlightItem($item)
     {
         $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
         $flightPassports = FlightBookingPassport::model()->findAllByAttributes(array('flightBookingId'=>$item->flightBookerId));
         if ($flightBooker)
         {
-            if(!$this->orderBookingId)
+            if(!$this->orderBookingId){
                 $this->orderBookingId = $flightBooker->orderBookingId;
+                $this->orderBooking = OrderBooking::model()->findByPk($this->orderBookingId);
+            }
             $pdfFileName = $this->controller->renderPdf('ticketAvia', array(
                 'type'=>'avia',
                 'ticket'=>$flightBooker->flightVoyage,
-                'bookingId'=>$readableNumber,
+                'bookingId'=>$this->orderBooking->readableId,
                 'pnr'=>$flightBooker->pnr,
                 'flightPassports'=>$flightPassports,
             ));

@@ -411,7 +411,7 @@ class OrderComponent extends CApplicationComponent
             {
                 if ($item->hotelBookerId)
                 {
-                    if ($pdfFileName =  $pdf->forHotelItem($item,$orderBooking->readableId))
+                    if ($pdfFileName =  $pdf->forHotelItem($item))
                        $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileName);
                 }
             }
@@ -419,7 +419,7 @@ class OrderComponent extends CApplicationComponent
             {
                 if ($item->flightBookerId)
                 {
-                    if ($pdfFileName =  $pdf->forFlightItem($item,$orderBooking->readableId))
+                    if ($pdfFileName =  $pdf->forFlightItem($item))
                         $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileName);
                 }
             }
