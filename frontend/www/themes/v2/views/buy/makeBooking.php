@@ -81,7 +81,7 @@
             <table class="headerTitle">
                 <tr>
                     <td class="h1">Оплатить <span class="grey">или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
-                    <td class="time">Ваши билеты забронированы, необходимо оплатить за 1 ч. 58 м.</td>
+                    <td class="time"></td>
                 </tr>
             </table>
             <table class="mainTable">
