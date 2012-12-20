@@ -603,6 +603,7 @@ class AviaResultSet
 
   findAndSelect: (result)=>
     hash = result.similarityHash()
+    console.log('hash find avia ',hash)
     for result in @data
       for voyage in result.voyages
         if voyage.similarityHash()==hash

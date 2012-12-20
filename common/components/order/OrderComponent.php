@@ -418,7 +418,7 @@ class OrderComponent extends CApplicationComponent
             {
                 if ($item->flightBookerId)
                 {
-                    if ($pdfFileName =  $pdf->forHotelItem($item))
+                    if ($pdfFileName =  $pdf->forFlightItem($item))
                         $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileName);
                 }
             }
