@@ -412,69 +412,38 @@ class OrderComponent extends CApplicationComponent
     }
 
 
-    public function sendNotifications(){
-        Yii::import('site.common.modules.hotel.models.*');
-        $hotelClient = new HotelBookClient();
+    public function sendNotifications()
+    {
+        $pdf = Yii::app()->pdfGenerator;
         $pdfFileNames = array();
-        $controller = new Controller('pdf');
-        $orderBookingId = false;
         foreach ($this->itemsOnePerGroup as $item)
         {
             if ($item instanceof HotelTripElement)
             {
                 if ($item->hotelBookerId)
                 {
-                    $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
-
-
-                    $hotelPassports = HotelBookingPassport::model()->findAllByAttributes(array('hotelBookingId'=>$item->hotelBookerId));
-                    if ($hotelBooker)
-                    {
-                        $voucherInfo = $hotelClient->voucher($hotelBooker->orderId);
-                        $hotelInfo = $hotelClient->hotelDetail($hotelBooker->hotel->hotelId);
-                        $hotelClient->hotelSearchDetails($hotelBooker->hotel);
-                        if(!$orderBookingId) $orderBookingId = $hotelBooker->orderBookingId;
-                        $pdfFileName = $controller->renderPdf('ticketHotel',array('type'=>'hotel','ticket'=>$hotelBooker->hotel,
-                            'bookingId'=>$orderBookingId,
-                            'pnr'=>implode(', ',$voucherInfo->references),
-                            'hotelPassports'=>$hotelPassports,
-                            'hotelInfo'=>$hotelInfo
-                        ));
-                        if($pdfFileName){
-                            $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileName);
-                        }
-//                        print_r($hotelBooker);
-                    }
+                    if ($pdfFileName =  $pdf->forHotelItem($item))
+                       $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileName);
                 }
             }
             elseif ($item instanceof FlightTripElement)
             {
                 if ($item->flightBookerId)
                 {
-                    $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
-                    $flightPassports = FlightBookingPassport::model()->findAllByAttributes(array('flightBookingId'=>$item->flightBookerId));
-                    if ($flightBooker)
-                    {
-                        if(!$orderBookingId) $orderBookingId = $flightBooker->orderBookingId;
-                        $pdfFileName = $controller->renderPdf('ticketAvia',array('type'=>'avia','ticket'=>$flightBooker->flightVoyage,
-                        'bookingId'=>$flightBooker->orderBookingId,
-                        'pnr'=>$flightBooker->pnr,
-                        'flightPassports'=>$flightPassports,
-                        ));
-                        if($pdfFileName){
-                            $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileName);
-                        }
-                        //                      print_r($flightBooker->flightVoyage);
-                        //$tickets[] = array('type'=>'avia','ticket'=>$flightBooker->flightVoyage);
-
-                    }
+                    if ($pdfFileName =  $pdf->forHotelItem($item))
+                        $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileName);
                 }
             }
         }
         $orderBooking = $this->getOrderBooking();
-        EmailManager::sendEmailOrderInfo(array('orderBookingId'=>$orderBookingId,'email'=>$orderBooking->email),$pdfFileNames);
-        foreach($pdfFileNames as $pdfInfo){
-            if(file_exists($pdfInfo['filename'])){
+        EmailManager::sendEmailOrderInfo(array(
+            'orderBookingId'=>$pdf->orderBookingId,
+            'email'=>$orderBooking->email
+        ),$pdfFileNames);
+        foreach($pdfFileNames as $pdfInfo)
+        {
+            if(file_exists($pdfInfo['filename']))
+            {
                 unlink($pdfInfo['filename']);
             }
         }

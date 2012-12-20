@@ -27,7 +27,20 @@
         </tbody>
     </table>
     <div class="tdPrice">
-        Статус заказа: <span data-bind='attr: {id: $data.key}' style="font-weight: bold">в обработке</span>
+        <div class="statusOrder">
+                <span class="price">
+                    <!-- ko if: $parents[0].tour -->
+                        <span data-bind="text: roomSets()[0].discountPrice">12 500</span> руб. за
+                    <!-- /ko -->
+                    <!-- ko ifnot: $parents[0].tour -->
+                        <span data-bind="text: roomSets()[0].price">12 500</span> руб. за
+                    <!-- /ko -->
+                    <span data-bind="text: $data.totalPeopleGen">2 человека</span>
+                </span>
+            <div class="status wait">
+                <span data-bind='attr: {id: $data.key}' style="font-weight: bold">в обработке</span>
+            </div>
+        </div>
     </div>
     </div>
 </script>

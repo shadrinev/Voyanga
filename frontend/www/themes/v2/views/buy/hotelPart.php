@@ -30,14 +30,14 @@
 
         <div class="verticalAlign">
             <div class="people" data-bind="text: totalPeople">2 человека</div>
-            <!-- ko if: $parents[1].tour -->
+            <!-- ko if: $parents[0].tour -->
                 <div class="price"><span data-bind="text: roomSets()[0].discountPrice"></span><span class="rur">o</span></div>
                 <div class="priceSale">
                     <div class="lastPrice"><span data-bind="text: roomSets()[0].price"></span><span class="rur">o</span></div>
                     <span class="icoTours"></span>
                 </div>
             <!-- /ko -->
-            <!-- ko ifnot: $parents[1].tour -->
+            <!-- ko ifnot: $parents[0].tour -->
                 <div class="price"><span data-bind="text: roomSets()[0].price"></span><span class="rur">o</span></div>
             <!-- /ko -->
         </div>

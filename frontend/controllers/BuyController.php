@@ -20,7 +20,7 @@ class BuyController extends Controller
     {
         return array(
             array('allow', 'actions' => array('makeBooking','makeBookingForItem', 'startPayment', 'getPayment', 'new', 'flightSearch','hotelSearch','showBasket','index','done','waitpayment','status', 'paymentStatus')),
-            array('allow', 'actions' => array('order'), 'users' => array('@')),
+            array('allow', 'actions' => array('order','pdf'), 'users' => array('@')),
             array('deny'),
         );
     }
@@ -104,6 +104,36 @@ class BuyController extends Controller
             $statuses[$id] = $this->normalizeStatus($hotelBooker->status);
         }
         echo json_encode($statuses);
+    }
+
+    public function actionPdf($id)
+    {
+        $pdf = Yii::app()->pdfGenerator;
+        $tsp = new TripDataProvider();
+        $items = $tsp->getSortedCartItemsOnePerGroup();
+        foreach ($items as $item)
+        {
+            if ($item instanceof HotelTripElement)
+            {
+                if ($item->getId() == $id)
+                {
+                    $file =  $pdf->forHotelItem($item);
+                    Yii::app()->request->sendFile(basename($file),file_get_contents($file));
+                    @unlink($file);
+                    break;
+                }
+            }
+            elseif ($item instanceof FlightTripElement)
+            {
+                if ($item->getId() == $id)
+                {
+                    $file = $pdf->forFlightItem($item);
+                    Yii::app()->request->sendFile(basename($file),file_get_contents($file));
+                    @unlink($file);
+                    break;
+                }
+            }
+        }
     }
 
     private function normalizeStatus($status)
