@@ -318,6 +318,9 @@ class GDSNemoAgency extends CComponent
                     $sType = $oFare->Type;
                     $aPassengers[$sType]['count'] = $oFare->Quantity;
                     $aPassengers[$sType]['base_fare'] = $oFare->BaseFare->Amount;
+                    if($oFare->BaseFare->Currency != 'RUB'){
+                        $aPassengers[$sType]['base_fare'] = $oFare->EquiveFare->Amount;
+                    }
                     $aPassengers[$sType]['total_fare'] = $oFare->TotalFare->Amount;
                     $full_sum += ($oFare->TotalFare->Amount * $oFare->Quantity);
                     if (isset($oFare->LastTicketDateTime))
@@ -406,6 +409,7 @@ class GDSNemoAgency extends CComponent
                 $oFlight->full_sum = $full_sum;
                 $oFlight->full_sum = UtilsHelper::soapElementValue($oSoapFlight->TotalPrice);
                 $oFlight->commission_price = UtilsHelper::soapElementValue($oSoapFlight->Commission);
+                $oFlight->charges = UtilsHelper::soapElementValue($oSoapFlight->Charges);
                 $oFlight->webService = UtilsHelper::soapElementValue($oSoapFlight->WebService);
                 if ((isset($oSoapFlight->ValCompany)) && (strlen($oSoapFlight->ValCompany)>0))
                 {

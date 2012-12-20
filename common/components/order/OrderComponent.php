@@ -416,13 +416,14 @@ class OrderComponent extends CApplicationComponent
     {
         $pdf = Yii::app()->pdfGenerator;
         $pdfFileNames = array();
+        $orderBooking = $this->getOrderBooking();
         foreach ($this->itemsOnePerGroup as $item)
         {
             if ($item instanceof HotelTripElement)
             {
                 if ($item->hotelBookerId)
                 {
-                    if ($pdfFileName =  $pdf->forHotelItem($item))
+                    if ($pdfFileName =  $pdf->forHotelItem($item,$orderBooking->readableId))
                        $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileName);
                 }
             }
@@ -430,14 +431,14 @@ class OrderComponent extends CApplicationComponent
             {
                 if ($item->flightBookerId)
                 {
-                    if ($pdfFileName =  $pdf->forHotelItem($item))
+                    if ($pdfFileName =  $pdf->forFlightItem($item,$orderBooking->readableId))
                         $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileName);
                 }
             }
         }
-        $orderBooking = $this->getOrderBooking();
+
         EmailManager::sendEmailOrderInfo(array(
-            'orderBookingId'=>$pdf->orderBookingId,
+            'orderBookingId'=>$orderBooking->readableId,
             'email'=>$orderBooking->email
         ),$pdfFileNames);
         foreach($pdfFileNames as $pdfInfo)

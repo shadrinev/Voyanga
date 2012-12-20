@@ -33,5 +33,6 @@ return array(
     'mongo.dbName'=> 'voyanga',
 
     'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)',
-    'enableMemcached' => false
+    'enableMemcached' => false,
+    'pdfConverterPath' => '/usr/bin/wkhtmltopdf',
 );

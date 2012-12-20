@@ -2549,7 +2549,7 @@ input.hotel-input {
 .status.wait {
     background: url("../images/bg-orderWait.png") no-repeat scroll 0 0 transparent;
     height: 22px;
-    line-height: 21px;
+    line-height: 23px;
     overflow: hidden;
     padding-left: 28px;
     text-overflow: ellipsis;
@@ -2561,7 +2561,7 @@ input.hotel-input {
 .status.download {
     background: url("../images/bg-downloadPdf.png") no-repeat scroll 0 0 transparent;
     height: 22px;
-    line-height: 21px;
+    line-height: 23px;
     overflow: hidden;
     padding-left: 28px;
     text-overflow: ellipsis;

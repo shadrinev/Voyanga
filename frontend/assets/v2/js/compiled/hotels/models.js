@@ -71,11 +71,8 @@ Room = (function() {
 
   function Room(data) {
     this.getParams = __bind(this.getParams, this);
-
     this.printDebug = __bind(this.printDebug, this);
-
     this.key = __bind(this.key, this);
-
     var _this = this;
     this.name = data.showName;
     this.nameNemo = data.roomNemoName;
@@ -152,23 +149,14 @@ RoomSet = (function() {
       duration = 1;
     }
     this.hideCancelationRules = __bind(this.hideCancelationRules, this);
-
     this.showCancelationRules = __bind(this.showCancelationRules, this);
-
     this.addCancelationRules = __bind(this.addCancelationRules, this);
-
     this.similarityHash = __bind(this.similarityHash, this);
-
     this.key = __bind(this.key, this);
-
     this.minusCount = __bind(this.minusCount, this);
-
     this.plusCount = __bind(this.plusCount, this);
-
     this.checkCount = __bind(this.checkCount, this);
-
     this.getParams = __bind(this.getParams, this);
-
     this.price = Math.ceil(data.rubPrice);
     this.discountPrice = Math.ceil(data.discountPrice);
     this.savings = 0;
@@ -322,35 +310,20 @@ HotelResult = (function() {
       _this = this;
     this.activeHotel = activeHotel;
     this.getParams = __bind(this.getParams, this);
-
     this.putToMap = __bind(this.putToMap, this);
-
     this.smallMapUrl = __bind(this.smallMapUrl, this);
-
     this.select = __bind(this.select, this);
-
     this.back = __bind(this.back, this);
-
     this.combinationClick = __bind(this.combinationClick, this);
-
     this.getFullInfo = __bind(this.getFullInfo, this);
-
     this.initFullInfo = __bind(this.initFullInfo, this);
-
     this.showMap = __bind(this.showMap, this);
-
     this.showMapInfo = __bind(this.showMapInfo, this);
-
     this.showMapDetails = __bind(this.showMapDetails, this);
-
     this.selectFromPopup = __bind(this.selectFromPopup, this);
-
     this.showDetails = __bind(this.showDetails, this);
-
     this.showPhoto = __bind(this.showPhoto, this);
-
     this.isActive = __bind(this.isActive, this);
-
     this.isFlight = false;
     this.isHotel = true;
     _.extend(this, Backbone.Events);
@@ -718,37 +691,44 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.getFullInfo = function() {
-    var api, url,
+    var api, hotelResults, key, roomSet, url, _i, _len, _ref,
       _this = this;
     if (!this.haveFullInfo()) {
       api = new HotelsAPI;
+      hotelResults = [];
+      _ref = this.roomSets();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        roomSet = _ref[_i];
+        key = roomSet.resultId;
+        hotelResults.push('hotelResult[' + 'searchId' + ']=' + roomSet.resultId);
+      }
       url = 'hotel/search/info/?hotelId=' + this.hotelId;
       url += '&cacheId=' + this.parent.cacheId;
       console.log(this.parent.cacheId);
       return api.search(url, function(data) {
-        var cancelObjs, ind, key, roomSet, set, _i, _len, _ref, _ref1, _ref2;
+        var cancelObjs, ind, set, _j, _len1, _ref1, _ref2, _ref3;
         window.voyanga_debug('searchInfo', data);
         if (!data.hotel) {
           return false;
         }
         _this.initFullInfo();
-        _ref = data.hotel.details;
-        for (ind in _ref) {
-          roomSet = _ref[ind];
+        _ref1 = data.hotel.details;
+        for (ind in _ref1) {
+          roomSet = _ref1[ind];
           set = new RoomSet(roomSet, _this, _this.duration);
           _this.roomCombinations.push(set);
         }
         cancelObjs = {};
-        _ref1 = data.hotel.oldHotels;
-        for (ind in _ref1) {
-          roomSet = _ref1[ind];
+        _ref2 = data.hotel.oldHotels;
+        for (ind in _ref2) {
+          roomSet = _ref2[ind];
           key = roomSet.resultId;
           cancelObjs[key] = roomSet;
         }
         console.log(cancelObjs);
-        _ref2 = _this.roomSets();
-        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-          roomSet = _ref2[_i];
+        _ref3 = _this.roomSets();
+        for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
+          roomSet = _ref3[_j];
           key = roomSet.resultId;
           if (cancelObjs[key]) {
             roomSet.addCancelationRules(cancelObjs[key]);
@@ -757,19 +737,19 @@ HotelResult = (function() {
           }
         }
         _this.roomMixed = ko.computed(function() {
-          var result, resultsObj, _j, _k, _len1, _len2, _ref3, _ref4;
+          var result, resultsObj, _k, _l, _len2, _len3, _ref4, _ref5;
           resultsObj = {};
-          _ref3 = _this.roomSets();
-          for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
-            roomSet = _ref3[_j];
+          _ref4 = _this.roomSets();
+          for (_k = 0, _len2 = _ref4.length; _k < _len2; _k++) {
+            roomSet = _ref4[_k];
             key = roomSet.key();
             if (typeof resultsObj[key] === 'undefined') {
               resultsObj[key] = roomSet;
             }
           }
-          _ref4 = _this.roomCombinations();
-          for (_k = 0, _len2 = _ref4.length; _k < _len2; _k++) {
-            roomSet = _ref4[_k];
+          _ref5 = _this.roomCombinations();
+          for (_l = 0, _len3 = _ref5.length; _l < _len3; _l++) {
+            roomSet = _ref5[_l];
             key = roomSet.key();
             if (typeof resultsObj[key] === 'undefined') {
               resultsObj[key] = roomSet;
@@ -930,43 +910,24 @@ HotelsResultSet = (function() {
     this.searchParams = searchParams;
     this.activeHotel = activeHotel;
     this.postFilters = __bind(this.postFilters, this);
-
     this.postInit = __bind(this.postInit, this);
-
     this.selectHotel = __bind(this.selectHotel, this);
-
     this.sortByRating = __bind(this.sortByRating, this);
-
     this.sortByPrice = __bind(this.sortByPrice, this);
-
     this.checkShowMore = __bind(this.checkShowMore, this);
-
     this.showMoreResults = __bind(this.showMoreResults, this);
-
     this.getDateInterval = __bind(this.getDateInterval, this);
-
     this.selectFromPopup = __bind(this.selectFromPopup, this);
-
     this.gMapPointClick = __bind(this.gMapPointClick, this);
-
     this.gMapPointHideWin = __bind(this.gMapPointHideWin, this);
-
     this.gMapPointShowWin = __bind(this.gMapPointShowWin, this);
-
     this.hideFullMap = __bind(this.hideFullMap, this);
-
     this.showFullMapFunc = __bind(this.showFullMapFunc, this);
-
     this.setFullMapZoom = __bind(this.setFullMapZoom, this);
-
     this.addMapPoint = __bind(this.addMapPoint, this);
-
     this.resetMapCenter = __bind(this.resetMapCenter, this);
-
     this.findAndSelect = __bind(this.findAndSelect, this);
-
     this.select = __bind(this.select, this);
-
     this._results = {};
     if (rawData.error) {
       throw "500";

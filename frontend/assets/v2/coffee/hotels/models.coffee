@@ -535,6 +535,11 @@ class HotelResult
   getFullInfo: ()=>
     if !@haveFullInfo()
       api = new HotelsAPI
+      hotelResults = []
+      for roomSet in @roomSets()
+        key = roomSet.resultId
+        hotelResults.push 'hotelResult['+'searchId'+']='+roomSet.resultId
+
       url = 'hotel/search/info/?hotelId='+@hotelId
       url += '&cacheId='+@parent.cacheId
       console.log @parent.cacheId

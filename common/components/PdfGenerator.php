@@ -16,7 +16,7 @@ class PdfGenerator extends CApplicationComponent
         $this->controller = new Controller('pdf');
     }
 
-    public function forHotelItem($item)
+    public function forHotelItem($item,$readableNumber)
     {
         $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
         $hotelPassports = HotelBookingPassport::model()->findAllByAttributes(array('hotelBookingId'=>$item->hotelBookerId));
@@ -34,7 +34,7 @@ class PdfGenerator extends CApplicationComponent
             $pdfFileName = $this->controller->renderPdf('ticketHotel',array(
                 'type'=>'hotel',
                 'ticket'=>$hotelBooker->hotel,
-                'bookingId'=>$this->orderBookingId,
+                'bookingId'=>$readableNumber,
                 'pnr'=>$pnr,
                 'hotelPassports'=>$hotelPassports,
                 'hotelInfo'=>$hotelInfo
@@ -43,7 +43,7 @@ class PdfGenerator extends CApplicationComponent
         }
     }
 
-    public function forFlightItem($item)
+    public function forFlightItem($item,$readableNumber)
     {
         $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
         $flightPassports = FlightBookingPassport::model()->findAllByAttributes(array('flightBookingId'=>$item->flightBookerId));
@@ -54,7 +54,7 @@ class PdfGenerator extends CApplicationComponent
             $pdfFileName = $this->controller->renderPdf('ticketAvia', array(
                 'type'=>'avia',
                 'ticket'=>$flightBooker->flightVoyage,
-                'bookingId'=>$flightBooker->orderBookingId,
+                'bookingId'=>$readableNumber,
                 'pnr'=>$flightBooker->pnr,
                 'flightPassports'=>$flightPassports,
             ));

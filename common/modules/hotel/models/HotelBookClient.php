@@ -1711,8 +1711,8 @@ class HotelBookClient
         $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
         if($responseObject->Order->ItemList){
             UtilsHelper::soapObjectsArray($responseObject->Order->ItemList->Item);
-            foreach($responseObject->Order->ItemList->Item as $key=>$itemSXE){
-
+            foreach($responseObject->Order->ItemList->Item as $itemSXE){
+                $key = (string)$itemSXE->Id;
                 if($itemSXE->Voucher->BookingDetails->Supplier)
                     $hotelOrderConfirmResponse->suppliers[$key] = (string)$itemSXE->Voucher->BookingDetails->Supplier;
                 if($itemSXE->Voucher->BookingDetails->Reference)
