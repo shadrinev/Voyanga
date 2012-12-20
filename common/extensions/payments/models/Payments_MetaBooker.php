@@ -35,7 +35,8 @@ class Payments_MetaBooker extends CComponent{
             $booker->getCurrent()->billId = $billId;
         }
     }
-    public function getPrice() {
+
+   public function getPrice() {
         $price = 0;
         foreach ($this->bookers as $booker) {
             $price += $booker->getCurrent()->price;
@@ -87,4 +88,15 @@ class Payments_MetaBooker extends CComponent{
             return $parts[1];
         return $parts[0];
     }
+
+    public function getPriceBreakdown()
+    {
+        $result = Array("price"=>$this->getPrice());
+        if(count($this->bookers)==1)
+            $result['title']= "гостиница";
+        if(count($this->bookers)>1)
+            $result['title']= "гостиницы";
+        return Array($result);
+    }
+
 }

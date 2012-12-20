@@ -171,6 +171,18 @@ class OrderComponent extends CApplicationComponent
         return $payments->getFormParamsForBooker($bookers[0]);
     }
 
+    public function getPaymentTransactions()
+    {
+   $bookers = $this->getBookers();
+        if(count($bookers)===0)
+        {
+            throw new Exception("Nothing to pay for");
+        }
+        $payments = Yii::app()->payments;
+        $bookers = $payments->preProcessBookers($bookers);
+        return $payments->getTransactionsForBookers($bookers);
+    }
+
     public function startPaymentOld()
     {
         // perekluchaem v state startpayment

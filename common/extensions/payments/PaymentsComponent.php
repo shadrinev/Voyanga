@@ -81,6 +81,24 @@ class PaymentsComponent extends CApplicationComponent
         return $channel->formParams();
     }
 
+    public function getTransactionsForBookers($bookers)
+    {
+        $result = array();
+        foreach($bookers as $booker)
+        {
+            $isHotel = ($booker instanceof Payments_MetaBooker);
+            $entry = Array("transactions" => $booker->getPriceBreakDown(), "isHotel"=> $isHotel);
+            if(!$isHotel)
+                $entry['title'] = "Перелет " . $booker->getSmallDescription();
+            $result[] = $entry;
+
+        }
+//        $bill = $this->getBillForBooker($booker);
+//        $channel = $bill->getChannel();
+        return $result;
+    }
+
+
     /**
        prepare bookers for payments component,
        ATM only wraps hotels into Payments_MetaBooker

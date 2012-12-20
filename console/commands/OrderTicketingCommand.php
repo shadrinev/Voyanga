@@ -13,7 +13,6 @@ EOD;
     {
         $orderId = intval($orderId);
         if ($orderId) {
-            $payment = Yii::app()->payments;
             Yii::app()->user->setState('orderBookingId', $orderId);
             $order = Yii::app()->order;
             $order->initByOrderBookingId($orderId);

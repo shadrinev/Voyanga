@@ -71,6 +71,8 @@ class Application extends Backbone.Router
     @activeModule.subscribe @slider.handler
     @debugMode = ko.observable false
 
+    @breakdown = ko.observable false
+
   initCalendar: =>
     throw "Deprecated"
 
