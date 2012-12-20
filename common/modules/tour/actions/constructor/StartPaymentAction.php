@@ -25,6 +25,9 @@ class StartPaymentAction extends CAction
         $params['ReturnUrl'] = "http://test.voyanga.com/buy/waitpayment";
         $params['FailUrl'] = "http://test.voyanga.com/buy/waitpayment";
         header("Content-type: application/json");
-        echo json_encode($params);
+        $result = Array();
+        $result['payonline'] = $params;
+        $result['breakdown'] = Yii::app()->order->getPaymentTransactions();
+        echo json_encode($result);
     }
 }

@@ -128,7 +128,8 @@ function checkStatuses(statuses, ids)
                         $('.paybuyEnd').show();
                         Utils.scrollTo('.payCardPal',true);
                     });
-                    Utils.submitPayment(data);
+		    window.app.breakdown(data.breakdown);
+                    Utils.submitPayment(data.payonline);
                 }
             });
         })

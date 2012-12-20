@@ -90,6 +90,7 @@ Application = (function(_super) {
     this.slider.init();
     this.activeModule.subscribe(this.slider.handler);
     this.debugMode = ko.observable(false);
+    this.breakdown = ko.observable(false);
   }
 
   Application.prototype.initCalendar = function() {

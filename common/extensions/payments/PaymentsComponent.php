@@ -86,15 +86,10 @@ class PaymentsComponent extends CApplicationComponent
         $result = array();
         foreach($bookers as $booker)
         {
-            if($booker instanceof FlightBookerComponent)
-            {
-                $booker = $booker->getCurrent();
-            }
-
             $isHotel = ($booker instanceof Payments_MetaBooker);
-            $entry = Array("amount" => $booker->price, "isHotel"=> $isHotel);
+            $entry = Array("transactions" => $booker->getPriceBreakDown(), "isHotel"=> $isHotel);
             if(!$isHotel)
-                $entry['title'] = $booker->getSmallDescription();
+                $entry['title'] = "Перелет " . $booker->getSmallDescription();
             $result[] = $entry;
 
         }

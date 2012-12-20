@@ -86,56 +86,24 @@
             </table>
             <table class="mainTable">
                 <tr>
-                    <td class="tdInfoText">
+                    <td class="tdInfoText" data-bind="if: breakdown">
                         Сумма может быть списана в несколько транзакций. <span class="whyQuest tooltipClose" rel="Это сделано для удобства и экономии ваших денег. На каждую составляющую вашей поездки мы делаем отдельное списание, а данные платежной карточки вы вводите один раз. Это позволяет экономить: мы меньше тратим на эквайринг, вы - получаете более привлекательные цены. Так же это дает дополнительное удобство в случае, если после оплаты всего заказа вы решите отказаться только от отеля, не отменяя авиабилет. В этом случае нам не надо будет отменять весь заказ целиком.">Почему?</span>
-
-                        <table class="aviaAllPrice">
-                            <thead>
+                      <!-- ko foreach: breakdown -->
+                        <table class="aviaAllPrice" data-bind="css: {aviaAllPrice: !isHotel, hotelAllPrice: isHotel}">
+                            <thead data-bind="if: !isHotel">
                                 <tr>
-                                    <td colspan="2">Перелет LED - MOW:</td>
+                                    <td colspan="2" data-bind="text: title">Перелет LED - MOW:</td>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody data-bind="foreach:transactions">
                                 <tr>
-                                    <td class="price"><div>5 500 <span class="rur">o</span></div></td>
-                                    <td class="text">тариф и таксы</td>
-                                </tr>
-                                <tr>
-                                    <td class="price"><div>5 500 <span class="rur">o</span></div></td>
-                                    <td class="text">тариф и таксы</td>
+                                    <td class="price"><div><span data-bind="text: price">5 500</span> <span class="rur">o</span></div></td>
+                                    <td class="text" data-bind="text: title">тариф и таксы</td>
                                 </tr>
                             </tbody>
 
                         </table>
-
-                        <table class="aviaAllPrice">
-                            <thead>
-                            <tr>
-                                <td colspan="2">Перелет MOW - LED:</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td class="price"><div>5 500 <span class="rur">o</span></div></td>
-                                <td class="text">тариф и таксы</td>
-                            </tr>
-                            <tr>
-                                <td class="price"><div>5 500 <span class="rur">o</span></div></td>
-                                <td class="text">тариф и таксы</td>
-                            </tr>
-                            </tbody>
-
-                        </table>
-
-                        <table class="hotelAllPrice">
-                            <tbody>
-                            <tr>
-                                <td class="price"><div>14 500 <span class="rur">o</span></div></td>
-                                <td class="text">гостиницы</td>
-                            </tr>
-                            </tbody>
-
-                        </table>
+                        <!-- /ko -->
                     </td>
                     <td class="tdIframe">
                         <iframe id="payment_frame" name="payment_frame" class="payCardPaliFrame"></iframe>
