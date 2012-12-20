@@ -267,10 +267,12 @@ class Hotel extends CApplicationComponent
                     $this->cancelExpiration = $params['fromTimestamp'];
                 }
                 $find = false;
-                foreach($this->cancelCharges as $charge){
-                    if($charge == $params){
-                        $find = true;
-                        break;
+                if($this->cancelCharges){
+                    foreach($this->cancelCharges as $charge){
+                        if($charge == $params){
+                            $find = true;
+                            break;
+                        }
                     }
                 }
                 if(!$find)
@@ -291,10 +293,12 @@ class Hotel extends CApplicationComponent
                     $this->cancelExpiration = $params['fromTimestamp'];
                 }
                 $find = false;
-                foreach($this->cancelCharges as $charge){
-                    if($charge == $params){
-                        $find = true;
-                        break;
+                if($this->cancelCharges){
+                    foreach($this->cancelCharges as $charge){
+                        if($charge == $params){
+                            $find = true;
+                            break;
+                        }
                     }
                 }
                 if(!$find)
