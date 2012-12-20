@@ -65,12 +65,18 @@ class FlightVoyage extends CApplicationComponent
     {
         $totalFare = 0;
         $baseFare = 0;
-        $totalFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->priceDetail;
-        $baseFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->baseFare;
-        $totalFare += $this->childPassengerInfo->count*$this->childPassengerInfo->priceDetail;
-        $baseFare += $this->childPassengerInfo->count*$this->childPassengerInfo->baseFare;
-        $totalFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->priceDetail;
-        $baseFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->baseFare;
+        if($this->adultPassengerInfo){
+            $totalFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->priceDetail;
+            $baseFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->baseFare;
+        }
+        if($this->childPassengerInfo){
+            $totalFare += $this->childPassengerInfo->count*$this->childPassengerInfo->priceDetail;
+            $baseFare += $this->childPassengerInfo->count*$this->childPassengerInfo->baseFare;
+        }
+        if($this->infantPassengerInfo){
+            $totalFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->priceDetail;
+            $baseFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->baseFare;
+        }
         return ($totalFare - $baseFare);
     }
 
