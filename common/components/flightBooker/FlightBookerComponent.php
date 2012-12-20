@@ -341,7 +341,7 @@ class FlightBookerComponent extends CApplicationComponent
         $result = Array();
         $result[] = Array("title" => "билет", "price" => $this->flightBooker->price);
         if($this->flightBooker->getFlightVoyage()->charges > 0 )
-           $result[] = Array("title" => "тарифы и сборы", "price" => $this->flightBooker->charges);
+           $result[] = Array("title" => "тарифы и сборы", "price" => $this->flightBooker->getFlightVoyage()->charges);
         return $result;
     }
 
