@@ -30,7 +30,7 @@
                 <tr>
                     <td class="tdNumberVoyanga">
                         Номер заказа в системе Voyanga<br>
-                        Order Id
+                        Order Number
                     </td>
                     <td class="tdReserve">
                         Номер билета<br>
@@ -65,7 +65,7 @@
             <img src="images/vertLine.png" class="hr">
             <?php //print_r($ticket);?>
             <?php if(count($ticket->flights)!=2):?>
-                <h2>Маршрут<?php echo count($ticket->flights);?></h2>
+                <h2>Маршрут</h2>
             <?php endif; ?>
             <?php foreach($ticket->flights as $key=>$flight):?>
                 <?php if( count($ticket->flights) === 2):?>
