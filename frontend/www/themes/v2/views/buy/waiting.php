@@ -17,7 +17,7 @@ Yii::app()->clientScript->registerCoreScript('jquery');
     <script type="text/javascript">
     $(function(){
       "use strict";
-      var item;
+      var item, done=false;
       var blocks = ['waiting', 'show', 'fail'];
       var show = function(id) {
         for(var i=0; i < blocks.length; i++) {
@@ -45,12 +45,15 @@ Yii::app()->clientScript->registerCoreScript('jquery');
       }
       function poll()
       {
+        if(done)
+          return;
         setTimeout(function(){
           $.get('/buy/paymentStatus')
             .always(poll)
             .done(function(data){
               if(data.paid) {
                 show('ok');
+                done = true;
               }
               if(data.error) {
                 show('fail');
@@ -61,7 +64,7 @@ Yii::app()->clientScript->registerCoreScript('jquery');
               show('fail');
 
             });
-        }, 10000);
+        }, 1000);
       }
       poll();
     });

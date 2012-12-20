@@ -246,7 +246,7 @@ class BuyController extends Controller
         $error = false;
         foreach($bookers as $booker)
         {
-            if($payments->getStatus($booker)!='paid'){
+            if(!in_array($payments->getStatus($booker),Array('paid', 'ticketReady', 'done', 'ticketing', 'ticketingRepeat'))){
                 $paid = false;
             }
         }

@@ -133,7 +133,7 @@ class PaymentsComponent extends CApplicationComponent
             $booker = $booker->getCurrent();
         }
 
-       $fb = $booker;
+        $fb = $booker;
         $params['locator'] = $fb->pnr;
         $params['type']='FLIGHTS';
         $params['booking_id']=$fb->nemoBookId;
