@@ -39,7 +39,11 @@ HotelsPanel = (function(_super) {
     this.cityReadableAcc = ko.observable();
     this.cityReadableGen = ko.observable();
     this.calendarText = ko.computed(function() {
-      return "vibAR->" + _this.cityReadable();
+      var ret;
+      ret = "Выберите дату проживания";
+      if (_this.cityReadable()) {
+        return ret += " в городе " + _this.cityReadable();
+      }
     });
     this.formFilled = ko.computed(function() {
       var cin, cout, result;

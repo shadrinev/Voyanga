@@ -19,7 +19,9 @@ class HotelsPanel extends SearchPanel
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
     @calendarText = ko.computed =>
-      "vibAR->" + @cityReadable()
+      ret = "Выберите дату проживания"
+      if @cityReadable()
+        ret += " в городе "+@cityReadable()
 
     @formFilled = ko.computed =>
       if @checkIn().getDay
