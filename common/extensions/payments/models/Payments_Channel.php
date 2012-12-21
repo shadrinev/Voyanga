@@ -8,7 +8,6 @@ abstract class Payments_Channel {
         $this->bill = $bill;
         $this->booker = $booker;
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
-        $this->amount = 10;
     }
 
     public function getName()
@@ -22,7 +21,7 @@ abstract class Payments_Channel {
         $params = Array();
         $params['MerchantId'] = $credentials['id'];
         //! FIXME: can this amount change?
-        $params['Amount'] = sprintf("%.2f", $this->amount);//  $this->bill->amount);
+        $params['Amount'] = sprintf("%.2f", $this->bill->amount);
         $params['Currency'] = 'RUB';
         # FIXME FIXME FIXME FIXME
         $params['OrderId'] = $order->id . '-' . $this->bill->id;
