@@ -10,11 +10,17 @@ HotelsPanel = (function(_super) {
 
   function HotelsPanel() {
     this.afterRender = __bind(this.afterRender, this);
+
     this.setDate = __bind(this.setDate, this);
+
     this.haveDates = __bind(this.haveDates, this);
+
     this.checkOutHtml = __bind(this.checkOutHtml, this);
+
     this.checkInHtml = __bind(this.checkInHtml, this);
+
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
+
     var _this = this;
     this.template = 'hotels-panel-template';
     HotelsPanel.__super__.constructor.call(this);
@@ -33,7 +39,11 @@ HotelsPanel = (function(_super) {
     this.cityReadableAcc = ko.observable();
     this.cityReadableGen = ko.observable();
     this.calendarText = ko.computed(function() {
-      return "vibAR->" + _this.cityReadable();
+      var ret;
+      ret = "Выберите дату проживания";
+      if (_this.cityReadable()) {
+        return ret += " в городе " + _this.cityReadable();
+      }
     });
     this.formFilled = ko.computed(function() {
       var cin, cout, result;

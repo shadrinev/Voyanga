@@ -102,6 +102,7 @@ class RoomSet
     # Used in tours
     @savings = 0
     @resultId = data.resultId
+    @searchId = data.searchId
     @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
     @cancelRules = ko.observable(false)
@@ -361,6 +362,7 @@ class HotelResult
   push: (data) ->
     set = new RoomSet data, @, @duration
     set.resultId = data.resultId
+    set.searchId = data.searchId
     if @roomSets().length == 0
       @cheapest = set.price
       @cheapestSet = set  
@@ -538,10 +540,10 @@ class HotelResult
       hotelResults = []
       for roomSet in @roomSets()
         key = roomSet.resultId
-        hotelResults.push 'hotelResult['+'searchId'+']='+roomSet.resultId
+        hotelResults.push roomSet.resultId+':'+roomSet.searchId
 
       url = 'hotel/search/info/?hotelId='+@hotelId
-      url += '&cacheId='+@parent.cacheId
+      url += '&hotelResult='+hotelResults.join(',')
       console.log @parent.cacheId
       api.search(
         url,

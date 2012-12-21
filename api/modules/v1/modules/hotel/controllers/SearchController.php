@@ -67,22 +67,23 @@ class SearchController extends ApiController
         }
     }
 
-    public function actionInfo($hotelId, $cacheId, $format = 'json')
+    public function actionInfo($hotelId,$hotelResult, $cacheId = null, $format = 'json')
     {
-        $hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $cacheId);
-        $hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $cacheId);
-        if ((!$hotelSearchResult) || (!$hotelSearchParams))
-        {
-            $this->sendError(200, 'Cache invalidated already.');
-            Yii::app()->end();
-        }
+        //$hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $cacheId);
+        //$hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $cacheId);
+        //if ((!$hotelSearchResult) || (!$hotelSearchParams))
+        //{
+        //    $this->sendError(200, 'Cache invalidated already.');
+        //    Yii::app()->end();
+        //}
 
-        $stack = new HotelStack($hotelSearchResult);
-        $results = $stack->groupBy('hotelId')->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
+        //$stack = new HotelStack($hotelSearchResult);
+        //$results = $stack->groupBy('hotelId')->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
+        //$results =
         $hotelClient = new HotelBookClient();
         $response = array();
 
-        foreach ($results['hotels'] as $hotel)
+        /*foreach ($results['hotels'] as $hotel)
         {
             if ($hotel['hotelId'] == $hotelId)
             {
@@ -102,6 +103,19 @@ class SearchController extends ApiController
                     $response['hotel']['oldHotels'][] = new Hotel($hotel);
                 }
             }
+        }*/
+        $response['hotel'] = array();
+        $response['hotel']['oldHotels'] = array();
+        $response['hotel']['details'] = array();
+        $hotelResultIDS = explode(',',$hotelResult);
+        $hotelResult = array();
+        foreach($hotelResultIDS as $hotelStr){
+            list($resultId,$searchId) = explode(':',$hotelStr);
+            $hotelResult[$resultId] = $searchId;
+        }
+        foreach ($hotelResult as $resultId=>$searchId)
+        {
+            $response['hotel']['oldHotels'][] = new Hotel(array('searchId'=>$searchId,'resultId'=>$resultId,'hotelId'=>$hotelId));
         }
         if (isset($response))
         {
