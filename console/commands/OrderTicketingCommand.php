@@ -26,7 +26,6 @@ EOD;
                 {
                     $bill = $payments->getBillForBooker($booker->getCurrent());
                     $payments->notifyNemo($booker, $bill);
-                } else {
                     Yii::app()->cron->delete($booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId);
                 }
                 echo $payments->getStatus($booker) . "=>\n";
