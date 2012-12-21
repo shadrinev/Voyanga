@@ -13,9 +13,13 @@ PhotoBox = (function() {
       initIndex = 0;
     }
     this._load = __bind(this._load, this);
+
     this.prev = __bind(this.prev, this);
+
     this.next = __bind(this.next, this);
+
     this.photoLoad = __bind(this.photoLoad, this);
+
     if (photos.length === 0) {
       return;
     }

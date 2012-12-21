@@ -10,10 +10,15 @@ AviaPanel = (function(_super) {
 
   function AviaPanel() {
     this.afterRender = __bind(this.afterRender, this);
+
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
+
     this.selectRoundTrip = __bind(this.selectRoundTrip, this);
+
     this.selectOneWay = __bind(this.selectOneWay, this);
+
     this.setDate = __bind(this.setDate, this);
+
     var _this = this;
     AviaPanel.__super__.constructor.call(this);
     this.prevPanel = 'tours';

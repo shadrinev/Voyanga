@@ -7,7 +7,8 @@ var API, AviaAPI, HotelsAPI, ToursAPI,
 API = (function() {
 
   function API() {
-    this.call = __bind(this.call, this);    this.endpoint = 'http://api.voyanga.com/v1/';
+    this.call = __bind(this.call, this);
+    this.endpoint = 'http://api.voyanga.com/v1/';
   }
 
   API.prototype.call = function(url, cb, showLoad) {
@@ -50,7 +51,8 @@ ToursAPI = (function(_super) {
   __extends(ToursAPI, _super);
 
   function ToursAPI() {
-    this.search = __bind(this.search, this);    return ToursAPI.__super__.constructor.apply(this, arguments);
+    this.search = __bind(this.search, this);
+    return ToursAPI.__super__.constructor.apply(this, arguments);
   }
 
   ToursAPI.prototype.search = function(url, cb) {
@@ -68,7 +70,8 @@ AviaAPI = (function(_super) {
   __extends(AviaAPI, _super);
 
   function AviaAPI() {
-    this.search = __bind(this.search, this);    return AviaAPI.__super__.constructor.apply(this, arguments);
+    this.search = __bind(this.search, this);
+    return AviaAPI.__super__.constructor.apply(this, arguments);
   }
 
   AviaAPI.prototype.search = function(url, cb) {
@@ -86,7 +89,8 @@ HotelsAPI = (function(_super) {
   __extends(HotelsAPI, _super);
 
   function HotelsAPI() {
-    this.search = __bind(this.search, this);    return HotelsAPI.__super__.constructor.apply(this, arguments);
+    this.search = __bind(this.search, this);
+    return HotelsAPI.__super__.constructor.apply(this, arguments);
   }
 
   HotelsAPI.prototype.search = function(url, cb, showLoad) {

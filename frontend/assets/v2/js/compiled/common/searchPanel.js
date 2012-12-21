@@ -13,12 +13,19 @@ SearchPanel = (function() {
       fromTourPanel = false;
     }
     this.afterRender = __bind(this.afterRender, this);
+
     this.handlePanelSubmit = __bind(this.handlePanelSubmit, this);
+
     this.showCalendar = __bind(this.showCalendar, this);
+
     this.minimizeCalendar = __bind(this.minimizeCalendar, this);
+
     this.minimize = __bind(this.minimize, this);
+
     this.toggleCalendar = __bind(this.toggleCalendar, this);
+
     this.togglePanel = __bind(this.togglePanel, this);
+
     this.minimized = ko.observable(!hideCalendar);
     this.minimizedCalendar = ko.observable(hideCalendar);
     this.calendarHidden = ko.observable(this.minimizedCalendar);

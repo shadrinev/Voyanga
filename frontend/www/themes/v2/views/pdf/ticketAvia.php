@@ -177,7 +177,7 @@
                         <table class="tableLastInfo">
                             <tr>
                                 <td class="tdTitle">Тариф / Fare</td>
-                                <td class="tdPrice"><?php echo UtilsHelper::formatPrice($ticket->price);?> RUB</td>
+                                <td class="tdPrice"><?php echo UtilsHelper::formatPrice(($ticket->price - $ticket->commission));?> RUB</td>
                             </tr>
                             <tr>
                                 <td class="tdTitle">Таксы и сборы / Taxes and fees</td>

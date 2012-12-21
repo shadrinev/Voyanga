@@ -8,7 +8,9 @@ SpRoom = (function() {
     var _this = this;
     this.parent = parent;
     this.getUrl = __bind(this.getUrl, this);
+
     this.getHash = __bind(this.getHash, this);
+
     this.adults = ko.observable(1).extend({
       integerOnly: {
         min: 1,
@@ -95,9 +97,13 @@ HotelsSearchParams = (function() {
 
   function HotelsSearchParams() {
     this.url = __bind(this.url, this);
+
     this.fromObject = __bind(this.fromObject, this);
+
     this.fromList = __bind(this.fromList, this);
+
     this.getHash = __bind(this.getHash, this);
+
     var _this = this;
     this.city = ko.observable('');
     this.checkIn = ko.observable(false);

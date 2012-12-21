@@ -166,7 +166,7 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageTicketReady()
     {
-        //TODO: ваучер
+        $this->status('done');
     }
 
     public function stageTicketingRepeat()
