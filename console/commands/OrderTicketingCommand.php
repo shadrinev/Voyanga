@@ -26,13 +26,14 @@ EOD;
                 {
                     $bill = $payments->getBillForBooker($booker->getCurrent());
                     $payments->notifyNemo($booker, $bill);
+                } else {
+                    Yii::app()->cron->delete($booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId);
                 }
                 echo $payments->getStatus($booker) . "=>\n";
                 $booker->status('ticketing');
                 echo $payments->getStatus($booker) . "\n";
                 echo "--------------------------------\n";
                 //! Remove scheduled change to BookingTimilimit state
-                Yii::app()->cron->delete($booker->getTaskInfo('paymentTimeLimit')->taskId);
             }
             $order->initByOrderBookingId($orderId);
             $order->sendNotifications();
