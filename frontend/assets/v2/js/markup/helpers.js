@@ -250,12 +250,7 @@ function deletePopUpHide() {
 
 function telefonLoad() {
     if ($('#contactPhone').length > 0 && $('#contactPhone').is(':visible')) {
-        $('#contactPhone').keydown(function(event) {
-            javascript:backspacerUP(this,event);
-        });
-        $('#contactPhone').keyup(function(event) {
-            javascript:backspacerDOWN(this,event);
-        })
+        $('#contactPhone').mask('+7 (999) 999-99-99');
     }
     else {
         return
