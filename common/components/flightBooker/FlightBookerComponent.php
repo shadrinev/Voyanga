@@ -338,8 +338,16 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function getPriceBreakdown()
     {
+        $payments = Yii::app()->payments;
+        $bill = $payments->getBillForBooker($this->flightBooker);
+        $channel = $bill->channel;
         $result = Array();
         $charges = $this->flightBooker->getFlightVoyage()->charges;
+        if ($channel=='ltr') {
+            // Show single transaction
+            $result[] = Array("title" => "билет", "price" => $this->flightBooker->price);
+            return $result;
+        }
         if($charges < 0)
             $charges = 0;
         $result[] = Array("title" => "билет", "price" => $this->flightBooker->price - $charges);
