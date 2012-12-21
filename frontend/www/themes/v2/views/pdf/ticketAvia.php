@@ -30,7 +30,7 @@
                 <tr>
                     <td class="tdNumberVoyanga">
                         Номер заказа в системе Voyanga<br>
-                        Order Id
+                        Order Number
                     </td>
                     <td class="tdReserve">
                         Номер билета<br>
@@ -63,8 +63,9 @@
                 </tbody>
             </table>
             <img src="images/vertLine.png" class="hr">
+            <?php //print_r($ticket);?>
             <?php if(count($ticket->flights)!=2):?>
-                <h2>Маршрут<?php echo count($ticket->flights);?></h2>
+                <h2>Маршрут</h2>
             <?php endif; ?>
             <?php foreach($ticket->flights as $key=>$flight):?>
                 <?php if( count($ticket->flights) === 2):?>
@@ -176,7 +177,7 @@
                         <table class="tableLastInfo">
                             <tr>
                                 <td class="tdTitle">Тариф / Fare</td>
-                                <td class="tdPrice"><?php echo UtilsHelper::formatPrice($ticket->price);?> RUB</td>
+                                <td class="tdPrice"><?php echo UtilsHelper::formatPrice(($ticket->price - $ticket->commission));?> RUB</td>
                             </tr>
                             <tr>
                                 <td class="tdTitle">Таксы и сборы / Taxes and fees</td>

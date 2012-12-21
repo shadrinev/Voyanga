@@ -12,10 +12,15 @@ HotelsController = (function() {
   function HotelsController(searchParams) {
     this.searchParams = searchParams;
     this.timelineAction = __bind(this.timelineAction, this);
+
     this.indexAction = __bind(this.indexAction, this);
+
     this.checkTicketAction = __bind(this.checkTicketAction, this);
+
     this.handleResults = __bind(this.handleResults, this);
+
     this.searchAction = __bind(this.searchAction, this);
+
     this.api = new HotelsAPI;
     this.routes = {
       '/search/:from/:in/:out/*rest': this.searchAction,

@@ -64,6 +64,7 @@ ErrorPopup = (function(_super) {
     }
     this.onclose = onclose != null ? onclose : false;
     this.close = __bind(this.close, this);
+
     id = 'errorpopup';
     data = ERRORS[key];
     data.text = data.text.format(params);

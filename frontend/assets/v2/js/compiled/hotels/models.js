@@ -173,6 +173,7 @@ RoomSet = (function() {
     this.discountPrice = Math.ceil(data.discountPrice);
     this.savings = 0;
     this.resultId = data.resultId;
+    this.searchId = data.searchId;
     this.pricePerNight = Math.ceil(this.price / duration);
     this.visible = ko.observable(true);
     this.cancelRules = ko.observable(false);
@@ -528,6 +529,7 @@ HotelResult = (function() {
       _this = this;
     set = new RoomSet(data, this, this.duration);
     set.resultId = data.resultId;
+    set.searchId = data.searchId;
     if (this.roomSets().length === 0) {
       this.cheapest = set.price;
       this.cheapestSet = set;
@@ -718,37 +720,44 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.getFullInfo = function() {
-    var api, url,
+    var api, hotelResults, key, roomSet, url, _i, _len, _ref,
       _this = this;
     if (!this.haveFullInfo()) {
       api = new HotelsAPI;
+      hotelResults = [];
+      _ref = this.roomSets();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        roomSet = _ref[_i];
+        key = roomSet.resultId;
+        hotelResults.push(roomSet.resultId + ':' + roomSet.searchId);
+      }
       url = 'hotel/search/info/?hotelId=' + this.hotelId;
-      url += '&cacheId=' + this.parent.cacheId;
+      url += '&hotelResult=' + hotelResults.join(',');
       console.log(this.parent.cacheId);
       return api.search(url, function(data) {
-        var cancelObjs, ind, key, roomSet, set, _i, _len, _ref, _ref1, _ref2;
+        var cancelObjs, ind, set, _j, _len1, _ref1, _ref2, _ref3;
         window.voyanga_debug('searchInfo', data);
         if (!data.hotel) {
           return false;
         }
         _this.initFullInfo();
-        _ref = data.hotel.details;
-        for (ind in _ref) {
-          roomSet = _ref[ind];
+        _ref1 = data.hotel.details;
+        for (ind in _ref1) {
+          roomSet = _ref1[ind];
           set = new RoomSet(roomSet, _this, _this.duration);
           _this.roomCombinations.push(set);
         }
         cancelObjs = {};
-        _ref1 = data.hotel.oldHotels;
-        for (ind in _ref1) {
-          roomSet = _ref1[ind];
+        _ref2 = data.hotel.oldHotels;
+        for (ind in _ref2) {
+          roomSet = _ref2[ind];
           key = roomSet.resultId;
           cancelObjs[key] = roomSet;
         }
         console.log(cancelObjs);
-        _ref2 = _this.roomSets();
-        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-          roomSet = _ref2[_i];
+        _ref3 = _this.roomSets();
+        for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
+          roomSet = _ref3[_j];
           key = roomSet.resultId;
           if (cancelObjs[key]) {
             roomSet.addCancelationRules(cancelObjs[key]);
@@ -757,19 +766,19 @@ HotelResult = (function() {
           }
         }
         _this.roomMixed = ko.computed(function() {
-          var result, resultsObj, _j, _k, _len1, _len2, _ref3, _ref4;
+          var result, resultsObj, _k, _l, _len2, _len3, _ref4, _ref5;
           resultsObj = {};
-          _ref3 = _this.roomSets();
-          for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
-            roomSet = _ref3[_j];
+          _ref4 = _this.roomSets();
+          for (_k = 0, _len2 = _ref4.length; _k < _len2; _k++) {
+            roomSet = _ref4[_k];
             key = roomSet.key();
             if (typeof resultsObj[key] === 'undefined') {
               resultsObj[key] = roomSet;
             }
           }
-          _ref4 = _this.roomCombinations();
-          for (_k = 0, _len2 = _ref4.length; _k < _len2; _k++) {
-            roomSet = _ref4[_k];
+          _ref5 = _this.roomCombinations();
+          for (_l = 0, _len3 = _ref5.length; _l < _len3; _l++) {
+            roomSet = _ref5[_l];
             key = roomSet.key();
             if (typeof resultsObj[key] === 'undefined') {
               resultsObj[key] = roomSet;

@@ -204,8 +204,8 @@ class FlightBookerComponent extends CApplicationComponent
                         if(isset($ticketInfo['documentNumber']) and isset($docSortPassports[$ticketInfo['documentNumber']])){
                             //TODO: add ticketNumber field to DB (FlightBookingPassport) and save it;
                             //$docSortPassports[$ticketInfo['documentNumber']]->
-                            //$docSortPassports[$ticketInfo['documentNumber']]->ticketNumber = $ticketInfo['ticketNumber'];
-                            //$docSortPassports[$ticketInfo['documentNumber']]->save();
+                            $docSortPassports[$ticketInfo['documentNumber']]->ticketNumber = $ticketInfo['ticketNumber'];
+                            $docSortPassports[$ticketInfo['documentNumber']]->save();
                         }
                     }
                 }
@@ -335,4 +335,23 @@ class FlightBookerComponent extends CApplicationComponent
     {
         return $this->flightBooker->id;
     }
+
+    public function getPriceBreakdown()
+    {
+        $result = Array();
+        $charges = $this->flightBooker->getFlightVoyage()->charges;
+        if($charges < 0)
+            $charges = 0;
+        $result[] = Array("title" => "билет", "price" => $this->flightBooker->price - $charges);
+        if($charges > 0 )
+           $result[] = Array("title" => "тарифы и сборы", "price" => $this->flightBooker->getFlightVoyage()->charges);
+        return $result;
+    }
+
+    //! return MOW - LED
+    public function getSmallDescription()
+    {
+        return $this->flightBooker->getSmallDescription();
+    }
+
 }

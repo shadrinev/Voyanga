@@ -10,6 +10,7 @@ GenericPopup = (function() {
     this.id = id;
     this.modal = modal != null ? modal : false;
     this.close = __bind(this.close, this);
+
     this.inside = false;
     $('body').prepend('<div id="popupOverlay"></div>');
     el = $(this.id + '-template');

@@ -426,13 +426,14 @@ class HotelBookClient
     {
 
         $hotelAttrMap = array(
-            'hotelId', 'hotelName', 'resultId', 'confirmation', 'price', 'currency', 'specialOffer', 'providerId', 'providerHotelCode',
+            'hotelId', 'hotelName', 'resultId', 'confirmation', 'price', 'currency', 'specialOffer', 'providerId', 'providerHotelCode','checkIn',
             'categoryId' => 'hotelCatId',
             'categoryName' => 'hotelCatName',
             'address' => 'hotelAddress',
             'latitude' => 'hotelLatitude',
             'longitude' => 'hotelLongitude',
-            'rubPrice' => 'comparePrice'
+            'rubPrice' => 'comparePrice',
+            'price' => 'totalPrice'
         );
         $roomAttrMap = array(
             'mealId', 'mealName', 'mealBreakfastId', 'mealBreakfastName', 'sharingBedding',
@@ -461,6 +462,40 @@ class HotelBookClient
                 else
                 {
                     $hotelParams[$paramKey] = (string)$hotelSXE[$itemKey];
+                }
+            }
+            if (isset($hotelSXE->$itemKey))
+            {
+                if (is_numeric($paramKey))
+                {
+                    $hotelParams[$itemKey] = (string)$hotelSXE->$itemKey;
+                }
+                else
+                {
+                    $hotelParams[$paramKey] = (string)$hotelSXE->$itemKey;
+                }
+            }
+            $upItemKey = ucwords($itemKey);
+            if (isset($hotelSXE->$upItemKey))
+            {
+                if (is_numeric($paramKey))
+                {
+                    $hotelParams[$itemKey] = (string)$hotelSXE->$upItemKey;
+                }
+                else
+                {
+                    $hotelParams[$paramKey] = (string)$hotelSXE->$upItemKey;
+                }
+            }
+            if (isset($hotelSXE[$upItemKey]))
+            {
+                if (is_numeric($paramKey))
+                {
+                    $hotelParams[$itemKey] = (string)$hotelSXE[$upItemKey];
+                }
+                else
+                {
+                    $hotelParams[$paramKey] = (string)$hotelSXE[$upItemKey];
                 }
             }
         }
@@ -502,7 +537,7 @@ class HotelBookClient
 
             }
         }
-        if($hotelParams['specialOffer']){
+        if(isset($hotelParams['specialOffer'])){
             $hotelParams['specialOffer'] = ($hotelParams['specialOffer'] == 'false' ? false : true);
         }
         if (isset($hotelSXE->SpecialOffers->SpecialOffer))
@@ -515,7 +550,7 @@ class HotelBookClient
             }
         }
 
-
+        //print_r($hotelParams);
         $hotel = new Hotel($hotelParams);
 
         if (self::$lastRequestCityHaveCoordinates)
@@ -1131,12 +1166,16 @@ class HotelBookClient
     </HotelSearchDetailsRequest>';*/
 
         $requestObject = simplexml_load_string($xml);
+        $needRewrite = false;
 
         if ($hotel)
         {
             $hotSearch = $requestObject->HotelSearches->addChild('HotelSearch');
             $hotSearch->addChild('SearchId', $hotel->searchId);
             $hotSearch->addChild('ResultId', $hotel->resultId);
+            if(!$hotel->price){
+                $needRewrite = true;
+            }
         }
         else if ($hotels)
         {
@@ -1148,19 +1187,38 @@ class HotelBookClient
                 $hotSearch->addChild('ResultId', $hot->resultId);
                 $sr = $hot->searchId . $hot->resultId;
                 $keys[$sr] = $key;
+                if(!$hot->price){
+                    $needRewrite = true;
+                }
             }
         }
 
         $xml = $requestObject->asXML();
+        $needHotels = false;
 
 
         $hotelXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_search_details', $getData, array('request' => $xml));
         $hotelObject = simplexml_load_string($hotelXml);
         if (isset($hotelObject->HotelSearchDetails->Hotel->ChargeConditions))
         {
+            if($hotels && $needRewrite){
+                $hotels = array();
+                $needHotels = true;
+            }
             UtilsHelper::soapObjectsArray($hotelObject->HotelSearchDetails->Hotel);
             foreach ($hotelObject->HotelSearchDetails->Hotel as $HotelSXE)
             {
+                if($needRewrite)
+                {
+                    $hotel = $this->getHotelFromSXE($HotelSXE);
+                    //print_r($hotel);
+
+                    if($needHotels){
+                        $sr = $hotel->searchId . $hotel->resultId;
+                        $keys[$sr] = $key;
+                        $hotels[] = $hotel;
+                    }
+                }
                 if (isset($HotelSXE->ChargeConditions))
                 {
                     $currency = (string)$HotelSXE->ChargeConditions->Currency;

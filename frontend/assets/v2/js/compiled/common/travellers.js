@@ -8,7 +8,9 @@ PeopleSelector = (function() {
 
   function PeopleSelector() {
     this.afterRender = __bind(this.afterRender, this);
-    this.show = __bind(this.show, this);    this.inside = false;
+
+    this.show = __bind(this.show, this);
+    this.inside = false;
     this.inside2 = false;
     this.inside3 = false;
   }
@@ -100,6 +102,7 @@ Passengers = (function(_super) {
 
   function Passengers() {
     this.balanceTravelers = __bind(this.balanceTravelers, this);
+
     var _this = this;
     this.template = 'passengers-template';
     this.adults = ko.observable(1).extend({
@@ -197,8 +200,11 @@ Roomers = (function() {
     this.index = index;
     this.length = length;
     this.last = __bind(this.last, this);
+
     this.minusOne = __bind(this.minusOne, this);
+
     this.plusOne = __bind(this.plusOne, this);
+
     this.adults = this.room.adults;
     this.children = this.room.children;
     this.ages = this.room.ages;
@@ -234,7 +240,9 @@ HotelPeopleSelector = (function(_super) {
     var _this = this;
     this.sp = sp;
     this.removeRoom = __bind(this.removeRoom, this);
+
     this.addRoom = __bind(this.addRoom, this);
+
     HotelPeopleSelector.__super__.constructor.apply(this, arguments);
     this.template = 'roomers-template';
     this.rawRooms = this.sp.rooms;

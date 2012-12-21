@@ -171,6 +171,18 @@ class OrderComponent extends CApplicationComponent
         return $payments->getFormParamsForBooker($bookers[0]);
     }
 
+    public function getPaymentTransactions()
+    {
+   $bookers = $this->getBookers();
+        if(count($bookers)===0)
+        {
+            throw new Exception("Nothing to pay for");
+        }
+        $payments = Yii::app()->payments;
+        $bookers = $payments->preProcessBookers($bookers);
+        return $payments->getTransactionsForBookers($bookers);
+    }
+
     public function startPaymentOld()
     {
         // perekluchaem v state startpayment
@@ -404,6 +416,7 @@ class OrderComponent extends CApplicationComponent
     {
         $pdf = Yii::app()->pdfGenerator;
         $pdfFileNames = array();
+        $orderBooking = $this->getOrderBooking();
         foreach ($this->itemsOnePerGroup as $item)
         {
             if ($item instanceof HotelTripElement)
@@ -423,9 +436,9 @@ class OrderComponent extends CApplicationComponent
                 }
             }
         }
-        $orderBooking = $this->getOrderBooking();
+
         EmailManager::sendEmailOrderInfo(array(
-            'orderBookingId'=>$pdf->orderBookingId,
+            'orderBookingId'=>$orderBooking->readableId,
             'email'=>$orderBooking->email
         ),$pdfFileNames);
         foreach($pdfFileNames as $pdfInfo)

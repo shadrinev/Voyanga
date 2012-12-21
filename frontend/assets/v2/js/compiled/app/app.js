@@ -11,19 +11,33 @@ Application = (function(_super) {
 
   function Application() {
     this.isEvent = __bind(this.isEvent, this);
+
     this.isNotEvent = __bind(this.isNotEvent, this);
+
     this.mapRendered = __bind(this.mapRendered, this);
+
     this.contentRendered = __bind(this.contentRendered, this);
+
     this.handle404 = __bind(this.handle404, this);
+
     this.bindItemsToEvent = __bind(this.bindItemsToEvent, this);
+
     this.bindItemsToBuy = __bind(this.bindItemsToBuy, this);
+
     this.bindEvents = __bind(this.bindEvents, this);
+
     this.runWithModule = __bind(this.runWithModule, this);
+
     this.render = __bind(this.render, this);
+
     this.reRenderCalendarEvent = __bind(this.reRenderCalendarEvent, this);
+
     this.reRenderCalendar = __bind(this.reRenderCalendar, this);
+
     this.minimizeCalendar = __bind(this.minimizeCalendar, this);
+
     this.initCalendar = __bind(this.initCalendar, this);
+
     var result,
       _this = this;
     window.onerror = function(error) {
@@ -90,6 +104,7 @@ Application = (function(_super) {
     this.slider.init();
     this.activeModule.subscribe(this.slider.handler);
     this.debugMode = ko.observable(false);
+    this.breakdown = ko.observable(false);
   }
 
   Application.prototype.initCalendar = function() {
