@@ -44,12 +44,17 @@ class CronTaskBehavior extends CBehavior
         return CronTask::model()->findAllByAttributes(array('ownerModel'=>$modelName,'ownerId'=>$owner->primaryKey));
     }
 
-    public function getTaskByName($taskName)
-    {
+    public function getTaskInfo($taskName) {
         Yii::import('site.common.components.cron.*');
         /** @var CActiveRecord $owner  */
         $owner = $this->getOwner();
         $modelName = get_class($owner);
         return CronTask::model()->findByAttributes(array('ownerModel'=>$modelName,'ownerId'=>$owner->primaryKey,'taskName'=>$taskName));
+    }
+
+    public function getTaskByName($taskName)
+    {
+        trigger_error("CronTaskBehavior getTaskByName is deprecated.", E_USER_NOTICE);
+        return $this->getTaskInfo($taskName);
     }
 }

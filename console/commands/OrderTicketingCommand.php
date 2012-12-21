@@ -20,7 +20,8 @@ EOD;
 #            exit;
             $payments = Yii::app()->payments;
             $bookers = $payments->preProcessBookers($order->getBookers());
-            foreach($bookers as $booker){
+            foreach($bookers as $booker)
+            {
                 if(! $booker instanceof Payments_MetaBooker)
                 {
                     $bill = $payments->getBillForBooker($booker->getCurrent());
@@ -30,10 +31,11 @@ EOD;
                 $booker->status('ticketing');
                 echo $payments->getStatus($booker) . "\n";
                 echo "--------------------------------\n";
+                //! Remove scheduled change to BookingTimilimit state
+                Yii::app()->cron->delete($booker->getTaskInfo('paymentTimeLimit')->taskId);
             }
             $order->initByOrderBookingId($orderId);
             $order->sendNotifications();
-
         }
         else
         {
