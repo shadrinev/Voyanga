@@ -1194,6 +1194,7 @@ class HotelBookClient
         }
 
         $xml = $requestObject->asXML();
+        $needHotels = false;
 
 
         $hotelXml = $this->request(Yii::app()->params['HotelBook']['uri'] . 'hotel_search_details', $getData, array('request' => $xml));
@@ -1202,6 +1203,7 @@ class HotelBookClient
         {
             if($hotels && $needRewrite){
                 $hotels = array();
+                $needHotels = true;
             }
             UtilsHelper::soapObjectsArray($hotelObject->HotelSearchDetails->Hotel);
             foreach ($hotelObject->HotelSearchDetails->Hotel as $HotelSXE)
@@ -1211,7 +1213,7 @@ class HotelBookClient
                     $hotel = $this->getHotelFromSXE($HotelSXE);
                     //print_r($hotel);
 
-                    if($hotels){
+                    if($needHotels){
                         $sr = $hotel->searchId . $hotel->resultId;
                         $keys[$sr] = $key;
                         $hotels[] = $hotel;
