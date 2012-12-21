@@ -3134,15 +3134,16 @@ input.hotel-input {
     height: 33px;
     z-index: 1;
     background: none;
+    display: none;
 }
 .dopInfoPassengers .tdTelefon #contactPhone {
     background: none repeat scroll 0 0 transparent;
     left: 0;
-    padding-left: 31px;
+    padding-left: 5px;
     padding-right: 5px;
     position: absolute;
     text-transform: uppercase;
-    width: 161px;
+    width: 188px;
     z-index: 2;
 }
 .dopInfoPassengers .tdTelefon #contactPhone.error {
