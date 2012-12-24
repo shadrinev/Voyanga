@@ -192,7 +192,7 @@ class UserController extends CController
             }
         }
 
-        $this->redirect('/');
+        $this->redirect('/?open=enter');
     }
 
     public function actionValidate()
