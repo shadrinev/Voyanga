@@ -180,15 +180,13 @@ Passengers = (function(_super) {
   Passengers.prototype.plusOne = function(model, e) {
     var prop;
     prop = $(e.target).attr("rel");
-    model[prop](model[prop]() + 1);
-    return resizePanel();
+    return model[prop](model[prop]() + 1);
   };
 
   Passengers.prototype.minusOne = function(model, e) {
     var prop;
     prop = $(e.target).attr("rel");
-    model[prop](model[prop]() - 1);
-    return resizePanel();
+    return model[prop](model[prop]() - 1);
   };
 
   return Passengers;
@@ -215,17 +213,15 @@ Roomers = (function() {
   Roomers.prototype.plusOne = function(context, event) {
     var target;
     target = $(event.currentTarget).attr('rel');
-    this[target](this[target]() + 1);
-    return resizePanel();
+    return this[target](this[target]() + 1);
   };
 
   Roomers.prototype.minusOne = function(context, event) {
     var target;
     target = $(event.currentTarget).attr('rel');
     if (this[target]() > 0) {
-      this[target](this[target]() - 1);
+      return this[target](this[target]() - 1);
     }
-    return resizePanel();
   };
 
   Roomers.prototype.last = function() {
