@@ -56,9 +56,27 @@ $(function(){
             var formData = $('#passport_form').serialize();
             var statuses = [],
                 ids = [];
+            /* disable all fields */
             $('input').each(function() {
                 $(this).attr({'disabled': 'disabled'});
             });
+            $("select option:selected").each(function() {
+                var template = '<input type="text" disabled="disabled" value="' + $(this).text() + '">';
+                $(this).closest('select').siblings('.chzn-container').html(template);
+            });
+            $('.tdDuration input').each(function(){
+                $(this).parent().addClass('active');
+            });
+            $('.tdBirthday input').each(function(){
+                $(this).parent().addClass('active');
+            });
+            $('.tdSex input').each(function(){
+                $(this).parent().addClass('inactive');
+            });
+            $('.tdTelefon input').each(function(){
+                $(this).parent().addClass('inactive');
+            });
+            /* hide button */
             $('#submit-passport').hide();
             $('.agreeConditions').hide();
             $('#loadPayFly').find('.armoring').show();
