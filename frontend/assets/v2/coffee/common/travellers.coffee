@@ -131,10 +131,12 @@ class Passengers extends PeopleSelector
   plusOne: (model, e)->
     prop = $(e.target).attr("rel")
     model[prop](model[prop]()+1)
+    do resizePanel
 
   minusOne: (model, e)->
     prop = $(e.target).attr("rel")
     model[prop] model[prop]()-1
+    do resizePanel
 
 
 # View model for a single room dropdown
@@ -148,11 +150,13 @@ class Roomers
   plusOne: (context, event) =>
     target = $(event.currentTarget).attr('rel')
     @[target] @[target]() + 1
+    do resizePanel
 
   minusOne: (context, event) =>
     target = $(event.currentTarget).attr('rel')
     if @[target]() > 0
       @[target] @[target]() - 1
+    do resizePanel
 
   last: =>
     return @index+1 == @length
