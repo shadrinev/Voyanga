@@ -46,7 +46,7 @@ HotelsController = (function() {
           new ErrorPopup('hotels404');
           return;
         }
-        new ErrorPopup('avia500');
+        new ErrorPopup('e500withText', [err]);
         return;
       }
       _this.results(stacked);
@@ -79,7 +79,7 @@ HotelsController = (function() {
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
-        new ErrorPopup('avia500');
+        new ErrorPopup('e500withText', [err]);
         return;
       }
       result = stacked.findAndSelect(roomSet);

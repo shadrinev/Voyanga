@@ -40,7 +40,8 @@ MEAL_VERBOSE = {'Американский завтрак':'Завтрак','Ан
   hide: ()=>
     @div_.hide()
   show: ()=>
-    @div_.show()###
+    @div_.show()
+###
 
 
 
@@ -754,7 +755,7 @@ class HotelsResultSet
   constructor: (rawData, @searchParams, @activeHotel) ->
     @_results = {}
     if rawData.error
-      throw "500"
+      throw rawData.error
     if !rawData.hotels
       throw "404"
     @creationMoment = moment()

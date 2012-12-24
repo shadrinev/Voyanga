@@ -978,7 +978,7 @@ HotelsResultSet = (function() {
 
     this._results = {};
     if (rawData.error) {
-      throw "500";
+      throw rawData.error;
     }
     if (!rawData.hotels) {
       throw "404";
