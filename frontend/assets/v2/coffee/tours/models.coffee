@@ -823,6 +823,7 @@ class TourTripResultSet
     @totalCostWithDiscount = 0
     @totalCostWithoutDiscount = 0
     @tour = false
+    @additional = false
 
     @flightCounterWord = ko.computed =>
       if @flightCounter()==0
@@ -850,7 +851,7 @@ class TourTripResultSet
         if (@roundTrip)
           @cities.push {isLast: false, cityName: item.flights[0].departureCity}
           @cities.push {isLast: false, cityName: item.flights[0].arrivalCity}
-          @cities.push {isLast: false, cityName: item.flights[0].departureCity}
+          @additional = {isLast: false, cityName: item.flights[0].departureCity}
         else
           @cities.push {isLast: false, cityName: item.flights[0].departureCity}
           @cities.push {isLast: false, cityName: item.flights[0].arrivalCity}
@@ -869,6 +870,9 @@ class TourTripResultSet
         @items.push(@lastHotel)
         @totalCostWithDiscount += @lastHotel.roomSets()[0].discountPrice
         @totalCostWithoutDiscount += @lastHotel.roomSets()[0].price
+
+    if (@additional)
+      @cities.push @additional
 
     newCity = []
     _.each @cities, (city, i) =>
