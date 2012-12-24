@@ -1274,6 +1274,7 @@ TourTripResultSet = (function() {
     this.totalCostWithDiscount = 0;
     this.totalCostWithoutDiscount = 0;
     this.tour = false;
+    this.additional = false;
     this.flightCounterWord = ko.computed(function() {
       var res;
       if (_this.flightCounter() === 0) {
@@ -1311,10 +1312,10 @@ TourTripResultSet = (function() {
             isLast: false,
             cityName: item.flights[0].arrivalCity
           });
-          _this.cities.push({
+          _this.additional = {
             isLast: false,
             cityName: item.flights[0].departureCity
-          });
+          };
         } else {
           _this.cities.push({
             isLast: false,
@@ -1346,6 +1347,9 @@ TourTripResultSet = (function() {
         return _this.totalCostWithoutDiscount += _this.lastHotel.roomSets()[0].price;
       }
     });
+    if (this.additional) {
+      this.cities.push(this.additional);
+    }
     newCity = [];
     _.each(this.cities, function(city, i) {
       var a;
