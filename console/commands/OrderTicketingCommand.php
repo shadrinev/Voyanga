@@ -26,7 +26,10 @@ EOD;
                 {
                     $bill = $payments->getBillForBooker($booker->getCurrent());
                     $payments->notifyNemo($booker, $bill);
-                    Yii::app()->cron->delete($booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId);
+                    $taskId = $booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId
+                    echo "Removing booking timelimit task #" . $taskId;
+                    $result = Yii::app()->cron->delete($taskId);
+                    echo " " . $result . "\n";
                 }
                 echo $payments->getStatus($booker) . "=>\n";
                 $booker->status('ticketing');
