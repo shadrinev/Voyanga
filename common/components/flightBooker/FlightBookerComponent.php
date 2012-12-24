@@ -345,14 +345,14 @@ class FlightBookerComponent extends CApplicationComponent
         $charges = $this->flightBooker->getFlightVoyage()->charges;
         if ($channel=='ltr') {
             // Show single transaction
-            $result[] = Array("title" => "билет", "price" => $this->flightBooker->price);
+            $result[] = Array("title" => "тариф, таксы и сбор", "price" => $this->flightBooker->price);
             return $result;
         }
         if($charges < 0)
             $charges = 0;
-        $result[] = Array("title" => "билет", "price" => $this->flightBooker->price - $charges);
+        $result[] = Array("title" => "тариф и таксы", "price" => $this->flightBooker->price - $charges);
         if($charges > 0 )
-           $result[] = Array("title" => "тарифы и сборы", "price" => $this->flightBooker->getFlightVoyage()->charges);
+           $result[] = Array("title" => "сервисный сбор", "price" => $this->flightBooker->getFlightVoyage()->charges);
         return $result;
     }
 
