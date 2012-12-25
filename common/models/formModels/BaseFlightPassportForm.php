@@ -44,7 +44,7 @@ class BaseFlightPassportForm extends BasePassportForm
     public function rules()
     {
         return CMap::mergeArray(parent::rules(), array(
-            array('documentTypeId, seriesNumber, birthdayDay, birthdayMonth, birthdayYear, countryId', 'required'),
+            array('documentTypeId, genderId, seriesNumber, birthdayDay, birthdayMonth, birthdayYear, countryId', 'required'),
             array('documentTypeId', 'in', 'range'=>array_keys(self::getPossibleTypes())),
             array('genderId', 'in', 'range'=>array_keys(self::getPossibleGenders())),
             array('birthday', 'date', 'format' => 'dd.MM.yyyy'),
