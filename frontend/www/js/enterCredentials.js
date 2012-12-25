@@ -106,9 +106,9 @@ function analyzeValidationResult(response)
     if (response.status == 'success')
         return true;
     /* analyze booking field */
-    if (response.message.booking.contactPhone != 'undefined')
+    if (typeof response.message.booking.contactPhone != 'undefined')
         $('.divInputTelefon').addClass('error tooltip').attr('rel', response.message.booking.contactPhone);
-    if (response.message.booking.contactEmail != 'undefined')
+    if (typeof response.message.booking.contactEmail != 'undefined')
         $('.tdEmail input').addClass('error tooltip').attr('rel', response.message.booking.contactEmail);
     if (response.message.passports != 'undefined')
         _.each(response.message.passports, function(el, i){
@@ -141,7 +141,7 @@ function disableAllFieldsAndHideButton()
         $(this).parent().addClass('inactive');
     });
     $('.tdTelefon input').each(function () {
-        $(this).parent().addClass('inactive');
+        $(this).parent().addClass('inactive').removeClass('tooltip error').attr('rel', '');
     });
     /* hide button */
     $('#submit-passport').hide();

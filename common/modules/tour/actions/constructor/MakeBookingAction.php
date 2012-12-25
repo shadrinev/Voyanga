@@ -134,8 +134,7 @@ class MakeBookingAction extends CAction
                     $this->validationErrors['passports'][] = $p->errors;
                 }
             }
-            if (sizeof($this->validationErrors['passports'])>0)
-                return false;
+            return (!isset($this->validationErrors['passports'][0]));
 
             foreach ($this->tripItems as $item)
             {
