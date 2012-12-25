@@ -572,6 +572,7 @@ function ResizeAvia() {
     smallIMGresizeIndex();
     mapAllPageView();
     gradientResize();
+    resizePanel();
 }
 
 function ResizeFun() {
@@ -1541,4 +1542,80 @@ $(function(){
             });
         return false;
     });
-})
+});
+
+
+
+
+function resizePanel() {
+    setTimeout(function() {
+    if ($('.panelTable').length > 0 && $('.panelTable').is(':visible')) {
+        var _panelTable = $('.panelTable');
+        var _classThis;
+        var _midWidth = 1130;
+        var _minWidth = 1000;
+        var _newMean;
+
+        var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
+        if (_panelTable.hasClass('avia')) {
+            _classThis = 'avia';
+            var _meanPanel = 850;
+            var _standartData = 290;
+            var _widthTdTumblr = $('.panelTable.'+_classThis).find('.tdTumblr').innerWidth();
+            var _widthTdPeople = $('.panelTable.'+_classThis).find('.tdPeople').innerWidth();
+            var _widthTdButton = $('.panelTable.'+_classThis).find('.tdButton').innerWidth();
+            var _widthTdCityStart = 0;
+            var _widthTdAddTour = 0;
+            var _howManyInput = 2;
+        }
+        else if (_panelTable.hasClass('hotel')) {
+            _classThis = 'hotel';
+        }
+        else if (_panelTable.hasClass('constructorTable')) {
+            _classThis = 'constructorTable';
+            var _meanPanel = 692;
+            var _widthTdTumblr = 0;
+            var _widthTdPeople = $('.panelTable.'+_classThis).find('.tdPeople').innerWidth();
+            var _widthTdButton = $('.panelTable.'+_classThis).find('.tdButton').innerWidth();
+            var _widthTdCityStart = $('.panelTable.'+_classThis).find('.tdCityStart').innerWidth();
+            var _widthTdAddTour = $('.panelTable.'+_classThis).find('.tdAddTour').innerWidth();
+            var _howManyInput = 1;
+        }
+
+        var _windowWidth = $(window).width();
+        var _widthPanelTable = _panelTable.innerWidth();
+        var _dataDiv = $('.panelTable.'+_classThis).find('.tdCity').find('.data');
+        var _dataInput = $('.panelTable.'+_classThis).find('.tdCity').find('.data').find('input');
+
+        if (_windowWidth < _midWidth && _windowWidth > _minWidth) {
+            _allWidthPanel = _windowWidth - 230;
+        }
+        else if (_windowWidth < _minWidth) {
+            _allWidthPanel = 1000 - 230;
+        }
+        else {
+            _allWidthPanel = 900;
+        }
+
+        if (_widthPanelTable >= _allWidthPanel) {
+            _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+        }
+        else if (_widthPanelTable < _allWidthPanel) {
+            _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+        }
+        else {
+            _newMean = (_widthPanelTable - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+        }
+
+
+            _dataDiv.css('width', _newMean +'px');
+            _dataInput.css('width', (_newMean-20) +'px');
+            console.log('=== _widthPanelTable = '+_widthPanelTable+' ! _allWidthPanel = '+_allWidthPanel+' ! _newMean = '+_newMean+' === ');
+
+    }
+    else {
+        return;
+    }
+
+    }, 500);
+}
