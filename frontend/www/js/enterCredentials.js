@@ -1,4 +1,4 @@
-$(function(){
+$(function () {
     var avia, hotels, tour;
     window.app = new Application();
     avia = new AviaModule();
@@ -9,20 +9,20 @@ $(function(){
     window.app.register('avia', avia);
 
     window.toursOverviewActive = true;
-    $('.genderField').each(function(){
+    $('.genderField').each(function () {
         var $this = $(this),
             value = $this.val(),
-            element = $this.siblings('.gender-'+value);
-        $this.siblings('.gender').each(function(){
+            element = $this.siblings('.gender-' + value);
+        $this.siblings('.gender').each(function () {
             $(this).removeClass('active');
         });
         element.addClass('active');
     });
-    $(document).on('click', '.gender', function(){
+    $(document).on('click', '.gender', function () {
         var $this = $(this),
             value = $this.data('value'),
             field = $this.siblings('.genderField');
-        $this.siblings('.gender').each(function(){
+        $this.siblings('.gender').each(function () {
             $(this).removeClass('active');
         });
         $this.addClass('active');
@@ -31,19 +31,18 @@ $(function(){
     $(".chzn-select").chosen({
         no_results_text: "Нет соответствий"
     });
-    $('input.next').keyup(function(){
-        var $this= $(this),
+    $('input.next').keyup(function () {
+        var $this = $(this),
             value = $this.val(),
             len = value.length,
             next = $this.next();
-        if ($this.attr('maxlength')<=len)
-        {
+        if ($this.attr('maxlength') <= len) {
             next.select();
             next.focus();
         }
     });
     $(function () {
-        $('.agreeConditions').on('click', function(){
+        $('.agreeConditions').on('click', function () {
             var checked = ($('#agreeCheck').is(':checked'));
             if (!checked)
                 $('#submit-passport').removeClass('inactive');
@@ -57,23 +56,23 @@ $(function(){
             var statuses = [],
                 ids = [];
             /* disable all fields */
-            $('input').each(function() {
+            $('input').each(function () {
                 $(this).attr({'disabled': 'disabled'});
             });
-            $("select option:selected").each(function() {
+            $("select option:selected").each(function () {
                 var template = '<input type="text" disabled="disabled" value="' + $(this).text() + '">';
                 $(this).closest('select').siblings('.chzn-container').html(template);
             });
-            $('.tdDuration input').each(function(){
+            $('.tdDuration input').each(function () {
                 $(this).parent().addClass('active');
             });
-            $('.tdBirthday input').each(function(){
+            $('.tdBirthday input').each(function () {
                 $(this).parent().addClass('active');
             });
-            $('.tdSex input').each(function(){
+            $('.tdSex input').each(function () {
                 $(this).parent().addClass('inactive');
             });
-            $('.tdTelefon input').each(function(){
+            $('.tdTelefon input').each(function () {
                 $(this).parent().addClass('inactive');
             });
             /* hide button */
@@ -88,85 +87,82 @@ $(function(){
                 data: formData,
                 dataType: 'json'
             })
-                .success(function(){
-                    _.each(window.tripRaw.items, function(item, i){
+                .success(function () {
+                    _.each(window.tripRaw.items, function (item, i) {
                         statuses[i] = 0;
                     });
-                    _.each(window.tripRaw.items, function(item, i){
+                    _.each(window.tripRaw.items, function (item, i) {
                         $.ajax({
                             type: 'POST',
-                            url: '/buy/makeBookingForItem?index='+i,
+                            url: '/buy/makeBookingForItem?index=' + i,
                             data: formData,
                             dataType: 'json'
                         })
-                            .success(function(response){
+                            .success(function (response) {
                                 statuses[i] = 1;
                                 ids[i] = response.bookerId;
                                 checkStatuses(statuses, ids);
                             })
-                            .error(function(xhr, ajaxOptions, thrownError){
+                            .error(function (xhr, ajaxOptions, thrownError) {
                                 statuses[i] = xhr.responseText;
                                 checkStatuses(statuses, ids);
                             });
                     });
                 })
-                .error(function(xhr, ajaxOptions, thrownError){
+                .error(function (xhr, ajaxOptions, thrownError) {
                     new ErrorPopup('passport500'); //ошибка, когда мы не смогли сохранить паспортные данные
                 });
-            });
         });
+    });
 });
 
-function checkStatuses(statuses, ids)
-{
+function checkStatuses(statuses, ids) {
     var errors = '',
-        errorText='',
+        errorText = '',
         completed = true;
-    _.each(statuses, function(el, i){
+    _.each(statuses, function (el, i) {
         if (el == 0)
             completed = false;
         if (_.isString(el))
-            errors += 'Ошибка бронирования сегмента номер ' + (i+1) + ' = ' + el + '.<br>';
+            errors += 'Ошибка бронирования сегмента номер ' + (i + 1) + ' = ' + el + '.<br>';
     });
     if (!completed)
         return;
     $.get('/buy/done', {ids: ids.join(',')})
-        .done(function(){
+        .done(function () {
             $.get('/buy/startPayment', function (data) {
                 console.log('DATA AFTER START PAYMENT: ', data);
                 if (data.error) {
                     new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
                 } else {
                     //if everything is ok then go to payment
-                    $('iframe').load(function(){
+                    $('iframe').load(function () {
                         $('#loadPayFly').find('.armoring').hide();
                         $('#loadPayFly').find('.loadJet').hide();
 
                         $('.payCardPal').show();
                         $('.paybuyEnd').show();
-                        Utils.scrollTo('.payCardPal',true);
+                        Utils.scrollTo('.payCardPal', true);
                     });
-		    window.app.breakdown(data.breakdown);
+                    window.app.breakdown(data.breakdown);
                     Utils.submitPayment(data.payonline);
                 }
             });
         })
-        .error(function(){
+        .error(function () {
             console.log('ERROR WHILE /buy/done')
         });
-    if (errors.length>0)
-    {
-	    errorText = errors;
+    if (errors.length > 0) {
+        errorText = errors;
         new ErrorPopup('passportBookingError', [errorText]);
         return;
     }
 
 }
 
-initCredentialsPage = function() {
+initCredentialsPage = function () {
     var currentModule;
-    switch (window.currentModule)
-    {
+    switch (window.currentModule) {
         case 'Tours':
             currentModule = 'tours';
             break;
@@ -183,7 +179,7 @@ initCredentialsPage = function() {
     window.app.runWithModule(currentModule);
 };
 function InputCheckOn() {
-    $('.tdDuration input[type="checkbox"]').each(function(index) {
+    $('.tdDuration input[type="checkbox"]').each(function (index) {
         if ($(this).attr('checked') == 'checked') {
             $(this)
                 .closest('tr')
@@ -207,7 +203,7 @@ function InputCheckOn() {
 function InputActiveFinishDate() {
     InputCheckOn();
 
-    $('.tdDuration label.ui-hover').click(function() {
+    $('.tdDuration label.ui-hover').click(function () {
         InputCheckOn();
     });
 }
