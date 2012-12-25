@@ -126,7 +126,7 @@ function disableAllFieldsAndHideButton()
 {
     /* disable all fields */
     $('.oneBlock input').each(function () {
-        $(this).attr({'disabled': 'disabled'});
+        $(this).attr({'disabled': 'disabled'}).removeClass('error').attr('data-validation-error','');
     });
     $("select option:selected").each(function () {
         var template = '<input type="text" class="tmp" disabled="disabled" value="' + $(this).text() + '">';
