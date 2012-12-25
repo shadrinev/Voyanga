@@ -9,5 +9,5 @@ return array(
     array('api/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
     array('api/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
     array('api/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),*/
-    '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+    'api/<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 );
