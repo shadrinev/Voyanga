@@ -127,6 +127,9 @@ function disableAllFieldsAndHideButton()
     $('.oneBlock input').each(function () {
         $(this).attr({'disabled': 'disabled'}).removeClass('error tooltip').attr('rel','');
     });
+    $('.expiration').each(function(){
+        $(this).closest('.checkOn').attr('data-is-active', $(this).closest('.checkOn').hasClass('active'));
+    });
     $("select option:selected").each(function () {
         var template = '<input type="text" class="tmp" disabled="disabled" value="' + $(this).text() + '">';
         $(this).closest('select').siblings('.chzn-container').hide().parent().append(template);
@@ -158,8 +161,16 @@ function enableAllFieldsAndShowButton()
         $('.tmp').remove();
         $(this).closest('select').siblings('.chzn-container').show();
     });
-    $('.tdDuration input').each(function () {
-        $(this).parent().removeClass('active');
+    $('.expiration').each(function(){
+        var isActive = $(this).closest('.checkOn').attr('data-is-active')=='true';
+        if (isActive)
+        {
+            $(this).closest('.checkOn').addClass('active');
+        }
+        else
+        {
+            $(this).closest('.checkOn').removeClass('active');
+        }
     });
     $('.tdBirthday input').each(function () {
         $(this).parent().removeClass('active');
