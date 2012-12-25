@@ -617,7 +617,10 @@ class ToursResultSet
     success = true
     for entry, index in items
       console.log('findAndSelectItems entry',entry,' in ',index,@data()[index])
-      if !@data()[index].findAndSelect(entry)
+      if(@data()[index].isAvia())
+        if !@data()[index].findAndSelect(@data()[index].results().cheapest())
+          success = false
+      else if !@data()[index].findAndSelect(entry)
         success = false
     return success
     

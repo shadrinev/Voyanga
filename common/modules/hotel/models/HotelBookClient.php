@@ -1771,9 +1771,9 @@ class HotelBookClient
             UtilsHelper::soapObjectsArray($responseObject->Order->ItemList->Item);
             foreach($responseObject->Order->ItemList->Item as $itemSXE){
                 $key = (string)$itemSXE->Id;
-                if($itemSXE->Voucher->BookingDetails->Supplier)
+                if(isset($itemSXE->Voucher->BookingDetails->Supplier))
                     $hotelOrderConfirmResponse->suppliers[$key] = (string)$itemSXE->Voucher->BookingDetails->Supplier;
-                if($itemSXE->Voucher->BookingDetails->Reference)
+                if(isset($itemSXE->Voucher->BookingDetails->Reference))
                     $hotelOrderConfirmResponse->references[$key] = (string)$itemSXE->Voucher->BookingDetails->Reference;
                 $hotelOrderConfirmResponse->voucherAvailable[$key] = (string)$itemSXE->VoucherAvailable;
             }

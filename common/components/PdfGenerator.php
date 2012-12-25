@@ -23,7 +23,26 @@ class PdfGenerator extends CApplicationComponent
         $hotelPassports = HotelBookingPassport::model()->findAllByAttributes(array('hotelBookingId'=>$item->hotelBookerId));
         if ($hotelBooker)
         {
-            $voucherInfo = $this->hotelClient->voucher($hotelBooker->orderId);
+            $loop = true;
+            $count = 0;
+            while($loop){
+                $loop = false;$voucherInfo = $this->hotelClient->voucher($hotelBooker->orderId);
+                $voucherAvailable = true;
+                foreach($voucherInfo->voucherAvailable as $avail)
+                    $voucherAvailable &= ($avail ? $avail !='0' ? true : false : false);
+                if($voucherAvailable){
+                    $loop = false;
+                    break;
+                }else{
+                    $count++;
+                    if($count > 2){
+                        $loop = false;
+                        return false;
+                        break;
+                    }
+                    sleep(10);
+                }
+            }
             $hotelInfo = $this->hotelClient->hotelDetail($hotelBooker->hotel->hotelId);
             $this->hotelClient->hotelSearchDetails($hotelBooker->hotel);
             $pnr = implode(', ',$voucherInfo->references);

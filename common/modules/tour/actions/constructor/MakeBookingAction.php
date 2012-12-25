@@ -11,6 +11,7 @@ class MakeBookingAction extends CAction
     private $tripItems;
     private $valid = true;
     private $bookingForm;
+    private $validationErrors = array();
 
     public function run()
     {
@@ -18,9 +19,6 @@ class MakeBookingAction extends CAction
 
         $dataProvider = new TripDataProvider();
         $this->tripItems = $dataProvider->getSortedCartItems();
-
-        if (sizeof($this->tripItems)==0)
-            Yii::app()->request->redirect('/');
 
         if ($this->areNotAllItemsLinked())
             throw new CHttpException(500, 'There are exists element inside trip that are not linked. You cannot continue booking');
@@ -32,8 +30,7 @@ class MakeBookingAction extends CAction
         $this->passportForms = $passportManager->passportForms;
         if ($this->weGotPassportsAndBooking())
         {
-            $this->fillOutBookingForm();
-            if ($this->fillOutPassports($ambigousPassports))
+            if (($this->fillOutBookingForm()) && ($this->fillOutPassports($ambigousPassports)))
             {
                 Yii::app()->user->setState('passportForms', $this->passportForms);
                 Yii::app()->user->setState('bookingForm', $this->bookingForm);
@@ -41,7 +38,13 @@ class MakeBookingAction extends CAction
                 // FIXME return status here
                 header("Content-type: application/json");
                 echo '{"status":"success"}';
-                exit;
+                Yii::app()->end();
+            }
+            else
+            {
+                header("Content-type: application/json");
+                echo json_encode(array('status'=>'error', 'message' => $this->validationErrors));
+                Yii::app()->end();
             }
         }
         $this->bookingForm = new BookingForm();
@@ -77,6 +80,9 @@ class MakeBookingAction extends CAction
     {
         $this->bookingForm = new BookingForm();
         $this->bookingForm->attributes = $_POST['BookingForm'];
+        $this->bookingForm->validate();
+        $this->validationErrors['booking'] = $this->bookingForm->errors;
+        return true; //just to get passport data ability to check too
     }
 
     private function fillOutPassports($ambigous)
@@ -96,7 +102,10 @@ class MakeBookingAction extends CAction
                     $adultsPassports[] = $adultPassport;
                 }
                 foreach ($adultsPassports as $p)
+                {
                     $valid = $valid && $p->validate();
+                    $this->validationErrors['passports'][] = $p->errors;
+                }
             }
             if (isset($_POST['FlightChildPassportForm']))
             {
@@ -107,7 +116,10 @@ class MakeBookingAction extends CAction
                     $childrenPassports[] = $childrenPassport;
                 }
                 foreach ($childrenPassports as $p)
+                {
                     $valid = $valid && $p->validate();
+                    $this->validationErrors['passports'][] = $p->errors;
+                }
             }
             if (isset($_POST['FlightInfantPassportForm']))
             {
@@ -118,7 +130,10 @@ class MakeBookingAction extends CAction
                     $infantsPassports[] = $infantsPassport;
                 }
                 foreach ($infantsPassports as $p)
+                {
                     $valid = $valid && $p->validate();
+                    $this->validationErrors['passports'][] = $p->errors;
+                }
             }
             if (!$valid)
                 return false;
@@ -130,7 +145,7 @@ class MakeBookingAction extends CAction
                     $item->setPassports($adultsPassports, $childrenPassports, $infantsPassports);
                     Yii::app()->shoppingCart->update($item, 1);
                 }
-                if ($item instanceof HotelTripElement)
+                elseif ($item instanceof HotelTripElement)
                 {
                     //todo: discuss with Oleg
                     foreach ($item->rooms as $i=>$room)

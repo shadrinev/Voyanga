@@ -425,6 +425,8 @@ class OrderComponent extends CApplicationComponent
                 {
                     if ($pdfFileName =  $pdf->forHotelItem($item))
                        $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileName);
+                    else
+                        return false;
                 }
             }
             elseif ($item instanceof FlightTripElement)
