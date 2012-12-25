@@ -107,7 +107,7 @@ function analyzeValidationResult(response)
         return true;
     /* analyze booking field */
     if (response.message.booking.contactPhone != 'undefined')
-        $('.tdTelefon input').addClass('error tooltip').attr('rel', response.message.booking.contactPhone);
+        $('.divInputTelefon').addClass('error tooltip').attr('rel', response.message.booking.contactPhone);
     if (response.message.booking.contactEmail != 'undefined')
         $('.tdEmail input').addClass('error tooltip').attr('rel', response.message.booking.contactEmail);
     if (response.message.passports != 'undefined')
