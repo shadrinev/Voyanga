@@ -151,7 +151,7 @@ function disableAllFieldsAndHideButton()
 function enableAllFieldsAndShowButton()
 {
     /* disable all fields */
-    $('.oneBlock input').each(function () {
+    $('.oneBlock input').not('.expiration').each(function () {
         $(this).removeAttr('disabled');
     });
     $("select option:selected").each(function () {
