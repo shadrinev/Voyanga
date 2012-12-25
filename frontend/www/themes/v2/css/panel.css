@@ -45,18 +45,6 @@
     width: 100%;
     height: 36px;
 }
-.panelTable tr td.tdPeople .how-many-man {
-	margin-left: 0px;
-}
-.panelTable tr td.tdPeople .how-many-man {
-    background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
-    height: 62px;
-    display: inline-block;
-    position: relative;
-    float: none;
-    margin: auto;
-    vertical-align: middle;
-}
 /* INPUT */
 .input-path {
     background: none repeat scroll 0 0 transparent;
@@ -327,13 +315,15 @@
     top: 0;
     width: 980px;
 }
-
 .how-many-man {
-	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
-    float: left;
+    background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+    display: inline-block;
+    float: none;
     height: 62px;
-    margin-left: 20px;
+    margin: auto;
+    padding-right: 24px;
     position: relative;
+    vertical-align: middle;
 }
 .how-many-man .btn {
 	width: 16px; height: 62px;
@@ -349,7 +339,7 @@
 .how-many-man .content {
 	float: left;
 	padding-left: 8px;
-	padding-right: 24px;
+	padding-right: 0px;
 	position: relative;
 }
 .how-many-man .content + .content, .how-many-man .content + .content  + .content, .how-many-man .content + .content  + .content  {
@@ -357,14 +347,16 @@
 	background: url("../images/bg-num-man.png") no-repeat scroll 0 0 transparent;
 }
 .how-many-man .popup {
-	position: absolute;
-	background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
-	width: 194px; height: 85px;
-	border-right: 1px solid #b7b8bc;
-	border-bottom: 1px solid #76777a;
-	border-left: 1px solid #b7b8bc;
-	display: none;
-	z-index: 997;
+    position: fixed;
+    background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
+    width: 194px; height: 85px;
+    border-right: 1px solid #b7b8bc;
+    border-bottom: 1px solid #76777a;
+    border-left: 1px solid #b7b8bc;
+    display: none;
+    z-index: 997;
+    right: 0px;
+    top: 106px;
 }
 .how-many-man .popup.active {
 	display: block;
