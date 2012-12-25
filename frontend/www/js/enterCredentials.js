@@ -105,19 +105,18 @@ function analyzeValidationResult(response)
 {
     if (response.status == 'success')
         return true;
-    console.log("VALIDATION PASSPORT DATA:", response);
     /* analyze booking field */
-    if (response.message.contactPhone != 'undefined')
-        $('.tdTelefon input').addClass('error');
-    if (response.message.contactEmail != 'undefined')
-        $('.tdEmail input').addClass('error');
+    if (response.message.booking.contactPhone != 'undefined')
+        $('.tdTelefon input').addClass('error tooltip').attr('rel', response.message.booking.contactPhone);
+    if (response.message.booking.contactEmail != 'undefined')
+        $('.tdEmail input').addClass('error tooltip').attr('rel', response.message.booking.contactEmail);
     if (response.message.passports != 'undefined')
         _.each(response.message.passports, function(el, i){
             _.each(el, function(fName, key){
                 var name = 'FlightAdultPassportForm[' + i + '][' + key + ']',
-                    inputEl = $('input[name="'+name+'"]').addClass('error').attr('data-validation-error', fName);
+                    inputEl = $('input[name="'+name+'"]').addClass('error tooltip').attr('rel', fName);
                 if (key == 'genderId')
-                    inputEl.closest('label').addClass('error');
+                    inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
             })
         });
 }
@@ -126,7 +125,7 @@ function disableAllFieldsAndHideButton()
 {
     /* disable all fields */
     $('.oneBlock input').each(function () {
-        $(this).attr({'disabled': 'disabled'}).removeClass('error').attr('data-validation-error','');
+        $(this).attr({'disabled': 'disabled'}).removeClass('error tooltip').attr('rel','');
     });
     $("select option:selected").each(function () {
         var template = '<input type="text" class="tmp" disabled="disabled" value="' + $(this).text() + '">';
