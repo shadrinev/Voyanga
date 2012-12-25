@@ -54,17 +54,16 @@ Yii::app()->clientScript->registerCoreScript('jquery');
               if(data.paid) {
                 show('ok');
                 done = true;
+                return;
               }
               if(data.error) {
                 show('fail');
               }
-      
             })
             .fail(function(){
               show('fail');
-
             });
-        }, 1000);
+        }, 5000);
       }
       poll();
     });
