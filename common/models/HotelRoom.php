@@ -50,13 +50,34 @@ class HotelRoom extends CApplicationComponent
     public $sharingBedding;
     public $cotsCount;
     public $childCount;
-    public $showName;
+    public $_showName;
     public $specialOffer;
     public $offerText;
     public $childAges = array();
     public $roomInfo;
     public $rusNameFound;
     public $providerId;
+    public $roomNameNemo;
+
+    public function getShowName()
+    {
+        if($this->_showName){
+            return $this->_showName;
+        }else{
+            if($this->roomNameNemo){
+                $this->roomNameNemo->fillValues();
+
+                if($this->roomNameNemo->rusName){
+                    $this->_showName = $this->roomNameNemo->rusName;
+                }else{
+                    $this->_showName = $this->roomName;
+                }
+                return $this->_showName;
+            }else{
+                return '';
+            }
+        }
+    }
 
     public function __construct($params)
     {
@@ -69,7 +90,7 @@ class HotelRoom extends CApplicationComponent
 
         $roomNameCanonical = null;
         if($this->roomName){
-            $this->showName = $this->roomName;
+            //$this->showName = $this->roomName;
             $roomInfo = $this->parseRoomName($this->roomName);
             $this->roomInfo = $roomInfo;
 
@@ -77,12 +98,12 @@ class HotelRoom extends CApplicationComponent
         }
         $this->rusNameFound = false;
 
-        $needAddToDb = false;
+        //$needAddToDb = false;
 
 
-        $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical,$this->sizeId,$this->typeId);
+        $this->roomNameNemo =& RoomNamesNemo::getNamesByParams($roomNameCanonical,$this->sizeId,$this->typeId);
 
-        if(!$roomNameNemo){
+        /*if(!$roomNameNemo){
             $needAddToDb = true;
             if($roomNameCanonical){
                 $roomNameNemo = RoomNamesNemo::getNamesByParams($roomNameCanonical);
@@ -102,7 +123,7 @@ class HotelRoom extends CApplicationComponent
         if($roomNameNemo){
 
             /** @var RoomNamesNemo */
-            if($roomNameNemo->roomNameRusId){
+            /*if($roomNameNemo->roomNameRusId){
 
                 $roomNameRus = RoomNamesRus::getRoomNameRusByPk($roomNameNemo->roomNameRusId);
 
@@ -120,7 +141,7 @@ class HotelRoom extends CApplicationComponent
             if(!$newRoomNameNemo->save()){
                 //VarDumper::dump($newRoomNameNemo->getErrors());
             }
-        }
+        }*/
     }
 
     public function getAdults()

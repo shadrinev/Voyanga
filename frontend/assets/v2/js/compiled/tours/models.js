@@ -980,7 +980,11 @@ ToursResultSet = (function() {
     for (index = _i = 0, _len = items.length; _i < _len; index = ++_i) {
       entry = items[index];
       console.log('findAndSelectItems entry', entry, ' in ', index, this.data()[index]);
-      if (!this.data()[index].findAndSelect(entry)) {
+      if (this.data()[index].isAvia()) {
+        if (!this.data()[index].findAndSelect(this.data()[index].results().cheapest())) {
+          success = false;
+        }
+      } else if (!this.data()[index].findAndSelect(entry)) {
         success = false;
       }
     }
