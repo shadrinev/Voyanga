@@ -1,26 +1,51 @@
-.hotelTable, .panelTable, .constructorTable {
-	width: 100%;
-	height: 64px;
+.panel {
+    display: table;
+    height: 64px;
+    margin: 0 auto;
+    position: relative;
+    max-width: 980px;
 }
-.hotelTable tr td , .panelTable tr td , .constructorTable tr td {
-	vertical-align: middle;
+.panelTable {
+    width: 100%;
+    height: 64px;
 }
-.tdCity {
+.panelTable tr td {
+    vertical-align: middle;
+}
+.panelTable tr td.tdPeople {
+    padding-left: 20px;
+    padding-right: 18px;
+    min-width: 55px;
+}
+.panelTable tr td.tdButton {
+    text-align: center;
+}
+.panelTable tr td.tdCity .data {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+.panelTable.hotel tr td.tdCity .data {
+    width: 340px;
+    height: 36px;
+    margin-top: 3px;
+}
+.panelTable.hotel {
+    width: 100%;
+    height: 64px;
+}
+.panelTable .tdCity {
 	text-align: left;
 }
-.tdPeople {
-	width: 285px;
-	padding-left: 20px;
-	padding-right: 20px;
+.panelTable .tdTumblr {
+    min-width: 94px;
+    max-width: 94px;
 }
-.tdPeople .how-many-man {
-	margin-left: 0px;
+.panelTable tr td.tdCity .data .to, tr td.tdCity .data .from {
+    width: 100%;
+    height: 36px;
 }
-.tdButton {
-	width: 90px;
-	vertical-align: middle;
-	text-align: center;
-}
+/* INPUT */
 .input-path {
     background: none repeat scroll 0 0 transparent;
     border: medium none;
@@ -30,111 +55,132 @@
     font-size: 19px;
     height: 36px;
     left: 0;
+    min-width: 105px;
+    max-width: 508px;
     overflow: hidden;
     padding: 0 10px;
     position: absolute;
-    width: 93%;
     z-index: 1;
 }
 .second-path {
-	z-index: 2;
-	border: medium none;
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
     border-radius: 4px 4px 4px 4px;
     font-family: Arial;
     font-size: 19px;
     height: 36px;
-    padding-left: 10px;
-    padding-right: 10px;
-    width: 270px;
-    left: 0px;
+    left: 0;
+    min-width: 105px;
+    max-width: 508px;
+    padding: 0 10px;
     position: absolute;
-    background: none;
-    padding-bottom: 0px;
-    padding-top: 0px;
+    z-index: 2;
+}
+.input-path:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 15px rgba(82, 168, 236, 0.8);
+    outline: 0 none;
+    color: #16181a !important;
+    foreground-color: #16181a;
+}
+.second-path:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
+    outline: 0 none;
+    color: #16181a !important;
+    foreground-color: #16181a;
+}
+.panelTable.avia tr td.tdCity .data {
+    width: 290px;
+}
+.panelTable.avia tr td.tdCity .data input {
+    width: 270px;
+}
+.panelTable.constructorTable tr td.tdCity .data {
+    width: 290px;
+}
+.panelTable.constructorTable tr td.tdCity .data input {
+    width: 270px;
+}
+.panelTable.hotel tr td.tdCity .data input {
+    width: 320px;
+}
+/* OTHER */
+.tdCityStart {
+    min-width: 130px;
+}
+.panelTable.constructorTable tr td.tdAddTour .add-tour {
+    background: url("../images/slice.png") no-repeat scroll -401px -1224px transparent;
+    display: inline-block;
+    height: 29px;
+    vertical-align: middle;
+    width: 99px;
+    margin-left: 18px;
+}
+.panelTable.constructorTable tr td.tdAddTour .add-tour:hover {
+    background-position: -401px -1254px;
 }
 /* DATE */
-.hotelTable .tdCity div .date {
-	display: none;
+.panelTable .data div .date {
+    display: none;
 }
-.hotelTable .tdCity div.active .date {
-    background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
-	display: inline-block;
-	font-size: 11px;
-	height: 28px;
-	line-height: 10px;
-	margin: 0 0 0 -5px;
-	padding-top: 8px;
-	text-align: center;
-	vertical-align: middle;
-	width: 36px;
-	position: absolute;
-	z-index: 3;
-	right: 0px;
-	cursor: pointer;	
+.panelTable div.active .date {
+    background: url("../images/inputPanel.png") no-repeat scroll -72px -50px transparent;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 11px;
+    height: 28px;
+    line-height: 10px;
+    margin: 0 0 0 -5px;
+    padding-left: 4px;
+    padding-top: 8px;
+    position: absolute;
+    right: 1px;
+    text-align: center;
+    vertical-align: middle;
+    width: 33px;
+    z-index: 3;
 }
-.hotelTable .tdCity div.active .date.noDate {
-	padding-top: 13px;
-	height: 23px;
+.panelTable div.active .date .f17 {
+    font-family: Verdana;
+    font-size: 17px;
+    font-weight: bold;
 }
-.hotelTable .tdCity div.active .date {
-	right: 36px;
+.panelTable div.active .date .f26 {
+    display: inline-block;
+    font-family: Verdana;
+    font-weight: bold;
+    margin-top: 5px;
+    padding-top: 0;
 }
-.hotelTable .tdCity div.active .date + .date {
-	right: 0px;
-	background: url("../images/slice.png") no-repeat scroll -305px -1260px transparent;
+.panelTable.avia tr td.tdCity div.active .date {
+    background: url("../images/inputPanel.png") no-repeat scroll -12px -50px transparent;
 }
+
+.hotel .tdCity div.active .date, .panelTable.constructorTable .tdCity div.active .date {
+    right: 35px;
+}
+.hotel .tdCity div.active .date + .date, .panelTable.constructorTable .tdCity div.active .date + .date {
+    background: url("../images/inputPanel.png") no-repeat scroll -109px -50px transparent;
+    padding-left: 0;
+    right: 0;
+    width: 35px;
+}
+.hotel .tdCity div.active .date.noDate, .panelTable.constructorTable .tdCity div.active .date.noDate {
+    padding-top: 13px;
+    height: 23px;
+}
+
+
+.toursPanel {
+    width: 980px;
+    position: relative;
+}
+
+
 
 /* CONSTRUCTOR */
-.board-content .tdCity .from {
-	display: inline-block;
-    height: 36px;
-    position: relative;
-    vertical-align: middle;
-    width: 270px;
-}
-.board-content .tdCity .from.active {}
-.board-content .tdCity .from.overflow {
-	overflow: hidden;
-	border-radius: 4px 4px 4px 4px;
-}
-
-.constructorTable .tdCity div .second-path {
-    width: 250px;
-}
-.constructorTable .tdCity div.active .second-path {
-    width: 179px;
-}
-.board-content .tdCity div .date {
-	display: none;
-}
-.board-content .tdCity div.active .date {
-    background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
-	display: inline-block;
-	font-size: 11px;
-	height: 28px;
-	line-height: 10px;
-	margin: 0 0 0 -5px;
-	padding-top: 8px;
-	text-align: center;
-	vertical-align: middle;
-	width: 36px;
-	position: absolute;
-	z-index: 3;
-	right: 1px;
-	cursor: pointer;	
-}
-.board-content .tdCity div.active .date.noDate {
-	padding-top: 13px;
-	height: 23px;
-}
-.board-content .constructorTable .tdCity div.active .date {
-	right: 36px;
-}
-.board-content .constructorTable .tdCity div.active .date + .date {
-	right: 0px;
-	background: url("../images/slice.png") no-repeat scroll -305px -1260px transparent;
-}
-.tdCity .cityStart {
+.panelTable.constructorTable tr td.tdCityStart .cityStart {
 	width: 115px;
 	display: inline-block;
 	text-align: left;
@@ -146,7 +192,7 @@
 	height: 36px;
 	border-radius: 4px 4px 4px 4px;
 }
-.tdCity .cityStart a {
+.panelTable.constructorTable tr td.tdCityStart .cityStart a {
 	color: #979eab;
 	font-size: 13px;
 	display: block;
@@ -155,10 +201,10 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
-.tdCity .cityStart a span {
+.panelTable.constructorTable tr td.tdCityStart .cityStart a span {
 	border-bottom: 1px dashed;
 }
-.tdCity .cityStart .startInputTo {
+.panelTable.constructorTable tr td.tdCityStart .cityStart .startInputTo {
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -167,38 +213,30 @@
 	display: none;
 	border-radius: 4px 4px 4px 4px;
 }
-.tdCity .cityStart .startInputTo .input-path {
+.panelTable.constructorTable tr td.tdCityStart .cityStart .startInputTo .input-path {
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	width: 242px;
 }
-.tdCity .cityStart .startInputTo .second-path {
+.panelTable.constructorTable tr td.tdCityStart .cityStart .startInputTo .second-path {
 	width: 242px;
 }
 /* HOTEL */
-.hotelTable .tdCity {
-	text-align: right;
-	vertical-align: middle;
-}
+/*.hotelTable .tdCity {*/
+	/*text-align: right;*/
+	/*vertical-align: middle;*/
+/*}*/
 
-.hotelTable .tdCity .how-many-man {
-	float: none;
-	vertical-align: middle;
-	display: inline-block;
-	margin-left: 5px;
-}
-.hotelTable .tdCity .data {
-	float: none;
-	margin-top: auto;
-	display: inline-block;
-	width: 341px;
-	position: relative;
-	height: 36px;
-	margin-top: 4px;
-}
-.hotelTable .tdCity div .second-path {
-    width: 321px;
-}
+/*.hotelTable .tdCity .how-many-man {*/
+	/*float: none;*/
+	/*vertical-align: middle;*/
+	/*display: inline-block;*/
+	/*margin-left: 5px;*/
+/*}*/
+
+/*.hotelTable .tdCity div .second-path {*/
+    /*width: 321px;*/
+/*}*/
 /* ================ */
 /* ================ */
 /* ================ */
@@ -267,40 +305,33 @@
     width: 39px;
     z-index: 1;
 }
+
 .slide-tmblr {
-	height: 64px;
+    height: 64px;
     overflow: hidden;
-    width: 800px;
     position: absolute;
-    left: 106px;
-    top: 0px;
-}
-.input-path:focus {
-    border-color: rgba(82, 168, 236, 0.8);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 15px rgba(82, 168, 236, 0.8);
-    outline: 0 none;
-    color: #16181a !important;
-    foreground-color: #16181a;
-}
-.second-path:focus {
-    border-color: rgba(82, 168, 236, 0.8);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
-    outline: 0 none;
-    color: #16181a !important;
-    foreground-color: #16181a;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 980px;
 }
 .how-many-man {
-	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
-    float: left;
+    background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
+    display: inline-block;
+    float: none;
     height: 62px;
-    margin-left: 20px;
+    margin: auto;
+    padding-right: 24px;
     position: relative;
+    vertical-align: middle;
 }
 .how-many-man .btn {
 	width: 16px; height: 62px;
 	background: url("../images/slice.png") no-repeat scroll right -1063px transparent;
-	float: right;
 	margin-left: 0px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
 }
 .how-many-man .btn.active {
 	background-position: right -1132px;
@@ -308,7 +339,7 @@
 .how-many-man .content {
 	float: left;
 	padding-left: 8px;
-	padding-right: 8px;
+	padding-right: 0px;
 	position: relative;
 }
 .how-many-man .content + .content, .how-many-man .content + .content  + .content, .how-many-man .content + .content  + .content  {
@@ -316,14 +347,16 @@
 	background: url("../images/bg-num-man.png") no-repeat scroll 0 0 transparent;
 }
 .how-many-man .popup {
-	position: absolute; bottom: -87px; left: 0px;
-	background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
-	width: 194px; height: 85px;
-	border-right: 1px solid #b7b8bc;
-	border-bottom: 1px solid #76777a;
-	border-left: 1px solid #b7b8bc;
-	display: none;
-	z-index: 997;
+    position: fixed;
+    background: url(../images/bg-how-much.png) repeat-x left bottom #f7f9fb;
+    width: 194px; height: 85px;
+    border-right: 1px solid #b7b8bc;
+    border-bottom: 1px solid #76777a;
+    border-left: 1px solid #b7b8bc;
+    display: none;
+    z-index: 997;
+    right: 0px;
+    top: 106px;
 }
 .how-many-man .popup.active {
 	display: block;
@@ -457,6 +490,8 @@
 	width: 406px;
 	bottom: auto;
 	top: 63px;
+    position: fixed;
+    right: 0px;
 }
 .number-hotel {
 	width: 198px;
@@ -574,15 +609,12 @@
 .panel-index .sub-head .navi-r:hover {
 	background-position: -26px -64px;
 }
-.fly-panel {
-	width: 100%;
-	height: 64px;
-	position: relative;
-	background: url("../images/bgBoardSmall.png") repeat-x scroll 0 0 transparent;
-}
-
-
-
+/*.fly-panel {*/
+	/*width: 100%;*/
+	/*height: 64px;*/
+	/*position: relative;*/
+	/*background: url("../images/bgBoardSmall.png") repeat-x scroll 0 0 transparent;*/
+/*}*/
 .board {
 	background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;
     bottom: 366px;
@@ -590,7 +622,7 @@
     min-width: 1000px;
     position: absolute;
     width: 100%;
-   /*  box-shadow: 0 0 5px #010101; */
+    /*  box-shadow: 0 0 5px #010101; */
 }
 .leftPageBtn {
 	background: url("../images/navindex.png") no-repeat scroll 0 0 transparent;
@@ -620,14 +652,7 @@
 	background-position: -26px -0px;
 }
 
-.constructor-ico {
-	background: url("../images/constructor-ico.png") no-repeat scroll 0 0 transparent;
-    height: 64px;
-    left: 26px;
-    position: absolute;
-    top: 0;
-    width: 86px;
-}	
+
 .constructor {
 	left: 0;
     min-height: 64px;
@@ -635,47 +660,11 @@
     top: 0;
     width: 100%;
 }
+
 .board-content {
 	height: 64px;
     position: relative;
 }
-.panel {
-	margin: 0 auto;
-	width: 948px;
-	height: 64px;
-	position: relative;
-}
-
-.panelTable tr td {
-	vertical-align: middle; text-align: center;
-}
-.panelTable .data {
-	display: inline-block;
-    position: relative;
-    vertical-align: middle;
-}
-.panelTable .how-many-man {
-	background: url("../images/slice.png") no-repeat scroll 0 -1125px transparent;
-    height: 62px;
-    display: inline-block;
-    position: relative;
-    float: none;
-    margin: auto;
-    vertical-align: middle;
-}
-.add-tour {
-	background: url("../images/slice.png") no-repeat scroll -401px -1224px transparent;
-    display: inline-block;
-    height: 29px;
-    vertical-align: middle;
-    width: 99px;
-    margin-left: 12px;
-    margin-right: 18px;
-}
-.add-tour:hover {
-	background-position: -401px -1254px;
-}
-
 .board-content.start .panelTable .contTD {
 	text-align: left;
 }
@@ -692,76 +681,21 @@
     border-radius: 4px 0 0 4px;
     width: 262px;
 }
-.panelTable .data .date {
-    display: none;
-}
-.panelTable div.active .date {
-    background: url("../images/slice.png") no-repeat scroll -270px -1260px transparent;
-	display: inline-block;
-	font-size: 11px;
-	height: 28px;
-	line-height: 10px;
-	margin: 0 0 0 -5px;
-	padding-top: 8px;
-	text-align: center;
-	vertical-align: middle;
-	width: 36px;
-	position: absolute;
-	z-index: 3;
-	right: 1px;
-	cursor: pointer;	
-}
-.panelTable .data.active .date + .date {
-    background-position: -305px -1260px;
-}
-.panelTable .data.active .date .f17 {
-    font-family: Verdana;
-    font-size: 17px;
-    font-weight: bold;
-}
-.panelTable .data.active .date .f26 {
-    display: inline-block;
-    font-family: Verdana;
-    font-weight: bold;
-    margin-top: 5px;
-    padding-top: 0;
-}
-.contTD.cityActive .data .input-path {
-    width: 100px;
-}
-.contTD.cityActive .cityStart {
-    width: 265px;
-}
+/*.contTD.cityActive .data .input-path {*/
+    /*width: 100px;*/
+/*}*/
+/*.contTD.cityActive .cityStart {*/
+    /*width: 265px;*/
+/*}*/
 .input-to {
     display: none;
 }
-.contTD .data .to, .contTD .data .from {
-	display: inline-block;
-	vertical-align: middle;
-	position: relative;
-	width: 290px;
-	height: 36px;
-}
-.AVIA .contTD {
-	text-align: left;
-}
-.AVIA .contTD .how-many-man {	
-	margin-left: 10px;
-}
-
-.AVIA .contTD div.active .date {
-	background: url("../images/slice.png") no-repeat scroll -225px -978px transparent;
-}
-
-.AVIA .contTD div.active .date {
-    background: url("../images/slice.png") no-repeat scroll -225px -978px transparent;
-}
-
-.AVIA .contTD div.active .input-path {
-	width: 235px;
-	border-radius: 4px 0px 0px 4px;
-}
-
+/*.avia .contTD {*/
+	/*text-align: left;*/
+/*}*/
+/*.avia .contTD .how-many-man {*/
+	/*margin-left: 10px;*/
+/*}*/
 .alphaRight {
     background: url("../images/alpha-tours-left.png") repeat-y scroll 0 0 transparent;
     display: block;
@@ -801,7 +735,29 @@
     position: absolute;
     width: 86px;
 }
+.constructor-ico {
+    background: url("../images/constructor-ico.png") no-repeat scroll 0 0 transparent;
+    height: 64px;
+    left: 26px;
+    position: absolute;
+    top: 0;
+    width: 86px;
+}
+/*.board-content .tdCity .from {*/
+/*display: inline-block;*/
+/*height: 36px;*/
+/*position: relative;*/
+/*vertical-align: middle;*/
+/*width: 270px;*/
+/*}*/
+/*.board-content .tdCity .from.active {}*/
+/*.board-content .tdCity .from.overflow {*/
+/*overflow: hidden;*/
+/*border-radius: 4px 4px 4px 4px;*/
+/*}*/
 
+
+/* INPUT */
 .bgInput {
     position: absolute;
     width: 100%;
@@ -832,4 +788,3 @@
     top: 0px;
     right: 0px;
 }
-.test{}
