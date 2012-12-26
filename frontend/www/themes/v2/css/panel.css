@@ -788,3 +788,225 @@
     top: 0px;
     right: 0px;
 }
+
+/* */
+.condition {
+    display: inline-block;
+}
+.condition .whence, .condition .where {
+    background: url("../images/slice.png") no-repeat scroll 0 -904px transparent;
+    display: inline-block;
+    float: left;
+    height: 36px;
+    position: relative;
+    width: 261px;
+}
+.condition .whence .input, .condition .where .input {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    font-size: 21px;
+    height: 36px;
+    margin-top: -1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 251px;
+}
+.condition .whence.date, .condition .where.date {
+    background-position: 0 -941px;
+}
+.condition .whence.date .input, .condition .where.date .input {
+    width: 213px;
+}
+.condition .whence .day, .condition .where .day {
+    display: none;
+}
+.condition .whence.date .day, .condition .where.date .day {
+    color: #FFFFFF;
+    display: block;
+    float: right;
+    font-size: 11px;
+    line-height: 10px;
+    padding-top: 7px;
+    text-align: center;
+    text-shadow: 0 1px 0 #0A5783;
+    width: 34px;
+}
+.condition .whence.date .day .f17, .condition .where.date .day .f17 {
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+.timeline {
+    position: relative;
+    display: inline-block;
+    height: 58px;
+}
+.timeline .left-corners {
+    background: url("../images/bg-timeline.png") repeat-x scroll 0 -19px transparent;
+    bottom: 1px;
+    height: 18px;
+    left: 18px;
+    position: absolute;
+    width: 10px;
+}
+.timeline .right-corners {
+    background: url("../images/bg-timeline.png") repeat-x scroll -44px -19px transparent;
+    bottom: 1px;
+    height: 18px;
+    position: absolute;
+    right: 18px;
+    width: 10px;
+}
+.timeline .btn-left {
+    background: url("../images/bg-timeline.png") repeat-x scroll 0 -38px transparent;
+    bottom: 1px;
+    cursor: pointer;
+    height: 18px;
+    left: 0;
+    position: absolute;
+    width: 10px;
+}
+.timeline .btn-right {
+    background: url("../images/bg-timeline.png") repeat-x scroll -44px -38px transparent;
+    bottom: 1px;
+    cursor: pointer;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    width: 10px;
+}
+.timedatelineOverflow {
+    height: 58px;
+    margin-left: 28px;
+    margin-right: 28px;
+    overflow: hidden;
+    width: 735px;
+}
+.timedateline {
+    height: 58px;
+}
+.timedateline li {
+    background: url("../images/hr-timeline.png") no-repeat scroll right 0 transparent;
+    color: #7B7C7F;
+    float: left;
+    height: 58px;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 #2C3038;
+    width: 32px;
+}
+.timedateline li .date {
+    background: url("../images/bg-timeline.png") repeat-x scroll 0 0 transparent;
+    bottom: 0;
+    height: 18px;
+    left: 0;
+    padding-top: 1px;
+    position: absolute;
+    text-align: center;
+    width: 32px;
+    z-index: 2;
+}
+.timedateline li .icoFlyTimeline {
+    background: url("../images/ico-fly-timeline.png") no-repeat scroll 0 0 transparent;
+    height: 12px;
+    left: -26px;
+    position: absolute;
+    top: 8px;
+    width: 12px;
+}
+.timedateline li .trip-fly {
+    background: url("../images/bg-trip-fly-none.png") repeat-x scroll 0 0 transparent;
+    border: 2px solid #133950;
+    border-radius: 10px 10px 10px 10px;
+    cursor: pointer;
+    height: 6px;
+    left: 2px;
+    position: absolute;
+    top: 8px;
+    width: 24px;
+    z-index: 1;
+}
+.timedateline li .trip-fly:hover {
+    box-shadow: 0 0 20px #1383C4;
+}
+.timedateline li .trip-fly.active {
+    background: url("../images/bg-trip-fly.png") repeat scroll 0 0 transparent;
+    box-shadow: 0 0 20px #1383C4;
+}
+.timedateline li .icoHotelTimeline {
+    background: url("../images/ico-hotel-timeline.png") no-repeat scroll 0 0 transparent;
+    height: 8px;
+    left: -12px;
+    position: absolute;
+    top: 24px;
+    width: 14px;
+}
+.timedateline li .trip-hotel {
+    background: url("../images/bg-trip-hotel-none.png") repeat-x scroll 0 0 transparent;
+    border: 2px solid #452617;
+    border-radius: 10px 10px 10px 10px;
+    cursor: pointer;
+    height: 6px;
+    left: 2px;
+    position: absolute;
+    top: 24px;
+    width: 24px;
+    z-index: 1;
+}
+.timedateline li .trip-hotel:hover {
+    box-shadow: 0 0 20px #F9610E;
+}
+.timedateline li .trip-hotel.active {
+    background: url("../images/bg-trip-hotel.png") repeat scroll 0 0 transparent;
+    box-shadow: 0 0 20px #F9610E;
+}
+
+.btn-timeline-and-condition {
+    left: 0;
+    position: absolute;
+    top: 8px;
+    width: 76px;
+    z-index: 1;
+}
+.btn-timeline-and-condition .btn-timeline {
+    background: url("../images/slice.png") repeat scroll 0 -828px transparent;
+    color: #636467;
+    display: block;
+    height: 21px;
+    padding-top: 3px;
+    text-align: center;
+    text-shadow: 0 1px 0 #0D0E0F;
+    width: 76px;
+}
+.btn-timeline-and-condition .btn-timeline.active {
+    background-position: -76px -828px;
+    color: #FFFFFF;
+    text-shadow: none;
+}
+.btn-timeline-and-condition .btn-condition {
+    background: url("../images/slice.png") repeat scroll -76px -852px transparent;
+    color: #636467;
+    display: block;
+    height: 21px;
+    padding-top: 3px;
+    text-align: center;
+    text-shadow: 0 1px 0 #0D0E0F;
+    width: 76px;
+}
+.btn-timeline-and-condition .btn-condition.active {
+    background-position: 0 -852px;
+    color: #FFFFFF;
+    text-shadow: none;
+}
+.divTimeline, .divCondition {
+    text-align: center;
+    position: absolute;
+    width: 980px;
+    height: 62px;
+}
+.divTimeline {
+    top: 0px;
+}
+.divCondition {
+    top: 62px;
+}
