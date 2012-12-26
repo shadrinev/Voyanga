@@ -281,7 +281,7 @@ TourPanel = (function(_super) {
 
   TourPanel.prototype.showFromCityInput = function(panel, event) {
     var el, elem;
-    elem = $('.cityStart .second-path');
+    elem = $('.cityStart').find('.second-path');
     elem.data('old', elem.val());
     el = elem.closest('.tdCity');
     el.find(".from").addClass("overflow").animate({

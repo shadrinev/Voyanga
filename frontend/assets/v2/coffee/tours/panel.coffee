@@ -201,7 +201,7 @@ class TourPanel extends SearchPanel
     $('.how-many-man').find('.popup').removeClass('active')
 
   showFromCityInput: (panel, event) ->
-    elem = $('.cityStart .second-path')
+    elem = $('.cityStart').find('.second-path');
     elem.data('old', elem.val())
     el = elem.closest('.tdCity')
     el.find(".from").addClass("overflow").animate
