@@ -41,6 +41,28 @@ $(function () {
             next.focus();
         }
     });
+    $('.tdDocumentNumber input').on('change keyup', function () {
+        var checkbox = $(this).closest('tr').next().find('.tdDuration').find('input[type=checkbox]'),
+            uiLabel = $(this).closest('tr').next().find('.tdDuration').find('.ui-label');
+        if ($(this).val().length > 10) {
+            uiLabel.attr('data-is-checked', checkbox.attr('checked') !== undefined);
+            if (checkbox.attr('checked') !== undefined) {
+                uiLabel.click();
+            }
+        }
+        else {
+            if (uiLabel.attr('data-is-checked') !== undefined) {
+                if (uiLabel.attr('data-is-checked') === "true") {
+                    if (checkbox.attr('checked') === undefined)
+                        uiLabel.click();
+                }
+                else {
+                    if (checkbox.attr('checked') !== undefined)
+                        uiLabel.click();
+                }
+            }
+        }
+    });
     $(function () {
         $('.agreeConditions').on('click', function () {
             var checked = ($('#agreeCheck').is(':checked'));
@@ -66,8 +88,7 @@ $(function () {
                 dataType: 'json'
             })
                 .success(function (response) {
-                    if (!analyzeValidationResult(response))
-                    {
+                    if (!analyzeValidationResult(response)) {
                         enableAllFieldsAndShowButton();
                         $('#loadPayFly').find('.armoring').hide();
                         $('#loadPayFly').find('.loadJet').hide();
@@ -101,8 +122,7 @@ $(function () {
     });
 });
 
-function analyzeValidationResult(response)
-{
+function analyzeValidationResult(response) {
     if (response.status == 'success')
         return true;
     /* analyze booking field */
@@ -111,23 +131,22 @@ function analyzeValidationResult(response)
     if (typeof response.message.booking.contactEmail != 'undefined')
         $('.tdEmail input').addClass('error tooltip').attr('rel', response.message.booking.contactEmail);
     if (response.message.passports != 'undefined')
-        _.each(response.message.passports, function(el, i){
-            _.each(el, function(fName, key){
+        _.each(response.message.passports, function (el, i) {
+            _.each(el, function (fName, key) {
                 var name = 'FlightAdultPassportForm[' + i + '][' + key + ']',
-                    inputEl = $('input[name="'+name+'"]').addClass('error tooltip').attr('rel', fName);
+                    inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
                 if (key == 'genderId')
                     inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
             })
         });
 }
 
-function disableAllFieldsAndHideButton()
-{
+function disableAllFieldsAndHideButton() {
     /* disable all fields */
     $('.oneBlock input').each(function () {
-        $(this).attr({'disabled': 'disabled'}).removeClass('error tooltip').attr('rel','');
+        $(this).attr({'disabled': 'disabled'}).removeClass('error tooltip').attr('rel', '');
     });
-    $('.expiration').each(function(){
+    $('.expiration').each(function () {
         $(this).closest('.checkOn').attr('data-is-active', $(this).closest('.checkOn').hasClass('active'));
     });
     $("select option:selected").each(function () {
@@ -151,8 +170,7 @@ function disableAllFieldsAndHideButton()
     $('.agreeConditions').hide();
 }
 
-function enableAllFieldsAndShowButton()
-{
+function enableAllFieldsAndShowButton() {
     /* disable all fields */
     $('.oneBlock input').not('.expiration').each(function () {
         $(this).removeAttr('disabled');
@@ -161,14 +179,12 @@ function enableAllFieldsAndShowButton()
         $('.tmp').remove();
         $(this).closest('select').siblings('.chzn-container').show();
     });
-    $('.expiration').each(function(){
-        var isActive = $(this).closest('.checkOn').attr('data-is-active')=='true';
-        if (isActive)
-        {
+    $('.expiration').each(function () {
+        var isActive = $(this).closest('.checkOn').attr('data-is-active') == 'true';
+        if (isActive) {
             $(this).closest('.checkOn').addClass('active');
         }
-        else
-        {
+        else {
             $(this).closest('.checkOn').removeClass('active');
         }
     });
