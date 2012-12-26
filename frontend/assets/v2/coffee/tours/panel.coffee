@@ -48,7 +48,6 @@ class TourPanelSet
       activeSearchPanel: @activeCalendarPanel()
 
 
-
     @formFilled = ko.computed =>
       isFilled = @startCity()
       _.each @panels(), (panel) ->
@@ -87,7 +86,7 @@ class TourPanelSet
     if _.last(@panels())
       _.last(@panels()).isLast(false)
       prevPanel = _.last(@panels())
-    newPanel = new TourPanel(@sp, @i, @i==0)
+    newPanel = new TourPanel(@sp, @i, @i == 0)
     newPanel.on "tourPanel:showCalendar", (args...) =>
       @activeCity(newPanel.cityReadable())
       @showPanelCalendar(args)
@@ -104,7 +103,7 @@ class TourPanelSet
     VoyangaCalendarStandart.clear()
 
   showPanelCalendar: (args) =>
-    @activeCalendarPanel  args[0]
+    @activeCalendarPanel args[0]
     console.log 'showPanelCalendar', args
 
   # calendar handler
@@ -129,7 +128,7 @@ class TourPanelSet
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
     window.voyanga_debug "TourPanel created"
-    super(isFirst,true)
+    super(isFirst, true)
     @toggleSubscribers.dispose();
     console.log('try dispose subscribe');
     _.extend @, Backbone.Events
@@ -175,23 +174,23 @@ class TourPanel extends SearchPanel
     handlePanelSubmit(false)
 
   handlePanelSubmit: (onlyHash = true)=>
-    console.log('onlyHash',onlyHash)
+    console.log('onlyHash', onlyHash)
     if onlyHash
       app.navigate @sp.getHash(), {trigger: true}
     else
-      url = '/#'+@sp.getHash()
+      url = '/#' + @sp.getHash()
       if @startParams == url
         # Need save data to server, because get have limit 2048 bytes
         #url += 'oldSelecton/'+encodeURIComponent(JSON.stringify(@selectedParams))
-        url += 'eventId/'+@selectedParams.eventId
+        url += 'eventId/' + @selectedParams.eventId
 
 
-      console.log('go url',url,'length', url.length)
+      console.log('go url', url, 'length', url.length)
       #return
       window.location.href = url
 
   saveStartParams: ()=>
-    url = '/#'+@sp.getHash()
+    url = '/#' + @sp.getHash()
     @startParams = url
 
   close: ->
@@ -203,9 +202,21 @@ class TourPanel extends SearchPanel
   showFromCityInput: (panel, event) ->
     elem = $('.cityStart').find('.second-path');
     elem.data('old', elem.val())
-    el = elem.closest('.tdCity')
+    el = elem.closest('.cityStart')
+    el.closest('.tdCityStart')
+      .animate({
+      width: '+=130', 300
+    })
+    el.closest('.tdCityStart').find('.bgInput')
+      .animate({
+      width: '+=150', 300
+    })
+    el.closest('.tdCityStart').next().find('.data')
+      .animate({
+      width: '-=130', 300
+      })
     el.find(".from").addClass("overflow").animate
-      width: "125px"
+      width: "150px"
     , 300
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
@@ -214,8 +225,21 @@ class TourPanel extends SearchPanel
       el.find(".startInputTo").find("input").focus().select()
 
   hideFromCityInput: (panel, event) ->
+    elemB = $('.cityStart').find('.second-path');
+    elB = elemB.closest('.cityStart')
+    elB.closest('.tdCityStart')
+      .animate({
+      width: '-=130', 300
+      })
+    elB.closest('.tdCityStart').find('.bgInput')
+      .animate({
+      width: '-=150', 300
+      })
+    elB.closest('.tdCityStart').next().find('.data')
+      .animate({
+      width: '+=130', 300
+      })
     elem = $('.startInputTo .second-path')
-    console.log "Hide city input", elem.parent()
     startInput = $('div.startInputTo')
     toInput = $('div.overflow')
     if startInput.is(':visible')
@@ -223,7 +247,7 @@ class TourPanel extends SearchPanel
         width: "271px"
       , 300, ->
         toInput.removeClass "overflow"
-    
+
       $(".cityStart").animate
         width: "115px"
       , 300
@@ -254,12 +278,12 @@ class TourPanel extends SearchPanel
 $(document).on "keyup change", "input.second-path", (e) ->
   firstValue = $(this).val()
   secondEl = $(this).siblings('input.input-path')
-  if ((e.keyCode==8) || (firstValue.length<3))
+  if ((e.keyCode == 8) || (firstValue.length < 3))
     secondEl.val('')
 
-$(document).on  "keyup change", '.cityStart input.second-path', (e) ->
+$(document).on "keyup change", '.cityStart input.second-path', (e) ->
   elem = $('.from.active .second-path')
-  if (e.keyCode==13)
+  if (e.keyCode == 13)
     if elem.parent().hasClass("overflow")
       elem.parent().animate
         width: "271px"
