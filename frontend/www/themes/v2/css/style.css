@@ -3157,6 +3157,7 @@ input.hotel-input {
 .dopInfoPassengers .tdText {
 	color: #808186;
 	font-size: 13px;
+    line-height: 16px;
 }
 .payCardPal {
     width: 100%;

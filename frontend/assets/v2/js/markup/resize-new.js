@@ -1043,6 +1043,7 @@ function loadPayFly() {
 }
 
 var clickYes = false;
+
 function openPopUpProj() {
     clickYes = true;
     $('.mainWrapBg').show();
@@ -1097,7 +1098,7 @@ function openPopUpProj() {
                 ClikLeftProj();
             }
             else {
-                return false;
+                return true;
             }
         }
     });
@@ -1183,7 +1184,15 @@ function PopUpInfo() {
         }
         else {
             $('body').prepend('<div class="PopUpInfo">'+ _text +'<div class="close"></div></div> ');
-            $('.PopUpInfo').css('left', (e.pageX - 300)+'px').css('top', (e.pageY - 10)+'px');
+            var _leftPadding;
+            if (e.pageX < $('.PopUpInfo').width()) {
+                _leftPadding = 5;
+            }
+            else {
+                _leftPadding = e.pageX - 300;
+            }
+            $('.PopUpInfo').css('left', _leftPadding +'px').css('top', (e.pageY - 10)+'px');
+
         }
         $('.PopUpInfo').hover(function() {
             _onHovePopUp = false;
@@ -1243,6 +1252,7 @@ function openPopUpContact() {
     $(window).on('keydown', function(e){
         if (clickYes) {
             if (e.which == 27) {
+
                 closePopUpContact();
             }
             else if (e.which == 38) {
@@ -1267,7 +1277,7 @@ function openPopUpContact() {
                 }
             }
             else {
-                return false;
+                return true;
             }
         }
     });

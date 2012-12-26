@@ -1,7 +1,8 @@
 <script type="text/html" id="avia-panel-template">
-  <table class="panelTable AVIA">
+  <table class="panelTable avia">
     <tr>
-      <td class="contTD">
+      <td class="tdCity">
+
         <div class="data">
           <div class="from" data-bind="css: {active: fromChosen}">
               <div class="bgInput">
@@ -17,6 +18,8 @@
               <span class="month" data-bind="text: departureDateMonth()">мая</span>
             </div>
           </div>
+      </td>
+      <td class="tdTumblr">
           <div class="tumblr">
             <label for="there-back">
               <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
@@ -25,24 +28,29 @@
             </label>
             <input id="there-back" type="checkbox" data-bind="checked: rt()">
           </div>
-          <div class="to" data-bind="css: {active: rtFromChosen}">
-              <div class="bgInput">
-                  <div class="left"></div>
-                  <div class="center"></div>
-                  <div class="right"></div>
+      </td>
+      <td class="tdCity">
+          <div class="data">
+              <div class="to" data-bind="css: {active: rtFromChosen}">
+                  <div class="bgInput">
+                      <div class="left"></div>
+                      <div class="center"></div>
+                      <div class="right"></div>
+                  </div>
+                <input class="input-path arrivalCity" type="text"  tabindex="-1">
+                <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}">
+                <div class="date" data-bind="click: showCalendar">
+                  <span class="f17" data-bind="text: rtDateDay()">12</span>
+                  <br>
+                  <span class="month" data-bind="text: rtDateMonth()">мая</span>
+                </div>
               </div>
-            <input class="input-path arrivalCity" type="text"  tabindex="-1">
-            <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}">
-            <div class="date" data-bind="click: showCalendar">
-              <span class="f17" data-bind="text: rtDateDay()">12</span>
-              <br>
-              <span class="month" data-bind="text: rtDateMonth()">мая</span>
-            </div>
           </div>
-        </div>
+      </td>
+      <td class="tdPeople">
         <span data-bind="template: {name: passengers.template, data: passengers}"></span>
       </td>
-      <td class="btnTD">
+      <td class="tdButton">
         <a class="btn-find" data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}">Найти</a>
       </td>
     </tr>
