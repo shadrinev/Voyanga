@@ -97,7 +97,7 @@
     <!-- ko if: !onlyTimeline -->
      <div class="divCondition" data-bind="style: {top: timeline.termsActive?'-16px':'68px'}">
         <div class="condition"
-             data-bind="template: {name: original_template, data: $data, afterRender: afterRender }>
+             data-bind="template: {name: original_template, data: $data, afterRender: afterRender }">
         </div>
      </div>
     <!-- /ko -->
