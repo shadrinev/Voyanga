@@ -126,6 +126,9 @@ class OrderBooking extends CActiveRecord
                 $this->partnerId = $partner->id;
             }
         }
+        if($this->phone){
+            $this->phone = str_replace(array(' ','(',')','-'),'',$this->phone);
+        }
         return parent::beforeSave();
     }
 
