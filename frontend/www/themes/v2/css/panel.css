@@ -107,7 +107,7 @@
 }
 /* OTHER */
 .tdCityStart {
-    min-width: 130px;
+    width: 130px;
 }
 .panelTable.constructorTable tr td.tdAddTour .add-tour {
     background: url("../images/slice.png") no-repeat scroll -401px -1224px transparent;
