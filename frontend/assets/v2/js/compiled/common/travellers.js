@@ -16,7 +16,7 @@ PeopleSelector = (function() {
   }
 
   PeopleSelector.prototype.show = function(context, event) {
-    var el,
+    var coords, el,
       _this = this;
     el = $(event.currentTarget);
     if (!el.hasClass('active')) {
@@ -28,7 +28,11 @@ PeopleSelector = (function() {
       });
       $('.how-many-man .btn').addClass('active');
       $('.how-many-man .content').addClass('active');
-      return $('.how-many-man').find('.popup').addClass('active');
+      el = $('.how-many-man').find('.popup');
+      el.addClass('active');
+      coords = $('.how-many-man').offset();
+      el.css('top', coords.top + $('.how-many-man').height());
+      return el.css('left', coords.left);
     } else {
       return this.close();
     }
@@ -151,6 +155,9 @@ Passengers = (function(_super) {
       }
       return _this.balanceTravelers(["children", 'infants'], _this);
     });
+    this.overall.subscribe(function(newValue) {
+      return resizePanel();
+    });
   }
 
   /*
@@ -265,6 +272,7 @@ HotelPeopleSelector = (function(_super) {
       result.push(current);
       return result;
     });
+    this.sp.overall.subscribe(resizePanel);
   }
 
   HotelPeopleSelector.prototype.addRoom = function() {

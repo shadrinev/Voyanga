@@ -1561,7 +1561,6 @@ $(function(){
 
 
 function resizePanel() {
-    setTimeout(function() {
     if ($('.panelTable').length > 0 && $('.panelTable').is(':visible')) {
         var _panelTable = $('.panel').last().find('.panelTable');
         var _classThis;
@@ -1634,6 +1633,4 @@ function resizePanel() {
     else {
         return;
     }
-
-    }, 500);
 }

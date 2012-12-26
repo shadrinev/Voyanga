@@ -14,7 +14,12 @@ class PeopleSelector
         @close()
       $('.how-many-man .btn').addClass('active')
       $('.how-many-man .content').addClass('active')
-      $('.how-many-man').find('.popup').addClass('active')
+      el = $('.how-many-man').find('.popup')
+      el.addClass('active')
+      coords = $('.how-many-man').offset()
+      el.css 'top', coords.top +  $('.how-many-man').height() 
+      el.css 'left', coords.left
+      
     else
       @close()
 
@@ -110,7 +115,8 @@ class Passengers extends PeopleSelector
         @adults @MAX_TRAVELERS
 
       @balanceTravelers ["children", 'infants'], @
-
+    @overall.subscribe (newValue) =>
+      do resizePanel
 
   ###
   Balances number of travelers, using those which was not affected by most recent user change
@@ -131,12 +137,10 @@ class Passengers extends PeopleSelector
   plusOne: (model, e)->
     prop = $(e.target).attr("rel")
     model[prop](model[prop]()+1)
-#    do resizePanel
 
   minusOne: (model, e)->
     prop = $(e.target).attr("rel")
     model[prop] model[prop]()-1
-#    do resizePanel
 
 
 # View model for a single room dropdown
@@ -150,13 +154,11 @@ class Roomers
   plusOne: (context, event) =>
     target = $(event.currentTarget).attr('rel')
     @[target] @[target]() + 1
-#    do resizePanel
 
   minusOne: (context, event) =>
     target = $(event.currentTarget).attr('rel')
     if @[target]() > 0
       @[target] @[target]() - 1
-#    do resizePanel
 
   last: =>
     return @index+1 == @length
@@ -182,6 +184,8 @@ class HotelPeopleSelector extends PeopleSelector
         current.push r
       result.push current
       return result
+    @sp.overall.subscribe resizePanel
+
 
   addRoom: =>
     if @sp.rooms().length == 4
