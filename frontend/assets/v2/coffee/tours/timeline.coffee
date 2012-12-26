@@ -90,7 +90,7 @@ class Timeline
         =>
           $('.slide-tmblr').css('overflow','visible')
           @termsActive = true)
-      $('.divCondition').animate({'top': '-16px'},400).removeClass('hide')
+      $('.divCondition').animate({'top': '0px'},400).removeClass('hide')
 
   showTimeline: (context, event) =>
     el = $(event.currentTarget)
@@ -99,7 +99,7 @@ class Timeline
       $('.btn-timeline-and-condition a').removeClass('active')
       el.addClass('active')
       $('.divTimeline').animate({'top': '0px'},400).removeClass('hide')
-      $('.divCondition').animate({'top': '68px'},400,
+      $('.divCondition').animate({'top': '64px'},400,
       =>
         @termsActive = false
       ).addClass('hide')

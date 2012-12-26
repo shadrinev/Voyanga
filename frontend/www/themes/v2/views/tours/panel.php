@@ -68,7 +68,7 @@
   </div>
   
   <div class="slide-tmblr" data-bind="style: {overflow: timeline.termsActive?'visible':'hidden'}">
-     <div class="divTimeline" data-bind="style: {top: timeline.termsActive?'-68px':0}">
+     <div class="divTimeline" data-bind="style: {top: timeline.termsActive?'-64px':0}">
         <div class="timeline">
           <div class="alphaLeft"></div><div class="alphaRight"></div>
           <div class="btn-left" data-bind="click: timeline.scrollLeft"> </div>
@@ -95,7 +95,7 @@
         </div>
      </div>
     <!-- ko if: !onlyTimeline -->
-     <div class="divCondition" data-bind="style: {top: timeline.termsActive?'-16px':'68px'}">
+     <div class="divCondition" data-bind="style: {top: timeline.termsActive?'0px':'68px'}">
         <div class="condition"
              data-bind="template: {name: original_template, data: $data, afterRender: afterRender }">
         </div>

@@ -137,7 +137,7 @@ Timeline = (function() {
         return _this.termsActive = true;
       });
       return $('.divCondition').animate({
-        'top': '-16px'
+        'top': '0px'
       }, 400).removeClass('hide');
     }
   };
@@ -154,7 +154,7 @@ Timeline = (function() {
         'top': '0px'
       }, 400).removeClass('hide');
       return $('.divCondition').animate({
-        'top': '68px'
+        'top': '64px'
       }, 400, function() {
         return _this.termsActive = false;
       }).addClass('hide');
