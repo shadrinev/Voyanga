@@ -112,7 +112,7 @@
                                 </td>
                                 <td class="tdCity"><?php echo City::getCityByPk($flightPart->departureCityId)->localRu;?>, <span class="airport"><?php echo $flightPart->departureAirport->localRu?><?php echo ($flightPart->departureTerminalCode ? " ({$flightPart->departureTerminalCode})" : '');?></span></td>
                                 <td rowspan="3" class="tdAvia">
-                                    <img src="img/airline_logos/<?php echo $flightPart->transportAirlineCode;?>.png"><br>
+                                    <img src="img/airline_logos/<?php echo $flightPart->transportAirlineCode;?>.png"><?php echo Airline::getAirlineByCode($flightPart->transportAirlineCode)->localRu;?><br>
                                     Рейс: <?php echo $flightPart->transportAirlineCode.' '.$flightPart->code;?><br>
 
                                 </td>
@@ -181,11 +181,11 @@
                             </tr>
                             <tr>
                                 <td class="tdTitle">Таксы и сборы / Taxes and fees</td>
-                                <td class="tdPrice"><?php echo $ticket->taxes;?> RUB</td>
+                                <td class="tdPrice"><?php echo UtilsHelper::formatPrice($ticket->taxes);?> RUB</td>
                             </tr>
                             <tr>
                                 <td class="tdTitle">Коммисия / Agency Fee</td>
-                                <td class="tdPrice"><?php echo $ticket->commission;?> RUB</td>
+                                <td class="tdPrice"><?php echo UtilsHelper::formatPrice($ticket->commission);?> RUB</td>
                             </tr>
                             <tr>
                                 <td class="tdTitle">Форма оплаты / Paid by Invoice</td>
