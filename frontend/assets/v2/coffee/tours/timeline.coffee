@@ -83,14 +83,14 @@ class Timeline
       $('.btn-timeline-and-condition a').removeClass('active')
       el.addClass('active')
 
-      $('.timeline').addClass('hide')
-      $('.timeline').animate(
-        {'top': '-'+$('.timeline').height()+'px'},
+      $('.divTimeline').addClass('hide')
+      $('.divTimeline').animate(
+        {'top': '-'+$('.divTimeline').height()+'px'},
         400,
         =>
           $('.slide-tmblr').css('overflow','visible')
           @termsActive = true)
-      $('.condition').animate({'top': '-16px'},400).removeClass('hide')
+      $('.divCondition').animate({'top': '-16px'},400).removeClass('hide')
 
   showTimeline: (context, event) =>
     el = $(event.currentTarget)
@@ -98,8 +98,8 @@ class Timeline
       $('.slide-tmblr').css('overflow','hidden')
       $('.btn-timeline-and-condition a').removeClass('active')
       el.addClass('active')
-      $('.timeline').animate({'top': '0px'},400).removeClass('hide')
-      $('.condition').animate({'top': '68px'},400,
+      $('.divTimeline').animate({'top': '0px'},400).removeClass('hide')
+      $('.divCondition').animate({'top': '68px'},400,
       =>
         @termsActive = false
       ).addClass('hide')
