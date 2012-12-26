@@ -80,6 +80,21 @@ class FlightVoyage extends CApplicationComponent
         return ($totalFare - $baseFare);
     }
 
+    public function getBaseFare()
+    {
+        $baseFare = 0;
+        if($this->adultPassengerInfo){
+            $baseFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->baseFare;
+        }
+        if($this->childPassengerInfo){
+            $baseFare += $this->childPassengerInfo->count*$this->childPassengerInfo->baseFare;
+        }
+        if($this->infantPassengerInfo){
+            $baseFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->baseFare;
+        }
+        return $baseFare;
+    }
+
     public function getCommission()
     {
         return $this->charges;
