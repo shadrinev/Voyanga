@@ -1044,6 +1044,11 @@ function loadPayFly() {
 
 var clickYes = false;
 
+function closeAllPopup() {
+    closePopUpProj();
+    closePopUpContact();
+}
+
 function openPopUpProj() {
     clickYes = true;
     $('.mainWrapBg').show();
@@ -1080,7 +1085,7 @@ function openPopUpProj() {
     );
     $('.mainWrapBg').mouseup(function() {
         if (mouseHover) {
-            closePopUpProj();
+            closeAllPopup();
         }
         else {
             return;
@@ -1089,7 +1094,7 @@ function openPopUpProj() {
     $(window).on('keydown', function(e){
         if (clickYes) {
             if (e.which == 27) {
-                closePopUpProj();
+                closeAllPopup();
             }
             else if (e.which == 39) {
                 ClikRightProj();
@@ -1238,7 +1243,7 @@ function openPopUpContact() {
     );
     $('.contentWrapBg').mouseup(function() {
         if (mouseHover) {
-            closePopUpContact();
+            closeAllPopup();
         }
         else {
             return;
@@ -1252,8 +1257,7 @@ function openPopUpContact() {
     $(window).on('keydown', function(e){
         if (clickYes) {
             if (e.which == 27) {
-
-                closePopUpContact();
+                closeAllPopup();
             }
             else if (e.which == 38) {
                 scrollTopCount -= 15;
