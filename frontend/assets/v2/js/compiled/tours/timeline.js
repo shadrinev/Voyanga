@@ -129,15 +129,15 @@ Timeline = (function() {
     if (!el.hasClass('active')) {
       $('.btn-timeline-and-condition a').removeClass('active');
       el.addClass('active');
-      $('.timeline').addClass('hide');
-      $('.timeline').animate({
-        'top': '-' + $('.timeline').height() + 'px'
+      $('.divTimeline').addClass('hide');
+      $('.divTimeline').animate({
+        'top': '-' + $('.divTimeline').height() + 'px'
       }, 400, function() {
         $('.slide-tmblr').css('overflow', 'visible');
         return _this.termsActive = true;
       });
-      return $('.condition').animate({
-        'top': '-16px'
+      return $('.divCondition').animate({
+        'top': '0px'
       }, 400).removeClass('hide');
     }
   };
@@ -150,11 +150,11 @@ Timeline = (function() {
       $('.slide-tmblr').css('overflow', 'hidden');
       $('.btn-timeline-and-condition a').removeClass('active');
       el.addClass('active');
-      $('.timeline').animate({
+      $('.divTimeline').animate({
         'top': '0px'
       }, 400).removeClass('hide');
-      return $('.condition').animate({
-        'top': '68px'
+      return $('.divCondition').animate({
+        'top': '64px'
       }, 400, function() {
         return _this.termsActive = false;
       }).addClass('hide');
