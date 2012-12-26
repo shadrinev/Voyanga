@@ -1154,7 +1154,6 @@ function ClikLeftProj() {
 function PopUpInfoPath() {
     $(document).on('mousemove', '.tooltip', function(e) {
         var _text = $(this).attr('rel');
-        console.log("TOOLTIP FOR:", $(this).attr('rel'));
         if ($('.PopUpInfoPath').length > 0 && $('.PopUpInfoPath').is(':visible')) {
             $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
         }

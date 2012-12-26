@@ -55,29 +55,7 @@ $(function () {
             var formData = $('#passport_form').serialize();
             var statuses = [],
                 ids = [];
-            /* disable all fields */
-            $('input').each(function () {
-                $(this).attr({'disabled': 'disabled'});
-            });
-            $("select option:selected").each(function () {
-                var template = '<input type="text" disabled="disabled" value="' + $(this).text() + '">';
-                $(this).closest('select').siblings('.chzn-container').html(template);
-            });
-            $('.tdDuration input').each(function () {
-                $(this).parent().addClass('active');
-            });
-            $('.tdBirthday input').each(function () {
-                $(this).parent().addClass('active');
-            });
-            $('.tdSex input').each(function () {
-                $(this).parent().addClass('inactive');
-            });
-            $('.tdTelefon input').each(function () {
-                $(this).parent().addClass('inactive');
-            });
-            /* hide button */
-            $('#submit-passport').hide();
-            $('.agreeConditions').hide();
+            disableAllFieldsAndHideButton();
             $('#loadPayFly').find('.armoring').show();
             loadPayFly();
             $('#loadPayFly').find('.loadJet').show();
@@ -87,7 +65,14 @@ $(function () {
                 data: formData,
                 dataType: 'json'
             })
-                .success(function () {
+                .success(function (response) {
+                    if (!analyzeValidationResult(response))
+                    {
+                        enableAllFieldsAndShowButton();
+                        $('#loadPayFly').find('.armoring').hide();
+                        $('#loadPayFly').find('.loadJet').hide();
+                        return false;
+                    }
                     _.each(window.tripRaw.items, function (item, i) {
                         statuses[i] = 0;
                     });
@@ -116,6 +101,91 @@ $(function () {
     });
 });
 
+function analyzeValidationResult(response)
+{
+    if (response.status == 'success')
+        return true;
+    /* analyze booking field */
+    if (typeof response.message.booking.contactPhone != 'undefined')
+        $('.divInputTelefon').addClass('error tooltip').attr('rel', response.message.booking.contactPhone);
+    if (typeof response.message.booking.contactEmail != 'undefined')
+        $('.tdEmail input').addClass('error tooltip').attr('rel', response.message.booking.contactEmail);
+    if (response.message.passports != 'undefined')
+        _.each(response.message.passports, function(el, i){
+            _.each(el, function(fName, key){
+                var name = 'FlightAdultPassportForm[' + i + '][' + key + ']',
+                    inputEl = $('input[name="'+name+'"]').addClass('error tooltip').attr('rel', fName);
+                if (key == 'genderId')
+                    inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
+            })
+        });
+}
+
+function disableAllFieldsAndHideButton()
+{
+    /* disable all fields */
+    $('.oneBlock input').each(function () {
+        $(this).attr({'disabled': 'disabled'}).removeClass('error tooltip').attr('rel','');
+    });
+    $('.expiration').each(function(){
+        $(this).closest('.checkOn').attr('data-is-active', $(this).closest('.checkOn').hasClass('active'));
+    });
+    $("select option:selected").each(function () {
+        var template = '<input type="text" class="tmp" disabled="disabled" value="' + $(this).text() + '">';
+        $(this).closest('select').siblings('.chzn-container').hide().parent().append(template);
+    });
+    $('.tdDuration input').each(function () {
+        $(this).parent().addClass('active');
+    });
+    $('.tdBirthday input').each(function () {
+        $(this).parent().addClass('active');
+    });
+    $('.tdSex input').each(function () {
+        $(this).parent().addClass('inactive');
+    });
+    $('.tdTelefon input').each(function () {
+        $(this).parent().addClass('inactive').removeClass('tooltip error').attr('rel', '');
+    });
+    /* hide button */
+    $('#submit-passport').hide();
+    $('.agreeConditions').hide();
+}
+
+function enableAllFieldsAndShowButton()
+{
+    /* disable all fields */
+    $('.oneBlock input').not('.expiration').each(function () {
+        $(this).removeAttr('disabled');
+    });
+    $("select option:selected").each(function () {
+        $('.tmp').remove();
+        $(this).closest('select').siblings('.chzn-container').show();
+    });
+    $('.expiration').each(function(){
+        var isActive = $(this).closest('.checkOn').attr('data-is-active')=='true';
+        if (isActive)
+        {
+            $(this).closest('.checkOn').addClass('active');
+        }
+        else
+        {
+            $(this).closest('.checkOn').removeClass('active');
+        }
+    });
+    $('.tdBirthday input').each(function () {
+        $(this).parent().removeClass('active');
+    });
+    $('.tdSex input').each(function () {
+        $(this).parent().removeClass('inactive');
+    });
+    $('.tdTelefon input').each(function () {
+        $(this).parent().removeClass('inactive');
+    });
+    /* hide button */
+    $('#submit-passport').show();
+    $('.agreeConditions').show();
+}
+
 function checkStatuses(statuses, ids) {
     var errors = '',
         errorText = '',
@@ -131,7 +201,6 @@ function checkStatuses(statuses, ids) {
     $.get('/buy/done', {ids: ids.join(',')})
         .done(function () {
             $.get('/buy/startPayment', function (data) {
-                console.log('DATA AFTER START PAYMENT: ', data);
                 if (data.error) {
                     new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
                 } else {

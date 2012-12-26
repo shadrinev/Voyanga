@@ -89,7 +89,6 @@ class MakeBookingAction extends CAction
     {
         if (!$ambigous)
         {
-            $valid = $this->bookingForm->validate();
             $adultsPassports = array();
             $childrenPassports = array();
             $infantsPassports = array();
@@ -103,8 +102,8 @@ class MakeBookingAction extends CAction
                 }
                 foreach ($adultsPassports as $p)
                 {
-                    $valid = $valid && $p->validate();
-                    $this->validationErrors['passports'][] = $p->errors;
+                    if (!$p->validate())
+                        $this->validationErrors['passports'][] = $p->errors;
                 }
             }
             if (isset($_POST['FlightChildPassportForm']))
@@ -117,8 +116,8 @@ class MakeBookingAction extends CAction
                 }
                 foreach ($childrenPassports as $p)
                 {
-                    $valid = $valid && $p->validate();
-                    $this->validationErrors['passports'][] = $p->errors;
+                    if (!$p->validate())
+                        $this->validationErrors['passports'][] = $p->errors;
                 }
             }
             if (isset($_POST['FlightInfantPassportForm']))
@@ -131,11 +130,11 @@ class MakeBookingAction extends CAction
                 }
                 foreach ($infantsPassports as $p)
                 {
-                    $valid = $valid && $p->validate();
-                    $this->validationErrors['passports'][] = $p->errors;
+                    if ($p->validate())
+                        $this->validationErrors['passports'][] = $p->errors;
                 }
             }
-            if (!$valid)
+            if (isset($this->validationErrors['passports'][0]))
                 return false;
 
             foreach ($this->tripItems as $item)

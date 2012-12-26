@@ -22,4 +22,8 @@ if ( $.browser.msie ) {
     console.profileEnd = function(){
 
     }
+
+    console.trace = function() {
+
+    }
 }

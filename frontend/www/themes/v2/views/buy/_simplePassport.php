@@ -168,17 +168,17 @@
                 <div class="divInputBirthday checkOn <?php if ($hide) echo 'active' ?>">
                     <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
                         "placeholder" => "ДД",
-                        "class" => "dd next",
+                        "class" => "expiration dd next",
                         "maxlength" => "2"
                     )); ?>
                     <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
                         "placeholder" => "ММ",
-                        "class" => "mm next",
+                        "class" => "expiration mm next",
                         "maxlength" => "2"
                     )); ?>
                     <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
                         "placeholder" => "ГГГГ",
-                        "class" => "yy",
+                        "class" => "expiration yy",
                         "maxlength" => "4"
                     )); ?>
                 </div>

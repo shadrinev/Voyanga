@@ -246,8 +246,13 @@ class BuyController extends Controller
         $error = false;
         foreach($bookers as $booker)
         {
-            if(!in_array($payments->getStatus($booker),Array('paid', 'ticketReady', 'done', 'ticketing', 'ticketingRepeat'))){
+            if(!in_array($payments->getStatus($booker),Array('paid', 'ticketReady', 'done', 'ticketing', 'ticketingRepeat')))
+            {
                 $paid = false;
+            }
+            if(strpos(strtolower($payments->getStatus($booker)), 'error')!==FALSE)
+            {
+                $error = true;
             }
         }
         header("Content-type: application/json");
