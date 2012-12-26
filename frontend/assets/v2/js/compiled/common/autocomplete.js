@@ -3,33 +3,36 @@ var _this = this;
 
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
-    $(element).bind("focus", function() {
-      return $(element).change();
-    });
-    $(element).autocomplete({
-      serviceUrl: "http://api.voyanga.com/v1/helper/autocomplete/" + valueAccessor().source,
-      minChars: 2,
-      delimiter: /(,|;)\s*/,
-      maxHeight: 400,
-      zIndex: 9999,
-      deferRequestBy: 0,
-      delay: 0,
-      onSelect: function(value, data) {
-        valueAccessor().iata(data.code);
-        valueAccessor().readable(data.name);
-        valueAccessor().readableGen(data.nameGen);
-        valueAccessor().readableAcc(data.nameAcc);
-        $(element).val(data.name);
-        return $(element).siblings('input.input-path').val(value);
-      },
-      onActivate: function(value, data) {
-        valueAccessor().readable(data.name);
-        valueAccessor().readableGen(data.nameGen);
-        valueAccessor().readableAcc(data.nameAcc);
-        $(element).val(data.name);
-        return $(element).siblings('input.input-path').val(value);
-      }
-    });
+    var _this = this;
+    setTimeout(function() {
+      $(element).bind("focus", function() {
+        return $(element).change();
+      });
+      return $(element).autocomplete({
+        serviceUrl: "http://api.voyanga.com/v1/helper/autocomplete/" + valueAccessor().source,
+        minChars: 2,
+        delimiter: /(,|;)\s*/,
+        maxHeight: 400,
+        zIndex: 9999,
+        deferRequestBy: 0,
+        delay: 0,
+        onSelect: function(value, data) {
+          valueAccessor().iata(data.code);
+          valueAccessor().readable(data.name);
+          valueAccessor().readableGen(data.nameGen);
+          valueAccessor().readableAcc(data.nameAcc);
+          $(element).val(data.name);
+          return $(element).siblings('input.input-path').val(value);
+        },
+        onActivate: function(value, data) {
+          valueAccessor().readable(data.name);
+          valueAccessor().readableGen(data.nameGen);
+          valueAccessor().readableAcc(data.nameAcc);
+          $(element).val(data.name);
+          return $(element).siblings('input.input-path').val(value);
+        }
+      });
+    }, 500);
     return $(element).on("keyup", function(e) {
       if ((e.keyCode === 8) || (e.keyCode === 46)) {
         valueAccessor().iata('');

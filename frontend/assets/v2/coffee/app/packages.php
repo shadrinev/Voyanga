@@ -1,26 +1,4 @@
 <?php return array(
-    //App supporting vendor modules package
-    'vendor' => array(
-        'basePath' => 'frontend.assets.v2.js.vendor',
-        'js' => array(
-            'knockout-2.1.0.js',
-            'knockout-repeat.js',
-            'knockout-deferred-updates.js',
-            'underscore.js',
-            'backbone.js',
-            'jquery-ui-1.8.22.custom.min.js',
-            'jquery.easing.1.3.js',
-            'jquery.autocomplete.js',
-            'jquery.dotdotdot-1.5.1.js',
-            'moment.js',
-            'moment-ru.js',
-            'scroll/jquery.mousewheel.js',
-            'scroll/jquery.jscrollpane.min.js',
-            'markerclusterer_compiled.js',
-            'chosen/chosen.jquery.min.js',
-        ),
-        'depends' => array('jquery')
-    ),
     'calendar' => array(
         'basePath' => 'frontend.assets.v2.js',
         'js' => array(
@@ -56,6 +34,27 @@
             'slide-mode.js',
             'google.info.js',
             'jquery.maskedinput-1.3.js'
+        ),
+        'depends' => array('jquery')
+    ),
+    'vendor' => array(
+        'basePath' => 'frontend.assets.v2.js.vendor',
+        'js' => array(
+            'knockout-2.1.0.js',
+            'knockout-repeat.js',
+            'knockout-deferred-updates.js',
+            'underscore.js',
+            'backbone.js',
+            'jquery-ui-1.8.22.custom.min.js',
+            'jquery.easing.1.3.js',
+            'jquery.autocomplete.js',
+            'jquery.dotdotdot-1.5.1.js',
+            'moment.js',
+            'moment-ru.js',
+            'scroll/jquery.mousewheel.js',
+            'scroll/jquery.jscrollpane.min.js',
+            'markerclusterer_compiled.js',
+            'chosen/chosen.jquery.min.js',
         ),
         'depends' => array('jquery')
     ),
