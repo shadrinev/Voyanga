@@ -44,9 +44,9 @@ $(function () {
     $('.tdDocumentNumber input').on('change keyup', function () {
         var checkbox = $(this).closest('tr').next().find('.tdDuration').find('input[type=checkbox]'),
             uiLabel = $(this).closest('tr').next().find('.tdDuration').find('.ui-label');
-        if ($(this).val().length > 10) {
+        if (countLength($(this).val()) >= 10) {
             uiLabel.attr('data-is-checked', checkbox.attr('checked') !== undefined);
-            if (checkbox.attr('checked') !== undefined) {
+            if (checkbox.attr('checked') === undefined) {
                 uiLabel.click();
             }
         }
@@ -291,6 +291,11 @@ function InputActiveFinishDate() {
     $('.tdDuration label.ui-hover').click(function () {
         InputCheckOn();
     });
+}
+
+function countLength(val)
+{
+    return val.replace(/\D/g,'').length;
 }
 
 $(window).load(InputActiveFinishDate);

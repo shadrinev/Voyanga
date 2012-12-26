@@ -196,8 +196,7 @@
             <td class="tdNationality"></td>
             <td class="tdDocumentNumber"></td>
             <td class="tdDuration">
-                <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}"
-                       checked="checked"
+                <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 0}"
                        name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
             </td>
         </tr>
