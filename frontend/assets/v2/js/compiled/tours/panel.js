@@ -283,9 +283,21 @@ TourPanel = (function(_super) {
     var el, elem;
     elem = $('.cityStart').find('.second-path');
     elem.data('old', elem.val());
-    el = elem.closest('.tdCity');
+    el = elem.closest('.cityStart');
+    el.closest('.tdCityStart').animate({
+      width: '+=130',
+      300: 300
+    });
+    el.closest('.tdCityStart').find('.bgInput').animate({
+      width: '+=150',
+      300: 300
+    });
+    el.closest('.tdCityStart').next().find('.data').animate({
+      width: '-=130',
+      300: 300
+    });
     el.find(".from").addClass("overflow").animate({
-      width: "125px"
+      width: "150px"
     }, 300);
     el.find(".startInputTo").show();
     return el.find('.cityStart').animate({
@@ -296,9 +308,22 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
-    var elem, startInput, toInput;
+    var elB, elem, elemB, startInput, toInput;
+    elemB = $('.cityStart').find('.second-path');
+    elB = elemB.closest('.cityStart');
+    elB.closest('.tdCityStart').animate({
+      width: '-=130',
+      300: 300
+    });
+    elB.closest('.tdCityStart').find('.bgInput').animate({
+      width: '-=150',
+      300: 300
+    });
+    elB.closest('.tdCityStart').next().find('.data').animate({
+      width: '+=130',
+      300: 300
+    });
     elem = $('.startInputTo .second-path');
-    console.log("Hide city input", elem.parent());
     startInput = $('div.startInputTo');
     toInput = $('div.overflow');
     if (startInput.is(':visible')) {
