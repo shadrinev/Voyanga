@@ -3876,21 +3876,21 @@ a.whereData span {
 }
 .paycard .mastercard {
     float: left;
-    height: 12px;
-    margin-top: 9px;
-    position: relative;
-    width: 72px;
+    height: 21px;
     margin-right: 20px;
+    margin-top: 5px;
+    position: relative;
+    width: 33px;
 }
 .paycard .mastercard .whiteblack {
-    width: 72px;
-    height: 12px;
+    width: 33px;
+    height: 21px;
     background: url(../images/ico-mastercard.png) 0px 0px;
 }
 .paycard .mastercard .color {
-    width: 72px;
-    height: 12px;
-    background: url(../images/ico-mastercard.png) 0px -12px;
+    width: 33px;
+    height: 21px;
+    background: url(../images/ico-mastercard.png) 0px -21px;
 }
 .paycard .payonline {
     width: 80px;
