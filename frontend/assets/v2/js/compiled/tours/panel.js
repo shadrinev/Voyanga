@@ -180,8 +180,16 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.afterRender = function() {
-    console.error("AFTER RENDER");
-    return resizePanel(true);
+    return resizePanel();
+  };
+
+  TourPanelSet.prototype.beforeRemove = function(el) {
+    if ($(el).hasClass('panel')) {
+      $(el).remove();
+      return resizePanel();
+    } else {
+      return $(el).remove();
+    }
   };
 
   return TourPanelSet;

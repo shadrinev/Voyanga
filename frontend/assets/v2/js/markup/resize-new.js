@@ -1579,7 +1579,7 @@ function resizePanel(arg) {
             var _widthTdCityStart = 0;
             var _widthTdAddTour = 0;
             var _howManyInput = 2;
-        }        else if (_panelTable.hasClass('constructorTable')) {
+        }  else if (_panelTable.hasClass('constructorTable')) {
             _classThis = 'constructorTable';
             var _meanPanel = 692;
             var _widthTdTumblr = 0;

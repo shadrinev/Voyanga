@@ -1,5 +1,5 @@
 <script type="text/html" id="tour-panel-template">
-    <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender} -->
+    <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender, beforeRemove: $data.beforeRemove} -->
     <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
     <div class="panel">
         <table class="panelTable constructorTable">
@@ -7,7 +7,7 @@
 
                 <td class="tdCityStart">
                     <div class="cityStart">
-                        <!-- ko if: ($parent.isFirst()) -->
+                        <!-- ko if: ($index() ==0) -->
                         <div class="to">
                             Старт из:
                             <a href="#"><span data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербург</span></a>
@@ -47,19 +47,19 @@
                     </div>
                 </td>
                 <td class="tdAddTour">
-                    <!-- ko if: ($data.isLast) -->
+                    <!-- ko if: ($index()+1) == $length() -->
                     <a href="#" class="add-tour"
                        data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
                     <!-- /ko -->
                 </td>
                 <td class="tdPeople">
-                    <!-- ko if: ($data.isLast) -->
+                    <!-- ko if: ($index()+1) == $length() -->
                     <span
                         data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}"></span>
                     <!-- /ko -->
                 </td>
                 <td class="tdButton">
-                    <!-- ko if: ($data.isLast) -->
+                    <!-- ko if: ($index()+1) == $length() -->
                     <div class="btn-find"
                          data-bind="click: $parent.navigateToNewSearch, css: {inactive: $parent.formNotFilled}"></div>
                     <!-- /ko -->

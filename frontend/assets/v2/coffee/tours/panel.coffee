@@ -101,8 +101,6 @@ class TourPanelSet
     @lastPanel = newPanel
     @i = @panels().length
     VoyangaCalendarStandart.clear()
-    #ko.processAllDeferredBindingUpdates()
-    #do resizePanel
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
@@ -125,13 +123,16 @@ class TourPanelSet
 
   calendarHidden: =>
     @activeCalendarPanel().calendarHidden()
-#    console.error("HANDLE ME")
-#
+    
   afterRender: =>
-    console.error("AFTER RENDER")
-    resizePanel(true)
-
-
+    do resizePanel
+    
+  beforeRemove: (el) ->
+    if $(el).hasClass 'panel'
+      $(el).remove()
+      do resizePanel
+    else
+      $(el).remove()
 
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
