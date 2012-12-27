@@ -35,6 +35,7 @@ h1.title {
 }
 .innerPage {
     color: #1D222B;
+    line-height: 20px;
 }
 .innerPage h1 {
     margin: 0 0 12px;

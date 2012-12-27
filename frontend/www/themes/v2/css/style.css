@@ -3915,5 +3915,5 @@ a.whereData span {
     top: 78px;
 }
 .enterOpen {
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
