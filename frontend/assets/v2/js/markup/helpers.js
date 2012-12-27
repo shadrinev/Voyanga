@@ -550,7 +550,6 @@ function hideFromCityInput(panel, event) {
     if (!$('.startInputTo').is(':visible')) {
         return;
     }
-    console.log("hideFromCityInput FIRED");
     elemB = $('.cityStart').find('.second-path');
     elB = elemB.closest('.cityStart');
     elB.closest('.tdCityStart').animate({
