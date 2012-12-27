@@ -1,5 +1,5 @@
 <script type="text/html" id="tour-panel-template">
-    <!-- ko foreach: $data.panels -->
+    <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender} -->
     <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
     <div class="panel">
         <table class="panelTable constructorTable">

@@ -77,7 +77,6 @@ class TourPanelSet
     @sp.destinations.remove(elem.city)
     @panels.remove(elem)
     _.last(@panels()).isLast(true)
-    setTimeout(resizePanel, 50)
 
   isFirst: =>
     @i == 1
@@ -102,7 +101,8 @@ class TourPanelSet
     @lastPanel = newPanel
     @i = @panels().length
     VoyangaCalendarStandart.clear()
-    setTimeout(resizePanel, 50)
+    #ko.processAllDeferredBindingUpdates()
+    #do resizePanel
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
@@ -126,6 +126,12 @@ class TourPanelSet
   calendarHidden: =>
     @activeCalendarPanel().calendarHidden()
 #    console.error("HANDLE ME")
+#
+  afterRender: =>
+    console.error("AFTER RENDER")
+    resizePanel(true)
+
+
 
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
@@ -243,7 +249,6 @@ class TourPanel extends SearchPanel
     if @checkOut()
       return dateUtils.formatHtmlDayShortMonth @checkOut()
     return ''
-
 
 $(document).on "keyup change", "input.second-path", (e) ->
   firstValue = $(this).val()

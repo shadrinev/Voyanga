@@ -8,6 +8,8 @@ var TourPanel, TourPanelSet,
 TourPanelSet = (function() {
 
   function TourPanelSet() {
+    this.afterRender = __bind(this.afterRender, this);
+
     this.calendarHidden = __bind(this.calendarHidden, this);
 
     this.setDate = __bind(this.setDate, this);
@@ -111,8 +113,7 @@ TourPanelSet = (function() {
   TourPanelSet.prototype.deletePanel = function(elem) {
     this.sp.destinations.remove(elem.city);
     this.panels.remove(elem);
-    _.last(this.panels()).isLast(true);
-    return setTimeout(resizePanel, 50);
+    return _.last(this.panels()).isLast(true);
   };
 
   TourPanelSet.prototype.isFirst = function() {
@@ -147,8 +148,7 @@ TourPanelSet = (function() {
     this.panels.push(newPanel);
     this.lastPanel = newPanel;
     this.i = this.panels().length;
-    VoyangaCalendarStandart.clear();
-    return setTimeout(resizePanel, 50);
+    return VoyangaCalendarStandart.clear();
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
@@ -177,6 +177,11 @@ TourPanelSet = (function() {
 
   TourPanelSet.prototype.calendarHidden = function() {
     return this.activeCalendarPanel().calendarHidden();
+  };
+
+  TourPanelSet.prototype.afterRender = function() {
+    console.error("AFTER RENDER");
+    return resizePanel(true);
   };
 
   return TourPanelSet;

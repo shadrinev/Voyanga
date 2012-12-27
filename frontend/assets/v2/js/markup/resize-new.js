@@ -1560,10 +1560,9 @@ $(function(){
 
 
 
-function resizePanel() {
-    console.log('ResizePanel executed');
-    if ($('.panelTable').length > 0) {
-        var _panelTable = $('.panel').last().find('.panelTable');
+function resizePanel(arg) {
+    $('.panelTable').each(function(){
+        var _panelTable = $(this);//$('.panel').last().find('.panelTable');
         var _classThis;
         var _midWidth = 1130;
         var _minWidth = 1000;
@@ -1572,34 +1571,30 @@ function resizePanel() {
         var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
         if (_panelTable.hasClass('avia')) {
             _classThis = 'avia';
-            var _meanPanel = 850;
+	    var _meanPanel = 850;
             var _standartData = 290;
-            var _widthTdTumblr = $('.panel').last().find('.panelTable.'+_classThis).find('.tdTumblr').innerWidth();
-            var _widthTdPeople = $('.panel').last().find('.panelTable.'+_classThis).find('.tdPeople').innerWidth();
-            var _widthTdButton = $('.panel').last().find('.panelTable.'+_classThis).find('.tdButton').innerWidth();
+            var _widthTdTumblr = _panelTable.find('.tdTumblr').innerWidth();
+            var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+            var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
             var _widthTdCityStart = 0;
             var _widthTdAddTour = 0;
             var _howManyInput = 2;
-        }
-        else if (_panelTable.hasClass('hotel')) {
-            _classThis = 'hotel';
-        }
-        else if (_panelTable.hasClass('constructorTable')) {
+        }        else if (_panelTable.hasClass('constructorTable')) {
             _classThis = 'constructorTable';
             var _meanPanel = 692;
             var _widthTdTumblr = 0;
-            var _widthTdPeople = $('.panel').last().find('.panelTable.'+_classThis).find('.tdPeople').innerWidth();
-            var _widthTdButton = $('.panel').last().find('.panelTable.'+_classThis).find('.tdButton').innerWidth();
-            var _widthTdCityStart = $('.panel').last().find('.panelTable.'+_classThis).find('.tdCityStart').innerWidth();
-            var _widthTdAddTour = $('.panel').last().find('.panelTable.'+_classThis).find('.tdAddTour').innerWidth();
+            var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+            var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
+            var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
+            var _widthTdAddTour = _panelTable.find('.tdAddTour').innerWidth();
             var _howManyInput = 1;
         }
 
         var _windowWidth = $(window).width();
         var _widthPanelTable = _panelTable.innerWidth();
 
-        var _dataDiv = $('.panelTable.'+_classThis).find('.tdCity').find('.data');
-        var _dataInput = $('.panelTable.'+_classThis).find('.tdCity').find('.data').find('input');
+        var _dataDiv = _panelTable.find('.tdCity').find('.data');
+        var _dataInput = _panelTable.find('.tdCity').find('.data').find('input');
 
         if (_windowWidth < _midWidth && _windowWidth > _minWidth) {
             _allWidthPanel = _windowWidth - 230;
@@ -1622,16 +1617,10 @@ function resizePanel() {
         }
 
 
-        $('.panelTable.'+_classThis).each(function(index) {
-            $(this).find('.tdCity').find('.data').css('width', _newMean +'px');
-            $(this).find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
-        });
+        _panelTable.find('.tdCity').find('.data').css('width', _newMean +'px');
+        _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
         _widthPanelTable = _panelTable.innerWidth();
-        $('.panel:not(:last)').css('width', _widthPanelTable+'px');
-        console.log('=== _widthPanelTable = '+_widthPanelTable+' ! _allWidthPanel = '+_allWidthPanel+' ! _newMean = '+_newMean+' === ');
+	//$('.panel:not(:last)').css('width', _widthPanelTable+'px');
 
-    }
-    else {
-        return;
-    }
+    });
 }

@@ -734,7 +734,7 @@ VoyangaCalendarStandart.init = function (panel, element){
         }
         console.log('prevPanel1',newPanel);
     }else{
-        console.log('Else',panel,this.panel,this.panel(),panel());
+//        console.log('Else',panel,this.panel,this.panel(),panel());
     }
 
     VoyangaCalendarStandart.generateGrid();
