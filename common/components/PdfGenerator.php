@@ -61,7 +61,7 @@ class PdfGenerator extends CApplicationComponent
                 'hotelPassports'=>$hotelPassports,
                 'hotelInfo'=>$hotelInfo
             ));
-            return $pdfFileName;
+            return array('realName'=>$pdfFileName,'visibleName'=>"hotel_{$hotelBooker->hotel->city->code}_".date('Ymd',strtotime($hotelBooker->hotel->checkIn)).".pdf");
         }
     }
 
@@ -82,7 +82,7 @@ class PdfGenerator extends CApplicationComponent
                 'pnr'=>$flightBooker->pnr,
                 'flightPassports'=>$flightPassports,
             ));
-            return $pdfFileName;
+            return array('realName'=>$pdfFileName,'visibleName'=>"avia_{$flightBooker->flightVoyage->departureCity->code}_{$flightBooker->flightVoyage->arrivalCity->code}_".date('Ymd',strtotime($flightBooker->flightVoyage->departureDate)).".pdf");
         }
     }
 }

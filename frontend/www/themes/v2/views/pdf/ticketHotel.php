@@ -27,15 +27,15 @@ $dayFormat = "d|n|w";
         <table class="hederInfo">
             <thead>
             <tr>
-                <td class="tdNumberVoyanga">
-                    Номер заказа в системе Voyanga<br>
-                    Order ID
+                <td class="tdNumberVoyangaHotel">
+                    Номер заказа<br>
+                    Order Number
                 </td>
-                <td class="tdReserve">
+                <td class="tdReserveHotel">
                     Номер бронирования<br>
                     Booking number
                 </td>
-                <td class="tdInfoPassenger">
+                <td class="tdInfoPassengerHotel">
                     Сведения о пассажирах<br>
                     Traveler Information
                 </td>
@@ -44,15 +44,15 @@ $dayFormat = "d|n|w";
             <tbody>
             <?php foreach($hotelPassports as $pKey=>$passport):?>
                 <tr>
-                    <td class="tdNumberVoyanga">
+                    <td class="tdNumberVoyangaHotel">
                         <?php if($pKey===0): ?>
                             <strong><?php echo $bookingId; ?></strong>
                         <?php endif; ?>
                     </td>
-                    <td class="tdReserve">
-                        <strong><?php echo $pnr; ?></strong>
+                    <td class="tdReserveHotel">
+                        <div class="divReserveHotel"><strong><?php echo $pnr; ?></strong></div>
                     </td>
-                    <td class="tdInfoPassenger">
+                    <td class="tdInfoPassengerHotel">
                         <div class="passenger"><?php echo strtoupper($passport->lastName.' '.$passport->firstName.' '.($passport->genderId == Passport::GENDER_M ? 'MR' : 'MS')); ?></div>
                     </td>
                 </tr>
@@ -101,7 +101,7 @@ $dayFormat = "d|n|w";
                     <table class="hotelInfo">
                         <tr>
                             <td width="85" style="font-size: 13px">Выезд<br>Leaving</td>
-                            <td class="dates"><?php echo $dateString;?>, с <?php echo $hotelInfo->earliestCheckInTime;?></td>
+                            <td class="dates"><?php echo $dateString;?>, до <?php echo $hotelInfo->earliestCheckInTime;?></td>
                         </tr>
                     </table>
                 </td>

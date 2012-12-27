@@ -117,9 +117,9 @@ class BuyController extends Controller
             {
                 if ($item->getId() == $id)
                 {
-                    $file =  $pdf->forHotelItem($item);
-                    Yii::app()->request->sendFile(basename($file),file_get_contents($file));
-                    @unlink($file);
+                    $fileNameInfo =  $pdf->forHotelItem($item);
+                    Yii::app()->request->sendFile($fileNameInfo['visibleName'],file_get_contents($fileNameInfo['realName']));
+                    @unlink($fileNameInfo['realName']);
                     break;
                 }
             }
@@ -127,9 +127,9 @@ class BuyController extends Controller
             {
                 if ($item->getId() == $id)
                 {
-                    $file = $pdf->forFlightItem($item);
-                    Yii::app()->request->sendFile(basename($file),file_get_contents($file));
-                    @unlink($file);
+                    $fileNameInfo = $pdf->forFlightItem($item);
+                    Yii::app()->request->sendFile($fileNameInfo['visibleName'],file_get_contents($fileNameInfo['realName']));
+                    @unlink($fileNameInfo['realName']);
                     break;
                 }
             }

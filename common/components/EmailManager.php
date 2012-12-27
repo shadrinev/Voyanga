@@ -49,10 +49,17 @@ class EmailManager
         $msg->setBody($params, 'text/html');
         foreach($pdfFileNames as $key=>$pdfInfo){
             $attachment = Swift_Attachment::fromPath($pdfInfo['filename']);
-            $attachment->setFilename('ticket_'.$pdfInfo['type'].'_'.$key.'.pdf');
+            $attachment->setFilename($pdfInfo['visibleName']);
             $msg->attach($attachment);
         }
 
         Yii::app()->mail->send($msg);
+        foreach($pdfFileNames as $key=>$pdfInfo){
+            if(file_exists($pdfInfo['filename']))
+            {
+                unlink($pdfInfo['filename']);
+            }
+        }
+
     }
 }

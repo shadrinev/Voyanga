@@ -50,10 +50,22 @@ body {
     width: 100%;
 }
 .hederInfo .tdNumberVoyanga {
-    width: 251px;
+    width: 167px;
+}
+.hederInfo .tdNumberBooking {
+    width: 167px;
 }
 .hederInfo .tdReserve {
+    width: 167px;
+}
+.hederInfo .tdNumberVoyangaHotel {
     width: 251px;
+}
+.hederInfo .tdReserveHotel {
+    width: 251px;
+}
+.hederInfo .divReserveHotel {
+    width: 140px;
 }
 .hederInfo thead tr td {
     line-height: 16px;
@@ -389,4 +401,7 @@ h3 {
 }
 .f20 {
     font-size: 20px;
+}
+.airlineName {
+    padding-left: 5px;
 }

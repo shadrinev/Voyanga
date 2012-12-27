@@ -423,8 +423,8 @@ class OrderComponent extends CApplicationComponent
             {
                 if ($item->hotelBookerId)
                 {
-                    if ($pdfFileName =  $pdf->forHotelItem($item))
-                       $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileName);
+                    if ($pdfFileInfo =  $pdf->forHotelItem($item))
+                       $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
                     else
                         return false;
                 }
@@ -433,8 +433,8 @@ class OrderComponent extends CApplicationComponent
             {
                 if ($item->flightBookerId)
                 {
-                    if ($pdfFileName =  $pdf->forFlightItem($item))
-                        $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileName);
+                    if ($pdfFileInfo =  $pdf->forFlightItem($item))
+                        $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
                 }
             }
         }
@@ -443,13 +443,7 @@ class OrderComponent extends CApplicationComponent
             'orderBookingId'=>$orderBooking->readableId,
             'email'=>$orderBooking->email
         ),$pdfFileNames);
-        foreach($pdfFileNames as $pdfInfo)
-        {
-            if(file_exists($pdfInfo['filename']))
-            {
-                unlink($pdfInfo['filename']);
-            }
-        }
+
     }
 
     public function getOrderBooking()

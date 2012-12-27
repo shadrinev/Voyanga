@@ -20,7 +20,7 @@
                     <td class="tdLogo"><img src="images/logo.png" width="209" height="50"></td>
                     <td class="tdEticket">Электронный билет<br>
                         E-ticket</td>
-                    <td style="width: 215px; font-size: 18px;">+7 (499) 533-09-33</td>
+                    <td style="width: 215px; font-size: 18px;" align="center">+7 (499) 533-09-33</td>
                     <td class="tdLink"><a href="http://www.voyanga.com">www.voyanga.com</a><br>
                         <a href="mailto:support@voyanga.com">support@voyanga.com</a></td>
                 </tr>
@@ -29,8 +29,12 @@
                 <thead>
                 <tr>
                     <td class="tdNumberVoyanga">
-                        Номер заказа в системе Voyanga<br>
+                        Номер заказа<br>
                         Order Number
+                    </td>
+                    <td class="tdNumberBooking">
+                        Номер бронирования<br>
+                        Booking Number
                     </td>
                     <td class="tdReserve">
                         Номер билета<br>
@@ -48,6 +52,11 @@
                         <td class="tdNumberVoyanga">
                             <?php if($pKey===0): ?>
                                 <strong><?php echo $bookingId; ?></strong>
+                            <?php endif; ?>
+                        </td>
+                        <td class="tdNumberBooking">
+                            <?php if($pKey===0): ?>
+                            <strong><?php echo $pnr; ?></strong>
                             <?php endif; ?>
                         </td>
                         <td class="tdReserve">
@@ -112,13 +121,13 @@
                                 </td>
                                 <td class="tdCity"><?php echo City::getCityByPk($flightPart->departureCityId)->localRu;?>, <span class="airport"><?php echo $flightPart->departureAirport->localRu?><?php echo ($flightPart->departureTerminalCode ? " ({$flightPart->departureTerminalCode})" : '');?></span></td>
                                 <td rowspan="3" class="tdAvia">
-                                    <img src="img/airline_logos/<?php echo $flightPart->transportAirlineCode;?>.png"><?php echo Airline::getAirlineByCode($flightPart->transportAirlineCode)->localRu;?><br>
+                                    <img src="img/airline_logos/<?php echo $flightPart->transportAirlineCode;?>.png"><span class="airlineName"><?php echo Airline::getAirlineByCode($flightPart->transportAirlineCode)->localRu;?></span><br>
                                     Рейс: <?php echo $flightPart->transportAirlineCode.' '.$flightPart->code;?><br>
 
                                 </td>
                                 <td rowspan="3" class="tdTarif">
-                                    <?php if(implode(',',$flightPart->tariffs)):?>
-                                    Тариф: <?php echo implode(',',$flightPart->tariffs);?>
+                                    <?php if(implode(',',$flightPart->bookingCodes)):?>
+                                    Тариф: <?php echo implode(',',$flightPart->bookingCodes);?>
                                     <?php endif;?>
                                 </td>
                             </tr>
@@ -206,7 +215,7 @@
             </table>
 
         </div>
-        <div class="lastWords">Желаем вам ярких эмоций и хорошего отдыха</div>
+        <div class="lastWords">Желаем вам приятного полёта</div>
     </div>
 </body>
 </html>

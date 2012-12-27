@@ -35,4 +35,6 @@ return array(
     'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)',
     'enableMemcached' => false,
     'pdfConverterPath' => '/usr/bin/wkhtmltopdf',
+    'app.api.flightSearchUrl' => 'http://api.oleg.voyanga/v1/flight/search/BE',
+    'app.api.hotelSearchUrl' => 'http://api.oleg.voyanga/v1/hotel/search',
 );
