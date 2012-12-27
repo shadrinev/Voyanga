@@ -340,7 +340,7 @@ class FlightBookerComponent extends CApplicationComponent
     {
         $payments = Yii::app()->payments;
         $bill = $payments->getBillForBooker($this->flightBooker);
-        $channel = $bill->channel;
+        $channel = $bill->getChannelName();
         $result = Array();
         $charges = $this->flightBooker->getFlightVoyage()->charges;
         if ($channel=='ltr') {

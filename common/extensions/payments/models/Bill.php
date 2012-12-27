@@ -120,6 +120,12 @@ class Bill extends CActiveRecord
         $this->channel = $channel;
     }
 
+    public function getChannelName()
+    {
+        return $this->channel;
+    }
+
+
     public function getChannel()
     {
         $parts = explode('_',$this->channel);
