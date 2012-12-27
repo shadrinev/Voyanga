@@ -162,7 +162,6 @@ class TourPanel extends SearchPanel
       return result
 
     @hasfocus.subscribe (newValue) =>
-      console.log "HAS FOCUS", @
       @trigger "tourPanel:hasFocus", @
 
     @city.subscribe (newValue) =>
@@ -200,6 +199,7 @@ class TourPanel extends SearchPanel
     $('.how-many-man').find('.popup').removeClass('active')
 
   showFromCityInput: (panel, event) ->
+    event.stopPropagation()
     elem = $('.cityStart').find('.second-path');
     elem.data('old', elem.val())
     el = elem.closest('.cityStart')
@@ -215,9 +215,6 @@ class TourPanel extends SearchPanel
       .animate({
       width: '-=130', 300
       })
-    el.find(".from").addClass("overflow").animate
-      width: "150px"
-    , 300
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
       width: "261px"
@@ -225,36 +222,7 @@ class TourPanel extends SearchPanel
       el.find(".startInputTo").find("input").focus().select()
 
   hideFromCityInput: (panel, event) ->
-    elemB = $('.cityStart').find('.second-path');
-    elB = elemB.closest('.cityStart')
-    elB.closest('.tdCityStart')
-      .animate({
-      width: '-=130', 300
-      })
-    elB.closest('.tdCityStart').find('.bgInput')
-      .animate({
-      width: '-=150', 300
-      })
-    elB.closest('.tdCityStart').next().find('.data')
-      .animate({
-      width: '+=130', 300
-      })
-    elem = $('.startInputTo .second-path')
-    startInput = $('div.startInputTo')
-    toInput = $('div.overflow')
-    if startInput.is(':visible')
-      toInput.animate
-        width: "271px"
-      , 300, ->
-        toInput.removeClass "overflow"
-
-      $(".cityStart").animate
-        width: "115px"
-      , 300
-      startInput.animate
-        opacity: "1"
-      , 300, ->
-        startInput.hide()
+    hideFromCityInput(panel, event)
 
   showCalendar: =>
     console.log('calendar show trigger')

@@ -231,7 +231,6 @@ TourPanel = (function(_super) {
       return result;
     });
     this.hasfocus.subscribe(function(newValue) {
-      console.log("HAS FOCUS", _this);
       return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
@@ -281,6 +280,7 @@ TourPanel = (function(_super) {
 
   TourPanel.prototype.showFromCityInput = function(panel, event) {
     var el, elem;
+    event.stopPropagation();
     elem = $('.cityStart').find('.second-path');
     elem.data('old', elem.val());
     el = elem.closest('.cityStart');
@@ -296,9 +296,6 @@ TourPanel = (function(_super) {
       width: '-=130',
       300: 300
     });
-    el.find(".from").addClass("overflow").animate({
-      width: "150px"
-    }, 300);
     el.find(".startInputTo").show();
     return el.find('.cityStart').animate({
       width: "261px"
@@ -308,39 +305,7 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
-    var elB, elem, elemB, startInput, toInput;
-    elemB = $('.cityStart').find('.second-path');
-    elB = elemB.closest('.cityStart');
-    elB.closest('.tdCityStart').animate({
-      width: '-=130',
-      300: 300
-    });
-    elB.closest('.tdCityStart').find('.bgInput').animate({
-      width: '-=150',
-      300: 300
-    });
-    elB.closest('.tdCityStart').next().find('.data').animate({
-      width: '+=130',
-      300: 300
-    });
-    elem = $('.startInputTo .second-path');
-    startInput = $('div.startInputTo');
-    toInput = $('div.overflow');
-    if (startInput.is(':visible')) {
-      toInput.animate({
-        width: "271px"
-      }, 300, function() {
-        return toInput.removeClass("overflow");
-      });
-      $(".cityStart").animate({
-        width: "115px"
-      }, 300);
-      return startInput.animate({
-        opacity: "1"
-      }, 300, function() {
-        return startInput.hide();
-      });
-    }
+    return hideFromCityInput(panel, event);
   };
 
   TourPanel.prototype.showCalendar = function() {

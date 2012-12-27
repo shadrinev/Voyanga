@@ -35,7 +35,7 @@
                             </div>
                             <input type="text" tabindex="-1" class="input-path">
                             <input type="text" placeholder="Куда едем?" class="second-path"
-                                   data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}">
+                                   data-bind="hasfocus: hasfocus, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}">
 
                             <div class="date"
                                  data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}">
