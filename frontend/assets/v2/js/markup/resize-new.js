@@ -1562,7 +1562,7 @@ $(function(){
 
 function resizePanel() {
     console.log('ResizePanel executed');
-    if ($('.panelTable').length > 0 && $('.panelTable').is(':visible')) {
+    if ($('.panelTable').length > 0) {
         var _panelTable = $('.panel').last().find('.panelTable');
         var _classThis;
         var _midWidth = 1130;
