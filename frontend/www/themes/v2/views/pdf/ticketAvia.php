@@ -20,7 +20,7 @@
                     <td class="tdLogo"><img src="images/logo.png" width="209" height="50"></td>
                     <td class="tdEticket">Электронный билет<br>
                         E-ticket</td>
-                    <td style="width: 215px; font-size: 18px;">+7 (495) 660-20-20</td>
+                    <td style="width: 215px; font-size: 18px;">+7 (499) 533-09-33</td>
                     <td class="tdLink"><a href="http://www.voyanga.com">www.voyanga.com</a><br>
                         <a href="mailto:support@voyanga.com">support@voyanga.com</a></td>
                 </tr>

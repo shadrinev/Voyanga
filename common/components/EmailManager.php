@@ -45,7 +45,7 @@ class EmailManager
         $msg
             ->setFrom(appParams('adminEmail'), appParams('adminEmailName'))
             ->setTo($params['email'])
-            ->setSubject('Ваш заказ готов');
+            ->setSubject('Заказ номер '.$params['OrderBookingId'].' готов');
         $msg->setBody($params, 'text/html');
         foreach($pdfFileNames as $key=>$pdfInfo){
             $attachment = Swift_Attachment::fromPath($pdfInfo['filename']);
