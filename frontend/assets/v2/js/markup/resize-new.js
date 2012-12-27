@@ -1561,6 +1561,7 @@ $(function(){
 
 
 function resizePanel() {
+    console.log('ResizePanel executed');
     if ($('.panelTable').length > 0 && $('.panelTable').is(':visible')) {
         var _panelTable = $('.panel').last().find('.panelTable');
         var _classThis;

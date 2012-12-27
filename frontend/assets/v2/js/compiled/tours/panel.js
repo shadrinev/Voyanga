@@ -111,7 +111,8 @@ TourPanelSet = (function() {
   TourPanelSet.prototype.deletePanel = function(elem) {
     this.sp.destinations.remove(elem.city);
     this.panels.remove(elem);
-    return _.last(this.panels()).isLast(true);
+    _.last(this.panels()).isLast(true);
+    return setTimeout(resizePanel, 50);
   };
 
   TourPanelSet.prototype.isFirst = function() {
@@ -146,7 +147,8 @@ TourPanelSet = (function() {
     this.panels.push(newPanel);
     this.lastPanel = newPanel;
     this.i = this.panels().length;
-    return VoyangaCalendarStandart.clear();
+    VoyangaCalendarStandart.clear();
+    return setTimeout(resizePanel, 50);
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {

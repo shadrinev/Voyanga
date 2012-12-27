@@ -77,6 +77,7 @@ class TourPanelSet
     @sp.destinations.remove(elem.city)
     @panels.remove(elem)
     _.last(@panels()).isLast(true)
+    setTimeout(resizePanel, 50)
 
   isFirst: =>
     @i == 1
@@ -101,6 +102,7 @@ class TourPanelSet
     @lastPanel = newPanel
     @i = @panels().length
     VoyangaCalendarStandart.clear()
+    setTimeout(resizePanel, 50)
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
