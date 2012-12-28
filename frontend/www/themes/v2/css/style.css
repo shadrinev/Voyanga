@@ -2028,9 +2028,13 @@ input.hotel-input {
 .backToBack, .backToBackBottom {
     background: url("../images/btn-back-point.png") no-repeat scroll left center transparent;
     color: #2E2F31;
+    display: block;
+    height: 30px;
     left: -11px;
+    line-height: 27px;
     padding-left: 12px;
     position: absolute;
+    width: 200px;
     z-index: 5;
 }
 .backToBackBottom {
@@ -2336,6 +2340,7 @@ input.hotel-input {
     margin-top: -22px;
     position: absolute;
     top: 50%;
+    text-align: center;
 }
 .allTicketsDIV .tdPrice .statusOrder .price {
     font-size: 11px !important;
@@ -2354,6 +2359,7 @@ input.hotel-input {
     white-space: nowrap;
     color: #FFF;
     display: block;
+    text-align: left;
 }
 .status.download {
     background: url("../images/bg-downloadPdf.png") no-repeat scroll 0 0 transparent;
@@ -2367,29 +2373,33 @@ input.hotel-input {
     color: #FFF;
     cursor: pointer;
     display: block;
+    text-align: left;
 }
 .allTicketsDIV .aviaTickets tr td,  .allTicketsDIV .hotelTickets tr td {
     line-height: 20px;
     padding-bottom: 9px;
     padding-top: 9px;
 }
-.allTicketsDIV .aviaTickets .tdICO .ico {
+.allTicketsDIV .aviaTickets .tdICO .ico, .allTicketsDIV .ticketBox.inactive .aviaTickets .tdICO .ico:hover {
     display: inline-block;
     width: 30px;
     height: 30px;
     background: url("../images/ico-fly.png") no-repeat scroll center center transparent;
 }
-.allTicketsDIV .hotelTickets .tdICO .ico {
+.allTicketsDIV .hotelTickets .tdICO .ico, .allTicketsDIV .ticketBox.inactive .hotelTickets .tdICO .ico:hover {
     display: inline-block;
     width: 30px;
     height: 30px;
     background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
 }
-.allTicketsDIV .aviaTickets .tdICO.paddingBottom .ico {
+.allTicketsDIV .aviaTickets .tdICO.paddingBottom .ico, .allTicketsDIV .ticketBox.inactive .aviaTickets .tdICO.paddingBottom .ico:hover {
     display: inline-block;
     width: 30px;
     height: 30px;
     background: url("../images/ico-fly-to-froms.png") no-repeat scroll center center transparent;
+}
+.allTicketsDIV .ticketBox.inactive .aviaTickets .tdICO .ico:hover, .allTicketsDIV .ticketBox.inactive .hotelTickets .tdICO .ico:hover, .allTicketsDIV .ticketBox.inactive .aviaTickets .tdICO.paddingBottom .ico:hover {
+    cursor: default;
 }
 .allTicketsDIV .aviaTickets .tdICO .ico:hover, .allTicketsDIV .aviaTickets .tdICO.paddingBottom .ico:hover, .allTicketsDIV .hotelTickets .tdICO .ico:hover {
     background: url(../images/close-pass.png) center center no-repeat;
@@ -2949,6 +2959,7 @@ input.hotel-input {
 .dopInfoPassengers .tdText {
 	color: #808186;
 	font-size: 13px;
+    line-height: 16px;
 }
 .payCardPal {
     width: 100%;

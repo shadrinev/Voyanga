@@ -28,7 +28,7 @@
 .panelTable.hotel tr td.tdCity .data {
     width: 340px;
     height: 36px;
-    margin-top: 3px;
+    margin-top: 0px;
 }
 .panelTable.hotel {
     width: 100%;
@@ -216,10 +216,10 @@
 .panelTable.constructorTable tr td.tdCityStart .cityStart .startInputTo .input-path {
 	background-position: 0 0;
 	background-repeat: no-repeat;
-	width: 242px;
+	width: 230px;
 }
 .panelTable.constructorTable tr td.tdCityStart .cityStart .startInputTo .second-path {
-	width: 242px;
+	width: 230px;
 }
 /* HOTEL */
 /*.hotelTable .tdCity {*/
