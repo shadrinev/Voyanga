@@ -2394,6 +2394,9 @@ input.hotel-input {
     height: 30px;
     background: url("../images/ico-fly-to-froms.png") no-repeat scroll center center transparent;
 }
+.allTicketsDIV .ticketBox.inactive .aviaTickets .tdICO .ico:hover, .allTicketsDIV .ticketBox.inactive .hotelTickets .tdICO .ico:hover, .allTicketsDIV .ticketBox.inactive .aviaTickets .tdICO.paddingBottom .ico:hover {
+    cursor: default;
+}
 .allTicketsDIV .aviaTickets .tdICO .ico:hover, .allTicketsDIV .aviaTickets .tdICO.paddingBottom .ico:hover, .allTicketsDIV .hotelTickets .tdICO .ico:hover {
     background: url(../images/close-pass.png) center center no-repeat;
     cursor: pointer;
