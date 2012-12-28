@@ -2,8 +2,8 @@
   <table class="panelTable avia">
     <tr>
       <td class="tdCityStart">
-          500+ авиакомпаний<br>
-          Все направления
+          Все направления<br>
+          500+ авиакомпаний
       </td>
       <td class="tdCity">
 
