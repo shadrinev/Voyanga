@@ -157,6 +157,7 @@
                                 <td class="tdCity"><?php echo City::getCityByPk($flightPart->arrivalCityId)->localRu;?>, <span class="airport"><?php echo $flightPart->arrivalAirport->localRu?><?php echo ($flightPart->arrivalTerminalCode ? " ({$flightPart->arrivalTerminalCode})" : '');?></span></td>
                             </tr>
                         </table>
+                        <?php $firstPart = false; ?>
                     <?php endforeach; ?>
                 </div>
             <?php endforeach;?>

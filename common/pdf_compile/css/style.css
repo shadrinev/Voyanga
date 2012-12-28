@@ -221,12 +221,14 @@ h2 {
     font-size: 12px;
     line-height: 20px;
     padding-left: 5px;
-    width: 125px;
+    width: 145px;
+    padding-top: 5px !important;
+    vertical-align: top;
 }
 .fly .tdTarif {
     font-size: 12px;
     line-height: 20px;
-    vertical-align: middle;
+    vertical-align: top;
 }
 .wait {
     width: 100%;
