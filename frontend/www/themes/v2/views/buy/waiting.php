@@ -1,5 +1,7 @@
 <?php
 Yii::app()->clientScript->registerCoreScript('jquery');
+Yii::app()->clientScript->registerCssFile('/themes/v2/css/style.css');
+
 ?>
 <html>
   <head>
