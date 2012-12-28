@@ -1,6 +1,10 @@
 <script type="text/html" id="avia-panel-template">
   <table class="panelTable avia">
     <tr>
+      <td class="tdCityStart">
+          500+ авиакомпаний<br>
+          Все направления
+      </td>
       <td class="tdCity">
 
         <div class="data">

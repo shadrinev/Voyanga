@@ -1576,7 +1576,7 @@ function resizePanel(arg) {
             var _widthTdTumblr = _panelTable.find('.tdTumblr').innerWidth();
             var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
             var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
-            var _widthTdCityStart = 0;
+            var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();;
             var _widthTdAddTour = 0;
             var _howManyInput = 2;
         }  else if (_panelTable.hasClass('constructorTable')) {
@@ -1594,7 +1594,7 @@ function resizePanel(arg) {
             var _widthTdTumblr = 0;
             var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
             var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
-            var _widthTdCityStart = 130;
+            var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
             var _widthTdAddTour = 117;
             var _howManyInput = 1;
         }
@@ -1605,7 +1605,7 @@ function resizePanel(arg) {
         var _dataDiv = _panelTable.find('.tdCity').find('.data');
         var _dataInput = _panelTable.find('.tdCity').find('.data').find('input');
 
-        if (_windowWidth < _midWidth && _windowWidth > _minWidth) {
+        if (_windowWidth <= _midWidth && _windowWidth >= _minWidth) {
             _allWidthPanel = _windowWidth - 230;
         }
         else if (_windowWidth < _minWidth) {

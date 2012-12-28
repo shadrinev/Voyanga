@@ -3932,8 +3932,8 @@ a.whereData span {
     background: #FFF;
     height: auto;
     color: #1d222b;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 13px;
+    line-height: 20px;
 }
 #payments-waiting h2 {
     background: url("../images/h1-time.png") no-repeat scroll left center transparent;

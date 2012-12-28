@@ -1,6 +1,10 @@
 <script type="text/html" id="hotels-panel-template">
     <table class="panelTable hotel">
         <tr>
+            <td class="tdCityStart">
+                200 000+ отелей<br>
+                10 118 городов
+            </td>
             <td class="tdCity">
                 <div class="data" data-bind="css: {active: haveDates()}">
                     <div class="bgInput">
