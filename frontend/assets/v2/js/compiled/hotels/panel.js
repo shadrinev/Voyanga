@@ -128,7 +128,9 @@ HotelsPanel = (function(_super) {
     }
   };
 
-  HotelsPanel.prototype.afterRender = function() {};
+  HotelsPanel.prototype.afterRender = function() {
+    return resizePanel();
+  };
 
   return HotelsPanel;
 

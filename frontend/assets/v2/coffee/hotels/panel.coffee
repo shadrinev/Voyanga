@@ -87,4 +87,4 @@ class HotelsPanel extends SearchPanel
       if values.length > 1
         @checkOut values[1]
   afterRender: =>
-    
+    do resizePanel

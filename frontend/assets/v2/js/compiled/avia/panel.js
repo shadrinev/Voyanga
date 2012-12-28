@@ -182,11 +182,12 @@ AviaPanel = (function(_super) {
 
   AviaPanel.prototype.afterRender = function() {
     var _this = this;
-    return $(function() {
+    $(function() {
       _this.sp.passengers.afterRender();
       _this.rtTumbler(_this.rt());
       return $('.how-many-man .btn');
     });
+    return resizePanel();
   };
 
   return AviaPanel;

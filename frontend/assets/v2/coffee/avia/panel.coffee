@@ -144,6 +144,7 @@ class AviaPanel extends SearchPanel
       # Initial state for tumbler
       @rtTumbler(@rt())
       $('.how-many-man .btn')
+    do resizePanel
 
 $(document).on "autocompleted", "input.departureCity", ->
   $('input.arrivalCity.second-path').focus()
