@@ -10,7 +10,7 @@ Yii::app()->clientScript->registerCssFile('/themes/v2/css/style.css');
 
         <div id="payments-waiting">
             <div class="title">
-                <h2>Ждем платежки</h2>
+                <h2>Ожидаем ответа платежной системы</h2>
             </div>
             <div class="text">
                 Мы обрабатываем платеж, это может занять несколько секунд. Не обновляйте страницу.

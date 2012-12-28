@@ -3944,6 +3944,7 @@ a.whereData span {
     padding-left: 40px;
     margin: 0;
     margin-bottom: 20px;
+    margin-top: 50px;
 }
 #payments-ok h2 {
     background: url("../images/h1-done.png") no-repeat scroll left center transparent;
@@ -3954,6 +3955,7 @@ a.whereData span {
     padding-left: 40px;
     margin: 0;
     margin-bottom: 20px;
+    margin-top: 50px;
 }
 #payments-fail h2 {
     background: url("../images/h1-bad.png") no-repeat scroll left center transparent;
@@ -3964,11 +3966,12 @@ a.whereData span {
     padding-left: 40px;
     margin: 0;
     margin-bottom: 20px;
+    margin-top: 50px;
 }
 #payments-waiting, #payments-fail, #payments-ok {
     width: 500px;
     margin: 0 auto;
 }
-#payments-waiting .text {
+#payments-waiting .text, #payments-fail .text, #payments-ok .text {
     margin-left: 40px;
 }
