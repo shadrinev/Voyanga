@@ -28,7 +28,7 @@
 .panelTable.hotel tr td.tdCity .data {
     width: 340px;
     height: 36px;
-    margin-top: 3px;
+    margin-top: 0px;
 }
 .panelTable.hotel {
     width: 100%;

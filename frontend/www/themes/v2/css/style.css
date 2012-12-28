@@ -2028,9 +2028,13 @@ input.hotel-input {
 .backToBack, .backToBackBottom {
     background: url("../images/btn-back-point.png") no-repeat scroll left center transparent;
     color: #2E2F31;
+    display: block;
+    height: 30px;
     left: -11px;
+    line-height: 27px;
     padding-left: 12px;
     position: absolute;
+    width: 200px;
     z-index: 5;
 }
 .backToBackBottom {
