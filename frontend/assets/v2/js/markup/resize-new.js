@@ -1571,7 +1571,7 @@ function resizePanel(arg) {
         var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
         if (_panelTable.hasClass('avia')) {
             _classThis = 'avia';
-	    var _meanPanel = 850;
+	        var _meanPanel = 850;
             var _standartData = 290;
             var _widthTdTumblr = _panelTable.find('.tdTumblr').innerWidth();
             var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
@@ -1587,6 +1587,15 @@ function resizePanel(arg) {
             var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
             var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
             var _widthTdAddTour = _panelTable.find('.tdAddTour').innerWidth();
+            var _howManyInput = 1;
+        }  else if (_panelTable.hasClass('hotel')) {
+            _classThis = 'hotel';
+            var _meanPanel = 692;
+            var _widthTdTumblr = 0;
+            var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+            var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
+            var _widthTdCityStart = 130;
+            var _widthTdAddTour = 117;
             var _howManyInput = 1;
         }
 
