@@ -432,6 +432,12 @@ function ResizeCenterBlock() {
 			var_hotelItems.removeClass('small');
 			var_content.find('h1').find('.hideTitle').show();
 		}
+        if ($('body').width() < 1000) {
+            $('body').addClass('scrollYes');
+        }
+        else {
+            $('body').removeClass('scrollYes');
+        }
 		resizeLeftStage();
 		resizeMainStage();
 	}

@@ -2011,6 +2011,10 @@ input.hotel-input {
 .fixed {
     position: fixed;
 }
+.fixed.scrollYes {
+    position: relative;
+    overflow-y: hidden;
+}
 .sorting-panel {
     color: #3E4C52;
     position: absolute;
@@ -3960,7 +3964,7 @@ a.whereData span {
     font-weight: normal;
 }
 #payments-fail h2 {
-    background: url("../images/h1-bad.png") no-repeat scroll left center transparent;
+    background: url("../images/h1-bad.png") no-repeat scroll left -3px transparent;
     color: #1D222B;
     font-size: 24px;
     height: 27px;
