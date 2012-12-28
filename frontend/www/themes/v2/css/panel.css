@@ -216,10 +216,10 @@
 .panelTable.constructorTable tr td.tdCityStart .cityStart .startInputTo .input-path {
 	background-position: 0 0;
 	background-repeat: no-repeat;
-	width: 242px;
+	width: 230px;
 }
 .panelTable.constructorTable tr td.tdCityStart .cityStart .startInputTo .second-path {
-	width: 242px;
+	width: 230px;
 }
 /* HOTEL */
 /*.hotelTable .tdCity {*/

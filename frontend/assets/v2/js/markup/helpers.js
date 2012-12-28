@@ -360,7 +360,9 @@ function showUserMenu() {
     });
 }
 
-function hideFromCityInput(panel, event) {
+function hideFromCityInput(event) {
+    var _targetYes = event.target;
+    if (!$(_targetYes).parents('.cityStart').length > 0) {
     var elB, elem, elemB, startInput, toInput;
     if (!$('.startInputTo').is(':visible')) {
         return;
@@ -383,6 +385,7 @@ function hideFromCityInput(panel, event) {
     startInput = $('div.startInputTo');
     toInput = $('div.overflow');
     if (startInput.is(':visible')) {
+        console.log('START THIS');
         toInput.animate({
             width: "271px"
         }, 300, function () {
@@ -397,10 +400,14 @@ function hideFromCityInput(panel, event) {
             return startInput.hide();
         });
     }
+    }
+    else {
+        return true;
+    }
 }
 
 $(function () {
-    $('html').on('click', function () {
-        hideFromCityInput()
+    $('html').on('click', function (e) {
+        hideFromCityInput(e);
     });
 });
