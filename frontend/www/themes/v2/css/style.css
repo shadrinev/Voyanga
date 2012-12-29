@@ -2011,6 +2011,10 @@ input.hotel-input {
 .fixed {
     position: fixed;
 }
+.fixed.scrollYes {
+    position: relative;
+    overflow-y: hidden;
+}
 .sorting-panel {
     color: #3E4C52;
     position: absolute;
@@ -3927,4 +3931,58 @@ a.whereData span {
 }
 .enterOpen {
     text-decoration: underline !important;
+}
+.whiteBody {
+    background: #FFF;
+    height: auto;
+    color: #1d222b;
+    font-size: 13px;
+    line-height: 20px;
+}
+#payments-waiting h2 {
+    background: url("../images/h1-time.png") no-repeat scroll left center transparent;
+    color: #1D222B;
+    font-size: 24px;
+    height: 27px;
+    line-height: 27px;
+    padding-left: 40px;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    font-weight: normal;
+}
+#payments-ok h2 {
+    background: url("../images/h1-done.png") no-repeat scroll left center transparent;
+    color: #1D222B;
+    font-size: 24px;
+    height: 27px;
+    line-height: 27px;
+    padding-left: 40px;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    font-weight: normal;
+}
+#payments-fail h2 {
+    background: url("../images/h1-bad.png") no-repeat scroll left -3px transparent;
+    color: #1D222B;
+    font-size: 24px;
+    height: 27px;
+    line-height: 27px;
+    padding-left: 40px;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    font-weight: normal;
+}
+#payments-waiting, #payments-fail, #payments-ok {
+    width: 500px;
+    margin: 0 auto;
+}
+#payments-waiting .text, #payments-fail .text, #payments-ok .text {
+    margin-left: 40px;
+}
+#payments-waiting .text a, #payments-fail .text a, #payments-ok .text a {
+    color: #1c81bb;
+    text-decoration: underline;
 }

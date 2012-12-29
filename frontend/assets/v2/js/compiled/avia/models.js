@@ -323,6 +323,8 @@ AviaResult = (function() {
     var fields, flights, name, rtName, _i, _len,
       _this = this;
     this.parent = parent;
+    this.getPostData = __bind(this.getPostData, this);
+
     this.getParams = __bind(this.getParams, this);
 
     this.directRating = __bind(this.directRating, this);
@@ -711,6 +713,14 @@ AviaResult = (function() {
       }
     }
     return JSON.stringify(result);
+  };
+
+  AviaResult.prototype.getPostData = function() {
+    var result;
+    result = {};
+    result.data = this._data;
+    result.type = 'avia';
+    return result;
   };
 
   return AviaResult;

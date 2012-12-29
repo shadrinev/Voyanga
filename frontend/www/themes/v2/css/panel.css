@@ -105,6 +105,18 @@
 .panelTable.hotel tr td.tdCity .data input {
     width: 320px;
 }
+.panelTable.avia tr td.tdCityStart {
+    vertical-align: middle;
+    color: #979eab;
+    line-height: 17px;
+    width: 130px;
+}
+.panelTable.hotel tr td.tdCityStart {
+    vertical-align: middle;
+    color: #979eab;
+    line-height: 17px;
+    width: 110px;
+}
 /* OTHER */
 .tdCityStart {
     width: 130px;

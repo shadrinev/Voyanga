@@ -315,6 +315,8 @@
     font-size: 15px;
     height: 37px;
     line-height: 39px;
+    text-align: center;
+    text-decoration: none;
     width: 180px;
 }
 .btn-check {

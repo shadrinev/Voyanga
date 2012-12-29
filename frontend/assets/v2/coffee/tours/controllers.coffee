@@ -47,8 +47,33 @@ class ToursController
           items.push hotel
         else
           items.push new AviaResult(item, stacked)
-
-      console.log('ssseeellleecctt',items,stacked.findAndSelectItems(items))
+      if(stacked.findAndSelectItems(items))
+        console.log('ssseeellleecctt',items,true)
+        #need save to tours
+        postData = []
+        for resultSet in stacked.data()
+          if resultSet.isAvia()
+            postData.push resultSet.selection().getPostData()
+          else
+            postData.push resultSet.selection().hotel.getPostData()
+          console.log('result:',  resultSet.selection())
+        console.log('post data',postData,@searchParams)
+        $.ajax
+          url: @api.endpoint + 'tour/search/updateEvent'
+          data: {eventId:@searchParams.eventId,startCity:@searchParams.startCity(), items:postData}
+          dataType: 'json'
+          timeout: 90000
+          type: 'POST'
+          success: (data)=>
+            #sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
+            cb(data)
+            if showLoad
+              $('#loadWrapBg').hide()
+              loaderChange(false)
+          error: ->
+            #
+      else
+        console.log('ssseeellleecctt',items,false)
 
 
     stacked.checkTicket = @checkTicketAction

@@ -385,7 +385,6 @@ function hideFromCityInput(event) {
     startInput = $('div.startInputTo');
     toInput = $('div.overflow');
     if (startInput.is(':visible')) {
-        console.log('START THIS');
         toInput.animate({
             width: "271px"
         }, 300, function () {

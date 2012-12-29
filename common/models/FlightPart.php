@@ -42,27 +42,51 @@ class FlightPart
 
     public function __construct($oParams)
     {
-        $this->departureCityId = $oParams->departure_city->id;
-        $this->arrivalCityId = $oParams->arrival_city->id;
-        $this->timestampBegin = strtotime($oParams->datetime_begin);
-        $this->timestampEnd = strtotime($oParams->datetime_end);
-        $this->datetimeBegin = $oParams->datetime_begin;
-        $this->datetimeEnd = $oParams->datetime_end;
-        $this->code = $oParams->code;
-        $this->duration = $oParams->duration;
-        $this->departureTerminalCode = $oParams->departure_terminal_code;
-        $this->arrivalTerminalCode = $oParams->arrival_terminal_code;
-        $this->aircraftCode = $oParams->aircraft_code;
-        //$this->aircraft_name = $oParams->aircraft_name;
-        $this->transportAirlineCode = $oParams->transport_airline->code;
-        $this->opAirline = $oParams->opAirline;
-        $this->markAirline = $oParams->markAirline;
-        $this->departureAirportId = $oParams->departure_airport->id;
-        $this->arrivalAirportId = $oParams->arrival_airport->id;
-        $this->departureAirport = $oParams->departure_airport;
-        $this->arrivalAirport = $oParams->arrival_airport;
-        $this->stopNum = $oParams->stopNum;
-        $this->bookingCodes = $oParams->aBookingCodes;
+        if(is_object($oParams)){
+            $this->departureCityId = $oParams->departure_city->id;
+            $this->arrivalCityId = $oParams->arrival_city->id;
+            $this->timestampBegin = strtotime($oParams->datetime_begin);
+            $this->timestampEnd = strtotime($oParams->datetime_end);
+            $this->datetimeBegin = $oParams->datetime_begin;
+            $this->datetimeEnd = $oParams->datetime_end;
+            $this->code = $oParams->code;
+            $this->duration = $oParams->duration;
+            $this->departureTerminalCode = $oParams->departure_terminal_code;
+            $this->arrivalTerminalCode = $oParams->arrival_terminal_code;
+            $this->aircraftCode = $oParams->aircraft_code;
+            //$this->aircraft_name = $oParams->aircraft_name;
+            $this->transportAirlineCode = $oParams->transport_airline->code;
+            $this->opAirline = $oParams->opAirline;
+            $this->markAirline = $oParams->markAirline;
+            $this->departureAirportId = $oParams->departure_airport->id;
+            $this->arrivalAirportId = $oParams->arrival_airport->id;
+            $this->departureAirport = $oParams->departure_airport;
+            $this->arrivalAirport = $oParams->arrival_airport;
+            $this->stopNum = $oParams->stopNum;
+            $this->bookingCodes = $oParams->aBookingCodes;
+        }else{
+            $this->departureCityId = $oParams['departureCityId'];
+            $this->arrivalCityId = $oParams['departureCityId'];
+            $this->timestampBegin = strtotime($oParams['datetimeBegin']);
+            $this->timestampEnd = strtotime($oParams['datetimeEnd']);
+            $this->datetimeBegin = $oParams['datetimeBegin'];
+            $this->datetimeEnd = $oParams['datetimeEnd'];
+            $this->code = $oParams['flightCode'];
+            $this->duration = $oParams['duration'];
+            //$this->departureTerminalCode = $oParams['departureCityId'];
+            //$this->arrivalTerminalCode = $oParams->arrival_terminal_code;
+            $this->aircraftCode = $oParams['aircraftCode'];
+            //$this->aircraft_name = $oParams->aircraft_name;
+            $this->transportAirlineCode = $oParams['transportAirline'];
+            //$this->opAirline = $oParams['duration'];
+            //$this->markAirline = $oParams['duration'];
+            $this->departureAirportId = $oParams['departureAirportId'];
+            $this->arrivalAirportId = $oParams['arrivalAirportId'];
+            $this->departureAirport = Airport::getAirportByPk($oParams['departureAirportId']);
+            $this->arrivalAirport = Airport::getAirportByPk($oParams['arrivalAirportId']);
+            $this->stopNum = $oParams['stopNum'];
+            $this->bookingCodes = array($oParams['bookingCode']);
+        }
     }
 
     public function getJsonObject()
@@ -74,14 +98,18 @@ class FlightPart
             'transportAirlineNameEn' => $airline->localEn,
             'departureCity' => City::getCityByPk($this->departureCityId)->localRu,
             'departureCityPre' => City::getCityByPk($this->departureCityId)->casePre,
+            'departureCityId' => $this->departureCityId,
             'arrivalCity' => City::getCityByPk($this->arrivalCityId)->localRu,
             'arrivalCityPre' => City::getCityByPk($this->arrivalCityId)->casePre,
+            'arrivalCityId' => $this->arrivalCityId,
             'datetimeBegin' => DateTimeHelper::formatForJs($this->timestampBegin),
             'datetimeEnd' => DateTimeHelper::formatForJs($this->timestampEnd),
             'flightCode' => $this->code,
             'duration' => $this->duration,
             'departureAirport' => $this->departureAirport->localRu,
             'arrivalAirport' => $this->arrivalAirport->localRu,
+            'departureAirportId' => $this->departureAirport->id,
+            'arrivalAirportId' => $this->arrivalAirport->id,
             'aircraftCode' => $this->aircraftCode,
             'aircraftName' => $this->getAircraftName(),
             'stopNum'=>$this->stopNum,
