@@ -15,6 +15,7 @@ class SuccessAction extends CAction
         else
             $method = 'SuccessCallback';
         $this->logEntry = PaymentLog::forMethod($method);
+        $this->logEntry->request = '{"callback":1}';
         $this->logEntry->response = json_encode($_REQUEST);
         if(isset($_REQUEST['TransactionID']))
             $this->logEntry->transactionId = $_REQUEST['TransactionID'];
