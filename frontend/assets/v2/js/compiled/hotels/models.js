@@ -419,7 +419,6 @@ HotelResult = (function() {
     this.parent = parent;
     this.checkInTime = hotelDatails.earliestCheckInTime;
     if (this.checkInTime) {
-      this.checkInTime = this.checkInTime.substr(0, this.checkInTime.length - 3);
       this.checkInText = this.checkIn.format('LL') + ", c " + this.checkInTime;
     } else {
       this.checkInText = this.checkIn.format('LL');

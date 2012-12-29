@@ -267,7 +267,6 @@ class HotelResult
     @parent = parent
     @checkInTime = hotelDatails.earliestCheckInTime
     if @checkInTime
-      @checkInTime = @checkInTime.substr(0,@checkInTime.length - 3)
       @checkInText = @checkIn.format('LL') + ", c " + @checkInTime
     else
       @checkInText = @checkIn.format('LL')
