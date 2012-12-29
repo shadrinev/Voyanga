@@ -18,7 +18,7 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
     <script type="text/javascript"
             src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
-    <script type="text/javascript" src="http://api.voyanga.com/API.js"></script>
+    <script type="text/javascript" src="http://api.voyanga.com/API22.js"></script>
 </head>
 <body>
 <div class="wrapper">

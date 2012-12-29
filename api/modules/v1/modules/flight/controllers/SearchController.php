@@ -113,6 +113,17 @@ class SearchController extends ApiController
         $this->sendWithCorrectFormat($format, $results);
     }
 
+    public function actionTariffRules($flightIds,$format='json'){
+        $flightIds = explode(':',$flightIds);
+        $results = array();
+        foreach($flightIds as $flightId)
+        {
+            $results[$flightId] = Yii::app()->gdsAdapter->flightTariffRules($flightId);
+        }
+        $this->sendWithCorrectFormat($format, $results);
+
+    }
+
     private function inject($flights, $cacheId)
     {
         $newFlights = array();

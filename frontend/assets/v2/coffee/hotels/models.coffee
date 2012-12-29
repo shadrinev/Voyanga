@@ -104,6 +104,7 @@ class RoomSet
     @savings = 0
     @resultId = data.resultId
     @searchId = data.searchId
+    @_data = data
     @pricePerNight =  Math.ceil(@price / duration)
     @visible = ko.observable(true)
     @cancelRules = ko.observable(false)
@@ -745,6 +746,11 @@ class HotelResult
     result.roomSet = @roomSets()[0].getParams()
 
     return JSON.stringify(result)
+  getPostData: =>
+    result = {}
+    result.data = @roomSets()[0]._data
+    result.type = 'hotel'
+    return result
 
 
 #
@@ -911,6 +917,16 @@ class HotelsResultSet
       if hotel.hotelId == roomSet.parent.hotelId
         for possibleRoomSet in hotel.roomSets()
           if possibleRoomSet.similarityHash() == roomSet.similarityHash()
+            return possibleRoomSet
+    return false
+
+  findAndSelectSame: (roomSet)=>
+
+    result = @findAndSelect(roomSet)
+    if(!result)
+      for hotel in @data()
+        if hotel.hotelId == roomSet.parent.hotelId
+          for possibleRoomSet in hotel.roomSets()
             return possibleRoomSet
     return false
 

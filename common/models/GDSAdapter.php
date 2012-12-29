@@ -32,9 +32,11 @@ class GDSAdapter extends CApplicationComponent
         return $response;
     }
 
-    public function flightTariffRules()
+    public function flightTariffRules($flightId)
     {
-
+        $nemo = new GDSNemoAgency();
+        $response = $nemo->FlightTariffRules($flightId);
+        return $response;
     }
 
     public function flightTicketing(FlightTicketingParams $flightTicketingParams)

@@ -174,6 +174,7 @@ RoomSet = (function() {
     this.savings = 0;
     this.resultId = data.resultId;
     this.searchId = data.searchId;
+    this._data = data;
     this.pricePerNight = Math.ceil(this.price / duration);
     this.visible = ko.observable(true);
     this.cancelRules = ko.observable(false);
@@ -322,6 +323,8 @@ HotelResult = (function() {
     var elemId, elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8,
       _this = this;
     this.activeHotel = activeHotel;
+    this.getPostData = __bind(this.getPostData, this);
+
     this.getParams = __bind(this.getParams, this);
 
     this.putToMap = __bind(this.putToMap, this);
@@ -927,6 +930,14 @@ HotelResult = (function() {
     return JSON.stringify(result);
   };
 
+  HotelResult.prototype.getPostData = function() {
+    var result;
+    result = {};
+    result.data = this.roomSets()[0]._data;
+    result.type = 'hotel';
+    return result;
+  };
+
   return HotelResult;
 
 })();
@@ -971,6 +982,8 @@ HotelsResultSet = (function() {
     this.addMapPoint = __bind(this.addMapPoint, this);
 
     this.resetMapCenter = __bind(this.resetMapCenter, this);
+
+    this.findAndSelectSame = __bind(this.findAndSelectSame, this);
 
     this.findAndSelect = __bind(this.findAndSelect, this);
 
@@ -1153,6 +1166,25 @@ HotelsResultSet = (function() {
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           possibleRoomSet = _ref1[_j];
           if (possibleRoomSet.similarityHash() === roomSet.similarityHash()) {
+            return possibleRoomSet;
+          }
+        }
+      }
+    }
+    return false;
+  };
+
+  HotelsResultSet.prototype.findAndSelectSame = function(roomSet) {
+    var hotel, possibleRoomSet, result, _i, _j, _len, _len1, _ref, _ref1;
+    result = this.findAndSelect(roomSet);
+    if (!result) {
+      _ref = this.data();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        hotel = _ref[_i];
+        if (hotel.hotelId === roomSet.parent.hotelId) {
+          _ref1 = hotel.roomSets();
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            possibleRoomSet = _ref1[_j];
             return possibleRoomSet;
           }
         }

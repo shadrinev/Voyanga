@@ -61,7 +61,8 @@ ToursController = (function() {
   };
 
   ToursController.prototype.handleResults = function(data) {
-    var hotel, item, items, stacked, _i, _len, _ref;
+    var hotel, item, items, postData, resultSet, stacked, _i, _j, _len, _len1, _ref, _ref1,
+      _this = this;
     console.log("Handling results", data);
     stacked = new ToursResultSet(data, this.searchParams);
     if (data.items) {
@@ -76,7 +77,42 @@ ToursController = (function() {
           items.push(new AviaResult(item, stacked));
         }
       }
-      console.log('ssseeellleecctt', items, stacked.findAndSelectItems(items));
+      if (stacked.findAndSelectItems(items)) {
+        console.log('ssseeellleecctt', items, true);
+        postData = [];
+        _ref1 = stacked.data();
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          resultSet = _ref1[_j];
+          if (resultSet.isAvia()) {
+            postData.push(resultSet.selection().getPostData());
+          } else {
+            postData.push(resultSet.selection().hotel.getPostData());
+          }
+          console.log('result:', resultSet.selection());
+        }
+        console.log('post data', postData, this.searchParams);
+        $.ajax({
+          url: this.api.endpoint + 'tour/search/updateEvent',
+          data: {
+            eventId: this.searchParams.eventId,
+            startCity: this.searchParams.startCity(),
+            items: postData
+          },
+          dataType: 'json',
+          timeout: 90000,
+          type: 'POST',
+          success: function(data) {
+            cb(data);
+            if (showLoad) {
+              $('#loadWrapBg').hide();
+              return loaderChange(false);
+            }
+          },
+          error: function() {}
+        });
+      } else {
+        console.log('ssseeellleecctt', items, false);
+      }
     }
     stacked.checkTicket = this.checkTicketAction;
     return stacked;

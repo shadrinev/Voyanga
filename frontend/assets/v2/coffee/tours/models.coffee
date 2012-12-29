@@ -273,6 +273,19 @@ class ToursHotelsResultSet extends TourEntry
       console.log(ko.utils.unwrapObservable(result.roomSets))
       result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0])
     if !result
+      console.log('not found =(',result)
+      return false
+    @_selectRoomSet result
+
+  findAndSelectSame: (result) =>
+    console.log('find THRS ',result)
+    if result.roomSet
+      result = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))
+    else
+      console.log(ko.utils.unwrapObservable(result.roomSets))
+      result = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
+    if !result
+      console.log('not found =(',result)
       return false
     @_selectRoomSet result
       
@@ -618,10 +631,15 @@ class ToursResultSet
     for entry, index in items
       console.log('findAndSelectItems entry',entry,' in ',index,@data()[index])
       if(@data()[index].isAvia())
-        if !@data()[index].findAndSelect(@data()[index].results().cheapest())
+        result = @data()[index].findAndSelect(@data()[index].results().cheapest())
+        if !result
           success = false
-      else if !@data()[index].findAndSelect(entry)
-        success = false
+          console.log('false res1:',result,@data()[index],@data()[index].results().cheapest())
+      else
+        result = @data()[index].findAndSelectSame(entry)
+        if !result
+          success = false
+          console.log('false res2:',result,@data()[index],entry)
     return success
     
 # Models for tour search params,
@@ -827,6 +845,30 @@ class TourTripResultSet
     @totalCostWithoutDiscount = 0
     @tour = false
     @additional = false
+    @flightIds = ko.observableArray([])
+    @flightIdsString = ko.computed =>
+      resArr = @flightIds()
+      return resArr.join(':')
+    @showTariffRules = =>
+      console.log('i wonna show tariff rules')
+      aviaApi = new AviaAPI();
+      aviaApi.search('flight/search/tariffRules?flightIds='+@flightIdsString(),
+        (data)=>
+          if(data)
+            tariffs = []
+            for item in @items
+              if(item.isFlight && data[item._data.flightKey])
+                tariff = {}
+                tariff.route = "Перелет из "+item.departureCity()+" в " + item.arrivalCity()
+                tariff.codes = []
+                for key,code of data[item._data.flightKey]
+                  tariff.codes.push code
+                tariffs.push tariff
+            if tariffs
+              console.log(tariffs)
+              gp = new GenericPopup('#tariff-rules',{'tariffs': tariffs})
+          #for()
+      )
 
     @flightCounterWord = ko.computed =>
       if @flightCounter()==0
@@ -848,6 +890,7 @@ class TourTripResultSet
         @flightCounter(@flightCounter()+1)
         @roundTrip = item.flights.length == 2
         aviaResult = new AviaResult(item, @)
+        @flightIds.push aviaResult._data.flightKey
         aviaResult.sort()
         aviaResult.totalPeople = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек'
         aviaResult.totalPeopleGen = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек'

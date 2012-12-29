@@ -268,6 +268,7 @@ h2 {
     font-size: 12px;
     vertical-align: bottom;
     width: 82px;
+    padding-bottom: 5px;
 }
 .fly.end .tdTime .number, .fly.middle .tdTime .number {
     border-top: 1px solid #000000;
