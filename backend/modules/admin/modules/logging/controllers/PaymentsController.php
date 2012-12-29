@@ -3,7 +3,7 @@ class PaymentsController extends Controller
 {
     public function actionIndex()
     {
-        $dataProvider=new EMongoDocumentDataProvider('PaymentLog',array('sort'=>array('defaultOrder'=>'updated desc')));
+        $dataProvider=new EMongoDocumentDataProvider('PaymentLog',array('sort'=>array('defaultOrder'=>'timestamp desc')));
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
         ));
