@@ -20,6 +20,8 @@ class SuccessAction extends CAction
             $this->logEntry->transactionId = $_REQUEST['TransactionID'];
         if(isset($_REQUEST['OrderId']))
             $this->logEntry->orderId = $_REQUEST['OrderId'];
+        $this->logEntry->save();
+
         foreach($this->keys as $key)
         {
             if(!isset($_REQUEST[$key]))

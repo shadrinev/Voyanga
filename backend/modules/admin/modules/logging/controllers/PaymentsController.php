@@ -68,7 +68,7 @@ class PaymentsController extends Controller
         $retArr['request'] = $widget->highlight($this->prettyJson($model->request));
         if($model->response)
         {
-            $retArr['responseXml'] = $widget->highlight($this->prettyJson($model->response));
+            $retArr['response'] = $widget->highlight($this->prettyJson($model->response));
         }
         $retArr['timestamp'] = date("Y-m-d H:i:s",$model->timestamp);
         $retArr['executionTime'] = Yii::app()->format->formatNumber($model->executionTime);

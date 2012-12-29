@@ -101,6 +101,8 @@ abstract class Payments_Channel {
         list($code,$result) = $this->callApi('transaction/rebill', $params);
         $entry->finishProfile();
         $entry->response = json_encode($result);
+        if(isset($result['Id']))
+            $entry->transactionId = $result['Id'];
         $entry->save();
         if(strtolower($result['Result']) == 'ok')
             return true;
@@ -130,8 +132,11 @@ abstract class Payments_Channel {
         $entry->finishProfile();
         $entry->response = json_encode($result);
         $entry->save();
-        if($result['Result'] == 'Ok')
+        if($result['Result'] == 'Ok') {
+            if(isset($result['Id']))
+                $entry->transactionId = $result['Id'];
             return true;
+        }
         $entry->errorDescription = "RefundError: " . $this->rawResponse;
         $entry->save();
         return false;
