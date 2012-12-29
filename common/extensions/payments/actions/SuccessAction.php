@@ -71,7 +71,8 @@ class SuccessAction extends CAction
         // and thus not allowed
         if($bill->transactionId && ($_REQUEST['TransactionID']!=$bill->transactionId)) {
             //! Fixme not sure if we need to log this
-            $this->handleError("Bill #" . $bill->id . " already have transaction id");
+            $e = new RequestError("Bill #" . $bill->id . " already have transaction id");
+            $this->handleException($e);
 #            return;
         }
         $bill->transactionId = $_REQUEST['TransactionID'];
@@ -189,7 +190,7 @@ class SuccessAction extends CAction
         $res = Yii::app()->cron->add(time() + 75, 'orderticketing', 'cron', array('orderId'=>$orderId));
     }
 
-    protected function handleError($e) {
+    protected function handleException($e) {
         $this->logEntry->errorDescription = "Exception " . get_class($e) . ": " .  $e->getMessage();
         $this->logEntry->save();
         Yii::app()->RSentryException->logException($e);
