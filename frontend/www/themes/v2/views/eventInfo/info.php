@@ -48,7 +48,9 @@ $images = '/themes/v2';
                     <a href="#" style="margin-top:0px;" class="otherCity" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2 взрослых</a>
                     <span class="check">Последняя проверка цены<br>выполнена 29 сентября, 18:04</span>
                     <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
-                    <div class="btn-check" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage,visible: !itemsToBuy.visiblePanel(), css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
+                    <div style="width: 144px; height: 40px;">
+                        <div class="btn-check" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage,visible: !itemsToBuy.visiblePanel(), css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
+                    </div>
                 </div>
                 <div class="textBlock"><?php echo $event->description;?></div>
             </div>

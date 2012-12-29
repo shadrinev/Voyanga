@@ -135,6 +135,14 @@ class HotelInfo extends CApplicationComponent
                 $this->images[] = new HotelImage($imageParams);
             }
         }
+        if($this->earliestCheckInTime){
+            if(strlen($this->earliestCheckInTime) > 5){
+                $this->earliestCheckInTime = substr($this->earliestCheckInTime,0,5);
+            }
+            if($this->earliestCheckInTime === '00:00'){
+               $this->earliestCheckInTime = false;
+            }
+        }
         $this->makeServices();
     }
 

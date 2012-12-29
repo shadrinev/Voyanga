@@ -87,6 +87,17 @@ class HotelRoom extends CApplicationComponent
                 $this->{$attrName} = $params[$attrName];
             }
         }
+        if(isset($params['roomNameNemo'])){
+            $this->roomName = $params['roomNameNemo'];
+            $this->_showName = $params['showName'];
+            $this->mealName = $params['meal'];
+            $this->mealBreakfastName = $params['mealBreakfast'];
+            $this->sizeName = $params['size'];
+            $this->sizeId = array_search($this->sizeName, RoomNamesNemo::$roomSizes);
+            $this->typeName = $params['type'];
+            $this->_showName = $params['showName'];
+            $this->_showName = $params['showName'];
+        }
 
         $roomNameCanonical = null;
         if($this->roomName){
@@ -174,6 +185,7 @@ class HotelRoom extends CApplicationComponent
        */
         $ret = array('size' => $this->sizeName,
             'type'=>$this->typeName,
+            'typeId'=>$this->typeId,
             'view'=>$this->viewName,
             'showName'=>$this->showName,
             'roomNemoName'=>$this->roomName,

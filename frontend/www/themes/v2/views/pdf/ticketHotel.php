@@ -87,7 +87,7 @@ $dayFormat = "d|n|w";
                     <table class="hotelInfo">
                         <tr>
                             <td width="85" style="font-size: 13px">Заселение<br>Incoming</td>
-                            <td class="dates"><?php echo $dateString;?>, с <?php echo $hotelInfo->earliestCheckInTime;?></td>
+                            <td class="dates"><?php echo $dateString;?><?php echo $hotelInfo->earliestCheckInTime ? ', с '.$hotelInfo->earliestCheckInTime : '';?></td>
                         </tr>
                     </table>
                     <?php
@@ -101,7 +101,7 @@ $dayFormat = "d|n|w";
                     <table class="hotelInfo">
                         <tr>
                             <td width="85" style="font-size: 13px">Выезд<br>Leaving</td>
-                            <td class="dates"><?php echo $dateString;?>, до <?php echo $hotelInfo->earliestCheckInTime;?></td>
+                            <td class="dates"><?php echo $dateString;?></td>
                         </tr>
                     </table>
                 </td>
@@ -111,7 +111,15 @@ $dayFormat = "d|n|w";
         <h2 style="margin-bottom: 10px"><?php echo (count($ticket->rooms) > 1 ? "Ваши номера" : "Ваш номер");?></h2>
         <img src="images/vertLine.png" class="hr">
         <?php foreach($ticket->rooms as $roomKey=>$room): ?>
-            <h3 style="margin-top: 10px"><?php echo $room->roomName;?> / <?php echo $room->showName;?></h3>
+            <h3 style="margin-top: 10px">
+                <?php
+                if(!$room->roomName){
+                    echo $room->showName;
+                }else{
+                    echo $room->roomName.($room->showName !== $room->roomName ? " / {$room->showName}": '');
+                }
+                ?>
+            </h3>
             <table class="hotelGuests">
                 <tr>
                     <td width="70" style="font-size: 13px">Гости<br>Guests</td>

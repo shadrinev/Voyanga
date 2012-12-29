@@ -97,8 +97,8 @@ class SearchController extends ApiController
                 //$hotel = new Hotel($item['data']);
                 //print_r($hotel);
             }else{
-                $flight = new FlightVoyage($item['data']);
-                print_r($flight);
+                //$flight = new FlightVoyage($item['data']);
+                //print_r($flight);
             }
         }
     }
