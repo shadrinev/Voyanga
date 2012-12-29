@@ -27,6 +27,10 @@ class StartPaymentAction extends CAction
         header("Content-type: application/json");
         $result = Array();
         $result['payonline'] = $params;
+        $entry = PaymentLog::forMethod('payonlineForm');
+        $entry->request = json_encode($params);
+        $entry->orderId = $params['OrderId'];
+        $entry->save();
         $result['breakdown'] = Yii::app()->order->getPaymentTransactions();
         echo json_encode($result);
     }

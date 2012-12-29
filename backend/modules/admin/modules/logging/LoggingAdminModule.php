@@ -30,6 +30,10 @@ class LoggingAdminModule extends ABaseAdminModule
                     "url" => array("/admin/logging/hotelRequest"),
                 ),
                 array(
+                    "label" => "Платежка",
+                    "url" => array("/admin/logging/payments"),
+                ),
+                array(
                     "label" => "WorkflowStates",
                     "url" => array("/admin/logging/workflowStates"),
                 ),
