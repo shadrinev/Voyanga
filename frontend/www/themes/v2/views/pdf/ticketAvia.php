@@ -56,7 +56,7 @@
                         </td>
                         <td class="tdNumberBooking">
                             <?php if($pKey===0): ?>
-                            <strong><?php echo $pnr; ?></strong>
+                            <strong><?php echo $pnr."<br>({$ticket->webService})"; ?></strong>
                             <?php endif; ?>
                         </td>
                         <td class="tdReserve">

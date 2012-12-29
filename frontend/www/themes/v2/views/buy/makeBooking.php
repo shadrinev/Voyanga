@@ -6,6 +6,44 @@
         initCredentialsPage();
     })
 </script>
+<script id="tariff-rules-template" type="text/html">
+
+    <div id="tariff-rules" class="body-popup">
+        <div id="layer">
+            <div class="pv_cont error">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div id="pv_box">
+                                <div class="contentText">
+                                    <div>
+                                        <h1 >Правила тарифов</h1>
+                                        <div data-bind="foreach: data.tariffs" style="color:#000; height: 40px; overflow: scroll">
+                                            <div class="tariff-route" data-bind="text: route"></div>
+                                            <div class="tariff-codes">
+                                                <div data-bind="foreach: codes">
+                                                    <span data-bind="text: code + '. '+ name"></span>
+                                                    <pre data-bind="text: content"></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p align="center">
+                                            <a href="#" class="btnBackMain" style="margin-top:40px"
+                                               data-bind="click: close">Закрыть</a>
+                                        </p>
+                                    </div>
+                                </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pv_switch">
+            </div>
+        </div>
+    </div>
+</script>
 <div id="content">
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
@@ -53,7 +91,7 @@
         </div>
         <div class="agreeConditions">
            <label for="agreeCheck">
-               <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и правилами тарифов', checked: 0}" name="agree" id="agreeCheck">
+               <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и <a onclick=\'window.app.itemsToBuy.showTariffRules()\'>правилами тарифов</a>', checked: 0}" name="agree" id="agreeCheck">
            </label>
         </div>
         <div class="btnBlue inactive" id='submit-passport'>

@@ -88,6 +88,21 @@ class SearchController extends ApiController
         }
     }
 
+    public function actionUpdateEvent()
+    {
+        print_r($_POST);
+        $items = $_POST['items'];
+        foreach($items as $item){
+            if($item['type'] == 'hotel'){
+                //$hotel = new Hotel($item['data']);
+                //print_r($hotel);
+            }else{
+                $flight = new FlightVoyage($item['data']);
+                print_r($flight);
+            }
+        }
+    }
+
     private function addAviaAsyncRequest($sp)
     {
         $url = Yii::app()->createAbsoluteUrl('/v1/flight/search/BE');

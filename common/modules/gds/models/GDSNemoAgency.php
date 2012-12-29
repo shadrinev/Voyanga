@@ -23,7 +23,8 @@ class GDSNemoAgency extends CComponent
             'BookFlight' => 'BookFlight',
             'Ticketing' => 'Ticketing',
             'AirAvail' => 'AirAvail',
-            'CancelBook' => 'CancelBook'
+            'CancelBook' => 'CancelBook',
+            'GetAirRules'=> 'GetAirRules'
         );
 
         if (!($wsdl = isset($methodMap[$methodName]) ? $methodMap[$methodName] : false))
@@ -608,20 +609,39 @@ class GDSNemoAgency extends CComponent
 
     }
 
-    public function FlightTariffRules()
+    public function FlightTariffRules($flightId)
     {
         $aParams = array(
             'Request' => array(
-                'Requisites' => array('Login' => Yii::app()->params['GDSNemo']['login'], 'Password' => Yii::app()->params['GDSNemo']['password']),
-                'RequestType' => 'U',
-                'UserID' => Yii::app()->params['GDSNemo']['userId'],
                 'GetAirRules' => array(
-                    'FlightId' => '89487'
+                    'FlightId' => $flightId
                 ),
+            ),
+            'Source' => array(
+                'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
+                'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                'Language' => 'RU',
+                'Currency' => 'RUB'
             )
         );
 
-        print_r(self::request('GetAirRules', $aParams));
+        $response = self::request('GetAirRules', $aParams);
+
+        $result = array();
+        if (isset($response->Response->GetAirRules->Rules->Rule))
+        {
+            UtilsHelper::soapObjectsArray($response->Response->GetAirRules->Rules->Rule);
+            foreach($response->Response->GetAirRules->Rules->Rule as $ruleInfo){
+                $ruleLine = array(
+                    'code'=>$ruleInfo->Code,
+                    'name'=>$ruleInfo->Name,
+                    'tariff'=>$ruleInfo->Tarrif,
+                    'content'=>$ruleInfo->RuleText
+                );
+                $result[$ruleLine['code']] = $ruleLine;
+            }
+        }
+        return $result;
     }
 
     public function humanReadable($soapResponse)

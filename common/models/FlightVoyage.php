@@ -13,11 +13,11 @@ class FlightVoyage extends CApplicationComponent
     const MASK_BEST_PRICETIME = 2;
 
     public $price;
-    //public $taxes;
+    private $_taxes = false;
     public $flightKey;
     /** @var Airline */
     public $valAirline;
-    //public $commission;
+    private $_commission = false;
     public $charges;
     public $flights;
     public $adultPassengerInfo;
@@ -63,21 +63,24 @@ class FlightVoyage extends CApplicationComponent
 
     public function getTaxes()
     {
-        $totalFare = 0;
-        $baseFare = 0;
-        if($this->adultPassengerInfo){
-            $totalFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->priceDetail;
-            $baseFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->baseFare;
+        if($this->_taxes === false){
+            $totalFare = 0;
+            $baseFare = 0;
+            if($this->adultPassengerInfo){
+                $totalFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->priceDetail;
+                $baseFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->baseFare;
+            }
+            if($this->childPassengerInfo){
+                $totalFare += $this->childPassengerInfo->count*$this->childPassengerInfo->priceDetail;
+                $baseFare += $this->childPassengerInfo->count*$this->childPassengerInfo->baseFare;
+            }
+            if($this->infantPassengerInfo){
+                $totalFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->priceDetail;
+                $baseFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->baseFare;
+            }
+            $this->_taxes = ($totalFare - $baseFare);
         }
-        if($this->childPassengerInfo){
-            $totalFare += $this->childPassengerInfo->count*$this->childPassengerInfo->priceDetail;
-            $baseFare += $this->childPassengerInfo->count*$this->childPassengerInfo->baseFare;
-        }
-        if($this->infantPassengerInfo){
-            $totalFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->priceDetail;
-            $baseFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->baseFare;
-        }
-        return ($totalFare - $baseFare);
+        return $this->_taxes;
     }
 
     public function getBaseFare()
@@ -97,7 +100,11 @@ class FlightVoyage extends CApplicationComponent
 
     public function getCommission()
     {
-        return $this->charges;
+        if($this->_commission === false)
+        {
+            $this->_commission = $this->charges;
+        }
+        return $this->_commission;
     }
 
     public function saveToOrderDb($groupId = null)
@@ -168,7 +175,13 @@ class FlightVoyage extends CApplicationComponent
 
     public function __construct($oParams)
     {
-        $this->price = $oParams->full_sum;
+        if(isset($oParams->full_sum))
+        {
+            $this->price = $oParams->full_sum;
+        }else{
+            $this->initFromJsonObject($oParams);
+            return true;
+        }
         //$this->taxes = $oParams->commission_price;
         $this->flightKey = $oParams->flight_key;
         //$this->commission = $oParams->commission_price;
@@ -211,6 +224,51 @@ class FlightVoyage extends CApplicationComponent
                 $this->flights[$iGroupId] = new Flight();
 
                 foreach ($aParts as $oPartParams)
+                {
+                    $oPart = new FlightPart($oPartParams);
+                    $this->flights[$iGroupId]->addPart($oPart);
+                }
+            }
+        }
+        else
+        {
+            throw new CException(Yii::t('application', 'Required param $oParams->parts not set.'));
+        }
+    }
+
+    private function initFromJsonObject($params)
+    {
+        if(isset($params['price']))
+        {
+            $this->price = $params['price'];
+        }
+        //$this->taxes = $oParams->commission_price;
+        $this->flightKey = $params['flightKey'];
+        //$this->commission = $oParams->commission_price;
+        $this->webService = $params['service'];
+        $this->charges = $params['commission'];
+        $this->refundable = $params['refundable'];
+        $this->_commission = $params['commission'];
+        $this->_taxes = $params['taxes'];
+
+        $this->flights = array();
+        //$this->searchKey = $oParams->searchId;
+        if (!$this->valAirline)
+        {
+            $this->valAirline = Airline::getAirlineByCode($params['valCompany']);
+        }
+        $iInd = 0;
+        $lastArrTime = 0;
+        $lastCityToId = 0;
+        $bStart = true;
+        if ($params['flights'])
+        {
+            foreach ($params['flights'] as $iGroupId => $aParts)
+            {
+                $iIndPart = 0;
+                $this->flights[$iGroupId] = new Flight();
+
+                foreach ($aParts['flightParts'] as $oPartParams)
                 {
                     $oPart = new FlightPart($oPartParams);
                     $this->flights[$iGroupId]->addPart($oPart);

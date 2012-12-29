@@ -388,6 +388,8 @@ ToursHotelsResultSet = (function(_super) {
 
     this.select = __bind(this.select, this);
 
+    this.findAndSelectSame = __bind(this.findAndSelectSame, this);
+
     this.findAndSelect = __bind(this.findAndSelect, this);
 
     this.newResults = __bind(this.newResults, this);
@@ -476,6 +478,22 @@ ToursHotelsResultSet = (function(_super) {
       result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0]);
     }
     if (!result) {
+      console.log('not found =(', result);
+      return false;
+    }
+    return this._selectRoomSet(result);
+  };
+
+  ToursHotelsResultSet.prototype.findAndSelectSame = function(result) {
+    console.log('find THRS ', result);
+    if (result.roomSet) {
+      result = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet));
+    } else {
+      console.log(ko.utils.unwrapObservable(result.roomSets));
+      result = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0]);
+    }
+    if (!result) {
+      console.log('not found =(', result);
       return false;
     }
     return this._selectRoomSet(result);
@@ -974,18 +992,24 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.findAndSelectItems = function(items) {
-    var entry, index, success, _i, _len;
+    var entry, index, result, success, _i, _len;
     console.log('findAndSelectItems', items);
     success = true;
     for (index = _i = 0, _len = items.length; _i < _len; index = ++_i) {
       entry = items[index];
       console.log('findAndSelectItems entry', entry, ' in ', index, this.data()[index]);
       if (this.data()[index].isAvia()) {
-        if (!this.data()[index].findAndSelect(this.data()[index].results().cheapest())) {
+        result = this.data()[index].findAndSelect(this.data()[index].results().cheapest());
+        if (!result) {
           success = false;
+          console.log('false res1:', result, this.data()[index], this.data()[index].results().cheapest());
         }
-      } else if (!this.data()[index].findAndSelect(entry)) {
-        success = false;
+      } else {
+        result = this.data()[index].findAndSelectSame(entry);
+        if (!result) {
+          success = false;
+          console.log('false res2:', result, this.data()[index], entry);
+        }
       }
     }
     return success;
@@ -1279,6 +1303,44 @@ TourTripResultSet = (function() {
     this.totalCostWithoutDiscount = 0;
     this.tour = false;
     this.additional = false;
+    this.flightIds = ko.observableArray([]);
+    this.flightIdsString = ko.computed(function() {
+      var resArr;
+      resArr = _this.flightIds();
+      return resArr.join(':');
+    });
+    this.showTariffRules = function() {
+      var aviaApi;
+      console.log('i wonna show tariff rules');
+      aviaApi = new AviaAPI();
+      return aviaApi.search('flight/search/tariffRules?flightIds=' + _this.flightIdsString(), function(data) {
+        var code, gp, item, key, tariff, tariffs, _i, _len, _ref, _ref1;
+        if (data) {
+          tariffs = [];
+          _ref = _this.items;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            item = _ref[_i];
+            if (item.isFlight && data[item._data.flightKey]) {
+              tariff = {};
+              tariff.route = "Перелет из " + item.departureCity() + " в " + item.arrivalCity();
+              tariff.codes = [];
+              _ref1 = data[item._data.flightKey];
+              for (key in _ref1) {
+                code = _ref1[key];
+                tariff.codes.push(code);
+              }
+              tariffs.push(tariff);
+            }
+          }
+          if (tariffs) {
+            console.log(tariffs);
+            return gp = new GenericPopup('#tariff-rules', {
+              'tariffs': tariffs
+            });
+          }
+        }
+      });
+    };
     this.flightCounterWord = ko.computed(function() {
       var res;
       if (_this.flightCounter() === 0) {
@@ -1304,6 +1366,7 @@ TourTripResultSet = (function() {
         _this.flightCounter(_this.flightCounter() + 1);
         _this.roundTrip = item.flights.length === 2;
         aviaResult = new AviaResult(item, _this);
+        _this.flightIds.push(aviaResult._data.flightKey);
         aviaResult.sort();
         aviaResult.totalPeople = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек');
         aviaResult.totalPeopleGen = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек');

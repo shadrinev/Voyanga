@@ -498,6 +498,13 @@ class AviaResult
         result.rtArrivalDateTime = @rtArrivalDate()
 
     return JSON.stringify(result)
+  getPostData: =>
+    result = {}
+    result.data = @_data
+    result.type = 'avia'
+    return result
+
+
 
 #
 # Result container
