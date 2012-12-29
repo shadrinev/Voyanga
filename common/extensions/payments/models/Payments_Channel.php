@@ -78,38 +78,62 @@ abstract class Payments_Channel {
 
     public function rebill($anchor)
     {
-        # FIXME FIXME FIXME doublecheck status
-        if($this->bill->transactionId)
-            return true;
-
         $allParams = $this->formParams();
+        $entry = PaymentLog::forMethod('rebill');
+        $entry->orderId = $allParams['OrderId'];
+ 
+        # FIXME FIXME FIXME doublecheck status
+        if($this->bill->transactionId) {
+            $entry->errorDescription = "Attemp to rebill bill with transaction, skipping";
+            $entry->save();
+            return true;
+        }
+
         $params['MerchantId'] = $allParams['MerchantId'];
         $params['RebillAnchor'] = $anchor;
         $params['OrderId'] = $allParams['OrderId'];
         $params['Amount'] = $allParams['Amount'];
         $params['Currency'] = $allParams['Currency'];
         $params['SecurityKey'] = $this->getSignature($params, 'rebill');
+        $entry->request = json_encode($params);
+        $entry->startProfile();
+        $entry->save();
         list($code,$result) = $this->callApi('transaction/rebill', $params);
-        
+        $entry->finishProfile();
+        $entry->response = json_encode($result);
+        $entry->save();
         if(strtolower($result['Result']) == 'ok')
             return true;
-        
         $e = new RebillError($this->rawResponse);
+        $entry->errorDescription = "RebillError: " . $this->rawResponse;
+        $entry->save();
         yii::app()->RSentryException->logException($e);
         return false;
     }
 
     public function refund()
     {
+        $allParams = $this->formParams();
+        $entry = PaymentLog::forMethod('refund');
+        $entry->orderId = $allParams['OrderId'];
+
         $params = Array();
         $params['MerchantId'] = $this->credentials['id'];
         //! FIXME: can this amount change?
 //        $params['Amount'] = sprintf("%.2f", $this->amount);//  $this->bill->amount);
         $params['TransactionId'] = $this->bill->transactionId;
         $params['SecurityKey'] = $this->getSignature($params);
+        $entry->request = json_encode($params);
+        $entry->save();
+        $entry->startProfile();
         list($code,$result) = $this->callApi('transaction/void', $params);
+        $entry->finishProfile();
+        $entry->response = json_encode($result);
+        $entry->save();
         if($result['Result'] == 'Ok')
             return true;
+        $entry->errorDescription = "RefundError: " . $this->rawResponse;
+        $entry->save();
         return false;
     }
 
@@ -131,7 +155,7 @@ abstract class Payments_Channel {
 //        Yii::trace('https://secure.payonlinesystem.com/payment/' . $url, "payments.channel.apicall");
 //        Yii::trace($data, "payments.channel.apicall");
 
-        //! FIXME TEMPORARY
+        //! FIXME SOMEHOW
         $this->rawResponse = $data;
         $result = array();
         if(strlen($data))

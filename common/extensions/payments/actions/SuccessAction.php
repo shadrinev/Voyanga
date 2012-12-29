@@ -5,15 +5,27 @@ Yii::import("common.extensions.payments.models.Bill");
 class SuccessAction extends CAction
 {
     protected $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey", "RebillAnchor"); 
+    protected $failure = false;
+    protected $logEntry;
+
     public function run()
     {
-        $params = Array();
+        if($this->failure)
+            $method = 'FailureCallback';
+        else
+            $method = 'SuccessCallback';
+        $this->logEntry = PaymentLog::forMethod($method);
+        $this->logEntry->response = json_encode($_REQUEST);
+        if(isset($_REQUEST['TransactionID']))
+            $this->logEntry->transactionId = $_REQUEST['TransactionID'];
+        if(isset($_REQUEST['OrderId']))
+            $this->logEntry->orderId = $_REQUEST['OrderId'];
         foreach($this->keys as $key)
         {
             if(!isset($_REQUEST[$key]))
             {
                 $e = new RequestError("$key not found.");
-                yii::app()->RSentryException->logException($e);
+                $this->handleException($e);
                 return;
             }
             $params[$key]=$_REQUEST[$key];
@@ -22,7 +34,7 @@ class SuccessAction extends CAction
         $parts = explode('-', $params['OrderId']);
         if(count($parts)<2) {
             $e = new RequestError("Wrong OrderId format: " . $params['OrderId']);
-            yii::app()->RSentryException->logException($e);
+            $this->handleException($e);
             return;
         }
         list($orderId, $billId) = $parts;
@@ -33,7 +45,7 @@ class SuccessAction extends CAction
         if($sign!=$params['SecurityKey'])
         {
             $e = new  SignatureError("Signature mismatch actual: ". $params['SecurityKey'] . ". Expected: " . $sign . ".");
-            yii::app()->RSentryException->logException($e);
+            $this->handleException($e);
 //            return;
         }
 
@@ -47,7 +59,10 @@ class SuccessAction extends CAction
 #            return;
         if($this->getStatus($booker)=='paymentInProgress')
             return;
+        $this->entryLog->startProfile();
         $this->handle($bill, $booker, $channel, $orderId);
+        $this->entryLog->finishProfile();
+        $this->entryLog->save();
     }
     protected function handle($bill, $booker, $channel, $orderId)
     {
@@ -55,19 +70,16 @@ class SuccessAction extends CAction
         // This could lead to data loss in current implementation
         // and thus not allowed
         if($bill->transactionId && ($_REQUEST['TransactionID']!=$bill->transactionId)) {
-            //! Fixme more specific exception?
-            $e = new RequestError("Bill #" . $bill->id . " already have transaction id");
-            yii::app()->RSentryException->logException($e);
+            //! Fixme not sure if we need to log this
+            $this->handleError("Bill #" . $bill->id . " already have transaction id");
 #            return;
         }
         $bill->transactionId = $_REQUEST['TransactionID'];
 
-//      return $this->rebill($orderId);
-
         if(!$this->isWaitingForPayment($booker)) {
            $e = new WrongOrderStateError("Wrong status" . $this->getStatus($booker));
-            yii::app()->RSentryException->logException($e);
-            return;
+           $this->handleException($e);
+           return;
         }
         $payments = Yii::app()->payments;
         $booker->status('paymentInProgress');
@@ -132,13 +144,13 @@ class SuccessAction extends CAction
                     $booker->status('refundedError');
                 else {
                     $e =  new RefundError("For bill" . $bill->id);
-                    yii::app()->RSentryException->logException($e);
+                    $this->handleException($e);
                 }
             } elseif($this->getStatus($booker)=='waitingForPayment') {
                 $booker->status('paymentCanceledError');
             } elseif($this->getStatus($booker)!='paymentError') {
                 $e = new WrongOrderStateError("Wrong status" . $this->getStatus($booker));
-                yii::app()->RSentryException->logException($e);
+                $this->handleException($e);
             }
         }
     }
@@ -175,5 +187,11 @@ class SuccessAction extends CAction
 //                return false;
         }
         $res = Yii::app()->cron->add(time() + 75, 'orderticketing', 'cron', array('orderId'=>$orderId));
+    }
+
+    protected function handleError($e) {
+        $this->logEntry->errorDescription = "Exception " . get_class($e) . ": " .  $e->getMessage();
+        $this->logEntry->save();
+        Yii::app()->RSentryException->logException($e);
     }
 }

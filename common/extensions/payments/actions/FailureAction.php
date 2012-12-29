@@ -4,6 +4,7 @@ Yii::import("common.extensions.payments.actions.SuccessAction");
 class FailureAction extends SuccessAction
 {
     protected $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey");
+    protected $failure = true;
 
     protected function handle($bill, $booker, $channel, $orderId)
     {
@@ -18,7 +19,7 @@ class FailureAction extends SuccessAction
             $bill->save();
             if(!$this->isWaitingForPayment($booker)) {
                 $e = new WrongOrderStateError("Wrong status" . $this->getStatus($booker));
-                yii::app()->RSentryException->logException($e);
+                $this->handleException($e);
                 return;
             }
             $this->rebill($orderId);
