@@ -68,7 +68,7 @@ $images = '/themes/v2';
                 <div class="constructor" style="position: static;">
                     <!-- BOARD CONTENT -->
                     <div class="board-content" data-bind="with: itemsToBuy.activePanel()" style="position: static;height: auto;">
-                        <!-- ko foreach: $data.panels -->
+                        <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender, beforeRemove: $data.beforeRemove} -->
                             <!-- ko if: $index()!=0 -->
                             <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
                             <!-- /ko -->
@@ -111,13 +111,13 @@ $images = '/themes/v2';
                                         </div>
                                     </td>
                                     <td class="tdAddTour">
-                                        <!-- ko if: ($data.isLast) -->
+                                        <!-- ko if: ($index()+1) == $length() -->
                                         <a href="#" class="add-tour" data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
                                         <!-- /ko -->
                                     </td>
 
-                                    <td class="tdPeople">
-                                        <!-- ko if: ($data.isLast) -->
+                                    <td class="tdPeople" data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
+                                        <!-- ko if: ($index()+1) == $length() -->
                                         <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}">
                                           <div class="how-many-man hotel">
                                               <!-- ko foreach: rawRooms -->
@@ -166,7 +166,7 @@ $images = '/themes/v2';
                                         <!-- /ko -->
                                     </td>
                                     <td class="tdButton">
-                                        <!-- ko if: ($data.isLast) -->
+                                        <!-- ko if: ($index()+1) == $length() -->
                                         <div class="btn-find inactive" data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
                                         <!-- /ko -->
                                     </td>

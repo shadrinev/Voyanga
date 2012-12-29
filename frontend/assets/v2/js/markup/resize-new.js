@@ -1567,7 +1567,8 @@ $(function(){
 
 
 function resizePanel(arg) {
-    $('.panelTable').each(function(){
+    $('.panelTable').each(function(index){
+
         var _panelTable = $(this);//$('.panel').last().find('.panelTable');
         var _classThis;
         var _midWidth = 1130;
@@ -1575,6 +1576,8 @@ function resizePanel(arg) {
         var _newMean;
 
         var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
+        //_panelTable.find('.tdPeople').css('width', 'auto');
+
         if (_panelTable.hasClass('avia')) {
             _classThis = 'avia';
 	        var _meanPanel = 850;
@@ -1587,6 +1590,12 @@ function resizePanel(arg) {
             var _howManyInput = 2;
         }  else if (_panelTable.hasClass('constructorTable')) {
             _classThis = 'constructorTable';
+            if ($(this).find('.tdPeople').hasClass('notFinal')) {
+                $(this).find('.tdPeople.notFinal').css('width', $('.tdPeople.final').width()+'px');
+            }
+            else if ($(this).find('.tdPeople').hasClass('final')) {
+                //$(this).find('.tdPeople.final').css('width', 'auto');
+            }
             var _meanPanel = 692;
             var _widthTdTumblr = 0;
             var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
@@ -1623,18 +1632,24 @@ function resizePanel(arg) {
 
         if (_widthPanelTable >= _allWidthPanel) {
             _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+        console.log('=1=');
         }
         else if (_widthPanelTable < _allWidthPanel) {
             _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+            console.log('=2=');
         }
         else {
             _newMean = (_widthPanelTable - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+            console.log('=3=');
         }
 
 
         _panelTable.find('.tdCity').find('.data').css('width', _newMean +'px');
         _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
         _widthPanelTable = _panelTable.innerWidth();
+
+
+        console.log(index + '=== THIS LOOOK ===' + _newMean)
 	//$('.panel:not(:last)').css('width', _widthPanelTable+'px');
 
     });

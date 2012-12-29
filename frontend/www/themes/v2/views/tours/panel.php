@@ -51,7 +51,7 @@
                        data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
                     <!-- /ko -->
                 </td>
-                <td class="tdPeople">
+                <td class="tdPeople" data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
                     <!-- ko if: ($index()+1) == $length() -->
                     <span
                         data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}"></span>

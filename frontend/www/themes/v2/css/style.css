@@ -3986,3 +3986,11 @@ a.whereData span {
     color: #1c81bb;
     text-decoration: underline;
 }
+.tariffStyle {
+    background: none repeat scroll 0 0 #CCCCCC;
+    border: 1px solid;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: 15px;
+    padding: 20px;
+}

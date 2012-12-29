@@ -15,10 +15,14 @@
 .panelTable tr td.tdPeople {
     padding-left: 20px;
     padding-right: 18px;
-    min-width: 55px;
+
+}
+.panelTable tr td.tdAddTour {
+    min-width: 117px;
 }
 .panelTable tr td.tdButton {
     text-align: center;
+    min-width: 90px;
 }
 .panelTable tr td.tdCity .data {
     display: inline-block;
