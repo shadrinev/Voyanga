@@ -8,41 +8,24 @@
 </script>
 <script id="tariff-rules-template" type="text/html">
 
-    <div id="tariff-rules" class="body-popup">
-        <div id="layer">
-            <div class="pv_cont error">
-                <table cellspacing="0" cellpadding="0">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div id="pv_box">
-                                <div class="contentText">
-                                    <div>
-                                        <h1 >Правила тарифов</h1>
-                                        <div data-bind="foreach: data.tariffs" style="color:#000; height: 40px; overflow: scroll">
-                                            <div class="tariff-route" data-bind="text: route"></div>
-                                            <div class="tariff-codes">
-                                                <div data-bind="foreach: codes">
-                                                    <span data-bind="text: code + '. '+ name"></span>
-                                                    <pre data-bind="text: content"></pre>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p align="center">
-                                            <a href="#" class="btnBackMain" style="margin-top:40px"
-                                               data-bind="click: close">Закрыть</a>
-                                        </p>
-                                    </div>
-                                </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="pv_switch">
+    <div id="tariff-rules" style="display: block;" class="contentWrapBg">
+        <div class="wrapDiv">
+            <div class="wrapContent">
+                <h1 >Правила тарифов</h1>
+                <div data-bind="foreach: data.tariffs" style="color:#000;">
+                    <div class="tariff-route" data-bind="text: route"></div>
+                    <div class="tariff-codes">
+                        <div class="tariffStyle" data-bind="foreach: codes">
+                            <span data-bind="text: code + '. '+ name"></span>
+                            <pre data-bind="text: content"></pre>
+                        </div>
+                    </div>
+                </div>
+                <div data-bind="click: close" class="boxClose"></div>
             </div>
         </div>
     </div>
+
 </script>
 <div id="content">
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
