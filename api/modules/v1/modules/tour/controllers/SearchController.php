@@ -94,8 +94,8 @@ class SearchController extends ApiController
         $items = $_POST['items'];
         foreach($items as $item){
             if($item['type'] == 'hotel'){
-                //$hotel = new Hotel($item['data']);
-                //print_r($hotel);
+                $hotel = new Hotel($item['data']);
+                print_r($hotel);
             }else{
                 //$flight = new FlightVoyage($item['data']);
                 //print_r($flight);

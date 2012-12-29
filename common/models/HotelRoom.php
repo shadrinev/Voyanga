@@ -87,14 +87,15 @@ class HotelRoom extends CApplicationComponent
                 $this->{$attrName} = $params[$attrName];
             }
         }
-        if(isset($params['roomNameNemo'])){
-            $this->roomName = $params['roomNameNemo'];
+        if(isset($params['roomNemoName'])){
+            $this->roomName = $params['roomNemoName'];
             $this->_showName = $params['showName'];
             $this->mealName = $params['meal'];
             $this->mealBreakfastName = $params['mealBreakfast'];
             $this->sizeName = $params['size'];
             $this->sizeId = array_search($this->sizeName, RoomNamesNemo::$roomSizes);
             $this->typeName = $params['type'];
+            $this->viewName = $params['view'];
             $this->_showName = $params['showName'];
             $this->_showName = $params['showName'];
         }
