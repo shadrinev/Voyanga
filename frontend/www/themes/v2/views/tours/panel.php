@@ -4,7 +4,6 @@
     <div class="panel">
         <table class="panelTable constructorTable">
             <tr>
-
                 <td class="tdCityStart">
                     <div class="cityStart">
                         <!-- ko if: ($index() ==0) -->
@@ -33,9 +32,9 @@
                                 <div class="center"></div>
                                 <div class="right"></div>
                             </div>
-                            <input type="text" tabindex="-1" class="input-path">
                             <input type="text" placeholder="Куда едем?" class="second-path"
                                    data-bind="hasfocus: hasfocus, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}">
+                            <input type="text" tabindex="-1" class="input-path">
 
                             <div class="date"
                                  data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}">

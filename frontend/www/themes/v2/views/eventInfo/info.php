@@ -73,9 +73,9 @@ $images = '/themes/v2';
                             <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
                             <!-- /ko -->
                         <div class="panel">
-                            <table class="constructorTable">
-                                <tbody><tr>         
-                                    <td class="tdCity">
+                            <table class="panelTable constructorTable">
+                                <tr>
+                                    <td class="tdCityStart">
                                         <div class="cityStart">
                                             <!-- ko if: $index()==0 || ($parent.isFirst()) -->
                                             <div class="to">
@@ -93,23 +93,31 @@ $images = '/themes/v2';
                                             </div>
                                             <!-- /ko -->
                                         </div>
-                                        <div class="from" data-bind="css: {active: checkIn()}">
-                                            <div class="bgInput">
-                                                <div class="left"></div>
-                                                <div class="center"></div>
-                                                <div class="right"></div>
+                                    </td>
+                                    <td class="tdCity">
+                                        <div class="data">
+                                            <div class="from" data-bind="css: {active: checkIn()}">
+                                                <div class="bgInput">
+                                                    <div class="left"></div>
+                                                    <div class="center"></div>
+                                                    <div class="right"></div>
+                                                </div>
+                                                <input type="text" placeholder="Куда едем?" class="second-path" data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}" autocomplete="off">
+                                                <input type="text" tabindex="-1" class="input-path">
+
+                                                <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
+                                                <div class="date noDate" data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
                                             </div>
-                                            <input type="text" tabindex="-1" class="input-path">
-                                            <input type="text" placeholder="Куда едем?" class="second-path" data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}" autocomplete="off">
-                                            <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
-                                            <div class="date noDate" data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
                                         </div>
+                                    </td>
+                                    <td class="tdAddTour">
                                         <!-- ko if: ($data.isLast) -->
                                         <a href="#" class="add-tour" data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
                                         <!-- /ko -->
                                     </td>
-                                    <!-- ko if: ($data.isLast) -->
+
                                     <td class="tdPeople">
+                                        <!-- ko if: ($data.isLast) -->
                                         <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}">
                                           <div class="how-many-man hotel">
                                               <!-- ko foreach: rawRooms -->
@@ -155,13 +163,16 @@ $images = '/themes/v2';
                                               </div>
                                            </div>
                                         </span>
+                                        <!-- /ko -->
                                     </td>
                                     <td class="tdButton">
+                                        <!-- ko if: ($data.isLast) -->
                                         <div class="btn-find inactive" data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
+                                        <!-- /ko -->
                                     </td>
-                                    <!-- /ko -->
+
                                 </tr>
-                            </tbody></table>
+                            </table>
                         </div>
 
 
