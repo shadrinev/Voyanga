@@ -50,7 +50,7 @@
         <?php $this->renderPartial('_buyer', array('model' => $bookingForm, 'hide'=>false)); ?>
     </form>
     <div class="paybuyEnd" id="loadPayFly">
-        <div class="loadJet">
+        <div class="loadJet" style="display: none">
             <div class="pathBlock">
                 <div class="overflowBlock">
                     <div class="linePath"></div>
