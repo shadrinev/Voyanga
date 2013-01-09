@@ -1035,19 +1035,22 @@ function loadPayFly() {
 	_loadJet.find('.pathBlock').eq(1).attr('id','grey');
 	
 	function startFlyJet() {
-		_loadJet.find('#grey').animate({'width' : '1%'}, 20200, 'linear', function() {
-			_loadJet.find('#grey').css('opacity','0').css('width', '100%');
-			setTimeout(function() {
-				_loadJet.find('#grey').animate({'opacity':'1'},1000, function() {
-					startFlyJet();
-				});
-			}, 3000);
-		});
-		_Jet.animate({'right' : '0%'}, 20000, 'linear', function() {
-			$(this).animate({'right' : '-241px'}, 4000, 'linear', function() {
-				$(this).css('right', '100%');
-			});
-		});
+        _Jet.animate({'right' : '0%'}, 20000, 'linear', function() {
+            $(this).animate({'right' : '-241px'}, 4000, 'linear', function() {
+                $(this).css('right', '100%');
+            });
+        });
+        setTimeout(function() {
+            _loadJet.find('#grey').animate({'width' : '0%'}, 20000, 'linear', function() {
+    			_loadJet.find('#grey').css('opacity','0').css('width', '100%');
+    			setTimeout(function() {
+    				_loadJet.find('#grey').animate({'opacity':'1'}, 1000, function() {
+    					startFlyJet();
+    				});
+    			}, 4500);
+            });
+        }, 500);
+
 	}
 	
 	startFlyJet();
