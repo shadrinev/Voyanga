@@ -846,8 +846,13 @@ function jsPaneScrollHeight() {
 }
 
 function scrollValue(what, event) {
-	var filterContent = $('.filter-content.'+ what)
-	if (filterContent.length > 0 && filterContent.is(':visible') && !$(event.target).is('#scroll-pane')) {		
+	var filterContent = $('.filter-content.'+ what);
+    var isScrollPane;
+    if(event.target == document)
+	isScrollPane = false;
+    else
+	isScrollPane = $(event.target).is('#scroll-pane');
+    if (filterContent.length > 0 && filterContent.is(':visible') && !isScrollPane) {		
 		var innerFilter = filterContent.find('.innerFilter');
 		var var_marginTopSubHead = $('.sub-head').css('margin-top');
 		var var_scrollValueTop = $(window).scrollTop();
