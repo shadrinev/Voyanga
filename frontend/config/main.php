@@ -14,8 +14,9 @@ Yii::setPathOfAlias('frontend', $root . '/frontend');
 Yii::setPathOfAlias('uploads', $root . '/frontend/www/uploads');
 
 $frontendMainLocal = file_exists('frontend/config/main-local.php') ? require('frontend/config/main-local.php') : array();
-$packagesJs = require('frontend/assets/v2/coffee/app/packages.php');
-$packagesCss = require('frontend/www/themes/v2/css/packages.php');
+$packagesJs = require('frontend/assets/v2/coffee/app/packagesJs.php');
+$packagesCss = require('frontend/assets/v2/coffee/app/packagesCss.php');
+
 
 return CMap::mergeArray(
     require_once ('common/config/main.php'),

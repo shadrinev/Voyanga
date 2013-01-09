@@ -1,4 +1,5 @@
 $(function () {
+    loadPayFly();
     var avia, hotels, tour;
     window.app = new Application();
     avia = new AviaModule();
@@ -79,7 +80,6 @@ $(function () {
                 ids = [];
             disableAllFieldsAndHideButton();
             $('#loadPayFly').find('.armoring').show();
-            loadPayFly();
             $('#loadPayFly').find('.loadJet').show();
             $.ajax({
                 type: 'POST',

@@ -1,0 +1,1 @@
+watch-less -d ./frontend/assets/v2/less -e css -c -opt 2 -o ./frontend/assets/v2/css
