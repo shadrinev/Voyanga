@@ -7,10 +7,11 @@
  */
 class FlightManager
 {
-    static public function injectForBe($flightVoyages, $injectSearchParams=false)
+    static public function injectForBe($flightVoyages, $injectSearchParams = false)
     {
         $newFlights = array();
-        try{
+        try
+        {
             foreach ($flightVoyages as $key => $flight)
             {
                 $newFlight = $flight;
@@ -30,8 +31,9 @@ class FlightManager
         }
         catch (Exception $e)
         {
-            Yii::log('Error: '.$e->getMessage(),". Data: ".CVarDumper::dumpAsString($flightVoyages), CLogger::LEVEL_ERROR);
-            throw $e;
+            $newException = new Exception("Error: ".$e->getMessage()." Data: ".CVarDumper::dumpAsString($flightVoyages));
+            Yii::app()->RSentryException->logException($newException);
+            return $newFlights;
         }
     }
 
@@ -61,9 +63,13 @@ class FlightManager
             $criteria->compare('`dateBack`', '0000-00-00');
             $cacheItem = FlightCache::model()->find($criteria);
             if ($cacheItem)
+            {
                 $value = $cacheItem->priceBestPrice * $flightSearchParams->totalPassengers;
+            }
             else
+            {
                 $value = false;
+            }
             $result[] = $value;
         }
         return $result;
@@ -113,7 +119,9 @@ class FlightManager
                 $criteria->compare('`dateBack`', $siblingDayBack->format('Y-m-d'));
                 $cacheItem = FlightCache::model()->find($criteria);
                 if ($cacheItem)
+                {
                     $value = ceil(($cacheItem->priceBestPrice * $flightSearchParams->totalPassengers) / 2);
+                }
                 else
                 {
                     $value = false;
