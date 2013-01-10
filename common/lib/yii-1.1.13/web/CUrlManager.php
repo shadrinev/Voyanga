@@ -358,7 +358,7 @@ class CUrlManager extends CApplicationComponent
 	{
 		if($this->getUrlFormat()===self::PATH_FORMAT)
 		{
-			$rawPathInfo=$request->getPathInfo();
+			$rawPathInfo=str_replace('//','/',$request->getPathInfo());
 			$pathInfo=$this->removeUrlSuffix($rawPathInfo,$this->urlSuffix);
 			foreach($this->_rules as $i=>$rule)
 			{
