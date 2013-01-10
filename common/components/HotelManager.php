@@ -19,17 +19,17 @@ class HotelManager
             $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
             $endTime = microtime(true);
 
-            Header('ExecutionTimeFullSearch:'.($endTime - $startTime));
+            //Header('ExecutionTimeFullSearch:'.($endTime - $startTime));
             $startTime = microtime(true);
             self::storeToCache($hotelSearchParams, $variants);
             $endTime = microtime(true);
 
-            Header('ExecutionTimeStoreToCache:'.($endTime - $startTime));
+            //Header('ExecutionTimeStoreToCache:'.($endTime - $startTime));
             $startTime = microtime(true);
             Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
             $endTime = microtime(true);
 
-            Header('ExecutionTimeRateInject:'.($endTime - $startTime));
+            //Header('ExecutionTimeRateInject:'.($endTime - $startTime));
             //Yii::app()->pCache->set('variantsHotels',$variants,3600);
         //}
         $results = array();
