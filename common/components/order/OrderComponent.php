@@ -443,7 +443,7 @@ class OrderComponent extends CApplicationComponent
             'orderBookingId'=>$orderBooking->readableId,
             'email'=>$orderBooking->email
         ),$pdfFileNames);
-
+        SmsManager::sendSmsOrderInfo($orderBooking->phone,array('email'=>$orderBooking->email,'orderBookingId'=>$orderBooking->readableId));
     }
 
     public function getOrderBooking()

@@ -1762,15 +1762,17 @@ class HotelBookClient
             <Reference>152336046</Reference>
           </BookingDetails>
          */
+
+
         $responseObject = simplexml_load_string($response);
         $hotelOrderConfirmResponse = new HotelOrderConfirmResponse();
-        $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order->Id;
+        $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order['Id'];
         $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
         $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
         if($responseObject->Order->ItemList){
             UtilsHelper::soapObjectsArray($responseObject->Order->ItemList->Item);
             foreach($responseObject->Order->ItemList->Item as $itemSXE){
-                $key = (string)$itemSXE->Id;
+                $key = (string)$itemSXE['Id'];
                 if(isset($itemSXE->Voucher->BookingDetails->Supplier))
                     $hotelOrderConfirmResponse->suppliers[$key] = (string)$itemSXE->Voucher->BookingDetails->Supplier;
                 if(isset($itemSXE->Voucher->BookingDetails->Reference))

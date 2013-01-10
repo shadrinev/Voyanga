@@ -1,0 +1,1 @@
+Заказ <?php echo $orderBookingId; ?> готов. Подробности высланы на <?php echo $email; ?>
