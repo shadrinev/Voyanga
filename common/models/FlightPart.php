@@ -66,7 +66,7 @@ class FlightPart
             $this->bookingCodes = $oParams->aBookingCodes;
         }else{
             $this->departureCityId = $oParams['departureCityId'];
-            $this->arrivalCityId = $oParams['departureCityId'];
+            $this->arrivalCityId = $oParams['arrivalCityId'];
             $this->timestampBegin = strtotime($oParams['datetimeBegin']);
             $this->timestampEnd = strtotime($oParams['datetimeEnd']);
             $this->datetimeBegin = $oParams['datetimeBegin'];

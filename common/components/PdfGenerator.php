@@ -28,6 +28,7 @@ class PdfGenerator extends CApplicationComponent
             while($loop){
                 $loop = false;$voucherInfo = $this->hotelClient->voucher($hotelBooker->orderId);
                 $voucherAvailable = true;
+                UtilsHelper::soapObjectsArray($voucherInfo->voucherAvailable);
                 foreach($voucherInfo->voucherAvailable as $avail)
                     $voucherAvailable &= ($avail ? $avail !='0' ? true : false : false);
                 if($voucherAvailable){

@@ -91,16 +91,64 @@ class SearchController extends ApiController
     public function actionUpdateEvent()
     {
         print_r($_POST);
+        $event = Event::model()->findByPk($_POST['eventId']);
+        if(isset($_POST['startCity'])){
+            $startCity = City::getCityByCode($_POST['startCity']);
+        }
+
+        foreach($event->tours as $tour){
+
+            if($tour->startCityId == $startCity->id){
+                echo "find startCity";
+                break;
+            }else{
+                echo "cid : ".$tour->startCityId;
+            }
+            $tour = null;
+        }
+        if($tour){
+            //print_r($tour);
+        }
+        if($tour->order){
+            //print_r($tour->order);
+        }
         $items = $_POST['items'];
         foreach($items as $item){
             if($item['type'] == 'hotel'){
+                $item['data']['cityId'] = City::getCityByCode($item['data']['cityCode'])->hotelbookId;
+                $item['data']['rubPrice'] = $item['data']['discountPrice'];
+                $item['data']['comparePrice'] = $item['data']['discountPrice'];
                 $hotel = new Hotel($item['data']);
-                print_r($hotel);
+                //print_r($hotel->getJsonObject());
+                $cityId = $hotel->city->id;
+                foreach($tour->order->hotelItems as $hotelItem){
+                    if($hotelItem->cityId == $cityId && $hotelItem->checkIn == $hotel->checkIn){
+                        $hotelItem->object = serialize($hotel);
+                        $hotelItem->save();
+                    }
+                    //print_r($hotelItem);
+                }
             }else{
-                //$flight = new FlightVoyage($item['data']);
+                $flight = new FlightVoyage($item['data']);
                 //print_r($flight);
+                foreach($flight->flights as $flightKey=>$fl){
+                    foreach($tour->order->flightItems as $flightItem){
+                        if($flightItem->departureCity == $flight->getDepartureCity($flightKey)->id
+                            && $flightItem->arrivalCity == $flight->getArrivalCity($flightKey)->id
+                            && $flightItem->departureDate == date('Y-m-d',strtotime($flight->getDepartureDate($flightKey))) ){
+                            $flightItem->object = serialize($flight);
+                            echo "update ".$flightItem->id." flight";
+                            $flightItem->save();
+                            break;
+                        }else{
+                            echo "notUpdate ".$flightItem->id." flight ".$flightItem->departureCity.'|'.$flight->getDepartureCity()->id.'|'.$flightItem->arrivalCity.'|'.$flight->getArrivalCity()->id.'|'.$flightItem->departureDate.'|'.$flight->getDepartureDate();
+                            //print_r($flight->getJsonObject());die();
+                        }
+                    }
+                }
             }
         }
+
     }
 
     private function addAviaAsyncRequest($sp)
