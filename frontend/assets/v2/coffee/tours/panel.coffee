@@ -112,11 +112,9 @@ class TourPanelSet
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
-    console.log 'showPanelCalendar', args
 
   # calendar handler
   setDate: (values) =>
-    console.log 'Calendar selected:', values
     if values && values.length
       @activeCalendarPanel().checkIn values[0]
       maxDate = @activeCalendarPanel().checkIn()
@@ -180,7 +178,6 @@ class TourPanel extends SearchPanel
       @trigger "tourPanel:hasFocus", @
 
     @city.subscribe (newValue) =>
-      console.log('city changed!!!!!!!!')
       if @sp.calendarActivated()
         @showCalendar()
 
@@ -188,19 +185,14 @@ class TourPanel extends SearchPanel
     handlePanelSubmit(false)
 
   handlePanelSubmit: (onlyHash = true)=>
-    console.log('onlyHash', onlyHash)
     if onlyHash
       app.navigate @sp.getHash(), {trigger: true}
     else
       url = '/#' + @sp.getHash()
       if @startParams == url
-        # Need save data to server, because get have limit 2048 bytes
-        #url += 'oldSelecton/'+encodeURIComponent(JSON.stringify(@selectedParams))
         url += 'eventId/' + @selectedParams.eventId
 
 
-      console.log('go url', url, 'length', url.length)
-      #return
       window.location.href = url
 
   saveStartParams: ()=>

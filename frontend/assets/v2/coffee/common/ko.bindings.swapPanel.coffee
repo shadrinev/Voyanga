@@ -4,4 +4,5 @@ ko.bindingHandlers.swapPanel =
     $(element).off 'click'
     $(element).on 'click', ->
       newHref = value.to
+      console.log "switching to " + newHref
       window.app.navigate newHref, {'trigger': true}

@@ -161,13 +161,11 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
-    this.activeCalendarPanel(args[0]);
-    return console.log('showPanelCalendar', args);
+    return this.activeCalendarPanel(args[0]);
   };
 
   TourPanelSet.prototype.setDate = function(values) {
     var maxDate;
-    console.log('Calendar selected:', values);
     if (values && values.length) {
       this.activeCalendarPanel().checkIn(values[0]);
       maxDate = this.activeCalendarPanel().checkIn();
@@ -256,7 +254,6 @@ TourPanel = (function(_super) {
       return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
-      console.log('city changed!!!!!!!!');
       if (_this.sp.calendarActivated()) {
         return _this.showCalendar();
       }
@@ -272,7 +269,6 @@ TourPanel = (function(_super) {
     if (onlyHash == null) {
       onlyHash = true;
     }
-    console.log('onlyHash', onlyHash);
     if (onlyHash) {
       return app.navigate(this.sp.getHash(), {
         trigger: true
@@ -282,7 +278,6 @@ TourPanel = (function(_super) {
       if (this.startParams === url) {
         url += 'eventId/' + this.selectedParams.eventId;
       }
-      console.log('go url', url, 'length', url.length);
       return window.location.href = url;
     }
   };
