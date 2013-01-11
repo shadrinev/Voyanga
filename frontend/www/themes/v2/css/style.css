@@ -3946,9 +3946,7 @@ a.whereData span {
     height: 27px;
     line-height: 27px;
     padding-left: 40px;
-    margin: 0;
-    margin-bottom: 20px;
-    margin-top: 50px;
+    margin: 50px 0px 20px;
     font-weight: normal;
 }
 #payments-ok h2 {
@@ -3958,9 +3956,7 @@ a.whereData span {
     height: 27px;
     line-height: 27px;
     padding-left: 40px;
-    margin: 0;
-    margin-bottom: 20px;w
-    margin-top: 50px;
+    margin: 50px 0px 20px;
     font-weight: normal;
 }
 #payments-fail h2 {
@@ -3970,9 +3966,7 @@ a.whereData span {
     height: 27px;
     line-height: 27px;
     padding-left: 40px;
-    margin: 0;
-    margin-bottom: 20px;
-    margin-top: 50px;
+    margin: 50px 0px 20px;
     font-weight: normal;
 }
 #payments-waiting, #payments-fail, #payments-ok {
