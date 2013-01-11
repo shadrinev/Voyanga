@@ -11,8 +11,10 @@ class FailureAction extends SuccessAction
         $haveRebillAnchor = isset($_REQUEST["RebillAnchor"]);
         //! It is failed transaction it is safe to save transaction id
         // Have to check if this could happen in production
-        if(!$haveRebillAnchor)
+        if(!$haveRebillAnchor) {
             $bill->transactionId = $_REQUEST['TransactionID'];
+            $bill->save();
+        }
 
        if($bill->getChannel()->getName() == 'gds_galileo'){
             $bill->channel = 'ltr';
