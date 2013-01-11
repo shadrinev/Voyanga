@@ -13,7 +13,7 @@
     <div class="rating"  data-bind="visible: rating">
 		<div class="textRating" onmouseover="ratingHoverActive(this)" onmouseout="ratingHoverNoActive(this)">
 	        <span class="value" data-bind="text: rating"></span>
-	        <span class="text">рейтинг<br>отеля</span>
+	        <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
 	    </div>
 	    <div class="descrRating">
 	    	<strong>4.5 из 5 баллов</strong>

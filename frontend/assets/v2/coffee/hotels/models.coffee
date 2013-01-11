@@ -364,14 +364,19 @@ class HotelResult
     set = new RoomSet data, @, @duration
     set.resultId = data.resultId
     set.searchId = data.searchId
+    if @hotelId == '17897'
+      console.log('setPrice',set.price)
     if @roomSets().length == 0
       @cheapest = set.price
       @cheapestSet = set  
       @minPrice = set.pricePerNight
       @maxPrice = set.pricePerNight
     else
+      #@cheapestSet = if set.price < @cheapest then set else @cheapestSet
+      if set.price < @cheapest
+        @cheapestSet = set
+        console.log('set cheapest setPrice',set.price)
       @cheapest = if set.price < @cheapest then set.price else @cheapest
-      @cheapestSet = if set.price < @cheapest then set else @cheapestSet 
       @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
       @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
