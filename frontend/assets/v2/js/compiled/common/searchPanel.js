@@ -74,7 +74,6 @@ SearchPanel = (function() {
     heightSubHead = $('.sub-head').height();
     heightCalendar1 = $('.calenderWindow').height();
     heightCalendar2 = heightSubHead;
-    console.log('toggle calendarRR');
     if (!minimizedCalendar) {
       this.calendarHidden(false);
       if (!initialize) {

@@ -112,15 +112,15 @@ Application = (function(_super) {
   };
 
   Application.prototype.minimizeCalendar = function() {
-    return this.activeSearchPanel().minimizedCalendar(true);
+    if (this.activeSearchPanel()) {
+      return this.activeSearchPanel().minimizedCalendar(true);
+    }
   };
 
   Application.prototype.reRenderCalendar = function(elements) {
     var _this = this;
-    console.log('rerender calendar');
     VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
     this.fakoPanel.subscribe(function(newPanel) {
-      console.log('now set new panel', newPanel);
       if (newPanel.panels) {
         return _this.activeSearchPanel(_.last(newPanel.panels()));
       }
@@ -167,6 +167,7 @@ Application = (function(_super) {
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       window.voyanga_debug("APP: routing", args);
       if (this.panel() === void 0 || (prefix !== this.activeModule())) {
+        this.minimizeCalendar();
         window.voyanga_debug("APP: switching active module to", prefix);
         this.activeModule(prefix);
         window.voyanga_debug("APP: activating panel", ko.utils.unwrapObservable(module.panel));
@@ -247,7 +248,6 @@ Application = (function(_super) {
   };
 
   Application.prototype.isEvent = function() {
-    console.log('Checking isEvent ', this.activeView());
     return this.activeView() === 'tours-index';
   };
 
