@@ -113,8 +113,15 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.deletePanel = function(elem) {
-    this.sp.destinations.remove(elem.city);
+    var index;
+    console.log("Panels before", this.panels());
+    console.log("Destinations before", this.sp.destinations());
+    console.log("Elem", elem);
+    index = this.panels.indexOf(elem);
     this.panels.remove(elem);
+    this.sp.destinations.splice(index, 1);
+    console.log("Panels after", this.panels());
+    console.log("Destinations after", this.sp.destinations());
     return _.last(this.panels()).isLast(true);
   };
 
@@ -216,10 +223,8 @@ TourPanel = (function(_super) {
     this.handlePanelSubmitToMain = __bind(this.handlePanelSubmitToMain, this);
 
     var _this = this;
-    window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this, isFirst, true);
     this.toggleSubscribers.dispose();
-    console.log('try dispose subscribe');
     _.extend(this, Backbone.Events);
     this.hasfocus = ko.observable(false);
     this.sp = sp;

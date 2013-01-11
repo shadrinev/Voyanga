@@ -76,8 +76,14 @@ class TourPanelSet
     _.last(@panels()).saveStartParams()
 
   deletePanel: (elem) =>
-    @sp.destinations.remove(elem.city)
+    console.log "Panels before", @panels()
+    console.log "Destinations before", @sp.destinations()
+    console.log "Elem", elem
+    index = @panels.indexOf(elem)
     @panels.remove(elem)
+    @sp.destinations.splice(index,1)
+    console.log "Panels after", @panels()
+    console.log "Destinations after", @sp.destinations()
     _.last(@panels()).isLast(true)
 
   isFirst: =>
@@ -138,10 +144,8 @@ class TourPanelSet
 
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
-    window.voyanga_debug "TourPanel created"
     super(isFirst, true)
     @toggleSubscribers.dispose();
-    console.log('try dispose subscribe');
     _.extend @, Backbone.Events
 
     @hasfocus = ko.observable false
