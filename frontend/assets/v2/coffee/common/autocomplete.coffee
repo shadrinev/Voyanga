@@ -1,5 +1,6 @@
 ko.bindingHandlers.autocomplete =
   init: (element, valueAccessor) ->
+    showCode = (if valueAccessor().showCode is `undefined` then valueAccessor().showCode else true)
     setTimeout ()=>
       $(element).bind "focus", ->
         $(element).change()
@@ -11,6 +12,7 @@ ko.bindingHandlers.autocomplete =
         zIndex: 9999 # z-index списка
         deferRequestBy: 0 # Задержка запроса (мсек), на случай, если мы не хотим слать миллион запросов, пока пользователь печатает. Я обычно ставлю 300.
         delay: 0
+        showCode: showCode
         onSelect: (value, data) -> # Callback функция, срабатывающая на выбор одного из предложенных вариантов,
           valueAccessor().iata(data.code)
           valueAccessor().readable(data.name)

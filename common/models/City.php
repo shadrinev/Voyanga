@@ -260,27 +260,27 @@ class City extends CActiveRecord
             $items = array();
             $cityIds = array();
 
-            if (strlen($query) == 3)
-            {
-                $criteria = new CDbCriteria();
-                $criteria->limit = $currentLimit;
-                $criteria->params[':code'] = $query;
-                $criteria->addCondition('t.code = :code');
-                $criteria->addCondition('t.hotelbookId > 0');
-                $criteria->with = 'country';
-                /** @var  City[] $cities  */
-                $cities = City::model()->findAll($criteria);
+            //try to search via code
+            $criteria = new CDbCriteria();
+            $criteria->limit = $currentLimit;
+            $criteria->params[':code'] = $query;
+            $criteria->addCondition('t.code = :code');
+            $criteria->addCondition('t.hotelbookId > 0');
+            $criteria->with = 'country';
+            /** @var  City[] $cities  */
+            $cities = City::model()->findAll($criteria);
 
-                if ($cities)
+            if ($cities)
+            {
+                foreach ($cities as $city)
                 {
-                    foreach ($cities as $city)
-                    {
-                        $items[] = $city;
-                        $cityIds[$city->id] = $city->id;
-                    }
+                    $items[] = $city;
+                    $cityIds[$city->id] = $city->id;
                 }
-                $currentLimit -= count($items);
             }
+            $currentLimit -= count($items);
+
+            //try to search via names
             $criteria = new CDbCriteria();
             $criteria->limit = $currentLimit;
             $criteria->params[':localRu'] = $query . '%';
