@@ -244,7 +244,7 @@ class City extends CActiveRecord
             }
             else
             {
-                throw new CException(Yii::t('application', 'City with hoteldookId {code} not found', array(
+                throw new CException(Yii::t('application', 'City with hotelbookId {code} not found', array(
                     '{code}' => $hotelbookId
                 )));
             }

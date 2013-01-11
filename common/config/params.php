@@ -50,6 +50,14 @@ return CMap::mergeArray(array(
         'distanceFromCityCenter' => 5000,
 
     ),
+    'SMS' => array(
+        'login'=>'voyanga',
+        'password'=>'rabotakipit',
+        'server'=>'api.smsfeedback.ru',
+        'port'=>80,
+        'sender'=>'Voyanga'
+
+    ),
     'autocompleteLimit' => 10,
     'autocompleteCacheTime' => 3600,
 

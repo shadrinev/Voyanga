@@ -22,6 +22,7 @@ class ConsoleApplication extends CConsoleApplication {
     {
         $_SERVER['SERVER_NAME']='test.voyanga.com';
         $this->getComponent('themeManager')->setBasePath('/home/voyanga/app/frontend/www/themes/');
+        //$this->getComponent('themeManager')->setBasePath('/srv/www/oleg.voyanga/public_html/frontend/www/themes/');
         return $this->getComponent('themeManager')->getTheme('v2');
     }
     public function getViewRenderer()
