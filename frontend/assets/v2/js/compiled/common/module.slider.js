@@ -40,7 +40,7 @@ Slider = (function() {
 
   Slider.prototype.handler = function(newValue) {
     var activeLI, activeLIindex;
-    if (!newValue) {
+    if (newValue === undefined) {
       return;
     }
     console.log("HANDLER: ", newValue);
