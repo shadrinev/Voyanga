@@ -54,10 +54,10 @@ class Payments_Channel_Ltr extends Payments_Channel {
             $diff = 20-strlen($name);
             $name .= str_repeat(' ', $diff);
         }
-        $ltr.= $name;
-
-        if(!preg_match("~01[ \w]{8}[A-Z]{2}[ \w]{1}[ O]{1}[A-Z]{3}(([A-Z]{2}[ \w]{1}[ O]{1}[A-Z]{3})|[ ]{7}){3}[ 01]{1}[ \w-]{14}[\d]{6}[A-Z]{3}[ \w/-]{20}~", $ltr))
-            throw new Exception("Wrong LTR generated");
+        $ltr.= strtoupper($name);
+        //! Fixme log exception
+        if(!preg_match("~01[ \w]{8}[A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3}(([A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3})|[ ]{7}){3}[ 01]{1}[ \w-]{14}[\d]{6}[A-Z0-9]{3}[ \w/-]{20}~", $ltr))
+            throw new Exception("Wrong LTR generated " . $ltr);
         return $ltr;
     }
 }

@@ -60,20 +60,27 @@ abstract class Payments_Channel {
     public function confirm()
     {
         //! FIXME shuld we only accept bills in certain states ?
-        $url = 'transaction/complete/';
-        $context = array();
-        $context['TransactionId'] = $this->bill->transactionId;
-        $context['ContentType'] = 'text';
-        $context = $this->contributeToConfirm($context);
+        $url = 'transaction/complete';
+        $credentials = $this->credentials;
 
-        $context['SecurityKey'] = $this->getSignatureFor($bill->channel, $context);
-        list($code, $result) = $this->callApi($url, $context);
+        $params = array();
+        $params['MerchantId'] = $credentials['id'];
+
+        $params['TransactionId'] = $this->bill->transactionId;
+        $params['ContentType'] = 'text';
+        $params = $this->contributeToConfirm($params);
+
+        $params['SecurityKey'] = $this->getSignature($params);
+        list($code, $result) = $this->callApi($url, $params);
             // FIXME check AMOUNT?
         if($result['Result'] == 'Ok')
         {
-            $bill->status = Bill::STATUS_PAID;
+//            $bill->status = Bill::STATUS_PAID;
+            $bill->transactionId = $result['Id'];
             $bill->save();
+            return true;
         }
+        return false;
     }
 
     public function rebill($anchor)
@@ -88,6 +95,8 @@ abstract class Payments_Channel {
             $entry->save();
             return true;
         }
+        if($this->name == 'gds_galileo')
+            return false;
 
         $params['MerchantId'] = $allParams['MerchantId'];
         $params['RebillAnchor'] = $anchor;
