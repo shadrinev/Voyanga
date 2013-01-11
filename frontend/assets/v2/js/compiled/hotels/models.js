@@ -532,14 +532,20 @@ HotelResult = (function() {
     set = new RoomSet(data, this, this.duration);
     set.resultId = data.resultId;
     set.searchId = data.searchId;
+    if (this.hotelId === '17897') {
+      console.log('setPrice', set.price);
+    }
     if (this.roomSets().length === 0) {
       this.cheapest = set.price;
       this.cheapestSet = set;
       this.minPrice = set.pricePerNight;
       this.maxPrice = set.pricePerNight;
     } else {
+      if (set.price < this.cheapest) {
+        this.cheapestSet = set;
+        console.log('set cheapest setPrice', set.price);
+      }
       this.cheapest = set.price < this.cheapest ? set.price : this.cheapest;
-      this.cheapestSet = set.price < this.cheapest ? set : this.cheapestSet;
       this.minPrice = set.pricePerNight < this.minPrice ? set.pricePerNight : this.minPrice;
       this.maxPrice = set.pricePerNight > this.maxPrice ? set.pricePerNight : this.maxPrice;
     }
