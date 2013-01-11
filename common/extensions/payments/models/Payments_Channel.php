@@ -95,6 +95,8 @@ abstract class Payments_Channel {
             $entry->save();
             return true;
         }
+        if($this->name == 'gds_galileo')
+            return false;
 
         $params['MerchantId'] = $allParams['MerchantId'];
         $params['RebillAnchor'] = $anchor;
