@@ -104,8 +104,11 @@ abstract class Payments_Channel {
         if(isset($result['Id']))
             $entry->transactionId = $result['Id'];
         $entry->save();
-        if(strtolower($result['Result']) == 'ok')
+        if(strtolower($result['Result']) == 'ok') {
+            $this->bill->transactionId = $result['Id'];
+            $this->bill->save();
             return true;
+        }
         $e = new RebillError($this->rawResponse);
         $entry->errorDescription = "RebillError: " . $this->rawResponse;
         $entry->save();
