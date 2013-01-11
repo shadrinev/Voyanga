@@ -50,6 +50,8 @@ TourPanelSet = (function() {
       result = 'Выберите даты пребывания в городе';
       if (_this.activeCity()) {
         result += ' ' + _this.activeCity();
+      } else {
+        result = 'Введите город';
       }
       return result;
     });

@@ -24,7 +24,9 @@ class TourPanelSet
       result = 'Выберите даты пребывания в городе'
       if @activeCity()
         result += ' ' + @activeCity()
-      return result
+      else
+        result = 'Введите город'
+      result
 
     @lastPanel = null
     @i = 0
