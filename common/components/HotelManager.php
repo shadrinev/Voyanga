@@ -12,43 +12,27 @@ class HotelManager
         Yii::import('site.frontend.models.*');
         Yii::import('site.frontend.components.*');
         $hotelClient = new HotelBookClient();
-        //if(false && $variants = Yii::app()->pCache->get('variantsHotels')){
+        $startTime = microtime(true);
+        $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
+        $endTime = microtime(true);
 
-        //}else{
-            $startTime = microtime(true);
-            $variants = $hotelClient->fullHotelSearch($hotelSearchParams);
-            $endTime = microtime(true);
+        $startTime = microtime(true);
+        self::storeToCache($hotelSearchParams, $variants);
+        $endTime = microtime(true);
 
-            Header('ExecutionTimeFullSearch:'.($endTime - $startTime));
-            $startTime = microtime(true);
-            self::storeToCache($hotelSearchParams, $variants);
-            $endTime = microtime(true);
+        $startTime = microtime(true);
+        Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
+        $endTime = microtime(true);
 
-            Header('ExecutionTimeStoreToCache:'.($endTime - $startTime));
-            $startTime = microtime(true);
-            Yii::app()->hotelsRating->injectRating($variants->hotels, $hotelSearchParams->city);
-            $endTime = microtime(true);
-
-            Header('ExecutionTimeRateInject:'.($endTime - $startTime));
-            //Yii::app()->pCache->set('variantsHotels',$variants,3600);
         //}
         $results = array();
         if ($variants->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
         {
             $startTime = microtime(true);
             $stack = new HotelStack($variants);
-
-            //$results = $stack->groupBy('hotelId')->mergeSame()->sortBy('rubPrice', 5)->getJsonObject(2);
-            $results = $stack->groupBy('hotelId',117501)->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
-            //echo "END";
-            //die();
+            $results = $stack->groupBy('hotelId', 117501)->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
             $nStack = new HotelStack();
             $nStack->_hotels = $stack->getHotels(1);
-
-            //print_r($stack->printStack(3000));
-            //print_r($nStack->groupBy('hotelId')->printStack(3000));
-            //die();
-
 
             $resultsHotels = $stack->getJsonObject();
             $query = array();
@@ -60,7 +44,7 @@ class HotelManager
             $hotelClient->processAsyncRequests();
             $endTime = microtime(true);
 
-            Header('ExecutionTimeSortAndDetails:'.($endTime - $startTime));
+            Header('ExecutionTimeSortAndDetails:' . ($endTime - $startTime));
 
             $hotelsDetails = array();
             foreach ($query as $hotelId => $responseId)
@@ -111,21 +95,22 @@ class HotelManager
         if (is_object($additional) && $additional instanceof HotelInfo)
         {
             //$objectVars = get_object_vars($additional);
-            $objectVars = array('address', 'description', 'distances', 'earliestCheckInTime',
-                'email', 'facilities', 'fax', 'hotelGroupServices', 'hotelServices', 'images',
-                'latitude', 'longitude', 'phone', 'roomAmenities', 'site', 'locations', 'builtIn', 'numberFloors', 'metroList'
-            );
+            $objectVars = array('address', 'description', 'distances', 'earliestCheckInTime', 'email', 'facilities', 'fax', 'hotelGroupServices', 'hotelServices', 'images', 'latitude', 'longitude', 'phone', 'roomAmenities', 'site', 'locations', 'builtIn', 'numberFloors', 'metroList');
             $return = new stdClass();
             foreach ($objectVars as $objVar)
             {
                 if (is_object($additional->$objVar))
+                {
                     $return->$objVar = self::prepare($additional->$objVar);
+                }
                 elseif (is_array($additional->$objVar))
                 {
                     $return->$objVar = self::prepare($additional->$objVar);
                 }
                 elseif (is_string($additional->$objVar))
+                {
                     $return->$objVar = strip_tags($additional->$objVar);
+                }
                 if ($objVar == 'description')
                 {
                     $pattern = '/\s?[^.]*?:\s?/';
@@ -146,13 +131,17 @@ class HotelManager
             foreach ($objectVars as $objVar => $val)
             {
                 if (is_object($additional->$objVar))
+                {
                     $additional->$objVar = self::prepare($additional->$objVar);
+                }
                 elseif (is_array($additional->$objVar))
                 {
                     $additional->$objVar = self::prepare($additional->$objVar);
                 }
                 elseif (is_string($additional->$objVar))
+                {
                     $additional->$objVar = strip_tags($additional->$objVar);
+                }
             }
         }
         return $additional;

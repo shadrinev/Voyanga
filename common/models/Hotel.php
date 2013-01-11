@@ -123,7 +123,8 @@ class Hotel extends CApplicationComponent
      */
     public function getPrice()
     {
-        return $this->markupPrice;
+        //return $this->markupPrice;
+        return DiscountManager::calculateHotelPrice($this->rubPrice);
     }
 
     /**

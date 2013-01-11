@@ -253,7 +253,7 @@ class HotelBookClient
                                 $requestInfo['hotelRequestLog']->responseXml = UtilsHelper::formatXML($result);
                                 $requestInfo['hotelRequestLog']->save();
                                 $endTime1 = microtime(true);
-                                Header('ExecutionTimeSaveToMongo:'.($endTime1 - $startTime1));
+                                //Header('ExecutionTimeSaveToMongo:'.($endTime1 - $startTime1));
 
                                 if ($requestInfo['cacheFilePath'] && self::$saveCache)
                                 {
@@ -669,7 +669,7 @@ class HotelBookClient
         $startTime = microtime(true);
         $hotelsObject = simplexml_load_string($hotelsXml);
         $endTime = microtime(true);
-        Header('ExecutionTimeSimpleLoad:'.($endTime - $startTime));
+        //Header('ExecutionTimeSimpleLoad:'.($endTime - $startTime));
 
         //$hotelsObject = simplexml_load_file('/srv/www/oleg.voyanga/public_html/frontend/runtime/resp.xml');
         $response = new HotelSearchResponse();
@@ -718,16 +718,16 @@ class HotelBookClient
                     $response->hotels[] = $hotel;
                     $endTime2 = microtime(true);
 
-                    Header('ExecutionTimeHotelInitFull:'.($endTime2 - $startTime2));
+                    //Header('ExecutionTimeHotelInitFull:'.($endTime2 - $startTime2));
                     $cnt++;
                 }
                 $endTime1 = microtime(true);
 
-                Header('ExecutionTimeLoopHotelInit:'.$cnt.'cnt'.($endTime1 - $startTime1));
-                Header('ExecutionTimeTotalXml:'.self::$totalMicrotime);
-                Header('ExecutionContFunc:'.self::$countFunc);
-                Header('ExecutionCountSql:'.self::$countSql);
-                Header('ExecutionMaxTime:'.self::$maxMicrotime);
+                //Header('ExecutionTimeLoopHotelInit:'.$cnt.'cnt'.($endTime1 - $startTime1));
+                //Header('ExecutionTimeTotalXml:'.self::$totalMicrotime);
+                //Header('ExecutionContFunc:'.self::$countFunc);
+                //Header('ExecutionCountSql:'.self::$countSql);
+                //Header('ExecutionMaxTime:'.self::$maxMicrotime);
 
             }
             if (isset($hotelsObject->Errors->Error))
@@ -760,7 +760,7 @@ class HotelBookClient
         }
         $endTime = microtime(true);
 
-        Header('ExecutionTimeProcess:'.($endTime - $startTime));
+        //Header('ExecutionTimeProcess:'.($endTime - $startTime));
         return $response;
     }
 
@@ -963,7 +963,7 @@ class HotelBookClient
         $this->processAsyncRequests();
         $endTime = microtime(true);
 
-        Header('ExecutionTimeProcessAsync:'.($endTime - $startTime));
+        //Header('ExecutionTimeProcessAsync:'.($endTime - $startTime));
         self::$groupId = null;
         $hotels = array();
         $errorDescriptions = array();
@@ -1762,15 +1762,17 @@ class HotelBookClient
             <Reference>152336046</Reference>
           </BookingDetails>
          */
+
+
         $responseObject = simplexml_load_string($response);
         $hotelOrderConfirmResponse = new HotelOrderConfirmResponse();
-        $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order->Id;
+        $hotelOrderConfirmResponse->orderId = (string)$responseObject->Order['Id'];
         $hotelOrderConfirmResponse->tag = (string)$responseObject->Order->Tag;
         $hotelOrderConfirmResponse->orderState = (string)$responseObject->Order->State;
         if($responseObject->Order->ItemList){
             UtilsHelper::soapObjectsArray($responseObject->Order->ItemList->Item);
             foreach($responseObject->Order->ItemList->Item as $itemSXE){
-                $key = (string)$itemSXE->Id;
+                $key = (string)$itemSXE['Id'];
                 if(isset($itemSXE->Voucher->BookingDetails->Supplier))
                     $hotelOrderConfirmResponse->suppliers[$key] = (string)$itemSXE->Voucher->BookingDetails->Supplier;
                 if(isset($itemSXE->Voucher->BookingDetails->Reference))

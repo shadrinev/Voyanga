@@ -2,12 +2,14 @@
     'cssFromLess' => array(
         'basePath' => 'frontend.assets.v2.css',
         'css' => array(
-            'reset.style.css',
+            'test.css',
+            'test2.css'
         )
     ),
     'appCss' => array(
         'baseUrl' => '/themes/v2/css',
         'css' => array(
+            'reset.style.css',
             'style.css',
             'popup.css',
             'popup-photo.css',

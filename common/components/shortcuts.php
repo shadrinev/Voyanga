@@ -1,5 +1,4 @@
 <?php
-
 function appParams($param)
 {
     $inside = explode('.', $param);
@@ -49,6 +48,17 @@ function array_all($arr, $lambda = null)
                 return false;
     }
     return true;
+}
+
+/**
+ * check is variable acts as an array and suitable for foreach statement
+ *
+ * @param $var
+ * @return bool
+ */
+function is_iterable($var)
+{
+    return (is_array($var) || $var instanceof Traversable);
 }
 
 

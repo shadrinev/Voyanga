@@ -233,7 +233,7 @@ class RoomNamesNemo extends CActiveRecord
             }
             $endTime = microtime(true);
             $fullTime = $endTime - $startTime;
-            header('FullSQLTime: '.$i.'|'.$fullTime);
+            //header('FullSQLTime: '.$i.'|'.$fullTime);
             $startTime = microtime(true);
             self::$needLoading = false;
             $i = 0;
@@ -243,7 +243,7 @@ class RoomNamesNemo extends CActiveRecord
             }
             $endTime = microtime(true);
             $fullTime = $endTime - $startTime;
-            header('Saving'.$i.'Objs: '.$fullTime);
+            //header('Saving'.$i.'Objs: '.$fullTime);
         }
     }
 
