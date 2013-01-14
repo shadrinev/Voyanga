@@ -1,4 +1,3 @@
-
 @import "body.css";
 @import "trash.css";
 @import "ico.css";
@@ -1407,8 +1406,9 @@ input.hotel-input {
 .foot-menu li {
     background: url("../images/hr-hor-footer.png") no-repeat scroll left top transparent;
     float: left;
-    height: 20px;
-    padding: 5px 20px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 20px;
     text-shadow: 0 1px 0 #202226;
 }
 .foot-menu li a {

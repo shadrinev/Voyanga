@@ -1,4 +1,3 @@
-
 .innerPage {
     color: #1D222B;
     line-height: 20px;
@@ -112,16 +111,8 @@ h3.calendarTitle {
 	font-weight: bold;
 	font-style: italic;
 }
-h4 {
-	color: #1D222B;
-    font-size: 15px;
-    margin-bottom: 6px;
-    text-shadow: 0 1px 0 #FFFFFF;
-}
+
 h4 a {
 	font-size: 12px; text-shadow: none;
-}
-input, select, button {
-	margin-left: -0px;
 }
 .recommended-ticket h3, .prices-of-3days h3 {color: #4b525c; text-shadow: #FFF 0px 1px 0px; margin-bottom: 22px;}
