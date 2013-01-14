@@ -40,7 +40,7 @@ EOD;
             }
             if($this->isDone($orderId)) {
                 $this->sendNotifications($orderId);
-                $this->confirm($orderId);
+                $this->confirmPayment($orderId);
             }
         }
         else
@@ -61,7 +61,7 @@ EOD;
     /**
        Confirms preauthorized transactions
     */
-    private function confirm($orderId) {
+    private function confirmPayment($orderId) {
         $order = Yii::app()->order;
         $order->initByOrderBookingId($orderId);
         $payments = Yii::app()->payments;
