@@ -579,6 +579,8 @@ function ResizeAvia() {
     mapAllPageView();
     gradientResize();
     resizePanel();
+
+    stratIE();
 }
 
 function ResizeFun() {
@@ -1674,4 +1676,3 @@ function stratIE() {
         });
     }
 }
-$(window).load(stratIE);
