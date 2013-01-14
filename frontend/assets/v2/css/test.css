@@ -3,3 +3,5 @@ body{width:100%;height:100%;background:url("/themes/v2/images/BG_NEW.png");color
 a{color:inherit;}
 h1{color:#1d222b;font-size:22px;text-shadow:#acb0b4 0px 1px 0px;margin-bottom:12px;letter-spacing:0.001em;}
 h3{font-size:18px;text-shadow:#acb0b4 0px 1px 0px;color:#1d222b;margin-bottom:10px;}
+h1.title{background:none repeat scroll 0 0 rgba(27, 29, 32, 0.7);border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;color:#ffffff;display:inline-block;font-size:24px;font-weight:normal;height:40px;left:26px;line-height:40px;padding:0 10px;position:absolute;text-shadow:none;top:-60px;white-space:nowrap;}
+h1.title img{margin-bottom:-8px;margin-right:-10px;margin-top:-10px;vertical-align:middle;}
