@@ -8,7 +8,7 @@
  */
 return array(
     "env.code" => "oleg",
-    /*'HotelBook' => array(
+    'HotelBook' => array(
         'uri' => 'http://hotelbook.ru/xml/',
         'login' => 'voyangaXML',
         'password' => 'BZEFODZoA1!5',
@@ -18,8 +18,8 @@ return array(
             'STD' => array(10, 12900),
         ),
         'distanceFromCityCenter' => 5000,
-    ),*/
-    'HotelBook' => array(
+    ),/**/
+    /*'HotelBook' => array(
         'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
         'login' => 'voyanga',
         'password' => 'vLP1xe',
@@ -30,6 +30,6 @@ return array(
         ),
         'distanceFromCityCenter' => 5000,
 
-    ),
+    ),/**/
 );
 

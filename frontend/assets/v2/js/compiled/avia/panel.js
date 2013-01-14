@@ -108,10 +108,15 @@ AviaPanel = (function(_super) {
     this.rtTumbler(this.rt());
     $('.how-many-man .btn');
     this.calendarText = ko.computed(function() {
-      var result;
+      var arrow, result;
       result = "Выберите дату перелета ";
+      if (_this.rt()) {
+        arrow = ' ↔ ';
+      } else {
+        arrow = ' → ';
+      }
       if ((_this.departureCityReadable().length > 0) && (_this.arrivalCityReadable().length > 0)) {
-        result += _this.departureCityReadable() + ' → ' + _this.arrivalCityReadable();
+        result += _this.departureCityReadable() + arrow + _this.arrivalCityReadable();
       } else if ((_this.departureCityReadable().length === 0) && (_this.arrivalCityReadable().length > 0)) {
         result += ' в ' + _this.arrivalCityReadableAcc();
       } else if ((_this.departureCityReadable().length > 0) && (_this.arrivalCityReadable().length === 0)) {

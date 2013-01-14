@@ -112,15 +112,15 @@ Application = (function(_super) {
   };
 
   Application.prototype.minimizeCalendar = function() {
-    return this.activeSearchPanel().minimizedCalendar(true);
+    if (this.activeSearchPanel()) {
+      return this.activeSearchPanel().minimizedCalendar(true);
+    }
   };
 
   Application.prototype.reRenderCalendar = function(elements) {
     var _this = this;
-    console.log('rerender calendar');
     VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
     this.fakoPanel.subscribe(function(newPanel) {
-      console.log('now set new panel', newPanel);
       if (newPanel.panels) {
         return _this.activeSearchPanel(_.last(newPanel.panels()));
       }
@@ -167,7 +167,17 @@ Application = (function(_super) {
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       window.voyanga_debug("APP: routing", args);
       if (this.panel() === void 0 || (prefix !== this.activeModule())) {
+        this.minimizeCalendar();
         window.voyanga_debug("APP: switching active module to", prefix);
+        if ((prefix === 'avia') || (prefix === 'hotels')) {
+          if (this.events && this.events.activeMaps === 0) {
+            this.events.closeEventsPhoto();
+          }
+        } else {
+          if (this.events && this.events.activeMaps === 1) {
+            this.events.closeEventsMaps();
+          }
+        }
         this.activeModule(prefix);
         window.voyanga_debug("APP: activating panel", ko.utils.unwrapObservable(module.panel));
         this.activeModuleInstance(module);
@@ -179,9 +189,17 @@ Application = (function(_super) {
   };
 
   Application.prototype.run = function() {
+    var _this = this;
     Backbone.history.start();
     this.bindEvents();
-    return this.slider.handler(this.activeModule());
+    this.slider.handler(this.activeModule());
+    return _.delay(function() {
+      if ((_this.activeModule() === 'avia') || (_this.activeModule() === 'hotels')) {
+        if (_this.events && _this.events.activeMaps === 0) {
+          return _this.events.closeEventsPhoto();
+        }
+      }
+    }, 1);
   };
 
   Application.prototype.runWithModule = function(module) {
@@ -247,7 +265,6 @@ Application = (function(_super) {
   };
 
   Application.prototype.isEvent = function() {
-    console.log('Checking isEvent ', this.activeView());
     return this.activeView() === 'tours-index';
   };
 

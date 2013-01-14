@@ -91,8 +91,12 @@ class AviaPanel extends SearchPanel
 
     @calendarText = ko.computed =>
       result = "Выберите дату перелета "
+      if @rt()
+        arrow = ' ↔ '
+      else
+        arrow = ' → '
       if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length>0))
-        result +=@departureCityReadable() + ' → ' + @arrivalCityReadable()
+        result +=@departureCityReadable() + arrow + @arrivalCityReadable()
       else if ((@departureCityReadable().length==0) && (@arrivalCityReadable().length>0))
         result+=' в ' + @arrivalCityReadableAcc()
       else if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length==0))

@@ -15,10 +15,12 @@
 
 	var reEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
-	function fnFormatResult(value, data, currentValue) {
+	function fnFormatResult(value, data, currentValue, showCode) {
 		var pattern = '(' + currentValue.replace(reEscape, '\\$1') + ')',
 		    newValue = data.name.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>'),
-            result = '<span class="city">' + data.name + ', </span><span class="country">'+ data.country +'</span><span class="code">' + data.code + '</span>';
+            result = '<span class="city">' + data.name + ', </span><span class="country">'+ data.country +'</span>';
+        if (showCode)
+            result += '<span class="code">' + data.code + '</span>';
         return result;
 	}
 
@@ -38,6 +40,7 @@
 		this.serviceUrl = options.serviceUrl;
 		this.isLocal = false;
 		this.options = {
+            showCode: true,
 			autoSubmit: false,
 			minChars: 1,
 			maxHeight: 300,
@@ -299,7 +302,7 @@
 			this.container.hide().empty();
 			for (i = 0; i < len; i++) {
 				s = this.suggestions[i];
-				div = $((me.selectedIndex === i ? '<div class="selected"' : '<div') + ' title="' + s + '">' + f(s, this.data[i], v) + '</div>');
+				div = $((me.selectedIndex === i ? '<div class="selected"' : '<div') + ' title="' + s + '">' + f(s, this.data[i], v, this.options.showCode) + '</div>');
 				div.mouseover(mOver(i));
 				div.click(mClick(i));
 				this.container.append(div);

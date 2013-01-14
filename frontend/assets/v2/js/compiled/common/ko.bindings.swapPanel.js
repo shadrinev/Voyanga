@@ -8,6 +8,7 @@ ko.bindingHandlers.swapPanel = {
     return $(element).on('click', function() {
       var newHref;
       newHref = value.to;
+      console.log("switching to " + newHref);
       return window.app.navigate(newHref, {
         'trigger': true
       });

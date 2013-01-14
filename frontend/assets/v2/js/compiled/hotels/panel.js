@@ -67,12 +67,6 @@ HotelsPanel = (function(_super) {
       return _this.city().length > 0;
     });
     this.maximizedCalendar.subscribe(function(newValue) {
-      if (!newValue) {
-        return;
-      }
-      if (_this.formFilled()) {
-        return;
-      }
       return _this.showCalendar();
     });
     this.calendarValue = ko.computed(function() {

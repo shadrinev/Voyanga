@@ -80,14 +80,11 @@ class Application extends Backbone.Router
     #  new Calendar(@fakoPanel)
     #  @calendarInitialized = true
   minimizeCalendar: =>
-    @activeSearchPanel().minimizedCalendar(true)
-
+    @activeSearchPanel().minimizedCalendar(true) if @activeSearchPanel()
 
   reRenderCalendar:(elements) =>
-    console.log('rerender calendar')
     VoyangaCalendarStandart.init @fakoPanel, elements[1]
     @fakoPanel.subscribe( (newPanel)=>
-      console.log('now set new panel',newPanel)
       if newPanel.panels
         @activeSearchPanel(_.last(newPanel.panels()))
     )
@@ -101,7 +98,6 @@ class Application extends Backbone.Router
     @activeSearchPanel(_.last(@itemsToBuy.activePanel().panels()))
 
   render: (data, view)=>
-#    $('#loadWrapBg').show()
     @viewData(data)
     @_view(view)
     $(window).resize()
@@ -131,7 +127,12 @@ class Application extends Backbone.Router
       window.voyanga_debug "APP: routing", args
       # hide sidebar
       if @panel() == undefined || (prefix != @activeModule())
+        @minimizeCalendar()
         window.voyanga_debug "APP: switching active module to", prefix
+        if ((prefix == 'avia') || (prefix == 'hotels'))
+          @events.closeEventsPhoto() if (@events && @events.activeMaps == 0)
+        else
+          @events.closeEventsMaps() if (@events && @events.activeMaps == 1)
         @activeModule(prefix)
         window.voyanga_debug "APP: activating panel", ko.utils.unwrapObservable module.panel
 
@@ -141,13 +142,14 @@ class Application extends Backbone.Router
         ko.processAllDeferredBindingUpdates()
 
   run: ->
-#    @route ':path', 'h404', @handle404
-#    @route ':path/*path', 'h404', @handle404
-    # Start listening to hash changes
     Backbone.history.start()
-    # Call some change handlers with initial values
     @bindEvents()
     @slider.handler(@activeModule())
+    _.delay () =>
+      if ((@activeModule() == 'avia') || (@activeModule() == 'hotels'))
+        @events.closeEventsPhoto() if (@events && @events.activeMaps == 0)
+    , 1
+
     
   runWithModule: (module) =>
     # set default module
@@ -195,7 +197,6 @@ class Application extends Backbone.Router
     !@isEvent();
 
   isEvent: =>
-    console.log 'Checking isEvent ', @activeView()
     @activeView() == 'tours-index'
 
 window.voyanga_debug = (args...)->

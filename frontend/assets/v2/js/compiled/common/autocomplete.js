@@ -3,7 +3,9 @@ var _this = this;
 
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
-    var _this = this;
+    var showCode,
+      _this = this;
+    showCode = (valueAccessor().showCode === undefined ? true : valueAccessor().showCode);
     setTimeout(function() {
       $(element).bind("focus", function() {
         return $(element).change();
@@ -16,6 +18,7 @@ ko.bindingHandlers.autocomplete = {
         zIndex: 9999,
         deferRequestBy: 0,
         delay: 0,
+        showCode: showCode,
         onSelect: function(value, data) {
           valueAccessor().iata(data.code);
           valueAccessor().readable(data.name);
@@ -51,7 +54,6 @@ ko.bindingHandlers.autocomplete = {
       params = [];
       params.push('codes[0]=' + code);
       result += params.join("&");
-      window.voyanga_debug("Generated autocomplete city url", result);
       return result;
     };
     handleResults = function(data) {

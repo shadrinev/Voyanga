@@ -24,7 +24,9 @@ class TourPanelSet
       result = 'Выберите даты пребывания в городе'
       if @activeCity()
         result += ' ' + @activeCity()
-      return result
+      else
+        result = 'Введите город'
+      result
 
     @lastPanel = null
     @i = 0
@@ -74,8 +76,14 @@ class TourPanelSet
     _.last(@panels()).saveStartParams()
 
   deletePanel: (elem) =>
-    @sp.destinations.remove(elem.city)
+    console.log "Panels before", @panels()
+    console.log "Destinations before", @sp.destinations()
+    console.log "Elem", elem
+    index = @panels.indexOf(elem)
     @panels.remove(elem)
+    @sp.destinations.splice(index,1)
+    console.log "Panels after", @panels()
+    console.log "Destinations after", @sp.destinations()
     _.last(@panels()).isLast(true)
 
   isFirst: =>
@@ -104,11 +112,9 @@ class TourPanelSet
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
-    console.log 'showPanelCalendar', args
 
   # calendar handler
   setDate: (values) =>
-    console.log 'Calendar selected:', values
     if values && values.length
       @activeCalendarPanel().checkIn values[0]
       maxDate = @activeCalendarPanel().checkIn()
@@ -136,10 +142,8 @@ class TourPanelSet
 
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
-    window.voyanga_debug "TourPanel created"
     super(isFirst, true)
     @toggleSubscribers.dispose();
-    console.log('try dispose subscribe');
     _.extend @, Backbone.Events
 
     @hasfocus = ko.observable false
@@ -174,7 +178,6 @@ class TourPanel extends SearchPanel
       @trigger "tourPanel:hasFocus", @
 
     @city.subscribe (newValue) =>
-      console.log('city changed!!!!!!!!')
       if @sp.calendarActivated()
         @showCalendar()
 
@@ -182,19 +185,14 @@ class TourPanel extends SearchPanel
     handlePanelSubmit(false)
 
   handlePanelSubmit: (onlyHash = true)=>
-    console.log('onlyHash', onlyHash)
     if onlyHash
       app.navigate @sp.getHash(), {trigger: true}
     else
       url = '/#' + @sp.getHash()
       if @startParams == url
-        # Need save data to server, because get have limit 2048 bytes
-        #url += 'oldSelecton/'+encodeURIComponent(JSON.stringify(@selectedParams))
         url += 'eventId/' + @selectedParams.eventId
 
 
-      console.log('go url', url, 'length', url.length)
-      #return
       window.location.href = url
 
   saveStartParams: ()=>

@@ -50,6 +50,8 @@ TourPanelSet = (function() {
       result = 'Выберите даты пребывания в городе';
       if (_this.activeCity()) {
         result += ' ' + _this.activeCity();
+      } else {
+        result = 'Введите город';
       }
       return result;
     });
@@ -111,8 +113,15 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.deletePanel = function(elem) {
-    this.sp.destinations.remove(elem.city);
+    var index;
+    console.log("Panels before", this.panels());
+    console.log("Destinations before", this.sp.destinations());
+    console.log("Elem", elem);
+    index = this.panels.indexOf(elem);
     this.panels.remove(elem);
+    this.sp.destinations.splice(index, 1);
+    console.log("Panels after", this.panels());
+    console.log("Destinations after", this.sp.destinations());
     return _.last(this.panels()).isLast(true);
   };
 
@@ -152,13 +161,11 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
-    this.activeCalendarPanel(args[0]);
-    return console.log('showPanelCalendar', args);
+    return this.activeCalendarPanel(args[0]);
   };
 
   TourPanelSet.prototype.setDate = function(values) {
     var maxDate;
-    console.log('Calendar selected:', values);
     if (values && values.length) {
       this.activeCalendarPanel().checkIn(values[0]);
       maxDate = this.activeCalendarPanel().checkIn();
@@ -214,10 +221,8 @@ TourPanel = (function(_super) {
     this.handlePanelSubmitToMain = __bind(this.handlePanelSubmitToMain, this);
 
     var _this = this;
-    window.voyanga_debug("TourPanel created");
     TourPanel.__super__.constructor.call(this, isFirst, true);
     this.toggleSubscribers.dispose();
-    console.log('try dispose subscribe');
     _.extend(this, Backbone.Events);
     this.hasfocus = ko.observable(false);
     this.sp = sp;
@@ -249,7 +254,6 @@ TourPanel = (function(_super) {
       return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
-      console.log('city changed!!!!!!!!');
       if (_this.sp.calendarActivated()) {
         return _this.showCalendar();
       }
@@ -265,7 +269,6 @@ TourPanel = (function(_super) {
     if (onlyHash == null) {
       onlyHash = true;
     }
-    console.log('onlyHash', onlyHash);
     if (onlyHash) {
       return app.navigate(this.sp.getHash(), {
         trigger: true
@@ -275,7 +278,6 @@ TourPanel = (function(_super) {
       if (this.startParams === url) {
         url += 'eventId/' + this.selectedParams.eventId;
       }
-      console.log('go url', url, 'length', url.length);
       return window.location.href = url;
     }
   };

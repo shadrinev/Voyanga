@@ -43,12 +43,8 @@ class HotelsPanel extends SearchPanel
       @city().length > 0
 
     @maximizedCalendar.subscribe (newValue) =>
-      if !newValue
-        return
-      if @formFilled()
-        return
       @showCalendar()
-      
+
     @calendarValue = ko.computed =>
       twoSelect: true
       hotels: true
