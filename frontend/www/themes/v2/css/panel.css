@@ -156,6 +156,7 @@
     vertical-align: middle;
     width: 33px;
     z-index: 3;
+    color: #FFF;
 }
 .panelTable div.active .date .f17 {
     font-family: Verdana;

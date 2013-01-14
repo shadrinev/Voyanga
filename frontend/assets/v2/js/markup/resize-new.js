@@ -1664,3 +1664,14 @@ function resizePanel(arg) {
 
     });
 }
+
+function stratIE() {
+    var browser = navigator.appName;
+    if(browser == "Microsoft Internet Explorer")
+    {
+        $('.from, .to').click(function() {
+            $(this).find('.second-path').focus();
+        });
+    }
+}
+$(window).load(stratIE);

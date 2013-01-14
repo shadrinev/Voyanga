@@ -27,20 +27,22 @@
                 <td class="tdCity">
                     <div class="data">
                         <div class="from" data-bind="css: {active: checkIn()}">
-                            <div class="bgInput">
-                                <div class="left"></div>
-                                <div class="center"></div>
-                                <div class="right"></div>
-                            </div>
+                            <input type="text" tabindex="-1" readonly="readonly" autocomplete="off" class="input-path">
                             <input type="text" placeholder="Куда едем?" class="second-path"
                                    data-bind="hasfocus: hasfocus, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}">
-                            <input type="text" tabindex="-1" class="input-path">
+
 
                             <div class="date"
                                  data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}">
                             </div>
                             <div class="date"
                                  data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}">
+                            </div>
+
+                            <div class="bgInput">
+                                <div class="left"></div>
+                                <div class="center"></div>
+                                <div class="right"></div>
                             </div>
                         </div>
                     </div>
