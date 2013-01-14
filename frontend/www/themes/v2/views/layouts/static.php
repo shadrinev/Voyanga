@@ -10,7 +10,9 @@ Yii::app()->clientScript->registerScriptFile('/js/completed.js');
 Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!--[if IE 8 ]>    <html xmlns="http://www.w3.org/1999/xhtml" class="ie ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html xmlns="http://www.w3.org/1999/xhtml" class="ie ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html xmlns="http://www.w3.org/1999/xhtml" class=""> <!--<![endif]-->
 <head>
     <link rel="shortcut icon" href="<?= $theme ?>/images/favicon.png" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
