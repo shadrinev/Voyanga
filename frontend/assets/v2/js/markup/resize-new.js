@@ -580,7 +580,7 @@ function ResizeAvia() {
     gradientResize();
     resizePanel();
 
-    stratIE();
+    startIE();
 }
 
 function ResizeFun() {
@@ -1667,7 +1667,7 @@ function resizePanel(arg) {
     });
 }
 
-function stratIE() {
+function startIE() {
     var browser = navigator.appName;
     if(browser == "Microsoft Internet Explorer")
     {
