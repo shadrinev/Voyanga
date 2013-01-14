@@ -11,7 +11,12 @@
 /* FONT */
 @font-family-main:  Arial, sans-serif;
 .font-size(@size : 12px) {font-size: @size;}
-
+/* RADIUS */
+.border-radius(@radius: 5px) {
+  border-radius: @radius;
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+}
 
 /* MAIN BODY STYLE */
 html, body {
@@ -44,4 +49,26 @@ h3 {
   text-shadow: @grey-shadow;
   color: #1d222b;
   margin-bottom: 10px;
+}
+h1.title {
+  background: none repeat scroll 0 0 rgba(27, 29, 32, 0.7);
+  .border-radius(20px);
+  color: @white-color;
+  display: inline-block;
+  .font-size(24px);
+  font-weight: normal;
+  height: 40px;
+  left: 26px;
+  line-height: 40px;
+  padding: 0 10px;
+  position: absolute;
+  text-shadow: none;
+  top: -60px;
+  white-space: nowrap;
+}
+h1.title img {
+  margin-bottom: -8px;
+  margin-right: -10px;
+  margin-top: -10px;
+  vertical-align: middle;
 }

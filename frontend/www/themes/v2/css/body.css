@@ -1,18 +1,4 @@
-h1.title {
-    background: none repeat scroll 0 0 rgba(27, 29, 32, 0.7);
-    border-radius: 20px 20px 20px 20px;
-    color: #FFFFFF;
-    display: inline-block;
-    font-size: 24px;
-    font-weight: normal;
-    height: 31px;
-    left: 26px;
-    padding: 9px 10px 0;
-    position: absolute;
-    text-shadow: none;
-    top: -60px;
-    white-space: nowrap;
-}
+
 .innerPage {
     color: #1D222B;
     line-height: 20px;
@@ -110,12 +96,6 @@ h1.title {
 .agreement > ol > li {
     counter-increment: list1;
     margin-left: 0;
-}
-h1.title img {
-    margin-bottom: -8px;
-    margin-right: -10px;
-    margin-top: -9px;
-    vertical-align: middle;
 }
 .main-block h1 {text-shadow: #FFF 0px 1px 0px; margin-bottom: 20px; letter-spacing: -0.05em; line-height: 26px; margin-top: -4px;}
 .ticket-content h2 {
