@@ -25,7 +25,7 @@ EOD;
             {
                 if(! $booker instanceof Payments_MetaBooker)
                 {
-                    $bill = $payments->getBillForBooker($booker->getCurrent());
+                    $bill = $payments->getBillForBooker($booker);
                     $payments->notifyNemo($booker, $bill);
                     $taskId = $booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId;
                     echo "Removing booking timelimit task #" . $taskId;
@@ -68,7 +68,7 @@ EOD;
         $bookers = $payments->preProcessBookers($order->getBookers());
         foreach($bookers as $booker)
         {
-            $bill = $payments->getBillForBooker($booker->getCurrent());
+            $bill = $payments->getBillForBooker($booker);
             if (!$bill->getChannel()->confirm()) {
                 //! fixme log exceptions
                 echo "Confirm failed for bill #" . $bill->id . " transaction #" . $bill->transactionId . "\n";
