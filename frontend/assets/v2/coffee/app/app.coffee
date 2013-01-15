@@ -148,7 +148,7 @@ class Application extends Backbone.Router
     _.delay () =>
       if ((@activeModule() == 'avia') || (@activeModule() == 'hotels'))
         @events.closeEventsPhoto() if (@events && @events.activeMaps == 0)
-    , 1
+    , 10
 
     
   runWithModule: (module) =>
