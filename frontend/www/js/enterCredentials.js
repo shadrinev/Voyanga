@@ -249,9 +249,9 @@ function checkStatuses(statuses, ids) {
                     $('iframe').load(function () {
                         $('#loadPayFly').find('.armoring').hide();
                         $('#loadPayFly').find('.loadJet').hide();
-
                         $('.payCardPal').show();
                         $('.paybuyEnd').show();
+                        ResizeAvia();
                         Utils.scrollTo('.payCardPal', true);
                     });
                     window.app.breakdown(data.breakdown);
