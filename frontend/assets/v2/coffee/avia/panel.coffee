@@ -25,7 +25,6 @@ class AviaPanel extends SearchPanel
     @oldCalendarState = @minimizedCalendar()
 
     @show = @passengers.show
-    @minimizeCalendar(true)
 
     #helper to handle dispaying of calendar
     @fromChosen = ko.computed =>
@@ -52,9 +51,10 @@ class AviaPanel extends SearchPanel
       !@formFilled()
 
     @maximizedCalendar = ko.computed =>
-      (@departureCity().length > 0) && (@arrivalCity().length > 0) && (@departureDate().length == 0) && ((@rt()) && (!@rtDate().length == 0))
+      @departureCity() && @arrivalCity()
 
     @maximizedCalendar.subscribe (newValue) =>
+      console.log "@maximizedCalendar", !newValue
       if !newValue
         return
       if @rt() && !@rtFromChosen()

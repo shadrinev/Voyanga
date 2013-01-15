@@ -120,7 +120,6 @@ SearchPanel = (function() {
   };
 
   SearchPanel.prototype.minimizeCalendar = function() {
-    console.log("MINIMIZE CALENDAR", this.minimizedCalendar());
     if (this.minimizedCalendar()) {
       return this.minimizedCalendar(false);
     } else {
@@ -129,7 +128,6 @@ SearchPanel = (function() {
   };
 
   SearchPanel.prototype.showCalendar = function() {
-    console.trace();
     $('.calenderWindow').show();
     if (this.minimizedCalendar()) {
       return this.minimizedCalendar(false);

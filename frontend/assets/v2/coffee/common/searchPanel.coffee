@@ -67,14 +67,12 @@ class SearchPanel
 
   # Minimize button click handler
   minimizeCalendar: =>
-    console.log "MINIMIZE CALENDAR", @minimizedCalendar()
     if @minimizedCalendar()
       @minimizedCalendar(false)
     else
       @minimizedCalendar(true)
 
   showCalendar: =>
-    console.trace()
     $('.calenderWindow').show()
     if @minimizedCalendar()
       @minimizedCalendar(false)

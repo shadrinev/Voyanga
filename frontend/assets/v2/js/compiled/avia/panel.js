@@ -41,7 +41,6 @@ AviaPanel = (function(_super) {
     this.arrivalCityReadableAcc = ko.observable('');
     this.oldCalendarState = this.minimizedCalendar();
     this.show = this.passengers.show;
-    this.minimizeCalendar(true);
     this.fromChosen = ko.computed(function() {
       if (_this.departureDate().getDay) {
         return true;
@@ -69,9 +68,10 @@ AviaPanel = (function(_super) {
       return !_this.formFilled();
     });
     this.maximizedCalendar = ko.computed(function() {
-      return (_this.departureCity().length > 0) && (_this.arrivalCity().length > 0) && (_this.departureDate().length === 0) && ((_this.rt()) && (!_this.rtDate().length === 0));
+      return _this.departureCity() && _this.arrivalCity();
     });
     this.maximizedCalendar.subscribe(function(newValue) {
+      console.log("@maximizedCalendar", !newValue);
       if (!newValue) {
         return;
       }
