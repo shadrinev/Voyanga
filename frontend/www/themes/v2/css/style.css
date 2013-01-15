@@ -1,4 +1,3 @@
-
 @import "body.css";
 @import "trash.css";
 @import "ico.css";
@@ -1407,8 +1406,9 @@ input.hotel-input {
 .foot-menu li {
     background: url("../images/hr-hor-footer.png") no-repeat scroll left top transparent;
     float: left;
-    height: 20px;
-    padding: 5px 20px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 20px;
     text-shadow: 0 1px 0 #202226;
 }
 .foot-menu li a {
@@ -2203,8 +2203,8 @@ input.hotel-input {
     margin-top: 15px;
 }
 .aviaAllPrice tr td, .hotelAllPrice tr td {
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 .aviaAllPrice thead tr td {
     color: #5b5d62;
@@ -3006,6 +3006,7 @@ input.hotel-input {
 }
 .mainTable .tdInfoText {
     padding-top: 50px;
+    line-height: 16px;
 }
 .paybuyEnd .info {
 	width: 690px;
@@ -3015,6 +3016,7 @@ input.hotel-input {
 	color: #626368;
 	font-size: 12px;
 	text-align: left;
+    line-height: 20px;
 }
 .paybuyEnd .armoring {
 	float: right;
@@ -3938,16 +3940,17 @@ a.whereData span {
     color: #1d222b;
     font-size: 13px;
     line-height: 20px;
+    font-family: Arial;
 }
 #payments-waiting h2 {
     background: url("../images/h1-time.png") no-repeat scroll left center transparent;
     color: #1D222B;
     font-size: 24px;
-    height: 27px;
-    line-height: 27px;
-    padding-left: 40px;
-    margin: 50px 0px 20px;
     font-weight: normal;
+    height: 29px;
+    line-height: 29px;
+    margin: 50px 0 20px;
+    padding-left: 40px;
 }
 #payments-ok h2 {
     background: url("../images/h1-done.png") no-repeat scroll left center transparent;

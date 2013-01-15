@@ -579,6 +579,8 @@ function ResizeAvia() {
     mapAllPageView();
     gradientResize();
     resizePanel();
+
+    startIE();
 }
 
 function ResizeFun() {
@@ -1663,4 +1665,14 @@ function resizePanel(arg) {
 	//$('.panel:not(:last)').css('width', _widthPanelTable+'px');
 
     });
+}
+
+function startIE() {
+    var browser = navigator.appName;
+    if(browser == "Microsoft Internet Explorer")
+    {
+        $('.from, .to').click(function() {
+            $(this).find('.second-path').focus();
+        });
+    }
 }

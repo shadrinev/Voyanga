@@ -22,7 +22,7 @@ API = (function() {
     }
     return $.ajax({
       url: "" + this.endpoint + url,
-      dataType: 'json',
+      dataType: 'jsonp',
       timeout: 90000,
       success: function(data) {
         cb(data);

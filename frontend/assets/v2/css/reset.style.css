@@ -1,9 +1,9 @@
 @charset "utf-8";
 body, h1, h2, h3, h4, h5, h6 {
-font: 14px/18px Verdana, sans-serif;
+font: 12px Arial, sans-serif;
 }
 code, kbd, pre, samp, tt, var {
-font: 14px/18px Consolas, "Courier New", monospace;
+font: 12px Arial, sans-serif;
 }
 body, optgroup {
 color: #000;
