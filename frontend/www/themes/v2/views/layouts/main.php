@@ -36,7 +36,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
                     <!-- BOARD CONTENT -->
                         <div class="board-content" data-bind="template: { name: fakoPanel().template, data: fakoPanel(), afterRender: fakoPanel().afterRender }"></div>
                     <!-- END BOARD CONTENT -->
-                    <div data-bind="attr: {class: fakoPanel().icon}"></div>
+                    <div data-bind="attr: {'class': fakoPanel().icon}"></div>
                 </div>
             <!-- /ko -->
             <!-- ko if:fakoPanel().template!='tour-panel-template' -->
@@ -49,7 +49,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
                         </div>
                         <!-- END PANEL -->
                     </div>
-                    <div data-bind="attr: {class: fakoPanel().icon}"></div>
+                    <div data-bind="attr: {'class': fakoPanel().icon}"></div>
                 </div>
             <!-- /ko -->
             <!-- END CONSTRUCTOR -->
@@ -104,7 +104,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 <!-- END WRAPPER -->
 <!-- MAPS -->
 <!-- FIXME -->
-<span data-bind="template: {if: in1, name: 'event-map', data: events, afterRender: events.afterRender}"></span>
+<span data-bind="template: {'if': in1, 'name': 'event-map', 'data': events, 'afterRender': events.afterRender}"></span>
 <!-- END MAPS -->
 
 <?php

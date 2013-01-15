@@ -49,7 +49,7 @@
                     <div class="description">
                         <div class="title">
                             <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span></h2>
-                            <div data-bind="attr: {class: 'stars ' + stars}"></div>
+                            <div data-bind="attr: {'class': 'stars ' + stars}"></div>
                         </div>
                         <div class="place">
                             <div class="street">
@@ -163,7 +163,7 @@
                         			</td>
                         			<td>
                       				 	<!-- ko if: hasMeal -->
-			                            	<span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
+			                            	<span class="ico-breakfast" data-bind="attr: {'class': mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
 			                            <!-- /ko -->
                         			</td>
                         		</tr>

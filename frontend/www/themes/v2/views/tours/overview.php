@@ -109,7 +109,7 @@ $theme = Yii::app()->theme->baseUrl;
 </script>
 <script id="tours-overview-entry" type="text/html">
   <div class="when">
-    <div class="date" data-bind="attr: {class: 'date '+ dateClass()}, html:dateHtml()">
+    <div class="date" data-bind="attr: {'class': 'date '+ dateClass()}, html:dateHtml()">
     </div>
   </div>
   <div class="info">
@@ -306,7 +306,7 @@ $theme = Yii::app()->theme->baseUrl;
             <div class="description">
                 <div class="title">
                     <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span></h2>
-                    <div data-bind="attr: {class: 'stars ' + stars}"></div>
+                    <div data-bind="attr: {'class': 'stars ' + stars}"></div>
                 </div>
                 <div class="place">
                     <div class="street">

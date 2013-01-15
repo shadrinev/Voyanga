@@ -22,7 +22,7 @@
 	</div>
 
 
-    <div class="stars four" data-bind="attr: {class: 'stars ' + stars}"></div>
+    <div class="stars four" data-bind="attr: {'class': 'stars ' + stars}"></div>
 
     <div class="clear"></div>
   </div>
@@ -106,7 +106,7 @@
                         			</td>
                         			<td>
                       				 	<!-- ko if: hasMeal -->
-			                            	<span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
+			                            	<span class="ico-breakfast" data-bind="attr: {'class': mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
 			                            <!-- /ko -->
                         			</td>
                         		</tr>
@@ -156,7 +156,7 @@
                         			</td>
                         			<td>
                       				 	<!-- ko if: hasMeal -->
-			                            	<span class="ico-breakfast" data-bind="attr: {class: mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
+			                            	<span class="ico-breakfast" data-bind="attr: {'class': mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
 			                            <!-- /ko -->
                         			</td>
                         		</tr>

@@ -37,7 +37,7 @@
           Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
 	</div>
       </div>
-      <div data-bind="attr: {class: 'stars ' + stars}"></div>
+      <div data-bind="attr: {'class': 'stars ' + stars}"></div>
       <div class="clear"></div>
     </div>
     <div class="place-buy" id="hotels-popup-header2">

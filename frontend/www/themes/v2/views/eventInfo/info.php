@@ -253,7 +253,7 @@ $images = '/themes/v2';
         </div>
         <div class="block" data-bind=" css:{end: $index()==$length()-1}">
             <div class="when">
-                <div class="date" data-bind="html:dateHtml(),attr: {class: 'date '+ dateClass()} ">
+                <div class="date" data-bind="html:dateHtml(),attr: {'class': 'date '+ dateClass()} ">
                 </div>
             </div>
             <div class="info">
@@ -430,7 +430,7 @@ $images = '/themes/v2';
                 <div class="description">
                     <div class="title">
                         <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span></h2>
-                        <div data-bind="attr: {class: 'stars ' + stars}"></div>
+                        <div data-bind="attr: {'class': 'stars ' + stars}"></div>
                     </div>
                     <div class="place">
                         <div class="street">
