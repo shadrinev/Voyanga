@@ -6,7 +6,6 @@ ko.bindingHandlers.timeSlider =
     limits.from -= 15
     limits.from = 0 if limits.from < 0
     limits.to += 15
-    console.log limits.to
     limits.to = 1440 if limits.to > 1440
     value.from = limits.from unless Utils.inRange(value.from, limits)
     value.to = limits.to unless Utils.inRange(value.to, limits)

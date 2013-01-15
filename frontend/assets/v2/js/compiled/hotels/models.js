@@ -459,7 +459,6 @@ HotelResult = (function() {
       this.distanceToCenter = 30;
     }
     this.duration = duration;
-    console.log('duration:' + duration);
     this.haveFullInfo = ko.observable(false);
     this.selectText = ko.computed(function() {
       if (!_this.tours()) {
@@ -491,7 +490,6 @@ HotelResult = (function() {
     this.hasRoomAmenities = hotelDatails.roomAmenities ? true : false;
     this.roomAmenities = hotelDatails.roomAmenities;
     this.roomSets = ko.observableArray([]);
-    console.log(this.roomSets());
     this.visible = ko.observable(true);
     this.wordDays = this.parent.wordDays;
     this.visibleRoomSets = ko.computed(function() {
@@ -503,11 +501,6 @@ HotelResult = (function() {
         if (roomSet.visible()) {
           result.push(roomSet);
         }
-      }
-      if (result.length > 0) {
-        window.voyanga_debug('all results for hotel'.result);
-      } else {
-        window.voyanga_debug('all results for hotel zero');
       }
       return result;
     });
@@ -1062,9 +1055,6 @@ HotelsResultSet = (function() {
     this.showLimit = 20;
     this.sortBy = ko.observable('minPrice');
     this.ordBy = ko.observable(1);
-    this.data.subscribe(function(value) {
-      return console.log('now changed fv:', value[0], window.hrs.data()[0]);
-    });
     this.resultsForRender = ko.computed(function() {
       var limit, ordKey, results, sortKey, _k, _len2, _ref2;
       limit = _this.showParts() * _this.showLimit;
@@ -1437,7 +1427,6 @@ HotelsResultSet = (function() {
     }
     fv = this.data()[0];
     sv = this.data()[1];
-    console.log('post filters', fv, sv, fromFilters);
     data = _.filter(this.data(), function(el) {
       return el.visible();
     });
@@ -1451,7 +1440,6 @@ HotelsResultSet = (function() {
       var kb, offset, posTop;
       fv = _this.data()[0];
       sv = _this.data()[1];
-      console.log('post filters timeout', fv, sv, fromFilters);
       if (fromFilters) {
         jsPaneScrollHeight();
       }
@@ -1471,12 +1459,10 @@ HotelsResultSet = (function() {
       }
       _this.toursOpened = false;
       fv = _this.data()[0];
-      sv = _this.data()[1];
-      return console.log('post filters timeoutEnd', fv, sv, fromFilters);
+      return sv = _this.data()[1];
     }, 50);
     fv = this.data()[0];
-    sv = this.data()[1];
-    return console.log('post filters end', fv, sv, fromFilters);
+    return sv = this.data()[1];
   };
 
   return HotelsResultSet;

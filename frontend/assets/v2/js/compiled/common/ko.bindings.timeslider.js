@@ -10,7 +10,6 @@ ko.bindingHandlers.timeSlider = {
       limits.from = 0;
     }
     limits.to += 15;
-    console.log(limits.to);
     if (limits.to > 1440) {
       limits.to = 1440;
     }

@@ -906,7 +906,6 @@ HotelFiltersT = (function() {
   };
 
   HotelFiltersT.prototype.filter = function() {
-    console.log('filters changed');
     return this.iterate(this.filterHotel, this.filterRoom);
   };
 
@@ -930,7 +929,6 @@ HotelFiltersT = (function() {
         result.visible(someVisible);
       }
     }
-    console.log('all filters accepted', fromInt);
     return this.results.postFilters(true);
   };
 

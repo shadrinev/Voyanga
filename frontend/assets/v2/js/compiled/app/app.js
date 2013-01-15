@@ -199,7 +199,7 @@ Application = (function(_super) {
           return _this.events.closeEventsPhoto();
         }
       }
-    }, 1);
+    }, 10);
   };
 
   Application.prototype.runWithModule = function(module) {

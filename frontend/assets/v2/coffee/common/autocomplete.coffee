@@ -44,11 +44,9 @@ ko.bindingHandlers.autocomplete =
       params = []
       params.push 'codes[0]=' + code
       result += params.join "&"
-      window.voyanga_debug "Generated autocomplete city url", result
       return result
 
     handleResults = (data) ->
-      window.voyanga_debug "Ajax request done for ", data[iataCode]
       valueAccessor().readable(data[iataCode].name)
       valueAccessor().readableGen(data[iataCode].nameGen)
       valueAccessor().readableAcc(data[iataCode].nameAcc)
@@ -56,7 +54,6 @@ ko.bindingHandlers.autocomplete =
       $(element).siblings('input.input-path').val(data[iataCode].label)
 
     if (iataCode.length>0)
-      window.voyanga_debug "Invoking ajax request to get city info ", iataCode
       $.ajax
         url: url iataCode
         dataType: 'jsonp'

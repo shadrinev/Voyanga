@@ -307,7 +307,6 @@ class HotelResult
       @distanceToCenter = 30
 
     @duration = duration
-    console.log('duration:'+duration)
     @haveFullInfo = ko.observable false
 
     @selectText = ko.computed =>
@@ -327,15 +326,9 @@ class HotelResult
     if hotelDatails.hotelGroupServices
       for groupName,elements of hotelDatails.hotelGroupServices
         @hotelGroupServices.push {groupName: groupName,elements: elements,groupIcon: HOTEL_SERVICE_VERBOSE[groupName]}
-    #if @hasHotelServices
-    #  for service in @hotelServices
-    #    if service == 'Фитнесс-центр'
-    #      service = 'Фитнесс'
     @hasRoomAmenities = if hotelDatails.roomAmenities then true else false
     @roomAmenities = hotelDatails.roomAmenities
     @roomSets = ko.observableArray([])
-    #@roomSets = []
-    console.log(@roomSets())
     @visible = ko.observable(true)
     @wordDays = @parent.wordDays
     @visibleRoomSets = ko.computed =>
@@ -343,9 +336,6 @@ class HotelResult
       for roomSet in @roomSets()
         if roomSet.visible()
           result.push roomSet
-      if result.length > 0
-        window.voyanga_debug('all results for hotel'.result)
-      else window.voyanga_debug('all results for hotel zero')
       return result
     @isShowAll = ko.observable(false)
     @showAllText = ko.computed =>
@@ -825,10 +815,6 @@ class HotelsResultSet
     @showLimit = 20
     @sortBy = ko.observable( 'minPrice')
     @ordBy = ko.observable 1
-    @data.subscribe (value)=>
-      console.log('now changed fv:',value[0],window.hrs.data()[0])
-
-
 
     @resultsForRender = ko.computed =>
       limit = @showParts() * @showLimit
@@ -1143,8 +1129,6 @@ class HotelsResultSet
   postFilters: (fromFilters = false)=>
     fv = @data()[0]
     sv = @data()[1]
-    #console.log('before more results',fv,sv,@showParts())
-    console.log 'post filters',fv,sv,fromFilters
     data = _.filter @data(), (el) -> el.visible()
     @numResults data.length
     if !@pagesLoad || fromFilters
@@ -1156,8 +1140,6 @@ class HotelsResultSet
       =>
         fv = @data()[0]
         sv = @data()[1]
-        #console.log('before more results',fv,sv,@showParts())
-        console.log 'post filters timeout',fv,sv,fromFilters
         if(fromFilters)
           jsPaneScrollHeight()
         if window.app.activeView() == 'hotels-results'
@@ -1167,9 +1149,6 @@ class HotelsResultSet
             Utils.scrollTo('#content')
         else if (@toursOpened && @tours() && @filtersConfig) || (@tours() && @showFullMap())
           kb = true
-          #if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
-            #Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent())
-
         else
           Utils.scrollTo(0,false)
         if @showFullMap()
@@ -1178,15 +1157,8 @@ class HotelsResultSet
         @toursOpened = false
         fv = @data()[0]
         sv = @data()[1]
-        #console.log('before more results',fv,sv,@showParts())
-        console.log 'post filters timeoutEnd',fv,sv,fromFilters
       , 50
     )
     fv = @data()[0]
     sv = @data()[1]
-    #console.log('before more results',fv,sv,@showParts())
-    console.log 'post filters end',fv,sv,fromFilters
-    #ko.processAllDeferredBindingUpdates()
-    # FIXME
-    #ResizeAvia()
 

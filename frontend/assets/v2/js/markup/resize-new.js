@@ -36,7 +36,6 @@ var var_widthMainBlockMIN = 530;
 window.hotelsScrollCallback = function(){}
 
 function ResizeCenterBlock() {
-    //console.log("CENTER")
 	var block = $('.center-block');
 	var isset = block.length;
 	if (isset) {
@@ -88,7 +87,6 @@ function ResizeCenterBlock() {
 		
 		
 		if (! var_leftBlockIsset &&  ! var_filterBlockIsset && var_mainBlockIsset) {
-			//console.log("THIS IS === 1 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthMainBlock = var_widthMiddleBlockOneMAX;
 				marginLeftMainBlock = 'auto';
@@ -130,7 +128,6 @@ function ResizeCenterBlock() {
 			}
 		}
 		else if (! var_leftBlockIsset &&  var_filterBlockIsset && var_mainBlockIsset) {
-			//console.log("THIS IS === 2 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthMainBlock = var_widthMiddleBlockMAX;
 				widthFilterBlock = var_widthFilterMAX;
@@ -192,7 +189,6 @@ function ResizeCenterBlock() {
 		}
 
 		else if (var_leftBlockIsset &&  var_filterBlockIsset && var_mainBlockIsset) {
-			//console.log("THIS IS === 3 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockMAX;
@@ -249,7 +245,6 @@ function ResizeCenterBlock() {
 		}
 
 		else if (var_leftBlockIsset && var_mainBlockIsset &&  ! var_filterBlockIsset ) {
-			//console.log("THIS IS === 4 === IF ELSE"); 
 			if (widthBlock >= var_widthMAX) {
 				widthLeftBlock = var_widthLeftBlockMAX;
 				widthMainBlock = var_widthMiddleBlockOneMAX;
@@ -331,7 +326,6 @@ function ResizeCenterBlock() {
 			}
 		}
 		else {
-			//console.log("THIS IS === 5 === IF ELSE");
 			if (widthBlock >= var_widthMAX) {
 
 
@@ -467,7 +461,6 @@ function smallTicketHeight() {
 	    heightTwoTicket = (var_oneHeight - 24);
 	}
 	heightTwoTicket = Math.floor(heightTwoTicket);
-	//console.log(heightTwoTicket);
 	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices').css('height', heightTwoTicket +'px');
 	var heightGraf = heightTwoTicket - 65;	
 	// fixme bzv this method itself called twice on avia result
@@ -742,7 +735,6 @@ function jsPaneScrollHeight() {
 	}
 	else {
 	
-	//console.log("==== * * * * ====");
 	var _content = $('#content');
 	_content.css('height','auto');
 	var _windowHeight = $(window).height();
@@ -757,11 +749,9 @@ function jsPaneScrollHeight() {
 	$('.scrollBlock').find('.div-filter').each(function(e) {
 		_scrollPaneHeight += $(this).innerHeight();
 	});
-	//console.log('_contentHeight = '+_contentHeight+' | _scrollPaneHeight = '+_scrollPaneHeight+ ' | _windowHeight = '+_windowHeight);
-	if (_scrollPaneHeight	> _contentHeight  && 
+	if (_scrollPaneHeight	> _contentHeight  &&
 		_contentHeight		> _windowHeight && 
 		_scrollPaneHeight 	> _windowHeight) {
-		//console.log('=== 1 ===');
 		_content.css('height', _scrollPaneHeight + 'px');
 		$('.filter-content').css('position','relative').css('top','auto').css('bottom','auto');
 		$('.innerFilter').css('height', _scrollPaneHeight +'px');
@@ -1288,7 +1278,6 @@ function openPopUpContact() {
                 }
             }
             else if (e.which == 40) {
-                console.log((scrollMean + 15) +' '+ scrollTopCount);
                 scrollTopCount += 15;
                 if ((scrollMean + 15) > scrollTopCount) {
                     $('.contentWrapBg').scrollTop(scrollTopCount);
@@ -1361,7 +1350,6 @@ function gradientResize() {
         var _rightContent = offset.left + _content.width();
         $('.gShR').show().css('left', (_rightContent - 180) +'px').css('width', ($(window).width() - (_rightContent - 180)) +'px');;
         $('.gShL').show().css('right', (_leftContent - 40) +'px').css('width', (offset.left + 40) +'px');
-        console.log(_leftContent+' '+_rightContent);
     }
     else {
         return
@@ -1644,26 +1632,17 @@ function resizePanel(arg) {
 
         if (_widthPanelTable >= _allWidthPanel) {
             _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-        console.log('=1=');
         }
         else if (_widthPanelTable < _allWidthPanel) {
             _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-            console.log('=2=');
         }
         else {
             _newMean = (_widthPanelTable - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-            console.log('=3=');
         }
-
 
         _panelTable.find('.tdCity').find('.data').css('width', _newMean +'px');
         _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
         _widthPanelTable = _panelTable.innerWidth();
-
-
-        console.log(index + '=== THIS LOOOK ===' + _newMean)
-	//$('.panel:not(:last)').css('width', _widthPanelTable+'px');
-
     });
 }
 

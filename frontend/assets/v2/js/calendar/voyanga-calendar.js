@@ -423,7 +423,6 @@ VoyangaCalendarStandart.update = function(dontset){
     if(this.values.length) {
         var jCell = this.getCellByDate(this.values[0]);
         jCell.addClass('selectData from');
-        console.log('I"m update value');
 
         if(this.values.length > 1) {
             jCell = this.getCellByDate(this.values[1]);
@@ -442,7 +441,6 @@ VoyangaCalendarStandart.update = function(dontset){
 
 VoyangaCalendarStandart.onCellClick = function(obj){
     var jCell = $(obj);
-    console.log('clickByCell',jCell.hasClass('inactive'),jCell);
     if(jCell.hasClass('inactive'))
         return;
     var cellDate = Date.fromIso(jCell.data('cell-date'));
@@ -523,7 +521,6 @@ VoyangaCalendarStandart.generateGrid = function(){
         //}
         lineNumber++;
     }
-    console.log('montharray',this.slider.monthArray);
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
     if((lineNumber -lastLineMonth) < 2){
         this.slider.monthArray.pop();
@@ -541,14 +538,9 @@ VoyangaCalendarStandart.clear = function(){
 }
 
 VoyangaCalendarStandart.minimalDateUpdated = function(){
-    console.log('minimalDate Updated',this.minimalDate);
     var dateLabel = this.minimalDate.getFullYear()+'-'+(this.minimalDate.getMonth()+1)+'-'+this.minimalDate.getDate();
     this.slider.minimalLine = $('#dayCell-'+dateLabel).parent().data('weeknum');
 
-
-    //var scrollTop = (this.slider.minimalLine / this.slider.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
-    //console.log('hheeiigghhtt',this.jObj.find('.calendarGridVoyanga').prop('scrollHeight'));
-    //this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
     dayCell = this.jObj.find('#weekNum-0 .dayCellVoyanga:eq(0)');
     if(dayCell.length){
         var dd = Date.fromIso(dayCell.data('cell-date'));
@@ -559,7 +551,6 @@ VoyangaCalendarStandart.minimalDateUpdated = function(){
                 dateLabel = dd.getFullYear()+'-'+(dd.getMonth()+1)+'-'+dd.getDate();
                 if(dd < this.minimalDate){
                     $('#dayCell-'+ dateLabel).addClass('inactive');
-                    //console.log('inactive'+i, dd, this.minimalDate );
                 }else{
                     if($('#dayCell-'+ dateLabel).hasClass('inactive')){
                         $('#dayCell-'+ dateLabel).removeClass('inactive');
@@ -572,11 +563,6 @@ VoyangaCalendarStandart.minimalDateUpdated = function(){
             }
         }
     }
-
-
-    console.log('dayCell',dayCell);
-
-
 }
 
 VoyangaCalendarStandart.scrollToDate = function(dateVar){
@@ -661,16 +647,13 @@ VoyangaCalendarStandart.compareCalendarValue = function(oldValue,newValue){
     for(var propName in newValue){
         if(propName == 'from'){
             if((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[0])){
-                console.log('!Not same'+propName,oldValue[propName],newValue[propName]);
                 return false;
             }
         }else if(propName == 'to'){
             if((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[1])){
-                console.log('!Not same'+propName,oldValue[propName],newValue[propName]);
                 return false;
             }
         }else if(oldValue[propName] != newValue[propName]){
-            console.log('!Not same'+propName,oldValue[propName],newValue[propName]);
             return false;
         }
     }
@@ -720,10 +703,7 @@ VoyangaCalendarStandart.init = function (panel, element){
     VoyangaCalendarStandart.generateGrid();
     VoyangaCalendarStandart.slider.init();
     if(this.minimalDateChanged){
-        console.log('try start MDU');
         this.minimalDateUpdated();
-    }else{
-        console.log('not changed');
     }
     this.alreadyInited = true;
 }.bind(VoyangaCalendarStandart);

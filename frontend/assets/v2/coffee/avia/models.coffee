@@ -364,7 +364,6 @@ class AviaResult
     @voyages.push newVoyage
 
   chooseStacked: (voyage) =>
-    window.voyanga_debug "Choosing stacked voyage", voyage
     if @roundTrip
       hash = @activeVoyage().activeBackVoyage().hash()
     @activeVoyage(voyage)

@@ -40,9 +40,11 @@ class HotelsPanel extends SearchPanel
       !@formFilled()
 
     @maximizedCalendar = ko.computed =>
-      @city().length > 0
+      (@city().length > 0) && (!_.isObject(@checkIn()))
 
     @maximizedCalendar.subscribe (newValue) =>
+      if !newValue
+        return
       @showCalendar()
 
     @calendarValue = ko.computed =>

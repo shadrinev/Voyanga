@@ -67,7 +67,6 @@ class Event extends Backbone.Events
 
 class EventSet
   constructor: (events) ->
-    console.trace()
     @events = ko.observableArray events
     @currentTitle = ko.observable 'HUY'
     @currentEvent = ko.computed =>

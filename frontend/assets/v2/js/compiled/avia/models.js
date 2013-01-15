@@ -519,7 +519,6 @@ AviaResult = (function() {
 
   AviaResult.prototype.chooseStacked = function(voyage) {
     var backVoyage, hash;
-    window.voyanga_debug("Choosing stacked voyage", voyage);
     if (this.roundTrip) {
       hash = this.activeVoyage().activeBackVoyage().hash();
     }

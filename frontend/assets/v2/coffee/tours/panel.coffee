@@ -232,7 +232,6 @@ class TourPanel extends SearchPanel
     hideFromCityInput(panel, event)
 
   showCalendar: =>
-    console.log('calendar show trigger')
     $('.calenderWindow').show()
     @trigger "tourPanel:showCalendar", @
     if @minimizedCalendar()

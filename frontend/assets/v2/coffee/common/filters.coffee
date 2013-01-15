@@ -541,8 +541,6 @@ class HotelFiltersT
       @[filter_key][methodName](item)
 
   filter: =>
-    console.log('filters changed')
-    #console.profile('hotelFilters')
     @iterate @filterHotel, @filterRoom
 
   iterate: (onHotel, onRoom, fromInt = true) =>
@@ -554,9 +552,6 @@ class HotelFiltersT
           onRoom(roomSet)
           someVisible = someVisible || roomSet.visible()
         result.visible(someVisible)
-      #result.chooseActive()
-    console.log('all filters accepted',fromInt)
-    #console.profileEnd('hotelFilters')
     @results.postFilters(true)
 
   getConfig: =>

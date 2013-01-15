@@ -89,7 +89,6 @@ EventSet = (function() {
     this.setActive = __bind(this.setActive, this);
 
     var _this = this;
-    console.trace();
     this.events = ko.observableArray(events);
     this.currentTitle = ko.observable('HUY');
     this.currentEvent = ko.computed(function() {

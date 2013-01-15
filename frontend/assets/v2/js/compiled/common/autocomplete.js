@@ -5,7 +5,7 @@ ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
     var showCode,
       _this = this;
-    showCode = (valueAccessor().showCode === undefined ? true : valueAccessor().showCode);
+    showCode = (valueAccessor().showCode === undefined ? valueAccessor().showCode : true);
     setTimeout(function() {
       $(element).bind("focus", function() {
         return $(element).change();
@@ -57,7 +57,6 @@ ko.bindingHandlers.autocomplete = {
       return result;
     };
     handleResults = function(data) {
-      window.voyanga_debug("Ajax request done for ", data[iataCode]);
       valueAccessor().readable(data[iataCode].name);
       valueAccessor().readableGen(data[iataCode].nameGen);
       valueAccessor().readableAcc(data[iataCode].nameAcc);
@@ -65,7 +64,6 @@ ko.bindingHandlers.autocomplete = {
       return $(element).siblings('input.input-path').val(data[iataCode].label);
     };
     if (iataCode.length > 0) {
-      window.voyanga_debug("Invoking ajax request to get city info ", iataCode);
       return $.ajax({
         url: url(iataCode),
         dataType: 'jsonp',
