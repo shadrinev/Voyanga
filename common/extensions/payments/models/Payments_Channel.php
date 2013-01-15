@@ -76,8 +76,8 @@ abstract class Payments_Channel {
         if($result['Result'] == 'Ok')
         {
 //            $bill->status = Bill::STATUS_PAID;
-            $bill->transactionId = $result['TransactionId'];
-            $bill->save();
+            $this->bill->transactionId = $result['TransactionId'];
+            $this->bill->save();
             return true;
         }
         return false;
