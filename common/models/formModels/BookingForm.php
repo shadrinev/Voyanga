@@ -18,9 +18,9 @@ class BookingForm extends CFormModel
         return array(
             // first_name, last_name, number, birthday, document_type_id, gender_id are required
             array(
-                'contactPhone, contactEmail',
-                'required',
+                'contactPhone, contactEmail', 'required',
             ),
+            array('contactEmail', 'email')
         );
 
 

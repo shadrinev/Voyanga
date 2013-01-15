@@ -38,6 +38,8 @@ class BaseFlightPassportForm extends BasePassportForm
     public $expirationYear;
     public $ticketNumber='';
 
+    public $srok = false;
+
     /**
      * Declares the validation rules.
      */
@@ -51,8 +53,23 @@ class BaseFlightPassportForm extends BasePassportForm
             array('documentTypeId', 'in', 'range'=>array_keys(self::getPossibleTypes())),
             array('genderId', 'in', 'range'=>array_keys(self::getPossibleGenders())),
             array('birthday', 'date', 'format' => 'dd.MM.yyyy'),
-            array('expirationDate', 'date', 'format' => 'dd.MM.yyyy', 'on'=>'type_'.self::TYPE_INTERNATIONAL),
+            array('srok, expirationDay, expirationMonth, expirationYear', 'safe'),
+            array('expirationDate', 'validateExpirationDate'),
         ));
+    }
+
+    public function validateExpirationDate($attr)
+    {
+        if (!$this->srok)
+            if (!checkdate(intval($this->expirationMonth), intval($this->expirationDay), intval($this->expirationYear)))
+                $this->addError('expirationDate', 'Введите дату истечения документа');
+            else
+            {
+                $date = strtotime($this->expirationMonth.'/'.$this->expirationDay.'/'.$this->expirationYear);
+                $now = time();
+                if ($date < $now)
+                    $this->addError('expirationDate', 'Срок действия вашего документа истёк');
+            }
     }
     
     public function getBirthday()

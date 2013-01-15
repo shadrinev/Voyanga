@@ -137,6 +137,30 @@ function analyzeValidationResult(response) {
                     inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
                 if (key == 'genderId')
                     inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
+                if (key == 'birthday')
+                {
+                    var namePrefix = 'FlightAdultPassportForm[' + i + '][',
+                        inputNames = [
+                            namePrefix + 'birthdayDay]',
+                            namePrefix + 'birthdayMonth]',
+                            namePrefix + 'birthdayYear]'
+                        ];
+                    _.each(inputNames, function(name, i){
+                        $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+                    });
+                }
+                if (key == 'expirationDate')
+                {
+                    var namePrefix = 'FlightAdultPassportForm[' + i + '][',
+                        inputNames = [
+                            namePrefix + 'expirationDay]',
+                            namePrefix + 'expirationMonth]',
+                            namePrefix + 'expirationYear]'
+                        ];
+                    _.each(inputNames, function(name, i){
+                        $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+                    });
+                }
             })
         });
 }
@@ -171,7 +195,6 @@ function disableAllFieldsAndHideButton() {
 }
 
 function enableAllFieldsAndShowButton() {
-    /* disable all fields */
     $('.oneBlock input').not('.expiration').each(function () {
         $(this).removeAttr('disabled');
     });
@@ -180,12 +203,14 @@ function enableAllFieldsAndShowButton() {
         $(this).closest('select').siblings('.chzn-container').show();
     });
     $('.expiration').each(function () {
-        var isActive = $(this).closest('.checkOn').attr('data-is-active') == 'true';
+        var that = this,
+            isActive = $(this).closest('.checkOn').attr('data-is-active') == 'true';
         if (isActive) {
             $(this).closest('.checkOn').addClass('active');
         }
         else {
             $(this).closest('.checkOn').removeClass('active');
+            $(that).removeAttr('disabled');
         }
     });
     $('.tdBirthday input').each(function () {

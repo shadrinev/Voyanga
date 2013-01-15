@@ -30,7 +30,9 @@ class MakeBookingAction extends CAction
         $this->passportForms = $passportManager->passportForms;
         if ($this->weGotPassportsAndBooking())
         {
-            if (($this->fillOutBookingForm()) && ($this->fillOutPassports($ambigousPassports)))
+            $flag1 = $this->fillOutBookingForm();
+            $flag2 = $this->fillOutPassports($ambigousPassports);
+            if ($flag1 && $flag2)
             {
                 Yii::app()->user->setState('passportForms', $this->passportForms);
                 Yii::app()->user->setState('bookingForm', $this->bookingForm);
@@ -82,7 +84,7 @@ class MakeBookingAction extends CAction
         $this->bookingForm->attributes = $_POST['BookingForm'];
         $this->bookingForm->validate();
         $this->validationErrors['booking'] = $this->bookingForm->errors;
-        return true; //just to get passport data ability to check too
+        return !$this->bookingForm->hasErrors(); //just to get passport data ability to check too
     }
 
     private function fillOutPassports($ambigous)

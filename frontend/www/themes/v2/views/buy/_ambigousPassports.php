@@ -205,8 +205,10 @@
 
             </td>
             <td class="tdDuration">
+                <input type="hidden" value="0"
+                       name="FlightAdultPassportForm[<?php echo $i;?>][srok]">
                 <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}" checked="checked"
-                       name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">
+                       name="FlightAdultPassportForm[<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
             </td>
         </tr>
         </tbody>
