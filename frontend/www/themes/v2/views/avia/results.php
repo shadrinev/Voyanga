@@ -192,7 +192,7 @@
             <span class="rur">o</span>
         </a>
     </div>
-    <a href="#" data-bind="click: showDetails" class="details">Подробнее <span>о перелете</span></a> <span data-bind="text:searchService"></span>
+    <a href="#" data-bind="click: showDetails" class="details">Подробнее <span>о перелете</span></a> <!-- span data-bind="text:searchService"></span  -->
 </div>
 <!-- END BUY TICKET -->
 <div class="clear"></div>

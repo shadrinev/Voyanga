@@ -76,7 +76,7 @@ abstract class Payments_Channel {
         if($result['Result'] == 'Ok')
         {
 //            $bill->status = Bill::STATUS_PAID;
-            $bill->transactionId = $result['Id'];
+            $bill->transactionId = $result['TransactionId'];
             $bill->save();
             return true;
         }
