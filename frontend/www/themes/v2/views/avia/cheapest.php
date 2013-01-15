@@ -75,7 +75,7 @@
 </script>
 <script id="recommend-ticket-template" type="text/html">
   <div class="ticket-items">
-    <div data-bind="attr:{class: ribbon}"></div>
+    <div data-bind="attr: {'class': ribbon}"></div>
     <div class="content">
       <div class="airlines-line">
         <img data-bind="attr: {'src': '/img/airline_logos/' + data.airline +'.png'}" >

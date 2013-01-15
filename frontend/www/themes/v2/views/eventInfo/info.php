@@ -463,7 +463,7 @@ $images = '/themes/v2';
                     <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: roomSets()[0]}" />
                 </ul>
                 <!-- div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
-                   <a href="#" data-bind="click: showAllResults,text: showAllText(),attr:{class: isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
+                   <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
                </div -->
                 <span class="lv"></span>
                 <span class="rv"></span>

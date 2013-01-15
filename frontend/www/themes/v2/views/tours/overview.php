@@ -18,9 +18,9 @@ $theme = Yii::app()->theme->baseUrl;
       <tr>
       <td class="firstTd">
       <div class="allTrip" data-bind="foreach: data">
-	<div class="block" data-bind="template: {if: $index()==0, name:'tours-overview-start', data:$parent}">
+	<div class="block" data-bind="template: {'if': $index()==0, name:'tours-overview-start', 'data':$parent}">
 	</div>
-	<div class="block" data-bind="template: {name:'tours-overview-entry', data:$data}, css:{end: $index()==$length()-1}">
+	<div class="block" data-bind="template: {'name':'tours-overview-entry', data:$data}, css:{'end': $index()==$length()-1}">
 	</div>    
       </div>
       </td>
@@ -131,7 +131,7 @@ $theme = Yii::app()->theme->baseUrl;
 	  </td>
 	</tr>
       </table>
-      <div data-bind="template: {name: overviewTemplate, data: selection()}"></div>
+      <div data-bind="template: {'name': overviewTemplate, 'data': selection()}"></div>
       <!-- ЗДЕСЬ БИЛЕТ -->
       <table class="descrTicket">
 	<tr data-bind="if: isAvia()">
@@ -336,11 +336,8 @@ $theme = Yii::app()->theme->baseUrl;
         </div>
         <div class="details">
             <ul>
-                <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: roomSet}" />
+                <li  class="not-show" data-bind="template: {'name': 'hotel-roomSet-template', 'data': roomSet}" />
             </ul>
-            <!-- div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
-                <a href="#" data-bind="click: showAllResults,text: showAllText(),attr:{class: isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
-            </div -->
             <span class="lv"></span>
             <span class="rv"></span>
         </div>

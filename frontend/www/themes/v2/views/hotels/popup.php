@@ -91,7 +91,7 @@
           <table class="serviceInHotelTable">
             <tr>
               <td class="title">
-                <h3><span class="icoService in-hotel" data-bind="attr:{class: 'icoService '+groupIcon}"></span><span data-bind="text: groupName"></span></h3>
+                <h3><span class="icoService in-hotel" data-bind="attr: {'class': 'icoService '+groupIcon}"></span><span data-bind="text: groupName"></span></h3>
                 </td>
               <td class="list">
                 <ul data-bind="foreach: elements">

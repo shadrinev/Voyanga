@@ -26,11 +26,11 @@
 <div class="ticket-content hotels">
     <h2>Найдено отелей: <span data-bind="text: numResults">##</span>
     	<ul class="tmblr">
-	      <li id="hotel-info-tumblr-description" data-bind="attr:{class: showFullMap() ? '' : 'active'}"><span class="ico-descr"></span> <a href="#descr" data-bind="click: hideFullMap">Списком</a></li>
-	      <li id="hotel-info-tumblr-map" data-bind="attr:{class: showFullMap() ? 'active' : ''}"><span class="ico-see-map"></span> <a href="#map" data-bind="click: showFullMapFunc">На карте</a></li>
+	      <li id="hotel-info-tumblr-description" data-bind="attr: {'class': showFullMap() ? '' : 'active'}"><span class="ico-descr"></span> <a href="#descr" data-bind="click: hideFullMap">Списком</a></li>
+	      <li id="hotel-info-tumblr-map" data-bind="attr: {'class': showFullMap() ? 'active' : ''}"><span class="ico-see-map"></span> <a href="#map" data-bind="click: showFullMapFunc">На карте</a></li>
 	    </ul>
     </h2>
-    <div class="sorting-panel" data-bind="visible: !showFullMap()"><span class="hotel-sort-by">сортировать по:</span> <span data-bind="click: sortByPrice,attr:{class: sortByPriceClass()}">&nbsp;цене</span> <span data-bind="click: sortByRating,attr:{class: sortByRatingClass()}">&nbsp;рейтингу</span>  </div>
+    <div class="sorting-panel" data-bind="visible: !showFullMap()"><span class="hotel-sort-by">сортировать по:</span> <span data-bind="click: sortByPrice,attr: {'class': sortByPriceClass()}">&nbsp;цене</span> <span data-bind="click: sortByRating,attr: {'class': sortByRatingClass()}">&nbsp;рейтингу</span>  </div>
     <div class="clear"></div>
     <div id="all-hotels-results">
         <!-- ko if: ! showFullMap() -->
@@ -92,7 +92,7 @@
                         </ul>
                     </div>
                     <div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
-                        <a href="#" data-bind="click: showAllResults,text: showAllText(),attr:{class: isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
+                        <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
                     </div>
                     <span class="lv"></span>
                     <span class="rv"></span>
@@ -118,11 +118,11 @@
 		</div>
 		<div id="titleNamePhoto">
 			<h2 data-bind="text: title">Рэдиссон Соня Отель</h2>
-			<div class="stars three" data-bind="attr:{class: 'stars '+ stars}"></div>
+			<div class="stars three" data-bind="attr: {'class': 'stars '+ stars}"></div>
 		</div>
     	<table>
     		<tr>
-    			<td id="left" data-bind="attr:{class: (activeIndex()!=0) ? '' :'none'}, click: prev"></td>
+    			<td id="left" data-bind="attr: {'class': (activeIndex()!=0) ? '' :'none'}, click: prev"></td>
     			<td id="center">
     				<div class="countAndClose">
     					<span data-bind="text: (activeIndex()+1)">11</span>
@@ -136,7 +136,7 @@
                     	Привет привет!
                     </div>
           		</td>
-    			<td id="right" data-bind="attr:{class: (activeIndex()!=length0) ? '' :'none'}, click: next"></td>
+    			<td id="right" data-bind="attr: {'class': (activeIndex()!=length0) ? '' :'none'}, click: next"></td>
     		</tr>
     	</table>
     	<div class="keyBoard"></div>
