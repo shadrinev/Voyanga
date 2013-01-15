@@ -129,10 +129,12 @@ class Application extends Backbone.Router
       if @panel() == undefined || (prefix != @activeModule())
         @minimizeCalendar()
         window.voyanga_debug "APP: switching active module to", prefix
-        if ((prefix == 'avia') || (prefix == 'hotels'))
-          @events.closeEventsPhoto() if (@events && @events.activeMaps == 0)
-        else
-          @events.closeEventsMaps() if (@events && @events.activeMaps == 1)
+        _.delay () =>
+          if ((prefix == 'avia') || (prefix == 'hotels'))
+            @events.closeEventsPhoto() if (@events && @events.activeMaps == 0)
+          else
+            @events.closeEventsMaps() if (@events && @events.activeMaps == 1)
+        , 10
         @activeModule(prefix)
         window.voyanga_debug "APP: activating panel", ko.utils.unwrapObservable module.panel
 

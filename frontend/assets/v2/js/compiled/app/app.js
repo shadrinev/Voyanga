@@ -163,21 +163,24 @@ Application = (function(_super) {
       }
     }
     return this.on("beforeroute:" + prefix, function() {
-      var args;
+      var args,
+        _this = this;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       window.voyanga_debug("APP: routing", args);
       if (this.panel() === void 0 || (prefix !== this.activeModule())) {
         this.minimizeCalendar();
         window.voyanga_debug("APP: switching active module to", prefix);
-        if ((prefix === 'avia') || (prefix === 'hotels')) {
-          if (this.events && this.events.activeMaps === 0) {
-            this.events.closeEventsPhoto();
+        _.delay(function() {
+          if ((prefix === 'avia') || (prefix === 'hotels')) {
+            if (_this.events && _this.events.activeMaps === 0) {
+              return _this.events.closeEventsPhoto();
+            }
+          } else {
+            if (_this.events && _this.events.activeMaps === 1) {
+              return _this.events.closeEventsMaps();
+            }
           }
-        } else {
-          if (this.events && this.events.activeMaps === 1) {
-            this.events.closeEventsMaps();
-          }
-        }
+        }, 10);
         this.activeModule(prefix);
         window.voyanga_debug("APP: activating panel", ko.utils.unwrapObservable(module.panel));
         this.activeModuleInstance(module);
