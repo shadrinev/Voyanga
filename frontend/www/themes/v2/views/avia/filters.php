@@ -53,11 +53,11 @@
 	      </div>
 	    </div>
 	<!-- AIRPORTS -->
-	    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: departureAirport, if: departureAirport.active}, visible: departureAirport.active">
+	    <div class="div-filter" data-bind="template: {'name': 'avia-filter-list', 'data': departureAirport, 'if': departureAirport.active}, 'visible': departureAirport.active">
 	    </div>
-	    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: arrivalAirport, if: arrivalAirport.active}, visible: arrivalAirport.active">
+	    <div class="div-filter" data-bind="template: {'name': 'avia-filter-list', 'data': arrivalAirport, 'if': arrivalAirport.active}, 'visible': arrivalAirport.active">
 	    </div>
-	    <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: airline, if: airline.active}, visible: airline.active">
+	    <div class="div-filter" data-bind="template: {'name': 'avia-filter-list', 'data': airline, 'if': airline.active}, 'visible': airline.active">
 	    </div>
 	    </div>
 
@@ -69,14 +69,14 @@
       <h4><div data-bind="text: caption" style="display: inline-block"></div> <a href="#" class="clean" data-bind="click: reset, visible: selection().length">Очистить</a></h4>
       <ul data-bind="foreach: options">
         <!-- ko if: $index() < 3 -->
-        <li><input type="checkbox" data-bind="checkbox:{label: key, checked: checked}"></li>
+        <li><input type="checkbox" data-bind="checkbox:{'label': key, 'checked': checked}"></li>
         <!-- /ko -->
       </ul>
       <!-- ko if: options().length > 3 -->
       <div class="more-filters">
         <ul data-bind="foreach: options">
           <!-- ko if: $index() >= 3 -->
-          <li><input type="checkbox" data-bind="checkbox:{label: key, checked: checked}"></li>
+          <li><input type="checkbox" data-bind="checkbox:{'label': key, 'checked': checked}"></li>
           <!-- /ko -->
         </ul>
       </div>

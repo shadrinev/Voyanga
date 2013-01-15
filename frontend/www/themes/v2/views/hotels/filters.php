@@ -14,7 +14,7 @@
                         <div class="none-select"></div>
                     </div>
                     <ul class="stars-li" data-bind="foreach: stars.options">
-                        <li><input type="checkbox" checked="checkbox" name="0001" id="s0001" data-bind="checked: checked,attr:{id: 's'+key}"><label for="s0001" class="" data-bind="text: key,attr: {for: 's'+key,class: cls()}">1</label></li>
+                        <li><input type="checkbox" checked="checkbox" name="0001" id="s0001" data-bind="checked: checked,attr:{id: 's'+key}"><label for="s0001" class="" data-bind="text: key,attr: {'for': 's'+key,'class': cls()}">1</label></li>
                     </ul>
                 </div>
                 <div class="div-filter">
@@ -30,7 +30,7 @@
                     </div>
                     <a href="#" class="linksFilter" data-bind="click: showFullMap, visible: ! results.showFullMap()">Отели на большой карте</a>
                 </div>
-                <div class="div-filter" data-bind="template: {name: 'avia-filter-list', data: services, if: services.active}, visible: services.active">
+                <div class="div-filter" data-bind="template: {'name': 'avia-filter-list', 'data': services, 'if': services.active}, visible: services.active">
                 </div>
                 </div>
             </div>
