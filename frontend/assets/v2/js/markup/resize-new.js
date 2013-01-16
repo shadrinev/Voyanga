@@ -1647,10 +1647,9 @@ function resizePanel(arg) {
 }
 
 function startIE() {
-    var browser = navigator.appName;
-    if(browser == "Microsoft Internet Explorer")
+    if($.browser.msie)
     {
-        $('.from, .to').click(function() {
+        $(document).on('click', '.data', function() {
             $(this).find('.second-path').focus();
         });
     }
