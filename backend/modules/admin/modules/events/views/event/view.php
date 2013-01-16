@@ -91,7 +91,7 @@ $this->beginWidget("AAdminPortlet", array(
         'orderId' => $tour->order->id,
         'urlToBasket' => $this->createUrl('/admin/tour/basket/show'),
         'urlToConstructor' => $this->createUrl('/admin/tour/constructor/new'),
-        'pathToAirlineImg' => 'http://frontend.voyanga/img/airlines/'));
+        'pathToAirlineImg' => 'http://test.voyanga.com/img/airlines/'));
     ?>
 <?php endforeach ?>
 
