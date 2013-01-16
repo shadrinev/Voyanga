@@ -94,7 +94,25 @@ class EventController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+			$model = $this->loadModel($id);
+            if ($model)
+            {
+                echo "Deleting event item with id: ".$model->id;
+                foreach ($model->tours as $eventOrder)
+                {
+                    $order = $eventOrder->order;
+                    echo "Deleting order item with id: ".$order->id;
+                    foreach ($order->flightItems as $item)
+                    {
+                        echo "Deleting flight item with id: ".$item->id;
+                        $item->delete();
+                    }
+                    foreach ($order->hotelItems as $item)
+                        $item->delete();
+                    $eventOrder->delete();
+                }
+                $model->remove()->save();
+            }
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))

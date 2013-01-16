@@ -34,6 +34,10 @@
 		}
 	};
 
+    function jq( myid ) {
+        return myid.replace( /(:|\.|\{|\}|\[|\])/g, "\\$1" );
+    }
+
 	/**
 	 * yiiactiveform set function.
 	 * @param options map settings for the active form plugin. Please see {@link CActiveForm::options} for availablel options.
@@ -47,7 +51,7 @@
 				settings.validationUrl = $form.attr('action');
 			}
 			$.each(settings.attributes, function (i) {
-				this.value = getAFValue($form.find('#' + this.inputID));
+				this.value = getAFValue($form.find(jq('#' + this.inputID)));
 				settings.attributes[i] = $.extend({}, {
 					validationDelay: settings.validationDelay,
 					validateOnChange: settings.validateOnChange,
@@ -69,7 +73,7 @@
 					attribute.status = 2;
 				}
 				$.each(settings.attributes, function () {
-					if (this.value !== getAFValue($form.find('#' + this.inputID))) {
+					if (this.value !== getAFValue($form.find(jq('#' + this.inputID)))) {
 						this.status = 2;
 						forceValidate = true;
 					}
@@ -109,7 +113,7 @@
 
 			$.each(settings.attributes, function (i, attribute) {
 				if (this.validateOnChange) {
-					$form.find('#' + this.inputID).change(function () {
+					$form.find(jq('#' + this.inputID)).change(function () {
 						validate(attribute, false);
 					}).blur(function () {
 						if (attribute.status !== 2 && attribute.status !== 3) {
@@ -118,7 +122,7 @@
 					});
 				}
 				if (this.validateOnType) {
-					$form.find('#' + this.inputID).keyup(function () {
+					$form.find(jq('#' + this.inputID)).keyup(function () {
 						if (attribute.value !== getAFValue($(this))) {
 							validate(attribute, false);
 						}
@@ -197,7 +201,7 @@
 						/*
 						 * without the setTimeout() we would get here the current entered value before the reset instead of the reseted value
 						 */
-						this.value = getAFValue($form.find('#' + this.inputID));
+						this.value = getAFValue($form.find(jq('#' + this.inputID)));
 					});
 					/*
 					 * If the form is submited (non ajax) with errors, labels and input gets the class 'error'
@@ -313,7 +317,7 @@
 			var value,
 				msg = [];
 			if (this.clientValidation !== undefined && (settings.submitting || this.status === 2 || this.status === 3)) {
-				value = getAFValue($form.find('#' + this.inputID));
+				value = getAFValue($form.find(jq('#' + this.inputID)));
 				this.clientValidation(value, msg, this);
 				if (msg.length) {
 					messages[this.id] = msg;

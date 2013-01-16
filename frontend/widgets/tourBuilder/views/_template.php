@@ -28,6 +28,7 @@
         $model,
         "[$i]startDate",
         array(
+            'id' => "startDate".rand(1,1000),
             'events'=> array(
                 'changeDate'=>'js:function(ev){$(this).datepicker("hide")}'
             ),
@@ -39,6 +40,7 @@
             $model,
             "[$i]endDate",
             array(
+                'id' => "endDate".rand(1,1000),
                 'events'=> array(
                     'changeDate'=>'js:function(ev){$(this).datepicker("hide")}'
                 ),

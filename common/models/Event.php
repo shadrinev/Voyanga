@@ -93,6 +93,17 @@ class Event extends FrontendActiveRecord
             // When false, throws exception when saving nonexisting tag.
             'createTagsAutomatically' => true,
         );
+        $behaviors['trash'] = array(
+            'class'=>'common.extensions.trashBin.ETrashBinBehavior',
+            // Deletion flag table column name (required)
+            'trashFlagField'=>'is_removed',
+            // Value that is written to $trashFlagField when model is deleted
+            // Default is 1
+            'removedFlag'=>1,
+            // Value that is written to $trashFlagField when model is restored
+            // Default is 0
+            'restoredFlag'=>0,
+        );
 
         return $behaviors;
     }
