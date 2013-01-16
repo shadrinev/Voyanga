@@ -863,14 +863,15 @@
 	height: 117px;
 }
 .how-much {
-	background: url("../images/bg-photo-preview.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/bg-photo-preview.png") no-repeat scroll 0 0 transparent;
     bottom: 0;
     color: #FFFFFF;
     font-size: 11px;
-    height: 23px;
+    height: 25px;
     left: 0;
+    line-height: 24px;
     padding-left: 26px;
-    padding-top: 2px;
+    padding-top: 0;
     position: absolute;
     width: 117px;
 }
