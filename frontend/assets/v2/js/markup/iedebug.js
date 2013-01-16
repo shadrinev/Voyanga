@@ -1,29 +1,29 @@
-if ( $.browser.msie ) {
-    console.log = function(){
+if ($.browser.msie) (function() {
 
-    }
+    var __console, Console;
 
-    console.data = function(){
+    Console = function() {
+        var check = setInterval(function() {
+            var f;
+            if (window.console && console.log && !console.__buffer) {
+                clearInterval(check);
+                f = (Function.prototype.bind) ? Function.prototype.bind.call(console.log, console) : console.log;
+                for (var i = 0; i < __console.__buffer.length; i++) f.apply(console, __console.__buffer[i]);
+            }
+        }, 1000);
 
-    }
+        function log() {
+            this.__buffer.push(arguments);
+        }
 
-    console.time = function(){
+        this.log = log;
+        this.error = log;
+        this.warn = log;
+        this.info = log;
+        this.time = log;
+        this.timeEnd = log;
+        this.__buffer = [];
+    };
 
-    }
-
-    console.timeEnd = function(){
-
-    }
-
-    console.profile = function(){
-
-    }
-
-    console.profileEnd = function(){
-
-    }
-
-    console.trace = function() {
-
-    }
-}
+    __console = window.console = new Console();
+})();
