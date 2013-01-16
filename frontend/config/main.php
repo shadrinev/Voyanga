@@ -90,6 +90,7 @@ return CMap::mergeArray(
         'components' => array(
             'assetManager' => array(
                 'class' => 'VAssetManager',
+		'baseUrl' => '/assets/'
             ),
             /*            'clientScript' => array(
                             'class'=> YII_DEBUG ? 'EClientScriptBoost' : 'EClientScriptBoost',
