@@ -211,13 +211,13 @@
     display: none;
 }
 .login-window .popupDown a {
+    background: url("../images/bg-loginPopUpDown.png") repeat-x scroll 0 -39px transparent;
+    color: #3E3F42;
     display: block;
-    height: 38px;
-    line-height: 41px;
-    padding-left: 13px;
     font-size: 13px;
-    color: #3e3f42;
-    background: url(../images/bg-loginPopUpDown.png) repeat-x 0px -39px;
+    height: 34px;
+    line-height: 36px;
+    padding-left: 13px;
 }
 .login-window .popupDown a:hover {
     background-position: 0px 0px;
