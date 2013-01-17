@@ -91,7 +91,7 @@ class HotelRoom extends CApplicationComponent
             $this->roomName = $params['roomNemoName'];
             $this->_showName = $params['showName'];
             $this->mealName = $params['meal'];
-            $this->mealBreakfastName = $params['mealBreakfast'];
+            $this->mealBreakfastName = isset($params['mealBreakfast']) ? $params['mealBreakfast'] : '';
             $this->sizeName = $params['size'];
             $this->sizeId = array_search($this->sizeName, RoomNamesNemo::$roomSizes);
             $this->typeName = $params['type'];

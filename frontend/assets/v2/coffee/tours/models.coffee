@@ -168,6 +168,12 @@ class ToursAviaResultSet extends TourEntry
       source = @results().data[0]
     source.departureDate()
 
+  timelineEnd: =>
+    source = @selection()
+    if source == null
+      source = @results().data[0]
+    source.arrivalDate()
+
   rtTimelineStart: =>
     source = @selection()
     if source == null
@@ -180,11 +186,18 @@ class ToursAviaResultSet extends TourEntry
       source = @results().data[0]
     source.roundTrip
 
-  timelineEnd: =>
+  timelineEndDate: =>
     source = @selection()
     if source == null
       source = @results().data[0]
     source.arrivalDate()
+
+  timelineStartDate: =>
+    source = @selection()
+    if source == null
+      source = @results().data[0]
+    source.departureDate()
+
         
   rt: =>
     @results().roundTrip
@@ -280,14 +293,13 @@ class ToursHotelsResultSet extends TourEntry
   findAndSelectSame: (result) =>
     console.log('find THRS ',result)
     if result.roomSet
-      result = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))
+      ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))
     else
       console.log(ko.utils.unwrapObservable(result.roomSets))
-      result = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
-    if !result
-      console.log('not found =(',result)
-      return false
-    @_selectRoomSet result
+      ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
+    if !ret
+      ret = @results().findAndSelectSameParams(result.categoryId,result.getLatLng())
+    @_selectRoomSet ret
       
   select: (roomData)=>
     @_selectRoomSet roomData.roomSet
@@ -383,6 +395,12 @@ class ToursHotelsResultSet extends TourEntry
 
   timelineEnd: =>
     @results().checkOut
+
+  timelineStartDate: =>
+    @results().checkIn._d
+
+  timelineEndDate: =>
+    @results().checkOut._d
 
   beforeRender: =>
     console.log('beforeRender hotels')
@@ -628,6 +646,21 @@ class ToursResultSet
   findAndSelectItems: (items) =>
     console.log('findAndSelectItems',items)
     success = true
+
+    @data.sort(
+      (left, right)->
+        leftDate = dateUtils.formatDayMonthYear(left.timelineStartDate())
+        rightDate = dateUtils.formatDayMonthYear(right.timelineStartDate())
+        if leftDate == rightDate
+          if left.isAvia() != right.isAvia()
+            return left.timelineEndDate() > right.timelineEndDate() ? -1 : 1;
+        return left.timelineStartDate() > right.timelineStartDate() ? -1 : 1;
+    )
+        #if
+        #return left.lastName == right.lastName ? 0 : (left.lastName < right.lastName ? -1 : 1)
+    for ts in @data()
+      console.log('ts entry',ts.timelineStart())
+    console.log('allTs',@data())
     for entry, index in items
       console.log('findAndSelectItems entry',entry,' in ',index,@data()[index])
       if(@data()[index].isAvia())
@@ -636,10 +669,15 @@ class ToursResultSet
           success = false
           console.log('false res1:',result,@data()[index],@data()[index].results().cheapest())
       else
+        #if !entry.isHotel
+        #  for en,ind in items
+        #    if !isHotel
+
         result = @data()[index].findAndSelectSame(entry)
         if !result
           success = false
-          console.log('false res2:',result,@data()[index],entry)
+          console.log( 'false res2:',result,@data()[index],entry )
+
     return success
     
 # Models for tour search params,

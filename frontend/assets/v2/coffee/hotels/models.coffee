@@ -733,6 +733,24 @@ class HotelResult
             @putToMap(gMap)
             @parent.mapCluster.addMarker(@gMarker)
       )
+  getLatLng: =>
+    @latLng = ko.observable(new google.maps.LatLng(@lat, @lng))
+    if(@lat && @lng)
+
+    else
+      city = @parent.city.localEn
+      country = if @parent.city.country then (', ' + @parent.city.country) else ''
+      gMapGeocoder = new google.maps.Geocoder()
+      gMapGeocoder.geocode(
+        {address:@address+', '+city+country},
+        (geoInfo,status)=>
+          console.log(geoInfo)
+          if status == google.maps.GeocoderStatus.OK
+            @lat = geoInfo[0].geometry.location.lat()
+            @lng = geoInfo[0].geometry.location.lng()
+            @latLng(new google.maps.LatLng(@lat, @lng))
+      )
+    return @latLng
   getParams: =>
     result = {}
 
@@ -919,6 +937,19 @@ class HotelsResultSet
           for possibleRoomSet in hotel.roomSets()
             return possibleRoomSet
     return false
+
+  findAndSelectSameParams: (stars,latLngObservable)=>
+    sameHotel = false
+    minDistance = 9999999;
+    for hotel in @data()
+      if !sameHotel
+        sameHotel = hotel
+      if hotel.categoryId == stars
+        dist = Utils.calculateTheDistance(latLngObservable().lat(),latLngObservable().lng(),hotel.lat,hotel.lng)
+        if(dist < minDistance)
+          sameHotel = hotel
+    for possibleRoomSet in sameHotel.roomSets()
+      return possibleRoomSet
 
   resetMapCenter: =>
     @computedCenter = new google.maps.LatLngBounds()

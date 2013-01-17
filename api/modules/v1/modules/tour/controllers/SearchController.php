@@ -121,9 +121,14 @@ class SearchController extends ApiController
                 $hotel = new Hotel($item['data']);
                 //print_r($hotel->getJsonObject());
                 $cityId = $hotel->city->id;
+                /** var OrderHotel $hotelItem */
                 foreach($tour->order->hotelItems as $hotelItem){
+                    //$hotelItem = new OrderHotel();
+
                     if($hotelItem->cityId == $cityId && $hotelItem->checkIn == $hotel->checkIn){
                         $hotelItem->object = serialize($hotel);
+                        $hotelItem->isNewRecord = false;
+                        echo "update ".$hotelItem->id." orderHotel";
                         $hotelItem->save();
                     }
                     //print_r($hotelItem);
@@ -137,11 +142,12 @@ class SearchController extends ApiController
                             && $flightItem->arrivalCity == $flight->getArrivalCity($flightKey)->id
                             && $flightItem->departureDate == date('Y-m-d',strtotime($flight->getDepartureDate($flightKey))) ){
                             $flightItem->object = serialize($flight);
-                            echo "update ".$flightItem->id." flight";
+                            $flightItem->isNewRecord = false;
+                            echo "update ".$flightItem->id." flight\n";
                             $flightItem->save();
                             break;
                         }else{
-                            echo "notUpdate ".$flightItem->id." flight ".$flightItem->departureCity.'|'.$flight->getDepartureCity()->id.'|'.$flightItem->arrivalCity.'|'.$flight->getArrivalCity()->id.'|'.$flightItem->departureDate.'|'.$flight->getDepartureDate();
+                            echo "notUpdate ".$flightItem->id." flight ".$flightItem->departureCity.'|'.$flight->getDepartureCity()->id.'|'.$flightItem->arrivalCity.'|'.$flight->getArrivalCity()->id.'|'.$flightItem->departureDate.'|'.$flight->getDepartureDate()."\n";
                             //print_r($flight->getJsonObject());die();
                         }
                     }

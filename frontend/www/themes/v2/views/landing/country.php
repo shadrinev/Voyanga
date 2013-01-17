@@ -1,6 +1,6 @@
 <div class="headBlockOne">
 <div class="center-block">
-    <h1>Авиабилеты в Италию</h1>
+    <h1>Авиабилеты в <?php echo $countryMorph['caseAcc'];?></h1>
     <h3>Стоимость из <a href="#" class="cityChoise active"><span>Нижний Новгород</span></a> <a href="#" class="cityChoise"><span>Москва</span></a> <a href="#" class="cityChoise"><span>Санкт Петербург</span></a></h3>
 </div>
 <table class="tableFlight first up">
@@ -24,142 +24,35 @@
     </tr>
     </thead>
     <tbody>
+    <?php
+    $firstHalf = round(count($flightCache)/2);
+    $secondHalf = count($flightCache) - $firstHalf;
+    $i =0;
+    foreach($flightCache as $fc):
+        $i++;
+        if($i <= $firstHalf):
+            $back = ($fc->dateBack == '0000-00-00' ? false : true );
+            ?>
     <tr class="select">
         <td class="tdEmpty">
 
         </td>
         <td class="tdFlight">
-            <div>Санкт-Петербург <span class="toFrom"></span> Санкт-Петербург</div>
+            <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?></div>
         </td>
         <td class="tdTo">
-            05.11
+                <?php echo date('d.m',strtotime($fc->dateFrom));?>
         </td>
         <td class="tdFrom">
-            05.11
+            <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m',strtotime($fc->dateBack)) );?>
         </td>
         <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
+            <a href="#"><span class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span class="rur">o</span></a>
         </td>
     </tr>
-    <tr>
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr class="select">
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="from"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr class="select">
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="from"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr class="select">
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="from"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-
-        </td>
-        <td class="tdTo">
-
-        </td>
-        <td class="tdFrom">
-
-        </td>
-        <td class="tdPrice">
-
-        </td>
-    </tr>
+            <?php
+        endif;
+    endforeach;?>
     </tbody>
 </table>
 <table class="tableFlight second up">
@@ -184,150 +77,32 @@
     </tr>
     </thead>
     <tbody>
+    <?php $i =0;
+    foreach($flightCache as $fc):
+    $i++;
+    if($i > $firstHalf):
+        $back = ($fc->dateBack == '0000-00-00' ? false : true );?>
     <tr class="select">
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
         <td class="tdEmpty">
 
         </td>
-    </tr>
-    <tr>
-
         <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
+            <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?></div>
         </td>
         <td class="tdTo">
-            05.11
+            <?php echo date('d.m',strtotime($fc->dateFrom));?>
         </td>
         <td class="tdFrom">
-            05.11
+            <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m',strtotime($fc->dateBack)) );?>
         </td>
         <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
+            <a href="#"><span class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span class="rur">o</span></a>
         </td>
     </tr>
-    <tr class="select">
+    <?php
+    endif;
+    endforeach;?>
 
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr>
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr class="select">
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr>
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr class="select">
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr>
-
-        <td class="tdFlight">
-
-        </td>
-        <td class="tdTo">
-
-        </td>
-        <td class="tdFrom">
-
-        </td>
-        <td class="tdPrice">
-
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
     </tbody>
 </table>
 <div class="clear"></div>

@@ -230,6 +230,10 @@ class Hotel extends CApplicationComponent
         {
             $this->categoryId = isset(self::$categoryIdMapHotelbook[intval($params['categoryId'])]) ? self::$categoryIdMapHotelbook[intval($params['categoryId'])]  : self::STARS_UNDEFINDED;
         }
+        if(isset($params['category']))
+        {
+            $this->categoryId = intval($params['category']);
+        }
         if(isset($params['rating']))
         {
             $this->_rating = $params['rating'];
@@ -425,6 +429,7 @@ class Hotel extends CApplicationComponent
             'duration' => $this->duration,
             'city' => ($this->city) ? $this->city->localRu : '',
             'cityCode' => ($this->city) ? $this->city->code : '',
+            'cityId' => ($this->city) ? $this->city->id : '',
             'rating' => $this->rating,
             'groupKey'=>$this->groupKey,
             'rooms' => array()

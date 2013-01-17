@@ -31,6 +31,7 @@ class HotelManager
             $startTime = microtime(true);
             $stack = new HotelStack($variants);
             $results = $stack->groupBy('hotelId', 117501)->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
+            $stack->saveHotelDb();
             $nStack = new HotelStack();
             $nStack->_hotels = $stack->getHotels(1);
 

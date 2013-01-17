@@ -129,6 +129,7 @@ class Country extends CActiveRecord
 
     public static function getCountryByCode( $code )
     {
+        $code = strtoupper($code);
         if ( isset( Country::$codeIdMap[$code] ) )
         {
             return Country::$countries[Country::$codeIdMap[$code]];

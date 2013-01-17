@@ -85,11 +85,15 @@ ToursAviaResultSet = (function(_super) {
 
     this.rt = __bind(this.rt, this);
 
-    this.timelineEnd = __bind(this.timelineEnd, this);
+    this.timelineStartDate = __bind(this.timelineStartDate, this);
+
+    this.timelineEndDate = __bind(this.timelineEndDate, this);
 
     this.rt = __bind(this.rt, this);
 
     this.rtTimelineStart = __bind(this.rtTimelineStart, this);
+
+    this.timelineEnd = __bind(this.timelineEnd, this);
 
     this.timelineStart = __bind(this.timelineStart, this);
 
@@ -291,6 +295,15 @@ ToursAviaResultSet = (function(_super) {
     return source.departureDate();
   };
 
+  ToursAviaResultSet.prototype.timelineEnd = function() {
+    var source;
+    source = this.selection();
+    if (source === null) {
+      source = this.results().data[0];
+    }
+    return source.arrivalDate();
+  };
+
   ToursAviaResultSet.prototype.rtTimelineStart = function() {
     var source;
     source = this.selection();
@@ -309,13 +322,22 @@ ToursAviaResultSet = (function(_super) {
     return source.roundTrip;
   };
 
-  ToursAviaResultSet.prototype.timelineEnd = function() {
+  ToursAviaResultSet.prototype.timelineEndDate = function() {
     var source;
     source = this.selection();
     if (source === null) {
       source = this.results().data[0];
     }
     return source.arrivalDate();
+  };
+
+  ToursAviaResultSet.prototype.timelineStartDate = function() {
+    var source;
+    source = this.selection();
+    if (source === null) {
+      source = this.results().data[0];
+    }
+    return source.departureDate();
   };
 
   ToursAviaResultSet.prototype.rt = function() {
@@ -355,6 +377,10 @@ ToursHotelsResultSet = (function(_super) {
     this.afterRender = __bind(this.afterRender, this);
 
     this.beforeRender = __bind(this.beforeRender, this);
+
+    this.timelineEndDate = __bind(this.timelineEndDate, this);
+
+    this.timelineStartDate = __bind(this.timelineStartDate, this);
 
     this.timelineEnd = __bind(this.timelineEnd, this);
 
@@ -485,18 +511,18 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.findAndSelectSame = function(result) {
+    var ret;
     console.log('find THRS ', result);
     if (result.roomSet) {
-      result = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet));
+      ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet));
     } else {
       console.log(ko.utils.unwrapObservable(result.roomSets));
-      result = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0]);
+      ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0]);
     }
-    if (!result) {
-      console.log('not found =(', result);
-      return false;
+    if (!ret) {
+      ret = this.results().findAndSelectSameParams(result.categoryId, result.getLatLng());
     }
-    return this._selectRoomSet(result);
+    return this._selectRoomSet(ret);
   };
 
   ToursHotelsResultSet.prototype.select = function(roomData) {
@@ -612,6 +638,14 @@ ToursHotelsResultSet = (function(_super) {
 
   ToursHotelsResultSet.prototype.timelineEnd = function() {
     return this.results().checkOut;
+  };
+
+  ToursHotelsResultSet.prototype.timelineStartDate = function() {
+    return this.results().checkIn._d;
+  };
+
+  ToursHotelsResultSet.prototype.timelineEndDate = function() {
+    return this.results().checkOut._d;
   };
 
   ToursHotelsResultSet.prototype.beforeRender = function() {
@@ -992,10 +1026,31 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.findAndSelectItems = function(items) {
-    var entry, index, result, success, _i, _len;
+    var entry, index, result, success, ts, _i, _j, _len, _len1, _ref;
     console.log('findAndSelectItems', items);
     success = true;
-    for (index = _i = 0, _len = items.length; _i < _len; index = ++_i) {
+    this.data.sort(function(left, right) {
+      var leftDate, rightDate, _ref, _ref1;
+      leftDate = dateUtils.formatDayMonthYear(left.timelineStartDate());
+      rightDate = dateUtils.formatDayMonthYear(right.timelineStartDate());
+      if (leftDate === rightDate) {
+        if (left.isAvia() !== right.isAvia()) {
+          return (_ref = left.timelineEndDate() > right.timelineEndDate()) != null ? _ref : -{
+            1: 1
+          };
+        }
+      }
+      return (_ref1 = left.timelineStartDate() > right.timelineStartDate()) != null ? _ref1 : -{
+        1: 1
+      };
+    });
+    _ref = this.data();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      ts = _ref[_i];
+      console.log('ts entry', ts.timelineStart());
+    }
+    console.log('allTs', this.data());
+    for (index = _j = 0, _len1 = items.length; _j < _len1; index = ++_j) {
       entry = items[index];
       console.log('findAndSelectItems entry', entry, ' in ', index, this.data()[index]);
       if (this.data()[index].isAvia()) {

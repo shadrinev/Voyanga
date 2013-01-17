@@ -327,6 +327,8 @@ HotelResult = (function() {
 
     this.getParams = __bind(this.getParams, this);
 
+    this.getLatLng = __bind(this.getLatLng, this);
+
     this.putToMap = __bind(this.putToMap, this);
 
     this.smallMapUrl = __bind(this.smallMapUrl, this);
@@ -920,6 +922,30 @@ HotelResult = (function() {
     }
   };
 
+  HotelResult.prototype.getLatLng = function() {
+    var city, country, gMapGeocoder,
+      _this = this;
+    this.latLng = ko.observable(new google.maps.LatLng(this.lat, this.lng));
+    if (this.lat && this.lng) {
+
+    } else {
+      city = this.parent.city.localEn;
+      country = this.parent.city.country ? ', ' + this.parent.city.country : '';
+      gMapGeocoder = new google.maps.Geocoder();
+      gMapGeocoder.geocode({
+        address: this.address + ', ' + city + country
+      }, function(geoInfo, status) {
+        console.log(geoInfo);
+        if (status === google.maps.GeocoderStatus.OK) {
+          _this.lat = geoInfo[0].geometry.location.lat();
+          _this.lng = geoInfo[0].geometry.location.lng();
+          return _this.latLng(new google.maps.LatLng(_this.lat, _this.lng));
+        }
+      });
+    }
+    return this.latLng;
+  };
+
   HotelResult.prototype.getParams = function() {
     var result;
     result = {};
@@ -980,6 +1006,8 @@ HotelsResultSet = (function() {
     this.addMapPoint = __bind(this.addMapPoint, this);
 
     this.resetMapCenter = __bind(this.resetMapCenter, this);
+
+    this.findAndSelectSameParams = __bind(this.findAndSelectSameParams, this);
 
     this.findAndSelectSame = __bind(this.findAndSelectSame, this);
 
@@ -1186,6 +1214,30 @@ HotelsResultSet = (function() {
       }
     }
     return false;
+  };
+
+  HotelsResultSet.prototype.findAndSelectSameParams = function(stars, latLngObservable) {
+    var dist, hotel, minDistance, possibleRoomSet, sameHotel, _i, _j, _len, _len1, _ref, _ref1;
+    sameHotel = false;
+    minDistance = 9999999;
+    _ref = this.data();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      hotel = _ref[_i];
+      if (!sameHotel) {
+        sameHotel = hotel;
+      }
+      if (hotel.categoryId === stars) {
+        dist = Utils.calculateTheDistance(latLngObservable().lat(), latLngObservable().lng(), hotel.lat, hotel.lng);
+        if (dist < minDistance) {
+          sameHotel = hotel;
+        }
+      }
+    }
+    _ref1 = sameHotel.roomSets();
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      possibleRoomSet = _ref1[_j];
+      return possibleRoomSet;
+    }
   };
 
   HotelsResultSet.prototype.resetMapCenter = function() {

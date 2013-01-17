@@ -546,7 +546,35 @@ class HotelStack
             }
             return $return;
         }
+    }
 
+    public function saveHotelDb(){
+        $hotels = $this->getJsonObject(0);
+
+        if($hotels){
+            $city = City::getCityByPk($hotels['hotels'][0]['cityId']);
+            $hotelNames = array();
+            foreach($hotels['hotels'] as $hotelInfo){
+                $hotelNames[$hotelInfo['hotelName']] = $hotelInfo['hotelName'];
+            }
+            $ratingNames = HotelRating::model()
+                ->findByNames($hotelNames, $city);
+            foreach($hotels['hotels'] as $hotelInfo){
+                $hotelDb = HotelDb::lazySaveHotelDb(
+                    array(
+                        'id'=>$hotelInfo['hotelId'],
+                        'name'=>$hotelInfo['hotelName'],
+                        'stars'=>$hotelInfo['categoryId'],
+                        'cityId'=>$city->id,
+                        'countryId'=>$city->countryId,
+                        'rating'=>(isset($ratingNames[$hotelInfo['hotelName']]) ? $ratingNames[$hotelInfo['hotelName']] : null),
+                        'minPrice'=>$hotelInfo['rubPrice'],
+                    )
+                );
+            }
+            HotelDb::lazySave();
+
+        }
     }
 
     /**
