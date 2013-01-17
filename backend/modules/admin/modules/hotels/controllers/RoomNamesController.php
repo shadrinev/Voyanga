@@ -188,6 +188,8 @@ class RoomNamesController extends ABaseAdminController
      * list all models
      */
     public function actionManage($filterName = '',$rusId = 1){
+	if($filterName = '-')
+	    $filterName = '';
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         //echo "fn:{$filterName}  ri: {$rusId} <br />";
@@ -240,6 +242,8 @@ class RoomNamesController extends ABaseAdminController
                 )
             )
         );
+	if($filterName=='')
+             $filterName = '-';
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
             'filterName'=>$filterName,
