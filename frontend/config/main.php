@@ -88,6 +88,9 @@ return CMap::mergeArray(
 
         // application components
         'components' => array(
+            'morphy' => array(
+                'class' => 'site.console.extensions.phpmorphy.PhpMorphyComponent'
+            ),
             'assetManager' => array(
                 'class' => 'VAssetManager',
 		'baseUrl' => '/assets/'

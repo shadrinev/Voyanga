@@ -298,6 +298,7 @@ class ToursHotelsResultSet extends TourEntry
       console.log(ko.utils.unwrapObservable(result.roomSets))
       ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
     if !ret
+      console.log('same not found and find by stars and coords');
       ret = @results().findAndSelectSameParams(result.categoryId,result.getLatLng())
     @_selectRoomSet ret
       
