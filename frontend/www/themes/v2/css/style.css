@@ -1883,16 +1883,17 @@ input.hotel-input {
 	display: inherit;
 }
 .slideTours.small .toursTicketsMain .textTours .priceEvent {
-    background: url("../images/bg-small-price-event.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/bg-small-price-event.png") no-repeat scroll right 0 transparent;
     font-size: 11px;
-    height: 22px;
+    height: 16px;
     left: 0;
-    line-height: 18px;
-    padding-right: 5px;
+    line-height: 16px;
+    min-width: 65px;
+    padding-right: 7px;
     position: absolute;
     text-align: center;
     top: -75px;
-    width: 66px;
+    padding-left: 1px;
 }
 .slideTours.small .toursTicketsMain .textTours .price {
 	font-size: 12px;
