@@ -1,26 +1,3 @@
-.btn-selecte {
-    background: url("../images/slice.png") no-repeat scroll 0 -534px transparent;
-    color: #FFFFFF;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: bold;
-    height: 27px;
-    padding: 10px 0 0 14px;
-    text-shadow: 0 1px 0 #0B5B88;
-    width: 190px;
-}
-.btn-selecte .price {
-    margin-left: 8px;
-}
-.btn-selecte .price, .btn-selecte .rur {
-    font-size: 26px;
-    vertical-align: top;
-}
-.btn-selecte .rur {
-    display: inline-block;
-    margin-left: 5px;
-    margin-top: -2px;
-}
 .btn-order {
     background: url("../images/slice.png") no-repeat scroll -211px -534px transparent;
     color: #FFFFFF;
@@ -51,14 +28,6 @@
 .btn-order:hover {
     background: url("../images/slice.png") no-repeat scroll -211px -573px transparent;
     text-decoration: none;
-}
-.btn-look {
-    background: url("../images/slice.png") no-repeat scroll 0 -612px transparent;
-    cursor: pointer;
-    display: inline-block;
-    height: 26px;
-    text-indent: -9999px;
-    width: 117px;
 }
 .btn-find {
     background: url("../images/slice.png") no-repeat scroll -122px -1014px transparent;
