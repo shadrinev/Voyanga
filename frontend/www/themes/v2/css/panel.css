@@ -219,7 +219,7 @@
 	overflow: hidden;
 }
 .panelTable.constructorTable tr td.tdCityStart .cityStart a span {
-	border-bottom: 1px dashed;
+    background: url(../images/dashed-grey.png) repeat-x left bottom;
 }
 .panelTable.constructorTable tr td.tdCityStart .cityStart .startInputTo {
 	position: absolute;

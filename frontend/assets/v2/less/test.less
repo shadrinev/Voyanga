@@ -28,6 +28,30 @@ h1 {
   .text-shadow (@grey-shadow);
   margin-bottom: 12px;
   letter-spacing: 0.001em;
+
+  &.title {
+    color: @white-color;
+    .border-radius(20px);
+    .font-size(24px);
+    background: none repeat scroll 0 0 rgba(27, 29, 32, 0.7);
+    display: inline-block;
+    font-weight: normal;
+    height: 40px;
+    left: 26px;
+    line-height: 40px;
+    padding: 0 10px;
+    position: absolute;
+    text-shadow: none;
+    top: -60px;
+    white-space: nowrap;
+
+    img {
+      margin-bottom: -8px;
+      margin-right: -10px;
+      margin-top: -11px;
+      vertical-align: middle;
+    }
+  }
 }
 h3 {
   color: @black-main-color;
@@ -42,36 +66,15 @@ h4 {
   margin-bottom: 6px;
   .text-shadow (@white-color);
 }
-h1.title {
-  color: @white-color;
-  .border-radius(20px);
-  .font-size(24px);
-  background: none repeat scroll 0 0 rgba(27, 29, 32, 0.7);
-  display: inline-block;
-  font-weight: normal;
-  height: 40px;
-  left: 26px;
-  line-height: 40px;
-  padding: 0 10px;
-  position: absolute;
-  text-shadow: none;
-  top: -60px;
-  white-space: nowrap;
-}
-h1.title img {
-  margin-bottom: -8px;
-  margin-right: -10px;
-  margin-top: -11px;
-  vertical-align: middle;
-}
 .main-block h1 {
   .text-shadow (@white-color);
   margin-bottom: 20px;
   letter-spacing: -0.05em;
   line-height: 26px;
   margin-top: -1px;
-}
-.main-block h1.ourTripH1 {
-  float: left;
-  letter-spacing: 0em;
+
+  &.ourTripH1 {
+    float: left;
+    letter-spacing: 0em;
+  }
 }
