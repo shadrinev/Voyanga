@@ -150,7 +150,7 @@ class CUrlManager extends CApplicationComponent
 	/**
 	 * @var string the GET variable name for route. Defaults to 'r'.
 	 */
-	public $routeVar='r1';
+	public $routeVar='r';
 	/**
 	 * @var boolean whether routes are case-sensitive. Defaults to true. By setting this to false,
 	 * the route in the incoming request will be turned to lower case first before further processing.
@@ -358,7 +358,7 @@ class CUrlManager extends CApplicationComponent
 	{
 		if($this->getUrlFormat()===self::PATH_FORMAT)
 		{
-			$rawPathInfo=str_replace('//','/',$request->getPathInfo());
+			$rawPathInfo=$request->getPathInfo();
 			$pathInfo=$this->removeUrlSuffix($rawPathInfo,$this->urlSuffix);
 			foreach($this->_rules as $i=>$rule)
 			{
