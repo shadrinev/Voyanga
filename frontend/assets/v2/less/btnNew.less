@@ -1,0 +1,147 @@
+@import "var.less";
+
+.pressButton {
+  background: url("@{img-url}/images/btn.png") no-repeat scroll right 0 transparent;
+  color: @white-color;
+  font-family: @font-family-main;
+  .font-size(14px);
+  .text-shadow(@blue-shadow);
+  cursor: pointer;
+  height: 37px;
+  line-height: 36px;
+  display: inline-block;
+  padding-left: 4px;
+  padding-right: 11px;
+  font-weight: bold;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  min-width: 90px;
+
+  &:hover {
+    background-position: right -37px;
+  }
+  span {
+    position: relative;
+    z-index: 2;
+  }
+  span.text {
+    display: inline-block;
+    height: 37px;
+    vertical-align: middle;
+  }
+  .price {
+    display: inline-block;
+    font-size: 26px;
+    height: 37px;
+    vertical-align: middle;
+  }
+  .rur {
+    display: inline-block;
+    font-size: 25px;
+    margin-top: 3px;
+    vertical-align: middle;
+
+    &.f21 {
+      margin-top: 5px;
+    }
+  }
+  .l {
+    background: url("@{img-url}/images/btn.png") no-repeat scroll left 0 transparent;
+    display: block;
+    position: absolute;
+    height: 37px;
+    width: 6px;
+    left: -4px;
+    top: 0px;
+    z-index: 1;
+  }
+  &:hover {
+    .l {
+      background-position: left -37px;
+    }
+  }
+
+  &.orange {
+    background-position: right -74px;
+    .text-shadow(@orange-shadow);
+
+    &:hover { background-position: right -111px; }
+    .l { background-position: left -74px; }
+    &:hover {
+      .l {
+        background-position: left -111px;
+      }
+    }
+  }
+
+  &.inactive, &.selected  {
+    background-position: right -148px;
+    .text-shadow(@grey-btn-shadow);
+    cursor: default;
+    &:hover {
+      background-position: right -148px;
+      .text-shadow(@grey-btn-shadow);
+      cursor: default;
+    }
+    .l {
+      background-position: left -148px;
+    }
+    &:hover {
+      .l {
+        background-position: left -148px;
+      }
+    }
+  }
+
+  /* ANIMATION DOTTED */
+  .dotted {
+    background: url("@{img-url}/images/booking.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 14px;
+    margin-left: 0;
+    margin-top: 1px;
+    width: 108px;
+  }
+}
+/* OTHER STYLE */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  body:first-of-type .pressButton .rur {
+    font-size: 25px;
+    margin-top: 4px;
+  }
+}
+.recommended-ticket .ticket-items .content .details-selecte .pressButton {
+  width: 180px;
+  float: right;
+  margin-left: 5px;
+}
+.ticket-items .content .buy-ticket .text .pressButton {
+  width: 78%;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .pressButton {
+  position: absolute;
+  top: 50px;
+  width: 122px;
+}
+.hotel-details .book .pressButton {
+  width: 126px;
+}
+#content .place-buy > .book .pressButton, .hotel-details .place-buy > .book .pressButton {
+  margin-left: 20px;
+}
+.block-trip .table-hotel-result .td-cost .pressButton {
+  width: 122px;
+}
+.recommended-ticket .ticket-items.small .content .details-selecte .pressButton .text {
+  display: none;
+}
+.recommended-ticket .ticket-items.small .content .details-selecte .pressButton {
+  width: 115px;
+}
+.hotels-tickets .content .full-info .choose-a-hotel .pressButton {
+  position: absolute;
+  top: 60px;
+  width: 120px;
+}
+/* === */

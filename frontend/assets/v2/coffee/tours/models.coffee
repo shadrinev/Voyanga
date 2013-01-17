@@ -200,8 +200,8 @@ class ToursAviaResultSet extends TourEntry
         console.log('Yes, have selected')
         window.setTimeout(
           =>
-            if $('.ticket-content .btn-cost.selected').parent().parent().parent().parent().length
-              Utils.scrollTo($('.ticket-content .btn-cost.selected').parent().parent().parent().parent())
+            if $('.ticket-content .pressButton.selected').parent().parent().parent().parent().length
+              Utils.scrollTo($('.ticket-content .pressButton.selected').parent().parent().parent().parent())
 
           , 50
         )
@@ -399,8 +399,8 @@ class ToursHotelsResultSet extends TourEntry
       if @activeHotel()
         window.setTimeout(
           =>
-            if $('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length
-              Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent())
+            if $('.hotels-tickets .pressButton.selected').parent().parent().parent().parent().length
+              Utils.scrollTo($('.hotels-tickets .pressButton.selected').parent().parent().parent().parent())
 
           , 50
         )

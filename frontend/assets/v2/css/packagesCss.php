@@ -4,7 +4,8 @@
         'css' => array(
             'reset.style.css',
             'test.css',
-            'ie.css'
+            'ie.css',
+            'btnNew.css'
         )
     ),
     'appCss' => array(

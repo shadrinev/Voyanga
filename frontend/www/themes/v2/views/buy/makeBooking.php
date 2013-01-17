@@ -84,7 +84,7 @@
             <span class="l"></span>
         </div>
         <div class="armoring" style="display: none">
-            <div class="btnBlue">
+            <div class="pressButton">
                 <span>Бронирование</span>
 
                 <div class="dotted"></div>

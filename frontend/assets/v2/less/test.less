@@ -1,25 +1,4 @@
-@img-url: "/themes/v2";
-
-/* COLOR */
-@black-main-color: #1d222b;
-@blue-link-color: #1C81BB;
-@grey-title-color: #4b525c;
-@white-color: #FFFFFF;
-@grey-shadow: #acb0b4;
-.text-shadow (@color: #FFF) {
-  text-shadow: 0px 1px 0px @color;
-//  filter: Shadow(Color=@color, Direction=90, Strength=1);
-}
-
-/* FONT */
-@font-family-main:  Arial, sans-serif;
-.font-size(@size : 12px) {font-size: @size;}
-/* RADIUS */
-.border-radius(@radius : 5px) {
-  border-radius: @radius;
-  -moz-border-radius: @radius;
-  -webkit-border-radius: @radius;
-}
+@import "var.less";
 
 /* MAIN BODY STYLE */
 html, body {
@@ -84,4 +63,15 @@ h1.title img {
   margin-right: -10px;
   margin-top: -11px;
   vertical-align: middle;
+}
+.main-block h1 {
+  .text-shadow (@white-color);
+  margin-bottom: 20px;
+  letter-spacing: -0.05em;
+  line-height: 26px;
+  margin-top: -1px;
+}
+.main-block h1.ourTripH1 {
+  float: left;
+  letter-spacing: 0em;
 }

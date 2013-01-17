@@ -7,3 +7,5 @@ h3{font-size:18px;text-shadow:0px 1px 0px #acb0b4;color:#1d222b;margin-bottom:10
 h4{color:#1d222b;font-size:15px;margin-bottom:6px;text-shadow:0px 1px 0px #ffffff;}
 h1.title{color:#ffffff;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;font-size:24px;background:none repeat scroll 0 0 rgba(27, 29, 32, 0.7);display:inline-block;font-weight:normal;height:40px;left:26px;line-height:40px;padding:0 10px;position:absolute;text-shadow:none;top:-60px;white-space:nowrap;}
 h1.title img{margin-bottom:-8px;margin-right:-10px;margin-top:-11px;vertical-align:middle;}
+.main-block h1{text-shadow:0px 1px 0px #ffffff;margin-bottom:20px;letter-spacing:-0.05em;line-height:26px;margin-top:-1px;}
+.main-block h1.ourTripH1{float:left;letter-spacing:0em;}

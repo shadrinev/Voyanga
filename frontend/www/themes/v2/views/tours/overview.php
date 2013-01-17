@@ -7,7 +7,7 @@ $theme = Yii::app()->theme->baseUrl;
   <div class="main-block">
     <div id="content">
       <div class="headAndTmblr">
-	<h1>Ваша поездка, сэр</h1>
+	<h1 class="ourTripH1">Ваша поездка, сэр</h1>
 	<ul class="tmblr">
 	  <li class="active"><span class="ico-descr"></span> <a href="javascript:void(0)">Таймлайн</a></li>
 	  <li><span class="ico-see-map"></span> <a href="javascript:void(0)">На карте</a></li>
@@ -137,7 +137,7 @@ $theme = Yii::app()->theme->baseUrl;
 	<tr data-bind="if: isAvia()">
 	  <td class="text"><span data-bind="text:selection()?'Или другой':'Выберите'"></span> вариант среди: <span class="f19" data-bind="text:numAirlines()">19</span> авиакомпаний, от <span class="f19"  data-bind="html: minPriceHtml()"></span> до <span class="f19"  data-bind="html: maxPriceHtml()"></span></td>
 	  <td class="buttons">
-            <a class="btnBlue" href="#" data-bind="click: $parents[1].setActive">
+            <a class="pressButton" href="#" data-bind="click: $parents[1].setActive">
               <span class="l"></span>
               <span class="text">Все авиабилеты</span>
             </a>
@@ -146,7 +146,7 @@ $theme = Yii::app()->theme->baseUrl;
 	<tr data-bind="if: isHotel()">
 	  <td class="text"><span data-bind="text:selection()?'Или другой':'Выберите'"></span> вариант среди: <span class="f19" data-bind="text:numHotels()">189</span> гостиниц, от <span class="f19" data-bind="html: minPriceHtml()"></span> до <span class="f19" data-bind="html: maxPriceHtml()"></span></td>
 	  <td class="buttons">
-            <a class="btnOrang" href="#" data-bind="click: $parents[1].setActive">
+            <a class="pressButton orange" href="#" data-bind="click: $parents[1].setActive">
               <span class="l"></span>
               <span class="text">Все отели</span>
             </a>

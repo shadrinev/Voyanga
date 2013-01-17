@@ -39,7 +39,7 @@
       <div class="how-cost">
         от <span class="cost" data-bind="text: cheapestSet.pricePerNight">5 200</span><span class="rur f21">o</span> / ночь
       </div>
-      <a class="btn-cost" href="#" data-bind="click:select, css: {selected: cheapestSet.resultId == activeResultId()}"><span class="l"></span><span class="text" data-bind="text: selectText"></span></a>
+      <a class="pressButton" href="#" data-bind="click:select, css: {selected: cheapestSet.resultId == activeResultId()}"><span class="l"></span><span class="text" data-bind="text: selectText"></span></a>
     </div>
   </div>
   <!-- DESCR -->
@@ -125,7 +125,7 @@
                         	<span class="grey em">Цена за <span data-bind="text: parent.parent.wordNights"></span></span>
                         </div>
                         <div class="right">
-                        	<a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
+                        	<a class="pressButton" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="price" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
                         </div>
                     </td>
                 </tr>
@@ -175,7 +175,7 @@
                         	<span class="grey em">Цена за <span data-bind="text: parent.parent.wordNights"></span></span>
                         </div>
                         <div class="right">
-                        	<a class="btn-cost" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="cost" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
+                        	<a class="pressButton" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="price" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
                         </div>
                     </td>
                 </tr>
@@ -227,7 +227,7 @@
                       </div>
                       <!-- /ko -->
                   </td>
-                  <td class="button"><a class="btn-cost" href="#" data-bind="click: combinationClick"><span class="l"></span><span class="text" data-bind="text: combinedButtonLabel()">Не выбраны номера</span><span class="cost" data-bind="text: combinedPrice(),visible: combinedPrice()"></span><span class="rur f21" data-bind="visible: combinedPrice()">o</span></a></td>
+                  <td class="button"><a class="pressButton" href="#" data-bind="click: combinationClick"><span class="l"></span><span class="text" data-bind="text: combinedButtonLabel()">Не выбраны номера</span><span class="price" data-bind="text: combinedPrice(),visible: combinedPrice()"></span><span class="rur f21" data-bind="visible: combinedPrice()">o</span></a></td>
               </tr>
               </tbody>
           </table>

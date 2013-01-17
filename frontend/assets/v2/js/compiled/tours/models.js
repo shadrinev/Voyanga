@@ -335,8 +335,8 @@ ToursAviaResultSet = (function(_super) {
       if (this.results().selected_key) {
         console.log('Yes, have selected');
         return window.setTimeout(function() {
-          if ($('.ticket-content .btn-cost.selected').parent().parent().parent().parent().length) {
-            return Utils.scrollTo($('.ticket-content .btn-cost.selected').parent().parent().parent().parent());
+          if ($('.ticket-content .pressButton.selected').parent().parent().parent().parent().length) {
+            return Utils.scrollTo($('.ticket-content .pressButton.selected').parent().parent().parent().parent());
           }
         }, 50);
       }
@@ -632,8 +632,8 @@ ToursHotelsResultSet = (function(_super) {
     if (this.results()) {
       if (this.activeHotel()) {
         return window.setTimeout(function() {
-          if ($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent().length) {
-            return Utils.scrollTo($('.hotels-tickets .btn-cost.selected').parent().parent().parent().parent());
+          if ($('.hotels-tickets .pressButton.selected').parent().parent().parent().parent().length) {
+            return Utils.scrollTo($('.hotels-tickets .pressButton.selected').parent().parent().parent().parent());
           }
         }, 50);
       }

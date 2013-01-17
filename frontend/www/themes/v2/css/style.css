@@ -694,9 +694,6 @@
     position: relative;
     width: 781px;
 }
-.hotel-details .book .btn-cost {
-    width: 126px;
-}
 #content > .title {
     margin-top: 45px;
     padding: 0 45px 10px 0;
@@ -876,9 +873,6 @@
 #content .place-buy > .book .how-cost, .hotel-details .place-buy > .book .how-cost {
     float: left;
     margin-top: 10px;
-}
-#content .place-buy > .book .btn-cost, .hotel-details .place-buy > .book .btn-cost {
-    margin-left: 20px;
 }
 .hotel-details .description {
     overflow: hidden;
@@ -1419,11 +1413,9 @@ input.hotel-input {
     margin-bottom: 16px;
     overflow: hidden;
 }
-.headAndTmblr h1 {
-    float: left;
-}
 .headAndTmblr .tmblr {
     margin: 0 0 0 34px;
+    padding-top: 4px;
 }
 .allTrip .block {
     padding-left: 65px;
@@ -1506,6 +1498,7 @@ input.hotel-input {
     font-size: 12px;
     padding: 2px 5px;
     text-shadow: 0 1px 0 rgba(172, 186, 194, 0.6);
+    margin-left: 3px;
 }
 .allTrip .block .headTitle td.removeTD {
     vertical-align: middle;

@@ -497,7 +497,7 @@ function resizeLeftStage() {
 	var leftPaddingDate = 215;
 	leftPaddingDate = (leftWidth - leftPaddingDate);
 	if (leftPaddingDate < 75) {
-		var leftPadding = leftPaddingDate / 1.5 ;
+		var leftPadding = leftPaddingDate / 1.3;
 		leftPadding = leftPadding + 100;
 	}
 	else {

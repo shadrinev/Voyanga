@@ -217,7 +217,7 @@
         <div class="details">
           <a data-bind="click: data.showDetails" href="#">Подробнее<br> о перелете</a>
         </div>
-        <a href="#" class="btn-cost" data-bind="click: $parent.select, css:{selected:$parent.selected_key()==data.key}">
+        <a href="#" class="pressButton" data-bind="click: $parent.select, css:{selected:$parent.selected_key()==data.key}">
           <span class="l"></span>
           <span class="text" data-bind="text: $parent.tours?($parent.selected_key()==data.key?'Выбран':'Выбрать'):'Купить'"></span>
           <span class="price" data-bind="text: data.price"></span>

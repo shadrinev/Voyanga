@@ -1,0 +1,23 @@
+.pressButton{background:url("/themes/v2/images/btn.png") no-repeat scroll right 0 transparent;color:#ffffff;font-family:Arial,sans-serif;font-size:14px;text-shadow:0px 1px 0px #0b5b88;cursor:pointer;height:37px;line-height:36px;display:inline-block;padding-left:4px;padding-right:11px;font-weight:bold;position:relative;vertical-align:middle;text-align:center;min-width:90px;}.pressButton:hover{background-position:right -37px;}
+.pressButton span{position:relative;z-index:2;}
+.pressButton span.text{display:inline-block;height:37px;vertical-align:middle;}
+.pressButton .price{display:inline-block;font-size:26px;height:37px;vertical-align:middle;}
+.pressButton .rur{display:inline-block;font-size:25px;margin-top:3px;vertical-align:middle;}.pressButton .rur.f21{margin-top:5px;}
+.pressButton .l{background:url("/themes/v2/images/btn.png") no-repeat scroll left 0 transparent;display:block;position:absolute;height:37px;width:6px;left:-4px;top:0px;z-index:1;}
+.pressButton:hover .l{background-position:left -37px;}
+.pressButton.orange{background-position:right -74px;text-shadow:0px 1px 0px #c36408;}.pressButton.orange:hover{background-position:right -111px;}
+.pressButton.orange .l{background-position:left -74px;}
+.pressButton.orange:hover .l{background-position:left -111px;}
+.pressButton.inactive,.pressButton.selected{background-position:right -148px;text-shadow:0px 1px 0px #444d57;cursor:default;}.pressButton.inactive:hover,.pressButton.selected:hover{background-position:right -148px;text-shadow:0px 1px 0px #444d57;cursor:default;}
+.pressButton.inactive .l,.pressButton.selected .l{background-position:left -148px;}
+.pressButton.inactive:hover .l,.pressButton.selected:hover .l{background-position:left -148px;}
+.pressButton .dotted{background:url("/themes/v2/images/booking.gif") no-repeat scroll 0 0 transparent;display:inline-block;height:14px;margin-left:0;margin-top:1px;width:108px;}
+@media screen and (-webkit-min-device-pixel-ratio:0){body:first-of-type .pressButton .rur{font-size:25px;margin-top:4px;}}.recommended-ticket .ticket-items .content .details-selecte .pressButton{width:180px;float:right;margin-left:5px;}
+.ticket-items .content .buy-ticket .text .pressButton{width:78%;}
+.hotels-tickets .content .full-info .choose-a-hotel .pressButton{position:absolute;top:50px;width:122px;}
+.hotel-details .book .pressButton{width:126px;}
+#content .place-buy>.book .pressButton,.hotel-details .place-buy>.book .pressButton{margin-left:20px;}
+.block-trip .table-hotel-result .td-cost .pressButton{width:122px;}
+.recommended-ticket .ticket-items.small .content .details-selecte .pressButton .text{display:none;}
+.recommended-ticket .ticket-items.small .content .details-selecte .pressButton{width:115px;}
+.hotels-tickets .content .full-info .choose-a-hotel .pressButton{position:absolute;top:60px;width:120px;}

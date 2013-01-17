@@ -587,11 +587,6 @@
     border-bottom: 1px dashed;
     text-decoration: none;
 }
-.recommended-ticket .ticket-items .content .details-selecte .btn-cost {
-	margin-left: 5px;
-	width: 190px;
-	float: right;
-}
 .recommended-ticket .ticket-items .content .line-two-ticket {
     background: url("../images/line-two-ticket.png") no-repeat scroll left -40px transparent;
     height: 13px;
@@ -639,12 +634,7 @@
 .recommended-ticket .ticket-items.small  .content .how-long .path, .recommended-ticket .ticket-items.small  .content .how-long .time {
 	display: none;
 }
-.recommended-ticket .ticket-items.small .content .details-selecte .btn-cost .text {
-	display: none;
-}
-.recommended-ticket .ticket-items.small .content .details-selecte .btn-cost {
-	width: 125px;
-}
+
 
 /* HOTEL */
 
@@ -731,10 +721,7 @@
 	color: #202328;
 	font-size: 11px;
 }
-.hotels-tickets .content .full-info .choose-a-hotel .btn-cost {
-	position: absolute; top: 60px;
-	width: 130px;
-}
+
 .hotels-tickets .content .full-info .choose-a-hotel .details {
 	display: inline-block;
 	position: absolute;
