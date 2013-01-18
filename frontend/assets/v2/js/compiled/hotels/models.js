@@ -421,7 +421,11 @@ HotelResult = (function() {
     this.parent = parent;
     this.checkInTime = hotelDatails.earliestCheckInTime;
     if (this.checkInTime) {
-      this.checkInText = this.checkIn.format('LL') + ", c " + this.checkInTime;
+      if (this.checkIn) {
+        this.checkInText = this.checkIn.format('LL') + ", c " + this.checkInTime;
+      } else {
+        console.log('strange ...', this.checkIn, this.checkInText, this.hotelName, this.hotelId);
+      }
     } else {
       this.checkInText = this.checkIn.format('LL');
     }
@@ -1180,11 +1184,12 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.findAndSelect = function(roomSet) {
     var hotel, possibleRoomSet, _i, _j, _len, _len1, _ref, _ref1;
-    console.log('find roomSet', roomSet);
+    console.log('find roomSet', roomSet, 'hotelId', roomSet.parent.hotelId);
     _ref = this.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       hotel = _ref[_i];
       if (hotel.hotelId === roomSet.parent.hotelId) {
+        console.log('ok, hotel found2');
         _ref1 = hotel.roomSets();
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           possibleRoomSet = _ref1[_j];
@@ -1199,12 +1204,14 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.findAndSelectSame = function(roomSet) {
     var hotel, possibleRoomSet, result, _i, _j, _len, _len1, _ref, _ref1;
+    result = false;
     result = this.findAndSelect(roomSet);
     if (!result) {
       _ref = this.data();
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         hotel = _ref[_i];
         if (hotel.hotelId === roomSet.parent.hotelId) {
+          console.log('ok, hotel found');
           _ref1 = hotel.roomSets();
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             possibleRoomSet = _ref1[_j];
@@ -1213,13 +1220,14 @@ HotelsResultSet = (function() {
         }
       }
     }
-    return false;
+    return result;
   };
 
   HotelsResultSet.prototype.findAndSelectSameParams = function(stars, latLngObservable) {
-    var dist, hotel, minDistance, possibleRoomSet, sameHotel, _i, _j, _len, _len1, _ref, _ref1;
+    var dist, hotel, minDistance, minPrice, possibleRoomSet, sameHotel, _i, _j, _len, _len1, _ref, _ref1;
     sameHotel = false;
-    minDistance = 9999999;
+    minDistance = 5000;
+    minPrice = 99999;
     _ref = this.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       hotel = _ref[_i];
@@ -1228,8 +1236,13 @@ HotelsResultSet = (function() {
       }
       if (hotel.categoryId === stars) {
         dist = Utils.calculateTheDistance(latLngObservable().lat(), latLngObservable().lng(), hotel.lat, hotel.lng);
-        if (dist < minDistance) {
+        if (dist > 5000) {
+          dist = 5000;
+        }
+        if ((dist * 2 + hotel.minPrice) < (minDistance * 2 + minPrice)) {
           sameHotel = hotel;
+          minDistance = dist;
+          minPrice = hotel.minPrice;
         }
       }
     }

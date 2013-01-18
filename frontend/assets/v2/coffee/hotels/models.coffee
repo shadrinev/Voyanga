@@ -267,7 +267,10 @@ class HotelResult
     @parent = parent
     @checkInTime = hotelDatails.earliestCheckInTime
     if @checkInTime
-      @checkInText = @checkIn.format('LL') + ", c " + @checkInTime
+      if @checkIn
+        @checkInText = @checkIn.format('LL') + ", c " + @checkInTime
+      else
+        console.log('strange ...',@checkIn,@checkInText,@hotelName,@hotelId)
     else
       @checkInText = @checkIn.format('LL')
     # FIXME trollface
@@ -920,34 +923,43 @@ class HotelsResultSet
     Utils.scrollTo('#content',false)
 
   findAndSelect: (roomSet)=>
-    console.log('find roomSet', roomSet)
+    console.log('find roomSet', roomSet,'hotelId',roomSet.parent.hotelId)
     for hotel in @data()
       if hotel.hotelId == roomSet.parent.hotelId
+        console.log('ok, hotel found2')
         for possibleRoomSet in hotel.roomSets()
           if possibleRoomSet.similarityHash() == roomSet.similarityHash()
             return possibleRoomSet
     return false
 
   findAndSelectSame: (roomSet)=>
-
+    result = false
     result = @findAndSelect(roomSet)
     if(!result)
       for hotel in @data()
         if hotel.hotelId == roomSet.parent.hotelId
+          console.log('ok, hotel found')
           for possibleRoomSet in hotel.roomSets()
             return possibleRoomSet
-    return false
+    return result
 
   findAndSelectSameParams: (stars,latLngObservable)=>
     sameHotel = false
-    minDistance = 9999999;
+    minDistance = 5000
+    minPrice = 99999
     for hotel in @data()
       if !sameHotel
         sameHotel = hotel
+        #minDistance = Utils.calculateTheDistance(latLngObservable().lat(),latLngObservable().lng(),hotel.lat,hotel.lng)
+        #if minDistance > 5000 then minDistance = 5000
+        #minPrice = hotel.minPrice
       if hotel.categoryId == stars
         dist = Utils.calculateTheDistance(latLngObservable().lat(),latLngObservable().lng(),hotel.lat,hotel.lng)
-        if(dist < minDistance)
+        if dist > 5000 then dist = 5000
+        if( (dist*2 + hotel.minPrice) < (minDistance*2 + minPrice))
           sameHotel = hotel
+          minDistance = dist
+          minPrice = hotel.minPrice
     for possibleRoomSet in sameHotel.roomSets()
       return possibleRoomSet
 
