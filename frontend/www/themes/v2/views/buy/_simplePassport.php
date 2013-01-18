@@ -202,6 +202,8 @@
                        name="FlightAdultPassportForm[<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
             </td>
         </tr>
+    <?php else: ?>
+        <input type="hidden" value="1" name="FlightAdultPassportForm[<?php echo $i;?>][srok]">
     <?php endif ?>
 <?php endforeach; ?>
 <!-- NEW USER -->

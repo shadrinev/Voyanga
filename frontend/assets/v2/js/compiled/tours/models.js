@@ -520,6 +520,7 @@ ToursHotelsResultSet = (function(_super) {
       ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0]);
     }
     if (!ret) {
+      console.log('same not found and find by stars and coords');
       ret = this.results().findAndSelectSameParams(result.categoryId, result.getLatLng());
     }
     return this._selectRoomSet(ret);
