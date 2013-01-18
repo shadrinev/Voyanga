@@ -103,6 +103,7 @@ EventSet = (function() {
     this.previousImage = ko.observable('');
     this.activeMaps = 0;
     this.mapsInited = false;
+    this.isRendered = false;
   }
 
   EventSet.prototype.setActive = function(valueAccessor, event) {
@@ -126,6 +127,9 @@ EventSet = (function() {
   };
 
   EventSet.prototype.closeEventsPhoto = function() {
+    if ($(".mapsBigAll").is(':visible')) {
+      return;
+    }
     $(".slideTours").find(".active").find(".triangle").animate({
       top: "0px"
     }, 200);
@@ -184,7 +188,8 @@ EventSet = (function() {
 
   EventSet.prototype.afterRender = function() {
     this.mapsInited = false;
-    return window.app.toggleGMaps();
+    window.app.toggleGMaps(true);
+    return this.isRendered = true;
   };
 
   return EventSet;

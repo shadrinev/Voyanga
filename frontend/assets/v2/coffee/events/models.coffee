@@ -78,6 +78,7 @@ class EventSet
     @previousImage = ko.observable ''
     @activeMaps = 0;
     @mapsInited = false
+    @isRendered = false
 
   setActive: (valueAccessor, event) =>
     if($(event.target).hasClass('lookEyes'))
@@ -93,6 +94,7 @@ class EventSet
     $(event.target).closest('.toursTicketsMain').find('.triangle').animate {'top' : '-16px'}, 200
 
   closeEventsPhoto: =>
+    return if $(".mapsBigAll").is(':visible')
     $(".slideTours").find(".active").find(".triangle").animate
       top: "0px"
     , 200
@@ -132,7 +134,8 @@ class EventSet
 
   afterRender: =>
     @mapsInited = false
-    window.app.toggleGMaps()
+    window.app.toggleGMaps(true)
+    @isRendered = true
 
 class EventCategory
   constructor: (data) ->

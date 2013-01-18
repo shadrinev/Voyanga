@@ -170,23 +170,23 @@ Application = (function(_super) {
         this.minimizeCalendar();
         window.voyanga_debug("APP: switching active module to", prefix);
         this.activeModule(prefix);
-        this.toggleGMaps();
         window.voyanga_debug("APP: activating panel", ko.utils.unwrapObservable(module.panel));
         this.activeModuleInstance(module);
         $(window).unbind('resize');
         $(window).resize(module.resize);
-        return ko.processAllDeferredBindingUpdates();
+        ko.processAllDeferredBindingUpdates();
+        return this.toggleGMaps(false);
       }
     });
   };
 
-  Application.prototype.toggleGMaps = function() {
+  Application.prototype.toggleGMaps = function(force) {
     if ((this.activeModule() === 'avia') || (this.activeModule() === 'hotels')) {
-      if (this.events && this.events.activeMaps === 0) {
+      if (force || (this.events && this.events.isRendered)) {
         return this.events.closeEventsPhoto();
       }
     } else {
-      if (this.events && this.events.activeMaps === 1) {
+      if (force || (this.events && this.events.isRendered)) {
         return this.events.closeEventsMaps();
       }
     }
