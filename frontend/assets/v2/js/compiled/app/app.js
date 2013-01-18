@@ -202,7 +202,7 @@ Application = (function(_super) {
           return _this.events.closeEventsPhoto();
         }
       }
-    }, 10);
+    }, 100);
   };
 
   Application.prototype.runWithModule = function(module) {
