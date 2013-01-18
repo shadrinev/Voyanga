@@ -84,11 +84,9 @@ function CenterIMGResize() {
 	}
 	pathIMG.css('left', '-'+marginPathLeft+'px');
 
-    setTimeout(function() {
-        var heightImgMain = $('div.IMGmain img').height();
-        var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
-        pathIMG.css('top', '-'+marginPathTop+'px');
-    }, 6000);
+    var heightImgMain = $('div.IMGmain img').height();
+    var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
+    pathIMG.css('top', '-'+marginPathTop+'px');
 }
 
 function smallIMGresizeIndex() {
