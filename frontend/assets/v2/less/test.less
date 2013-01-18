@@ -78,3 +78,71 @@ h4 {
     letter-spacing: 0em;
   }
 }
+
+
+
+.popupPeople {
+  height: auto;
+  border: none;
+  background: none;
+  width: 406px;
+  bottom: auto;
+  bottom: -169px;
+  position: absolute;
+  left: 0px;
+//  display: none;
+  display: block;
+  z-index: 997;
+
+  &.active {
+    display: block;
+  }
+  &:hover .addOtherRoom  {
+    color: #23262c !important;
+  }
+  .number-hotel .addOtherRoom:hover {
+    color: #23262c !important;
+  }
+  &:hover .del-hotel {
+    color: #9ea2a7 !important;
+  }
+  .adults, .childs, .small-childs {
+    float: left;
+    width: 48px; font-size: 11px; color: #272728; text-shadow: 0px 1px 0px #FFF; line-height: 13px;
+    margin-left: 13px;
+    padding-top: 13px;
+    position: relative;
+  }
+  .adults input, .childs input, .small-childs input  {
+    background: url("@{img-url}/images/slice.png") no-repeat scroll -264px -941px transparent;
+    border: medium none;
+    font-size: 25px;
+    height: 32px;
+    text-align: center;
+    width: 48px;
+    color: #8f959c;
+
+    &.active {
+      background-position: -264px -904px;
+      color: #272729;
+    }
+    &:focus {
+      background-position: -264px -904px;
+    }
+  }
+  .one-str .adults, .one-str .childs {
+    color: #272728;
+    float: left;
+    font-size: 11px;
+    line-height: 13px;
+    margin-left: 6px;
+    padding-top: 5px;
+    position: relative;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 60px;
+  }
+}
+
+
+
+

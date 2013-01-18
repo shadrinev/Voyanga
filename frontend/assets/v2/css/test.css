@@ -6,3 +6,11 @@ h1{color:#1d222b;font-size:22px;text-shadow:0px 1px 0px #acb0b4;margin-bottom:12
 h3{font-size:18px;text-shadow:0px 1px 0px #acb0b4;color:#1d222b;margin-bottom:10px;}
 h4{color:#1d222b;font-size:15px;margin-bottom:6px;text-shadow:0px 1px 0px #ffffff;}
 .main-block h1{text-shadow:0px 1px 0px #ffffff;margin-bottom:20px;letter-spacing:-0.05em;line-height:26px;margin-top:-1px;}.main-block h1.ourTripH1{float:left;letter-spacing:0em;}
+.popupPeople{height:auto;border:none;background:none;width:406px;bottom:auto;bottom:-169px;position:absolute;left:0px;display:block;z-index:997;}.popupPeople.active{display:block;}
+.popupPeople:hover .addOtherRoom{color:#23262c !important;}
+.popupPeople .number-hotel .addOtherRoom:hover{color:#23262c !important;}
+.popupPeople:hover .del-hotel{color:#9ea2a7 !important;}
+.popupPeople .adults,.popupPeople .childs,.popupPeople .small-childs{float:left;width:48px;font-size:11px;color:#272728;text-shadow:0px 1px 0px #FFF;line-height:13px;margin-left:13px;padding-top:13px;position:relative;}
+.popupPeople .adults input,.popupPeople .childs input,.popupPeople .small-childs input{background:url("/themes/v2/images/slice.png") no-repeat scroll -264px -941px transparent;border:medium none;font-size:25px;height:32px;text-align:center;width:48px;color:#8f959c;}.popupPeople .adults input.active,.popupPeople .childs input.active,.popupPeople .small-childs input.active{background-position:-264px -904px;color:#272729;}
+.popupPeople .adults input:focus,.popupPeople .childs input:focus,.popupPeople .small-childs input:focus{background-position:-264px -904px;}
+.popupPeople .one-str .adults,.popupPeople .one-str .childs{color:#272728;float:left;font-size:11px;line-height:13px;margin-left:6px;padding-top:5px;position:relative;text-shadow:0 1px 0 #FFFFFF;width:60px;}
