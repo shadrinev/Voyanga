@@ -2147,10 +2147,10 @@ input.hotel-input {
     display: inline-block;
 }
 .paybuyContent {
+    color: #1D222B;
     margin: 0 auto;
     max-width: 950px;
-    color: #1d222b;
-    padding-bottom: 22px;
+    padding-bottom: 15px;
 }
 .paybuyContent h1 {
     font-size: 24px;
@@ -2628,12 +2628,12 @@ input.hotel-input {
 }
 
 .paybuyContent h2 {
-	color: #1d222b;
-	font-size: 24px;
-	margin-top: 22px;
-	margin-bottom: 15px;
-	letter-spacing: -0.05em;
+    color: #1D222B;
+    font-size: 24px;
+    letter-spacing: -0.05em;
     line-height: 26px;
+    margin-bottom: 15px;
+    margin-top: 15px;
     text-shadow: 0 1px 0 #FFFFFF;
 }
 .paybuyContent h2 .ico-fly {
@@ -2665,6 +2665,9 @@ input.hotel-input {
 .infoPassengers td, .dopInfoPassengers td {
 	padding-top: 5px;
 	padding-bottom: 3px;
+}
+.infoPassengers thead td {
+    padding-top: 0;
 }
 .infoPassengers thead, .dopInfoPassengers thead {
 	font-weight: bold;

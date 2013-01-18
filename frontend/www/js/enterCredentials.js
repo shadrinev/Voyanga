@@ -247,12 +247,12 @@ function checkStatuses(statuses, ids) {
                 } else {
                     //if everything is ok then go to payment
                     $('iframe').load(function () {
-                        $('#loadPayFly').find('.armoring').hide();
+                        $('#loadPayFly').removeClass('paybuyEnd').find('.armoring').hide();
                         $('#loadPayFly').find('.loadJet').hide();
                         $('.payCardPal').show();
                         $('.paybuyEnd').show();
                         ResizeAvia();
-                        Utils.scrollTo('.payCardPal', true);
+                        Utils.scrollTo('.oneBlock:eq(1)', true);
                     });
                     window.app.breakdown(data.breakdown);
                     Utils.submitPayment(data.payonline);
