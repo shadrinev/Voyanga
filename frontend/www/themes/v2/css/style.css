@@ -202,13 +202,13 @@
     z-index: 2;
 }
 .login-window .popupDown {
-    left: 1px;
+    box-shadow: 0 1px 3px rgba(1, 1, 1, 0.6);
+    display: none;
+    left: 2px;
     position: absolute;
     top: 38px;
-    width: 99%;
+    width: 98%;
     z-index: 1;
-    box-shadow: 0 1px 3px rgba(1,1,1, 0.6);
-    display: none;
 }
 .login-window .popupDown a {
     background: url("../images/bg-loginPopUpDown.png") repeat-x scroll 0 -39px transparent;
