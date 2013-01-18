@@ -163,25 +163,14 @@ Application = (function(_super) {
       }
     }
     return this.on("beforeroute:" + prefix, function() {
-      var args,
-        _this = this;
+      var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       window.voyanga_debug("APP: routing", args);
       if (this.panel() === void 0 || (prefix !== this.activeModule())) {
         this.minimizeCalendar();
         window.voyanga_debug("APP: switching active module to", prefix);
-        _.delay(function() {
-          if ((prefix === 'avia') || (prefix === 'hotels')) {
-            if (_this.events && _this.events.activeMaps === 0) {
-              return _this.events.closeEventsPhoto();
-            }
-          } else {
-            if (_this.events && _this.events.activeMaps === 1) {
-              return _this.events.closeEventsMaps();
-            }
-          }
-        }, 10);
         this.activeModule(prefix);
+        this.toggleGMaps();
         window.voyanga_debug("APP: activating panel", ko.utils.unwrapObservable(module.panel));
         this.activeModuleInstance(module);
         $(window).unbind('resize');
@@ -191,18 +180,22 @@ Application = (function(_super) {
     });
   };
 
+  Application.prototype.toggleGMaps = function() {
+    if ((this.activeModule() === 'avia') || (this.activeModule() === 'hotels')) {
+      if (this.events && this.events.activeMaps === 0) {
+        return this.events.closeEventsPhoto();
+      }
+    } else {
+      if (this.events && this.events.activeMaps === 1) {
+        return this.events.closeEventsMaps();
+      }
+    }
+  };
+
   Application.prototype.run = function() {
-    var _this = this;
     Backbone.history.start();
     this.bindEvents();
-    this.slider.handler(this.activeModule());
-    return _.delay(function() {
-      if ((_this.activeModule() === 'avia') || (_this.activeModule() === 'hotels')) {
-        if (_this.events && _this.events.activeMaps === 0) {
-          return _this.events.closeEventsPhoto();
-        }
-      }
-    }, 100);
+    return this.slider.handler(this.activeModule());
   };
 
   Application.prototype.runWithModule = function(module) {

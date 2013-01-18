@@ -183,7 +183,8 @@ EventSet = (function() {
   };
 
   EventSet.prototype.afterRender = function() {
-    return this.mapsInited = false;
+    this.mapsInited = false;
+    return window.app.toggleGMaps();
   };
 
   return EventSet;

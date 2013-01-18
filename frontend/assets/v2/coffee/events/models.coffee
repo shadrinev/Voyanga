@@ -132,7 +132,7 @@ class EventSet
 
   afterRender: =>
     @mapsInited = false
-
+    window.app.toggleGMaps()
 
 class EventCategory
   constructor: (data) ->
