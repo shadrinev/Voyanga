@@ -8,6 +8,7 @@
  * @package payments
  */
 Yii::import("common.extensions.payments.models.Payments_MetaBooker");
+Yii::import("common.extensions.payments.models.Payments_MetaBookerTour");
 
 class PaymentsComponent extends CApplicationComponent
 {
@@ -113,17 +114,37 @@ class PaymentsComponent extends CApplicationComponent
             else
                 $rest[] = $booker;
         }
-        if(count($hotels)) {
-            $billId = $hotels[0]->getCurrent()->billId;
-            foreach($hotels as $hotel) {
-                if($hotel->getCurrent()->billId != $billId)
-                    throw new Exception("Hotel set for payment is broken");
-            }
-            $metaBooker = new Payments_MetaBooker($hotels, $billId);
-            $rest[]=$metaBooker;
-        }
-        return $rest;
+        $hasHotels = count($hotels);
+        $hasFlights = count($rest);
+        if($hasHotels && !$hasFlights)
+            return $this->onlyHotelsCase($hotels);
+        if(!$hasHotels && ($hasFlights == 1))
+            return $rest;
+        if($hasFlights)
+            return $this->tourCase($rest, $hotels);
     }
+
+    private function onlyHotelsCase($hotels) {
+        # FIXME: check if this call is needed
+        $bill = $this->getBillForBooker($hotels[0]->getCurrent());
+        $billId = $bill->id;
+        $metaBooker = new Payments_MetaBooker($hotels, $billId);
+        return array($metaBooker);
+    }
+
+    private function tourCase($flights, $hotels) {
+        # FIXME: check if this call is needed
+        $bill = $this->getBillForBooker($flights[0]);
+        $bill->setChannel('ltr');
+        $bill->save();
+        $billId = $bill->id;
+        $metaBooker = new Payments_MetaBookerTour(array_merge($flights, $hotels), $flights[0], $billId);
+        //! FIXME FIXME
+        $bill->amount = $metaBooker->getPrice();
+        $bill->save();
+        return array($metaBooker);
+    }
+
 
     //! tell nemo we are done with payment for given pnr
     public function notifyNemo($booker, $bill)
