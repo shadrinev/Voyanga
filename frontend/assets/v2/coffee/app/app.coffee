@@ -130,19 +130,20 @@ class Application extends Backbone.Router
         @minimizeCalendar()
         window.voyanga_debug "APP: switching active module to", prefix
         @activeModule(prefix)
-        @toggleGMaps()
         window.voyanga_debug "APP: activating panel", ko.utils.unwrapObservable module.panel
 
         @activeModuleInstance module
         $(window).unbind 'resize'
         $(window).resize module.resize
         ko.processAllDeferredBindingUpdates()
+        @toggleGMaps()
 
   toggleGMaps: ->
+    console.log "Toggel GMaps: @events: ", @events
     if ((@activeModule() == 'avia') || (@activeModule() == 'hotels'))
-      @events.closeEventsPhoto() if (@events && @events.activeMaps == 0)
+      @events.closeEventsPhoto() if (@events)
     else
-      @events.closeEventsMaps() if (@events && @events.activeMaps == 1)
+      @events.closeEventsMaps() if (@events)
 
   run: ->
     Backbone.history.start()

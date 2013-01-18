@@ -93,6 +93,7 @@ class EventSet
     $(event.target).closest('.toursTicketsMain').find('.triangle').animate {'top' : '-16px'}, 200
 
   closeEventsPhoto: =>
+    return if $(".mapsBigAll").is(':visible')
     $(".slideTours").find(".active").find(".triangle").animate
       top: "0px"
     , 200

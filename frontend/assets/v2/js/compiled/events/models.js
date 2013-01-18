@@ -126,6 +126,9 @@ EventSet = (function() {
   };
 
   EventSet.prototype.closeEventsPhoto = function() {
+    if ($(".mapsBigAll").is(':visible')) {
+      return;
+    }
     $(".slideTours").find(".active").find(".triangle").animate({
       top: "0px"
     }, 200);
