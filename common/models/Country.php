@@ -182,7 +182,7 @@ class Country extends CActiveRecord
     {
         $criteria = new CDbCriteria();
         $criteria->select = 'id, localRu';
-        $criteria->order = 'priority desc, localRu';
+        $criteria->order = 'position desc, localRu';
         $countries = self::model()->findAll($criteria);
         return CHtml::listData($countries, 'id', 'localRu');
     }
@@ -191,7 +191,7 @@ class Country extends CActiveRecord
     {
         $criteria = new CDbCriteria();
         $criteria->select = "id, localRu";
-        $criteria->order = "priority DESC, localRu ASC";
+        $criteria->order = "position DESC, localRu ASC";
         return CHtml::listData(self::model()->findAll($criteria), 'id', 'localRu');
     }
 }

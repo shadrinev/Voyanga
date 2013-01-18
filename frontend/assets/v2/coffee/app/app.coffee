@@ -129,12 +129,6 @@ class Application extends Backbone.Router
       if @panel() == undefined || (prefix != @activeModule())
         @minimizeCalendar()
         window.voyanga_debug "APP: switching active module to", prefix
-        _.delay () =>
-          if ((prefix == 'avia') || (prefix == 'hotels'))
-            @events.closeEventsPhoto() if (@events && @events.activeMaps == 0)
-          else
-            @events.closeEventsMaps() if (@events && @events.activeMaps == 1)
-        , 10
         @activeModule(prefix)
         window.voyanga_debug "APP: activating panel", ko.utils.unwrapObservable module.panel
 
@@ -142,16 +136,18 @@ class Application extends Backbone.Router
         $(window).unbind 'resize'
         $(window).resize module.resize
         ko.processAllDeferredBindingUpdates()
+        @toggleGMaps(false)
+
+  toggleGMaps: (force) ->
+    if ((@activeModule() == 'avia') || (@activeModule() == 'hotels'))
+      @events.closeEventsPhoto() if (force || (@events && @events.isRendered))
+    else
+      @events.closeEventsMaps() if (force || (@events && @events.isRendered))
 
   run: ->
     Backbone.history.start()
     @bindEvents()
     @slider.handler(@activeModule())
-    _.delay () =>
-      if ((@activeModule() == 'avia') || (@activeModule() == 'hotels'))
-        @events.closeEventsPhoto() if (@events && @events.activeMaps == 0)
-    , 10
-
     
   runWithModule: (module) =>
     # set default module

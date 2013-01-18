@@ -22,6 +22,7 @@ class CityManager extends CApplicationComponent
                 $criteria->params[':code'] = $query;
                 $criteria->addCondition('t.code = :code');
                 $criteria->addCondition('t.countAirports > 0');
+                $criteria->order = 'country.position desc, t.position desc';
                 $criteria->with = 'country';
                 /** @var  City[] $cities  */
                 $cities = City::model()->findAll($criteria);
@@ -133,6 +134,7 @@ class CityManager extends CApplicationComponent
                 $criteria->params[':code'] = $query;
                 $criteria->addCondition('t.code = :code');
                 $criteria->addCondition('t.hotelbookId > 0');
+                $criteria->order = 'country.position desc, t.position desc';
                 $criteria->with = 'country';
                 /** @var  City[] $cities  */
                 $cities = City::model()->findAll($criteria);
@@ -270,6 +272,7 @@ class CityManager extends CApplicationComponent
                 $criteria->with = 'country';
                 $criteria->params[':code'] = $query;
                 $criteria->addCondition('t.code = :code');
+                $criteria->order = 'country.position desc, t.position desc';
                 /** @var  City[] $cities  */
                 $cities = City::model()->findAll($criteria);
                 if ($cities)

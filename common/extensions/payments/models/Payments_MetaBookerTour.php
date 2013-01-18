@@ -4,12 +4,20 @@
  Container used to pay for multiple bookers,
  Mimics booker interface
  */
-class Payments_MetaBooker extends CComponent{
+class Payments_MetaBookerTour extends CComponent{
     private $bookers;
     private $_billId;
-    public function __construct($bookers, $billId)
+    private $base;
+    public function __construct($bookers, $base, $billId)
     {
         $this->bookers = array();
+        if($base instanceof FlightBooker) {
+            $bookerComp  = new FlightBookerComponent();
+            $bookerComp->setFlightBookerFromId($base->id);
+            $base = $bookerComp;
+        }
+        $this->base = $base;
+
         foreach ($bookers as $booker) {
             if($booker instanceof FlightBooker) {
                 $bookerComp  = new FlightBookerComponent();
@@ -34,18 +42,23 @@ class Payments_MetaBooker extends CComponent{
 
     public function setBillId($billId) {
         foreach($this->bookers as $booker){
-            if(($booker->getCurrent()->billId != $billId) && $billId)
-                throw new Exception("Hotel set for payment is broken");
             $booker->getCurrent()->billId = $billId;
         }
     }
 
-   public function getPrice() {
+
+    public function getPrice() {
+        return $this->getRealPrice();
+//        return $this->base->getCurrent()->price;
+    }
+
+
+   public function getRealPrice() {
         $price = 0;
         foreach ($this->bookers as $booker) {
             $price += $booker->getCurrent()->price;
         }
-        return $price;
+        return $price;// - $this->getPrice();
     }
 
     public function save() {
@@ -103,4 +116,8 @@ class Payments_MetaBooker extends CComponent{
         return Array($result);
     }
 
+    public function getSmallDEscription()
+    {
+        return "Тур";
+    }
 }
