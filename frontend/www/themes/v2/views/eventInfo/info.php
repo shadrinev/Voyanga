@@ -120,49 +120,17 @@ $images = '/themes/v2';
 
                                     <td class="tdPeople" data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
                                         <!-- ko if: ($index()+1) == $length() -->
-                                        <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}">
+                                        <span data-bind="template: { data: $data.peopleSelectorVM}">
                                           <div class="how-many-man hotel">
                                               <!-- ko foreach: rawRooms -->
-                                              <div class="content" data-bind="click: $parent.show">
+                                              <div class="content" data-bind="click: $parent.showPeoplePopup">
                                                   <span class="num" data-bind="text: $index() + 1">1</span>
-                                                  <div class="man" data-repeat-index="0"></div><!--ko_repeatplaceholder-->
-                                                  <!--ko_repeatplaceholder-->
+                                                  <div class="man" data-bind="repeat: adults"></div>
+                                                  <div class="child" data-bind="repeat: children"></div>
                                               </div>
                                               <!-- /ko -->
-                                              <div class="btn" data-bind="click: show"></div>
-                                              <div class="popup">
-                                                  <!-- ko foreach: {data: roomsView, afterRender: afterRender } -->
-                                                  <div class="float">
-                                                      <!-- ko template: {name: 'room-template', foreach: $data} -->
-                                                      <div class="number-hotel">
-                                                          <a href="#" class="del-hotel" data-bind="click:removeRoom">удалить</a>
-                                                          <h5>Номер <span data-bind="text: index + 1">1</span></h5>
-                                                          <div class="one-str">
-                                                              <div class="adults">
-                                                                  <div class="inputDIV">
-                                                                      <input type="text" data-bind="value: adults, css:{active: adults}" class="active">
-                                                                      <a href="#" class="plusOne" data-bind="click:plusOne" rel="adults">+</a>
-                                                                      <a href="#" class="minusOne" data-bind="click:minusOne" rel="adults">-</a>
-                                                                  </div>
-                                                                  взрослых
-                                                              </div>
-                                                              <div class="childs">
-                                                                  <div class="inputDIV">
-                                                                      <input type="text" data-bind="value: children, css:{active: children}" name="adult2" class="">
-                                                                      <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
-                                                                      <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
-                                                                  </div>
-                                                                  детей от 12 до 18 лет
-                                                              </div>
-                                                          </div>
-                                                          <div class="one-str" data-bind="foreach: ages, visible: ages().length" style="display: none;"></div>
-                                                          <a href="#" data-bind="click: addRoom, visible: last() &amp;&amp; index&lt;3" class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер.</a>
-                                                      </div>
+                                              <div class="btn" data-bind="click: showPeoplePopup"></div>
 
-                                                      <!-- /ko -->
-                                                  </div>
-                                                  <!-- /ko -->
-                                              </div>
                                            </div>
                                         </span>
                                         <!-- /ko -->
@@ -181,6 +149,46 @@ $images = '/themes/v2';
                         <!-- /ko -->
                     </div>
                     <!-- END BOARD CONTENT -->
+                    <!-- ko with: itemsToBuy.activePanel() -->
+                        <!-- ko template: {foreach: $data.panels} -->
+                            <!-- ko if: ($index()+1) == $length() -->
+                                <!-- ko template: { data: $data.peopleSelectorVM }-->
+                                <div class="popupPeople">
+                                    <!-- ko foreach: {data: roomsView, afterRender: afterRenderPeoplePopup } -->
+                                    <div class="float">
+                                        <!-- ko foreach: $data -->
+                                        <div class="number-hotel">
+                                            <a href="#" class="del-hotel" data-bind="click:removeRoom">удалить</a>
+                                            <h5>Номер <span data-bind="text: index + 1">1</span></h5>
+                                            <div class="one-str">
+                                                <div class="adults">
+                                                    <div class="inputDIV">
+                                                        <input type="text" data-bind="value: adults, css:{active: adults}" class="active">
+                                                        <a href="#" class="plusOne" data-bind="click:plusOne" rel="adults">+</a>
+                                                        <a href="#" class="minusOne" data-bind="click:minusOne" rel="adults">-</a>
+                                                    </div>
+                                                    взрослых
+                                                </div>
+                                                <div class="childs">
+                                                    <div class="inputDIV">
+                                                        <input type="text" data-bind="value: children, css:{active: children}" name="adult2" class="">
+                                                        <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
+                                                        <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
+                                                    </div>
+                                                    детей от 12 до 18 лет
+                                                </div>
+                                            </div>
+                                            <div class="one-str" data-bind="foreach: ages, visible: ages().length" style="display: none;"></div>
+                                            <a href="#" data-bind="click: addRoom, visible: last() &amp;&amp; index&lt;3" class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер.</a>
+                                        </div>
+                                        <!-- /ko -->
+                                    </div>
+                                    <!-- /ko -->
+                                </div>
+                                <!-- /ko -->
+                            <!-- /ko -->
+                        <!-- /ko -->
+                    <!-- /ko -->
 
                 </div>
 

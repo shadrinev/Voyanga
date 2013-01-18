@@ -9,6 +9,10 @@ PeopleSelector = (function() {
   function PeopleSelector() {
     this.afterRender = __bind(this.afterRender, this);
 
+    this.afterRenderPeoplePopup = __bind(this.afterRenderPeoplePopup, this);
+
+    this.showPeoplePopup = __bind(this.showPeoplePopup, this);
+
     this.show = __bind(this.show, this);
     this.inside = false;
     this.inside2 = false;
@@ -36,6 +40,64 @@ PeopleSelector = (function() {
     } else {
       return this.close();
     }
+  };
+
+  PeopleSelector.prototype.showPeoplePopup = function(context, event) {
+    var coords, el,
+      _this = this;
+    el = $('.popupPeople');
+    if (!el.hasClass('active')) {
+      $(document.body).mousedown(function(event) {
+        console.log('click event', event);
+        event.target;
+        if ($(event.target).parents('.popupPeople').length > 0) {
+          return;
+        }
+        return _this.close();
+      });
+      $('.how-many-man .btn').addClass('active');
+      $('.how-many-man .content').addClass('active');
+      el.addClass('active');
+      coords = $('.how-many-man').offset();
+      return el.css('left', coords.left);
+    } else {
+      return this.close();
+    }
+  };
+
+  PeopleSelector.prototype.afterRenderPeoplePopup = function() {
+    $('.popupPeople').find('input').hover(function() {
+      $(this).parent().find('.plusOne').show();
+      return $(this).parent().find('.minusOne').show();
+    });
+    $('.adults,.childs,.small-childs').hover(null, function() {
+      $(this).parent().find('.plusOne').hide();
+      return $(this).parent().find('.minusOne').hide();
+    });
+    $('.plusOne').hover(function() {
+      $(this).addClass('active');
+      return $('.minusOne').addClass('active');
+    }, function() {
+      $(this).removeClass('active');
+      return $('.minusOne').removeClass('active');
+    });
+    $('.minusOne').hover(function() {
+      $(this).addClass('active');
+      return $('.plusOne').addClass('active');
+    }, function() {
+      $(this).removeClass('active');
+      return $('.plusOne').removeClass('active');
+    });
+    $('.popupPeople').find('input').focus(function() {
+      $(this).attr('rel', $(this).val());
+      return $(this).val('');
+    });
+    return $('.popupPeople').find('input').blur(function() {
+      if ($(this).val() === '') {
+        $(this).val($(this).attr('rel'));
+      }
+      return $(this).trigger('change');
+    });
   };
 
   PeopleSelector.prototype.afterRender = function() {
@@ -93,6 +155,7 @@ PeopleSelector = (function() {
     $(document.body).unbind('mousedown');
     $('.how-many-man .btn').removeClass('active');
     $('.how-many-man .content').removeClass('active');
+    $('.popupPeople').removeClass('active');
     return $('.how-many-man').find('.popup').removeClass('active');
   };
 

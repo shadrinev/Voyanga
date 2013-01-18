@@ -23,6 +23,61 @@ class PeopleSelector
     else
       @close()
 
+  showPeoplePopup: (context, event) =>
+    el = $('.popupPeople')
+    if !el.hasClass('active')
+      $(document.body).mousedown (event)=>
+        console.log('click event',event)
+        event.target;
+        if ($(event.target).parents('.popupPeople').length > 0)
+          return
+        @close()
+      $('.how-many-man .btn').addClass('active')
+      $('.how-many-man .content').addClass('active')
+      #el = $('.how-many-man').find('.popup')
+      el.addClass('active')
+      coords = $('.how-many-man').offset()
+      #el.css 'top', coords.top +  $('.how-many-man').height()
+      el.css 'left', coords.left
+
+    else
+      @close()
+
+  afterRenderPeoplePopup: =>
+    $('.popupPeople').find('input').hover ->
+      $(this).parent().find('.plusOne').show()
+      $(this).parent().find('.minusOne').show()
+
+    $('.adults,.childs,.small-childs').hover null,   ->
+      $(this).parent().find('.plusOne').hide()
+      $(this).parent().find('.minusOne').hide()
+
+    $('.plusOne').hover ->
+      $(this).addClass('active')
+      $('.minusOne').addClass('active')
+    , ->
+      $(this).removeClass('active')
+      $('.minusOne').removeClass('active')
+
+    $('.minusOne').hover ->
+      $(this).addClass('active');
+      $('.plusOne').addClass('active')
+    , ->
+      $(this).removeClass('active')
+      $('.plusOne').removeClass('active')
+
+    # Placeholder-like behaviour for inputs
+    $('.popupPeople').find('input').focus ->
+      $(@).attr 'rel', $(@).val()
+      $(@).val('')
+
+    $('.popupPeople').find('input').blur ->
+      if $(@).val() == ''
+        $(@).val $(@).attr 'rel'
+      $(@).trigger 'change'
+
+
+
   afterRender: =>
     $('.how-many-man .popup').find('input').hover ->
       $(this).parent().find('.plusOne').show()
@@ -75,6 +130,7 @@ class PeopleSelector
     $(document.body).unbind 'mousedown'
     $('.how-many-man .btn').removeClass('active')
     $('.how-many-man .content').removeClass('active')
+    $('.popupPeople').removeClass('active')
 
     $('.how-many-man').find('.popup').removeClass('active')
 
