@@ -333,16 +333,13 @@ function onFocusInput() {
 $(window).load(onFocusInput);
 
 function showUserMenu() {
-    $('.popupDown').slideDown();
+
+    $('.popupDown').slideDown(200, function() {
+        $('.login-window').attr('onclick',' ');
+    });
     // Проверка на закрытие вне области
     var mouseHover = true;
-    $('.login-window').hover(function () {
-            mouseHover = false;
-        },
-        function () {
-            mouseHover = true;
-        }
-    );
+
     $('.popupDown').hover(function () {
             mouseHover = false;
         },
@@ -352,10 +349,13 @@ function showUserMenu() {
     );
     $('body').mouseup(function () {
         if (mouseHover) {
-            $('.popupDown').slideUp();
+            console.log(mouseHover);
+            $('.popupDown').slideUp(100, function() {
+                $('.login-window').attr('onclick','showUserMenu()');
+            });
         }
         else {
-            return;
+            return false;
         }
     });
 }
