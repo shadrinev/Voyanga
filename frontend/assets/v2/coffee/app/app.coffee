@@ -136,14 +136,13 @@ class Application extends Backbone.Router
         $(window).unbind 'resize'
         $(window).resize module.resize
         ko.processAllDeferredBindingUpdates()
-        @toggleGMaps()
+        @toggleGMaps(false)
 
-  toggleGMaps: ->
-    console.log "Toggel GMaps: @events: ", @events
+  toggleGMaps: (force) ->
     if ((@activeModule() == 'avia') || (@activeModule() == 'hotels'))
-      @events.closeEventsPhoto() if (@events)
+      @events.closeEventsPhoto() if (force || (@events && @events.isRendered))
     else
-      @events.closeEventsMaps() if (@events)
+      @events.closeEventsMaps() if (force || (@events && @events.isRendered))
 
   run: ->
     Backbone.history.start()

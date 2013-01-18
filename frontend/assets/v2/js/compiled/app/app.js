@@ -175,19 +175,18 @@ Application = (function(_super) {
         $(window).unbind('resize');
         $(window).resize(module.resize);
         ko.processAllDeferredBindingUpdates();
-        return this.toggleGMaps();
+        return this.toggleGMaps(false);
       }
     });
   };
 
-  Application.prototype.toggleGMaps = function() {
-    console.log("Toggel GMaps: @events: ", this.events);
+  Application.prototype.toggleGMaps = function(force) {
     if ((this.activeModule() === 'avia') || (this.activeModule() === 'hotels')) {
-      if (this.events) {
+      if (force || (this.events && this.events.isRendered)) {
         return this.events.closeEventsPhoto();
       }
     } else {
-      if (this.events) {
+      if (force || (this.events && this.events.isRendered)) {
         return this.events.closeEventsMaps();
       }
     }

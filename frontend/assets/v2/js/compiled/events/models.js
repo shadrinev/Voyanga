@@ -103,6 +103,7 @@ EventSet = (function() {
     this.previousImage = ko.observable('');
     this.activeMaps = 0;
     this.mapsInited = false;
+    this.isRendered = false;
   }
 
   EventSet.prototype.setActive = function(valueAccessor, event) {
@@ -187,7 +188,8 @@ EventSet = (function() {
 
   EventSet.prototype.afterRender = function() {
     this.mapsInited = false;
-    return window.app.toggleGMaps();
+    window.app.toggleGMaps(true);
+    return this.isRendered = true;
   };
 
   return EventSet;
