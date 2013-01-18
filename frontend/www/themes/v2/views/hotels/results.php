@@ -129,7 +129,7 @@
     					<div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div>
     				</div>
                     <div>
-    				    <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0">
+    				    <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0; border: #696c72 1px solid;">
                     </div>
                     <div class="namePhotoPopUp" data-bind="text: activeDesc()">
                     	Привет привет!
