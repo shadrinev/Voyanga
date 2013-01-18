@@ -233,7 +233,10 @@ class Hotel extends CApplicationComponent
         if(isset($params['category']))
         {
             $this->categoryId = intval($params['category']);
+            //echo "checkIn is :".$this->checkIn;
+            //print_r($params);die();
         }
+
         if(isset($params['rating']))
         {
             $this->_rating = $params['rating'];

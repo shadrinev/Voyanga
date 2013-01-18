@@ -162,6 +162,7 @@ class TripDataProvider
         foreach ($items as $item)
         {
             $prepared = $item->getJsonObject();
+            //print_r($prepared);die();
             $prepared['isLinked'] = $item->isLinked();
             $prepared['searchParams'] = $item->getJsonObjectForSearchParams();
             TripDataProvider::injectAdditionalInfo($prepared);
@@ -220,6 +221,7 @@ class TripDataProvider
         $element['isHotel'] = !isset($element['flightKey']);
         if ($element['isHotel'])
         {
+            //print_r($element);die();
             $element['hotelDetails'] = $hotelClient->hotelDetail($element['hotelId']);
         }
         if ($element['isFlight'])

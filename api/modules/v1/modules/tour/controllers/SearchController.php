@@ -125,10 +125,10 @@ class SearchController extends ApiController
                 foreach($tour->order->hotelItems as $hotelItem){
                     //$hotelItem = new OrderHotel();
 
-                    if($hotelItem->cityId == $cityId && $hotelItem->checkIn == $hotel->checkIn){
+                    if($hotelItem->cityId == $cityId || $hotelItem->checkIn == $hotel->checkIn){
                         $hotelItem->object = serialize($hotel);
                         $hotelItem->isNewRecord = false;
-                        echo "update ".$hotelItem->id." orderHotel";
+                        echo "update ".$hotelItem->id." orderHotel".$hotel->checkIn.serialize($hotel);
                         $hotelItem->save();
                     }
                     //print_r($hotelItem);
