@@ -125,8 +125,7 @@
     			<td id="left" data-bind="attr: {'class': (activeIndex()!=0) ? '' :'none'}, click: prev"></td>
     			<td id="center">
     				<div class="countAndClose">
-    					<span data-bind="text: (activeIndex()+1)">11</span>
-    					<span class="lost">/<span data-bind="text: (length0 +1)">17</span></span> 
+    					<span data-bind="text: (activeIndex()+1)">11</span><span class="lost">/<span data-bind="text: (length0 +1)">17</span></span>
     					<div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div>
     				</div>
                     <div>
