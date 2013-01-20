@@ -88,11 +88,14 @@ class PaymentsComponent extends CApplicationComponent
         foreach($bookers as $booker)
         {
             $isHotel = ($booker instanceof Payments_MetaBooker);
-            $entry = Array("transactions" => $booker->getPriceBreakDown(), "isHotel"=> $isHotel);
-            if(!$isHotel)
-                $entry['title'] = "Перелет " . $booker->getSmallDescription();
-            $result[] = $entry;
+            $isTour = ($booker instanceof Payments_MetaBookerTour);
 
+            if (!$isHotel&&!$isTour) {
+                $entry = Array("transactions" => $booker->getPriceBreakDown(), "isHotel"=> $isHotel);
+                if(!$isHotel)
+                    $entry['title'] = "Перелет " . $booker->getSmallDescription();
+                $result[] = $entry;
+            }
         }
 //        $bill = $this->getBillForBooker($booker);
 //        $channel = $bill->getChannel();
@@ -100,7 +103,7 @@ class PaymentsComponent extends CApplicationComponent
     }
 
 
-    /**
+    /*
        prepare bookers for payments component,
        ATM only wraps hotels into Payments_MetaBooker
      */
