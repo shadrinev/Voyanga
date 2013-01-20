@@ -7,6 +7,9 @@ abstract class Payments_Channel {
     public function __construct($bill, $booker) {
         $this->bill = $bill;
         $this->booker = $booker;
+        if ($booker instanceof Payments_MetabookerTour) {
+            $this->booker = $booker->getBaseBooker();
+        }
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
     }
 

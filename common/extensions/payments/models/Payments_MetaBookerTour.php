@@ -3,6 +3,7 @@
 /*
  Container used to pay for multiple bookers,
  Mimics booker interface
+ FIXME subclass from Payments_MetaBooker
  */
 class Payments_MetaBookerTour extends CComponent{
     private $bookers;
@@ -84,6 +85,11 @@ class Payments_MetaBookerTour extends CComponent{
         foreach($this->bookers as $booker){
             $booker->status($status);
         }
+    }
+
+    public function getBaseBooker()
+    {
+        return $this->base;
     }
 
     /**
