@@ -15,6 +15,9 @@ abstract class Payments_Channel {
         if ($booker instanceof Payments_MetabookerTour) {
             $this->baseBooker = $booker->getBaseBooker();
         }
+        if($this->baseBooker instanceof FlightBookerComponent) {
+            $this->baseBooker = $this->baseBooker->getCurrent();
+        }
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
     }
 
