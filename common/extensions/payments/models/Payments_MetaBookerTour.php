@@ -122,6 +122,12 @@ class Payments_MetaBookerTour extends CComponent{
         return Array($result);
     }
 
+   public function getBookers()
+   {
+       return $this->bookers;
+   }
+
+
     public function getSmallDEscription()
     {
         return "Тур";

@@ -23,15 +23,7 @@ EOD;
             $bookers = $payments->preProcessBookers($order->getBookers());
             foreach($bookers as $booker)
             {
-                if(! $booker instanceof Payments_MetaBooker)
-                {
-                    $bill = $payments->getBillForBooker($booker);
-                    $payments->notifyNemo($booker, $bill);
-                    $taskId = $booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId;
-                    echo "Removing booking timelimit task #" . $taskId;
-                    $result = Yii::app()->cron->delete($taskId);
-                    echo " " . $result . "\n";
-                }
+                $this->notifyNemo($booker);
                 echo $payments->getStatus($booker) . "=>\n";
                 $booker->status('ticketing');
                 echo $payments->getStatus($booker) . "\n";
@@ -57,6 +49,32 @@ EOD;
         $order->initByOrderBookingId($orderId);
         $order->sendNotifications();
     }
+
+
+    private function notifyNemo($booker)
+    {
+        if($booker instanceof Payments_MetaBookerTour)
+        {
+            foreach($booker->getBookers() as $book)
+            {
+                $this->notifyNemo($book);
+            }
+            return;
+        }
+
+        if(! $booker instanceof Payments_MetaBooker)
+        {
+            $bill = $payments->getBillForBooker($booker);
+            $payments->notifyNemo($booker, $bill);
+            $taskId = $booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId;
+            echo "Removing booking timelimit task #" . $taskId;
+            $result = Yii::app()->cron->delete($taskId);
+            echo " " . $result . "\n";
+        }
+    }
+
+
+
 
     /**
        Confirms preauthorized transactions
