@@ -61,7 +61,7 @@ EOD;
             }
             return;
         }
-
+        $payments = Yii::app()->payments;
         if(! $booker instanceof Payments_MetaBooker)
         {
             $bill = $payments->getBillForBooker($booker);
