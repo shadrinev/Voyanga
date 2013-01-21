@@ -336,6 +336,11 @@ class Event extends FrontendActiveRecord
         return $data;
     }
 
+    /**
+     * @static
+     * @param int $amount
+     * @return Event[]
+     */
     static public function getRandomEvents($amount = 8)
     {
         $condition = new CDbCriteria();

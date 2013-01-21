@@ -35,13 +35,14 @@ class EventInfoController extends Controller
             $dataProvider->restoreFromDb($tour->orderId);
             //echo $tour->orderId.'dsf';
 
-            //print_r($dataProvider->getSortedCartItemsOnePerGroup(false));die();
+            //print_r($dataProvider->getSortedCartItemsOnePerGroup(false));//die();
             $items = $dataProvider->getWithAdditionalInfo($dataProvider->getSortedCartItemsOnePerGroup(false));
             //print_r($items);die();
             $tours[$tour->startCityId] = $items;
             $tours[$tour->startCityId]['city'] = City::getCityByPk($tour->startCityId)->getAttributes();
             $cities[$tour->startCityId] = City::getCityByPk($tour->startCityId)->getAttributes();
         }
+        //die();
         if(!isset($cities[$defaultCityId])){
             foreach($cities as $defaultCityId=>$city)
                 break;
