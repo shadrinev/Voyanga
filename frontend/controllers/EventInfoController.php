@@ -22,7 +22,7 @@ class EventInfoController extends Controller
         $pricesData = array();
         $this->layout = 'static';
         foreach($event->prices as $price){
-            $pricesData[$price->city->id] = array('price'=>floor($price->bestPrice),'cityName'=>$price->city->localRu,'cityId'=>$price->city->id,'updateTime'=>$price->updated);
+            $pricesData[$price->city->id] = array('price'=>floor($price->bestPrice),'cityName'=>$price->city->localRu,'cityId'=>$price->city->id,'updateTime'=>str_replace(' ','T',$price->updated));
         }
 
 

@@ -5,6 +5,7 @@ $images = '/themes/v2';
     window.toursArr = <?php echo json_encode($tours); ?>;
     window.defaultCity = <?php echo $defaultCity; ?>;
     window.tripRaw = window.toursArr[window.defaultCity];
+    window.priceData = <?php echo json_encode($priceData); ?>;
     window.eventPhotos = <?php echo json_encode($pictures); ?>;
     window.eventId = <?php echo $event->id; ?>;
     $(document).ready(function(){
@@ -46,7 +47,7 @@ $images = '/themes/v2';
                     <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
                     <div class="divPrice"><span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span> <span class="rur">o</span></div>
                     <a href="#" style="margin-top:0px;" class="otherCity" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2 взрослых</a>
-                    <span class="check">Последняя проверка цены<br>выполнена 29 сентября, 18:04</span>
+                    <span class="check">Последняя проверка цены<br>выполнена <span data-bind="text: itemsToBuy.fullPriceUpdateTimeText"></span></span>
                     <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
                     <div style="width: 144px; height: 40px;">
                         <div class="btn-check" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage,visible: !itemsToBuy.visiblePanel(), css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>

@@ -352,7 +352,16 @@ EventTourResultSet = (function() {
     this.items = ko.observableArray([]);
     this.selectedCity = ko.observable(resultSet.city.id);
     this.fullPrice = ko.observable(0);
+    this.fullPriceUpdateTime = ko.observable(window.priceData[this.selectedCity()]["updateTime"]);
+    this.fullPriceUpdateTimeText = ko.computed(function() {
+      var upTime, updateText;
+      upTime = moment(_this.fullPriceUpdateTime());
+      console.log('upDate', upTime, upTime._d);
+      updateText = dateUtils.formatDayMonth(upTime._d) + ', ' + dateUtils.formatTime(upTime._d);
+      return updateText;
+    });
     this.selectedCity.subscribe(function(newCityId) {
+      _this.fullPriceUpdateTime(window.priceData[newCityId]["updateTime"]);
       return _this.reinit(window.toursArr[newCityId]);
     });
     this.startCity = ko.observable(resultSet.city.localRu);
