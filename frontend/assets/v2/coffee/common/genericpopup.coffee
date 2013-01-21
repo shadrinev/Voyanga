@@ -1,6 +1,7 @@
 class GenericPopup
   constructor: (@id, data, @modal=false)->
     @inside = false
+    $('body').css('overflow', 'hidden');
     $('body').prepend('<div id="popupOverlay"></div>')
     el = $(@id+'-template')
     if el[0] == undefined
@@ -30,4 +31,5 @@ class GenericPopup
       $(window).unbind 'keyup'
     $(@id).remove()
     $('#popupOverlay').remove()
+    $('body').css('overflow', 'auto');
     do btnClosePopUp

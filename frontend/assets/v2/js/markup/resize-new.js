@@ -1369,7 +1369,6 @@ function openPopUpLogIn(what) {
     else {
         $('.loginWrapBg').show();
         $('body').css('overflow', 'hidden');
-
         $('.loginWrapBg').find('.wrapContent > div:not(.boxClose)').hide();
         $('.loginWrapBg').find('.wrapContent > div.'+_this).show();
     }

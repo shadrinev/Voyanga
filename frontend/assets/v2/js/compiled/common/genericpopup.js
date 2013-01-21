@@ -12,6 +12,7 @@ GenericPopup = (function() {
     this.close = __bind(this.close, this);
 
     this.inside = false;
+    $('body').css('overflow', 'hidden');
     $('body').prepend('<div id="popupOverlay"></div>');
     el = $(this.id + '-template');
     if (el[0] === void 0) {
@@ -51,6 +52,7 @@ GenericPopup = (function() {
     }
     $(this.id).remove();
     $('#popupOverlay').remove();
+    $('body').css('overflow', 'auto');
     return btnClosePopUp();
   };
 

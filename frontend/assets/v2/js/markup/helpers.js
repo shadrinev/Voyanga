@@ -295,19 +295,32 @@ function onFocusInput() {
     }
     $('.male input').focus(function () {
         $(this).parent().addClass('focus');
+        var _that = this;
+        $(window).unbind('keypress');
+        $(window).bind('keypress', function(e) {
+            if (e.which == 9 && $(_that).attr('checked') == 'checked') {
+                $(_that).parent().parent().next().find('input.dd').focus();
+            }
+            else if (e.which == 9 && $(_that).attr('checked') != 'checked') {
+                $('.female input').focus();
+            }
+            else if (e.which == 32) {
+                $('.male').removeClass('active error');
+                $('.female').removeClass('active error');
+                $(_that).parent().addClass('active');
+                $(_that).parent().parent().next().find('input.dd').focus();
+            }
+        });
     });
     $('.male input').blur(function () {
         $(this).parent().removeClass('focus');
         $(this).removeAttr('disabled');
         $('.female input').removeAttr('disabled');
-        $('.female input').focus();
-
     });
     $('.male input').change(function () {
         if ($(this).attr('checked') == 'checked') {
             $(this).parent().addClass('active');
             $('.female').removeClass('active error');
-            $(this).parent().parent().next().find('input.dd').focus();
         }
         else {
             $(this).parent().removeClass('active');
@@ -315,19 +328,32 @@ function onFocusInput() {
     });
     $('.female input').focus(function () {
         $(this).parent().addClass('focus');
-
+        var _that = this;
+        $(window).unbind('keypress');
+        $(window).bind('keypress', function(e) {
+            if (e.which == 9 && $(_that).attr('checked') == 'checked') {
+                $(_that).parent().parent().next().find('input.dd').focus();
+            }
+            else if (e.which == 9 && $(_that).attr('checked') != 'checked') {
+                $(_that).parent().parent().next().find('input.dd').focus();
+            }
+            else if (e.which == 32) {
+                $('.male').removeClass('active error');
+                $('.female').removeClass('active error');
+                $(_that).parent().addClass('active');
+                $(_that).parent().parent().next().find('input.dd').focus();
+            }
+        });
     });
     $('.female input').blur(function () {
         $(this).parent().removeClass('focus');
         $(this).removeAttr('disabled');
         $('.male input').removeAttr('disabled');
-        $(this).parent().parent().next().find('input.dd').focus();
     });
     $('.female input').change(function () {
         if ($(this).attr('checked') == 'checked') {
             $(this).parent().addClass('active');
             $('.male').removeClass('active error');
-            $(this).parent().parent().next().find('input.dd').focus();
         }
         else {
             $(this).parent().removeClass('active');
