@@ -136,13 +136,15 @@ class Bill extends CActiveRecord
         $className = 'Payments_Channel_'. implode('_', $ucFirstParts);
 
         Yii::import("common.extensions.payments.models." . $className);
-        $booker = FlightBooker::model()->findByAttributes(array('billId'=> $this->id));
-        if(!$booker) {
-            $bookers = HotelBooker::model()->findAllByAttributes(array('billId'=> $this->id));
-            if(count($bookers))
-                $booker = new Payments_MetaBooker($bookers, $this->id);
-        }
-        if(!$booker) {
+        $flightBookers = FlightBooker::model()->findAllByAttributes(array('billId'=> $this->id));
+        $hotelBookers = HotelBooker::model()->findAllByAttributes(array('billId'=> $this->id));
+        $bookers = Yii::app()->payments->preProcessBookers(array_merge($flightBookers, $hotelBookers));
+        if(count($bookers)>1)
+            throw new Exception("More than 1 processed booker for bill");
+
+        $booker = $bookers[0];
+
+       if(!$booker) {
             # Would never happen in theory
             throw new Exception("No booker for given bill");
         }
