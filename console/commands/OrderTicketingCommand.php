@@ -17,10 +17,11 @@ EOD;
             Yii::app()->user->setState('orderBookingId', $orderId);
             $order = Yii::app()->order;
             $order->initByOrderBookingId($orderId);
-#            $order->sendNotifications();
-#            exit;
             $payments = Yii::app()->payments;
             $bookers = $payments->preProcessBookers($order->getBookers());
+            if(!count($bookers))
+                throw new Exception("Something went wrong with order #" . $orderId);
+
             foreach($bookers as $booker)
             {
                 $this->notifyNemo($booker);

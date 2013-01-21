@@ -42,6 +42,7 @@ class Payments_MetaBookerTour extends CComponent{
     }
 
     public function setBillId($billId) {
+        $this->_billId = $billId;
         foreach($this->bookers as $booker){
             $booker->getCurrent()->billId = $billId;
         }
