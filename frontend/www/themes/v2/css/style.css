@@ -3985,6 +3985,17 @@ a.whereData span {
     border: 1px solid;
     margin-left: -20px;
     margin-right: -20px;
-    margin-top: 15px;
+    margin-top: 5px;
     padding: 20px;
+}
+.tariff-route {
+    border-bottom: 1px dashed;
+    display: inline-block;
+    cursor: pointer;
+    color: #1C81BB;
+}
+.tariffStyle > span {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }

@@ -17,7 +17,7 @@ class GenericPopup
     $(window).keyup (e) =>
       if e.keyCode == 27
         @close()
-    $(el.find('table')[0]).hover =>
+    $(el.find('table')[0] || el.find('.wrapContent')).hover =>
       @inside = true
     , =>
       @inside = false

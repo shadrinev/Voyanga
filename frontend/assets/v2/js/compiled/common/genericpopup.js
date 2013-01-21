@@ -34,7 +34,7 @@ GenericPopup = (function() {
         return _this.close();
       }
     });
-    $(el.find('table')[0]).hover(function() {
+    $(el.find('table')[0] || el.find('.wrapContent')).hover(function() {
       return _this.inside = true;
     }, function() {
       return _this.inside = false;

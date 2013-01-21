@@ -440,3 +440,14 @@ $(function () {
         hideFromCityInput(e);
     });
 });
+
+function nextSlideDownRules(_this) {
+    if ($(_this).hasClass('active')) {
+        $(_this).next().slideUp();
+    }
+    else {
+        $(_this).next().slideDown();
+        $(_this).addClass('active')
+    }
+
+}
