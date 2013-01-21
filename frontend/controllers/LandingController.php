@@ -55,10 +55,12 @@ class LandingController extends Controller {
     {
         if(!($country = $this->testCountry($countryCode)))
             return false;
+
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
         $countryMorph = array('caseAcc'=>$this->getCase($countryUp,'ВН'));
         $currentCity = City::getCityByCode('LED');
+
 
         Yii::import('site.common.modules.hotel.models.*');
         $hotelClient = new HotelBookClient();
@@ -108,7 +110,9 @@ class LandingController extends Controller {
         }
 
         $this->layout = 'static';
-        $this->render('country',array('country',$country,'countryMorph'=>$countryMorph,'flightCache'=>$flightCache,'hotelsInfo'=>$hotelsInfo));
+        $this->render('country',array('country',$country,'countryMorph'=>$countryMorph,'flightCache'=>$flightCache,'hotelsInfo'=>$hotelsInfo,
+        'currentCity'=>$currentCity
+        ));
     }
 
 

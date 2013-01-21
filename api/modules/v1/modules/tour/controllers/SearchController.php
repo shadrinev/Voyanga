@@ -113,11 +113,13 @@ class SearchController extends ApiController
             //print_r($tour->order);
         }
         $items = $_POST['items'];
+        $priceSum = 0;
         foreach($items as $item){
             if($item['type'] == 'hotel'){
                 $item['data']['cityId'] = City::getCityByCode($item['data']['cityCode'])->hotelbookId;
                 $item['data']['rubPrice'] = $item['data']['discountPrice'];
                 $item['data']['comparePrice'] = $item['data']['discountPrice'];
+                $priceSum += $item['data']['discountPrice'];
                 $hotel = new Hotel($item['data']);
                 //print_r($hotel->getJsonObject());
                 $cityId = $hotel->city->id;
@@ -135,6 +137,7 @@ class SearchController extends ApiController
                 }
             }else{
                 $flight = new FlightVoyage($item['data']);
+                $priceSum += $flight->price;
                 //print_r($flight);
                 foreach($flight->flights as $flightKey=>$fl){
                     foreach($tour->order->flightItems as $flightItem){
@@ -152,6 +155,13 @@ class SearchController extends ApiController
                         }
                     }
                 }
+            }
+        }
+        if($priceSum){
+            $eventPrice = EventPrice::model()->findByAttributes(array('eventId'=>$event->id,'cityId'=>$startCity->id));
+            if($eventPrice){
+                $eventPrice->bestPrice = $priceSum;
+                $eventPrice->save();
             }
         }
 

@@ -4,6 +4,16 @@
  * Company: Easytrip LLC
  * Date: 29.08.12
  * Time: 13:52
+ *
+ * The followings are the available columns in table 'event_price':
+ * @property integer $id
+ * @property integer $eventId
+ * @property integer $cityId
+ * @property double $bestPrice
+ * @property double $bestTime
+ * @property double $bestPriceTime
+ * @property string $created
+ * @property string $updated
  */
 class EventPrice extends CActiveRecord
 {
