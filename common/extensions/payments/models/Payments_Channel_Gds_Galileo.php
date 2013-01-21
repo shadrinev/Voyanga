@@ -8,12 +8,12 @@ class Payments_Channel_Gds_Galileo extends Payments_Channel {
     public function formParams() {
         $params = parent::formParams();
         //! FIXME MOVE TO BILL
-        $charges = $this->booker->flightVoyage->charges;
+        $charges = $this->baseBooker->flightVoyage->charges;
         if($charges<0)
             $charges = 0;
         //! FIXME: implement commission split
         $params['Commission'] = sprintf("%.2f", $charges);
-        $params['PNR'] = 'ABCDFE';//$this->booker->pnr;
+        $params['PNR'] = $this->baseBooker->pnr;
         $params['SecurityKey'] = $this->getSignature($params);
         return $params;
     }

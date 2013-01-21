@@ -7,7 +7,7 @@ class Payments_Channel_Ltr extends Payments_Channel {
 
     protected function contributeToConfirm($context)
     {
-        $context['IData'] = $this->getIData($this->booker);
+        $context['IData'] = $this->getIData($this->baseBooker);
         return $context;
     }
 

@@ -3,12 +3,17 @@
 abstract class Payments_Channel {
     protected $bill;
     protected $name = 'foo';
+    /*
+      Details for payment transaction  would be taken from this specific bookin when it matters
+     */
+    protected $baseBooker;
 
     public function __construct($bill, $booker) {
         $this->bill = $bill;
         $this->booker = $booker;
+        $this->baseBooker = $booker;
         if ($booker instanceof Payments_MetabookerTour) {
-            $this->booker = $booker->getBaseBooker();
+            $this->baseBooker = $booker->getBaseBooker();
         }
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
     }
