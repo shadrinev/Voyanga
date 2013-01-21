@@ -52,7 +52,7 @@ class ConstructorBuilder
         }
 
         //back to home now
-        $next = $form->getStartCityId();
+        /*$next = $form->getStartCityId();
         $flight = new FlightTripElement();
         $flight->departureCity = $prev;
         $flight->arrivalCity = $next;
@@ -69,6 +69,6 @@ class ConstructorBuilder
         {
             $flight->groupId = $firstGroup = substr(md5('group'. uniqid('',true)),0,10);
         }
-        Yii::app()->shoppingCart->put($flight);
+        Yii::app()->shoppingCart->put($flight);*/
     }
 }

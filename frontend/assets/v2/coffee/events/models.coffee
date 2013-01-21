@@ -205,7 +205,15 @@ class EventTourResultSet
     @items = ko.observableArray([])
     @selectedCity = ko.observable(resultSet.city.id)
     @fullPrice = ko.observable 0
+    @fullPriceUpdateTime = ko.observable window.priceData[@selectedCity()]["updateTime"]
+    @fullPriceUpdateTimeText = ko.computed =>
+      upTime = moment(@fullPriceUpdateTime())
+      #upTime = moment('2013-01-19T14:10:05')
+      console.log('upDate',upTime,upTime._d)
+      updateText = dateUtils.formatDayMonth(upTime._d) + ', ' + dateUtils.formatTime(upTime._d)
+      return updateText #'29 сентября, 18:04'
     @selectedCity.subscribe (newCityId)=>
+      @fullPriceUpdateTime(window.priceData[newCityId]["updateTime"])
       @reinit(window.toursArr[newCityId])
     @startCity = ko.observable resultSet.city.localRu
     @activePanel = ko.observable(null)
@@ -364,6 +372,7 @@ class EventTourResultSet
 
 
     @fullPrice(@totalCost)
+
   gotoAndShowPanel: =>
     Utils.scrollTo('.panel')
     @visiblePanel(true)

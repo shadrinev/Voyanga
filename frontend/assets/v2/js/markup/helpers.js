@@ -300,6 +300,8 @@ function onFocusInput() {
         $(this).parent().removeClass('focus');
         $(this).removeAttr('disabled');
         $('.female input').removeAttr('disabled');
+        $('.female input').focus();
+
     });
     $('.male input').change(function () {
         if ($(this).attr('checked') == 'checked') {
@@ -313,11 +315,13 @@ function onFocusInput() {
     });
     $('.female input').focus(function () {
         $(this).parent().addClass('focus');
+
     });
     $('.female input').blur(function () {
         $(this).parent().removeClass('focus');
         $(this).removeAttr('disabled');
         $('.male input').removeAttr('disabled');
+        $(this).parent().parent().next().find('input.dd').focus();
     });
     $('.female input').change(function () {
         if ($(this).attr('checked') == 'checked') {
