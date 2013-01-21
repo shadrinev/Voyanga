@@ -62,7 +62,10 @@ EOD;
             return;
         }
         $payments = Yii::app()->payments;
-        if(! $booker instanceof Payments_MetaBooker)
+        //! Notify on avia only
+        $isHotel = $booker instanceof HotelBookerComponent;
+        $isMetaHotel =  $booker instanceof Payments_MetaBooker;
+        if(!$isHotel&&!$isMetaHotel)
         {
             $bill = $payments->getBillForBooker($booker);
             $payments->notifyNemo($booker, $bill);
