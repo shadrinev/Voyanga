@@ -88,14 +88,14 @@ class SyncCacheExecuter extends Component
         $beforeHotels = Yii::app()->db->createCommand($query)->queryScalar();
 
         $queryFlight = "
-            LOAD DATA LOCAL INFILE '".$this->fullFlightPath."'
+            LOAD DATA INFILE '".$this->fullFlightPath."'
             REPLACE
             INTO TABLE `".FlightCache::model()->tableName()."`
             FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'";
         Yii::app()->db->createCommand($queryFlight)->execute();
 
         $queryHotel = "
-            LOAD DATA LOCAL INFILE '".$this->fullHotelPath."'
+            LOAD DATA INFILE '".$this->fullHotelPath."'
             REPLACE
             INTO TABLE `".HotelCache::model()->tableName()."`
             FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'";
