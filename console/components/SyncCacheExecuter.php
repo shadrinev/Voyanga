@@ -72,8 +72,8 @@ class SyncCacheExecuter extends Component
 
     public function getCacheFile($url)
     {
-        //echo "trying to get file from ".$url."\n";
-        $result = file_get_contents($url);
+        echo "trying to get file from ".$url."\n";
+        $result = file_get_contents_curl_with_credentials($url, 'voyanga', 'rabotakipit');
         return $result;
     }
 
@@ -88,14 +88,14 @@ class SyncCacheExecuter extends Component
         $beforeHotels = Yii::app()->db->createCommand($query)->queryScalar();
 
         $queryFlight = "
-            LOAD DATA INFILE '".$this->fullFlightPath."'
+            LOAD DATA LOCAL INFILE '".$this->fullFlightPath."'
             REPLACE
             INTO TABLE `".FlightCache::model()->tableName()."`
             FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'";
         Yii::app()->db->createCommand($queryFlight)->execute();
 
         $queryHotel = "
-            LOAD DATA INFILE '".$this->fullHotelPath."'
+            LOAD DATA LOCAL INFILE '".$this->fullHotelPath."'
             REPLACE
             INTO TABLE `".HotelCache::model()->tableName()."`
             FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'";

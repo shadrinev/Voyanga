@@ -180,16 +180,21 @@ class CacheCommand extends CConsoleCommand
     public function grabSkyScanner($urls)
     {
         $folder = 'console.data_files.skyscanner';
+        $doneFolder = 'console.data_files.done';
         foreach ($urls as $name => $url)
         {
             $saveTo = Yii::getPathOfAlias($folder). '/' . $name . '.xml';
+            $donePath = Yii::getPathOfAlias($doneFolder). '/' . $name . '.xml';
             try
             {
                 if (is_file($saveTo))
                 {
                     $this->analyzeFile($saveTo, $url);
+                    rename($saveTo, $donePath);
                     continue;
                 }
+                if (is_file($donePath))
+                    continue;
                 echo 'Grabbing using '.$name.'. ';
                 $response = file_get_contents_curl($url);
                 usleep(200000);
@@ -200,7 +205,7 @@ class CacheCommand extends CConsoleCommand
             }
             catch (Exception $e)
             {
-                echo "Failed22.\n";
+                echo "Failed. {$e->getMessage()}\n";
             }
         }
     }
@@ -208,11 +213,18 @@ class CacheCommand extends CConsoleCommand
     public function analyzeFile($path, $url)
     {
         echo "Analyzing $path.\n";
-        $xml = simplexml_load_file($path);
+        $xml = @simplexml_load_file($path);
+        if (!$xml)
+        {
+            echo "Can not parse as xml. Failed.\n";
+            return;
+        }
         echo "XML Loaded\n";
         $set1 = $xml->Set1->Data;
+        $set2 = $xml->Set2->Data;
         $success = 0;
         $failed = 0;
+        echo "Parsing one way tickets\n";
         foreach ($set1->Row as $row)
         {
             if (strlen($row->Price) != 0)
@@ -223,12 +235,23 @@ class CacheCommand extends CConsoleCommand
                     $failed++;
             }
         }
+        echo "Parsing round-trip tickets\n";
+        foreach ($set2->Row as $row)
+        {
+            if (strlen($row->ReturnPrice) != 0)
+            {
+                if ($this->addRoundTripToCache($row, $url))
+                    $success++;
+                else
+                    $failed++;
+            }
+        }
         echo "Successfully saved: {$success}. Failed: $failed \n";
     }
 
     public function addOneWayToCache($row, $url)
     {
-        $price = $row->Price;
+        $price = ceil($row->Price);
         $codes = explode('*', $row->WebsiteFlightCode);
         if (sizeof($codes)>1)
         {
@@ -280,14 +303,96 @@ class CacheCommand extends CConsoleCommand
         else
         {
             if ($flightCache->priceBestPrice > $price)
-                echo "Updating record $from - $to at $dateFrom ...\n";
-            else
+            {
+                echo "Updating record $from - $to at $dateFrom. It was {$flightCache->priceBestPrice} become $price\n";
                 return true;
+            }
+            else
+            {
+                echo "Creating record $from - $to at $dateFrom. It is {$price}\n";
+                return true;
+            }
         }
 
         $flightCache->from = $from;
         $flightCache->to = $to;
         $flightCache->dateFrom = $dateFrom;
+        $flightCache->priceBestPrice = $price;
+        $flightCache->transportBestPrice = $airline;
+        $flightCache->validatorBestPrice = $airline;
+        return $flightCache->save();
+    }
+
+    public function addRoundTripToCache($row, $url)
+    {
+        $price = ceil($row->ReturnPrice);
+        $codesFrom = explode('*', $row->OutboundWebsiteFlightCode);
+        $codesTo = explode('*', $row->InboundWebsiteFlightCode);
+        if ((sizeof($codesFrom)>1) && (sizeof($codesTo)>1))
+        {
+            $airline = $codesFrom[2];
+            $depAirportDate = $codesFrom[1];
+            $arrAirportDate = end($codesFrom);
+
+            $fromAirp = Airport::model()->findByAttributes(array('code'=>substr($depAirportDate,0,3)));
+            if (!$fromAirp)
+            {
+                echo "Airport $depAirportDate not defined \n";
+                return false;
+            }
+            $toAirp = Airport::model()->findByAttributes(array('code'=>substr($arrAirportDate,0,3)));
+            if (!$fromAirp)
+            {
+                echo "Airport $arrAirportDate not defined \n";
+                return false;
+            }
+            $from = $fromAirp->cityId;
+            $to = $toAirp->cityId;
+        }
+        else
+        {
+            $airline = '';
+            $from = $this->intRouters[$url][0];
+            $to = $this->intRouters[$url][1];
+            if (!$from || !$to)
+            {
+                echo "Cities not defined \n";
+                return false;
+            }
+        }
+        $timeFrom = strtotime($row->OutboundDepartureDate);
+        $timeBack = strtotime($row->InboundDepartureDate);
+        if (($timeFrom == 0) || ($timeBack == 0))
+        {
+            echo "Time does not determined\n";
+            return false;
+        }
+        $dateFrom = date('Y-m-d', $timeFrom);
+        $dateBack = date('Y-m-d', $timeBack);
+
+        $flightCache = FlightCache::model()->findByAttributes(array(
+            'from' => $from,
+            'to' => $to,
+            'dateFrom' => $dateFrom,
+            'dateBack' => $dateBack
+        ));
+        if (!$flightCache)
+            $flightCache = new FlightCache();
+        else
+        {
+            if ($flightCache->priceBestPrice > $price)
+                echo "Updating record $from - $to - $from at $dateFrom <-> $dateBack. It was {$flightCache->priceBestPrice} become {$price}\n";
+            else
+            {
+                echo "Creating record $from - $to - $from at $dateFrom <-> $dateBack. It is {$price}\n";
+                return true;
+            }
+        }
+
+        $flightCache->from = $from;
+        $flightCache->to = $to;
+        $flightCache->dateFrom = $dateFrom;
+        $flightCache->dateBack = $dateBack;
         $flightCache->priceBestPrice = $price;
         $flightCache->transportBestPrice = $airline;
         $flightCache->validatorBestPrice = $airline;

@@ -94,4 +94,16 @@ function file_get_contents_curl($url) {
     return $data;
 }
 
+function file_get_contents_curl_with_credentials($url, $username, $password)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return $data;
+}
+
 
