@@ -1,9 +1,9 @@
 @import "var.less";
-
+@imgBtnUrl: "@{img-url}/images/btn.png";
 .pressButton {
-  background: url("@{img-url}/images/btn.png") no-repeat scroll right 0 transparent;
+  background: url(@imgBtnUrl) no-repeat scroll right 0 transparent;
   color: @white;
-  font-family: @font-family-main;
+  .font-family;
   .font-size(14px);
   .text-shadow(@blueShadow);
   cursor: pointer;
@@ -48,7 +48,7 @@
     }
   }
   .l {
-    background: url("@{img-url}/images/btn.png") no-repeat scroll left 0 transparent;
+    background: url(@imgBtnUrl) no-repeat scroll left 0 transparent;
     display: block;
     position: absolute;
     height: 37px;
@@ -105,6 +105,67 @@
     width: 108px;
   }
 }
+.btn-order {
+  background: url(@imgBtnUrl) no-repeat scroll right -222px transparent;
+  color: @white;
+  .text-shadow(@redShadow);
+  position: relative;
+  display: block;
+  height: 39px;
+  line-height: 37px;
+  padding-left: 0px;
+  padding-right: 10px;
+  text-align: center;
+  margin-left: 6px;
+  width: 137px;
+  font-size: 21px;
+  cursor: pointer;
+  &.leftColumn {
+    margin-bottom: 7px;
+    margin-top: 5px;
+  }
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    &.cost {
+      font-size: 26px;
+      font-weight: bold;
+      margin-left: 0;
+      margin-right: 5px;
+    }
+    &.rur {
+      height: 21px;
+    }
+  }
+  .l {
+    display: block;
+    position: absolute;
+    background: url(@imgBtnUrl) no-repeat scroll left -222px transparent;
+    top: 0px;
+    left: -6px;
+    width: 7px;
+    height: 100%;
+  }
+  &:hover {
+    background-position: right -261px;
+    text-decoration: none;
+    .l {
+      background-position: left -261px;
+    }
+  }
+}
+.btnBackMain {
+  background: url(@imgBtnUrl) no-repeat scroll 0 -185px transparent;
+  color: @white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  height: 37px;
+  line-height: 39px;
+  text-align: center;
+  text-decoration: none;
+  width: 180px;
+}
 /* OTHER STYLE */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   body:first-of-type .pressButton .rur {
@@ -144,5 +205,12 @@
   position: absolute;
   top: 60px;
   width: 120px;
+}
+#eventsContent .rightBlock .btn-order {
+  float: left;
+  margin-bottom: 20px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
 }
 /* === */

@@ -50,7 +50,7 @@ $images = '/themes/v2';
                     <span class="check">Последняя проверка цены<br>выполнена <span data-bind="text: itemsToBuy.fullPriceUpdateTimeText"></span></span>
                     <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
                     <div style="width: 144px; height: 40px;">
-                        <div class="btn-check" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage,visible: !itemsToBuy.visiblePanel(), css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
+                        <div class="btn-order floatRight" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage,visible: !itemsToBuy.visiblePanel(), css: {inactive: itemsToBuy.activePanel().formNotFilled}">Проверить<span class="l"></span></div>
                     </div>
                 </div>
                 <div class="textBlock"><?php echo $event->description;?></div>
@@ -225,7 +225,7 @@ $images = '/themes/v2';
                     <div class="hr-bg big">
                         <img width="100%" height="31" src="/themes/v2/images/shadow-hotel.png">
                     </div>
-                    <div class="btn-check" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}"></div>
+                    <div class="btn-order floatRight" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}">Проверить<span class="l"></span></div>
                 </td>
                 <td class="secondTd">
 

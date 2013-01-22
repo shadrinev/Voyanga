@@ -1,34 +1,4 @@
-.btn-order {
-    background: url("../images/slice.png") no-repeat scroll -211px -534px transparent;
-    color: #FFFFFF;
-    display: block;
-    height: 39px;
-    line-height: 37px;
-    margin-bottom: 7px;
-    margin-top: 5px;
-    padding-left: 2px;
-    padding-right: 10px;
-    text-align: center;
-    text-shadow: 0 1px 0 #850606;
-    width: 143px;
-}
-.btn-order span {
-    display: inline-block;
-    vertical-align: middle;
-}
-.btn-order .cost {
-    font-size: 26px;
-    font-weight: bold;
-    margin-left: 0;
-    margin-right: 5px;
-}
-.btn-order .rur {
-    height: 21px;
-}
-.btn-order:hover {
-    background: url("../images/slice.png") no-repeat scroll -211px -573px transparent;
-    text-decoration: none;
-}
+
 .btn-find {
     background: url("../images/slice.png") no-repeat scroll -122px -1014px transparent;
     cursor: pointer;
@@ -79,27 +49,4 @@
     text-indent: -9999px;
     vertical-align: middle;
     width: 193px;
-}
-.btnBackMain {
-    background: url("../images/btn.png") no-repeat scroll 0 -185px transparent;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 15px;
-    height: 37px;
-    line-height: 39px;
-    text-align: center;
-    text-decoration: none;
-    width: 180px;
-}
-.btn-check {
-    background: url("../images/btn-check.png") no-repeat scroll -0px 0px transparent;
-    cursor: pointer;
-    display: inline-block;
-    height: 40px;
-    margin-right: 0px;
-    text-indent: -9999px;
-    vertical-align: middle;
-    width: 144px;
-    float: right;
 }

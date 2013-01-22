@@ -1422,13 +1422,6 @@ input.hotel-input {
 #eventsContent .rightBlock .divPrice {
     margin-top: -20px;
 }
-#eventsContent .rightBlock .btn-check {
-    float: left;
-    margin-bottom: 20px;
-    margin-top: -20px;
-    position: relative;
-    z-index: 2;
-}
 #eventsContent .rightBlock .check {
     color: #5E6064;
     display: block;
