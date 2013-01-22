@@ -7,6 +7,7 @@ $params = require('console/config/params.php');
 Yii::setPathOfAlias('root', $root);
 Yii::setPathOfAlias('common', $root.'/common');
 Yii::setPathOfAlias('frontend', $root.'/frontend');
+Yii::setPathOfAlias('console', $root.'/console');
 Yii::setPathOfAlias('uploads', $root.'/frontend/www/uploads');
 require_once('common/packages/packages.php');
 
