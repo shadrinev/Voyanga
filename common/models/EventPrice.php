@@ -40,6 +40,7 @@ class EventPrice extends CActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'created',
                 'updateAttribute' => 'updated',
+                'setUpdateOnCreate' => true,
             )
         );
     }

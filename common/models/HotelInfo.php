@@ -99,6 +99,8 @@ class HotelInfo extends CApplicationComponent
     public $hotelGroupServices;
     public $locations;
     public $metroList;
+    public $price;
+    public $hotelName;
 
 
     /** @var HotelImage[] */
