@@ -13,15 +13,7 @@
     width: 100%;
     padding-bottom: 1px;
 }
-.head {
-    background: url("../images/bg-head.png") repeat-x scroll 0 0 transparent;
-    box-shadow: 0 0 5px #000101;
-    height: 38px;
-    min-width: 1000px;
-    position: relative;
-    width: 100%;
-    z-index: 998;
-}
+
 .center-block {
     margin: 0 auto;
     max-width: 1390px;
@@ -36,40 +28,7 @@
     padding-top: 35px;
     position: relative;
 }
-.head .center-block .logo {
-    background: url("../images/slice.png") no-repeat scroll 0 0 transparent;
-    display: block;
-    height: 27px;
-    left: 32px;
-    position: absolute;
-    text-indent: -9999px;
-    top: 7px;
-    width: 122px;
-}
-.head .center-block .about {
-    background: url("../images/slice.png") no-repeat scroll -122px 0 transparent;
-    display: block;
-    height: 27px;
-    left: 154px;
-    position: absolute;
-    text-indent: -9999px;
-    top: 7px;
-    width: 76px;
-}
-.head .center-block .telefon {
-    height: 15px;
-    left: 250px;
-    position: absolute;
-    top: 9px;
-    width: 180px;
-    font-size: 18px;
-    font-family: Tahoma;
-    color: #2c2d35;
-    text-shadow: 0 1px 0px rgba(255,255,255,0.5);
-}
-.head .center-block .telefon .prefix {
-    color: #5d6067;
-}
+
 .slide-turn-mode {
     background: url("../images/slide-turn-mode.png") no-repeat scroll 0 0 transparent;
     height: 38px;
@@ -175,80 +134,7 @@
 .active a:hover {
     color: #FFFFFF !important;
 }
-.login-window {
-    /**/
-    color: #000000;
-    height: 38px;
-    line-height: 45px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 152px;
-    cursor: pointer;
-}
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    body:first-of-type .login-window {
-        line-height: 38px;
-    }
-}
-.login-window .registerForm {
-    background: url("../images/bg-head.png") repeat scroll 0 -38px transparent;
-    box-shadow: 0 1px 0 rgba(120, 121, 124, 0.9);
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 2;
-}
-.login-window .popupDown {
-    box-shadow: 0 1px 3px rgba(1, 1, 1, 0.6);
-    display: none;
-    left: 2px;
-    position: absolute;
-    top: 38px;
-    width: 98%;
-    z-index: 1;
-}
-.login-window .popupDown a {
-    background: url("../images/bg-loginPopUpDown.png") repeat-x scroll 0 -39px transparent;
-    color: #3E3F42;
-    display: block;
-    font-size: 13px;
-    height: 34px;
-    line-height: 36px;
-    padding-left: 13px;
-}
-.login-window .popupDown a:hover {
-    background-position: 0px 0px;
-}
-.login-window .logInLinks {
-    background: url("../images/ico.png") no-repeat scroll -0px -265px transparent;
-    display: inline-block;
-    height: 17px;
-    line-height: 16px;
-    max-width: 115px;
-    overflow: hidden;
-    padding-left: 20px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-left: 10px;
-}
-.login-window .logInLinks.user {
-    background: url("../images/ico.png") no-repeat scroll -0px -248px transparent;
-}
-.login-window a:hover {
-    text-decoration: none;
-}
-.login-window a span {
-    vertical-align: middle;
-    border-bottom: 1px dotted;
-}
-.login-window a span.point {
-    background: url("../images/slice.png") no-repeat scroll -8px -32px transparent;
-    height: 4px;
-    width: 6px;
-}
+
 
 
 
@@ -579,15 +465,7 @@
 .finish-result.voyasha tr:hover .price div {
     background-position: 0 -16px;
 }
-.sub-head {
-    background: url("../images/bg-head.png") repeat-x scroll left bottom transparent;
-    margin-bottom: -43px;
-    min-width: 1000px;
-    padding-bottom: 43px;
-    position: relative;
-    width: 100%;
-    z-index: 4;
-}
+
 .voyasha-text {
     line-height: 18px;
     margin-bottom: 4px;
