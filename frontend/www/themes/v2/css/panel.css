@@ -990,6 +990,7 @@
     text-align: center;
     text-shadow: 0 1px 0 #0D0E0F;
     width: 76px;
+    line-height: 20px;
 }
 .btn-timeline-and-condition .btn-timeline.active {
     background-position: -76px -828px;
