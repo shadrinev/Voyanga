@@ -473,12 +473,8 @@
 .btn-minimizePanel.active span {
 	background-position: -84px -35px;
 }
-.sub-head.event .btn-minimizePanel {
-    bottom: 24px;
-}
-.sub-head.event.calSelectedPanelActive .btn-minimizePanel {
-    bottom: -19px;
-}
+
+
 /* HOTEL */
 .input-path-hotel {
 	background: url("../images/slice.png") repeat scroll 0 -1296px transparent;
