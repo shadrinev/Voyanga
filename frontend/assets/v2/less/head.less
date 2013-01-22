@@ -109,6 +109,95 @@
       color: #5d6067;
     }
   }
+
+  .slide-turn-mode {
+  @imgSrc: "@{img-url}/images/slide-turn-mode.png";
+  @heightSwitch: 31px;
+    background: url(@imgSrc) no-repeat scroll 0 0 transparent;
+    height: 38px;
+    position: absolute;
+    top: 0;
+    width: 392px;
+    .switch {
+      height: @heightSwitch ;
+      left: 0;
+      position: absolute;
+      top: 5px;
+      z-index: 1;
+      .l {
+        background: url(@imgSrc) no-repeat scroll 0 -78px transparent;
+        display: inline-block;
+        height: @heightSwitch ;
+        left: 0;
+        width: 15px;
+      }
+      .r {
+        background: url(@imgSrc) no-repeat scroll -131px -78px transparent;
+        display: inline-block;
+        height: @heightSwitch ;
+        right: 0;
+        width: 12px;
+      }
+      .c {
+        background: url(@imgSrc) no-repeat scroll 0 -109px transparent;
+        display: inline-block;
+        height: @heightSwitch ;
+        width: 15px;
+      }
+    }
+    .bg-mask {
+      background: url(@imgSrc) no-repeat scroll 0 -39px transparent;
+      height: 37px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 392px;
+      z-index: 2;
+    }
+    .planner, .aviatickets, .hotel, .finish-stages {
+      .text-shadow(#86888C);
+      .font-size(14px);
+      color: #2E2E2E;
+      height: 20px;
+      padding: 4px 0;
+      position: absolute;
+      top: 6px;
+      z-index: 3;
+    }
+    .planner {
+      background: url(@imgSrc) no-repeat scroll 0 -173px transparent;
+      left: 13px;
+      padding-left: 25px !important;
+      &.active {
+        background-position: -520px -173px;
+      }
+    }
+    .aviatickets {
+      background: url(@imgSrc) no-repeat scroll 0 -236px transparent;
+      left: 167px;
+      padding-left: 31px !important;
+      &.active {
+        background-position: -521px -235px;
+      }
+    }
+    .hotel {
+      background: url(@imgSrc) no-repeat scroll 0 -205px transparent;
+      left: 305px;
+      padding-left: 31px !important;
+      &.active {
+        background-position: -520px -204px;
+      }
+    }
+    .finish-stages {
+      background: url(@imgSrc) no-repeat scroll 0 -142px transparent;
+      left: 416px;
+      padding-left: 32px !important;
+      .active {
+        background-position: -520px -142px;
+      }
+    }
+  }
+
 }
 /* GOOGLE CHROME */
 @media screen and (-webkit-min-device-pixel-ratio:0) {

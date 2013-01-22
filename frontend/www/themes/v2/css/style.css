@@ -6,114 +6,7 @@
 @import "tickets.css";
 @import "checkradio.css";
 @import "scroll.css";
-.wrapper {
-    min-height: 100%;
-    min-width: 1000px;
-    position: relative;
-    width: 100%;
-    padding-bottom: 1px;
-}
 
-.center-block {
-    margin: 0 auto;
-    max-width: 1390px;
-    min-width: 1000px;
-    position: relative;
-    width: 100%;
-    z-index: 1;
-}
-#content {
-    margin: 0 auto;
-    padding-bottom: 65px;
-    padding-top: 35px;
-    position: relative;
-}
-
-.slide-turn-mode {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 0 transparent;
-    height: 38px;
-    position: absolute;
-    top: 0;
-    width: 392px;
-}
-.slide-turn-mode .switch {
-    height: 31px;
-    left: 0;
-    position: absolute;
-    top: 5px;
-    z-index: 1;
-}
-.slide-turn-mode .switch .l {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -78px transparent;
-    display: inline-block;
-    height: 31px;
-    left: 0;
-    width: 15px;
-}
-.slide-turn-mode .switch .r {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll -131px -78px transparent;
-    display: inline-block;
-    height: 31px;
-    right: 0;
-    width: 12px;
-}
-.slide-turn-mode .switch .c {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -109px transparent;
-    display: inline-block;
-    height: 31px;
-    width: 15px;
-}
-.slide-turn-mode .bg-mask {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -39px transparent;
-    height: 37px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 392px;
-    z-index: 2;
-}
-.slide-turn-mode .planner, .slide-turn-mode .aviatickets, .slide-turn-mode .hotel, .slide-turn-mode .finish-stages {
-    color: #2E2E2E;
-    font-size: 14px;
-    height: 20px;
-    padding: 4px 0;
-    position: absolute;
-    text-shadow: 0 1px 0 #86888C;
-    top: 6px;
-    z-index: 3;
-}
-.slide-turn-mode .planner {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -173px transparent;
-    left: 13px;
-    padding-left: 25px !important;
-}
-.slide-turn-mode .planner.active {
-    background-position: -520px -173px;
-}
-.slide-turn-mode .aviatickets {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -236px transparent;
-    left: 167px;
-    padding-left: 31px !important;
-}
-.slide-turn-mode .aviatickets.active {
-    background-position: -521px -235px;
-}
-.slide-turn-mode .hotel {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -205px transparent;
-    left: 305px;
-    padding-left: 31px !important;
-}
-.slide-turn-mode .hotel.active {
-    background-position: -520px -204px;
-}
-.slide-turn-mode .finish-stages {
-    background: url("../images/slide-turn-mode.png") no-repeat scroll 0 -142px transparent;
-    left: 416px;
-    padding-left: 32px !important;
-}
-.slide-turn-mode .finish-stages.active {
-    background-position: -520px -142px;
-}
 .btn {
     cursor: pointer;
 }
@@ -136,21 +29,6 @@
 }
 
 
-
-
-.main-block {
-    margin: 0 auto;
-    min-width: 585px;
-}
-.left-block {
-    background: none repeat scroll 0 0 #F4F7F9;
-    height: 100%;
-    left: 0;
-    min-width: 220px;
-    position: absolute;
-    top: 0;
-    z-index: 5;
-}
 .left-content {
     color: #1D222B;
     margin-left: 12px;
