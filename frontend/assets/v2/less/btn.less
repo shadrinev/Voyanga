@@ -119,10 +119,18 @@
   margin-left: 6px;
   width: 137px;
   font-size: 21px;
+
   cursor: pointer;
   &.leftColumn {
     margin-bottom: 7px;
     margin-top: 5px;
+  }
+  &.btnGoBuy {
+   width: 190px;
+    margin-left: 10px;
+    margin-top: -10px;
+    display: inline-block;
+    vertical-align: middle;
   }
   span {
     display: inline-block;
@@ -166,6 +174,46 @@
   text-decoration: none;
   width: 180px;
 }
+.btnDeleteTrip {
+  background: url("@{img-url}/images/ico-my-trip.png") no-repeat scroll -7px -605px transparent;
+  cursor: pointer;
+  display: inline-block;
+  height: 11px;
+  text-indent: -9999px;
+  vertical-align: middle;
+  width: 11px;
+  &:hover {
+    background-position: -7px -663px;
+  }
+}
+.btn-find {
+  background: url(@imgBtnUrl) no-repeat scroll 0px -300px transparent;
+  cursor: pointer;
+  display: inline-block;
+  height: 47px;
+  text-indent: -9999px;
+  vertical-align: middle;
+  width: 83px;
+  &:hover {
+    background-position: -83px -300px;
+  }
+  &.inactive {
+    background-position: -166px -300px;
+    cursor: default;
+  }
+}
+//.btnChangeStart {
+//  background: url("@{img-url}/images/btnTripAll.png") no-repeat scroll 0 0 transparent;
+//  color: @white;
+//  display: inline-block;
+//  font-size: 12px;
+//  height: 22px;
+//  padding-top: 2px;
+//  text-align: center;
+//  .text-shadow(#35383C);
+//  vertical-align: text-top;
+//  width: 105px;
+//}
 /* OTHER STYLE */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   body:first-of-type .pressButton .rur {

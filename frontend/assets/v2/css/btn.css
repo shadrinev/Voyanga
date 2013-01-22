@@ -14,11 +14,15 @@
 .pressButton.inactive:hover .l,.pressButton.selected:hover .l{background-position:left -148px;}
 .pressButton .dotted{background:url("/themes/v2/images/booking.gif") no-repeat scroll 0 0 transparent;display:inline-block;height:14px;margin-left:0;margin-top:1px;width:108px;}
 .btn-order{background:url("/themes/v2/images/btn.png") no-repeat scroll right -222px transparent;color:#ffffff;text-shadow:0px 1px 0px #850606;position:relative;display:block;height:39px;line-height:37px;padding-left:0px;padding-right:10px;text-align:center;margin-left:6px;width:137px;font-size:21px;cursor:pointer;}.btn-order.leftColumn{margin-bottom:7px;margin-top:5px;}
+.btn-order.btnGoBuy{width:190px;margin-left:10px;margin-top:-10px;display:inline-block;vertical-align:middle;}
 .btn-order span{display:inline-block;vertical-align:middle;}.btn-order span.cost{font-size:26px;font-weight:bold;margin-left:0;margin-right:5px;}
 .btn-order span.rur{height:21px;}
 .btn-order .l{display:block;position:absolute;background:url("/themes/v2/images/btn.png") no-repeat scroll left -222px transparent;top:0px;left:-6px;width:7px;height:100%;}
 .btn-order:hover{background-position:right -261px;text-decoration:none;}.btn-order:hover .l{background-position:left -261px;}
 .btnBackMain{background:url("/themes/v2/images/btn.png") no-repeat scroll 0 -185px transparent;color:#ffffff;cursor:pointer;display:inline-block;font-size:15px;height:37px;line-height:39px;text-align:center;text-decoration:none;width:180px;}
+.btnDeleteTrip{background:url("/themes/v2/images/ico-my-trip.png") no-repeat scroll -7px -605px transparent;cursor:pointer;display:inline-block;height:11px;text-indent:-9999px;vertical-align:middle;width:11px;}.btnDeleteTrip:hover{background-position:-7px -663px;}
+.btn-find{background:url("/themes/v2/images/btn.png") no-repeat scroll 0px -300px transparent;cursor:pointer;display:inline-block;height:47px;text-indent:-9999px;vertical-align:middle;width:83px;}.btn-find:hover{background-position:-83px -300px;}
+.btn-find.inactive{background-position:-166px -300px;cursor:default;}
 @media screen and (-webkit-min-device-pixel-ratio:0){body:first-of-type .pressButton .rur{font-size:25px;margin-top:4px;}}.recommended-ticket .ticket-items .content .details-selecte .pressButton{width:180px;float:right;margin-left:5px;}
 .ticket-items .content .buy-ticket .text .pressButton{width:78%;}
 .hotels-tickets .content .full-info .choose-a-hotel .pressButton{position:absolute;top:50px;width:122px;}

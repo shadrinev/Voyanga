@@ -6,7 +6,7 @@
             'test.css',
             'head.css',
             'ie.css',
-            'btnNew.css'
+            'btn.css'
         )
     ),
     'appCss' => array(
