@@ -189,7 +189,8 @@ EventSet = (function() {
   EventSet.prototype.afterRender = function() {
     this.mapsInited = false;
     window.app.toggleGMaps(true);
-    return this.isRendered = true;
+    this.isRendered = true;
+    return ResizeAvia();
   };
 
   return EventSet;

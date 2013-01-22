@@ -136,6 +136,7 @@ class EventSet
     @mapsInited = false
     window.app.toggleGMaps(true)
     @isRendered = true
+    ResizeAvia()
 
 class EventCategory
   constructor: (data) ->

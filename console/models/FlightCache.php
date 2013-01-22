@@ -30,7 +30,6 @@ class FlightCache extends CommonFlightCache
      */
     public static function model($className = __CLASS__)
     {
-        echo $className;
         return parent::model($className);
     }
 
