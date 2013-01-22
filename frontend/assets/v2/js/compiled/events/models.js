@@ -447,7 +447,6 @@ EventTourResultSet = (function() {
         } else if (item.isHotel) {
           _this.hasHotel = true;
           _this.hotelCounter(_this.hotelCounter() + 1);
-          console.log("Hotel: ", item);
           _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
           _this.lastHotel.priceHtml = ko.observable(_this.lastHotel.roomSets()[0].price + '<span class="rur">o</span>');
           _this.lastHotel.dateClass = ko.observable('orange-two');

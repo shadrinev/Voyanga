@@ -282,18 +282,14 @@ class EventTourResultSet
           aviaResult.startDate = aviaResult.departureDate()
           aviaResult.dateHtml = ko.observable('<div class="day">'+dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate())+'</div>' + (if @roundTrip then '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' else '') )
           @activePanel().selectedParams.ticketParams.push aviaResult.getParams()
-
           aviaResult.overviewPeople = ko.observable
-
           @items.push aviaResult
           @totalCost += aviaResult.price
         else if (item.isHotel)
           @hasHotel = true
           @hotelCounter(@hotelCounter()+1)
-          console.log "Hotel: ", item
           @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
           @lastHotel.priceHtml = ko.observable(@lastHotel.roomSets()[0].price + '<span class="rur">o</span>')
-
           @lastHotel.dateClass = ko.observable('orange-two')
           @lastHotel.overviewTemplate = 'tours-event-hotels-ticket'
           @lastHotel.isAvia = ko.observable(item.isFlight)
