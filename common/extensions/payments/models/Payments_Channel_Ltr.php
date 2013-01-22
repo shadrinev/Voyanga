@@ -34,7 +34,7 @@ class Payments_Channel_Ltr extends Payments_Channel {
         }
         //! FIXME did not tested for edge case
         $ltr.= str_repeat('       ', 4-$i);
-        $ltr.= "1"; // RESTRICTED TICKET INDICATOR // NELZA VERNUT
+        $ltr.= " "; // RESTRICTED TICKET INDICATOR: pass nothing even tho we can get this info
         $ltr.= $booker->flightBookingPassports[0]->ticketNumber; // TICKET NUMBER
         //! FIXME check how de focking php TZs are working
         list($date, $time) = explode("T",$flightVoyage->flights[0]->departureDate);
