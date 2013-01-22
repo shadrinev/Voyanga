@@ -473,12 +473,8 @@
 .btn-minimizePanel.active span {
 	background-position: -84px -35px;
 }
-.sub-head.event .btn-minimizePanel {
-    bottom: 24px;
-}
-.sub-head.event.calSelectedPanelActive .btn-minimizePanel {
-    bottom: -19px;
-}
+
+
 /* HOTEL */
 .input-path-hotel {
 	background: url("../images/slice.png") repeat scroll 0 -1296px transparent;
@@ -994,6 +990,7 @@
     text-align: center;
     text-shadow: 0 1px 0 #0D0E0F;
     width: 76px;
+    line-height: 20px;
 }
 .btn-timeline-and-condition .btn-timeline.active {
     background-position: -76px -828px;

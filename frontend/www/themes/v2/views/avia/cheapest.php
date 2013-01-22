@@ -25,6 +25,7 @@
     <div class="ticket" data-bind="with:siblings">
     	
       <div class="one-way">
+          <div class="to" data-bind='text:roundTrip?"Туда":"Вылет"'>Туда</div>
         <ul class="schedule-of-prices" data-bind="foreach: $data">
           <li data-bind="css: {active: isActive}, click: $parent.select">
             <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+35) + 'px'}, text: columnValue(), visible: !nodata">-100</div>
@@ -38,6 +39,7 @@
         </ul>
       </div>
       <div class="two-way" data-bind="visible: roundTrip">
+          <div class="from">Обратно</div>
         <ul class="schedule-of-prices" data-bind="foreach: active">
           <li data-bind="css: {active: isActive}, click: $parent.select">
 <!-- columnValue() -->

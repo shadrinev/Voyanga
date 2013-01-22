@@ -1,5 +1,6 @@
+.text-overflow{white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;overflow:hidden;}
 html,body{height:100%;margin:0px;padding:0px 0px 0px 0px;}
-body{width:100%;height:100%;background:url("/themes/v2/images/BG_NEW.png");color:#1d222b;font-family:Arial,sans-serif;font-size:12px;position:relative;}
+body{width:100%;height:100%;background:url("/themes/v2/images/bg.png");color:#1d222b;font-family:Arial,sans-serif;font-size:12px;position:relative;}
 a{color:inherit;}
 input,select,button{margin-left:0px;padding:0px;}
 h1{color:#1d222b;font-size:22px;text-shadow:0px 1px 0px #acb0b4;margin-bottom:12px;letter-spacing:0.001em;}h1.title{color:#ffffff;border-radius:20px;-moz-border-radius:20px;-webkit-border-radius:20px;font-size:24px;background:none repeat scroll 0 0 rgba(27, 29, 32, 0.7);display:inline-block;font-weight:normal;height:40px;left:26px;line-height:40px;padding:0 10px;position:absolute;text-shadow:none;top:-60px;white-space:nowrap;}h1.title img{margin-bottom:-8px;margin-right:-10px;margin-top:-11px;vertical-align:middle;}
@@ -14,3 +15,8 @@ h4{color:#1d222b;font-size:15px;margin-bottom:6px;text-shadow:0px 1px 0px #fffff
 .popupPeople .adults input,.popupPeople .childs input,.popupPeople .small-childs input{background:url("/themes/v2/images/slice.png") no-repeat scroll -264px -941px transparent;border:medium none;font-size:25px;height:32px;text-align:center;width:48px;color:#8f959c;}.popupPeople .adults input.active,.popupPeople .childs input.active,.popupPeople .small-childs input.active{background-position:-264px -904px;color:#272729;}
 .popupPeople .adults input:focus,.popupPeople .childs input:focus,.popupPeople .small-childs input:focus{background-position:-264px -904px;}
 .popupPeople .one-str .adults,.popupPeople .one-str .childs{color:#272728;float:left;font-size:11px;line-height:13px;margin-left:6px;padding-top:5px;position:relative;text-shadow:0 1px 0 #FFFFFF;width:60px;}
+.wrapper{min-height:100%;min-width:1000px;position:relative;width:100%;padding-bottom:1px;}
+.center-block{margin:0 auto;max-width:1390px;min-width:1000px;position:relative;width:100%;z-index:1;}
+#content{margin:0 auto;padding-bottom:65px;padding-top:35px;position:relative;}
+.main-block{margin:0 auto;min-width:585px;}
+.left-block{background:none repeat scroll 0 0 #F4F7F9;height:100%;left:0;min-width:220px;position:absolute;top:0;z-index:5;}

@@ -29,10 +29,10 @@
     <div class="tdPrice">
         <div class="statusOrder">
                 <span class="price">
-                    <!-- ko if: $parents[0].tour -->
+                    <!-- ko if: $parent.tour -->
                         <span data-bind="text: roomSets()[0].discountPrice">12 500</span> руб. за
                     <!-- /ko -->
-                    <!-- ko ifnot: $parents[0].tour -->
+                    <!-- ko ifnot: $parent.tour -->
                         <span data-bind="text: roomSets()[0].price">12 500</span> руб. за
                     <!-- /ko -->
                     <span data-bind="text: $data.totalPeopleGen">2 человека</span>

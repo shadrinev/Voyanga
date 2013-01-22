@@ -13,8 +13,8 @@
             <div class="wrapContent">
                 <h1 >Правила тарифов</h1>
                 <div data-bind="foreach: data.tariffs" style="color:#000;">
-                    <div class="tariff-route" data-bind="text: route"></div>
-                    <div class="tariff-codes">
+                    <div onclick="nextSlideDownRules(this);" class="tariff-route" data-bind="text: route"></div>
+                    <div class="tariff-codes" style="display:none;">
                         <div class="tariffStyle" data-bind="foreach: codes">
                             <span data-bind="text: code + '. '+ name"></span>
                             <pre data-bind="text: content"></pre>

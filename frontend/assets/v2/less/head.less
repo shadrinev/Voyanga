@@ -1,0 +1,222 @@
+@import "var.less";
+
+.head {
+  background: url("@{img-url}/images/bg-head.png") repeat-x scroll 0 0 transparent;
+  .box-shadow(0, 0, 5px, #000101);
+  .min-width();
+  height: 38px;
+  width: 100%;
+  position: relative;
+  z-index: 998;
+  .logo {
+    background: url("@{img-url}/images/logo.png") no-repeat scroll 0 0 transparent;
+    .text-indent();
+    display: block;
+    height: 27px;
+    left: 32px;
+    position: absolute;
+    top: 7px;
+    width: 122px;
+
+  }
+  .about {
+    background: url("@{img-url}/images/logo.png") no-repeat scroll -122px 0 transparent;
+    .text-indent();
+    display: block;
+    height: 27px;
+    left: 154px;
+    position: absolute;
+    top: 7px;
+    width: 76px;
+  }
+  .login-window {
+    height: 38px;
+    line-height: 45px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 152px;
+    cursor: pointer;
+
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+      span {
+        vertical-align: middle;
+        border-bottom: 1px dotted;
+      }
+    }
+    .registerForm {
+      background: url("@{img-url}/images/bg-head.png") repeat scroll 0 -38px transparent;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 2;
+    }
+    .logInLinks {
+      background: url("@{img-url}/images/ico.png") no-repeat scroll -0px -265px transparent;
+      display: inline-block;
+      height: 17px;
+      line-height: 16px;
+      max-width: 115px;
+      padding-left: 20px;
+      margin-left: 10px;
+      .text-overflow;
+
+      &.user {
+        background: url("@{img-url}/images/ico.png") no-repeat scroll -0px -248px transparent;
+      }
+    }
+    .popupDown {
+      .box-shadow(0, 1px, 3px, rgba(1, 1, 1, 0.6));
+      display: none;
+      left: 2px;
+      position: absolute;
+      top: 38px;
+      width: 98%;
+      z-index: 1;
+
+      a {
+        background: url("@{img-url}/images/bg-loginPopUpDown.png") repeat-x scroll 0 -39px transparent;
+        color: #3E3F42;
+        display: block;
+        font-size: 13px;
+        height: 34px;
+        line-height: 36px;
+        padding-left: 13px;
+        &:hover {
+          background-position: 0px 0px;
+        }
+      }
+    }
+  }
+  .telefon {
+    .font-family(Tahoma);
+    .text-shadow(rgba(255,255,255,0.5));
+    .font-size(18px);
+    color: #2c2d35;
+    height: 21px;
+    left: 250px;
+    position: absolute;
+    top: 9px;
+    width: 180px;
+    line-height: 18px;
+
+    .prefix {
+      color: #5d6067;
+    }
+  }
+
+  .slide-turn-mode {
+  @imgSrc: "@{img-url}/images/slide-turn-mode.png";
+  @heightSwitch: 31px;
+    background: url(@imgSrc) no-repeat scroll 0 0 transparent;
+    height: 38px;
+    position: absolute;
+    top: 0;
+    width: 392px;
+    .switch {
+      height: @heightSwitch ;
+      left: 0;
+      position: absolute;
+      top: 5px;
+      z-index: 1;
+      .l {
+        background: url(@imgSrc) no-repeat scroll 0 -78px transparent;
+        display: inline-block;
+        height: @heightSwitch ;
+        left: 0;
+        width: 15px;
+      }
+      .r {
+        background: url(@imgSrc) no-repeat scroll -131px -78px transparent;
+        display: inline-block;
+        height: @heightSwitch ;
+        right: 0;
+        width: 12px;
+      }
+      .c {
+        background: url(@imgSrc) no-repeat scroll 0 -109px transparent;
+        display: inline-block;
+        height: @heightSwitch ;
+        width: 15px;
+      }
+    }
+    .bg-mask {
+      background: url(@imgSrc) no-repeat scroll 0 -39px transparent;
+      height: 37px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 392px;
+      z-index: 2;
+    }
+    .planner, .aviatickets, .hotel, .finish-stages {
+      .text-shadow(#86888C);
+      .font-size(14px);
+      color: #2E2E2E;
+      height: 20px;
+      padding: 4px 0;
+      position: absolute;
+      top: 6px;
+      z-index: 3;
+    }
+    .planner {
+      background: url(@imgSrc) no-repeat scroll 0 -173px transparent;
+      left: 13px;
+      padding-left: 25px !important;
+      &.active {
+        background-position: -520px -173px;
+      }
+    }
+    .aviatickets {
+      background: url(@imgSrc) no-repeat scroll 0 -236px transparent;
+      left: 167px;
+      padding-left: 31px !important;
+      &.active {
+        background-position: -521px -235px;
+      }
+    }
+    .hotel {
+      background: url(@imgSrc) no-repeat scroll 0 -205px transparent;
+      left: 305px;
+      padding-left: 31px !important;
+      &.active {
+        background-position: -520px -204px;
+      }
+    }
+    .finish-stages {
+      background: url(@imgSrc) no-repeat scroll 0 -142px transparent;
+      left: 416px;
+      padding-left: 32px !important;
+      .active {
+        background-position: -520px -142px;
+      }
+    }
+  }
+
+}
+/* GOOGLE CHROME */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  body:first-of-type .login-window {
+    line-height: 38px;
+  }
+}
+/* = = = */
+.sub-head {
+  background: url("@{img-url}/images/bgBoardSmall.png") repeat-x scroll 0 0 transparent;
+  .box-shadow(0, 0, 45px, rgba(0, 1, 0, 0.6));
+  .min-width();
+  height: 63px;
+  border-bottom: 1px solid #cfd1d3;
+  position: relative;
+  width: 100%;
+  z-index: 4;
+
+  &.calSelectedPanelActive {
+    z-index: 996;
+  }
+}

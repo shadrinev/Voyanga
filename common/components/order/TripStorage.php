@@ -87,7 +87,7 @@ class TripStorage
 
     private function saveItemsOfOrder()
     {
-        foreach ($this->items as $item)
+        foreach ($this->itemsOnePerGroup as $item)
         {
             if (!$item->saveToOrderDb())
             {

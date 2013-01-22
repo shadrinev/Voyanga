@@ -1,11 +1,11 @@
 @import "var.less";
-
+@imgBtnUrl: "@{img-url}/images/btn.png";
 .pressButton {
-  background: url("@{img-url}/images/btn.png") no-repeat scroll right 0 transparent;
-  color: @white-color;
-  font-family: @font-family-main;
+  background: url(@imgBtnUrl) no-repeat scroll right 0 transparent;
+  color: @white;
+  .font-family;
   .font-size(14px);
-  .text-shadow(@blue-shadow);
+  .text-shadow(@blueShadow);
   cursor: pointer;
   height: 37px;
   line-height: 36px;
@@ -48,7 +48,7 @@
     }
   }
   .l {
-    background: url("@{img-url}/images/btn.png") no-repeat scroll left 0 transparent;
+    background: url(@imgBtnUrl) no-repeat scroll left 0 transparent;
     display: block;
     position: absolute;
     height: 37px;
@@ -65,7 +65,7 @@
 
   &.orange {
     background-position: right -74px;
-    .text-shadow(@orange-shadow);
+    .text-shadow(@orangeShadow);
 
     &:hover { background-position: right -111px; }
     .l { background-position: left -74px; }
@@ -78,11 +78,11 @@
 
   &.inactive, &.selected  {
     background-position: right -148px;
-    .text-shadow(@grey-btn-shadow);
+    .text-shadow(@greyBtnShadow);
     cursor: default;
     &:hover {
       background-position: right -148px;
-      .text-shadow(@grey-btn-shadow);
+      .text-shadow(@greyBtnShadow);
       cursor: default;
     }
     .l {
@@ -105,6 +105,115 @@
     width: 108px;
   }
 }
+.btn-order {
+  background: url(@imgBtnUrl) no-repeat scroll right -222px transparent;
+  color: @white;
+  .text-shadow(@redShadow);
+  position: relative;
+  display: block;
+  height: 39px;
+  line-height: 37px;
+  padding-left: 0px;
+  padding-right: 10px;
+  text-align: center;
+  margin-left: 6px;
+  width: 137px;
+  font-size: 18px;
+
+  cursor: pointer;
+  &.leftColumn {
+    margin-bottom: 7px;
+    margin-top: 5px;
+  }
+  &.btnGoBuy {
+   width: 190px;
+    margin-left: 10px;
+    margin-top: -10px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    &.cost {
+      font-size: 26px;
+      font-weight: bold;
+      margin-left: 0;
+      margin-right: 5px;
+    }
+    &.rur {
+      height: 21px;
+    }
+  }
+  .l {
+    display: block;
+    position: absolute;
+    background: url(@imgBtnUrl) no-repeat scroll left -222px transparent;
+    top: 0px;
+    left: -6px;
+    width: 7px;
+    height: 100%;
+  }
+  &:hover {
+    background-position: right -261px;
+    text-decoration: none;
+    .l {
+      background-position: left -261px;
+    }
+  }
+}
+.btnBackMain {
+  background: url(@imgBtnUrl) no-repeat scroll 0 -185px transparent;
+  color: @white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  height: 37px;
+  line-height: 39px;
+  text-align: center;
+  text-decoration: none;
+  width: 180px;
+}
+.btnDeleteTrip {
+  background: url("@{img-url}/images/ico-my-trip.png") no-repeat scroll -7px -605px transparent;
+  cursor: pointer;
+  display: inline-block;
+  height: 11px;
+  text-indent: -9999px;
+  vertical-align: middle;
+  width: 11px;
+  &:hover {
+    background-position: -7px -663px;
+  }
+}
+.btn-find {
+  background: url(@imgBtnUrl) no-repeat scroll 0px -300px transparent;
+  cursor: pointer;
+  display: inline-block;
+  height: 47px;
+  text-indent: -9999px;
+  vertical-align: middle;
+  width: 83px;
+  &:hover {
+    background-position: -83px -300px;
+  }
+  &.inactive {
+    background-position: -166px -300px;
+    cursor: default;
+  }
+}
+//.btnChangeStart {
+//  background: url("@{img-url}/images/btnTripAll.png") no-repeat scroll 0 0 transparent;
+//  color: @white;
+//  display: inline-block;
+//  font-size: 12px;
+//  height: 22px;
+//  padding-top: 2px;
+//  text-align: center;
+//  .text-shadow(#35383C);
+//  vertical-align: text-top;
+//  width: 105px;
+//}
 /* OTHER STYLE */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   body:first-of-type .pressButton .rur {
@@ -144,5 +253,12 @@
   position: absolute;
   top: 60px;
   width: 120px;
+}
+#eventsContent .rightBlock .btn-order {
+  float: left;
+  margin-bottom: 20px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
 }
 /* === */
