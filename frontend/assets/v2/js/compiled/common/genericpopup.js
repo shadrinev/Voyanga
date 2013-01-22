@@ -12,6 +12,7 @@ GenericPopup = (function() {
     this.close = __bind(this.close, this);
 
     this.inside = false;
+    $('body').css('overflow', 'hidden');
     $('body').prepend('<div id="popupOverlay"></div>');
     el = $(this.id + '-template');
     if (el[0] === void 0) {
@@ -33,7 +34,7 @@ GenericPopup = (function() {
         return _this.close();
       }
     });
-    $(el.find('table')[0]).hover(function() {
+    $(el.find('table')[0] || el.find('.wrapContent')).hover(function() {
       return _this.inside = true;
     }, function() {
       return _this.inside = false;
@@ -51,6 +52,7 @@ GenericPopup = (function() {
     }
     $(this.id).remove();
     $('#popupOverlay').remove();
+    $('body').css('overflow', 'auto');
     return btnClosePopUp();
   };
 
