@@ -5,6 +5,7 @@
             'reset.style.css',
             'test.css',
             'head.css',
+            'footer.css',
             'ie.css',
             'btn.css'
         )
