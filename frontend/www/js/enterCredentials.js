@@ -252,7 +252,7 @@ function checkStatuses(statuses, ids) {
                         $('.payCardPal').show();
                         $('.paybuyEnd').show();
                         ResizeAvia();
-                        Utils.scrollTo('.oneBlock:eq(1)', true);
+                        Utils.scrollTo('#paybuyContent', true);
                     });
                     window.app.breakdown(data.breakdown);
                     Utils.submitPayment(data.payonline);
