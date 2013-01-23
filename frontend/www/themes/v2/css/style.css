@@ -1551,7 +1551,7 @@ input.hotel-input {
     cursor: pointer;
 }
 .slideTours .toursTicketsMain .l {
-    background: url("../images/bg-tours-main.png") no-repeat scroll -30px 0 transparent;
+    background: url("../images/bg-toursMain.png") no-repeat scroll -96px 0 transparent;
     height: 176px;
     left: 0;
     position: absolute;
@@ -1561,10 +1561,10 @@ input.hotel-input {
 }
 .slideTours.small .toursTicketsMain .l {
 	height: 122px;
-	background: url("../images/bg-tours-main-small.png") no-repeat scroll -30px 0 transparent;
+	background: url("../images/bg-toursMain.png") no-repeat scroll -30px 0 transparent;
 }
 .slideTours .toursTicketsMain .r {
-    background: url("../images/bg-tours-main.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/bg-toursMain.png") no-repeat scroll -66px 0 transparent;
     height: 176px;
     position: absolute;
     right: 0;
@@ -1574,7 +1574,7 @@ input.hotel-input {
 }
 .slideTours.small .toursTicketsMain .r {
 	height: 122px;
-	background: url("../images/bg-tours-main-small.png") no-repeat scroll 0 0 transparent;
+	background: url("../images/bg-toursMain.png") no-repeat scroll 0 0 transparent;
 }
 .slideTours .toursTicketsMain .innerTours {
     background: none repeat scroll 0 0 #F4F7F9;
