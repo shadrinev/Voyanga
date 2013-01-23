@@ -60,7 +60,10 @@ class Event extends Backbone.Events
     @thumb = ko.observable data.thumb
     @active = ko.observable data.active
     @minimalPrice = ko.computed =>
-      @prices()[0].price
+      if @prices()[0]
+        return @prices()[0].price
+      else
+        return 0
 
   duration: ->
     dateUtils.formatDuration @_duration
