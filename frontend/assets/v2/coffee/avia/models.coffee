@@ -755,7 +755,6 @@ class AviaResultSet
       @best result
       return
     if @best().key != result.key
-      delete @best()
       @best result
 
   filtersRendered: ->

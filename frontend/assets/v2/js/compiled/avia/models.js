@@ -1086,7 +1086,6 @@ AviaResultSet = (function() {
       return;
     }
     if (this.best().key !== result.key) {
-      delete this.best();
       return this.best(result);
     }
   };

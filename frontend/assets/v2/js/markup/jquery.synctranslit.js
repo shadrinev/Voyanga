@@ -48,17 +48,17 @@
      * @param {String} character
      * @param {Object} opts
      */
-    $.fn.syncTranslit.transliterate = function(char, opts) {
+    $.fn.syncTranslit.transliterate = function(character, opts) {
     	var charIsLowerCase = true, trChar;
-    	if (char.toLowerCase() != char) {
+    	if (character.toLowerCase() != character) {
     		charIsLowerCase = false;
     	}
     	
-    	char = char.toLowerCase();
+    	character = character.toLowerCase();
     	
-    	var index = opts.dictOriginal.indexOf(char);
+    	var index = opts.dictOriginal.indexOf(character);
     	if (index == -1) {
-    		trChar = char;
+    		trChar = character;
     	} else {
     		trChar = opts.dictTranslate[index];
     	}
