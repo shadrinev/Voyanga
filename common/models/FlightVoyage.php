@@ -114,6 +114,7 @@ class FlightVoyage extends CApplicationComponent
         if (($order) && (sizeof($this->flights)==1))
         {
             //we try to save same flight
+            $order->reference->delete();
             $order->delete();
             $order = false;
         }
