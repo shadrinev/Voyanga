@@ -1,6 +1,5 @@
 class API
   constructor: ->
-    #@endpoint = 'http://test.voyanga.com/api/'
     @endpoint = 'http://api.voyanga.com/v1/'
     #@endpoint = 'http://api.oleg.voyanga/v1/'
 

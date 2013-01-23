@@ -57,6 +57,7 @@ class OrderFlightVoyage extends FrontendActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'reference' => array(self::HAS_ONE, 'OrderHasFlightVoyage', 'orderFlightVoyage')
         );
     }
 
