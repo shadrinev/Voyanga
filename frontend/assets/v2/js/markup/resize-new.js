@@ -564,22 +564,22 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
-    if (DetectIphoneOrIpod() && var_iphone <= 5) {
-        console.log('АЙФОН!');
-        ResizeCenterBlock();
-        inTheTwoLines();
-        smallTicketHeight();
-        CenterIMGResize();
-        slideToursSlide();
-        smallIMGresizeIndex();
-        mapAllPageView();
-        gradientResize();
-        resizePanel();
-
-        startIE();
-        var_iphone++;
-    }
-    else if (! DetectIphoneOrIpod()) {
+//    if (DetectIphoneOrIpod() && var_iphone <= 5) {
+//        console.log('АЙФОН!');
+//        ResizeCenterBlock();
+//        inTheTwoLines();
+//        smallTicketHeight();
+//        CenterIMGResize();
+//        slideToursSlide();
+//        smallIMGresizeIndex();
+//        mapAllPageView();
+//        gradientResize();
+//        resizePanel();
+//
+//        startIE();
+//        var_iphone++;
+//    }
+//    else if (! DetectIphoneOrIpod()) {
         console.log('НЕ АЙФОН!');
         ResizeCenterBlock();
         inTheTwoLines();
@@ -592,10 +592,10 @@ function ResizeAvia() {
         resizePanel();
 
         startIE();
-    }
-    else {
-        return;
-    }
+//    }
+//    else {
+//        return;
+//    }
 }
 
 function ResizeFun() {
