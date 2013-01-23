@@ -74,16 +74,12 @@ $theme = Yii::app()->theme->baseUrl;
       <div class="hr-bg" data-bind="visible: someSegmentsSelected">
         <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
       </div>
+      <div class="shareSocial">
+      </div>
       <div class="costItAll" data-bind="visible: someSegmentsSelected">
-	Итого <span class="allCost"><span data-bind="text: price()">86 250</span> <span class="rur">o</span></span>
+	    Итого <span class="allCost"><span data-bind="text: price()">86 250</span> <span class="rur">o</span></span>
         <a href="#" class="btn-order btnGoBuy" data-bind="click:buy">Перейти к оплате<span class="l"></span></a>
       </div>
-        <div class="hr-bg" data-bind="visible: someSegmentsSelected" style="margin-top:10px">
-            <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
-        </div>
-        <div class="shareSocial">
-            TEXT
-        </div>
     </div>
     <div class="clear"></div>
   </div>

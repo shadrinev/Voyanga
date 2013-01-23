@@ -1,5 +1,10 @@
 <?php
 $images = '/themes/v2';
+$url = Yii::app()->request->url;
+$image = (isset($event->pictureBig) ? $event->imgSrc.$event->pictureBig->url : $event->defaultBigImageUrl);
+$imageAbs = Yii::app()->createAbsoluteUrl('/'). '/' . $image;
+$title = $event->title;
+$description = $event->preview;
 ?>
 <script>
     window.toursArr = <?php echo json_encode($tours); ?>;
@@ -13,6 +18,33 @@ $images = '/themes/v2';
         //eventPhotos = new EventPhotoBox(window.eventPhotos);
     })
 </script>
+<span style="display: none" id='socialSource'>
+    <div id='socialButtons'>
+    <ul id="social" class="cf">
+        <li>
+            <a href="http://twitter.com/share" class="socialite twitter-share" data-text="<?php echo $description ?>" data-url="<?php echo $url ?>" data-count="vertical" rel="nofollow" target="_blank">
+                <span class="vhidden">Поделиться в Twitter</span>
+            </a>
+        </li>
+        <li>
+            <a href="https://plusone.google.com/_/+1/confirm?hl=en&amp;url=<?php echo $url ?>" class="socialite googleplus-one" data-size="tall" data-href="<?php echo $url ?>" rel="nofollow" target="_blank">
+                <span class="vhidden">Поделиться в Google+</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://www.facebook.com/sharer.php?u=<?php echo $url ?>&amp;t=<?php echo $description ?>" class="socialite facebook-like" data-href="<?php echo $url ?>" data-send="false" data-layout="box_count" data-width="60" data-show-faces="false" rel="nofollow" target="_blank">
+                <span class="vhidden">Поделиться в Facebook</span>
+            </a>
+        </li>
+        <li>
+            <a class="socialite vkontakte"
+               href="http://vkontakte.ru/share.php?url=<?php echo $url ?>&amp;title=<?php echo $title ?>&amp;description=<?php echo $description ?>&amp;image=<?php echo $imageAbs ?>" target="_blank">
+                <span class="vhidden">Поделиться ВКонтакте</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</span>
 <!-- EVENTS -->
 <div class="events">
     <div class="center-block">
@@ -29,7 +61,7 @@ $images = '/themes/v2';
                 <!-- /ko -->
                 <!-- ko if: itemsToBuy.photoBox.boxHeight() == 0 -->
                 <div class="photoAlbum">
-                    <img src="<?php echo (isset($event->pictureBig) ? $event->imgSrc.$event->pictureBig->url : $event->defaultBigImageUrl);?>">
+                    <img src="<?php echo $image;?>">
                 </div>
                 <!-- /ko -->
 
@@ -224,6 +256,8 @@ $images = '/themes/v2';
                     <div data-bind="template: {name: 'print-event-trip', data: itemsToBuy}"></div>
                     <div class="hr-bg big">
                         <img width="100%" height="31" src="/themes/v2/images/shadow-hotel.png">
+                    </div>
+                    <div class="shareSocial">
                     </div>
                     <div class="btn-order floatRight" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}">Проверить<span class="l"></span></div>
                 </td>

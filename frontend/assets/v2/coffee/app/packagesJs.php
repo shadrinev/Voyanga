@@ -55,6 +55,8 @@
             'scroll/jquery.jscrollpane.min.js',
             'markerclusterer_compiled.js',
             'chosen/chosen.jquery.min.js',
+            'socialite/socialite.js',
+            'socialite/socialite.vkontakte.js',
         ),
         'depends' => array('jquery')
     ),
@@ -85,8 +87,10 @@
             'filters.js',
             'searchPanel.js',
             'autocomplete.js',
-            'API.js'
-        )
+            'API.js',
+            'sharer.js'
+        ),
+        'depends' => array('vendor')
     ),
     'avia' => array(
         'basePath' => 'frontend.assets.v2.js.compiled.avia',
