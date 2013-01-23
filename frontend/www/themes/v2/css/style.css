@@ -2744,10 +2744,12 @@ input.hotel-input {
     text-align: right;
 }
 .payCardPal .payCardPaliFrame {
-    width: 760px;
+    border: medium none;
     height: 700px;
-    border: none;
     margin-right: -20px;
+    overflow: hidden;
+    text-align: center;
+    width: 760px;
 }
 .mainTable .tdInfoText {
     padding-top: 50px;
