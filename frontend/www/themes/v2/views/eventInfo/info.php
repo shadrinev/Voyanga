@@ -20,7 +20,7 @@ $description = $event->preview;
 </script>
 <span style="display: none" id='socialSource'>
     <div id='socialButtons'>
-    <ul id="social" class="cf">
+        <ul id="social" class="cf">
         <li>
             <a href="http://twitter.com/share" class="socialite twitter-share" data-text="<?php echo $description ?>" data-url="<?php echo $url ?>" data-count="vertical" rel="nofollow" target="_blank">
                 <span class="vhidden">Поделиться в Twitter</span>
@@ -37,13 +37,13 @@ $description = $event->preview;
             </a>
         </li>
         <li>
-            <a class="socialite vkontakte"
+            <a class="socialite vkontakte-like"
                href="http://vkontakte.ru/share.php?url=<?php echo $url ?>&amp;title=<?php echo $title ?>&amp;description=<?php echo $description ?>&amp;image=<?php echo $imageAbs ?>" target="_blank">
                 <span class="vhidden">Поделиться ВКонтакте</span>
             </a>
         </li>
     </ul>
-</div>
+    </div>
 </span>
 <!-- EVENTS -->
 <div class="events">

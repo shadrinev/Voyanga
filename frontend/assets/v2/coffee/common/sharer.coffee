@@ -1,6 +1,6 @@
 Socialite.setup facebook:
   lang: "ru"
-  appId: 123456789
+  appId: 463273800404070
   onlike: (url) -> # ...
 
   onunlike: (url) -> # ...
@@ -8,7 +8,7 @@ Socialite.setup facebook:
   onsend: (url) -> # ...
 
 Socialite.setup vkontakte:
-  apiId: null
+  apiId: 3377254
   group:
     id: 0
     mode: 0

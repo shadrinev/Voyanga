@@ -88,7 +88,8 @@
             'filters.js',
             'searchPanel.js',
             'autocomplete.js',
-            'API.js'
+            'API.js',
+            'sharer.js'
         )
     ),
     'avia' => array(

@@ -3,7 +3,7 @@
 Socialite.setup({
   facebook: {
     lang: "ru",
-    appId: 123456789,
+    appId: 463273800404070,
     onlike: function(url) {},
     onunlike: function(url) {},
     onsend: function(url) {}
@@ -12,7 +12,7 @@ Socialite.setup({
 
 Socialite.setup({
   vkontakte: {
-    apiId: null,
+    apiId: 3377254,
     group: {
       id: 0,
       mode: 0,
