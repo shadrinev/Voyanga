@@ -581,6 +581,9 @@ function ResizeAvia() {
 //    }
 //    else if (! DetectIphoneOrIpod()) {
 //        console.log('НЕ АЙФОН!');
+    if (DetectIphoneOrIpod()) {
+        console.log('!!!!!!!!! АЙФОН !!!!!!');
+    }
         ResizeCenterBlock();
         inTheTwoLines();
         smallTicketHeight();
