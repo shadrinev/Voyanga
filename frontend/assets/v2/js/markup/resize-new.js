@@ -577,7 +577,7 @@ function ResizeAvia() {
         resizePanel();
 
         startIE();
-        var var_iphone++;
+        var_iphone++;
     }
     else if (! DetectIphoneOrIpod()) {
         console.log('НЕ АЙФОН!');
