@@ -1931,6 +1931,7 @@ input.hotel-input {
 .mainTable .tdIframe {
     width: 720px;
     padding-left: 20px;
+    overflow: hidden;
 }
 .aviaAllPrice, .hotelAllPrice {
     width: 100%;
