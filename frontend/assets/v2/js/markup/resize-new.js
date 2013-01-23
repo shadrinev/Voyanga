@@ -564,26 +564,7 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
-//    if (DetectIphoneOrIpod() && var_iphone <= 5) {
-//        console.log('АЙФОН!');
-//        ResizeCenterBlock();
-//        inTheTwoLines();
-//        smallTicketHeight();
-//        CenterIMGResize();
-//        slideToursSlide();
-//        smallIMGresizeIndex();
-//        mapAllPageView();
-//        gradientResize();
-//        resizePanel();
-//
-//        startIE();
-//        var_iphone++;
-//    }
-//    else if (! DetectIphoneOrIpod()) {
-//        console.log('НЕ АЙФОН!');
-    if (DetectIphoneOrIpod()) {
-        console.log('!!!!!!!!! АЙФОН !!!!!!');
-    }
+//    if (DetectIphoneOrIpod() )
         ResizeCenterBlock();
         inTheTwoLines();
         smallTicketHeight();
@@ -595,10 +576,6 @@ function ResizeAvia() {
         resizePanel();
 
         startIE();
-//    }
-//    else {
-//        return;
-//    }
 }
 
 function ResizeFun() {
