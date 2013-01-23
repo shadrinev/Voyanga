@@ -1,11 +1,3 @@
-@import "body.css";
-@import "trash.css";
-@import "ico.css";
-@import "filter.css";
-@import "tickets.css";
-@import "checkradio.css";
-@import "scroll.css";
-
 .btn {
     cursor: pointer;
 }
