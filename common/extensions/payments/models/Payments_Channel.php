@@ -88,6 +88,7 @@ abstract class Payments_Channel {
         {
 //            $bill->status = Bill::STATUS_PAID;
             $this->bill->transactionId = $result['TransactionId'];
+            $this->bill->status = 'PAI';
             $this->bill->save();
             return true;
         }
@@ -126,6 +127,7 @@ abstract class Payments_Channel {
         $entry->save();
         if(strtolower($result['Result']) == 'ok') {
             $this->bill->transactionId = $result['Id'];
+            $this->bill->status = 'PRE';
             $this->bill->save();
             return true;
         }

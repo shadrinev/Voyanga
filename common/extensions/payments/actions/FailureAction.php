@@ -13,6 +13,7 @@ class FailureAction extends SuccessAction
         // Have to check if this could happen in production
         if(!$haveRebillAnchor) {
             $bill->transactionId = $_REQUEST['TransactionID'];
+            $bill->status = 'FAI';
             $bill->save();
         }
 
