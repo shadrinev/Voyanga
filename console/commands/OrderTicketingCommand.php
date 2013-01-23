@@ -81,7 +81,7 @@ EOD;
 
 
     /**
-       Confirms preauthorized transactions
+     *  Confirms preauthorized transactions
     */
     private function confirmPayment($orderId) {
         $order = Yii::app()->order;

@@ -21,6 +21,10 @@ abstract class Payments_Channel {
         $this->credentials = Yii::app()->payments->getCredentials($this->name);
     }
 
+    public function getOrderBookingId() {
+        return  $this->baseBooker->orderBookingId;
+    }
+
     public function getName()
     {
         return $this->name;
@@ -71,6 +75,8 @@ abstract class Payments_Channel {
     public function confirm()
     {
         //! FIXME shuld we only accept bills in certain states ?
+        $entry = PaymentLog::forMethod('complete');
+        $entry->orderId = $this->baseBooker->orderBookingId . '-' . $this->bill->id;
         $url = 'transaction/complete';
         $credentials = $this->credentials;
 
@@ -82,7 +88,16 @@ abstract class Payments_Channel {
         $params = $this->contributeToConfirm($params);
 
         $params['SecurityKey'] = $this->getSignature($params);
+        $entry->request = json_encode($params);
+        $entry->startProfile();
+        $entry->save();
         list($code, $result) = $this->callApi($url, $params);
+        $entry->finishProfile();
+        $entry->response = json_encode($result);
+        if(isset($result['TransactionId'])) {
+            $entry->transactionId = $result['TransactionId'];
+            $entry->save();
+        }
             // FIXME check AMOUNT?
         if($result['Result'] == 'Ok')
         {
@@ -92,6 +107,8 @@ abstract class Payments_Channel {
             $this->bill->save();
             return true;
         }
+        $entry->errorDescription = "ConfirmError: " . $this->rawResponse;
+        $entry->save();
         return false;
     }
 
@@ -184,7 +201,6 @@ abstract class Payments_Channel {
         list($code, $data) =  Yii::app()->httpClient->get('https://secure.payonlinesystem.com/payment/' . $url);
 //        Yii::trace('https://secure.payonlinesystem.com/payment/' . $url, "payments.channel.apicall");
 //        Yii::trace($data, "payments.channel.apicall");
-
         //! FIXME SOMEHOW
         $this->rawResponse = $data;
         $result = array();

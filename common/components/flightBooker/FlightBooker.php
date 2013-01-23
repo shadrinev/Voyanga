@@ -20,6 +20,9 @@
  * @property OrderBooking $orderBooking
  * @property FlightBookingPassport[] $flightBookingPassports
  */
+
+Yii::import("common.extensions.payments.models.Bill");
+
 class FlightBooker extends SWLogActiveRecord
 {
     private $_flightVoyage;
@@ -133,6 +136,7 @@ class FlightBooker extends SWLogActiveRecord
         return array(
             'orderBooking' => array(self::BELONGS_TO, 'OrderBooking', 'orderBookingId'),
             'flightBookingPassports' => array(self::HAS_MANY, 'FlightBookingPassport', 'flightBookingId'),
+             'bill' => array(self::BELONGS_TO, 'Bill', 'billId'),
         );
     }
 

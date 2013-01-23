@@ -1,4 +1,4 @@
-<?php
+get<?php
 /**
  * Component to deal with payments.
  * Provides easy to use api for payment initiation and status checks.
@@ -9,6 +9,8 @@
  */
 Yii::import("common.extensions.payments.models.Payments_MetaBooker");
 Yii::import("common.extensions.payments.models.Payments_MetaBookerTour");
+Yii::import("common.extensions.payments.models.Bill");
+
 
 class PaymentsComponent extends CApplicationComponent
 {
@@ -58,7 +60,6 @@ class PaymentsComponent extends CApplicationComponent
             }
 
         }
-        Yii::import("common.extensions.payments.models.Bill");
         if($booker->billId)
         {
             return Bill::model()->findByPk($booker->billId);

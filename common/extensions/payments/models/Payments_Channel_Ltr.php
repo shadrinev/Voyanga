@@ -24,7 +24,7 @@ class Payments_Channel_Ltr extends Payments_Channel {
             foreach($flight->flightParts as $part){
                 $i++;
                 $ltr.= $part->transportAirlineCode; //CARREIR LEGN
-                $ltr.= " "; //SERVICE CLASS LEGN //optional
+                $ltr.= $part->bookingCodes[0]; //SERVICE CLASS LEGN 
                 $ltr.= " "; //STOPOVER CODE LEGN //optional
                 $ltr.= $part->arrivalAirport->code; //DEST CITY LEGN
 
@@ -56,7 +56,7 @@ class Payments_Channel_Ltr extends Payments_Channel {
         }
         $ltr.= strtoupper($name);
         //! Fixme log exception
-        if(!preg_match("~01[ \w]{8}[A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3}(([A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3})|[ ]{7}){3}[ 01]{1}[ \w-]{14}[\d]{6}[A-Z0-9]{3}[ \w/-]{20}~", $ltr))
+        if(!preg_match("~^01[ \w]{8}[A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3}(([A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3})|[ ]{7}){3}[ 01]{1}[ \w-]{14}[\d]{6}[A-Z0-9]{3}[ \w/-]{20}$~", $ltr))
             throw new Exception("Wrong LTR generated " . $ltr);
         return $ltr;
     }
