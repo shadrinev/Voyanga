@@ -564,7 +564,7 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
-    if (DetectIphoneOrIpod() && var_iphone >= 5) {
+    if (DetectIphoneOrIpod() && var_iphone <= 5) {
         console.log('АЙФОН!');
         ResizeCenterBlock();
         inTheTwoLines();
