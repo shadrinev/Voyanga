@@ -1537,8 +1537,24 @@
 	position: relative;
 	margin-top: 2px;
 }
+.prices-of-3days .one-way .to {
+    position: absolute;
+    font-size: 11px;
+    color: #262930;
+    top: 7px;
+    left: -9px;
+    font-weight: bold;
+}
 .prices-of-3days .two-way {
 	position: relative;
+}
+.prices-of-3days .two-way .from {
+    position: absolute;
+    font-size: 11px;
+    color: #262930;
+    top: 7px;
+    left: -9px;
+    font-weight: bold;
 }
 .cena {
 	margin-top: 15px;

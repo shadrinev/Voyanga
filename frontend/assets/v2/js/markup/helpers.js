@@ -309,6 +309,7 @@ function onFocusInput() {
                 $('.female').removeClass('active error');
                 $(_that).parent().addClass('active');
                 $(_that).parent().parent().next().find('input.dd').focus();
+                $(_that).attr('checked','checked');
             }
         });
     });
@@ -342,6 +343,7 @@ function onFocusInput() {
                 $('.female').removeClass('active error');
                 $(_that).parent().addClass('active');
                 $(_that).parent().parent().next().find('input.dd').focus();
+                $(_that).attr('checked','checked');
             }
         });
     });
