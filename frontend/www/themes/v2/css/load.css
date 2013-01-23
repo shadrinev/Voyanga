@@ -22,7 +22,7 @@
 	margin-left: -121px;
 	margin-top: -165px;
 	z-index: 801;
-	background: url(../images/loadBg.png) no-repeat;
+	background: url("../images/slice.png") no-repeat scroll 0 0 transparent;
 }
 #loadContentWinMin {
 	position:relative;
@@ -42,15 +42,16 @@
 	width: 252px;
 }
 #loadTXT {
-	position: absolute;
-	top: 224px;
-	width: 252px;
-	text-align: center;
-	font-family: Arial;
-	color: #16181c;
-	text-shadow: 0px 1px 0px rgba(255,255,255, 0.7);
-	font-size: 14px;
-	line-height: 20px;
+    color: #16181C;
+    font-family: Arial;
+    font-size: 14px;
+    line-height: 20px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    top: 224px;
+    width: 252px;
+    z-index: 2;
 }
 #loadLight {
 	display: inline-block;
@@ -74,4 +75,12 @@
 	font-size: 11px;
 	color: #454654;
 	margin-top: -10px;
+}
+#footBg {
+    background: url("../images/slice.png") no-repeat scroll 0 -20px transparent;
+    height: 123px;
+    position: absolute;
+    top: 207px;
+    width: 100%;
+    z-index: 1;
 }
