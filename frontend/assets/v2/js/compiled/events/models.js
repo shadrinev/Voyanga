@@ -525,6 +525,9 @@ EventTourResultSet = (function() {
       console.log("Cannot process tour");
       this.correctTour(false);
     }
+    if (this.resultSet.price) {
+      this.totalCost = this.resultSet.price;
+    }
     return this.fullPrice(this.totalCost);
   };
 

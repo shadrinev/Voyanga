@@ -369,8 +369,8 @@ class EventTourResultSet
     catch exept
       console.log("Cannot process tour")
       @correctTour(false)
-
-
+    if @resultSet.price
+      @totalCost = @resultSet.price
     @fullPrice(@totalCost)
 
   gotoAndShowPanel: =>
