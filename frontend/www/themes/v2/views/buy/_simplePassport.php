@@ -1,4 +1,4 @@
-<div class="oneBlock">
+<div class="oneBlock"  id="paybuyContent">
 <!--=== ===-->
 <div class="paybuyContent" id="tableStartRun">
 <h2><span class="<?php echo $icon ?>"></span><?php echo $header ?></h2>

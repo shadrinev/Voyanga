@@ -1,5 +1,5 @@
 <?php $flightHeaderPrinted = false; $hotelHeaderPrinted = false; $flightCounter = 0; $hotelCounter = 0; $curNumCounter = 0; $curNum = 0; ?>
-<div class="oneBlock">
+<div class="oneBlock" id="paybuyContent">
 <!--=== ===-->
 <div class="paybuyContent">
 <table class="infoPassengers">
