@@ -87,11 +87,8 @@ class TripStorage
 
     private function saveItemsOfOrder()
     {
-        print_r($this->itemsOnePerGroup);
-        die();
-        foreach ($this->itemsOnePerGroup as $item)
+        foreach ($this->items as $item)
         {
-
             if (!$item->saveToOrderDb())
             {
                 $errMsg = "Could not save order's item" . PHP_EOL . CVarDumper::dumpAsString($item);
