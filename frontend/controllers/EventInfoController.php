@@ -40,6 +40,9 @@ class EventInfoController extends Controller
             //print_r($items);die();
             $tours[$tour->startCityId] = $items;
             $tours[$tour->startCityId]['city'] = City::getCityByPk($tour->startCityId)->getAttributes();
+            $eventPrice = EventPrice::model()->findByAttributes(array('eventId'=>$eventId,'cityId'=>$tour->startCityId));
+            if( $eventPrice )
+                $tours[$tour->startCityId]['price'] = ceil($eventPrice->bestPrice);
             $cities[$tour->startCityId] = City::getCityByPk($tour->startCityId)->getAttributes();
         }
         //die();
