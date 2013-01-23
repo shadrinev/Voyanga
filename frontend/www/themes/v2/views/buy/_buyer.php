@@ -1,4 +1,4 @@
-<div class="oneBlock">
+<div class="oneBlock" id="paybuyContent">
     <!--=== ===-->
     <div class="paybuyContent">
         <h2>Покупатель</h2>

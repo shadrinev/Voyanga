@@ -32,6 +32,7 @@ var var_paddingLeftTelefonMIN = 220;
 
 var var_widthMainBlockMAX = 695;
 var var_widthMainBlockMIN = 530;
+var var_iphone = 0;
 
 window.hotelsScrollCallback = function(){}
 
@@ -563,17 +564,38 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
-    ResizeCenterBlock();
-    inTheTwoLines();
-    smallTicketHeight();
-    CenterIMGResize();
-    slideToursSlide();
-    smallIMGresizeIndex();
-    mapAllPageView();
-    gradientResize();
-    resizePanel();
+//    if (DetectIphoneOrIpod() && var_iphone <= 5) {
+//        console.log('АЙФОН!');
+//        ResizeCenterBlock();
+//        inTheTwoLines();
+//        smallTicketHeight();
+//        CenterIMGResize();
+//        slideToursSlide();
+//        smallIMGresizeIndex();
+//        mapAllPageView();
+//        gradientResize();
+//        resizePanel();
+//
+//        startIE();
+//        var_iphone++;
+//    }
+//    else if (! DetectIphoneOrIpod()) {
+        console.log('НЕ АЙФОН!');
+        ResizeCenterBlock();
+        inTheTwoLines();
+        smallTicketHeight();
+        CenterIMGResize();
+        slideToursSlide();
+        smallIMGresizeIndex();
+        mapAllPageView();
+        gradientResize();
+        resizePanel();
 
-    startIE();
+        startIE();
+//    }
+//    else {
+//        return;
+//    }
 }
 
 function ResizeFun() {
