@@ -1,6 +1,5 @@
 <?php
 $cs = Yii::app()->getClientScript();
-$cs->reset();
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 $theme = Yii::app()->theme->baseUrl;
 Yii::app()->clientScript->registerPackage('appCss');
