@@ -21,15 +21,17 @@ class EventInfoController extends Controller
 
         $pricesData = array();
         $this->layout = 'static';
-        foreach($event->prices as $price){
-            $pricesData[$price->city->id] = array('price'=>floor($price->bestPrice),'cityName'=>$price->city->localRu,'cityId'=>$price->city->id,'updateTime'=>str_replace(' ','T',$price->updated));
+        foreach ($event->prices as $price)
+        {
+            $pricesData[$price->city->id] = array('price' => floor($price->bestPrice), 'cityName' => $price->city->localRu, 'cityId' => $price->city->id, 'updateTime' => str_replace(' ', 'T', $price->updated));
         }
 
 
         $tours = array();
         $dataProvider = new TripDataProvider();
         $cities = array();
-        foreach($event->tours as $tour){
+        foreach ($event->tours as $tour)
+        {
 
             $tours[$tour->startCityId] = array();
             $dataProvider->restoreFromDb($tour->orderId);
@@ -40,34 +42,35 @@ class EventInfoController extends Controller
             //print_r($items);die();
             $tours[$tour->startCityId] = $items;
             $tours[$tour->startCityId]['city'] = City::getCityByPk($tour->startCityId)->getAttributes();
-            $eventPrice = EventPrice::model()->findByAttributes(array('eventId'=>$eventId,'cityId'=>$tour->startCityId));
-            if( $eventPrice )
-                $tours[$tour->startCityId]['price'] = ceil($eventPrice->bestPrice);
+            $eventPrice = EventPrice::model()->findByAttributes(array('eventId' => $eventId, 'cityId' => $tour->startCityId));
+            if ($eventPrice)
+                    {
+                        $tours[$tour->startCityId]['price'] = ceil($eventPrice->bestPrice);
+                    }
             $cities[$tour->startCityId] = City::getCityByPk($tour->startCityId)->getAttributes();
         }
         //die();
-        if(!isset($cities[$defaultCityId])){
-            foreach($cities as $defaultCityId=>$city)
+        if (!isset($cities[$defaultCityId]))
+        {
+            foreach ($cities as $defaultCityId => $city)
                 break;
         }
         //need search params
         $twoCities = array();
         $twoCities[$defaultCityId] = $cities[$defaultCityId];
-        foreach($cities as $cityId=>$city)
-            if(!isset($twoCities[$cityId])){
+        foreach ($cities as $cityId => $city)
+            if (!isset($twoCities[$cityId]))
+            {
                 $twoCities[$cityId] = $city;
                 break;
             }
 
-
-
-        //$tArr = array(array('test'=>3),array('test'=>1),array('test'=>2));
-        //UtilsHelper::sortBy($tArr,'test');
         $pictures = array();
-        foreach($event->pictures as $picture){
-            $pictures[] = array('url'=>$picture->getUrl());
+        foreach ($event->pictures as $picture)
+        {
+            $pictures[] = array('url' => $picture->getUrl());
         }
 
-        $this->render('info',array('event'=>$event,'priceData'=>$pricesData,'defaultCity'=>$defaultCityId,'tours'=>$tours,'cities'=>$cities,'twoCities'=>$twoCities,'pictures'=>$pictures));
+        $this->render('info', array('event' => $event, 'priceData' => $pricesData, 'defaultCity' => $defaultCityId, 'tours' => $tours, 'cities' => $cities, 'twoCities' => $twoCities, 'pictures' => $pictures));
     }
 }

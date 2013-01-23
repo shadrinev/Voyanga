@@ -3,9 +3,17 @@ $cs = Yii::app()->getClientScript();
 $cs->reset();
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 $theme = Yii::app()->theme->baseUrl;
-Yii::app()->clientScript->registerPackage('appCss');
-Yii::app()->clientScript->registerPackage('appJs');
-Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
+if (BUILDING || YII_DEBUG)
+{
+    Yii::app()->clientScript->registerPackage('appCss');
+    Yii::app()->clientScript->registerPackage('appJs');
+    Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
+}
+else
+{
+    Yii::app()->clientScript->registerCssFile('/themes/v2/css/all.min.css');
+    Yii::app()->clientScript->registerScriptFile('/js/all.min.js');
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--[if IE 8 ]>    <html xmlns="http://www.w3.org/1999/xhtml" class="ie ie8"> <![endif]-->

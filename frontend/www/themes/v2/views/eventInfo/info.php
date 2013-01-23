@@ -1,11 +1,24 @@
 <?php
 $images = '/themes/v2';
-$url = Yii::app()->request->url;
-$image = (isset($event->pictureBig) ? $event->imgSrc.$event->pictureBig->url : $event->defaultBigImageUrl);
-$imageAbs = Yii::app()->createAbsoluteUrl('/'). '/' . $image;
+$url = Yii::app()->createAbsoluteUrl('/') . Yii::app()->request->url;
+$imageBig = (isset($event->pictureBig) ? $event->imgSrc.$event->pictureBig->url : $event->defaultBigImageUrl);
+$imageSmall = (isset($event->pictureSmall) ? $event->imgSrc.$event->pictureSmall->url : $event->defaultSmallImageUrl);
+$imageBigAbs = Yii::app()->createAbsoluteUrl('/'). '/' . $imageBig;
+$imageSmallAbs = Yii::app()->createAbsoluteUrl('/'). '/' . $imageSmall;
 $title = $event->title;
 $description = $event->preview;
+
+// Set opengraph meta tags
+$cs = Yii::app()->getClientScript();
+$cs->registerMetaTag('Voyanga.com', NULL, NULL, array('property'=>'og:site_name'));
+$cs->registerMetaTag('shadrinev', NULL, NULL, array('property'=>'fb:admins'));
+$cs->registerMetaTag($url, NULL, NULL, array('property' =>'og:url'));
+$cs->registerMetaTag($title, NULL, NULL, array('property'=>'og:title'));
+$cs->registerMetaTag('article', NULL, NULL, array('property'=>'og:type'));
+$cs->registerMetaTag($description, NULL, NULL, array('property'=>'og:description'));
+$cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 ?>
+
 <script>
     window.toursArr = <?php echo json_encode($tours); ?>;
     window.defaultCity = <?php echo $defaultCity; ?>;
@@ -20,7 +33,7 @@ $description = $event->preview;
 </script>
 <span style="display: none" id='socialSource'>
     <div id='socialButtons'>
-    <ul id="social" class="cf">
+        <ul id="social" class="cf">
         <li>
             <a href="http://twitter.com/share" class="socialite twitter-share" data-text="<?php echo $description ?>" data-url="<?php echo $url ?>" data-count="vertical" rel="nofollow" target="_blank">
                 <span class="vhidden">Поделиться в Twitter</span>
@@ -32,18 +45,18 @@ $description = $event->preview;
             </a>
         </li>
         <li>
-            <a href="http://www.facebook.com/sharer.php?u=<?php echo $url ?>&amp;t=<?php echo $description ?>" class="socialite facebook-like" data-href="<?php echo $url ?>" data-send="false" data-layout="box_count" data-width="60" data-show-faces="false" rel="nofollow" target="_blank">
+            <a href="http://www.facebook.com/sharer.php?u=<?php echo $url ?>&amp;t=<?php echo $title ?>" class="socialite facebook-like" data-href="<?php echo $url ?>" data-send="false" data-layout="box_count" data-width="60" data-show-faces="false" rel="nofollow" target="_blank">
                 <span class="vhidden">Поделиться в Facebook</span>
             </a>
         </li>
         <li>
-            <a class="socialite vkontakte"
-               href="http://vkontakte.ru/share.php?url=<?php echo $url ?>&amp;title=<?php echo $title ?>&amp;description=<?php echo $description ?>&amp;image=<?php echo $imageAbs ?>" target="_blank">
+            <a class="socialite vkontakte-like"
+               href="http://vkontakte.ru/share.php?url=<?php echo $url ?>&amp;title=<?php echo $title ?>&amp;description=<?php echo $description ?>&amp;image=<?php echo $imageSmallAbs ?>" target="_blank">
                 <span class="vhidden">Поделиться ВКонтакте</span>
             </a>
         </li>
     </ul>
-</div>
+    </div>
 </span>
 <!-- EVENTS -->
 <div class="events">
@@ -61,7 +74,7 @@ $description = $event->preview;
                 <!-- /ko -->
                 <!-- ko if: itemsToBuy.photoBox.boxHeight() == 0 -->
                 <div class="photoAlbum">
-                    <img src="<?php echo $image;?>">
+                    <img src="<?php echo $imageBig;?>">
                 </div>
                 <!-- /ko -->
 

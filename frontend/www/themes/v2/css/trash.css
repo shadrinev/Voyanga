@@ -1,13 +1,4 @@
-@font-face {
-    font-family: "ALSRublRegular";
-    src: local("ALS Rubl"), local("ALSRubl"), url("rouble.woff") format("woff"), url("rouble.ttf") format("truetype"), url("rouble.svg#ALSRubl") format("svg");
-}
-.rur {
-    font-family: 'ALSRublRegular',sans-serif;
-    font-size: inherit;
-    font-weight: normal;
-    line-height: normal;
-}
+
 .center {
     margin: 0 auto;
 }

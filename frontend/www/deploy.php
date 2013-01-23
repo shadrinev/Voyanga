@@ -1,29 +1,27 @@
 <?php
-function _exec($cmd)
-{
-    $out = "$ " . $cmd . "\n";
-    $out .= exec($cmd . ' 2>&1');
-    _log($out);
+defined('YII_DEBUG') or define('YII_DEBUG',true);
+defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
+defined('BUILDING') or define('BUILDING',true);
+header("Content-type:text/html;charset=utf-8");
+// On dev display all errors
+if(YII_DEBUG) {
+    error_reporting(-1);
+    ini_set('display_errors', true);
 }
 
-function _log($str)
-{
-    $out = "\n" . date('r') . " " . $str;
-    echo $out;
-    error_log($out, 3, '.webhook.log');
-}
+date_default_timezone_set('Europe/Moscow');
 
-//$github_ips = array('207.97.227.253', '50.57.128.197', '108.171.174.178');
+chdir(dirname(__FILE__).'/../../');
 
-/*if (in_array($_SERVER['REMOTE_ADDR'], $github_ips))
-{*/
-    $dir = '/home/voyanga/app/';
-    $result = _exec("cd $dir && git pull && {$dir}yiic migrate --interactive=0");
-    echo 'Done.';
-/*}
-else
-{
-    header('HTTP/1.1 404 Not Found');
-    echo '404 Not Found.';
-    exit;
-}*/
+$root=dirname(__FILE__).'/..';
+$common=$root.'/../common';
+
+$config='frontend/config/main.php';
+require_once('common/components/Yii.php');
+require_once('common/components/WebApplication.php');
+require_once('common/lib/global.php');
+require_once('common/packages/packages.php');
+require_once('common/components/shortcuts.php');
+
+$app = Yii::createApplication('WebApplication',$config);
+$app->run();

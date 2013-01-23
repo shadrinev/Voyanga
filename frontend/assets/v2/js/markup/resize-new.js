@@ -477,19 +477,6 @@ function smallTicketHeight() {
     }
 }
 
-function loginResize() {
-	var widthWindow = $(window).width();
-	if (widthWindow > 1160) {
-			$('.login-window a .text').show();
-			$('.login-window').css('width','165px');
-	}
-	else {
-		$('.login-window a .text').hide();
-			$('.login-window').css('width','40px');
-	}
-}
-
-
 function resizeLeftStage() {
 	var leftStage = $('.left-block');
 	var leftWidth = leftStage.width();
@@ -564,23 +551,7 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
-//    if (DetectIphoneOrIpod() && var_iphone <= 5) {
-//        console.log('АЙФОН!');
-//        ResizeCenterBlock();
-//        inTheTwoLines();
-//        smallTicketHeight();
-//        CenterIMGResize();
-//        slideToursSlide();
-//        smallIMGresizeIndex();
-//        mapAllPageView();
-//        gradientResize();
-//        resizePanel();
-//
-//        startIE();
-//        var_iphone++;
-//    }
-//    else if (! DetectIphoneOrIpod()) {
-        console.log('НЕ АЙФОН!');
+//    if (DetectIphoneOrIpod() )
         ResizeCenterBlock();
         inTheTwoLines();
         smallTicketHeight();
@@ -592,82 +563,10 @@ function ResizeAvia() {
         resizePanel();
 
         startIE();
-//    }
-//    else {
-//        return;
-//    }
 }
 
 function ResizeFun() {
     ResizeAvia();
-}
-
-function OneWidthEquelTwoWidth() {
-	if ($('.jspPane').width() == $('.scrollBlock').width() ) {
-		$('.slide-filter.first').css('padding-right','21px');
-	}
-	else {
-		$('.slide-filter.first').css('padding-right','30px');
-	}
-}
-
-
-function scrollValue2(what) {
-	var filterContent = $('.filter-content.'+what)
-	
-	var var_marginTopSubHead = $('.sub-head').css('margin-top');
-	var var_scrollValueTop = $(window).scrollTop();
-	var var_heightWindow = $(window).height();
-	
-	if (what == 'avia') {
-		var var_topFilterContent = 73;
-		if ($('.sub-head').css('margin-top') != '-67px') {
-			var diffrentScrollTop = 173;
-		}
-		else {
-			var diffrentScrollTop = 110;
-		}
-	}
-	else {
-	
-		var var_topFilterContent = 23;
-		
-		if ($('.sub-head').css('margin-top') != '-67px') {
-			var diffrentScrollTop = 125;
-		}
-		else {
-			var diffrentScrollTop = 61 ;
-
-		}
-	}
-	var var_heightWindow = $(window).height();
-	var var_heightContent = $('#content').height();
-	if (var_scrollValueTop == 0) {
-		filterContent.css('position','relative').css('top','auto').css('bottom','auto');
-	}
-	else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
-		filterContent.css('position','relative').css('top','auto').css('bottom','auto');
-		if (var_heightContent < var_heightWindow) {
-			$('.innerFilter').css('height', (var_heightWindow - 210)+'px');
-		}
-		else {
-			$('.innerFilter').css('height', '100%');
-		}
-	}
-	else if (var_scrollValueTop > diffrentScrollTop) {		
-		if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - var_topFilterContent) && var_scrollValueTop != 0) {
-			filterContent.css('position','fixed').css('bottom', var_topFilterContent+'px').css('top','auto');
-			$('.innerFilter').css('height', ((var_heightWindow - (var_topFilterContent - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) - 30) +'px');
-		}
-		else if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - var_topFilterContent) && var_scrollValueTop == 0) {
-			filterContent.css('position','fixed').css('bottom','auto').css('top','auto');
-			$('.innerFilter').css('height', (var_heightWindow - (var_topFilterContent - (($('.wrapper').height() - var_heightWindow)-var_scrollValueTop))) +'px');
-		}
-		else {
-			filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
-			$('.innerFilter').css('height', var_heightWindow +'px');
-		}		
-	}		
 }
 
 $(window).load(function() {
@@ -677,10 +576,6 @@ $(window).load(function() {
         window.hotelsScrollCallback();
 	});
 });
-
-function ifHeightMinAllBody() {
-
-}
 
 function readMoreService(obj) {
 	if (! $(obj).hasClass('active')) {
@@ -694,7 +589,6 @@ function readMoreService(obj) {
 		$(obj).removeClass('active') 
 	}
 }
-
 
 function mapAllPageView() {
 	var _map = $('#all-hotels-map');
@@ -734,15 +628,6 @@ function mapAllPageView() {
 	
 	}
 }
-
-
-
-
-
-
-
-
-
 
 var _GoOnScroll = true;
 var _jScrollingBootom = false;
@@ -984,7 +869,6 @@ function reInitJScrollPane(){
     }
 }
 
-
 function minimizeFilter() {
 	var _issetMaps = $('#all-hotels-map').length > 0 && $('#all-hotels-map').is(':visible');
 	var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
@@ -1023,6 +907,7 @@ function filterShow() {
 	}
 	$('.filter-minimize').addClass('hide').attr('onclick','minimizeFilter()');
 }
+
 function removeFilterShow() {
 	$('.filter-minimize').remove();
 	$('.filter-block').css('height','100%');
@@ -1032,9 +917,6 @@ function removeFilterShow() {
 		scrollValue('hotel', e);
 	});
 }
-
-
-
 
 function loadPayFly() {
 	var _loadPayFly = $('#loadPayFly');
@@ -1147,6 +1029,7 @@ function closePopUpProj() {
     $('body').css('overflow', 'auto');
     clickYes = false;
 }
+
 function ClikRightProj() {
 
     var lenSlideProj = $('.textSlideProj').find('li').length;
@@ -1167,6 +1050,7 @@ function ClikRightProj() {
         $('.naviProj').find('.right').addClass('inactive');
     }
 }
+
 function ClikLeftProj() {
 
     var _countSlide = $('.bgCount').find('span').text();
@@ -1187,7 +1071,6 @@ function ClikLeftProj() {
     }
 }
 
-
 function PopUpInfoPath() {
     $(document).on('mousemove', '.tooltip', function(e) {
         var _text = $(this).attr('rel');
@@ -1206,6 +1089,7 @@ function PopUpInfoPath() {
         $('.PopUpInfoPath').remove();
     });
 }
+
 $(window).load(PopUpInfoPath);
 
 function PopUpInfo() {
@@ -1255,8 +1139,8 @@ function PopUpInfo() {
         });
     });
 }
-$(window).load(PopUpInfo);
 
+$(window).load(PopUpInfo);
 
 function openPopUpContact() {
     clickYes = true;
@@ -1323,6 +1207,7 @@ function closePopUpContact() {
 }
 
 var scrollTrue = true;
+
 function resizeFAQ() {
     var _marginLeftWrapFAQ;
     if ($(window).width() <= 1000) {
@@ -1344,6 +1229,7 @@ function resizeFAQ() {
         setTimeout(function() { scrollTrue = true; }, 650);
     });
 }
+
 function scrollFAQ() {
     if ($(window).scrollTop() > 64) {
         $('.listFAQ').css('position', 'fixed').css('top', '4px');
@@ -1360,6 +1246,7 @@ function scrollFAQ() {
        }
     });
 }
+
 $(window).load(resizeFAQ);
 $(window).resize(resizeFAQ);
 $(window).scroll(scrollFAQ);
@@ -1377,7 +1264,6 @@ function gradientResize() {
         return
     }
 }
-
 
 function openPopUpLogIn(what) {
     var _this = what;
@@ -1451,10 +1337,6 @@ function closePopUpLogIn() {
     clickYes = false;
 }
 
-function loginPopSlideDown() {
-    $('.login-window .popupDown').slideDown();
-}
-
 function hoverPayCard() {
     $('.paycard > div').hover(function() {
         $(this).find('.black').animate({'opacity': 0},400);
@@ -1464,6 +1346,7 @@ function hoverPayCard() {
         $(this).find('.color').animate({'opacity': 0},300);
     });
 }
+
 $(window).load(hoverPayCard);
 
 //functions for private space popups
@@ -1583,9 +1466,6 @@ $(function(){
         return false;
     });
 });
-
-
-
 
 function resizePanel(arg) {
     $('.panelTable').each(function(index){
