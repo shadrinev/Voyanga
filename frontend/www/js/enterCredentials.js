@@ -253,6 +253,8 @@ function checkStatuses(statuses, ids) {
                         $('.paybuyEnd').show();
                         ResizeAvia();
                         Utils.scrollTo('#paybuyContent', true);
+                        $('iframe').unbind('load');
+
                     });
                     window.app.breakdown(data.breakdown);
                     Utils.submitPayment(data.payonline);
