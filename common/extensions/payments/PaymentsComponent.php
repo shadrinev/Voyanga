@@ -1,4 +1,4 @@
-get<?php
+<?php
 /**
  * Component to deal with payments.
  * Provides easy to use api for payment initiation and status checks.
