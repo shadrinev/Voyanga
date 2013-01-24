@@ -150,6 +150,14 @@ h4{color:#1d222b;font-size:15px;margin-bottom:6px;text-shadow:0px 1px 0px #fffff
 .head .slide-turn-mode .hotel{background:url("/themes/v2/images/slide-turn-mode.png") no-repeat scroll 0 -205px transparent;left:305px;padding-left:31px !important;}.head .slide-turn-mode .hotel.active{background-position:-520px -204px;}
 .head .slide-turn-mode .finish-stages{background:url("/themes/v2/images/slide-turn-mode.png") no-repeat scroll 0 -142px transparent;left:416px;padding-left:32px !important;}.head .slide-turn-mode .finish-stages .active{background-position:-520px -142px;}
 @media screen and (-webkit-min-device-pixel-ratio:0){body:first-of-type .login-window{line-height:38px;}}.sub-head{background:url("/themes/v2/images/bgBoardSmall.png") repeat-x scroll 0 0 transparent;box-shadow:0 0 45px rgba(0, 1, 0, 0.6);-moz-box-shadow:0 0 45px rgba(0, 1, 0, 0.6);-webkit-box-shadow:0 0 45px rgba(0, 1, 0, 0.6);min-width:1000px;height:63px;border-bottom:1px solid #cfd1d3;position:relative;width:100%;z-index:4;}.sub-head.calSelectedPanelActive{z-index:996;}
+.paycard{position:absolute;height:30px;width:400px;padding-left:15px;}.paycard>div .color{top:0px;left:0px;opacity:0;position:absolute;z-index:2;}
+.paycard>div .whiteblack{top:0px;left:0px;position:absolute;z-index:1;}
+.paycard .visa{float:left;height:16px;margin-top:7px;position:relative;width:51px;margin-right:20px;}.paycard .visa .whiteblack{width:51px;height:16px;background:url("/themes/v2/images/ico-payCard.png") no-repeat 0px -34px;}
+.paycard .visa .color{width:51px;height:16px;background:url("/themes/v2/images/ico-payCard.png") no-repeat 0px -50px;}
+.paycard .mastercard{float:left;height:21px;margin-right:20px;margin-top:5px;position:relative;width:33px;}.paycard .mastercard .whiteblack{width:33px;height:21px;background:url("/themes/v2/images/ico-payCard.png") 0px -66px;}
+.paycard .mastercard .color{width:33px;height:21px;background:url("/themes/v2/images/ico-payCard.png") 0px -87px;}
+.paycard .payonline{width:80px;height:17px;margin-top:7px;position:relative;float:left;}.paycard .payonline .whiteblack{width:80px;height:17px;background:url("/themes/v2/images/ico-payCard.png") 0px 0px;}
+.paycard .payonline .color{width:80px;height:17px;background:url("/themes/v2/images/ico-payCard.png") 0px -17px;}
 .ie h1.title img{margin-top:-11px;}
 .ie .ticket-items .content .center-ticket .other-time ul.minimize .ico-path-time .path{line-height:20px;}
 .ie .pressButton .rur.f21{margin-top:0px;}
@@ -3939,7 +3947,7 @@ input.hotel-input {
     cursor: pointer;
 }
 .slideTours .toursTicketsMain .l {
-    background: url("../images/bg-tours-main.png") no-repeat scroll -30px 0 transparent;
+    background: url("../images/bg-toursMain.png") no-repeat scroll -96px 0 transparent;
     height: 176px;
     left: 0;
     position: absolute;
@@ -3949,10 +3957,10 @@ input.hotel-input {
 }
 .slideTours.small .toursTicketsMain .l {
 	height: 122px;
-	background: url("../images/bg-tours-main-small.png") no-repeat scroll -30px 0 transparent;
+	background: url("../images/bg-toursMain.png") no-repeat scroll -30px 0 transparent;
 }
 .slideTours .toursTicketsMain .r {
-    background: url("../images/bg-tours-main.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/bg-toursMain.png") no-repeat scroll -66px 0 transparent;
     height: 176px;
     position: absolute;
     right: 0;
@@ -3962,7 +3970,7 @@ input.hotel-input {
 }
 .slideTours.small .toursTicketsMain .r {
 	height: 122px;
-	background: url("../images/bg-tours-main-small.png") no-repeat scroll 0 0 transparent;
+	background: url("../images/bg-toursMain.png") no-repeat scroll 0 0 transparent;
 }
 .slideTours .toursTicketsMain .innerTours {
     background: none repeat scroll 0 0 #F4F7F9;
@@ -4319,6 +4327,7 @@ input.hotel-input {
 .mainTable .tdIframe {
     width: 720px;
     padding-left: 20px;
+    overflow: hidden;
 }
 .aviaAllPrice, .hotelAllPrice {
     width: 100%;
@@ -5982,78 +5991,6 @@ a.whereData span {
 .grid-view .items tbody tr td a {
     color: #1C81BB;
     text-decoration: underline;
-}
-.paycard {
-    position: absolute;
-    height: 30px;
-    width: 400px;
-    padding-left: 15px;
-}
-.paycard > div .color {
-    top: 0px;
-    left: 0px;
-    opacity: 0;
-    position: absolute;
-    z-index: 2;
-}
-.paycard > div .whiteblack {
-    top: 0px;
-    left: 0px;
-    position: absolute;
-    z-index: 1;
-}
-.paycard .visa {
-    float: left;
-    height: 16px;
-    margin-top: 7px;
-    position: relative;
-    width: 51px;
-    margin-right: 20px;
-}
-.paycard .visa .whiteblack {
-    width: 51px;
-    height: 16px;
-    background: url(../images/ico-visa.png) no-repeat 0px 0px;
-}
-.paycard .visa .color {
-    width: 51px;
-    height: 16px;
-    background: url(../images/ico-visa.png) no-repeat 0px -16px;
-}
-.paycard .mastercard {
-    float: left;
-    height: 21px;
-    margin-right: 20px;
-    margin-top: 5px;
-    position: relative;
-    width: 33px;
-}
-.paycard .mastercard .whiteblack {
-    width: 33px;
-    height: 21px;
-    background: url(../images/ico-mastercard.png) 0px 0px;
-}
-.paycard .mastercard .color {
-    width: 33px;
-    height: 21px;
-    background: url(../images/ico-mastercard.png) 0px -21px;
-}
-.paycard .payonline {
-    width: 80px;
-    height: 17px;
-    margin-top: 7px;
-    position: relative;
-    float: left;
-}
-.paycard .payonline .whiteblack {
-    width: 80px;
-    height: 17px;
-    background: url(../images/ico-payonline.png) 0px 0px;
-}
-.paycard .payonline .color {
-    width: 80px;
-    height: 17px;
-    background: url(../images/ico-payonline.png) 0px -17px;
 }
 #login-errors {
     color: red;
@@ -8531,7 +8468,7 @@ a.whereData span {
 	margin-left: -121px;
 	margin-top: -165px;
 	z-index: 801;
-	background: url(../images/loadBg.png) no-repeat;
+	background: url("../images/slice.png") no-repeat scroll 0 0 transparent;
 }
 #loadContentWinMin {
 	position:relative;
@@ -8551,15 +8488,16 @@ a.whereData span {
 	width: 252px;
 }
 #loadTXT {
-	position: absolute;
-	top: 224px;
-	width: 252px;
-	text-align: center;
-	font-family: Arial;
-	color: #16181c;
-	text-shadow: 0px 1px 0px rgba(255,255,255, 0.7);
-	font-size: 14px;
-	line-height: 20px;
+    color: #16181C;
+    font-family: Arial;
+    font-size: 14px;
+    line-height: 20px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    top: 224px;
+    width: 252px;
+    z-index: 2;
 }
 #loadLight {
 	display: inline-block;
@@ -8583,6 +8521,14 @@ a.whereData span {
 	font-size: 11px;
 	color: #454654;
 	margin-top: -10px;
+}
+#footBg {
+    background: url("../images/slice.png") no-repeat scroll 0 -20px transparent;
+    height: 123px;
+    position: absolute;
+    top: 207px;
+    width: 100%;
+    z-index: 1;
 }.jspContainer {
     overflow: hidden;
     position: relative;
