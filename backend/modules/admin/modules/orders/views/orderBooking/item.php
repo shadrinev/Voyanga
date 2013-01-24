@@ -17,6 +17,8 @@ $this->breadcrumbs=array(
     <tr>
       <th>ID заказа</th>
       <th>дата</th>
+      <th>email</th>
+      <th>телефон</th>
       <th>статус</th>
     </tr>
   </thead>
@@ -24,6 +26,8 @@ $this->breadcrumbs=array(
     <tr>
       <td><?= $data['id'] ?></td>
       <td><?= $data['timestamp'] ?></td>
+      <td> <?=$data['orderBooking']->email ?></td>
+      <td> <?=$data['orderBooking']->phone ?></td>
       <td><?= $data['orderBooking']->orderStatus ?> 
         <?php if($data['orderBooking']->rawOrderStatus == 'done'): ?>
         <a href="<?= $this->createUrl('resendEmail', array('id'=>$data['id'])) ?>">Выслать письмо повторно</a>
@@ -31,7 +35,7 @@ $this->breadcrumbs=array(
       </td>
     </tr>
     <tr>
-      <td colspan="3">
+      <td colspan="5">
         <?php if(count($data['flightBookings'])): ?>
         <h3>Авиабилеты</h3>
         <table class="table table-bordered">
