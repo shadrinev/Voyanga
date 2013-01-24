@@ -468,10 +468,10 @@
 .btn-minimizePanel span {
 	display: inline-block;
 	width: 12px; height: 6px;
-	background: url(../images/slice.png) no-repeat -72px -35px;
+	background: url("../images/slice.png") no-repeat scroll -264px -1px transparent;
 }
 .btn-minimizePanel.active span {
-	background-position: -84px -35px;
+	background-position: -253px -1px;
 }
 
 
