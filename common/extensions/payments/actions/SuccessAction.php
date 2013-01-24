@@ -79,16 +79,17 @@ class SuccessAction extends CAction
 #            return;
         }
         $bill->transactionId = $_REQUEST['TransactionID'];
+        $bill->status = 'PRE';
 
         if(!$this->isWaitingForPayment($booker)) {
            $e = new WrongOrderStateError("Wrong status" . $this->getStatus($booker));
            $this->handleException($e);
            return;
         }
+        $bill->save();
         $payments = Yii::app()->payments;
         $booker->status('paymentInProgress');
         $booker->status('paid');
-        $bill->save();
         $this->rebill($orderId);
     }
 

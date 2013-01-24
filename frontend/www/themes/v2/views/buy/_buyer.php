@@ -1,3 +1,4 @@
+<div class="clear" id="paybuyContent"></div>
 <div class="oneBlock">
     <!--=== ===-->
     <div class="paybuyContent">

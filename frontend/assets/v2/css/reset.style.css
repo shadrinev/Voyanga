@@ -1,4 +1,14 @@
 @charset "utf-8";
+@font-face {
+    font-family: "ALSRublRegular";
+    src: local("ALS Rubl"), local("ALSRubl"), url("rouble.woff") format("woff"), url("rouble.ttf") format("truetype"), url("rouble.svg#ALSRubl") format("svg");
+}
+.rur {
+    font-family: 'ALSRublRegular',sans-serif;
+    font-size: inherit;
+    font-weight: normal;
+    line-height: normal;
+}
 body, h1, h2, h3, h4, h5, h6 {
 font: 12px Arial, sans-serif;
 }

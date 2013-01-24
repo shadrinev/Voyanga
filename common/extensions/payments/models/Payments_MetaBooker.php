@@ -7,6 +7,7 @@
 class Payments_MetaBooker extends CComponent{
     private $bookers;
     private $_billId;
+    public $orderBookingId;
     public function __construct($bookers, $billId)
     {
         $this->bookers = array();
@@ -23,6 +24,7 @@ class Payments_MetaBooker extends CComponent{
                 $this->bookers[] = $booker;
             }
         }
+        $this->orderBookingId = $this->bookers[0]->getCurrent()->orderBookingId;
         $this->_billId = $billId;
         if($billId)
             $this->setBillId($billId);

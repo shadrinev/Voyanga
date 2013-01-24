@@ -157,6 +157,21 @@ class OrderBooking extends CActiveRecord
         return $n;
     }
 
+    public function getRawOrderStatus()
+    {
+        $states = array();
+        foreach ($this->flightBookers as $flightBooker)
+        {
+            $states[$this->getPrefixlessState($flightBooker->status)] =1;
+        }
+
+        foreach ($this->hotelBookers as $hotelBooker)
+        {
+            $states[$this->getPrefixlessState($hotelBooker->status)] = 1;
+        }
+        return join(',', array_keys($states));
+    }
+
     public function getOrderStatus()
     {
         $states = array();
@@ -172,12 +187,17 @@ class OrderBooking extends CActiveRecord
         return join(',', $states);
     }
 
-    public function stateAdapter($state)
-    {
-        if (strpos($state, '/') !== false)
-        {
+    private function getPrefixlessState($state) {
+        if (strpos($state, '/') !== false) {
             $state = substr($state, strpos($state, '/') + 1);
         }
+        return $state;
+    }
+
+    public function stateAdapter($state)
+    {
+        $state = $this->getPrefixlessState($state);
+
         $aStates = array('enterCredentials' => 'Ввод ПД',
             'booking' => 'Бронирование',
             'bookingError' => 'Ошибка бронирования',
@@ -194,7 +214,9 @@ class OrderBooking extends CActiveRecord
             'moneyReturn' => 'Возврат денег',
             'manualSuccess' => 'Обработано вручную',
             'bspTransfer' => 'Трансфер денег',
-            'done' => 'Заказ оплачен',
+            'paymentError' => 'Ошибка проведения платежа',
+            'paid' => 'Заказ оплачен',
+            'done' => 'Заказ выполнен',
             'error' => 'Ошибка заказа',
 
             'analyzing' => 'Анализ штрафов',

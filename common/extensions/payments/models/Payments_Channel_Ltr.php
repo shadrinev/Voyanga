@@ -24,7 +24,7 @@ class Payments_Channel_Ltr extends Payments_Channel {
             foreach($flight->flightParts as $part){
                 $i++;
                 $ltr.= $part->transportAirlineCode; //CARREIR LEGN
-                $ltr.= "X"; //SERVICE CLASS LEGN
+                $ltr.= $part->bookingCodes[0]; //SERVICE CLASS LEGN 
                 $ltr.= " "; //STOPOVER CODE LEGN //optional
                 $ltr.= $part->arrivalAirport->code; //DEST CITY LEGN
 
@@ -36,6 +36,7 @@ class Payments_Channel_Ltr extends Payments_Channel {
         $ltr.= str_repeat('       ', 4-$i);
         $ltr.= " "; // RESTRICTED TICKET INDICATOR: pass nothing even tho we can get this info
         $ltr.= $booker->flightBookingPassports[0]->ticketNumber; // TICKET NUMBER
+        $ltr.= substr($booker->flightBookingPassports[0]->ticketNumber, 3) % 7; // CHECK DIGIT
         //! FIXME check how de focking php TZs are working
         list($date, $time) = explode("T",$flightVoyage->flights[0]->departureDate);
         list($year, $month, $date) = explode('-', $date);
@@ -55,7 +56,7 @@ class Payments_Channel_Ltr extends Payments_Channel {
         }
         $ltr.= strtoupper($name);
         //! Fixme log exception
-        if(!preg_match("~01[ \w]{8}[A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3}(([A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3})|[ ]{7}){3}[ 01]{1}[ \w-]{14}[\d]{6}[A-Z0-9]{3}[ \w/-]{20}~", $ltr))
+        if(!preg_match("~^01[ \w]{8}[A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3}(([A-Z0-9]{2}[ \w]{1}[ O]{1}[A-Z0-9]{3})|[ ]{7}){3}[ 01]{1}[ \w-]{14}[\d]{6}[A-Z0-9]{3}[ \w/-]{20}$~", $ltr))
             throw new Exception("Wrong LTR generated " . $ltr);
         return $ltr;
     }

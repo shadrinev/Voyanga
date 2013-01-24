@@ -5,6 +5,7 @@
             'reset.style.css',
             'test.css',
             'head.css',
+            'footer.css',
             'ie.css',
             'btn.css'
         )
@@ -12,6 +13,13 @@
     'appCss' => array(
         'baseUrl' => '/themes/v2/css',
         'css' => array(
+            'body.css',
+            'trash.css',
+            'ico.css',
+            'filter.css',
+            'tickets.css',
+            'checkradio.css',
+            'scroll.css',
             'style.css',
             'popup.css',
             'popup-photo.css',

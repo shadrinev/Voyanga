@@ -9,6 +9,8 @@
  */
 Yii::import("common.extensions.payments.models.Payments_MetaBooker");
 Yii::import("common.extensions.payments.models.Payments_MetaBookerTour");
+Yii::import("common.extensions.payments.models.Bill");
+
 
 class PaymentsComponent extends CApplicationComponent
 {
@@ -58,7 +60,6 @@ class PaymentsComponent extends CApplicationComponent
             }
 
         }
-        Yii::import("common.extensions.payments.models.Bill");
         if($booker->billId)
         {
             return Bill::model()->findByPk($booker->billId);

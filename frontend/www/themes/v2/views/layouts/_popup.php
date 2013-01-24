@@ -12,6 +12,7 @@
             </ul>
             <div id="changeText"></div>
         </div>
+        <div id="footBg"></div>
     </div>
 </div>
 

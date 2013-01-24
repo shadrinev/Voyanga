@@ -24,7 +24,11 @@ $this->breadcrumbs=array(
     <tr>
       <td><?= $data['id'] ?></td>
       <td><?= $data['timestamp'] ?></td>
-      <td>UNIMPLEMENTED</td>
+      <td><?= $data['orderBooking']->orderStatus ?> 
+        <?php if($data['orderBooking']->rawOrderStatus == 'done'): ?>
+        <a href="<?= $this->createUrl('resendEmail', array('id'=>$data['id'])) ?>">Выслать письмо повторно</a>
+        <?php endif; ?>
+      </td>
     </tr>
     <tr>
       <td colspan="3">
@@ -93,18 +97,17 @@ $this->breadcrumbs=array(
                 </thead>
                 <?php foreach($booking->flightBookingPassports as $passport): ?>
                 <tr>
-                  <td>TODO</td>
+                  <td><?= $passport->ticketNumber ?></td>
                   <td><?= $passport->firstName; ?> <?= $passport->lastName; ?></td>
-                  <td><?= $passport->series; ?>/<?= $passport->number; ?></td>
+                  <td><?= $passport->series; ?> <?= $passport->number; ?></td>
                 </tr>
                 <?php endforeach; ?>
               </table>
             </td>
           </tr>
           <tr>
-            <td colspan="11">
-    </td>
-    </tr>
+            <?php $this->renderPartial('_booking_control_panel', Array('booking'=>$booking, 'span'=>Array(5,6))); ?>
+          </tr>
           <?php endforeach; ?>
         </table>
         <?php endif; ?>
@@ -173,8 +176,7 @@ $this->breadcrumbs=array(
             </td>
           </tr>
           <tr>
-            <td colspan="8">
-            </td>
+            <?php $this->renderPartial('_booking_control_panel', Array('booking'=>$booking, 'span'=>Array(4,4))); ?>
           </tr>
           <?php endforeach; ?>
         <?php endif; ?>

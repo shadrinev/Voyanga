@@ -51,7 +51,7 @@ class EventPrice extends CActiveRecord
             'city' => array(
                 'title' => $this->city->localRu
             ),
-            'price' => floor($this->bestPrice)
+            'price' => ceil($this->bestPrice)
         );
     }
 }

@@ -6,6 +6,9 @@
  * Time: 12:18
  * To change this template use File | Settings | File Templates.
  */
+
+Yii::import("common.extensions.payments.models.Bill");
+
 class OrderBookingController extends Controller
 {
 
@@ -164,6 +167,77 @@ class OrderBookingController extends Controller
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
+    }
+
+
+    public function actionResendEmail($id) {
+        $order = Yii::app()->order;
+        $order->initByOrderBookingId($id);
+        $order->sendNotifications();
+        $this->redirect(Array('view', 'id'=>$id));
+    }
+
+    /**
+    * Returns map {title=>url} of actions availiable for this booker 
+    */
+    protected function adminActions($booker) {
+        if($booker instanceof FlightBooker) 
+            return $this->flightAdminActions($booker);
+        if($booker instanceof HotelBooker) 
+            return $this->hotelAdminActions($booker);
+    }
+
+    private function flightAdminActions($booker) {
+        switch ($booker->status) {
+            case 'swFlightBooker/done':
+                $result = array();
+                if($booker->bill->status=='PRE') {
+                    $result['подтвердить списание'] =  $this->createUrl('confirmBill', array('billId'=>$booker->bill->id));
+                }
+                return $result;
+            
+            default:
+                return array();
+
+        }
+    }
+
+
+    private function hotelAdminActions($booker) {
+        switch ($booker->status) {
+            case 'swHotelBooker/waitingForPayment':
+                # code...
+                return array("Отметить как оплаченный" => $this->createUrl('markHotelPaid', array('bookingId'=>$booker->id)));
+            case 'swHotelBooker/paid':
+                 return array("Автовыписка" => $this->createUrl('ticketHotel', array('bookingId'=>$booker->id)));       
+            default:
+                return array();
+        }
+    }
+
+    /*
+    Booking actions
+    */
+    public function actionMarkHotelPaid($bookingId) {
+        $booking = new HotelBookerComponent();
+        $booking->setHotelBookerFromId($bookingId);
+        $booking->status('paymentInProgress');
+        $booking->status('paid');
+
+        $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
+    }
+        public function actionTicketHotel($bookingId) {
+        $booking = new HotelBookerComponent();
+        $booking->setHotelBookerFromId($bookingId);
+        $booking->status('ticketing');
+        $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
+    }
+
+    public function actionConfirmBill($billId) {
+        $bill = Bill::model()->findByPk($billId);
+        if(!$bill->getChannel()->confirm())
+            die( "FIALED");
+        $this->redirect(Array('view', 'id'=>$bill->getChannel()->getOrderBookingId()));
     }
 
 }

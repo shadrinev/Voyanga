@@ -63,7 +63,11 @@ Event = (function(_super) {
     this.thumb = ko.observable(data.thumb);
     this.active = ko.observable(data.active);
     this.minimalPrice = ko.computed(function() {
-      return _this.prices()[0].price;
+      if (_this.prices()[0]) {
+        return _this.prices()[0].price;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -520,6 +524,9 @@ EventTourResultSet = (function() {
     } catch (exept) {
       console.log("Cannot process tour");
       this.correctTour(false);
+    }
+    if (this.resultSet.price) {
+      this.totalCost = this.resultSet.price;
     }
     return this.fullPrice(this.totalCost);
   };

@@ -92,13 +92,9 @@ return CMap::mergeArray(
                 'class' => 'site.console.extensions.phpmorphy.PhpMorphyComponent'
             ),
             'assetManager' => array(
-                'class' => 'VAssetManager',
-		'baseUrl' => '/assets/'
+                'class' => BUILDING ? 'VAssetManager' : 'CAssetManager',
+		        'baseUrl' => '/assets/'
             ),
-            /*            'clientScript' => array(
-                            'class'=> YII_DEBUG ? 'EClientScriptBoost' : 'EClientScriptBoost',
-                            'cacheDuration'=>30,
-                        ),*/
             'bootstrap' => array(
                 'class' => 'site.backend.extensions.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
                 'responsiveCss' => true,
@@ -161,6 +157,7 @@ return CMap::mergeArray(
                 )
             ),
             'clientScript' => array(
+                'class'=> BUILDING ? 'VClientScript' : 'CClientScript',
                 'packages' => CMap::mergeArray($packagesJs, $packagesCss)
             ),
         ),

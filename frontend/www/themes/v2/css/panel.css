@@ -606,6 +606,7 @@
     height: 64px;
     padding-bottom: 0px;
     margin-bottom: none;
+    border-bottom: 0px;
 }
 
 .panel-index .sub-head .navi-l {

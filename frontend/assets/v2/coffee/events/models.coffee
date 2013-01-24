@@ -60,7 +60,10 @@ class Event extends Backbone.Events
     @thumb = ko.observable data.thumb
     @active = ko.observable data.active
     @minimalPrice = ko.computed =>
-      @prices()[0].price
+      if @prices()[0]
+        return @prices()[0].price
+      else
+        return 0
 
   duration: ->
     dateUtils.formatDuration @_duration
@@ -366,8 +369,8 @@ class EventTourResultSet
     catch exept
       console.log("Cannot process tour")
       @correctTour(false)
-
-
+    if @resultSet.price
+      @totalCost = @resultSet.price
     @fullPrice(@totalCost)
 
   gotoAndShowPanel: =>

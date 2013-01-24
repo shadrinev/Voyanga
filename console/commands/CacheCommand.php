@@ -33,6 +33,11 @@ class CacheCommand extends CConsoleCommand
 
     public function actionParseSkyScanner()
     {
+        foreach (Yii::app()->log->routes as $route)
+        {
+            $route->enabled = false;
+        }
+
         Yii::import('console.models.*');
 
         $routesFilename = 'aviastat.txt';
@@ -59,9 +64,11 @@ class CacheCommand extends CConsoleCommand
 
         $this->cities = unserialize(file_get_contents($ourCitiesPath));
 
+        echo "Cities loaded\n";
         //3. build urls for parsing skyscanner with routes
         $urls = $this->buildUrls($routes, $skyscannerCities);
 
+        echo "Urls builded. Total urls: ".sizeof($urls)."\n";
         //4. capture data from skyscanner using urls
         $this->grabSkyScanner($urls);
     }
@@ -121,10 +128,11 @@ class CacheCommand extends CConsoleCommand
     {
         $urls = array();
         $routes = explode("\n", $routes);
+        $notFound = array();
         foreach ($routes as $route)
         {
             $citiesTmp = explode("-", $route);
-            if (sizeof($citiesTmp) != 3)
+            if (sizeof($citiesTmp) < 2)
                 continue;
             $from = explode('/', $citiesTmp[0]);
             $to = explode('/', $citiesTmp[1]);
@@ -137,8 +145,8 @@ class CacheCommand extends CConsoleCommand
                     if (isset($skyscannerCities[$nFrom]) and (isset($skyscannerCities[$nTo])))
                     {
                         $url = self::SKYSCANNER_CACHE;
-                        $from = '1302';
-                        $to = '1302';
+                        $from = '1304';
+                        $to = '1304';
                         $skyscannerCityFrom = $skyscannerCities[$nFrom];
                         $skyscannerCityTo = $skyscannerCities[$nTo];
                         $url = str_replace('{{from}}', $skyscannerCityFrom, $url);
@@ -147,8 +155,12 @@ class CacheCommand extends CConsoleCommand
                         $url = str_replace('{{rdate}}', $to, $url);
                         $name = 'url_'.$nFrom.'_'.$nTo.'_'.$from.'_'.$to;
                         $name = str_replace(' ', '+', $name);
-                        if (!isset($this->cities[$nFrom]))
+                        if ((!isset($this->cities[$nFrom])) || (strlen($skyscannerCities[$nFrom])==0))
                         {
+                            if (!isset($this->cities[$nFrom]))
+                            {
+                                $notFound[] = $nFrom;
+                            }
                             continue;
                         }
                         else
@@ -156,8 +168,10 @@ class CacheCommand extends CConsoleCommand
                             $fromCities = $this->cities[$nFrom];
                         }
 
-                        if (!isset($this->cities[$nTo]))
+                        if ((!isset($this->cities[$nTo])) || (strlen($skyscannerCities[$nTo])==0))
                         {
+                            if (!isset($this->cities[$nTo]))
+                                $notFound[] = $nTo;
                             continue;
                         }
                         else
@@ -174,6 +188,11 @@ class CacheCommand extends CConsoleCommand
                 }
             }
         }
+        $tmp = array_unique($notFound);
+        sort($tmp);
+        echo "Not founded cities inside our db:\n";
+        echo implode("\n", $tmp);
+        echo "\n";
         return $urls;
     }
 
@@ -194,14 +213,18 @@ class CacheCommand extends CConsoleCommand
                     continue;
                 }
                 if (is_file($donePath))
+                {
                     continue;
-                echo 'Grabbing using '.$name.'. ';
+                }
+                echo 'Grabbing using '.$name." ( $url ) ";
                 $response = file_get_contents_curl($url);
-                usleep(200000);
+                sleep(2);
                 if ($response === false)
                     throw new CException('Failed');
                 echo "Success.\n";
                 file_put_contents($saveTo, $response);
+                $this->analyzeFile($saveTo, $url);
+                rename($saveTo, $donePath);
             }
             catch (Exception $e)
             {
@@ -266,7 +289,7 @@ class CacheCommand extends CConsoleCommand
                 return false;
             }
             $toAirp = Airport::model()->findByAttributes(array('code'=>substr($arrAirportDate,0,3)));
-            if (!$fromAirp)
+            if (!$toAirp)
             {
                 echo "Airport $arrAirportDate not defined \n";
                 return false;
@@ -299,17 +322,18 @@ class CacheCommand extends CConsoleCommand
            'dateBack' => '0000-00-00'
         ));
         if (!$flightCache)
+        {
+            echo "Creating record $from - $to at $dateFrom. It is {$price}\n";
             $flightCache = new FlightCache();
+        }
         else
         {
             if ($flightCache->priceBestPrice > $price)
             {
                 echo "Updating record $from - $to at $dateFrom. It was {$flightCache->priceBestPrice} become $price\n";
-                return true;
             }
             else
             {
-                echo "Creating record $from - $to at $dateFrom. It is {$price}\n";
                 return true;
             }
         }
@@ -341,7 +365,7 @@ class CacheCommand extends CConsoleCommand
                 return false;
             }
             $toAirp = Airport::model()->findByAttributes(array('code'=>substr($arrAirportDate,0,3)));
-            if (!$fromAirp)
+            if (!$toAirp)
             {
                 echo "Airport $arrAirportDate not defined \n";
                 return false;
@@ -377,14 +401,16 @@ class CacheCommand extends CConsoleCommand
             'dateBack' => $dateBack
         ));
         if (!$flightCache)
+        {
+            echo "Creating record $from - $to - $from at $dateFrom <-> $dateBack. It is {$price}\n";
             $flightCache = new FlightCache();
+        }
         else
         {
             if ($flightCache->priceBestPrice > $price)
                 echo "Updating record $from - $to - $from at $dateFrom <-> $dateBack. It was {$flightCache->priceBestPrice} become {$price}\n";
             else
             {
-                echo "Creating record $from - $to - $from at $dateFrom <-> $dateBack. It is {$price}\n";
                 return true;
             }
         }
