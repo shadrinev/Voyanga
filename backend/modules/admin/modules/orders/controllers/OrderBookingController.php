@@ -23,20 +23,45 @@ class OrderBookingController extends Controller
     /**
      * Lists all models.
      */
-    public function actionIndex()
+    public function actionIndex($all=false)
     {
+        $criteria = array('order'=>'t.timestamp DESC');
+        $navText = 'Показать без мусора';
+        $navLink = $this->createUrl('index');
+
+        if(!$all) {
+            $criteria['with'] = array('hotelBookers', 'flightBookers');
+            $criteria['together'] = true;
+            $criteria['condition'] = "hotelBookers.status!='swHotelBooker/enterCredentials' or flightBookers.status!='swFlightBooker/enterCredentials'";
+            $navText = 'Показать все';
+            $navLink = $this->createUrl('index', array('all'=>true));
+        }
+
+        if(isset($_GET['search'])) {
+            $s = $_GET['search'];
+            $criteria['with'] = array('hotelBookers', 'flightBookers');
+            $criteria['together'] = true;
+            $conds = Array();
+            $conds[] = "flightBookers.nemoBookId = '$s'";  
+            $conds[] = "flightBookers.pnr = '$s'";
+            $conds[] = "email='$s'";
+            $criteria['condition'] = implode(" OR ", $conds);
+
+        }
+
+
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         $dataProvider=new CActiveDataProvider('OrderBooking', array(
-            'criteria'=>array(
-                'order'=>'timestamp DESC',
-            ),
+            'criteria'=>$criteria,
             'pagination'=>array(
-                'pageSize'=>100,
+                'pageSize'=>10,
             )
         ));
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
+            'navText' => $navText,
+            'navLink' => $navLink,
         ));
     }
 

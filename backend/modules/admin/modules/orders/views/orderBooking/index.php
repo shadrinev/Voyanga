@@ -10,6 +10,13 @@ $this->menu=array(
 ?>
 
 <h1>Заказы</h1>
+<a href="<?= $navLink?>"><?= $navText?></a>
+<form method="get">
+    Ищет по NemoBookId, pnr, email
+    <br />
+    <input type="text" name="search" value="">
+    <input type="submit" value="Искать">
+</form>
 
 <?php $this->widget('bootstrap.widgets.BootGridView',array(
     'id'=>'event-grid',
