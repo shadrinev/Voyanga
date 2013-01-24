@@ -12,7 +12,7 @@ $this->menu=array(
 <h1>Заказы</h1>
 <a href="<?= $navLink?>"><?= $navText?></a>
 <form method="get">
-    Ищет по NemoBookId, pnr, email, phone
+    Ищет по NemoBookId, pnr, email, phone, flight status, hotel status
     <br />
     <input type="text" name="search" value="">
     <input type="submit" value="Искать">

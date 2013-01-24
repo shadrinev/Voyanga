@@ -26,7 +26,7 @@ class OrderBookingController extends Controller
     /**
      * Lists all models.
      */
-    public function actionIndex($all=false)
+    public function actionIndex($search='',$all=false)
     {
         $criteria = array('order'=>'t.timestamp DESC');
         $navText = 'Показать без мусора';
@@ -40,13 +40,15 @@ class OrderBookingController extends Controller
             $navLink = $this->createUrl('index', array('all'=>true));
         }
 
-        if(isset($_GET['search'])) {
-            $s = $_GET['search'];
+        if($search) {
+            $s = $search;
             $criteria['with'] = array('hotelBookers', 'flightBookers');
             $criteria['together'] = true;
             $conds = Array();
             $conds[] = "flightBookers.nemoBookId = '$s'";  
             $conds[] = "flightBookers.pnr = '$s'";
+            $conds[] = "flightBookers.status = '$s'";
+            $conds[] = "hotelBookers.status = '$s'";
             $conds[] = "email='$s'";
             $conds[] = "phone='$s'";
             $criteria['condition'] = implode(" OR ", $conds);
@@ -59,7 +61,7 @@ class OrderBookingController extends Controller
         $dataProvider=new CActiveDataProvider('OrderBooking', array(
             'criteria'=>$criteria,
             'pagination'=>array(
-                'pageSize'=>10,
+                'pageSize'=>100,
             )
         ));
         $this->render('index',array(
@@ -239,6 +241,21 @@ class OrderBookingController extends Controller
         if(!$bill->getChannel()->confirm())
             die( "FIALED");
         $this->redirect(Array('view', 'id'=>$bill->getChannel()->getOrderBookingId()));
+    }
+
+    public function actionInjectTicketNumbers($bookingId) {
+        $booking = new FlightBookerComponent();
+        $booking->setFlightBookerFromId($bookingId);
+        foreach($_POST['tickets'] as $passId => $ticket) {
+            $pass = FlightBookingPassport::model()->findByPk($passId);
+            $pass->ticketNumber = $ticket;
+            $pass->save();
+        }
+        //! Fixme leave 1-2 steps max
+        $booking->status('manualProcessing');
+        $booking->status('manualTicketing');
+        $booking->status('manualSuccess');
+        $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
     }
 
 }

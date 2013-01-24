@@ -21,6 +21,18 @@
           <li><a href="<?= $url?>"><?=$title?></a></li>
         <?php endforeach; ?>
       </ul>
+      <?php if($booking->status == 'swFlightBooker/ticketingRepeat'): ?>
+      <b>Ввод результатов ручной выписки</b>
+      <ol>
+        <form method="POST" action="<?= $this->createUrl('injectTicketNumbers', array('bookingId'=>$booking->id)); ?>">
+        <?php foreach($booking->flightBookingPassports as $passport): ?>
+              <li>Номер билета <input type="text" name="tickets[<?= $passport->id?>]"> для <?= $passport->firstName; ?> <?= $passport->lastName; ?></li>
+        <?php endforeach; ?>
+        <input type='submit' value="Выписать"> *Письмо не будет отправлено автоматически
+        </form>
+      </ol>
+      <?php endif; ?> 
+
     </td></tr>
   </table>
 </td>
