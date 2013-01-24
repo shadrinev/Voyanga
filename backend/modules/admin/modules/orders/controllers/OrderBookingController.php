@@ -48,6 +48,7 @@ class OrderBookingController extends Controller
             $conds[] = "flightBookers.nemoBookId = '$s'";  
             $conds[] = "flightBookers.pnr = '$s'";
             $conds[] = "email='$s'";
+            $conds[] = "phone='$s'";
             $criteria['condition'] = implode(" OR ", $conds);
 
         }
