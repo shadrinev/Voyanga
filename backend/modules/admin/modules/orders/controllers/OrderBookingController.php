@@ -175,7 +175,7 @@ class OrderBookingController extends Controller
 
 
     public function actionResendEmail($id) {
-        $res = Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$orderId));
+        $res = Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$id));
         $this->redirect(Array('view', 'id'=>$id));
     }
 
