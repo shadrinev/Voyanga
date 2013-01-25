@@ -1561,7 +1561,7 @@ function resizePanel(arg) {
             });
             var_iphone++;
         }
-        esle {
+        else {
             return
         }
     }
