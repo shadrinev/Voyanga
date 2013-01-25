@@ -1258,13 +1258,18 @@ $(window).resize(resizeFAQ);
 $(window).scroll(scrollFAQ);
 
 function gradientResize() {
-    if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
-        var _content = $('.wrapper .main-block').find('#content');
-        var offset = _content.offset();
-        var _leftContent = $(window).width() - offset.left;
-        var _rightContent = offset.left + _content.width();
-        $('.gShR').show().css('left', (_rightContent - 180) +'px').css('width', ($(window).width() - (_rightContent - 180)) +'px');;
-        $('.gShL').show().css('right', (_leftContent - 40) +'px').css('width', (offset.left + 40) +'px');
+    if (! DetectIphoneOrIpod() ) {
+        if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
+            var _content = $('.wrapper .main-block').find('#content');
+            var offset = _content.offset();
+            var _leftContent = $(window).width() - offset.left;
+            var _rightContent = offset.left + _content.width();
+            $('.gShR').show().css('left', (_rightContent - 180) +'px').css('width', ($(window).width() - (_rightContent - 180)) +'px');;
+            $('.gShL').show().css('right', (_leftContent - 40) +'px').css('width', (offset.left + 40) +'px');
+        }
+        else {
+            return
+        }
     }
     else {
         return
@@ -1475,7 +1480,7 @@ $(function(){
 
 function resizePanel(arg) {
     if ($('.panelTable').length > 0 && $('.panelTable').is(':visible')) {
-        if (DetectIphoneOrIpod() && var_iphone < 1) {
+        if (DetectIphoneOrIpod() && var_iphone < 5) {
         console.log('!!!==== 7 ====!!!');
             $('.panelTable').each(function(index){
 
@@ -1554,9 +1559,9 @@ function resizePanel(arg) {
                 _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
                 _widthPanelTable = _panelTable.innerWidth();
             });
-            var_iphone = 1;
+            var_iphone++;
         }
-        esle {
+        else {
             return
         }
     }
