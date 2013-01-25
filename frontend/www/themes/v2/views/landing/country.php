@@ -1,7 +1,18 @@
 <div class="headBlockOne">
 <div class="center-block">
     <h1>Авиабилеты в <?php echo $countryMorph['caseAcc'];?></h1>
-    <h3>Стоимость из <a href="#" class="cityChoise active"><span>Нижний Новгород</span></a> <a href="#" class="cityChoise"><span>Москва</span></a> <a href="#" class="cityChoise"><span>Санкт Петербург</span></a></h3>
+    <h3>Стоимость из
+        <?php
+        foreach($citiesFrom as $cityPoint):
+            ?>
+            <a href="#" class="cityChoise<?php echo $cityPoint['cityId']==$currentCity->id ? ' active':'';?>">
+                <span><?php echo $cityPoint['cityName'];?></span>
+            </a>
+            <?php
+
+        endforeach;
+        ?>
+    </h3>
 </div>
 <table class="tableFlight first up">
     <thead>
@@ -33,7 +44,7 @@
         if($i <= $firstHalf):
             $back = ($fc->dateBack == '0000-00-00' ? false : true );
             ?>
-    <tr class="select">
+    <tr<?php echo (($i+1) % 2) == 0 ? ' class="select"' : '';?>>
         <td class="tdEmpty">
 
         </td>
@@ -82,10 +93,7 @@
     $i++;
     if($i > $firstHalf):
         $back = ($fc->dateBack == '0000-00-00' ? false : true );?>
-    <tr class="select">
-        <td class="tdEmpty">
-
-        </td>
+    <tr<?php echo ($i % 2) == 0 ? ' class="select"' : '';?>>
         <td class="tdFlight">
             <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?></div>
         </td>
@@ -112,24 +120,25 @@
 <div class="center-block">
 <h2>Отели в Москве</h2>
 
+<?php foreach($hotelsInfo as $hotInfo):?>
 <div class="hotels-tickets parkPage">
     <div class="content">
         <div class="full-info">
             <div class="preview-photo">
                 <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
+                    <li><a class="photo" href="<?php echo $hotInfo->getFrontImageUrl();?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
                 </ul>
             </div>
-            <div class="stars three"></div>
+            <div class="stars <?php echo $hotInfo->getWordStars();?>"></div>
             <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
+                <h4><?php echo $hotInfo->hotelName;?></h4>
                 <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
+                    <span><?php echo $hotInfo->address;?></span>
                     <span class="gradient"></span>
                 </div>
             </div>
             <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
+                от <span class="cost"><?php echo $hotInfo->price;?></span> <span class="rur">o</span> / ночь
             </div>
         </div>
     </div>
@@ -139,229 +148,15 @@
     <span class="rv"></span>
     <span class="bh"></span>
 </div>
-<div class="hotels-tickets parkPage">
-    <div class="content">
-        <div class="full-info">
-            <div class="preview-photo">
-                <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
-                </ul>
-            </div>
-            <div class="stars three"></div>
-            <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
-                <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
-                    <span class="gradient"></span>
-                </div>
-            </div>
-            <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
-            </div>
-        </div>
-    </div>
-    <span class="lt"></span>
-    <span class="rt"></span>
-    <span class="lv"></span>
-    <span class="rv"></span>
-    <span class="bh"></span>
-</div>
-<div class="hotels-tickets parkPage">
-    <div class="content">
-        <div class="full-info">
-            <div class="preview-photo">
-                <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
-                </ul>
-            </div>
-            <div class="stars three"></div>
-            <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
-                <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
-                    <span class="gradient"></span>
-                </div>
-            </div>
-            <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
-            </div>
-        </div>
-    </div>
-    <span class="lt"></span>
-    <span class="rt"></span>
-    <span class="lv"></span>
-    <span class="rv"></span>
-    <span class="bh"></span>
-</div>
-<div class="hotels-tickets parkPage">
-    <div class="content">
-        <div class="full-info">
-            <div class="preview-photo">
-                <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
-                </ul>
-            </div>
-            <div class="stars three"></div>
-            <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
-                <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
-                    <span class="gradient"></span>
-                </div>
-            </div>
-            <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
-            </div>
-        </div>
-    </div>
-    <span class="lt"></span>
-    <span class="rt"></span>
-    <span class="lv"></span>
-    <span class="rv"></span>
-    <span class="bh"></span>
-</div>
-<div class="hotels-tickets parkPage">
-    <div class="content">
-        <div class="full-info">
-            <div class="preview-photo">
-                <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
-                </ul>
-            </div>
-            <div class="stars three"></div>
-            <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
-                <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
-                    <span class="gradient"></span>
-                </div>
-            </div>
-            <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
-            </div>
-        </div>
-    </div>
-    <span class="lt"></span>
-    <span class="rt"></span>
-    <span class="lv"></span>
-    <span class="rv"></span>
-    <span class="bh"></span>
-</div>
-<div class="hotels-tickets parkPage">
-    <div class="content">
-        <div class="full-info">
-            <div class="preview-photo">
-                <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
-                </ul>
-            </div>
-            <div class="stars three"></div>
-            <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
-                <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
-                    <span class="gradient"></span>
-                </div>
-            </div>
-            <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
-            </div>
-        </div>
-    </div>
-    <span class="lt"></span>
-    <span class="rt"></span>
-    <span class="lv"></span>
-    <span class="rv"></span>
-    <span class="bh"></span>
-</div>
-<div class="hotels-tickets parkPage">
-    <div class="content">
-        <div class="full-info">
-            <div class="preview-photo">
-                <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
-                </ul>
-            </div>
-            <div class="stars three"></div>
-            <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
-                <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
-                    <span class="gradient"></span>
-                </div>
-            </div>
-            <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
-            </div>
-        </div>
-    </div>
-    <span class="lt"></span>
-    <span class="rt"></span>
-    <span class="lv"></span>
-    <span class="rv"></span>
-    <span class="bh"></span>
-</div>
-<div class="hotels-tickets parkPage">
-    <div class="content">
-        <div class="full-info">
-            <div class="preview-photo">
-                <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
-                </ul>
-            </div>
-            <div class="stars three"></div>
-            <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
-                <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
-                    <span class="gradient"></span>
-                </div>
-            </div>
-            <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
-            </div>
-        </div>
-    </div>
-    <span class="lt"></span>
-    <span class="rt"></span>
-    <span class="lv"></span>
-    <span class="rv"></span>
-    <span class="bh"></span>
-</div>
-<div class="hotels-tickets parkPage">
-    <div class="content">
-        <div class="full-info">
-            <div class="preview-photo">
-                <ul>
-                    <li><a class="photo" href="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"><img src="http://hotelbook.ru/photos/118/118/2/4/1833b.jpg"></a></li>
-                </ul>
-            </div>
-            <div class="stars three"></div>
-            <div class="overflowBlock">
-                <h4>ST PETERSBURG</h4>
-                <div class="street">
-                    <span>5/2 VYBORGSKAYA EMBANKMENT ST PETERSBURG NABREREZHNAYA RUSSIA</span>
-                    <span class="gradient"></span>
-                </div>
-            </div>
-            <div class="how-cost">
-                от <span class="cost">2635</span> <span class="rur">o</span> / ночь
-            </div>
-        </div>
-    </div>
-    <span class="lt"></span>
-    <span class="rt"></span>
-    <span class="lv"></span>
-    <span class="rv"></span>
-    <span class="bh"></span>
-</div>
+<?php endforeach; ?>
+
 
 <div class="clear"></div>
 </div>
 </div>
 <div class="headBlockOne">
 <div class="center-block">
-    <h2 class="tableH2">Дешевые билеты из Санкт-Петербурга</h2>
+    <h2 class="tableH2">Дешевые билеты из <?php echo $currentCity->caseGen;?></h2>
 </div>
 <table class="tableFlight first">
     <thead>
@@ -384,142 +179,35 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="select">
-        <td class="tdEmpty">
+    <?php
+    $firstHalf = round(count($flightCacheFromCurrent)/2);
+    $secondHalf = count($flightCacheFromCurrent) - $firstHalf;
+    $i =0;
+    foreach($flightCacheFromCurrent as $fc):
+        $i++;
+        if($i <= $firstHalf):
+            $back = ($fc->dateBack == '0000-00-00' ? false : true );
+            ?>
+        <tr<?php echo (($i+1) % 2) == 0 ? ' class="select"' : '';?>>
+            <td class="tdEmpty">
 
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="toFrom"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr class="select">
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="from"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr class="select">
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="from"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr class="select">
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="from"></span> Санкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td class="tdEmpty">
-
-        </td>
-        <td class="tdFlight">
-
-        </td>
-        <td class="tdTo">
-
-        </td>
-        <td class="tdFrom">
-
-        </td>
-        <td class="tdPrice">
-
-        </td>
-    </tr>
+            </td>
+            <td class="tdFlight">
+                <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?></div>
+            </td>
+            <td class="tdTo">
+                <?php echo date('d.m',strtotime($fc->dateFrom));?>
+            </td>
+            <td class="tdFrom">
+                <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m',strtotime($fc->dateBack)) );?>
+            </td>
+            <td class="tdPrice">
+                <a href="#"><span class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span class="rur">o</span></a>
+            </td>
+        </tr>
+            <?php
+        endif;
+    endforeach;?>
     </tbody>
 </table>
 <table class="tableFlight second">
@@ -544,150 +232,29 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="select">
+    <?php $i =0;
+    foreach($flightCacheFromCurrent as $fc):
+        $i++;
+        if($i > $firstHalf):
+            $back = ($fc->dateBack == '0000-00-00' ? false : true );?>
+        <tr<?php echo ($i % 2) == 0 ? ' class="select"' : '';?>>
+            <td class="tdFlight">
+                <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?></div>
+            </td>
+            <td class="tdTo">
+                <?php echo date('d.m',strtotime($fc->dateFrom));?>
+            </td>
+            <td class="tdFrom">
+                <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m',strtotime($fc->dateBack)) );?>
+            </td>
+            <td class="tdPrice">
+                <a href="#"><span class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span class="rur">o</span></a>
+            </td>
+        </tr>
+            <?php
+        endif;
+    endforeach;?>
 
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr>
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr class="select">
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr>
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr class="select">
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr>
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr class="select">
-
-        <td class="tdFlight">
-            <div>Санкт-Петербург <span class="to"></span> Санкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-ПетербургСанкт-Петербург</div>
-        </td>
-        <td class="tdTo">
-            05.11
-        </td>
-        <td class="tdFrom">
-            05.11
-        </td>
-        <td class="tdPrice">
-            <a href="#"><span class="price">9 400</span> <span class="rur">o</span></a>
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
-    <tr>
-
-        <td class="tdFlight">
-
-        </td>
-        <td class="tdTo">
-
-        </td>
-        <td class="tdFrom">
-
-        </td>
-        <td class="tdPrice">
-
-        </td>
-        <td class="tdEmpty">
-
-        </td>
-    </tr>
     </tbody>
 </table>
 <div class="clear"></div>

@@ -194,7 +194,7 @@
                                 <td class="tdPrice"><?php echo UtilsHelper::formatPrice($ticket->taxes);?> RUB</td>
                             </tr>
                             <tr>
-                                <td class="tdTitle">Коммисия / Agency Fee</td>
+                                <td class="tdTitle">Комиссия / Agency Fee</td>
                                 <td class="tdPrice"><?php echo UtilsHelper::formatPrice($ticket->commission);?> RUB</td>
                             </tr>
                             <tr>

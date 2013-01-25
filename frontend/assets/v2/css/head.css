@@ -1,4 +1,3 @@
-.text-overflow{white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;overflow:hidden;}
 .head{background:url("/themes/v2/images/bg-head.png") repeat-x scroll 0 0 transparent;box-shadow:0 0 5px #000101;-moz-box-shadow:0 0 5px #000101;-webkit-box-shadow:0 0 5px #000101;min-width:1000px;height:38px;width:100%;position:relative;z-index:998;}.head .logo{background:url("/themes/v2/images/logo.png") no-repeat scroll 0 0 transparent;text-indent:-9999px;display:block;height:27px;left:32px;position:absolute;top:7px;width:122px;}
 .head .about{background:url("/themes/v2/images/logo.png") no-repeat scroll -122px 0 transparent;text-indent:-9999px;display:block;height:27px;left:154px;position:absolute;top:7px;width:76px;}
 .head .login-window{height:38px;line-height:45px;position:absolute;right:0;top:0;width:152px;cursor:pointer;}.head .login-window a:hover{text-decoration:none;}

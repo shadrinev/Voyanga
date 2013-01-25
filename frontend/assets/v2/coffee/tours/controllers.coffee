@@ -48,6 +48,7 @@ class ToursController
         else
           items.push new AviaResult(item, stacked)
       if(stacked.findAndSelectItems(items))
+        stacked.showOverview()
         console.log('ssseeellleecctt',items,true)
         #need save to tours
         postData = []

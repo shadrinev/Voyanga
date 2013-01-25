@@ -26,20 +26,48 @@ class OrderBookingController extends Controller
     /**
      * Lists all models.
      */
-    public function actionIndex()
+    public function actionIndex($search='',$all=false)
     {
+        $criteria = array('order'=>'t.timestamp DESC');
+        $navText = 'Показать без мусора';
+        $navLink = $this->createUrl('index');
+
+        if(!$all) {
+            $criteria['with'] = array('hotelBookers', 'flightBookers');
+            $criteria['together'] = true;
+            $criteria['condition'] = "hotelBookers.status!='swHotelBooker/enterCredentials' or flightBookers.status!='swFlightBooker/enterCredentials'";
+            $navText = 'Показать все';
+            $navLink = $this->createUrl('index', array('all'=>true));
+        }
+
+        if($search) {
+            $s = $search;
+            $criteria['with'] = array('hotelBookers', 'flightBookers');
+            $criteria['together'] = true;
+            $conds = Array();
+            $conds[] = "flightBookers.nemoBookId = '$s'";  
+            $conds[] = "flightBookers.pnr = '$s'";
+            $conds[] = "flightBookers.status = '$s'";
+            $conds[] = "hotelBookers.status = '$s'";
+            $conds[] = "email='$s'";
+            $conds[] = "phone='$s'";
+            $criteria['condition'] = implode(" OR ", $conds);
+
+        }
+
+
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         $dataProvider=new CActiveDataProvider('OrderBooking', array(
-            'criteria'=>array(
-                'order'=>'timestamp DESC',
-            ),
+            'criteria'=>$criteria,
             'pagination'=>array(
                 'pageSize'=>100,
             )
         ));
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
+            'navText' => $navText,
+            'navLink' => $navLink,
         ));
     }
 
@@ -213,6 +241,21 @@ class OrderBookingController extends Controller
         if(!$bill->getChannel()->confirm())
             die( "FIALED");
         $this->redirect(Array('view', 'id'=>$bill->getChannel()->getOrderBookingId()));
+    }
+
+    public function actionInjectTicketNumbers($bookingId) {
+        $booking = new FlightBookerComponent();
+        $booking->setFlightBookerFromId($bookingId);
+        foreach($_POST['tickets'] as $passId => $ticket) {
+            $pass = FlightBookingPassport::model()->findByPk($passId);
+            $pass->ticketNumber = $ticket;
+            $pass->save();
+        }
+        //! Fixme leave 1-2 steps max
+        $booking->status('manualProcessing');
+        $booking->status('manualTicketing');
+        $booking->status('manualSuccess');
+        $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
     }
 
 }

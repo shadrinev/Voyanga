@@ -78,6 +78,7 @@ ToursController = (function() {
         }
       }
       if (stacked.findAndSelectItems(items)) {
+        stacked.showOverview();
         console.log('ssseeellleecctt', items, true);
         postData = [];
         _ref1 = stacked.data();
