@@ -447,7 +447,7 @@ class FlightVoyage extends CApplicationComponent
             reset($aParts);
             foreach ($this->flights as $flightKey => $flight)
             {
-                foreach($flight as $partKey=>$part){
+                foreach($flight->flightParts as $partKey=>$part){
                     $each = each($aParts);
                     if(isset($each['value']->departure_terminal_code)){
                         $this->flights[$flightKey]->flightParts[$partKey]->departureTerminalCode = $each['value']->departure_terminal_code;

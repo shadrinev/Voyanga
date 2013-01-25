@@ -18,7 +18,7 @@ class LandingController extends Controller {
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
         $countryMorph = array('caseAcc'=>$this->getCase($countryUp,'ВН'));
         //if(!$cityFromCode){
-            $currentCity = City::getCityByCode('LED');
+        $currentCity = City::getCityByCode('LED');
         //}else{
         //    $currentCity = City::getCityByCode($cityFromCode);
         //}
@@ -135,11 +135,27 @@ class LandingController extends Controller {
             $city = City::getCityByPk($hc->cityId);
         }else{
             $hotelInfo = $hotelClient->hotelDetail($hotelId);
+            if($hotelInfo->city){
+                $city = $hotelInfo->city;
+            }
         }
-        $rating = new HotelRating();
+        if($city){
+            $rating = new HotelRating();
+            $ratings = $rating->findByNames(array($hotelInfo->hotelName),$city);
+            if($ratings){
+                foreach($ratings as $rate) break;
+                $hotelInfo->rating = $rate;
+            }
+        }
+        $serviceGroupIcons = array('Сервис'=>'service','Спорт и отдых'=>'sport','Туристам'=>'turist','Интернет'=>'internet','Развлечения и досуг'=>'dosug','Парковка'=>'parkovka','Дополнительно'=>'dop','В отеле'=>'in-hotel');
+        $serviceList = array();
+        foreach($hotelInfo->hotelGroupServices as $grName=>$group){
+            $serviceList[] = array('name'=>$grName,'icon'=>$serviceGroupIcons[$grName],'elements'=>$group);
+        }
+        //print_r($serviceList);die();
 
         $this->layout = 'static';
-        $this->render('hotelInfo', array('hotelInfo'=>$hotelInfo
+        $this->render('hotelInfo', array('hotelInfo'=>$hotelInfo,'serviceList'=>$serviceList
         ));
     }
 
