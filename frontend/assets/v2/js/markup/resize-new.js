@@ -1480,7 +1480,7 @@ $(function(){
 
 function resizePanel(arg) {
     if ($('.panelTable').length > 0 && $('.panelTable').is(':visible')) {
-        if (DetectIphoneOrIpod() && var_iphone < 5) {
+
         console.log('!!!==== 7 ====!!!');
             $('.panelTable').each(function(index){
 
@@ -1559,11 +1559,6 @@ function resizePanel(arg) {
                 _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
                 _widthPanelTable = _panelTable.innerWidth();
             });
-            var_iphone++;
-        }
-        else {
-            return
-        }
     }
 }
 
