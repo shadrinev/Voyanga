@@ -1,8 +1,8 @@
 <?php
 $debug = true;
-$prodServers = array('test.voyanga.com', 'voyanga.com');
-if ((isset($_SERVER['HTTP_HOST'])) && (in_array($_SERVER['HTTP_HOST'], $prodServers)))
-  $debug = false;
+//$prodServers = array('test.voyanga.com', 'voyanga.com');
+//if ((isset($_SERVER['HTTP_HOST'])) && (in_array($_SERVER['HTTP_HOST'], $prodServers)))
+//  $debug = false;
 defined('YII_DEBUG') or define('YII_DEBUG', $debug);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 defined('BUILDING') or define('BUILDING', false);

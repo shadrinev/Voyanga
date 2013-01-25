@@ -145,8 +145,8 @@ class CacheCommand extends CConsoleCommand
                     if (isset($skyscannerCities[$nFrom]) and (isset($skyscannerCities[$nTo])))
                     {
                         $url = self::SKYSCANNER_CACHE;
-                        $from = '1304';
-                        $to = '1304';
+                        $from = '1306';
+                        $to = '1306';
                         $skyscannerCityFrom = $skyscannerCities[$nFrom];
                         $skyscannerCityTo = $skyscannerCities[$nTo];
                         $url = str_replace('{{from}}', $skyscannerCityFrom, $url);
