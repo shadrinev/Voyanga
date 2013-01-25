@@ -149,6 +149,7 @@ class OrderBookingController extends Controller
 
         foreach($model->flightBookers as $flightBooker) {
             $retArr['flightBookings'][] = $flightBooker;
+//            die(var_dump($flightBooker->flightVoyage->taxes));
         }
 
         foreach($model->hotelBookers as $hotelBooker){
@@ -174,9 +175,7 @@ class OrderBookingController extends Controller
 
 
     public function actionResendEmail($id) {
-        $order = Yii::app()->order;
-        $order->initByOrderBookingId($id);
-        $order->sendNotifications();
+        $res = Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$orderId));
         $this->redirect(Array('view', 'id'=>$id));
     }
 
