@@ -12,6 +12,19 @@
   <?php endif; ?>
 </td>
 <td colspan="<?= $span[1]?>">
+  <?php if($booking instanceof FlightBooker): ?>
+  <h4>Тарифы/Сборы</h4>
+  <table class="table-bordered">
+    <tr><th>BaseFare</th><td><?= $booking->flightVoyage->baseFare?></td></tr>
+
+    <tr><th>Taxes</th><td><?= $booking->flightVoyage->taxes?></td></tr>
+
+    <tr><th>Charges</th><td><?= $booking->flightVoyage->charges?></td></tr>
+    <tr><th>Сумма</th><td><?= $booking->flightVoyage->price?> руб.</td></tr>
+  </table>
+  <?php endif; ?>
+</td>
+<td colspan="<?= $span[2]?>">
   <h4>Пульт управления</h4>
   <table class="table-bordered">
     <tr><th>Статус</th><td><?= $booking->status ?></td></tr>

@@ -53,14 +53,16 @@ class Payments_MetaBookerTour extends CComponent{
 
     public function getPrice() {
         return $this->getRealPrice();
-//        return $this->base->getCurrent()->price;
     }
 
 
    public function getRealPrice() {
         $price = 0;
         foreach ($this->bookers as $booker) {
-            $price += $booker->getCurrent()->price;
+            if($booker instanceof HotelBookerComponent)
+                $price += $booker->hotel->rubPrice;
+            else
+                $price += $booker->getCurrent()->price;
         }
         return $price;// - $this->getPrice();
     }
