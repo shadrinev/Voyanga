@@ -316,4 +316,16 @@ class HotelInfo extends CApplicationComponent
             }
         }
     }
+
+    public function getFrontImageUrl(){
+        if($this->images){
+            foreach($this->images as $img)
+                break;
+            return $img->largeUrl;
+        }
+    }
+
+    public function getWordStars(){
+        return Hotel::$categoryWord[$this->categoryId];
+    }
 }

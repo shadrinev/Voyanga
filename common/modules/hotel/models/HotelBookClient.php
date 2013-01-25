@@ -1411,7 +1411,8 @@ class HotelBookClient
             'distances' => 'Distances',
             'gtaHotelCode' => 'GTAHotelCode',
             'gtaCityCode' => 'GTACityCode',
-            'updated' => 'Updated'
+            'updated' => 'Updated',
+            'hotelName' => 'name'
         );
         $roomAttrMap = array(
             'mealId', 'mealName', 'mealBreakfastId', 'mealBreakfastName', 'sharingBedding',

@@ -3,6 +3,8 @@ class UtilsHelper
 {
 
     public static $sng = array('RU','UA','BY');
+    public static $months = array('Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек');
+    public static $days = array('Вс','Пн','Вт','Ср','Чт','Пт','Сб');
     public static $sortKey;
     public static $orderSort;
 

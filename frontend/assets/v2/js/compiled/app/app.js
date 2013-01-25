@@ -32,6 +32,8 @@ Application = (function(_super) {
 
     this.reRenderCalendarEvent = __bind(this.reRenderCalendarEvent, this);
 
+    this.reRenderCalendarStatic = __bind(this.reRenderCalendarStatic, this);
+
     this.reRenderCalendar = __bind(this.reRenderCalendar, this);
 
     this.minimizeCalendar = __bind(this.minimizeCalendar, this);
@@ -119,6 +121,20 @@ Application = (function(_super) {
 
   Application.prototype.reRenderCalendar = function(elements) {
     var _this = this;
+    VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
+    this.fakoPanel.subscribe(function(newPanel) {
+      if (newPanel.panels) {
+        return _this.activeSearchPanel(_.last(newPanel.panels()));
+      }
+    });
+    if (this.fakoPanel().panels) {
+      return this.activeSearchPanel(_.last(this.fakoPanel().panels()));
+    }
+  };
+
+  Application.prototype.reRenderCalendarStatic = function(elements) {
+    var _this = this;
+    $('.calenderWindow').css('position', 'static').find('.calendarSlide').css('position', 'static');
     VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
     this.fakoPanel.subscribe(function(newPanel) {
       if (newPanel.panels) {

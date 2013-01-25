@@ -27,7 +27,7 @@
         panelSet.departureCity(window.defaultCity);
         panelSet.arrivalCity(window.pointCity);
 
-        panelSet.rt(false);
+        panelSet.rt(true);
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
         setDepartureDate('<?php echo $flightCache[$activeMin]->dateFrom;?>');
@@ -44,55 +44,55 @@
 
 </script>
 <div class="headBlockOne">
-<div class="center-block">
-    <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
-    <h3>Стоимость на месяц вперед из
-        <?php
-        foreach($citiesFrom as $cityPoint):
-            ?>
-            <a href="#" class="cityChoise<?php echo $cityPoint['cityId']==$currentCity->id ? ' active':'';?>">
-                <span><?php echo $cityPoint['cityName'];?></span>
-            </a>
+    <div class="center-block">
+        <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
+        <h3>Стоимость на месяц вперед из
             <?php
+            foreach($citiesFrom as $cityPoint):
+                ?>
+                <a href="#" class="cityChoise<?php echo $cityPoint['cityId']==$currentCity->id ? ' active':'';?>">
+                    <span><?php echo $cityPoint['cityName'];?></span>
+                </a>
+                <?php
 
-        endforeach;
-        ?>
-    </h3>
-</div>
-<div class="center-block">
-    <div class="floatLeft">
-        <ul class="grafik first-child">
-
-            <?php foreach($flightCache as $k=>$fc):?>
-            <?php $perc = round(( $fc->priceBestPrice / $maxPrice )*100);?>
-            <li class="grafikMean<?php echo $k==$activeMin ? ' min' : '';?>" data-price="<?php echo $fc->priceBestPrice;?>" data-date="<?php echo $fc->dateFrom;?>" onclick="setDepartureDate($(this).data('date'))">
-                <div class="price" style="bottom: <?php echo $perc;?>px"><?php echo $fc->priceBestPrice;?></div>
-                <div class="statusBar" style="height: <?php echo $perc;?>px"></div>
-            </li>
-            <?php endforeach; ?>
-
-        </ul>
+            endforeach;
+            ?>
+        </h3>
     </div>
-    <div class="floatRight textBlockPrice">
-        <div class="cena"> от <span class="price">3 250</span> <span class="rur">o</span></div>
-        <div>
-            Самая низкая цена<br>
-            по этому направлению:<br>
-            <a href="#">12 июня 2012</a>
-        </div>
-    </div>
-    <div class="clear"></div>
-</div>
-<div class="bgDate">
     <div class="center-block">
         <div class="floatLeft">
-    <?php foreach($flightCache as $fc){
-            $oldMonth = intval(date('n',strtotime($fc->dateFrom)));
-            $firstCell = true;
-            break;
-        }?>
-            <ul class="date">
+            <ul class="grafik first-child">
+
                 <?php foreach($flightCache as $k=>$fc):?>
+                <?php $perc = round(( $fc->priceBestPrice / $maxPrice )*100);?>
+                <li class="grafikMean<?php echo $k==$activeMin ? ' min' : '';?>" data-price="<?php echo $fc->priceBestPrice;?>" data-date="<?php echo $fc->dateFrom;?>" onclick="setDepartureDate($(this).data('date'))">
+                    <div class="price" style="bottom: <?php echo $perc;?>px"><?php echo $fc->priceBestPrice;?></div>
+                    <div class="statusBar" style="height: <?php echo $perc;?>px"></div>
+                </li>
+                <?php endforeach; ?>
+
+            </ul>
+        </div>
+        <div class="floatRight textBlockPrice">
+            <div class="cena"> от <span class="price">3 250</span> <span class="rur">o</span></div>
+            <div>
+                Самая низкая цена<br>
+                по этому направлению:<br>
+                <a href="#">12 июня 2012</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="bgDate">
+        <div class="center-block">
+            <div class="floatLeft">
+                <?php foreach($flightCache as $fc){
+                $oldMonth = intval(date('n',strtotime($fc->dateFrom)));
+                $firstCell = true;
+                break;
+            }?>
+                <ul class="date">
+                    <?php foreach($flightCache as $k=>$fc):?>
                     <?php $ts = strtotime($fc->dateFrom);
                     $m = intval(date('n',$ts));
                     ?>
@@ -106,14 +106,14 @@
                         </div>
                     </li>
                     <?php $oldMonth = $m;$firstCell=false;?>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <div class="floatRight textBlockPrice">
-            <a href="#" class="whereData"><span>Откуда данные?</span></a>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="floatRight textBlockPrice">
+                <a href="#" class="whereData"><span>Откуда данные?</span></a>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
@@ -122,121 +122,121 @@
         <div class="constructor" style="position: static;">
             <!-- BOARD CONTENT -->
             <div class="panel" data-bind="template: {data: fakoPanel(), afterRender: fakoPanel().afterRender }">
-            <table class="panelTable avia">
-                <tbody><tr>
-                    <td class="tdCityStart">
-                        Все направления<br>
-                        500+ авиакомпаний
-                    </td>
-                    <td class="tdCity">
+                <table class="panelTable avia">
+                    <tbody><tr>
+                        <td class="tdCityStart">
+                            Все направления<br>
+                            500+ авиакомпаний
+                        </td>
+                        <td class="tdCity">
 
-                        <div class="data" style="width: 247.5px;">
-                            <div class="from" data-bind="css: {active: fromChosen}">
-                                <div class="bgInput">
-                                    <div class="left"></div>
-                                    <div class="center"></div>
-                                    <div class="right"></div>
+                            <div class="data" style="width: 247.5px;">
+                                <div class="from" data-bind="css: {active: fromChosen}">
+                                    <div class="bgInput">
+                                        <div class="left"></div>
+                                        <div class="center"></div>
+                                        <div class="right"></div>
+                                    </div>
+                                    <input class="input-path departureCity" type="text" tabindex="-1" style="width: 227.5px;">
+                                    <input class="second-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen}" style="width: 227.5px;" autocomplete="off">
+                                    <div class="date" data-bind="click: showCalendar">
+                                        <span class="f17" data-bind="text: departureDateDay()"></span>
+                                        <br>
+                                        <span class="month" data-bind="text: departureDateMonth()"></span>
+                                    </div>
                                 </div>
-                                <input class="input-path departureCity" type="text" tabindex="-1" style="width: 227.5px;">
-                                <input class="second-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen}" style="width: 227.5px;" autocomplete="off">
-                                <div class="date" data-bind="click: showCalendar">
-                                    <span class="f17" data-bind="text: departureDateDay()"></span>
-                                    <br>
-                                    <span class="month" data-bind="text: departureDateMonth()"></span>
+                            </div></td>
+                        <td class="tdTumblr">
+                            <div class="tumblr">
+                                <label for="there-back">
+                                    <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
+                                    <div class="two active" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
+                                    <div class="switch" style="left: 35px;"></div>
+                                </label>
+                                <input id="there-back" type="checkbox" data-bind="checked: rt()">
+                            </div>
+                        </td>
+                        <td class="tdCity">
+                            <div class="data" style="width: 247.5px;">
+                                <div class="to" data-bind="css: {active: rtFromChosen}">
+                                    <div class="bgInput">
+                                        <div class="left"></div>
+                                        <div class="center"></div>
+                                        <div class="right"></div>
+                                    </div>
+                                    <input class="input-path arrivalCity" type="text" tabindex="-1" style="width: 227.5px;">
+                                    <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}" style="width: 227.5px;" autocomplete="off">
+                                    <div class="date" data-bind="click: showCalendar">
+                                        <span class="f17" data-bind="text: rtDateDay()"></span>
+                                        <br>
+                                        <span class="month" data-bind="text: rtDateMonth()"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div></td>
-                    <td class="tdTumblr">
-                        <div class="tumblr">
-                            <label for="there-back">
-                                <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
-                                <div class="two active" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
-                                <div class="switch" style="left: 35px;"></div>
-                            </label>
-                            <input id="there-back" type="checkbox" data-bind="checked: rt()">
-                        </div>
-                    </td>
-                    <td class="tdCity">
-                        <div class="data" style="width: 247.5px;">
-                            <div class="to" data-bind="css: {active: rtFromChosen}">
-                                <div class="bgInput">
-                                    <div class="left"></div>
-                                    <div class="center"></div>
-                                    <div class="right"></div>
-                                </div>
-                                <input class="input-path arrivalCity" type="text" tabindex="-1" style="width: 227.5px;">
-                                <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}" style="width: 227.5px;" autocomplete="off">
-                                <div class="date" data-bind="click: showCalendar">
-                                    <span class="f17" data-bind="text: rtDateDay()"></span>
-                                    <br>
-                                    <span class="month" data-bind="text: rtDateMonth()"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="tdPeople">
+                        </td>
+                        <td class="tdPeople">
                         <span data-bind="template: { data: passengers,afterRender: passengers.afterRenderPeoplePopup}">
                             <div class="how-many-man">
                                 <div class="content active" data-bind="click: showPeoplePopup">
                                     <!-- ko if: overall()>5 -->
-                                        <!-- ko if: adults()>0 -->
-                                        <div class="man"></div>
-                                        <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
-                                        <!-- /ko -->
-                                        <!-- ko if: (sum_children())>0 -->
-                                        <div class="child"></div>
-                                        <div class="count"><span>x</span><i data-bind="text: sum_children()"></i></div>
-                                        <!-- /ko -->
+                                    <!-- ko if: adults()>0 -->
+                                    <div class="man"></div>
+                                    <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
+                                    <!-- /ko -->
+                                    <!-- ko if: (sum_children())>0 -->
+                                    <div class="child"></div>
+                                    <div class="count"><span>x</span><i data-bind="text: sum_children()"></i></div>
+                                    <!-- /ko -->
                                     <!-- /ko -->
                                     <!-- ko if: overall()<=5 -->
-                                        <div class="man" data-bind="repeat: adults"></div>
-                                        <div class="child" data-bind="repeat: sum_children"></div>
+                                    <div class="man" data-bind="repeat: adults"></div>
+                                    <div class="child" data-bind="repeat: sum_children"></div>
                                     <!-- /ko -->
                                 </div>
                                 <div class="btn active" data-bind="click: showPeoplePopup"></div>
 
                             </div>
                         </span>
-                    </td>
-                    <td class="tdButton">
-                        <a class="btn-find inactive" data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}">Найти</a>
-                    </td>
-                </tr>
-                </tbody></table>
-                </div>
+                        </td>
+                        <td class="tdButton">
+                            <a class="btn-find inactive" data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}">Найти</a>
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </div>
 
 
             <!-- END BOARD CONTENT -->
             <!-- ko with: fakoPanel() -->
-                <!-- ko with: passengers -->
-                    <div class="popupPeople active avia" style="display: none;">
-                        <div class="adults">
-                            <div class="inputDIV">
-                                <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults" class="active">
-                                <a href="#" class="plusOne" data-bind="click: plusOne" rel="adults" style="display: none;">+</a>
-                                <a href="#" class="minusOne" data-bind="click: minusOne" rel="adults" style="display: none;">-</a>
-                            </div>
-                            взрослых
-                        </div>
-                        <div class="childs">
-                            <div class="inputDIV">
-                                <input type="text" name="adult2" data-bind="css: {active: children() > 0}, value: children" class="">
-                                <a href="#" class="plusOne" data-bind="click: plusOne" rel="children" style="display: none;">+</a>
-                                <a href="#" class="minusOne" data-bind="click: minusOne" rel="children" style="display: none;">-</a>
-                            </div>
-                            детей до 12 лет
-                        </div>
-                        <div class="small-childs">
-                            <div class="inputDIV">
-                                <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants" class="">
-                                <a href="#" class="plusOne" data-bind="click: plusOne" rel="infants" style="display: none;">+</a>
-                                <a href="#" class="minusOne" data-bind="click: minusOne" rel="infants" style="display: none;">-</a>
-                            </div>
-                            детей до 2 лет
-                        </div>
-
+            <!-- ko with: passengers -->
+            <div class="popupPeople active avia" style="display: none;">
+                <div class="adults">
+                    <div class="inputDIV">
+                        <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults" class="active">
+                        <a href="#" class="plusOne" data-bind="click: plusOne" rel="adults" style="display: none;">+</a>
+                        <a href="#" class="minusOne" data-bind="click: minusOne" rel="adults" style="display: none;">-</a>
                     </div>
-                <!-- /ko -->
+                    взрослых
+                </div>
+                <div class="childs">
+                    <div class="inputDIV">
+                        <input type="text" name="adult2" data-bind="css: {active: children() > 0}, value: children" class="">
+                        <a href="#" class="plusOne" data-bind="click: plusOne" rel="children" style="display: none;">+</a>
+                        <a href="#" class="minusOne" data-bind="click: minusOne" rel="children" style="display: none;">-</a>
+                    </div>
+                    детей до 12 лет
+                </div>
+                <div class="small-childs">
+                    <div class="inputDIV">
+                        <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants" class="">
+                        <a href="#" class="plusOne" data-bind="click: plusOne" rel="infants" style="display: none;">+</a>
+                        <a href="#" class="minusOne" data-bind="click: minusOne" rel="infants" style="display: none;">-</a>
+                    </div>
+                    детей до 2 лет
+                </div>
+
+            </div>
+            <!-- /ko -->
             <!-- /ko -->
 
 
@@ -256,40 +256,40 @@
 
 
 <div class="headBlockTwo">
-<div class="center-block">
-<h2>Отели в <?php echo $city->casePre;?></h2>
-    <?php foreach($hotelsInfo as $hotInfo):?>
-    <div class="hotels-tickets parkPage">
-        <div class="content">
-            <div class="full-info">
-                <div class="preview-photo">
-                    <ul>
-                        <li><a class="photo" href="<?php echo $hotInfo->getFrontImageUrl();?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
-                    </ul>
-                </div>
-                <div class="stars <?php echo $hotInfo->getWordStars();?>"></div>
-                <div class="overflowBlock">
-                    <h4><?php echo $hotInfo->hotelName;?></h4>
-                    <div class="street">
-                        <span><?php echo $hotInfo->address;?></span>
-                        <span class="gradient"></span>
+    <div class="center-block">
+        <h2>Отели в <?php echo $city->casePre;?></h2>
+        <?php foreach($hotelsInfo as $hotInfo):?>
+        <div class="hotels-tickets parkPage">
+            <div class="content">
+                <div class="full-info">
+                    <div class="preview-photo">
+                        <ul>
+                            <li><a class="photo" href="<?php echo $hotInfo->getFrontImageUrl();?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
+                        </ul>
+                    </div>
+                    <div class="stars <?php echo $hotInfo->getWordStars();?>"></div>
+                    <div class="overflowBlock">
+                        <h4><?php echo $hotInfo->hotelName;?></h4>
+                        <div class="street">
+                            <span><?php echo $hotInfo->address;?></span>
+                            <span class="gradient"></span>
+                        </div>
+                    </div>
+                    <div class="how-cost">
+                        от <span class="cost"><?php echo $hotInfo->price;?></span> <span class="rur">o</span> / ночь
                     </div>
                 </div>
-                <div class="how-cost">
-                    от <span class="cost"><?php echo $hotInfo->price;?></span> <span class="rur">o</span> / ночь
-                </div>
             </div>
+            <span class="lt"></span>
+            <span class="rt"></span>
+            <span class="lv"></span>
+            <span class="rv"></span>
+            <span class="bh"></span>
         </div>
-        <span class="lt"></span>
-        <span class="rt"></span>
-        <span class="lv"></span>
-        <span class="rv"></span>
-        <span class="bh"></span>
-    </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
 
-<div class="clear"></div>
-</div>
+        <div class="clear"></div>
+    </div>
 </div>
 <div class="headBlockOne">
     <div class="center-block">
@@ -394,7 +394,7 @@
 
         </tbody>
     </table>
-<div class="clear"></div>
+    <div class="clear"></div>
 </div>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">

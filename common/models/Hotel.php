@@ -14,6 +14,7 @@ class Hotel extends CApplicationComponent
 
     public static $categoryIdHotelbook = array(1=>'5*',2=>'3*',3=>'4*',4=>'2*',5=>'1*',6=>'-');
     public static $categoryIdMapHotelbook = array(6=>0,5=>1,4=>2,2=>3,3=>4,1=>5);
+    public static $categoryWord = array('none','one','two','three','four','five');
     public static $compereDesc = "";
 
     /** @var string hotelBook search identifier */

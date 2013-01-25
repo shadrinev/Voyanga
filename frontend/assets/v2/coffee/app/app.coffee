@@ -91,6 +91,16 @@ class Application extends Backbone.Router
     if @fakoPanel().panels
       @activeSearchPanel(_.last(@fakoPanel().panels()))
 
+  reRenderCalendarStatic:(elements) =>
+    $('.calenderWindow').css('position','static').find('.calendarSlide').css('position','static')
+    VoyangaCalendarStandart.init @fakoPanel, elements[1]
+    @fakoPanel.subscribe( (newPanel)=>
+      if newPanel.panels
+        @activeSearchPanel(_.last(newPanel.panels()))
+    )
+    if @fakoPanel().panels
+      @activeSearchPanel(_.last(@fakoPanel().panels()))
+
   reRenderCalendarEvent:(elements) =>
     console.log('rerender calendar')
     $('.calenderWindow').css('position','static').find('.calendarSlide').css('position','static')

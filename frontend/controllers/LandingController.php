@@ -11,8 +11,133 @@ class LandingController extends Controller {
 
     public function actionHotels($countryCode = '',$cityCode = '')
     {
+        if(!($country = $this->testCountry($countryCode)))
+            return false;
+
+        $this->morphy = Yii::app()->morphy;
+        $countryUp = mb_strtoupper($country->localRu, 'utf-8');
+        $countryMorph = array('caseAcc'=>$this->getCase($countryUp,'ВН'));
+        //if(!$cityFromCode){
+            $currentCity = City::getCityByCode('LED');
+        //}else{
+        //    $currentCity = City::getCityByCode($cityFromCode);
+        //}
+        $city = City::getCityByCode($cityCode);
+
+        $citiesFrom = array();
+        $this->addCityFrom($citiesFrom,4466);// Moscow
+        $this->addCityFrom($citiesFrom,5185);// Spb
+        $this->addCityFrom($citiesFrom,$currentCity->id);
+
+
+
+        Yii::import('site.common.modules.hotel.models.*');
+        $hotelClient = new HotelBookClient();
+
+        /*$criteria = new CDbCriteria();
+        $criteria->addCondition('countAirports > 0');
+        $criteria->addCondition('countryId = '.$country->id);
+        $cities = City::model()->findAll($criteria);
+        $cityIds = array();
+        foreach($cities as $city){
+            $cityIds[$city->id] = $city->id;
+        }
+
+        if(isset($cityIds[$currentCity->id])){
+            unset($cityIds[$currentCity->id]);
+        }*/
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('`to` = '.$city->id);
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->group = 'dateFrom';
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
+        $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*30));
+        $criteria->order = 'priceBestPrice';
+        //$criteria->limit = 18;
+
+        $flightCache = FlightCache::model()->findAll($criteria);
+        $sortFc = array();
+        foreach($flightCache as $fc){
+            $k = strtotime($fc->dateFrom);
+            $sortFc[$k] = $fc;
+        }
+        ksort($sortFc);
+        $sortFc = array_slice($sortFc,0,18);
+        $minPrice = false;
+        $maxPrice = false;
+        $activeMin = null;
+        $activeMax = null;
+        foreach($sortFc as $k=>$fc){
+            //$k = strtotime($fc->dateFrom);
+            if(!$minPrice){
+                $minPrice = $fc->priceBestPrice;
+                $maxPrice = $fc->priceBestPrice;
+            }else{
+                if($fc->priceBestPrice < $minPrice){
+                    $minPrice = $fc->priceBestPrice;
+                    $activeMin = $k;
+                }
+                if($fc->priceBestPrice > $maxPrice){
+                    $maxPrice = $fc->priceBestPrice;
+                    $activeMax = $k;
+                }
+            }
+        }
+        //print_r($flightCache);die();
+
+        $criteria = new CDbCriteria();
+        //$criteria->addInCondition('`cityId`',$cityIds);
+        $criteria->addCondition('cityId = '.$city->id);
+
+        $criteria->limit = 15;
+
+        $hotelCache = HotelDb::model()->findAll($criteria);
+        $hotelsInfo = array();
+        foreach($hotelCache as $hc){
+            $hotelInfo = $hotelClient->hotelDetail($hc->id);
+            $hotelInfo->price = $hc->minPrice;
+            $hotelInfo->hotelName = $hc->name;
+            $hotelsInfo[] = $hotelInfo;
+        }
+
+        $criteria = new CDbCriteria();
+        //$criteria->addInCondition('`to`',$cityIds);
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->addCondition('`dateFrom` > \''.date('Y-m-d')."'");
+        $criteria->order = 'priceBestPrice';
+        $criteria->limit = 14;
+        $criteria->group = '`to`';
+
+        $flightCacheFromCurrent = FlightCache::model()->findAll($criteria);
+
         $this->layout = 'static';
-        $this->render('hotels');
+        $this->render('hotels', array('city'=>$city,'citiesFrom'=>$citiesFrom,'hotelsInfo'=>$hotelsInfo,'currentCity'=>$currentCity,'flightCache'=>$sortFc,'maxPrice'=>$maxPrice,'minPrice'=>$minPrice,'activeMin'=>$activeMin,
+            'flightCacheFromCurrent' => $flightCacheFromCurrent
+        ));
+    }
+
+    public function hotelInfo($hotelId){
+        Yii::import('site.common.modules.hotel.models.*');
+        $hotelClient = new HotelBookClient();
+
+        $criteria = new CDbCriteria();
+        //$criteria->addInCondition('`cityId`',$cityIds);
+        $criteria->addCondition('id = '.$hotelId);
+
+
+        $hc = HotelDb::model()->find($criteria);
+        $hotelsInfo = array();
+        if($hc){
+            $hotelInfo = $hotelClient->hotelDetail($hc->id);
+            $hotelInfo->price = $hc->minPrice;
+            $hotelInfo->hotelName = $hc->name;
+        }else{
+            $hotelInfo = $hotelClient->hotelDetail($hotelId);
+        }
+        $this->layout = 'static';
+        $this->render('hotelInfo', array('hotelInfo'=>$hotelInfo
+        ));
     }
 
     private function testCountry($countryCode)
@@ -31,10 +156,113 @@ class LandingController extends Controller {
         }
     }
 
-    public function actionCity($countryCode = '',$cityCode = '')
+    public function actionCity($countryCode = '',$cityCode = '',$cityFromCode='')
     {
+
+        if(!($country = $this->testCountry($countryCode)))
+            return false;
+
+        $this->morphy = Yii::app()->morphy;
+        $countryUp = mb_strtoupper($country->localRu, 'utf-8');
+        $countryMorph = array('caseAcc'=>$this->getCase($countryUp,'ВН'));
+        if(!$cityFromCode){
+            $currentCity = City::getCityByCode('LED');
+        }else{
+            $currentCity = City::getCityByCode($cityFromCode);
+        }
+        $city = City::getCityByCode($cityCode);
+
+        $citiesFrom = array();
+        $this->addCityFrom($citiesFrom,4466);// Moscow
+        $this->addCityFrom($citiesFrom,5185);// Spb
+        $this->addCityFrom($citiesFrom,$currentCity->id);
+
+
+
+        Yii::import('site.common.modules.hotel.models.*');
+        $hotelClient = new HotelBookClient();
+
+        /*$criteria = new CDbCriteria();
+        $criteria->addCondition('countAirports > 0');
+        $criteria->addCondition('countryId = '.$country->id);
+        $cities = City::model()->findAll($criteria);
+        $cityIds = array();
+        foreach($cities as $city){
+            $cityIds[$city->id] = $city->id;
+        }
+
+        if(isset($cityIds[$currentCity->id])){
+            unset($cityIds[$currentCity->id]);
+        }*/
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('`to` = '.$city->id);
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->group = 'dateFrom';
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
+        $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*30));
+        $criteria->order = 'priceBestPrice';
+        //$criteria->limit = 18;
+
+        $flightCache = FlightCache::model()->findAll($criteria);
+        $sortFc = array();
+        foreach($flightCache as $fc){
+            $k = strtotime($fc->dateFrom);
+            $sortFc[$k] = $fc;
+        }
+        ksort($sortFc);
+        $sortFc = array_slice($sortFc,0,18);
+        $minPrice = false;
+        $maxPrice = false;
+        $activeMin = null;
+        $activeMax = null;
+        foreach($sortFc as $k=>$fc){
+            //$k = strtotime($fc->dateFrom);
+            if(!$minPrice){
+                $minPrice = $fc->priceBestPrice;
+                $maxPrice = $fc->priceBestPrice;
+            }else{
+                if($fc->priceBestPrice < $minPrice){
+                    $minPrice = $fc->priceBestPrice;
+                    $activeMin = $k;
+                }
+                if($fc->priceBestPrice > $maxPrice){
+                    $maxPrice = $fc->priceBestPrice;
+                    $activeMax = $k;
+                }
+            }
+        }
+        //print_r($flightCache);die();
+
+        $criteria = new CDbCriteria();
+        //$criteria->addInCondition('`cityId`',$cityIds);
+        $criteria->addCondition('cityId = '.$city->id);
+
+        $criteria->limit = 15;
+
+        $hotelCache = HotelDb::model()->findAll($criteria);
+        $hotelsInfo = array();
+        foreach($hotelCache as $hc){
+            $hotelInfo = $hotelClient->hotelDetail($hc->id);
+            $hotelInfo->price = $hc->minPrice;
+            $hotelInfo->hotelName = $hc->name;
+            $hotelsInfo[] = $hotelInfo;
+        }
+
+        $criteria = new CDbCriteria();
+        //$criteria->addInCondition('`to`',$cityIds);
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->addCondition('`dateFrom` > \''.date('Y-m-d')."'");
+        $criteria->order = 'priceBestPrice';
+        $criteria->limit = 14;
+        $criteria->group = '`to`';
+
+        $flightCacheFromCurrent = FlightCache::model()->findAll($criteria);
+
         $this->layout = 'static';
-        $this->render('city');
+        $this->render('city', array('city'=>$city,'citiesFrom'=>$citiesFrom,'hotelsInfo'=>$hotelsInfo,'currentCity'=>$currentCity,'flightCache'=>$sortFc,'maxPrice'=>$maxPrice,'minPrice'=>$minPrice,'activeMin'=>$activeMin,
+            'flightCacheFromCurrent' => $flightCacheFromCurrent
+        ));
     }
 
     private function getCase($word, $case)
@@ -51,6 +279,14 @@ class LandingController extends Controller {
         return ($str);
     }
 
+    private function addCityFrom(&$cityFromArray,$cityFromId)
+    {
+        if(!isset($cityFromArray[$cityFromId])){
+            $city = City::getCityByPk($cityFromId);
+            $cityFromArray[$cityFromId] = array('cityId'=>$cityFromId,'cityName'=>$city->localRu,'cityAcc'=>$city->caseAcc);
+        }
+    }
+
     public function actionCountry($countryCode = '')
     {
         if(!($country = $this->testCountry($countryCode)))
@@ -60,6 +296,12 @@ class LandingController extends Controller {
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
         $countryMorph = array('caseAcc'=>$this->getCase($countryUp,'ВН'));
         $currentCity = City::getCityByCode('LED');
+
+        $citiesFrom = array();
+        $this->addCityFrom($citiesFrom,4466);// Moscow
+        $this->addCityFrom($citiesFrom,5185);// Spb
+        $this->addCityFrom($citiesFrom,$currentCity->id);
+
 
 
         Yii::import('site.common.modules.hotel.models.*');
@@ -82,36 +324,40 @@ class LandingController extends Controller {
         $criteria->addCondition('`from` = '.$currentCity->id);
         $criteria->order = 'updatedAt';
         $criteria->limit = 14;
+        $criteria->group = '`to`';
 
         $flightCache = FlightCache::model()->findAll($criteria);
 
-        //getting cities with hotelbookId
         $criteria = new CDbCriteria();
-        $criteria->addCondition('`hotelbookId` IS NOT NULL');
+        //$criteria->addInCondition('`cityId`',$cityIds);
         $criteria->addCondition('countryId = '.$country->id);
-        $criteria->limit = 14;
-        $cities = City::model()->findAll($criteria);
-        $cityIds = array();
-        foreach($cities as $city){
-            $cityIds[$city->id] = $city->id;
-        }
 
-        $criteria = new CDbCriteria();
-        $criteria->addInCondition('`cityId`',$cityIds);
-
-        $criteria->limit = 14;
+        $criteria->limit = 15;
 
         $hotelCache = HotelDb::model()->findAll($criteria);
         $hotelsInfo = array();
         foreach($hotelCache as $hc){
-            $hotelInfo = $hotelClient->hotelDetail($hc->hotelId);
+            $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
+            $hotelInfo->hotelName = $hc->name;
             $hotelsInfo[] = $hotelInfo;
         }
+        //echo 'count'.count($hotelCache);
+
+        $criteria = new CDbCriteria();
+        //$criteria->addInCondition('`to`',$cityIds);
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->addCondition('`dateFrom` > \''.date('Y-m-d')."'");
+        $criteria->order = 'priceBestPrice';
+        $criteria->limit = 14;
+        $criteria->group = '`to`';
+
+        $flightCacheFromCurrent = FlightCache::model()->findAll($criteria);
 
         $this->layout = 'static';
-        $this->render('country',array('country',$country,'countryMorph'=>$countryMorph,'flightCache'=>$flightCache,'hotelsInfo'=>$hotelsInfo,
-        'currentCity'=>$currentCity
+        $this->render('country',array('country',$country,'countryMorph'=>$countryMorph,'flightCache'=>$flightCache,'flightCacheFromCurrent'=>$flightCacheFromCurrent,'hotelsInfo'=>$hotelsInfo,
+        'currentCity'=>$currentCity,
+            'citiesFrom'=>$citiesFrom
         ));
     }
 
@@ -125,14 +371,115 @@ class LandingController extends Controller {
 
     public function actionOWFlight($countryCode = '',$cityCodeFrom = '',$cityCodeTo = '')
     {
-        $this->layout = 'static';
-        $this->render('owflight');
+        $this->actionCity($countryCode,$cityCodeTo,$cityCodeFrom);
     }
 
     public function actionRTFlight($countryCode = '',$cityCodeFrom = '',$cityCodeTo = '')
     {
+        if(!($country = $this->testCountry($countryCode)))
+            return false;
+
+        $this->morphy = Yii::app()->morphy;
+        $countryUp = mb_strtoupper($country->localRu, 'utf-8');
+        $countryMorph = array('caseAcc'=>$this->getCase($countryUp,'ВН'));
+        if(!$cityCodeFrom){
+            $currentCity = City::getCityByCode('LED');
+        }else{
+            $currentCity = City::getCityByCode($cityCodeFrom);
+        }
+        $city = City::getCityByCode($cityCodeTo);
+
+        $citiesFrom = array();
+        $this->addCityFrom($citiesFrom,4466);// Moscow
+        $this->addCityFrom($citiesFrom,5185);// Spb
+        $this->addCityFrom($citiesFrom,$currentCity->id);
+
+
+
+        Yii::import('site.common.modules.hotel.models.*');
+        $hotelClient = new HotelBookClient();
+
+        /*$criteria = new CDbCriteria();
+        $criteria->addCondition('countAirports > 0');
+        $criteria->addCondition('countryId = '.$country->id);
+        $cities = City::model()->findAll($criteria);
+        $cityIds = array();
+        foreach($cities as $city){
+            $cityIds[$city->id] = $city->id;
+        }
+
+        if(isset($cityIds[$currentCity->id])){
+            unset($cityIds[$currentCity->id]);
+        }*/
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('`to` = '.$city->id);
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->group = 'dateFrom';
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
+        $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*30));
+        $criteria->order = 'priceBestPrice';
+        //$criteria->limit = 18;
+
+        $flightCache = FlightCache::model()->findAll($criteria);
+        $sortFc = array();
+        foreach($flightCache as $fc){
+            $k = strtotime($fc->dateFrom);
+            $sortFc[$k] = $fc;
+        }
+        ksort($sortFc);
+        $sortFc = array_slice($sortFc,0,18);
+        $minPrice = false;
+        $maxPrice = false;
+        $activeMin = null;
+        $activeMax = null;
+        foreach($sortFc as $k=>$fc){
+            //$k = strtotime($fc->dateFrom);
+            if(!$minPrice){
+                $minPrice = $fc->priceBestPrice;
+                $maxPrice = $fc->priceBestPrice;
+            }else{
+                if($fc->priceBestPrice < $minPrice){
+                    $minPrice = $fc->priceBestPrice;
+                    $activeMin = $k;
+                }
+                if($fc->priceBestPrice > $maxPrice){
+                    $maxPrice = $fc->priceBestPrice;
+                    $activeMax = $k;
+                }
+            }
+        }
+        //print_r($flightCache);die();
+
+        $criteria = new CDbCriteria();
+        //$criteria->addInCondition('`cityId`',$cityIds);
+        $criteria->addCondition('cityId = '.$city->id);
+
+        $criteria->limit = 15;
+
+        $hotelCache = HotelDb::model()->findAll($criteria);
+        $hotelsInfo = array();
+        foreach($hotelCache as $hc){
+            $hotelInfo = $hotelClient->hotelDetail($hc->id);
+            $hotelInfo->price = $hc->minPrice;
+            $hotelInfo->hotelName = $hc->name;
+            $hotelsInfo[] = $hotelInfo;
+        }
+
+        $criteria = new CDbCriteria();
+        //$criteria->addInCondition('`to`',$cityIds);
+        $criteria->addCondition('`from` = '.$currentCity->id);
+        $criteria->addCondition('`dateFrom` > \''.date('Y-m-d')."'");
+        $criteria->order = 'priceBestPrice';
+        $criteria->limit = 14;
+        $criteria->group = '`to`';
+
+        $flightCacheFromCurrent = FlightCache::model()->findAll($criteria);
+
         $this->layout = 'static';
-        $this->render('owflight');
+        $this->render('rtflight', array('city'=>$city,'citiesFrom'=>$citiesFrom,'hotelsInfo'=>$hotelsInfo,'currentCity'=>$currentCity,'flightCache'=>$sortFc,'maxPrice'=>$maxPrice,'minPrice'=>$minPrice,'activeMin'=>$activeMin,
+            'flightCacheFromCurrent' => $flightCacheFromCurrent
+        ));
     }
 
 }
