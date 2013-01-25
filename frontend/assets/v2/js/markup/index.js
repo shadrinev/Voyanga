@@ -2,7 +2,7 @@ var speedAnimateChangePic = 500;
 
 function slideToursSlide() {
     if ($('.innerBlockMain').length > 0 && $('.innerBlockMain').is(':visible')) {
-        console.log('!!!==== 2 ====!!!');
+        //console.log('!!!==== 2 ====!!!');
 
         var WidthAllWindow = $(window).width();
         var var_slideToursBody = $('.slideTours');
@@ -56,7 +56,7 @@ function slideToursSlide() {
 
 function CenterIMGResize() {
 	if ($('.innerBlockMain').length > 0 && $('.innerBlockMain').is(':visible')) {
-        console.log('!!!==== 3 ====!!!');
+        //console.log('!!!==== 3 ====!!!');
         var HeightAllWindow = $(window).height();
         if (HeightAllWindow < 800) {
             HeightAllWindow = HeightAllWindow - 38 - 158;
@@ -97,7 +97,7 @@ function CenterIMGResize() {
 function smallIMGresizeIndex() {
 	var _this = $('.imgTours');
     if (_this.length > 0 && _this.is(':visible')) {
-        console.log('!!!==== 5 ====!!!');
+        //console.log('!!!==== 5 ====!!!');
         var _img = _this.find('img');
         _this.each(function(e) {
             var _img = $(this).find('img');
