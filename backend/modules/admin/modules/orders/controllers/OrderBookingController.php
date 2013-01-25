@@ -149,6 +149,7 @@ class OrderBookingController extends Controller
 
         foreach($model->flightBookers as $flightBooker) {
             $retArr['flightBookings'][] = $flightBooker;
+//            die(var_dump($flightBooker->flightVoyage->taxes));
         }
 
         foreach($model->hotelBookers as $hotelBooker){
@@ -174,9 +175,7 @@ class OrderBookingController extends Controller
 
 
     public function actionResendEmail($id) {
-        $order = Yii::app()->order;
-        $order->initByOrderBookingId($id);
-        $order->sendNotifications();
+        $res = Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$id));
         $this->redirect(Array('view', 'id'=>$id));
     }
 
@@ -198,7 +197,10 @@ class OrderBookingController extends Controller
                     $result['подтвердить списание'] =  $this->createUrl('confirmBill', array('billId'=>$booker->bill->id));
                 }
                 return $result;
-            
+            case 'swFlightBooker/waitingForPayment':
+                return array('Отметить как оплаченный' => $this->createUrl('markFlightPaid', array('bookingId'=>$booker->id)));
+            case 'swFlightBooker/paid':
+                 return array("Автовыписка(без письма)" => $this->createUrl('ticketFlight', array('bookingId'=>$booker->id)));            
             default:
                 return array();
 
@@ -212,7 +214,7 @@ class OrderBookingController extends Controller
                 # code...
                 return array("Отметить как оплаченный" => $this->createUrl('markHotelPaid', array('bookingId'=>$booker->id)));
             case 'swHotelBooker/paid':
-                 return array("Автовыписка" => $this->createUrl('ticketHotel', array('bookingId'=>$booker->id)));       
+                 return array("Автовыписка(без письма)" => $this->createUrl('ticketHotel', array('bookingId'=>$booker->id)));       
             default:
                 return array();
         }
@@ -229,7 +231,24 @@ class OrderBookingController extends Controller
 
         $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
     }
-        public function actionTicketHotel($bookingId) {
+
+    public function actionMarkFlightPaid($bookingId) {
+        $booking = new FlightBookerComponent();
+        $booking->setFlightBookerFromId($bookingId);
+        $booking->status('paymentInProgress');
+        $booking->status('paid');
+
+        $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
+    }
+
+    public function actionTicketFlight($bookingId) {
+        $booking = new FlightBookerComponent();
+        $booking->setFlightBookerFromId($bookingId);
+        $booking->status('ticketing');
+        $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
+    }
+
+    public function actionTicketHotel($bookingId) {
         $booking = new HotelBookerComponent();
         $booking->setHotelBookerFromId($bookingId);
         $booking->status('ticketing');

@@ -40,7 +40,7 @@ function ResizeCenterBlock() {
 	var block = $('.center-block');
 	var isset = block.length;
 	if (isset) {
-        console.log('!!!==== 0 ====!!!');
+        //console.log('!!!==== 0 ====!!!');
 		var var_leftBlock = $('.left-block');
 		var var_head = $('.head');
 		var var_mainBlock = block.find('.main-block');
@@ -451,7 +451,7 @@ function ResizeCenterBlock() {
 }
 function smallTicketHeight() {
     if ($('.recommended-ticket').length > 0 && $('.recommended-ticket').is(':visible')) {
-        console.log('!!!==== 4 ====!!!');
+        //console.log('!!!==== 4 ====!!!');
         var var_recomendedContent = $('.recomended-content');
         var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items .content');
         var var_oneHeight = var_recomendedItems.height();
@@ -595,7 +595,7 @@ function mapAllPageView() {
 	var _map = $('#all-hotels-map');
 
     if (_map.length > 0 && _map.is(':visible')) {
-        console.log('!!!==== 6 ====!!!');
+        //console.log('!!!==== 6 ====!!!');
 
         var _isset = _map.length > 0 && _map.is(':visible');
         if (_isset) {
@@ -1485,7 +1485,7 @@ $(function(){
 
 function resizePanel(arg) {
 
-        console.log('!!!==== 7 ====!!!');
+        //console.log('!!!==== 7 ====!!!');
         $('.panelTable').each(function(index){
 
             var _panelTable = $(this);//$('.panel').last().find('.panelTable');
