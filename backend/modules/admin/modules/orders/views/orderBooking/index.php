@@ -26,7 +26,7 @@ $this->menu=array(
         array(
             'header'=>'Номер',
             'labelExpression'=> '$data->id',
-            'urlExpression'=> '"/admin/orders/orderBooking/view/id/" . $data->id . "/"',
+            'urlExpression'=> '"/admin/orders/orderBooking/view/id/" . $data->id . ""',
             'class'=>'CLinkColumn',
         ),
         array(
