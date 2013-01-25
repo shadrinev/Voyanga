@@ -2,6 +2,7 @@ class TourEntry
   constructor: ->
     # Mix in events
     _.extend @, Backbone.Events
+    @savingsWithAviaOnly = false
 
   isAvia: =>
     return @avia
@@ -29,8 +30,7 @@ class TourEntry
   savings: =>
     if @selection() == null
       return 0
-
-    return 555
+    return 0
 
   rt: =>
     false
@@ -236,6 +236,8 @@ class ToursHotelsResultSet extends TourEntry
     @results = ko.observable()
     @data = {results: @results}
 
+    @savingsWithAviaOnly = true
+
     @newResults raw, sp
 
   newResults: (data, sp)=>
@@ -427,6 +429,11 @@ class ToursHotelsResultSet extends TourEntry
           , 50
         )
 
+  savings: =>
+    if(@selection()==null)
+      return 0
+    @selection().roomSet.price - @selection().roomSet.discountPrice
+    
 
 class ToursResultSet
   constructor: (raw, @searchParams)->
@@ -474,9 +481,19 @@ class ToursResultSet
       return sum
 
     @savings = ko.computed =>
+      has_avia = false
+      for item in @data()
+        if item.selection() && item.isAvia()
+          has_avia = true
+        
+
       sum = 0
       for item in @data()
-        sum += item.savings()
+        if item.savingsWithAviaOnly 
+          if has_avia
+            sum+=item.savings()
+        else
+          sum += item.savings()
       return sum
 
     @someSegmentsSelected= ko.computed =>

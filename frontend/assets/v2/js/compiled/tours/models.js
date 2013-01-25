@@ -25,6 +25,7 @@ TourEntry = (function() {
 
     this.isAvia = __bind(this.isAvia, this);
     _.extend(this, Backbone.Events);
+    this.savingsWithAviaOnly = false;
   }
 
   TourEntry.prototype.isAvia = function() {
@@ -61,7 +62,7 @@ TourEntry = (function() {
     if (this.selection() === null) {
       return 0;
     }
-    return 555;
+    return 0;
   };
 
   TourEntry.prototype.rt = function() {
@@ -374,6 +375,8 @@ ToursHotelsResultSet = (function(_super) {
   __extends(ToursHotelsResultSet, _super);
 
   function ToursHotelsResultSet(raw, sp) {
+    this.savings = __bind(this.savings, this);
+
     this.afterRender = __bind(this.afterRender, this);
 
     this.beforeRender = __bind(this.beforeRender, this);
@@ -433,6 +436,7 @@ ToursHotelsResultSet = (function(_super) {
     this.data = {
       results: this.results
     };
+    this.savingsWithAviaOnly = true;
     this.newResults(raw, sp);
   }
 
@@ -678,6 +682,13 @@ ToursHotelsResultSet = (function(_super) {
     }
   };
 
+  ToursHotelsResultSet.prototype.savings = function() {
+    if (this.selection() === null) {
+      return 0;
+    }
+    return this.selection().roomSet.price - this.selection().roomSet.discountPrice;
+  };
+
   return ToursHotelsResultSet;
 
 })(TourEntry);
@@ -771,12 +782,26 @@ ToursResultSet = (function() {
       return sum;
     });
     this.savings = ko.computed(function() {
-      var item, sum, _j, _len1, _ref1;
-      sum = 0;
+      var has_avia, item, sum, _j, _k, _len1, _len2, _ref1, _ref2;
+      has_avia = false;
       _ref1 = _this.data();
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         item = _ref1[_j];
-        sum += item.savings();
+        if (item.selection() && item.isAvia()) {
+          has_avia = true;
+        }
+      }
+      sum = 0;
+      _ref2 = _this.data();
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        item = _ref2[_k];
+        if (item.savingsWithAviaOnly) {
+          if (has_avia) {
+            sum += item.savings();
+          }
+        } else {
+          sum += item.savings();
+        }
       }
       return sum;
     });
