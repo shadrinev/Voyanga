@@ -19,7 +19,7 @@
 
     <tr><th>Taxes</th><td><?= $booking->flightVoyage->taxes?></td></tr>
 
-    <tr><th>Chages</th><td><?= $booking->flightVoyage->charges?></td></tr>
+    <tr><th>Charges</th><td><?= $booking->flightVoyage->charges?></td></tr>
     <tr><th>Сумма</th><td><?= $booking->flightVoyage->price?> руб.</td></tr>
   </table>
   <?php endif; ?>
