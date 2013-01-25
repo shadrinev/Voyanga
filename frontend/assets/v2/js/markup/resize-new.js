@@ -1475,84 +1475,87 @@ $(function(){
 
 function resizePanel(arg) {
     if ($('.panelTable').length > 0 && $('.panelTable').is(':visible')) {
+        if (DetectIphoneOrIpod() && var_iphone < 1) {
         console.log('!!!==== 7 ====!!!');
-        $('.panelTable').each(function(index){
+            $('.panelTable').each(function(index){
 
-            var _panelTable = $(this);//$('.panel').last().find('.panelTable');
-            var _classThis;
-            var _midWidth = 1130;
-            var _minWidth = 1000;
-            var _newMean;
+                var _panelTable = $(this);//$('.panel').last().find('.panelTable');
+                var _classThis;
+                var _midWidth = 1130;
+                var _minWidth = 1000;
+                var _newMean;
 
-            var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
-            //_panelTable.find('.tdPeople').css('width', 'auto');
+                var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
+                //_panelTable.find('.tdPeople').css('width', 'auto');
 
-            if (_panelTable.hasClass('avia')) {
-                _classThis = 'avia';
-                var _meanPanel = 850;
-                var _standartData = 290;
-                var _widthTdTumblr = _panelTable.find('.tdTumblr').innerWidth();
-                var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
-                var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
-                var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();;
-                var _widthTdAddTour = 0;
-                var _howManyInput = 2;
-            }  else if (_panelTable.hasClass('constructorTable')) {
-                _classThis = 'constructorTable';
-                if ($(this).find('.tdPeople').hasClass('notFinal')) {
-                    $(this).find('.tdPeople.notFinal').css('width', $('.tdPeople.final').width()+'px');
+                if (_panelTable.hasClass('avia')) {
+                    _classThis = 'avia';
+                    var _meanPanel = 850;
+                    var _standartData = 290;
+                    var _widthTdTumblr = _panelTable.find('.tdTumblr').innerWidth();
+                    var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+                    var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
+                    var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();;
+                    var _widthTdAddTour = 0;
+                    var _howManyInput = 2;
+                }  else if (_panelTable.hasClass('constructorTable')) {
+                    _classThis = 'constructorTable';
+                    if ($(this).find('.tdPeople').hasClass('notFinal')) {
+                        $(this).find('.tdPeople.notFinal').css('width', $('.tdPeople.final').width()+'px');
+                    }
+                    else if ($(this).find('.tdPeople').hasClass('final')) {
+                        //$(this).find('.tdPeople.final').css('width', 'auto');
+                    }
+                    var _meanPanel = 692;
+                    var _widthTdTumblr = 0;
+                    var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+                    var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
+                    var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
+                    var _widthTdAddTour = _panelTable.find('.tdAddTour').innerWidth();
+                    var _howManyInput = 1;
+                }  else if (_panelTable.hasClass('hotel')) {
+                    _classThis = 'hotel';
+                    var _meanPanel = 692;
+                    var _widthTdTumblr = 0;
+                    var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+                    var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
+                    var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
+                    var _widthTdAddTour = 117;
+                    var _howManyInput = 1;
                 }
-                else if ($(this).find('.tdPeople').hasClass('final')) {
-                    //$(this).find('.tdPeople.final').css('width', 'auto');
+
+                var _windowWidth = $(window).width();
+                var _widthPanelTable = _panelTable.innerWidth();
+
+                var _dataDiv = _panelTable.find('.tdCity').find('.data');
+                var _dataInput = _panelTable.find('.tdCity').find('.data').find('input');
+
+                if (_windowWidth <= _midWidth && _windowWidth >= _minWidth) {
+                    _allWidthPanel = _windowWidth - 230;
                 }
-                var _meanPanel = 692;
-                var _widthTdTumblr = 0;
-                var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
-                var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
-                var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
-                var _widthTdAddTour = _panelTable.find('.tdAddTour').innerWidth();
-                var _howManyInput = 1;
-            }  else if (_panelTable.hasClass('hotel')) {
-                _classThis = 'hotel';
-                var _meanPanel = 692;
-                var _widthTdTumblr = 0;
-                var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
-                var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
-                var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
-                var _widthTdAddTour = 117;
-                var _howManyInput = 1;
-            }
+                else if (_windowWidth < _minWidth) {
+                    _allWidthPanel = 1000 - 230;
+                }
+                else {
+                    _allWidthPanel = 900;
+                }
 
-            var _windowWidth = $(window).width();
-            var _widthPanelTable = _panelTable.innerWidth();
+                if (_widthPanelTable >= _allWidthPanel) {
+                    _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+                }
+                else if (_widthPanelTable < _allWidthPanel) {
+                    _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+                }
+                else {
+                    _newMean = (_widthPanelTable - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+                }
 
-            var _dataDiv = _panelTable.find('.tdCity').find('.data');
-            var _dataInput = _panelTable.find('.tdCity').find('.data').find('input');
-
-            if (_windowWidth <= _midWidth && _windowWidth >= _minWidth) {
-                _allWidthPanel = _windowWidth - 230;
-            }
-            else if (_windowWidth < _minWidth) {
-                _allWidthPanel = 1000 - 230;
-            }
-            else {
-                _allWidthPanel = 900;
-            }
-
-            if (_widthPanelTable >= _allWidthPanel) {
-                _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-            }
-            else if (_widthPanelTable < _allWidthPanel) {
-                _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-            }
-            else {
-                _newMean = (_widthPanelTable - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-            }
-
-            _panelTable.find('.tdCity').find('.data').css('width', _newMean +'px');
-            _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
-            _widthPanelTable = _panelTable.innerWidth();
-        });
+                _panelTable.find('.tdCity').find('.data').css('width', _newMean +'px');
+                _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
+                _widthPanelTable = _panelTable.innerWidth();
+            });
+            var_iphone = 1;
+        }
     }
 }
 
