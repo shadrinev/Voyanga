@@ -33,7 +33,8 @@ return array(
     'components'=>array(
 
         'assetManager' => array(
-            'forceCopy' => YII_DEBUG
+            'forceCopy' => YII_DEBUG,
+            'baseUrl' => '/assets/',
         ),
 
         'cron'=>array(
