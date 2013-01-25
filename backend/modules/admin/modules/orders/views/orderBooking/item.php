@@ -151,7 +151,7 @@ $this->breadcrumbs=array(
               UNIMPLEMENTED
             </td>
             <td>
-              <?= $booking->price; ?>
+              <?= $booking->price; ?> руб
             </td>
             <td>
               <?= $data['orderBooking']->stateAdapter($booking->status); ?>
