@@ -1,12 +1,12 @@
-<div class="center-block" data-bind="template: {name: activeView(), data: viewData(), afterRender: contentRendered}">
+<div class="center-block" >
 <div class="main-block" style="width: 935px; margin-left: auto; margin-right: auto;">
-<div id="content" data-bind="template: {name: 'hotels-info-inner', data: $data}" style="width: 935px;">
+<div id="content" style="width: 935px;">
 <div class="title hotel">
-    <h1 data-bind="text: hotelName">Максима Заря</h1>
+    <h1 data-bind="text: hotelName"><?php echo $hotelInfo->hotelName;?></h1>
 
-    <div class="rating" data-bind="visible: rating" style="display: none;">
+    <div class="rating"  style="display: none;">
         <div class="textRating" onmouseover="ratingHoverActive(this)" onmouseout="ratingHoverNoActive(this)">
-            <span class="value" data-bind="text: rating">0</span>
+            <span class="value"><?php echo $hotelInfo->raiting;?></span>
             <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
         </div>
         <div class="descrRating">

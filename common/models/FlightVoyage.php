@@ -19,6 +19,7 @@ class FlightVoyage extends CApplicationComponent
     public $valAirline;
     private $_commission = false;
     public $charges;
+    /** @var Flight[] */
     public $flights;
     public $adultPassengerInfo;
     public $childPassengerInfo;
@@ -438,5 +439,21 @@ class FlightVoyage extends CApplicationComponent
     public function getWeight()
     {
         return 1;
+    }
+
+    public function updateFlightParts($aParts){
+        if ($aParts)
+        {
+            reset($aParts);
+            foreach ($this->flights as $flightKey => $flight)
+            {
+                foreach($flight as $partKey=>$part){
+                    $each = each($aParts);
+                    if(isset($each['value']->departure_terminal_code)){
+                        $this->flights[$flightKey]->flightParts[$partKey]->departureTerminalCode = $each['value']->departure_terminal_code;
+                    }
+                }
+            }
+        }
     }
 }

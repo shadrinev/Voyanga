@@ -552,7 +552,7 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
-//    if (DetectIphoneOrIpod() )
+//    if (DetectMobileQuick() )
         ResizeCenterBlock();
         inTheTwoLines();
         smallTicketHeight();
@@ -751,7 +751,7 @@ function jsPaneScrollHeight() {
 }
 
 function scrollValue(what, event) {
-    if (! DetectIphoneOrIpod() ) {
+    if (! DetectMobileQuick() ) {
         var filterContent = $('.filter-content.'+ what);
         var isScrollPane;
         if(event.target == document)
@@ -1263,7 +1263,7 @@ $(window).resize(resizeFAQ);
 $(window).scroll(scrollFAQ);
 
 function gradientResize() {
-    if (! DetectIphoneOrIpod() ) {
+    if (! DetectMobileQuick() ) {
         if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
             var _content = $('.wrapper .main-block').find('#content');
             var offset = _content.offset();
