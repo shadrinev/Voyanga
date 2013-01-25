@@ -110,7 +110,7 @@ $this->breadcrumbs=array(
             </td>
           </tr>
           <tr>
-            <?php $this->renderPartial('_booking_control_panel', Array('booking'=>$booking, 'span'=>Array(5,6))); ?>
+            <?php $this->renderPartial('_booking_control_panel', Array('booking'=>$booking, 'span'=>Array(3,3,5))); ?>
           </tr>
           <?php endforeach; ?>
         </table>
@@ -180,7 +180,7 @@ $this->breadcrumbs=array(
             </td>
           </tr>
           <tr>
-            <?php $this->renderPartial('_booking_control_panel', Array('booking'=>$booking, 'span'=>Array(4,4))); ?>
+            <?php $this->renderPartial('_booking_control_panel', Array('booking'=>$booking, 'span'=>Array(3,3,5))); ?>
           </tr>
           <?php endforeach; ?>
         <?php endif; ?>
