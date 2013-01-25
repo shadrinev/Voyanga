@@ -1556,6 +1556,9 @@ function resizePanel(arg) {
             });
             var_iphone = 1;
         }
+        esle {
+            return
+        }
     }
 }
 
