@@ -34,6 +34,10 @@ $this->menu=array(
             'value'=>'$data->email'
         ),
         array(
+            'header' => 'Дата',
+            'value'=> '$data->timestamp'
+            ),
+        array(
             'header'=>'Пользователь',
             'value'=>'$data->userDescription'
         ),
