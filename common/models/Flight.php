@@ -7,6 +7,7 @@
  */
 class Flight extends CComponent
 {
+    /** @var FlightPart[] */
     public $flightParts = array();
     public $transits = array();
     public $departureCityId;

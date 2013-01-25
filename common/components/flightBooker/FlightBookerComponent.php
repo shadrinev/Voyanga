@@ -210,8 +210,9 @@ class FlightBookerComponent extends CApplicationComponent
                     }
                 }
             }
-
-
+            $flightVoyage = $this->flightBooker->flightVoyage;
+            $flightVoyage->updateFlightParts($flightTicketingResponse->aParts);
+            $this->flightBooker->flightVoyage = $flightVoyage;
         }
         else
         {

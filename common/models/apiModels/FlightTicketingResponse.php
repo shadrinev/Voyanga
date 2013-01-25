@@ -10,5 +10,6 @@ class FlightTicketingResponse extends ResponseStatus
 {
     public $tickets;
     public $status;
+    public $aParts;
 
 }

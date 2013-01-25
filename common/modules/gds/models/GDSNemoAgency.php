@@ -747,6 +747,59 @@ class GDSNemoAgency extends CComponent
         if ($status == 'ticket')
         {
             $flightTicketingResponse->status = 1;
+            $aParts = array();
+            UtilsHelper::soapObjectsArray($flightTicketingResponse->Response->Ticketing->Flight->Segments->Segment);
+            foreach ($flightTicketingResponse->Response->Ticketing->Flight->Segments->Segment as $arrKey => $oSegment)
+            {
+                $oPart = new stdClass();
+                //Yii::beginProfile('loadAirportData');
+                if (!isset($oSegment->DepAirp))
+                {
+                    Yii::log(print_r($oSegment, true) . '|||' . $arrKey, 'info');
+                }
+                try
+                {
+                    $oPart->departure_airport = Airport::getAirportByCode(UtilsHelper::soapElementValue($oSegment->DepAirp));
+                    $oPart->departure_city = $oPart->departure_airport->city;
+                    $oPart->arrival_airport = Airport::getAirportByCode(UtilsHelper::soapElementValue($oSegment->ArrAirp));
+                    $oPart->arrival_city = $oPart->arrival_airport->city;
+                    $oPart->departure_terminal_code = isset($oSegment->DepTerminal) ? UtilsHelper::soapElementValue($oSegment->DepTerminal) : '';
+                    $oPart->arrival_terminal_code = isset($oSegment->ArrTerminal) ? UtilsHelper::soapElementValue($oSegment->ArrTerminal) : '';
+
+                    $oPart->markAirline = Airline::getAirlineByCode($oSegment->MarkAirline);
+                    if ($oSegment->OpAirline == '**')
+                    {
+                        $oPart->opAirline = $oPart->markAirline;
+                        $oPart->transport_airline = $oPart->markAirline;
+                    }
+                    else
+                    {
+                        $oPart->opAirline = Airline::getAirlineByCode($oSegment->OpAirline);
+                        $oPart->transport_airline = Airline::getAirlineByCode($oSegment->OpAirline);
+                    }
+                    $oPart->code = $oSegment->FlightNumber;
+                    $oPart->duration = $oSegment->FlightTime * 60;
+                    $oPart->datetime_begin = UtilsHelper::soapElementValue($oSegment->DepDateTime);
+                    $oPart->datetime_end = UtilsHelper::soapElementValue($oSegment->ArrDateTime);
+                    $oPart->stopNum = UtilsHelper::soapElementValue($oSegment->StopNum);
+                    $oPart->aircraft_code = $oSegment->AircraftType;
+
+                    $oPart->aTariffs = array();
+                    $oPart->aTaxes = array();
+                    $oPart->aBookingCodes = array();
+                    UtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
+                    foreach ($oSegment->BookingCodes->BookingCode as $sBookingCode)
+                    {
+                        $oPart->aBookingCodes[] = UtilsHelper::soapElementValue($sBookingCode);
+                    }
+                    $aParts[$oSegment->SegNum] = $oPart;
+                }catch (CException $e){
+                }
+            }
+            if($aParts){
+                $flightTicketingResponse->aParts = $aParts;
+            }
+
             UtilsHelper::soapObjectsArray($response->Response->Ticketing->Travellers->Traveller);
             foreach ($response->Response->Ticketing->Travellers->Traveller as $traveller)
             {

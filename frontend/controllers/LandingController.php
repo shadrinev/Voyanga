@@ -117,7 +117,7 @@ class LandingController extends Controller {
         ));
     }
 
-    public function hotelInfo($hotelId){
+    public function actionHotelInfo($hotelId){
         Yii::import('site.common.modules.hotel.models.*');
         $hotelClient = new HotelBookClient();
 
@@ -132,9 +132,12 @@ class LandingController extends Controller {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
             $hotelInfo->hotelName = $hc->name;
+            $city = City::getCityByPk($hc->cityId);
         }else{
             $hotelInfo = $hotelClient->hotelDetail($hotelId);
         }
+        $rating = new HotelRating();
+
         $this->layout = 'static';
         $this->render('hotelInfo', array('hotelInfo'=>$hotelInfo
         ));
