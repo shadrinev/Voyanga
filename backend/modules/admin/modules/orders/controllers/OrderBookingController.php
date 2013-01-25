@@ -244,6 +244,8 @@ class OrderBookingController extends Controller
     public function actionTicketFlight($bookingId) {
         $booking = new FlightBookerComponent();
         $booking->setFlightBookerFromId($bookingId);
+        $payments = Yii::app()->payments;
+        $payments->notifyNemo($booking);
         $booking->status('ticketing');
         $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
     }

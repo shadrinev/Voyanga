@@ -24,7 +24,7 @@ EOD;
 
             foreach($bookers as $booker)
             {
-                $this->notifyNemo($booker);
+                $payments->notifyNemo($booker);
                 echo $payments->getStatus($booker) . "=>\n";
                 $booker->status('ticketing');
                 echo $payments->getStatus($booker) . "\n";
@@ -52,30 +52,7 @@ EOD;
     }
 
 
-    private function notifyNemo($booker)
-    {
-        if($booker instanceof Payments_MetaBookerTour)
-        {
-            foreach($booker->getBookers() as $book)
-            {
-                $this->notifyNemo($book);
-            }
-            return;
-        }
-        $payments = Yii::app()->payments;
-        //! Notify on avia only
-        $isHotel = $booker instanceof HotelBookerComponent;
-        $isMetaHotel =  $booker instanceof Payments_MetaBooker;
-        if(!$isHotel&&!$isMetaHotel)
-        {
-            $bill = $payments->getBillForBooker($booker);
-            $payments->notifyNemo($booker, $bill);
-            $taskId = $booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId;
-            echo "Removing booking timelimit task #" . $taskId;
-            $result = Yii::app()->cron->delete($taskId);
-            echo " " . $result . "\n";
-        }
-    }
+
 
 
 
