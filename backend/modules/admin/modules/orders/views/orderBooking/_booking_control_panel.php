@@ -36,14 +36,25 @@
       </ul>
       <?php if($booking->status == 'swFlightBooker/ticketingRepeat'): ?>
       <b>Ввод результатов ручной выписки</b>
-      <ol>
-        <form method="POST" action="<?= $this->createUrl('injectTicketNumbers', array('bookingId'=>$booking->id)); ?>">
+      <form method="POST" action="<?= $this->createUrl('injectTicketNumbers', array('bookingId'=>$booking->id)); ?>">
+        <ol>
         <?php foreach($booking->flightBookingPassports as $passport): ?>
-              <li>Номер билета <input type="text" name="tickets[<?= $passport->id?>]"> для <?= $passport->firstName; ?> <?= $passport->lastName; ?></li>
+              <li>Номер билета  для <?= $passport->firstName; ?> <?= $passport->lastName; ?>
+                <br />
+                <input type="text" name="tickets[<?= $passport->id?>]">
+              </li>
         <?php endforeach; ?>
+        </ol>
+        <ul>
+        <?php foreach($booking->flightVoyage->flights as $fvkey=>$flight): ?>
+          <?php foreach($flight->flightParts as $fkey=>$part): ?>
+          <li> Терминал для <?=$part->departureAirport->code;?>
+          <input name="terminal[<?=$fvkey?>][<?=$fkey?>]" type="text" value="<?= $part->departureTerminalCode ?>" style="width:40px !important;">
+          <?php endforeach; ?>
+        <?php endforeach; ?>
+        </ul>
         <input type='submit' value="Выписать"> *Письмо не будет отправлено автоматически
-        </form>
-      </ol>
+      </form>
       <?php endif; ?> 
 
     </td></tr>
