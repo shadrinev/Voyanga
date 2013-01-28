@@ -149,9 +149,33 @@ class PaymentsComponent extends CApplicationComponent
         return array($metaBooker);
     }
 
+    public function notifyNemo($booker)
+    {
+        if($booker instanceof Payments_MetaBookerTour)
+        {
+            foreach($booker->getBookers() as $book)
+            {
+                $this->notifyNemo($book);
+            }
+            return;
+        }
+        //! Notify on avia only
+        $isHotel = $booker instanceof HotelBookerComponent;
+        $isMetaHotel =  $booker instanceof Payments_MetaBooker;
+        if(!$isHotel&&!$isMetaHotel)
+        {
+            $bill = $this->getBillForBooker($booker);
+            $this->notifyNemoRaw($booker, $bill);
+            $taskId = $booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId;
+            //echo "Removing booking timelimit task #" . $taskId;
+            $result = Yii::app()->cron->delete($taskId);
+            //echo " " . $result . "\n";
+        }
+    }
+
 
     //! tell nemo we are done with payment for given pnr
-    public function notifyNemo($booker, $bill)
+    private function notifyNemoRaw($booker, $bill)
     {
         if($booker instanceof FlightBookerComponent)
         {

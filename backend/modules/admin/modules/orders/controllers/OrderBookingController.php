@@ -244,6 +244,8 @@ class OrderBookingController extends Controller
     public function actionTicketFlight($bookingId) {
         $booking = new FlightBookerComponent();
         $booking->setFlightBookerFromId($bookingId);
+        $payments = Yii::app()->payments;
+        $payments->notifyNemo($booking);
         $booking->status('ticketing');
         $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
     }
@@ -270,6 +272,17 @@ class OrderBookingController extends Controller
             $pass->ticketNumber = $ticket;
             $pass->save();
         }
+        $flightVoyage = $booking->getCurrent()->flightVoyage;
+
+        foreach($_POST['terminal'] as $fvkey=>$value) {
+            foreach($value as $fkey=>$terminalCode) {
+                if($terminalCode)
+                    $flightVoyage->flights[$fvkey]->flightParts[$fkey]->departureTerminalCode = $terminalCode;
+            }
+        }
+        //! force serialization, save will be called on later status change
+        $booking->getCurrent()->flightVoyage = $flightVoyage;
+
         //! Fixme leave 1-2 steps max
         $booking->status('manualProcessing');
         $booking->status('manualTicketing');

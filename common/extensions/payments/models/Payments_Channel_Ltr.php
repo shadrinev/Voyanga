@@ -36,7 +36,8 @@ class Payments_Channel_Ltr extends Payments_Channel {
         $ltr.= str_repeat('       ', 4-$i);
         $ltr.= " "; // RESTRICTED TICKET INDICATOR: pass nothing even tho we can get this info
         $ltr.= $booker->flightBookingPassports[0]->ticketNumber; // TICKET NUMBER
-        $ltr.= substr($booker->flightBookingPassports[0]->ticketNumber, 3) % 7; // CHECK DIGIT
+        if(strlen($booker->flightBookingPassports[0]->ticketNumber)==13)
+            $ltr.= substr($booker->flightBookingPassports[0]->ticketNumber, 3) % 7; // CHECK DIGIT
         //! FIXME check how de focking php TZs are working
         list($date, $time) = explode("T",$flightVoyage->flights[0]->departureDate);
         list($year, $month, $date) = explode('-', $date);
