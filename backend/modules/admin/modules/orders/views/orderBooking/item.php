@@ -9,7 +9,6 @@ $this->breadcrumbs=array(
 .table tbody tr:hover th {
     background-color: white;
 }
-
 </style>
 
 <table class="table table-bordered">

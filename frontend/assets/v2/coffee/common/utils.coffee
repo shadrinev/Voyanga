@@ -204,6 +204,19 @@ Utils =
     $('body').append(form_html)
     $('#buy-form').submit()
 
+  formatPrice: (price) ->
+    intPrice = parseInt(price)
+    strPrice = intPrice.toString()
+    ret = ""
+    j = 0
+    for i in [(strPrice.length-1)..0]
+      if j != 0 && j % 3 == 0
+        ret = ' ' + ret
+      ret = strPrice[i] + ret
+      j++
+    return ret
+
+
   calculateTheDistance: (lat1, lng1, lat2, lng2)=>
     #координаты в радианы
     $lat1 = lat1 * Math.PI / 180;

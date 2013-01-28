@@ -3,6 +3,7 @@
   <?php if($booking->bill): ?>
   <table class="table-bordered">
     <tr><th>Счет #</th><td><?= $booking->bill->id?></td></tr>
+    <tr><th>Канал</th><td><?= $booking->bill->channelVerbose?></td></tr>
     <tr><th>Статус счета</th><td><?= $booking->bill->status?></td></tr>
     <tr><th>Транзакция</th><td><?= $booking->bill->transactionId?></td></tr>
     <tr><th>Сумма</th><td><?= $booking->bill->amount?> руб.</td></tr>

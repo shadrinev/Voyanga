@@ -29,8 +29,8 @@
         var panelSet = new AviaPanel();
         panelSet.departureCity(window.defaultCity);
         panelSet.arrivalCity(window.pointCity);
-        var kkk = new landBestPriceSet(window.flightCache);
-        console.log(kkk);
+        var landBP = new landBestPriceSet(window.flightCache);
+        app.landBP = landBP;
 
         panelSet.rt(true);
         //panelSet.sp.calendarActivated(false);
@@ -63,6 +63,99 @@
             endforeach;
             ?>
         </h3>
+    </div>
+    <div class="center-block">
+        <div class="floatLeft">
+            <ul class="grafik first-child" data-bind="foreach: datesArr">
+                <!-- ko if: landBP -->
+                    <li class="grafikMean inactive">
+                        <div class="price" style="bottom: 30px">3 100</div>
+                        <div class="statusBar" style="height: 30px"></div>
+                    </li>
+                <!-- ko else: -->
+
+                <!-- /ko -->
+
+
+                <li class="grafikMean inactive">
+                    <div class="price" style="bottom: 30px">3 100</div>
+                    <div class="statusBar" style="height: 30px"></div>
+                </li>
+                <li class="grafikMean min">
+                    <div class="price" style="bottom: 23px">3 100</div>
+                    <div class="statusBar" style="height: 23px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 50px">3 100</div>
+                    <div class="statusBar" style="height: 50px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 41px">3 100</div>
+                    <div class="statusBar" style="height: 41px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 49px">3 100</div>
+                    <div class="statusBar" style="height: 49px"></div>
+                </li>
+                <li class="grafikMean active">
+                    <div class="price" style="bottom: 61px">3 100</div>
+                    <div class="statusBar" style="height: 61px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 89px">3 100</div>
+                    <div class="statusBar" style="height: 89px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 57px">3 100</div>
+                    <div class="statusBar" style="height: 57px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 50px">3 100</div>
+                    <div class="statusBar" style="height: 50px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 90px">3 100</div>
+                    <div class="statusBar" style="height: 90px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 100px">3 100</div>
+                    <div class="statusBar" style="height: 100px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 90px">3 100</div>
+                    <div class="statusBar" style="height: 90px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 87px">3 100</div>
+                    <div class="statusBar" style="height: 87px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 78px">3 100</div>
+                    <div class="statusBar" style="height: 78px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 65px">3 100</div>
+                    <div class="statusBar" style="height: 65px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 46px">3 100</div>
+                    <div class="statusBar" style="height: 46px"></div>
+                </li>
+                <li class="grafikMean">
+                    <div class="price" style="bottom: 21px">3 100</div>
+                    <div class="statusBar" style="height: 21px"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="floatRight textBlockPrice">
+            <div class="cena"> от <span class="price">3 250</span> <span class="rur">o</span></div>
+            <div>
+                Самая низкая цена<br>
+                по этому направлению:<br>
+                <a href="#">12 июня 2012</a>
+            </div>
+        </div>
+        <div class="clear"></div>
     </div>
     <!--<div class="center-block">
         <div class="floatLeft">
