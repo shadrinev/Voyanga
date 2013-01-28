@@ -123,7 +123,9 @@
                                 <td rowspan="3" class="tdAvia">
                                     <img src="img/airline_logos/<?php echo $flightPart->markAirline->code;?>.png"><span class="airlineName"><?php echo $flightPart->markAirline->localRu;?></span><br>
                                     Рейс: <?php echo $flightPart->markAirline->code.' '.$flightPart->code;?><br>
-
+                                    <?php if($flightPart->getAircraftName()):?>
+                                        Самолёт: <?php echo $flightPart->getAircraftName();?><br>
+                                    <?php endif;?>
                                 </td>
                                 <td rowspan="3" class="tdTarif">
                                     <?php if(implode(',',$flightPart->bookingCodes)):?>
