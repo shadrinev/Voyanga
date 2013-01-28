@@ -118,27 +118,31 @@
     <div class="shadowHotel"><img src="/themes/v2/images/shadow-hotel.png"></div>
     <h3>Важная информация</h3>
     <ul>
-        <li><span class="span">Время заселения:</span> <span data-bind="text: checkInTime">14:00</span></li>
-        <!-- ko if: site --><!-- /ko -->
-        <!-- ko if: phone -->
-        <li><span class="span">Телефон:</span> <span data-bind="text: phone">7-495-7887272</span></li>
-        <!-- /ko -->
-        <!-- ko if: fax -->
-        <li><span class="span">Факс:</span> <span data-bind="text: fax">7-495-4822076</span></li>
-        <!-- /ko -->
-        <!-- ko if: email --><!-- /ko -->
-        <!-- ko if: metroList.length -->
-        <li><span class="span">Ближайшее метро:</span> <span data-bind="foreach: metroList"><span data-bind="text: $index() != 0 ? ', '+$data : $data">Владыкино</span><span data-bind="text: $index() != 0 ? ', '+$data : $data">, Петровско-Разумовская</span></span></li>
-        <!-- /ko -->
-        <!-- ko if: locations.length -->
-        <li><span class="span">Месторасположение:</span> <span data-bind="foreach: locations"><span data-bind="text: $index() != 0 ? ', '+$data : $data">Near Centre</span></span></li>
-        <!-- /ko -->
-        <!-- ko if: numberFloors -->
-        <li><span class="span">Число этажей:</span> <span data-bind="text: numberFloors">5</span></li>
-        <!-- /ko -->
-        <!-- ko if: builtIn -->
-        <li><span class="span">Год постройки:</span> <span data-bind="text: builtIn">1956</span></li>
-        <!-- /ko -->
+        <li><span class="span">Время заселения:</span> <span><?php echo $hotelInfo->earliestCheckInTime; ?></span></li>
+        <?php if($hotelInfo->site):?>
+            <li><span class="span">Site:</span> <span><?php echo $hotelInfo->site; ?></span></li>
+        <?php endif;?>
+        <?php if($hotelInfo->phone):?>
+            <li><span class="span">Телефон:</span> <span><?php echo $hotelInfo->phone; ?></span></li>
+        <?php endif;?>
+        <?php if($hotelInfo->fax):?>
+            <li><span class="span">Факс:</span> <span><?php echo $hotelInfo->fax; ?></span></li>
+        <?php endif;?>
+        <?php if($hotelInfo->email):?>
+            <li><span class="span">Email:</span> <span><?php echo $hotelInfo->email; ?></span></li>
+        <?php endif;?>
+        <?php if($hotelInfo->metroList):?>
+            <li><span class="span">Ближайшее метро:</span> <span><?php echo implode(', ',$hotelInfo->metroList); ?></span></li>
+        <?php endif;?>
+        <?php if($hotelInfo->locations):?>
+        <li><span class="span">Месторасположение:</span> <span><?php echo implode(', ',$hotelInfo->locations); ?></span></li>
+        <?php endif;?>
+        <?php if($hotelInfo->numberFloors):?>
+        <li><span class="span">Число этажей:</span> <span><?php echo $hotelInfo->numberFloors; ?></span></li>
+        <?php endif;?>
+        <?php if($hotelInfo->builtIn):?>
+        <li><span class="span">Год постройки:</span> <span><?php echo $hotelInfo->builtIn; ?></span></li>
+        <?php endif;?>
     </ul>
 </div>
 
