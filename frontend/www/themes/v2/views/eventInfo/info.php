@@ -34,28 +34,27 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 <span style="display: none" id='socialSource'>
     <div id='socialButtons'>
         <ul id="social" class="cf">
-        <li>
-            <a href="http://twitter.com/share" class="socialite twitter-share" data-text="<?php echo $description ?>" data-url="<?php echo $url ?>" data-count="horizontal" rel="nofollow" target="_blank">
-                <span class="vhidden">Поделиться в Twitter</span>
-            </a>
-        </li>
-        <li>
-            <a href="https://plusone.google.com/_/+1/confirm?hl=en&amp;url=<?php echo $url ?>" class="socialite googleplus-one" data-size="medium" data-href="<?php echo $url ?>" rel="nofollow" target="_blank">
-                <span class="vhidden">Поделиться в Google+</span>
-            </a>
-        </li>
-        <li>
-            <a href="http://www.facebook.com/sharer.php?u=<?php echo $url ?>&amp;t=<?php echo $title ?>" class="socialite facebook-like" data-href="<?php echo $url ?>" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false" rel="nofollow" target="_blank">
-                <span class="vhidden">Поделиться в Facebook</span>
-            </a>
-        </li>
-        <li>
-            <a class="socialite vkontakte-like"
-               href="http://vkontakte.ru/share.php?url=<?php echo $url ?>&amp;title=<?php echo $title ?>&amp;description=<?php echo $description ?>&amp;image=<?php echo $imageSmallAbs ?>" target="_blank">
-                <span class="vhidden">Поделиться ВКонтакте</span>
-            </a>
-        </li>
+            <li>
+                <a class="socialite vkontakte-like"
+                   href="http://vkontakte.ru/share.php?url=<?php echo $url ?>&amp;title=<?php echo $title ?>&amp;description=<?php echo $description ?>&amp;image=<?php echo $imageSmallAbs ?>" target="_blank">
+                    <span class="vhidden">Поделиться ВКонтакте</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.facebook.com/sharer.php?u=<?php echo $url ?>&amp;t=<?php echo $title ?>" class="socialite facebook-like" data-href="<?php echo $url ?>" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false" rel="nofollow" target="_blank">
+                    <span class="vhidden">Поделиться в Facebook</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://twitter.com/share" class="socialite twitter-share" data-text="<?php echo $description ?>" data-url="<?php echo $url ?>" data-count="horizontal" rel="nofollow" target="_blank">
+                    <span class="vhidden">Поделиться в Twitter</span>
+                </a>
+            </li>
     </ul>
+    <div class="clear"></div>
+    <a href="#" id="followLink">
+        <span class="vhidden">Получить ссылку</span>
+    </a>
     </div>
 </span>
 <!-- EVENTS -->

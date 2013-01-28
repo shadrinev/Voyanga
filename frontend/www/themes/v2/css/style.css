@@ -3673,3 +3673,34 @@ a.whereData span {
     margin-top: 10px;
     margin-bottom: 5px;
 }
+
+#socialButtons {
+    float: left;
+}
+#socialButtons #social {
+    margin-bottom: 10px;
+}
+#socialButtons #social li {
+    margin-right: 17px;
+    display: inline-block;
+    height: 22px;
+    vertical-align: middle;
+}
+#followLink {
+    display: inline-block;
+    text-align: center;
+    padding: 5px;
+    color: #292d35;
+    text-decoration: none;
+    border-radius: 3px;
+    box-shadow: 0px 1px 0px rgba(26,27,31,0.5);
+
+    background: #eff3f6;
+    background: -moz-linear-gradient(top, #eff3f6 0%, #e8e9ef 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eff3f6), color-stop(100%,#e8e9ef));
+    background: -webkit-linear-gradient(top, #eff3f6 0%,#e8e9ef 100%);
+    background: -o-linear-gradient(top, #eff3f6 0%,#e8e9ef 100%);
+    background: -ms-linear-gradient(top, #eff3f6 0%,#e8e9ef 100%);
+    background: linear-gradient(to bottom, #eff3f6 0%,#e8e9ef 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff3f6', endColorstr='#e8e9ef',GradientType=0 );
+}
