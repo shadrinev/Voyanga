@@ -656,7 +656,7 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.showDetails = function(data, event) {
-    new GenericPopup('#avia-body-popup', this);
+    this.parent._popup = new GenericPopup('#avia-body-popup', this);
     ko.processAllDeferredBindingUpdates();
     SizeBox('avia-body-popup');
     return ResizeBox('avia-body-popup');
@@ -746,6 +746,8 @@ AviaResultSet = (function() {
 
     this.findAndSelect = __bind(this.findAndSelect, this);
 
+    this.onAfterSelect = __bind(this.onAfterSelect, this);
+
     this.select = __bind(this.select, this);
 
     this.injectSearchParams = __bind(this.injectSearchParams, this);
@@ -833,7 +835,6 @@ AviaResultSet = (function() {
 
   AviaResultSet.prototype.select = function(ctx) {
     var selection, ticketValidCheck;
-    console.log(ctx);
     if (ctx.ribbon) {
       selection = ctx.data;
     } else {
@@ -850,6 +851,12 @@ AviaResultSet = (function() {
       return Utils.toBuySubmit([result]);
     });
     return this.checkTicket(selection, ticketValidCheck);
+  };
+
+  AviaResultSet.prototype.onAfterSelect = function() {
+    if (this._popup) {
+      return this._popup.close();
+    }
   };
 
   AviaResultSet.prototype.findAndSelect = function(result) {

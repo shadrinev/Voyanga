@@ -181,7 +181,8 @@ ToursAviaResultSet = (function(_super) {
     res.parent.filtersConfig = res.parent.filters.getConfig();
     this.results().selected_best(res.best | false);
     this.overviewTemplate = 'tours-overview-avia-ticket';
-    return this.selection(res);
+    this.selection(res);
+    return this.results().onAfterSelect();
   };
 
   ToursAviaResultSet.prototype.toBuyRequest = function() {

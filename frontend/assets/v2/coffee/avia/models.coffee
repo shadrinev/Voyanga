@@ -456,7 +456,7 @@ class AviaResult
 
   # Shows popup with detailed info about given result
   showDetails: (data, event)=>
-    new GenericPopup '#avia-body-popup', @
+    @parent._popup = new GenericPopup '#avia-body-popup', @
     ko.processAllDeferredBindingUpdates()
 
     SizeBox('avia-body-popup');
@@ -588,7 +588,6 @@ class AviaResultSet
       @dateHeadingText += ', ' +@rtDate      
 
   select: (ctx) =>
-    console.log ctx
     # cheapest click
     if ctx.ribbon
       selection = ctx.data
@@ -606,6 +605,10 @@ class AviaResultSet
       Utils.toBuySubmit [result]
       
     @checkTicket selection, ticketValidCheck
+
+  onAfterSelect: =>
+    if @_popup
+      do @_popup.close
 
   findAndSelect: (result)=>
     hash = result.similarityHash()
