@@ -403,27 +403,36 @@ VoyangaCalendarStandart.onCellClick = function(obj){
     var cellDate = Date.fromIso(jCell.data('cell-date'));
     var dontset = true;
 
-    if(this.twoSelect){
-        if(this.values.length == 2){
+    if(this.twoSelect)
+    {
+        if(this.values.length == 2)
+        {
             this.values = new Array();
-        }else if(this.values.length == 1){
-            if(cellDate < this.values[0]){
+        }
+        else if(this.values.length == 1)
+        {
+            if(cellDate < this.values[0])
+            {
                 this.values = new Array();
-            }else{
+            }
+            else
+            {
 		        dontset = false;
                 this.values.push(cellDate);
             }
         }
-    }else{
-        console.log("this.values", this.values);
-        if(this.values.length != 0){
+    }
+    else
+    {
+        dontset = false;
+        if(this.values.length != 0)
+        {
             this.values = new Array();
-        } else {
-	        dontset = false;
-	    }
+        }
     }
 
-    if(this.values.length == 0){
+    if(this.values.length == 0)
+    {
         this.values.push(cellDate);
     }
     VoyangaCalendarStandart.update(dontset);
@@ -436,9 +445,6 @@ VoyangaCalendarStandart.generateGrid = function(){
     dayToday.setHours(0);
     var self = this;
     var startMonth = firstDay.getMonth();
-    //var firstDayOfMonth = new Date();
-    //firstDayOfMonth.setFullYear(firstDay.getFullYear(), startMonth, 1);
-    //var tmpDate = getMonday(firstDayOfMonth);
     var tmpDate =  moment(moment(firstDay))._d;//clone Date object
     tmpDate.setDate(1);
     tmpDate.setDate(tmpDate.getDate() - this.getDay(tmpDate));//set Monday
@@ -545,6 +551,7 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
 	    VoyangaCalendarStandart.values = VoyangaCalendarStandart.values.slice(0,1);
     VoyangaCalendarStandart.minimalDateChanged = false;
     var needScroll = false;
+    var dontset = true;
     if(newCalendarValue.activeSearchPanel){
         if(newCalendarValue.activeSearchPanel.prevSearchPanel()){
             minDt = newCalendarValue.activeSearchPanel.prevSearchPanel().checkOut();
@@ -570,7 +577,7 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
         if(VoyangaCalendarStandart.alreadyInited && VoyangaCalendarStandart.minimalDateChanged){
             VoyangaCalendarStandart.minimalDateUpdated();
         }else if(VoyangaCalendarStandart.alreadyInited){
-            console.log('not inited',VoyangaCalendarStandart.minimalDateChanged);
+            dontset = false;
         }
     }else{
         console.log('else????')
@@ -582,19 +589,12 @@ VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
     if(needScroll){
         VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate);
     }
-    if ((newCalendarValue.twoSelect == true && (!newCalendarValue.from || !newCalendarValue.to) || (newCalendarValue.twoSelect == false && (!newCalendarValue.from) ) ))
-    {
-        if (VoyangaCalendarStandart != undefined)
-            VoyangaCalendarStandart.values = new Array();
-    }
-    else
-    {
-        VoyangaCalendarStandart.values = new Array();
+    VoyangaCalendarStandart.values = new Array();
+    if (newCalendarValue.from)
         VoyangaCalendarStandart.values.push(newCalendarValue.from);
-        if(newCalendarValue.twoSelect)
-            VoyangaCalendarStandart.values.push(newCalendarValue.to);
-    }
-    VoyangaCalendarStandart.update(true);
+    if ((newCalendarValue.twoSelect) && (newCalendarValue.to))
+        VoyangaCalendarStandart.values.push(newCalendarValue.to);
+    VoyangaCalendarStandart.update(dontset);
 }
 
 VoyangaCalendarStandart.compareCalendarValue = function(oldValue,newValue){

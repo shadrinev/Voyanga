@@ -119,7 +119,10 @@ class TourPanelSet
       @activeCalendarPanel().checkIn values[0]
       maxDate = @activeCalendarPanel().checkIn()
       if values.length > 1
-        @activeCalendarPanel().checkOut values[1]
+        if (values[0] < values[1])
+          @activeCalendarPanel().checkOut values[1]
+        else
+          @activeCalendarPanel().checkOut ''
         if maxDate < @activeCalendarPanel().checkOut()
           maxDate = @activeCalendarPanel().checkOut()
       if(@activeCalendarPanel().nextSearchPanel() && maxDate > @activeCalendarPanel().nextSearchPanel().checkIn())
