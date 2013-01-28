@@ -322,3 +322,17 @@ function nextSlideDownRules(_this) {
     }
 
 }
+
+function getLink() {
+    $('body').click(function(e) {
+        if ($(e.target).parents('#followLink').length > 0) {
+            $('#followLink').find('.text').hide();
+            $('#followLink').find('.getLink').show();
+        }
+        else {
+            $('#followLink').find('.text').show();
+            $('#followLink').find('.getLink').hide();
+        }
+    });
+}
+$(window).load(getLink);

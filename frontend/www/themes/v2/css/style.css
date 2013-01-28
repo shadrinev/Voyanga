@@ -3704,3 +3704,9 @@ a.whereData span {
     background: linear-gradient(to bottom, #eff3f6 0%,#e8e9ef 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff3f6', endColorstr='#e8e9ef',GradientType=0 );
 }
+#followLink .getLink {
+    display: none;
+}
+#followLink .getLink input {
+    width: 250px;
+}

@@ -52,8 +52,8 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
             </li>
     </ul>
     <div class="clear"></div>
-    <a href="#" id="followLink">
-        <span class="vhidden">Получить ссылку</span>
+    <a href="javascript:void(0);" id="followLink">
+        <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText"> </span>
     </a>
     </div>
 </span>
