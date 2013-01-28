@@ -4,6 +4,7 @@ $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('fronten
 $theme = Yii::app()->theme->baseUrl;
 Yii::app()->clientScript->registerPackage('appCss');
 Yii::app()->clientScript->registerPackage('appJs');
+Yii::app()->clientScript->registerPackage('landing');
 Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
 Yii::app()->clientScript->registerScriptFile('/js/completed.js');
 Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');

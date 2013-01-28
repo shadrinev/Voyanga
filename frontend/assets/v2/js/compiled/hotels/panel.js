@@ -120,7 +120,11 @@ HotelsPanel = (function(_super) {
     if (values.length) {
       this.checkIn(values[0]);
       if (values.length > 1) {
-        return this.checkOut(values[1]);
+        if (values[0] < values[1]) {
+          return this.checkOut(values[1]);
+        } else {
+          return this.checkOut('');
+        }
       }
     }
   };

@@ -83,7 +83,10 @@ class HotelsPanel extends SearchPanel
     if values.length
       @checkIn values[0]
       if values.length > 1
-        @checkOut values[1]
+        if values[0] < values[1]
+          @checkOut values[1]
+        else
+          @checkOut ''
 
   afterRender: =>
     do resizePanel

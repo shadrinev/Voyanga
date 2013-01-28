@@ -20,7 +20,9 @@ FlightPart = (function() {
     this._duration = part.duration;
     this.transportAirline = part.transportAirline;
     this.transportAirlineName = part.transportAirlineNameEn;
-    this.flightCode = part.transportAirline + ' ' + part.flightCode;
+    this.markAirline = part.markAirline;
+    this.markAirlineName = part.markAirlineNameEn;
+    this.flightCode = part.markAirline + ' ' + part.flightCode;
     this.stopoverLength = 0;
   }
 

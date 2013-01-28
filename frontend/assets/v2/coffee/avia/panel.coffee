@@ -54,7 +54,6 @@ class AviaPanel extends SearchPanel
       @departureCity() && @arrivalCity()
 
     @maximizedCalendar.subscribe (newValue) =>
-      console.log "@maximizedCalendar", !newValue
       if !newValue
         return
       if @rt() && !@rtFromChosen()
@@ -113,8 +112,11 @@ class AviaPanel extends SearchPanel
   setDate: (values)=>
     if values.length
       @departureDate values[0]
-      if values.length > 1
-        @rtDate values[1]
+      if @rt and values.length > 1
+        if values[1] > values[0]
+          @rtDate values[1]
+        else
+          @rtDate ''
 
   ###
   # Click handlers

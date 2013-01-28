@@ -170,7 +170,11 @@ TourPanelSet = (function() {
       this.activeCalendarPanel().checkIn(values[0]);
       maxDate = this.activeCalendarPanel().checkIn();
       if (values.length > 1) {
-        this.activeCalendarPanel().checkOut(values[1]);
+        if (values[0] < values[1]) {
+          this.activeCalendarPanel().checkOut(values[1]);
+        } else {
+          this.activeCalendarPanel().checkOut('');
+        }
         if (maxDate < this.activeCalendarPanel().checkOut()) {
           maxDate = this.activeCalendarPanel().checkOut();
         }

@@ -12,6 +12,8 @@ class FlightManager
         $newFlights = array();
         try
         {
+            if (!is_iterable($flightVoyages))
+                throw new CException('Flight Voyages are not iterable.');
             foreach ($flightVoyages as $key => $flight)
             {
                 $newFlight = $flight;

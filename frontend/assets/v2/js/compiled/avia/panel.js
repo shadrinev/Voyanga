@@ -71,7 +71,6 @@ AviaPanel = (function(_super) {
       return _this.departureCity() && _this.arrivalCity();
     });
     this.maximizedCalendar.subscribe(function(newValue) {
-      console.log("@maximizedCalendar", !newValue);
       if (!newValue) {
         return;
       }
@@ -141,8 +140,12 @@ AviaPanel = (function(_super) {
   AviaPanel.prototype.setDate = function(values) {
     if (values.length) {
       this.departureDate(values[0]);
-      if (values.length > 1) {
-        return this.rtDate(values[1]);
+      if (this.rt && values.length > 1) {
+        if (values[1] > values[0]) {
+          return this.rtDate(values[1]);
+        } else {
+          return this.rtDate('');
+        }
       }
     }
   };
