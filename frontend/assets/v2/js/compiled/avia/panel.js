@@ -71,7 +71,6 @@ AviaPanel = (function(_super) {
       return _this.departureCity() && _this.arrivalCity();
     });
     this.maximizedCalendar.subscribe(function(newValue) {
-      console.log("@maximizedCalendar", !newValue);
       if (!newValue) {
         return;
       }

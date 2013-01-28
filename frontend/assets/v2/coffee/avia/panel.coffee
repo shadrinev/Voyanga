@@ -54,7 +54,6 @@ class AviaPanel extends SearchPanel
       @departureCity() && @arrivalCity()
 
     @maximizedCalendar.subscribe (newValue) =>
-      console.log "@maximizedCalendar", !newValue
       if !newValue
         return
       if @rt() && !@rtFromChosen()

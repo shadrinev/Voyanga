@@ -5,39 +5,6 @@
  * Time: 13:40
  * To change this template use File | Settings | File Templates.
  */
-/*VoyangaCalendarKnob = {
-    options: {
-        animate: false,
-        slider: false
-    },
-
-    _create: function() {
-        var self = this,
-            o = this.options;
-        //console.log(this);
-        this._mouseInit();
-
-    },
-    //_init: function(){
-    //	this._mouseInit(); // начинаем обработку поведения мыши
-    //},
-    destroy: function(){
-        this._mouseDestroy();
-    },
-    _mouseStart: function(e){
-        this.options.startEvent(e,this.element);
-    },
-    _mouseDrag: function(e){
-        this.options.dragEvent(e,this.element);
-    },
-    _mouseStop: function( event ) {
-        this.options.endEvent(event,this.element);
-        return false;
-
-    }
-};
-$.widget("ui.VoyangaCalendarKnob",$.ui.mouse, VoyangaCalendarKnob);/**/
-
 
 Date.fromIso = function (dateIsoString){
     if(typeof dateIsoString == 'string'){
@@ -411,15 +378,6 @@ VoyangaCalendarStandart.update = function(dontset){
     // FIXME SUPER SLOW
     $('.dayCellVoyanga').removeClass('selectData from to selectDay');
 
-/*
-                if(cellDate.getDate() == 1){
-                    jCell.addClass('startMonth');
-                }
-        if(cellDate.getDate() == 1){
-            jCell.addClass('startMonth');
-        }
-*/
-
     if(this.values.length) {
         var jCell = this.getCellByDate(this.values[0]);
         jCell.addClass('selectData from');
@@ -434,8 +392,7 @@ VoyangaCalendarStandart.update = function(dontset){
                     tmpDate.setDate(tmpDate.getDate()+1);
                 }
         }
-        if(!dontset)
-            this.panel().setDate(this.values);
+        this.panel().setDate(this.values);
     }
 }
 
@@ -446,7 +403,6 @@ VoyangaCalendarStandart.onCellClick = function(obj){
     var cellDate = Date.fromIso(jCell.data('cell-date'));
     var dontset = true;
 
-
     if(this.twoSelect){
         if(this.values.length == 2){
             this.values = new Array();
@@ -454,16 +410,17 @@ VoyangaCalendarStandart.onCellClick = function(obj){
             if(cellDate < this.values[0]){
                 this.values = new Array();
             }else{
-		dontset = false;
+		        dontset = false;
                 this.values.push(cellDate);
             }
         }
     }else{
+        console.log("this.values", this.values);
         if(this.values.length != 0){
             this.values = new Array();
         } else {
-	    dontset = false;
-	}
+	        dontset = false;
+	    }
     }
 
     if(this.values.length == 0){
