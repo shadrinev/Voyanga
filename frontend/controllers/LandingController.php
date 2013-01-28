@@ -437,7 +437,10 @@ class LandingController extends Controller {
         $criteria->addCondition('`from` = '.$currentCity->id);
         $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
         $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*30));
-        $criteria->addCondition("`dateBack` <> '0000-00-00'");
+        $criteria->addCondition('`dateBack` >= '.date("'Y-m-d'"));
+        $criteria->addCondition('`dateBack` <= '.date("'Y-m-d'", time()+ 3600*24*30));
+
+        //$criteria->addCondition("`dateBack` <> '0000-00-00'");
         $criteria->order = 'priceBestPrice';
         //$criteria->limit = 18;
 
@@ -502,6 +505,7 @@ class LandingController extends Controller {
 
 
         $this->layout = 'static';
+        //$this->render('landing');
         $this->render('rtflight', array('city'=>$city,'citiesFrom'=>$citiesFrom,'hotelsInfo'=>$hotelsInfo,'currentCity'=>$currentCity,'flightCache'=>$sortFc,'maxPrice'=>$maxPrice,'minPrice'=>$minPrice,'activeMin'=>$activeMin,
             'flightCacheFromCurrent' => $flightCacheFromCurrent
         ));
