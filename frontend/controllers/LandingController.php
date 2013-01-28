@@ -433,10 +433,11 @@ class LandingController extends Controller {
         $criteria = new CDbCriteria();
         $criteria->addCondition('`to` = '.$city->id);
         $criteria->addCondition('`from` = '.$currentCity->id);
-        $criteria->group = 'dateFrom';
+        $criteria->group = 'dateBack';
         $criteria->addCondition('`from` = '.$currentCity->id);
         $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
         $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*30));
+        $criteria->addCondition("`dateBack` <> '0000-00-00");
         $criteria->order = 'priceBestPrice';
         //$criteria->limit = 18;
 
@@ -444,10 +445,10 @@ class LandingController extends Controller {
         $sortFc = array();
         foreach($flightCache as $fc){
             $k = strtotime($fc->dateFrom);
-            $sortFc[$k] = $fc;
+            $sortFc[$k] = array('price'=>$fc->priceBestPrice,'date'=>$fc->dateFrom,'dateBack'=>$fc->dateBack);
         }
         ksort($sortFc);
-        $sortFc = array_slice($sortFc,0,18);
+        //$sortFc = array_slice($sortFc,0,18);
         $minPrice = false;
         $maxPrice = false;
         $activeMin = null;

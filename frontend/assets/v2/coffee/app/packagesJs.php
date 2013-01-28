@@ -129,6 +129,12 @@
             'models.js',
         )
     ),
+    'landing' => array(
+        'basePath' => 'frontend.assets.v2.js.compiled.events',
+        'js' => array(
+            'models.js',
+        )
+    ),
     'appJs' => array(
         'basePath' => 'frontend.assets.v2.js.compiled.app',
         'js' => array(

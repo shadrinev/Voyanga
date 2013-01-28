@@ -2,6 +2,7 @@
     //window.flightBestPrice = <?php //echo json_encode($flightCache); ?>;
     window.defaultCity = '<?php echo $currentCity->code; ?>';
     window.pointCity = '<?php echo $city->code; ?>';
+    window.flightCache = <?php json_encode($flightCache);?>;
 
     function setDepartureDate(strDate){
         window.app.fakoPanel().departureDate(moment(strDate)._d);

@@ -11,6 +11,7 @@ class FlightPart
     public $arrivalCityId;
     public $opAirlineCode;
     public $markAirlineCode;
+    public $markAirline;
     public $transportAirlineCode;
     public $departureAirportId;
     public $departureAirport;
@@ -78,6 +79,11 @@ class FlightPart
             $this->aircraftCode = $oParams['aircraftCode'];
             //$this->aircraft_name = $oParams->aircraft_name;
             $this->transportAirlineCode = $oParams['transportAirline'];
+            if($oParams['markAirline']){
+                $this->markAirline = Airline::getAirlineByCode($oParams['markAirline']);
+            }else{
+                $this->markAirline = Airline::getAirlineByCode($oParams['transportAirline']);
+            }
             //$this->opAirline = $oParams['duration'];
             //$this->markAirline = $oParams['duration'];
             $this->departureAirportId = $oParams['departureAirportId'];
@@ -92,32 +98,64 @@ class FlightPart
     public function getJsonObject()
     {
         $airline = Airline::getAirlineByCode($this->transportAirlineCode);
-        $ret = array(
-            'transportAirline' => $this->transportAirlineCode,
-            'transportAirlineName' => $airline->localRu,
-            'transportAirlineNameEn' => $airline->localEn,
-            'markAirline' => $this->markAirline->code,
-            'markAirlineName' => $this->markAirline->localRu,
-            'markAirlineNameEn' => $this->markAirline->localEn,
-            'departureCity' => City::getCityByPk($this->departureCityId)->localRu,
-            'departureCityPre' => City::getCityByPk($this->departureCityId)->casePre,
-            'departureCityId' => $this->departureCityId,
-            'arrivalCity' => City::getCityByPk($this->arrivalCityId)->localRu,
-            'arrivalCityPre' => City::getCityByPk($this->arrivalCityId)->casePre,
-            'arrivalCityId' => $this->arrivalCityId,
-            'datetimeBegin' => DateTimeHelper::formatForJs($this->timestampBegin),
-            'datetimeEnd' => DateTimeHelper::formatForJs($this->timestampEnd),
-            'flightCode' => $this->code,
-            'duration' => $this->duration,
-            'departureAirport' => $this->departureAirport->localRu,
-            'arrivalAirport' => $this->arrivalAirport->localRu,
-            'departureAirportId' => $this->departureAirport->id,
-            'arrivalAirportId' => $this->arrivalAirport->id,
-            'aircraftCode' => $this->aircraftCode,
-            'aircraftName' => $this->getAircraftName(),
-            'stopNum'=>$this->stopNum,
-            'bookingCode'=>$this->bookingCodes[0],
-        );
+        //echo 1;
+        //die();
+
+        if(!$this->markAirline)
+            //$this->markAirline = $airline;
+            $ret = array(
+                'transportAirline' => $this->transportAirlineCode,
+                'transportAirlineName' => $airline->localRu,
+                'transportAirlineNameEn' => $airline->localEn,
+                'departureCity' => City::getCityByPk($this->departureCityId)->localRu,
+                'departureCityPre' => City::getCityByPk($this->departureCityId)->casePre,
+                'departureCityId' => $this->departureCityId,
+                'arrivalCity' => City::getCityByPk($this->arrivalCityId)->localRu,
+                'arrivalCityPre' => City::getCityByPk($this->arrivalCityId)->casePre,
+                'arrivalCityId' => $this->arrivalCityId,
+                'datetimeBegin' => DateTimeHelper::formatForJs($this->timestampBegin),
+                'datetimeEnd' => DateTimeHelper::formatForJs($this->timestampEnd),
+                'flightCode' => $this->code,
+                'duration' => $this->duration,
+                'departureAirport' => $this->departureAirport->localRu,
+                'arrivalAirport' => $this->arrivalAirport->localRu,
+                'departureAirportId' => $this->departureAirport->id,
+                'arrivalAirportId' => $this->arrivalAirport->id,
+                'aircraftCode' => $this->aircraftCode,
+                'aircraftName' => $this->getAircraftName(),
+                'stopNum'=>$this->stopNum,
+                'bookingCode'=>$this->bookingCodes[0],
+            );
+        else
+            $ret = array(
+                'transportAirline' => $this->transportAirlineCode,
+                'transportAirlineName' => $airline->localRu,
+                'transportAirlineNameEn' => $airline->localEn,
+                'markAirline' => $this->markAirline->code,
+                'markAirlineName' => $this->markAirline->localRu,
+                'markAirlineNameEn' => $this->markAirline->localEn,
+                'departureCity' => City::getCityByPk($this->departureCityId)->localRu,
+                'departureCityPre' => City::getCityByPk($this->departureCityId)->casePre,
+                'departureCityId' => $this->departureCityId,
+                'arrivalCity' => City::getCityByPk($this->arrivalCityId)->localRu,
+                'arrivalCityPre' => City::getCityByPk($this->arrivalCityId)->casePre,
+                'arrivalCityId' => $this->arrivalCityId,
+                'datetimeBegin' => DateTimeHelper::formatForJs($this->timestampBegin),
+                'datetimeEnd' => DateTimeHelper::formatForJs($this->timestampEnd),
+                'flightCode' => $this->code,
+                'duration' => $this->duration,
+                'departureAirport' => $this->departureAirport->localRu,
+                'arrivalAirport' => $this->arrivalAirport->localRu,
+                'departureAirportId' => $this->departureAirport->id,
+                'arrivalAirportId' => $this->arrivalAirport->id,
+                'aircraftCode' => $this->aircraftCode,
+                'aircraftName' => $this->getAircraftName(),
+                'stopNum'=>$this->stopNum,
+                'bookingCode'=>$this->bookingCodes[0],
+            );
+        //print_r($ret);
+        //die();
+
         return $ret;
     }
 
