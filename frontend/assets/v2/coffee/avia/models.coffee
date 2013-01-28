@@ -17,7 +17,9 @@ class FlightPart
     @_duration = part.duration
     @transportAirline = part.transportAirline
     @transportAirlineName = part.transportAirlineNameEn
-    @flightCode = part.transportAirline + ' ' + part.flightCode
+    @markAirline = part.markAirline
+    @markAirlineName = part.markAirlineNameEn
+    @flightCode = part.markAirline + ' ' + part.flightCode
     @stopoverLength = 0
 
   departureTime: ->
