@@ -121,8 +121,8 @@
                                 </td>
                                 <td class="tdCity"><?php echo City::getCityByPk($flightPart->departureCityId)->localRu;?>, <span class="airport"><?php echo $flightPart->departureAirport->localRu?><?php echo ($flightPart->departureTerminalCode ? " ({$flightPart->departureTerminalCode})" : '');?></span></td>
                                 <td rowspan="3" class="tdAvia">
-                                    <img src="img/airline_logos/<?php echo $flightPart->transportAirlineCode;?>.png"><span class="airlineName"><?php echo Airline::getAirlineByCode($flightPart->transportAirlineCode)->localRu;?></span><br>
-                                    Рейс: <?php echo $flightPart->transportAirlineCode.' '.$flightPart->code;?><br>
+                                    <img src="img/airline_logos/<?php echo $flightPart->markAirline->code;?>.png"><span class="airlineName"><?php echo $flightPart->markAirline->localRu;?></span><br>
+                                    Рейс: <?php echo $flightPart->markAirline->code.' '.$flightPart->code;?><br>
 
                                 </td>
                                 <td rowspan="3" class="tdTarif">
