@@ -263,6 +263,21 @@ Utils = {
     $('body').append(form_html);
     return $('#buy-form').submit();
   },
+  formatPrice: function(price) {
+    var i, intPrice, j, ret, strPrice, _i, _ref;
+    intPrice = parseInt(price);
+    strPrice = intPrice.toString();
+    ret = "";
+    j = 0;
+    for (i = _i = _ref = strPrice.length - 1; _ref <= 0 ? _i <= 0 : _i >= 0; i = _ref <= 0 ? ++_i : --_i) {
+      if (j !== 0 && j % 3 === 0) {
+        ret = ' ' + ret;
+      }
+      ret = strPrice[i] + ret;
+      j++;
+    }
+    return ret;
+  },
   calculateTheDistance: function(lat1, lng1, lat2, lng2) {
     var $ad, $cdelta, $cl1, $cl2, $delta, $dist, $lat1, $lat2, $long1, $long2, $sdelta, $sl1, $sl2, $x, $y;
     $lat1 = lat1 * Math.PI / 180;
