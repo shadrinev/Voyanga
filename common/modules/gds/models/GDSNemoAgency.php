@@ -748,8 +748,8 @@ class GDSNemoAgency extends CComponent
         {
             $flightTicketingResponse->status = 1;
             $aParts = array();
-            UtilsHelper::soapObjectsArray($flightTicketingResponse->Response->Ticketing->Flight->Segments->Segment);
-            foreach ($flightTicketingResponse->Response->Ticketing->Flight->Segments->Segment as $arrKey => $oSegment)
+            UtilsHelper::soapObjectsArray($response->Response->Ticketing->Flight->Segments->Segment);
+            foreach ($response->Response->Ticketing->Flight->Segments->Segment as $arrKey => $oSegment)
             {
                 $oPart = new stdClass();
                 //Yii::beginProfile('loadAirportData');
