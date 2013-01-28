@@ -30,13 +30,18 @@ class landBestPrice
 class landBestPriceSet
   constructor: (allData) ->
     @_results = {}
+    #console.log(allData)
     @minBestPrice = false
-    for data of allData
+    for key,data of allData
+      #console.log(key,data)
       if @_results[data.date]
         @_results[data.date].addBack(data)
       else
         @_results[data.date] = new landBestPrice(data)
       if(!@minBestPrice || @_results[data.date].minPrice() < @minBestPrice.minPrice())
-        @minBestPrice.selected(false)
+        if @minBestPrice
+          @minBestPrice.selected(false)
         @minBestPrice = @_results[data.date]
+        @minBestPrice.selected(true)
+
 

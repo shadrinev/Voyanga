@@ -1,8 +1,10 @@
+<?php //print_r($flightCache);?>
 <script>
     //window.flightBestPrice = <?php //echo json_encode($flightCache); ?>;
     window.defaultCity = '<?php echo $currentCity->code; ?>';
     window.pointCity = '<?php echo $city->code; ?>';
-    window.flightCache = <?php json_encode($flightCache);?>;
+
+    window.flightCache = <?php echo json_encode($flightCache);?>;
 
     function setDepartureDate(strDate){
         window.app.fakoPanel().departureDate(moment(strDate)._d);
@@ -27,11 +29,13 @@
         var panelSet = new AviaPanel();
         panelSet.departureCity(window.defaultCity);
         panelSet.arrivalCity(window.pointCity);
+        var kkk = new landBestPriceSet(window.flightCache);
+        console.log(kkk);
 
         panelSet.rt(true);
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
-        setDepartureDate('<?php echo $flightCache[$activeMin]->dateFrom;?>');
+        setDepartureDate('<?php echo $flightCache[$activeMin]['date'];?>');
 
 
         ko.applyBindings(app);
@@ -60,17 +64,17 @@
             ?>
         </h3>
     </div>
-    <div class="center-block">
+    <!--<div class="center-block">
         <div class="floatLeft">
             <ul class="grafik first-child">
 
-                <?php foreach($flightCache as $k=>$fc):?>
-                <?php $perc = round(( $fc->priceBestPrice / $maxPrice )*100);?>
-                <li class="grafikMean<?php echo $k==$activeMin ? ' min' : '';?>" data-price="<?php echo $fc->priceBestPrice;?>" data-date="<?php echo $fc->dateFrom;?>" onclick="setDepartureDate($(this).data('date'))">
-                    <div class="price" style="bottom: <?php echo $perc;?>px"><?php echo $fc->priceBestPrice;?></div>
-                    <div class="statusBar" style="height: <?php echo $perc;?>px"></div>
+                <?php /*foreach($flightCache as $k=>$fc):*/?>
+                <?php /*$perc = round(( $fc->priceBestPrice / $maxPrice )*100);*/?>
+                <li class="grafikMean<?php /*echo $k==$activeMin ? ' min' : '';*/?>" data-price="<?php /*echo $fc->priceBestPrice;*/?>" data-date="<?php /*echo $fc->dateFrom;*/?>" onclick="setDepartureDate($(this).data('date'))">
+                    <div class="price" style="bottom: <?php /*echo $perc;*/?>px"><?php /*echo $fc->priceBestPrice;*/?></div>
+                    <div class="statusBar" style="height: <?php /*echo $perc;*/?>px"></div>
                 </li>
-                <?php endforeach; ?>
+                <?php /*endforeach; */?>
 
             </ul>
         </div>
@@ -83,38 +87,38 @@
             </div>
         </div>
         <div class="clear"></div>
-    </div>
-    <div class="bgDate">
+    </div>-->
+    <!--<div class="bgDate">
         <div class="center-block">
             <div class="floatLeft">
-                <?php foreach($flightCache as $fc){
+                <?php /*foreach($flightCache as $fc){
                 $oldMonth = intval(date('n',strtotime($fc->dateFrom)));
                 $firstCell = true;
                 break;
-            }?>
+            }*/?>
                 <ul class="date">
-                    <?php foreach($flightCache as $k=>$fc):?>
-                    <?php $ts = strtotime($fc->dateFrom);
+                    <?php /*foreach($flightCache as $k=>$fc):*/?>
+                    <?php /*$ts = strtotime($fc->dateFrom);
                     $m = intval(date('n',$ts));
-                    ?>
-                    <li<?php echo $m!=$oldMonth ? ' class="newMonth"' : '';?>>
-                        <?php if($m!=$oldMonth || $firstCell):?>
-                        <div class="month"><?php echo UtilsHelper::$months[($m-1)];?></div>
-                        <?php endif; ?>
-                        <div class="day<?php echo $fc->dateFrom == date('Y-m-d') ? ' today':'';?><?php echo $k==$activeMin ? ' min' : '';?>">
-                            <?php echo UtilsHelper::$days[date('w',$ts)];?><br>
-                            <span><?php echo date('d',$ts);?></span>
+                    */?>
+                    <li<?php /*echo $m!=$oldMonth ? ' class="newMonth"' : '';*/?>>
+                        <?php /*if($m!=$oldMonth || $firstCell):*/?>
+                        <div class="month"><?php /*echo UtilsHelper::$months[($m-1)];*/?></div>
+                        <?php /*endif; */?>
+                        <div class="day<?php /*echo $fc->dateFrom == date('Y-m-d') ? ' today':'';*/?><?php /*echo $k==$activeMin ? ' min' : '';*/?>">
+                            <?php /*echo UtilsHelper::$days[date('w',$ts)];*/?><br>
+                            <span><?php /*echo date('d',$ts);*/?></span>
                         </div>
                     </li>
-                    <?php $oldMonth = $m;$firstCell=false;?>
-                    <?php endforeach; ?>
+                    <?php /*$oldMonth = $m;$firstCell=false;*/?>
+                    <?php /*endforeach; */?>
                 </ul>
             </div>
             <div class="floatRight textBlockPrice">
                 <a href="#" class="whereData"><span>Откуда данные?</span></a>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">

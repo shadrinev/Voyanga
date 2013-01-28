@@ -130,7 +130,7 @@
         )
     ),
     'landing' => array(
-        'basePath' => 'frontend.assets.v2.js.compiled.events',
+        'basePath' => 'frontend.assets.v2.js.compiled.landing',
         'js' => array(
             'models.js',
         )

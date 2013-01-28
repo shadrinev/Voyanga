@@ -437,7 +437,7 @@ class LandingController extends Controller {
         $criteria->addCondition('`from` = '.$currentCity->id);
         $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
         $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*30));
-        $criteria->addCondition("`dateBack` <> '0000-00-00");
+        $criteria->addCondition("`dateBack` <> '0000-00-00'");
         $criteria->order = 'priceBestPrice';
         //$criteria->limit = 18;
 
@@ -445,7 +445,7 @@ class LandingController extends Controller {
         $sortFc = array();
         foreach($flightCache as $fc){
             $k = strtotime($fc->dateFrom);
-            $sortFc[$k] = array('price'=>$fc->priceBestPrice,'date'=>$fc->dateFrom,'dateBack'=>$fc->dateBack);
+            $sortFc[$k] = $fc;//array('price'=>$fc->priceBestPrice,'date'=>$fc->dateFrom,'dateBack'=>$fc->dateBack);
         }
         ksort($sortFc);
         //$sortFc = array_slice($sortFc,0,18);
@@ -468,6 +468,10 @@ class LandingController extends Controller {
                     $activeMax = $k;
                 }
             }
+        }
+        foreach($flightCache as $fc){
+            $k = strtotime($fc->dateFrom);
+            $sortFc[$k] = array('price'=>$fc->priceBestPrice,'date'=>$fc->dateFrom,'dateBack'=>$fc->dateBack);
         }
         //print_r($flightCache);die();
 
@@ -495,6 +499,7 @@ class LandingController extends Controller {
         $criteria->group = '`to`';
 
         $flightCacheFromCurrent = FlightCache::model()->findAll($criteria);
+
 
         $this->layout = 'static';
         $this->render('rtflight', array('city'=>$city,'citiesFrom'=>$citiesFrom,'hotelsInfo'=>$hotelsInfo,'currentCity'=>$currentCity,'flightCache'=>$sortFc,'maxPrice'=>$maxPrice,'minPrice'=>$minPrice,'activeMin'=>$activeMin,
