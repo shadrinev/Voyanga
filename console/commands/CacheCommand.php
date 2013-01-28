@@ -13,6 +13,8 @@ class CacheCommand extends CConsoleCommand
 
     private $intRouters;
     private $cities;
+    private $from;
+    private $to;
 
     public function actionSync()
     {
@@ -31,8 +33,11 @@ class CacheCommand extends CConsoleCommand
         echo "Deleted hotel rows: ".$deleted."\n";
     }
 
-    public function actionParseSkyScanner()
+    public function actionParseSkyScanner($from, $to)
     {
+        $this->from = $from;
+        $this->to = $to;
+
         foreach (Yii::app()->log->routes as $route)
         {
             $route->enabled = false;
@@ -145,8 +150,8 @@ class CacheCommand extends CConsoleCommand
                     if (isset($skyscannerCities[$nFrom]) and (isset($skyscannerCities[$nTo])))
                     {
                         $url = self::SKYSCANNER_CACHE;
-                        $from = '1306';
-                        $to = '1306';
+                        $from = $this->from;
+                        $to = $this->to;
                         $skyscannerCityFrom = $skyscannerCities[$nFrom];
                         $skyscannerCityTo = $skyscannerCities[$nTo];
                         $url = str_replace('{{from}}', $skyscannerCityFrom, $url);
