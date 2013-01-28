@@ -151,4 +151,20 @@ class Bill extends CActiveRecord
         # FIXME passing this is hella retarded
         return new $className($this, $booker);
     }
+
+    public function getChannelVerbose()
+    {
+        switch ($this->channel) {
+            case 'ltr':
+                return "Длинная запись";
+            case 'gds_galileo':
+                return "Галилео";
+            case "gds_sabre":
+                return "sabre";
+            
+            default:
+                return $this->channel;
+        }
+
+    }
 }
