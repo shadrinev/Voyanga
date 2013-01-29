@@ -36,10 +36,7 @@ class SearchController extends ApiController
             foreach($event->tours as $tour){
                 if($tourSearchParams->getStartCityId() == $tour->startCityId){
                     $dataProvider->restoreFromDb($tour->orderId);
-                    //echo $tour->orderId.'dsf';
-
                     $items = $dataProvider->getWithAdditionalInfo($dataProvider->getSortedCartItemsOnePerGroup(false));
-                    //print_r($items);
                 }
             }
         }
@@ -48,10 +45,7 @@ class SearchController extends ApiController
         if(isset($items)){
             $results['items'] = $items['items'];
         }
-        if (empty($this->errors))
-            $this->sendWithCorrectFormat($format, $results);
-        else
-            $this->sendError(200, CVarDumper::dumpAsString($this->errors));
+        $this->sendWithCorrectFormat($format, $results);
         Yii::app()->end();
     }
 
@@ -68,24 +62,22 @@ class SearchController extends ApiController
         }
         $responses = $this->asyncExecutor->send();
         $result = array();
+        $i = 0;
         foreach ($responses as $response)
         {
             if ($httpCode = $response->headers['http_code'] == 200)
             {
-                $result[] = CJSON::decode($response->body);
+                $result[$i] = CJSON::decode($response->body);
+                $errors[$i] = false;
             }
             else
-                $errors[] = 'Error ' . $httpCode;
+            {
+                $result[$i] = array();
+                $errors[$i] = 'Error ' . $httpCode;    
+            }
+            $i++;
         }
-        if (!empty($this->errors))
-        {
-            $this->sendError(200, CVarDumper::dump($errors));
-            Yii::app()->end();
-        }
-        else
-        {
-            $this->sendWithCorrectFormat($format, $result);
-        }
+        $this->sendWithCorrectFormat($format, $result);
     }
 
     public function actionUpdateEvent()
@@ -227,8 +219,6 @@ class SearchController extends ApiController
     private function searchTourVariants()
     {
         $this->getAllTourVariants();
-        if (!empty($this->errors))
-            return false;
         $allVariants = $this->variants;
         return array(
             'allVariants' => $allVariants
@@ -267,14 +257,20 @@ class SearchController extends ApiController
         }
         $responses = $asyncExecutor->send();
         $this->errors = array();
+        $i=0;
         foreach ($responses as $response)
         {
             if ($httpCode = $response->headers['http_code'] == 200)
             {
-                $this->variants[] = CJSON::decode($response->body);
+                $this->variants[$i] = CJSON::decode($response->body);
+                $this->errors[$i] = false;
             }
             else
-                $this->errors[] = 'Error ' . $httpCode;
+            {
+                $this->variants[$i] = array();
+                $this->errors[$i] = 'Error ' . $httpCode;
+            }
+            $i++;
         }
     }
 

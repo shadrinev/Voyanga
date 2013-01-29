@@ -24,10 +24,19 @@ class SearchController extends ApiController
     {
         $hotelSearchParams = new HotelSearchParams();
         $hotelSearchParams->checkIn = date('Y-m-d', strtotime($checkIn));
-        $possibleCities = City::model()->guess($city);
-        if (empty($possibleCities))
-            $this->sendError(404, 'Given city not found');
-        $hotelSearchParams->city = $possibleCities[0];
+        $possibleCities = CityManager::getCitiesWithHotels($city);
+        if (!empty($possibleCities))
+        {
+            $hotelSearchParams->city = City::model()->findByPk($possibleCities[0]['id']);
+        }
+        else
+        {
+            $city = CityManager::getCities($city);
+            if (!empty($city))
+            {
+                $hotelSearchParams->city = City::model()->findByPk($city[0]['id']);
+            }
+        }
         $hotelSearchParams->duration = $duration;
         foreach ($rooms as $i => $room)
         {
@@ -41,18 +50,20 @@ class SearchController extends ApiController
                 Yii::app()->end();
             }
         }
-
-        $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
-
-
-        if (!$this->results)
+        if (empty($possibleCities))
         {
-            $this->sendError(500, 'Error while send Request To Hotel Provider');
-            Yii::app()->end();
+            $this->results = array('hotels'=>array(), 'hotelsDetails'=>array());
+        }
+        else
+        {
+            $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
+            if (!$this->results)
+            {
+                $this->results = array();
+            }
         }
 
         $cacheId = md5(serialize($hotelSearchParams));
-
         $this->results['cacheId'] = $cacheId;
         $this->results['searchParams'] = $hotelSearchParams->getJsonObject();
 
@@ -69,41 +80,8 @@ class SearchController extends ApiController
 
     public function actionInfo($hotelId,$hotelResult, $cacheId = null, $format = 'json')
     {
-        //$hotelSearchResult = Yii::app()->pCache->get('hotelSearchResult' . $cacheId);
-        //$hotelSearchParams = Yii::app()->pCache->get('hotelSearchParams' . $cacheId);
-        //if ((!$hotelSearchResult) || (!$hotelSearchParams))
-        //{
-        //    $this->sendError(200, 'Cache invalidated already.');
-        //    Yii::app()->end();
-        //}
-
-        //$stack = new HotelStack($hotelSearchResult);
-        //$results = $stack->groupBy('hotelId')->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
-        //$results =
         $hotelClient = new HotelBookClient();
         $response = array();
-
-        /*foreach ($results['hotels'] as $hotel)
-        {
-            if ($hotel['hotelId'] == $hotelId)
-            {
-                if (!isset($response['hotel']))
-                {
-                    $response['hotel'] = $hotel;
-                    $allHotels = $hotelClient->hotelSearchFullDetails($hotelSearchParams, $hotelId);
-                    $newStack = new HotelStack(array('hotels'=>$allHotels));
-                    $hotelsOut = $newStack->groupBy('hotelId')->mergeStepV2()->groupBy('rubPrice')->getJsonObject(1);
-                    $response['hotel']['details'] = array();//$hotelsOut['hotels'];
-                    $response['searchParams'] = $hotelSearchParams->getJsonObject();
-                    $response['hotel']['oldHotels'] = array();
-                    $response['hotel']['oldHotels'][] = new Hotel($hotel);
-                }
-                else
-                {
-                    $response['hotel']['oldHotels'][] = new Hotel($hotel);
-                }
-            }
-        }*/
         $response['hotel'] = array();
         $response['hotel']['oldHotels'] = array();
         $response['hotel']['details'] = array();
@@ -120,7 +98,6 @@ class SearchController extends ApiController
         if (isset($response))
         {
             $null = null;
-            //$allhotels = array_merge($response['hotel']['oldHotels'],$response['hotel']['details']);
             $hotelClient->hotelSearchDetails($null, $response['hotel']['oldHotels']);
             if ($format == 'json')
                 $this->sendJson($response);

@@ -125,6 +125,13 @@
 .tdCityStart {
     width: 130px;
 }
+.tdCityStart.zero {
+    width: 0px !important;
+    content: ""
+}
+.tdCityStart.zero span {
+    display: none;
+}
 .panelTable.constructorTable tr td.tdAddTour .add-tour {
     background: url("../images/slice.png") no-repeat scroll -401px -1224px transparent;
     display: inline-block;

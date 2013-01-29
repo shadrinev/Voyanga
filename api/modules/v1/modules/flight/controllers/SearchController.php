@@ -42,19 +42,15 @@ class SearchController extends ApiController
         }
         if (!empty($this->errors))
         {
-            $this->sendError(200, CVarDumper::dump($errors));
-            Yii::app()->end();
+            $variants = array();
         }
-        else
-        {
-            $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
-            $this->results = $variants;
-            $result['flights']['flightVoyages'] = $this->results;
-            $result['searchParams'] = $flightSearchParams->getJsonObject();
-            $siblingsEconom = FlightManager::createSiblingsData($flightSearchParams);
-            $result['siblings']['E'] = $siblingsEconom;
-            $this->sendWithCorrectFormat($format, $result);
-        }
+        $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
+        $this->results = $variants;
+        $result['flights']['flightVoyages'] = $this->results;
+        $result['searchParams'] = $flightSearchParams->getJsonObject();
+        $siblingsEconom = FlightManager::createSiblingsData($flightSearchParams);
+        $result['siblings']['E'] = $siblingsEconom;
+        $this->sendWithCorrectFormat($format, $result);
     }
 
     private function addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
