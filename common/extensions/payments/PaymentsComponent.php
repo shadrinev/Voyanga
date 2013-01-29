@@ -181,8 +181,8 @@ class PaymentsComponent extends CApplicationComponent
         {
             $booker = $booker->getCurrent();
         }
-        if($bill->getChannelName()=='gds_galileo')
-            return;
+//        if($bill->getChannelName()=='gds_galileo')
+//            return;
         $fb = $booker;
         $params['locator'] = $fb->pnr;
         $params['type']='FLIGHTS';
