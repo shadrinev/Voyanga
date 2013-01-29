@@ -1343,9 +1343,15 @@ class HotelBookClient
 
     public function processHotelDetail($hotelDetailXml)
     {
-        $hotelObject = simplexml_load_string($hotelDetailXml);
+        $hotelObject = @simplexml_load_string($hotelDetailXml);
+
         //VarDumper::dump($hotelsObject);
-        if (!$hotelObject) return false;
+        if (!$hotelObject){
+            if(self::$cacheFilePath){
+                unlink(self::$cacheFilePath);
+            }
+            return false;
+        }
         if (!isset($hotelObject->HotelDetail)) return false;
         $hotelSXE = $hotelObject->HotelDetail;
 
