@@ -9,6 +9,9 @@
     function setDepartureDate(strDate){
         window.app.fakoPanel().departureDate(moment(strDate)._d);
     }
+    function setBackDate(strDate){
+        window.app.fakoPanel().rtDate(moment(strDate)._d);
+    }
     initLandingPage = function() {
         var app, avia, hotels, tour;
         window.voyanga_debug = function() {
@@ -35,7 +38,7 @@
         panelSet.rt(true);
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
-        setDepartureDate('<?php echo $flightCache[$activeMin]['date'];?>');
+        //setDepartureDate('<?php //echo $flightCache[$activeMin]['date'];?>');
 
 
         ko.applyBindings(app);
@@ -68,7 +71,7 @@
         <div class="floatLeft">
             <ul class="grafik first-child" data-bind="foreach: landBP.datesArr">
                 <!-- ko if: landBP -->
-                    <li class="grafikMean inactive">
+                    <li class="grafikMean" data-bind="css: 'grafikMean' + (landBP.selected() ? ' active' : ''), click: landBP.selectThis"">
                         <div class="price" style="bottom: 30px" data-bind="style: { bottom: landBP.showWidth() + 'px'}, text: landBP.showPriceText()"></div>
                         <div class="statusBar" style="height: 30px" data-bind="style: { height: landBP.showWidth() + 'px'}"></div>
                     </li>
@@ -81,7 +84,7 @@
             </ul>
         </div>
         <div class="floatRight textBlockPrice">
-            <div class="cena"> от <span class="price">3 250</span> <span class="rur">o</span></div>
+            <div class="cena"> от <span class="price" data-bind="text: landBP.selectedPrice()">3 250</span> <span class="rur">o</span></div>
             <div>
                 Самая низкая цена<br>
                 по этому направлению:<br>
@@ -95,7 +98,7 @@
         <div class="floatLeft">
             <ul class="grafik second-child" data-bind="foreach: landBP.active().results()">
                 <!-- ko if: landBP -->
-                <li class="grafikMean inactive">
+                <li class="grafikMean" data-bind="css: 'grafikMean' + (landBP.selected() ? ' active' : ''), click: landBP.selectThis">
                     <div class="price" style="bottom: 30px" data-bind="style: { bottom: landBP.showWidth() + 'px'}, text: landBP.showPriceText()"></div>
                     <div class="statusBar" style="height: 30px" data-bind="style: { height: landBP.showWidth() + 'px'}"></div>
                 </li>
@@ -109,61 +112,22 @@
         </div>
         <div class="clear"></div>
     </div>
-    <!--<div class="center-block">
-        <div class="floatLeft">
-            <ul class="grafik first-child">
+    <div class="bgDate">
+    <div class="center-block">
+    <div class="floatLeft">
+        <ul class="date" data-bind="foreach: landBP.datesArr">
+            <li data-bind="css: monthChanged ? 'newMonth' : ''">
+                <div class="month" data-bind="text: monthName,visible: monthName">Май</div>
+                <div data-bind="html: dateText,css: 'day'+ (today ? ' today' : '')">
+                    пн <br>
+                    <span>16</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </div>
+    </div>
 
-                <?php /*foreach($flightCache as $k=>$fc):*/?>
-                <?php /*$perc = round(( $fc->priceBestPrice / $maxPrice )*100);*/?>
-                <li class="grafikMean<?php /*echo $k==$activeMin ? ' min' : '';*/?>" data-price="<?php /*echo $fc->priceBestPrice;*/?>" data-date="<?php /*echo $fc->dateFrom;*/?>" onclick="setDepartureDate($(this).data('date'))">
-                    <div class="price" style="bottom: <?php /*echo $perc;*/?>px"><?php /*echo $fc->priceBestPrice;*/?></div>
-                    <div class="statusBar" style="height: <?php /*echo $perc;*/?>px"></div>
-                </li>
-                <?php /*endforeach; */?>
-
-            </ul>
-        </div>
-        <div class="floatRight textBlockPrice">
-            <div class="cena"> от <span class="price">3 250</span> <span class="rur">o</span></div>
-            <div>
-                Самая низкая цена<br>
-                по этому направлению:<br>
-                <a href="#">12 июня 2012</a>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>-->
-    <!--<div class="bgDate">
-        <div class="center-block">
-            <div class="floatLeft">
-                <?php /*foreach($flightCache as $fc){
-                $oldMonth = intval(date('n',strtotime($fc->dateFrom)));
-                $firstCell = true;
-                break;
-            }*/?>
-                <ul class="date">
-                    <?php /*foreach($flightCache as $k=>$fc):*/?>
-                    <?php /*$ts = strtotime($fc->dateFrom);
-                    $m = intval(date('n',$ts));
-                    */?>
-                    <li<?php /*echo $m!=$oldMonth ? ' class="newMonth"' : '';*/?>>
-                        <?php /*if($m!=$oldMonth || $firstCell):*/?>
-                        <div class="month"><?php /*echo UtilsHelper::$months[($m-1)];*/?></div>
-                        <?php /*endif; */?>
-                        <div class="day<?php /*echo $fc->dateFrom == date('Y-m-d') ? ' today':'';*/?><?php /*echo $k==$activeMin ? ' min' : '';*/?>">
-                            <?php /*echo UtilsHelper::$days[date('w',$ts)];*/?><br>
-                            <span><?php /*echo date('d',$ts);*/?></span>
-                        </div>
-                    </li>
-                    <?php /*$oldMonth = $m;$firstCell=false;*/?>
-                    <?php /*endforeach; */?>
-                </ul>
-            </div>
-            <div class="floatRight textBlockPrice">
-                <a href="#" class="whereData"><span>Откуда данные?</span></a>
-            </div>
-        </div>
-    </div>-->
 </div>
 
 <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">

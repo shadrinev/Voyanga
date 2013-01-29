@@ -433,31 +433,31 @@ class LandingController extends Controller {
         $criteria = new CDbCriteria();
         $criteria->addCondition('`to` = '.$city->id);
         $criteria->addCondition('`from` = '.$currentCity->id);
-        $criteria->group = 'dateBack';
-        $criteria->addCondition('`from` = '.$currentCity->id);
+        //$criteria->group = 'dateBack';
+        //$criteria->addCondition('`from` = '.$currentCity->id);
         $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
-        $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*30));
+        $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*18));
         $criteria->addCondition('`dateBack` >= '.date("'Y-m-d'"));
-        $criteria->addCondition('`dateBack` <= '.date("'Y-m-d'", time()+ 3600*24*30));
+        $criteria->addCondition('`dateBack` <= '.date("'Y-m-d'", time()+ 3600*24*18));
 
         //$criteria->addCondition("`dateBack` <> '0000-00-00'");
         $criteria->order = 'priceBestPrice';
         //$criteria->limit = 18;
 
         $flightCache = FlightCache::model()->findAll($criteria);
-        $sortFc = array();
+        /*$sortFc = array();
         foreach($flightCache as $fc){
             $k = strtotime($fc->dateFrom);
             $sortFc[$k] = $fc;//array('price'=>$fc->priceBestPrice,'date'=>$fc->dateFrom,'dateBack'=>$fc->dateBack);
         }
-        ksort($sortFc);
+        ksort($sortFc);*/
         //$sortFc = array_slice($sortFc,0,18);
         $minPrice = false;
         $maxPrice = false;
         $activeMin = null;
         $activeMax = null;
-        foreach($sortFc as $k=>$fc){
-            //$k = strtotime($fc->dateFrom);
+        foreach($flightCache as $k=>$fc){
+            $k = strtotime($fc->dateFrom);
             if(!$minPrice){
                 $minPrice = $fc->priceBestPrice;
                 $maxPrice = $fc->priceBestPrice;
@@ -472,9 +472,10 @@ class LandingController extends Controller {
                 }
             }
         }
+        $sortFc = array();
         foreach($flightCache as $fc){
-            $k = strtotime($fc->dateFrom);
-            $sortFc[$k] = array('price'=>$fc->priceBestPrice,'date'=>$fc->dateFrom,'dateBack'=>$fc->dateBack);
+            //$k = strtotime($fc->dateFrom);
+            $sortFc[] = array('price'=>$fc->priceBestPrice,'date'=>$fc->dateFrom,'dateBack'=>$fc->dateBack);
         }
         //print_r($flightCache);die();
 
