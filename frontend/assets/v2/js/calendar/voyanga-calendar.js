@@ -452,6 +452,7 @@ VoyangaCalendarStandart.onCellClick = function (obj) {
 
     if (this.values.length == 0) {
         this.values.push(cellDate);
+        dontset = false;
     }
     VoyangaCalendarStandart.update(dontset);
 }
