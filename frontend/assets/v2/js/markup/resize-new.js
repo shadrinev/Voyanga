@@ -552,6 +552,14 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
+    if(window.resizeAviaThrottle) {
+	clearTimeout(window.resizeAviaThrottle);
+	window.resizeAviaThrottle = null;
+    }
+    window.resizeAviaThrottle = setTimeout(ResizeAviaClb, 1000/30);
+}
+
+function ResizeAviaClb() {
 //    if (DetectMobileQuick() )
         ResizeCenterBlock();
         inTheTwoLines();
