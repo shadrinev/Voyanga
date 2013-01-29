@@ -21,7 +21,7 @@ function inTheTwoLines() {
 	var var_otherTime = $('.recommended-ticket .ticket-items .other-time');
 
     if (var_otherTime.length > 0 && var_otherTime.is(':visible')) {
-        if (DetectMobileQuick() && var_iphone < 3) {
+//        if (DetectMobileQuick() && var_iphone < 3) {
             //console.log('!!!==== 1 ====!!!');
             var_otherTime.each(function() {
                 var var_lengthLI = $(this).find('ul.minimize li').length;
@@ -49,8 +49,8 @@ function inTheTwoLines() {
                     }
                 }
             });
-            var_iphone++;
-        }
+//            var_iphone++;
+//        }
     }
 }
 
