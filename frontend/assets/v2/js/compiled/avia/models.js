@@ -357,6 +357,8 @@ AviaResult = (function() {
 
     this.flightKey = __bind(this.flightKey, this);
 
+    this.rtServiceClass = __bind(this.rtServiceClass, this);
+
     this.rtFlightCodesText = __bind(this.rtFlightCodesText, this);
 
     this.isFlight = true;
@@ -380,6 +382,7 @@ AviaResult = (function() {
     this.searchService = data.service;
     this.airlineName = data.valCompanyNameEn;
     this.serviceClass = data.serviceClass;
+    this.serviceClassReadable = data.serviceClass === 'E' ? 'Эконом' : 'Бизнес';
     this.refundable = data.refundable;
     this.refundableText = this.refundable ? "Билет возвратный" : "Билет не возвратный";
     this.freeWeight = data.freeWeight;
@@ -433,6 +436,10 @@ AviaResult = (function() {
     } else {
       return "Рейс";
     }
+  };
+
+  AviaResult.prototype.rtServiceClass = function() {
+    return this.activeVoyage().serviceClass;
   };
 
   AviaResult.prototype.flightKey = function() {

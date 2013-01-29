@@ -85,7 +85,6 @@ class ToursAviaResultSet extends TourEntry
     @results().selected_best res.best | false
     @overviewTemplate = 'tours-overview-avia-ticket'
     @selection(res)
-    do @results().onAfterSelect
 
     
   toBuyRequest: =>

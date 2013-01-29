@@ -9,7 +9,17 @@ landBestPriceBack = (function() {
     this.parent = parent;
     this.price = parseInt(data.price);
     this.showPrice = ko.computed(function() {
-      return _this.price - _this.parent.showPrice;
+      return _this.price - _this.parent.showPrice();
+    });
+    this.showPriceText = ko.computed(function() {
+      return Utils.formatPrice(_this.showPrice());
+    });
+    this.showWidth = ko.computed(function() {
+      if (_this.parent.parent.maxPrice()) {
+        return Math.ceil((_this.showPrice() / (_this.parent.parent.maxPrice() / 2)) * 100);
+      } else {
+        return console.log('no minPrice', _this.parent.minBestPrice());
+      }
     });
     this.backDate = moment(data.backDate);
     this.selected = ko.observable(false);
@@ -38,11 +48,24 @@ landBestPrice = (function() {
       return Utils.formatPrice(_this.showPrice());
     });
     this.showWidth = ko.computed(function() {
-      if (_this.parent.minBestPrice()) {
+      if (_this.parent.maxPrice()) {
         return Math.ceil((_this.showPrice() / (_this.parent.maxPrice() / 2)) * 100);
       } else {
         return console.log('no minPrice', _this.parent.minBestPrice());
       }
+    });
+    this.results = ko.computed(function() {
+      var obj, ret, _i, _len, _ref;
+      ret = [];
+      _ref = _this.parent.datesArr;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        obj = _ref[_i];
+        ret.push({
+          data: obj.data,
+          landBP: _this._results[obj.data]
+        });
+      }
+      return ret;
     });
     this.selected = ko.observable(false);
     this.selBack = ko.observable(null);
