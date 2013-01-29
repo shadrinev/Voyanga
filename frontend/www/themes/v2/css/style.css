@@ -3057,6 +3057,11 @@ hr {
 .grafik .grafikMean.inactive .price {
     color: #9da1a5;
 }
+.grafik .grafikMean .price.question {
+    background: url("../images/question.png") center 0 no-repeat;
+    height: 30px;
+    text-indent: -9999px;
+}
 .grafik .grafikMean.min .price {
     color: #287705;
 }

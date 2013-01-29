@@ -66,85 +66,18 @@
     </div>
     <div class="center-block">
         <div class="floatLeft">
-            <ul class="grafik first-child" data-bind="foreach: datesArr">
+            <ul class="grafik first-child" data-bind="foreach: landBP.datesArr">
                 <!-- ko if: landBP -->
                     <li class="grafikMean inactive">
-                        <div class="price" style="bottom: 30px">3 100</div>
-                        <div class="statusBar" style="height: 30px"></div>
+                        <div class="price" style="bottom: 30px" data-bind="style: { bottom: landBP.showWidth() + 'px'}, text: landBP.showPriceText()"></div>
+                        <div class="statusBar" style="height: 30px" data-bind="style: { height: landBP.showWidth() + 'px'}"></div>
                     </li>
-                <!-- ko else: -->
-
                 <!-- /ko -->
-
-
+                <!-- ko ifnot: landBP -->
                 <li class="grafikMean inactive">
-                    <div class="price" style="bottom: 30px">3 100</div>
-                    <div class="statusBar" style="height: 30px"></div>
+                    <div class="price question" style="bottom: 0px; left: 0px;">?</div>
                 </li>
-                <li class="grafikMean min">
-                    <div class="price" style="bottom: 23px">3 100</div>
-                    <div class="statusBar" style="height: 23px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 50px">3 100</div>
-                    <div class="statusBar" style="height: 50px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 41px">3 100</div>
-                    <div class="statusBar" style="height: 41px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 49px">3 100</div>
-                    <div class="statusBar" style="height: 49px"></div>
-                </li>
-                <li class="grafikMean active">
-                    <div class="price" style="bottom: 61px">3 100</div>
-                    <div class="statusBar" style="height: 61px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 89px">3 100</div>
-                    <div class="statusBar" style="height: 89px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 57px">3 100</div>
-                    <div class="statusBar" style="height: 57px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 50px">3 100</div>
-                    <div class="statusBar" style="height: 50px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 90px">3 100</div>
-                    <div class="statusBar" style="height: 90px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 100px">3 100</div>
-                    <div class="statusBar" style="height: 100px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 90px">3 100</div>
-                    <div class="statusBar" style="height: 90px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 87px">3 100</div>
-                    <div class="statusBar" style="height: 87px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 78px">3 100</div>
-                    <div class="statusBar" style="height: 78px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 65px">3 100</div>
-                    <div class="statusBar" style="height: 65px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 46px">3 100</div>
-                    <div class="statusBar" style="height: 46px"></div>
-                </li>
-                <li class="grafikMean">
-                    <div class="price" style="bottom: 21px">3 100</div>
-                    <div class="statusBar" style="height: 21px"></div>
-                </li>
+                <!-- /ko -->
             </ul>
         </div>
         <div class="floatRight textBlockPrice">
@@ -154,6 +87,25 @@
                 по этому направлению:<br>
                 <a href="#">12 июня 2012</a>
             </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <hr>
+    <div class="center-block">
+        <div class="floatLeft">
+            <ul class="grafik second-child" data-bind="foreach: landBP.active().results()">
+                <!-- ko if: landBP -->
+                <li class="grafikMean inactive">
+                    <div class="price" style="bottom: 30px" data-bind="style: { bottom: landBP.showWidth() + 'px'}, text: landBP.showPriceText()"></div>
+                    <div class="statusBar" style="height: 30px" data-bind="style: { height: landBP.showWidth() + 'px'}"></div>
+                </li>
+                <!-- /ko -->
+                <!-- ko ifnot: landBP -->
+                <li class="grafikMean inactive">
+                    <div class="price question" style="bottom: 0px; left: 0px;">?</div>
+                </li>
+                <!-- /ko -->
+            </ul>
         </div>
         <div class="clear"></div>
     </div>
