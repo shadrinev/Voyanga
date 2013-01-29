@@ -7,7 +7,7 @@ landBestPriceBack = (function() {
   function landBestPriceBack(data, parent) {
     var _this = this;
     this.parent = parent;
-    this.price = data.price;
+    this.price = parseInt(data.price);
     this.showPrice = ko.computed(function() {
       return _this.price - _this.parent.showPrice;
     });
@@ -28,7 +28,7 @@ landBestPrice = (function() {
 
     this.addBack = __bind(this.addBack, this);
 
-    this.minPrice = ko.observable(data.price);
+    this.minPrice = ko.observable(parseInt(data.price));
     this.date = moment(data.date);
     this._results = {};
     this.showPrice = ko.computed(function() {
@@ -38,8 +38,10 @@ landBestPrice = (function() {
       return Utils.formatPrice(_this.showPrice());
     });
     this.showWidth = ko.computed(function() {
-      if (_this.parent.minBestPrice) {
-        return Math.ceil((_this.showPrice / _this.parent.minBestPrice.showPrice()) * 100);
+      if (_this.parent.minBestPrice()) {
+        return Math.ceil((_this.showPrice() / (_this.parent.maxPrice() / 2)) * 100);
+      } else {
+        return console.log('no minPrice', _this.parent.minBestPrice());
       }
     });
     this.selected = ko.observable(false);
@@ -81,7 +83,8 @@ landBestPriceSet = (function() {
     var data, dataKey, empty, key, _ref;
     this._results = {};
     this.dates = {};
-    this.minBestPrice = false;
+    this.minBestPrice = ko.observable(null);
+    this.maxPrice = ko.observable(0);
     this.active = ko.observable(null);
     for (key in allData) {
       data = allData[key];
@@ -96,8 +99,12 @@ landBestPriceSet = (function() {
       } else {
         this._results[data.date] = new landBestPrice(data, this);
       }
-      if (!this.minBestPrice || this._results[data.date].minPrice() < this.minBestPrice.minPrice()) {
-        this.minBestPrice = this._results[data.date];
+      if (!this.minBestPrice() || this._results[data.date].minPrice() < this.minBestPrice().minPrice()) {
+        this.minBestPrice(this._results[data.date]);
+        console.log('set new minBestPrice', this.minBestPrice());
+      }
+      if (parseInt(data.price) > this.maxPrice()) {
+        this.maxPrice(parseInt(data.price));
       }
     }
     this.datesArr = [];
@@ -113,7 +120,7 @@ landBestPriceSet = (function() {
       return moment(objDate.date).unix();
     });
     console.log('dates', this.datesArr);
-    this.active(this.minBestPrice);
+    this.active(this.minBestPrice());
     this.active().selected(true);
   }
 

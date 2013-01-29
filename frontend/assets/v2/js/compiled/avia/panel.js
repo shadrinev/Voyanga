@@ -39,6 +39,7 @@ AviaPanel = (function(_super) {
     this.arrivalCityReadable = ko.observable('');
     this.arrivalCityReadableGen = ko.observable('');
     this.arrivalCityReadableAcc = ko.observable('');
+    this.prefixText = 'Все направления<br>500+ авиакомпаний';
     this.oldCalendarState = this.minimizedCalendar();
     this.show = this.passengers.show;
     this.fromChosen = ko.computed(function() {

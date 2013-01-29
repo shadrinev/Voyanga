@@ -6,12 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 
-Date.fromIso = function (dateIsoString){
-    if(typeof dateIsoString == 'string'){
+Date.fromIso = function (dateIsoString) {
+    if (typeof dateIsoString == 'string') {
         var initArray = dateIsoString.split('-');
-        return new Date(initArray[0],(initArray[1]-1),initArray[2]);
+        return new Date(initArray[0], (initArray[1] - 1), initArray[2]);
     }
-    else{
+    else {
         return dateIsoString;
     }
 }
@@ -21,7 +21,7 @@ MouseDraggable = {
         slider: false
     },
 
-    _create: function() {
+    _create: function () {
         var self = this,
             o = this.options;
         //console.log(this);
@@ -31,24 +31,24 @@ MouseDraggable = {
     //_init: function(){
     //	this._mouseInit(); // начинаем обработку поведения мыши
     //},
-    destroy: function(){
+    destroy: function () {
         this._mouseDestroy();
     },
-    _mouseStart: function(e){
-        this.options.startEvent(e,this.element);
+    _mouseStart: function (e) {
+        this.options.startEvent(e, this.element);
     },
-    _mouseDrag: function(e){
-        this.options.dragEvent(e,this.element);
+    _mouseDrag: function (e) {
+        this.options.dragEvent(e, this.element);
     },
-    _mouseStop: function( event ) {
-        this.options.endEvent(event,this.element);
+    _mouseStop: function (event) {
+        this.options.endEvent(event, this.element);
         return false;
 
     }
 };
-$.widget("ui.MouseDraggable",$.ui.mouse, MouseDraggable);
+$.widget("ui.MouseDraggable", $.ui.mouse, MouseDraggable);
 
-VoyangaCalendarSlider = function(options){
+VoyangaCalendarSlider = function (options) {
     var defaults = {
         monthArray: new Array(),
         jObj: null,
@@ -59,53 +59,53 @@ VoyangaCalendarSlider = function(options){
         width: 0,//recalc on window resize
         knobSlideAction: false,
         animateScrollAction: false,
-        onresize: function(){
+        onresize: function () {
             this.width = this.jObj.find('.monthLineVoyanga').width();
         },
-        startEvent: function(e,obj){
-            if(this.knobSlideAction){
+        startEvent: function (e, obj) {
+            if (this.knobSlideAction) {
                 obj.data('xStart', e.pageX);
                 obj.data('posStart', this.knobPos);
-                if(this.width < 100){
+                if (this.width < 100) {
                     this.onresize();
                 }
             }
         },
-        endEvent: function(e,obj){
-            if(this.knobSlideAction){
+        endEvent: function (e, obj) {
+            if (this.knobSlideAction) {
                 this.knobSlideAction = false;
             }
         },
-        dragEvent: function(e,obj){
-            if(this.knobSlideAction){
+        dragEvent: function (e, obj) {
+            if (this.knobSlideAction) {
                 var xDelta = e.pageX - obj.data('xStart');
-                var posDelta = Math.round((xDelta / this.width)*10000)/100;
+                var posDelta = Math.round((xDelta / this.width) * 10000) / 100;
                 this.knobPos = obj.data('posStart') + posDelta;
-                if(this.knobPos < 0) this.knobPos = 0;
-                if(this.knobPos > (100 - this.knobWidth)) this.knobPos = (100 - this.knobWidth);
-                this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
-                this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
+                if (this.knobPos < 0) this.knobPos = 0;
+                if (this.knobPos > (100 - this.knobWidth)) this.knobPos = (100 - this.knobWidth);
+                this.jObj.find('.knobVoyanga').css('left', this.knobPos + '%');
+                this.jObj.find('.knobUpAllMonth').css('left', this.getKnobUpLeft());
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
-                var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
+                var scrollTop = Math.round(scrollHeight * (this.knobPos / 100));
                 this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
                 this.knobMove();
             }
         },
-        mouseDown: function(e){
+        mouseDown: function (e) {
             var xLeft = Math.round(this.jObj.find('.knobVoyanga').offset().left);
             var xRight = xLeft + Math.round(this.jObj.find('.knobVoyanga').width());
-            if((e.pageX >= xLeft) && (e.pageX <= xRight)){
+            if ((e.pageX >= xLeft) && (e.pageX <= xRight)) {
                 this.knobSlideAction = true;
-                if(this.animateScrollAction){
+                if (this.animateScrollAction) {
                     this.jObj.find('.knobVoyanga').stop(true);
                     this.animateScrollAction = false;
                 }
             }
         },
-        mouseUp: function(e){
+        mouseUp: function (e) {
             this.knobSlideAction = false;
         },
-        mousewheelEvent: function(e){
+        mousewheelEvent: function (e) {
             //console.log(e);
             var rolled = 0;
             var event = e.originalEvent;
@@ -116,9 +116,9 @@ VoyangaCalendarSlider = function(options){
                 // The measurement units of the detail and wheelDelta properties are different.
                 rolled = -40 * event.detail;
             }
-            var direction = (rolled > 0)? 1 : -1;
-            if(Math.abs(rolled) > 60){
-                rolled = 60* direction;
+            var direction = (rolled > 0) ? 1 : -1;
+            if (Math.abs(rolled) > 60) {
+                rolled = 60 * direction;
             }
 
             //var scrollHeight = TimelineCalendar.jObj.find('.calendarGrid').prop('scrollHeight');
@@ -128,37 +128,37 @@ VoyangaCalendarSlider = function(options){
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
             return false;
         },
-        animateStep: function(now, fx){
+        animateStep: function (now, fx) {
             var data = fx.elem.id + ' ' + fx.prop + ': ' + now;
-            if(fx.unit == 'px'){
-                var posLeft = Math.round((now / this.width)*10000)/100;
-            }else{
+            if (fx.unit == 'px') {
+                var posLeft = Math.round((now / this.width) * 10000) / 100;
+            } else {
                 var posLeft = now;
             }
             this.knobPos = posLeft;
-            this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
+            this.jObj.find('.knobUpAllMonth').css('left', this.getKnobUpLeft());
             var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
-            var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
+            var scrollTop = Math.round(scrollHeight * (this.knobPos / 100));
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
             this.knobMove();
         },
-        getKnobUpLeft: function(){
+        getKnobUpLeft: function () {
             return this.knobPos + '%'
         },
-        getPercent: function (pos){
-            if(pos.indexOf('px') != -1){
-                if(this.width < 100){
+        getPercent: function (pos) {
+            if (pos.indexOf('px') != -1) {
+                if (this.width < 100) {
                     this.onresize();
                 }
-                pos = pos.substr(0, pos.length -2);
-                pos = Math.round((pos / this.width)*10000)/100;
-            }else if(pos.indexOf('%') != -1){
-                pos = pos.substr(0, pos.length -1);
-                pos = Math.round((pos)*100)/100;
+                pos = pos.substr(0, pos.length - 2);
+                pos = Math.round((pos / this.width) * 10000) / 100;
+            } else if (pos.indexOf('%') != -1) {
+                pos = pos.substr(0, pos.length - 1);
+                pos = Math.round((pos) * 100) / 100;
             }
             return pos;
         },
-        knobMove: function(){
+        knobMove: function () {
             //var xLeft = Math.round(this.jObj.find('.knobVoyanga').offset().left);
             //var xRight = xLeft + Math.round(this.jObj.find('.knobVoyanga').width());
             var pWidth = this.knobWidth;
@@ -167,28 +167,27 @@ VoyangaCalendarSlider = function(options){
             //console.log(pLeft);
             var pRight = pLeft + pWidth;
             var self = this;
-            this.jObj.find('.monthNameVoyanga').each(function(){
+            this.jObj.find('.monthNameVoyanga').each(function () {
                 var pMonthLeft = self.getPercent($(this).css('left'));
                 var pMonthWidth = self.getPercent($(this).css('width'));
-                if( ( (pRight - pMonthLeft) > (pMonthWidth * 0.6) ) && ( (pMonthLeft + pMonthWidth - pLeft) > (pMonthWidth * 0.6) )){
+                if (( (pRight - pMonthLeft) > (pMonthWidth * 0.6) ) && ( (pMonthLeft + pMonthWidth - pLeft) > (pMonthWidth * 0.6) )) {
                     $(this).addClass('highlited');
                     //console.log((pRight - pMonthLeft));
 
-                }else{
+                } else {
                     $(this).removeClass('highlited');
                 }
             });
         },
-        monthMouseUp: function(obj,e){
-            if(!this.knobSlideAction)
-            {
+        monthMouseUp: function (obj, e) {
+            if (!this.knobSlideAction) {
                 this.animateScrollAction = true;
                 this.jObj.find('.knobVoyanga').stop(true);
                 var newPos = $(obj).parent().css('left');
-                newPos = this.getPercent(newPos)+'%';
+                newPos = this.getPercent(newPos) + '%';
                 //var newPos = $(this).css('left');
                 var self = this;
-                if(this.width < 100){
+                if (this.width < 100) {
                     this.onresize();
                 }
                 this.jObj.find('.knobVoyanga').animate({
@@ -196,247 +195,276 @@ VoyangaCalendarSlider = function(options){
                     },
                     {
                         duration: 800,
-                        step: function(now,fx){self.animateStep(now,fx);},
+                        step: function (now, fx) {
+                            self.animateStep(now, fx);
+                        },
                         easing: 'easeOutCubic',
-                        complete: function(){self.animateScrollAction = false;}
+                        complete: function () {
+                            self.animateScrollAction = false;
+                        }
                     });
             }
         },
-        scrollEvent: function(e){
-            if(!this.animateScrollAction){
+        scrollEvent: function (e) {
+            if (!this.animateScrollAction) {
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
-                this.knobPos = Math.round((this.jObj.find('.calendarGridVoyanga').scrollTop() / scrollHeight)*1000)/10;
-                this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
-                this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
+                this.knobPos = Math.round((this.jObj.find('.calendarGridVoyanga').scrollTop() / scrollHeight) * 1000) / 10;
+                this.jObj.find('.knobVoyanga').css('left', this.knobPos + '%');
+                this.jObj.find('.knobUpAllMonth').css('left', this.getKnobUpLeft());
                 this.knobMove();
             }
         },
 
-        init: function(){}
+        init: function () {
+        }
     };
-    options = $.extend({},defaults,options);
-    for(key in options){
+    options = $.extend({}, defaults, options);
+    for (key in options) {
         this[key] = options[key];
     }
 }
-VoyangaCalendarClass = function(options){
+VoyangaCalendarClass = function (options) {
     var defaults = {
         jObj: null,
-        weekDays: new Array('Пн','Вт','Ср','Чт','Пт','Сб','Вс'),
-        monthNames: new Array('Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'),
+        weekDays: new Array('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'),
+        monthNames: new Array('Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'),
         dayCellWidth: 180,
-        getDay: function (dateObj){
+        getDay: function (dateObj) {
             var dayNum = dateObj.getDay();
-            if(dayNum == 0){
+            if (dayNum == 0) {
                 dayNum = 6;
             }
-            else{
+            else {
                 dayNum = dayNum - 1;
             }
             return dayNum;
         }
     };
-    options = $.extend({},defaults,options);
-    for(key in options){
+    options = $.extend({}, defaults, options);
+    for (key in options) {
         this[key] = options[key];
     }
 }
 /**/
-VoyangaCalendarStandart = new VoyangaCalendarClass({values:new Array()});
+VoyangaCalendarStandart = new VoyangaCalendarClass({values: new Array()});
 VoyangaCalendarStandart.initialized = false;
 
 VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
-    init: function(){
+    init: function () {
         //console.log(this.monthArray);
         var self = this;
-        for(var i in this.monthArray){
+        for (var i in this.monthArray) {
             var leftPercent = this.monthArray[i].line / (this.totalLines - this.linesWidth);
-            leftPercent =  Math.round((1 - (this.linesWidth / this.totalLines) )*leftPercent*1000 )/10;
-            if(i < (this.monthArray.length - 1) ){
-                var k=parseInt(i)+1;
+            leftPercent = Math.round((1 - (this.linesWidth / this.totalLines) ) * leftPercent * 1000) / 10;
+            if (i < (this.monthArray.length - 1)) {
+                var k = parseInt(i) + 1;
 
                 var widthPercent = (this.monthArray[k].line - this.monthArray[i].line) / this.totalLines;
                 //var widthPercent = 4/(VoyangaCalendar.slider.totalLines);
-            }else{
+            } else {
                 var widthPercent = (this.totalLines - this.monthArray[i].line) / this.totalLines;
             }
-            widthPercent = Math.round(widthPercent*1000)/10;
+            widthPercent = Math.round(widthPercent * 1000) / 10;
 
-            var newHtml = '<div class="monthNameVoyanga" style="left: '+leftPercent+'%; width: '+widthPercent+'%"><div class="monthWrapper">'+this.monthArray[i].name+'</div></div>';
+            var newHtml = '<div class="monthNameVoyanga" style="left: ' + leftPercent + '%; width: ' + widthPercent + '%"><div class="monthWrapper">' + this.monthArray[i].name + '</div></div>';
             this.jObj.find('.monthLineVoyanga').append(newHtml);
         }
-        this.knobWidth = Math.round((this.linesWidth / this.totalLines)*10000)/100;
-        this.jObj.find('.knobVoyanga').css('width',this.knobWidth + '%');
-        this.jObj.find('.knobUpAllMonth').css('width',this.knobWidth + '%');
+        this.knobWidth = Math.round((this.linesWidth / this.totalLines) * 10000) / 100;
+        this.jObj.find('.knobVoyanga').css('width', this.knobWidth + '%');
+        this.jObj.find('.knobUpAllMonth').css('width', this.knobWidth + '%');
         //VoyangaCalendar.slider.width = VoyangaCalendar.jObj.find('.monthLineVoyanga').width();
-        $(window).on('resize',function(){self.onresize();});
-        $(window).load(function(){self.onresize();self.knobMove();});
+        $(window).on('resize', function () {
+            self.onresize();
+        });
+        $(window).load(function () {
+            self.onresize();
+            self.knobMove();
+        });
 
-        this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);return false});
+        this.jObj.find('.calendarGridVoyanga').on('scroll', function (e) {
+            self.scrollEvent(e);
+            return false
+        });
         //console.log('set wheel actions');
-        this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);
-            if(e.preventDefault)
+        this.jObj.find('.calendarGridVoyanga').on('mousewheel', function (e) {
+            self.mousewheelEvent(e);
+            if (e.preventDefault)
                 e.preventDefault();
             e.returnValue = false;
         });
-        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);
-            if(e.preventDefault)
+        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll', function (e) {
+            self.mousewheelEvent(e);
+            if (e.preventDefault)
                 e.preventDefault();
             e.returnValue = false;
         });
         //console.log(this);
-        this.jObj.find('.monthLineVoyanga').mousedown(function(e){self.mouseDown(e);});
-        this.jObj.find('.monthLineVoyanga').mouseup(function(e){self.mouseUp(e);});
-        //VoyangaCalendar.jObj.find('.monthLineVoyanga .monthNameVoyanga').mouseup(VoyangaCalendar.slider.monthMouseUp);
-        this.jObj.find('.monthLineVoyanga .monthNameVoyanga .monthWrapper').mouseup(function(e){var obj = this;self.monthMouseUp(obj,e);});
-        this.jObj.find('.monthLineVoyanga').MouseDraggable({
-            startEvent: function (e,obj){self.startEvent(e,obj);},
-            endEvent: function (e,obj){self.endEvent(e,obj);},
-            dragEvent: function (e,obj){self.dragEvent(e,obj);}
+        this.jObj.find('.monthLineVoyanga').mousedown(function (e) {
+            self.mouseDown(e);
         });
-        if(this.minimalLine){
+        this.jObj.find('.monthLineVoyanga').mouseup(function (e) {
+            self.mouseUp(e);
+        });
+        //VoyangaCalendar.jObj.find('.monthLineVoyanga .monthNameVoyanga').mouseup(VoyangaCalendar.slider.monthMouseUp);
+        this.jObj.find('.monthLineVoyanga .monthNameVoyanga .monthWrapper').mouseup(function (e) {
+            var obj = this;
+            self.monthMouseUp(obj, e);
+        });
+        this.jObj.find('.monthLineVoyanga').MouseDraggable({
+            startEvent: function (e, obj) {
+                self.startEvent(e, obj);
+            },
+            endEvent: function (e, obj) {
+                self.endEvent(e, obj);
+            },
+            dragEvent: function (e, obj) {
+                self.dragEvent(e, obj);
+            }
+        });
+        if (this.minimalLine) {
             var scrollTop = (this.minimalLine / this.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
         }
     }
 });
 
-VoyangaCalendarStandart.onCellOver = function(obj,e){
+VoyangaCalendarStandart.onCellOver = function (obj, e) {
     var jCell = $(obj);
-    if(!jCell.hasClass('inactive')){
+    if (!jCell.hasClass('inactive')) {
         var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if(this.values.length == 1){
-            if(cellDate < this.values[0]){
+        if (this.values.length == 1) {
+            if (cellDate < this.values[0]) {
                 jCell.addClass('from');
-            }else{
-                if(this.twoSelect){
+            } else {
+                if (this.twoSelect) {
                     jCell.addClass('to');
-                }else{
+                } else {
                     jCell.addClass('from');
                 }
             }
 
-        }else{
+        } else {
             jCell.addClass('from');
         }
-        if(cellDate.getDate() == 1){
+        if (cellDate.getDate() == 1) {
             jCell.addClass('startMonth');
         }
     }
 }
-VoyangaCalendarStandart.onCellOut = function(obj,e){
+VoyangaCalendarStandart.onCellOut = function (obj, e) {
     var jCell = $(obj);
-    if(!jCell.hasClass('inactive')){
+    if (!jCell.hasClass('inactive')) {
         var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if(this.values.length == 1){
-            if(cellDate < this.values[0]){
+        if (this.values.length == 1) {
+            if (cellDate < this.values[0]) {
                 jCell.removeClass('from');
-            }else{
-                if(this.twoSelect){
+            } else {
+                if (this.twoSelect) {
                     jCell.removeClass('to');
-                }else{
+                } else {
                     jCell.removeClass('from');
                 }
             }
 
-        }else{
+        } else {
             jCell.removeClass('from');
         }
-        if(cellDate.getDate() == 1){
+        if (cellDate.getDate() == 1) {
             jCell.removeClass('startMonth');
         }
-        if(this.values.length > 0){
-            if(this.values[0].valueOf() == cellDate.valueOf()){
+        if (this.values.length > 0) {
+            if (this.values[0].valueOf() == cellDate.valueOf()) {
                 jCell.addClass('selectData from');
-                if(cellDate.getDate() == 1){
+                if (cellDate.getDate() == 1) {
                     jCell.addClass('startMonth');
                 }
             }
         }
-        if(this.values.length > 1){
-            if(this.values[1].valueOf() == cellDate.valueOf()){
+        if (this.values.length > 1) {
+            if (this.values[1].valueOf() == cellDate.valueOf()) {
                 jCell.addClass('selectData to');
-                if(cellDate.getDate() == 1){
+                if (cellDate.getDate() == 1) {
                     jCell.addClass('startMonth');
                 }
             }
         }
     }
 }
-VoyangaCalendarStandart.getCellByDate = function(oDate){
-    if(oDate){
-        var dateLabel = oDate.getFullYear()+'-'+(oDate.getMonth()+1)+'-'+oDate.getDate();
-        return $('#dayCell-'+dateLabel);
-    }else{
-        console.log('bad date value:',oDate);
+VoyangaCalendarStandart.getCellByDate = function (oDate) {
+    if (oDate) {
+        var dateLabel = oDate.getFullYear() + '-' + (oDate.getMonth() + 1) + '-' + oDate.getDate();
+        return $('#dayCell-' + dateLabel);
+    } else {
+        console.log('bad date value:', oDate);
         return false;
     }
 
 }
 
-VoyangaCalendarStandart.update = function(dontset){
+VoyangaCalendarStandart.update = function (dontset) {
     // FIXME SUPER SLOW
     $('.dayCellVoyanga').removeClass('selectData from to selectDay');
 
-    if(this.values.length) {
+    if (this.values.length) {
         var jCell = this.getCellByDate(this.values[0]);
         jCell.addClass('selectData from');
 
-        if(this.values.length > 1) {
+        if (this.values.length > 1) {
             jCell = this.getCellByDate(this.values[1]);
             jCell.addClass('selectData to');
             var tmpDate = new Date(this.values[0].toDateString());
-                tmpDate.setDate(tmpDate.getDate()+1);
-                while(tmpDate < this.values[1]){
-                    this.getCellByDate(tmpDate).addClass('selectDay');
-                    tmpDate.setDate(tmpDate.getDate()+1);
-                }
+            tmpDate.setDate(tmpDate.getDate() + 1);
+            while (tmpDate < this.values[1]) {
+                this.getCellByDate(tmpDate).addClass('selectDay');
+                tmpDate.setDate(tmpDate.getDate() + 1);
+            }
         }
-        if(!dontset)
+        if (!dontset)
             this.panel().setDate(this.values);
     }
 }
 
-VoyangaCalendarStandart.onCellClick = function(obj){
+VoyangaCalendarStandart.onCellClick = function (obj) {
     var jCell = $(obj);
-    if(jCell.hasClass('inactive'))
+    if (jCell.hasClass('inactive'))
         return;
     var cellDate = Date.fromIso(jCell.data('cell-date'));
     var dontset = true;
 
-    if(this.twoSelect){
-        if(this.values.length == 2){
+    if (this.twoSelect) {
+        if (this.values.length == 2) {
             this.values = new Array();
-        }else if(this.values.length == 1){
-            if(cellDate < this.values[0]){
+        } else if (this.values.length == 1) {
+            if (cellDate < this.values[0]) {
                 this.values = new Array();
-            }else{
-		dontset = false;
+            } else {
+                dontset = false;
                 this.values.push(cellDate);
             }
         }
-    }else{
-        if(this.values.length != 0){
+    } else {
+        if (this.values.length != 0) {
             this.values = new Array();
         } else {
-	    dontset = false;
-	}
+            dontset = false;
+        }
     }
 
-    if(this.values.length == 0){
+    if (this.values.length == 0) {
         this.values.push(cellDate);
+        dontset = false;
     }
     VoyangaCalendarStandart.update(dontset);
 }
 
-VoyangaCalendarStandart.generateGrid = function(){
+VoyangaCalendarStandart.generateGrid = function () {
     var firstDay = new Date();
     var dayToday = new Date();
-    dayToday.setMinutes(0,0,0);
+    dayToday.setMinutes(0, 0, 0);
     dayToday.setHours(0);
     var self = this;
     var startMonth = firstDay.getMonth();
-    var tmpDate =  moment(moment(firstDay))._d;//clone Date object
+    var tmpDate = moment(moment(firstDay))._d;//clone Date object
     tmpDate.setDate(1);
     tmpDate.setDate(tmpDate.getDate() - this.getDay(tmpDate));//set Monday
     var weekDay = this.getDay(tmpDate);
@@ -445,70 +473,75 @@ VoyangaCalendarStandart.generateGrid = function(){
     var needStop = false;
     var lineNumber = 0;
     this.slider.monthArray = new Array();
-    while(!needStop)
-    {
-        var newHtml = '<div class="calendarLineVoyanga" id="weekNum-'+lineNumber+'" data-weeknum="'+lineNumber+'">';
-        for(var i=0;i<7;i++){
-            var label = '<div class="dayLabel'+((i>=5 && i<7) ? ' weekEnd' : '')+'">'+tmpDate.getDate()+'</div>';
+    while (!needStop) {
+        var newHtml = '<div class="calendarLineVoyanga" id="weekNum-' + lineNumber + '" data-weeknum="' + lineNumber + '">';
+        for (var i = 0; i < 7; i++) {
+            var label = '<div class="dayLabel' + ((i >= 5 && i < 7) ? ' weekEnd' : '') + '">' + tmpDate.getDate() + '</div>';
 
-            if(tmpDate.getDate() == 1){
-                label = label + ' <div class="monthLabel">' + this.monthNames[tmpDate.getMonth()] +'</div>';
+            if (tmpDate.getDate() == 1) {
+                label = label + ' <div class="monthLabel">' + this.monthNames[tmpDate.getMonth()] + '</div>';
                 var monthObject = new Object();
                 monthObject.line = lineNumber;
                 monthObject.name = this.monthNames[tmpDate.getMonth()];
                 this.slider.monthArray.push(monthObject);
             }
-            var dateLabel = tmpDate.getFullYear()+'-'+(tmpDate.getMonth()+1)+'-'+tmpDate.getDate();
-            var dateLabelApi = tmpDate.getDate()+'.'+(tmpDate.getMonth()+1)+'.'+tmpDate.getFullYear();
-            newHtml = newHtml + '<div class="dayCellVoyanga' + ((tmpDate < dayToday) ? ' inactive' : '')+'" id="dayCell-'+dateLabel+'" data-cell-date="'+dateLabel+'" data-cell-date-api="'+dateLabelApi+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
-            tmpDate.setDate(tmpDate.getDate()+1);
+            var dateLabel = tmpDate.getFullYear() + '-' + (tmpDate.getMonth() + 1) + '-' + tmpDate.getDate();
+            var dateLabelApi = tmpDate.getDate() + '.' + (tmpDate.getMonth() + 1) + '.' + tmpDate.getFullYear();
+            newHtml = newHtml + '<div class="dayCellVoyanga' + ((tmpDate < dayToday) ? ' inactive' : '') + '" id="dayCell-' + dateLabel + '" data-cell-date="' + dateLabel + '" data-cell-date-api="' + dateLabelApi + '"><div class="innerDayCellVoyanga">' + label + '</div></div>';
+            tmpDate.setDate(tmpDate.getDate() + 1);
         }
         newHtml = newHtml + '</div>';
         this.jObj.find('.calendarDIVVoyanga').append(newHtml);
-        if(tmpDate.getFullYear() > startYear){
-            if(tmpDate.getMonth() >= startMonth ){
+        if (tmpDate.getFullYear() > startYear) {
+            if (tmpDate.getMonth() >= startMonth) {
                 needStop = true;
             }
         }
-        //if(lineNumber > 4){
-        //needStop = true;
-        //}
         lineNumber++;
     }
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
-    if((lineNumber -lastLineMonth) < 2){
+    if ((lineNumber - lastLineMonth) < 2) {
         this.slider.monthArray.pop();
     }
-    this.jObj.find('.dayCellVoyanga').hover(function (e) {var obj = this; self.onCellOver(obj,e);},function (e) {var obj = this; self.onCellOut(obj,e);});
-    this.jObj.find('.dayCellVoyanga').click(function (e) {var obj = this; self.onCellClick(obj,e);});
+    this.jObj.find('.dayCellVoyanga').hover(function (e) {
+        var obj = this;
+        self.onCellOver(obj, e);
+    }, function (e) {
+        var obj = this;
+        self.onCellOut(obj, e);
+    });
+    this.jObj.find('.dayCellVoyanga').click(function (e) {
+        var obj = this;
+        self.onCellClick(obj, e);
+    });
 
 
     this.slider.totalLines = lineNumber;
 }
 
-VoyangaCalendarStandart.clear = function(){
+VoyangaCalendarStandart.clear = function () {
     VoyangaCalendarStandart.values = [];
     VoyangaCalendarStandart.update(true);
 }
 
-VoyangaCalendarStandart.minimalDateUpdated = function(){
-    var dateLabel = this.minimalDate.getFullYear()+'-'+(this.minimalDate.getMonth()+1)+'-'+this.minimalDate.getDate();
-    this.slider.minimalLine = $('#dayCell-'+dateLabel).parent().data('weeknum');
+VoyangaCalendarStandart.minimalDateUpdated = function () {
+    var dateLabel = this.minimalDate.getFullYear() + '-' + (this.minimalDate.getMonth() + 1) + '-' + this.minimalDate.getDate();
+    this.slider.minimalLine = $('#dayCell-' + dateLabel).parent().data('weeknum');
 
     dayCell = this.jObj.find('#weekNum-0 .dayCellVoyanga:eq(0)');
-    if(dayCell.length){
+    if (dayCell.length) {
         var dd = Date.fromIso(dayCell.data('cell-date'));
         var stop = false;
         var lineNumber = 0;
-        while(!stop){
-            for(var i = 0;i < 7;i++){
-                dateLabel = dd.getFullYear()+'-'+(dd.getMonth()+1)+'-'+dd.getDate();
-                if(dd < this.minimalDate){
-                    $('#dayCell-'+ dateLabel).addClass('inactive');
-                }else{
-                    if($('#dayCell-'+ dateLabel).hasClass('inactive')){
-                        $('#dayCell-'+ dateLabel).removeClass('inactive');
-                    }else{
+        while (!stop) {
+            for (var i = 0; i < 7; i++) {
+                dateLabel = dd.getFullYear() + '-' + (dd.getMonth() + 1) + '-' + dd.getDate();
+                if (dd < this.minimalDate) {
+                    $('#dayCell-' + dateLabel).addClass('inactive');
+                } else {
+                    if ($('#dayCell-' + dateLabel).hasClass('inactive')) {
+                        $('#dayCell-' + dateLabel).removeClass('inactive');
+                    } else {
                         stop = true;
                         break;
                     }
@@ -519,117 +552,110 @@ VoyangaCalendarStandart.minimalDateUpdated = function(){
     }
 }
 
-VoyangaCalendarStandart.scrollToDate = function(dateVar){
-    var dateLabel = dateVar.getFullYear()+'-'+(dateVar.getMonth()+1)+'-'+dateVar.getDate();
-    var scrollLine = $('#dayCell-'+dateLabel).parent().data('weeknum');
+VoyangaCalendarStandart.scrollToDate = function (dateVar) {
+    var dateLabel = dateVar.getFullYear() + '-' + (dateVar.getMonth() + 1) + '-' + dateVar.getDate();
+    var scrollLine = $('#dayCell-' + dateLabel).parent().data('weeknum');
     var scrollTop = (scrollLine / this.slider.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
     this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
 }
 
-VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
-    if(newCalendarValue.hotels)
-	    $('#voyanga-calendar').addClass('hotel');
+VoyangaCalendarStandart.newValueHandler = function (newCalendarValue) {
+    if (newCalendarValue.hotels)
+        $('#voyanga-calendar').addClass('hotel');
     else
-	    $('#voyanga-calendar').removeClass('hotel');
-    if(newCalendarValue.values !== undefined && newCalendarValue.values.length == 0){
+        $('#voyanga-calendar').removeClass('hotel');
+    if (newCalendarValue.values !== undefined && newCalendarValue.values.length == 0) {
         newCalendarValue.values.push(new Date());
         VoyangaCalendarStandart.values = new Array();
         VoyangaCalendarStandart.values.push(new Date())
         newCalendarValue.from = new Date();
     }
     VoyangaCalendarStandart.twoSelect = newCalendarValue.twoSelect;
-    if(!newCalendarValue.twoSelect && VoyangaCalendarStandart.values.length > 1)
-	    VoyangaCalendarStandart.values = VoyangaCalendarStandart.values.slice(0,1);
+    if (!newCalendarValue.twoSelect && VoyangaCalendarStandart.values.length > 1)
+        VoyangaCalendarStandart.values = VoyangaCalendarStandart.values.slice(0, 1);
     VoyangaCalendarStandart.minimalDateChanged = false;
     var needScroll = false;
-    if(newCalendarValue.activeSearchPanel){
-        if(newCalendarValue.activeSearchPanel.prevSearchPanel()){
+    if (newCalendarValue.activeSearchPanel) {
+        if (newCalendarValue.activeSearchPanel.prevSearchPanel()) {
             minDt = newCalendarValue.activeSearchPanel.prevSearchPanel().checkOut();
-            if((!VoyangaCalendarStandart.minimalDate && minDt) || (minDt && VoyangaCalendarStandart.minimalDate.toString() != minDt.toString())){
+            if ((!VoyangaCalendarStandart.minimalDate && minDt) || (minDt && VoyangaCalendarStandart.minimalDate.toString() != minDt.toString())) {
                 VoyangaCalendarStandart.minimalDate = minDt;
                 needScroll = true;
                 VoyangaCalendarStandart.scrollDate = VoyangaCalendarStandart.minimalDate;
                 VoyangaCalendarStandart.minimalDateChanged = true;
             }
-        }else{
+        } else {
             minDt = new Date();
             minDt.setHours(0);
             minDt.setMinutes(0);
             minDt.setSeconds(0);
             minDt.setMilliseconds(0);
-            if((!VoyangaCalendarStandart.minimalDate) || (VoyangaCalendarStandart.minimalDate && VoyangaCalendarStandart.minimalDate.toString() != minDt.toString())){
+            if ((!VoyangaCalendarStandart.minimalDate) || (VoyangaCalendarStandart.minimalDate && VoyangaCalendarStandart.minimalDate.toString() != minDt.toString())) {
                 VoyangaCalendarStandart.minimalDate = minDt;
                 needScroll = true;
                 VoyangaCalendarStandart.scrollDate = VoyangaCalendarStandart.minimalDate;
                 VoyangaCalendarStandart.minimalDateChanged = true;
             }
         }
-        if(VoyangaCalendarStandart.alreadyInited && VoyangaCalendarStandart.minimalDateChanged){
+        if (VoyangaCalendarStandart.alreadyInited && VoyangaCalendarStandart.minimalDateChanged) {
             VoyangaCalendarStandart.minimalDateUpdated();
-        }else if(VoyangaCalendarStandart.alreadyInited){
-            console.log('not inited',VoyangaCalendarStandart.minimalDateChanged);
+        } else if (VoyangaCalendarStandart.alreadyInited) {
+            console.log('not inited', VoyangaCalendarStandart.minimalDateChanged);
         }
-    }else{
+    } else {
         console.log('else????')
     }
-    if((newCalendarValue.from && !VoyangaCalendarStandart.scrollDate) || (newCalendarValue.from && newCalendarValue.from.toString() != VoyangaCalendarStandart.scrollDate.toString()) ){
+    if ((newCalendarValue.from && !VoyangaCalendarStandart.scrollDate) || (newCalendarValue.from && newCalendarValue.from.toString() != VoyangaCalendarStandart.scrollDate.toString())) {
         needScroll = true;
         VoyangaCalendarStandart.scrollDate = newCalendarValue.from;
     }
-    if(needScroll){
+    if (needScroll) {
         VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate);
     }
-    if ((newCalendarValue.twoSelect == true && (!newCalendarValue.from || !newCalendarValue.to) || (newCalendarValue.twoSelect == false && (!newCalendarValue.from) ) ))
-    {
-        if (VoyangaCalendarStandart != undefined)
-            VoyangaCalendarStandart.values = new Array();
-    }
-    else
-    {
-        VoyangaCalendarStandart.values = new Array();
+    VoyangaCalendarStandart.values = new Array();
+    if (newCalendarValue.from)
         VoyangaCalendarStandart.values.push(newCalendarValue.from);
-        if(newCalendarValue.twoSelect)
-            VoyangaCalendarStandart.values.push(newCalendarValue.to);
-    }
+    if ((newCalendarValue.twoSelect) && (newCalendarValue.to))
+        VoyangaCalendarStandart.values.push(newCalendarValue.to);
     VoyangaCalendarStandart.update(true);
 }
 
-VoyangaCalendarStandart.compareCalendarValue = function(oldValue,newValue){
-    if((!oldValue && newValue) || (!newValue && oldValue) ){
+VoyangaCalendarStandart.compareCalendarValue = function (oldValue, newValue) {
+    if ((!oldValue && newValue) || (!newValue && oldValue)) {
         return false;
     }
-    for(var propName in newValue){
-        if(propName == 'from'){
-            if((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[0])){
+    for (var propName in newValue) {
+        if (propName == 'from') {
+            if ((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[0])) {
                 return false;
             }
-        }else if(propName == 'to'){
-            if((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[1])){
+        } else if (propName == 'to') {
+            if ((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[1])) {
                 return false;
             }
-        }else if(oldValue[propName] != newValue[propName]){
+        } else if (oldValue[propName] != newValue[propName]) {
             return false;
         }
     }
     return true;
 }
 
-VoyangaCalendarStandart.init = function (panel, element){
-    this.jObj =  $(element);
+VoyangaCalendarStandart.init = function (panel, element) {
+    this.jObj = $(element);
     VoyangaCalendarStandart.slider.jObj = this.jObj;
     this.alreadyInited = false;
     this.minimalDateChanged = false;
     var self = this;
     this.oldCalendarValue = null;
-    if(!this.panel || (this.panel && panel() != this.panel() ) ){
+    if (!this.panel || (this.panel && panel() != this.panel() )) {
         this.panel = panel;
-        panel.subscribe(function(newPanel) {
-            if(newPanel.template) {
-                if(VoyangaCalendarStandart.subscription)
-                VoyangaCalendarStandart.subscription.dispose();
+        panel.subscribe(function (newPanel) {
+            if (newPanel.template) {
+                if (VoyangaCalendarStandart.subscription)
+                    VoyangaCalendarStandart.subscription.dispose();
                 VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(
-                    function(calendarValue){
-                        if(!VoyangaCalendarStandart.compareCalendarValue(self.oldCalendarValue,calendarValue)){
+                    function (calendarValue) {
+                        if (!VoyangaCalendarStandart.compareCalendarValue(self.oldCalendarValue, calendarValue)) {
                             VoyangaCalendarStandart.clear();
                             self.oldCalendarValue = calendarValue;
                             VoyangaCalendarStandart.newValueHandler(calendarValue);
@@ -643,20 +669,20 @@ VoyangaCalendarStandart.init = function (panel, element){
         });
         newPanel = panel();
 
-        if(newPanel.template) {
-            if(VoyangaCalendarStandart.subscription)
+        if (newPanel.template) {
+            if (VoyangaCalendarStandart.subscription)
                 VoyangaCalendarStandart.subscription.dispose();
             VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
             self.oldCalendarValue = newPanel.calendarValue();
             VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
         }
-    }else{
+    } else {
 //        console.log('Else',panel,this.panel,this.panel(),panel());
     }
 
     VoyangaCalendarStandart.generateGrid();
     VoyangaCalendarStandart.slider.init();
-    if(this.minimalDateChanged){
+    if (this.minimalDateChanged) {
         this.minimalDateUpdated();
     }
     this.alreadyInited = true;
