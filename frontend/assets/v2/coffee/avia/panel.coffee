@@ -20,6 +20,7 @@ class AviaPanel extends SearchPanel
     @arrivalCityReadable = ko.observable ''
     @arrivalCityReadableGen = ko.observable ''
     @arrivalCityReadableAcc = ko.observable ''
+    @prefixText = 'Все направления<br>500+ авиакомпаний'
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()

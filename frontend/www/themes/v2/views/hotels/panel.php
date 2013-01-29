@@ -1,9 +1,8 @@
 <script type="text/html" id="hotels-panel-template">
     <table class="panelTable hotel">
         <tr>
-            <td class="tdCityStart">
-                Выберите город<br>
-                200 000+ отелей
+            <td class="tdCityStart" data-bind='css: {zero: !$parent.in1()}'>
+                <span data-bind="html: prefixText"></span>
             </td>
             <td class="tdCity">
                 <div class="data" data-bind="css: {active: haveDates()}">

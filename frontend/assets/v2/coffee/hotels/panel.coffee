@@ -22,6 +22,7 @@ class HotelsPanel extends SearchPanel
       ret = "Выберите дату проживания"
       if @cityReadable()
         ret += " в городе "+@cityReadable()
+    @prefixText = "Выберите город<br>200 000+ отелей"
 
     @formFilled = ko.computed =>
       if @checkIn().getDay
