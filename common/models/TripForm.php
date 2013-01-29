@@ -43,8 +43,11 @@ class TripForm extends CFormModel
 
     public function setCityName($value)
     {
-        $items = City::model()->guess($value);
-        $this->cityModel = $items[0];
+        $items = CityManager::getCities($value);
+        if (isset($items[0]))
+            $this->cityModel = City::model()->findByPk($items[0]['id']);
+        else
+            throw new CException('Cannot define city by city name:'.$value);
     }
 
     public function attributeLabels()

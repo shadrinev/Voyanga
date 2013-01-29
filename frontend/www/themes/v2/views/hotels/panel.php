@@ -1,7 +1,7 @@
 <script type="text/html" id="hotels-panel-template">
     <table class="panelTable hotel">
         <tr>
-            <td class="tdCityStart" data-bind='css: {zero: !$parent.in1()}'>
+            <td class="tdCityStart" data-bind='css: {zero: !$root.in1()}'>
                 <span data-bind="html: prefixText"></span>
             </td>
             <td class="tdCity">
