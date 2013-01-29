@@ -27,7 +27,7 @@
             <td class="tdAvia paddingBottom">
                 <div class="airline" data-bind="text:$data[0].airlineName">Аэрофлот</div>
                 <div class="voyage"><span data-bind="text: $data[0].flightCodesText">Рейс</span>: <span class="number" data-bind="html: $data[0].flightCodes()">S7-76</span></div>
-                <div class="class">Класс: <span class="classMine">Эконом</span></div>
+                <div class="class">Класс: <span class="classMine" data-bind='text: $data[0].serviceClassReadable'>Эконом</span></div>
             </td>
         </tr>
         <tr>
@@ -52,7 +52,7 @@
             <td class="tdAvia">
                 <div class="airline" data-bind="text:$data[0].rtAirlineName">Аэрофлот</div>
                 <div class="voyage"><span data-bind="text:$data[0].rtFlightCodesText()">Рейс</span>: <span class="number" data-bind="html: $data[0].rtFlightCodes()">S7-76</span></div>
-                <div class="class">Класс: <span class="classMine">Эконом</span></div>
+                <div class="class">Класс: <span class="classMine" data-bind='text: $data[0].serviceClassReadable'>Эконом</span></div>
             </td>
         </tr>
         </tbody>

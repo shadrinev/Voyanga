@@ -221,12 +221,11 @@ class TripDataProvider
         $element['isHotel'] = !isset($element['flightKey']);
         if ($element['isHotel'])
         {
-            //print_r($element);die();
             $element['hotelDetails'] = $hotelClient->hotelDetail($element['hotelId']);
         }
         if ($element['isFlight'])
         {
-            $elements = FlightManager::injectForBe(array($element), true);
+            $elements = FlightManager::injectForBe(array($element), $element['searchParams']);
             $element = $elements[0];
         }
     }

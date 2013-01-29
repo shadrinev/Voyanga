@@ -267,6 +267,7 @@ class AviaResult
     @searchService = data.service
     @airlineName = data.valCompanyNameEn
     @serviceClass = data.serviceClass
+    @serviceClassReadable = if data.serviceClass == 'E' then 'Эконом' else 'Бизнес'
     @refundable = data.refundable
     @refundableText = if @refundable then "Билет возвратный" else "Билет не возвратный"
     @freeWeight = data.freeWeight
@@ -312,6 +313,10 @@ class AviaResult
 
   rtFlightCodesText: =>
     if _.size(@activeVoyage().activeBackVoyage().parts)>1 then "Рейсы" else "Рейс"
+
+  rtServiceClass: =>
+    @activeVoyage().serviceClass
+
 
   flightKey: =>
     if @roundTrip
