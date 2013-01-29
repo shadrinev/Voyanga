@@ -11,10 +11,11 @@ ko.bindingHandlers.highlightChange = {
     allBindings = allBindingsAccessor();
     valueUnwrapped = ko.utils.unwrapObservable(value);
     previousImage = allBindings.previousImage;
-    newEl = $('<div class="IMGmain"><img src=""></div>');
+    newEl = $('<div class="IMGmain" style="visible:hidden"><img src=""></div>');
     newEl.appendTo(".centerTours");
     $(".IMGmain").eq(0).find('img').attr("src", previousImage());
-    indexIMGresizeCenter(0);
+    CenterIMGResize(0);
+    $(".IMGmain").eq(0).show();
     varLeftPos = $(".IMGmain").eq(1).css("left");
     varTopPos = $(".IMGmain").eq(1).css("top");
     varLeftPos = parseInt(varLeftPos.slice(0, -2));
@@ -24,9 +25,8 @@ ko.bindingHandlers.highlightChange = {
     $(".IMGmain").eq(1).css("opacity", "0").css("left", varLeftPosStart + "px").css("top", varTopPosStart + "px").find("img").attr("src", valueUnwrapped);
     previousImage(valueUnwrapped);
     slideToursSlide();
-    ResizeAvia();
     return $(".IMGmain").eq(1).find("img").load(function() {
-      indexIMGresizeCenter(1);
+      CenterIMGResize(1);
       $(".IMGmain").eq(0).animate({
         opacity: 0
       }, speedAnimateChangePic, function() {

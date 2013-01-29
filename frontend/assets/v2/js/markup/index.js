@@ -54,9 +54,10 @@ function slideToursSlide() {
     }
 }
 
-function CenterIMGResize() {
+function CenterIMGResize(index) {
+    if (index == undefined)
+        index = 0
 	if ($('.innerBlockMain').length > 0 && $('.innerBlockMain').is(':visible')) {
-        //console.log('!!!==== 3 ====!!!');
         var HeightAllWindow = $(window).height();
         if (HeightAllWindow < 800) {
             HeightAllWindow = HeightAllWindow - 38 - 158;
@@ -69,10 +70,10 @@ function CenterIMGResize() {
         $('.innerBlockMain').css('height', HeightAllWindow+'px');
 
 
-        var pathIMG = $('.innerBlockMain .IMGmain img');
+        var pathIMG = $('.innerBlockMain .IMGmain').eq(index).find('img');
         var marginPathLeft = 0;
         var var_allWidth = $('.slideTours .center').width();
-        var heightImgMain = $('div.IMGmain img').height();
+        var heightImgMain = $('div.IMGmain').eq(index).find('img').height();
 
     if (var_allWidth >= 1390) {
             marginPathLeft = (1390 - var_allWidth) / 2;
