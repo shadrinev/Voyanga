@@ -1272,7 +1272,6 @@ $(window).scroll(scrollFAQ);
 
 function gradientResize() {
     if (DetectMobileQuick() || DetectTierTablet()) {
-        alert(1);
         return
     }
     else {
