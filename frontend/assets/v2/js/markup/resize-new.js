@@ -1285,6 +1285,7 @@ function gradientResize() {
         }
     }
     else {
+        alert (1);
         return
     }
 }
