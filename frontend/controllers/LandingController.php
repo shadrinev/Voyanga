@@ -417,8 +417,6 @@ class LandingController extends Controller {
         $this->addCityFrom($citiesFrom,5185);// Spb
         $this->addCityFrom($citiesFrom,$currentCity->id);
 
-
-
         Yii::import('site.common.modules.hotel.models.*');
         $hotelClient = new HotelBookClient();
 
@@ -495,6 +493,7 @@ class LandingController extends Controller {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
             $hotelInfo->hotelName = $hc->name;
+            $hotelInfo->hotelId = $hc->id;
             $hotelsInfo[] = $hotelInfo;
         }
 
