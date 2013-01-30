@@ -1,14 +1,14 @@
 function hideRecomendedBlockTicket() {
     if (!$(this).hasClass('show')) {
         $('.recomended-content').slideUp(function () {
-            ifHeightMinAllBody();
+            jsPaneScrollHeight();
         });
         $(this).addClass('show');
     }
     else {
         $(this).removeClass('show');
         $('.recomended-content').slideDown(function () {
-            ifHeightMinAllBody();
+            jsPaneScrollHeight();
         });
 
         $(window).load(inTheTwoLines);
