@@ -759,7 +759,7 @@ function jsPaneScrollHeight() {
 }
 
 function scrollValue(what, event) {
-    if (! DetectMobileQuick() ) {
+    if (! DetectMobileQuick() || ! DetectMobileQuick()) {
         var filterContent = $('.filter-content.'+ what);
         var isScrollPane;
         if(event.target == document)
@@ -1271,7 +1271,7 @@ $(window).resize(resizeFAQ);
 $(window).scroll(scrollFAQ);
 
 function gradientResize() {
-    if (! DetectMobileQuick() ) {
+    if (! DetectMobileQuick() || ! DetectTierTablet()) {
         if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
             var _content = $('.wrapper .main-block').find('#content');
             var offset = _content.offset();
