@@ -36,6 +36,14 @@ class HotelManager
             $nStack->_hotels = $stack->getHotels(1);
 
             $resultsHotels = $stack->getJsonObject();
+            foreach ($resultsHotels['hotels'] as $i => $info)
+            {
+                $hotelInfo = $hotelClient->hotelDetail($info['hotelId']);
+                if($hotelInfo){
+                    $hotelsDetails[$info['hotelId'] . 'd'] = self::prepare($hotelInfo);
+                }
+            }
+            /*
             $query = array();
             foreach ($resultsHotels['hotels'] as $i => $info)
             {
@@ -53,9 +61,9 @@ class HotelManager
                 if (isset($hotelClient->requests[$responseId]['result']))
                 {
                     $hotelsDetails[$hotelId . 'd'] = self::prepare($hotelClient->requests[$responseId]['result']);
-                    Yii::app()->cache->set('HotelDetails-' . $hotelId, $hotelsDetails[$hotelId . 'd']);
+                    //Yii::app()->cache->set('HotelDetails-' . $hotelId, $hotelsDetails[$hotelId . 'd']);
                 }
-            }
+            }/**/
 
             $results['hotelsDetails'] = $hotelsDetails;
 
