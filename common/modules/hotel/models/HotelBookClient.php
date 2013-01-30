@@ -21,6 +21,8 @@ class HotelBookClient
     public static $maxMicrotime = 0;
     public static $countSql = 0;
     public static $countFunc = 0;
+    public static $updateProcess = false;
+    public static $downCountCacheFill = 10;
     public $requests;
 
     public function request($url, $getData = null, $postData = null, $asyncParams = null, $cacheFileName = null)
@@ -50,13 +52,18 @@ class HotelBookClient
             $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
             self::$cacheFilePath = $cacheFilePath;
             self::$downloadExternal = $asyncParams ? false : true;
-            if (file_exists($cacheFilePath) && ( (filectime($cacheFilePath) + 3600*24*14) > time() ) )
+            if (file_exists($cacheFilePath) && (!self::$updateProcess || (self::$updateProcess && (filectime($cacheFilePath) + 3600*24*14) > time() ) ) )
             {
                 $cacheResult = file_get_contents($cacheFilePath);
                 self::$saveCache = false;
             }
             else
             {
+                if(self::$downCountCacheFill > 0){
+                    self::$downCountCacheFill--;
+                }else{
+                    return false;
+                }
                 $cacheResult = false;
             }
 
@@ -1347,7 +1354,7 @@ class HotelBookClient
 
         //VarDumper::dump($hotelsObject);
         if (!$hotelObject){
-            if(self::$cacheFilePath){
+            if(self::$cacheFilePath && file_exists(self::$cacheFilePath)){
                 unlink(self::$cacheFilePath);
             }
             return false;

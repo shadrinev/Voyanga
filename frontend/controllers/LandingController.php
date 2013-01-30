@@ -132,6 +132,7 @@ class LandingController extends Controller {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
             $hotelInfo->hotelName = $hc->name;
+            $hotelInfo->hotelId = $hc->id;
             $city = City::getCityByPk($hc->cityId);
         }else{
             $hotelInfo = $hotelClient->hotelDetail($hotelId);
@@ -149,8 +150,10 @@ class LandingController extends Controller {
         }
         $serviceGroupIcons = array('Сервис'=>'service','Спорт и отдых'=>'sport','Туристам'=>'turist','Интернет'=>'internet','Развлечения и досуг'=>'dosug','Парковка'=>'parkovka','Дополнительно'=>'dop','В отеле'=>'in-hotel');
         $serviceList = array();
-        foreach($hotelInfo->hotelGroupServices as $grName=>$group){
-            $serviceList[] = array('name'=>$grName,'icon'=>$serviceGroupIcons[$grName],'elements'=>$group);
+        if($hotelInfo->hotelGroupServices){
+            foreach($hotelInfo->hotelGroupServices as $grName=>$group){
+                $serviceList[] = array('name'=>$grName,'icon'=>$serviceGroupIcons[$grName],'elements'=>$group);
+            }
         }
         //print_r($serviceList);die();
 
@@ -265,6 +268,7 @@ class LandingController extends Controller {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
             $hotelInfo->hotelName = $hc->name;
+            $hotelInfo->hotelId = $hc->id;
             $hotelsInfo[] = $hotelInfo;
         }
 
