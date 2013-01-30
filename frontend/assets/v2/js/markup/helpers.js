@@ -17,12 +17,9 @@ function hideRecomendedBlockTicket() {
     }
 }
 $(function () {
-
     bindActions = function () {
-
         $('.minimize-rcomended .btn-minimizeRecomended').click(function () {
         });
-
         $('.order-show').click(function () {
             $('.recomended-content').slideDown();
             $('.minimize-rcomended .btn-minimizeRecomended').animate({top: '-19px'}, 500);
@@ -32,7 +29,6 @@ $(function () {
             widthHowLong();
             setTimeout(smallTicketHeight, 100);
         });
-
         $('.descr').eq(1).hide();
         $('.place-buy .tmblr li a').click(function (e) {
             e.preventDefault();
@@ -45,7 +41,6 @@ $(function () {
                 $('#' + var_nameBlock).show();
             }
         });
-
         $('.read-more').click(function () {
             if (!$(this).hasClass('active')) {
                 $(this).prev().css('height', 'auto');
@@ -58,13 +53,11 @@ $(function () {
                 $(this).removeClass('active').text('Подробнее');
             }
         });
-
         $('.stars-li input').each(function () {
             if ($(this).attr('checked') == 'checked') {
                 $(this).next().addClass('active');
             }
         });
-
         $('.stars-li label').click(function () {
             if (!$(this).hasClass('active')) {
                 $(this).addClass('active');
@@ -72,7 +65,6 @@ $(function () {
             else {
                 $(this).removeClass('active');
             }
-
         });
         var heCal = $('.calendarSlide').height();
         $('.calendarSlide').css('top', '-' + heCal + 'px');
@@ -91,8 +83,6 @@ $(function () {
                 var_parent.find('.startInputTo').find('input').focus();
             });
         });
-
-
         $('.board-content .from input').click(function () {
             if ($(this).parent().hasClass('overflow')) {
                 $(this).parent().animate({'width': '271px'}, 300, function () {
