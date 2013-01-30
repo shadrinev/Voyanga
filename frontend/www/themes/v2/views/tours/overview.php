@@ -77,7 +77,7 @@ $theme = Yii::app()->theme->baseUrl;
       <div class="shareSocial">
       </div>
       <div class="costItAll" data-bind="visible: someSegmentsSelected">
-	    Итого <span class="allCost"><span data-bind="text: price()">86 250</span> <span class="rur">o</span></span>
+	    Итого <span class="allCost"><span data-bind="text: price()-savings()">86 250</span> <span class="rur">o</span></span>
         <a href="#" class="btn-order btnGoBuy" data-bind="click:buy">Перейти к оплате<span class="l"></span></a>
       </div>
     </div>
