@@ -6,10 +6,11 @@
  * Time: 16:14
  * To change this template use File | Settings | File Templates.
  */
-class FaqController extends Controller
+class FaqController extends FrontendController
 {
     public function actionIndex()
     {
+        $this->assignTitle('faq');
         $this->layout = 'static';
         $this->render('faq');
     }

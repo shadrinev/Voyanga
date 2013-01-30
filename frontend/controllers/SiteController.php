@@ -3,21 +3,11 @@
 class SiteController extends FrontendController
 {
     /**
-     * This is the default 'index' action that is invoked
-     * when an action is not explicitly requested by users.
-     */
-    public function actionIndex()
-    {
-        // renders the view file 'protected/views/site/index.php'
-        // using the default layout 'protected/views/layouts/main.php'
-        $this->render('index');
-    }
-
-    /**
      * This is the action to handle external exceptions.
      */
     public function actionError()
     {
+        $this->assignTitle('error');
         if ($error = Yii::app()->errorHandler->error)
         {
             if (Yii::app()->request->isAjaxRequest) echo $error['message'];
@@ -115,13 +105,15 @@ class SiteController extends FrontendController
 
     public function actionIata()
     {
+        $this->assignTitle('iata');
         $this->layout = 'static';
         $this->render('iata');
-        exit;
+        Yii::app()->end();
     }
 
     public function actionAgreement_avia()
     {
+        $this->assignTitle('agreementAvia');
         $this->layout = 'static';
         $this->render('agreement_avia');
         exit;
@@ -129,14 +121,16 @@ class SiteController extends FrontendController
 
     public function actionAgreement_hotel()
     {
+        $this->assignTitle('agreementHotel');
         $this->layout = 'static';
         $this->render('agreement_hotel');
-        exit;
+        Yii::app()->end();
     }
     public function actionAgreement()
     {
+        $this->assignTitle('agreement');
         $this->layout = 'static';
         $this->render('agreement');
-        exit;
+        Yii::app()->end();
     }
 }
