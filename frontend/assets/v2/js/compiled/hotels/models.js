@@ -27,7 +27,8 @@ MEAL_VERBOSE = {
   'Завтрак Шведский стол': 'Завтрак'
 };
 
-/*class googleInfoDiv extends google.maps.OverlayView
+/*
+class googleInfoDiv extends google.maps.OverlayView
   constructor: ->
     @div_ = null
     @latLng = null
@@ -1026,6 +1027,7 @@ HotelsResultSet = (function() {
     if (!rawData.hotels) {
       throw "404";
     }
+    this.noresults = rawData.hotels.length === 0;
     this.creationMoment = moment();
     this.rawSP = this.searchParams;
     this.cacheId = rawData.cacheId;
