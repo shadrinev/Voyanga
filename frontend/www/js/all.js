@@ -9540,6 +9540,7 @@ function ResizeCenterBlock() {
 	var block = $('.center-block');
 	var isset = block.length;
 	if (isset) {
+        //console.log('!!!==== 0 ====!!!');
 		var var_leftBlock = $('.left-block');
 		var var_head = $('.head');
 		var var_mainBlock = block.find('.main-block');
@@ -9950,30 +9951,30 @@ function ResizeCenterBlock() {
 }
 function smallTicketHeight() {
     if ($('.recommended-ticket').length > 0 && $('.recommended-ticket').is(':visible')) {
-    
-	var var_recomendedContent = $('.recomended-content');
-	var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items .content');
-	var var_oneHeight = var_recomendedItems.height();
-	
-	var heightTwoTicket= 0;
-	if ($('.two-way').css('display')!=='none') {
-	    heightTwoTicket = (var_oneHeight - 24) / 2;
-	} else {
-	    heightTwoTicket = (var_oneHeight - 24);
-	}
-	heightTwoTicket = Math.floor(heightTwoTicket);
-	var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices').css('height', heightTwoTicket +'px');
-	var heightGraf = heightTwoTicket - 65;	
-	// fixme bzv this method itself called twice on avia result
-	var scheduleElement = $('.prices-of-3days .ticket  .schedule-of-prices')[0];
-	if(scheduleElement) {
-	    var siblings = ko.contextFor($('.prices-of-3days .ticket  .schedule-of-prices')[0]);
+        //console.log('!!!==== 4 ====!!!');
+        var var_recomendedContent = $('.recomended-content');
+        var var_recomendedItems = var_recomendedContent.find('.recommended-ticket .ticket-items .content');
+        var var_oneHeight = var_recomendedItems.height();
 
-	    siblings = siblings['$data'];
-	    if(siblings.graphHeight) {
-		siblings.graphHeight(heightGraf);
-	    }
-	}
+        var heightTwoTicket= 0;
+        if ($('.two-way').css('display')!=='none') {
+            heightTwoTicket = (var_oneHeight - 24) / 2;
+        } else {
+            heightTwoTicket = (var_oneHeight - 24);
+        }
+        heightTwoTicket = Math.floor(heightTwoTicket);
+        var_recomendedContent.find('.prices-of-3days .ticket .schedule-of-prices').css('height', heightTwoTicket +'px');
+        var heightGraf = heightTwoTicket - 65;
+        // fixme bzv this method itself called twice on avia result
+        var scheduleElement = $('.prices-of-3days .ticket  .schedule-of-prices')[0];
+        if(scheduleElement) {
+            var siblings = ko.contextFor($('.prices-of-3days .ticket  .schedule-of-prices')[0]);
+
+            siblings = siblings['$data'];
+            if(siblings.graphHeight) {
+            siblings.graphHeight(heightGraf);
+            }
+        }
     }
 }
 
@@ -10051,7 +10052,16 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
-//    if (DetectIphoneOrIpod() )
+    if(window.resizeAviaThrottle) {
+	clearTimeout(window.resizeAviaThrottle);
+	window.resizeAviaThrottle = null;
+    }
+    window.resizeAviaThrottle = setTimeout(ResizeAviaClb, 1000/30);
+}
+
+function ResizeAviaClb() {
+    console.log('!!!! DNIWE EBANOE!!!');
+//    if (DetectMobileQuick() )
         ResizeCenterBlock();
         inTheTwoLines();
         smallTicketHeight();
@@ -10092,41 +10102,46 @@ function readMoreService(obj) {
 
 function mapAllPageView() {
 	var _map = $('#all-hotels-map');
-	var _isset = _map.length > 0 && _map.is(':visible');
-	if (_isset) {
-		var _contentWidth = $('#content').width();
-		var _contentHeight = $('#content').height();
-		var _mainWidth = $('.main-block').width();
-		var _leftBlockIsset = $('.left-block').length > 0 && $('.left-block').is(':visible');
-		
-		if (_leftBlockIsset) {
-			var _marginLeftMap = ((_mainWidth - _contentWidth) / 2);
-			
-			if ($(window).height() < 670) {
-				var _windowWidth = 670;
-			}
-			else {
-				var _windowWidth = $(window).height();
-			}		
-			var offset = $('#content').offset();
-			$('#content').css('height', (_windowWidth - 70)+'px');
-			_map.css('height', (_windowWidth - 123)+'px');
-			_map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
-		}
-		else {
-			if ($(window).height() < 670) {
-				var _windowWidth = 670;
-			}
-			else {
-				var _windowWidth = $(window).height();
-			}		
-			var offset = $('#content').offset();
-			$('#content').css('height', (_windowWidth - 70)+'px');
-			_map.css('height', (_windowWidth - 123)+'px');
-			_map.css('width', $(window).width()+'px').css('margin-left', '-'+ offset.left +'px');
-		}	
-	
-	}
+
+    if (_map.length > 0 && _map.is(':visible')) {
+        //console.log('!!!==== 6 ====!!!');
+
+        var _isset = _map.length > 0 && _map.is(':visible');
+        if (_isset) {
+            var _contentWidth = $('#content').width();
+            var _contentHeight = $('#content').height();
+            var _mainWidth = $('.main-block').width();
+            var _leftBlockIsset = $('.left-block').length > 0 && $('.left-block').is(':visible');
+
+            if (_leftBlockIsset) {
+                var _marginLeftMap = ((_mainWidth - _contentWidth) / 2);
+
+                if ($(window).height() < 670) {
+                    var _windowWidth = 670;
+                }
+                else {
+                    var _windowWidth = $(window).height();
+                }
+                var offset = $('#content').offset();
+                $('#content').css('height', (_windowWidth - 70)+'px');
+                _map.css('height', (_windowWidth - 123)+'px');
+                _map.css('width', _mainWidth+'px').css('margin-left', '-'+ _marginLeftMap +'px');
+            }
+            else {
+                if ($(window).height() < 670) {
+                    var _windowWidth = 670;
+                }
+                else {
+                    var _windowWidth = $(window).height();
+                }
+                var offset = $('#content').offset();
+                $('#content').css('height', (_windowWidth - 70)+'px');
+                _map.css('height', (_windowWidth - 123)+'px');
+                _map.css('width', $(window).width()+'px').css('margin-left', '-'+ offset.left +'px');
+            }
+
+        }
+    }
 }
 
 var _GoOnScroll = true;
@@ -10245,122 +10260,127 @@ function jsPaneScrollHeight() {
 }
 
 function scrollValue(what, event) {
-	var filterContent = $('.filter-content.'+ what);
-    var isScrollPane;
-    if(event.target == document)
-	isScrollPane = false;
-    else
-	isScrollPane = $(event.target).is('#scroll-pane');
-    if (filterContent.length > 0 && filterContent.is(':visible') && !isScrollPane) {		
-		var innerFilter = filterContent.find('.innerFilter');
-		var var_marginTopSubHead = $('.sub-head').css('margin-top');
-		var var_scrollValueTop = $(window).scrollTop();
-		var var_heightWindow = $(window).height();
-		var var_heightContent = $('#content').height();
-		
-		if (what == 'avia') {
-			var var_topFilterContent = 73;
-			if ($('.sub-head').css('margin-top') != '-67px') {
-				var diffrentScrollTop = 173;
-			}
-			else {
-				var diffrentScrollTop = 110;
-			}
-		}
-		else {
-			var var_topFilterContent = 23;
-			if ($('.sub-head').css('margin-top') != '-67px') {
-				var diffrentScrollTop = 125;
-			}
-			else {
-				var diffrentScrollTop = 61 ;
-			}
-		}	
-		if (_GoOnScroll) {
-			var needDel = false;
-			if (var_scrollValueTop == 0) {
-				//is del
-				needDel = true;
-				filterContent.css('position','relative').css('top','auto').css('bottom','auto');
-			}
-			else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
-				needDel = true;
-				filterContent.css('position','relative').css('top','auto').css('bottom','auto');
-			}
-			else if (var_scrollValueTop > diffrentScrollTop) {		
-				if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 30)) {
-					var var_minHeightBottom;
-					filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
-					if ((var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30)) < 30) {
-						var_minHeightBottom = (var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30));
-					}
-					else {
-						var_minHeightBottom = 30;
-					}
-					innerFilter.css('height', (var_heightWindow - var_minHeightBottom) +'px');
-					if(!$('#scroll-pane').data('jsp')){
-						$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
-						
-					}
-					$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});					
-					if(!_jScrollingBootom && var_scrollValueTop == ($('.wrapper').height() - $('body').height())){
-						_jScrollingBootom = true;
-	                    window.setTimeout(function(){
-						        $('#scroll-pane').data('jsp').scrollToBottom();
-	                        },
-	                        50
-	                    );
-						
-						window.setTimeout(
-							function(){
-								_jScrollingBootom = false;
-								_jScrollNonBottomInitted = false;
-								//scrollValue(what, event)
-							}
-							, 500
-						);
-						
-					}
-					//
-				}
-				else {
-					filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
-					innerFilter.css('height', var_heightWindow +'px');
-					if(!$('#scroll-pane').data('jsp')){
-						$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
-					}
-					if(!_jScrollNonBottomInitted){
-						_jScrollNonBottomInitted = true;
-						$('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
-						//$('#scroll-pane').data('jsp').scrollToBottom();
-					}
-				}
-				
-			}
-			if(needDel){
-				if($('#scroll-pane').data('jsp')){
-					$('#scroll-pane').data('jsp').destroy();
-				}
-			}
-		}
-		else {
-			var _issetMaps = $('#all-hotels-map').length > 0 && $('#all-hotels-map').is(':visible');
-			var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
-			if (_issetMaps && ! _issetLeftBlock) {
-				
-			}
-			else {
-				if($('#scroll-pane').data('jsp')){
-					$('#scroll-pane').data('jsp').destroy();
-				}
+    if (DetectMobileQuick() || DetectTierTablet()) {
+        return;
+    }
+    else {
+        var filterContent = $('.filter-content.'+ what);
+        var isScrollPane;
+        if(event.target == document)
+            isScrollPane = false;
+        else
+            isScrollPane = $(event.target).is('#scroll-pane');
+        if (filterContent.length > 0 && filterContent.is(':visible') && !isScrollPane) {
+            var innerFilter = filterContent.find('.innerFilter');
+            var var_marginTopSubHead = $('.sub-head').css('margin-top');
+            var var_scrollValueTop = $(window).scrollTop();
+            var var_heightWindow = $(window).height();
+            var var_heightContent = $('#content').height();
 
-			}
-			return false;
-		}
-	}
-	else {
-		return false;
-	}
+            if (what == 'avia') {
+                var var_topFilterContent = 73;
+                if ($('.sub-head').css('margin-top') != '-67px') {
+                    var diffrentScrollTop = 173;
+                }
+                else {
+                    var diffrentScrollTop = 110;
+                }
+            }
+            else {
+                var var_topFilterContent = 23;
+                if ($('.sub-head').css('margin-top') != '-67px') {
+                    var diffrentScrollTop = 125;
+                }
+                else {
+                    var diffrentScrollTop = 61 ;
+                }
+            }
+            if (_GoOnScroll) {
+                var needDel = false;
+                if (var_scrollValueTop == 0) {
+                    //is del
+                    needDel = true;
+                    filterContent.css('position','relative').css('top','auto').css('bottom','auto');
+                }
+                else if (var_scrollValueTop > 0 && var_scrollValueTop < diffrentScrollTop ) {
+                    needDel = true;
+                    filterContent.css('position','relative').css('top','auto').css('bottom','auto');
+                }
+                else if (var_scrollValueTop > diffrentScrollTop) {
+                    if (var_scrollValueTop > (($('.wrapper').height() - var_heightWindow) - 30)) {
+                        var var_minHeightBottom;
+                        filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
+                        if ((var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30)) < 30) {
+                            var_minHeightBottom = (var_scrollValueTop - (($('.wrapper').height() - var_heightWindow) - 30));
+                        }
+                        else {
+                            var_minHeightBottom = 30;
+                        }
+                        innerFilter.css('height', (var_heightWindow - var_minHeightBottom) +'px');
+                        if(!$('#scroll-pane').data('jsp')){
+                            $('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
+
+                        }
+                        $('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
+                        if(!_jScrollingBootom && var_scrollValueTop == ($('.wrapper').height() - $('body').height())){
+                            _jScrollingBootom = true;
+                            window.setTimeout(function(){
+                                    $('#scroll-pane').data('jsp').scrollToBottom();
+                                },
+                                50
+                            );
+
+                            window.setTimeout(
+                                function(){
+                                    _jScrollingBootom = false;
+                                    _jScrollNonBottomInitted = false;
+                                    //scrollValue(what, event)
+                                }
+                                , 500
+                            );
+
+                        }
+                        //
+                    }
+                    else {
+                        filterContent.css('position','fixed').css('top','-'+var_topFilterContent+'px').css('bottom','auto');
+                        innerFilter.css('height', var_heightWindow +'px');
+                        if(!$('#scroll-pane').data('jsp')){
+                            $('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
+                        }
+                        if(!_jScrollNonBottomInitted){
+                            _jScrollNonBottomInitted = true;
+                            $('#scroll-pane').jScrollPane({contentWidth: innerFilter.width()});
+                            //$('#scroll-pane').data('jsp').scrollToBottom();
+                        }
+                    }
+
+                }
+                if(needDel){
+                    if($('#scroll-pane').data('jsp')){
+                        $('#scroll-pane').data('jsp').destroy();
+                    }
+                }
+            }
+            else {
+                var _issetMaps = $('#all-hotels-map').length > 0 && $('#all-hotels-map').is(':visible');
+                var _issetLeftBlock = $('.left-block').length > 0 && $('.left-block').is(':visible');
+                if (_issetMaps && ! _issetLeftBlock) {
+
+                }
+                else {
+                    if($('#scroll-pane').data('jsp')){
+                        $('#scroll-pane').data('jsp').destroy();
+                    }
+
+                }
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 function reInitJScrollPane(){
@@ -10752,16 +10772,21 @@ $(window).resize(resizeFAQ);
 $(window).scroll(scrollFAQ);
 
 function gradientResize() {
-    if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
-        var _content = $('.wrapper .main-block').find('#content');
-        var offset = _content.offset();
-        var _leftContent = $(window).width() - offset.left;
-        var _rightContent = offset.left + _content.width();
-        $('.gShR').show().css('left', (_rightContent - 180) +'px').css('width', ($(window).width() - (_rightContent - 180)) +'px');;
-        $('.gShL').show().css('right', (_leftContent - 40) +'px').css('width', (offset.left + 40) +'px');
+    if (DetectMobileQuick() || DetectTierTablet()) {
+        return
     }
     else {
-        return
+        if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
+            var _content = $('.wrapper .main-block').find('#content');
+            var offset = _content.offset();
+            var _leftContent = $(window).width() - offset.left;
+            var _rightContent = offset.left + _content.width();
+            $('.gShR').show().css('left', (_rightContent - 180) +'px').css('width', ($(window).width() - (_rightContent - 180)) +'px');;
+            $('.gShL').show().css('right', (_leftContent - 40) +'px').css('width', (offset.left + 40) +'px');
+        }
+        else {
+            return
+        }
     }
 }
 
@@ -10968,83 +10993,85 @@ $(function(){
 });
 
 function resizePanel(arg) {
-    $('.panelTable').each(function(index){
 
-        var _panelTable = $(this);//$('.panel').last().find('.panelTable');
-        var _classThis;
-        var _midWidth = 1130;
-        var _minWidth = 1000;
-        var _newMean;
+        //console.log('!!!==== 7 ====!!!');
+        $('.panelTable').each(function(index){
 
-        var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
-        //_panelTable.find('.tdPeople').css('width', 'auto');
+            var _panelTable = $(this);//$('.panel').last().find('.panelTable');
+            var _classThis;
+            var _midWidth = 1130;
+            var _minWidth = 1000;
+            var _newMean;
 
-        if (_panelTable.hasClass('avia')) {
-            _classThis = 'avia';
-	        var _meanPanel = 850;
-            var _standartData = 290;
-            var _widthTdTumblr = _panelTable.find('.tdTumblr').innerWidth();
-            var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
-            var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
-            var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();;
-            var _widthTdAddTour = 0;
-            var _howManyInput = 2;
-        }  else if (_panelTable.hasClass('constructorTable')) {
-            _classThis = 'constructorTable';
-            if ($(this).find('.tdPeople').hasClass('notFinal')) {
-                $(this).find('.tdPeople.notFinal').css('width', $('.tdPeople.final').width()+'px');
+            var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
+            //_panelTable.find('.tdPeople').css('width', 'auto');
+
+            if (_panelTable.hasClass('avia')) {
+                _classThis = 'avia';
+                var _meanPanel = 850;
+                var _standartData = 290;
+                var _widthTdTumblr = _panelTable.find('.tdTumblr').innerWidth();
+                var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+                var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
+                var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();;
+                var _widthTdAddTour = 0;
+                var _howManyInput = 2;
+            }  else if (_panelTable.hasClass('constructorTable')) {
+                _classThis = 'constructorTable';
+                if ($(this).find('.tdPeople').hasClass('notFinal')) {
+                    $(this).find('.tdPeople.notFinal').css('width', $('.tdPeople.final').width()+'px');
+                }
+                else if ($(this).find('.tdPeople').hasClass('final')) {
+                    //$(this).find('.tdPeople.final').css('width', 'auto');
+                }
+                var _meanPanel = 692;
+                var _widthTdTumblr = 0;
+                var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+                var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
+                var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
+                var _widthTdAddTour = _panelTable.find('.tdAddTour').innerWidth();
+                var _howManyInput = 1;
+            }  else if (_panelTable.hasClass('hotel')) {
+                _classThis = 'hotel';
+                var _meanPanel = 692;
+                var _widthTdTumblr = 0;
+                var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
+                var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
+                var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
+                var _widthTdAddTour = 117;
+                var _howManyInput = 1;
             }
-            else if ($(this).find('.tdPeople').hasClass('final')) {
-                //$(this).find('.tdPeople.final').css('width', 'auto');
+
+            var _windowWidth = $(window).width();
+            var _widthPanelTable = _panelTable.innerWidth();
+
+            var _dataDiv = _panelTable.find('.tdCity').find('.data');
+            var _dataInput = _panelTable.find('.tdCity').find('.data').find('input');
+
+            if (_windowWidth <= _midWidth && _windowWidth >= _minWidth) {
+                _allWidthPanel = _windowWidth - 230;
             }
-            var _meanPanel = 692;
-            var _widthTdTumblr = 0;
-            var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
-            var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
-            var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
-            var _widthTdAddTour = _panelTable.find('.tdAddTour').innerWidth();
-            var _howManyInput = 1;
-        }  else if (_panelTable.hasClass('hotel')) {
-            _classThis = 'hotel';
-            var _meanPanel = 692;
-            var _widthTdTumblr = 0;
-            var _widthTdPeople = _panelTable.find('.tdPeople').innerWidth();
-            var _widthTdButton = _panelTable.find('.tdButton').innerWidth();
-            var _widthTdCityStart = _panelTable.find('.tdCityStart').innerWidth();
-            var _widthTdAddTour = 117;
-            var _howManyInput = 1;
-        }
+            else if (_windowWidth < _minWidth) {
+                _allWidthPanel = 1000 - 230;
+            }
+            else {
+                _allWidthPanel = 900;
+            }
 
-        var _windowWidth = $(window).width();
-        var _widthPanelTable = _panelTable.innerWidth();
+            if (_widthPanelTable >= _allWidthPanel) {
+                _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+            }
+            else if (_widthPanelTable < _allWidthPanel) {
+                _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+            }
+            else {
+                _newMean = (_widthPanelTable - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
+            }
 
-        var _dataDiv = _panelTable.find('.tdCity').find('.data');
-        var _dataInput = _panelTable.find('.tdCity').find('.data').find('input');
-
-        if (_windowWidth <= _midWidth && _windowWidth >= _minWidth) {
-            _allWidthPanel = _windowWidth - 230;
-        }
-        else if (_windowWidth < _minWidth) {
-            _allWidthPanel = 1000 - 230;
-        }
-        else {
-            _allWidthPanel = 900;
-        }
-
-        if (_widthPanelTable >= _allWidthPanel) {
-            _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-        }
-        else if (_widthPanelTable < _allWidthPanel) {
-            _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-        }
-        else {
-            _newMean = (_widthPanelTable - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
-        }
-
-        _panelTable.find('.tdCity').find('.data').css('width', _newMean +'px');
-        _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
-        _widthPanelTable = _panelTable.innerWidth();
-    });
+            _panelTable.find('.tdCity').find('.data').css('width', _newMean +'px');
+            _panelTable.find('.tdCity').find('.data').find('input').css('width', (_newMean-20) +'px');
+            _widthPanelTable = _panelTable.innerWidth();
+        });
 }
 
 function startIE() {
@@ -11845,32 +11872,39 @@ function minimizeListTime() {
 // ОТВЕЧАЕТ ЗА СЛАЙДЕР НА МАЛЕНЬКОМ БИЛЕТЕ!
 function inTheTwoLines() {
 	var var_otherTime = $('.recommended-ticket .ticket-items .other-time');
-	var_otherTime.each(function() {
-		var var_lengthLI = $(this).find('ul.minimize li').length;
-		var var_heightUL = $(this).find('ul.minimize').height();
-		if (var_heightUL > 30 && var_heightUL < 40) {
-			$(this).find('.variation').css('margin-top', '0px');
-		}
-		else if (var_heightUL > 40) {
-			$(this).find('.variation').css('margin-top', '0px');
-			var var_paddingTop = ($(this).height() - 40) / 2;
 
-			$(this).find('.left').css('top', var_paddingTop+'px');
-			$(this).find('.right').css('top', var_paddingTop+'px');
-		}
-		else {
-			$(this).find('.variation').css('margin-top', '10px');
-		}
-		for (i = 0; i < var_lengthLI; i++) {
-			var var_LI = $(this).find('ul.minimize li').eq(i);
-			if (var_LI.hasClass('active') == true && i == 1) {
-				$(this).find('.left').addClass('none');
-			}
-			else if (var_LI.hasClass('active') == true && i == (var_lengthLI - 1)) {
-				$(this).find('.right').addClass('none');
-			}
-		}
-	});
+    if (var_otherTime.length > 0 && var_otherTime.is(':visible')) {
+//        if (DetectMobileQuick() && var_iphone < 3) {
+            //console.log('!!!==== 1 ====!!!');
+            var_otherTime.each(function() {
+                var var_lengthLI = $(this).find('ul.minimize li').length;
+                var var_heightUL = $(this).find('ul.minimize').height();
+                if (var_heightUL > 30 && var_heightUL < 40) {
+                    $(this).find('.variation').css('margin-top', '0px');
+                }
+                else if (var_heightUL > 40) {
+                    $(this).find('.variation').css('margin-top', '0px');
+                    var var_paddingTop = ($(this).height() - 40) / 2;
+
+                    $(this).find('.left').css('top', var_paddingTop+'px');
+                    $(this).find('.right').css('top', var_paddingTop+'px');
+                }
+                else {
+                    $(this).find('.variation').css('margin-top', '10px');
+                }
+                for (i = 0; i < var_lengthLI; i++) {
+                    var var_LI = $(this).find('ul.minimize li').eq(i);
+                    if (var_LI.hasClass('active') == true && i == 1) {
+                        $(this).find('.left').addClass('none');
+                        }
+                    else if (var_LI.hasClass('active') == true && i == (var_lengthLI - 1)) {
+                        $(this).find('.right').addClass('none');
+                    }
+                }
+            });
+//            var_iphone++;
+//        }
+    }
 }
 
 
@@ -12197,7 +12231,21 @@ function nextSlideDownRules(_this) {
         $(_this).addClass('active')
     }
 
-}/**
+}
+
+function getLink() {
+    $('body').click(function(e) {
+        if ($(e.target).parents('#followLink').length > 0) {
+            $('#followLink').find('.text').hide();
+            $('#followLink').find('.getLink').show();
+        }
+        else {
+            $('#followLink').find('.text').show();
+            $('#followLink').find('.getLink').hide();
+        }
+    });
+}
+$(window).load(getLink);/**
  * Created with JetBrains PhpStorm.
  * User: oleg
  * Date: 29.08.12
@@ -13349,109 +13397,119 @@ function runText() {
 var speedAnimateChangePic = 500;
 
 function slideToursSlide() {
-	var WidthAllWindow = $(window).width();
-	var var_slideToursBody = $('.slideTours');
-	var var_lengthTours;
-	
-	var var_slideTours = $('.centerTours');
-	var widthSmall;
-	if (WidthAllWindow <= 1000) {
-		widthSmall = 1000;
-	}
-	else if (WidthAllWindow > 1000 && WidthAllWindow < 1050) {
-		widthSmall = WidthAllWindow;
-	}
-	else if (WidthAllWindow > 1050 && WidthAllWindow < 1290) {
-		widthSmall = Math.floor(1050 + ( (WidthAllWindow - 1050) / ((1290 - 1050) / (1205 - 1050))) );
-	}
-	else if (WidthAllWindow > 1290 && WidthAllWindow < 1390) {
-		widthSmall = 1205;
-	}
-	else if (WidthAllWindow > 1390 && WidthAllWindow < 1490) {
-		widthSmall = Math.floor(1205 + ( (WidthAllWindow - 1390) / ((1490 - 1390) / (1390 - 1205))) );
-	}
-	else if (WidthAllWindow > 1490) {
-		widthSmall = 1390;
-	}
-	
-	var_slideTours.css('width', widthSmall+'px');
-	$('.slideTours .center').css('width', widthSmall+'px');
-	
-	var var_allWidth = $('.slideTours .center').width();
-	var var_widthTours;
-	if (var_allWidth >= 1390) {
-		var_lengthTours = 8;
-		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
-	}
-	else if (var_allWidth < 1390 && var_allWidth >= 1290) {
-		var_lengthTours = 7;
-		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
-	}
-	else if (var_allWidth < 1290 && var_allWidth > 1000) {
-		var_lengthTours = 6;
-		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
-	}
-	else if (var_allWidth <= 1000) {
-		var_lengthTours = 5;
-		var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
-	}
-	var_slideToursBody.find('.toursTicketsMain').css('width',var_widthTours+'px');
+    if ($('.innerBlockMain').length > 0 && $('.innerBlockMain').is(':visible')) {
+        //console.log('!!!==== 2 ====!!!');
+
+        var WidthAllWindow = $(window).width();
+        var var_slideToursBody = $('.slideTours');
+        var var_lengthTours;
+
+        var var_slideTours = $('.centerTours');
+        var widthSmall;
+        if (WidthAllWindow <= 1000) {
+            widthSmall = 1000;
+        }
+        else if (WidthAllWindow > 1000 && WidthAllWindow < 1050) {
+            widthSmall = WidthAllWindow;
+        }
+        else if (WidthAllWindow > 1050 && WidthAllWindow < 1290) {
+            widthSmall = Math.floor(1050 + ( (WidthAllWindow - 1050) / ((1290 - 1050) / (1205 - 1050))) );
+        }
+        else if (WidthAllWindow > 1290 && WidthAllWindow < 1390) {
+            widthSmall = 1205;
+        }
+        else if (WidthAllWindow > 1390 && WidthAllWindow < 1490) {
+            widthSmall = Math.floor(1205 + ( (WidthAllWindow - 1390) / ((1490 - 1390) / (1390 - 1205))) );
+        }
+        else if (WidthAllWindow > 1490) {
+            widthSmall = 1390;
+        }
+
+        var_slideTours.css('width', widthSmall+'px');
+        $('.slideTours .center').css('width', widthSmall+'px');
+
+        var var_allWidth = $('.slideTours .center').width();
+        var var_widthTours;
+        if (var_allWidth >= 1390) {
+            var_lengthTours = 8;
+            var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
+        }
+        else if (var_allWidth < 1390 && var_allWidth >= 1290) {
+            var_lengthTours = 7;
+            var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
+        }
+        else if (var_allWidth < 1290 && var_allWidth > 1000) {
+            var_lengthTours = 6;
+            var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
+        }
+        else if (var_allWidth <= 1000) {
+            var_lengthTours = 5;
+            var_widthTours = Math.floor(((var_allWidth / var_lengthTours) - 2));
+        }
+        var_slideToursBody.find('.toursTicketsMain').css('width',var_widthTours+'px');
+    }
 }
 
-function CenterIMGResize() {
-	
-	var HeightAllWindow = $(window).height();
-	if (HeightAllWindow < 800) {
-		HeightAllWindow = HeightAllWindow - 38 - 158;
-		$('.slideTours').addClass('small');
-	}
-	else {
-		HeightAllWindow = HeightAllWindow - 38 - 214;
-		$('.slideTours').removeClass('small');
-	}
-	$('.innerBlockMain').css('height', HeightAllWindow+'px');
-	
-	
-	var pathIMG = $('.innerBlockMain .IMGmain img');
-	var marginPathLeft = 0;
-	var var_allWidth = $('.slideTours .center').width();
-    var heightImgMain = $('div.IMGmain img').height();
+function CenterIMGResize(index) {
+    if (index == undefined)
+        index = 0
+	if ($('.innerBlockMain').length > 0 && $('.innerBlockMain').is(':visible')) {
+        var HeightAllWindow = $(window).height();
+        if (HeightAllWindow < 800) {
+            HeightAllWindow = HeightAllWindow - 38 - 158;
+            $('.slideTours').addClass('small');
+        }
+        else {
+            HeightAllWindow = HeightAllWindow - 38 - 214;
+            $('.slideTours').removeClass('small');
+        }
+        $('.innerBlockMain').css('height', HeightAllWindow+'px');
 
-if (var_allWidth >= 1390) {
-		marginPathLeft = (1390 - var_allWidth) / 2;
-	}
-	else if (var_allWidth < 1390 && var_allWidth >= 1290) {
-		marginPathLeft = (1390 - var_allWidth) / 2;
-		
-	}
-	else if (var_allWidth < 1290 && var_allWidth > 1000) {
-		marginPathLeft = (1390 - var_allWidth) / 2;
-	}
-	else if (var_allWidth <= 1000) {
-		marginPathLeft = (1390 - var_allWidth) / 2;
-	}
-	pathIMG.css('left', '-'+marginPathLeft+'px');
-	
-    var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
-	pathIMG.css('top', '-'+marginPathTop+'px');
+
+        var pathIMG = $('.innerBlockMain .IMGmain').eq(index).find('img');
+        var marginPathLeft = 0;
+        var var_allWidth = $('.slideTours .center').width();
+        var heightImgMain = $('div.IMGmain').eq(index).find('img').height();
+
+    if (var_allWidth >= 1390) {
+            marginPathLeft = (1390 - var_allWidth) / 2;
+        }
+        else if (var_allWidth < 1390 && var_allWidth >= 1290) {
+            marginPathLeft = (1390 - var_allWidth) / 2;
+
+        }
+        else if (var_allWidth < 1290 && var_allWidth > 1000) {
+            marginPathLeft = (1390 - var_allWidth) / 2;
+        }
+        else if (var_allWidth <= 1000) {
+            marginPathLeft = (1390 - var_allWidth) / 2;
+        }
+        pathIMG.css('left', '-'+marginPathLeft+'px');
+
+        var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
+        pathIMG.css('top', '-'+marginPathTop+'px');
+    }
 }
 
 function smallIMGresizeIndex() {
 	var _this = $('.imgTours');
-	var _img = _this.find('img');
-	_this.each(function(e) {
-		var _img = $(this).find('img');
-		var _imgHeight = _img.height();
-		var _imgWidth = _img.width();
-		var _thisHeight = $(this).height();
-		var _thisWidth = $(this).width();
-		
-		if (_imgHeight < _thisHeight) {
-			_img.css('height', _thisHeight+'px');
-			//console.log('!!!==='+_imgHeight +' / '+ _imgWidth +' / '+ _thisHeight +' / '+ _thisWidth);
-		}
-		//console.log(_imgHeight +' / '+ _imgWidth +' / '+ _thisHeight +' / '+ _thisWidth);
-	});
+    if (_this.length > 0 && _this.is(':visible')) {
+        //console.log('!!!==== 5 ====!!!');
+        var _img = _this.find('img');
+        _this.each(function(e) {
+            var _img = $(this).find('img');
+            var _imgHeight = _img.height();
+            var _imgWidth = _img.width();
+            var _thisHeight = $(this).height();
+            var _thisWidth = $(this).width();
+
+            if (_imgHeight < _thisHeight) {
+                _img.css('height', _thisHeight+'px');
+                //console.log('!!!==='+_imgHeight +' / '+ _imgWidth +' / '+ _thisHeight +' / '+ _thisWidth);
+            }
+            //console.log(_imgHeight +' / '+ _imgWidth +' / '+ _thisHeight +' / '+ _thisWidth);
+        });
+    }
 }
 
 function indexIMGresizeCenter(index) {
@@ -13459,7 +13517,6 @@ function indexIMGresizeCenter(index) {
 	_indexIMG.css('width','100%');
 	var _imgHeight = _indexIMG.height();
 	var _innerHeight = $('.innerBlockMain').height();
-	console.log("== ! == "+ _imgHeight+" == / == "+ _innerHeight);
 	if (_innerHeight > _imgHeight) {
 		_indexIMG.css('height', _innerHeight+'px').css('width', 'auto');
 	}
@@ -27334,46 +27391,13 @@ InitDeviceScan()
  * Time: 13:40
  * To change this template use File | Settings | File Templates.
  */
-/*VoyangaCalendarKnob = {
-    options: {
-        animate: false,
-        slider: false
-    },
 
-    _create: function() {
-        var self = this,
-            o = this.options;
-        //console.log(this);
-        this._mouseInit();
-
-    },
-    //_init: function(){
-    //	this._mouseInit(); // начинаем обработку поведения мыши
-    //},
-    destroy: function(){
-        this._mouseDestroy();
-    },
-    _mouseStart: function(e){
-        this.options.startEvent(e,this.element);
-    },
-    _mouseDrag: function(e){
-        this.options.dragEvent(e,this.element);
-    },
-    _mouseStop: function( event ) {
-        this.options.endEvent(event,this.element);
-        return false;
-
-    }
-};
-$.widget("ui.VoyangaCalendarKnob",$.ui.mouse, VoyangaCalendarKnob);/**/
-
-
-Date.fromIso = function (dateIsoString){
-    if(typeof dateIsoString == 'string'){
+Date.fromIso = function (dateIsoString) {
+    if (typeof dateIsoString == 'string') {
         var initArray = dateIsoString.split('-');
-        return new Date(initArray[0],(initArray[1]-1),initArray[2]);
+        return new Date(initArray[0], (initArray[1] - 1), initArray[2]);
     }
-    else{
+    else {
         return dateIsoString;
     }
 }
@@ -27383,7 +27407,7 @@ MouseDraggable = {
         slider: false
     },
 
-    _create: function() {
+    _create: function () {
         var self = this,
             o = this.options;
         //console.log(this);
@@ -27393,24 +27417,24 @@ MouseDraggable = {
     //_init: function(){
     //	this._mouseInit(); // начинаем обработку поведения мыши
     //},
-    destroy: function(){
+    destroy: function () {
         this._mouseDestroy();
     },
-    _mouseStart: function(e){
-        this.options.startEvent(e,this.element);
+    _mouseStart: function (e) {
+        this.options.startEvent(e, this.element);
     },
-    _mouseDrag: function(e){
-        this.options.dragEvent(e,this.element);
+    _mouseDrag: function (e) {
+        this.options.dragEvent(e, this.element);
     },
-    _mouseStop: function( event ) {
-        this.options.endEvent(event,this.element);
+    _mouseStop: function (event) {
+        this.options.endEvent(event, this.element);
         return false;
 
     }
 };
-$.widget("ui.MouseDraggable",$.ui.mouse, MouseDraggable);
+$.widget("ui.MouseDraggable", $.ui.mouse, MouseDraggable);
 
-VoyangaCalendarSlider = function(options){
+VoyangaCalendarSlider = function (options) {
     var defaults = {
         monthArray: new Array(),
         jObj: null,
@@ -27421,53 +27445,53 @@ VoyangaCalendarSlider = function(options){
         width: 0,//recalc on window resize
         knobSlideAction: false,
         animateScrollAction: false,
-        onresize: function(){
+        onresize: function () {
             this.width = this.jObj.find('.monthLineVoyanga').width();
         },
-        startEvent: function(e,obj){
-            if(this.knobSlideAction){
+        startEvent: function (e, obj) {
+            if (this.knobSlideAction) {
                 obj.data('xStart', e.pageX);
                 obj.data('posStart', this.knobPos);
-                if(this.width < 100){
+                if (this.width < 100) {
                     this.onresize();
                 }
             }
         },
-        endEvent: function(e,obj){
-            if(this.knobSlideAction){
+        endEvent: function (e, obj) {
+            if (this.knobSlideAction) {
                 this.knobSlideAction = false;
             }
         },
-        dragEvent: function(e,obj){
-            if(this.knobSlideAction){
+        dragEvent: function (e, obj) {
+            if (this.knobSlideAction) {
                 var xDelta = e.pageX - obj.data('xStart');
-                var posDelta = Math.round((xDelta / this.width)*10000)/100;
+                var posDelta = Math.round((xDelta / this.width) * 10000) / 100;
                 this.knobPos = obj.data('posStart') + posDelta;
-                if(this.knobPos < 0) this.knobPos = 0;
-                if(this.knobPos > (100 - this.knobWidth)) this.knobPos = (100 - this.knobWidth);
-                this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
-                this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
+                if (this.knobPos < 0) this.knobPos = 0;
+                if (this.knobPos > (100 - this.knobWidth)) this.knobPos = (100 - this.knobWidth);
+                this.jObj.find('.knobVoyanga').css('left', this.knobPos + '%');
+                this.jObj.find('.knobUpAllMonth').css('left', this.getKnobUpLeft());
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
-                var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
+                var scrollTop = Math.round(scrollHeight * (this.knobPos / 100));
                 this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
                 this.knobMove();
             }
         },
-        mouseDown: function(e){
+        mouseDown: function (e) {
             var xLeft = Math.round(this.jObj.find('.knobVoyanga').offset().left);
             var xRight = xLeft + Math.round(this.jObj.find('.knobVoyanga').width());
-            if((e.pageX >= xLeft) && (e.pageX <= xRight)){
+            if ((e.pageX >= xLeft) && (e.pageX <= xRight)) {
                 this.knobSlideAction = true;
-                if(this.animateScrollAction){
+                if (this.animateScrollAction) {
                     this.jObj.find('.knobVoyanga').stop(true);
                     this.animateScrollAction = false;
                 }
             }
         },
-        mouseUp: function(e){
+        mouseUp: function (e) {
             this.knobSlideAction = false;
         },
-        mousewheelEvent: function(e){
+        mousewheelEvent: function (e) {
             //console.log(e);
             var rolled = 0;
             var event = e.originalEvent;
@@ -27478,9 +27502,9 @@ VoyangaCalendarSlider = function(options){
                 // The measurement units of the detail and wheelDelta properties are different.
                 rolled = -40 * event.detail;
             }
-            var direction = (rolled > 0)? 1 : -1;
-            if(Math.abs(rolled) > 60){
-                rolled = 60* direction;
+            var direction = (rolled > 0) ? 1 : -1;
+            if (Math.abs(rolled) > 60) {
+                rolled = 60 * direction;
             }
 
             //var scrollHeight = TimelineCalendar.jObj.find('.calendarGrid').prop('scrollHeight');
@@ -27490,37 +27514,37 @@ VoyangaCalendarSlider = function(options){
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
             return false;
         },
-        animateStep: function(now, fx){
+        animateStep: function (now, fx) {
             var data = fx.elem.id + ' ' + fx.prop + ': ' + now;
-            if(fx.unit == 'px'){
-                var posLeft = Math.round((now / this.width)*10000)/100;
-            }else{
+            if (fx.unit == 'px') {
+                var posLeft = Math.round((now / this.width) * 10000) / 100;
+            } else {
                 var posLeft = now;
             }
             this.knobPos = posLeft;
-            this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
+            this.jObj.find('.knobUpAllMonth').css('left', this.getKnobUpLeft());
             var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
-            var scrollTop = Math.round(scrollHeight*(this.knobPos / 100));
+            var scrollTop = Math.round(scrollHeight * (this.knobPos / 100));
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
             this.knobMove();
         },
-        getKnobUpLeft: function(){
+        getKnobUpLeft: function () {
             return this.knobPos + '%'
         },
-        getPercent: function (pos){
-            if(pos.indexOf('px') != -1){
-                if(this.width < 100){
+        getPercent: function (pos) {
+            if (pos.indexOf('px') != -1) {
+                if (this.width < 100) {
                     this.onresize();
                 }
-                pos = pos.substr(0, pos.length -2);
-                pos = Math.round((pos / this.width)*10000)/100;
-            }else if(pos.indexOf('%') != -1){
-                pos = pos.substr(0, pos.length -1);
-                pos = Math.round((pos)*100)/100;
+                pos = pos.substr(0, pos.length - 2);
+                pos = Math.round((pos / this.width) * 10000) / 100;
+            } else if (pos.indexOf('%') != -1) {
+                pos = pos.substr(0, pos.length - 1);
+                pos = Math.round((pos) * 100) / 100;
             }
             return pos;
         },
-        knobMove: function(){
+        knobMove: function () {
             //var xLeft = Math.round(this.jObj.find('.knobVoyanga').offset().left);
             //var xRight = xLeft + Math.round(this.jObj.find('.knobVoyanga').width());
             var pWidth = this.knobWidth;
@@ -27529,28 +27553,27 @@ VoyangaCalendarSlider = function(options){
             //console.log(pLeft);
             var pRight = pLeft + pWidth;
             var self = this;
-            this.jObj.find('.monthNameVoyanga').each(function(){
+            this.jObj.find('.monthNameVoyanga').each(function () {
                 var pMonthLeft = self.getPercent($(this).css('left'));
                 var pMonthWidth = self.getPercent($(this).css('width'));
-                if( ( (pRight - pMonthLeft) > (pMonthWidth * 0.6) ) && ( (pMonthLeft + pMonthWidth - pLeft) > (pMonthWidth * 0.6) )){
+                if (( (pRight - pMonthLeft) > (pMonthWidth * 0.6) ) && ( (pMonthLeft + pMonthWidth - pLeft) > (pMonthWidth * 0.6) )) {
                     $(this).addClass('highlited');
                     //console.log((pRight - pMonthLeft));
 
-                }else{
+                } else {
                     $(this).removeClass('highlited');
                 }
             });
         },
-        monthMouseUp: function(obj,e){
-            if(!this.knobSlideAction)
-            {
+        monthMouseUp: function (obj, e) {
+            if (!this.knobSlideAction) {
                 this.animateScrollAction = true;
                 this.jObj.find('.knobVoyanga').stop(true);
                 var newPos = $(obj).parent().css('left');
-                newPos = this.getPercent(newPos)+'%';
+                newPos = this.getPercent(newPos) + '%';
                 //var newPos = $(this).css('left');
                 var self = this;
-                if(this.width < 100){
+                if (this.width < 100) {
                     this.onresize();
                 }
                 this.jObj.find('.knobVoyanga').animate({
@@ -27558,260 +27581,276 @@ VoyangaCalendarSlider = function(options){
                     },
                     {
                         duration: 800,
-                        step: function(now,fx){self.animateStep(now,fx);},
+                        step: function (now, fx) {
+                            self.animateStep(now, fx);
+                        },
                         easing: 'easeOutCubic',
-                        complete: function(){self.animateScrollAction = false;}
+                        complete: function () {
+                            self.animateScrollAction = false;
+                        }
                     });
             }
         },
-        scrollEvent: function(e){
-            if(!this.animateScrollAction){
+        scrollEvent: function (e) {
+            if (!this.animateScrollAction) {
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
-                this.knobPos = Math.round((this.jObj.find('.calendarGridVoyanga').scrollTop() / scrollHeight)*1000)/10;
-                this.jObj.find('.knobVoyanga').css('left',this.knobPos + '%');
-                this.jObj.find('.knobUpAllMonth').css('left',this.getKnobUpLeft());
+                this.knobPos = Math.round((this.jObj.find('.calendarGridVoyanga').scrollTop() / scrollHeight) * 1000) / 10;
+                this.jObj.find('.knobVoyanga').css('left', this.knobPos + '%');
+                this.jObj.find('.knobUpAllMonth').css('left', this.getKnobUpLeft());
                 this.knobMove();
             }
         },
 
-        init: function(){}
+        init: function () {
+        }
     };
-    options = $.extend({},defaults,options);
-    for(key in options){
+    options = $.extend({}, defaults, options);
+    for (key in options) {
         this[key] = options[key];
     }
 }
-VoyangaCalendarClass = function(options){
+VoyangaCalendarClass = function (options) {
     var defaults = {
         jObj: null,
-        weekDays: new Array('Пн','Вт','Ср','Чт','Пт','Сб','Вс'),
-        monthNames: new Array('Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'),
+        weekDays: new Array('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'),
+        monthNames: new Array('Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'),
         dayCellWidth: 180,
-        getDay: function (dateObj){
+        getDay: function (dateObj) {
             var dayNum = dateObj.getDay();
-            if(dayNum == 0){
+            if (dayNum == 0) {
                 dayNum = 6;
             }
-            else{
+            else {
                 dayNum = dayNum - 1;
             }
             return dayNum;
         }
     };
-    options = $.extend({},defaults,options);
-    for(key in options){
+    options = $.extend({}, defaults, options);
+    for (key in options) {
         this[key] = options[key];
     }
 }
 /**/
-VoyangaCalendarStandart = new VoyangaCalendarClass({values:new Array()});
+VoyangaCalendarStandart = new VoyangaCalendarClass({values: new Array()});
 VoyangaCalendarStandart.initialized = false;
 
 VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
-    init: function(){
+    init: function () {
         //console.log(this.monthArray);
         var self = this;
-        for(var i in this.monthArray){
+        for (var i in this.monthArray) {
             var leftPercent = this.monthArray[i].line / (this.totalLines - this.linesWidth);
-            leftPercent =  Math.round((1 - (this.linesWidth / this.totalLines) )*leftPercent*1000 )/10;
-            if(i < (this.monthArray.length - 1) ){
-                var k=parseInt(i)+1;
+            leftPercent = Math.round((1 - (this.linesWidth / this.totalLines) ) * leftPercent * 1000) / 10;
+            if (i < (this.monthArray.length - 1)) {
+                var k = parseInt(i) + 1;
 
                 var widthPercent = (this.monthArray[k].line - this.monthArray[i].line) / this.totalLines;
                 //var widthPercent = 4/(VoyangaCalendar.slider.totalLines);
-            }else{
+            } else {
                 var widthPercent = (this.totalLines - this.monthArray[i].line) / this.totalLines;
             }
-            widthPercent = Math.round(widthPercent*1000)/10;
+            widthPercent = Math.round(widthPercent * 1000) / 10;
 
-            var newHtml = '<div class="monthNameVoyanga" style="left: '+leftPercent+'%; width: '+widthPercent+'%"><div class="monthWrapper">'+this.monthArray[i].name+'</div></div>';
+            var newHtml = '<div class="monthNameVoyanga" style="left: ' + leftPercent + '%; width: ' + widthPercent + '%"><div class="monthWrapper">' + this.monthArray[i].name + '</div></div>';
             this.jObj.find('.monthLineVoyanga').append(newHtml);
         }
-        this.knobWidth = Math.round((this.linesWidth / this.totalLines)*10000)/100;
-        this.jObj.find('.knobVoyanga').css('width',this.knobWidth + '%');
-        this.jObj.find('.knobUpAllMonth').css('width',this.knobWidth + '%');
+        this.knobWidth = Math.round((this.linesWidth / this.totalLines) * 10000) / 100;
+        this.jObj.find('.knobVoyanga').css('width', this.knobWidth + '%');
+        this.jObj.find('.knobUpAllMonth').css('width', this.knobWidth + '%');
         //VoyangaCalendar.slider.width = VoyangaCalendar.jObj.find('.monthLineVoyanga').width();
-        $(window).on('resize',function(){self.onresize();});
-        $(window).load(function(){self.onresize();self.knobMove();});
+        $(window).on('resize', function () {
+            self.onresize();
+        });
+        $(window).load(function () {
+            self.onresize();
+            self.knobMove();
+        });
 
-        this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);return false});
+        this.jObj.find('.calendarGridVoyanga').on('scroll', function (e) {
+            self.scrollEvent(e);
+            return false
+        });
         //console.log('set wheel actions');
-        this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);
-            if(e.preventDefault)
+        this.jObj.find('.calendarGridVoyanga').on('mousewheel', function (e) {
+            self.mousewheelEvent(e);
+            if (e.preventDefault)
                 e.preventDefault();
             e.returnValue = false;
         });
-        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll',function (e){self.mousewheelEvent(e);
-            if(e.preventDefault)
+        this.jObj.find('.calendarGridVoyanga').on('DOMMouseScroll', function (e) {
+            self.mousewheelEvent(e);
+            if (e.preventDefault)
                 e.preventDefault();
             e.returnValue = false;
         });
         //console.log(this);
-        this.jObj.find('.monthLineVoyanga').mousedown(function(e){self.mouseDown(e);});
-        this.jObj.find('.monthLineVoyanga').mouseup(function(e){self.mouseUp(e);});
-        //VoyangaCalendar.jObj.find('.monthLineVoyanga .monthNameVoyanga').mouseup(VoyangaCalendar.slider.monthMouseUp);
-        this.jObj.find('.monthLineVoyanga .monthNameVoyanga .monthWrapper').mouseup(function(e){var obj = this;self.monthMouseUp(obj,e);});
-        this.jObj.find('.monthLineVoyanga').MouseDraggable({
-            startEvent: function (e,obj){self.startEvent(e,obj);},
-            endEvent: function (e,obj){self.endEvent(e,obj);},
-            dragEvent: function (e,obj){self.dragEvent(e,obj);}
+        this.jObj.find('.monthLineVoyanga').mousedown(function (e) {
+            self.mouseDown(e);
         });
-        if(this.minimalLine){
+        this.jObj.find('.monthLineVoyanga').mouseup(function (e) {
+            self.mouseUp(e);
+        });
+        //VoyangaCalendar.jObj.find('.monthLineVoyanga .monthNameVoyanga').mouseup(VoyangaCalendar.slider.monthMouseUp);
+        this.jObj.find('.monthLineVoyanga .monthNameVoyanga .monthWrapper').mouseup(function (e) {
+            var obj = this;
+            self.monthMouseUp(obj, e);
+        });
+        this.jObj.find('.monthLineVoyanga').MouseDraggable({
+            startEvent: function (e, obj) {
+                self.startEvent(e, obj);
+            },
+            endEvent: function (e, obj) {
+                self.endEvent(e, obj);
+            },
+            dragEvent: function (e, obj) {
+                self.dragEvent(e, obj);
+            }
+        });
+        if (this.minimalLine) {
             var scrollTop = (this.minimalLine / this.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
         }
     }
 });
 
-VoyangaCalendarStandart.onCellOver = function(obj,e){
+VoyangaCalendarStandart.onCellOver = function (obj, e) {
     var jCell = $(obj);
-    if(!jCell.hasClass('inactive')){
+    if (!jCell.hasClass('inactive')) {
         var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if(this.values.length == 1){
-            if(cellDate < this.values[0]){
+        if (this.values.length == 1) {
+            if (cellDate < this.values[0]) {
                 jCell.addClass('from');
-            }else{
-                if(this.twoSelect){
+            } else {
+                if (this.twoSelect) {
                     jCell.addClass('to');
-                }else{
+                } else {
                     jCell.addClass('from');
                 }
             }
 
-        }else{
+        } else {
             jCell.addClass('from');
         }
-        if(cellDate.getDate() == 1){
+        if (cellDate.getDate() == 1) {
             jCell.addClass('startMonth');
         }
     }
 }
-VoyangaCalendarStandart.onCellOut = function(obj,e){
+VoyangaCalendarStandart.onCellOut = function (obj, e) {
     var jCell = $(obj);
-    if(!jCell.hasClass('inactive')){
+    if (!jCell.hasClass('inactive')) {
         var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if(this.values.length == 1){
-            if(cellDate < this.values[0]){
+        if (this.values.length == 1) {
+            if (cellDate < this.values[0]) {
                 jCell.removeClass('from');
-            }else{
-                if(this.twoSelect){
+            } else {
+                if (this.twoSelect) {
                     jCell.removeClass('to');
-                }else{
+                } else {
                     jCell.removeClass('from');
                 }
             }
 
-        }else{
+        } else {
             jCell.removeClass('from');
         }
-        if(cellDate.getDate() == 1){
+        if (cellDate.getDate() == 1) {
             jCell.removeClass('startMonth');
         }
-        if(this.values.length > 0){
-            if(this.values[0].valueOf() == cellDate.valueOf()){
+        if (this.values.length > 0) {
+            if (this.values[0].valueOf() == cellDate.valueOf()) {
                 jCell.addClass('selectData from');
-                if(cellDate.getDate() == 1){
+                if (cellDate.getDate() == 1) {
                     jCell.addClass('startMonth');
                 }
             }
         }
-        if(this.values.length > 1){
-            if(this.values[1].valueOf() == cellDate.valueOf()){
+        if (this.values.length > 1) {
+            if (this.values[1].valueOf() == cellDate.valueOf()) {
                 jCell.addClass('selectData to');
-                if(cellDate.getDate() == 1){
+                if (cellDate.getDate() == 1) {
                     jCell.addClass('startMonth');
                 }
             }
         }
     }
 }
-VoyangaCalendarStandart.getCellByDate = function(oDate){
-    if(oDate){
-        var dateLabel = oDate.getFullYear()+'-'+(oDate.getMonth()+1)+'-'+oDate.getDate();
-        return $('#dayCell-'+dateLabel);
-    }else{
-        console.log('bad date value:',oDate);
+VoyangaCalendarStandart.getCellByDate = function (oDate) {
+    if (oDate) {
+        var dateLabel = oDate.getFullYear() + '-' + (oDate.getMonth() + 1) + '-' + oDate.getDate();
+        return $('#dayCell-' + dateLabel);
+    } else {
+        console.log('bad date value:', oDate);
         return false;
     }
 
 }
 
-VoyangaCalendarStandart.update = function(dontset){
+VoyangaCalendarStandart.update = function (dontset) {
     // FIXME SUPER SLOW
     $('.dayCellVoyanga').removeClass('selectData from to selectDay');
 
-/*
-                if(cellDate.getDate() == 1){
-                    jCell.addClass('startMonth');
-                }
-        if(cellDate.getDate() == 1){
-            jCell.addClass('startMonth');
-        }
-*/
-
-    if(this.values.length) {
+    if (this.values.length) {
         var jCell = this.getCellByDate(this.values[0]);
         jCell.addClass('selectData from');
 
-        if(this.values.length > 1) {
+        if (this.values.length > 1) {
             jCell = this.getCellByDate(this.values[1]);
             jCell.addClass('selectData to');
             var tmpDate = new Date(this.values[0].toDateString());
-                tmpDate.setDate(tmpDate.getDate()+1);
-                while(tmpDate < this.values[1]){
-                    this.getCellByDate(tmpDate).addClass('selectDay');
-                    tmpDate.setDate(tmpDate.getDate()+1);
-                }
+            tmpDate.setDate(tmpDate.getDate() + 1);
+            while (tmpDate < this.values[1]) {
+                this.getCellByDate(tmpDate).addClass('selectDay');
+                tmpDate.setDate(tmpDate.getDate() + 1);
+            }
         }
-        if(!dontset)
+        if (!dontset)
             this.panel().setDate(this.values);
     }
 }
 
-VoyangaCalendarStandart.onCellClick = function(obj){
+VoyangaCalendarStandart.onCellClick = function (obj) {
     var jCell = $(obj);
-    if(jCell.hasClass('inactive'))
+    if (jCell.hasClass('inactive'))
         return;
     var cellDate = Date.fromIso(jCell.data('cell-date'));
     var dontset = true;
 
-
-    if(this.twoSelect){
-        if(this.values.length == 2){
+    if (this.twoSelect) {
+        if (this.values.length == 2) {
             this.values = new Array();
-        }else if(this.values.length == 1){
-            if(cellDate < this.values[0]){
+        } else if (this.values.length == 1) {
+            if (cellDate < this.values[0]) {
                 this.values = new Array();
-            }else{
-		dontset = false;
+            } else {
+                dontset = false;
                 this.values.push(cellDate);
             }
         }
-    }else{
-        if(this.values.length != 0){
+    } else {
+        if (this.values.length != 0) {
             this.values = new Array();
         } else {
-	    dontset = false;
-	}
+            dontset = false;
+        }
     }
 
-    if(this.values.length == 0){
+    if (this.values.length == 0) {
         this.values.push(cellDate);
+        dontset = false;
     }
     VoyangaCalendarStandart.update(dontset);
 }
 
-VoyangaCalendarStandart.generateGrid = function(){
+VoyangaCalendarStandart.generateGrid = function () {
     var firstDay = new Date();
     var dayToday = new Date();
-    dayToday.setMinutes(0,0,0);
+    dayToday.setMinutes(0, 0, 0);
     dayToday.setHours(0);
     var self = this;
     var startMonth = firstDay.getMonth();
-    //var firstDayOfMonth = new Date();
-    //firstDayOfMonth.setFullYear(firstDay.getFullYear(), startMonth, 1);
-    //var tmpDate = getMonday(firstDayOfMonth);
-    var tmpDate =  moment(moment(firstDay))._d;//clone Date object
+    var tmpDate = moment(moment(firstDay))._d;//clone Date object
     tmpDate.setDate(1);
     tmpDate.setDate(tmpDate.getDate() - this.getDay(tmpDate));//set Monday
     var weekDay = this.getDay(tmpDate);
@@ -27820,70 +27859,75 @@ VoyangaCalendarStandart.generateGrid = function(){
     var needStop = false;
     var lineNumber = 0;
     this.slider.monthArray = new Array();
-    while(!needStop)
-    {
-        var newHtml = '<div class="calendarLineVoyanga" id="weekNum-'+lineNumber+'" data-weeknum="'+lineNumber+'">';
-        for(var i=0;i<7;i++){
-            var label = '<div class="dayLabel'+((i>=5 && i<7) ? ' weekEnd' : '')+'">'+tmpDate.getDate()+'</div>';
+    while (!needStop) {
+        var newHtml = '<div class="calendarLineVoyanga" id="weekNum-' + lineNumber + '" data-weeknum="' + lineNumber + '">';
+        for (var i = 0; i < 7; i++) {
+            var label = '<div class="dayLabel' + ((i >= 5 && i < 7) ? ' weekEnd' : '') + '">' + tmpDate.getDate() + '</div>';
 
-            if(tmpDate.getDate() == 1){
-                label = label + ' <div class="monthLabel">' + this.monthNames[tmpDate.getMonth()] +'</div>';
+            if (tmpDate.getDate() == 1) {
+                label = label + ' <div class="monthLabel">' + this.monthNames[tmpDate.getMonth()] + '</div>';
                 var monthObject = new Object();
                 monthObject.line = lineNumber;
                 monthObject.name = this.monthNames[tmpDate.getMonth()];
                 this.slider.monthArray.push(monthObject);
             }
-            var dateLabel = tmpDate.getFullYear()+'-'+(tmpDate.getMonth()+1)+'-'+tmpDate.getDate();
-            var dateLabelApi = tmpDate.getDate()+'.'+(tmpDate.getMonth()+1)+'.'+tmpDate.getFullYear();
-            newHtml = newHtml + '<div class="dayCellVoyanga' + ((tmpDate < dayToday) ? ' inactive' : '')+'" id="dayCell-'+dateLabel+'" data-cell-date="'+dateLabel+'" data-cell-date-api="'+dateLabelApi+'"><div class="innerDayCellVoyanga">'+label+'</div></div>';
-            tmpDate.setDate(tmpDate.getDate()+1);
+            var dateLabel = tmpDate.getFullYear() + '-' + (tmpDate.getMonth() + 1) + '-' + tmpDate.getDate();
+            var dateLabelApi = tmpDate.getDate() + '.' + (tmpDate.getMonth() + 1) + '.' + tmpDate.getFullYear();
+            newHtml = newHtml + '<div class="dayCellVoyanga' + ((tmpDate < dayToday) ? ' inactive' : '') + '" id="dayCell-' + dateLabel + '" data-cell-date="' + dateLabel + '" data-cell-date-api="' + dateLabelApi + '"><div class="innerDayCellVoyanga">' + label + '</div></div>';
+            tmpDate.setDate(tmpDate.getDate() + 1);
         }
         newHtml = newHtml + '</div>';
         this.jObj.find('.calendarDIVVoyanga').append(newHtml);
-        if(tmpDate.getFullYear() > startYear){
-            if(tmpDate.getMonth() >= startMonth ){
+        if (tmpDate.getFullYear() > startYear) {
+            if (tmpDate.getMonth() >= startMonth) {
                 needStop = true;
             }
         }
-        //if(lineNumber > 4){
-        //needStop = true;
-        //}
         lineNumber++;
     }
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
-    if((lineNumber -lastLineMonth) < 2){
+    if ((lineNumber - lastLineMonth) < 2) {
         this.slider.monthArray.pop();
     }
-    this.jObj.find('.dayCellVoyanga').hover(function (e) {var obj = this; self.onCellOver(obj,e);},function (e) {var obj = this; self.onCellOut(obj,e);});
-    this.jObj.find('.dayCellVoyanga').click(function (e) {var obj = this; self.onCellClick(obj,e);});
+    this.jObj.find('.dayCellVoyanga').hover(function (e) {
+        var obj = this;
+        self.onCellOver(obj, e);
+    }, function (e) {
+        var obj = this;
+        self.onCellOut(obj, e);
+    });
+    this.jObj.find('.dayCellVoyanga').click(function (e) {
+        var obj = this;
+        self.onCellClick(obj, e);
+    });
 
 
     this.slider.totalLines = lineNumber;
 }
 
-VoyangaCalendarStandart.clear = function(){
+VoyangaCalendarStandart.clear = function () {
     VoyangaCalendarStandart.values = [];
     VoyangaCalendarStandart.update(true);
 }
 
-VoyangaCalendarStandart.minimalDateUpdated = function(){
-    var dateLabel = this.minimalDate.getFullYear()+'-'+(this.minimalDate.getMonth()+1)+'-'+this.minimalDate.getDate();
-    this.slider.minimalLine = $('#dayCell-'+dateLabel).parent().data('weeknum');
+VoyangaCalendarStandart.minimalDateUpdated = function () {
+    var dateLabel = this.minimalDate.getFullYear() + '-' + (this.minimalDate.getMonth() + 1) + '-' + this.minimalDate.getDate();
+    this.slider.minimalLine = $('#dayCell-' + dateLabel).parent().data('weeknum');
 
     dayCell = this.jObj.find('#weekNum-0 .dayCellVoyanga:eq(0)');
-    if(dayCell.length){
+    if (dayCell.length) {
         var dd = Date.fromIso(dayCell.data('cell-date'));
         var stop = false;
         var lineNumber = 0;
-        while(!stop){
-            for(var i = 0;i < 7;i++){
-                dateLabel = dd.getFullYear()+'-'+(dd.getMonth()+1)+'-'+dd.getDate();
-                if(dd < this.minimalDate){
-                    $('#dayCell-'+ dateLabel).addClass('inactive');
-                }else{
-                    if($('#dayCell-'+ dateLabel).hasClass('inactive')){
-                        $('#dayCell-'+ dateLabel).removeClass('inactive');
-                    }else{
+        while (!stop) {
+            for (var i = 0; i < 7; i++) {
+                dateLabel = dd.getFullYear() + '-' + (dd.getMonth() + 1) + '-' + dd.getDate();
+                if (dd < this.minimalDate) {
+                    $('#dayCell-' + dateLabel).addClass('inactive');
+                } else {
+                    if ($('#dayCell-' + dateLabel).hasClass('inactive')) {
+                        $('#dayCell-' + dateLabel).removeClass('inactive');
+                    } else {
                         stop = true;
                         break;
                     }
@@ -27894,117 +27938,110 @@ VoyangaCalendarStandart.minimalDateUpdated = function(){
     }
 }
 
-VoyangaCalendarStandart.scrollToDate = function(dateVar){
-    var dateLabel = dateVar.getFullYear()+'-'+(dateVar.getMonth()+1)+'-'+dateVar.getDate();
-    var scrollLine = $('#dayCell-'+dateLabel).parent().data('weeknum');
+VoyangaCalendarStandart.scrollToDate = function (dateVar) {
+    var dateLabel = dateVar.getFullYear() + '-' + (dateVar.getMonth() + 1) + '-' + dateVar.getDate();
+    var scrollLine = $('#dayCell-' + dateLabel).parent().data('weeknum');
     var scrollTop = (scrollLine / this.slider.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
     this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
 }
 
-VoyangaCalendarStandart.newValueHandler = function(newCalendarValue) {
-    if(newCalendarValue.hotels)
-	    $('#voyanga-calendar').addClass('hotel');
+VoyangaCalendarStandart.newValueHandler = function (newCalendarValue) {
+    if (newCalendarValue.hotels)
+        $('#voyanga-calendar').addClass('hotel');
     else
-	    $('#voyanga-calendar').removeClass('hotel');
-    if(newCalendarValue.values !== undefined && newCalendarValue.values.length == 0){
+        $('#voyanga-calendar').removeClass('hotel');
+    if (newCalendarValue.values !== undefined && newCalendarValue.values.length == 0) {
         newCalendarValue.values.push(new Date());
         VoyangaCalendarStandart.values = new Array();
         VoyangaCalendarStandart.values.push(new Date())
         newCalendarValue.from = new Date();
     }
     VoyangaCalendarStandart.twoSelect = newCalendarValue.twoSelect;
-    if(!newCalendarValue.twoSelect && VoyangaCalendarStandart.values.length > 1)
-	    VoyangaCalendarStandart.values = VoyangaCalendarStandart.values.slice(0,1);
+    if (!newCalendarValue.twoSelect && VoyangaCalendarStandart.values.length > 1)
+        VoyangaCalendarStandart.values = VoyangaCalendarStandart.values.slice(0, 1);
     VoyangaCalendarStandart.minimalDateChanged = false;
     var needScroll = false;
-    if(newCalendarValue.activeSearchPanel){
-        if(newCalendarValue.activeSearchPanel.prevSearchPanel()){
+    if (newCalendarValue.activeSearchPanel) {
+        if (newCalendarValue.activeSearchPanel.prevSearchPanel()) {
             minDt = newCalendarValue.activeSearchPanel.prevSearchPanel().checkOut();
-            if((!VoyangaCalendarStandart.minimalDate && minDt) || (minDt && VoyangaCalendarStandart.minimalDate.toString() != minDt.toString())){
+            if ((!VoyangaCalendarStandart.minimalDate && minDt) || (minDt && VoyangaCalendarStandart.minimalDate.toString() != minDt.toString())) {
                 VoyangaCalendarStandart.minimalDate = minDt;
                 needScroll = true;
                 VoyangaCalendarStandart.scrollDate = VoyangaCalendarStandart.minimalDate;
                 VoyangaCalendarStandart.minimalDateChanged = true;
             }
-        }else{
+        } else {
             minDt = new Date();
             minDt.setHours(0);
             minDt.setMinutes(0);
             minDt.setSeconds(0);
             minDt.setMilliseconds(0);
-            if((!VoyangaCalendarStandart.minimalDate) || (VoyangaCalendarStandart.minimalDate && VoyangaCalendarStandart.minimalDate.toString() != minDt.toString())){
+            if ((!VoyangaCalendarStandart.minimalDate) || (VoyangaCalendarStandart.minimalDate && VoyangaCalendarStandart.minimalDate.toString() != minDt.toString())) {
                 VoyangaCalendarStandart.minimalDate = minDt;
                 needScroll = true;
                 VoyangaCalendarStandart.scrollDate = VoyangaCalendarStandart.minimalDate;
                 VoyangaCalendarStandart.minimalDateChanged = true;
             }
         }
-        if(VoyangaCalendarStandart.alreadyInited && VoyangaCalendarStandart.minimalDateChanged){
+        if (VoyangaCalendarStandart.alreadyInited && VoyangaCalendarStandart.minimalDateChanged) {
             VoyangaCalendarStandart.minimalDateUpdated();
-        }else if(VoyangaCalendarStandart.alreadyInited){
-            console.log('not inited',VoyangaCalendarStandart.minimalDateChanged);
+        } else if (VoyangaCalendarStandart.alreadyInited) {
+            console.log('not inited', VoyangaCalendarStandart.minimalDateChanged);
         }
-    }else{
+    } else {
         console.log('else????')
     }
-    if((newCalendarValue.from && !VoyangaCalendarStandart.scrollDate) || (newCalendarValue.from && newCalendarValue.from.toString() != VoyangaCalendarStandart.scrollDate.toString()) ){
+    if ((newCalendarValue.from && !VoyangaCalendarStandart.scrollDate) || (newCalendarValue.from && newCalendarValue.from.toString() != VoyangaCalendarStandart.scrollDate.toString())) {
         needScroll = true;
         VoyangaCalendarStandart.scrollDate = newCalendarValue.from;
     }
-    if(needScroll){
+    if (needScroll) {
         VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate);
     }
-    if ((newCalendarValue.twoSelect == true && (!newCalendarValue.from || !newCalendarValue.to) || (newCalendarValue.twoSelect == false && (!newCalendarValue.from) ) ))
-    {
-        if (VoyangaCalendarStandart != undefined)
-            VoyangaCalendarStandart.values = new Array();
-    }
-    else
-    {
-        VoyangaCalendarStandart.values = new Array();
+    VoyangaCalendarStandart.values = new Array();
+    if (newCalendarValue.from)
         VoyangaCalendarStandart.values.push(newCalendarValue.from);
-        if(newCalendarValue.twoSelect)
-            VoyangaCalendarStandart.values.push(newCalendarValue.to);
-    }
+    if ((newCalendarValue.twoSelect) && (newCalendarValue.to))
+        VoyangaCalendarStandart.values.push(newCalendarValue.to);
     VoyangaCalendarStandart.update(true);
 }
 
-VoyangaCalendarStandart.compareCalendarValue = function(oldValue,newValue){
-    if((!oldValue && newValue) || (!newValue && oldValue) ){
+VoyangaCalendarStandart.compareCalendarValue = function (oldValue, newValue) {
+    if ((!oldValue && newValue) || (!newValue && oldValue)) {
         return false;
     }
-    for(var propName in newValue){
-        if(propName == 'from'){
-            if((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[0])){
+    for (var propName in newValue) {
+        if (propName == 'from') {
+            if ((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[0])) {
                 return false;
             }
-        }else if(propName == 'to'){
-            if((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[1])){
+        } else if (propName == 'to') {
+            if ((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[1])) {
                 return false;
             }
-        }else if(oldValue[propName] != newValue[propName]){
+        } else if (oldValue[propName] != newValue[propName]) {
             return false;
         }
     }
     return true;
 }
 
-VoyangaCalendarStandart.init = function (panel, element){
-    this.jObj =  $(element);
+VoyangaCalendarStandart.init = function (panel, element) {
+    this.jObj = $(element);
     VoyangaCalendarStandart.slider.jObj = this.jObj;
     this.alreadyInited = false;
     this.minimalDateChanged = false;
     var self = this;
     this.oldCalendarValue = null;
-    if(!this.panel || (this.panel && panel() != this.panel() ) ){
+    if (!this.panel || (this.panel && panel() != this.panel() )) {
         this.panel = panel;
-        panel.subscribe(function(newPanel) {
-            if(newPanel.template) {
-                if(VoyangaCalendarStandart.subscription)
-                VoyangaCalendarStandart.subscription.dispose();
+        panel.subscribe(function (newPanel) {
+            if (newPanel.template) {
+                if (VoyangaCalendarStandart.subscription)
+                    VoyangaCalendarStandart.subscription.dispose();
                 VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(
-                    function(calendarValue){
-                        if(!VoyangaCalendarStandart.compareCalendarValue(self.oldCalendarValue,calendarValue)){
+                    function (calendarValue) {
+                        if (!VoyangaCalendarStandart.compareCalendarValue(self.oldCalendarValue, calendarValue)) {
                             VoyangaCalendarStandart.clear();
                             self.oldCalendarValue = calendarValue;
                             VoyangaCalendarStandart.newValueHandler(calendarValue);
@@ -28018,20 +28055,20 @@ VoyangaCalendarStandart.init = function (panel, element){
         });
         newPanel = panel();
 
-        if(newPanel.template) {
-            if(VoyangaCalendarStandart.subscription)
+        if (newPanel.template) {
+            if (VoyangaCalendarStandart.subscription)
                 VoyangaCalendarStandart.subscription.dispose();
             VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(VoyangaCalendarStandart.newValueHandler);
             self.oldCalendarValue = newPanel.calendarValue();
             VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
         }
-    }else{
+    } else {
 //        console.log('Else',panel,this.panel,this.panel(),panel());
     }
 
     VoyangaCalendarStandart.generateGrid();
     VoyangaCalendarStandart.slider.init();
-    if(this.minimalDateChanged){
+    if (this.minimalDateChanged) {
         this.minimalDateUpdated();
     }
     this.alreadyInited = true;
@@ -29180,7 +29217,7 @@ Slider = (function() {
 
 })();
 // Generated by CoffeeScript 1.4.0
-var AVIA_TICKET_TIMELIMIT, HOTEL_TICKET_TIMELIMIT, MONTHS, SHORT_MONTHS, SHORT_WEEKDAYS, TOURS_TICKET_TIMELIMIT, Utils, dateUtils, exTrim, isEmail,
+var ACC_MONTHS, AVIA_TICKET_TIMELIMIT, HOTEL_TICKET_TIMELIMIT, MONTHS, SHORT_MONTHS, SHORT_WEEKDAYS, TOURS_TICKET_TIMELIMIT, Utils, dateUtils, exTrim, isEmail,
   _this = this;
 
 AVIA_TICKET_TIMELIMIT = 15 * 60;
@@ -29190,6 +29227,8 @@ HOTEL_TICKET_TIMELIMIT = 15 * 60;
 TOURS_TICKET_TIMELIMIT = 15 * 60;
 
 MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентрября', 'октября', 'ноября', 'декабря'];
+
+ACC_MONTHS = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентрябрь', 'октябрь', 'ноябрь', 'декабрь'];
 
 SHORT_MONTHS = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
 
@@ -29443,6 +29482,21 @@ Utils = {
     form_html += '</form>';
     $('body').append(form_html);
     return $('#buy-form').submit();
+  },
+  formatPrice: function(price) {
+    var i, intPrice, j, ret, strPrice, _i, _ref;
+    intPrice = parseInt(price);
+    strPrice = intPrice.toString();
+    ret = "";
+    j = 0;
+    for (i = _i = _ref = strPrice.length - 1; _ref <= 0 ? _i <= 0 : _i >= 0; i = _ref <= 0 ? ++_i : --_i) {
+      if (j !== 0 && j % 3 === 0) {
+        ret = ' ' + ret;
+      }
+      ret = strPrice[i] + ret;
+      j++;
+    }
+    return ret;
   },
   calculateTheDistance: function(lat1, lng1, lat2, lng2) {
     var $ad, $cdelta, $cl1, $cl2, $delta, $dist, $lat1, $lat2, $long1, $long2, $sdelta, $sl1, $sl2, $x, $y;
@@ -31558,6 +31612,7 @@ AviaPanel = (function(_super) {
     this.arrivalCityReadable = ko.observable('');
     this.arrivalCityReadableGen = ko.observable('');
     this.arrivalCityReadableAcc = ko.observable('');
+    this.prefixText = 'Все направления<br>500+ авиакомпаний';
     this.oldCalendarState = this.minimizedCalendar();
     this.show = this.passengers.show;
     this.fromChosen = ko.computed(function() {
@@ -31590,7 +31645,6 @@ AviaPanel = (function(_super) {
       return _this.departureCity() && _this.arrivalCity();
     });
     this.maximizedCalendar.subscribe(function(newValue) {
-      console.log("@maximizedCalendar", !newValue);
       if (!newValue) {
         return;
       }
@@ -31660,8 +31714,12 @@ AviaPanel = (function(_super) {
   AviaPanel.prototype.setDate = function(values) {
     if (values.length) {
       this.departureDate(values[0]);
-      if (values.length > 1) {
-        return this.rtDate(values[1]);
+      if (this.rt && values.length > 1) {
+        if (values[1] > values[0]) {
+          return this.rtDate(values[1]);
+        } else {
+          return this.rtDate('');
+        }
       }
     }
   };
@@ -31997,7 +32055,9 @@ FlightPart = (function() {
     this._duration = part.duration;
     this.transportAirline = part.transportAirline;
     this.transportAirlineName = part.transportAirlineNameEn;
-    this.flightCode = part.transportAirline + ' ' + part.flightCode;
+    this.markAirline = part.markAirline;
+    this.markAirlineName = part.markAirlineNameEn;
+    this.flightCode = part.markAirline + ' ' + part.flightCode;
     this.stopoverLength = 0;
   }
 
@@ -32332,6 +32392,8 @@ AviaResult = (function() {
 
     this.flightKey = __bind(this.flightKey, this);
 
+    this.rtServiceClass = __bind(this.rtServiceClass, this);
+
     this.rtFlightCodesText = __bind(this.rtFlightCodesText, this);
 
     this.isFlight = true;
@@ -32355,6 +32417,7 @@ AviaResult = (function() {
     this.searchService = data.service;
     this.airlineName = data.valCompanyNameEn;
     this.serviceClass = data.serviceClass;
+    this.serviceClassReadable = data.serviceClass === 'E' ? 'Эконом' : 'Бизнес';
     this.refundable = data.refundable;
     this.refundableText = this.refundable ? "Билет возвратный" : "Билет не возвратный";
     this.freeWeight = data.freeWeight;
@@ -32408,6 +32471,10 @@ AviaResult = (function() {
     } else {
       return "Рейс";
     }
+  };
+
+  AviaResult.prototype.rtServiceClass = function() {
+    return this.activeVoyage().serviceClass;
   };
 
   AviaResult.prototype.flightKey = function() {
@@ -32633,7 +32700,7 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.showDetails = function(data, event) {
-    new GenericPopup('#avia-body-popup', this);
+    this.parent._popup = new GenericPopup('#avia-body-popup', this);
     ko.processAllDeferredBindingUpdates();
     SizeBox('avia-body-popup');
     return ResizeBox('avia-body-popup');
@@ -32723,6 +32790,8 @@ AviaResultSet = (function() {
 
     this.findAndSelect = __bind(this.findAndSelect, this);
 
+    this.onAfterSelect = __bind(this.onAfterSelect, this);
+
     this.select = __bind(this.select, this);
 
     this.injectSearchParams = __bind(this.injectSearchParams, this);
@@ -32810,7 +32879,6 @@ AviaResultSet = (function() {
 
   AviaResultSet.prototype.select = function(ctx) {
     var selection, ticketValidCheck;
-    console.log(ctx);
     if (ctx.ribbon) {
       selection = ctx.data;
     } else {
@@ -32827,6 +32895,12 @@ AviaResultSet = (function() {
       return Utils.toBuySubmit([result]);
     });
     return this.checkTicket(selection, ticketValidCheck);
+  };
+
+  AviaResultSet.prototype.onAfterSelect = function() {
+    if (this._popup) {
+      return this._popup.close();
+    }
   };
 
   AviaResultSet.prototype.findAndSelect = function(result) {
@@ -33929,7 +34003,11 @@ TourPanelSet = (function() {
       this.activeCalendarPanel().checkIn(values[0]);
       maxDate = this.activeCalendarPanel().checkIn();
       if (values.length > 1) {
-        this.activeCalendarPanel().checkOut(values[1]);
+        if (values[0] < values[1]) {
+          this.activeCalendarPanel().checkOut(values[1]);
+        } else {
+          this.activeCalendarPanel().checkOut('');
+        }
         if (maxDate < this.activeCalendarPanel().checkOut()) {
           maxDate = this.activeCalendarPanel().checkOut();
         }
@@ -34169,6 +34247,7 @@ TourEntry = (function() {
 
     this.isAvia = __bind(this.isAvia, this);
     _.extend(this, Backbone.Events);
+    this.savingsWithAviaOnly = false;
   }
 
   TourEntry.prototype.isAvia = function() {
@@ -34205,7 +34284,7 @@ TourEntry = (function() {
     if (this.selection() === null) {
       return 0;
     }
-    return 555;
+    return 0;
   };
 
   TourEntry.prototype.rt = function() {
@@ -34518,6 +34597,8 @@ ToursHotelsResultSet = (function(_super) {
   __extends(ToursHotelsResultSet, _super);
 
   function ToursHotelsResultSet(raw, sp) {
+    this.savings = __bind(this.savings, this);
+
     this.afterRender = __bind(this.afterRender, this);
 
     this.beforeRender = __bind(this.beforeRender, this);
@@ -34577,6 +34658,7 @@ ToursHotelsResultSet = (function(_super) {
     this.data = {
       results: this.results
     };
+    this.savingsWithAviaOnly = true;
     this.newResults(raw, sp);
   }
 
@@ -34822,6 +34904,13 @@ ToursHotelsResultSet = (function(_super) {
     }
   };
 
+  ToursHotelsResultSet.prototype.savings = function() {
+    if (this.selection() === null) {
+      return 0;
+    }
+    return this.selection().roomSet.price - this.selection().roomSet.discountPrice;
+  };
+
   return ToursHotelsResultSet;
 
 })(TourEntry);
@@ -34915,12 +35004,26 @@ ToursResultSet = (function() {
       return sum;
     });
     this.savings = ko.computed(function() {
-      var item, sum, _j, _len1, _ref1;
-      sum = 0;
+      var has_avia, item, sum, _j, _k, _len1, _len2, _ref1, _ref2;
+      has_avia = false;
       _ref1 = _this.data();
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         item = _ref1[_j];
-        sum += item.savings();
+        if (item.selection() && item.isAvia()) {
+          has_avia = true;
+        }
+      }
+      sum = 0;
+      _ref2 = _this.data();
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        item = _ref2[_k];
+        if (item.savingsWithAviaOnly) {
+          if (has_avia) {
+            sum += item.savings();
+          }
+        } else {
+          sum += item.savings();
+        }
       }
       return sum;
     });
@@ -35734,6 +35837,7 @@ ToursController = (function() {
         }
       }
       if (stacked.findAndSelectItems(items)) {
+        stacked.showOverview();
         console.log('ssseeellleecctt', items, true);
         postData = [];
         _ref1 = stacked.data();
@@ -35890,6 +35994,7 @@ HotelsPanel = (function(_super) {
         return ret += " в городе " + _this.cityReadable();
       }
     });
+    this.prefixText = "Выберите город<br>200 000+ отелей";
     this.formFilled = ko.computed(function() {
       var cin, cout, result;
       if (_this.checkIn().getDay) {
@@ -35965,7 +36070,11 @@ HotelsPanel = (function(_super) {
     if (values.length) {
       this.checkIn(values[0]);
       if (values.length > 1) {
-        return this.checkOut(values[1]);
+        if (values[0] < values[1]) {
+          return this.checkOut(values[1]);
+        } else {
+          return this.checkOut('');
+        }
       }
     }
   };
@@ -37952,10 +38061,11 @@ ko.bindingHandlers.highlightChange = {
     allBindings = allBindingsAccessor();
     valueUnwrapped = ko.utils.unwrapObservable(value);
     previousImage = allBindings.previousImage;
-    newEl = $('<div class="IMGmain"><img src=""></div>');
+    newEl = $('<div class="IMGmain" style="visible:hidden"><img src=""></div>');
     newEl.appendTo(".centerTours");
     $(".IMGmain").eq(0).find('img').attr("src", previousImage());
-    indexIMGresizeCenter(0);
+    CenterIMGResize(0);
+    $(".IMGmain").eq(0).show();
     varLeftPos = $(".IMGmain").eq(1).css("left");
     varTopPos = $(".IMGmain").eq(1).css("top");
     varLeftPos = parseInt(varLeftPos.slice(0, -2));
@@ -37965,9 +38075,8 @@ ko.bindingHandlers.highlightChange = {
     $(".IMGmain").eq(1).css("opacity", "0").css("left", varLeftPosStart + "px").css("top", varTopPosStart + "px").find("img").attr("src", valueUnwrapped);
     previousImage(valueUnwrapped);
     slideToursSlide();
-    ResizeAvia();
     return $(".IMGmain").eq(1).find("img").load(function() {
-      indexIMGresizeCenter(1);
+      CenterIMGResize(1);
       $(".IMGmain").eq(0).animate({
         opacity: 0
       }, speedAnimateChangePic, function() {
@@ -38748,6 +38857,8 @@ Application = (function(_super) {
 
     this.reRenderCalendarEvent = __bind(this.reRenderCalendarEvent, this);
 
+    this.reRenderCalendarStatic = __bind(this.reRenderCalendarStatic, this);
+
     this.reRenderCalendar = __bind(this.reRenderCalendar, this);
 
     this.minimizeCalendar = __bind(this.minimizeCalendar, this);
@@ -38835,6 +38946,20 @@ Application = (function(_super) {
 
   Application.prototype.reRenderCalendar = function(elements) {
     var _this = this;
+    VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
+    this.fakoPanel.subscribe(function(newPanel) {
+      if (newPanel.panels) {
+        return _this.activeSearchPanel(_.last(newPanel.panels()));
+      }
+    });
+    if (this.fakoPanel().panels) {
+      return this.activeSearchPanel(_.last(this.fakoPanel().panels()));
+    }
+  };
+
+  Application.prototype.reRenderCalendarStatic = function(elements) {
+    var _this = this;
+    $('.calenderWindow').css('position', 'static').find('.calendarSlide').css('position', 'static');
     VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
     this.fakoPanel.subscribe(function(newPanel) {
       if (newPanel.panels) {
