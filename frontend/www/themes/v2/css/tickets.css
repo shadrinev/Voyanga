@@ -1077,29 +1077,31 @@
     vertical-align: bottom;
 }
 .hotels-tickets .content .details ul li .items.specialOffer {
-    border: 2px solid #ffbf0c;
-    background: #fffff2;
-    background: -moz-linear-gradient(top,  #fffff2 0%, #fff6d1 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fffff2), color-stop(100%,#fff6d1));
-    background: -webkit-linear-gradient(top,  #fffff2 0%,#fff6d1 100%);
-    background: -o-linear-gradient(top,  #fffff2 0%,#fff6d1 100%);
-    background: -ms-linear-gradient(top,  #fffff2 0%,#fff6d1 100%);
-    background: linear-gradient(to bottom,  #fffff2 0%,#fff6d1 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fffff2', endColorstr='#fff6d1',GradientType=0 );
+    border: 0px solid #ffbf0c;
+    background: rgb(255,255,252);
+    background: -moz-linear-gradient(top,  rgba(255,255,252,1) 0%, rgba(255,251,239,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,252,1)), color-stop(100%,rgba(255,251,239,1)));
+    background: -webkit-linear-gradient(top,  rgba(255,255,252,1) 0%,rgba(255,251,239,1) 100%);
+    background: -o-linear-gradient(top,  rgba(255,255,252,1) 0%,rgba(255,251,239,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(255,255,252,1) 0%,rgba(255,251,239,1) 100%);
+    background: linear-gradient(to bottom,  rgba(255,255,252,1) 0%,rgba(255,251,239,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fffffc', endColorstr='#fffbef',GradientType=0 );
+
 
 }
 .hotels-tickets .content .details ul li .items.specialOffer .how-cost {
-    color: #e60c0c;
+    color: #B90C0C;
 }
 .hotels-tickets .content .details ul li .items.specialOffer .how-cost .cost {
-    color: #e60c0c !important;
+    color: #B90C0C !important;
 }
 .hotels-tickets .content .details ul li .items.specialOffer .how-cost .offer {
-    border-bottom: 1px dashed #E60C0C;
-    color: #E60C0C;
+    border-bottom: 1px dashed #B90C0C;
+    color: #B90C0C;
     display: block;
-    line-height: 13px;
     margin-top: -2px;
+    cursor: default;
+    line-height: 13px;
 }
 .hotels-tickets .content .details ul li .items .float {
 	font-size: 11px;
@@ -1153,6 +1155,8 @@
 .hotels-tickets .content .details ul li .items .how-cost {
     display: inline-block;
     line-height: 19px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 .hotels-tickets .content .details ul li .items .cost {
 	color: #202328; 
