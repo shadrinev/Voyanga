@@ -16,7 +16,7 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
 <head>
     <link rel="shortcut icon" href="<?= $theme ?>/images/favicon.png" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Voyanga v.0.1 - Trip Flight Rework</title>
+    <title><?php echo $this->title ?></title>
     <script type="text/javascript"
             src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
