@@ -3681,6 +3681,7 @@ a.whereData span {
 
 #socialButtons {
     float: left;
+    width: 300px;
 }
 #socialButtons #social {
     margin-bottom: 10px;

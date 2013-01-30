@@ -1076,6 +1076,31 @@
     padding: 0 0px;
     vertical-align: bottom;
 }
+.hotels-tickets .content .details ul li .items.specialOffer {
+    border: 2px solid #ffbf0c;
+    background: #fffff2;
+    background: -moz-linear-gradient(top,  #fffff2 0%, #fff6d1 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fffff2), color-stop(100%,#fff6d1));
+    background: -webkit-linear-gradient(top,  #fffff2 0%,#fff6d1 100%);
+    background: -o-linear-gradient(top,  #fffff2 0%,#fff6d1 100%);
+    background: -ms-linear-gradient(top,  #fffff2 0%,#fff6d1 100%);
+    background: linear-gradient(to bottom,  #fffff2 0%,#fff6d1 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fffff2', endColorstr='#fff6d1',GradientType=0 );
+
+}
+.hotels-tickets .content .details ul li .items.specialOffer .how-cost {
+    color: #e60c0c;
+}
+.hotels-tickets .content .details ul li .items.specialOffer .how-cost .cost {
+    color: #e60c0c !important;
+}
+.hotels-tickets .content .details ul li .items.specialOffer .how-cost .offer {
+    border-bottom: 1px dashed #E60C0C;
+    color: #E60C0C;
+    display: block;
+    line-height: 13px;
+    margin-top: -2px;
+}
 .hotels-tickets .content .details ul li .items .float {
 	font-size: 11px;
 	width: 100%;

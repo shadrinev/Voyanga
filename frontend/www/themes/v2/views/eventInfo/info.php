@@ -33,29 +33,24 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 </script>
 <span style="display: none" id='socialSource'>
     <div id='socialButtons'>
-        <ul id="social" class="cf">
-            <li style="width: 115px; position: relative;">
-                <a href="javascript:void(0);" id="followLink">
-                    <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText"> </span>
-                </a>
-            </li>
-            <li>
-                <a class="socialite vkontakte-like"
-                   href="http://vkontakte.ru/share.php?url=<?php echo $url ?>&amp;title=<?php echo $title ?>&amp;description=<?php echo $description ?>&amp;image=<?php echo $imageSmallAbs ?>" target="_blank">
-                    <span class="vhidden">Поделиться ВКонтакте</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.facebook.com/sharer.php?u=<?php echo $url ?>&amp;t=<?php echo $title ?>" class="socialite facebook-like" data-href="<?php echo $url ?>" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false" rel="nofollow" target="_blank">
-                    <span class="vhidden">Поделиться в Facebook</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://twitter.com/share" class="socialite twitter-share" data-text="<?php echo $description ?>" data-url="<?php echo $url ?>" data-count="horizontal" rel="nofollow" target="_blank">
-                    <span class="vhidden">Поделиться в Twitter</span>
-                </a>
-            </li>
-    </ul>
+        <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+            <a class="addthis_button_preferred_1 "></a>
+            <a class="addthis_button_preferred_2"></a>
+            <a class="addthis_button_preferred_3"></a>
+            <a class="addthis_button_compact"></a>
+        </div>
+        <script type="text/javascript">
+            var addthis_config =
+                {
+                    data_track_addressbar: false,
+                    data_track_clickback: false,
+                    services_expanded: 'vk,livejournal,pinterest,favorites',
+                    services_exclude: 'linkedin, print',
+                    services_compact: 'vk,livejournal,pinterest,favorites',
+
+                }
+        </script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
 
     </div>
 </span>
