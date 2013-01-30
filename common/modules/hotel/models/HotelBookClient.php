@@ -22,7 +22,7 @@ class HotelBookClient
     public static $countSql = 0;
     public static $countFunc = 0;
     public static $updateProcess = false;
-    public static $downCountCacheFill = 10;
+    public static $downCountCacheFill = 0;
     public $requests;
 
     public function request($url, $getData = null, $postData = null, $asyncParams = null, $cacheFileName = null)
