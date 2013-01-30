@@ -132,6 +132,7 @@ class LandingController extends Controller {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
             $hotelInfo->hotelName = $hc->name;
+            $hotelInfo->hotelId = $hc->id;
             $city = City::getCityByPk($hc->cityId);
         }else{
             $hotelInfo = $hotelClient->hotelDetail($hotelId);
@@ -267,6 +268,7 @@ class LandingController extends Controller {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
             $hotelInfo->hotelName = $hc->name;
+            $hotelInfo->hotelId = $hc->id;
             $hotelsInfo[] = $hotelInfo;
         }
 

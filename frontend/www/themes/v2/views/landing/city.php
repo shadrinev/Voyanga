@@ -264,7 +264,7 @@
             <div class="full-info">
                 <div class="preview-photo">
                     <ul>
-                        <li><a class="photo" href="<?php echo $hotInfo->getFrontImageUrl();?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
+                        <li><a class="photo" href="<?php echo '/land/hotel/'.$hotInfo->hotelId;?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
                     </ul>
                 </div>
                 <div class="stars <?php echo $hotInfo->getWordStars();?>"></div>
