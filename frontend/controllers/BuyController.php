@@ -5,7 +5,7 @@
  * Date: 17.10.12
  * Time: 14:21
  */
-class BuyController extends Controller
+class BuyController extends FrontendController
 {
     private $keys;
 

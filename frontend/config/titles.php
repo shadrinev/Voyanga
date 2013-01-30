@@ -2,15 +2,15 @@
 
 return array(
     'title.default' => 'Voyanga',
-    'title.prefix' => '',
-    'title.suffix' => ' - Voyanga',
-    'title.main' => 'Главная',
-    'title.enterCredentials' => 'Ввод данных',
+    'title.prefix' => 'Voyanga, ',
+    'title.suffix' => '',
+    'title.main' => 'Авиабилеты и гостиницы по низким ценам, планирование путешествий',
+    'title.enterCredentials' => 'Ввод паспортных данных',
     'title.event' => '##eventTitle##',
     'title.error' => 'Ошибка',
     'title.iata'  => 'Пользовательское соглашение ИАТА',
-    'title.faq'  => 'ЧАВО',
+    'title.faq'  => 'Часто задаваемые вопросы',
     'title.agreement' => 'Пользовательское соглашение',
-    'title.agreementAvia' => 'Пользовательское соглашение - авиа',
-    'title.agreementHotel' => 'Пользовательское соглашение - отели',
+    'title.agreementAvia' => 'Пользовательское соглашение, Авиабилеты',
+    'title.agreementHotel' => 'Пользовательское соглашение, Отели',
 ); ?>
