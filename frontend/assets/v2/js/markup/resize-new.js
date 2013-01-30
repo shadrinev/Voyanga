@@ -759,7 +759,7 @@ function jsPaneScrollHeight() {
 }
 
 function scrollValue(what, event) {
-    if (! DetectMobileQuick() || ! DetectMobileQuick()) {
+    if (! DetectMobileQuick() || ! DetectTierTablet()) {
         var filterContent = $('.filter-content.'+ what);
         var isScrollPane;
         if(event.target == document)
