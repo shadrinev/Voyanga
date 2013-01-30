@@ -5,15 +5,16 @@ class Voyasha
     @selected = ko.computed =>
       result = []
       for item in  @toursResultSet.data()
-        if item.isAvia()
-          result.push @handleAvia item
-        else
-          result.push @handleHotels item
+          if item.isAvia()
+            result.push (if item.results().data.length != 0 then @handleAvia item else null)
+          else
+            result.push (if item.results().data().length != 0 then @handleHotels item else null)
       result
     @price = ko.computed =>
       result = 0
       for item in @selected()
-        result += item.price
+        if item?
+          result += item.price
       result
 
     @title = do @getTitle
@@ -42,6 +43,8 @@ class VoyashaCheapest extends Voyasha
 
   handleHotels: (item)=>
     data = item.results().data()
+    if data.length == 0
+      return
     result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].price}
     for hotel in item.results().data()
       for roomSet in hotel.roomSets()
