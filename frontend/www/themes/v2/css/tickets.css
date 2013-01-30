@@ -1098,10 +1098,10 @@
 .hotels-tickets .content .details ul li .items.specialOffer .how-cost .offer {
     border-bottom: 1px dashed #B90C0C;
     color: #B90C0C;
-    display: block;
-    margin-top: -2px;
     cursor: default;
-    line-height: 13px;
+    display: inline-block;
+    font-size: 11px;
+    line-height: 14px;
 }
 .hotels-tickets .content .details ul li .items .float {
 	font-size: 11px;
@@ -1154,7 +1154,7 @@
 
 .hotels-tickets .content .details ul li .items .how-cost {
     display: inline-block;
-    line-height: 19px;
+    line-height: 14px;
     margin-bottom: 5px;
     margin-top: 5px;
 }
