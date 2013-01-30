@@ -224,6 +224,7 @@ class RoomNamesNemo extends CActiveRecord
                 $roomParamsKey = ($roomNameCanonical ? $roomNameCanonical : '').'|'.($roomSizeId ? $roomSizeId : '').'|'.($roomTypeId ? $roomTypeId : '');
                 self::$roomNames[self::$paramsIdMap[$roomParamsKey]]->id = $row['id'];
                 self::$roomNames[self::$paramsIdMap[$roomParamsKey]]->setIsNewRecord(false);
+                self::$roomNames[self::$paramsIdMap[$roomParamsKey]]->roomNameRusId = $row['roomNameRusId'];
                 unset(self::$lazyLoadObjectsIds[self::$paramsIdMap[$roomParamsKey]]);
                 if($row['roomNameRus']){
                     RoomNamesRus::$roomNamesRus[$row['roomNameRusId']] = new RoomNamesRus();
