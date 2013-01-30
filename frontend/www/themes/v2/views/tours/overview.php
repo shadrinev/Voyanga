@@ -135,7 +135,7 @@ $theme = Yii::app()->theme->baseUrl;
       </table>
       <div data-bind="template: {'name': overviewTemplate, 'data': selection()}"></div>
       <!-- ЗДЕСЬ БИЛЕТ -->
-      <table class="descrTicket">
+      <table class="descrTicket" data-bind="visible: !noresults">
 	<tr data-bind="if: isAvia()">
 	  <td class="text"><span data-bind="text:selection()?'Или другой':'Выберите'"></span> вариант среди: <span class="f19" data-bind="text:numAirlines()">19</span> авиакомпаний, от <span class="f19"  data-bind="html: minPriceHtml()"></span> до <span class="f19"  data-bind="html: maxPriceHtml()"></span></td>
 	  <td class="buttons">
