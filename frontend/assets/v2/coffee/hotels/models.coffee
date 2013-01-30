@@ -123,9 +123,12 @@ class RoomSet
       else
         return 'Условия бронирования не известны'
 
+    @specialOffer = ko.observable('')
 
     @rooms = []
     for room in data.rooms
+      if room.offerText && !@specialOffer()
+        @specialOffer(room.offerText)
       @rooms.push new Room room
     @rooms[(@rooms.length-1)].last(true)
     @selectedCount = ko.observable 0

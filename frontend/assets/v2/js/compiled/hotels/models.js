@@ -202,10 +202,14 @@ RoomSet = (function() {
         return 'Условия бронирования не известны';
       }
     });
+    this.specialOffer = ko.observable('');
     this.rooms = [];
     _ref = data.rooms;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
+      if (room.offerText && !this.specialOffer()) {
+        this.specialOffer(room.offerText);
+      }
       this.rooms.push(new Room(room));
     }
     this.rooms[this.rooms.length - 1].last(true);
