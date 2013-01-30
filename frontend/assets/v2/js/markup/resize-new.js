@@ -1271,7 +1271,11 @@ $(window).resize(resizeFAQ);
 $(window).scroll(scrollFAQ);
 
 function gradientResize() {
-    if (! DetectMobileQuick() || ! DetectTierTablet()) {
+    if (DetectMobileQuick() || DetectTierTablet()) {
+        alert(1);
+        return
+    }
+    else {
         if ($('.wrapper .main-block').find('#content').length > 0 && $('.wrapper .main-block').find('#content').is(':visible')) {
             var _content = $('.wrapper .main-block').find('#content');
             var offset = _content.offset();
@@ -1283,10 +1287,6 @@ function gradientResize() {
         else {
             return
         }
-    }
-    else {
-        alert (1);
-        return
     }
 }
 
