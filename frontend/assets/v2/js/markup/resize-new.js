@@ -759,13 +759,16 @@ function jsPaneScrollHeight() {
 }
 
 function scrollValue(what, event) {
-    if (! DetectMobileQuick() || ! DetectTierTablet()) {
+    if (DetectMobileQuick() || DetectTierTablet()) {
+        return;
+    }
+    else {
         var filterContent = $('.filter-content.'+ what);
         var isScrollPane;
         if(event.target == document)
-        isScrollPane = false;
+            isScrollPane = false;
         else
-        isScrollPane = $(event.target).is('#scroll-pane');
+            isScrollPane = $(event.target).is('#scroll-pane');
         if (filterContent.length > 0 && filterContent.is(':visible') && !isScrollPane) {
             var innerFilter = filterContent.find('.innerFilter');
             var var_marginTopSubHead = $('.sub-head').css('margin-top');
@@ -876,9 +879,6 @@ function scrollValue(what, event) {
         else {
             return false;
         }
-    }
-    else {
-        return;
     }
 }
 
