@@ -1,3 +1,13 @@
+/* RATING HOVER */
+function ratingHoverActive(obj) {
+    var that = $(obj);
+    that.parent().addClass('hover');
+}
+function ratingHoverNoActive(obj) {
+    var that = $(obj);
+    that.parent().removeClass('hover');
+}
+
 function hideRecomendedBlockTicket() {
     if (!$(this).hasClass('show')) {
         $('.recomended-content').slideUp(function () {
