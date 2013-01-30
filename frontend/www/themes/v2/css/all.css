@@ -109,8 +109,7 @@ q > q:before {
 content: "\201e";
 }
 :focus {outline:none;}
-i {font-style: normal;}.text-overflow{white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;overflow:hidden;}
-html,body{height:100%;margin:0px;padding:0px 0px 0px 0px;}
+i {font-style: normal;}html,body{height:100%;margin:0px;padding:0px 0px 0px 0px;}
 body{width:100%;height:100%;background:url("/themes/v2/images/bg.png");color:#1d222b;font-family:Arial,sans-serif;font-size:12px;position:relative;}
 a{color:inherit;}
 input,select,button{margin-left:0px;padding:0px;}
@@ -120,6 +119,7 @@ h4{color:#1d222b;font-size:15px;margin-bottom:6px;text-shadow:0px 1px 0px #fffff
 .main-block h1{text-shadow:0px 1px 0px #ffffff;margin-bottom:20px;letter-spacing:-0.05em;line-height:26px;margin-top:-1px;}.main-block h1.ourTripH1{float:left;letter-spacing:0em;}
 .popupPeople{height:auto;border:none;background:none;width:406px;bottom:auto;position:absolute;left:0px;display:none;z-index:997;}.popupPeople.active{display:block;}
 .popupPeople:hover .addOtherRoom{color:#23262c !important;}
+.popupPeople.avia{background:url("/themes/v2/images/bg-how-much.png") repeat-x scroll left bottom #f7f9fb;border-bottom:1px solid #76777A;border-left:1px solid #B7B8BC;border-right:1px solid #B7B8BC;width:194px;height:85px;}
 .popupPeople .number-hotel .addOtherRoom:hover{color:#23262c !important;}
 .popupPeople:hover .del-hotel{color:#9ea2a7 !important;}
 .popupPeople .adults,.popupPeople .childs,.popupPeople .small-childs{float:left;width:48px;font-size:11px;color:#272728;text-shadow:0px 1px 0px #FFF;line-height:13px;margin-left:13px;padding-top:13px;position:relative;}
@@ -131,7 +131,6 @@ h4{color:#1d222b;font-size:15px;margin-bottom:6px;text-shadow:0px 1px 0px #fffff
 #content{margin:0 auto;padding-bottom:65px;padding-top:35px;position:relative;}
 .main-block{margin:0 auto;min-width:585px;}
 .left-block{background:none repeat scroll 0 0 #F4F7F9;height:100%;left:0;min-width:220px;position:absolute;top:0;z-index:5;}
-.text-overflow{white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;overflow:hidden;}
 .head{background:url("/themes/v2/images/bg-head.png") repeat-x scroll 0 0 transparent;box-shadow:0 0 5px #000101;-moz-box-shadow:0 0 5px #000101;-webkit-box-shadow:0 0 5px #000101;min-width:1000px;height:38px;width:100%;position:relative;z-index:998;}.head .logo{background:url("/themes/v2/images/logo.png") no-repeat scroll 0 0 transparent;text-indent:-9999px;display:block;height:27px;left:32px;position:absolute;top:7px;width:122px;}
 .head .about{background:url("/themes/v2/images/logo.png") no-repeat scroll -122px 0 transparent;text-indent:-9999px;display:block;height:27px;left:154px;position:absolute;top:7px;width:76px;}
 .head .login-window{height:38px;line-height:45px;position:absolute;right:0;top:0;width:152px;cursor:pointer;}.head .login-window a:hover{text-decoration:none;}
@@ -653,22 +652,22 @@ h4 a {
 }
 
 .ticket-items .lv {
-	background: url(../images/bg-recommended-ticket.png) no-repeat 0px bottom;
-	position: absolute; top: 0px; left: 0px;
+	background: url(../images/bg-recommended-ticket.png) no-repeat 1px bottom;
+	position: absolute; top: 0px; left: -1px;
 	width: 8px; height: 100%;
 	display: block;
 	z-index: 2;
 }
 .ticket-items .rv {
-	background: url(../images/bg-recommended-ticket.png) no-repeat -8px bottom;
-	position: absolute; top: 0px; right: 0px;
+	background: url(../images/bg-recommended-ticket.png) no-repeat -9px bottom;
+	position: absolute; top: 0px; right: -1px;
 	width: 8px; height: 100%;
 	display: block;
 	z-index: 2;
 }
 .ticket-items .bh {
-	background: url(../images/bg-recommended-ticket-hor.png) repeat-x 0px -8px;
-	position: absolute; bottom: 0px; left: 0px;
+	background: url(../images/bg-recommended-ticket-hor.png) repeat-x 0px -9px;
+	position: absolute; bottom: -1px; left: 0px;
 	width: 100%; height: 8px;
 	display: block;
 	z-index: 1;
@@ -2693,6 +2692,7 @@ h4 a {
     font-size: 11px;
     line-height: 20px;
     width: 100%;
+    margin-bottom: 10px;
 }
 .finish-result .txt {
     color: #4B525C;
@@ -5452,6 +5452,11 @@ hr {
 .grafik .grafikMean.inactive .price {
     color: #9da1a5;
 }
+.grafik .grafikMean .price.question {
+    background: url("../images/question.png") center 0 no-repeat;
+    height: 30px;
+    text-indent: -9999px;
+}
 .grafik .grafikMean.min .price {
     color: #287705;
 }
@@ -6067,7 +6072,46 @@ a.whereData span {
     display: block;
     margin-top: 10px;
     margin-bottom: 5px;
-}@charset "UTF-8";
+}
+
+#socialButtons {
+    float: left;
+}
+#socialButtons #social {
+    margin-bottom: 10px;
+}
+#socialButtons #social li {
+    margin-right: 17px;
+    display: inline-block;
+    height: 22px;
+    vertical-align: middle;
+}
+#followLink {
+    display: inline-block;
+    text-align: center;
+    padding: 5px;
+    color: #292d35;
+    text-decoration: none;
+    border-radius: 3px;
+    box-shadow: 0px 1px 0px rgba(26,27,31,0.5);
+    z-index: 2;
+    position: absolute;
+    background: #eff3f6;
+    background: -moz-linear-gradient(top, #eff3f6 0%, #e8e9ef 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eff3f6), color-stop(100%,#e8e9ef));
+    background: -webkit-linear-gradient(top, #eff3f6 0%,#e8e9ef 100%);
+    background: -o-linear-gradient(top, #eff3f6 0%,#e8e9ef 100%);
+    background: -ms-linear-gradient(top, #eff3f6 0%,#e8e9ef 100%);
+    background: linear-gradient(to bottom, #eff3f6 0%,#e8e9ef 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff3f6', endColorstr='#e8e9ef',GradientType=0 );
+}
+#followLink .getLink {
+    display: none;
+}
+#followLink .getLink input {
+    width: 450px;
+}
+@charset "UTF-8";
 #popupOverlay {
     background: none repeat scroll 0 0 #26292E;
     height: 100%;
@@ -6952,6 +6996,13 @@ a.whereData span {
 .tdCityStart {
     width: 130px;
 }
+.tdCityStart.zero {
+    width: 0px !important;
+    content: ""
+}
+.tdCityStart.zero span {
+    display: none;
+}
 .panelTable.constructorTable tr td.tdAddTour .add-tour {
     background: url("../images/slice.png") no-repeat scroll -401px -1224px transparent;
     display: inline-block;
@@ -7295,10 +7346,10 @@ a.whereData span {
 .btn-minimizePanel span {
 	display: inline-block;
 	width: 12px; height: 6px;
-	background: url(../images/slice.png) no-repeat -72px -35px;
+	background: url("../images/slice.png") no-repeat scroll -264px -1px transparent;
 }
 .btn-minimizePanel.active span {
-	background-position: -84px -35px;
+	background-position: -253px -1px;
 }
 
 
