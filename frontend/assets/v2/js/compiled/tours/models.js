@@ -44,6 +44,9 @@ TourEntry = (function() {
   };
 
   TourEntry.prototype.priceHtml = function() {
+    if (this.noresults) {
+      return "Нет результатов";
+    }
     if (this.selection() === null) {
       return "Не выбрано";
     }
@@ -157,6 +160,7 @@ ToursAviaResultSet = (function(_super) {
       return _this.trigger('next');
     };
     this.avia = true;
+    this.noresults = result.data.length === 0;
     return this.results(result);
   };
 
@@ -496,6 +500,7 @@ ToursHotelsResultSet = (function(_super) {
     };
     this.hotels = true;
     this.selection(null);
+    this.noresults = result.data().length === 0;
     return this.results(result);
   };
 
@@ -534,7 +539,9 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.select = function(roomData) {
-    return this._selectRoomSet(roomData.roomSet);
+    if (roomData != null) {
+      return this._selectRoomSet(roomData.roomSet);
+    }
   };
 
   ToursHotelsResultSet.prototype._selectRoomSet = function(roomSet) {
@@ -603,7 +610,11 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.destinationText = function() {
-    return "<span class='hotel-left-long'>Отель в " + this.rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + this.rawSP.cityFull.caseNom + "</span>";
+    if (this.noresults) {
+      return this.rawSP.cityFull.caseNom;
+    } else {
+      return "<span class='hotel-left-long'>Отель в " + this.rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + this.rawSP.cityFull.caseNom + "</span>";
+    }
   };
 
   ToursHotelsResultSet.prototype.price = function() {

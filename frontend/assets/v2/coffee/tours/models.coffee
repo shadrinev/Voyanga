@@ -16,6 +16,8 @@ class TourEntry
     @selection().price
 
   priceHtml: =>
+    if @noresults
+      return "Нет результатов"
     if @selection() == null
       return "Не выбрано"
     return @price() + '<span class="rur">o</span>'
@@ -63,6 +65,7 @@ class ToursAviaResultSet extends TourEntry
       @select res, result
       @trigger 'next'
     @avia = true
+    @noresults = result.data.length == 0
     @results result
 
   findAndSelect: (result)=>
@@ -278,6 +281,7 @@ class ToursHotelsResultSet extends TourEntry
     # FIXME WTF
     @hotels = true
     @selection null
+    @noresults = result.data().length == 0
     @results result
 
   findAndSelect: (result) =>
@@ -308,7 +312,8 @@ class ToursHotelsResultSet extends TourEntry
     @_selectRoomSet ret
       
   select: (roomData)=>
-    @_selectRoomSet roomData.roomSet
+    if roomData?
+      @_selectRoomSet roomData.roomSet
 
   _selectRoomSet: (roomSet)=>
     hotel = roomSet.parent
@@ -365,7 +370,10 @@ class ToursHotelsResultSet extends TourEntry
 
   # tours overview
   destinationText: =>
-    "<span class='hotel-left-long'>Отель в " + @rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + @rawSP.cityFull.caseNom + "</span>"
+    if @noresults
+      @rawSP.cityFull.caseNom
+    else
+      "<span class='hotel-left-long'>Отель в " + @rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + @rawSP.cityFull.caseNom + "</span>"
 
   price: =>
     if @selection() == null
