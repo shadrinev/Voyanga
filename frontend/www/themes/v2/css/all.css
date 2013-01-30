@@ -1703,6 +1703,33 @@ h4 a {
     padding: 0 0px;
     vertical-align: bottom;
 }
+.hotels-tickets .content .details ul li .items.specialOffer {
+    border: 0px solid #ffbf0c;
+    background: rgb(255,255,252);
+    background: -moz-linear-gradient(top,  rgba(255,255,252,1) 0%, rgba(255,251,239,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,252,1)), color-stop(100%,rgba(255,251,239,1)));
+    background: -webkit-linear-gradient(top,  rgba(255,255,252,1) 0%,rgba(255,251,239,1) 100%);
+    background: -o-linear-gradient(top,  rgba(255,255,252,1) 0%,rgba(255,251,239,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(255,255,252,1) 0%,rgba(255,251,239,1) 100%);
+    background: linear-gradient(to bottom,  rgba(255,255,252,1) 0%,rgba(255,251,239,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fffffc', endColorstr='#fffbef',GradientType=0 );
+
+
+}
+.hotels-tickets .content .details ul li .items.specialOffer .how-cost {
+    color: #B90C0C;
+}
+.hotels-tickets .content .details ul li .items.specialOffer .how-cost .cost {
+    color: #B90C0C !important;
+}
+.hotels-tickets .content .details ul li .items.specialOffer .how-cost .offer {
+    border-bottom: 1px dashed #B90C0C;
+    color: #B90C0C;
+    cursor: default;
+    display: inline-block;
+    font-size: 11px;
+    line-height: 14px;
+}
 .hotels-tickets .content .details ul li .items .float {
 	font-size: 11px;
 	width: 100%;
@@ -1754,7 +1781,9 @@ h4 a {
 
 .hotels-tickets .content .details ul li .items .how-cost {
     display: inline-block;
-    line-height: 19px;
+    line-height: 14px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 .hotels-tickets .content .details ul li .items .cost {
 	color: #202328; 
@@ -3160,9 +3189,12 @@ h2 .tmblr {
 .descr > .left .descr-text a {
     border-bottom: 1px dashed;
     color: #2174A3;
+    line-height: 20px;
 }
 .descr > .left .descr-text .text {
     height: auto;
+    line-height: 20px;
+
 }
 .descr > .left .descr-text h3 {
     display: inline-block;
@@ -6076,6 +6108,9 @@ a.whereData span {
 
 #socialButtons {
     float: left;
+    width: 300px;
+    position: relative;
+    padding-left: 114px;
 }
 #socialButtons #social {
     margin-bottom: 10px;
@@ -6087,15 +6122,20 @@ a.whereData span {
     vertical-align: middle;
 }
 #followLink {
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 0 rgba(26, 27, 31, 0.5);
+    color: #292D35;
     display: inline-block;
-    text-align: center;
+    float: left;
+    height: 22px;
+    line-height: 21px;
+    margin-right: 6px;
     padding: 5px;
-    color: #292d35;
-    text-decoration: none;
-    border-radius: 3px;
-    box-shadow: 0px 1px 0px rgba(26,27,31,0.5);
-    z-index: 2;
     position: absolute;
+    text-align: center;
+    text-decoration: none;
+    left: 0px;
+    z-index: 2;
     background: #eff3f6;
     background: -moz-linear-gradient(top, #eff3f6 0%, #e8e9ef 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eff3f6), color-stop(100%,#e8e9ef));
@@ -6109,9 +6149,11 @@ a.whereData span {
     display: none;
 }
 #followLink .getLink input {
-    width: 450px;
+    width: 230px;
 }
-@charset "UTF-8";
+.addthis_toolbox a {
+    padding: 0 6px !important;
+}@charset "UTF-8";
 #popupOverlay {
     background: none repeat scroll 0 0 #26292E;
     height: 100%;
