@@ -75,7 +75,21 @@ function CenterIMGResize(index) {
         var var_allWidth = $('.slideTours .center').width();
         var heightImgMain = $('div.IMGmain').eq(index).find('img').height();
 
-    if (var_allWidth >= 1390) {
+
+
+
+        var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
+        console.log("!!!! " +marginPathTop);
+        if (marginPathTop < 0) {
+            pathIMG.css('top', '0px');
+            pathIMG.css('height', $('.innerBlockMain .IMGmain').eq(index).height()+'px').css('width','auto');
+
+        }
+        else {
+            pathIMG.css('top', '-'+marginPathTop+'px');
+        }
+
+        if (var_allWidth >= 1390) {
             marginPathLeft = (1390 - var_allWidth) / 2;
         }
         else if (var_allWidth < 1390 && var_allWidth >= 1290) {
@@ -88,10 +102,8 @@ function CenterIMGResize(index) {
         else if (var_allWidth <= 1000) {
             marginPathLeft = (1390 - var_allWidth) / 2;
         }
-        pathIMG.css('left', '-'+marginPathLeft+'px');
 
-        var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
-        pathIMG.css('top', '-'+marginPathTop+'px');
+        pathIMG.css('left', '-'+marginPathLeft+'px');
     }
 }
 
