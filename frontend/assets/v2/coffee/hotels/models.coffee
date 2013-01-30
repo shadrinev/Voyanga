@@ -4,7 +4,8 @@ MEAL_VERBOSE = {'Американский завтрак':'Завтрак','Ан
 
 
 
-###class googleInfoDiv extends google.maps.OverlayView
+###
+class googleInfoDiv extends google.maps.OverlayView
   constructor: ->
     @div_ = null
     @latLng = null
@@ -42,9 +43,6 @@ MEAL_VERBOSE = {'Американский завтрак':'Завтрак','Ан
   show: ()=>
     @div_.show()
 ###
-
-
-
 
 class Room
   constructor: (data) ->
@@ -779,6 +777,7 @@ class HotelsResultSet
       throw rawData.error
     if !rawData.hotels
       throw "404"
+    @noresults = rawData.hotels.length == 0  
     @creationMoment = moment()
     # FIXME FIXME FIXEM
     @rawSP = @searchParams

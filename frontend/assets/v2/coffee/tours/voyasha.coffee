@@ -5,15 +5,16 @@ class Voyasha
     @selected = ko.computed =>
       result = []
       for item in  @toursResultSet.data()
-        if item.isAvia()
-          result.push @handleAvia item
-        else
-          result.push @handleHotels item
+          if item.isAvia()
+            result.push (if item.results().data.length != 0 then @handleAvia item else null)
+          else
+            result.push (if item.results().data().length != 0 then @handleHotels item else null)
       result
     @price = ko.computed =>
       result = 0
       for item in @selected()
-        result += item.price
+        if item?
+          result += item.price
       result
 
     @title = do @getTitle
@@ -42,13 +43,15 @@ class VoyashaCheapest extends Voyasha
 
   handleHotels: (item)=>
     data = item.results().data()
-    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].price}
+    if data.length == 0
+      return
+    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].discountPrice}
     for hotel in item.results().data()
       for roomSet in hotel.roomSets()
-        if roomSet.price < result.roomSet.price
+        if roomSet.price < result.roomSet.discountPrice
           result.roomSet = roomSet
           result.hotel = hotel
-          result.price = result.roomSet.price
+          result.price = result.roomSet.discountPrice
     return result
 
 class VoyashaOptima extends Voyasha
@@ -60,17 +63,17 @@ class VoyashaOptima extends Voyasha
 
   handleHotels: (item) =>
     data = item.results().data()
-    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].price}
+    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].discountPrice}
     results = _.filter data, (x)-> x.distanceToCenter <= 6
     results = _.filter results, (x)-> (x.starsNumeric == 3)||(x.starsNumeric == 4)
-    results.sort (a,b) -> a.roomSets()[0].price - b.roomSets()[0].price
+    results.sort (a,b) -> a.roomSets()[0].discountPrice - b.roomSets()[0].discountPrice
     if results.length
       data = results[0]
-      result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].price}
+      result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].discountPrice}
     results = _.filter results, (x) -> x.rating > 2 
     if results.length
       data = results[0]
-      result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].price}
+      result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].discountPrice}
     result
     
 class VoyashaRich extends Voyasha
@@ -104,12 +107,12 @@ class VoyashaRich extends Voyasha
 
   handleHotels: (item) =>
     data = item.results().data()
-    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].price}
+    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].discountPrice}
     results = data #_.filter results, (x)-> (x.starsNumeric == 4)||(x.starsNumeric == 5)
     results.sort (a,b) =>
       aHotelRating = @getRating(a)
       bHotelRating = @getRating(b)
-      return a.roomSets()[0].price*aHotelRating  - b.roomSets()[0].price*bHotelRating
+      return a.roomSets()[0].discountPrice*aHotelRating  - b.roomSets()[0].discountPrice*bHotelRating
     data = results[0]
-    result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].price}
+    result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].discountPrice}
     return result

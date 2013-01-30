@@ -15,6 +15,7 @@ class MakeBookingAction extends CAction
 
     public function run()
     {
+        $this->controller->assignTitle('enterCredentials');
         $this->getController()->layout = 'static';
 
         $dataProvider = new TripDataProvider();

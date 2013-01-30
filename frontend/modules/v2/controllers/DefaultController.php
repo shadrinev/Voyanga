@@ -5,10 +5,11 @@
  * Date: 27.08.12
  * Time: 13:59
  */
-class DefaultController extends CController
+class DefaultController extends FrontendController
 {
     public function actionIndex($open=false)
     {
+        $this->assignTitle('main');
         Yii::app()->user->setState('orderBookingId', null);
         Yii::app()->user->setState('todayOrderId', null);
         $events = Event::getRandomEvents();

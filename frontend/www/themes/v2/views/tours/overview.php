@@ -77,7 +77,7 @@ $theme = Yii::app()->theme->baseUrl;
       <div class="shareSocial">
       </div>
       <div class="costItAll" data-bind="visible: someSegmentsSelected">
-	    Итого <span class="allCost"><span data-bind="text: price()">86 250</span> <span class="rur">o</span></span>
+	    Итого <span class="allCost"><span data-bind="text: price()-savings()">86 250</span> <span class="rur">o</span></span>
         <a href="#" class="btn-order btnGoBuy" data-bind="click:buy">Перейти к оплате<span class="l"></span></a>
       </div>
     </div>
@@ -135,7 +135,7 @@ $theme = Yii::app()->theme->baseUrl;
       </table>
       <div data-bind="template: {'name': overviewTemplate, 'data': selection()}"></div>
       <!-- ЗДЕСЬ БИЛЕТ -->
-      <table class="descrTicket">
+      <table class="descrTicket" data-bind="visible: !noresults">
 	<tr data-bind="if: isAvia()">
 	  <td class="text"><span data-bind="text:selection()?'Или другой':'Выберите'"></span> вариант среди: <span class="f19" data-bind="text:numAirlines()">19</span> авиакомпаний, от <span class="f19"  data-bind="html: minPriceHtml()"></span> до <span class="f19"  data-bind="html: maxPriceHtml()"></span></td>
 	  <td class="buttons">

@@ -10060,7 +10060,7 @@ function ResizeAvia() {
 }
 
 function ResizeAviaClb() {
-    console.log('!!!! DNIWE EBANOE!!!');
+
 //    if (DetectMobileQuick() )
         ResizeCenterBlock();
         inTheTwoLines();
@@ -11911,14 +11911,14 @@ function inTheTwoLines() {
 function hideRecomendedBlockTicket() {
     if (!$(this).hasClass('show')) {
         $('.recomended-content').slideUp(function () {
-            ifHeightMinAllBody();
+            jsPaneScrollHeight();
         });
         $(this).addClass('show');
     }
     else {
         $(this).removeClass('show');
         $('.recomended-content').slideDown(function () {
-            ifHeightMinAllBody();
+            jsPaneScrollHeight();
         });
 
         $(window).load(inTheTwoLines);
@@ -11927,12 +11927,9 @@ function hideRecomendedBlockTicket() {
     }
 }
 $(function () {
-
     bindActions = function () {
-
         $('.minimize-rcomended .btn-minimizeRecomended').click(function () {
         });
-
         $('.order-show').click(function () {
             $('.recomended-content').slideDown();
             $('.minimize-rcomended .btn-minimizeRecomended').animate({top: '-19px'}, 500);
@@ -11942,7 +11939,6 @@ $(function () {
             widthHowLong();
             setTimeout(smallTicketHeight, 100);
         });
-
         $('.descr').eq(1).hide();
         $('.place-buy .tmblr li a').click(function (e) {
             e.preventDefault();
@@ -11955,7 +11951,6 @@ $(function () {
                 $('#' + var_nameBlock).show();
             }
         });
-
         $('.read-more').click(function () {
             if (!$(this).hasClass('active')) {
                 $(this).prev().css('height', 'auto');
@@ -11968,13 +11963,11 @@ $(function () {
                 $(this).removeClass('active').text('Подробнее');
             }
         });
-
         $('.stars-li input').each(function () {
             if ($(this).attr('checked') == 'checked') {
                 $(this).next().addClass('active');
             }
         });
-
         $('.stars-li label').click(function () {
             if (!$(this).hasClass('active')) {
                 $(this).addClass('active');
@@ -11982,7 +11975,6 @@ $(function () {
             else {
                 $(this).removeClass('active');
             }
-
         });
         var heCal = $('.calendarSlide').height();
         $('.calendarSlide').css('top', '-' + heCal + 'px');
@@ -12001,8 +11993,6 @@ $(function () {
                 var_parent.find('.startInputTo').find('input').focus();
             });
         });
-
-
         $('.board-content .from input').click(function () {
             if ($(this).parent().hasClass('overflow')) {
                 $(this).parent().animate({'width': '271px'}, 300, function () {
@@ -13471,7 +13461,21 @@ function CenterIMGResize(index) {
         var var_allWidth = $('.slideTours .center').width();
         var heightImgMain = $('div.IMGmain').eq(index).find('img').height();
 
-    if (var_allWidth >= 1390) {
+
+
+
+        var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
+        console.log("!!!! " +marginPathTop);
+        if (marginPathTop < 0) {
+            pathIMG.css('top', '0px');
+            pathIMG.css('height', $('.innerBlockMain .IMGmain').eq(index).height()+'px').css('width','auto');
+
+        }
+        else {
+            pathIMG.css('top', '-'+marginPathTop+'px');
+        }
+
+        if (var_allWidth >= 1390) {
             marginPathLeft = (1390 - var_allWidth) / 2;
         }
         else if (var_allWidth < 1390 && var_allWidth >= 1290) {
@@ -13484,10 +13488,8 @@ function CenterIMGResize(index) {
         else if (var_allWidth <= 1000) {
             marginPathLeft = (1390 - var_allWidth) / 2;
         }
-        pathIMG.css('left', '-'+marginPathLeft+'px');
 
-        var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
-        pathIMG.css('top', '-'+marginPathTop+'px');
+        pathIMG.css('left', '-'+marginPathLeft+'px');
     }
 }
 

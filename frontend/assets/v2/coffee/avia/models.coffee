@@ -529,8 +529,7 @@ class AviaResultSet
     
     @_results = {}
 
-    if !rawVoyages.length
-      throw "404"
+    @noresults = rawVoyages.length == 0
 
     # first pass filter interlines
     _interlines = {}

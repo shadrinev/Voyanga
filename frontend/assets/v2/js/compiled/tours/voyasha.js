@@ -22,9 +22,9 @@ Voyasha = (function() {
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         if (item.isAvia()) {
-          result.push(_this.handleAvia(item));
+          result.push((item.results().data.length !== 0 ? _this.handleAvia(item) : null));
         } else {
-          result.push(_this.handleHotels(item));
+          result.push((item.results().data().length !== 0 ? _this.handleHotels(item) : null));
         }
       }
       return result;
@@ -35,7 +35,9 @@ Voyasha = (function() {
       _ref = _this.selected();
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
-        result += item.price;
+        if (item != null) {
+          result += item.price;
+        }
       }
       return result;
     });
@@ -92,10 +94,13 @@ VoyashaCheapest = (function(_super) {
   VoyashaCheapest.prototype.handleHotels = function(item) {
     var data, hotel, result, roomSet, _i, _j, _len, _len1, _ref, _ref1;
     data = item.results().data();
+    if (data.length === 0) {
+      return;
+    }
     result = {
       roomSet: data[0].roomSets()[0],
       hotel: data[0],
-      price: data[0].roomSets()[0].price
+      price: data[0].roomSets()[0].discountPrice
     };
     _ref = item.results().data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -103,10 +108,10 @@ VoyashaCheapest = (function(_super) {
       _ref1 = hotel.roomSets();
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         roomSet = _ref1[_j];
-        if (roomSet.price < result.roomSet.price) {
+        if (roomSet.price < result.roomSet.discountPrice) {
           result.roomSet = roomSet;
           result.hotel = hotel;
-          result.price = result.roomSet.price;
+          result.price = result.roomSet.discountPrice;
         }
       }
     }
@@ -144,7 +149,7 @@ VoyashaOptima = (function(_super) {
     result = {
       roomSet: data[0].roomSets()[0],
       hotel: data[0],
-      price: data[0].roomSets()[0].price
+      price: data[0].roomSets()[0].discountPrice
     };
     results = _.filter(data, function(x) {
       return x.distanceToCenter <= 6;
@@ -153,14 +158,14 @@ VoyashaOptima = (function(_super) {
       return (x.starsNumeric === 3) || (x.starsNumeric === 4);
     });
     results.sort(function(a, b) {
-      return a.roomSets()[0].price - b.roomSets()[0].price;
+      return a.roomSets()[0].discountPrice - b.roomSets()[0].discountPrice;
     });
     if (results.length) {
       data = results[0];
       result = {
         roomSet: data.roomSets()[0],
         hotel: data,
-        price: data.roomSets()[0].price
+        price: data.roomSets()[0].discountPrice
       };
     }
     results = _.filter(results, function(x) {
@@ -171,7 +176,7 @@ VoyashaOptima = (function(_super) {
       result = {
         roomSet: data.roomSets()[0],
         hotel: data,
-        price: data.roomSets()[0].price
+        price: data.roomSets()[0].discountPrice
       };
     }
     return result;
@@ -243,20 +248,20 @@ VoyashaRich = (function(_super) {
     result = {
       roomSet: data[0].roomSets()[0],
       hotel: data[0],
-      price: data[0].roomSets()[0].price
+      price: data[0].roomSets()[0].discountPrice
     };
     results = data;
     results.sort(function(a, b) {
       var aHotelRating, bHotelRating;
       aHotelRating = _this.getRating(a);
       bHotelRating = _this.getRating(b);
-      return a.roomSets()[0].price * aHotelRating - b.roomSets()[0].price * bHotelRating;
+      return a.roomSets()[0].discountPrice * aHotelRating - b.roomSets()[0].discountPrice * bHotelRating;
     });
     data = results[0];
     result = {
       roomSet: data.roomSets()[0],
       hotel: data,
-      price: data.roomSets()[0].price
+      price: data.roomSets()[0].discountPrice
     };
     return result;
   };
