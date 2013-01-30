@@ -5,7 +5,7 @@
 <script id="hotels-results" type="text/html">
         <!-- MAIN BLOCK -->
         <div class="main-block">
-            <div id="content" data-bind="template: {name: 'hotels-results-inner', data: results()}" >
+            <div id="content" data-bind="template: {name: noresults?'hotels-no-results':'hotels-results-inner', data: results()}" >
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
@@ -15,6 +15,9 @@
             <div class="clear"></div>
         </div>
         <!-- END ALL CONTENT -->
+</script>
+<script type="text-html" id="hotels-no-results">
+<h1>404</h1>
 </script>
 <script type="text-html" id="hotels-results-inner-data">
     <!-- ko template: {name: 'hotels-results-inner', data: $data()} -->

@@ -65,7 +65,7 @@ class ToursAviaResultSet extends TourEntry
       @select res, result
       @trigger 'next'
     @avia = true
-    @noresults = result.data.length == 0
+    @noresults = result.noresults
     @results result
 
   findAndSelect: (result)=>
@@ -281,7 +281,8 @@ class ToursHotelsResultSet extends TourEntry
     # FIXME WTF
     @hotels = true
     @selection null
-    @noresults = result.data().length == 0
+    @noresults = result.noresults
+    @data.noresults = @noresults
     @results result
 
   findAndSelect: (result) =>
@@ -543,6 +544,7 @@ class ToursResultSet
       if entry.afterRender && afterRender
         console.log('arin')
         entry.afterRender()
+      console.error(entry)
       @selection entry
       ko.processAllDeferredBindingUpdates()
       ResizeAvia()

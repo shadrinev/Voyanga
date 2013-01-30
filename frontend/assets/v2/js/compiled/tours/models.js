@@ -160,7 +160,7 @@ ToursAviaResultSet = (function(_super) {
       return _this.trigger('next');
     };
     this.avia = true;
-    this.noresults = result.data.length === 0;
+    this.noresults = result.noresults;
     return this.results(result);
   };
 
@@ -500,7 +500,8 @@ ToursHotelsResultSet = (function(_super) {
     };
     this.hotels = true;
     this.selection(null);
-    this.noresults = result.data().length === 0;
+    this.noresults = result.noresults;
+    this.data.noresults = this.noresults;
     return this.results(result);
   };
 
@@ -874,6 +875,7 @@ ToursResultSet = (function() {
         console.log('arin');
         entry.afterRender();
       }
+      console.error(entry);
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
       ResizeAvia();

@@ -768,9 +768,7 @@ AviaResultSet = (function() {
     this.showBest = ko.observable(false);
     this.creationMoment = moment();
     this._results = {};
-    if (!rawVoyages.length) {
-      throw "404";
-    }
+    this.noresults = rawVoyages.length === 0;
     _interlines = {};
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
       flightVoyage = rawVoyages[_i];
