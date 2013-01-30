@@ -617,7 +617,9 @@ class Hotel extends CApplicationComponent
                 if($thisRoom->roomInfo['offer'] !== null && $otherRoom->roomInfo['offer'] !== null){
                     if($thisRoom->roomInfo['offer'] != $otherRoom->roomInfo['offer']){
                         //self::$compereDesc = "not same offer:".$thisRoom->roomInfo['offer']." and ".$otherRoom->roomInfo['offer'];
-                        return false;
+
+                        //Now special offer don't important. If important delete comment in 1 line down
+                        //return false;
                     }else{
 
                     }
