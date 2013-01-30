@@ -22,6 +22,7 @@ class HotelBookClient
     public static $countSql = 0;
     public static $countFunc = 0;
     public static $updateProcess = false;
+    public static $downCountCacheFill = 10;
     public $requests;
 
     public function request($url, $getData = null, $postData = null, $asyncParams = null, $cacheFileName = null)
@@ -58,6 +59,11 @@ class HotelBookClient
             }
             else
             {
+                if(self::$downCountCacheFill > 0){
+                    self::$downCountCacheFill--;
+                }else{
+                    return false;
+                }
                 $cacheResult = false;
             }
 
