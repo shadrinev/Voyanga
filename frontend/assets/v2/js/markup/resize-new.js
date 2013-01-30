@@ -560,6 +560,7 @@ function ResizeAvia() {
 }
 
 function ResizeAviaClb() {
+    console.log('!!!! DNIWE EBANOE!!!');
 //    if (DetectMobileQuick() )
         ResizeCenterBlock();
         inTheTwoLines();
