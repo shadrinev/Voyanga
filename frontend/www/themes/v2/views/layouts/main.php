@@ -22,7 +22,8 @@ else
 <head>
 	<link rel="shortcut icon" href="<?= $theme ?>/images/favicon.png" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title><?php echo $this->title ?></title>
+    <?php if (!isset($this->title)) $title = Yii::app()->params['title.default']; else $title = $this->title ?>
+    <title><?php echo $title ?></title>
     <script type="text/javascript"
             src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
