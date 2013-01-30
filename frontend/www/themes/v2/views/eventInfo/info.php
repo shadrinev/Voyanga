@@ -34,6 +34,11 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 <span style="display: none" id='socialSource'>
     <div id='socialButtons'>
         <ul id="social" class="cf">
+            <li style="width: 115px; position: relative;">
+                <a href="javascript:void(0);" id="followLink">
+                    <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText"> </span>
+                </a>
+            </li>
             <li>
                 <a class="socialite vkontakte-like"
                    href="http://vkontakte.ru/share.php?url=<?php echo $url ?>&amp;title=<?php echo $title ?>&amp;description=<?php echo $description ?>&amp;image=<?php echo $imageSmallAbs ?>" target="_blank">
@@ -51,10 +56,7 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
                 </a>
             </li>
     </ul>
-    <div class="clear"></div>
-    <a href="javascript:void(0);" id="followLink">
-        <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText"> </span>
-    </a>
+
     </div>
 </span>
 <!-- EVENTS -->

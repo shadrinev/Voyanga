@@ -3699,7 +3699,8 @@ a.whereData span {
     text-decoration: none;
     border-radius: 3px;
     box-shadow: 0px 1px 0px rgba(26,27,31,0.5);
-
+    z-index: 2;
+    position: absolute;
     background: #eff3f6;
     background: -moz-linear-gradient(top, #eff3f6 0%, #e8e9ef 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eff3f6), color-stop(100%,#e8e9ef));
@@ -3713,5 +3714,5 @@ a.whereData span {
     display: none;
 }
 #followLink .getLink input {
-    width: 250px;
+    width: 450px;
 }

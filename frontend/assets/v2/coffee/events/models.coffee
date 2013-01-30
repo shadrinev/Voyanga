@@ -10,11 +10,12 @@ ko.bindingHandlers.highlightChange =
     # Grab some more data from another binding property
     previousImage = allBindings.previousImage
 
-    newEl = $('<div class="IMGmain"><img src=""></div>')
+    newEl = $('<div class="IMGmain" style="visible:hidden"><img src=""></div>')
     newEl.appendTo ".centerTours"
 
     $(".IMGmain").eq(0).find('img').attr "src", previousImage()
-    indexIMGresizeCenter(0)
+    CenterIMGResize(0)
+    $(".IMGmain").eq(0).show()
 
     varLeftPos = $(".IMGmain").eq(1).css("left")
     varTopPos = $(".IMGmain").eq(1).css("top")
@@ -27,10 +28,9 @@ ko.bindingHandlers.highlightChange =
     previousImage(valueUnwrapped)
 
     slideToursSlide()
-    ResizeAvia()
 
     $(".IMGmain").eq(1).find("img").load ->
-      indexIMGresizeCenter(1)
+      CenterIMGResize(1)
       $(".IMGmain").eq(0).animate
         opacity: 0
       , speedAnimateChangePic, ->
@@ -39,6 +39,7 @@ ko.bindingHandlers.highlightChange =
       $(".IMGmain").eq(1).animate
         opacity: 1
       , speedAnimateChangePic
+
 
 class Event extends Backbone.Events
   constructor: (data) ->
