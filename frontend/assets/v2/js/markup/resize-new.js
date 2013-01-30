@@ -1095,11 +1095,11 @@ function PopUpInfoPath() {
     $(document).on('mousemove', '.tooltip', function(e) {
         var _text = $(this).attr('rel');
         if ($('.PopUpInfoPath').length > 0 && $('.PopUpInfoPath').is(':visible')) {
-            $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
+            $('.PopUpInfoPath').css('left', (e.pageX+8)+'px').css('top', (e.pageY + 5)+'px');
         }
         else {
             $('body').prepend('<div class="PopUpInfoPath">'+ _text +'</div> ');
-            $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
+            $('.PopUpInfoPath').css('left', (e.pageX+8)+'px').css('top', (e.pageY + 5)+'px');
         }
     });
     $(document).on('mouseout', '.tooltip', function() {
