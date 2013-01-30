@@ -6,7 +6,7 @@
  * Time: 16:14
  * To change this template use File | Settings | File Templates.
  */
-class EventInfoController extends Controller
+class EventInfoController extends FrontendController
 {
     public function actionIndex()
     {
@@ -17,15 +17,17 @@ class EventInfoController extends Controller
     public function actionInfo($eventId)
     {
         $event = Event::model()->findByPk($eventId);
-        $defaultCityId = 4466;
+        if (!$event)
+            throw new CHttpException(404, 'Событие не найдено');
 
+        $defaultCityId = 4466;
         $pricesData = array();
+        $this->assignTitle('event', array('##eventTitle##'=>$event->title));
         $this->layout = 'static';
         foreach ($event->prices as $price)
         {
             $pricesData[$price->city->id] = array('price' => floor($price->bestPrice), 'cityName' => $price->city->localRu, 'cityId' => $price->city->id, 'updateTime' => str_replace(' ', 'T', $price->updated));
         }
-
 
         $tours = array();
         $dataProvider = new TripDataProvider();
@@ -35,11 +37,7 @@ class EventInfoController extends Controller
 
             $tours[$tour->startCityId] = array();
             $dataProvider->restoreFromDb($tour->orderId);
-            //echo $tour->orderId.'dsf';
-
-            //print_r($dataProvider->getSortedCartItemsOnePerGroup(false));//die();
             $items = $dataProvider->getWithAdditionalInfo($dataProvider->getSortedCartItemsOnePerGroup(false));
-            //print_r($items);die();
             $tours[$tour->startCityId] = $items;
             $tours[$tour->startCityId]['city'] = City::getCityByPk($tour->startCityId)->getAttributes();
             $eventPrice = EventPrice::model()->findByAttributes(array('eventId' => $eventId, 'cityId' => $tour->startCityId));

@@ -1,6 +1,6 @@
 <?php
 $debug = true;
-$prodServers = array('test.voyanga.com', 'voyanga.com');
+$prodServers = array('voyanga.com');
 if ((isset($_SERVER['HTTP_HOST'])) && (in_array($_SERVER['HTTP_HOST'], $prodServers)))
   $debug = false;
 defined('YII_DEBUG') or define('YII_DEBUG', $debug);
