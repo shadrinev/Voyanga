@@ -17,7 +17,7 @@
         <!-- END ALL CONTENT -->
 </script>
 <script type="text-html" id="hotels-no-results">
-<h1>404</h1>
+<h1>В выбранные даты, к сожалению, отеля не найдено!</h1>
 </script>
 <script type="text-html" id="hotels-results-inner-data">
     <!-- ko template: {name: 'hotels-results-inner', data: $data()} -->
@@ -108,7 +108,9 @@
             <span class="bh"></span>
         </div>
     <!-- /ko -->
-        <div data-bind="visible: showButtonMoreResults,click: showMoreResults">Показать еще</div>
+        <div data-bind="visible: showButtonMoreResults" style="text-align:center;">
+            <span class="showMore" data-bind="click: showMoreResults">Показать еще</span>
+        </div>
     <!-- /ko -->
     </div>
     <div id="all-hotels-map" style="display: none;"></div>

@@ -3730,3 +3730,7 @@ a.whereData span {
 .addthis_toolbox a {
     padding: 0 6px !important;
 }
+.showMore {
+    font-size: 20px;
+    border-bottom: 1px dashed;
+}
