@@ -108,6 +108,7 @@
             <span class="bh"></span>
         </div>
     <!-- /ko -->
+        <div data-bind="visible: showButtonMoreResults,click: showMoreResults">Показать еще</div>
     <!-- /ko -->
     </div>
     <div id="all-hotels-map" style="display: none;"></div>

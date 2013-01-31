@@ -833,6 +833,7 @@ class HotelsResultSet
     @filtersConfig = false
     @pagesLoad = false
     @toursOpened = false
+
     window.hotelsScrollCallback = (ev)=>
       @checkShowMore(ev)
 
@@ -863,6 +864,8 @@ class HotelsResultSet
         return  1
       return 0
 
+    @showButtonMoreResults = ko.computed =>
+      return (@numResults() > (@showParts() * @showLimit)) && (DetectMobileQuick() || DetectTierTablet())
     window.hrs = @
 
 
