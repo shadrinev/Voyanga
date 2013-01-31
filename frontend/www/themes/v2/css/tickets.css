@@ -1079,16 +1079,19 @@
 .hotels-tickets .content .details ul li .items.specialOffer {
     border: 0px solid #ffbf0c;
     background: #feffe8;
-
-
+}
+.specialOffer {
+    border: 0px solid #ffbf0c;
+    background: #feffe8 !important;
 }
 .hotels-tickets .content .details ul li .items.specialOffer .how-cost {
     color: #B90C0C;
 }
+
 .hotels-tickets .content .details ul li .items.specialOffer .how-cost .cost {
     color: #B90C0C !important;
 }
-.hotels-tickets .content .details ul li .items.specialOffer .how-cost .offer {
+.offer {
     border-bottom: 1px dashed #B90C0C;
     color: #B90C0C;
     cursor: default;
