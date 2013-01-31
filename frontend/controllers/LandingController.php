@@ -96,9 +96,11 @@ class LandingController extends Controller {
         $hotelsInfo = array();
         foreach($hotelCache as $hc){
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
-            $hotelInfo->price = $hc->minPrice;
-            $hotelInfo->hotelName = $hc->name;
-            $hotelsInfo[] = $hotelInfo;
+            if($hotelInfo){
+                $hotelInfo->price = $hc->minPrice;
+                $hotelInfo->hotelName = $hc->name;
+                $hotelsInfo[] = $hotelInfo;
+            }
         }
 
         $criteria = new CDbCriteria();
@@ -266,10 +268,12 @@ class LandingController extends Controller {
         $hotelsInfo = array();
         foreach($hotelCache as $hc){
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
-            $hotelInfo->price = $hc->minPrice;
-            $hotelInfo->hotelName = $hc->name;
-            $hotelInfo->hotelId = $hc->id;
-            $hotelsInfo[] = $hotelInfo;
+            if($hotelInfo){
+                $hotelInfo->price = $hc->minPrice;
+                $hotelInfo->hotelName = $hc->name;
+                $hotelInfo->hotelId = $hc->id;
+                $hotelsInfo[] = $hotelInfo;
+            }
         }
 
         $criteria = new CDbCriteria();
@@ -361,9 +365,12 @@ class LandingController extends Controller {
         $hotelsInfo = array();
         foreach($hotelCache as $hc){
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
-            $hotelInfo->price = $hc->minPrice;
-            $hotelInfo->hotelName = $hc->name;
-            $hotelsInfo[] = $hotelInfo;
+            if($hotelInfo){
+                $hotelInfo->price = $hc->minPrice;
+                $hotelInfo->hotelName = $hc->name;
+                $hotelInfo->hotelId = $hc->id;
+                $hotelsInfo[] = $hotelInfo;
+            }
         }
         //echo 'count'.count($hotelCache);
 

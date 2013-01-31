@@ -52,7 +52,7 @@
                 <div class="full-info">
                     <div class="preview-photo">
                         <ul>
-                            <li><a class="photo" href="<?php echo $hotInfo->getFrontImageUrl();?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
+                            <li><a class="photo" href="<?php echo '/land/hotel/'.$hotInfo->hotelId;?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
                         </ul>
                     </div>
                     <div class="stars <?php echo $hotInfo->getWordStars();?>"></div>
@@ -83,12 +83,7 @@
 
     <div class="clear"></div>
 </div>
-<!-- END PANEL -->
 
-<!-- CALENDAR -->
-<div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarStatic}" style="top: -302px; overflow: hidden; height: 341px; position: static;">
-</div>
-<!-- END CALENDAR -->
 
 
 <div class="headBlockTwo">
@@ -296,6 +291,12 @@
 
         <div class="clear"></div>
     </div>
+    <!-- END PANEL -->
+
+    <!-- CALENDAR -->
+    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarStatic}" style="top: -302px; overflow: hidden; height: 341px; position: static;">
+    </div>
+    <!-- END CALENDAR -->
 </div>
 <div class="headBlockOne">
     <div class="center-block">
@@ -345,7 +346,7 @@
                     <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m',strtotime($fc->dateBack)) );?>
                 </td>
                 <td class="tdPrice">
-                    <a href="#"><span class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span class="rur">o</span></a>
+                    <a href="<?php echo '/land/'.City::getCityByPk($fc->to)->country->code.'/'.City::getCityByPk($fc->from)->code.'/'.City::getCityByPk($fc->to)->code.($fc->dateBack == '0000-00-00' ? '/trip/OW' : '' );?>"><span class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span class="rur">o</span></a>
                 </td>
             </tr>
                 <?php
@@ -391,7 +392,7 @@
                     <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m',strtotime($fc->dateBack)) );?>
                 </td>
                 <td class="tdPrice">
-                    <a href="#"><span class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span class="rur">o</span></a>
+                    <a href="<?php echo '/land/'.City::getCityByPk($fc->to)->country->code.'/'.City::getCityByPk($fc->from)->code.'/'.City::getCityByPk($fc->to)->code.($fc->dateBack == '0000-00-00' ? '/trip/OW' : '' );?>"><span class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span class="rur">o</span></a>
                 </td>
             </tr>
                 <?php
