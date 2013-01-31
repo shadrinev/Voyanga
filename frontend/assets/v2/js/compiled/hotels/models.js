@@ -542,10 +542,14 @@ HotelResult = (function() {
 
   HotelResult.prototype.showAllResults = function(data, event) {
     if (this.isShowAll()) {
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast');
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast', function() {
+        return jsPaneScrollHeight();
+      });
       return this.isShowAll(false);
     } else {
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast');
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast', function() {
+        return jsPaneScrollHeight();
+      });
       return this.isShowAll(true);
     }
   };

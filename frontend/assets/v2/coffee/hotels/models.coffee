@@ -361,11 +361,17 @@ class HotelResult
   showAllResults: (data,event)->
     #console.log(event)
     if @isShowAll()
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast')
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide(
+        'fast', ->
+          jsPaneScrollHeight();
+      );
       #$(event.currentTarget).parent().hide()
       @isShowAll(false)
     else
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast')
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show(
+        'fast', ->
+          jsPaneScrollHeight();
+      );
       #$(event.currentTarget).parent().hide()
       @isShowAll(true)
 
