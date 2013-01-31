@@ -706,7 +706,7 @@ HotelResult = (function() {
         key = roomSet.resultId;
         hotelResults.push(roomSet.resultId + ':' + roomSet.searchId);
       }
-      url = 'hotel/search/info/?hotelId=' + this.hotelId;
+      url = 'hotel/search/info?hotelId=' + this.hotelId;
       url += '&hotelResult=' + hotelResults.join(',');
       console.log(this.parent.cacheId);
       return api.search(url, function(data) {

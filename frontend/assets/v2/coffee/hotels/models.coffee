@@ -507,7 +507,7 @@ class HotelResult
         key = roomSet.resultId
         hotelResults.push roomSet.resultId+':'+roomSet.searchId
 
-      url = 'hotel/search/info/?hotelId='+@hotelId
+      url = 'hotel/search/info?hotelId='+@hotelId
       url += '&hotelResult='+hotelResults.join(',')
       console.log @parent.cacheId
       api.search(

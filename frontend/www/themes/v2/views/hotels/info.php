@@ -87,7 +87,7 @@
     <h3>Рекомендуемые сочетания по вашему запросу</h3>
     <!-- ko if: !haveFullInfo() -->
         <!-- ko foreach: roomSets -->
-        <div class="block-trip">
+        <div data-bind="css: 'block-trip '+(specialOffer() ? ' specialOffer' : '')">
         	 <table class="table-hotel-result">
                 <tr>
                     <td class="td-float" data-bind="foreach: rooms">
@@ -112,7 +112,7 @@
                         		</tr>
                                 <!-- ko if: last()-->
                                 <tr>
-                                    <td colspan="2"><a href="javascript:void(0)" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: 'Идет один запрос на получение информации...'},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
+                                    <td colspan="2"><a href="javascript:void(0)" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: 'Идет один запрос на получение информации...'},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a> <span class="offer tooltip" data-bind="visible: $parent.specialOffer(),attr: {rel: $parent.specialOffer()}">| Спецпредложение</span></td>
                                 </tr>
                                 <!-- /ko -->
                         	</table>
@@ -135,7 +135,7 @@
     <!-- /ko -->
     <!-- ko if: haveFullInfo() -->
       <!-- ko foreach: roomMixed -->
-      <div class="block-trip">
+      <div data-bind="css: 'block-trip '+(specialOffer() ? ' specialOffer' : '')">
       	
       		<table class="table-hotel-result">
                 <tr>
@@ -162,7 +162,7 @@
                         		</tr>
                                 <!-- ko if: last()-->
                         		<tr>
-                        			<td colspan="2"><a href="javascript:void(0)" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: $parent.cancelText()},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a></td>
+                        			<td colspan="2"><a href="javascript:void(0)" class="conditionCancel" rel="Условия бронирования пока не известны" data-bind="attr:{rel: $parent.cancelText()},event: { mouseover: $parent.showCancelationRules, mouseout: $parent.hideCancelationRules }">Условия отмены бронирования</a> <span class="offer tooltip" data-bind="visible: $parent.specialOffer(),attr: {rel: $parent.specialOffer()}">| Спецпредложение</span></td>
                         		</tr>
                                 <!-- /ko -->
                         	</table>
