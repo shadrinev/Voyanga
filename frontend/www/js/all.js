@@ -10052,27 +10052,35 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
+    if(!window.lastResizeCall)
+	window.lastResizeCall = 0;
+
+    var dt = new Date().getTime() - window.lastResizeCall;
+
     if(window.resizeAviaThrottle) {
 	clearTimeout(window.resizeAviaThrottle);
 	window.resizeAviaThrottle = null;
     }
-    window.resizeAviaThrottle = setTimeout(ResizeAviaClb, 1000/30);
+    if(dt < 100)
+	window.resizeAviaThrottle = setTimeout(ResizeAviaClb, 1000/10);
+    else {
+	ResizeAviaClb();
+    }
 }
 
 function ResizeAviaClb() {
-
-//    if (DetectMobileQuick() )
-        ResizeCenterBlock();
-        inTheTwoLines();
-        smallTicketHeight();
-        CenterIMGResize();
-        slideToursSlide();
-        smallIMGresizeIndex();
-        mapAllPageView();
-        gradientResize();
-        resizePanel();
-
-        startIE();
+    window.lastResizeCall = new Date().getTime();
+    //    if (DetectMobileQuick() )
+    ResizeCenterBlock();
+    inTheTwoLines();
+    smallTicketHeight();
+    CenterIMGResize();
+    slideToursSlide();
+    smallIMGresizeIndex();
+    mapAllPageView();
+    gradientResize();
+    resizePanel();
+    startIE();
 }
 
 function ResizeFun() {
@@ -14092,7 +14100,14 @@ ko.utils = new (function () {
 
             var container = document.createElement('div');
             for (var i = 0, j = nodesArray.length; i < j; i++) {
-                container.appendChild(ko.cleanNode(nodesArray[i]));
+		var node = nodesArray[i];
+ 		var isEmptyTextNode = (node.nodeType == 3 && node.textContent.trim() == '');
+                // Skip empty text nodes; Some browsers are slow at appending such nodes.
+                if (isEmptyTextNode)
+                    node.parentNode.removeChild(node);
+                else
+                    container.appendChild(ko.cleanNode(node));
+//                container.appendChild(ko.cleanNode(nodesArray[i]));
             }
             return container;
         },
@@ -34738,7 +34753,6 @@ ToursHotelsResultSet = (function(_super) {
     this.hotels = true;
     this.selection(null);
     this.noresults = result.noresults;
-    this.data.noresults = this.noresults;
     return this.results(result);
   };
 
@@ -35100,9 +35114,7 @@ ToursResultSet = (function() {
     } else {
       window.toursOverviewActive = false;
     }
-    console.log('br', beforeRender, afterRender);
     if (entry.beforeRender && beforeRender) {
-      console.log('brin');
       entry.beforeRender();
     }
     this.trigger('inner-template', entry.template);
@@ -35112,7 +35124,6 @@ ToursResultSet = (function() {
         console.log('arin');
         entry.afterRender();
       }
-      console.error(entry);
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
       ResizeAvia();
@@ -35121,9 +35132,8 @@ ToursResultSet = (function() {
         Utils.scrollTo(scrollTo, false);
       }
       if (callback) {
-        callback();
+        return callback();
       }
-      return console.log('TourOut2', window.hrs.data()[0]);
     }, 100);
   };
 
@@ -36143,47 +36153,6 @@ MEAL_VERBOSE = {
   'Завтрак Шведский стол': 'Завтрак'
 };
 
-/*
-class googleInfoDiv extends google.maps.OverlayView
-  constructor: ->
-    @div_ = null
-    @latLng = null
-    @content = ''
-  setPosition: (latLng)=>
-    @latLng = latLng
-    pos = getPosFromLatLng_(@latLng)
-    if(@div_)
-      @div_.css({'top': pos.y+'px','left': pos.x+'px'})
-  setContent: (content)=>
-    @content = content
-    if(@div_)
-      @div_.html(@content)
-  draw: ()=>
-    if(@div_)
-      @latLng = latLng
-      pos = getPosFromLatLng_(@latLng)
-      @div_.css({'top': pos.y+'px','left': pos.x+'px'})
-  onAdd: =>
-    pos = getPosFromLatLng_(@latLng)
-    divEl = $('<div style="background-color: #0ff; width: 50px; height: 5px;position: absolute">'+@content+'</div>')
-
-
-    divEl.css({'top': pos.y+'px','left': pos.x+'px'})
-    @div_ = divEl
-    panes = @getPanes()
-    $(panes.overlayMouseTarget).append(divEl)
-  getPosFromLatLng_: (LatLng)=>
-    pos = this.getProjection().fromLatLngToDivPixel(latlng);
-    #pos.x -= parseInt(this.width_ / 2, 10);
-    #pos.y -= parseInt(this.height_ / 2, 10);
-    return pos
-  hide: ()=>
-    @div_.hide()
-  show: ()=>
-    @div_.show()
-*/
-
-
 Room = (function() {
 
   function Room(data) {
@@ -36699,10 +36668,14 @@ HotelResult = (function() {
 
   HotelResult.prototype.showAllResults = function(data, event) {
     if (this.isShowAll()) {
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast');
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast', function() {
+        return jsPaneScrollHeight();
+      });
       return this.isShowAll(false);
     } else {
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast');
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast', function() {
+        return jsPaneScrollHeight();
+      });
       return this.isShowAll(true);
     }
   };
@@ -37899,8 +37872,7 @@ HotelsController = (function() {
       }
       _this.results(stacked);
       return _this.render('results', {
-        'results': _this.results,
-        'noresults': stacked.noresults
+        'results': _this.results
       });
     });
   };

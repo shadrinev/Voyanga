@@ -299,6 +299,9 @@ class GDSNemoAgency extends CComponent
                         $needSave = false;
                     }
                 }
+                if(!$needSave){
+                    continue;
+                }
                 //Yii::endProfile('processingSegments');
                 $full_sum = 0;
                 $aPassengers = array();

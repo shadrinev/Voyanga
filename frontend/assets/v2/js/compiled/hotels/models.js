@@ -542,10 +542,14 @@ HotelResult = (function() {
 
   HotelResult.prototype.showAllResults = function(data, event) {
     if (this.isShowAll()) {
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast');
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast', function() {
+        return jsPaneScrollHeight();
+      });
       return this.isShowAll(false);
     } else {
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast');
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast', function() {
+        return jsPaneScrollHeight();
+      });
       return this.isShowAll(true);
     }
   };
@@ -702,7 +706,7 @@ HotelResult = (function() {
         key = roomSet.resultId;
         hotelResults.push(roomSet.resultId + ':' + roomSet.searchId);
       }
-      url = 'hotel/search/info/?hotelId=' + this.hotelId;
+      url = 'hotel/search/info?hotelId=' + this.hotelId;
       url += '&hotelResult=' + hotelResults.join(',');
       console.log(this.parent.cacheId);
       return api.search(url, function(data) {
@@ -1118,6 +1122,9 @@ HotelsResultSet = (function() {
         return 1;
       }
       return 0;
+    });
+    this.showButtonMoreResults = ko.computed(function() {
+      return (_this.numResults() > (_this.showParts() * _this.showLimit)) && (DetectMobileQuick() || DetectTierTablet());
     });
     window.hrs = this;
   }

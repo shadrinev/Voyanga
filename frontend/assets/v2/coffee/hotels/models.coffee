@@ -361,11 +361,17 @@ class HotelResult
   showAllResults: (data,event)->
     #console.log(event)
     if @isShowAll()
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide('fast')
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide(
+        'fast', ->
+          jsPaneScrollHeight();
+      );
       #$(event.currentTarget).parent().hide()
       @isShowAll(false)
     else
-      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show('fast')
+      $(event.currentTarget).parent().parent().find('.hidden-roomSets').show(
+        'fast', ->
+          jsPaneScrollHeight();
+      );
       #$(event.currentTarget).parent().hide()
       @isShowAll(true)
 
@@ -501,7 +507,7 @@ class HotelResult
         key = roomSet.resultId
         hotelResults.push roomSet.resultId+':'+roomSet.searchId
 
-      url = 'hotel/search/info/?hotelId='+@hotelId
+      url = 'hotel/search/info?hotelId='+@hotelId
       url += '&hotelResult='+hotelResults.join(',')
       console.log @parent.cacheId
       api.search(
@@ -827,6 +833,7 @@ class HotelsResultSet
     @filtersConfig = false
     @pagesLoad = false
     @toursOpened = false
+
     window.hotelsScrollCallback = (ev)=>
       @checkShowMore(ev)
 
@@ -857,6 +864,8 @@ class HotelsResultSet
         return  1
       return 0
 
+    @showButtonMoreResults = ko.computed =>
+      return (@numResults() > (@showParts() * @showLimit)) && (DetectMobileQuick() || DetectTierTablet())
     window.hrs = @
 
 
