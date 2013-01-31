@@ -862,9 +862,7 @@ ToursResultSet = (function() {
     } else {
       window.toursOverviewActive = false;
     }
-    console.log('br', beforeRender, afterRender);
     if (entry.beforeRender && beforeRender) {
-      console.log('brin');
       entry.beforeRender();
     }
     this.trigger('inner-template', entry.template);
@@ -874,7 +872,6 @@ ToursResultSet = (function() {
         console.log('arin');
         entry.afterRender();
       }
-      console.error(entry);
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
       ResizeAvia();
@@ -883,9 +880,8 @@ ToursResultSet = (function() {
         Utils.scrollTo(scrollTo, false);
       }
       if (callback) {
-        callback();
+        return callback();
       }
-      return console.log('TourOut2', window.hrs.data()[0]);
     }, 100);
   };
 

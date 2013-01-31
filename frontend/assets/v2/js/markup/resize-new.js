@@ -552,27 +552,35 @@ function resizeMainStage() {
 }
 
 function ResizeAvia() {
+    if(!window.lastResizeCall)
+	window.lastResizeCall = 0;
+
+    var dt = new Date().getTime() - window.lastResizeCall;
+
     if(window.resizeAviaThrottle) {
 	clearTimeout(window.resizeAviaThrottle);
 	window.resizeAviaThrottle = null;
     }
-    window.resizeAviaThrottle = setTimeout(ResizeAviaClb, 1000/30);
+    if(dt < 100)
+	window.resizeAviaThrottle = setTimeout(ResizeAviaClb, 1000/10);
+    else {
+	ResizeAviaClb();
+    }
 }
 
 function ResizeAviaClb() {
-
-//    if (DetectMobileQuick() )
-        ResizeCenterBlock();
-        inTheTwoLines();
-        smallTicketHeight();
-        CenterIMGResize();
-        slideToursSlide();
-        smallIMGresizeIndex();
-        mapAllPageView();
-        gradientResize();
-        resizePanel();
-
-        startIE();
+    window.lastResizeCall = new Date().getTime();
+    //    if (DetectMobileQuick() )
+    ResizeCenterBlock();
+    inTheTwoLines();
+    smallTicketHeight();
+    CenterIMGResize();
+    slideToursSlide();
+    smallIMGresizeIndex();
+    mapAllPageView();
+    gradientResize();
+    resizePanel();
+    startIE();
 }
 
 function ResizeFun() {
