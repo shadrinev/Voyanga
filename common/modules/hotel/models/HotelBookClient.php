@@ -54,6 +54,7 @@ class HotelBookClient
             self::$downloadExternal = $asyncParams ? false : true;
             if (file_exists($cacheFilePath) && (!self::$updateProcess || (self::$updateProcess && (filectime($cacheFilePath) + 3600*24*14) > time() ) ) )
             {
+                //echo "file don't old:".date('Y-m-d H:i:s',(filectime($cacheFilePath) + 3600*24*14)).(self::$updateProcess ? ' true' : ' false')." {$cacheFilePath}\n";
                 $cacheResult = file_get_contents($cacheFilePath);
                 self::$saveCache = false;
             }
