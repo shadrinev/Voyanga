@@ -282,7 +282,6 @@ class ToursHotelsResultSet extends TourEntry
     @hotels = true
     @selection null
     @noresults = result.noresults
-    @data.noresults = @noresults
     @results result
 
   findAndSelect: (result) =>

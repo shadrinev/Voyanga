@@ -31,7 +31,7 @@ class HotelsController
         return
         
       @results stacked
-      @render 'results', {'results' : @results, 'noresults': stacked.noresults}
+      @render 'results', {'results' : @results}
 
   handleResults: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data

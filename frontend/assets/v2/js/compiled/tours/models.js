@@ -501,7 +501,6 @@ ToursHotelsResultSet = (function(_super) {
     this.hotels = true;
     this.selection(null);
     this.noresults = result.noresults;
-    this.data.noresults = this.noresults;
     return this.results(result);
   };
 

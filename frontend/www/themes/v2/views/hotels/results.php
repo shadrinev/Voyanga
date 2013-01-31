@@ -5,7 +5,7 @@
 <script id="hotels-results" type="text/html">
         <!-- MAIN BLOCK -->
         <div class="main-block">
-            <div id="content" data-bind="template: {name: noresults?'hotels-no-results':'hotels-results-inner', data: results()}" >
+            <div id="content" data-bind="template: {name: results().noresults?'hotels-no-results':'hotels-results-inner', data: results()}" >
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
