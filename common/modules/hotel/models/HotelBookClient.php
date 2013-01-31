@@ -1481,20 +1481,24 @@ class HotelBookClient
                 if(self::$saveCache && self::$cacheFilePath && self::$downloadExternal){
                     $largeUrl = (string)$imageSXE->Large;
                     $largeFileName = basename($largeUrl);
-                    try{
-                        $imgCont = @file_get_contents($largeUrl);
-                    }catch(Exeption $e){
-                        $imgCont = false;
-                    }
-                    if($imgCont){
-                        //coorect saving folder
-                        file_put_contents($imageSavePath. '/' . $largeFileName,$imgCont);
-                        $imageSXE->Large->{0} = '/image_storage/' . $cacheSubDir. '/' . $hotelId . '/' .$largeFileName;
-                        unset($imgCont);
+                    if(!file_exists($imageSavePath. '/' . $largeFileName)){
+                        try{
+                            $imgCont = @file_get_contents($largeUrl);
+                        }catch(Exeption $e){
+                            $imgCont = false;
+                        }
+                        if($imgCont){
+                            //coorect saving folder
+                            file_put_contents($imageSavePath. '/' . $largeFileName,$imgCont);
+                            $imageSXE->Large->{0} = '/image_storage/' . $cacheSubDir. '/' . $hotelId . '/' .$largeFileName;
+                            unset($imgCont);
+                        }else{
+                            //delete element
+                            unset($hotelSXE->Images->Image[$ind]);
+                            continue;
+                        }
                     }else{
-                        //delete element
-                        unset($hotelSXE->Images->Image[$ind]);
-                        continue;
+                        $imageSXE->Large->{0} = '/image_storage/' . $cacheSubDir. '/' . $hotelId . '/' .$largeFileName;
                     }
                 }
                 if ((int)$imageSXE->Small['width'])
