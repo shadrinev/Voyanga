@@ -75,12 +75,6 @@
             <span class="bh"></span>
         </div>
         <?php endforeach; ?>
-
-
-
-
-
-
     <div class="clear"></div>
 </div>
 
