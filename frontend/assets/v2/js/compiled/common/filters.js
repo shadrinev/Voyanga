@@ -611,23 +611,12 @@ AviaFiltersT = (function() {
 
     this.template = 'avia-filters';
     this.rt = this.results.roundTrip;
-    this.showRt = ko.observable(0);
-    this.showRtText = ko.observable('');
-    this.showRt.subscribe(function(newValue) {
-      if (+newValue) {
-        return _this.showRtText('обратно');
-      } else {
-        return _this.showRtText('туда');
-      }
-    });
-    this.voyageFilters = ['departure', 'arrival', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
-    this.rtVoyageFilters = ['rtDeparture', 'rtArrival', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
+    this.voyageFilters = ['departure', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
+    this.rtVoyageFilters = ['rtDeparture', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
     this.resultFilters = ['departureAirport', 'arrivalAirport', 'airline', 'serviceClass'];
     this.departure = new PriceFilter('departureTimeNumeric');
-    this.arrival = new TimeFilter('arrivalTimeNumeric');
     if (this.rt) {
       this.rtDeparture = new TimeFilter('departureTimeNumeric');
-      this.rtArrival = new TimeFilter('arrivalTimeNumeric');
     }
     fields = this.rt ? ['departureAirport', 'rtArrivalAirport'] : ['departureAirport'];
     this.departureAirport = new ListFilter(fields, this.results.departureCity, 'Все аэропорты');

@@ -341,25 +341,15 @@ class AviaFiltersT
     @template = 'avia-filters'
     @rt = @results.roundTrip
 
-    @showRt = ko.observable 0
-    @showRtText = ko.observable ''
-    @showRt.subscribe (newValue)=>
-      if +newValue
-        @showRtText 'обратно'
-      else
-        @showRtText 'туда'
-
     # Fixme stopover filter will cause filter method to run twice!
     # onlyDirect should actually be result filter
-    @voyageFilters = ['departure', 'arrival', 'shortStopover', 'irrelevantlyLong', 'onlyDirect']
-    @rtVoyageFilters = ['rtDeparture', 'rtArrival', 'shortStopover', 'irrelevantlyLong','onlyDirect']
+    @voyageFilters = ['departure', 'shortStopover', 'irrelevantlyLong', 'onlyDirect']
+    @rtVoyageFilters = ['rtDeparture', 'shortStopover', 'irrelevantlyLong','onlyDirect']
     @resultFilters = ['departureAirport', 'arrivalAirport', 'airline', 'serviceClass']
     
     @departure = new PriceFilter('departureTimeNumeric')
-    @arrival = new TimeFilter('arrivalTimeNumeric')
     if @rt
       @rtDeparture = new TimeFilter('departureTimeNumeric')
-      @rtArrival = new TimeFilter('arrivalTimeNumeric')
 
 
     fields = if @rt then ['departureAirport','rtArrivalAirport'] else ['departureAirport']
