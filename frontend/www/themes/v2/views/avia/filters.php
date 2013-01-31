@@ -24,33 +24,24 @@
 	      <input type="checkbox" data-bind="checkbox:{label: 'Только короткие пересадки', checked: shortStopover.selection}" />
 	    </div>
 	    <div class="div-filter">
-	      <div class="slider-filter smallSlide" style="text-align:center; margin-bottom:14px;" data-bind="visible: rt">
-	        <div>
-	          <select class="smallSlider" data-bind="slider: true, value: showRt"><option value="0" selected="selected">Туда</option><option value="1">Обратно</option></select>
-	        </div>
-	        <br>
-	        <br>
-	      </div>
-	      <h4>Время вылета <span class="flightDirectionName" data-bind="visible: rt, text:showRtText">туда</span></h4>
+	      <h4>Время вылета <span class="flightDirectionName" data-bind="visible: rt">туда</span></h4>
 	      <div class="slide-filter">
-	        <div class="slider-wrapper-div" data-bind="visible: !(+showRt())">
+	        <div class="slider-wrapper-div">
 	          <input data-bind="timeSlider: departure"/>
 	        </div>
 		<!-- FIXME -->
-	        <div class="slider-wrapper-div" data-bind="if: rt, visible: +showRt()">
+	        <!-- div class="slider-wrapper-div" data-bind="if: rt, visible: +showRt()">
 	          <input data-bind="timeSlider: rtDeparture"/>
-	        </div>
+	        </div -->
 	      </div>
-	      <h4 style="margin-top:25px">Время прилета <span class="flightDirectionName" data-bind="visible: rt, text:showRtText">туда</span></h4>
+              <!-- ko if: rt -->
+	      <h4 style="margin-top:25px">Время вылета <span class="flightDirectionName" data-bind="visible: rt">обратно</span></h4>
 	      <div class="slide-filter">
-	        <div class="slider-wrapper-div" data-bind="visible: !(+showRt())">
-	          <input data-bind="timeSlider: arrival "/>
-	        </div>
-		<!-- FIXME -->
-	        <div class="slider-wrapper-div" data-bind="if: rt, visible: +showRt()">
-	          <input data-bind="timeSlider: rtArrival"/>
+	        <div class="slider-wrapper-div">
+	          <input data-bind="timeSlider: rtDeparture "/>
 	        </div>
 	      </div>
+              <!-- /ko -->
 	    </div>
 	<!-- AIRPORTS -->
 	    <div class="div-filter" data-bind="template: {'name': 'avia-filter-list', 'data': departureAirport, 'if': departureAirport.active}, 'visible': departureAirport.active">
