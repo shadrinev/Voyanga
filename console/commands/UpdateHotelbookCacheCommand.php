@@ -36,6 +36,8 @@ EOD;
             Yii::import('site.common.modules.hotel.models.*');
             $HotelClient = new HotelBookClient();
             $HotelClient->synchronize(true);
+            //$HotelClient
+            HotelBookClient::$updateProcess = true;
             $countries = $HotelClient->getCountries();
             $countryStart = false;
             $cityStart = false;
@@ -52,6 +54,7 @@ EOD;
                     $countryStart = true;
                 }
                 echo "process country with id: {$country['id']}\n";
+                HotelBookClient::$downCountCacheFill = 1000500;
                 $hotelCities = $HotelClient->getCities($country['id']);
                 foreach ($hotelCities as $hotelCity) {
                     if ($cityStartId && !$cityStart) {
@@ -64,6 +67,7 @@ EOD;
                         $cityStart = true;
                     }
                     echo "process city with id: {$hotelCity['id']}\n";
+                    HotelBookClient::$downCountCacheFill = 1000500;
                     echo "Memory usage: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
                     $cityHotels = $HotelClient->getHotels($hotelCity['id']);
                     foreach ($cityHotels as $hotel) {
@@ -74,7 +78,7 @@ EOD;
                                 echo "Cant get hotelDetail for hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
                                 $tryAgain--;
                                 $cachePath = Yii::getPathOfAlias('cacheStorage');
-                                $cacheSubDir = md5('HotelDetail' . $hotel['id'] . '.xml');
+                                $cacheSubDir = md5('HotelDetail' . $hotel['id']);
                                 $cacheSubDir = substr($cacheSubDir,-3);
                                 $cacheFilePath = $cachePath . '/' . $cacheSubDir .'/HotelDetail' . $hotel['id'] . '.xml';
                                 if (file_exists($cacheFilePath)) {
@@ -92,6 +96,14 @@ EOD;
                                 if(!$tryAgain){
                                     echo "HotelOK hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
                                 }
+                            }
+                            if(!HotelBookClient::$saveCache){
+                                $cachePath = Yii::getPathOfAlias('cacheStorage');
+                                //echo 'input str: '.bin2hex('HotelDetail' . $hotel['id']).' ('.'HotelDetail' . $hotel['id'] .')';
+                                $cacheSubDir = md5('HotelDetail' . $hotel['id']);
+                                $cacheSubDir = substr($cacheSubDir,-3);
+                                $cacheFilePath = $cachePath . '/' . $cacheSubDir .'/HotelDetail' . $hotel['id'] . '.xml';
+                                echo "file don't old:".date('Y-m-d H:i:s',(filectime($cacheFilePath) + 3600*24*14)).(HotelBookClient::$updateProcess ? ' true' : ' false')." {$cacheFilePath}\n";
                             }
                             usleep(200000);
                         }

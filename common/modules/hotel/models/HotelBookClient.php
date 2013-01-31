@@ -54,6 +54,7 @@ class HotelBookClient
             self::$downloadExternal = $asyncParams ? false : true;
             if (file_exists($cacheFilePath) && (!self::$updateProcess || (self::$updateProcess && (filectime($cacheFilePath) + 3600*24*14) > time() ) ) )
             {
+                //echo "file don't old:".date('Y-m-d H:i:s',(filectime($cacheFilePath) + 3600*24*14)).(self::$updateProcess ? ' true' : ' false')." {$cacheFilePath}\n";
                 $cacheResult = file_get_contents($cacheFilePath);
                 self::$saveCache = false;
             }
@@ -1481,20 +1482,24 @@ class HotelBookClient
                 if(self::$saveCache && self::$cacheFilePath && self::$downloadExternal){
                     $largeUrl = (string)$imageSXE->Large;
                     $largeFileName = basename($largeUrl);
-                    try{
-                        $imgCont = @file_get_contents($largeUrl);
-                    }catch(Exeption $e){
-                        $imgCont = false;
-                    }
-                    if($imgCont){
-                        //coorect saving folder
-                        file_put_contents($imageSavePath. '/' . $largeFileName,$imgCont);
-                        $imageSXE->Large->{0} = '/image_storage/' . $cacheSubDir. '/' . $hotelId . '/' .$largeFileName;
-                        unset($imgCont);
+                    if(!file_exists($imageSavePath. '/' . $largeFileName)){
+                        try{
+                            $imgCont = @file_get_contents($largeUrl);
+                        }catch(Exeption $e){
+                            $imgCont = false;
+                        }
+                        if($imgCont){
+                            //coorect saving folder
+                            file_put_contents($imageSavePath. '/' . $largeFileName,$imgCont);
+                            $imageSXE->Large->{0} = '/image_storage/' . $cacheSubDir. '/' . $hotelId . '/' .$largeFileName;
+                            unset($imgCont);
+                        }else{
+                            //delete element
+                            unset($hotelSXE->Images->Image[$ind]);
+                            continue;
+                        }
                     }else{
-                        //delete element
-                        unset($hotelSXE->Images->Image[$ind]);
-                        continue;
+                        $imageSXE->Large->{0} = '/image_storage/' . $cacheSubDir. '/' . $hotelId . '/' .$largeFileName;
                     }
                 }
                 if ((int)$imageSXE->Small['width'])
