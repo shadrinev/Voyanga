@@ -5,7 +5,7 @@
 <script id="hotels-results" type="text/html">
         <!-- MAIN BLOCK -->
         <div class="main-block">
-            <div id="content" data-bind="template: {name: noresults?'hotels-no-results':'hotels-results-inner', data: results()}" >
+            <div id="content" data-bind="template: {name: results().noresults?'hotels-no-results':'hotels-results-inner', data: results()}" >
             </div>
             <!-- END MAIN BLOCK -->
             <!-- FILTER BLOCK -->
@@ -175,9 +175,8 @@
                     </td>
                     <td class="td-cost">
                         <div class="how-cost">
-                            <span class="cost" data-bind="text: pricePerNight">14 200</span><span class="rur f21">o</span> / ночь
+                            <span class="cost" data-bind="text: pricePerNight">14 200</span><span class="rur f21">o</span> / ночь<br>
                             <span class="offer tooltip" data-bind="visible: specialOffer(),attr: {rel: specialOffer()}">Спецпредложение<br></span>
-                            <br>
                             <span class="grey em" data-bind="visible: rooms.length == 2">За оба номера</span>
                         </div>
                     </td>

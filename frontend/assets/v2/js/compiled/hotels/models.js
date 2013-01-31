@@ -27,47 +27,6 @@ MEAL_VERBOSE = {
   'Завтрак Шведский стол': 'Завтрак'
 };
 
-/*
-class googleInfoDiv extends google.maps.OverlayView
-  constructor: ->
-    @div_ = null
-    @latLng = null
-    @content = ''
-  setPosition: (latLng)=>
-    @latLng = latLng
-    pos = getPosFromLatLng_(@latLng)
-    if(@div_)
-      @div_.css({'top': pos.y+'px','left': pos.x+'px'})
-  setContent: (content)=>
-    @content = content
-    if(@div_)
-      @div_.html(@content)
-  draw: ()=>
-    if(@div_)
-      @latLng = latLng
-      pos = getPosFromLatLng_(@latLng)
-      @div_.css({'top': pos.y+'px','left': pos.x+'px'})
-  onAdd: =>
-    pos = getPosFromLatLng_(@latLng)
-    divEl = $('<div style="background-color: #0ff; width: 50px; height: 5px;position: absolute">'+@content+'</div>')
-
-
-    divEl.css({'top': pos.y+'px','left': pos.x+'px'})
-    @div_ = divEl
-    panes = @getPanes()
-    $(panes.overlayMouseTarget).append(divEl)
-  getPosFromLatLng_: (LatLng)=>
-    pos = this.getProjection().fromLatLngToDivPixel(latlng);
-    #pos.x -= parseInt(this.width_ / 2, 10);
-    #pos.y -= parseInt(this.height_ / 2, 10);
-    return pos
-  hide: ()=>
-    @div_.hide()
-  show: ()=>
-    @div_.show()
-*/
-
-
 Room = (function() {
 
   function Room(data) {

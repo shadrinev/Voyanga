@@ -10595,11 +10595,11 @@ function PopUpInfoPath() {
     $(document).on('mousemove', '.tooltip', function(e) {
         var _text = $(this).attr('rel');
         if ($('.PopUpInfoPath').length > 0 && $('.PopUpInfoPath').is(':visible')) {
-            $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
+            $('.PopUpInfoPath').css('left', (e.pageX+8)+'px').css('top', (e.pageY + 5)+'px');
         }
         else {
             $('body').prepend('<div class="PopUpInfoPath">'+ _text +'</div> ');
-            $('.PopUpInfoPath').css('left', e.pageX+'px').css('top', (e.pageY + 5)+'px');
+            $('.PopUpInfoPath').css('left', (e.pageX+8)+'px').css('top', (e.pageY + 5)+'px');
         }
     });
     $(document).on('mouseout', '.tooltip', function() {
@@ -11907,6 +11907,16 @@ function inTheTwoLines() {
     }
 }
 
+
+/* RATING HOVER */
+function ratingHoverActive(obj) {
+    var that = $(obj);
+    that.parent().addClass('hover');
+}
+function ratingHoverNoActive(obj) {
+    var that = $(obj);
+    that.parent().removeClass('hover');
+}
 
 function hideRecomendedBlockTicket() {
     if (!$(this).hasClass('show')) {
@@ -32805,9 +32815,7 @@ AviaResultSet = (function() {
     this.showBest = ko.observable(false);
     this.creationMoment = moment();
     this._results = {};
-    if (!rawVoyages.length) {
-      throw "404";
-    }
+    this.noresults = rawVoyages.length === 0;
     _interlines = {};
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
       flightVoyage = rawVoyages[_i];
@@ -33401,9 +33409,9 @@ Voyasha = (function() {
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         if (item.isAvia()) {
-          result.push(_this.handleAvia(item));
+          result.push((item.results().data.length !== 0 ? _this.handleAvia(item) : null));
         } else {
-          result.push(_this.handleHotels(item));
+          result.push((item.results().data().length !== 0 ? _this.handleHotels(item) : null));
         }
       }
       return result;
@@ -33414,7 +33422,9 @@ Voyasha = (function() {
       _ref = _this.selected();
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
-        result += item.price;
+        if (item != null) {
+          result += item.price;
+        }
       }
       return result;
     });
@@ -33471,10 +33481,13 @@ VoyashaCheapest = (function(_super) {
   VoyashaCheapest.prototype.handleHotels = function(item) {
     var data, hotel, result, roomSet, _i, _j, _len, _len1, _ref, _ref1;
     data = item.results().data();
+    if (data.length === 0) {
+      return;
+    }
     result = {
       roomSet: data[0].roomSets()[0],
       hotel: data[0],
-      price: data[0].roomSets()[0].price
+      price: data[0].roomSets()[0].discountPrice
     };
     _ref = item.results().data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -33482,10 +33495,10 @@ VoyashaCheapest = (function(_super) {
       _ref1 = hotel.roomSets();
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         roomSet = _ref1[_j];
-        if (roomSet.price < result.roomSet.price) {
+        if (roomSet.price < result.roomSet.discountPrice) {
           result.roomSet = roomSet;
           result.hotel = hotel;
-          result.price = result.roomSet.price;
+          result.price = result.roomSet.discountPrice;
         }
       }
     }
@@ -33523,7 +33536,7 @@ VoyashaOptima = (function(_super) {
     result = {
       roomSet: data[0].roomSets()[0],
       hotel: data[0],
-      price: data[0].roomSets()[0].price
+      price: data[0].roomSets()[0].discountPrice
     };
     results = _.filter(data, function(x) {
       return x.distanceToCenter <= 6;
@@ -33532,14 +33545,14 @@ VoyashaOptima = (function(_super) {
       return (x.starsNumeric === 3) || (x.starsNumeric === 4);
     });
     results.sort(function(a, b) {
-      return a.roomSets()[0].price - b.roomSets()[0].price;
+      return a.roomSets()[0].discountPrice - b.roomSets()[0].discountPrice;
     });
     if (results.length) {
       data = results[0];
       result = {
         roomSet: data.roomSets()[0],
         hotel: data,
-        price: data.roomSets()[0].price
+        price: data.roomSets()[0].discountPrice
       };
     }
     results = _.filter(results, function(x) {
@@ -33550,7 +33563,7 @@ VoyashaOptima = (function(_super) {
       result = {
         roomSet: data.roomSets()[0],
         hotel: data,
-        price: data.roomSets()[0].price
+        price: data.roomSets()[0].discountPrice
       };
     }
     return result;
@@ -33622,20 +33635,20 @@ VoyashaRich = (function(_super) {
     result = {
       roomSet: data[0].roomSets()[0],
       hotel: data[0],
-      price: data[0].roomSets()[0].price
+      price: data[0].roomSets()[0].discountPrice
     };
     results = data;
     results.sort(function(a, b) {
       var aHotelRating, bHotelRating;
       aHotelRating = _this.getRating(a);
       bHotelRating = _this.getRating(b);
-      return a.roomSets()[0].price * aHotelRating - b.roomSets()[0].price * bHotelRating;
+      return a.roomSets()[0].discountPrice * aHotelRating - b.roomSets()[0].discountPrice * bHotelRating;
     });
     data = results[0];
     result = {
       roomSet: data.roomSets()[0],
       hotel: data,
-      price: data.roomSets()[0].price
+      price: data.roomSets()[0].discountPrice
     };
     return result;
   };
@@ -34268,6 +34281,9 @@ TourEntry = (function() {
   };
 
   TourEntry.prototype.priceHtml = function() {
+    if (this.noresults) {
+      return "Нет результатов";
+    }
     if (this.selection() === null) {
       return "Не выбрано";
     }
@@ -34381,6 +34397,7 @@ ToursAviaResultSet = (function(_super) {
       return _this.trigger('next');
     };
     this.avia = true;
+    this.noresults = result.noresults;
     return this.results(result);
   };
 
@@ -34720,6 +34737,8 @@ ToursHotelsResultSet = (function(_super) {
     };
     this.hotels = true;
     this.selection(null);
+    this.noresults = result.noresults;
+    this.data.noresults = this.noresults;
     return this.results(result);
   };
 
@@ -34758,7 +34777,9 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.select = function(roomData) {
-    return this._selectRoomSet(roomData.roomSet);
+    if (roomData != null) {
+      return this._selectRoomSet(roomData.roomSet);
+    }
   };
 
   ToursHotelsResultSet.prototype._selectRoomSet = function(roomSet) {
@@ -34827,7 +34848,11 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.destinationText = function() {
-    return "<span class='hotel-left-long'>Отель в " + this.rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + this.rawSP.cityFull.caseNom + "</span>";
+    if (this.noresults) {
+      return this.rawSP.cityFull.caseNom;
+    } else {
+      return "<span class='hotel-left-long'>Отель в " + this.rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + this.rawSP.cityFull.caseNom + "</span>";
+    }
   };
 
   ToursHotelsResultSet.prototype.price = function() {
@@ -35087,6 +35112,7 @@ ToursResultSet = (function() {
         console.log('arin');
         entry.afterRender();
       }
+      console.error(entry);
       _this.selection(entry);
       ko.processAllDeferredBindingUpdates();
       ResizeAvia();
@@ -36117,7 +36143,8 @@ MEAL_VERBOSE = {
   'Завтрак Шведский стол': 'Завтрак'
 };
 
-/*class googleInfoDiv extends google.maps.OverlayView
+/*
+class googleInfoDiv extends google.maps.OverlayView
   constructor: ->
     @div_ = null
     @latLng = null
@@ -36291,10 +36318,14 @@ RoomSet = (function() {
         return 'Условия бронирования не известны';
       }
     });
+    this.specialOffer = ko.observable('');
     this.rooms = [];
     _ref = data.rooms;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
+      if (room.offerText && !this.specialOffer()) {
+        this.specialOffer(room.offerText);
+      }
       this.rooms.push(new Room(room));
     }
     this.rooms[this.rooms.length - 1].last(true);
@@ -37116,6 +37147,7 @@ HotelsResultSet = (function() {
     if (!rawData.hotels) {
       throw "404";
     }
+    this.noresults = rawData.hotels.length === 0;
     this.creationMoment = moment();
     this.rawSP = this.searchParams;
     this.cacheId = rawData.cacheId;
@@ -37867,7 +37899,8 @@ HotelsController = (function() {
       }
       _this.results(stacked);
       return _this.render('results', {
-        'results': _this.results
+        'results': _this.results,
+        'noresults': stacked.noresults
       });
     });
   };

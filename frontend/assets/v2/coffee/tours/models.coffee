@@ -282,7 +282,6 @@ class ToursHotelsResultSet extends TourEntry
     @hotels = true
     @selection null
     @noresults = result.noresults
-    @data.noresults = @noresults
     @results result
 
   findAndSelect: (result) =>
@@ -533,9 +532,7 @@ class ToursResultSet
       window.toursOverviewActive = true
     else
       window.toursOverviewActive = false
-    console.log('br',beforeRender,afterRender)
     if entry.beforeRender && beforeRender
-      console.log('brin')
       entry.beforeRender()
     @trigger 'inner-template', entry.template
     # FIXME 
@@ -544,7 +541,6 @@ class ToursResultSet
       if entry.afterRender && afterRender
         console.log('arin')
         entry.afterRender()
-      console.error(entry)
       @selection entry
       ko.processAllDeferredBindingUpdates()
       ResizeAvia()
@@ -553,7 +549,6 @@ class ToursResultSet
         Utils.scrollTo(scrollTo,false)
       if callback
         callback()
-      console.log('TourOut2',window.hrs.data()[0])
     , 100
 
 

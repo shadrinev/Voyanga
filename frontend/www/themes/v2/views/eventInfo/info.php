@@ -33,22 +33,27 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 </script>
 <span style="display: none" id='socialSource'>
     <div id='socialButtons'>
+        <a href="javascript:void(0);" id="followLink" title="Прямая ссылка">
+            <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText"> </span>
+        </a>
         <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-            <a class="addthis_button_preferred_1 "></a>
-            <a class="addthis_button_preferred_2"></a>
-            <a class="addthis_button_preferred_3"></a>
-            <a class="addthis_button_compact"></a>
-        </div>
-        <script type="text/javascript">
-            var addthis_config =
-                {
-                    data_track_addressbar: false,
-                    data_track_clickback: false,
-                    services_expanded: 'vk,livejournal,pinterest,favorites',
-                    services_exclude: 'linkedin, print',
-                    services_compact: 'vk,livejournal,pinterest,favorites',
 
+            <a class="addthis_button_vk"
+               addthis:url="http://example.com"
+               addthis:title="An Example Title"
+               addthis:description="<?php echo $event->preview;?>" title="Вконтакте"></a>
+            <a class="addthis_button_facebook"
+               addthis:url="http://example.com"
+               addthis:title="An Example Title"
+               addthis:description="<?php echo $event->preview;?>" title="Facebook"></a>
+            <a class="addthis_button_twitter" title="Twitter"></a>
+        </div>
+        <script>
+            var addthis_share = {
+                templates : {
+                    twitter : "{{title}} (via @voyanga) #voyanga {{url}}"
                 }
+            }
         </script>
         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
 
