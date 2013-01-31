@@ -22,8 +22,8 @@ class StartPaymentAction extends CAction
         }
         // FIXME move to config
         $params['url']= "https://secure.payonlinesystem.com/ru/payment/ivoyanga/";
-        $params['ReturnUrl'] = "http://test.voyanga.com/buy/waitpayment";
-        $params['FailUrl'] = "http://test.voyanga.com/buy/waitpayment";
+        $params['ReturnUrl'] = $this->controller->createAbsoluteUrl("buy/waitpayment");
+        $params['FailUrl'] = $this->controller->createAbsoluteUrl("buy/waitpayment");
         header("Content-type: application/json");
         $result = Array();
         $result['payonline'] = $params;
