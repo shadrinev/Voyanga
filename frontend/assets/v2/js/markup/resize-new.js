@@ -1601,5 +1601,8 @@ function ifIpadLoad() {
         else {
             $('body').css('width','111%');
         }
+        if ($('.maps').length > 0 && $('.maps').is(':visible')) {
+            $('.maps').append('<div style="position: absolute; width: 100%; height: 100%; z-index: 500;"></div>');
+        }
     }
 }
