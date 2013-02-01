@@ -1602,7 +1602,10 @@ function ifIpadLoad() {
             $('body').css('width','111%');
         }
         if ($('.maps').length > 0 && $('.maps').is(':visible')) {
-            $('.maps').append('<div style="position: absolute; width: 100%; height: 100%; z-index: 500;"></div>');
+            if ($('.maps').find('.layers').length < 0) {
+                $('.maps').append('<div class="layers" style="position: absolute; width: 100%; height: 100%; z-index: 500; top:0px; left: 0px;"></div>');
+            }
+            else { return }
         }
     }
 }
