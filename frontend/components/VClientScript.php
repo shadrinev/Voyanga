@@ -29,6 +29,7 @@ class VClientScript extends CClientScript
         $makefile = str_replace('{{jsFiles}}', implode(" \\\n", $fullPaths), $makefileTemplate);
         $makefile = str_replace('{{cssFiles}}', implode(" \\\n", $cssPaths), $makefile);
         file_put_contents($filePath, $makefile);
+        var_dump($this->scriptFiles); die();
         parent::renderHead($output);
     }
 }
