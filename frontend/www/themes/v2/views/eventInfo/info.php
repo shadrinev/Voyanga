@@ -34,7 +34,7 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 <span style="display: none" id='socialSource'>
     <div id='socialButtons'>
         <a href="javascript:void(0);" id="followLink" title="Прямая ссылка">
-            <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText"> </span>
+            <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText" value="http://example.com/"> </span>
         </a>
         <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
 
