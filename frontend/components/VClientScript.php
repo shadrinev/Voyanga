@@ -7,19 +7,12 @@
  */
 class VClientScript extends CClientScript
 {
-    public function renderCoreScripts()
-    {
-        $folder = 'frontend.tmp';
-        $path = Yii::getPathOfAlias($folder);
-        $filePath = $path . '/core.txt';
-        file_put_contents($filePath, CVarDumper::dumpAsString($this->coreScripts));
-        parent::renderCoreScripts();
-    }
+    public $buildingMode = false;
 
     public function renderHead(&$output)
     {
-        $folder = 'frontend.tmp';
-        $path = Yii::getPathOfAlias($folder);
+        if (!$this->buildingMode)
+           return parent::renderHead($output);
         $root = Yii::getPathOfAlias('webroot');
         $filePath = $root.'/../../Makefile';
         $fullPaths = array();
@@ -36,6 +29,7 @@ class VClientScript extends CClientScript
         $makefile = str_replace('{{jsFiles}}', implode(" \\\n", $fullPaths), $makefileTemplate);
         $makefile = str_replace('{{cssFiles}}', implode(" \\\n", $cssPaths), $makefile);
         file_put_contents($filePath, $makefile);
+        var_dump($this->scriptFiles); die();
         parent::renderHead($output);
     }
 }

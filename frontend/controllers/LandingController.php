@@ -409,6 +409,16 @@ class LandingController extends Controller {
         if(!($country = $this->testCountry($countryCode)))
             return false;
 
+        //$criteria = new CDbCriteria();
+
+
+        /*$criteria->limit = 15;
+
+        $hotelCache = HotelDb::model()->findAll($criteria);
+
+        VarDumper::dump($hotelCache);
+        die();*/
+
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
         $countryMorph = array('caseAcc'=>$this->getCase($countryUp,'ВН'));
@@ -494,6 +504,7 @@ class LandingController extends Controller {
 
         $criteria->limit = 15;
 
+        //print_r($criteria);
         $hotelCache = HotelDb::model()->findAll($criteria);
         $hotelsInfo = array();
         foreach($hotelCache as $hc){

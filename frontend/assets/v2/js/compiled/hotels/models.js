@@ -1417,7 +1417,7 @@ HotelsResultSet = (function() {
     }
     fv = this.data()[0];
     sv = this.data()[1];
-    return console.log('after more results', fv, sv, this.showParts());
+    return console.log('after more results', fv, sv, this.showParts(), 'resultsForRender length', this.resultsForRender().length);
   };
 
   HotelsResultSet.prototype.checkShowMore = function(ev) {

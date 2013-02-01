@@ -1706,16 +1706,19 @@ h4 a {
 .hotels-tickets .content .details ul li .items.specialOffer {
     border: 0px solid #ffbf0c;
     background: #feffe8;
-
-
+}
+.specialOffer {
+    border: 0px solid #ffbf0c;
+    background: #feffe8 !important;
 }
 .hotels-tickets .content .details ul li .items.specialOffer .how-cost {
     color: #B90C0C;
 }
+
 .hotels-tickets .content .details ul li .items.specialOffer .how-cost .cost {
     color: #B90C0C !important;
 }
-.hotels-tickets .content .details ul li .items.specialOffer .how-cost .offer {
+.offer {
     border-bottom: 1px dashed #B90C0C;
     color: #B90C0C;
     cursor: default;
@@ -6146,6 +6149,10 @@ a.whereData span {
 }
 .addthis_toolbox a {
     padding: 0 6px !important;
+}
+.showMore {
+    font-size: 20px;
+    border-bottom: 1px dashed;
 }@charset "UTF-8";
 #popupOverlay {
     background: none repeat scroll 0 0 #26292E;
