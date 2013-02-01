@@ -55,7 +55,8 @@ class HotelRoom extends CApplicationComponent
     public $offerText;
     public $childAges = array();
     public $roomInfo;
-    public $rusNameFound;
+    //public $rusNameFound;
+    public $_rusNameFound;
     public $providerId;
     public $roomNameNemo;
 
@@ -69,14 +70,25 @@ class HotelRoom extends CApplicationComponent
 
                 if($this->roomNameNemo->rusName){
                     $this->_showName = $this->roomNameNemo->rusName;
+                    $this->_rusNameFound = true;
                 }else{
                     $this->_showName = $this->roomName;
+                    $this->_rusNameFound = false;
                 }
                 return $this->_showName;
             }else{
+                $this->_rusNameFound = false;
                 return '';
             }
         }
+    }
+
+    public function getRusNameFound()
+    {
+        $this->getShowName();
+        //echo "Show name: ".$this->getShowName().($this->_rusNameFound? ' true': ' false')."<br>";
+        return $this->_rusNameFound;
+
     }
 
     public function __construct($params)
@@ -108,7 +120,6 @@ class HotelRoom extends CApplicationComponent
 
             $roomNameCanonical = $roomInfo['roomNameCanonical'];
         }
-        $this->rusNameFound = false;
 
         //$needAddToDb = false;
 
