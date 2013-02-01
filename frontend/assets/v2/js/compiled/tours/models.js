@@ -769,6 +769,11 @@ ToursResultSet = (function() {
         if (_this.selection().panel) {
           _this.panelContainer = _this.selection().panel;
         }
+        if (!(_this.panelContainer.minimizedCalendar != null)) {
+          _this.panelContainer.minimizedCalendar = function() {
+            return true;
+          };
+        }
         _this.panelContainer.timeline = _this.timeline;
         _this.panelContainer.setActiveTimelineAvia = _this.setActiveTimelineAvia;
         _this.panelContainer.setActiveTimelineHotels = _this.setActiveTimelineHotels;

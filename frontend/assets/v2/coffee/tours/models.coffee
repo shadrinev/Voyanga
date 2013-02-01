@@ -465,10 +465,14 @@ class ToursResultSet
 
     @timeline = new Timeline(@data)
     @selection = ko.observable @data()[0]
+    
     @panel = ko.computed 
       read: =>
         if @selection().panel
           @panelContainer = @selection().panel
+        # FIXME this should never happen but it does
+        if ! @panelContainer.minimizedCalendar?
+          @panelContainer.minimizedCalendar = -> true
         @panelContainer.timeline = @timeline
         @panelContainer.setActiveTimelineAvia = @setActiveTimelineAvia
         @panelContainer.setActiveTimelineHotels = @setActiveTimelineHotels

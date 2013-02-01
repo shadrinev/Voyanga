@@ -30881,23 +30881,12 @@ AviaFiltersT = (function() {
 
     this.template = 'avia-filters';
     this.rt = this.results.roundTrip;
-    this.showRt = ko.observable(0);
-    this.showRtText = ko.observable('');
-    this.showRt.subscribe(function(newValue) {
-      if (+newValue) {
-        return _this.showRtText('обратно');
-      } else {
-        return _this.showRtText('туда');
-      }
-    });
-    this.voyageFilters = ['departure', 'arrival', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
-    this.rtVoyageFilters = ['rtDeparture', 'rtArrival', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
+    this.voyageFilters = ['departure', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
+    this.rtVoyageFilters = ['rtDeparture', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
     this.resultFilters = ['departureAirport', 'arrivalAirport', 'airline', 'serviceClass'];
     this.departure = new PriceFilter('departureTimeNumeric');
-    this.arrival = new TimeFilter('arrivalTimeNumeric');
     if (this.rt) {
       this.rtDeparture = new TimeFilter('departureTimeNumeric');
-      this.rtArrival = new TimeFilter('arrivalTimeNumeric');
     }
     fields = this.rt ? ['departureAirport', 'rtArrivalAirport'] : ['departureAirport'];
     this.departureAirport = new ListFilter(fields, this.results.departureCity, 'Все аэропорты');
@@ -36832,7 +36821,7 @@ HotelResult = (function() {
         key = roomSet.resultId;
         hotelResults.push(roomSet.resultId + ':' + roomSet.searchId);
       }
-      url = 'hotel/search/info/?hotelId=' + this.hotelId;
+      url = 'hotel/search/info?hotelId=' + this.hotelId;
       url += '&hotelResult=' + hotelResults.join(',');
       console.log(this.parent.cacheId);
       return api.search(url, function(data) {
@@ -37248,6 +37237,9 @@ HotelsResultSet = (function() {
         return 1;
       }
       return 0;
+    });
+    this.showButtonMoreResults = ko.computed(function() {
+      return (_this.numResults() > (_this.showParts() * _this.showLimit)) && (DetectMobileQuick() || DetectTierTablet());
     });
     window.hrs = this;
   }

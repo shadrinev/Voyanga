@@ -325,9 +325,10 @@ function nextSlideDownRules(_this) {
 
 function getLink() {
     $('body').click(function(e) {
-        if ($(e.target).parents('#followLink').length > 0) {
+        if ($(e.target).parents('#followLink').length > 0 || $(e.target).attr('id') == 'followLink') {
             $('#followLink').find('.text').hide();
             $('#followLink').find('.getLink').show();
+            $('#followLink').find('.getLink input').focus().select();
         }
         else {
             $('#followLink').find('.text').show();
