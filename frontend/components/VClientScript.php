@@ -13,8 +13,6 @@ class VClientScript extends CClientScript
     {
         if (!$this->buildingMode)
            return parent::renderHead($output);
-        $folder = 'frontend.tmp';
-        $path = Yii::getPathOfAlias($folder);
         $root = Yii::getPathOfAlias('webroot');
         $filePath = $root.'/../../Makefile';
         $fullPaths = array();
