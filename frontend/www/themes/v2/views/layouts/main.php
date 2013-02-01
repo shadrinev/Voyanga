@@ -3,7 +3,7 @@ $cs = Yii::app()->getClientScript();
 $cs->reset();
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 $theme = Yii::app()->theme->baseUrl;
-if (BUILDING || YII_DEBUG)
+if (YII_DEBUG || Yii::app()->clientScript->buildingMode)
 {
     Yii::app()->clientScript->registerPackage('appCss');
     Yii::app()->clientScript->registerPackage('appJs');
