@@ -107,6 +107,9 @@ return CMap::mergeArray(
 
         // application components
         'components' => array(
+            'themeManager' => array(
+                'baseUrl' => '/themes/'
+            ),
 
             'bootstrap' => array(
                 'class' => 'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions

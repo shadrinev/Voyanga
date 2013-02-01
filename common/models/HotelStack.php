@@ -303,7 +303,7 @@ class HotelStack
                                 $mergedStacks[$workHotelStackKey]->addHotel($otherHotel);
                                 break;
                             }else{
-                                if(false && $otherHotel->hotelId == '65664'){
+                                if(false && $otherHotel->hotelId == '15311'){
                                     echo Hotel::$compereDesc."hotelId: {$otherHotel->hotelId}<br>";
                                     //VarDumper::dump($otherHotel);
                                     $needStop = true;

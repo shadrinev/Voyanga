@@ -114,6 +114,7 @@ Application = (function(_super) {
   };
 
   Application.prototype.minimizeCalendar = function() {
+    console.log('activeSearchPanel', this.activeSearchPanel());
     if (this.activeSearchPanel()) {
       return this.activeSearchPanel().minimizedCalendar(true);
     }
@@ -137,12 +138,18 @@ Application = (function(_super) {
     $('.calenderWindow').css('position', 'static').find('.calendarSlide').css('position', 'static');
     VoyangaCalendarStandart.init(this.fakoPanel, elements[1]);
     this.fakoPanel.subscribe(function(newPanel) {
+      console.log('change panel', newPanel, newPanel.panels);
       if (newPanel.panels) {
         return _this.activeSearchPanel(_.last(newPanel.panels()));
+      } else {
+        return _this.activeSearchPanel(newPanel);
       }
     });
+    console.log('set panel', this.fakoPanel(), this.fakoPanel().panels);
     if (this.fakoPanel().panels) {
       return this.activeSearchPanel(_.last(this.fakoPanel().panels()));
+    } else {
+      return this.activeSearchPanel(this.fakoPanel());
     }
   };
 
