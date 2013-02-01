@@ -1,3 +1,20 @@
+@media only screen and (device-width: 768px) {
+    body {
+        width: 111%;
+    }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+    body {
+        width: 111%;
+    }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+    body {
+        width: 111%;
+    }
+}
 .btn {
     cursor: pointer;
 }
