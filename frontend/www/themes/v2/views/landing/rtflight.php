@@ -268,7 +268,7 @@
 </div>
 <!-- END CALENDAR -->
 
-
+<?php if($hotelsInfo):?>
 <div class="headBlockTwo">
     <div class="center-block">
         <h2>Отели в <?php echo $city->casePre;?></h2>
@@ -305,6 +305,7 @@
         <div class="clear"></div>
     </div>
 </div>
+<?php endif;?>
 <div class="headBlockOne">
     <div class="center-block">
         <h2 class="tableH2">Дешевые билеты из <?php echo $currentCity->caseGen;?></h2>

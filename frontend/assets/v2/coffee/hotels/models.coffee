@@ -1103,7 +1103,7 @@ class HotelsResultSet
 
     fv = @data()[0]
     sv = @data()[1]
-    console.log('after more results',fv,sv,@showParts())
+    console.log('after more results',fv,sv,@showParts(),'resultsForRender length',@resultsForRender().length)
 
 
 
