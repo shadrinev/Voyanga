@@ -582,6 +582,7 @@ function ResizeAviaClb() {
     gradientResize();
     resizePanel();
     startIE();
+    ifIpadLoad();
 }
 
 function ResizeFun() {
@@ -1589,5 +1590,16 @@ function startIE() {
         $(document).on('click', '.data', function() {
             $(this).find('.second-path').focus();
         });
+    }
+}
+
+function ifIpadLoad() {
+    if (DetectMobileQuick() || DetectTierTablet()) {
+        if($('body').hasClass('fixed')) {
+            $('body').css('width','100%');
+        }
+        else {
+            $('body').css('width','111%');
+        }
     }
 }
