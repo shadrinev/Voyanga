@@ -79,7 +79,7 @@ function CenterIMGResize(index) {
 
 
         var marginPathTop = (heightImgMain - HeightAllWindow) / 2;
-        console.log("!!!! " +marginPathTop);
+        //console.log("!!!! " +marginPathTop);
         if (marginPathTop < 0) {
             pathIMG.css('top', '0px');
             pathIMG.css('height', $('.innerBlockMain .IMGmain').eq(index).height()+'px').css('width','auto');
