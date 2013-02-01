@@ -910,6 +910,9 @@
 	right: -5px;
 	left: auto;
 }
+#pv_box #hotels-popup-header1 .rating {
+    right: 0px !important;
+}
 .rating.hover, .title.hotel .rating.hover {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 5px;
