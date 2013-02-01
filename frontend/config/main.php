@@ -92,7 +92,7 @@ return CMap::mergeArray(
                 'class' => 'site.console.extensions.phpmorphy.PhpMorphyComponent'
             ),
             'assetManager' => array(
-                'class' => BUILDING ? 'VAssetManager' : 'CAssetManager',
+                'class' => 'VAssetManager',
 		        'baseUrl' => '/assets/'
             ),
             'bootstrap' => array(
@@ -157,7 +157,7 @@ return CMap::mergeArray(
                 )
             ),
             'clientScript' => array(
-                'class'=> BUILDING ? 'VClientScript' : 'CClientScript',
+                'class'=> 'VClientScript',
                 'packages' => CMap::mergeArray($packagesJs, $packagesCss)
             ),
         ),

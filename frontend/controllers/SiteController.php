@@ -15,31 +15,16 @@ class SiteController extends FrontendController
         }
     }
 
-    /**
-     * Displays the login page
-     */
-    public function actionLogin()
+    public function actionDeploy($key)
     {
-        $model = new LoginForm();
-
-        // if it is ajax validation request
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form')
+        $secretKey = 'kasdjnfkn24r2wrn2efk';
+        if ($key != $secretKey)
         {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
+            throw new CHttpException(404);
         }
-
-        // collect user input data
-        if (isset($_POST['LoginForm']))
-        {
-            $model->attributes = $_POST['LoginForm'];
-            // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login()) $this->redirect(Yii::app()->user->returnUrl);
-        }
-        // display the login form
-        $this->render('login', array(
-            'model' => $model
-        ));
+        Yii::app()->clientScript->buildingMode = true;
+        $myModule = Yii::app()->getModule('v2');
+        Yii::app()->runController($myModule->id . '/default/index');
     }
 
     /**

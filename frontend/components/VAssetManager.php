@@ -5,7 +5,6 @@
  * Date: 05.10.12
  * Time: 11:40
  */
-Yii::import('frontend.extensions.EScriptBoost.*');
 
 class VAssetManager extends CAssetManager
 {
