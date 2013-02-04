@@ -9,28 +9,40 @@ return array(
     "env.code" => "test",
 
     'db.name' => 'search',
-    'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',
+    'db.connectionString'=>'mysql:host=109.236.87.227;dbname=test_search;port=3307',
     'db.username'=>'voyanga',
     'db.password'=>'srazunadogovoritblya',
 
     'backendDb.name' => 'search',
-    'backendDb.connectionString'=>'mysql:host=109.236.87.227;dbname=backend;port=3307',
+    'backendDb.connectionString'=>'mysql:host=109.236.87.227;dbname=test_backend;port=3307',
     'backendDb.username'=>'voyanga',
     'backendDb.password'=>'srazunadogovoritblya',
 
     'userDb.name' => 'search',
-    'userDb.connectionString'=>'mysql:host=109.236.87.227;dbname=backend;port=3307',
+    'userDb.connectionString'=>'mysql:host=109.236.87.227;dbname=test_backend;port=3307',
     'userDb.username'=>'voyanga',
     'userDb.password'=>'srazunadogovoritblya',
 
     'log_db.name' => 'search',
-    'log_db.connectionString'=>'mysql:host=109.236.87.227;dbname=logdb;port=3307',
+    'log_db.connectionString'=>'mysql:host=109.236.87.227;dbname=test_logdb;port=3307',
     'log_db.username'=>'voyanga',
     'log_db.password'=>'srazunadogovoritblya',
 
     'mongo.connectionString' => 'mongodb://109.236.87.123',
-    'mongo.dbName'=> 'voyanga',
+    'mongo.dbName'=> 'test_voyanga',
 
     'email.sender' => 'noreply@voyanga.com (Voyanga robot)',
-    'enableMemcached' => false
+    'enableMemcached' => false,
+
+    'HotelBook' => array(
+        'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
+        'login' => 'voyanga',
+        'password' => 'vLP1xe',
+        'room' => array(
+            'DBL' => 10,
+            'TWIN' => 20,
+            'STD' => array(10, 12900),
+        ),
+        'distanceFromCityCenter' => 5000,
+    ),
 );

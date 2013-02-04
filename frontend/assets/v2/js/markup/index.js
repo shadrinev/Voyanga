@@ -123,9 +123,7 @@ function smallIMGresizeIndex() {
 
             if (_imgHeight < _thisHeight) {
                 _img.css('height', _thisHeight+'px');
-                //console.log('!!!==='+_imgHeight +' / '+ _imgWidth +' / '+ _thisHeight +' / '+ _thisWidth);
             }
-            //console.log(_imgHeight +' / '+ _imgWidth +' / '+ _thisHeight +' / '+ _thisWidth);
         });
     }
 }

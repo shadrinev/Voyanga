@@ -33,5 +33,17 @@ return array(
     'mongo.dbName'=> 'voyanga',
 
     'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)',
-    'enableMemcached' => true
+    'enableMemcached' => true,
+
+    'HotelBook' => array(
+        'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
+        'login' => 'voyanga',
+        'password' => 'vLP1xe',
+        'room' => array(
+            'DBL' => 10,
+            'TWIN' => 20,
+            'STD' => array(10, 12900),
+        ),
+        'distanceFromCityCenter' => 5000,
+    ),
 );

@@ -23,6 +23,11 @@ class PhotoBox
     $(window).keyup (e) =>
       if e.keyCode == 27
         @close()
+#        if e.preventDefault
+#          e.preventDefault()
+#        e.returnValue = false
+
+
       else if e.keyCode == 37
         @prev()
       else if e.keyCode == 39
