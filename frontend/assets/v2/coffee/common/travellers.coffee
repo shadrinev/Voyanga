@@ -29,7 +29,7 @@ class PeopleSelector
       $(document.body).mousedown (event)=>
         console.log('click event',event)
         event.target;
-        if ($(event.target).parents('.popupPeople').length > 0)
+        if (($(event.target).parents('.popupPeople').length > 0) || ($(event.target).parents('.tdPeople').length > 0))
           return
         @close()
       $('.how-many-man .btn').addClass('active')
