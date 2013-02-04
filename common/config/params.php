@@ -86,4 +86,6 @@ return CMap::mergeArray(array(
 
     'autoAssignCurrentOrders' => true,
 
+    'shortUrl.prefix' => 't/'
+
 ), CMap::mergeArray( $commonParamsEnv, $commonParamsLocal));

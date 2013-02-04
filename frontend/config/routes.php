@@ -14,4 +14,9 @@ return array(
     '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
     '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
     '<action:(agreement_avia|agreement_hotel|iata|agreement)>' => 'site/<action>',
+    //rule for parsing short urls
+    array(
+        'class' => 'site.frontend.components.ShortUrlRule',
+        'connectionID' => 'db',
+    ),
 );
