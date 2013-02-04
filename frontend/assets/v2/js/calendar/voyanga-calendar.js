@@ -16,12 +16,12 @@ Date.fromIso = function (dateIsoString) {
     }
 }
 MouseDraggable = {
-    options: {
-        animate: false,
-        slider: false
+    options:{
+        animate:false,
+        slider:false
     },
 
-    _create: function () {
+    _create:function () {
         var self = this,
             o = this.options;
         //console.log(this);
@@ -31,16 +31,16 @@ MouseDraggable = {
     //_init: function(){
     //	this._mouseInit(); // начинаем обработку поведения мыши
     //},
-    destroy: function () {
+    destroy:function () {
         this._mouseDestroy();
     },
-    _mouseStart: function (e) {
+    _mouseStart:function (e) {
         this.options.startEvent(e, this.element);
     },
-    _mouseDrag: function (e) {
+    _mouseDrag:function (e) {
         this.options.dragEvent(e, this.element);
     },
-    _mouseStop: function (event) {
+    _mouseStop:function (event) {
         this.options.endEvent(event, this.element);
         return false;
 
@@ -50,19 +50,19 @@ $.widget("ui.MouseDraggable", $.ui.mouse, MouseDraggable);
 
 VoyangaCalendarSlider = function (options) {
     var defaults = {
-        monthArray: new Array(),
-        jObj: null,
-        totalLines: 1,
-        knobWidth: 1,
-        knobPos: 0,
-        linesWidth: 5,
-        width: 0,//recalc on window resize
-        knobSlideAction: false,
-        animateScrollAction: false,
-        onresize: function () {
+        monthArray:new Array(),
+        jObj:null,
+        totalLines:1,
+        knobWidth:1,
+        knobPos:0,
+        linesWidth:5,
+        width:0, //recalc on window resize
+        knobSlideAction:false,
+        animateScrollAction:false,
+        onresize:function () {
             this.width = this.jObj.find('.monthLineVoyanga').width();
         },
-        startEvent: function (e, obj) {
+        startEvent:function (e, obj) {
             if (this.knobSlideAction) {
                 obj.data('xStart', e.pageX);
                 obj.data('posStart', this.knobPos);
@@ -71,12 +71,12 @@ VoyangaCalendarSlider = function (options) {
                 }
             }
         },
-        endEvent: function (e, obj) {
+        endEvent:function (e, obj) {
             if (this.knobSlideAction) {
                 this.knobSlideAction = false;
             }
         },
-        dragEvent: function (e, obj) {
+        dragEvent:function (e, obj) {
             if (this.knobSlideAction) {
                 var xDelta = e.pageX - obj.data('xStart');
                 var posDelta = Math.round((xDelta / this.width) * 10000) / 100;
@@ -91,7 +91,7 @@ VoyangaCalendarSlider = function (options) {
                 this.knobMove();
             }
         },
-        mouseDown: function (e) {
+        mouseDown:function (e) {
             var xLeft = Math.round(this.jObj.find('.knobVoyanga').offset().left);
             var xRight = xLeft + Math.round(this.jObj.find('.knobVoyanga').width());
             if ((e.pageX >= xLeft) && (e.pageX <= xRight)) {
@@ -102,10 +102,10 @@ VoyangaCalendarSlider = function (options) {
                 }
             }
         },
-        mouseUp: function (e) {
+        mouseUp:function (e) {
             this.knobSlideAction = false;
         },
-        mousewheelEvent: function (e) {
+        mousewheelEvent:function (e) {
             //console.log(e);
             var rolled = 0;
             var event = e.originalEvent;
@@ -128,7 +128,7 @@ VoyangaCalendarSlider = function (options) {
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
             return false;
         },
-        animateStep: function (now, fx) {
+        animateStep:function (now, fx) {
             var data = fx.elem.id + ' ' + fx.prop + ': ' + now;
             if (fx.unit == 'px') {
                 var posLeft = Math.round((now / this.width) * 10000) / 100;
@@ -142,10 +142,10 @@ VoyangaCalendarSlider = function (options) {
             this.jObj.find('.calendarGridVoyanga').scrollTop(scrollTop);
             this.knobMove();
         },
-        getKnobUpLeft: function () {
+        getKnobUpLeft:function () {
             return this.knobPos + '%'
         },
-        getPercent: function (pos) {
+        getPercent:function (pos) {
             if (pos.indexOf('px') != -1) {
                 if (this.width < 100) {
                     this.onresize();
@@ -158,7 +158,7 @@ VoyangaCalendarSlider = function (options) {
             }
             return pos;
         },
-        knobMove: function () {
+        knobMove:function () {
             //var xLeft = Math.round(this.jObj.find('.knobVoyanga').offset().left);
             //var xRight = xLeft + Math.round(this.jObj.find('.knobVoyanga').width());
             var pWidth = this.knobWidth;
@@ -179,7 +179,7 @@ VoyangaCalendarSlider = function (options) {
                 }
             });
         },
-        monthMouseUp: function (obj, e) {
+        monthMouseUp:function (obj, e) {
             if (!this.knobSlideAction) {
                 this.animateScrollAction = true;
                 this.jObj.find('.knobVoyanga').stop(true);
@@ -191,21 +191,21 @@ VoyangaCalendarSlider = function (options) {
                     this.onresize();
                 }
                 this.jObj.find('.knobVoyanga').animate({
-                        left: [newPos, 'easeOutCubic']
+                        left:[newPos, 'easeOutCubic']
                     },
                     {
-                        duration: 800,
-                        step: function (now, fx) {
+                        duration:800,
+                        step:function (now, fx) {
                             self.animateStep(now, fx);
                         },
-                        easing: 'easeOutCubic',
-                        complete: function () {
+                        easing:'easeOutCubic',
+                        complete:function () {
                             self.animateScrollAction = false;
                         }
                     });
             }
         },
-        scrollEvent: function (e) {
+        scrollEvent:function (e) {
             if (!this.animateScrollAction) {
                 var scrollHeight = this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
                 this.knobPos = Math.round((this.jObj.find('.calendarGridVoyanga').scrollTop() / scrollHeight) * 1000) / 10;
@@ -215,7 +215,7 @@ VoyangaCalendarSlider = function (options) {
             }
         },
 
-        init: function () {
+        init:function () {
         }
     };
     options = $.extend({}, defaults, options);
@@ -225,11 +225,11 @@ VoyangaCalendarSlider = function (options) {
 }
 VoyangaCalendarClass = function (options) {
     var defaults = {
-        jObj: null,
-        weekDays: new Array('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'),
-        monthNames: new Array('Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'),
-        dayCellWidth: 180,
-        getDay: function (dateObj) {
+        jObj:null,
+        weekDays:new Array('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'),
+        monthNames:new Array('Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'),
+        dayCellWidth:180,
+        getDay:function (dateObj) {
             var dayNum = dateObj.getDay();
             if (dayNum == 0) {
                 dayNum = 6;
@@ -246,11 +246,11 @@ VoyangaCalendarClass = function (options) {
     }
 }
 /**/
-VoyangaCalendarStandart = new VoyangaCalendarClass({values: new Array()});
+VoyangaCalendarStandart = new VoyangaCalendarClass({values:new Array()});
 VoyangaCalendarStandart.initialized = false;
 
 VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
-    init: function () {
+    init:function () {
         //console.log(this.monthArray);
         var self = this;
         for (var i in this.monthArray) {
@@ -311,13 +311,13 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
             self.monthMouseUp(obj, e);
         });
         this.jObj.find('.monthLineVoyanga').MouseDraggable({
-            startEvent: function (e, obj) {
+            startEvent:function (e, obj) {
                 self.startEvent(e, obj);
             },
-            endEvent: function (e, obj) {
+            endEvent:function (e, obj) {
                 self.endEvent(e, obj);
             },
-            dragEvent: function (e, obj) {
+            dragEvent:function (e, obj) {
                 self.dragEvent(e, obj);
             }
         });
@@ -452,7 +452,6 @@ VoyangaCalendarStandart.onCellClick = function (obj) {
 
     if (this.values.length == 0) {
         this.values.push(cellDate);
-        dontset = false;
     }
     VoyangaCalendarStandart.update(dontset);
 }
@@ -497,6 +496,9 @@ VoyangaCalendarStandart.generateGrid = function () {
                 needStop = true;
             }
         }
+        //if(lineNumber > 4){
+        //needStop = true;
+        //}
         lineNumber++;
     }
     var lastLineMonth = this.slider.monthArray[this.slider.monthArray.length - 1].line;
@@ -612,11 +614,16 @@ VoyangaCalendarStandart.newValueHandler = function (newCalendarValue) {
     if (needScroll) {
         VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate);
     }
-    VoyangaCalendarStandart.values = new Array();
-    if (newCalendarValue.from)
+    if ((newCalendarValue.twoSelect == true && (!newCalendarValue.from || !newCalendarValue.to) || (newCalendarValue.twoSelect == false && (!newCalendarValue.from) ) )) {
+        if (VoyangaCalendarStandart != undefined)
+            VoyangaCalendarStandart.values = new Array();
+    }
+    else {
+        VoyangaCalendarStandart.values = new Array();
         VoyangaCalendarStandart.values.push(newCalendarValue.from);
-    if ((newCalendarValue.twoSelect) && (newCalendarValue.to))
-        VoyangaCalendarStandart.values.push(newCalendarValue.to);
+        if (newCalendarValue.twoSelect)
+            VoyangaCalendarStandart.values.push(newCalendarValue.to);
+    }
     VoyangaCalendarStandart.update(true);
 }
 
