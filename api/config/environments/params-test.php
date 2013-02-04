@@ -6,5 +6,5 @@
  * You may modify this file to fit for your environment.
  */
 return array(
-    "env.code" => "prod",
+    "env.code" => "test",
 );

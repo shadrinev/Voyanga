@@ -38,17 +38,6 @@ return CMap::mergeArray(array(
     'time_for_payment' => 600,
     'hotel_repeat_time' => 120,
 
-    'HotelBook' => array(
-        'uri' => 'http://hotelbook.ru/xml/',
-        'login' => 'voyangaXML',
-        'password' => 'BZEFODZoA1!5',
-        'room' => array(
-            'DBL' => 10,
-            'TWIN' => 20,
-            'STD' => array(10, 12900),
-        ),
-        'distanceFromCityCenter' => 5000,
-    ),
     'SMS' => array(
         'login'=>'voyanga',
         'password'=>'rabotakipit',
