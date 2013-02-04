@@ -333,7 +333,11 @@ AviaResult = (function() {
 
     this.chooseActive = __bind(this.chooseActive, this);
 
+    this.showDetailsOverview = __bind(this.showDetailsOverview, this);
+
     this.showDetails = __bind(this.showDetails, this);
+
+    this.showDetailsPopup = __bind(this.showDetailsPopup, this);
 
     this.minimizeRtStacked = __bind(this.minimizeRtStacked, this);
 
@@ -664,11 +668,21 @@ AviaResult = (function() {
     return _results;
   };
 
-  AviaResult.prototype.showDetails = function(data, event) {
+  AviaResult.prototype.showDetailsPopup = function() {
     this.parent._popup = new GenericPopup('#avia-body-popup', this);
     ko.processAllDeferredBindingUpdates();
     SizeBox('avia-body-popup');
     return ResizeBox('avia-body-popup');
+  };
+
+  AviaResult.prototype.showDetails = function() {
+    this.overviewMode = false;
+    return this.showDetailsPopup();
+  };
+
+  AviaResult.prototype.showDetailsOverview = function() {
+    this.overviewMode = true;
+    return this.showDetailsPopup();
   };
 
   AviaResult.prototype.chooseActive = function() {

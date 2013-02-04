@@ -281,6 +281,7 @@ $theme = Yii::app()->theme->baseUrl;
 	  <!-- FIXME -->
           <span class="txtBuy" data-bind="text: price"></span> <span class="rur">o</span>
 	</div>
+        <a class="details" data-bind="click: showDetailsOverview" href="#">Подробнее о перелете</a>
       </div>
       <!-- END BUY TICKET -->
       <div class="clear"></div>
