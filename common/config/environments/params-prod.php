@@ -8,6 +8,8 @@
 return array(
 	"env.code" => "private",
 
+    "baseUrl" => 'http://voyanga.com',
+
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',
     'db.username'=>'voyanga',
