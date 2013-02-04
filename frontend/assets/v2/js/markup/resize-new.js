@@ -581,6 +581,7 @@ function ResizeAviaClb() {
     mapAllPageView();
     gradientResize();
     resizePanel();
+    jsPaneScrollHeight();
     startIE();
     ifIpadLoad();
 }
@@ -1609,3 +1610,4 @@ function ifIpadLoad() {
         }
     }
 }
+

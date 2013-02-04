@@ -7,7 +7,7 @@
                 </div>
                 <h3>Туда</h3>
                 <div class="other-time">
-                  <div class="variation">
+                  <div class="variation" data-bind="visible: !overviewMode">
                   <!-- ko if: stacked() -->
                     <ul class="minimize">
                       <li>
@@ -30,7 +30,7 @@
               <h3>Обратно</h3>
 
               <div class="other-time">
-                <div class="variation">
+                <div class="variation" data-bind="visible: !overviewMode">
                  <!-- ko if: rtStacked() -->
                 <ul class="minimize">
                     <li>

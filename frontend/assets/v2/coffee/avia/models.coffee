@@ -461,13 +461,24 @@ class AviaResult
       @voyages.push item
 
 
-  # Shows popup with detailed info about given result
-  showDetails: (data, event)=>
+  # show details popup
+  showDetailsPopup: =>
     @parent._popup = new GenericPopup '#avia-body-popup', @
     ko.processAllDeferredBindingUpdates()
 
     SizeBox('avia-body-popup');
     ResizeBox('avia-body-popup');
+
+  # Shows popup with detailed info about given result
+  # Generic mode
+  showDetails: =>
+    @overviewMode = false
+    do @showDetailsPopup
+
+  showDetailsOverview: =>
+    @overviewMode = true
+    do @showDetailsPopup
+
 
   chooseActive: =>
     if @visible() == false

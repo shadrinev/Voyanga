@@ -151,7 +151,7 @@
     </div>
     <!-- END FINISH -->
     <div class="clear"></div>
-    <div class="airlinesLogo">
+    <div class="airlinesLogo" style="margin-top: -40px;">
       <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
       <br>
       <span data-bind="text:airlineName">Россия</span>
