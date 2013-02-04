@@ -82,10 +82,12 @@ class HotelsPanel extends SearchPanel
 
   setDate: (values)=>
     if values.length
-      @checkIn values[0]
+      if !@checkIn() || (moment(@checkIn()).format('YYYY-MM-DD') != moment(values[0]).format('YYYY-MM-DD'))
+        @checkIn values[0]
       if values.length > 1
-        if values[0] < values[1]
-          @checkOut values[1]
+        if values[1] > @checkIn()
+          if !@checkOut() || (moment(@checkOut()).format('YYYY-MM-DD') != moment(values[1]).format('YYYY-MM-DD'))
+            @checkOut values[1]
         else
           @checkOut ''
 

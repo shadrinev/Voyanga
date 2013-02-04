@@ -112,10 +112,12 @@ class AviaPanel extends SearchPanel
   # calendar handler
   setDate: (values)=>
     if values.length
-      @departureDate values[0]
+      if !@departureDate() || (moment(@departureDate()).format('YYYY-MM-DD') != moment(values[0]).format('YYYY-MM-DD'))
+        @departureDate values[0]
       if @rt and values.length > 1
-        if values[1] > values[0]
-          @rtDate values[1]
+        if values[1] >= @departureDate()
+          if !@rtDate() || (moment(@rtDate()).format('YYYY-MM-DD') != moment(values[1]).format('YYYY-MM-DD'))
+            @rtDate values[1]
         else
           @rtDate ''
 

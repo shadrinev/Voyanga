@@ -167,11 +167,15 @@ TourPanelSet = (function() {
   TourPanelSet.prototype.setDate = function(values) {
     var maxDate;
     if (values && values.length) {
-      this.activeCalendarPanel().checkIn(values[0]);
+      if (!this.activeCalendarPanel().checkIn() || (moment(this.activeCalendarPanel().checkIn()).format('YYYY-MM-DD') !== moment(values[0]).format('YYYY-MM-DD'))) {
+        this.activeCalendarPanel().checkIn(values[0]);
+      }
       maxDate = this.activeCalendarPanel().checkIn();
       if (values.length > 1) {
-        if (values[0] < values[1]) {
-          this.activeCalendarPanel().checkOut(values[1]);
+        if (this.activeCalendarPanel().checkIn() < values[1]) {
+          if (!this.activeCalendarPanel().checkOut() || (moment(this.activeCalendarPanel().checkOut()).format('YYYY-MM-DD') !== moment(values[1]).format('YYYY-MM-DD'))) {
+            this.activeCalendarPanel().checkOut(values[1]);
+          }
         } else {
           this.activeCalendarPanel().checkOut('');
         }

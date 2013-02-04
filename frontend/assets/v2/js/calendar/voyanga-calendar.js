@@ -627,7 +627,7 @@ VoyangaCalendarStandart.newValueHandler = function (newCalendarValue) {
         console.log('else????')
     }
     console.log('values(2):',VoyangaCalendarStandart.values);
-    if ((newCalendarValue.from && !VoyangaCalendarStandart.scrollDate) || (newCalendarValue.from && newCalendarValue.from.toString() != VoyangaCalendarStandart.scrollDate.toString())) {
+    if ((newCalendarValue.from && !needScroll) || (newCalendarValue.from && newCalendarValue.from.toString() != VoyangaCalendarStandart.scrollDate.toString())) {
         needScroll = true;
         VoyangaCalendarStandart.scrollDate = newCalendarValue.from;
     }
@@ -650,7 +650,7 @@ VoyangaCalendarStandart.newValueHandler = function (newCalendarValue) {
             VoyangaCalendarStandart.values.push(newCalendarValue.from);
             if (newCalendarValue.twoSelect)
                 VoyangaCalendarStandart.values.push(newCalendarValue.to);
-            dontset = true;
+            dontset = false;
         }
     }
     console.log('values(4):',VoyangaCalendarStandart.values);

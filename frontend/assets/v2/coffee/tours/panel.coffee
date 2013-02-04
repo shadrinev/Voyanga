@@ -116,11 +116,13 @@ class TourPanelSet
   # calendar handler
   setDate: (values) =>
     if values && values.length
-      @activeCalendarPanel().checkIn values[0]
+      if !@activeCalendarPanel().checkIn() || (moment(@activeCalendarPanel().checkIn()).format('YYYY-MM-DD') != moment(values[0]).format('YYYY-MM-DD'))
+        @activeCalendarPanel().checkIn values[0]
       maxDate = @activeCalendarPanel().checkIn()
       if values.length > 1
-        if (values[0] < values[1])
-          @activeCalendarPanel().checkOut values[1]
+        if (@activeCalendarPanel().checkIn() < values[1])
+          if !@activeCalendarPanel().checkOut() || (moment(@activeCalendarPanel().checkOut()).format('YYYY-MM-DD') != moment(values[1]).format('YYYY-MM-DD'))
+            @activeCalendarPanel().checkOut values[1]
         else
           @activeCalendarPanel().checkOut ''
         if maxDate < @activeCalendarPanel().checkOut()

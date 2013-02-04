@@ -140,10 +140,14 @@ AviaPanel = (function(_super) {
 
   AviaPanel.prototype.setDate = function(values) {
     if (values.length) {
-      this.departureDate(values[0]);
+      if (!this.departureDate() || (moment(this.departureDate()).format('YYYY-MM-DD') !== moment(values[0]).format('YYYY-MM-DD'))) {
+        this.departureDate(values[0]);
+      }
       if (this.rt && values.length > 1) {
-        if (values[1] > values[0]) {
-          return this.rtDate(values[1]);
+        if (values[1] >= this.departureDate()) {
+          if (!this.rtDate() || (moment(this.rtDate()).format('YYYY-MM-DD') !== moment(values[1]).format('YYYY-MM-DD'))) {
+            return this.rtDate(values[1]);
+          }
         } else {
           return this.rtDate('');
         }
