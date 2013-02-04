@@ -94,14 +94,14 @@
         </td>
         <td class="tdSex">
             <?php if (!$roomCounters): ?>
-                <label class="male <?php if ($hide) echo 'inactive' ?>" for="male">
-                    <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="male"
+                <label class="male <?php if ($hide) echo 'inactive' ?>" for="male<?php echo $i ?>">
+                    <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="male<?php echo $i ?>"
                            value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
                         <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
-                <label class="female <?php if ($hide) echo 'inactive' ?>" for="female">
+                <label class="female <?php if ($hide) echo 'inactive' ?>" for="female<?php echo $i ?>">
                     <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]"
-                           id="female"
+                           id="female<?php echo $i ?>"
                            value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"
                         <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                 </label>

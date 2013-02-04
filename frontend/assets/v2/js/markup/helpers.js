@@ -156,26 +156,29 @@ $(window).load(telefonLoad);
 
 
 function onFocusInput() {
-    if ($('.male input').attr('checked') == 'checked') {
-        $('.male input').closest('label').addClass('active');
-    }
-    if ($('.female input').attr('checked') == 'checked') {
-        $('.female input').closest('label').addClass('active');
-    }
+    $('.male input').each(function(index) {
+        if ($('.male').eq(index).find('input').attr('checked') == 'checked') {
+            $('.male').eq(index).find('input').closest('label').addClass('active');
+        }
+    });
+    $('.female input').each(function(index) {
+        if ($('.female').eq(index).find('input').attr('checked') == 'checked') {
+            $('.female').eq(index).find('input').closest('label').addClass('active');
+        }
+    });
     $('.male input').focus(function () {
-        $(this).parent().addClass('focus');
         var _that = this;
+        $(_that).parent().addClass('focus');
         $(window).unbind('keypress');
         $(window).bind('keypress', function(e) {
             if (e.which == 9 && $(_that).attr('checked') == 'checked') {
                 $(_that).parent().parent().next().find('input.dd').focus();
             }
             else if (e.which == 9 && $(_that).attr('checked') != 'checked') {
-                $('.female input').focus();
+                $(_that).parent().next().focus();
             }
             else if (e.which == 32) {
-                $('.male').removeClass('active error');
-                $('.female').removeClass('active error');
+                $(_that).parent().parent().find('label').removeClass('active error');
                 $(_that).parent().addClass('active');
                 $(_that).parent().parent().next().find('input.dd').focus();
                 $(_that).attr('checked','checked');
@@ -185,20 +188,20 @@ function onFocusInput() {
     $('.male input').blur(function () {
         $(this).parent().removeClass('focus');
         $(this).removeAttr('disabled');
-        $('.female input').removeAttr('disabled');
+        $(this).parent().next().find('input').removeAttr('disabled');
     });
     $('.male input').change(function () {
         if ($(this).attr('checked') == 'checked') {
             $(this).parent().addClass('active');
-            $('.female').removeClass('active error');
+            $(this).parent().next().removeClass('active error');
         }
         else {
             $(this).parent().removeClass('active');
         }
     });
     $('.female input').focus(function () {
-        $(this).parent().addClass('focus');
         var _that = this;
+        $(_that).parent().addClass('focus');
         $(window).unbind('keypress');
         $(window).bind('keypress', function(e) {
             if (e.which == 9 && $(_that).attr('checked') == 'checked') {
@@ -208,8 +211,7 @@ function onFocusInput() {
                 $(_that).parent().parent().next().find('input.dd').focus();
             }
             else if (e.which == 32) {
-                $('.male').removeClass('active error');
-                $('.female').removeClass('active error');
+                $(_that).parent().parent().find('label').removeClass('active error');
                 $(_that).parent().addClass('active');
                 $(_that).parent().parent().next().find('input.dd').focus();
                 $(_that).attr('checked','checked');
@@ -219,12 +221,12 @@ function onFocusInput() {
     $('.female input').blur(function () {
         $(this).parent().removeClass('focus');
         $(this).removeAttr('disabled');
-        $('.male input').removeAttr('disabled');
+        $(this).parent().next().find('input').removeAttr('disabled');
     });
     $('.female input').change(function () {
         if ($(this).attr('checked') == 'checked') {
             $(this).parent().addClass('active');
-            $('.male').removeClass('active error');
+            $(this).parent().prev().removeClass('active error');
         }
         else {
             $(this).parent().removeClass('active');
@@ -322,7 +324,24 @@ function nextSlideDownRules(_this) {
     }
 
 }
-
+function divInputBirthday() {
+    if($('.divInputBirthday').length > 0 && $('.divInputBirthday').is(':visible')) {
+        var _this = $('.divInputBirthday').find('input');
+        _this.focus(function() {
+            $(this).attr('rel', $(this).val());
+            $(this).val('');
+            $(this).blur(function() {
+                if($(this).val() < 1) {
+                    $(this).val($(this).attr('rel'));
+                }
+                else {
+                    return;
+                }
+            });
+        });
+    }
+}
+$(window).load(divInputBirthday);
 function getLink() {
     $('body').click(function(e) {
         if ($(e.target).parents('#followLink').length > 0 || $(e.target).attr('id') == 'followLink') {

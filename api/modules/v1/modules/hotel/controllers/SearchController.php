@@ -27,14 +27,14 @@ class SearchController extends ApiController
         $possibleCities = CityManager::getCitiesWithHotels($city);
         if (!empty($possibleCities))
         {
-            $hotelSearchParams->city = City::model()->findByPk($possibleCities[0]['id']);
+            $hotelSearchParams->city = City::getCityByPk($possibleCities[0]['id']);
         }
         else
         {
             $city = CityManager::getCities($city);
             if (!empty($city))
             {
-                $hotelSearchParams->city = City::model()->findByPk($city[0]['id']);
+                $hotelSearchParams->city = City::getCityByPk($city[0]['id']);
             }
         }
         $hotelSearchParams->duration = $duration;
