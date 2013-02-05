@@ -184,7 +184,7 @@ class SearchController extends ApiController
 
     private function storeToCache($flightSearchParams)
     {
-        $cacheId = md5(md5(serialize($flightSearchParams)).microtime());
+        $cacheId = md5(md5(serialize($flightSearchParams)).microtime().rand(1000,9999));
         Yii::app()->pCache->set('flightSearchResult' . $cacheId, $this->results, appParams('flight_search_cache_time'));
         Yii::app()->pCache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('flight_search_cache_time'));
         return $cacheId;
