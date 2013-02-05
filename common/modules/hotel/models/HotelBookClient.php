@@ -267,7 +267,8 @@ class HotelBookClient
                                 $startTime1 = microtime(true);
                                 $requestInfo['hotelRequestLog']->executionTime = ($endTime - $startTime);
                                 $requestInfo['hotelRequestLog']->responseXml = UtilsHelper::formatXML($result);
-                                $requestInfo['hotelRequestLog']->save();
+                                if (appParams('enableHotelLogging'))
+                                    $requestInfo['hotelRequestLog']->save();
                                 $endTime1 = microtime(true);
                                 //Header('ExecutionTimeSaveToMongo:'.($endTime1 - $startTime1));
 
