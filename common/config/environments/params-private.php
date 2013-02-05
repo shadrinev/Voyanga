@@ -10,6 +10,8 @@ return array(
     "env.code" => "private",
 
     "api.endPoint" => "http://api.voyanga.lcl/v1/",
+    'app.api.flightSearchUrl' => 'http://api.voyanga.lcl/v1/flight/search/BE',
+    'app.api.hotelSearchUrl' => 'http://api.voyanga.lcl/v1/hotel/search',
 
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',

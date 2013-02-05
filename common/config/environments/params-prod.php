@@ -9,6 +9,8 @@ return array(
 	"env.code" => "prod",
 
     "api.endPoint" => "http://api.voyanga.com/v1/",
+    'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
+    'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',
 
     "baseUrl" => 'http://voyanga.com',
 
