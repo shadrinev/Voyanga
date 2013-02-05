@@ -9,6 +9,8 @@
 return array(
     "env.code" => "private",
 
+    "api.endPoint" => "http://api.voyanga.lcl/v1/",
+
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',
     'db.username'=>'voyanga',
