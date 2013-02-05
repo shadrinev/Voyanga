@@ -348,7 +348,7 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
             </div>
             <!-- END AIRLINES -->
             <div class="center-ticket">
-                <div class="date-time-city">
+                <div class="date-time-city" data-bind="css: {first: roundTrip}">
                     <div class="start">
                         <div class="date" data-bind="text: departureDayMo()">
                             28 мая

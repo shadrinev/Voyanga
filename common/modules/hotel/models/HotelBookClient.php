@@ -111,24 +111,30 @@ class HotelBookClient
 
 
             curl_setopt($rCh, CURLOPT_URL, $url);
-            $key = $url . md5(serialize($postData));
-            $mongoKey = substr(md5($key . uniqid('', true)), 0, 10);
 
-            $hotelRequest = new HotelRequest();
-            $hotelRequest->requestNum = $mongoKey;
-            self::$requestIds[] = array('key' => $mongoKey, 'class' => get_class($hotelRequest), 'keyName' => 'requestNum');
-            $hotelRequest->timestamp = time();
-            //echo 'send req: '.self::$lastRequestMethod."\n";
-            $hotelRequest->methodName = self::$lastRequestMethod;
-            $hotelRequest->requestUrl = $url;
-            if (self::$groupId)
+
             {
-                $hotelRequest->groupId = self::$groupId;
+                $key = $url . md5(serialize($postData));
+                $mongoKey = substr(md5($key . uniqid('', true)), 0, 10);
+
+                $hotelRequest = new HotelRequest();
+                $hotelRequest->requestNum = $mongoKey;
+                self::$requestIds[] = array('key' => $mongoKey, 'class' => get_class($hotelRequest), 'keyName' => 'requestNum');
+                $hotelRequest->timestamp = time();
+                $hotelRequest->methodName = self::$lastRequestMethod;
+                $hotelRequest->requestUrl = $url;
+                if (self::$groupId)
+                {
+                    $hotelRequest->groupId = self::$groupId;
+                }
+                $hotelRequest->requestDescription = self::$lastRequestDescription;
+                $hotelRequest->requestXml = isset($postData['request']) ? $postData['request'] : '';
+                if (appParams('enableHotelLogging'))
+                {
+                    if (!$hotelRequest->save())
+                        CVarDumper::dump($hotelRequest->getErrors());
+                }
             }
-            $hotelRequest->requestDescription = self::$lastRequestDescription;
-            $hotelRequest->requestXml = isset($postData['request']) ? $postData['request'] : '';
-            $valid = $hotelRequest->save();
-            if (!$valid) CVarDumper::dump($hotelRequest->getErrors());
         }
 
 
@@ -152,7 +158,8 @@ class HotelBookClient
 
                     $hotelRequest->executionTime = ($endTime - $startTime);
                     $hotelRequest->responseXml = UtilsHelper::formatXML($sData);
-                    $hotelRequest->save();
+                    if (appParams('enableHotelLogging'))
+                        $hotelRequest->save();
 
                     if ($cacheFileName && self::$saveCache)
                     {
@@ -163,7 +170,8 @@ class HotelBookClient
                 {
                     $this->lastCurlError = curl_error($rCh);
                     $hotelRequest->errorDescription = $this->lastCurlError;
-                    $hotelRequest->save();
+                    if (appParams('enableHotelLogging'))
+                        $hotelRequest->save();
                 }
                 unset($url);
                 unset($hotelRequest);
@@ -259,7 +267,8 @@ class HotelBookClient
                                 $startTime1 = microtime(true);
                                 $requestInfo['hotelRequestLog']->executionTime = ($endTime - $startTime);
                                 $requestInfo['hotelRequestLog']->responseXml = UtilsHelper::formatXML($result);
-                                $requestInfo['hotelRequestLog']->save();
+                                if (appParams('enableHotelLogging'))
+                                    $requestInfo['hotelRequestLog']->save();
                                 $endTime1 = microtime(true);
                                 //Header('ExecutionTimeSaveToMongo:'.($endTime1 - $startTime1));
 

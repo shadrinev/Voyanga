@@ -46,6 +46,7 @@ return CMap::mergeArray(array(
         'sender'=>'Voyanga'
 
     ),
+
     'autocompleteLimit' => 10,
     'autocompleteCacheTime' => 3600,
 
@@ -68,9 +69,6 @@ return CMap::mergeArray(array(
 
     'php.exePath' => '/usr/bin/php',
     'pdfConverterPath' => '/usr/local/bin/wkhtmltopdf',
-
-    'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
-    'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',
 
     'hotel.markupPercentage' => 10,
 

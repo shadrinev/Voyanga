@@ -6,9 +6,14 @@
  * You may modify this file to fit for your environment.
  */
 return array(
-	"env.code" => "private",
+	"env.code" => "prod",
+
+    'enableHotelLogging' => true,
+    'enableFlightLogging' => true,
 
     "api.endPoint" => "http://api.voyanga.com/v1/",
+    'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
+    'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',
 
     "baseUrl" => 'http://voyanga.com',
 

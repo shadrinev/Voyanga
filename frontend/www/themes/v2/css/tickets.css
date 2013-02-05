@@ -125,12 +125,17 @@
     padding-right: 135px;
     position: relative;
 }
-
+.ticket-items .content .center-ticket .date-time-city.first {
+    padding-top: 3px;
+}
 .date-time-city .start {
 	left: 15px;
     position: absolute;
     top: 0;
     width: 100px;
+}
+.date-time-city.first .start, .date-time-city.first .finish {
+    top: 3px;
 }
 .date-time-city .finish {
 	position: absolute;
@@ -896,7 +901,7 @@
     padding-bottom: 0px;
 }
 .title.hotel .rating {
-    right: 2px;
+    right: 0px;
     left: auto;
     padding: 9px;
     position: absolute;
@@ -905,6 +910,7 @@
     width: 120px;
     z-index: 5;
     padding-bottom: 0px;
+    width: 122px;
 }
 .hotel-details .rating {
 	right: -5px;

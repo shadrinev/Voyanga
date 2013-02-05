@@ -59,11 +59,11 @@ class SearchController extends ApiController
             $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
             if (!$this->results)
             {
-                $this->results = array();
+                $this->results = array('hotels'=>array(), 'hotelsDetails'=>array());
             }
         }
 
-        $cacheId = md5(serialize($hotelSearchParams));
+        $cacheId = md5(md5(serialize($hotelSearchParams)).microtime().rand(1000,9999));
         $this->results['cacheId'] = $cacheId;
         $this->results['searchParams'] = $hotelSearchParams->getJsonObject();
 
