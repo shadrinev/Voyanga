@@ -123,25 +123,25 @@
 			<img src="<?=   $images; ?>/images/load.gif">
 		</div>
 		<div id="titleNamePhoto">
-			<h2 data-bind="text: title">Рэдиссон Соня Отель</h2>
-			<div class="stars three" data-bind="attr: {'class': 'stars '+ stars}"></div>
+			<h2 data-bind="text: data.title">Рэдиссон Соня Отель</h2>
+			<div class="stars three" data-bind="attr: {'class': 'stars '+ data.stars}"></div>
 		</div>
     	<table>
     		<tr>
-    			<td id="left" data-bind="attr: {'class': (activeIndex()!=0) ? '' :'none'}, click: prev"></td>
+    			<td id="left" data-bind="attr: {'class': (data.activeIndex()!=0) ? '' :'none'}, click: data.prev"></td>
     			<td id="center">
     				<div class="countAndClose">
-    					<span data-bind="text: (activeIndex()+1)">11</span><span class="lost">/<span data-bind="text: (length0 +1)">17</span></span>
+    					<span data-bind="text: (data.activeIndex()+1)">11</span><span class="lost">/<span data-bind="text: (data.length0 +1)">17</span></span>
     					<div id="boxClosePhoto" data-bind="click: close">Закрыть Х</div>
     				</div>
                     <div>
-    				    <img data-bind="attr:{src: activePhoto()}, event: {load: photoLoad}, click: next" style="opacity:0; border: #696c72 1px solid;">
+    				    <img data-bind="attr:{src: data.activePhoto()}, event: {load: data.photoLoad}, click: data.next" style="opacity:0; border: #696c72 1px solid;">
                     </div>
-                    <div class="namePhotoPopUp" data-bind="text: activeDesc()">
+                    <div class="namePhotoPopUp" data-bind="text: data.activeDesc()">
                     	Привет привет!
                     </div>
           		</td>
-    			<td id="right" data-bind="attr: {'class': (activeIndex()!=length0) ? '' :'none'}, click: next"></td>
+    			<td id="right" data-bind="attr: {'class': (data.activeIndex()!=data.length0) ? '' :'none'}, click: data.next"></td>
     		</tr>
     	</table>
     	<div class="keyBoard"></div>
