@@ -1,7 +1,8 @@
-class PhotoBox
+class PhotoBox extends GenericPopup
   constructor: (@photos,@title,@stars = 0,initIndex = 0)->
     if photos.length == 0
       return
+    
     @activeIndex = ko.observable initIndex
     @length0 = photos.length - 1
     @activePhoto = ko.observable @photos[@activeIndex()]['largeUrl']
@@ -9,41 +10,23 @@ class PhotoBox
     # Indicates if we are sliding right now, so no one should be able
     # to request other image
     @busy = false
-    
-    $('body').prepend('<div id="popupOverlayPhoto"></div>')
-    $('body').prepend($('#photo-popup-template').html())
-    # FIXME most likely memory leaks, tho i dont sure
-    ko.applyBindings(@, $('#body-popup-Photo')[0])
-    ko.processAllDeferredBindingUpdates()
+    super('#photo-popup', @, false)
+
+#    $('body').prepend('<div id="popupOverlayPhoto"></div>')
 
     resizeLoad()
     #resizePhotoWin()
-    @loadFirstTime = true
-
+  rebind: =>
+    super
     $(window).keyup (e) =>
-      if e.keyCode == 27
-        @close()
-#        if e.preventDefault
-#          e.preventDefault()
-#        e.returnValue = false
-
-
-      else if e.keyCode == 37
+      if e.keyCode == 37
         @prev()
       else if e.keyCode == 39
         @next()
 
-  close: ->
-    $(window).unbind 'keyup'
-    $('#body-popup-Photo').remove()
-    $('#popupOverlayPhoto').remove()
     
   # Load handler for popup photos
   photoLoad: (context, event) =>
-    console.log "PHOTOLOAD"
-    if @loadFirstTime
-      #resizePhotoWinHandler()
-      @loadFirstTime = false
     el = $(event.currentTarget)
     el.show()
     console.log(el)
