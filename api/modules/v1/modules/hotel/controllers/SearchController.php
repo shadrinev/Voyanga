@@ -59,7 +59,7 @@ class SearchController extends ApiController
             $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
             if (!$this->results)
             {
-                $this->results = array();
+                $this->results = array('hotels'=>array(), 'hotelsDetails'=>array());
             }
         }
 
