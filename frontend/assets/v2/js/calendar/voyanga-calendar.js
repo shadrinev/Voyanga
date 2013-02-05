@@ -421,8 +421,10 @@ VoyangaCalendarStandart.update = function (dontset) {
             }
         }
         if (!dontset){
-            console.log('sat date and value will be updated');
-            this.panel().setDate(this.values);
+            console.log('sat date and value will be updated',this.panel());
+            if(this.panel().setDate){
+                this.panel().setDate(this.values);
+            }
         }
     }
 }

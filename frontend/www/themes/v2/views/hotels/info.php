@@ -262,7 +262,9 @@
   	<div class="shadowHotel"><img src="<?= $theme; ?>/images/shadow-hotel.png"></div>
           <h3>Важная информация</h3>
           <ul>
-              <li><span class="span">Время заселения:</span> <span data-bind="text: checkInTime"></span></li>
+              <!-- ko if: checkInTime -->
+                <li><span class="span">Время заселения:</span> <span data-bind="text: checkInTime"></span></li>
+              <!-- /ko -->
               <!-- ko if: site -->
                 <li><span class="span">Сайт отеля:</span> <span><a data-bind="text: site,attr:{href: site}"></a></span></li>
               <!-- /ko -->
