@@ -7,7 +7,7 @@
  */
 
 return array(
-    "env.code" => "private",
+    "env.code" => "home",
 
     "api.endPoint" => "http://api.voyanga.lcl/v1/",
 
