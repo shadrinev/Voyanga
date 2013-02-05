@@ -46,6 +46,10 @@ return CMap::mergeArray(array(
         'sender'=>'Voyanga'
 
     ),
+
+    'enableHotelLogging' => false,
+    'enableFlightLogging' => false,
+
     'autocompleteLimit' => 10,
     'autocompleteCacheTime' => 3600,
 

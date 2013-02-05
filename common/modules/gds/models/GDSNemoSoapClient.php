@@ -59,34 +59,29 @@ class GDSNemoSoapClient extends SoapClient
         elseif( strpos($action,'bookFlight1') !== FALSE)
         {
             $this->gdsRequest->requestXml = UtilsHelper::formatXML($request);
-
-            $this->gdsRequest->save();
-            echo '???';
+            if (appParams('enableFlightLogging'))
+                $this->gdsRequest->save();
             VarDumper::dump($request);
             return "";
         }
         else
         {
-
-            //die();
             $this->gdsRequest->requestXml = UtilsHelper::formatXML($request);
-            $this->gdsRequest->save();
-            //VarDumper::dump($request);
-            //die();
+            if (appParams('enableFlightLogging'))
+                $this->gdsRequest->save();
             $startTime = microtime(true);
             $sXML = $this->makeSoapRequest($request, $location, $action, $version);
             $endTime = microtime(true);
             $this->gdsRequest->executionTime = ($endTime - $startTime);
             $this->gdsRequest->responseXml = UtilsHelper::formatXML($sXML);
-            $this->gdsRequest->save();
+            if (appParams('enableFlightLogging'))
+                $this->gdsRequest->save();
             if(!$sXML){
                 $this->gdsRequest->errorDescription = Yii::t( 'application', 'Error on soap request. Curl description: {curl_desc}. Last headers: {last_headers}.', array('{curl_desc}'=>GDSNemoSoapClient::$lastCurlError,'{last_headers}'=>GDSNemoSoapClient::$lastHeaders));
-                $this->gdsRequest->save();
+                if (appParams('enableFlightLogging'))
+                    $this->gdsRequest->save();
                 throw new CException( Yii::t( 'application', 'Error on soap request. Curl description: {curl_desc}. Last headers: {last_headers}.', array('{curl_desc}'=>GDSNemoSoapClient::$lastCurlError,'{last_headers}'=>GDSNemoSoapClient::$lastHeaders)) );
             }
-            //$sXML = parent::__doRequest($request, $location, $action, $version);
-            //echo VarDumper::xmlDump($sXML);
-            //die();
         }
 
         return $sXML;
