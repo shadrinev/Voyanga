@@ -21,6 +21,7 @@ EOD;
             $xpath = new DOMXPath($dom);
             $data = $xpath->query('//*[@id="table"]/tr');
             $rowResult = array();
+            $rowResult['code'] = $code;
             foreach($data as $row) {
                 $result= $xpath->query('td/text()', $row);
                 $key = $result->item(0)->textContent;
@@ -29,6 +30,6 @@ EOD;
             }
             $overall_results[] = $rowResult;
         }
-        json_encode($overall_results);
+        echo json_encode($overall_results);
     }
 }
