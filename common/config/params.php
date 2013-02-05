@@ -47,9 +47,6 @@ return CMap::mergeArray(array(
 
     ),
 
-    'enableHotelLogging' => false,
-    'enableFlightLogging' => false,
-
     'autocompleteLimit' => 10,
     'autocompleteCacheTime' => 3600,
 
