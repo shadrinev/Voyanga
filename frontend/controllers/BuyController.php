@@ -189,7 +189,7 @@ class BuyController extends FrontendController
             }
         }
         else
-            throw new CException(500, 'Cache expired');
+            throw new CHttpException(500, 'Cache expired');
     }
 
     public function addFlightTripElement($flight, FlightSearchParams $flightSearchParams)

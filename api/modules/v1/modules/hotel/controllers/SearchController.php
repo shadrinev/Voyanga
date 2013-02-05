@@ -50,20 +50,21 @@ class SearchController extends ApiController
                 Yii::app()->end();
             }
         }
+        $cacheId = md5(serialize($hotelSearchParams).microtime().rand(1000,9999));
+
         if (empty($possibleCities))
         {
             $this->results = array('hotels'=>array(), 'hotelsDetails'=>array());
         }
         else
         {
-            $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams);
+            $this->results = HotelManager::sendRequestToHotelProvider($hotelSearchParams, $cacheId);
             if (!$this->results)
             {
                 $this->results = array('hotels'=>array(), 'hotelsDetails'=>array());
             }
         }
 
-        $cacheId = md5(md5(serialize($hotelSearchParams)).microtime().rand(1000,9999));
         $this->results['cacheId'] = $cacheId;
         $this->results['searchParams'] = $hotelSearchParams->getJsonObject();
 
