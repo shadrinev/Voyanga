@@ -158,7 +158,7 @@ class HotelManager
 
     static private function storeToCache($hotelSearchParams, $variants)
     {
-        $cacheId = md5(serialize($hotelSearchParams));
+        $cacheId = md5(serialize($hotelSearchParams).microtime().rand(1000,9999));
 
         Yii::app()->pCache->set('hotelSearchResult' . $cacheId, $variants, appParams('hotel_search_cache_time'));
         Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
