@@ -11,7 +11,7 @@ ko.bindingHandlers.autocomplete = {
         return $(element).change();
       });
       return $(element).autocomplete({
-        serviceUrl: "http://api.voyanga.com/v1/helper/autocomplete/" + valueAccessor().source,
+        serviceUrl: window.apiEndPoint + "/helper/autocomplete/" + valueAccessor().source,
         minChars: 2,
         delimiter: /(,|;)\s*/,
         maxHeight: 400,
