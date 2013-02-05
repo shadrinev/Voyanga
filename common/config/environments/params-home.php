@@ -9,6 +9,8 @@
 return array(
     "env.code" => "private",
 
+    "api.endPoint" => "http://api.voyanga.lcl/v1/",
+
     "baseUrl" => 'http://frontend.voyanga.lcl',
 
     'db.name' => 'search',

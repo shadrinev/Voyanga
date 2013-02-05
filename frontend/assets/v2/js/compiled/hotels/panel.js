@@ -119,10 +119,14 @@ HotelsPanel = (function(_super) {
 
   HotelsPanel.prototype.setDate = function(values) {
     if (values.length) {
-      this.checkIn(values[0]);
+      if (!this.checkIn() || (moment(this.checkIn()).format('YYYY-MM-DD') !== moment(values[0]).format('YYYY-MM-DD'))) {
+        this.checkIn(values[0]);
+      }
       if (values.length > 1) {
-        if (values[0] < values[1]) {
-          return this.checkOut(values[1]);
+        if (values[1] > this.checkIn()) {
+          if (!this.checkOut() || (moment(this.checkOut()).format('YYYY-MM-DD') !== moment(values[1]).format('YYYY-MM-DD'))) {
+            return this.checkOut(values[1]);
+          }
         } else {
           return this.checkOut('');
         }

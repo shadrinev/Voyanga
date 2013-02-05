@@ -41,6 +41,11 @@ class CacheCommand extends CConsoleCommand
         echo "Deleted hotel rows: ".$deleted."\n";
     }
 
+    public function actionMemcacheFlush()
+    {
+        Yii::app()->cache->flush();
+    }
+
     public function actionParseSkyScanner($from, $to)
     {
         $this->from = $from;

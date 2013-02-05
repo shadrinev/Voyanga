@@ -570,7 +570,6 @@ function ResizeAvia() {
 
 function ResizeAviaClb() {
     window.lastResizeCall = new Date().getTime();
-    console.log('МЫ КОГДА-НИБУДЬ ЭТУ ХЕРНЮ СОТВОРИМ?!');
     //    if (DetectMobileQuick() )
     ResizeCenterBlock();
     inTheTwoLines();

@@ -8,6 +8,8 @@
 return array(
 	"env.code" => "private",
 
+    "api.endPoint" => "http://api.voyanga.com/v1/",
+
     "baseUrl" => 'http://voyanga.com',
 
     'db.name' => 'search',

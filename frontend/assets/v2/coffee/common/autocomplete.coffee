@@ -5,7 +5,7 @@ ko.bindingHandlers.autocomplete =
       $(element).bind "focus", ->
         $(element).change()
       $(element).autocomplete
-        serviceUrl: "http://api.voyanga.com/v1/helper/autocomplete/" + valueAccessor().source # Страница для обработки запросов автозаполнения
+        serviceUrl: window.apiEndPoint + "/helper/autocomplete/" + valueAccessor().source # Страница для обработки запросов автозаполнения
         minChars: 2 # Минимальная длина запроса для срабатывания автозаполнения
         delimiter: /(,|;)\s*/ # Разделитель для нескольких запросов, символ или регулярное выражение
         maxHeight: 400 # Максимальная высота списка подсказок, в пикселях
