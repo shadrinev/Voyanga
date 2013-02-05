@@ -8,6 +8,7 @@
  * @property string $code
  * @property string $localRu
  * @property string $localEn
+ * @property string $ticketingplate;
  */
 class Airline extends CActiveRecord
 {
