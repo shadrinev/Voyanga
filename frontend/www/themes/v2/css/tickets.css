@@ -125,12 +125,17 @@
     padding-right: 135px;
     position: relative;
 }
-
+.ticket-items .content .center-ticket .date-time-city.first {
+    padding-top: 3px;
+}
 .date-time-city .start {
 	left: 15px;
     position: absolute;
     top: 0;
     width: 100px;
+}
+.date-time-city.first .start, .date-time-city.first .finish {
+    top: 3px;
 }
 .date-time-city .finish {
 	position: absolute;
