@@ -10,7 +10,7 @@
 return array(
 	'components'=>array(
         'RSentryException'=> array(
-            'dsn'=> 'http://0a8a5a8f752047b4817d033007109c46:dcc2ccf28f654f9da5f151178b6886b6@mihan007.ru/2',
+            'dsn'=> $params['sentry.dsn'],
             'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
         ),
 		'log'=>array(

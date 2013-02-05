@@ -55,4 +55,5 @@ return array(
         ),
         'distanceFromCityCenter' => 5000,
     ),
+    'sentry.dsn' => 'http://cc514c559d7c452cbcce18ea6fad927d:7901456e89b3417498605c034c81665a@109.236.87.123:9000/3'
 );
