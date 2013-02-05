@@ -35,9 +35,13 @@ class Payments_Channel_Ltr extends Payments_Channel {
         //! FIXME did not tested for edge case
         $ltr.= str_repeat('       ', 4-$i);
         $ltr.= " "; // RESTRICTED TICKET INDICATOR: pass nothing even tho we can get this info
-        $ltr.= $booker->flightBookingPassports[0]->ticketNumber; // TICKET NUMBER
-        if(strlen($booker->flightBookingPassports[0]->ticketNumber)==13)
-            $ltr.= substr($booker->flightBookingPassports[0]->ticketNumber, 3) % 7; // CHECK DIGIT
+        $ticketNumber = $booker->flightBookingPassports[0]->ticketNumber;
+        if(strlen($ticketingNumber)==10) {
+            $ticketNumber = $flightVoyage->valAirline->ticketingplate . $ticketNumber;
+        }
+        $ltr.= $ticketNumber; // TICKET NUMBER
+        if(strlen($ticketNumber)==13)
+            $ltr.= substr($ticketNumber, 3) % 7; // CHECK DIGIT
         //! FIXME check how de focking php TZs are working
         list($date, $time) = explode("T",$flightVoyage->flights[0]->departureDate);
         list($year, $month, $date) = explode('-', $date);
