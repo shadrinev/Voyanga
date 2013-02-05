@@ -239,7 +239,6 @@ function onFocusInput() {
     });
 }
 $(window).load(onFocusInput);
-
 function showUserMenu() {
 
     $('.popupDown').slideDown(200, function() {
