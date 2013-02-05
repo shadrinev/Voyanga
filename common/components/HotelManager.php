@@ -7,7 +7,7 @@
  */
 class HotelManager
 {
-    static function sendRequestToHotelProvider($hotelSearchParams)
+    static function sendRequestToHotelProvider($hotelSearchParams, $cacheId)
     {
         Yii::import('site.frontend.models.*');
         Yii::import('site.frontend.components.*');
@@ -17,7 +17,7 @@ class HotelManager
         $endTime = microtime(true);
 
         $startTime = microtime(true);
-        self::storeToCache($hotelSearchParams, $variants);
+        self::storeToCache($hotelSearchParams, $variants, $cacheId);
         $endTime = microtime(true);
 
         $startTime = microtime(true);
@@ -156,10 +156,8 @@ class HotelManager
         return $additional;
     }
 
-    static private function storeToCache($hotelSearchParams, $variants)
+    static private function storeToCache($hotelSearchParams, $variants, $cacheId)
     {
-        $cacheId = md5(serialize($hotelSearchParams).microtime().rand(1000,9999));
-
         Yii::app()->pCache->set('hotelSearchResult' . $cacheId, $variants, appParams('hotel_search_cache_time'));
         Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
 
