@@ -63,7 +63,7 @@ class SearchController extends ApiController
             }
         }
 
-        $cacheId = md5(serialize($hotelSearchParams));
+        $cacheId = md5(md5(serialize($hotelSearchParams)).microtime());
         $this->results['cacheId'] = $cacheId;
         $this->results['searchParams'] = $hotelSearchParams->getJsonObject();
 
