@@ -1,3 +1,6 @@
+<script type="text/javascript">
+    window.apiEndPoint = '<?php echo Yii::app()->params['api.endPoint'] ?>';
+</script>
 <div class="head" id="header">
     <!-- CENTER BLOCK -->
     <div class="center-block">

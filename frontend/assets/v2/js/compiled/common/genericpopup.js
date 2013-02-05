@@ -5,55 +5,73 @@ var GenericPopup,
 GenericPopup = (function() {
 
   function GenericPopup(id, data, modal) {
-    var el,
-      _this = this;
+    var el;
     this.id = id;
     this.modal = modal != null ? modal : false;
     this.close = __bind(this.close, this);
 
+    this.rebind = __bind(this.rebind, this);
+
+    if (!window.popupStack) {
+      window.popupStack = [];
+    }
     this.inside = false;
-    $('body').css('overflow', 'hidden');
-    $('body').prepend('<div id="popupOverlay"></div>');
+    if (window.popupStack.length === 0) {
+      $('body').css('overflow', 'hidden');
+      $('body').prepend('<div id="popupOverlay"></div>');
+    }
     el = $(this.id + '-template');
     if (el[0] === void 0) {
       throw "Wrong popup template";
       return;
     }
-    el = $(el.html());
-    $('body').prepend(el);
+    this.el = $(el.html());
+    $('body').prepend(this.el);
     ko.applyBindings({
       data: data,
       close: this.close
-    }, el[0]);
+    }, this.el[0]);
     ko.processAllDeferredBindingUpdates();
     if (this.modal) {
       return;
     }
+    window.popupStack.push(this);
+    this.rebind();
+  }
+
+  GenericPopup.prototype.rebind = function() {
+    var _this = this;
+    $(window).unbind('keyup');
     $(window).keyup(function(e) {
       if (e.keyCode === 27) {
+        console.error(_this);
         return _this.close();
       }
     });
-    $(el.find('table')[0] || el.find('.wrapContent')).hover(function() {
+    $(this.el.find('table')[0] || this.el.find('.wrapContent')).hover(function() {
       return _this.inside = true;
     }, function() {
       return _this.inside = false;
     });
-    el.click(function() {
+    return this.el.click(function() {
       if (!_this.inside) {
         return _this.close();
       }
     });
-  }
+  };
 
   GenericPopup.prototype.close = function() {
     if (!this.modal) {
       $(window).unbind('keyup');
     }
-    $(this.id).remove();
-    $('#popupOverlay').remove();
-    $('body').css('overflow', 'auto');
-    return btnClosePopUp();
+    this.el.remove();
+    this["this"] = window.popupStack.pop();
+    if (window.popupStack.length) {
+      return window.popupStack[window.popupStack.length - 1].rebind();
+    } else {
+      $('#popupOverlay').remove();
+      return $('body').css('overflow', 'auto');
+    }
   };
 
   return GenericPopup;
