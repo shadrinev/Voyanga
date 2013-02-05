@@ -43,28 +43,6 @@ class HotelManager
                     $hotelsDetails[$info['hotelId'] . 'd'] = self::prepare($hotelInfo);
                 }
             }
-            /*
-            $query = array();
-            foreach ($resultsHotels['hotels'] as $i => $info)
-            {
-                $query[$info['hotelId']] = $hotelClient->hotelDetail($info['hotelId'], true);
-            }
-
-            $hotelClient->processAsyncRequests();
-            $endTime = microtime(true);
-
-            Header('ExecutionTimeSortAndDetails:' . ($endTime - $startTime));
-
-            $hotelsDetails = array();
-            foreach ($query as $hotelId => $responseId)
-            {
-                if (isset($hotelClient->requests[$responseId]['result']))
-                {
-                    $hotelsDetails[$hotelId . 'd'] = self::prepare($hotelClient->requests[$responseId]['result']);
-                    //Yii::app()->cache->set('HotelDetails-' . $hotelId, $hotelsDetails[$hotelId . 'd']);
-                }
-            }/**/
-
             $results['hotelsDetails'] = $hotelsDetails;
 
             return $results;
@@ -158,8 +136,8 @@ class HotelManager
 
     static private function storeToCache($hotelSearchParams, $variants, $cacheId)
     {
-        Yii::app()->pCache->set('hotelSearchResult' . $cacheId, $variants, appParams('hotel_search_cache_time'));
-        Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
+        Yii::app()->pCache->set('hotelSearchResult1' . $cacheId, $variants, appParams('hotel_search_cache_time'));
+        Yii::app()->pCache->set('hotelSearchParams1' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
 
         return $cacheId;
     }
