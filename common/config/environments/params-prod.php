@@ -8,8 +8,8 @@
 return array(
 	"env.code" => "prod",
 
-    'enableHotelLogging' => true,
-    'enableFlightLogging' => true,
+    'enableHotelLogging' => false,
+    'enableFlightLogging' => false,
 
     "api.endPoint" => "http://api.voyanga.com/v1/",
     'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
