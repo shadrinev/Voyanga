@@ -609,7 +609,7 @@
     z-index: 11;
 }
 .panel-index .sub-head {
-	background: none;
+    background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;
     height: 64px;
     padding-bottom: 0px;
     margin-bottom: none;
@@ -637,7 +637,7 @@
 	/*background: url("../images/bgBoardSmall.png") repeat-x scroll 0 0 transparent;*/
 /*}*/
 .board {
-	background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;
+	/*background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;*/
     bottom: 366px;
     min-height: 64px;
     min-width: 1000px;
@@ -683,8 +683,9 @@
 }
 
 .board-content {
-	height: 64px;
+	/*height: 64px;*/
     position: relative;
+    background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;
 }
 .board-content.start .panelTable .contTD {
 	text-align: left;
@@ -702,21 +703,9 @@
     border-radius: 4px 0 0 4px;
     width: 262px;
 }
-/*.contTD.cityActive .data .input-path {*/
-    /*width: 100px;*/
-/*}*/
-/*.contTD.cityActive .cityStart {*/
-    /*width: 265px;*/
-/*}*/
 .input-to {
     display: none;
 }
-/*.avia .contTD {*/
-	/*text-align: left;*/
-/*}*/
-/*.avia .contTD .how-many-man {*/
-	/*margin-left: 10px;*/
-/*}*/
 .alphaRight {
     background: url("../images/alpha-tours-left.png") repeat-y scroll 0 0 transparent;
     display: block;
@@ -764,20 +753,6 @@
     top: 0;
     width: 86px;
 }
-/*.board-content .tdCity .from {*/
-/*display: inline-block;*/
-/*height: 36px;*/
-/*position: relative;*/
-/*vertical-align: middle;*/
-/*width: 270px;*/
-/*}*/
-/*.board-content .tdCity .from.active {}*/
-/*.board-content .tdCity .from.overflow {*/
-/*overflow: hidden;*/
-/*border-radius: 4px 4px 4px 4px;*/
-/*}*/
-
-
 /* INPUT */
 .bgInput {
     position: absolute;

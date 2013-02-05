@@ -583,6 +583,7 @@ function ResizeAviaClb() {
     jsPaneScrollHeight();
     startIE();
     ifIpadLoad();
+    slideToursPanel();
 }
 
 function ResizeFun() {
@@ -1610,3 +1611,18 @@ function ifIpadLoad() {
     }
 }
 
+
+function slideToursPanel() {
+    if ($('.board').length > 0 && $('.board').is(':visible')) {
+        var _topHeight = $('.board').offset().top;
+        if (_topHeight < 40) {
+            $('body').css('position','relative').css('height', ($('.board').height() + 404)+'px');
+        }
+        $(window).resize(function() {
+            if ($(window).height() > $('body').height()) {
+               $('body').css('position','fixed').css('height', '100%');
+               //CenterIMGResize();
+            }
+        });
+    }
+}
