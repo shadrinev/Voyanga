@@ -166,70 +166,75 @@ function onFocusInput() {
             $('.female').eq(index).find('input').closest('label').addClass('active');
         }
     });
-    $('.male input').focus(function () {
-        var _that = this;
-        $(_that).parent().addClass('focus');
-        $(window).unbind('keypress');
-        $(window).bind('keypress', function(e) {
-            if (e.which == 9 && $(_that).attr('checked') == 'checked') {
-                $(_that).parent().parent().next().find('input.dd').focus();
-            }
-            else if (e.which == 9 && $(_that).attr('checked') != 'checked') {
-                $(_that).parent().next().focus();
-            }
-            else if (e.which == 32) {
-                $(_that).parent().parent().find('label').removeClass('active error');
-                $(_that).parent().addClass('active');
-                $(_that).parent().parent().next().find('input.dd').focus();
-                $(_that).attr('checked','checked');
-            }
-        });
+    $('.male input').focusin(function(e) {
+        $(this).parent().addClass('focus');
+        $(this).removeAttr('checked');
     });
     $('.male input').blur(function () {
         $(this).parent().removeClass('focus');
-        $(this).removeAttr('disabled');
-        $(this).parent().next().find('input').removeAttr('disabled');
+
     });
     $('.male input').change(function () {
-        if ($(this).attr('checked') == 'checked') {
-            $(this).parent().addClass('active');
-            $(this).parent().next().removeClass('active error');
+        $(this).parent().removeClass('active');
+        $(this).parent().next().removeClass('active');
+        $(this).parent().addClass('active');
+        if ($(this).attr('ckecked') == 'checked') {
+
         }
         else {
-            $(this).parent().removeClass('active');
+
         }
+        $(this).parent().parent().next().find('input.dd').focus();
     });
-    $('.female input').focus(function () {
-        var _that = this;
-        $(_that).parent().addClass('focus');
-        $(window).unbind('keypress');
-        $(window).bind('keypress', function(e) {
-            if (e.which == 9 && $(_that).attr('checked') == 'checked') {
-                $(_that).parent().parent().next().find('input.dd').focus();
-            }
-            else if (e.which == 9 && $(_that).attr('checked') != 'checked') {
-                $(_that).parent().parent().next().find('input.dd').focus();
-            }
-            else if (e.which == 32) {
-                $(_that).parent().parent().find('label').removeClass('active error');
-                $(_that).parent().addClass('active');
-                $(_that).parent().parent().next().find('input.dd').focus();
-                $(_that).attr('checked','checked');
-            }
-        });
+    $('.female input').focusin(function() {
+        $(this).parent().addClass('focus');
+        $(this).removeAttr('checked');
     });
     $('.female input').blur(function () {
         $(this).parent().removeClass('focus');
-        $(this).removeAttr('disabled');
-        $(this).parent().next().find('input').removeAttr('disabled');
+
     });
     $('.female input').change(function () {
-        if ($(this).attr('checked') == 'checked') {
-            $(this).parent().addClass('active');
-            $(this).parent().prev().removeClass('active error');
+        $(this).parent().removeClass('active');
+        $(this).parent().prev().removeClass('active');
+        $(this).parent().addClass('active');
+        if ($(this).attr('ckecked') == 'checked') {
+
         }
         else {
-            $(this).parent().removeClass('active');
+
+        }
+        $(this).parent().parent().next().find('input.dd').focus();
+    });
+    $(window).unbind('keydown');
+    $(window).bind('keydown', function(e) {
+        if (e.which == 0 || e.which == 9 || e.which == 39 || e.which == 37) {
+            if ($(e.target).parents('.male').length > 0) {
+                e.preventDefault();
+                var _this = $(e.target);
+                if ($(_this).is(':checked')) {
+                    $(_this).parent().parent().next().find('input.dd').focus();
+                }
+                else {
+                    $(_this).parent().next().find('input').focus();
+                    $(_this).parent().removeClass('active');
+                }
+            }
+            else if ($(e.target).parents('.female').length > 0) {
+                e.preventDefault();
+                var _this = $(e.target);
+                if ($(_this).is(':checked')) {
+                    $(_this).parent().parent().next().find('input.dd').focus();
+                }
+                else {
+                    $(_this).parent().prev().find('input').focus();
+                    $(_this).parent().removeClass('active');
+                }
+            }
+        }
+        else if (e.which == 32) {
+            var _this = $(e.target);
+            $(_this).parent().addClass('active');
         }
     });
 }
