@@ -32,9 +32,9 @@ class SearchController extends ApiController
         {
             if ($httpCode=$response->headers['http_code'] == 200)
             {
-                $combined = CJSON::decode($response->body);
-                $flights = $combined['flights'];
-                $searchParams = $combined['searchParams'];
+                $combined = json_decode($response->body);
+                $flights = $combined->flights;
+                $searchParams = $combined->searchParams;
                 $variants = CMap::mergeArray($variants, FlightManager::injectForBe($flights, $searchParams));
             }
             else

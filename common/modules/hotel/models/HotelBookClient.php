@@ -1849,6 +1849,7 @@ class HotelBookClient
             $diff = Yii::app()->cache->get($keydiff);
             if (($diff === false) or $forced)
             {
+                self::$lastRequestDescription = 'olddiff:'.$diff.' gh:'.gethostname().' servtime:'.time();
                 $unixtime = $this->request(Yii::app()->params['HotelBook']['uri'] . 'unix_time');
                 $this->differenceTimestamp = $unixtime - time();
                 Yii::app()->cache->set($keydiff, $this->differenceTimestamp, 30 * 60);

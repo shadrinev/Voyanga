@@ -2,9 +2,15 @@
     //window.flightBestPrice = <?php //echo json_encode($flightCache); ?>;
     window.defaultCity = '<?php echo $currentCity->code; ?>';
     window.pointCity = '<?php echo $city->code; ?>';
+    //window.apiEndPoint = 'http://api.oleg.voyanga';
 
     function setDepartureDate(strDate){
-        window.app.fakoPanel().departureDate(moment(strDate)._d);
+        var checkIn = moment(strDate);
+        window.app.fakoPanel().checkIn(checkIn._d);
+        var checkOut = moment(checkIn);
+        checkOut.add('days', 7);
+        window.app.fakoPanel().checkOut(checkOut._d);
+
     }
     initLandingPage = function() {
         var app, avia, hotels, tour;
@@ -23,14 +29,15 @@
         app.register('avia', avia);
         app.runWithModule('tours');
         app.activeModule('tours');
-        var panelSet = new AviaPanel();
-        panelSet.departureCity(window.defaultCity);
-        panelSet.arrivalCity(window.pointCity);
+        var panelSet = new HotelsPanel();
+        //panelSet.departureCity(window.defaultCity);
+        panelSet.city(window.pointCity);
 
-        panelSet.rt(false);
+        //panelSet.rt(false);
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
-        setDepartureDate('<?php echo $flightCache[$activeMin]->dateFrom;?>');
+
+        setDepartureDate(moment(new Date()).format('YYYY-MM-DD'))
 
 
         ko.applyBindings(app);
@@ -96,201 +103,132 @@
             ?>
         </h3>
     </div>
-    <div class="center-block">
-        <div class="floatLeft">
-            <ul class="grafik first-child">
 
-                <?php foreach($flightCache as $k=>$fc):?>
-                <?php $perc = round(( $fc->priceBestPrice / $maxPrice )*100);?>
-                <li class="grafikMean<?php echo $k==$activeMin ? ' min' : '';?>" data-price="<?php echo $fc->priceBestPrice;?>" data-date="<?php echo $fc->dateFrom;?>" onclick="setDepartureDate($(this).data('date'))">
-                    <div class="price" style="bottom: <?php echo $perc;?>px"><?php echo $fc->priceBestPrice;?></div>
-                    <div class="statusBar" style="height: <?php echo $perc;?>px"></div>
-                </li>
-                <?php endforeach; ?>
-
-            </ul>
-        </div>
-        <div class="floatRight textBlockPrice">
-            <div class="cena"> от <span class="price">3 250</span> <span class="rur">o</span></div>
-            <div>
-                Самая низкая цена<br>
-                по этому направлению:<br>
-                <a href="#">12 июня 2012</a>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="bgDate">
-        <div class="center-block">
-            <div class="floatLeft">
-                <?php foreach($flightCache as $fc){
-                $oldMonth = intval(date('n',strtotime($fc->dateFrom)));
-                $firstCell = true;
-                break;
-            }?>
-                <ul class="date">
-                    <?php foreach($flightCache as $k=>$fc):?>
-                    <?php $ts = strtotime($fc->dateFrom);
-                    $m = intval(date('n',$ts));
-                    ?>
-                    <li<?php echo $m!=$oldMonth ? ' class="newMonth"' : '';?>>
-                        <?php if($m!=$oldMonth || $firstCell):?>
-                        <div class="month"><?php echo UtilsHelper::$months[($m-1)];?></div>
-                        <?php endif; ?>
-                        <div class="day<?php echo $fc->dateFrom == date('Y-m-d') ? ' today':'';?><?php echo $k==$activeMin ? ' min' : '';?>">
-                            <?php echo UtilsHelper::$days[date('w',$ts)];?><br>
-                            <span><?php echo date('d',$ts);?></span>
-                        </div>
-                    </li>
-                    <?php $oldMonth = $m;$firstCell=false;?>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <div class="floatRight textBlockPrice">
-                <a href="#" class="whereData"><span>Откуда данные?</span></a>
-            </div>
-        </div>
-    </div>
 </div>
+
+    <!--<div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
+
+        <div class="board"  style="position: static;">
+            <div class="constructor" style="position: static;">-->
 
     <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
 
         <div class="board"  style="position: static;">
             <div class="constructor" style="position: static;">
                 <!-- BOARD CONTENT -->
-                <div class="panel" data-bind="template: {data: fakoPanel(), afterRender: fakoPanel().afterRender }">
-                    <table class="panelTable avia">
-                        <tbody><tr>
-                            <td class="tdCityStart">
-                                Все направления<br>
-                                500+ авиакомпаний
-                            </td>
-                            <td class="tdCity">
+                <div class="board-content" data-bind="with: fakoPanel()" style="position: static;height: auto;">
 
-                                <div class="data" style="width: 247.5px;">
-                                    <div class="from" data-bind="css: {active: fromChosen}">
-                                        <div class="bgInput">
-                                            <div class="left"></div>
-                                            <div class="center"></div>
-                                            <div class="right"></div>
-                                        </div>
-                                        <input class="input-path departureCity" type="text" tabindex="-1" style="width: 227.5px;">
-                                        <input class="second-path departureCity" type="text" placeholder="Откуда" data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen}" style="width: 227.5px;" autocomplete="off">
-                                        <div class="date" data-bind="click: showCalendar">
-                                            <span class="f17" data-bind="text: departureDateDay()"></span>
-                                            <br>
-                                            <span class="month" data-bind="text: departureDateMonth()"></span>
+                    <div class="panel">
+                        <table class="panelTable constructorTable">
+                            <tr>
+                                <td class="tdCity">
+                                    <div class="data">
+                                        <div class="from" data-bind="css: {active: checkIn()}">
+                                            <div class="bgInput">
+                                                <div class="left"></div>
+                                                <div class="center"></div>
+                                                <div class="right"></div>
+                                            </div>
+                                            <input type="text" placeholder="Куда едем?" class="second-path" data-bind="autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}" autocomplete="off">
+                                            <input type="text" tabindex="-1" class="input-path">
+
+                                            <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
+                                            <div class="date noDate" data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
                                         </div>
                                     </div>
-                                </div></td>
-                            <td class="tdTumblr">
-                                <div class="tumblr">
-                                    <label for="there-back">
-                                        <div class="one" data-bind="css: {active: !rt()}, click: selectOneWay"></div>
-                                        <div class="two active" data-bind="css: {active: rt()}, click: selectRoundTrip"></div>
-                                        <div class="switch" style="left: 35px;"></div>
-                                    </label>
-                                    <input id="there-back" type="checkbox" data-bind="checked: rt()">
-                                </div>
-                            </td>
-                            <td class="tdCity">
-                                <div class="data" style="width: 247.5px;">
-                                    <div class="to" data-bind="css: {active: rtFromChosen}">
-                                        <div class="bgInput">
-                                            <div class="left"></div>
-                                            <div class="center"></div>
-                                            <div class="right"></div>
-                                        </div>
-                                        <input class="input-path arrivalCity" type="text" tabindex="-1" style="width: 227.5px;">
-                                        <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}" style="width: 227.5px;" autocomplete="off">
-                                        <div class="date" data-bind="click: showCalendar">
-                                            <span class="f17" data-bind="text: rtDateDay()"></span>
-                                            <br>
-                                            <span class="month" data-bind="text: rtDateMonth()"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="tdPeople">
-                        <span data-bind="template: { data: passengers,afterRender: passengers.afterRenderPeoplePopup}">
-                            <div class="how-many-man">
-                                <div class="content active" data-bind="click: showPeoplePopup">
-                                    <!-- ko if: overall()>5 -->
-                                    <!-- ko if: adults()>0 -->
-                                    <div class="man"></div>
-                                    <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
-                                    <!-- /ko -->
-                                    <!-- ko if: (sum_children())>0 -->
-                                    <div class="child"></div>
-                                    <div class="count"><span>x</span><i data-bind="text: sum_children()"></i></div>
-                                    <!-- /ko -->
-                                    <!-- /ko -->
-                                    <!-- ko if: overall()<=5 -->
-                                    <div class="man" data-bind="repeat: adults"></div>
-                                    <div class="child" data-bind="repeat: sum_children"></div>
-                                    <!-- /ko -->
-                                </div>
-                                <div class="btn active" data-bind="click: showPeoplePopup"></div>
+                                </td>
+                                <td class="tdAddTour">
 
-                            </div>
-                        </span>
-                            </td>
-                            <td class="tdButton">
-                                <a class="btn-find inactive" data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}">Найти</a>
-                            </td>
-                        </tr>
-                        </tbody></table>
+                                </td>
+
+                                <td class="tdPeople final">
+
+                                        <span data-bind="template: { data: $data.peopleSelectorVM}">
+                                          <div class="how-many-man hotel">
+                                              <!-- ko foreach: rawRooms -->
+                                              <div class="content" data-bind="click: $parent.showPeoplePopup">
+                                                  <span class="num" data-bind="text: $index() + 1">1</span>
+                                                  <div class="man" data-bind="repeat: adults"></div>
+                                                  <div class="child" data-bind="repeat: children"></div>
+                                              </div>
+                                              <!-- /ko -->
+                                              <div class="btn" data-bind="click: showPeoplePopup"></div>
+
+                                          </div>
+                                        </span>
+
+                                </td>
+                                <td class="tdButton">
+
+                                    <div class="btn-find inactive" data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
+
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+
                 </div>
-
-
                 <!-- END BOARD CONTENT -->
                 <!-- ko with: fakoPanel() -->
-                <!-- ko with: passengers -->
-                <div class="popupPeople active avia" style="display: none;">
-                    <div class="adults">
-                        <div class="inputDIV">
-                            <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults" class="active">
-                            <a href="#" class="plusOne" data-bind="click: plusOne" rel="adults" style="display: none;">+</a>
-                            <a href="#" class="minusOne" data-bind="click: minusOne" rel="adults" style="display: none;">-</a>
+                <!-- ko template: { data: $data.peopleSelectorVM }-->
+                <div class="popupPeople">
+                    <!-- ko foreach: {data: roomsView, afterRender: afterRenderPeoplePopup } -->
+                    <div class="float">
+                        <!-- ko foreach: $data -->
+                        <div class="number-hotel">
+                            <a href="#" class="del-hotel" data-bind="click:removeRoom">удалить</a>
+                            <h5>Номер <span data-bind="text: index + 1">1</span></h5>
+                            <div class="one-str">
+                                <div class="adults">
+                                    <div class="inputDIV">
+                                        <input type="text" data-bind="value: adults, css:{active: adults}" class="active">
+                                        <a href="#" class="plusOne" data-bind="click:plusOne" rel="adults">+</a>
+                                        <a href="#" class="minusOne" data-bind="click:minusOne" rel="adults">-</a>
+                                    </div>
+                                    взрослых
+                                </div>
+                                <div class="childs">
+                                    <div class="inputDIV">
+                                        <input type="text" data-bind="value: children, css:{active: children}" name="adult2" class="">
+                                        <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
+                                        <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
+                                    </div>
+                                    детей от 12 до 18 лет
+                                </div>
+                            </div>
+                            <div class="one-str" data-bind="foreach: ages, visible: ages().length" style="display: none;"></div>
+                            <a href="#" data-bind="click: addRoom, visible: last() &amp;&amp; index&lt;3" class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер.</a>
                         </div>
-                        взрослых
+                        <!-- /ko -->
                     </div>
-                    <div class="childs">
-                        <div class="inputDIV">
-                            <input type="text" name="adult2" data-bind="css: {active: children() > 0}, value: children" class="">
-                            <a href="#" class="plusOne" data-bind="click: plusOne" rel="children" style="display: none;">+</a>
-                            <a href="#" class="minusOne" data-bind="click: minusOne" rel="children" style="display: none;">-</a>
-                        </div>
-                        детей до 12 лет
-                    </div>
-                    <div class="small-childs">
-                        <div class="inputDIV">
-                            <input type="text" name="adult3" data-bind="css: {active: infants() > 0}, value: infants" class="">
-                            <a href="#" class="plusOne" data-bind="click: plusOne" rel="infants" style="display: none;">+</a>
-                            <a href="#" class="minusOne" data-bind="click: minusOne" rel="infants" style="display: none;">-</a>
-                        </div>
-                        детей до 2 лет
-                    </div>
-
+                    <!-- /ko -->
                 </div>
                 <!-- /ko -->
                 <!-- /ko -->
-
+                <!-- /ko -->
+                <!-- /ko -->
 
             </div>
+
+
 
             <!-- END CONSTRUCTOR -->
 
         </div>
-
         <div class="clear"></div>
+        <!-- BTN MINIMIZE -->
+
     </div>
     <!-- END PANEL -->
-
     <!-- CALENDAR -->
     <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarStatic}" style="top: -302px; overflow: hidden; height: 341px; position: static;">
     </div>
     <!-- END CALENDAR -->
+
+
+    <!-- END CENTER BLOCK -->
+
 </div>
 <div class="headBlockOne">
     <div class="center-block">

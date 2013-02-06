@@ -67,7 +67,7 @@ class SearchController extends ApiController
         {
             if ($httpCode = $response->headers['http_code'] == 200)
             {
-                $result[$i] = CJSON::decode($response->body);
+                $result[$i] = json_decode($response->body);
                 $errors[$i] = false;
             }
             else
@@ -262,7 +262,7 @@ class SearchController extends ApiController
         {
             if ($httpCode = $response->headers['http_code'] == 200)
             {
-                $this->variants[$i] = CJSON::decode($response->body);
+                $this->variants[$i] = json_decode($response->body);
                 $this->errors[$i] = false;
             }
             else
