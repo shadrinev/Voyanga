@@ -218,6 +218,7 @@ class OrderBooking extends CActiveRecord
             'paid' => 'Заказ оплачен',
             'done' => 'Заказ выполнен',
             'error' => 'Ошибка заказа',
+            'canceled' => 'Заказ отменен',
 
             'analyzing' => 'Анализ штрафов',
 

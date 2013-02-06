@@ -446,6 +446,17 @@ class OrderComponent extends CApplicationComponent
         SmsManager::sendSmsOrderInfo($orderBooking->phone,array('email'=>$orderBooking->email,'orderBookingId'=>$orderBooking->readableId));
     }
 
+    public function sendCanceled()
+    {
+        $orderBooking = $this->getOrderBooking();
+
+        EmailManager::sendOrderCanceled(array(
+            'orderBookingId'=>$orderBooking->readableId,
+            'email'=>$orderBooking->email
+        );
+ 
+    }
+
     public function getOrderBooking()
     {
         $orderBookingId = Yii::app()->user->getState('orderBookingId');
