@@ -48,10 +48,10 @@ class VoyashaCheapest extends Voyasha
     result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].discountPrice}
     for hotel in item.results().data()
       for roomSet in hotel.roomSets()
-        if roomSet.price < result.roomSet.discountPrice
+        if roomSet.discountPrice < result.price
           result.roomSet = roomSet
           result.hotel = hotel
-          result.price = result.roomSet.discountPrice
+          result.price = roomSet.discountPrice
     return result
 
 class VoyashaOptima extends Voyasha

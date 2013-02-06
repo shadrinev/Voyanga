@@ -453,7 +453,7 @@ class OrderComponent extends CApplicationComponent
         EmailManager::sendOrderCanceled(array(
             'orderBookingId'=>$orderBooking->readableId,
             'email'=>$orderBooking->email
-        );
+                                            ));
  
     }
 
