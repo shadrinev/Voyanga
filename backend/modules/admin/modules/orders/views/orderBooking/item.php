@@ -27,11 +27,10 @@ $this->breadcrumbs=array(
       <td><?= $data['timestamp'] ?></td>
       <td> <?=$data['orderBooking']->email ?></td>
       <td> <?=$data['orderBooking']->phone ?></td>
-      <td><?= $data['orderBooking']->orderStatus ?> 
-        <?php if($data['orderBooking']->rawOrderStatus == 'done'): ?>
-        <a href="<?= $this->createUrl('resendEmail', array('id'=>$data['id'])) ?>">Выслать письмо повторно</a>
-        <?php endif; ?>
-      </td>
+      <td><?= $data['orderBooking']->orderStatus ?></td>
+    </tr>
+    <tr>
+      <?php $this->renderPartial('_order_control_panel', Array('orderBooking'=>$data['orderBooking'])); ?>
     </tr>
     <tr>
       <td colspan="5">
