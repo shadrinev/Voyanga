@@ -37,7 +37,8 @@
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
 
-        setDepartureDate(moment(new Date()).format('YYYY-MM-DD'))
+        setDepartureDate(moment(new Date()).format('YYYY-MM-DD'));
+        app.fakoPanel().showCalendar();
 
 
         ko.applyBindings(app);
