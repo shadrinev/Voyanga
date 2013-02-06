@@ -39,6 +39,7 @@
 
         setDepartureDate(moment(new Date()).format('YYYY-MM-DD'));
         app.fakoPanel().showCalendar();
+        app.fakoPanel().minimizeCalendar();
 
 
         ko.applyBindings(app);

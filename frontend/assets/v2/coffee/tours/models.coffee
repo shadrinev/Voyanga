@@ -298,18 +298,19 @@ class ToursHotelsResultSet extends TourEntry
 
   findAndSelectSame: (result) =>
     console.log('find THRS ',result)
-    if result.roomSet
-      console.log('inif')
-      ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))
-    else
-      console.log('inelse')
-      console.log(ko.utils.unwrapObservable(result.roomSets))
-      ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
-    console.log('ret?',ret)
-    if !ret
-      console.log('same not found and find by stars and coords');
-      ret = @results().findAndSelectSameParams(result.categoryId,result.getLatLng())
-    @_selectRoomSet ret
+    if @results() && @results().length
+      if result.roomSet
+        console.log('inif')
+        ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))
+      else
+        console.log('inelse')
+        console.log(ko.utils.unwrapObservable(result.roomSets))
+        ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
+      console.log('ret?',ret)
+      if !ret
+        console.log('same not found and find by stars and coords');
+        ret = @results().findAndSelectSameParams(result.categoryId,result.getLatLng())
+      @_selectRoomSet ret
       
   select: (roomData)=>
     if roomData?
