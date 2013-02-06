@@ -62,4 +62,20 @@ class EmailManager
         }
 
     }
+
+    static public function sendOrderCanceled($params)
+    {
+        $msg = new YiiMailMessage();
+        $msg->view = 'orderCanceled';
+        $msg
+            ->setFrom(appParams('adminEmail'), appParams('adminEmailName'))
+            ->setTo($params['email'])
+            ->setSubject('Заказ номер '.$params['orderBookingId'].' отменен');
+        $msg->setBody(array(
+        ), 'text/html');
+        Yii::app()->mail->send($msg);
+    }
+
+
+
 }
