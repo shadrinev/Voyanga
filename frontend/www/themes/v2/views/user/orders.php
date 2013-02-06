@@ -10,6 +10,7 @@
             'id' => 'drives-grid',
             'dataProvider' => $model,
             'template' => "{items}",
+            'cssFile' => false,
             'columns' => array(
                 array(
                     'header' => 'Дата заказа',
