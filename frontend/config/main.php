@@ -29,7 +29,6 @@ return CMap::mergeArray(
         'defaultController' => $params['app.defaultController'],
         'preload' => array(
             'log',
-            'RSentryException'
         ),
         'onBeginRequest' => function ($event)
         {
