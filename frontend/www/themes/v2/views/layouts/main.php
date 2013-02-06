@@ -20,8 +20,6 @@ else
 <!--[if IE 9 ]>    <html xmlns="http://www.w3.org/1999/xhtml" class="ie ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html xmlns="http://www.w3.org/1999/xhtml" class=""> <!--<![endif]-->
 <head>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raven.js/1.0.4/raven.min.js"></script>
-    <script>Raven.config('<?php echo Yii::app()->params['sentry.dsn']; ?>').install()</script>
     <link rel="shortcut icon" href="<?= $theme ?>/images/favicon.png" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <?php if (!isset($this->title)) $title = Yii::app()->params['title.default']; else $title = $this->title ?>
@@ -31,6 +29,12 @@ else
     </script>
 </head>
 <body data-bind="css: {fixed: in1}">
+<script type="text/javascript">
+    $(function(){
+        Raven.config('<?php echo Yii::app()->params['sentry.dsn']; ?>').install()
+    })
+</script>
+
 <?php echo $content; ?>
 <div class="wrapper" data-bind="css: {'scroll-none': in1}">
 

@@ -42,9 +42,6 @@ Application = (function(_super) {
 
     var result,
       _this = this;
-    window.onerror = function(error) {
-      return new ErrorPopup('e500withText', [error]);
-    };
     this.activeModule = ko.observable(null);
     this.activeModuleInstance = ko.observable(null);
     this.activeSearchPanel = ko.observable(null);
