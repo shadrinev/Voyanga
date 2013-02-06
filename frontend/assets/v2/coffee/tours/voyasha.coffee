@@ -48,7 +48,7 @@ class VoyashaCheapest extends Voyasha
     result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].discountPrice}
     for hotel in item.results().data()
       for roomSet in hotel.roomSets()
-        if roomSet.discountPrice < result.roomSet.price
+        if roomSet.discountPrice < result.price
           result.roomSet = roomSet
           result.hotel = hotel
           result.price = roomSet.discountPrice

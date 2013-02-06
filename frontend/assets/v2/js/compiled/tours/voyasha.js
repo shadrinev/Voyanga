@@ -108,7 +108,7 @@ VoyashaCheapest = (function(_super) {
       _ref1 = hotel.roomSets();
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         roomSet = _ref1[_j];
-        if (roomSet.discountPrice < result.roomSet.price) {
+        if (roomSet.discountPrice < result.price) {
           result.roomSet = roomSet;
           result.hotel = hotel;
           result.price = roomSet.discountPrice;
