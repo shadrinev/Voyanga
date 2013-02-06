@@ -23,19 +23,20 @@
 
 class Raven_ErrorHandler
 {
-    private $old_exception_handler = null;
+    private $old_exception_handler;
     private $call_existing_exception_handler = false;
-    private $old_error_handler = null;
+    private $old_error_handler;
     private $call_existing_error_handler = false;
+    private $reservedMemory;
 
     public function __construct($client)
     {
         $this->client = $client;
     }
 
-    public function handleException($e, $isError = false)
+    public function handleException($e, $isError = false, $vars = null)
     {
-        $e->event_id = $this->client->getIdent($this->client->captureException($e));
+        $e->event_id = $this->client->getIdent($this->client->captureException($e, null, null, $vars));
 
         if (!$isError && $this->call_existing_exception_handler && $this->old_exception_handler) {
             call_user_func($this->old_exception_handler, $e);
@@ -43,9 +44,12 @@ class Raven_ErrorHandler
     }
 
     public function handleError($code, $message, $file='', $line=0, $context=array())
-    {    
+    {
+
+        if (!error_reporting()) { return; }
+
         $e = new ErrorException($message, 0, $code, $file, $line);
-        $this->handleException($e, true);
+        $this->handleException($e, true, $context);
 
         if ($this->call_existing_error_handler && $this->old_error_handler) {
             call_user_func($this->old_error_handler, $code, $message, $file, $line, $context);
@@ -58,7 +62,7 @@ class Raven_ErrorHandler
             return;
         }
 
-        self::freeMemory();
+        unset($this->reservedMemory);
 
         $errors = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_CORE_WARNING, E_COMPILE_ERROR, E_COMPILE_WARNING, E_STRICT);
 
@@ -77,8 +81,11 @@ class Raven_ErrorHandler
         $this->call_existing_exception_handler = $call_existing_exception_handler;
     }
 
-    public function registerErrorHandler($call_existing_error_handler = true, $error_types = E_ALL)
+    public function registerErrorHandler($call_existing_error_handler = true, $error_types = null)
     {
+        if (null === $error_types) {
+            $error_types = E_ALL | E_STRICT;
+        }
         $this->old_error_handler = set_error_handler(array($this, 'handleError'), $error_types);
         $this->call_existing_error_handler = $call_existing_error_handler;
     }
@@ -87,22 +94,6 @@ class Raven_ErrorHandler
     {
         register_shutdown_function(array($this, 'handleFatalError'));
 
-        self::reserveMemory($reservedMemorySize);
-    }
-
-    /**
-     * This is allows to catch memory limit fatal errors.
-     */
-    private static function reserveMemory($reservedMemorySize)
-    {
-        $GLOBALS['tmp_buf'] = str_repeat('x', 1024 * $reservedMemorySize);
-    }
-
-    /**
-     * Free momory
-     */
-    private static function freeMemory()
-    {
-        unset($GLOBALS['tmp_buf']);
+        $this->reservedMemory = str_repeat('x', 1024 * $reservedMemorySize);
     }
 }

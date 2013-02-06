@@ -19,7 +19,7 @@ class RSentryComponent extends CApplicationComponent
     public $dsn;
 
     /**
-     * @var class Sentry stored connection
+     * @var Raven_Client Sentry stored connection
      */
     protected $_client;
 
@@ -30,34 +30,29 @@ class RSentryComponent extends CApplicationComponent
     {
         parent::init();
 
-        if(!class_exists('Raven_Autoloader', false)) {
-            # Turn off our amazing library autoload
-            spl_autoload_unregister(array('YiiBase','autoload'));
-
-            # Include request library
-            include(dirname(__FILE__) . '/lib/Raven/Autoloader.php');
-
-            # Run request autoloader
+        if (!class_exists('Raven_Autoloader', false)) {
+            spl_autoload_unregister(array('YiiBase', 'autoload'));
+            include(dirname(__FILE__) . '/raven-php/lib/Raven/Autoloader.php');
             Raven_Autoloader::register();
-            # Give back the power to Yii
-            spl_autoload_register(array('YiiBase','autoload'));
+            spl_autoload_register(array('YiiBase', 'autoload'));
         }
 
-        if($this->_client===null)
+        if ($this->_client === null)
             $this->_client = new Raven_Client($this->dsn);
 
-        Yii::app()->attachEventHandler('onException',array($this,'handleException'));
+        Yii::app()->attachEventHandler('onException', array($this, 'handleException'));
     }
 
     /**
      * logs exception
      * @param CEvent $event Description
      */
-    public function handleException($event) {
-        $this->_client=$this->_client->captureException($event->exception);
+    public function handleException($event)
+    {
+        $this->_client = $this->_client->captureException($event->exception);
     }
 
     public function logException($exception) {
-        $this->_client->captureException($exception);
+        $this->_client = $this->_client->captureException($exception);
     }
 }
