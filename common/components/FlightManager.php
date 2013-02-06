@@ -19,13 +19,13 @@ class FlightManager
                 $newFlight = $flight;
                 if ($injectSearchParams)
                 {
-                    $newFlight->serviceClass = $injectSearchParams['serviceClass'];
-                    $newFlight->freeWeight = ($newFlight->serviceClass == 'E') ? $flight->economFreeWeight : $flight->businessFreeWeight;
-                    $newFlight->freeWeightDescription = ($newFlight->serviceClass == 'E') ? $flight->economDescription : $flight->businessDescription;
-                    unset($newFlight->economFreeWeight);
-                    unset($newFlight->businessFreeWeight);
-                    unset($newFlight->economDescription);
-                    unset($newFlight->businessDescription);
+                    $newFlight['serviceClass'] = $injectSearchParams['serviceClass'];
+                    $newFlight['freeWeight'] = ($newFlight['serviceClass'] == 'E') ? $flight['economFreeWeight'] : $flight['businessFreeWeight'];
+                    $newFlight['freeWeightDescription'] = ($newFlight['serviceClass'] == 'E') ? $flight['economDescription'] : $flight['businessDescription'];
+                    unset($newFlight['economFreeWeight']);
+                    unset($newFlight['businessFreeWeight']);
+                    unset($newFlight['economDescription']);
+                    unset($newFlight['businessDescription']);
                 }
                 $newFlights[] = $newFlight;
             }
