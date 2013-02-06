@@ -298,7 +298,7 @@ class ToursHotelsResultSet extends TourEntry
 
   findAndSelectSame: (result) =>
     console.log('find THRS ',result)
-    if @results() && @results().length
+    if @results() && @results().data() && @results().data().length
       if result.roomSet
         console.log('inif')
         ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))

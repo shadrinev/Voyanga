@@ -522,20 +522,22 @@ ToursHotelsResultSet = (function(_super) {
   ToursHotelsResultSet.prototype.findAndSelectSame = function(result) {
     var ret;
     console.log('find THRS ', result);
-    if (result.roomSet) {
-      console.log('inif');
-      ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet));
-    } else {
-      console.log('inelse');
-      console.log(ko.utils.unwrapObservable(result.roomSets));
-      ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0]);
+    if (this.results() && this.results().data() && this.results().data().length) {
+      if (result.roomSet) {
+        console.log('inif');
+        ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet));
+      } else {
+        console.log('inelse');
+        console.log(ko.utils.unwrapObservable(result.roomSets));
+        ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0]);
+      }
+      console.log('ret?', ret);
+      if (!ret) {
+        console.log('same not found and find by stars and coords');
+        ret = this.results().findAndSelectSameParams(result.categoryId, result.getLatLng());
+      }
+      return this._selectRoomSet(ret);
     }
-    console.log('ret?', ret);
-    if (!ret) {
-      console.log('same not found and find by stars and coords');
-      ret = this.results().findAndSelectSameParams(result.categoryId, result.getLatLng());
-    }
-    return this._selectRoomSet(ret);
   };
 
   ToursHotelsResultSet.prototype.select = function(roomData) {
