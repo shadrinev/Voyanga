@@ -834,9 +834,6 @@ class HotelsResultSet
     @pagesLoad = false
     @toursOpened = false
 
-    window.hotelsScrollCallback = (ev)=>
-      @checkShowMore(ev)
-
 
 
     for key, result of @_results
@@ -1174,4 +1171,8 @@ class HotelsResultSet
     )
     fv = @data()[0]
     sv = @data()[1]
+
+  afterRender: =>
+    window.hotelsScrollCallback = (ev)=>
+      @checkShowMore(ev)
 

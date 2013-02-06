@@ -58,12 +58,13 @@ dateUtils = {
     if (date.length === 0) {
       return;
     }
+    console.log('dmy', date, date.getYear());
     result = "";
     result += date.getDate();
     result += " ";
     result += MONTHS[date.getMonth()];
     result += " ";
-    return result += date.getYear();
+    return result += date.getFullYear();
   },
   formatDayMonthInterval: function(dateStart, dateEnd) {
     var result;

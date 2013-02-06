@@ -9,6 +9,15 @@
 return array(
     "env.code" => "oleg",
 
+    'enableHotelLogging' => true,
+    'enableFlightLogging' => true,
+
+    "api.endPoint" => "http://api.oleg.voyanga/v1/",
+    'app.api.flightSearchUrl' => 'http://api.oleg.voyanga/v1/flight/search/BE',
+    'app.api.hotelSearchUrl' => 'http://api.oleg.voyanga/v1/hotel/search',
+
+    "baseUrl" => 'http://frontend.oleg.voyanga',
+
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',
     'db.username'=>'voyanga',
@@ -35,6 +44,6 @@ return array(
     'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)',
     'enableMemcached' => false,
     'pdfConverterPath' => '/usr/bin/wkhtmltopdf',
-    'app.api.flightSearchUrl' => 'http://api.oleg.voyanga/v1/flight/search/BE',
-    'app.api.hotelSearchUrl' => 'http://api.oleg.voyanga/v1/hotel/search',
+
+    'sentry.dsn' => 'http://cc514c559d7c452cbcce18ea6fad927d:7901456e89b3417498605c034c81665a@109.236.87.123:9000/3'
 );

@@ -17,10 +17,12 @@ landBestPriceBack = (function() {
       return Utils.formatPrice(_this.showPrice());
     });
     this.showWidth = ko.computed(function() {
-      if (_this.parent.parent.maxPrice()) {
-        return Math.ceil((_this.showPrice() / _this.parent.parent.maxPrice()) * 100);
+      var k;
+      if (_this.parent.backMaxPrice() - _this.parent.backMinPrice()) {
+        k = 10 + Math.ceil((_this.showPrice() - _this.parent.backMinPrice()) / (_this.parent.backMaxPrice() - _this.parent.backMinPrice()) * 90);
+        return k;
       } else {
-        return console.log('no maxPrice');
+        return 50;
       }
     });
     this.backDate = moment(data.dateBack);
@@ -47,10 +49,11 @@ landBestPrice = (function() {
 
     this.addBack = __bind(this.addBack, this);
 
-    this.minPrice = ko.observable(parseInt(data.price) + 5);
+    this.minPrice = ko.observable(parseInt(data.price) * 2 + 5);
     this.date = moment(data.date);
     this._results = {};
-    this.maxPrice = ko.observable(0);
+    this.backMaxPrice = ko.observable(1);
+    this.backMinPrice = ko.observable(this.minPrice());
     this.showPrice = ko.computed(function() {
       return Math.ceil(_this.minPrice() / 2);
     });
@@ -58,10 +61,12 @@ landBestPrice = (function() {
       return Utils.formatPrice(_this.showPrice());
     });
     this.showWidth = ko.computed(function() {
-      if (_this.parent.maxPrice()) {
-        return Math.ceil((_this.showPrice() / _this.parent.maxPrice()) * 100);
+      var k;
+      if (_this.parent.maxPrice() - _this.parent.minPrice()) {
+        k = 10 + Math.ceil((_this.showPrice() - _this.parent.minPrice()) / (_this.parent.maxPrice() - _this.parent.minPrice()) * 90);
+        return k;
       } else {
-        return console.log('no maxPrice');
+        return 50;
       }
     });
     this.results = ko.computed(function() {
@@ -87,20 +92,25 @@ landBestPrice = (function() {
 
   landBestPrice.prototype.addBack = function(data) {
     var back;
-    back = new landBestPriceBack(data, this);
-    if (back.price < this.minPrice()) {
-      this.minPrice(back.price);
-      if (this.selBack()) {
-        this.selBack().selected(false);
+    if (data.dateBack) {
+      back = new landBestPriceBack(data, this);
+      if (back.price < this.minPrice()) {
+        this.minPrice(back.price);
+        if (this.selBack()) {
+          this.selBack().selected(false);
+        }
+        back.selected(true);
+        this.selBack(back);
+        this.active(back);
       }
-      back.selected(true);
-      this.selBack(back);
-      this.active(back);
+      if (back.showPrice() > this.backMaxPrice()) {
+        this.backMaxPrice(back.showPrice());
+      }
+      if (back.showPrice() < this.backMinPrice()) {
+        this.backMinPrice(back.showPrice());
+      }
+      return this._results[data.dateBack] = back;
     }
-    if (back.showPrice() > this.maxPrice()) {
-      this.maxPrice(back.showPrice());
-    }
-    return this._results[data.dateBack] = back;
   };
 
   landBestPrice.prototype.setActiveBack = function(date) {
@@ -111,8 +121,12 @@ landBestPrice = (function() {
 
   landBestPrice.prototype.selectThis = function() {
     this.parent.setActive(this.date.format('YYYY-MM-DD'));
+    console.log('selectThis', this.date, this.date.format('YYYY-MM-DD'));
     setDepartureDate(this.date.format('YYYY-MM-DD'));
-    return setBackDate(this.active().backDate.format('YYYY-MM-DD'));
+    if (this.active()) {
+      setBackDate(this.active().backDate.format('YYYY-MM-DD'));
+      return this.setActiveBack(this.active().backDate.format('YYYY-MM-DD'));
+    }
   };
 
   return landBestPrice;
@@ -122,23 +136,32 @@ landBestPrice = (function() {
 landBestPriceSet = (function() {
 
   function landBestPriceSet(allData) {
+    this.setDirectBestPrice = __bind(this.setDirectBestPrice, this);
+
     this.setActive = __bind(this.setActive, this);
 
-    var data, dataKey, dataObj, empty, firstElem, key, mom, monthChanged, monthName, prevMonth, today, _i, _len, _ref, _ref1,
+    this.bestDateClick = __bind(this.bestDateClick, this);
+
+    var data, dataKey, dataObj, empty, firstElem, key, landBP, mom, monthChanged, monthName, prevMonth, today, _i, _len, _ref, _ref1, _ref2,
       _this = this;
     this._results = {};
     this.dates = {};
     this.datesArr = ko.observableArray([]);
+    this.directBestPrice = ko.observable(null);
+    this.directBestPriceData = ko.observable(null);
     this.minBestPrice = ko.observable(null);
-    this.maxPrice = ko.observable(0);
+    this.maxPrice = ko.observable(1);
+    this.minPrice = ko.observable(9999999);
     this.active = ko.observable(null);
     for (key in allData) {
       data = allData[key];
       if (!this.dates[data.date]) {
         this.dates[data.date] = true;
       }
-      if (!this.dates[data.dateBack]) {
-        this.dates[data.dateBack] = true;
+      if (data.dateBack) {
+        if (!this.dates[data.dateBack]) {
+          this.dates[data.dateBack] = true;
+        }
       }
       if (this._results[data.date]) {
         this._results[data.date].addBack(data);
@@ -149,16 +172,20 @@ landBestPriceSet = (function() {
         this.minBestPrice(this._results[data.date]);
         console.log('set new minBestPrice', this.minBestPrice());
       }
-      if (this._results[data.date].showPrice() > this.maxPrice()) {
-        this.maxPrice(this._results[data.date].showPrice());
+    }
+    _ref = this._results;
+    for (key in _ref) {
+      landBP = _ref[key];
+      if (landBP.showPrice() > this.maxPrice()) {
+        this.maxPrice(landBP.showPrice());
       }
-      if (this._results[data.date].maxPrice() > this.maxPrice()) {
-        this.maxPrice(this._results[data.date].maxPrice());
+      if (landBP.showPrice() < this.minPrice()) {
+        this.minPrice(landBP.showPrice());
       }
     }
-    _ref = this.dates;
-    for (dataKey in _ref) {
-      empty = _ref[dataKey];
+    _ref1 = this.dates;
+    for (dataKey in _ref1) {
+      empty = _ref1[dataKey];
       this.datesArr.push({
         date: dataKey,
         landBP: this._results[dataKey],
@@ -181,9 +208,9 @@ landBestPriceSet = (function() {
     });
     firstElem = true;
     today = moment().format("YYYY-MM-DD");
-    _ref1 = this.datesArr();
-    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-      dataObj = _ref1[_i];
+    _ref2 = this.datesArr();
+    for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+      dataObj = _ref2[_i];
       mom = moment(dataObj.date);
       if (firstElem) {
         monthChanged = false;
@@ -212,14 +239,77 @@ landBestPriceSet = (function() {
     this.active(this.minBestPrice());
     this.active().selected(true);
     this.selectedPrice = ko.computed(function() {
-      return Utils.formatPrice(_this.active().active().price);
+      var price;
+      if (_this.directBestPrice()) {
+        price = _this.directBestPrice();
+      } else {
+        if (price = _this.active().active()) {
+          price = _this.active().active().price;
+        } else {
+          if (_this.active()) {
+            price = _this.active().showPrice();
+          } else {
+            console.log('active not set', _this.active());
+          }
+        }
+      }
+      return Utils.formatPrice(price);
+    });
+    this.bestDate = ko.computed(function() {
+      var dateFrom, strDate;
+      if (_this.directBestPriceData()) {
+        dateFrom = moment(_this.directBestPriceData().date);
+        console.log(dateFrom);
+        strDate = dateUtils.formatDayMonthYear(dateFrom._d);
+        return strDate;
+      }
+      return false;
     });
   }
+
+  landBestPriceSet.prototype.bestDateClick = function() {
+    if (this.directBestPriceData()) {
+      if (!this.directBestPrice()) {
+        this.directBestPrice(this.directBestPriceData().price);
+      }
+      if (this.directBestPriceData().date) {
+        setDepartureDate(moment(this.directBestPriceData().date).format('YYYY-MM-DD'));
+      }
+      if (this.directBestPriceData().dateBack) {
+        setBackDate(moment(this.directBestPriceData().dateBack).format('YYYY-MM-DD'));
+      }
+      if (this.active()) {
+        console.log('yes have active', this.active());
+        this.active().selected(false);
+        if (this.active().active()) {
+          return this.active().active().selected(false);
+        } else {
+          return console.log('not have active', this.active());
+        }
+      }
+    }
+  };
 
   landBestPriceSet.prototype.setActive = function(date) {
     this.active().selected(false);
     this.active(this._results[date]);
-    return this.active().selected(true);
+    this.active().selected(true);
+    return this.directBestPrice(null);
+  };
+
+  landBestPriceSet.prototype.setDirectBestPrice = function(data) {
+    console.log('DIRECCCCTTTTTT');
+    this.directBestPrice(data.price);
+    this.directBestPriceData(data);
+    if (this.active()) {
+      console.log('yes have active', this.active());
+      this.active().selected(false);
+      if (this.active().active()) {
+        return this.active().active().selected(false);
+      }
+    } else {
+      return console.log('not have active', this.active());
+    }
   };
 
   return landBestPriceSet;

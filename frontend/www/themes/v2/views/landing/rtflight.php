@@ -5,6 +5,7 @@
     window.pointCity = '<?php echo $city->code; ?>';
 
     window.flightCache = <?php echo json_encode($flightCache);?>;
+    window.bestDateData = <?php echo json_encode($flightCacheBestPrice);?>;
 
     function setDepartureDate(strDate){
         window.app.fakoPanel().departureDate(moment(strDate)._d);
@@ -33,6 +34,8 @@
         panelSet.departureCity(window.defaultCity);
         panelSet.arrivalCity(window.pointCity);
         var landBP = new landBestPriceSet(window.flightCache);
+        landBP.setDirectBestPrice(window.bestDateData);
+
         app.landBP = landBP;
 
         panelSet.rt(true);
@@ -88,7 +91,7 @@
             <div>
                 Самая низкая цена<br>
                 по этому направлению:<br>
-                <a href="#">12 июня 2012</a>
+                <a href="#" data-bind="text: landBP.bestDate(),click: landBP.bestDateClick">12 июня 2012</a>
             </div>
         </div>
         <div class="clear"></div>
