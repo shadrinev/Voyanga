@@ -927,8 +927,9 @@ class HotelsResultSet
           sameHotel = hotel
           minDistance = dist
           minPrice = hotel.minPrice
-    for possibleRoomSet in sameHotel.roomSets()
-      return possibleRoomSet
+    if @data()
+      for possibleRoomSet in sameHotel.roomSets()
+        return possibleRoomSet
 
   resetMapCenter: =>
     @computedCenter = new google.maps.LatLngBounds()

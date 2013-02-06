@@ -1217,10 +1217,12 @@ HotelsResultSet = (function() {
         }
       }
     }
-    _ref1 = sameHotel.roomSets();
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      possibleRoomSet = _ref1[_j];
-      return possibleRoomSet;
+    if (this.data()) {
+      _ref1 = sameHotel.roomSets();
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        possibleRoomSet = _ref1[_j];
+        return possibleRoomSet;
+      }
     }
   };
 
