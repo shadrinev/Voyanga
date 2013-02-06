@@ -4,7 +4,7 @@ Yii::import("common.extensions.payments.models.Bill");
 
 class SuccessAction extends CAction
 {
-    protected $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey", "RebillAnchor"); 
+    protected $keys = Array("DateTime", "TransactionID", "OrderId", "Amount", "Currency", "SecurityKey"); 
     protected $failure = false;
     protected $logEntry;
 
