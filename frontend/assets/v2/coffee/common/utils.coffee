@@ -46,12 +46,13 @@ dateUtils=
   formatDayMonthYear: (date) ->
     if (date.length==0)
       return
+    console.log('dmy',date,date.getYear())
     result = ""
     result+= date.getDate()
     result+= " "
     result+= MONTHS[date.getMonth()]
     result+= " "
-    result+= date.getYear()
+    result+= date.getFullYear()
 
   formatDayMonthInterval: (dateStart,dateEnd) ->
     if (dateStart.length==0 || dateEnd.length==0)

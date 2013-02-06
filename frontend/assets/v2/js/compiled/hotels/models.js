@@ -945,6 +945,8 @@ HotelsResultSet = (function() {
       _this = this;
     this.searchParams = searchParams;
     this.activeHotel = activeHotel;
+    this.afterRender = __bind(this.afterRender, this);
+
     this.postFilters = __bind(this.postFilters, this);
 
     this.postInit = __bind(this.postInit, this);
@@ -1088,9 +1090,6 @@ HotelsResultSet = (function() {
     this.filtersConfig = false;
     this.pagesLoad = false;
     this.toursOpened = false;
-    window.hotelsScrollCallback = function(ev) {
-      return _this.checkShowMore(ev);
-    };
     _ref2 = this._results;
     for (key in _ref2) {
       result = _ref2[key];
@@ -1500,6 +1499,13 @@ HotelsResultSet = (function() {
     }, 50);
     fv = this.data()[0];
     return sv = this.data()[1];
+  };
+
+  HotelsResultSet.prototype.afterRender = function() {
+    var _this = this;
+    return window.hotelsScrollCallback = function(ev) {
+      return _this.checkShowMore(ev);
+    };
   };
 
   return HotelsResultSet;
