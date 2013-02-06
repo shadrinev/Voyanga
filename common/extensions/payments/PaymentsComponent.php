@@ -114,6 +114,11 @@ class PaymentsComponent extends CApplicationComponent
         $rest = array();
         $hotels = array();
         foreach($bookers as $booker){
+            if($booker instanceof HotelBooker) {
+                $hotelBookerComponent = new HotelBookerComponent();
+                $hotelBookerComponent->setHotelBookerFromId($booker->id);
+                $booker = $hotelBookerComponent;
+            }
             if($booker instanceof HotelBookerComponent)
                 $hotels[] = $booker;
             else
