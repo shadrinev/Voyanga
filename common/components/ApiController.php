@@ -53,7 +53,7 @@ class ApiController extends Controller
         else
         {
             //jsonp handling
-            $json = CJSON::encode($response);
+            $json = json_encode($response);
             if (isset($_GET['callback']))
             {
                 echo $_GET['callback'] . ' (';
