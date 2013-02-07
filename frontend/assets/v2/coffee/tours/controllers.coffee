@@ -35,7 +35,7 @@ class ToursController
 
   handleResults: (data) =>
     console.log "Handling results", data
-    #    data.allVariants[0].flights.flightVoyages = []
+    #data.allVariants[0].flights.flightVoyages = []
     stacked = new ToursResultSet data, @searchParams
 
     if data.items

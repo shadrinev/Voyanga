@@ -174,6 +174,9 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.select = function(res) {
+    if (!(res != null)) {
+      return;
+    }
     if (res.ribbon) {
       res = res.data;
     }

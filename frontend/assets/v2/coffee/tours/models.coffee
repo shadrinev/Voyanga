@@ -76,6 +76,8 @@ class ToursAviaResultSet extends TourEntry
     return result
 
   select: (res)=>
+    if !res?
+      return
     # FIXME looks retardely stupid
     if res.ribbon
       #it is actually recommnd ticket
