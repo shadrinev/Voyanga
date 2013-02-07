@@ -1,6 +1,6 @@
 class API
   constructor: ->
-    @endpoint = window.apiEndPoint
+    @endpoint = window.apiEndPoint + '/trash/'
 
   call: (url, cb, showLoad = true) =>
     if showLoad
@@ -23,11 +23,11 @@ class API
           $('#loadWrapBg').hide()
           loaderChange(false)
       error: ->
-        console.log( "ERROR")
         if showLoad
           $('#loadWrapBg').hide()
           loaderChange(false)
-        cb(false)
+        throw new Error("Api call failed")
+#        cb(false)
 
 class ToursAPI extends API
   search: (url,cb)=>

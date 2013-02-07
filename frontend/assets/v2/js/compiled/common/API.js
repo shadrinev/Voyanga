@@ -8,7 +8,7 @@ API = (function() {
 
   function API() {
     this.call = __bind(this.call, this);
-    this.endpoint = window.apiEndPoint;
+    this.endpoint = window.apiEndPoint + '/trash/';
   }
 
   API.prototype.call = function(url, cb, showLoad) {
@@ -32,12 +32,11 @@ API = (function() {
         }
       },
       error: function() {
-        console.log("ERROR");
         if (showLoad) {
           $('#loadWrapBg').hide();
           loaderChange(false);
         }
-        return cb(false);
+        throw new Error("Api call failed");
       }
     });
   };
