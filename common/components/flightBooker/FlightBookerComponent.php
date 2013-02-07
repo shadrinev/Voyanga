@@ -218,7 +218,7 @@ class FlightBookerComponent extends CApplicationComponent
         {
             $this->status('ticketingRepeat');
         }
-        $this->status('ticketReady');
+        $this->status('done');
     }
 
     public function stageTicketingRepeat()
