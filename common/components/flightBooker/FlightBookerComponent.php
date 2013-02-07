@@ -279,7 +279,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageTicketingError()
     {
-        $this->status('moneyReturn');
+//        $this->status('moneyReturn');
     }
 
     public function stageManualError()
@@ -289,8 +289,8 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageMoneyReturn()
     {
-        //TODO: return money function
-        $this->status('error');
+        // TODO: return money function
+        // $this->status('error');
     }
 
     public function stageManualSuccess()
