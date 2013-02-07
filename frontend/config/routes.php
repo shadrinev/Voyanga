@@ -4,6 +4,7 @@
  */
 return array(
     'land'=>'landing/countries',
+    'land/hotels/<countrycode:\w+>'=>'landing/hotels/countryCode/<countrycode>',
     'land/hotels/<countrycode:\w+>/<citycode:\w+>'=>'landing/hotels/countryCode/<countrycode>/cityCode/<citycode>',
     'land/hotel/<hotelid:\w+>'=>'landing/hotelInfo/hotelId/<hotelid>',
     'land/<countrycode:\w+>'=>'landing/country/countryCode/<countrycode>',
