@@ -503,11 +503,13 @@ ToursHotelsResultSet = (function(_super) {
 
   ToursHotelsResultSet.prototype.findAndSelect = function(result) {
     console.log('find THRS ', result);
-    if (result.roomSet) {
-      result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSet));
-    } else {
-      console.log(ko.utils.unwrapObservable(result.roomSets));
-      result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0]);
+    if (result) {
+      if (result.roomSet) {
+        result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSet));
+      } else {
+        console.log(ko.utils.unwrapObservable(result.roomSets));
+        result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0]);
+      }
     }
     if (!result) {
       console.log('not found =(', result);

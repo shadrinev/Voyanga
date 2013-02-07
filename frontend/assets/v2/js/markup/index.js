@@ -111,7 +111,6 @@ function CenterIMGResize(index) {
 function smallIMGresizeIndex() {
 	var _this = $('.imgTours');
     if (_this.length > 0 && _this.is(':visible')) {
-        //console.log('!!!==== 5 ====!!!');
         var _img = _this.find('img');
         _this.each(function(e) {
             var _img = $(this).find('img');
@@ -120,9 +119,16 @@ function smallIMGresizeIndex() {
             var _thisHeight = $(this).height();
             var _thisWidth = $(this).width();
 
-            if (_imgHeight < _thisHeight) {
-                _img.css('height', _thisHeight+'px');
+            var _marginTop = (_imgHeight - _thisHeight) / 2;
+            if (_marginTop > 0) {
+                _img.css('margin-top', '-'+_marginTop+'px');
             }
+            else {
+                _img.css('margin-top', '0px');
+            }
+//            if (_imgHeight < _thisHeight) {
+//                _img.css('height', _thisHeight+'px');
+//            }
         });
     }
 }
