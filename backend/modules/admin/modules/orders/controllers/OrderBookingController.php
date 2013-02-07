@@ -328,9 +328,12 @@ class OrderBookingController extends Controller
         }
         //! force serialization, save will be called on later status change
         $booking->getCurrent()->flightVoyage = $flightVoyage;
-
-       $booking->status('manualSuccess');
-       $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
+        if($booking->getCurrent()->status = 'swFlightBooker/ticketing') {
+            //! Does nothing but sets ticketingError status
+            $booking->status('ticketingRepeat');
+        }
+        $booking->status('manualSuccess');
+        $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
     }
 
 }
