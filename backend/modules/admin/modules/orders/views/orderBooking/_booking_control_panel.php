@@ -35,7 +35,7 @@
           <li><a href="<?= $url?>"><?=$title?></a></li>
         <?php endforeach; ?>
       </ul>
-      <?php if(in_array($booking->status, Array('swFlightBooker/ticketingError', 'swFlightBooker/ticketing'))): ?>
+      <?php if(in_array(str_replace('swFlightBooker/','',$booking->status), Array('ticketingError', 'ticketing'))): ?>
       <b>Ввод результатов ручной выписки</b>
       <form method="POST" action="<?= $this->createUrl('injectTicketNumbers', array('bookingId'=>$booking->id)); ?>">
         <ol>
