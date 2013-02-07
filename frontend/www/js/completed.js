@@ -25,6 +25,7 @@ function mapping(status)
         "manualSuccess" : "скачать PDF",
         "confirmMoney" : "Ожидание оплаты",
         "done" : "скачать PDF",
+	"canceled": "Отменен",
         "error" : "Ошибка"
     }
     if (dictionary[status] != "undefined")
@@ -34,6 +35,7 @@ function mapping(status)
 
 function isSuccess(status)
 {
+    //! ЕМНИП ручной успех все равно доталкивается до дана.
     return ((status == 'manualSuccess') || (status =='done'));
 }
 

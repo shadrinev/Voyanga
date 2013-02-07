@@ -98,19 +98,7 @@ class HotelBookerComponent extends CApplicationComponent
         return $this->hotelBooker->save();
     }
 
-    public function stageMoneyTransfer()
-    {
-        //! FIXME WTF IS ВАУЧЕР
-        //TODO: получение информации о ваучере и отправка денег
-        //$vaucher =
-        Yii::app()->payments->confirm($this->hotelBooker->bill);
-        if($this->hotelBooker->bill->status == Bill::STATUS_PAID)
-        {
-            $this->status('done');
-        }
-    }
-
-   public function stageTicketing()
+  public function stageTicketing()
     {
         $hotelOrderParams = new HotelOrderParams();
 
@@ -148,6 +136,7 @@ class HotelBookerComponent extends CApplicationComponent
             HotelBookClient::$requestIds = array();
             if (!$confirmInfo->error)
             {
+                //! Вроде не нужно уже?
                 //TODO: добавить задание на переход в состояние bookingTimeLimitError
                 $this->status('ticketReady');
             }
@@ -171,6 +160,8 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageTicketingRepeat()
     {
+        $this->status('ticketingError');
+        return;
         echo "event ticketing repeat {$this->hotelBooker->tryCount}\n";
         $this->hotelBooker->tryCount++;
         echo "after ++ {$this->hotelBooker->tryCount}\n";
@@ -260,7 +251,7 @@ class HotelBookerComponent extends CApplicationComponent
 
     public function stageTicketingError()
     {
-        $this->status('moneyReturn');
+
     }
 
     public function stageManualTicketing()

@@ -46,8 +46,7 @@ HotelsController = (function() {
           new ErrorPopup('hotels404');
           return;
         }
-        new ErrorPopup('e500withText', [err]);
-        return;
+        throw new Error("Unable to build HotelResultSet from search response");
       }
       _this.results(stacked);
       return _this.render('results', {
@@ -79,8 +78,7 @@ HotelsController = (function() {
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
-        new ErrorPopup('e500withText', [err]);
-        return;
+        throw new Error("Unable to bould HotelResultSet from api response. Check ticket.");
       }
       result = stacked.findAndSelect(roomSet);
       if (result) {

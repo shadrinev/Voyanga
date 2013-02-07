@@ -47,8 +47,7 @@ ToursController = (function() {
     this.searchParams.fromList(args);
     return this.api.search(this.searchParams.url(), function(data) {
       if (!data || data.error) {
-        console.error('sup');
-        alert('HANDLE ME');
+        throw new Error("Successfull api call with wrong/error response");
       }
       _this.stacked = _this.handleResults(data);
       _this.stacked.on('inner-template', function(data) {

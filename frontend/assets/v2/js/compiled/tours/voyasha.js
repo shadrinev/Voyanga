@@ -22,9 +22,9 @@ Voyasha = (function() {
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         if (item.isAvia()) {
-          result.push((item.results().data.length !== 0 ? _this.handleAvia(item) : null));
+          result.push((!item.noresults ? _this.handleAvia(item) : null));
         } else {
-          result.push((item.results().data().length !== 0 ? _this.handleHotels(item) : null));
+          result.push((!item.noresults ? _this.handleHotels(item) : null));
         }
       }
       return result;
@@ -58,9 +58,9 @@ Voyasha = (function() {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       item = _ref[_i];
       if (item.isAvia()) {
-        item.select(this.handleAvia(item));
+        item.select((item.noresults ? null : this.handleAvia(item)));
       } else {
-        item.select(this.handleHotels(item));
+        item.select((item.noresults ? null : this.handleHotels(item)));
       }
     }
     return this.toursResultSet.showOverview();
@@ -94,9 +94,6 @@ VoyashaCheapest = (function(_super) {
   VoyashaCheapest.prototype.handleHotels = function(item) {
     var data, hotel, result, roomSet, _i, _j, _len, _len1, _ref, _ref1;
     data = item.results().data();
-    if (data.length === 0) {
-      return;
-    }
     result = {
       roomSet: data[0].roomSets()[0],
       hotel: data[0],

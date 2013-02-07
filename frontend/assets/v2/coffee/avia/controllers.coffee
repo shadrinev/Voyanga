@@ -28,8 +28,7 @@ class AviaController
         if err=='404'
           new ErrorPopup 'avia404'
           return
-        new ErrorPopup 'avia500'
-        return
+        throw new Error("Unable to build AviaResultSet from search response")
       @results stacked
 
       @render 'results', {results: @results}
@@ -59,8 +58,7 @@ class AviaController
       try
         stacked = @handleResults(data)
       catch err
-        new ErrorPopup 'avia500'
-        return
+        throw new Error("Unable to build AviaResultSet from search response. Check ticket")
       result = stacked.findAndSelect(result)
       if result
         resultDeferred.resolve(result)

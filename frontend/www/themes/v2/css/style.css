@@ -35,8 +35,13 @@
 .active a:hover {
     color: #FFFFFF !important;
 }
-
-
+.toursTicketsMain.active a {
+    color: inherit !important;
+    text-shadow: none;
+}
+.toursTicketsMain a:hover {
+    text-decoration: underline;
+}
 .left-content {
     color: #1D222B;
     margin-left: 12px;

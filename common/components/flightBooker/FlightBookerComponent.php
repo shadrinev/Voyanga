@@ -218,11 +218,6 @@ class FlightBookerComponent extends CApplicationComponent
         {
             $this->status('ticketingRepeat');
         }
-        $this->status('ticketReady');
-    }
-
-    public function stageTicketReady()
-    {
         $this->status('done');
     }
 
@@ -251,7 +246,7 @@ class FlightBookerComponent extends CApplicationComponent
             if ($flightTicketingResponse->status == 1)
             {
 
-                    $this->status('ticketReady');
+                    $this->status('done');
             }
             else
             {
@@ -279,7 +274,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageTicketingError()
     {
-        $this->status('moneyReturn');
+//        $this->status('moneyReturn');
     }
 
     public function stageManualError()
@@ -289,8 +284,8 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageMoneyReturn()
     {
-        //TODO: return money function
-        $this->status('error');
+        // TODO: return money function
+        // $this->status('error');
     }
 
     public function stageManualSuccess()
