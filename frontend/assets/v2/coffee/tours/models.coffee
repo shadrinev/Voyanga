@@ -119,6 +119,8 @@ class ToursAviaResultSet extends TourEntry
     @results().filters.airline.options().length
 
   minPrice: =>
+    if @noresults
+      return 0
     cheapest = _.reduce @results().data,
       (el1, el2)->
         if el1.price < el2.price then el1 else el2
@@ -126,6 +128,8 @@ class ToursAviaResultSet extends TourEntry
     cheapest.price
 
   maxPrice: =>
+    if @noresults
+      return 0
     mostExpensive = _.reduce @results().data,
       (el1, el2)->
         if el1.price > el2.price then el1 else el2
