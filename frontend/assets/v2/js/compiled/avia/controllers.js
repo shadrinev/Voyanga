@@ -50,8 +50,7 @@ AviaController = (function() {
           new ErrorPopup('avia404');
           return;
         }
-        new ErrorPopup('avia500');
-        return;
+        throw new Error("Unable to build AviaResultSet from search response");
       }
       _this.results(stacked);
       _this.render('results', {
@@ -90,8 +89,7 @@ AviaController = (function() {
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
-        new ErrorPopup('avia500');
-        return;
+        throw new Error("Unable to build AviaResultSet from search response. Check ticket");
       }
       result = stacked.findAndSelect(result);
       if (result) {

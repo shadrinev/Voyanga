@@ -8,7 +8,7 @@ API = (function() {
 
   function API() {
     this.call = __bind(this.call, this);
-    this.endpoint = window.apiEndPoint + '/trash/';
+    this.endpoint = window.apiEndPoint;
   }
 
   API.prototype.call = function(url, cb, showLoad) {

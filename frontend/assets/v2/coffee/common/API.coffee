@@ -1,6 +1,6 @@
 class API
   constructor: ->
-    @endpoint = window.apiEndPoint + '/trash/'
+    @endpoint = window.apiEndPoint
 
   call: (url, cb, showLoad = true) =>
     if showLoad

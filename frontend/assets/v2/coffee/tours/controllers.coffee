@@ -25,8 +25,7 @@ class ToursController
     @searchParams.fromList(args)
     @api.search @searchParams.url(), (data) =>
       if !data || data.error
-        console.error 'sup'
-        alert 'HANDLE ME'
+        throw new Error("Successfull api call with wrong/error response")
       @stacked = @handleResults data
       @stacked.on 'inner-template', (data)=>
         @trigger 'inner-template', data
