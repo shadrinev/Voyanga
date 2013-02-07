@@ -125,10 +125,11 @@ function smallIMGresizeIndex() {
             }
             else {
                 _img.css('margin-top', '0px');
+                if (_imgHeight < _thisHeight) {
+                    _img.css('height', _thisHeight+'px');
+                }
             }
-//            if (_imgHeight < _thisHeight) {
-//                _img.css('height', _thisHeight+'px');
-//            }
+
         });
     }
 }
