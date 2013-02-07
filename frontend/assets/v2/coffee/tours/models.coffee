@@ -286,11 +286,12 @@ class ToursHotelsResultSet extends TourEntry
 
   findAndSelect: (result) =>
     console.log('find THRS ',result)
-    if result.roomSet
-      result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSet))
-    else
-      console.log(ko.utils.unwrapObservable(result.roomSets))
-      result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0])
+    if result
+      if result.roomSet
+        result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSet))
+      else
+        console.log(ko.utils.unwrapObservable(result.roomSets))
+        result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0])
     if !result
       console.log('not found =(',result)
       return false
