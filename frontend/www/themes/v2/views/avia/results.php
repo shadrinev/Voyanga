@@ -1,7 +1,7 @@
 <script id="avia-results" type="text/html">
   <!-- MAIN BLOCK -->
   <div class="main-block">
-    <div id="content" data-bind="template: {name: 'avia-results-inner', data: results()}">
+    <div id="content" data-bind="template: {name: results().noresults?'avia-no-results':'avia-results-inner', data: results()}">
     </div>
     <!-- END MAIN BLOCK -->
     <!-- FILTER BLOCK -->
@@ -11,6 +11,9 @@
     <div class="clear"></div>
   </div>
   <!-- END ALL CONTENT -->
+</script>
+<script type="text-html" id="avia-no-results">
+<h1>В выбранные даты, к сожалению, перелета не найдено!</h1>
 </script>
 <script type="text/html" id="avia-results-inner">
   <h1 data-bind="visible: tours"><div class="hideTitle">Выберите авиабилет</div>

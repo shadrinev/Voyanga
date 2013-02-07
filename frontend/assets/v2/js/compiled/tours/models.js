@@ -269,23 +269,19 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.dateHtml = function(startonly) {
-    var result, source;
+    var result;
     if (startonly == null) {
       startonly = false;
     }
-    source = this.selection();
-    if (source === null) {
-      source = this.results().data[0];
-    }
     result = '<div class="day">';
-    result += dateUtils.formatHtmlDayShortMonth(source.departureDate());
+    result += dateUtils.formatHtmlDayShortMonth(moment(this.rawSP.destinations[0].date));
     result += '</div>';
     if (startonly) {
       return result;
     }
     if (this.rt()) {
       result += '<div class="day">';
-      result += dateUtils.formatHtmlDayShortMonth(source.rtDepartureDate());
+      result += dateUtils.formatHtmlDayShortMonth(moment(this.rawSP.destinations[1].date));
       result += '</div>';
     }
     return result;
@@ -295,6 +291,7 @@ ToursAviaResultSet = (function(_super) {
     var source;
     source = this.selection();
     if (source === null) {
+      return this.rawSP.destinations[0].date;
       source = this.results().data[0];
     }
     return source.departureDate();
@@ -304,7 +301,7 @@ ToursAviaResultSet = (function(_super) {
     var source;
     source = this.selection();
     if (source === null) {
-      source = this.results().data[0];
+      return this.rawSP.destinations[0].date;
     }
     return source.arrivalDate();
   };
@@ -313,7 +310,7 @@ ToursAviaResultSet = (function(_super) {
     var source;
     source = this.selection();
     if (source === null) {
-      source = this.results().data[0];
+      return this.rawSP.destinations[1].date;
     }
     return source.rtDepartureDate();
   };
