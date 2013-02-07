@@ -22,7 +22,24 @@ class LandingController extends Controller {
         //}else{
         //    $currentCity = City::getCityByCode($cityFromCode);
         //}
-        $city = City::getCityByCode($cityCode);
+        if($cityCode){
+            $city = City::getCityByCode($cityCode);
+        }else{
+            $criteria = new CDbCriteria();
+            $criteria->addCondition('`countryId` = '.$country->id);
+            $criteria->order = 'position desc';
+            $city = City::model()->find($criteria);
+        }
+        if(!$city){
+            $city = City::getCityByPk(5185);
+        }
+        if($city->id == $currentCity->id){
+            if($currentCity->id != 4466){
+                $currentCity = City::getCityByPk(4466);
+            }elseif($currentCity->id != 5185){
+                $currentCity = City::getCityByPk(5185);
+            }
+        }
 
         $citiesFrom = array();
         $this->addCityFrom($citiesFrom,4466);// Moscow
@@ -83,22 +100,12 @@ class LandingController extends Controller {
 
         $flightCacheFromCurrent = FlightCache::model()->findAll($criteria);
 
-        //select bast price for all future time
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('`to` = '.$city->id);
-        $criteria->addCondition('`from` = '.$currentCity->id);
-        $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
 
-        $criteria->order = 'priceBestPrice';
-
-        $flightCacheBestPrice = FlightCache::model()->find($criteria);
-        $flightCacheBestPriceArr = array('price'=>$flightCacheBestPrice->priceBestPrice,'date'=>$flightCacheBestPrice->dateFrom);
 
 
         $this->layout = 'static';
         $this->render('hotels', array('city'=>$city,'citiesFrom'=>$citiesFrom,'hotelsInfo'=>$hotelsInfo,'currentCity'=>$currentCity,'flightCache'=>$sortFc,
-            'flightCacheFromCurrent' => $flightCacheFromCurrent,
-            'flightCacheBestPrice' => $flightCacheBestPriceArr
+            'flightCacheFromCurrent' => $flightCacheFromCurrent
         ));
     }
 

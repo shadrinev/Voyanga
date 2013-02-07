@@ -32,8 +32,19 @@ EOD;
         $cityGeoIDs = array();
         $cityFp = fopen ($cityGeoDB, "r");
         while (!feof($cityFp)) {
-
+            $line = fgets($cityFp);
+            if($line){
+                preg_match('#^(\d+)\t+(\W+?)\t+.+$#', $line, $match);
+                //print_r($match);
+                //break;
+                $id = intval($match[1]);
+                $cityName = $match[2];
+                $cityGeoIDs[$id] = iconv('CP1251','UTF8',$cityName);
+            }
         }
+        var_dump($cityGeoIDs);
+
+        return true;
         if ($type == 'hotels') {
             echo Yii::app()->params['HotelBook']['uri']."\n";
             echo Yii::app()->params['HotelBook']['login']."\n";

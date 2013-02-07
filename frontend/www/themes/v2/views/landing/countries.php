@@ -51,7 +51,7 @@
                 <div><?php echo $country->localRu;?></div>
             </td>
             <td class="tdPrice">
-                <a href="/land/<?php echo $country->code;?>/hotels">отели</a>
+                <a href="/land/hotels/<?php echo $country->code;?>">отели</a>
             </td>
             <td class="tdPrice">
                 <a href="/land/<?php echo $country->code;?>">перелеты</a>
