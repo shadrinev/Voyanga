@@ -446,9 +446,9 @@ class LandingController extends Controller {
         //$criteria->group = 'dateBack';
         //$criteria->addCondition('`from` = '.$currentCity->id);
         $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
-        $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*18));
+        $criteria->addCondition('`dateFrom` <= '.date("'Y-m-d'", time()+ 3600*24*17));
         $criteria->addCondition('`dateBack` >= '.date("'Y-m-d'"));
-        $criteria->addCondition('`dateBack` <= '.date("'Y-m-d'", time()+ 3600*24*18));
+        $criteria->addCondition('`dateBack` <= '.date("'Y-m-d'", time()+ 3600*24*17));
 
         //$criteria->addCondition("`dateBack` <> '0000-00-00'");
         $criteria->order = 'priceBestPrice';
