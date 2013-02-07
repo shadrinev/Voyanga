@@ -107,7 +107,7 @@
             </table>
             <table class="mainTable">
                 <tr>
-                    <td class="tdInfoText">
+                    <td class="tdInfoText" data-bind="if: breakdown.length">
                         Сумма может быть списана в несколько транзакций. <span class="whyQuest tooltipClose" rel="Это сделано для удобства и экономии ваших денег. На каждую составляющую вашей поездки мы делаем отдельное списание, а данные платежной карточки вы вводите один раз. Это позволяет экономить: мы меньше тратим на эквайринг, вы - получаете более привлекательные цены. Так же это дает дополнительное удобство в случае, если после оплаты всего заказа вы решите отказаться только от отеля, не отменяя авиабилет. В этом случае нам не надо будет отменять весь заказ целиком.">Почему?</span>
                       <!-- ko foreach: breakdown -->
                         <table class="aviaAllPrice" data-bind="css: {aviaAllPrice: !isHotel, hotelAllPrice: isHotel}">
@@ -126,7 +126,7 @@
                         </table>
                         <!-- /ko -->
                     </td>
-                    <td class="tdIframe">
+                    <td class="tdIframe" data-bind='attr: {style: breakdown.length?"":"text-align: center; width: 100%"}'>
                         <iframe id="payment_frame" name="payment_frame" class="payCardPaliFrame"></iframe>
                     </td>
                 </tr>

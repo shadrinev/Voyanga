@@ -24,7 +24,8 @@ return array(
         array('id'=>'moneyReturn',              'transition'=>'error'),
         array('id'=>'manualSuccess',            'transition'=>'done'),
         array('id'=>'confirmMoney',             'transition'=>'done'),
-        array('id'=>'done'),
-        array('id'=>'error')
+        array('id'=>'done',                     'transition'=>'canceled'),
+        array('id'=>'error'),
+        array('id'=>'canceled')
     )
 );

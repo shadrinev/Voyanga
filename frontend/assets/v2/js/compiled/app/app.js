@@ -40,10 +40,14 @@ Application = (function(_super) {
 
     this.initCalendar = __bind(this.initCalendar, this);
 
-    var result,
+    var result, _oldOnerrorHandler,
       _this = this;
+    _oldOnerrorHandler = window.onerror;
     window.onerror = function(error) {
-      return new ErrorPopup('e500withText', [error]);
+      new ErrorPopup('e500withText', [error]);
+      if (_oldOnerrorHandler) {
+        return _oldOnerrorHandler.apply(_this, arguments_);
+      }
     };
     this.activeModule = ko.observable(null);
     this.activeModuleInstance = ko.observable(null);

@@ -28,7 +28,6 @@ return CMap::mergeArray(
         'preload' => array(
             'log',
             'bootstrap',
-            'RSentryException'
         ),
 
         // autoloading model and component classes
@@ -132,10 +131,6 @@ return CMap::mergeArray(
             'errorHandler' => array(
                 // use 'site/error' action to display errors
                 'errorAction' => 'site/error'
-            ),
-            'RSentryException'=> array(
-                'dsn'=> $params['sentry.dsn'],
-                'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
             ),
             'log' => array(
                 'class' => 'CLogRouter',

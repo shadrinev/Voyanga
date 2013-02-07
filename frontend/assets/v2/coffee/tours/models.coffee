@@ -151,36 +151,34 @@ class ToursAviaResultSet extends TourEntry
 
   dateHtml: (startonly=false)=>
     # FIXME SEARCH PARAMS
-    source = @selection()
-    if source == null
-      source = @results().data[0]
     result = '<div class="day">'
-    result+= dateUtils.formatHtmlDayShortMonth source.departureDate()
+    result+= dateUtils.formatHtmlDayShortMonth moment(@rawSP.destinations[0].date)
     result+='</div>'
     if startonly
       return result
     if @rt()
       result+= '<div class="day">'
-      result+= dateUtils.formatHtmlDayShortMonth source.rtDepartureDate()
+      result+= dateUtils.formatHtmlDayShortMonth moment(@rawSP.destinations[1].date)
       result+= '</div>'
     return result
 
   timelineStart: =>
     source = @selection()
     if source == null
+      return @rawSP.destinations[0].date
       source = @results().data[0]
     source.departureDate()
 
   timelineEnd: =>
     source = @selection()
     if source == null
-      source = @results().data[0]
+      return @rawSP.destinations[0].date
     source.arrivalDate()
 
   rtTimelineStart: =>
     source = @selection()
     if source == null
-      source = @results().data[0]
+      return @rawSP.destinations[1].date
     source.rtDepartureDate()
 
   rt: =>
@@ -298,18 +296,19 @@ class ToursHotelsResultSet extends TourEntry
 
   findAndSelectSame: (result) =>
     console.log('find THRS ',result)
-    if result.roomSet
-      console.log('inif')
-      ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))
-    else
-      console.log('inelse')
-      console.log(ko.utils.unwrapObservable(result.roomSets))
-      ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
-    console.log('ret?',ret)
-    if !ret
-      console.log('same not found and find by stars and coords');
-      ret = @results().findAndSelectSameParams(result.categoryId,result.getLatLng())
-    @_selectRoomSet ret
+    if @results() && @results().data() && @results().data().length
+      if result.roomSet
+        console.log('inif')
+        ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))
+      else
+        console.log('inelse')
+        console.log(ko.utils.unwrapObservable(result.roomSets))
+        ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
+      console.log('ret?',ret)
+      if !ret
+        console.log('same not found and find by stars and coords');
+        ret = @results().findAndSelectSameParams(result.categoryId,result.getLatLng())
+      @_selectRoomSet ret
       
   select: (roomData)=>
     if roomData?

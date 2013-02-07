@@ -3,15 +3,10 @@
 # FIXME maybe modules is not that good idea?
 class Application extends Backbone.Router
   constructor: ->
-    # FIXME
-    window.onerror = (error)-> new ErrorPopup('e500withText', [error]);
-
-    # register url hash changes handler
-#    hasher.initialized.add @navigate
-#    hasher.changed.add @navigate
-
-    # register 404 handler
-#    crossroads.bypassed.add(@http404)
+    _oldOnerrorHandler = window.onerror
+    window.onerror = (error)=>
+      new ErrorPopup('e500withText', [error])
+      return _oldOnerrorHandler.apply(this, arguments_)  if _oldOnerrorHandler
 
     # FIXME
     @activeModule = ko.observable null #ko.observable window.activeModule || 'avia'

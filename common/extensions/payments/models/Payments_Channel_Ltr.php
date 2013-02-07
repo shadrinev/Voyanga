@@ -36,7 +36,7 @@ class Payments_Channel_Ltr extends Payments_Channel {
         $ltr.= str_repeat('       ', 4-$i);
         $ltr.= " "; // RESTRICTED TICKET INDICATOR: pass nothing even tho we can get this info
         $ticketNumber = $booker->flightBookingPassports[0]->ticketNumber;
-        if(strlen($ticketingNumber)==10) {
+        if(strlen($ticketNumber)==10) {
             $ticketNumber = $flightVoyage->valAirline->ticketingplate . $ticketNumber;
         }
         $ltr.= $ticketNumber; // TICKET NUMBER

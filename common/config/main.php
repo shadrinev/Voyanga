@@ -13,7 +13,7 @@ Yii::setPathOfAlias('imageStorage', $root . '/frontend/www/image_storage');
 
 return array(
     'preload' => array(
-        'notification'
+        'notification', 'RSentryException'
     ),
 
     'import' => array(
@@ -56,6 +56,11 @@ return array(
             'serializer' => array('igbinary_serialize', 'igbinary_unserialize'),
             'cacheTableName' => 'tbl_cache',
             'connectionID' => 'db'
+        ),
+
+        'RSentryException'=> array(
+            'dsn'=> $params['sentry.dsn'],
+            'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
         ),
 
         'flightBooker' => array(

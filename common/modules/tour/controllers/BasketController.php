@@ -95,7 +95,7 @@ class BasketController extends Controller
                             $item->flightVoyage = $flight;
                             Yii::app()->shoppingCart->update($item, 1);
                         }
-                        $json = CJSON::encode($flight->getJsonObject());
+                        $json = json_encode($flight->getJsonObject());
                         if (isset($_GET['callback']))
                             echo $_GET['callback'] . ' (' . $json . ');';
                         else
@@ -113,7 +113,7 @@ class BasketController extends Controller
                         $needPosition->fillFromSearchParams($hotelSearchParams);
                         $needPosition->hotel = $hotel;
                         Yii::app()->shoppingCart->update($needPosition, 1);
-                        $json = CJSON::encode($hotel->getJsonObject());
+                        $json = json_encode($hotel->getJsonObject());
                         if (isset($_GET['callback']))
                             echo $_GET['callback'] . ' (' . $json . ');';
                         else

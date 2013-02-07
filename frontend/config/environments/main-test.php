@@ -9,10 +9,6 @@
  */
 return array(
     'components'=>array(
-        'RSentryException'=> array(
-            'dsn'=> $params['sentry.dsn'],
-            'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
-        ),
         'log'=>array(
             'class'=>'CLogRouter',
             'routes'=>array(

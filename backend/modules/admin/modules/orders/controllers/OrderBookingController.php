@@ -45,7 +45,7 @@ class OrderBookingController extends Controller
             $criteria['with'] = array('hotelBookers', 'flightBookers');
             $criteria['together'] = true;
             $conds = Array();
-            $conds[] = "flightBookers.nemoBookId = '$s'";  
+            $conds[] = "flightBookers.nemoBookId = '$s'";
             $conds[] = "flightBookers.pnr = '$s'";
             $conds[] = "flightBookers.status = '$s'";
             $conds[] = "hotelBookers.status = '$s'";
@@ -180,12 +180,58 @@ class OrderBookingController extends Controller
     }
 
     /**
-    * Returns map {title=>url} of actions availiable for this booker 
+    * Returns map {title=>url} of actions availiable for this orderBooking
+    */
+    protected function orderActions($orderBooking) {
+        switch ($orderBooking->rawOrderStatus) {
+            case 'done':
+                $result = array();
+                $result["Выслать письмо повторно"] = $this->createUrl('resendEmail', array('id'=>$orderBooking->id));
+                $result["Отменить заказ"] = $this->createUrl('cancelOrder', array('id'=>$orderBooking->id));
+                return $result;
+            default:
+                return array();
+        }
+    }
+
+    public function actionCancelOrder($id) {
+        $data = $this->getOrderInfo($id);
+        if($data['orderBooking']->rawOrderStatus !== 'done') {
+            return;
+        }
+        $billIds = Array();
+        foreach ($data['flightBookings'] as $booker) {
+            $bookerComponent = new FlightBookerComponent();
+            $bookerComponent->setFlightBookerFromId($booker->id);
+            $bookerComponent->status('canceled');
+            $billIds[$booker->bill->transactionId]=1;
+        }
+        foreach ($data['hotelBookings'] as $booker) {
+            $bookerComponent = new HotelBookerComponent();
+            $bookerComponent->setFlightBookerFromId($booker->id);
+            $bookerComponent->status('canceled');
+            $booker->status('canceled');
+            $billIds[$booker->bill->transactionId]=1;
+        }
+        $res = Yii::app()->cron->add(time() + 75, 'ordercanceledemail', 'cron', array('orderId'=>$id));
+        echo "<h1>Заказ отменен<h1>";
+        echo "Транзакции пейонлайна для отмены:";
+        echo "<ul>";
+        foreach(array_keys($billIds) as $billId) {
+            echo "<li>" . $billId . "</li>";
+        }
+        echo "</ul>";
+        echo "<a href='" . $this->createUrl('index', array('id'=>$data['orderBooking']->id)) . "'>Назад</a>";
+   }
+
+
+    /**
+    * Returns map {title=>url} of actions availiable for this booker
     */
     protected function adminActions($booker) {
-        if($booker instanceof FlightBooker) 
+        if($booker instanceof FlightBooker)
             return $this->flightAdminActions($booker);
-        if($booker instanceof HotelBooker) 
+        if($booker instanceof HotelBooker)
             return $this->hotelAdminActions($booker);
     }
 
@@ -200,7 +246,7 @@ class OrderBookingController extends Controller
             case 'swFlightBooker/waitingForPayment':
                 return array('Отметить как оплаченный' => $this->createUrl('markFlightPaid', array('bookingId'=>$booker->id)));
             case 'swFlightBooker/paid':
-                 return array("Автовыписка(без письма)" => $this->createUrl('ticketFlight', array('bookingId'=>$booker->id)));            
+                 return array("Автовыписка(без письма)" => $this->createUrl('ticketFlight', array('bookingId'=>$booker->id)));
             default:
                 return array();
 
@@ -214,7 +260,7 @@ class OrderBookingController extends Controller
                 # code...
                 return array("Отметить как оплаченный" => $this->createUrl('markHotelPaid', array('bookingId'=>$booker->id)));
             case 'swHotelBooker/paid':
-                 return array("Автовыписка(без письма)" => $this->createUrl('ticketHotel', array('bookingId'=>$booker->id)));       
+                 return array("Автовыписка(без письма)" => $this->createUrl('ticketHotel', array('bookingId'=>$booker->id)));
             default:
                 return array();
         }

@@ -1845,10 +1845,12 @@ class HotelBookClient
         if ((!$this->isSynchronized) or $forced)
         {
             self::$lastRequestMethod = 'unixtime';
-            $keydiff = gethostname().'hotelbookDifferenceTimestamp';
+
+            $keydiff = substr(md5(Yii::app()->params['HotelBook']['uri'].gethostname()),-8).'hotelbookDifferenceTimestamp';
             $diff = Yii::app()->cache->get($keydiff);
             if (($diff === false) or $forced)
             {
+                self::$lastRequestDescription = 'olddiff:'.$diff.' gh:'.gethostname().' servtime:'.time();
                 $unixtime = $this->request(Yii::app()->params['HotelBook']['uri'] . 'unix_time');
                 $this->differenceTimestamp = $unixtime - time();
                 Yii::app()->cache->set($keydiff, $this->differenceTimestamp, 30 * 60);

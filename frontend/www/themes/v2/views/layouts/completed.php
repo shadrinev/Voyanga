@@ -25,6 +25,11 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
     <script type="text/javascript" src="http://api.voyanga.com/API.js"></script>
 </head>
 <body>
+<script type="text/javascript">
+    $(function(){
+        Raven.config('<?php echo Yii::app()->params['sentry.dsn']; ?>').install()
+    })
+</script>
 <div class="wrapper">
     <?php echo $this->renderPartial('//layouts/_header'); ?>
 

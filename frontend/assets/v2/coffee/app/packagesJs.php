@@ -40,6 +40,7 @@
     'vendor' => array(
         'basePath' => 'frontend.assets.v2.js.vendor',
         'js' => array(
+            'raven.js',
             'knockout-2.1.0.js',
             'knockout-repeat.js',
             'knockout-deferred-updates.js',
