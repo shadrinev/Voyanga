@@ -1217,7 +1217,7 @@ HotelsResultSet = (function() {
         }
       }
     }
-    if (this.data()) {
+    if (sameHotel) {
       _ref1 = sameHotel.roomSets();
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         possibleRoomSet = _ref1[_j];

@@ -37,7 +37,9 @@
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
 
-        setDepartureDate(moment(new Date()).format('YYYY-MM-DD'))
+        setDepartureDate(moment(new Date()).format('YYYY-MM-DD'));
+        app.fakoPanel().showCalendar();
+        app.fakoPanel().minimizeCalendar();
 
 
         ko.applyBindings(app);
@@ -50,7 +52,7 @@
     })
 
 </script>
-<div class="headBlockOne">
+<div class="headBlockTwo">
     <div class="center-block">
         <h2>Отели в <?php echo $city->casePre;?></h2>
         <?php foreach($hotelsInfo as $hotInfo):?>
@@ -83,27 +85,6 @@
         </div>
         <?php endforeach; ?>
     <div class="clear"></div>
-</div>
-
-
-
-<div class="headBlockTwo">
-    <div class="center-block">
-        <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
-        <h3>Стоимость на месяц вперед из
-            <?php
-            foreach($citiesFrom as $cityPoint):
-                ?>
-                <a href="#" class="cityChoise<?php echo $cityPoint['cityId']==$currentCity->id ? ' active':'';?>">
-                    <span><?php echo $cityPoint['cityName'];?></span>
-                </a>
-                <?php
-
-            endforeach;
-            ?>
-        </h3>
-    </div>
-
 </div>
 
     <!--<div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">

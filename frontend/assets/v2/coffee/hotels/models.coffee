@@ -927,7 +927,7 @@ class HotelsResultSet
           sameHotel = hotel
           minDistance = dist
           minPrice = hotel.minPrice
-    if @data()
+    if sameHotel
       for possibleRoomSet in sameHotel.roomSets()
         return possibleRoomSet
 
