@@ -221,11 +221,6 @@ class FlightBookerComponent extends CApplicationComponent
         $this->status('ticketReady');
     }
 
-    public function stageTicketReady()
-    {
-        $this->status('done');
-    }
-
     public function stageTicketingRepeat()
     {
         $this->status('ticketingError');
@@ -251,7 +246,7 @@ class FlightBookerComponent extends CApplicationComponent
             if ($flightTicketingResponse->status == 1)
             {
 
-                    $this->status('ticketReady');
+                    $this->status('done');
             }
             else
             {
