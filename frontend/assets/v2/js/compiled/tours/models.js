@@ -174,6 +174,9 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.select = function(res) {
+    if (!(res != null)) {
+      return;
+    }
     if (res.ribbon) {
       res = res.data;
     }
@@ -223,6 +226,9 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.minPrice = function() {
     var cheapest;
+    if (this.noresults) {
+      return 0;
+    }
     cheapest = _.reduce(this.results().data, function(el1, el2) {
       if (el1.price < el2.price) {
         return el1;
@@ -235,6 +241,9 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.maxPrice = function() {
     var mostExpensive;
+    if (this.noresults) {
+      return 0;
+    }
     mostExpensive = _.reduce(this.results().data, function(el1, el2) {
       if (el1.price > el2.price) {
         return el1;
@@ -503,11 +512,13 @@ ToursHotelsResultSet = (function(_super) {
 
   ToursHotelsResultSet.prototype.findAndSelect = function(result) {
     console.log('find THRS ', result);
-    if (result.roomSet) {
-      result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSet));
-    } else {
-      console.log(ko.utils.unwrapObservable(result.roomSets));
-      result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0]);
+    if (result) {
+      if (result.roomSet) {
+        result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSet));
+      } else {
+        console.log(ko.utils.unwrapObservable(result.roomSets));
+        result = this.results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0]);
+      }
     }
     if (!result) {
       console.log('not found =(', result);

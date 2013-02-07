@@ -76,6 +76,8 @@ class ToursAviaResultSet extends TourEntry
     return result
 
   select: (res)=>
+    if !res?
+      return
     # FIXME looks retardely stupid
     if res.ribbon
       #it is actually recommnd ticket
@@ -119,6 +121,8 @@ class ToursAviaResultSet extends TourEntry
     @results().filters.airline.options().length
 
   minPrice: =>
+    if @noresults
+      return 0
     cheapest = _.reduce @results().data,
       (el1, el2)->
         if el1.price < el2.price then el1 else el2
@@ -126,6 +130,8 @@ class ToursAviaResultSet extends TourEntry
     cheapest.price
 
   maxPrice: =>
+    if @noresults
+      return 0
     mostExpensive = _.reduce @results().data,
       (el1, el2)->
         if el1.price > el2.price then el1 else el2
@@ -284,11 +290,12 @@ class ToursHotelsResultSet extends TourEntry
 
   findAndSelect: (result) =>
     console.log('find THRS ',result)
-    if result.roomSet
-      result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSet))
-    else
-      console.log(ko.utils.unwrapObservable(result.roomSets))
-      result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0])
+    if result
+      if result.roomSet
+        result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSet))
+      else
+        console.log(ko.utils.unwrapObservable(result.roomSets))
+        result = @results().findAndSelect(ko.utils.unwrapObservable(result.roomSets)[0])
     if !result
       console.log('not found =(',result)
       return false

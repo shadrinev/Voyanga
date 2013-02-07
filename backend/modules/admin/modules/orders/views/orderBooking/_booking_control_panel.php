@@ -35,7 +35,7 @@
           <li><a href="<?= $url?>"><?=$title?></a></li>
         <?php endforeach; ?>
       </ul>
-      <?php if($booking->status == 'swFlightBooker/ticketingRepeat'): ?>
+      <?php if($booking->status == 'swFlightBooker/ticketingError'): ?>
       <b>Ввод результатов ручной выписки</b>
       <form method="POST" action="<?= $this->createUrl('injectTicketNumbers', array('bookingId'=>$booking->id)); ?>">
         <ol>

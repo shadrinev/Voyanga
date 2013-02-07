@@ -27,8 +27,7 @@ class HotelsController
         if err=='e404'
           new ErrorPopup 'hotels404'
           return
-        new ErrorPopup 'e500withText', [err]
-        return
+        throw new Error("Unable to build HotelResultSet from search response")
         
       @results stacked
       @render 'results', {'results' : @results}
@@ -52,8 +51,7 @@ class HotelsController
       try
         stacked = @handleResults(data)
       catch err
-        new ErrorPopup 'e500withText', [err]
-        return
+        throw new Error("Unable to bould HotelResultSet from api response. Check ticket.")
       result = stacked.findAndSelect(roomSet)
       if result
         resultDeferred.resolve(result)

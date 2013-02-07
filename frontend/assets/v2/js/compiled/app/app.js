@@ -44,7 +44,7 @@ Application = (function(_super) {
       _this = this;
     _oldOnerrorHandler = window.onerror;
     window.onerror = function(error) {
-      new ErrorPopup('e500withText', [error]);
+      new ErrorPopup('e500');
       if (_oldOnerrorHandler) {
         return _oldOnerrorHandler.apply(_this, arguments_);
       }

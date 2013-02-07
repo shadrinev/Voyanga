@@ -25,8 +25,7 @@ class ToursController
     @searchParams.fromList(args)
     @api.search @searchParams.url(), (data) =>
       if !data || data.error
-        console.error 'sup'
-        alert 'HANDLE ME'
+        throw new Error("Successfull api call with wrong/error response")
       @stacked = @handleResults data
       @stacked.on 'inner-template', (data)=>
         @trigger 'inner-template', data
@@ -36,7 +35,7 @@ class ToursController
 
   handleResults: (data) =>
     console.log "Handling results", data
-#    data.allVariants[0].flights.flightVoyages = []
+    #data.allVariants[0].flights.flightVoyages = []
     stacked = new ToursResultSet data, @searchParams
 
     if data.items

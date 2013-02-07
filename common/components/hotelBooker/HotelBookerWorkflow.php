@@ -14,7 +14,7 @@ return array(
         array('id'=>'ticketingRepeat',          'transition'=>'ticketingRepeat,ticketReady,manualProcessing,ticketingError'),
         array('id'=>'manualProcessing',         'transition'=>'ticketingError,manualTicketing'),
         array('id'=>'manualTicketing',          'transition'=>'manualSuccess,manualError'),
-        array('id'=>'ticketingError',           'transition'=>'moneyReturn'),
+        array('id'=>'ticketingError',           'transition'=>'manualSuccess,error'),
         array('id'=>'manualError',              'transition'=>'moneyReturn'),
         array('id'=>'moneyReturn',              'transition'=>'error'),
         array('id'=>'manualSuccess',            'transition'=>'done'),
