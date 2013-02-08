@@ -8,6 +8,8 @@ GenericPopup = (function() {
     var el;
     this.id = id;
     this.modal = modal != null ? modal : false;
+    this.zindex = __bind(this.zindex, this);
+
     this.close = __bind(this.close, this);
 
     this.rebind = __bind(this.rebind, this);
@@ -18,8 +20,9 @@ GenericPopup = (function() {
     this.inside = false;
     if (window.popupStack.length === 0) {
       $('body').css('overflow', 'hidden');
-      $('body').prepend('<div id="popupOverlay"></div>');
     }
+    this.overlay = $('<div id="popupOverlay" style="z-index:' + this.zindex() + '"></div>');
+    $('body').prepend(this.overlay);
     el = $(this.id + '-template');
     if (el[0] === void 0) {
       throw "Wrong popup template";
@@ -27,6 +30,7 @@ GenericPopup = (function() {
     }
     this.el = $(el.html());
     $('body').prepend(this.el);
+    this.el.css('z-index', this.zindex());
     ko.applyBindings({
       data: data,
       close: this.close
@@ -66,12 +70,19 @@ GenericPopup = (function() {
     }
     this.el.remove();
     this["this"] = window.popupStack.pop();
+    this.overlay.remove();
     if (window.popupStack.length) {
       return window.popupStack[window.popupStack.length - 1].rebind();
     } else {
-      $('#popupOverlay').remove();
       return $('body').css('overflow', 'auto');
     }
+  };
+
+  GenericPopup.prototype.zindex = function() {
+    if (!window.POPUP_NEXT_ZINDEX) {
+      window.POPUP_NEXT_ZINDEX = 2000;
+    }
+    return window.POPUP_NEXT_ZINDEX++;
   };
 
   return GenericPopup;
