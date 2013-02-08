@@ -30,19 +30,104 @@ EOD;
     {
         $cityGeoDB = 'cities.txt';
         $cityGeoIDs = array();
-        $cityFp = fopen ($cityGeoDB, "r");
-        while (!feof($cityFp)) {
-            $line = fgets($cityFp);
-            if($line){
-                preg_match('#^(\d+)\t+(\W+?)\t+.+$#', $line, $match);
-                //print_r($match);
-                //break;
-                $id = intval($match[1]);
-                $cityName = $match[2];
-                $cityGeoIDs[$id] = iconv('CP1251','UTF8',$cityName);
+        if(file_exists($cityGeoDB))
+        {
+            $cityFp = fopen($cityGeoDB, "r");
+            while (!feof($cityFp)) {
+                $line = fgets($cityFp);
+                if($line){
+                    preg_match('#^(\d+)\t+(\W+?)\t+.+$#', $line, $match);
+                    //print_r($match);
+                    //break;
+                    $id = intval($match[1]);
+                    $cityName = $match[2];
+                    $cityGeoIDs[$id] = iconv('CP1251','UTF8',$cityName);
+                }
             }
+            echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+            $connection=Yii::app()->db;
+            $sql = 'truncate geoip';
+            $command=$connection->createCommand($sql);
+            $dataReader=$command->query();
+            $fileRuBase = "cidr_optim.txt";
+            $fp = fopen($fileRuBase, "r");
+            $addedCities = 0;
+            $skippedCities = 0;
+            $addedCountries = 0;
+            $page = "";
+            while (!feof($fp)) {
+                $page .= fgets($fp, 1024);
+                $pos = strpos($page, "\n");
+                while ($pos !== false) {
+                    if ($pos > 0) {
+                        $line = substr ($page, 0, $pos);
+                        $page = substr($page, $pos + 1);
+                        if (preg_match("#^(\d+)\s+(\d+)\s+[0-9\.]+ - [0-9\.]+\s+([A-Z]+)\s+([-0-9]+)$#", $line, $match)) {
+                            $begin_ip = $match[1];
+                            $end_ip = $match[2];
+                            $country_code = $match[3];
+
+                            $city_id = $match[4];
+                            if ($city_id != "-") {
+                                $cityName = $cityGeoIDs[intval($city_id)];
+                                try{
+                                    $country = Country::getCountryByCode($country_code);
+                                }catch (Exception $e){
+                                    $country = (object) array('id'=>false);
+                                }
+                                if($country->id){
+                                    $cities = CityManager::getCities($cityName,$country->id);
+                                }else{
+                                    $cities = CityManager::getCities($cityName);
+                                }
+                            }else{
+                                $pos = strpos ($page, "\n");
+                                continue;
+                            }
+                            if(isset($cities) && $cities){
+                                $geoip = new Geoip();
+                                $geoip->beginIp = $begin_ip;
+                                $geoip->endIp = $end_ip;
+                                $geoip->cityId = $cities[0]['id'];
+                                $geoip->countryId = City::getCityByPk($cities[0]['id'])->country->id;
+                                $addedCities++;
+                                $geoip->save();
+                                unset($geoip);
+                            }elseif($country->id){
+                                $geoip = new Geoip();
+                                $geoip->beginIp = $begin_ip;
+                                $geoip->endIp = $end_ip;
+                                $geoip->countryId = $country->id;
+                                $addedCountries++;
+                                if($geoip->save()){
+
+                                }else{
+
+                                }
+                                unset($geoip);
+                            }else{
+                                $skippedCities++;
+                            }
+                            if(isset($cities))
+                                unset($cities);
+                        }
+                    }
+                    $pos = strpos ($page, "\n");
+                }
+            }
+            echo "Added countries blocks: $addedCountries\n";
+            echo "Added cities blocks: $addedCities\n";
+            echo "Skipped blocks: $skippedCities\n";
+            unset($pos);
+            unset($page);
+        }else{
+            echo "file $cityGeoDB not found";
         }
-        var_dump($cityGeoIDs);
+
+
+
+
+
 
         return true;
         if ($type == 'hotels') {
@@ -134,5 +219,44 @@ EOD;
 
         }
 
+    }
+
+    public function actionMaxmindCities(){
+
+        echo "next base maxmind\n";
+        $cityGeoDB = 'GeoLiteCity-Location.csv';
+        $cityGeoIDs = array();
+        if(file_exists($cityGeoDB))
+        {
+            $cityFp = fopen($cityGeoDB, "r");
+            $line = fgets($cityFp);
+            $line = fgets($cityFp);
+            $i=0;
+            echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+            while (!feof($cityFp)) {
+                $line = fgets($cityFp);
+                $i++;
+                if($line){
+                    preg_match('#^(\d+),"(\w+)","(\w+)","(.*?)",".*?",([-\.0-9]*),([-\.0-9]*),.*?,.*?$#', $line, $match);
+                    //print_r($match);
+                    //break;
+                    if($match){
+
+                        $id = intval($match[1]);
+                        $country_code = $match[2];
+                        $region = $match[3];
+                        $cityName = iconv('CP1251','UTF8',$match[4]);
+                        $lat = $match[5];
+                        $long = $match[6];
+                        $cityGeoIDs[$id] = array('cc'=>$country_code,'re'=>$region,'cn'=>$cityName,'lat'=>$lat,'lng'=>$long);
+                        if(($i % 10000) == 0){
+                            echo "parsed $i lines\n";
+                            echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+                        }
+                    }
+                }
+            }
+        }
+        echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
     }
 }

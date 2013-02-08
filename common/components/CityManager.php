@@ -256,7 +256,7 @@ class CityManager extends CApplicationComponent
         return $items;
     }
 
-    static public function getCities($query)
+    static public function getCities($query,$countryId = false)
     {
         $currentLimit = appParams('autocompleteLimit');
         $items = Yii::app()->cache->get('autocompleteCities' . $query);
@@ -272,6 +272,10 @@ class CityManager extends CApplicationComponent
                 $criteria->with = 'country';
                 $criteria->params[':code'] = $query;
                 $criteria->addCondition('t.code = :code');
+                if($countryId){
+                    $criteria->addCondition('t.countryId = :countryId');
+                    $criteria->params[':countryId'] = $countryId;
+                }
                 $criteria->order = 'country.position desc, t.position desc';
                 /** @var  City[] $cities  */
                 $cities = City::model()->findAll($criteria);
@@ -293,6 +297,10 @@ class CityManager extends CApplicationComponent
             $criteria->limit = $currentLimit;
             $criteria->params[':localRu'] = $query . '%';
             $criteria->params[':localEn'] = $query . '%';
+            if($countryId){
+                $criteria->addCondition('t.countryId = :countryId');
+                $criteria->params[':countryId'] = $countryId;
+            }
 
             $criteria->addCondition('t.localRu LIKE :localRu OR t.localEn LIKE :localEn');
             if ($cityIds)
@@ -337,6 +345,10 @@ class CityManager extends CApplicationComponent
                     if ($cityIds)
                     {
                         $criteria->addCondition('t.id NOT IN (' . join(',', $cityIds) . ')');
+                    }
+                    if($countryId){
+                        $criteria->addCondition('t.countryId = :countryId');
+                        $criteria->params[':countryId'] = $countryId;
                     }
                     $criteria->with = 'country';
                     $criteria->order = 'country.position desc, t.position desc';

@@ -102,7 +102,7 @@ class GDSNemoSoapClient extends SoapClient
                 ->httpClient->post($location,
                                    $request,
                                    $headersToSend,
-                                   Array(CURLOPT_TIMEOUT=>190));
+                                   Array(CURLOPT_TIMEOUT=>100));
             GDSNemoSoapClient::$lastHeaders = $headers;
         } catch (HttpClientException $e) {
             GDSNemoSoapClient::$lastCurlError = $e->getMessage();
