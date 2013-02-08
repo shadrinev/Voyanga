@@ -165,6 +165,9 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.findAndSelect = function(result) {
+    if (this.noresults) {
+      return;
+    }
     result = this.results().findAndSelect(result);
     if (!result) {
       return false;
