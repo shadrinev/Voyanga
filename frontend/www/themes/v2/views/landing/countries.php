@@ -4,7 +4,7 @@
 
 </div>
 <?php
-    $firstHalf = round(count($countries)/2);
+    $firstHalf = ceil(count($countries)/2);
     $secondHalf = count($countries) - $firstHalf;?>
 <table class="tableFlight first up">
     <tbody>
@@ -12,19 +12,19 @@
     $i =0;
     foreach($countries as $country):
         $i++;
-        if($i < $firstHalf):
+        if($i <= $firstHalf):
         ?>
-        <tr class="select">
+        <tr class="<?php echo (($i+1) % 2 == 0)? 'select' : '' ;?>">
             <td class="tdEmpty">
 
             </td>
             <td class="tdFlight">
                 <div><?php echo $country->localRu;?></div>
             </td>
-            <td class="tdPrice">
+            <td class="tdHostel">
                 <a href="/land/hotels/<?php echo $country->code;?>">отели</a>
             </td>
-            <td class="tdPrice">
+            <td class="tdFly">
                 <a href="/land/<?php echo $country->code;?>">перелеты</a>
             </td>
         </tr>
@@ -41,20 +41,21 @@
     $i =0;
     foreach($countries as $country):
         $i++;
-        if($i >= $firstHalf):
+        if($i > $firstHalf):
             ?>
-        <tr class="select">
-            <td class="tdEmpty">
+        <tr class="<?php echo (($i+1) % 2 == 0)? 'select' : '' ;?>">
 
-            </td>
             <td class="tdFlight">
                 <div><?php echo $country->localRu;?></div>
             </td>
-            <td class="tdPrice">
+            <td class="tdHostel">
                 <a href="/land/hotels/<?php echo $country->code;?>">отели</a>
             </td>
-            <td class="tdPrice">
+            <td class="tdFly">
                 <a href="/land/<?php echo $country->code;?>">перелеты</a>
+            </td>
+            <td class="tdEmpty">
+
             </td>
         </tr>
             <?php
