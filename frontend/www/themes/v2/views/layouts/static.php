@@ -2,8 +2,16 @@
 $cs = Yii::app()->getClientScript();
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 $theme = Yii::app()->theme->baseUrl;
-Yii::app()->clientScript->registerPackage('appCss');
-Yii::app()->clientScript->registerPackage('appJs');
+if (YII_DEBUG || Yii::app()->clientScript->buildingMode)
+{
+    Yii::app()->clientScript->registerPackage('appCss');
+    Yii::app()->clientScript->registerPackage('appJs');
+}
+else
+{
+    Yii::app()->clientScript->registerCssFile('/themes/v2/css/all.min.css');
+    Yii::app()->clientScript->registerScriptFile('/js/all.min.js');
+}
 Yii::app()->clientScript->registerPackage('landing');
 Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
 Yii::app()->clientScript->registerScriptFile('/js/completed.js');

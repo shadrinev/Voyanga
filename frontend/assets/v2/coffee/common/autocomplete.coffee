@@ -40,7 +40,7 @@ ko.bindingHandlers.autocomplete =
     iataCode = valueAccessor().iata()
 
     url = (code) ->
-      result = window.apiEndPoint + '/v1/helper/autocomplete/citiesReadable?'
+      result = window.apiEndPoint + '/helper/autocomplete/citiesReadable?'
       params = []
       params.push 'codes[0]=' + code
       result += params.join "&"
