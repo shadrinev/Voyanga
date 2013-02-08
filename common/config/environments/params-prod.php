@@ -13,6 +13,7 @@ return array(
 
     "api.endPoint" => "//api.voyanga.com/v1/",
     'app.api.flightSearchUrl' => 'https://api.voyanga.com/v1/flight/search/BE',
+    'app.api.flightSearchNoSecure' => 'http://api.voyanga.com/v1/flight',
     'app.api.hotelSearchUrl' => 'https://api.voyanga.com/v1/hotel/search',
 
     "baseUrl" => 'https://voyanga.com',

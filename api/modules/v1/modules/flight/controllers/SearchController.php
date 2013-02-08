@@ -55,7 +55,7 @@ class SearchController extends ApiController
 
     private function addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
     {
-        $businessUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $businessUrl = Yii::app()->params['app.api.flightSearchNoSecure'].'/search/withParams';
         $query = http_build_query(array(
             'destinations' => $destinations,
             'adt' => $adt,
@@ -64,13 +64,12 @@ class SearchController extends ApiController
             'serviceClass' => 'B',
         ));
         $businessUrl = $businessUrl . '?' . $query;
-        echo $businessUrl; die();
         $asyncExecutor->add($businessUrl);
     }
 
     private function addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
     {
-        $businessUrl = Yii::app()->createAbsoluteUrl('/v1/flight/search/withParams');
+        $businessUrl = Yii::app()->params['app.api.flightSearchNoSecure'].'/search/withParams';
         $query = http_build_query(array(
             'destinations' => $destinations,
             'adt' => $adt,
