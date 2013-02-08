@@ -118,6 +118,9 @@ EOD;
                     while($cityHotels === false){
                         try{
                             $cityHotels = $HotelClient->getHotels($hotelCity['id']);
+                            if($executionState->hotelId && (!isset($cityHotels[$executionState->hotelId]))){
+                                $executionState->hotelId = false;
+                            }
                         }catch (Exception $e){
                             $cityHotels = false;
                             sleep(60);
