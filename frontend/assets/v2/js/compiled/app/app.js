@@ -43,10 +43,12 @@ Application = (function(_super) {
     var result, _oldOnerrorHandler,
       _this = this;
     _oldOnerrorHandler = window.onerror;
-    window.onerror = function(error) {
+    window.onerror = function() {
+      var rest;
+      rest = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       new ErrorPopup('e500');
       if (_oldOnerrorHandler) {
-        return _oldOnerrorHandler.apply(_this, arguments_);
+        return _oldOnerrorHandler.apply(_this, rest);
       }
     };
     this.activeModule = ko.observable(null);

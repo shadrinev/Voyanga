@@ -4,9 +4,9 @@
 class Application extends Backbone.Router
   constructor: ->
     _oldOnerrorHandler = window.onerror
-    window.onerror = (error)=>
+    window.onerror = (rest...)=>
       new ErrorPopup('e500')
-      return _oldOnerrorHandler.apply(this, arguments_)  if _oldOnerrorHandler
+      return _oldOnerrorHandler.apply(this, rest)  if _oldOnerrorHandler
 
     # FIXME
     @activeModule = ko.observable null #ko.observable window.activeModule || 'avia'
