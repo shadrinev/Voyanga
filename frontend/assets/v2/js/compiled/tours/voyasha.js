@@ -88,7 +88,13 @@ VoyashaCheapest = (function(_super) {
   };
 
   VoyashaCheapest.prototype.handleAvia = function(item) {
-    return item.results().cheapest();
+    return _.reduce(item.results().data, function(memo, flight) {
+      if (memo.price < flight.price) {
+        return memo;
+      } else {
+        return flight;
+      }
+    }, item.results().data[0]);
   };
 
   VoyashaCheapest.prototype.handleHotels = function(item) {
@@ -137,7 +143,7 @@ VoyashaOptima = (function(_super) {
   };
 
   VoyashaOptima.prototype.handleAvia = function(item) {
-    return item.results().best();
+    return item.results().getFilterLessBest();
   };
 
   VoyashaOptima.prototype.handleHotels = function(item) {

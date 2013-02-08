@@ -26,6 +26,7 @@ class Voyasha
     throw "Implement me"
 
   choose: =>
+    # we can just use selected here and still use @best @cheapest in avia handlers
     for item in  @toursResultSet.data()
       if item.isAvia()
         item.select (if item.noresults then null else @handleAvia item)
@@ -39,7 +40,10 @@ class VoyashaCheapest extends Voyasha
 
   # item is TourAviaResultSet
   handleAvia: (item)=>
-    item.results().cheapest()
+    _.reduce item.results().data,
+      (memo, flight) ->
+        if memo.price < flight.price then memo else flight
+      , item.results().data[0]
 
   handleHotels: (item)=>
     data = item.results().data()
@@ -57,7 +61,7 @@ class VoyashaOptima extends Voyasha
     'Оптимальный вариант'
 
   handleAvia: (item)=>
-    item.results().best()
+    item.results().getFilterLessBest()
 
   handleHotels: (item) =>
     data = item.results().data()
