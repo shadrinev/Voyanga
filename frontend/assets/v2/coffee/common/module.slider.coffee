@@ -28,7 +28,7 @@ class Slider
 
   click: (scope, event)=>
     event.preventDefault()
-    if window.location.href.replace('/','') != ''
+    if window.location.pathname.replace('/','') != ''
       $('#loadWrapBgMin').show()
       window.location.href =  $(event.currentTarget).find('a').attr('href')
       return
