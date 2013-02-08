@@ -11,11 +11,12 @@ return array(
     'enableHotelLogging' => true,
     'enableFlightLogging' => true,
 
-    "api.endPoint" => "http://api.voyanga.com/v1/",
-    'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
-    'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',
+    "api.endPoint" => "//api.voyanga.com/v1/",
+    'app.api.flightSearchUrl' => 'https://api.voyanga.com/v1/flight/search/BE',
+    'app.api.flightSearchNoSecure' => 'http://api.voyanga.com/v1/flight',
+    'app.api.hotelSearchUrl' => 'https://api.voyanga.com/v1/hotel/search',
 
-    "baseUrl" => 'http://voyanga.com',
+    "baseUrl" => 'https://voyanga.com',
 
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',

@@ -69,6 +69,8 @@ class ToursAviaResultSet extends TourEntry
     @results result
 
   findAndSelect: (result)=>
+    if @noresults
+      return
     result = @results().findAndSelect(result)
     if !result
       return false
@@ -193,16 +195,17 @@ class ToursAviaResultSet extends TourEntry
       source = @results().data[0]
     source.roundTrip
 
+  # Надо переименовать или зареюзать то что уже есть
   timelineEndDate: =>
     source = @selection()
     if source == null
-      source = @results().data[0]
+      return moment(@rawSP.destinations[0].date).toDate()
     source.arrivalDate()
 
   timelineStartDate: =>
     source = @selection()
     if source == null
-      source = @results().data[0]
+      return moment(@rawSP.destinations[0].date).toDate()
     source.departureDate()
 
         
@@ -679,6 +682,7 @@ class ToursResultSet
         success = false
     return success
 
+  # FIXME ищет в пустых результатах, пока костыльнул.
   findAndSelectItems: (items) =>
     console.log('findAndSelectItems',items)
     success = true
