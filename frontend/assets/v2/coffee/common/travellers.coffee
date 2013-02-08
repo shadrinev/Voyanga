@@ -40,7 +40,7 @@ class PeopleSelector
       el.addClass('active')
       coords = $('.how-many-man').offset()
       #el.css 'top', coords.top +  $('.how-many-man').height()
-      el.css 'left', coords.left
+      el.css 'margin-left', coords.left
 
     else
       @close()
