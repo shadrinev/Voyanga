@@ -5,8 +5,11 @@ class PeopleSelector
     @inside2 = false
     @inside3 = false
 
+  preventShow:(context, event) =>
+    event.stopPropagation()
+
   show: (context, event) =>
-    el = $(event.currentTarget)
+    el = $(event.currentTarget).find('.popup')
     if !el.hasClass('active')
       $(document.body).mousedown =>
         if @inside ||  @inside2 || @inside3
@@ -115,14 +118,11 @@ class PeopleSelector
     , =>
       @inside = false
 
-    $('.how-many-man .content').hover =>
+    $('.how-many-man').hover =>
       @inside2 = true
-    , =>
-      @inside2 = false
-
-    $('.how-many-man .btn').hover =>
       @inside3 = true
     , =>
+      @inside2 = false
       @inside3 = false
 
   close: ->

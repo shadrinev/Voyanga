@@ -1,6 +1,6 @@
 <script type="text/html" id="passengers-template">
-    <div class="how-many-man">
-    <div class="content" data-bind="click: show">
+    <div class="how-many-man" data-bind="click: show">
+    <div class="content">
         <!-- ko if: overall()>5 -->
         <!-- ko if: adults()>0 -->
         <div class="man"></div>
@@ -12,12 +12,12 @@
         <!-- /ko -->
         <!-- /ko -->
         <!-- ko if: overall()<=5 -->
-        <div class="man" data-bind="repeat: adults()"></div>
-        <div class="child" data-bind="repeat: sum_children()"></div>
+        <div class="man" data-bind="repeat: adults"></div>
+        <div class="child" data-bind="repeat: sum_children"></div>
         <!-- /ko -->
     </div>
-    <div class="btn" data-bind="click: show"></div>
-    <div class="popup">
+    <div class="btn"></div>
+    <div class="popup" data-bind="click: preventShow">
         <div class="adults">
             <div class="inputDIV">
                 <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults">
