@@ -84,7 +84,6 @@
       <span data-bind="text: parent.getDateInterval()">26 мая - 27 мая</span>
     </div>
     <h2>Номера в <span data-bind="text: hotelName">Рэдиссон Соня Отель</span></h2>
-    <h3>Рекомендуемые сочетания по вашему запросу</h3>
     <!-- ko if: !haveFullInfo() -->
         <!-- ko foreach: roomSets -->
         <div data-bind="css: 'block-trip '+(specialOffer() ? ' specialOffer' : '')">
