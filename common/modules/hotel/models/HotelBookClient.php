@@ -330,7 +330,7 @@ class HotelBookClient
         $countries = $this->request(Yii::app()->params['HotelBook']['uri'] . 'countries', $getData);
         $countriesObject = simplexml_load_string($countries);
         $return = array();
-        CVarDumper::dump($countriesObject);
+        //CVarDumper::dump($countriesObject);
         foreach ($countriesObject->Countries->Country as $country)
         {
             $id = intval($country['id']);
