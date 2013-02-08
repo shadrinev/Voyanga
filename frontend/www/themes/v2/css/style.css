@@ -2699,6 +2699,9 @@ input.hotel-input {
 .divInputTelefon.inactive {
     background-position: -431px -132px;
 }
+.divInputTelefon.error {
+    background-position: -431px -99px;
+}
 .dopInfoPassengers .tdTelefon .plusSeven {
     width: 25px;
     padding-left: 5px;
@@ -3769,4 +3772,10 @@ a.whereData span {
 .showMore {
     font-size: 20px;
     border-bottom: 1px dashed;
+}
+.iframeDiv {
+    overflow: hidden;
+    width: 760px;
+    height: 700px;
+    margin: 0 auto;
 }
