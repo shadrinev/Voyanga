@@ -465,7 +465,7 @@
     width: 781px;
 }
 #content > .title {
-    margin-top: 45px;
+    margin-top: 41px;
     padding: 0 45px 10px 0;
     position: relative;
 }
@@ -691,7 +691,7 @@
     width: 822px;
 }
 .title.hotel h1 {
-    margin-bottom: 10px;
+    margin-bottom: 4px;
 }
 .tmblr {
     float: left;
@@ -745,7 +745,7 @@ h2 .tmblr {
     color: #1A1B1E;
     margin-bottom: 20px;
     margin-left: 0;
-    margin-top: 18px;
+    margin-top: 15px;
     overflow: hidden;
     padding: 8px;
 }
@@ -802,7 +802,7 @@ h2 .tmblr {
 .descr > .left .right {
     color: #5D5F63;
     float: right;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     margin-left: 30px;
     width: 312px;
 }
@@ -862,7 +862,7 @@ h2 .tmblr {
     color: #1D222B;
     font-size: 24px;
     line-height: 22px;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
     text-shadow: 0 1px 0 #FFFFFF;
 }
 .info-trip h3 {
