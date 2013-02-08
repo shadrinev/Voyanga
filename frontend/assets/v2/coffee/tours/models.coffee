@@ -196,13 +196,13 @@ class ToursAviaResultSet extends TourEntry
   timelineEndDate: =>
     source = @selection()
     if source == null
-      source = @results().data[0]
+      return moment(@rawSP.destinations[0].date).toDate()
     source.arrivalDate()
 
   timelineStartDate: =>
     source = @selection()
     if source == null
-      source = @results().data[0]
+      return moment(@rawSP.destinations[0].date).toDate()
     source.departureDate()
 
         

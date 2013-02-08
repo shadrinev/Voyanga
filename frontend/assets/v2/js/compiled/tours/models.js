@@ -337,7 +337,7 @@ ToursAviaResultSet = (function(_super) {
     var source;
     source = this.selection();
     if (source === null) {
-      source = this.results().data[0];
+      return moment(this.rawSP.destinations[0].date).toDate();
     }
     return source.arrivalDate();
   };
@@ -346,7 +346,7 @@ ToursAviaResultSet = (function(_super) {
     var source;
     source = this.selection();
     if (source === null) {
-      source = this.results().data[0];
+      return moment(this.rawSP.destinations[0].date).toDate();
     }
     return source.departureDate();
   };
