@@ -1,7 +1,17 @@
+scaledValue = (value, max, scale, invert=false)->
+  if value >= max
+    return if invert then 0 else scale
+  if invert
+    return scale - value * scale/max
+  return value * scale/max
+  
+
 # Abstact class for set of tickets
 class Voyasha
   constructor: (@toursResultSet)->
     # FIXME price is enough here tbh
+    if @init
+      do @init
     @selected = ko.computed =>
       result = []
       for item in  @toursResultSet.data()
@@ -22,8 +32,40 @@ class Voyasha
   handleAvia: =>
     throw "Implement me"
 
-  handleHotels: =>
-    throw "Implement me"
+  getRating: (x, maxPrice, maxDistance) ->
+    # Веса(== максимальные значения) координат.
+    
+    if x.rating == '-'
+      userRating = 0
+    else
+      userRating = scaledValue x.rating, 5, @RATING_WEIGHT
+    stars = scaledValue x.starsNumeric, 5, @STARS_WEIGHT
+
+    # расстояние до центра
+    dCenter = scaledValue x.distanceToCenter, maxDistance, @DISTANCE_WEIGHT, true
+
+    # разумность цены :D
+    rPrice = scaledValue x.roomSets()[0].discountPrice, maxPrice, @PRICE_WEIGHT, true
+    
+    hotelRating = Math.sqrt(stars*stars + userRating*userRating + dCenter*dCenter + rPrice*rPrice)
+    return hotelRating
+
+  handleHotels: (item) =>
+    data = item.results().data()
+    maxPrice = _.reduce data, (memo,hotel)  =>
+        if memo > hotel.roomSets()[0].discountPrice then memo else hotel.roomSets()[0].discountPrice
+      , data[0].roomSets()[0].discountPrice
+    maxDistance = _.reduce data, (memo,hotel)  =>
+        if !hotel.distanceToCenter
+          return memo
+        if memo > hotel.distanceToCenter then memo else hotel.distanceToCenter
+      , 0
+      
+    found = _.reduce data, (memo,hotel)  =>
+        if @getRating(memo, maxPrice, maxDistance) > @getRating(hotel, maxPrice, maxDistance) then memo else hotel
+      , data[0]
+    result = {roomSet: found.roomSets()[0], hotel : data, price: found.roomSets()[0].discountPrice}
+    return result
 
   choose: =>
     # we can just use selected here and still use @best @cheapest in avia handlers
@@ -35,6 +77,12 @@ class Voyasha
     do @toursResultSet.showOverview
 
 class VoyashaCheapest extends Voyasha
+  init: =>
+    @PRICE_WEIGHT = 5
+    @RATING_WEIGHT = 0
+    @STARS_WEIGHT = 0
+    @DISTANCE_WEIGHT = 0
+
   getTitle: =>
     'Самый дешевый'
 
@@ -45,40 +93,26 @@ class VoyashaCheapest extends Voyasha
         if memo.price < flight.price then memo else flight
       , item.results().data[0]
 
-  handleHotels: (item)=>
-    data = item.results().data()
-    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].discountPrice}
-    for hotel in item.results().data()
-      for roomSet in hotel.roomSets()
-        if roomSet.discountPrice < result.price
-          result.roomSet = roomSet
-          result.hotel = hotel
-          result.price = roomSet.discountPrice
-    return result
-
 class VoyashaOptima extends Voyasha
+  init: =>
+    @PRICE_WEIGHT = 5
+    @RATING_WEIGHT = 3
+    @STARS_WEIGHT = 4
+    @DISTANCE_WEIGHT = 2
+
   getTitle: =>
     'Оптимальный вариант'
 
   handleAvia: (item)=>
     item.results().getFilterLessBest()
-
-  handleHotels: (item) =>
-    data = item.results().data()
-    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].discountPrice}
-    results = _.filter data, (x)-> x.distanceToCenter <= 6
-    results = _.filter results, (x)-> (x.starsNumeric == 3)||(x.starsNumeric == 4)
-    results.sort (a,b) -> a.roomSets()[0].discountPrice - b.roomSets()[0].discountPrice
-    if results.length
-      data = results[0]
-      result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].discountPrice}
-    results = _.filter results, (x) -> x.rating > 2 
-    if results.length
-      data = results[0]
-      result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].discountPrice}
-    result
     
 class VoyashaRich extends Voyasha
+  init: =>
+    @PRICE_WEIGHT = 5
+    @RATING_WEIGHT = 3
+    @STARS_WEIGHT = 5
+    @DISTANCE_WEIGHT = 5
+
   getTitle: =>
     'Роскошный вариант'
 
@@ -96,25 +130,6 @@ class VoyashaRich extends Voyasha
           result.result = item
     return result.result
 
-  getRating: (x) ->
-    hotelRating = Math.abs(4.5-x.starsNumeric)
-    if x.rating == '-'
-      hotelRating += 4
-    else
-      hotelRating = hotelRating + Math.abs(4-x.rating)
-    if x.distanceToCenter > 3
-      hotelRating = hotelRating * 4
 
-    return hotelRating
-
-  handleHotels: (item) =>
-    data = item.results().data()
-    result = {roomSet: data[0].roomSets()[0], hotel : data[0], price: data[0].roomSets()[0].discountPrice}
-    results = data #_.filter results, (x)-> (x.starsNumeric == 4)||(x.starsNumeric == 5)
-    results.sort (a,b) =>
-      aHotelRating = @getRating(a)
-      bHotelRating = @getRating(b)
-      return a.roomSets()[0].discountPrice*aHotelRating  - b.roomSets()[0].discountPrice*bHotelRating
-    data = results[0]
-    result = {roomSet: data.roomSets()[0], hotel : data, price: data.roomSets()[0].discountPrice}
-    return result
+  #
+  # Длина вектора {Звезды, Рейтинг, Близость центра, Дешевизна} и есть рейтинг отеля
