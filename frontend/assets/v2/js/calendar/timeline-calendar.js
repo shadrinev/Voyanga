@@ -143,7 +143,6 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
     },
     linesWidth:3
 });
-console.log(this.jObj);
 VoyangaCalendarTimeline.onCellOver = function(obj,e){
 
 }

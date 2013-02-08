@@ -2699,6 +2699,9 @@ input.hotel-input {
 .divInputTelefon.inactive {
     background-position: -431px -132px;
 }
+.divInputTelefon.error {
+    background-position: -431px -99px;
+}
 .dopInfoPassengers .tdTelefon .plusSeven {
     width: 25px;
     padding-left: 5px;
@@ -3256,6 +3259,20 @@ a.whereData span {
     color: #1c81bb;
     text-decoration: underline;
 }
+.tableFlight.first.up .tdHostel {
+    width: 100px;
+}
+.tableFlight.first.up td a, .tableFlight.second.up td a {
+    color: #1c81bb;
+    text-decoration: underline;
+}
+.tableFlight.first.up .tdFly {
+    width: 100px;
+    border-right: 1px solid #c9cece;
+}
+.tableFlight.second.up .tdFly, .tableFlight.second.up .tdHostel {
+    width: 100px;
+}
 .tableFlight tr.select {
     background: #e6eaec;
 }
@@ -3755,4 +3772,10 @@ a.whereData span {
 .showMore {
     font-size: 20px;
     border-bottom: 1px dashed;
+}
+.iframeDiv {
+    overflow: hidden;
+    width: 760px;
+    height: 700px;
+    margin: 0 auto;
 }

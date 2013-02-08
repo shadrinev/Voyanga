@@ -25,7 +25,7 @@ else
     <?php if (!isset($this->title)) $title = Yii::app()->params['title.default']; else $title = $this->title ?>
     <title><?php echo $title ?></title>
     <script type="text/javascript"
-            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
+            src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
 </head>
 <body data-bind="css: {fixed: in1}">

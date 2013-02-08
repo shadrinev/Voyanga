@@ -127,7 +127,9 @@
                         <!-- /ko -->
                     </td>
                     <td class="tdIframe" data-bind='attr: {style: breakdown.length?"":"text-align: center; width: 100%"}'>
-                        <iframe id="payment_frame" name="payment_frame" class="payCardPaliFrame"></iframe>
+                        <div class="iframeDiv">
+                            <iframe id="payment_frame" name="payment_frame" class="payCardPaliFrame"></iframe>
+                        </div>
                     </td>
                 </tr>
             </table>
