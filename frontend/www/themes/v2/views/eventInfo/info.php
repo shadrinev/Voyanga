@@ -113,10 +113,11 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
         <!-- PANEL -->
         <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !itemsToBuy.activePanel().calendarHidden()}">
 
-            <div class="board"  style="position: static;">
+            <div class="board"  style="bottom:auto;">
                 <div class="constructor" style="position: static;">
                     <!-- BOARD CONTENT -->
                     <div class="board-content" data-bind="with: itemsToBuy.activePanel()" style="position: static;height: auto;">
+
                         <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender, beforeRemove: $data.beforeRemove} -->
                             <!-- ko if: $index()!=0 -->
                             <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
@@ -194,6 +195,7 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 
 
                         <!-- /ko -->
+
                     </div>
                     <!-- END BOARD CONTENT -->
                     <!-- ko with: itemsToBuy.activePanel() -->
@@ -242,11 +244,11 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 
 
                 <!-- END CONSTRUCTOR -->
-
+                <a href="#" class="btn-minimizePanel" data-bind="click: itemsToBuy.togglePanel,html: '<span></span>'+itemsToBuy.showPanelText()"><span></span></a>
             </div>
             <div class="clear"></div>
             <!-- BTN MINIMIZE -->
-            <a href="#" class="btn-minimizePanel" data-bind="click: itemsToBuy.togglePanel,html: '<span></span>'+itemsToBuy.showPanelText()"><span></span></a>
+
             <div class="minimize-rcomended">
                 <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
             </div>
