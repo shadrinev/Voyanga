@@ -465,7 +465,7 @@
     width: 781px;
 }
 #content > .title {
-    margin-top: 45px;
+    margin-top: 41px;
     padding: 0 45px 10px 0;
     position: relative;
 }
@@ -691,7 +691,7 @@
     width: 822px;
 }
 .title.hotel h1 {
-    margin-bottom: 10px;
+    margin-bottom: 4px;
 }
 .tmblr {
     float: left;
@@ -745,7 +745,7 @@ h2 .tmblr {
     color: #1A1B1E;
     margin-bottom: 20px;
     margin-left: 0;
-    margin-top: 18px;
+    margin-top: 15px;
     overflow: hidden;
     padding: 8px;
 }
@@ -802,7 +802,7 @@ h2 .tmblr {
 .descr > .left .right {
     color: #5D5F63;
     float: right;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     margin-left: 30px;
     width: 312px;
 }
@@ -862,7 +862,7 @@ h2 .tmblr {
     color: #1D222B;
     font-size: 24px;
     line-height: 22px;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
     text-shadow: 0 1px 0 #FFFFFF;
 }
 .info-trip h3 {
@@ -2699,6 +2699,9 @@ input.hotel-input {
 .divInputTelefon.inactive {
     background-position: -431px -132px;
 }
+.divInputTelefon.error {
+    background-position: -431px -99px;
+}
 .dopInfoPassengers .tdTelefon .plusSeven {
     width: 25px;
     padding-left: 5px;
@@ -3256,6 +3259,20 @@ a.whereData span {
     color: #1c81bb;
     text-decoration: underline;
 }
+.tableFlight.first.up .tdHostel {
+    width: 100px;
+}
+.tableFlight.first.up td a, .tableFlight.second.up td a {
+    color: #1c81bb;
+    text-decoration: underline;
+}
+.tableFlight.first.up .tdFly {
+    width: 100px;
+    border-right: 1px solid #c9cece;
+}
+.tableFlight.second.up .tdFly, .tableFlight.second.up .tdHostel {
+    width: 100px;
+}
 .tableFlight tr.select {
     background: #e6eaec;
 }
@@ -3755,4 +3772,10 @@ a.whereData span {
 .showMore {
     font-size: 20px;
     border-bottom: 1px dashed;
+}
+.iframeDiv {
+    overflow: hidden;
+    width: 760px;
+    height: 700px;
+    margin: 0 auto;
 }

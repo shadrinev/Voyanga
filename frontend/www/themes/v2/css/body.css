@@ -115,4 +115,7 @@ h3.calendarTitle {
 h4 a {
 	font-size: 12px; text-shadow: none;
 }
+.overflowBlock h4 a {
+    font-size: inherit;
+}
 .recommended-ticket h3, .prices-of-3days h3 {color: #4b525c; text-shadow: #FFF 0px 1px 0px; margin-bottom: 22px;}

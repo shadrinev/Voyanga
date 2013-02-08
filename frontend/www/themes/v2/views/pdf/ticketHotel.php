@@ -65,7 +65,7 @@ $dayFormat = "d|n|w";
             <tr>
                 <td class="tdMaps">
                     <div class="maps">
-                        <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=310x259&maptype=roadmap&markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C%7C<?php echo $ticket->latitude.','.$ticket->longitude;?>&sensor=false">
+                        <img src="//maps.googleapis.com/maps/api/staticmap?zoom=15&size=310x259&maptype=roadmap&markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C%7C<?php echo $ticket->latitude.','.$ticket->longitude;?>&sensor=false">
                     </div>
                 </td>
                 <td class="tdInfo">

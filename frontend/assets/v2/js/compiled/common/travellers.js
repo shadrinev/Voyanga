@@ -14,15 +14,21 @@ PeopleSelector = (function() {
     this.showPeoplePopup = __bind(this.showPeoplePopup, this);
 
     this.show = __bind(this.show, this);
+
+    this.preventShow = __bind(this.preventShow, this);
     this.inside = false;
     this.inside2 = false;
     this.inside3 = false;
   }
 
+  PeopleSelector.prototype.preventShow = function(context, event) {
+    return event.stopPropagation();
+  };
+
   PeopleSelector.prototype.show = function(context, event) {
     var coords, el,
       _this = this;
-    el = $(event.currentTarget);
+    el = $(event.currentTarget).find('.popup');
     if (!el.hasClass('active')) {
       $(document.body).mousedown(function() {
         if (_this.inside || _this.inside2 || _this.inside3) {
@@ -58,7 +64,7 @@ PeopleSelector = (function() {
       $('.how-many-man .content').addClass('active');
       el.addClass('active');
       coords = $('.how-many-man').offset();
-      return el.css('left', coords.left);
+      return el.css('margin-left', coords.left);
     } else {
       return this.close();
     }
@@ -138,14 +144,11 @@ PeopleSelector = (function() {
     }, function() {
       return _this.inside = false;
     });
-    $('.how-many-man .content').hover(function() {
-      return _this.inside2 = true;
-    }, function() {
-      return _this.inside2 = false;
-    });
-    return $('.how-many-man .btn').hover(function() {
+    return $('.how-many-man').hover(function() {
+      _this.inside2 = true;
       return _this.inside3 = true;
     }, function() {
+      _this.inside2 = false;
       return _this.inside3 = false;
     });
   };

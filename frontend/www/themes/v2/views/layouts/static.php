@@ -2,8 +2,16 @@
 $cs = Yii::app()->getClientScript();
 $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 $theme = Yii::app()->theme->baseUrl;
-Yii::app()->clientScript->registerPackage('appCss');
-Yii::app()->clientScript->registerPackage('appJs');
+if (YII_DEBUG || Yii::app()->clientScript->buildingMode)
+{
+    Yii::app()->clientScript->registerPackage('appCss');
+    Yii::app()->clientScript->registerPackage('appJs');
+}
+else
+{
+    Yii::app()->clientScript->registerCssFile('/themes/v2/css/all.min.css');
+    Yii::app()->clientScript->registerScriptFile('/js/all.min.js');
+}
 Yii::app()->clientScript->registerPackage('landing');
 Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
 Yii::app()->clientScript->registerScriptFile('/js/completed.js');
@@ -19,9 +27,8 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
     <?php if (!isset($this->title)) $title = Yii::app()->params['title.default']; else $title = $this->title ?>
     <title><?php echo $title ?></title>
     <script type="text/javascript"
-            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
+            src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
-    <script type="text/javascript" src="http://api.voyanga.com/API.js"></script>
 </head>
 <body>
 <script type="text/javascript">

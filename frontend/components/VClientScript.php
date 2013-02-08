@@ -8,6 +8,7 @@
 class VClientScript extends CClientScript
 {
     public $buildingMode = false;
+    public $excludeFiles = array('runApp.js');
 
     public function renderHead(&$output)
     {
@@ -19,7 +20,17 @@ class VClientScript extends CClientScript
         $cssPaths = array();
         foreach ($this->scriptFiles[0] as $from => $to)
         {
-            $fullPaths[] = $root . $to;
+            $add = true;
+            foreach ($this->excludeFiles as $exclude)
+            {
+                if (endsWith($to, $exclude))
+                {
+                    $add = false;
+                    break;
+                }
+            }
+            if ($add)
+                $fullPaths[] = $root . $to;
         }
         foreach ($this->cssFiles as $path => $media)
         {
