@@ -30,6 +30,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 </head>
 <body data-bind="css: {fixed: in1}">
 <script type="text/javascript">
+    window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
     $(function(){
         Raven.config('<?php echo Yii::app()->params['sentry.dsn']; ?>').install()
     })

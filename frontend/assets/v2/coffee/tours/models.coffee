@@ -738,7 +738,10 @@ class RoomsSearchParams
 class TourSearchParams extends SearchParams
   constructor: ->
     super()
-    @startCity = ko.observable 'LED'
+    if(window.currentCityCode)
+      @startCity = ko.observable window.currentCityCode
+    else
+      @startCity = ko.observable 'LED'
     @destinations = ko.observableArray []
     # FIXME copy paste from hotel search params
     @rooms = ko.observableArray [new SpRoom(@)]

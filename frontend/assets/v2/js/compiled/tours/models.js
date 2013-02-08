@@ -1165,7 +1165,11 @@ TourSearchParams = (function(_super) {
 
     var _this = this;
     TourSearchParams.__super__.constructor.call(this);
-    this.startCity = ko.observable('LED');
+    if (window.currentCityCode) {
+      this.startCity = ko.observable(window.currentCityCode);
+    } else {
+      this.startCity = ko.observable('LED');
+    }
     this.destinations = ko.observableArray([]);
     this.rooms = ko.observableArray([new SpRoom(this)]);
     this.overall = ko.computed(function() {

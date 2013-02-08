@@ -95,4 +95,41 @@ class Geoip extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    public static function ip2int($ip){
+        $a=explode(".",$ip);
+        return $a[0]*256*256*256+$a[1]*256*256+$a[2]*256+$a[3];
+    }
+
+    public static function getCurrentCity(){
+        if(isset($_SERVER['REMOTE_ADDR'])){
+            $intIp = self::ip2int($_SERVER['REMOTE_ADDR']);
+
+            $criteria=new CDbCriteria;
+            $criteria->addCondition('`beginIp` <= '.$intIp);
+            $criteria->addCondition('`endIp` >= '.$intIp);
+            $criteria->order = 'cityId desc';
+            $geoip = Geoip::model()->find($criteria);
+            if($geoip)
+            {
+                if($geoip->cityId){
+                    $city = City::getCityByPk($geoip->cityId);
+                }else{
+                    $criteria = new CDbCriteria();
+                    $criteria->addCondition('`countryId` = '.$geoip->countryId);
+                    $criteria->order = 'position desc';
+                    $city = City::model()->find($criteria);
+                }
+            }
+            if(isset($city) && $city){
+
+            }
+            //$city = City
+
+        }
+        if(!isset($city) || !$city){
+            $city = City::getCityByPk(4466);
+        }
+        return $city;
+    }
 }

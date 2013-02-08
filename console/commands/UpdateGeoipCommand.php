@@ -221,17 +221,106 @@ EOD;
 
     }
 
+    public function findCity($cityName,$countryId,$region,$lat,$lng){
+        $cityIds = array();
+
+        $criteria = new CDbCriteria();
+        $criteria->limit = 12;
+        $criteria->params[':localRu'] = $cityName . '%';
+        $criteria->params[':localEn'] = $cityName . '%';
+        if($countryId){
+            $criteria->addCondition('t.countryId = :countryId');
+            $criteria->params[':countryId'] = $countryId;
+        }
+        if($region){
+            $criteria->addCondition('t.stateCode = :stateCode');
+            $criteria->params[':stateCode'] = $region;
+        }
+
+
+        $criteria->addCondition('t.localRu LIKE :localRu OR t.localEn LIKE :localEn');
+        if ($cityIds)
+        {
+            $criteria->addCondition('t.id NOT IN (' . join(',', $cityIds) . ')');
+        }
+        $criteria->with = 'country';
+        $criteria->order = 'country.position desc, t.position desc';
+        $cities = City::model()->findAll($criteria);
+        if ($cities)
+        {
+            foreach ($cities as $city)
+            {
+                $items[] = array(
+                    'id' => $city->primaryKey,
+                    'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                    'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
+                );
+                $cityIds[$city->id] = $city->id;
+            }
+        }
+        $currentLimit -= count($items);
+        if ($currentLimit)
+        {
+            $criteria = new CDbCriteria();
+            $criteria->limit = $currentLimit;
+            if (UtilsHelper::countRussianCharacters($query) > 0)
+            {
+                $nameRu = $query;
+            }
+            else
+            {
+                $nameRu = UtilsHelper::cityNameToRus($query);
+            }
+            $metaphoneRu = UtilsHelper::ruMetaphone($nameRu);
+
+            if ($metaphoneRu)
+            {
+                $criteria->params[':metaphoneRu'] = $metaphoneRu;
+
+                $criteria->addCondition('t.metaphoneRu = :metaphoneRu');
+                if ($cityIds)
+                {
+                    $criteria->addCondition('t.id NOT IN (' . join(',', $cityIds) . ')');
+                }
+                if($countryId){
+                    $criteria->addCondition('t.countryId = :countryId');
+                    $criteria->params[':countryId'] = $countryId;
+                }
+                $criteria->with = 'country';
+                $criteria->order = 'country.position desc, t.position desc';
+                $cities = City::model()->findAll($criteria);
+
+                if ($cities)
+                {
+                    foreach ($cities as $city)
+                    {
+                        $items[] = array(
+                            'id' => $city->primaryKey,
+                            'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
+                            'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
+                        );
+                        $cityIds[$city->id] = $city->id;
+                    }
+                }
+                $currentLimit -= count($items);
+            }
+        }
+    }
+
     public function actionMaxmindCities(){
 
         echo "next base maxmind\n";
         $cityGeoDB = 'GeoLiteCity-Location.csv';
         $cityGeoIDs = array();
+        $countriesHave = array();
+        $countriesDont = array();
         if(file_exists($cityGeoDB))
         {
             $cityFp = fopen($cityGeoDB, "r");
             $line = fgets($cityFp);
             $line = fgets($cityFp);
             $i=0;
+
             echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
             while (!feof($cityFp)) {
                 $line = fgets($cityFp);
@@ -248,7 +337,18 @@ EOD;
                         $cityName = iconv('CP1251','UTF8',$match[4]);
                         $lat = $match[5];
                         $long = $match[6];
-                        $cityGeoIDs[$id] = array('cc'=>$country_code,'re'=>$region,'cn'=>$cityName,'lat'=>$lat,'lng'=>$long);
+                        //$cityGeoIDs[$id] = array('cc'=>$country_code,'re'=>$region,'cn'=>$cityName,'lat'=>$lat,'lng'=>$long);
+                        if(!$country_code){
+                            continue;
+                        }
+                        try{
+                            $country = Country::getCountryByCode($country_code);
+                            $countriesHave[$country_code] = true;
+                        }catch (Exception $e){
+                            $country = (object) array('id'=>false);
+                            $countriesDont[$country_code] = true;
+                        }
+
                         if(($i % 10000) == 0){
                             echo "parsed $i lines\n";
                             echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
@@ -258,5 +358,7 @@ EOD;
             }
         }
         echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+        echo "dont found cntrs:\n";
+        print_r($countriesDont);
     }
 }
