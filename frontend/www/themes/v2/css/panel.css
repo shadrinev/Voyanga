@@ -602,7 +602,7 @@
 /* board */
 .panel-index {
 	bottom: 0px;
-    height: 4px;
+    height: 64px;
     min-width: 1000px;
     position: absolute;
     width: 100%;

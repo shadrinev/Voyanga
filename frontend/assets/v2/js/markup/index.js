@@ -114,22 +114,21 @@ function smallIMGresizeIndex() {
         var _img = _this.find('img');
         _this.each(function(e) {
             var _img = $(this).find('img');
-            var _imgHeight = _img.height();
-            var _imgWidth = _img.width();
-            var _thisHeight = $(this).height();
-            var _thisWidth = $(this).width();
-
-            var _marginTop = (_imgHeight - _thisHeight) / 2;
+            var _imgHeight, _thisHeight;
+            _thisHeight = $(this).height();
+            _img.load(function() {
+                _imgHeight = _img.height();
+                var _marginTop = (_imgHeight - _thisHeight) / 2;
             if (_marginTop > 0) {
                 _img.css('margin-top', '-'+_marginTop+'px');
             }
             else {
                 _img.css('margin-top', '0px');
-                if (_imgHeight < _thisHeight) {
+                if (_imgHeight > _thisHeight) {
                     _img.css('height', _thisHeight+'px');
                 }
             }
-
+            });
         });
     }
 }
