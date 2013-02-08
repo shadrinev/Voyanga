@@ -32,6 +32,7 @@ class Voyasha
   handleAvia: =>
     throw "Implement me"
 
+  # Длина вектора {Звезды, Рейтинг, Близость центра, Дешевизна} и есть рейтинг отеля
   getRating: (x, maxPrice, maxDistance) ->
     # Веса(== максимальные значения) координат.
     
@@ -129,7 +130,3 @@ class VoyashaRich extends Voyasha
           result.price = item.price
           result.result = item
     return result.result
-
-
-  #
-  # Длина вектора {Звезды, Рейтинг, Близость центра, Дешевизна} и есть рейтинг отеля
