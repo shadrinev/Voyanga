@@ -39,7 +39,7 @@ class Event extends FrontendActiveRecord
 
     public $defaultThumbImageUrl = '/img/events/defaultSmall.jpg';
     public $defaultBigImageUrl = '/img/events/defaultBig.jpg';
-    public $imgSrc = 'http://backend.voyanga.com';
+    public $imgSrc = '';
 
     /**
      * The behaviors associated with the user model.
