@@ -64,6 +64,7 @@ class SearchController extends ApiController
             'serviceClass' => 'B',
         ));
         $businessUrl = $businessUrl . '?' . $query;
+        echo $businessUrl; die();
         $asyncExecutor->add($businessUrl);
     }
 
