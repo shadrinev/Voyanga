@@ -267,7 +267,7 @@
 			} else if (!this.isBadQuery(q)) {
 				me = this;
 				me.options.params.query = q;
-				$.get(this.serviceUrl, me.options.params, function (txt) { me.processResponse(txt); }, 'jsonp');
+				$.get(this.serviceUrl, me.options.params, function (txt) { me.processResponse(txt); }, 'json');
 			}
 		},
 
