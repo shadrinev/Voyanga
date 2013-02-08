@@ -50,7 +50,7 @@ ko.bindingHandlers.autocomplete = {
     iataCode = valueAccessor().iata();
     url = function(code) {
       var params, result;
-      result = '//api.voyanga.com/v1/helper/autocomplete/citiesReadable?';
+      result = window.apiEndPoint + '/v1/helper/autocomplete/citiesReadable?';
       params = [];
       params.push('codes[0]=' + code);
       result += params.join("&");
