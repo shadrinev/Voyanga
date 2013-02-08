@@ -106,4 +106,14 @@ function file_get_contents_curl_with_credentials($url, $username, $password)
     return $data;
 }
 
+function endsWith($haystack, $needle)
+{
+    $length = strlen($needle);
+    if ($length == 0) {
+        return true;
+    }
+
+    return (substr($haystack, -$length) === $needle);
+}
+
 
