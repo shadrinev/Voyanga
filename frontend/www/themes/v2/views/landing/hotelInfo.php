@@ -39,7 +39,7 @@
     <div class="left">
         <div class="right">
             <div class="map-hotel">
-                <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=13&amp;size=310x259&amp;maptype=roadmap&amp;markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C%7C<?php echo $hotelInfo->latitude.','.$hotelInfo->longitude;?>&amp;sensor=false">
+                <img src="//maps.googleapis.com/maps/api/staticmap?zoom=13&amp;size=310x259&amp;maptype=roadmap&amp;markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C%7C<?php echo $hotelInfo->latitude.','.$hotelInfo->longitude;?>&amp;sensor=false">
             </div>
 
         </div>
