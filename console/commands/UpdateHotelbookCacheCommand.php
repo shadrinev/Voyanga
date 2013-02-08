@@ -29,9 +29,9 @@ EOD;
     public function actionIndex($type = 'hotels', $filename = '', $countryStartId = null, $cityStartId = null)
     {
         if ($type == 'hotels') {
-            echo Yii::app()->params['HotelBook']['uri']."\n";
-            echo Yii::app()->params['HotelBook']['login']."\n";
-            echo Yii::app()->params['HotelBook']['password']."\n";
+            //echo Yii::app()->params['HotelBook']['uri']."\n";
+            //echo Yii::app()->params['HotelBook']['login']."\n";
+            //echo Yii::app()->params['HotelBook']['password']."\n";
             //die();
             Yii::import('site.common.modules.hotel.models.*');
             $HotelClient = new HotelBookClient();
