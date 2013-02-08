@@ -348,6 +348,7 @@
     padding-right: 24px;
     position: relative;
     vertical-align: middle;
+    cursor: pointer;
 }
 .how-many-man .btn {
 	width: 16px; height: 62px;
