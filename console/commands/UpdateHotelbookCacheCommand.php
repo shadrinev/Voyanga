@@ -85,7 +85,7 @@ EOD;
                     $countryStart = true;
                 }
                 $executionState->countryId = $country['id'];
-                echo "process country with id: {$country['id']}\n";
+                //echo "process country with id: {$country['id']}\n";
                 HotelBookClient::$downCountCacheFill = 1000500;
                 $hotelCities = false;
                 while($hotelCities === false){
@@ -111,9 +111,9 @@ EOD;
                         $cityStart = true;
                     }
                     $executionState->cityId = $hotelCity['id'];
-                    echo "process city with id: {$hotelCity['id']}\n";
+                    //echo "process city with id: {$hotelCity['id']}\n";
                     HotelBookClient::$downCountCacheFill = 1000500;
-                    echo "Memory usage: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+                    //echo "Memory usage: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
                     $cityHotels = false;
                     while($cityHotels === false){
                         try{
@@ -143,7 +143,7 @@ EOD;
                         while ($tryAgain) {
                             $hotelDetail = $HotelClient->hotelDetail($hotel['id']);
                             if (!$hotelDetail) {
-                                echo "Cant get hotelDetail for hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
+                                //echo "Cant get hotelDetail for hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
                                 $tryAgain--;
                                 $cachePath = Yii::getPathOfAlias('cacheStorage');
                                 $cacheSubDir = md5('HotelDetail' . $hotel['id']);
@@ -156,13 +156,13 @@ EOD;
                                 unset($cacheSubDir);
                                 unset($cacheFilePath);
                                 if(!$tryAgain){
-                                    echo "HotelError hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
+                                    //echo "HotelError hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
                                 }
 
                             } else {
                                 $tryAgain = 0;
                                 if(!$tryAgain){
-                                    echo "HotelOK hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
+                                    //echo "HotelOK hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
                                 }
                             }
                             if(!HotelBookClient::$saveCache){
@@ -181,9 +181,10 @@ EOD;
                     //echo count($cityHotels) . " hotel completed\n";
                 }
                 unset($hotelCities);
-                echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+                //echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
             }
             $executionState->endState = 'end';
+            echo "AllOK";
 
         }
 
