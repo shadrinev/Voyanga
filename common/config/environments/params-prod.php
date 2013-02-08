@@ -12,8 +12,8 @@ return array(
     'enableFlightLogging' => true,
 
     "api.endPoint" => "//api.voyanga.com/v1/",
-    'app.api.flightSearchUrl' => 'https://api.voyanga.com/v1/flight/search/BE',
-    'app.api.hotelSearchUrl' => 'https://api.voyanga.com/v1/hotel/search',
+    'app.api.flightSearchUrl' => 'http://api.voyanga.com/v1/flight/search/BE',
+    'app.api.hotelSearchUrl' => 'http://api.voyanga.com/v1/hotel/search',
 
     "baseUrl" => 'https://voyanga.com',
 
