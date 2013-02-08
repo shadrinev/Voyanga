@@ -40,7 +40,7 @@ ko.bindingHandlers.autocomplete =
     iataCode = valueAccessor().iata()
 
     url = (code) ->
-      result = 'http://api.voyanga.com/v1/helper/autocomplete/citiesReadable?'
+      result = '//api.voyanga.com/v1/helper/autocomplete/citiesReadable?'
       params = []
       params.push 'codes[0]=' + code
       result += params.join "&"
