@@ -139,4 +139,16 @@ class FlightBookingPassport extends CActiveRecord
         $this->documentTypeId = $passport->documentTypeId;
         $this->flightBookingId = $flightBookerId;        
     }
+
+    public function getType()
+    {
+        $bday = DateTime::createFromFormat('Y-m-d', $this->birthday);
+        $today = new DateTime('00:00:00'); // for testing purposes
+        $diff = $today->diff($bday);
+        if ($diff->y < 2)
+            return Passenger::TYPE_INFANT;
+        if ($diff->y < 12)
+            return Passenger::TYPE_CHILD;
+        return Passenger::TYPE_ADULT;
+    }
 }

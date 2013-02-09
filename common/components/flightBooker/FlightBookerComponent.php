@@ -112,7 +112,7 @@ class FlightBookerComponent extends CApplicationComponent
         foreach($this->flightBooker->flightBookingPassports as $passport)
         {
             $passenger = new Passenger();
-            $passenger->type = Passenger::TYPE_ADULT;
+            $passenger->type = $passport->getType();
             $passenger->passport = $passport;
             $flightBookingParams->addPassenger($passenger);
         }
