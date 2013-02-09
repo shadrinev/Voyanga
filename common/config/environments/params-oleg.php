@@ -14,6 +14,7 @@ return array(
 
     "api.endPoint" => "http://api.oleg.voyanga/v1/",
     'app.api.flightSearchUrl' => 'http://api.oleg.voyanga/v1/flight/search/BE',
+    'app.api.flightSearchNoSecure' => 'http://api.oleg.voyanga.com/v1/flight',
     'app.api.hotelSearchUrl' => 'http://api.oleg.voyanga/v1/hotel/search',
 
     "baseUrl" => 'http://frontend.oleg.voyanga',
