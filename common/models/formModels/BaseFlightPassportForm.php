@@ -74,6 +74,10 @@ class BaseFlightPassportForm extends BasePassportForm
     
     public function getBirthday()
     {
+        if ($this->birthdayDay<10)
+            $this->birthdayDay = '0'.intval($this->birthdayDay);
+        if ($this->birthdayMonth<10)
+            $this->birthdayMonth = '0'.intval($this->birthdayMonth);
         return $this->birthdayDay.'.'.$this->birthdayMonth.'.'.$this->birthdayYear;
     }
 

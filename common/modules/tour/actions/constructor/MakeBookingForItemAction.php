@@ -42,8 +42,11 @@ class MakeBookingForItemAction extends CAction
     {
         foreach ($this->passportForms as $i=>$pf)
         {
-            if (!($pf instanceof FlightAdultPassportForm))
-                return false;
+            if (!($pf instanceof FlightAdultPassportForm)
+                and !($pf instanceof FlightChildPassportForm)
+                and !($pf instanceof FlightInfantPassportForm)
+               )
+            return false;
 
         }
         return $this->bookingForm instanceof BookingForm;

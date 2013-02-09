@@ -95,18 +95,18 @@
         <td class="tdSex">
             <?php if (!$roomCounters): ?>
                 <label class="male <?php if ($hide) echo 'inactive' ?>" for="male<?php echo $i ?>">
-                    <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" id="male<?php echo $i ?>"
+                    <input type="radio" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" id="male<?php echo $i ?>"
                            value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
                         <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
                 <label class="female <?php if ($hide) echo 'inactive' ?>" for="female<?php echo $i ?>">
-                    <input type="radio" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]"
+                    <input type="radio" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]"
                            id="female<?php echo $i ?>"
                            value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"
                         <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                 </label>
             <?php else: ?>
-                <input type="hidden" name="FlightAdultPassportForm[<?php echo $i ?>][genderId]"
+                <input type="hidden" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]"
                        value="<?php echo BaseFlightPassportForm::GENDER_MALE?>">
             <?php endif ?>
         </td>
@@ -153,7 +153,7 @@
                     ); ?>
                 <?php endif ?>
             <?php else: ?>
-                <input type='hidden' name="<?php echo "FlightAdultPassportForm[$i][countryId]" ?>" value="174">
+                <input type='hidden' name="<?php echo get_class($model)."[$i][countryId]" ?>" value="174">
             <?php endif ?>
         </td>
         <td class="tdDocumentNumber">
@@ -197,13 +197,13 @@
             <td class="tdDocumentNumber"></td>
             <td class="tdDuration">
                 <input type="hidden" value="0"
-                       name="FlightAdultPassportForm[<?php echo $i;?>][srok]">
+                       name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
                 <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 0}"
-                       name="FlightAdultPassportForm[<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
+                       name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
             </td>
         </tr>
     <?php else: ?>
-        <input type="hidden" value="1" name="FlightAdultPassportForm[<?php echo $i;?>][srok]">
+        <input type="hidden" value="1" name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
     <?php endif ?>
 <?php endforeach; ?>
 <!-- NEW USER -->

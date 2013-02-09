@@ -37,7 +37,6 @@ class MakeBookingAction extends CAction
             {
                 Yii::app()->user->setState('passportForms', $this->passportForms);
                 Yii::app()->user->setState('bookingForm', $this->bookingForm);
-                //$tripElementsWorkflow = Yii::app()->order->bookAndReturnTripElementWorkflowItems();
                 // FIXME return status here
                 header("Content-type: application/json");
                 echo '{"status":"success"}';
@@ -90,6 +89,7 @@ class MakeBookingAction extends CAction
 
     private function fillOutPassports($ambigous)
     {
+        $errorCounter = 0;
         if (!$ambigous)
         {
             $adultsPassports = array();
@@ -106,7 +106,10 @@ class MakeBookingAction extends CAction
                 foreach ($adultsPassports as $p)
                 {
                     if (!$p->validate())
-                        $this->validationErrors['passports'][] = $p->errors;
+                    {
+                        $this->validationErrors['passports'][$i] = $p->errors;
+                        $errorCounter++;
+                    }
                 }
             }
             if (isset($_POST['FlightChildPassportForm']))
@@ -120,7 +123,10 @@ class MakeBookingAction extends CAction
                 foreach ($childrenPassports as $p)
                 {
                     if (!$p->validate())
-                        $this->validationErrors['passports'][] = $p->errors;
+                    {
+                        $this->validationErrors['passports'][$i] = $p->errors;
+                        $errorCounter++;
+                    }
                 }
             }
             if (isset($_POST['FlightInfantPassportForm']))
@@ -133,11 +139,14 @@ class MakeBookingAction extends CAction
                 }
                 foreach ($infantsPassports as $p)
                 {
-                    if ($p->validate())
-                        $this->validationErrors['passports'][] = $p->errors;
+                    if (!$p->validate())
+                    {
+                        $this->validationErrors['passports'][$i] = $p->errors;
+                        $errorCounter++;
+                    }
                 }
             }
-            if (isset($this->validationErrors['passports'][0]))
+            if ($errorCounter>0)
                 return false;
 
             foreach ($this->tripItems as $item)
