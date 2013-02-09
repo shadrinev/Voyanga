@@ -530,8 +530,6 @@ class GDSNemoAgency extends CComponent
             $iNum = 1;
             foreach ($oFlightBookingParams->passengers as $passenger)
             {
-                //VarDumper::dump($passenger);die();
-                //$oTraveller = array();
                 $oTraveller['Type'] = Yii::app()->params['aPassegerTypes'][$passenger->type];
                 $oTraveller['Num'] = $iNum;
                 $oTraveller['IsContact'] = $iNum == 1 ? true : false;
