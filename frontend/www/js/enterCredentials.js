@@ -241,6 +241,9 @@ function checkStatuses(statuses, ids) {
         return;
     $.get('/buy/done', {ids: ids.join(',')})
         .done(function () {
+	    if (errors.length > 0)
+		return;
+
             $.get('/buy/startPayment', function (data) {
                 if (data.error) {
                     new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
