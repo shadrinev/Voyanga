@@ -121,7 +121,7 @@ class CityManager extends CApplicationComponent
     static public function getCitiesWithHotels($query)
     {
         $currentLimit = appParams('autocompleteLimit');
-        $items = Yii::app()->cache->get('autocompleteCityForHotel' . $query);
+        $items = Yii::app()->cache->get('autocompleteCityForHotel1' . $query);
         if (!$items)
         {
             $items = array();
@@ -133,7 +133,7 @@ class CityManager extends CApplicationComponent
                 $criteria->limit = $currentLimit;
                 $criteria->params[':code'] = $query;
                 $criteria->addCondition('t.code = :code');
-                $criteria->addCondition('t.hotelbookId > 0');
+                $criteria->addCondition('t.hotelbookId is not null');
                 $criteria->order = 'country.position desc, t.position desc';
                 $criteria->with = 'country';
                 /** @var  City[] $cities  */
@@ -159,7 +159,7 @@ class CityManager extends CApplicationComponent
             $criteria->params[':localEn'] = $query . '%';
 
             $criteria->addCondition('t.localRu LIKE :localRu OR t.localEn LIKE :localEn');
-            $criteria->addCondition('t.hotelbookId > 0');
+            $criteria->addCondition('t.hotelbookId is not null');
             if ($cityIds)
             {
                 $criteria->addCondition('t.id NOT IN (' . join(',', $cityIds) . ')');
@@ -201,7 +201,7 @@ class CityManager extends CApplicationComponent
                     $criteria->params[':metaphoneRu'] = $metaphoneRu;
 
                     $criteria->addCondition('t.metaphoneRu = :metaphoneRu');
-                    $criteria->addCondition('t.hotelbookId > 0');
+                    $criteria->addCondition('t.hotelbookId is not null');
                     if ($cityIds)
                     {
                         $criteria->addCondition('t.id NOT IN (' . join(',', $cityIds) . ')');
@@ -225,7 +225,7 @@ class CityManager extends CApplicationComponent
                     $currentLimit -= count($items);
                 }
             }
-            Yii::app()->cache->set('autocompleteCityForHotel' . $query, $items, appParams('autocompleteCacheTime'));
+            Yii::app()->cache->set('autocompleteCityForHotel1' . $query, $items, appParams('autocompleteCacheTime'));
         }
         return $items;
     }
