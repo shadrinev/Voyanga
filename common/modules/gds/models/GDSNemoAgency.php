@@ -296,6 +296,7 @@ class GDSNemoAgency extends CComponent
                     catch (Exception $e)
                     {
                         Yii::log('Error while parsing gds nemo results: '.$e->getMessage());
+                        throw $e;
                         $needSave = false;
                     }
                 }
@@ -795,6 +796,8 @@ class GDSNemoAgency extends CComponent
                     }
                     $aParts[$oSegment->SegNum] = $oPart;
                 }catch (CException $e){
+                    Yii::log('Error while parsing gds nemo results: '.$e->getMessage());
+                    throw $e;
                 }
             }
             if($aParts){
