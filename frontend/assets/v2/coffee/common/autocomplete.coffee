@@ -1,6 +1,6 @@
 ko.bindingHandlers.autocomplete =
   init: (element, valueAccessor) ->
-    showCode = (if valueAccessor().showCode is `undefined` then valueAccessor().showCode else true)
+    showCode = (if valueAccessor().showCode is `undefined` then true else valueAccessor().showCode)
     setTimeout ()=>
       $(element).bind "focus", ->
         $(element).change()
@@ -56,6 +56,6 @@ ko.bindingHandlers.autocomplete =
     if (iataCode.length>0)
       $.ajax
         url: url iataCode
-        dataType: 'jsonp'
+        dataType: 'json'
         success: handleResults
 

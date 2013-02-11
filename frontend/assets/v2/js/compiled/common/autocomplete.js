@@ -5,7 +5,7 @@ ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
     var showCode,
       _this = this;
-    showCode = (valueAccessor().showCode === undefined ? valueAccessor().showCode : true);
+    showCode = (valueAccessor().showCode === undefined ? true : valueAccessor().showCode);
     setTimeout(function() {
       $(element).bind("focus", function() {
         return $(element).change();
@@ -66,7 +66,7 @@ ko.bindingHandlers.autocomplete = {
     if (iataCode.length > 0) {
       return $.ajax({
         url: url(iataCode),
-        dataType: 'jsonp',
+        dataType: 'json',
         success: handleResults
       });
     }
