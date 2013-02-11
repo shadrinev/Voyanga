@@ -127,11 +127,11 @@ class FlightBookerComponent extends CApplicationComponent
             $this->flightBooker->nemoBookId = $flightBookingResponse->nemoBookId;
             $this->flightBooker->pnr = $flightBookingResponse->pnr;
             $this->flightBooker->timeout = date('y-m-d H:i:s',$flightBookingResponse->expiration);
-            $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'flightbooking','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
-            if($res)
-            {
-                $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
-            }
+//            $res = Yii::app()->cron->add(strtotime($this->flightBooker->timeout), 'flightbooking','ChangeState',array('flightBookerId'=>$this->flightBooker->id,'newState'=>'bookingTimeLimitError'));
+//            if($res)
+//            {
+//                $this->flightBooker->saveTaskInfo('paymentTimeLimit',$res);
+//            }
             $this->status('waitingForPayment');
         }
         else
