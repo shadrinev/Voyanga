@@ -345,7 +345,7 @@
     float: none;
     height: 62px;
     margin: auto;
-    padding-right: 24px;
+    padding-right: 16px;
     position: relative;
     vertical-align: middle;
     cursor: pointer;
@@ -366,6 +366,11 @@
 	padding-left: 8px;
 	padding-right: 0px;
 	position: relative;
+}
+.how-many-man .wrapDivContent {
+    height: 100%;
+    padding-right: 8px;
+    width: 100%;
 }
 .how-many-man .content + .content, .how-many-man .content + .content  + .content, .how-many-man .content + .content  + .content  {
 	padding-left: 13px;

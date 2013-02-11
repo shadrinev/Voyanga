@@ -172,9 +172,9 @@ class PaymentsComponent extends CApplicationComponent
         {
             $bill = $this->getBillForBooker($booker);
             $this->notifyNemoRaw($booker, $bill);
-            $taskId = $booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId;
+            //$taskId = $booker->getCurrent()->getTaskInfo('paymentTimeLimit')->taskId;
             //echo "Removing booking timelimit task #" . $taskId;
-            $result = Yii::app()->cron->delete($taskId);
+            //$result = Yii::app()->cron->delete($taskId);
             //echo " " . $result . "\n";
         }
     }

@@ -113,6 +113,9 @@
 .my-trip-list .items a .date.orange-one, .my-trip-list .items a .date.blue-one {
     right: 44px;
 }
+.my-trip-list .items a .date.orange-one, .my-trip-list .items a.active .date.blue-one {
+    right: 54px;
+}
 .my-trip-list .items a .date.blue-two, .my-trip-list .items a .date.orange-two {
     right: 10px !important;
 }

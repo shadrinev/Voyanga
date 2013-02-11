@@ -41,6 +41,8 @@ class PeopleSelector
       coords = $('.how-many-man').offset()
       #el.css 'top', coords.top +  $('.how-many-man').height()
       el.css 'left', coords.left
+#      el[0].style.webkitTransform = 'scale(1)';
+#      el.parent()[0].style.webkitTransform = 'scale(1)';
 
     else
       @close()

@@ -361,6 +361,7 @@ class EventTourResultSet
             $('.sub-head.event').css('margin-top','0px')
           else
             $('.sub-head.event').stop(true);
+            $('.sub-head.event').css('height', (@activePanel().heightPanelSet())+'px');
             $('.sub-head.event').css('margin-top', (-@activePanel().heightPanelSet() + 4)+'px')
             console.log('need hidePanel',$('.sub-head.event'),@activePanel().heightPanelSet(),$('.sub-head.event').css('margin-top'))
 
@@ -384,6 +385,7 @@ class EventTourResultSet
     $('.sub-head.event').animate({'margin-top': '0px'})
   hidePanel: =>
     console.log('hidePanel',@activePanel().heightPanelSet())
+    $('.sub-head.event').css('height', (@activePanel().heightPanelSet())+'px');
     $('.sub-head.event').animate({'margin-top': (-@activePanel().heightPanelSet() + 4)+'px'})
 
 

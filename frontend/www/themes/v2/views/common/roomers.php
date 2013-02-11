@@ -1,14 +1,17 @@
 <script type="text/html" id="roomers-template">
-  <div class="how-many-man hotel">
-    <!-- ko foreach: rawRooms -->
-    <div class="content" data-bind="click: $parent.show">
-      <span class="num" data-bind="text: $index() + 1"></span>
-      <div class="man" data-bind="repeat: adults"></div>
-      <div class="child" data-bind="repeat: children"></div>
+  <div class="how-many-man hotel"  data-bind="click: show">
+    <div class="wrapDivContent">
+        <!-- ko foreach: rawRooms -->
+        <div class="content">
+          <span class="num" data-bind="text: $index() + 1"></span>
+          <div class="man" data-bind="repeat: adults"></div>
+          <div class="child" data-bind="repeat: children"></div>
+        </div>
+        <!-- /ko -->
+        <div class="btn"></div>
     </div>
-    <!-- /ko -->
-    <div class="btn" data-bind="click: show"></div>
-    <div class="popup">
+
+    <div class="popup"  data-bind="click: preventShow">
       <!-- ko foreach: {data: roomsView, afterRender: afterRender } -->
       <div class="float">
         <!-- ko template: {name: 'room-template', foreach: $data} -->
@@ -16,6 +19,7 @@
       </div>
       <!-- /ko -->
     </div>
+
   </div>
 </script>
 <script type="text/html" id="room-template">

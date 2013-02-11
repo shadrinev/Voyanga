@@ -29,6 +29,7 @@ class SearchPanel
       else
         $('.sub-head').animate {'margin-top' : '-'+(heightSubHead-4)+'px'}, speed
 
+
   toggleCalendar: (minimizedCalendar,initialize = false) =>
     speed =  500
     heightSubHead = $('.sub-head').height()
