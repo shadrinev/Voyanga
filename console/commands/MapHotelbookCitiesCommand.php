@@ -74,23 +74,13 @@ EOD;
                 $j = 0;
                 foreach ($cities as $city)
                 {
-                    echo ($i)." of ".sizeof($countries).", ".(++$j)." of ".sizeof($cities)." {$country['nameRu']}/{$city['nameRu']}\n";
+                    if ($i % 1000 == 0)
+                        echo ($i)." of ".sizeof($countries).", ".(++$j)." of ".sizeof($cities)." {$country['nameRu']}/{$city['nameRu']}\n";
                     $ourCity = City::model()->findAllByAttributes(array('localRu'=>$city['nameRu'], 'countryId'=>$ourId));
                     if (sizeof($ourCity)==0)
                         $missingCities[] = $country['nameRu'] . ' / ' . $city['nameRu'];
-                    elseif (sizeof($ourId)>1)
-                        $ambigousCities = $country['nameRu'] . ' / ' . $city['nameRu'];
-                    else
-                    {
-                        $oldHbid = intval($ourCity[0]->hotelbookId);
-                        $newHbid = $city['id'];
-                        if ($oldHbid != $newHbid)
-                        {
-                            $result[] = $country['nameRu'] . ' / ' .$ourCity[0]->localRu.' - old hotelbookid='.$oldHbid.' and new hotelbookid='.$newHbid;
-                            $ourCity[0]->hotelbookId = $newHbid;
-                            $ourCity[0]->update(array('hotelbookId'));
-                        }
-                    }
+                    elseif (sizeof($ourCity)>1)
+                        $ambigousCities[] = $country['nameRu'] . ' / ' . $city['nameRu'];
                 }
             }
         }
@@ -100,9 +90,9 @@ EOD;
         $ambigousCitiesFile = $out . '/' . 'ambigousCities';
         $resultFile = $out . '/' . 'result';
 
-        file_put_contents($missingCountryFile, implode("\n", $missingCountry));
-        file_put_contents($missingCitiesFile, implode("\n", $missingCities));
+        //file_put_contents($missingCountryFile, implode("\n", $missingCountry));
+        //file_put_contents($missingCitiesFile, implode("\n", $missingCities));
         file_put_contents($ambigousCitiesFile, implode("\n", $ambigousCities));
-        file_put_contents($resultFile, implode("\n", $result));
+        //file_put_contents($resultFile, implode("\n", $result));
     }
 }
