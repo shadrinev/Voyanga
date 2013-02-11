@@ -37,7 +37,7 @@
                 <div class="people" data-bind="text: $data.totalPeople">2 человека</div>
                 <div class="price"><span data-bind="text:$data.price">12 500</span><span class="rur">o</span></div>
             </div>
-            <div class="moreDetails"><a href="#" data-bind="click: $data.showDetails">Подробнее</a></div>
+            <div class="moreDetails"><a href="#" data-bind="click: $data.showDetailsOverview">Подробнее</a></div>
         </div>
     </div>
 </script>

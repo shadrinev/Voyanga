@@ -65,7 +65,7 @@
                 <!-- <div class="lastPrice">13 000 <span class="rur">o</span></div> <span class="icoTours"></span> -->
             </div>
         </div>
-        <div class="moreDetails"><a href="#" data-bind="click: $data[0].showDetails">Подробнее</a></div>
+        <div class="moreDetails"><a href="#" data-bind="click: $data[0].showDetailsOverview">Подробнее</a></div>
     </div>
     </div>
 </script>
