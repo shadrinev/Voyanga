@@ -131,6 +131,8 @@ class EventSet
     @activeMaps = 0
 
   mapsInit: =>
+    if !google
+      return
     value = {lat:52,lng:10}
     @mapsInited = true
     element = $(".mapsBigAll")[0]
