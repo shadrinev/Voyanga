@@ -64,8 +64,7 @@ PeopleSelector = (function() {
       $('.how-many-man .content').addClass('active');
       el.addClass('active');
       coords = $('.how-many-man').offset();
-      el.css('left', coords.left);
-      return el.style.webkitTransform = 'scale(1)';
+      return el.css('left', coords.left);
     } else {
       return this.close();
     }
