@@ -125,7 +125,6 @@ class PeopleSelector
       @inside3 = false
 
   close: ->
-    console.error "CLOWZ"
     $(document.body).unbind 'mousedown'
     $('.how-many-man .btn').removeClass('active')
     $('.how-many-man .content').removeClass('active')

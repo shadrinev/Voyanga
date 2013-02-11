@@ -148,7 +148,6 @@ PeopleSelector = (function() {
   };
 
   PeopleSelector.prototype.close = function() {
-    console.error("CLOWZ");
     $(document.body).unbind('mousedown');
     $('.how-many-man .btn').removeClass('active');
     $('.how-many-man .content').removeClass('active');
