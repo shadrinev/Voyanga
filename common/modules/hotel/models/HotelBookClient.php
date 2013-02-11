@@ -374,7 +374,8 @@ class HotelBookClient
             $id = intval($city['id']);
             $name = trim((string)$city);
             $country_id = intval($city['country']);
-            $return[$id] = array('id' => $id, 'nameEn' => $name, 'countryId' => $country_id);
+            $name_ru = trim((string)($city['name_ru']));
+            $return[$id] = array('id' => $id, 'nameEn' => $name, 'countryId' => $country_id, 'nameRu' => $name_ru);
         }
 
         return $return;
