@@ -15,6 +15,12 @@
         /*width: 111%;*/
     /*}*/
 /*}*/
+input:-moz-placeholder {
+    color: #CCCCCC !important;
+}
+input:focus:-moz-placeholder {
+    color: #CCCCCC !important;
+}
 .btn {
     cursor: pointer;
 }
@@ -1919,7 +1925,7 @@ input.hotel-input {
     color: #1D222B;
     margin: 0 auto;
     max-width: 950px;
-    padding-bottom: 15px;
+    padding-bottom: 12px;
 }
 .paybuyContent h1 {
     font-size: 24px;
@@ -2379,10 +2385,12 @@ input.hotel-input {
 	color: #1d222b;
 }
 .paybuyContent .theSum .left {
-	float: left;
+    float: left;
+    line-height: 26px;
 }
 .paybuyContent .theSum .right {
-	float: right;
+    float: right;
+    line-height: 23px;
 }
 .paybuyContent .theSum .right .price {
 	width: 155px;
@@ -2436,6 +2444,9 @@ input.hotel-input {
 	padding-top: 5px;
 	padding-bottom: 3px;
 }
+.trDurationPadding td {
+    padding-top: 1px;
+}
 .infoPassengers thead td {
     padding-top: 0;
 }
@@ -2448,7 +2459,7 @@ input.hotel-input {
     border-bottom: 1px dashed;
     cursor: pointer;
 }
-.infoPassengers input[type='text'], .dopInfoPassengers input[type='text'] {
+.infoPassengers input[type='text'], .dopInfoPassengers input[type='text'], .dopInfoPassengers input[type='email'] {
 	background: url("../images/bg-input.png") no-repeat 0px 0px transparent;
 	border: none;
 	height: 33px;
@@ -2473,7 +2484,7 @@ input.hotel-input {
 .infoPassengers input[type='text']:focus {
 	border-color: rgba(82, 168, 236, 0.8);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.086) inset, 0 0 15px rgba(82, 168, 236, 0.9);
-    color: #16181A !important;
+    color: #16181A;
     outline: 0 none;
 }
 .infoPassengers .tdName input[type='text'].error {
@@ -2670,7 +2681,7 @@ input.hotel-input {
 .dopInfoPassengers .tdEmail {
 	width: 354px;
 }
-.dopInfoPassengers .tdEmail input[type='text'] {
+.dopInfoPassengers .tdEmail input[type='email'] {
 	width: 334px;
 	padding-left: 5px;
 	padding-right: 5px;
