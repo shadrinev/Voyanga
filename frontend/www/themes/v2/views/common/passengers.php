@@ -1,6 +1,6 @@
 <script type="text/html" id="passengers-template">
-    <div class="how-many-man" data-bind="click: show">
-        <div class="wrapDivContent">
+    <div class="how-many-man">
+        <div class="wrapDivContent"  data-bind="click: show">
             <div class="content">
                 <!-- ko if: overall()>5 -->
                 <!-- ko if: adults()>0 -->
@@ -19,7 +19,7 @@
             </div>
             <div class="btn"></div>
         </div>
-    <div class="popup" data-bind="click: preventShow">
+    <div class="popup">
         <div class="adults">
             <div class="inputDIV">
                 <input type="text" name="adult" data-bind="css: {active: adults() > 0}, value: adults">
