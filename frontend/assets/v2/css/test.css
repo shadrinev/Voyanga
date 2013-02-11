@@ -6,7 +6,7 @@ h1{color:#1d222b;font-size:22px;text-shadow:0px 1px 0px #acb0b4;margin-bottom:12
 h3{font-size:18px;color:#1d222b;margin-bottom:10px;}
 h4{color:#1d222b;font-size:15px;margin-bottom:6px;text-shadow:0px 1px 0px #ffffff;}
 .main-block h1{text-shadow:0px 1px 0px #ffffff;margin-bottom:20px;letter-spacing:-0.05em;line-height:26px;margin-top:-1px;}.main-block h1.ourTripH1{float:left;letter-spacing:0em;}
-.popupPeople{height:auto;border:none;background:none;width:406px;bottom:auto;left:0px;display:none;z-index:997;}.popupPeople.active{display:block;}
+.popupPeople{height:auto;border:none;background:none;width:406px;bottom:auto;position:absolute;left:0px;display:none;z-index:997;}.popupPeople.active{display:block;}
 .popupPeople:hover .addOtherRoom{color:#23262c !important;}
 .popupPeople.avia{background:url("/themes/v2/images/bg-how-much.png") repeat-x scroll left bottom #f7f9fb;border-bottom:1px solid #76777A;border-left:1px solid #B7B8BC;border-right:1px solid #B7B8BC;width:194px;height:85px;}
 .popupPeople .number-hotel .addOtherRoom:hover{color:#23262c !important;}

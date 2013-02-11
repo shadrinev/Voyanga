@@ -516,6 +516,7 @@ EventTourResultSet = (function() {
           return $('.sub-head.event').css('margin-top', '0px');
         } else {
           $('.sub-head.event').stop(true);
+          $('.sub-head.event').css('height', (_this.activePanel().heightPanelSet()) + 'px');
           $('.sub-head.event').css('margin-top', (-_this.activePanel().heightPanelSet() + 4) + 'px');
           return console.log('need hidePanel', $('.sub-head.event'), _this.activePanel().heightPanelSet(), $('.sub-head.event').css('margin-top'));
         }
@@ -549,6 +550,7 @@ EventTourResultSet = (function() {
 
   EventTourResultSet.prototype.hidePanel = function() {
     console.log('hidePanel', this.activePanel().heightPanelSet());
+    $('.sub-head.event').css('height', (this.activePanel().heightPanelSet()) + 'px');
     return $('.sub-head.event').animate({
       'margin-top': (-this.activePanel().heightPanelSet() + 4) + 'px'
     });

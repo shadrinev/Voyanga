@@ -100,6 +100,7 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
                     </div>
                 </div>
                 <div class="textBlock"><?php echo $event->description;?></div>
+                <div class="clear"></div>
             </div>
             <!-- end eventsContent -->
         </div>
@@ -111,12 +112,12 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 
         <!-- ko if: itemsToBuy.correctTour() -->
         <!-- PANEL -->
-        <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !itemsToBuy.activePanel().calendarHidden()}">
+        <div class="sub-head event"  data-bind="css: {calSelectedPanelActive: !itemsToBuy.activePanel().calendarHidden()}">
 
-            <div class="board"  style="position: static;">
-                <div class="constructor" style="position: static;">
+            <div class="board" >
+                <div class="constructor" >
                     <!-- BOARD CONTENT -->
-                    <div class="board-content" data-bind="with: itemsToBuy.activePanel()" style="position: static;height: auto;">
+                    <div class="board-content" data-bind="with: itemsToBuy.activePanel()" >
                         <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender, beforeRemove: $data.beforeRemove} -->
                             <!-- ko if: $index()!=0 -->
                             <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
