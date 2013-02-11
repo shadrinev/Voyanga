@@ -98,6 +98,8 @@ class Geoip extends CActiveRecord
 
     public static function ip2int($ip){
         $a=explode(".",$ip);
+        if (count($a)<4)
+            return 0;
         return $a[0]*256*256*256+$a[1]*256*256+$a[2]*256+$a[3];
     }
 
