@@ -248,9 +248,6 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
             <div class="clear"></div>
             <!-- BTN MINIMIZE -->
             <a href="#" class="btn-minimizePanel" data-bind="click: itemsToBuy.togglePanel,html: '<span></span>'+itemsToBuy.showPanelText()"><span></span></a>
-            <div class="minimize-rcomended">
-                <a href="#" class="btn-minimizeRecomended"> вернуть рекомендации</a>
-            </div>
         </div>
         <!-- END PANEL -->
         <!-- CALENDAR -->
