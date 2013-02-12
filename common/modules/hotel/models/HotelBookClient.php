@@ -724,8 +724,14 @@ class HotelBookClient
                 UtilsHelper::soapObjectsArray($hotelsObject->Hotels->Hotel);
                 $startTime1 = microtime(true);
                 $cnt = 0;
+                $i = 0;
+                $totalHotels = sizeof($hotelsObject->Hotels->Hotel);
+                $miss = $totalHotels > 10000;
                 foreach ($hotelsObject->Hotels->Hotel as $hotelItem)
                 {
+                    $i++;
+                    if ($miss and ($i%2 == 0))
+                        continue;
                     $startTime2 = microtime(true);
                     $hotel = $this->getHotelFromSXE($hotelItem);
                     $hotel->searchId = $searchId;

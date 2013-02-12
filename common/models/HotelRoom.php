@@ -232,11 +232,8 @@ class HotelRoom extends CApplicationComponent
     public static function stripWords(&$str,$words){
         //$replaced = false;
         $startLen = mb_strlen($str);
-
         $str = str_replace($words,'',$str);
-
         $endLen = mb_strlen($str);
-
         return ($endLen < $startLen);
     }
 
@@ -251,7 +248,7 @@ class HotelRoom extends CApplicationComponent
         if(is_array($words))
         {
             foreach($words as $word){
-                if(mb_strpos($str,$word) !== false){
+                if(strpos($str,$word) !== false){
                     $find = true;
                     break;
                 }
@@ -259,7 +256,7 @@ class HotelRoom extends CApplicationComponent
         }
         elseif(is_string($words))
         {
-            if(mb_strpos($str,$words) !== false){
+            if(strpos($str,$words) !== false){
                 $find = true;
             }
         }
@@ -268,36 +265,10 @@ class HotelRoom extends CApplicationComponent
     }
 
     public function parseRoomName($roomName){
-        /*
-         * $roomInfo = array(
-            'sizeId'=>null,
-            'typeId'=>null,
-            'typeName'=>null,
-            'view'=>null,
-            'breakfast'=>null,
-            'refundable'=>null,
-            'roomNameCanonical'=>null,
-            'offer'=>null,
-            'smoke'=>null
-        );
-         */
         $roomInfo = self::parseRoomNameStatic($roomName);
         if($this->specialOffer){
             $roomInfo['offer'] = $this->specialOffer;
         }
-        /*if($this->viewName){
-            $roomInfo['view'] = $this->viewName;
-        }
-        if($this->mealBreakfastName){
-            $roomInfo['breakfast'] = true;
-        }
-
-        if($this->sizeId){
-            $roomInfo['sizeId'] = $this->sizeId;
-        }
-        if($this->typeId){
-            $roomInfo['typeId'] = $this->typeId;
-        }*/
         return $roomInfo;
     }
 
