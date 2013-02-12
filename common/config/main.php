@@ -50,6 +50,7 @@ return array(
         ),
 
         'pCache' => array(
+            'autoCreateCacheTable' => false,
             'class' => 'CDbCache',
             'keyPrefix' => 'voyanga-',
             'hashKey' => false,

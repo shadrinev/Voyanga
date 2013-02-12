@@ -13,6 +13,8 @@
  * @property integer $raiting
  * @property integer $minPrice
  */
+
+//todo: ЗДЕСЬ НАДО ПОЗНАТЬ ДАО (жрёт память как не в себя)
 class HotelDb extends CActiveRecord
 {
 

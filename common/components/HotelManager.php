@@ -77,6 +77,7 @@ class HotelManager
         $results['hotels'] = $newResults;
     }
 
+    //todo: ЭТО НАДО ОПТИМИЗИРОВАТЬ
     static function prepare($additional)
     {
         if (is_object($additional) && $additional instanceof HotelInfo)
