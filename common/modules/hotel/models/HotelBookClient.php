@@ -719,6 +719,7 @@ class HotelBookClient
             }
             $response->searchId = $searchId;
             $response->timestamp = time();
+            gc_collect_cycles();
             if (isset($hotelsObject->Hotels->Hotel))
             {
                 UtilsHelper::soapObjectsArray($hotelsObject->Hotels->Hotel);
@@ -735,9 +736,9 @@ class HotelBookClient
                     $response->hotels[] = $hotel;
                     $endTime2 = microtime(true);
                     $cnt++;
-                    gc_collect_cycles();
                 }
             }
+            gc_collect_cycles();
             if (isset($hotelsObject->Errors->Error))
             {
                 UtilsHelper::soapObjectsArray($hotelsObject->Errors->Error);
