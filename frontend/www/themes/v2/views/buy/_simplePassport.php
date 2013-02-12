@@ -87,10 +87,10 @@
     </script>
     <tr>
         <td class="tdName">
-            <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'Иван')); ?>
+            <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
         </td>
         <td class="tdLastname">
-            <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'Петров')); ?>
+            <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
         </td>
         <td class="tdSex">
             <?php if (!$roomCounters): ?>

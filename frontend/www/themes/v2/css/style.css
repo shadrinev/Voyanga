@@ -2234,6 +2234,9 @@ input.hotel-input {
     line-height: 21px;
     margin-top: 3px;
 }
+.allTicketsDIV .aviaTickets .class {
+    margin-top: 0px;
+}
 .allTicketsDIV .aviaTickets .voyage .number, .allTicketsDIV .aviaTickets .class .classMine {
     color: #1D222B;
 }
@@ -2688,7 +2691,7 @@ input.hotel-input {
 	background-position: 0px -66px;
 	text-transform:none;
 }
-.dopInfoPassengers .tdEmail input[type='text'][disabled="disabled"] {
+.dopInfoPassengers .tdEmail input[type='text'][disabled="disabled"], .dopInfoPassengers .tdEmail input[type='email'][disabled="disabled"] {
     background-position: 0px -132px;
 }
 .dopInfoPassengers .tdEmail input[type='text'].error {
@@ -3789,7 +3792,7 @@ a.whereData span {
 }
 .iframeDiv {
     overflow: hidden;
-    width: 760px;
+    width: 748px;
     height: 700px;
     margin: 0 auto;
 }
