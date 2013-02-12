@@ -1,8 +1,10 @@
 class SpRoom
   constructor: (@parent) ->
+    console.log('SpRoom Constructor')
     @adults = ko.observable(1).extend({integerOnly: {min: 1, max:4}})
-    @children = ko.observable(0).extend({integerOnly: {min: 0, max:4}})
+    @children = ko.observable(0).extend({integerOnly: {min: 0, max:1}})
     @ages = ko.observableArray()
+    @infants = ko.observable(0).extend({integerOnly: {min:0, max:2}})
 
     @adults.subscribe (newValue)=>
       if newValue + @children() > 4
@@ -22,25 +24,30 @@ class SpRoom
         return
       if @ages().length < newValue
         for i in [0..(newValue-@ages().length-1)]
-          @ages.push {age: ko.observable(12).extend {integerOnly: {min: 12, max:17}}}
+          @ages.push {age: ko.observable(12).extend {integerOnly: {min: 2, max:12}}}
       else if @ages().length > newValue
         @ages.splice(newValue)
       ko.processAllDeferredBindingUpdates()
 
   fromList: (item) ->
+    console.log('SpRoom FromList',item)
     parts = item.split(':')
+    console.log('parts:',parts)
     @adults parts[0]
     @children parts[1]
+    @infants parts[2]
     # FIXME: FIXME FIXME
-#    for i in [0..@children]
-#      @ages.push {age: ko.observable(parts[2+i]).extend {integerOnly: {min: 12, max:17}}}
+    if @children() > 0
+      for i in [0..(@children()-1)]
+        @ages.push {age: ko.observable(parts[3+i]).extend {integerOnly: {min: 2, max:12}}}
+    console.log('ages:',@ages())
 
   fromObject: (item) ->
     @adults +item.adultCount
     @children +item.childCount
 
   getHash: =>
-    parts = [@adults(), @children()]
+    parts = [@adults(), @children(), @infants()]
 
     for age in @ages()
       parts.push age.age()
@@ -48,7 +55,14 @@ class SpRoom
 
   getUrl: (i)=>
     # FIXME FIMXE FIMXE
-    return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&rooms[#{i}][chdAge]=0&rooms[#{i}][cots]=0"
+    agesText = ''
+    console.log('age p',@ages(), @)
+    for ageObj in @ages()
+      console.log('age',ageObj,ageObj.age())
+      agesText = "rooms[#{i}][chdAge]=" + ageObj.age()
+    if !agesText
+      agesText = "rooms[#{i}][chdAge]=0"
+    return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&" + agesText + "&rooms[#{i}][cots]=" + @infants()
 
 class HotelsSearchParams
   constructor: ->

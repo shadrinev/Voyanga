@@ -274,6 +274,7 @@ Roomers = (function() {
     this.adults = this.room.adults;
     this.children = this.room.children;
     this.ages = this.room.ages;
+    this.infants = this.room.infants;
   }
 
   Roomers.prototype.plusOne = function(context, event) {

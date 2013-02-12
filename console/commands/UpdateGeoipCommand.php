@@ -124,101 +124,6 @@ EOD;
             echo "file $cityGeoDB not found";
         }
 
-
-
-
-
-
-        return true;
-        if ($type == 'hotels') {
-            echo Yii::app()->params['HotelBook']['uri']."\n";
-            echo Yii::app()->params['HotelBook']['login']."\n";
-            echo Yii::app()->params['HotelBook']['password']."\n";
-            //die();
-            Yii::import('site.common.modules.hotel.models.*');
-            $HotelClient = new HotelBookClient();
-            $HotelClient->synchronize(true);
-            //$HotelClient
-            HotelBookClient::$updateProcess = true;
-            $countries = $HotelClient->getCountries();
-            $countryStart = false;
-            $cityStart = false;
-
-
-            foreach ($countries as $country) {
-                if ($countryStartId && !$countryStart) {
-                    if ($countryStartId == $country['id']) {
-                        $countryStart = true;
-                    } else {
-                        continue;
-                    }
-                } else {
-                    $countryStart = true;
-                }
-                echo "process country with id: {$country['id']}\n";
-                HotelBookClient::$downCountCacheFill = 1000500;
-                $hotelCities = $HotelClient->getCities($country['id']);
-                foreach ($hotelCities as $hotelCity) {
-                    if ($cityStartId && !$cityStart) {
-                        if ($cityStartId == $hotelCity['id']) {
-                            $cityStart = true;
-                        } else {
-                            continue;
-                        }
-                    } else {
-                        $cityStart = true;
-                    }
-                    echo "process city with id: {$hotelCity['id']}\n";
-                    HotelBookClient::$downCountCacheFill = 1000500;
-                    echo "Memory usage: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
-                    $cityHotels = $HotelClient->getHotels($hotelCity['id']);
-                    foreach ($cityHotels as $hotel) {
-                        $tryAgain = 3;
-                        while ($tryAgain) {
-                            $hotelDetail = $HotelClient->hotelDetail($hotel['id']);
-                            if (!$hotelDetail) {
-                                echo "Cant get hotelDetail for hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
-                                $tryAgain--;
-                                $cachePath = Yii::getPathOfAlias('cacheStorage');
-                                $cacheSubDir = md5('HotelDetail' . $hotel['id']);
-                                $cacheSubDir = substr($cacheSubDir,-3);
-                                $cacheFilePath = $cachePath . '/' . $cacheSubDir .'/HotelDetail' . $hotel['id'] . '.xml';
-                                if (file_exists($cacheFilePath)) {
-                                    unlink($cacheFilePath);
-                                }
-                                unset($cachePath);
-                                unset($cacheSubDir);
-                                unset($cacheFilePath);
-                                if(!$tryAgain){
-                                    echo "HotelError hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
-                                }
-
-                            } else {
-                                $tryAgain = 0;
-                                if(!$tryAgain){
-                                    echo "HotelOK hotelId:{$hotel['id']} cityId:{$hotelCity['id']}\n";
-                                }
-                            }
-                            if(!HotelBookClient::$saveCache){
-                                $cachePath = Yii::getPathOfAlias('cacheStorage');
-                                //echo 'input str: '.bin2hex('HotelDetail' . $hotel['id']).' ('.'HotelDetail' . $hotel['id'] .')';
-                                $cacheSubDir = md5('HotelDetail' . $hotel['id']);
-                                $cacheSubDir = substr($cacheSubDir,-3);
-                                $cacheFilePath = $cachePath . '/' . $cacheSubDir .'/HotelDetail' . $hotel['id'] . '.xml';
-                                echo "file don't old:".date('Y-m-d H:i:s',(filectime($cacheFilePath) + 3600*24*14)).(HotelBookClient::$updateProcess ? ' true' : ' false')." {$cacheFilePath}\n";
-                            }
-                            usleep(200000);
-                        }
-                    }
-                    unset($cityHotels);
-                    //echo count($cityHotels) . " hotel completed\n";
-                }
-                unset($hotelCities);
-                echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
-            }
-
-        }
-
     }
 
     public function findCity($cityName,$countryId,$region,$lat,$lng){
@@ -236,6 +141,7 @@ EOD;
             $criteria->addCondition('t.stateCode = :stateCode');
             $criteria->params[':stateCode'] = $region;
         }
+        $criteria->addCondition('t.maxmindId IS NULL');
 
 
         $criteria->addCondition('t.localRu LIKE :localRu OR t.localEn LIKE :localEn');
@@ -243,68 +149,73 @@ EOD;
         {
             $criteria->addCondition('t.id NOT IN (' . join(',', $cityIds) . ')');
         }
-        $criteria->with = 'country';
-        $criteria->order = 'country.position desc, t.position desc';
+        //$criteria->with = 'country';
+        $criteria->order = 't.position desc';
+        /** @var $cities City[] */
         $cities = City::model()->findAll($criteria);
+        $coords = (abs($lat) > 0.05) || (abs($lng) > 0.05);
+
         if ($cities)
         {
             foreach ($cities as $city)
             {
-                $items[] = array(
-                    'id' => $city->primaryKey,
-                    'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
-                    'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
-                );
-                $cityIds[$city->id] = $city->id;
-            }
-        }
-        $currentLimit -= count($items);
-        if ($currentLimit)
-        {
-            $criteria = new CDbCriteria();
-            $criteria->limit = $currentLimit;
-            if (UtilsHelper::countRussianCharacters($query) > 0)
-            {
-                $nameRu = $query;
-            }
-            else
-            {
-                $nameRu = UtilsHelper::cityNameToRus($query);
-            }
-            $metaphoneRu = UtilsHelper::ruMetaphone($nameRu);
-
-            if ($metaphoneRu)
-            {
-                $criteria->params[':metaphoneRu'] = $metaphoneRu;
-
-                $criteria->addCondition('t.metaphoneRu = :metaphoneRu');
-                if ($cityIds)
-                {
-                    $criteria->addCondition('t.id NOT IN (' . join(',', $cityIds) . ')');
-                }
-                if($countryId){
-                    $criteria->addCondition('t.countryId = :countryId');
-                    $criteria->params[':countryId'] = $countryId;
-                }
-                $criteria->with = 'country';
-                $criteria->order = 'country.position desc, t.position desc';
-                $cities = City::model()->findAll($criteria);
-
-                if ($cities)
-                {
-                    foreach ($cities as $city)
-                    {
-                        $items[] = array(
-                            'id' => $city->primaryKey,
-                            'label' => self::parseTemplate(self::templateForLabelAutocomplete(), $city),
-                            'value' => self::parseTemplate(self::templateForValueAutocomplete(), $city),
-                        );
-                        $cityIds[$city->id] = $city->id;
+                if($coords){
+                    if(abs($city->latitude) > 0.05 && abs($city->longitude) > 0.05){
+                        $dist = UtilsHelper::calculateTheDistance($lat,$lng,$city->latitude,$city->longitude);
+                        if($dist < 178000){
+                            return $city;
+                        }
                     }
                 }
-                $currentLimit -= count($items);
+            }
+            return $cities[0];
+        }
+
+
+        $criteria = new CDbCriteria();
+        $criteria->limit = 12;
+        if (UtilsHelper::countRussianCharacters($cityName) > 0)
+        {
+            $nameRu = $cityName;
+        }
+        else
+        {
+            $nameRu = UtilsHelper::cityNameToRus($cityName);
+        }
+        $metaphoneRu = UtilsHelper::ruMetaphone($nameRu);
+
+        if ($metaphoneRu)
+        {
+            $criteria->params[':metaphoneRu'] = $metaphoneRu;
+
+            $criteria->addCondition('t.metaphoneRu = :metaphoneRu');
+            $criteria->addCondition('t.maxmindId IS NULL');
+
+            if($countryId){
+                $criteria->addCondition('t.countryId = :countryId');
+                $criteria->params[':countryId'] = $countryId;
+            }
+            //$criteria->with = 'country';
+            $criteria->order = 't.position desc';
+            $cities = City::model()->findAll($criteria);
+
+            if ($cities)
+            {
+                foreach ($cities as $city)
+                {
+                    if($coords){
+                        if(abs($city->latitude) > 0.05 && abs($city->longitude) > 0.05){
+                            $dist = UtilsHelper::calculateTheDistance($lat,$lng,$city->latitude,$city->longitude);
+                            if($dist < 178000){
+                                return $city;
+                            }
+                        }
+                    }
+                }
+                return $cities[0];
             }
         }
+        return false;
     }
 
     public function actionMaxmindCities(){
@@ -312,8 +223,18 @@ EOD;
         echo "next base maxmind\n";
         $cityGeoDB = 'GeoLiteCity-Location.csv';
         $cityGeoIDs = array();
-        $countriesHave = array();
-        $countriesDont = array();
+        $citiesFound = 0;
+        $stateFile = 'maxmind_cities.txt';
+        try{
+            $executionState = json_decode(@file_get_contents($stateFile));
+        }catch (Exception $e){
+            $executionState = false;
+        }
+        if(!$executionState || $executionState->endState){
+            $executionState = (object) array('cityId'=>null,'endState'=>false,'stateDesc'=>'');
+        }
+        $startParse = false;
+        $citiesNotFound = 0;
         if(file_exists($cityGeoDB))
         {
             $cityFp = fopen($cityGeoDB, "r");
@@ -332,6 +253,13 @@ EOD;
                     if($match){
 
                         $id = intval($match[1]);
+                        if(!$startParse && $executionState->cityId && $executionState->cityId != $id){
+                            continue;
+                        }else{
+                            $executionState->cityId = $id;
+                            $startParse = true;
+                            file_put_contents($stateFile,json_encode($executionState));
+                        }
                         $country_code = $match[2];
                         $region = $match[3];
                         $cityName = iconv('CP1251','UTF8',$match[4]);
@@ -343,13 +271,24 @@ EOD;
                         }
                         try{
                             $country = Country::getCountryByCode($country_code);
-                            $countriesHave[$country_code] = true;
+                            //$countriesHave[$country_code] = true;
                         }catch (Exception $e){
                             $country = (object) array('id'=>false);
-                            $countriesDont[$country_code] = true;
+                            //$countriesDont[$country_code] = true;
+                        }
+                        if($country->id){
+                            $city = $this->findCity($cityName,$country->id,$region,$lat,$long);
+                            if($city){
+                                $city->maxmindId = $id;
+                                $city->save();
+                                $citiesFound++;
+                                unset($city);
+                            }else{
+                                $citiesNotFound++;
+                            }
                         }
 
-                        if(($i % 10000) == 0){
+                        if(($i % 1000) == 0){
                             echo "parsed $i lines\n";
                             echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
                         }
@@ -358,7 +297,139 @@ EOD;
             }
         }
         echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
-        echo "dont found cntrs:\n";
-        print_r($countriesDont);
+        echo "city found: {$citiesFound} city undef: {$citiesNotFound}\n";
+    }
+
+    public function actionMaxmindBase(){
+
+        echo "parse base maxmind\n";
+        $cityGeoDB = 'GeoLiteCity-Blocks.csv';
+        $cityGeoIDs = array();
+        $citiesFound = 0;
+        $maxCntr = 'O1,AP,EU,AD,AE,AF,AG,AI,AL,AM,AN,AO,AQ,AR,AS,AT,AU,AW,AZ,BA,BB,BD,BE,BF,BG,BH,BI,BJ,BM,BN,BO,BR,BS,BT,BV,BW,BY,BZ,CA,CC,CD,CF,CG,CH,CI,CK,CL,CM,CN,CO,CR,CU,CV,CX,CY,CZ,DE,DJ,DK,DM,DO,DZ,EC,EE,EG,EH,ER,ES,ET,FI,FJ,FK,FM,FO,FR,GA,GB,GD,GE,GF,GH,GI,GL,GM,GN,GP,GQ,GR,GS,GT,GU,GW,GY,HK,HM,HN,HR,HT,HU,ID,IE,IL,IN,IO,IQ,IR,IS,IT,JM,JO,JP,KE,KG,KH,KI,KM,KN,KP,KR,KW,KY,KZ,LA,LB,LC,LI,LK,LR,LS,LT,LU,LV,LY,MA,MC,MD,MG,MH,MK,ML,MM,MN,MO,MP,MQ,MR,MS,MT,MU,MV,MW,MX,MY,MZ,NA,NC,NE,NF,NG,NI,NL,NO,NP,NR,NU,NZ,OM,PA,PE,PF,PG,PH,PK,PL,PM,PR,PS,PT,PW,PY,QA,RE,RO,RU,RW,SA,SB,SC,SD,SE,SG,SH,SI,SJ,SK,SL,SM,SN,SO,SR,ST,SV,SY,SZ,TC,TD,TF,TG,TH,TJ,TK,TM,TN,TO,TR,TT,TV,TW,TZ,UA,UG,UM,US,UY,UZ,VA,VC,VE,VG,VI,VN,VU,WF,WS,YE,YT,RS,ZA,ZM,ME,ZW,A1,A2';
+        $maxCntrArr = explode(',',$maxCntr);
+        $maxCntrs = array();
+        foreach($maxCntrArr as $key=>$code){
+            $maxCntrs[($key+1)] = $code;
+        }
+        $maxCntrs = array_flip($maxCntrs);
+        //print_r($maxCntrs);
+        $connection=Yii::app()->db;
+
+
+        $sql = 'SELECT id,maxmindId,countryId
+            FROM `city`
+            WHERE `maxmindId` IS NOT NULL ';
+
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+        $maxmindCityMap = array();
+        $maxmindCountryMap = array();
+        while(($row=$dataReader->read())!==false) {
+            $maxId = intval($row['maxmindId']);
+            $cityId = intval($row['id']);
+            $countryId = intval($row['countryId']);
+            $maxmindCityMap[$maxId] = $cityId;
+            $maxmindCountryMap[$maxId] = $countryId;
+        }
+
+        $sql = 'SELECT id,code
+            FROM `country`';
+
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+        while(($row=$dataReader->read())!==false) {
+            $countryId = intval($row['id']);
+            if(isset($maxCntrs[$row['code']])){
+                $maxmindCountryMap[$maxCntrs[$row['code']]] = $countryId;
+            }
+        }
+        echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+        echo "count:".count($maxmindCountryMap);
+        die();
+        $stateFile = 'maxmind_base.txt';
+        try{
+            $executionState = json_decode(@file_get_contents($stateFile));
+        }catch (Exception $e){
+            $executionState = false;
+        }
+        if(!$executionState || $executionState->endState){
+            $executionState = (object) array('line'=>null,'endState'=>false,'stateDesc'=>'');
+        }
+
+        $startParse = false;
+        $citiesNotFound = 0;
+        if(file_exists($cityGeoDB))
+        {
+            $cityFp = fopen($cityGeoDB, "r");
+            $line = fgets($cityFp);
+            $line = fgets($cityFp);
+            $i=0;
+
+            echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+            while (!feof($cityFp)) {
+                $line = fgets($cityFp);
+                $i++;
+                if(!$startParse && $executionState->line && $executionState->line != $i){
+                    continue;
+                }else{
+                    $executionState->line = $i;
+                    $startParse = true;
+                    file_put_contents($stateFile,json_encode($executionState));
+                }
+                if($line){
+                    preg_match('#^"(\w+)","(\w+)","(\w+)"$#', $line, $match);
+                    //print_r($match);
+                    //break;
+                    if($match){
+
+                        $begin_ip = intval($match[1]);
+                        $end_ip = intval($match[2]);
+                        $loc_id = intval($match[3]);
+                        //$cityGeoIDs[$id] = array('cc'=>$country_code,'re'=>$region,'cn'=>$cityName,'lat'=>$lat,'lng'=>$long);
+                        if(!isset($maxmindCountryMap[$loc_id])){
+                            continue;
+                        }else{
+                            $attrs = array('beginIp','endIp','cityId','countryId','position');
+                            $fields = array('beginIp'=>$begin_ip,'endIp'=>$end_ip,'position'=>0);
+                            $fields['countryId'] = $maxmindCountryMap[$loc_id];
+                            if(isset($maxmindCityMap[$loc_id])){
+                                $fields['cityId'] = $maxmindCityMap[$loc_id];
+                                $citiesFound++;
+                            }else{
+                                $fields['cityId'] = null;
+                                $citiesNotFound++;
+                            }
+
+                            $vals = array();
+                            foreach($attrs as $attrName){
+                                $attrVal = $fields[$attrName];
+                                if($attrVal !== null){
+                                    $vals[] = "'".addslashes($attrVal)."'";
+                                }else{
+                                    $vals[] = 'NULL';
+                                }
+                            }
+                            $values[] = "(".implode(',',$vals).")";
+
+                            if(count($values) > 1000){
+                                $sql = 'INSERT INTO geoip ('.implode(',',$attrs).') VALUES '.implode(',',$values);
+                                //$sql .= " (".implode(',',$in).")";
+                                $command=$connection->createCommand($sql);
+                                $command->execute();
+                            }
+                        }
+
+
+                        if(($i % 1000) == 0){
+                            echo "parsed $i lines\n";
+                            echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+                        }
+                    }
+                }
+            }
+        }
+        echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+        echo "city found: {$citiesFound} city undef: {$citiesNotFound}\n";
     }
 }
