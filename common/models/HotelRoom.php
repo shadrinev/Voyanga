@@ -232,11 +232,8 @@ class HotelRoom extends CApplicationComponent
     public static function stripWords(&$str,$words){
         //$replaced = false;
         $startLen = mb_strlen($str);
-
         $str = str_replace($words,'',$str);
-
         $endLen = mb_strlen($str);
-
         return ($endLen < $startLen);
     }
 

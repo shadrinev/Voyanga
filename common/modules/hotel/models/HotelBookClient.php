@@ -735,6 +735,7 @@ class HotelBookClient
                     $response->hotels[] = $hotel;
                     $endTime2 = microtime(true);
                     $cnt++;
+                    gc_collect_cycles();
                 }
             }
             if (isset($hotelsObject->Errors->Error))
