@@ -863,7 +863,8 @@ class HotelBookClient
         $combinations = array();
         foreach ($rooms as $key => $room)
         {
-            $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesMap[$room['adultCount']]);
+            $rooms[$key]['bigPeoples']  = $room['adultCount'] + $room['childCount'];
+            $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesMap[$rooms[$key]['bigPeoples']]);
             $rooms[$key]['sizeIndex'] = 0;
         }
         $allCombined = false;
@@ -876,7 +877,7 @@ class HotelBookClient
             {
 
                 if ($room['sizeCount'] !== ($room['sizeIndex'] + 1)) $allCombined = false;
-                $rooms[$key]['roomSizeId'] = self::$roomSizeRoomTypesMap[$room['adultCount']][$room['sizeIndex']];
+                $rooms[$key]['roomSizeId'] = self::$roomSizeRoomTypesMap[$rooms[$key]['bigPeoples']][$room['sizeIndex']];
                 $combination[] = array('roomSizeId' => $rooms[$key]['roomSizeId'], 'child' => $rooms[$key]['childCount'], 'cots' => $rooms[$key]['cots'], 'ChildAge' => $rooms[$key]['childAge']);
             }
             sort($combination);

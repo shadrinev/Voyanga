@@ -87,10 +87,10 @@
     </script>
     <tr>
         <td class="tdName">
-            <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i)); ?>
+            <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
         </td>
         <td class="tdLastname">
-            <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
+            <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
         </td>
         <td class="tdSex">
             <?php if (!$roomCounters): ?>
@@ -186,7 +186,7 @@
         </td>
     </tr>
     <?php if ((!$hide) && (!$roomCounters)): ?>
-        <tr>
+        <tr class="trDurationPadding">
             <td class="tdName">
                 <!--<input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта', checked: 0}" checked="checked" name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">-->
             </td>

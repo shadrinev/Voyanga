@@ -55,6 +55,8 @@ class GDSNemoSoapClient extends SoapClient
             //$sXML = parent::__doRequest($request, $location, $action, $version);
             //echo VarDumper::xmlDump($sXML);
             //die();
+            //$sXML = file_get_contents('/srv/www/oleg.voyanga/public_html/responseSearch.xml');
+
         }
         elseif( strpos($action,'bookFlight1') !== FALSE)
         {
