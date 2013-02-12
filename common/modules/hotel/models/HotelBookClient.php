@@ -719,14 +719,18 @@ class HotelBookClient
             }
             $response->searchId = $searchId;
             $response->timestamp = time();
-            gc_collect_cycles();
             if (isset($hotelsObject->Hotels->Hotel))
             {
                 UtilsHelper::soapObjectsArray($hotelsObject->Hotels->Hotel);
                 $startTime1 = microtime(true);
                 $cnt = 0;
+                $i = 0;
+                $totalHotels = sizeof($hotelsObject->Hotels->Hotel) > 10000;
                 foreach ($hotelsObject->Hotels->Hotel as $hotelItem)
                 {
+                    $i++;
+                    if ($totalHotels and ($i%2 == 0))
+                        continue;
                     $startTime2 = microtime(true);
                     $hotel = $this->getHotelFromSXE($hotelItem);
                     $hotel->searchId = $searchId;
@@ -738,7 +742,6 @@ class HotelBookClient
                     $cnt++;
                 }
             }
-            gc_collect_cycles();
             if (isset($hotelsObject->Errors->Error))
             {
                 UtilsHelper::soapObjectsArray($hotelsObject->Errors->Error);
