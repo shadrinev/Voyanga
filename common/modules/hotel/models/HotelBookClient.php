@@ -577,7 +577,7 @@ class HotelBookClient
                 $hotel->centerDistance = intval(UtilsHelper::calculateTheDistance(self::$lastRequestCity->latitude, self::$lastRequestCity->longitude, $hotel->latitude, $hotel->longitude));
                 if ($hotel->centerDistance >= appParams('hotelWarningDistance'))
                 {
-                    $exception = new CException('Hotel '.$hotel->hotelName.' is far away from '.self::$lastRequestCity->localRu.' more than '.appParams('hotelWarningDistance').' meters ('.($hotel->centerDistance/1000).' km.)');
+                    $exception = new CException('Hotel '.$hotel->hotelName.' is far away from '.self::$lastRequestCity->localEn.' more than '.appParams('hotelWarningDistance').' meters ('.($hotel->centerDistance/1000).' km.)');
                     Yii::app()->RSentryException->logException($exception);
                 }
                 if ($hotel->centerDistance > 100000)
