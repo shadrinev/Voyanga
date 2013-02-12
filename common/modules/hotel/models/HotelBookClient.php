@@ -8,7 +8,6 @@ class HotelBookClient
     public static $roomSizeRoomTypesMap = array(1 => array(1), 2 => array(2, 3), 3 => array(5), 4 => array(6));
     public static $roomSizeIdNamesMap = array(1 => 'SGL', 2 => 'DBL', 3 => 'TWN', 4 => 'TWNSU', 5 => 'TRLP', 6 => 'QUAD', 7 => 'DBLSU', 8 => 'DBLORTWIN');
     public static $lastRequestMethod;
-    public static $notificationAboutDistanceDone = false;
     /** @var City lastRequestCity */
     public static $lastRequestCity;
     public static $lastRequestCityHaveCoordinates;
@@ -576,12 +575,6 @@ class HotelBookClient
             if (($hotel->latitude !== null) && ($hotel->longitude !== null))
             {
                 $hotel->centerDistance = intval(UtilsHelper::calculateTheDistance(self::$lastRequestCity->latitude, self::$lastRequestCity->longitude, $hotel->latitude, $hotel->longitude));
-                if ($hotel->centerDistance >= appParams('hotelWarningDistance') and (!self::$notificationAboutDistanceDone))
-                {
-                    $exception = new CException('Hotel '.$hotel->hotelName.' is far away from '.self::$lastRequestCity->localEn.' more than '.appParams('hotelWarningDistance').' meters ('.($hotel->centerDistance/1000).' km.)');
-                    Yii::app()->RSentryException->logException($exception);
-                    self::$notificationAboutDistanceDone = true;
-                }
                 if ($hotel->centerDistance > 100000)
                 {
                     $hotel->centerDistance = PHP_INT_MAX;
@@ -741,18 +734,8 @@ class HotelBookClient
                     $hotel->cityId = (string)$hotelsObject->HotelSearch['cityId'];
                     $response->hotels[] = $hotel;
                     $endTime2 = microtime(true);
-
-                    //Header('ExecutionTimeHotelInitFull:'.($endTime2 - $startTime2));
                     $cnt++;
                 }
-                $endTime1 = microtime(true);
-
-                //Header('ExecutionTimeLoopHotelInit:'.$cnt.'cnt'.($endTime1 - $startTime1));
-                //Header('ExecutionTimeTotalXml:'.self::$totalMicrotime);
-                //Header('ExecutionContFunc:'.self::$countFunc);
-                //Header('ExecutionCountSql:'.self::$countSql);
-                //Header('ExecutionMaxTime:'.self::$maxMicrotime);
-
             }
             if (isset($hotelsObject->Errors->Error))
             {
@@ -761,6 +744,10 @@ class HotelBookClient
                 {
                     $response->errorsDescriptions[] = array('code' => (string)$errorItem['code'], 'description' => (string)$errorItem['description']);
                 }
+            }
+            else
+            {
+                $this->checkDistance($response);
             }
             if ($response->hotels && $response->errorsDescriptions)
             {
@@ -786,6 +773,32 @@ class HotelBookClient
 
         //Header('ExecutionTimeProcess:'.($endTime - $startTime));
         return $response;
+    }
+
+    public function checkDistance(&$response)
+    {
+        $i = 0;
+        $distance = 0;
+        foreach ($response->hotels as $hotel)
+        {
+            $distance += $hotel->centerDistance;
+            $distances[] = $hotel->centerDistance;
+            $i++;
+            if ($i>=5)
+                break;
+        }
+        $smallest = min($distances);
+        $biggest = max($distances);
+        # если у нас есть отели и они не слишком сильно разбросаны
+        if (($i>0) && (($biggest/$smallest)<50))
+        {
+            $avgDistance = $distance / $i;
+            if ($avgDistance >= appParams('hotelWarningDistance'))
+            {
+                $exception = new CException('Average distance of '.$i.' hotels is far away from '.self::$lastRequestCity->localEn.' more than '.appParams('hotelWarningDistance').' meters ('.($avgDistance/1000).' km.)');
+                Yii::app()->RSentryException->logException($exception);
+            }
+        }
     }
 
     /**
