@@ -417,33 +417,40 @@ class OrderComponent extends CApplicationComponent
         $pdf = Yii::app()->pdfGenerator;
         $pdfFileNames = array();
         $orderBooking = $this->getOrderBooking();
-        foreach ($this->itemsOnePerGroup as $item)
-        {
-            if ($item instanceof HotelTripElement)
+        try {
+            foreach ($this->itemsOnePerGroup as $item)
             {
-                if ($item->hotelBookerId)
+                if ($item instanceof HotelTripElement)
                 {
-                    if ($pdfFileInfo =  $pdf->forHotelItem($item))
-                       $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
-                    else
-                        return false;
+                    if ($item->hotelBookerId)
+                    {
+                        if ($pdfFileInfo =  $pdf->forHotelItem($item))
+                            $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
+                        else
+                            return false;
+                    }
+                }
+                elseif ($item instanceof FlightTripElement)
+                {
+                    if ($item->flightBookerId)
+                    {
+                        if ($pdfFileInfo =  $pdf->forFlightItem($item))
+                            $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
+                    }
                 }
             }
-            elseif ($item instanceof FlightTripElement)
-            {
-                if ($item->flightBookerId)
-                {
-                    if ($pdfFileInfo =  $pdf->forFlightItem($item))
-                        $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
-                }
-            }
+            EmailManager::sendEmailOrderInfo(array(
+                                                 'orderBookingId'=>$orderBooking->readableId,
+                                                 'email'=>$orderBooking->email
+                                                 ),$pdfFileNames);
+        } catch (Exception $e) {
+            Yii::app()->RSentryException->logException($e);
         }
-
-        EmailManager::sendEmailOrderInfo(array(
-            'orderBookingId'=>$orderBooking->readableId,
-            'email'=>$orderBooking->email
-        ),$pdfFileNames);
-        SmsManager::sendSmsOrderInfo($orderBooking->phone,array('email'=>$orderBooking->email,'orderBookingId'=>$orderBooking->readableId));
+        try {
+            SmsManager::sendSmsOrderInfo($orderBooking->phone,array('email'=>$orderBooking->email,'orderBookingId'=>$orderBooking->readableId));
+        } catch (Exception $e) {
+            Yii::app()->RSentryException->logException($e);
+        }
     }
 
     public function sendCanceled()

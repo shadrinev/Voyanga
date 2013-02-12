@@ -24,6 +24,10 @@ return CMap::mergeArray (
         'preload'=>array('log'),
         'language' => 'ru_RU',
 
+        'host'=>'voyanga.com',
+        'themePath'=>'/home/voyanga/app/frontend/www/themes/',
+
+
         'import'=>array(
                 'site.common.extensions.*',
                 'site.common.components.*',
