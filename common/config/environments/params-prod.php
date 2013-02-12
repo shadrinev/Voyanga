@@ -42,7 +42,7 @@ return array(
     'mongo.dbName'=> 'voyanga',
 
     'email.sender' => 'robot@misha.voyanga (Voyanga dev-robot)',
-    'enableMemcached' => true,
+    'enableMemcached' => false,
 
     'HotelBook' => array(
         'uri' => 'http://hotelbook.ru/xml/',
