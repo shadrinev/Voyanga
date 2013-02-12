@@ -14,21 +14,15 @@ PeopleSelector = (function() {
     this.showPeoplePopup = __bind(this.showPeoplePopup, this);
 
     this.show = __bind(this.show, this);
-
-    this.preventShow = __bind(this.preventShow, this);
     this.inside = false;
     this.inside2 = false;
     this.inside3 = false;
   }
 
-  PeopleSelector.prototype.preventShow = function(context, event) {
-    return event.stopPropagation();
-  };
-
   PeopleSelector.prototype.show = function(context, event) {
     var coords, el,
       _this = this;
-    el = $(event.currentTarget).find('.popup');
+    el = $(event.currentTarget).parent().find('.popup');
     if (!el.hasClass('active')) {
       $(document.body).mousedown(function() {
         if (_this.inside || _this.inside2 || _this.inside3) {
@@ -144,7 +138,7 @@ PeopleSelector = (function() {
     }, function() {
       return _this.inside = false;
     });
-    return $('.how-many-man').hover(function() {
+    return $('.how-many-man').find('.wrapDivContent').hover(function() {
       _this.inside2 = true;
       return _this.inside3 = true;
     }, function() {

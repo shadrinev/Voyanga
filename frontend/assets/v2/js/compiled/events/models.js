@@ -170,6 +170,9 @@ EventSet = (function() {
 
   EventSet.prototype.mapsInit = function() {
     var element, gMap, value;
+    if (!google) {
+      return;
+    }
     value = {
       lat: 52,
       lng: 10

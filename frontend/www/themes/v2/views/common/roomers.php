@@ -1,6 +1,6 @@
 <script type="text/html" id="roomers-template">
-  <div class="how-many-man hotel"  data-bind="click: show">
-    <div class="wrapDivContent">
+  <div class="how-many-man hotel" >
+    <div class="wrapDivContent"  data-bind="click: show">
         <!-- ko foreach: rawRooms -->
         <div class="content">
           <span class="num" data-bind="text: $index() + 1"></span>
@@ -11,7 +11,7 @@
         <div class="btn"></div>
     </div>
 
-    <div class="popup"  data-bind="click: preventShow">
+    <div class="popup">
       <!-- ko foreach: {data: roomsView, afterRender: afterRender } -->
       <div class="float">
         <!-- ko template: {name: 'room-template', foreach: $data} -->
