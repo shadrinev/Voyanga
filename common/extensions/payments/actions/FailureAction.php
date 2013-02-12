@@ -15,6 +15,8 @@ class FailureAction extends SuccessAction
             $bill->transactionId = $_REQUEST['TransactionID'];
             $bill->status = 'FAI';
             $bill->save();
+            $booker->status('paymentError');
+            return;
         }
 
        if($bill->getChannel()->getName() == 'gds_galileo'){
