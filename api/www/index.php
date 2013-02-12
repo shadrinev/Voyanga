@@ -1,4 +1,5 @@
 <?php
+ini_set ('max_execution_time' , '120');
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 // On dev display all errors
