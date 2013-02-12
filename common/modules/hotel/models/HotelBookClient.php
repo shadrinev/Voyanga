@@ -568,7 +568,6 @@ class HotelBookClient
             }
         }
 
-        //print_r($hotelParams);
         $hotel = new Hotel($hotelParams);
 
         if (self::$lastRequestCityHaveCoordinates)
@@ -576,6 +575,11 @@ class HotelBookClient
             if (($hotel->latitude !== null) && ($hotel->longitude !== null))
             {
                 $hotel->centerDistance = intval(UtilsHelper::calculateTheDistance(self::$lastRequestCity->latitude, self::$lastRequestCity->longitude, $hotel->latitude, $hotel->longitude));
+                if ($hotel->centerDistance >= appParams('hotelWarningDistance'))
+                {
+                    $exception = new CException('Hotel '.CVarDumper::dumpAsString($hotel).' is far away from '.VarDumper::dumpAsString(self::$lastRequestCity).' more than '.appParams('hotelWarningDistance').' meters');
+                    Yii::app()->RSentryException->logException($exception);
+                }
                 if ($hotel->centerDistance > 100000)
                 {
                     $hotel->centerDistance = PHP_INT_MAX;
@@ -1456,7 +1460,6 @@ class HotelBookClient
         {
             if (isset($hotelSXE[$itemKey]))
             {
-
                 $hotelParams[$paramKey] = (string)$hotelSXE[$itemKey];
             }
             elseif (isset($hotelSXE->{$itemKey}))
