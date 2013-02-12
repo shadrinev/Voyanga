@@ -726,11 +726,11 @@ class HotelBookClient
                 $cnt = 0;
                 $i = 0;
                 $totalHotels = sizeof($hotelsObject->Hotels->Hotel);
-                $miss = $totalHotels > 10000;
+                $miss = ceil($totalHotels / 1000);
                 foreach ($hotelsObject->Hotels->Hotel as $hotelItem)
                 {
                     $i++;
-                    if ($miss and ($i%2 == 0))
+                    if ($i%$miss != 0)
                         continue;
                     $startTime2 = microtime(true);
                     $hotel = $this->getHotelFromSXE($hotelItem);
