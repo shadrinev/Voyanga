@@ -14,12 +14,12 @@
             <tbody>
             <tr>
                 <td class="tdEmail">
-                    <?php echo CHtml::activeTextField($model, "contactEmail", array('id' => 'contactEmail')); ?>
+                    <?php echo CHtml::activeEmailField($model, "contactEmail", array('id' => 'contactEmail')); ?>
                 </td>
                 <td class="tdTelefon">
                     <div class="divInputTelefon <?php if ($hide) echo "inactive" ?>">
-                        <input disabled="disabled" value="+7" class="plusSeven" name="plusSeven" type="text">
-                        <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone')); ?>
+
+                        <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone', 'placeholder' => '+7 (910) 123-45-67 ')); ?>
                     </div>
                 </td>
                 <td class="tdText">

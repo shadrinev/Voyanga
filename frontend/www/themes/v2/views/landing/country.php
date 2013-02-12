@@ -116,6 +116,7 @@
 <div class="clear"></div>
 
 </div>
+<?php echo $this->renderPartial('//layouts/_header'); ?>
 <div class="headBlockTwo">
 <div class="center-block">
 <h2>Отели в Москве</h2>

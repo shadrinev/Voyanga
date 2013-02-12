@@ -580,6 +580,17 @@
     text-shadow: 0 1px 0 #FFFFFF;
     width: 60px;
 }
+.how-many-man .popup .one-str .small-childs {
+    color: #272728;
+    float: left;
+    font-size: 11px;
+    line-height: 13px;
+    margin-left: 6px;
+    padding-top: 5px;
+    position: relative;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 48px;
+}
 .one-str .ages {
 	width: 40px;
 	text-align: center;

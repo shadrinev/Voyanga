@@ -575,11 +575,6 @@ class HotelBookClient
             if (($hotel->latitude !== null) && ($hotel->longitude !== null))
             {
                 $hotel->centerDistance = intval(UtilsHelper::calculateTheDistance(self::$lastRequestCity->latitude, self::$lastRequestCity->longitude, $hotel->latitude, $hotel->longitude));
-                if ($hotel->centerDistance >= appParams('hotelWarningDistance'))
-                {
-                    $exception = new CException('Hotel '.CVarDumper::dumpAsString($hotel).' is far away from '.VarDumper::dumpAsString(self::$lastRequestCity).' more than '.appParams('hotelWarningDistance').' meters');
-                    Yii::app()->RSentryException->logException($exception);
-                }
                 if ($hotel->centerDistance > 100000)
                 {
                     $hotel->centerDistance = PHP_INT_MAX;
@@ -739,18 +734,8 @@ class HotelBookClient
                     $hotel->cityId = (string)$hotelsObject->HotelSearch['cityId'];
                     $response->hotels[] = $hotel;
                     $endTime2 = microtime(true);
-
-                    //Header('ExecutionTimeHotelInitFull:'.($endTime2 - $startTime2));
                     $cnt++;
                 }
-                $endTime1 = microtime(true);
-
-                //Header('ExecutionTimeLoopHotelInit:'.$cnt.'cnt'.($endTime1 - $startTime1));
-                //Header('ExecutionTimeTotalXml:'.self::$totalMicrotime);
-                //Header('ExecutionContFunc:'.self::$countFunc);
-                //Header('ExecutionCountSql:'.self::$countSql);
-                //Header('ExecutionMaxTime:'.self::$maxMicrotime);
-
             }
             if (isset($hotelsObject->Errors->Error))
             {
@@ -759,6 +744,10 @@ class HotelBookClient
                 {
                     $response->errorsDescriptions[] = array('code' => (string)$errorItem['code'], 'description' => (string)$errorItem['description']);
                 }
+            }
+            else
+            {
+                $this->checkDistance($response);
             }
             if ($response->hotels && $response->errorsDescriptions)
             {
@@ -784,6 +773,32 @@ class HotelBookClient
 
         //Header('ExecutionTimeProcess:'.($endTime - $startTime));
         return $response;
+    }
+
+    public function checkDistance(&$response)
+    {
+        $i = 0;
+        $distance = 0;
+        foreach ($response->hotels as $hotel)
+        {
+            $distance += $hotel->centerDistance;
+            $distances[] = $hotel->centerDistance;
+            $i++;
+            if ($i>=5)
+                break;
+        }
+        $smallest = min($distances);
+        $biggest = max($distances);
+        # если у нас есть отели и они не слишком сильно разбросаны
+        if (($i>0) && (($biggest/$smallest)<50))
+        {
+            $avgDistance = $distance / $i;
+            if ($avgDistance >= appParams('hotelWarningDistance'))
+            {
+                $exception = new CException('Average distance of '.$i.' hotels is far away from '.self::$lastRequestCity->localEn.' more than '.appParams('hotelWarningDistance').' meters ('.($avgDistance/1000).' km.)');
+                Yii::app()->RSentryException->logException($exception);
+            }
+        }
     }
 
     /**
@@ -861,7 +876,8 @@ class HotelBookClient
         $combinations = array();
         foreach ($rooms as $key => $room)
         {
-            $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesMap[$room['adultCount']]);
+            $rooms[$key]['bigPeoples']  = $room['adultCount'] + $room['childCount'];
+            $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesMap[$rooms[$key]['bigPeoples']]);
             $rooms[$key]['sizeIndex'] = 0;
         }
         $allCombined = false;
@@ -874,7 +890,7 @@ class HotelBookClient
             {
 
                 if ($room['sizeCount'] !== ($room['sizeIndex'] + 1)) $allCombined = false;
-                $rooms[$key]['roomSizeId'] = self::$roomSizeRoomTypesMap[$room['adultCount']][$room['sizeIndex']];
+                $rooms[$key]['roomSizeId'] = self::$roomSizeRoomTypesMap[$rooms[$key]['bigPeoples']][$room['sizeIndex']];
                 $combination[] = array('roomSizeId' => $rooms[$key]['roomSizeId'], 'child' => $rooms[$key]['childCount'], 'cots' => $rooms[$key]['cots'], 'ChildAge' => $rooms[$key]['childAge']);
             }
             sort($combination);

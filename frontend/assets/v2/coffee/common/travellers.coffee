@@ -77,8 +77,6 @@ class PeopleSelector
         $(@).val $(@).attr 'rel'
       $(@).trigger 'change'
 
-
-
   afterRender: =>
     $('.how-many-man .popup').find('input').hover ->
       $(this).parent().find('.plusOne').show()
@@ -203,6 +201,7 @@ class Roomers
     @adults = @room.adults
     @children = @room.children
     @ages = @room.ages
+    @infants = @room.infants
     #@overall = 
 
   plusOne: (context, event) =>

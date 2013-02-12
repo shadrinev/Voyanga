@@ -20,9 +20,9 @@ return CMap::mergeArray(array(
     'flight_repeat_time' => 120,
 
     'airport_codes_cache' => 365 * 24 * 3600,
-    'hotelWarningDistance' => 10 * 1000, //количество метров для проверки принадлежности отеля городу поиска
+    'hotelWarningDistance' => 50 * 1000, //количество метров для проверки принадлежности отеля городу поиска
 
-    'aPassegerTypes' => array(1 => 'ADT', 2 => 'CNN', 3 => 'INN'),
+    'aPassegerTypes' => array(1 => 'ADT', 2 => 'CNN', 3 => 'INF'),
     'GDSNemo' => array(
         'wsdlUri' => 'http://109.120.157.20:10002/Flights.asmx?wsdl',
         'uri' => 'http://109.120.157.20:10002/Flights.asmx',

@@ -12,6 +12,7 @@
  * @property real $latitude
  * @property real $longitude
  * @property integer $hotelbookId
+ * @property integer $maxmindId
  * @property string $metaphoneRu
  * @property string $stateCode
  * The followings are the available model relations:
@@ -25,6 +26,7 @@ class City extends CActiveRecord
     private static $cities = array();
     private static $codeIdMap = array();
     private static $idHotelbookIdMap = array();
+    private static $idMaxmindIdMap = array();
 
     /**
      * Returns the static model of the specified AR class.
@@ -70,7 +72,7 @@ class City extends CActiveRecord
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array(
-                'id, position, countryId, code, localRu, localEn, countAirports, latitude, longitude, hotelbookId, metaphoneRu, stateCode',
+                'id, position, countryId, code, localRu, localEn, countAirports, latitude, longitude, hotelbookId, maxmindId, metaphoneRu, stateCode',
                 'safe',
                 'on' => 'search'
             )
@@ -246,6 +248,39 @@ class City extends CActiveRecord
             {
                 throw new CException(Yii::t('application', 'City with hotelbookId {code} not found', array(
                     '{code}' => $hotelbookId
+                )));
+            }
+        }
+    }
+
+    public static function getCityByMaxmindId($maxmindId)
+    {
+        if (isset(City::$idMaxmindIdMap[$maxmindId]))
+        {
+            return City::$cities[City::$idMaxmindIdMap[$maxmindId]];
+        }
+        else
+        {
+            $city = City::model()->findByAttributes(array(
+                'maxmindId' => $maxmindId
+            ));
+            if ($city)
+            {
+                City::$cities[$city->id] = $city;
+                if ($city->code)
+                {
+                    City::$codeIdMap[$city->code] = $city->id;
+                }
+                if ($city->maxmindId)
+                {
+                    City::$idMaxmindIdMap[$city->maxmindId] = $city->id;
+                }
+                return City::$cities[City::$idMaxmindIdMap[$maxmindId]];
+            }
+            else
+            {
+                throw new CException(Yii::t('application', 'City with maxmindId {code} not found', array(
+                    '{code}' => $maxmindId
                 )));
             }
         }

@@ -201,6 +201,7 @@ class GDSNemoAgency extends CComponent
         unset($traveller);
 
         $soapResponse = self::request('Search', $params);
+        //print_r($soapResponse);die();
         $errorDescription = '';
 
         if (!$soapResponse)
@@ -219,7 +220,8 @@ class GDSNemoAgency extends CComponent
             if ($soapResponse)
             {
                 Yii::trace(CVarDumper::dumpAsString($soapResponse), 'Gds.GdsNemoAgency.request');
-                throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
+                Yii::app()->RSentryException->logException(new CException('Incorrect soap response or no results for search request('.self::$lastRequestDescription.'): '.CVarDumper::dumpAsString($soapResponse)));
+                //throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
             }
         }
 
@@ -296,7 +298,7 @@ class GDSNemoAgency extends CComponent
                     catch (Exception $e)
                     {
                         Yii::log('Error while parsing gds nemo results: '.$e->getMessage());
-                        throw $e;
+                        Yii::app()->RSentryException->logException($e);
                         $needSave = false;
                     }
                 }
@@ -404,6 +406,11 @@ class GDSNemoAgency extends CComponent
                                 '{codes}' => implode(', ', $aCities),
                                 '{flightId}' => $oSoapFlight->FlightId
                             )), 'info', 'nemo');
+                            Yii::app()->RSentryException->logException(new CException(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}. FlightId: {flightId}', array(
+                                '{code}' => $route->arrivalCity->code,
+                                '{codes}' => implode(', ', $aCities),
+                                '{flightId}' => $oSoapFlight->FlightId
+                            ))));
                             $needSave = false;
                         }
                     }
@@ -796,8 +803,7 @@ class GDSNemoAgency extends CComponent
                     }
                     $aParts[$oSegment->SegNum] = $oPart;
                 }catch (CException $e){
-                    Yii::log('Error while parsing gds nemo results: '.$e->getMessage());
-                    throw $e;
+                    Yii::app()->RSentryException->logException($e);
                 }
             }
             if($aParts){

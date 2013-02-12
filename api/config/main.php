@@ -85,7 +85,6 @@ return CMap::mergeArray(
                         'levels' => 'trace, info',
                         'categories' => 'application.*'
                     ),
-
                     array(
                         'class' => 'CDbLogRoute',
                         'levels' => 'info',

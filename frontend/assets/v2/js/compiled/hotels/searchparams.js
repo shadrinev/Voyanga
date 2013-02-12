@@ -11,6 +11,7 @@ SpRoom = (function() {
 
     this.getHash = __bind(this.getHash, this);
 
+    console.log('SpRoom Constructor');
     this.adults = ko.observable(1).extend({
       integerOnly: {
         min: 1,
@@ -20,10 +21,16 @@ SpRoom = (function() {
     this.children = ko.observable(0).extend({
       integerOnly: {
         min: 0,
-        max: 4
+        max: 1
       }
     });
     this.ages = ko.observableArray();
+    this.infants = ko.observable(0).extend({
+      integerOnly: {
+        min: 0,
+        max: 2
+      }
+    });
     this.adults.subscribe(function(newValue) {
       if (newValue + _this.children() > 4) {
         _this.adults(4 - _this.children());
@@ -49,8 +56,8 @@ SpRoom = (function() {
           _this.ages.push({
             age: ko.observable(12).extend({
               integerOnly: {
-                min: 12,
-                max: 17
+                min: 2,
+                max: 12
               }
             })
           });
@@ -63,10 +70,26 @@ SpRoom = (function() {
   }
 
   SpRoom.prototype.fromList = function(item) {
-    var parts;
+    var i, parts, _i, _ref;
+    console.log('SpRoom FromList', item);
     parts = item.split(':');
+    console.log('parts:', parts);
     this.adults(parts[0]);
-    return this.children(parts[1]);
+    this.children(parts[1]);
+    this.infants(parts[2]);
+    if (this.children() > 0) {
+      for (i = _i = 0, _ref = this.children() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        this.ages.push({
+          age: ko.observable(parts[3 + i]).extend({
+            integerOnly: {
+              min: 2,
+              max: 12
+            }
+          })
+        });
+      }
+    }
+    return console.log('ages:', this.ages());
   };
 
   SpRoom.prototype.fromObject = function(item) {
@@ -76,7 +99,7 @@ SpRoom = (function() {
 
   SpRoom.prototype.getHash = function() {
     var age, parts, _i, _len, _ref;
-    parts = [this.adults(), this.children()];
+    parts = [this.adults(), this.children(), this.infants()];
     _ref = this.ages();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       age = _ref[_i];
@@ -86,7 +109,19 @@ SpRoom = (function() {
   };
 
   SpRoom.prototype.getUrl = function(i) {
-    return ("rooms[" + i + "][adt]=") + this.adults() + ("&rooms[" + i + "][chd]=") + this.children() + ("&rooms[" + i + "][chdAge]=0&rooms[" + i + "][cots]=0");
+    var ageObj, agesText, _i, _len, _ref;
+    agesText = '';
+    console.log('age p', this.ages(), this);
+    _ref = this.ages();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      ageObj = _ref[_i];
+      console.log('age', ageObj, ageObj.age());
+      agesText = ("rooms[" + i + "][chdAge]=") + ageObj.age();
+    }
+    if (!agesText) {
+      agesText = "rooms[" + i + "][chdAge]=0";
+    }
+    return ("rooms[" + i + "][adt]=") + this.adults() + ("&rooms[" + i + "][chd]=") + this.children() + "&" + agesText + ("&rooms[" + i + "][cots]=") + this.infants();
   };
 
   return SpRoom;
