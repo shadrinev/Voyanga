@@ -8,6 +8,7 @@ class HotelBookClient
     public static $roomSizeRoomTypesMap = array(1 => array(1), 2 => array(2, 3), 3 => array(5), 4 => array(6));
     public static $roomSizeIdNamesMap = array(1 => 'SGL', 2 => 'DBL', 3 => 'TWN', 4 => 'TWNSU', 5 => 'TRLP', 6 => 'QUAD', 7 => 'DBLSU', 8 => 'DBLORTWIN');
     public static $lastRequestMethod;
+    public static $notificationAboutDistanceDone = false;
     /** @var City lastRequestCity */
     public static $lastRequestCity;
     public static $lastRequestCityHaveCoordinates;
@@ -575,10 +576,11 @@ class HotelBookClient
             if (($hotel->latitude !== null) && ($hotel->longitude !== null))
             {
                 $hotel->centerDistance = intval(UtilsHelper::calculateTheDistance(self::$lastRequestCity->latitude, self::$lastRequestCity->longitude, $hotel->latitude, $hotel->longitude));
-                if ($hotel->centerDistance >= appParams('hotelWarningDistance'))
+                if ($hotel->centerDistance >= appParams('hotelWarningDistance') and (!self::$notificationAboutDistanceDone))
                 {
                     $exception = new CException('Hotel '.$hotel->hotelName.' is far away from '.self::$lastRequestCity->localEn.' more than '.appParams('hotelWarningDistance').' meters ('.($hotel->centerDistance/1000).' km.)');
                     Yii::app()->RSentryException->logException($exception);
+                    self::$notificationAboutDistanceDone = true;
                 }
                 if ($hotel->centerDistance > 100000)
                 {
