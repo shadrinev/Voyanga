@@ -149,21 +149,21 @@ class MakeBookingAction extends CAction
                     $adultPassport = new FlightAdultPassportForm();
                     $adultPassport->attributes = $formInfo['formData'];
                     $adultsPassports[] = $adultPassport;
-                    $p = &$adultsPassports[(count($adultsPassports)-1)];
+                    $p = $adultsPassports[(count($adultsPassports)-1)];
 
                 }elseif($chcnt > 0){
                     $chcnt--;
                     $childrenPassport = new FlightChildPassportForm();
                     $childrenPassport->attributes = $formInfo['formData'];
                     $childrenPassports[] = $childrenPassport;
-                    $p = &$childrenPassports[(count($childrenPassports)-1)];
+                    $p = $childrenPassports[(count($childrenPassports)-1)];
 
                 }elseif($incnt > 0){
                     $incnt--;
                     $infantsPassport = new FlightInfantPassportForm();
                     $infantsPassport->attributes = $formInfo['formData'];
                     $infantsPassports[] = $infantsPassport;
-                    $p = &$infantsPassports[(count($infantsPassports)-1)];
+                    $p = $infantsPassports[(count($infantsPassports)-1)];
 
                 }
                 if (!$p->validate())
