@@ -37,6 +37,7 @@ class BaseFlightPassportForm extends BasePassportForm
     public $expirationMonth;
     public $expirationYear;
     public $ticketNumber='';
+    public $passengerType = Passenger::TYPE_ADULT;
 
     public $srok = false;
 
