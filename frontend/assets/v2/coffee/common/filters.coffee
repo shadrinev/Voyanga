@@ -347,7 +347,7 @@ class AviaFiltersT
     @rtVoyageFilters = ['rtDeparture', 'shortStopover', 'irrelevantlyLong','onlyDirect']
     @resultFilters = ['departureAirport', 'arrivalAirport', 'airline', 'serviceClass']
     
-    @departure = new PriceFilter('departureTimeNumeric')
+    @departure = new TimeFilter('departureTimeNumeric')
     if @rt
       @rtDeparture = new TimeFilter('departureTimeNumeric')
 

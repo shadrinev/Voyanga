@@ -374,7 +374,7 @@ class AviaResult
     if @roundTrip
       hash = @activeVoyage().activeBackVoyage().hash()
     @activeVoyage(voyage)
-    backVoyage = _.find voyage._backVoyages, (el)-> el.hash() == hash
+    backVoyage = _.find voyage._backVoyages, (el)-> el.visible() && (el.hash() == hash)
     if backVoyage
       @activeVoyage().activeBackVoyage(backVoyage)
 

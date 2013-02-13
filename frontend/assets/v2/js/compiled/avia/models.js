@@ -537,7 +537,7 @@ AviaResult = (function() {
     }
     this.activeVoyage(voyage);
     backVoyage = _.find(voyage._backVoyages, function(el) {
-      return el.hash() === hash;
+      return el.visible() && (el.hash() === hash);
     });
     if (backVoyage) {
       return this.activeVoyage().activeBackVoyage(backVoyage);
