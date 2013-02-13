@@ -135,8 +135,9 @@ class EventSet
       return
     value = {lat:52,lng:10}
     @mapsInited = true
-    element = $(".mapsBigAll")[0]
-    gMap = new google.maps.Map(element,{'mapTypeControl':false,'panControl':false,'zoomControlOptions':{position: google.maps.ControlPosition.LEFT_TOP,style:google.maps.ZoomControlStyle.SMALL},'streetViewControl':false,'zoom': 3,'mapTypeId': google.maps.MapTypeId.TERRAIN,'center': new google.maps.LatLng(value.lat,value.lng)})
+    # wait till element is present in document
+    waitElement ".mapsBigAll", (element)->
+      gMap = new google.maps.Map(element[0],{'mapTypeControl':false,'panControl':false,'zoomControlOptions':{position: google.maps.ControlPosition.LEFT_TOP,style:google.maps.ZoomControlStyle.SMALL},'streetViewControl':false,'zoom': 3,'mapTypeId': google.maps.MapTypeId.TERRAIN,'center': new google.maps.LatLng(value.lat,value.lng)})
 
   afterRender: =>
     @mapsInited = false

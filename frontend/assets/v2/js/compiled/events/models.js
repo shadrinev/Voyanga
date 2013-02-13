@@ -169,7 +169,7 @@ EventSet = (function() {
   };
 
   EventSet.prototype.mapsInit = function() {
-    var element, gMap, value;
+    var value;
     if (!google) {
       return;
     }
@@ -178,18 +178,20 @@ EventSet = (function() {
       lng: 10
     };
     this.mapsInited = true;
-    element = $(".mapsBigAll")[0];
-    return gMap = new google.maps.Map(element, {
-      'mapTypeControl': false,
-      'panControl': false,
-      'zoomControlOptions': {
-        position: google.maps.ControlPosition.LEFT_TOP,
-        style: google.maps.ZoomControlStyle.SMALL
-      },
-      'streetViewControl': false,
-      'zoom': 3,
-      'mapTypeId': google.maps.MapTypeId.TERRAIN,
-      'center': new google.maps.LatLng(value.lat, value.lng)
+    return waitElement(".mapsBigAll", function(element) {
+      var gMap;
+      return gMap = new google.maps.Map(element[0], {
+        'mapTypeControl': false,
+        'panControl': false,
+        'zoomControlOptions': {
+          position: google.maps.ControlPosition.LEFT_TOP,
+          style: google.maps.ZoomControlStyle.SMALL
+        },
+        'streetViewControl': false,
+        'zoom': 3,
+        'mapTypeId': google.maps.MapTypeId.TERRAIN,
+        'center': new google.maps.LatLng(value.lat, value.lng)
+      });
     });
   };
 

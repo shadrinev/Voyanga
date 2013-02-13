@@ -1082,6 +1082,9 @@ ToursResultSet = (function() {
 
   ToursResultSet.prototype.findAndSelectItems = function(items) {
     var entry, index, result, success, ts, _i, _j, _len, _len1, _ref;
+    if (items.length !== this.data().length) {
+      return false;
+    }
     console.log('findAndSelectItems', items);
     success = true;
     this.data.sort(function(left, right) {

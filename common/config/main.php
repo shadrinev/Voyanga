@@ -50,6 +50,7 @@ return array(
         ),
 
         'pCache' => array(
+            'autoCreateCacheTable' => false,
             'class' => 'CDbCache',
             'keyPrefix' => 'voyanga-',
             'hashKey' => false,
@@ -215,6 +216,11 @@ return array(
                     'connectionID' => 'logdb',
                     'autoCreateLogTable' => true,
                     'logTableName' => 'shared_memory'
+                ),
+                array(
+                    'class'=> 'common.extensions.yii-sentry-log.RSentryLog',
+                    'dsn'=> $params['sentry.dsn'],
+                    'levels'=> 'error, warning',
                 ),
             )
         ),
