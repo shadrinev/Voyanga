@@ -116,7 +116,23 @@ dateUtils=
     hours = (all_minutes - minutes) / 60
     hours + " ч. " + minutes + " м."
 
+calcOffset = ->
+    x = new Date()
+    minutesDiff = -x.getTimezoneOffset()
+    hours = Math.floor(minutesDiff/60).toString()
+    minutes = (minutesDiff % 60).toString()
+    
+    if hours.length == 1
+      hours = "0" + hours
+
+    if minutes.length == 1
+      minutes = "0" + minutes
+    sign = if minutesDiff < 0 then '-' else '+'
+    sign+hours+':'+minutes 
+  
+
 Utils =
+  tzOffset: calcOffset()
   implode: ( glue, pieces ) ->
     (if (pieces instanceof Array) then pieces.join(glue) else pieces)
 

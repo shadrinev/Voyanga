@@ -5,8 +5,8 @@
 class FlightPart
   constructor: (part)->
     @part = part
-    @departureDate = new Date(part.datetimeBegin+'+04:00')
-    @arrivalDate = new Date(part.datetimeEnd+'+04:00')
+    @departureDate = new Date(part.datetimeBegin+Utils.tzOffset)
+    @arrivalDate = new Date(part.datetimeEnd+Utils.tzOffset)
     @departureCity = part.departureCity
     @departureCityPre = part.departureCityPre
     @departureAirport = part.departureAirport
@@ -64,7 +64,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
           @maxStopoverLength = part.stopoverLength
 
     # FIXME !!!!!!!!!!!!!!!!!!!!!
-    @departureDate = new Date(flight.departureDate+'+04:00')
+    @departureDate = new Date(flight.departureDate+Utils.tzOffset)
     # fime it is converted already
     @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
 
@@ -374,7 +374,7 @@ class AviaResult
     if @roundTrip
       hash = @activeVoyage().activeBackVoyage().hash()
     @activeVoyage(voyage)
-    backVoyage = _.find voyage._backVoyages, (el)-> el.hash() == hash
+    backVoyage = _.find voyage._backVoyages, (el)-> el.visible() && (el.hash() == hash)
     if backVoyage
       @activeVoyage().activeBackVoyage(backVoyage)
 
@@ -594,13 +594,13 @@ class AviaResultSet
     @rawSP = sp
     @arrivalCity = sp.destinations[0].arrival
     @departureCity = sp.destinations[0].departure
-    @rawDate = moment(new Date(sp.destinations[0].date+'+04:00'))
-    @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+'+04:00')
+    @rawDate = moment(new Date(sp.destinations[0].date+Utils.tzOffset))
+    @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+Utils.tzOffset)
     @dateHeadingText = @date
     @roundTrip = sp.isRoundTrip
     if @roundTrip
-      @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+'+04:00')
-      @rawRtDate = moment(new Date(sp.destinations[1].date+'+04:00'))
+      @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+Utils.tzOffset)
+      @rawRtDate = moment(new Date(sp.destinations[1].date+Utils.tzOffset))
 
       @dateHeadingText += ', ' +@rtDate      
 

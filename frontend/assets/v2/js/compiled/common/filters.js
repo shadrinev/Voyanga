@@ -614,7 +614,7 @@ AviaFiltersT = (function() {
     this.voyageFilters = ['departure', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
     this.rtVoyageFilters = ['rtDeparture', 'shortStopover', 'irrelevantlyLong', 'onlyDirect'];
     this.resultFilters = ['departureAirport', 'arrivalAirport', 'airline', 'serviceClass'];
-    this.departure = new PriceFilter('departureTimeNumeric');
+    this.departure = new TimeFilter('departureTimeNumeric');
     if (this.rt) {
       this.rtDeparture = new TimeFilter('departureTimeNumeric');
     }
