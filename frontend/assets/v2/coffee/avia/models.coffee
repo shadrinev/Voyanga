@@ -600,7 +600,7 @@ class AviaResultSet
     @roundTrip = sp.isRoundTrip
     if @roundTrip
       @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+Utils.tzOffset)
-      @rawRtDate = moment(new Date(sp.destinations[1].date+Utils.rzOffset))
+      @rawRtDate = moment(new Date(sp.destinations[1].date+Utils.tzOffset))
 
       @dateHeadingText += ', ' +@rtDate      
 

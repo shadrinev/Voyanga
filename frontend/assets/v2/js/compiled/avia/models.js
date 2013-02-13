@@ -851,7 +851,7 @@ AviaResultSet = (function() {
     this.roundTrip = sp.isRoundTrip;
     if (this.roundTrip) {
       this.rtDate = dateUtils.formatDayShortMonth(new Date(sp.destinations[1].date + Utils.tzOffset));
-      this.rawRtDate = moment(new Date(sp.destinations[1].date + Utils.rzOffset));
+      this.rawRtDate = moment(new Date(sp.destinations[1].date + Utils.tzOffset));
       return this.dateHeadingText += ', ' + this.rtDate;
     }
   };
