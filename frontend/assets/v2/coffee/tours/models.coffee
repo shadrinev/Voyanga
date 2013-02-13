@@ -684,6 +684,12 @@ class ToursResultSet
 
   # FIXME ищет в пустых результатах, пока костыльнул.
   findAndSelectItems: (items) =>
+    # В теории не должно никогда случаться, на практике видимо случается:
+    # Количество сегментов в результате от апи не равно количеству элементов
+    # в туре. Оттуда @data()[index] далее по тексту undefined.
+    if items.length != @data().length
+      return false
+      
     console.log('findAndSelectItems',items)
     success = true
 
