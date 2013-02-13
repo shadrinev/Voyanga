@@ -52,7 +52,7 @@ class FlightBookingPassport extends CActiveRecord
         // will receive user inputs.
         return array(
             array('firstName', 'required'),
-            array('flightBookingId, documentTypeId, countryId, genderId, passengerType', 'numerical', 'integerOnly'=>true),
+            array('flightBookingId, documentTypeId,passengerType, countryId, genderId, passengerType', 'numerical', 'integerOnly'=>true),
             array('firstName, lastName, birthday, series, number', 'length', 'max'=>45),
             array('ticketNumber','length','max'=>15),
             array('expiration, timestamp', 'safe'),
