@@ -119,6 +119,8 @@ class LandingController extends Controller {
 
 
         $hc = HotelDb::model()->find($criteria);
+        HotelBookClient::$updateProcess = true;
+        HotelBookClient::$downCountCacheFill = 2;
         $hotelsInfo = array();
         if($hc){
             $hotelInfo = $hotelClient->hotelDetail($hc->id);

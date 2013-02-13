@@ -1,3 +1,35 @@
+<script type="text/javascript">
+    window.hotPhotos = <?php echo json_encode($hotelInfo->images)?>;
+    console.log('hot hotels',window.hotPhotos);
+    initLandingPage = function() {
+        var app, avia, hotels, tour;
+        window.voyanga_debug = function() {
+            var args;
+            args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+            return console.log.apply(console, args);
+        };
+        app = new Application();
+        avia = new AviaModule();
+        hotels = new HotelsModule();
+        tour = new ToursModule();
+        window.app = app;
+        app.register('tours', tour, true);
+        app.register('hotels', hotels);
+        app.register('avia', avia);
+        app.runWithModule('tours');
+        app.activeModule('tours');
+        app.photos = window.hotPhotos;
+        app.numPhotos = window.hotPhotos.length;
+
+
+        ko.applyBindings(app);
+        ko.processAllDeferredBindingUpdates();
+    };
+    $(document).ready(function(){
+        initLandingPage();
+        //eventPhotos = new EventPhotoBox(window.eventPhotos);
+    })
+</script>
 <div class="center-block" >
 <div class="main-block" style="width: 935px; margin-left: auto; margin-right: auto;">
 <div id="content" style="width: 935px;">
@@ -24,14 +56,14 @@
 <div class="place-buy">
     <div class="street"><?php echo $hotelInfo->address;?></div>
     <ul class="tmblr">
-        <li class="active" id="hotel-info-tumblr-description"><span class="ico-descr"></span> <a href="#descr" data-bind="click: showDescriptionInfo">Описание</a></li>
-        <li id="hotel-info-tumblr-map"><span class="ico-see-map"></span> <a href="#map" data-bind="click: showMapInfo">На карте</a></li>
+        <li class="active" id="hotel-info-tumblr-description"><span class="ico-descr"></span> <a href="#descr" >Описание</a></li>
+        <li id="hotel-info-tumblr-map"><span class="ico-see-map"></span> <a href="#map" >На карте</a></li>
     </ul>
     <div class="book">
         <div class="how-cost">
-            от <span class="cost" data-bind="text: cheapestSet.pricePerNight">4389</span><span class="rur f21">o</span> / ночь
+            от <span class="cost">4389</span><span class="rur f21">o</span> / ночь
         </div>
-        <a class="pressButton" href="#"><span class="l"></span><span class="text" data-bind="text: selectText">Забронировать</span></a>
+        <a class="pressButton" href="#"><span class="l"></span><span class="text" >Забронировать</span></a>
     </div>
 </div>
 <!-- DESCR -->
@@ -39,38 +71,22 @@
     <div class="left">
         <div class="right">
             <div class="map-hotel">
-                <img src="//maps.googleapis.com/maps/api/staticmap?zoom=13&amp;size=310x259&amp;maptype=roadmap&amp;markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C%7C<?php echo $hotelInfo->latitude.','.$hotelInfo->longitude;?>&amp;sensor=false">
+                <img src="//maps.googleapis.com/maps/api/staticmap?zoom=13&amp;size=310x259&amp;maptype=roadmap&amp;markers=icon:http://voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C%7C<?php echo $hotelInfo->latitude.','.$hotelInfo->longitude;?>&amp;sensor=false">
             </div>
 
         </div>
         <!-- ko if: numPhotos > 0 -->
         <div class="photo-slide-hotel">
             <ul data-bind="foreach: photos,photoSlider: photos">
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296463b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="0"><img src="http://hotelbook.ru/photos/118/118/4/37/1296463b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296464b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="1"><img src="http://hotelbook.ru/photos/118/118/4/37/1296464b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296465b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="2"><img src="http://hotelbook.ru/photos/118/118/4/37/1296465b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296466b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="3"><img src="http://hotelbook.ru/photos/118/118/4/37/1296466b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296467b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="4"><img src="http://hotelbook.ru/photos/118/118/4/37/1296467b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296468b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="5"><img src="http://hotelbook.ru/photos/118/118/4/37/1296468b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296469b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="6"><img src="http://hotelbook.ru/photos/118/118/4/37/1296469b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296470b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="7"><img src="http://hotelbook.ru/photos/118/118/4/37/1296470b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-
-                <li><a href="http://hotelbook.ru/photos/118/118/4/37/1296471b.jpg" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="8"><img src="http://hotelbook.ru/photos/118/118/4/37/1296471b.jpg" data-bind="attr:{src: largeUrl}"></a></li>
-            </ul><div class="left-navi" style="display: none;"></div><div class="right-navi" style=""></div>
+                <li><a href="#" class="photo" data-bind="attr:{href: largeUrl,'data-photo-index': $index()},click: $parent.showPhoto" data-photo-index="0"><img src="#" data-bind="attr:{src: largeUrl}"></a></li>
+            </ul>
             <div class="photoNumb">Фотографии предоставлены отелями.</div>
         </div>
         <!-- /ko -->
         <div class="descr-text">
             <h3>Описание отеля</h3>
             <div class="text">
-                <span data-bind="html: limitDesc.startText"><?php echo str_replace("\n",'<br>',$hotelInfo->description);?></span>
+                <span><?php echo str_replace("\n",'<br>',$hotelInfo->description);?></span>
             </div>
         </div>
     </div>
@@ -88,7 +104,6 @@
 </div>
 <!-- END INFO TRIP -->
 <!-- SERVICE -->
-<!-- ko if: hasHotelGroupServices -->
 <div class="service-in-hotel">
     <div class="shadowHotel"><img src="/themes/v2/images/shadow-hotel.png"></div>
     <h3>Услуги в отеле</h3>
@@ -111,7 +126,6 @@
     </table>
     <?php endforeach;?>
 </div>
-<!-- /ko -->
 
 <!-- END SERVICE -->
 <div class="hotel-important-info">
