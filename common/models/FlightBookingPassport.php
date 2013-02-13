@@ -15,6 +15,7 @@
  * @property integer $countryId
  * @property string $expiration
  * @property integer $genderId
+ * @property integer $passengerType
  * @property string $ticketNumber
  * @property string $timestamp
  *
@@ -51,7 +52,7 @@ class FlightBookingPassport extends CActiveRecord
         // will receive user inputs.
         return array(
             array('firstName', 'required'),
-            array('flightBookingId, documentTypeId, countryId, genderId', 'numerical', 'integerOnly'=>true),
+            array('flightBookingId, documentTypeId, countryId, genderId, passengerType', 'numerical', 'integerOnly'=>true),
             array('firstName, lastName, birthday, series, number', 'length', 'max'=>45),
             array('ticketNumber','length','max'=>15),
             array('expiration, timestamp', 'safe'),
@@ -115,6 +116,7 @@ class FlightBookingPassport extends CActiveRecord
         $criteria->compare('number',$this->number,true);
         $criteria->compare('flightBookingId',$this->flightBookingId);
         $criteria->compare('documentTypeId',$this->documentTypeId);
+        $criteria->compare('passengerType',$this->documentTypeId);
         $criteria->compare('countryId',$this->countryId);
         $criteria->compare('expiration',$this->expiration,true);
         $criteria->compare('genderId',$this->genderId);
@@ -137,6 +139,7 @@ class FlightBookingPassport extends CActiveRecord
         $this->genderId = $passport->genderId;
         $this->ticketNumber = $passport->ticketNumber;
         $this->documentTypeId = $passport->documentTypeId;
+        $this->passengerType = $passport->passengerType;
         $this->flightBookingId = $flightBookerId;        
     }
 
@@ -146,7 +149,12 @@ class FlightBookingPassport extends CActiveRecord
         $today = new DateTime('00:00:00'); // for testing purposes
         $diff = $today->diff($bday);
         if ($diff->y < 2)
-            return Passenger::TYPE_INFANT;
+            if($this->passengerType == Passenger::TYPE_CHILD)
+            {
+                return Passenger::TYPE_INFANT_PLACE;
+            }else{
+                return Passenger::TYPE_INFANT;
+            }
         if ($diff->y < 12)
             return Passenger::TYPE_CHILD;
         return Passenger::TYPE_ADULT;

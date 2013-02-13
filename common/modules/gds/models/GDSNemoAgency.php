@@ -607,7 +607,17 @@ class GDSNemoAgency extends CComponent
         {
 
             $flightBookingResponse->pnr = $response->Response->BookFlight->Code;
-            $flightBookingResponse->expiration = strtotime($response->Response->BookFlight->Flight->PricingInfo->PassengerFare->LastTicketDateTime->_);
+            $flightBookingResponse->expiration = false;
+            UtilsHelper::soapObjectsArray($response->Response->BookFlight->Flight->PricingInfo->PassengerFare);
+            foreach ($response->Response->BookFlight->Flight->PricingInfo->PassengerFare as $oFare)
+            {
+                if(!$flightBookingResponse->expiration){
+                    $flightBookingResponse->expiration = strtotime($oFare->LastTicketDateTime->_);
+                }
+                if($flightBookingResponse->expiration < strtotime($oFare->LastTicketDateTime->_)){
+                    $flightBookingResponse->expiration = strtotime($oFare->LastTicketDateTime->_);
+                }
+            }
             $flightBookingResponse->nemoBookId = $response->Response->BookFlight->ID;
             $flightBookingResponse->status = 1;
         }

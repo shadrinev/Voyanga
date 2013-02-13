@@ -41,7 +41,7 @@
           <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
           <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
         </div>
-        детей до 12 лет
+        до 12 лет с местом
       </div>
       <div class="small-childs">
         <div class="inputDIV">
@@ -49,7 +49,7 @@
             <a href="#" class="plusOne" data-bind="click: plusOne" rel="infants" style="display: none;">+</a>
             <a href="#" class="minusOne" data-bind="click: minusOne" rel="infants" style="display: none;">-</a>
         </div>
-        детей до 2 лет
+        до 2 лет без места
       </div>
     </div>
     <div class="one-str" data-bind="foreach: ages, visible: ages().length">

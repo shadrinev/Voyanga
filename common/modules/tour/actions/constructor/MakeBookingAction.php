@@ -87,6 +87,20 @@ class MakeBookingAction extends CAction
         return !$this->bookingForm->hasErrors(); //just to get passport data ability to check too
     }
 
+    public static function formCompare($a,$b)
+    {
+        $abd = $a['formData']['birthdayYear'].'-'.$a['formData']['birthdayMonth'].'-'.$a['formData']['birthdayDay'];
+        $at = DateTime::createFromFormat('Y-m-d',$abd);
+        $bbd = $b['formData']['birthdayYear'].'-'.$b['formData']['birthdayMonth'].'-'.$b['formData']['birthdayDay'];
+        $bt = DateTime::createFromFormat('Y-m-d',$bbd);
+        $diff = $bt->diff($at);
+        //print_r($diff->days);
+        //echo "diff: ".($diff->days*($diff->invert ? -1 : 1))." abd:$abd bbd: $bbd";
+        $ret = (($diff->days*($diff->invert ? -1 : 1)) > 0) ? 1 : ((($diff->days*($diff->invert ? -1 : 1)) < 0) ? -1 : 0);
+        //echo "ret: $ret ||";
+        return $ret;
+    }
+
     private function fillOutPassports($ambigous)
     {
         $errorCounter = 0;
@@ -95,57 +109,70 @@ class MakeBookingAction extends CAction
             $adultsPassports = array();
             $childrenPassports = array();
             $infantsPassports = array();
+            $adcnt = isset($_POST['FlightAdultPassportForm']) ? count($_POST['FlightAdultPassportForm']) : 0;
+            $chcnt = isset($_POST['FlightChildPassportForm']) ? count($_POST['FlightChildPassportForm']) : 0;
+            $incnt = isset($_POST['FlightInfantPassportForm']) ? count($_POST['FlightAdultPassportForm']) : 0;
+            //echo "adcnt: {$adcnt} chcnt: {$chcnt} incnt: {$incnt}";
+            $formsData = array();
+            $i = 0;
             if (isset($_POST['FlightAdultPassportForm']))
             {
-                foreach ($_POST['FlightAdultPassportForm'] as $i=>$formData)
+                foreach ($_POST['FlightAdultPassportForm'] as $formData)
                 {
-                    $adultPassport = new FlightAdultPassportForm();
-                    $adultPassport->attributes = $_POST['FlightAdultPassportForm'][$i];
-                    $adultsPassports[] = $adultPassport;
-                }
-                foreach ($adultsPassports as $p)
-                {
-                    if (!$p->validate())
-                    {
-                        $this->validationErrors['passports'][$i] = $p->errors;
-                        $errorCounter++;
-                    }
+                    $formsData[$i] = array('i'=>$i,'formData'=>$formData);
+                    $i++;
                 }
             }
             if (isset($_POST['FlightChildPassportForm']))
             {
-                foreach ($_POST['FlightChildPassportForm'] as $i=>$formData)
+                foreach ($_POST['FlightChildPassportForm'] as $formData)
                 {
-                    $childrenPassport = new FlightChildPassportForm();
-                    $childrenPassport->attributes = $_POST['FlightChildPassportForm'][$i];
-                    $childrenPassports[] = $childrenPassport;
-                }
-                foreach ($childrenPassports as $p)
-                {
-                    if (!$p->validate())
-                    {
-                        $this->validationErrors['passports'][$i] = $p->errors;
-                        $errorCounter++;
-                    }
+                    $formsData[$i] = array('i'=>$i,'formData'=>$formData);
+                    $i++;
                 }
             }
             if (isset($_POST['FlightInfantPassportForm']))
             {
-                foreach ($_POST['FlightInfantPassportForm'] as $i=>$formData)
+                foreach ($_POST['FlightInfantPassportForm'] as $formData)
                 {
-                    $infantsPassport = new FlightInfantPassportForm();
-                    $infantsPassport->attributes = $_POST['FlightInfantPassportForm'][$i];
-                    $infantsPassports[] = $infantsPassport;
-                }
-                foreach ($infantsPassports as $p)
-                {
-                    if (!$p->validate())
-                    {
-                        $this->validationErrors['passports'][$i] = $p->errors;
-                        $errorCounter++;
-                    }
+                    $formsData[$i] = array('i'=>$i,'formData'=>$formData);
+                    $i++;
                 }
             }
+
+            if(count($formsData)>1){
+                usort($formsData,'MakeBookingAction::formCompare');
+            }
+            foreach($formsData as $formInfo){
+                if($adcnt > 0){
+                    $adcnt--;
+                    $adultPassport = new FlightAdultPassportForm();
+                    $adultPassport->attributes = $formInfo['formData'];
+                    $adultsPassports[] = $adultPassport;
+                    $p = &$adultsPassports[(count($adultsPassports)-1)];
+
+                }elseif($chcnt > 0){
+                    $chcnt--;
+                    $childrenPassport = new FlightChildPassportForm();
+                    $childrenPassport->attributes = $formInfo['formData'];
+                    $childrenPassports[] = $childrenPassport;
+                    $p = &$childrenPassports[(count($childrenPassports)-1)];
+
+                }elseif($incnt > 0){
+                    $incnt--;
+                    $infantsPassport = new FlightInfantPassportForm();
+                    $infantsPassport->attributes = $formInfo['formData'];
+                    $infantsPassports[] = $infantsPassport;
+                    $p = &$infantsPassports[(count($infantsPassports)-1)];
+
+                }
+                if (!$p->validate())
+                {
+                    $this->validationErrors['passports'][$formInfo['i']] = $p->errors;
+                    $errorCounter++;
+                }
+            }
+
             if ($errorCounter>0)
                 return false;
 
