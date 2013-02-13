@@ -82,7 +82,8 @@ class GDSNemoSoapClient extends SoapClient
                 $this->gdsRequest->errorDescription = Yii::t( 'application', 'Error on soap request. Curl description: {curl_desc}. Last headers: {last_headers}.', array('{curl_desc}'=>GDSNemoSoapClient::$lastCurlError,'{last_headers}'=>GDSNemoSoapClient::$lastHeaders));
                 if (appParams('enableFlightLogging'))
                     $this->gdsRequest->save();
-                throw new CException( Yii::t( 'application', 'Error on soap request. Curl description: {curl_desc}. Last headers: {last_headers}.', array('{curl_desc}'=>GDSNemoSoapClient::$lastCurlError,'{last_headers}'=>GDSNemoSoapClient::$lastHeaders)) );
+                return "";
+//                throw new CException( Yii::t( 'application', 'Error on soap request. Curl description: {curl_desc}. Last headers: {last_headers}.', array('{curl_desc}'=>GDSNemoSoapClient::$lastCurlError,'{last_headers}'=>GDSNemoSoapClient::$lastHeaders)) );
             }
         }
 
