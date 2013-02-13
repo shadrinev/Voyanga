@@ -260,3 +260,12 @@ String.prototype.format = ->
 isEmail = (email) ->
   emailPatterh = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
   email.match emailPattern
+
+
+waitElement = (selector, callback) ->
+  if $(selector).size()
+    return callback($(selector))
+  else
+    setTimeout ->
+      waitElement(selector, callback)
+    ,100
