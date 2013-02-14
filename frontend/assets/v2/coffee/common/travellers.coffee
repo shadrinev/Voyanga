@@ -6,20 +6,25 @@ class PeopleSelector
     @inside3 = false
 
   show: (context, event) =>
-    el = $(event.currentTarget).parent().find('.popup')
+    el = $('.popup')
     if !el.hasClass('active')
-      $(document.body).mousedown =>
-        if @inside ||  @inside2 || @inside3
+      $(document.body).mousedown (event)=>
+        console.log('click event',event)
+        if (($(event.target).parents('.popup').length > 0) || ($(event.target).parents('.how-many-man').length > 0))
           return
         @close()
       $('.how-many-man .btn').addClass('active')
       $('.how-many-man .content').addClass('active')
-      el = $('.how-many-man').find('.popup')
+      elWidth = el.width()
+      #el = $('.how-many-man').find('.popup')
       el.addClass('active')
       coords = $('.how-many-man').offset()
-      el.css 'top', coords.top +  $('.how-many-man').height() 
-      el.css 'left', coords.left
-      
+      #el.css 'top', coords.top +  $('.how-many-man').height()
+      #el.css 'left', coords.left
+      el.css 'right', (-elWidth + $('.how-many-man').innerWidth()) + 'px'
+      #el.css 'top', ($('.board-content').height()) + 'px'
+      el.css 'top', '63px'
+      el.css 'position', 'absolute'
     else
       @close()
 

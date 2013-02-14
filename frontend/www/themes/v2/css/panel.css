@@ -387,6 +387,7 @@
     z-index: 997;
     right: 0px;
     top: 106px;
+    margin-right: -2px;
 }
 .how-many-man .popup.active {
 	display: block;
@@ -518,6 +519,7 @@
 	top: 63px;
     position: fixed;
     right: 0px;
+    margin-right: 0px;
 }
 .number-hotel {
 	width: 198px;
@@ -578,6 +580,9 @@
     padding-top: 5px;
     position: relative;
     text-shadow: 0 1px 0 #FFFFFF;
+    width: 56px;
+}
+.how-many-man .popup .one-str .childs {
     width: 60px;
 }
 .how-many-man .popup .one-str .small-childs {
@@ -589,7 +594,7 @@
     padding-top: 5px;
     position: relative;
     text-shadow: 0 1px 0 #FFFFFF;
-    width: 48px;
+    width: 60px;
 }
 .one-str .ages {
 	width: 40px;

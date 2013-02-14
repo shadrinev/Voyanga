@@ -265,6 +265,7 @@ class ToursHotelsResultSet extends TourEntry
             Utils.scrollTo('#hotelResult'+hotel.hotelId)
           else
             hotel.parent.showFullMapFunc(null,null,true)
+      hotel.getFullInfo()
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
         @select roomData

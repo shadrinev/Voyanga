@@ -20,23 +20,25 @@ PeopleSelector = (function() {
   }
 
   PeopleSelector.prototype.show = function(context, event) {
-    var coords, el,
+    var coords, el, elWidth,
       _this = this;
-    el = $(event.currentTarget).parent().find('.popup');
+    el = $('.popup');
     if (!el.hasClass('active')) {
-      $(document.body).mousedown(function() {
-        if (_this.inside || _this.inside2 || _this.inside3) {
+      $(document.body).mousedown(function(event) {
+        console.log('click event', event);
+        if (($(event.target).parents('.popup').length > 0) || ($(event.target).parents('.how-many-man').length > 0)) {
           return;
         }
         return _this.close();
       });
       $('.how-many-man .btn').addClass('active');
       $('.how-many-man .content').addClass('active');
-      el = $('.how-many-man').find('.popup');
+      elWidth = el.width();
       el.addClass('active');
       coords = $('.how-many-man').offset();
-      el.css('top', coords.top + $('.how-many-man').height());
-      return el.css('left', coords.left);
+      el.css('right', (-elWidth + $('.how-many-man').innerWidth()) + 'px');
+      el.css('top', '63px');
+      return el.css('position', 'absolute');
     } else {
       return this.close();
     }

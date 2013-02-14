@@ -539,10 +539,15 @@ class GDSNemoAgency extends CComponent
         {
             $aTraveler = array();
             $iNum = 1;
+            $infLinkedToNum = 1;
             foreach ($oFlightBookingParams->passengers as $passenger)
             {
                 $oTraveller['Type'] = Yii::app()->params['aPassegerTypes'][$passenger->type];
                 $oTraveller['Num'] = $iNum;
+                if($oTraveller['Type'] == 'INF'){
+                    $oTraveller['LinkedTo'] = $infLinkedToNum;
+                    $infLinkedToNum++;
+                }
                 $oTraveller['IsContact'] = $iNum == 1 ? true : false;
                 $oTraveller['PersonalInfo'] = array();
                 $oTraveller['PersonalInfo']['DateOfBirth'] = $passenger->passport->birthday;

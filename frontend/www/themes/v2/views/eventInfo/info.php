@@ -32,7 +32,7 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
     })
 </script>
 <span style="display: none" id='socialSource'>
-    <div id='socialButtons'>
+    <div id='socialButtons' style="display: none">
         <a href="javascript:void(0);" id="followLink" title="Прямая ссылка">
             <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText" value="http://example.com/"> </span>
         </a>
@@ -168,8 +168,7 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
 
                                     <td class="tdPeople" data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
                                         <!-- ko if: ($index()+1) == $length() -->
-                    <span
-                            data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}"></span>
+                    <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}"></span>
                                         <!-- /ko -->
                                     </td>
                                     <td class="tdButton">
