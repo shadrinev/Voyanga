@@ -473,6 +473,7 @@ ToursHotelsResultSet = (function(_super) {
           }
         });
       });
+      hotel.getFullInfo();
       hotel.off('select');
       hotel.on('select', function(roomData) {
         _this.select(roomData);

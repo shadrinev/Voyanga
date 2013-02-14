@@ -387,6 +387,7 @@
     z-index: 997;
     right: 0px;
     top: 106px;
+    margin-right: -2px;
 }
 .how-many-man .popup.active {
 	display: block;
@@ -518,6 +519,7 @@
 	top: 63px;
     position: fixed;
     right: 0px;
+    margin-right: 0px;
 }
 .number-hotel {
 	width: 198px;

@@ -89,9 +89,24 @@ class MakeBookingAction extends CAction
 
     public static function formCompare($a,$b)
     {
-        $abd = $a['formData']['birthdayYear'].'-'.$a['formData']['birthdayMonth'].'-'.$a['formData']['birthdayDay'];
+        if(
+            isset($a['formData']['birthdayYear'],$a['formData']['birthdayMonth'],$a['formData']['birthdayDay']) &&
+            ($a['formData']['birthdayYear'] && $a['formData']['birthdayMonth'] && $a['formData']['birthdayDay'])
+        ){
+            $abd = $a['formData']['birthdayYear'].'-'.$a['formData']['birthdayMonth'].'-'.$a['formData']['birthdayDay'];
+        }else{
+            $abd = '1900-01-01';
+        }
         $at = DateTime::createFromFormat('Y-m-d',$abd);
-        $bbd = $b['formData']['birthdayYear'].'-'.$b['formData']['birthdayMonth'].'-'.$b['formData']['birthdayDay'];
+
+        if(
+            isset($b['formData']['birthdayYear'],$b['formData']['birthdayMonth'],$b['formData']['birthdayDay']) &&
+            ($b['formData']['birthdayYear'] && $b['formData']['birthdayMonth'] && $b['formData']['birthdayDay'])
+        ){
+            $bbd = $b['formData']['birthdayYear'].'-'.$b['formData']['birthdayMonth'].'-'.$b['formData']['birthdayDay'];
+        }else{
+            $bbd = '1900-01-01';
+        }
         $bt = DateTime::createFromFormat('Y-m-d',$bbd);
         $diff = $bt->diff($at);
         //print_r($diff->days);
