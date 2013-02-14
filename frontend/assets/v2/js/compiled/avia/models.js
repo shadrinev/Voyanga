@@ -1167,7 +1167,11 @@ AviaSearchParams = (function(_super) {
 
   function AviaSearchParams() {
     AviaSearchParams.__super__.constructor.apply(this, arguments);
-    this.dep = ko.observable('');
+    if (window.currentCityCode) {
+      this.dep = ko.observable(window.currentCityCode);
+    } else {
+      this.dep = ko.observable('LED');
+    }
     this.arr = ko.observable('');
     this.rt = ko.observable(true);
     this.rtDate = ko.observable('');

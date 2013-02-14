@@ -805,7 +805,11 @@ class AviaResultSet
 class AviaSearchParams extends SearchParams
   constructor: ->
     super
-    @dep = ko.observable ''
+    #@dep = ko.observable ''
+    if(window.currentCityCode)
+      @dep = ko.observable window.currentCityCode
+    else
+      @dep = ko.observable 'LED'
     @arr = ko.observable ''
     @rt = ko.observable true
     @rtDate = ko.observable ''
