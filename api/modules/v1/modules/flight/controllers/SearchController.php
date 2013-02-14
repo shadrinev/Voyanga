@@ -62,7 +62,7 @@ class SearchController extends ApiController
     {
         if (sizeof($destinations)==2)
         {
-            if ($destinations[0]['city'] == $destinations[1]['city'])
+            if ($destinations[0]['departure'] == $destinations[1]['arrival'])
                 return false;
         }
         return true;
