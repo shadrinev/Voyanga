@@ -1150,7 +1150,7 @@ AviaResultSet = (function() {
         }
       }
     }
-    return data[0];
+    return this.data[0];
   };
 
   AviaResultSet.prototype.filtersRendered = function() {
