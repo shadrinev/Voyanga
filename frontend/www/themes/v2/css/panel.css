@@ -580,6 +580,9 @@
     padding-top: 5px;
     position: relative;
     text-shadow: 0 1px 0 #FFFFFF;
+    width: 56px;
+}
+.how-many-man .popup .one-str .childs {
     width: 60px;
 }
 .how-many-man .popup .one-str .small-childs {
@@ -591,7 +594,7 @@
     padding-top: 5px;
     position: relative;
     text-shadow: 0 1px 0 #FFFFFF;
-    width: 48px;
+    width: 60px;
 }
 .one-str .ages {
 	width: 40px;
