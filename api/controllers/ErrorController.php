@@ -11,7 +11,8 @@ class ErrorController extends ApiController
     {
         if ($error = Yii::app()->errorHandler->error)
         {
-            VarDumper::dump($error);
+            if (YII_DEBUG)
+                VarDumper::dump($error);
         }
     }
 }

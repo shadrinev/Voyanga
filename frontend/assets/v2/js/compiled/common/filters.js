@@ -555,6 +555,7 @@ TextFilter = (function(_super) {
     lit = this.selection();
     result = true;
     if (lit !== '') {
+      lit = lit.replace(/([\\\(\)\{\}\[\]\.\*\?\^\$\|\+\-])/g, '\\$1');
       expr = new RegExp(lit, 'ig');
       result = expr.test(item[this.key]);
     }
