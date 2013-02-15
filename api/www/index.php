@@ -1,15 +1,18 @@
 <?php
-defined('YII_DEBUG') or define('YII_DEBUG', true);
-defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
-// On dev display all errors
+$debug = true;
+$prodServers = array('api.voyanga.com');
+if ((isset($_SERVER['HTTP_HOST'])) && (in_array($_SERVER['HTTP_HOST'], $prodServers)))
+    $debug = false;
+defined('YII_DEBUG') or define('YII_DEBUG', $debug);
 if (YII_DEBUG)
 {
+    defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
     error_reporting(-1);
     ini_set('display_errors', true);
-    header("Access-Control-Allow-Origin: *");
 }
 
 date_default_timezone_set('Europe/Moscow');
+header("Access-Control-Allow-Origin: *");
 
 chdir(dirname(__FILE__) . '/../..');
 

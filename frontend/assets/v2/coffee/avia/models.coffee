@@ -5,8 +5,8 @@
 class FlightPart
   constructor: (part)->
     @part = part
-    @departureDate = new Date(part.datetimeBegin+Utils.tzOffset)
-    @arrivalDate = new Date(part.datetimeEnd+Utils.tzOffset)
+    @departureDate = Date.fromISO(part.datetimeBegin+Utils.tzOffset)
+    @arrivalDate = Date.fromISO(part.datetimeEnd+Utils.tzOffset)
     @departureCity = part.departureCity
     @departureCityPre = part.departureCityPre
     @departureAirport = part.departureAirport
@@ -63,8 +63,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
         if part.stopoverLength > @maxStopoverLength
           @maxStopoverLength = part.stopoverLength
 
-    # FIXME !!!!!!!!!!!!!!!!!!!!!
-    @departureDate = new Date(flight.departureDate+Utils.tzOffset)
+    @departureDate = Date.fromISO(flight.departureDate+Utils.tzOffset)
     # fime it is converted already
     @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
 
@@ -594,13 +593,13 @@ class AviaResultSet
     @rawSP = sp
     @arrivalCity = sp.destinations[0].arrival
     @departureCity = sp.destinations[0].departure
-    @rawDate = moment(new Date(sp.destinations[0].date+Utils.tzOffset))
-    @date = dateUtils.formatDayShortMonth new Date(sp.destinations[0].date+Utils.tzOffset)
+    @rawDate = moment(Date.fromISO(sp.destinations[0].date+Utils.tzOffset))
+    @date = dateUtils.formatDayShortMonth Date.fromISO(sp.destinations[0].date+Utils.tzOffset)
     @dateHeadingText = @date
     @roundTrip = sp.isRoundTrip
     if @roundTrip
-      @rtDate = dateUtils.formatDayShortMonth new Date(sp.destinations[1].date+Utils.tzOffset)
-      @rawRtDate = moment(new Date(sp.destinations[1].date+Utils.tzOffset))
+      @rtDate = dateUtils.formatDayShortMonth Date.fromISO(sp.destinations[1].date+Utils.tzOffset)
+      @rawRtDate = moment(Date.fromISO(sp.destinations[1].date+Utils.tzOffset))
 
       @dateHeadingText += ', ' +@rtDate      
 
