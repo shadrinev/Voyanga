@@ -1,12 +1,13 @@
 <?php
-$this->pageTitle=Yii::app()->name . ' - Error';
-$this->breadcrumbs=array(
-	'Error',
-);
+    $theme = Yii::app()->theme->baseUrl;
 ?>
-
-<h2>Error <?php echo $code; ?></h2>
-
-<div class="error">
-<?php echo CHtml::encode($message); ?>
+<script type="text/javascript">
+    $(function () {
+        window.app.runWithModule('tours');
+    });
+</script>
+<div class="center-block">
+    <div class="main-block innerPage" id="content">
+        <h1>Страница не найдена</h1>
+    </div>
 </div>
