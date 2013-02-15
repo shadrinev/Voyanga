@@ -8,8 +8,8 @@ FlightPart = (function() {
 
   function FlightPart(part) {
     this.part = part;
-    this.departureDate = new Date(part.datetimeBegin + Utils.tzOffset);
-    this.arrivalDate = new Date(part.datetimeEnd + Utils.tzOffset);
+    this.departureDate = Date.fromISO(part.datetimeBegin + Utils.tzOffset);
+    this.arrivalDate = Date.fromISO(part.datetimeEnd + Utils.tzOffset);
     this.departureCity = part.departureCity;
     this.departureCityPre = part.departureCityPre;
     this.departureAirport = part.departureAirport;
@@ -83,7 +83,7 @@ Voyage = (function() {
         }
       }
     }
-    this.departureDate = new Date(flight.departureDate + Utils.tzOffset);
+    this.departureDate = Date.fromISO(flight.departureDate + Utils.tzOffset);
     this.arrivalDate = new Date(this.parts[this.parts.length - 1].arrivalDate);
     this._duration = flight.fullDuration;
     this.departureAirport = this.parts[0].departureAirport;
@@ -845,13 +845,13 @@ AviaResultSet = (function() {
     this.rawSP = sp;
     this.arrivalCity = sp.destinations[0].arrival;
     this.departureCity = sp.destinations[0].departure;
-    this.rawDate = moment(new Date(sp.destinations[0].date + Utils.tzOffset));
-    this.date = dateUtils.formatDayShortMonth(new Date(sp.destinations[0].date + Utils.tzOffset));
+    this.rawDate = moment(Date.fromISO(sp.destinations[0].date + Utils.tzOffset));
+    this.date = dateUtils.formatDayShortMonth(Date.fromISO(sp.destinations[0].date + Utils.tzOffset));
     this.dateHeadingText = this.date;
     this.roundTrip = sp.isRoundTrip;
     if (this.roundTrip) {
-      this.rtDate = dateUtils.formatDayShortMonth(new Date(sp.destinations[1].date + Utils.tzOffset));
-      this.rawRtDate = moment(new Date(sp.destinations[1].date + Utils.tzOffset));
+      this.rtDate = dateUtils.formatDayShortMonth(Date.fromISO(sp.destinations[1].date + Utils.tzOffset));
+      this.rawRtDate = moment(Date.fromISO(sp.destinations[1].date + Utils.tzOffset));
       return this.dateHeadingText += ', ' + this.rtDate;
     }
   };
