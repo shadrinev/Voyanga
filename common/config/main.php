@@ -218,7 +218,8 @@ return array(
                     'logTableName' => 'shared_memory'
                 ),
                 array(
-                    'class'=> 'common.extensions.yii-sentry-log.RSentryLog',
+                    'class' => 'common.extensions.yii-sentry-log.RSentryLog',
+                    'filter' => 'VoyangaLogFilter',
                     'dsn'=> $params['sentry.dsn'],
                     'levels'=> 'error, warning',
                 ),
