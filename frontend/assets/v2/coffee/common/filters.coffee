@@ -318,6 +318,7 @@ class TextFilter extends Filter
     lit = @selection()
     result = true
     if lit != ''
+      lit = lit.replace(/([\\\(\)\{\}\[\]\.\*\?\^\$\|\+\-])/g,'\\$1')
       expr = new RegExp(lit, 'ig');
       result = expr.test item[@key]
     return result
