@@ -1,8 +1,8 @@
 <?php
-    $theme = Yii::app()->theme->baseUrl;
+$theme = Yii::app()->theme->baseUrl;
 ?>
 <script type="text/javascript">
-    $(function () {
+    $(function(){
         window.app.runWithModule('tours');
     });
 </script>

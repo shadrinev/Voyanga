@@ -14,7 +14,7 @@ class SiteController extends FrontendController
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
             else
-                $this->renderPartial('error', $error);
+                $this->render('error', array('error' => $error));
         }
         Yii::app()->end();
     }
