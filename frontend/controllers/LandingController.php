@@ -108,7 +108,7 @@ class LandingController extends Controller
         ));
     }
 
-    public function actionHotelInfo($hotelId)
+    public function actionHotelInfo($hotelId, $update = '')
     {
         Yii::import('site.common.modules.hotel.models.*');
         $hotelClient = new HotelBookClient();
@@ -121,6 +121,15 @@ class LandingController extends Controller
         $hc = HotelDb::model()->find($criteria);
         HotelBookClient::$updateProcess = true;
         HotelBookClient::$downCountCacheFill = 2;
+        if ($update === 'yes') {
+            $cachePath = Yii::getPathOfAlias('cacheStorage');
+            $cacheSubDir = md5('HotelDetail' . $hotelId);
+            $cacheSubDir = substr($cacheSubDir, -3);
+            $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/HotelDetail' . $hotelId . '.xml';
+            if (file_exists($cacheFilePath)) {
+                unlink($cacheFilePath);
+            }
+        }
         $hotelsInfo = array();
         if ($hc) {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
