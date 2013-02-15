@@ -1,26 +1,32 @@
-<?php if($hotelsInfo):?>
+<?php if ($hotelsInfo): ?>
 <div class="headBlockTwo">
     <div class="center-block">
         <h2>Отели в <?php echo $city->casePre;?></h2>
-        <?php foreach($hotelsInfo as $hotInfo):?>
+        <?php foreach ($hotelsInfo as $hotInfo): ?>
         <div class="hotels-tickets parkPage">
             <div class="content">
                 <div class="full-info">
                     <div class="preview-photo">
                         <ul>
-                            <li><a class="photo" href="<?php echo '/land/hotel/'.$hotInfo->hotelId;?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
+                            <li><a class="photo" href="<?php echo '/land/hotel/' . $hotInfo->hotelId;?>"><img
+                                src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
                         </ul>
                     </div>
                     <div class="stars <?php echo $hotInfo->getWordStars();?>"></div>
                     <div class="overflowBlock">
-                        <h4><?php echo $hotInfo->hotelName;?></h4>
+                        <h4><a
+                            href="<?php echo '/land/hotel/' . $hotInfo->hotelId;?>"><?php echo $hotInfo->hotelName;?></a>
+                        </h4>
+
                         <div class="street">
                             <span><?php echo $hotInfo->address;?></span>
                             <span class="gradient"></span>
                         </div>
                     </div>
                     <div class="how-cost">
-                        от <span class="cost"><?php echo $hotInfo->price;?></span> <span class="rur">o</span> / ночь
+                        от <span class="cost"><a
+                        href="<?php echo '/land/hotel/' . $hotInfo->hotelId;?>"><?php echo $hotInfo->price;?></a></span>
+                        <span class="rur">o</span> / ночь
                     </div>
                 </div>
             </div>
@@ -35,4 +41,4 @@
         <div class="clear"></div>
     </div>
 </div>
-<?php endif;?>
+<?php endif; ?>
