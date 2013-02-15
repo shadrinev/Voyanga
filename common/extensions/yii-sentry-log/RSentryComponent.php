@@ -49,13 +49,13 @@ class RSentryComponent extends CApplicationComponent
      */
     public function handleException($event)
     {
-        if ($event->exception instanceof CHttpException)
+        if (!($event->exception instanceof CHttpException))
             $this->_client->captureException($event->exception);
     }
 
     public function logException($exception)
     {
-        if ($exception instanceof CHttpException)
+        if (!($exception instanceof CHttpException))
             $this->_client->captureException($exception);
     }
 }
