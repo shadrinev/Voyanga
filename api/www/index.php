@@ -7,8 +7,7 @@ defined('YII_DEBUG') or define('YII_DEBUG', $debug);
 // On dev display all errors
 if (isset($_GET['test']))
 {
-    var_dump($_SERVER);
-    var_dump($debug);
+    var_dump(YII_DEBUG);
     die();
 }
 if (YII_DEBUG)
