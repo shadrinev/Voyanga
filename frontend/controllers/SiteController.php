@@ -8,11 +8,15 @@ class SiteController extends FrontendController
     public function actionError()
     {
         $this->assignTitle('error');
+        $this->layout = 'static';
         if ($error = Yii::app()->errorHandler->error)
         {
-            if (Yii::app()->request->isAjaxRequest) echo $error['message'];
-            else $this->renderPartial('error', $error);
+            if (Yii::app()->request->isAjaxRequest)
+                echo $error['message'];
+            else
+                $this->render('error', array('error' => $error));
         }
+        Yii::app()->end();
     }
 
     public function actionDeploy($key)
@@ -111,6 +115,7 @@ class SiteController extends FrontendController
         $this->render('agreement_hotel');
         Yii::app()->end();
     }
+
     public function actionAgreement()
     {
         $this->assignTitle('agreement');

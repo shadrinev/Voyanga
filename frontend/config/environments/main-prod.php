@@ -15,13 +15,13 @@ return array(
 				array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error',
-					'filter'=>'CLogFilter',
+					'filter'=>'VoyangaLogFilter',
 					'logFile' => 'applicationError.log',
 				),
                 array(
                     'class' => 'CEmailLogRoute',
                     'levels' => 'error, warning',
-                    'filter' => 'CLogFilter',
+                    'filter' => 'VoyangaLogFilter',
                     'emails' => 'reports-frontend@voyanga.com,shadrin@voyanga.com,maximov@voyanga.com'
                 ),
 			),

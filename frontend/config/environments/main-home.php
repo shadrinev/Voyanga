@@ -24,11 +24,12 @@ return array(
 					'filter'=>'CLogFilter',
 					'logFile' => 'applicationError.log',
 				),
-				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'warning, trace, info',
-					'filter'=>'CLogFilter',
-				),
+                array(
+                    'class' => 'CEmailLogRoute',
+                    'levels' => 'error, warning',
+                    'filter' => 'VoyangaLogFilter',
+                    'emails' => 'kuklin@voyanga.com'
+                ),
 			),
 		),
 	),

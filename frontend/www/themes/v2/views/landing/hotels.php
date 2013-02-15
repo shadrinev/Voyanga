@@ -4,7 +4,7 @@
     window.pointCity = '<?php echo $city->code; ?>';
     //window.apiEndPoint = 'http://api.oleg.voyanga';
 
-    function setDepartureDate(strDate){
+    function setDepartureDate(strDate) {
         var checkIn = moment(strDate);
         window.app.fakoPanel().checkIn(checkIn._d);
         var checkOut = moment(checkIn);
@@ -12,9 +12,9 @@
         window.app.fakoPanel().checkOut(checkOut._d);
 
     }
-    initLandingPage = function() {
+    initLandingPage = function () {
         var app, avia, hotels, tour;
-        window.voyanga_debug = function() {
+        window.voyanga_debug = function () {
             var args;
             args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
             return console.log.apply(console, args);
@@ -46,89 +46,62 @@
         ko.processAllDeferredBindingUpdates();
     };
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         initLandingPage();
         //eventPhotos = new EventPhotoBox(window.eventPhotos);
     })
 
 </script>
-<div class="headBlockTwo">
-    <div class="center-block">
-        <h2>Отели в <?php echo $city->casePre;?></h2>
-        <?php foreach($hotelsInfo as $hotInfo):?>
-        <div class="hotels-tickets parkPage">
-            <div class="content">
-                <div class="full-info">
-                    <div class="preview-photo">
-                        <ul>
-                            <li><a class="photo" href="<?php echo '/land/hotel/'.$hotInfo->hotelId;?>"><img src="<?php echo $hotInfo->getFrontImageUrl();?>"></a></li>
-                        </ul>
-                    </div>
-                    <div class="stars <?php echo $hotInfo->getWordStars();?>"></div>
-                    <div class="overflowBlock">
-                        <h4><?php echo $hotInfo->hotelName;?></h4>
-                        <div class="street">
-                            <span><?php echo $hotInfo->address;?></span>
-                            <span class="gradient"></span>
-                        </div>
-                    </div>
-                    <div class="how-cost">
-                        от <span class="cost"><?php echo $hotInfo->price;?></span> <span class="rur">o</span> / ночь
-                    </div>
-                </div>
-            </div>
-            <span class="lt"></span>
-            <span class="rt"></span>
-            <span class="lv"></span>
-            <span class="rv"></span>
-            <span class="bh"></span>
-        </div>
-        <?php endforeach; ?>
-    <div class="clear"></div>
-</div>
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
 
-    <!--<div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
+<!--<div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
 
-        <div class="board"  style="position: static;">
-            <div class="constructor" style="position: static;">-->
+<div class="board"  style="position: static;">
+<div class="constructor" style="position: static;">-->
 
-    <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
+<div class="sub-head event" style="height: auto;width: auto;"
+     data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
 
-        <div class="board"  style="position: static;">
-            <div class="constructor" style="position: static;">
-                <!-- BOARD CONTENT -->
-                <div class="board-content" data-bind="with: fakoPanel()" style="position: static;height: auto;">
+    <div class="board" style="position: static;">
+        <div class="constructor" style="position: static;">
+            <!-- BOARD CONTENT -->
+            <div class="board-content" data-bind="with: fakoPanel()" style="position: static;height: auto;">
 
-                    <div class="panel">
-                        <table class="panelTable constructorTable">
-                            <tr>
-                                <td class="tdCity">
-                                    <div class="data">
-                                        <div class="from" data-bind="css: {active: checkIn()}">
-                                            <div class="bgInput">
-                                                <div class="left"></div>
-                                                <div class="center"></div>
-                                                <div class="right"></div>
-                                            </div>
-                                            <input type="text" placeholder="Куда едем?" class="second-path" data-bind="autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}" autocomplete="off">
-                                            <input type="text" tabindex="-1" class="input-path">
-
-                                            <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
-                                            <div class="date noDate" data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
+                <div class="panel">
+                    <table class="panelTable constructorTable">
+                        <tr>
+                            <td class="tdCity">
+                                <div class="data">
+                                    <div class="from" data-bind="css: {active: checkIn()}">
+                                        <div class="bgInput">
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
                                         </div>
+                                        <input type="text" placeholder="Куда едем?" class="second-path"
+                                               data-bind="autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}"
+                                               autocomplete="off">
+                                        <input type="text" tabindex="-1" class="input-path">
+
+                                        <div class="date noDate"
+                                             data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
+                                        <div class="date noDate"
+                                             data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
                                     </div>
-                                </td>
-                                <td class="tdAddTour">
+                                </div>
+                            </td>
+                            <td class="tdAddTour">
 
-                                </td>
+                            </td>
 
-                                <td class="tdPeople final">
+                            <td class="tdPeople final">
 
                                         <span data-bind="template: { data: $data.peopleSelectorVM}">
                                           <div class="how-many-man hotel">
                                               <!-- ko foreach: rawRooms -->
                                               <div class="content" data-bind="click: $parent.showPeoplePopup">
                                                   <span class="num" data-bind="text: $index() + 1">1</span>
+
                                                   <div class="man" data-bind="repeat: adults"></div>
                                                   <div class="child" data-bind="repeat: children"></div>
                                               </div>
@@ -138,90 +111,113 @@
                                           </div>
                                         </span>
 
-                                </td>
-                                <td class="tdButton">
+                            </td>
+                            <td class="tdButton">
 
-                                    <div class="btn-find inactive" data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
+                                <div class="btn-find inactive"
+                                     data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
 
-                                </td>
+                            </td>
 
-                            </tr>
-                        </table>
-                    </div>
-
+                        </tr>
+                    </table>
                 </div>
-                <!-- END BOARD CONTENT -->
-                <!-- ko with: fakoPanel() -->
-                <!-- ko template: { data: $data.peopleSelectorVM }-->
-                <div class="popupPeople">
-                    <!-- ko foreach: {data: roomsView, afterRender: afterRenderPeoplePopup } -->
-                    <div class="float">
-                        <!-- ko foreach: $data -->
-                        <div class="number-hotel">
-                            <a href="#" class="del-hotel" data-bind="click:removeRoom">удалить</a>
-                            <h5>Номер <span data-bind="text: index + 1">1</span></h5>
-                            <div class="one-str">
-                                <div class="adults">
-                                    <div class="inputDIV">
-                                        <input type="text" data-bind="value: adults, css:{active: adults}" class="active">
-                                        <a href="#" class="plusOne" data-bind="click:plusOne" rel="adults">+</a>
-                                        <a href="#" class="minusOne" data-bind="click:minusOne" rel="adults">-</a>
-                                    </div>
-                                    взрослых
+
+            </div>
+            <!-- END BOARD CONTENT -->
+            <!-- ko with: fakoPanel() -->
+            <!-- ko template: { data: $data.peopleSelectorVM }-->
+            <div class="popupPeople">
+                <!-- ko foreach: {data: roomsView, afterRender: afterRenderPeoplePopup } -->
+                <div class="float">
+                    <!-- ko foreach: $data -->
+                    <div class="number-hotel">
+                        <a href="#" class="del-hotel" data-bind="click:removeRoom">удалить</a>
+                        <h5>Номер <span data-bind="text: index + 1">1</span></h5>
+
+                        <div class="one-str">
+                            <div class="adults">
+                                <div class="inputDIV">
+                                    <input type="text" data-bind="value: adults, css:{active: adults}" class="active">
+                                    <a href="#" class="plusOne" data-bind="click:plusOne" rel="adults">+</a>
+                                    <a href="#" class="minusOne" data-bind="click:minusOne" rel="adults">-</a>
                                 </div>
-                                <div class="childs">
-                                    <div class="inputDIV">
-                                        <input type="text" data-bind="value: children, css:{active: children}" name="adult2" class="">
-                                        <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
-                                        <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
-                                    </div>
-                                    детей от 12 до 18 лет
-                                </div>
+                                взрослых
                             </div>
-                            <div class="one-str" data-bind="foreach: ages, visible: ages().length" style="display: none;"></div>
-                            <a href="#" data-bind="click: addRoom, visible: last() &amp;&amp; index&lt;3" class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер.</a>
+                            <div class="childs">
+                                <div class="inputDIV">
+                                    <input type="text" data-bind="value: children, css:{active: children}" name="adult2"
+                                           class="">
+                                    <a href="#" class="plusOne" data-bind="click:plusOne" rel="children">+</a>
+                                    <a href="#" class="minusOne" data-bind="click:minusOne" rel="children">-</a>
+                                </div>
+                                детей от 12 до 18 лет
+                            </div>
                         </div>
-                        <!-- /ko -->
+                        <div class="one-str" data-bind="foreach: ages, visible: ages().length"
+                             style="display: none;"></div>
+                        <a href="#" data-bind="click: addRoom, visible: last() &amp;&amp; index&lt;3"
+                           class="addOtherRoom"><span class="ico-plus"></span>Добавить еще один номер.</a>
                     </div>
                     <!-- /ko -->
                 </div>
                 <!-- /ko -->
-                <!-- /ko -->
-                <!-- /ko -->
-                <!-- /ko -->
-
             </div>
-
-
-
-            <!-- END CONSTRUCTOR -->
+            <!-- /ko -->
+            <!-- /ko -->
+            <!-- /ko -->
+            <!-- /ko -->
 
         </div>
-        <div class="clear"></div>
-        <!-- BTN MINIMIZE -->
+
+
+        <!-- END CONSTRUCTOR -->
 
     </div>
-    <!-- END PANEL -->
-    <!-- CALENDAR -->
-    <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarStatic}" style="top: -302px; overflow: hidden; height: 341px; position: static;">
-    </div>
-    <!-- END CALENDAR -->
-
-
-    <!-- END CENTER BLOCK -->
+    <div class="clear"></div>
+    <!-- BTN MINIMIZE -->
 
 </div>
-<?php echo $this->renderPartial('//landing/_bestFlights',array('currentCity'=>$currentCity,'flightCacheFromCurrent'=>$flightCacheFromCurrent)); ?>
+<!-- END PANEL -->
+<!-- CALENDAR -->
+<div class="calenderWindow z-indexTop"
+     data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarStatic}"
+     style="top: -302px; overflow: hidden; height: 341px; position: static;">
+</div>
+<!-- END CALENDAR -->
+
+
+<!-- END CENTER BLOCK -->
+
+</div>
+<?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
         <h2>Что такое Voyanga</h2>
-        <p>Voyanga.com — это самый простой, удобный и современный способ поиска и покупки авиабилетов. Мы постоянно работаем над развитием и улучшением сервиса. Наш сайт подключен сразу к нескольким системам бронирования, что позволяет сравнивать тарифы и подбирать наиболее выгодные и удобные тарифы и рейсы.</p>
-        <p>Наша компания официально аккредитована в Международной ассоциации авиаперевозчиков (IATA) и в российской транспортной клиринговой палате (ТКП). Мы прошли все необходимые процедуры для оформления электронных билетов на рейсы российских и зарубежных авиакомпаний.</p>
-        <p>Помимо сайта у нас есть собственная служба бронирования, которая находится в нашем офисе. Всегда можно позвонить и вам помогут и ответят на все вопросы. Офис компании находится в Санкт-Петербурге.</p>
+
+        <p>Voyanga.com — это самый простой, удобный и современный способ поиска и покупки авиабилетов. Мы постоянно
+            работаем над развитием и улучшением сервиса. Наш сайт подключен сразу к нескольким системам бронирования,
+            что позволяет сравнивать тарифы и подбирать наиболее выгодные и удобные тарифы и рейсы.</p>
+
+        <p>Наша компания официально аккредитована в Международной ассоциации авиаперевозчиков (IATA) и в российской
+            транспортной клиринговой палате (ТКП). Мы прошли все необходимые процедуры для оформления электронных
+            билетов на рейсы российских и зарубежных авиакомпаний.</p>
+
+        <p>Помимо сайта у нас есть собственная служба бронирования, которая находится в нашем офисе. Всегда можно
+            позвонить и вам помогут и ответят на все вопросы. Офис компании находится в Санкт-Петербурге.</p>
+
         <h2>Как посетить 10 стран по цене Айфона</h2>
-        <p>Voyanga.com — это самый простой, удобный и современный способ поиска и покупки авиабилетов. Мы постоянно работаем над развитием и улучшением сервиса. Наш сайт подключен сразу к нескольким системам бронирования, что позволяет сравнивать тарифы и подбирать наиболее выгодные и удобные тарифы и рейсы.</p>
-        <p>Наша компания официально аккредитована в Международной ассоциации авиаперевозчиков (IATA) и в российской транспортной клиринговой палате (ТКП). Мы прошли все необходимые процедуры для оформления электронных билетов на рейсы российских и зарубежных авиакомпаний.</p>
-        <p>Помимо сайта у нас есть собственная служба бронирования, которая находится в нашем офисе. Всегда можно позвонить и вам помогут и ответят на все вопросы. Офис компании находится в Санкт-Петербурге.</p>
+
+        <p>Voyanga.com — это самый простой, удобный и современный способ поиска и покупки авиабилетов. Мы постоянно
+            работаем над развитием и улучшением сервиса. Наш сайт подключен сразу к нескольким системам бронирования,
+            что позволяет сравнивать тарифы и подбирать наиболее выгодные и удобные тарифы и рейсы.</p>
+
+        <p>Наша компания официально аккредитована в Международной ассоциации авиаперевозчиков (IATA) и в российской
+            транспортной клиринговой палате (ТКП). Мы прошли все необходимые процедуры для оформления электронных
+            билетов на рейсы российских и зарубежных авиакомпаний.</p>
+
+        <p>Помимо сайта у нас есть собственная служба бронирования, которая находится в нашем офисе. Всегда можно
+            позвонить и вам помогут и ответят на все вопросы. Офис компании находится в Санкт-Петербурге.</p>
 
     </div>
 </div>

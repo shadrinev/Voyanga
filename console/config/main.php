@@ -67,7 +67,7 @@ return CMap::mergeArray (
                     'main' => array(
                         'class'=>'CFileLogRoute',
                         'levels'=>'error, warning',
-                        'filter'=>'CLogFilter',
+                        'filter'=>'VoyangaLogFilter',
                     ),
                     'console' => array(
                         'class'=>'StdErrRoute',
