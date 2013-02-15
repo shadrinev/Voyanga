@@ -268,8 +268,11 @@ VoyangaCalendarTimeline.generateGrid = function(){
     }
     console.log('monthArr', this.slider.monthArray.length,this.slider.monthArray);
 
-
-    var lastLineMonth = this.slider.monthShowArray[this.slider.monthShowArray.length - 1].line;
+    if((this.slider.monthShowArray.length > 0) && (this.slider.monthShowArray[this.slider.monthShowArray.length - 1])){
+        var lastLineMonth = this.slider.monthShowArray[this.slider.monthShowArray.length - 1].line;
+    }else{
+        Raven.captureMessage('cant define lastLineMonth',{'monthShowArray':this.slider.monthShowArray,'monthArray':this.slider.monthArray,'events': VoyangaCalendarTimeline.calendarEvents,'stopDate':stopDate,'tmpDate':tmpDate});
+    }
     //console.log(this.slider.monthArray);
     if((lineNumber - lastLineMonth) < 2){
         this.slider.monthShowArray.pop();
