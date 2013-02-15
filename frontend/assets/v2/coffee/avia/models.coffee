@@ -794,7 +794,7 @@ class AviaResultSet
           else
             result.activeVoyage voyage
             return result
-    return data[0]
+    return @data[0]
     
 
   filtersRendered: ->

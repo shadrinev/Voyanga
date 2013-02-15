@@ -22,27 +22,32 @@ class SearchController extends ApiController
      */
     public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
     {
-        $asyncExecutor = new AsyncCurl();
-        $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
-        $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
-        $responses = $asyncExecutor->send();
-        $errors = array();
-        $variants = array();
-        foreach ($responses as $response)
-        {
-            if ($httpCode=$response->headers['http_code'] == 200)
-            {
-                $combined = json_decode($response->body);
-                $flights = $combined->flights;
-                $searchParams = $combined->searchParams;
-                $variants = CMap::mergeArray($variants, FlightManager::injectForBe($flights, $searchParams));
-            }
-            else
-                $errors[] = 'Error '.$httpCode;
-        }
-        if (!empty($this->errors))
-        {
+        if (!$this->filter($destinations))
             $variants = array();
+        else
+        {
+            $asyncExecutor = new AsyncCurl();
+            $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+            $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+            $responses = $asyncExecutor->send();
+            $errors = array();
+            $variants = array();
+            foreach ($responses as $response)
+            {
+                if ($httpCode=$response->headers['http_code'] == 200)
+                {
+                    $combined = json_decode($response->body);
+                    $flights = $combined->flights;
+                    $searchParams = $combined->searchParams;
+                    $variants = CMap::mergeArray($variants, FlightManager::injectForBe($flights, $searchParams));
+                }
+                else
+                    $errors[] = 'Error '.$httpCode;
+            }
+            if (!empty($this->errors))
+            {
+                $variants = array();
+            }
         }
         $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, 'A');
         $this->results = $variants;
@@ -51,6 +56,17 @@ class SearchController extends ApiController
         $siblingsEconom = FlightManager::createSiblingsData($flightSearchParams);
         $result['siblings']['E'] = $siblingsEconom;
         $this->sendWithCorrectFormat($format, $result);
+    }
+
+    private function filter($destinations)
+    {
+        if (sizeof($destinations)==2)
+        {
+            if (($destinations[0]['departure'] == $destinations[0]['arrival']) ||
+                ($destinations[1]['departure'] == $destinations[1]['arrival']))
+                return false;
+        }
+        return true;
     }
 
     private function addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)

@@ -46,6 +46,9 @@ Application = (function(_super) {
     window.onerror = function() {
       var rest;
       rest = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      if (rest.length === 3 && rest[2] === 0) {
+        return;
+      }
       new ErrorPopup('e500');
       if (_oldOnerrorHandler) {
         return _oldOnerrorHandler.apply(_this, rest);

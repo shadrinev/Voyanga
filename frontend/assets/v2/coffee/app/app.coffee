@@ -5,6 +5,9 @@ class Application extends Backbone.Router
   constructor: ->
     _oldOnerrorHandler = window.onerror
     window.onerror = (rest...)=>
+      if rest.length == 3 and rest[2] == 0
+        # most likely extension or inline script(?) error
+        return
       new ErrorPopup('e500')
       return _oldOnerrorHandler.apply(this, rest)  if _oldOnerrorHandler
 
@@ -67,7 +70,7 @@ class Application extends Backbone.Router
     @debugMode = ko.observable false
 
     @breakdown = ko.observable false
-
+    
   initCalendar: =>
     throw "Deprecated"
 
