@@ -1,9 +1,4 @@
 <?php
-if (isset($_GET['test']))
-{
-    var_dump($_SERVER);
-    die();
-}
 $debug = true;
 $prodServers = array('voyanga.com');
 if ((isset($_SERVER['HTTP_HOST'])) && (in_array($_SERVER['HTTP_HOST'], $prodServers)))
