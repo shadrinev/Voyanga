@@ -4,12 +4,6 @@ $prodServers = array('api.voyanga.com');
 if ((isset($_SERVER['HTTP_HOST'])) && (in_array($_SERVER['HTTP_HOST'], $prodServers)))
     $debug = false;
 defined('YII_DEBUG') or define('YII_DEBUG', $debug);
-// On dev display all errors
-if (isset($_GET['test']))
-{
-    var_dump(YII_DEBUG);
-    die();
-}
 if (YII_DEBUG)
 {
     defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
