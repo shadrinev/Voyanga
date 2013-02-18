@@ -231,6 +231,7 @@ class MakeBookingAction extends CAction
             return Yii::app()->user->getState('todayOrderId');
         $orderBooking = new OrderBooking();
         $orderBooking->secretKey = md5(microtime().time().appParams('salt'));
+        $orderBooking->readableId = ""; //to prevent warning about "string should be here" of EAdvancedArBehavior
         $orderBooking->save();
         $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
         $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);
