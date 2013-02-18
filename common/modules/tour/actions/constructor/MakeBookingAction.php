@@ -73,7 +73,10 @@ class MakeBookingAction extends CAction
         {
             if (($pf instanceof FlightAdultPassportForm) and (!isset($_POST['FlightAdultPassportForm'][$i])))
                 return false;
-
+            if (($pf instanceof FlightChildPassportForm) and (!isset($_POST['FlightChildPassportForm'][$i])))
+                return false;
+            if (($pf instanceof FlightInfantPassportForm) and (!isset($_POST['FlightInfantPassportForm'][$i])))
+                return false;
         }
         return isset($_POST['BookingForm']);
     }
