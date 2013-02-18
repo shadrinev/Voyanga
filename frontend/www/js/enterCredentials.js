@@ -134,16 +134,23 @@ function analyzeValidationResult(response) {
         _.each(response.message.passports, function (el, i) {
             _.each(el, function (fName, key) {
                 var name = 'FlightAdultPassportForm[' + i + '][' + key + ']',
-                    inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName),
+                    inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+
+                if (key == 'genderId')
+                    inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
 
                     name = 'FlightChildPassportForm[' + i + '][' + key + ']';
                     inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+
+                if (key == 'genderId')
+                    inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
 
                     name = 'FlightInfantPassportForm[' + i + '][' + key + ']';
                     inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
 
                 if (key == 'genderId')
                     inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
+
                 if (key == 'birthday')
                 {
                     var namePrefix = 'FlightAdultPassportForm[' + i + '][',
