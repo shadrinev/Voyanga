@@ -67,6 +67,8 @@ if (!jQuery.support.cors && window.XDomainRequest) {
               complete(status.code, status.message, responses, allResponseHeaders);
             }
           };
+          //! Or it would randomly fail
+          xdr.onprogress = function() {};
           xdr.onerror = function(){
             complete(500, 'error', {
               text: xdr.responseText
