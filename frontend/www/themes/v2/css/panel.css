@@ -22,7 +22,7 @@
 }
 .panelTable tr td.tdButton {
     text-align: center;
-    min-width: 90px;
+    min-width: 85px;
 }
 .panelTable tr td.tdCity .data {
     display: inline-block;
@@ -1022,6 +1022,9 @@
     position: absolute;
     width: 900px;
     height: 62px;
+}
+.divCondition .panelTable.avia .tdCityStart.zero {
+    width: 10px !important;
 }
 .divTimeline {
     top: 0px;

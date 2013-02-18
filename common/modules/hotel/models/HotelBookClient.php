@@ -658,6 +658,7 @@ class HotelBookClient
     {
         $i = 0;
         $distance = 0;
+        $distances=array();
         if ($response->hotels) {
             foreach ($response->hotels as $hotel) {
                 $distance += $hotel->centerDistance;
