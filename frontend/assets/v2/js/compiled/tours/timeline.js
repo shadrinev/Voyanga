@@ -16,7 +16,7 @@ Timeline = (function() {
     this.showConditions = __bind(this.showConditions, this);
 
     this.timelinePosition = ko.observable(0);
-    this.termsActive = false;
+    this.termsActive = true;
     this.data = ko.computed(function() {
       var avia_map, end_date, has_first_avia, has_first_hotel, hotel_map, item, item_avia, item_hotel, left, middle_date, obj, results, right, spans, start_date, timeline_length, x, _i, _j, _k, _len, _ref;
       spans = [];

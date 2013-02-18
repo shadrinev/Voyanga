@@ -489,6 +489,7 @@ class ToursResultSet
         
         if !@panelContainer.onlyTimeline
           @panelContainer.onlyTimeline = false
+          @panelContainer.timeline.termsActive = true
         else
           @panelContainer.timeline.termsActive = false
         @panelContainer.selection = @selection
