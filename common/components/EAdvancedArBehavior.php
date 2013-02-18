@@ -110,7 +110,6 @@ class EAdvancedArBehavior extends CActiveRecordBehavior
                 $attribute = $owner->getAttribute($column->name);
                 if (!is_string($attribute))
                 {
-                    Yii::log('It should be string here:'.CVarDumper::dumpAsString($column->name).':'.CVarDumper::dumpAsString($attribute), CLogger::LEVEL_WARNING);
                     continue;
                 }
                 $value = trim($attribute);
