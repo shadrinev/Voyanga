@@ -39,7 +39,7 @@ API = (function() {
           $('#loadWrapBg').hide();
           loaderChange(false);
         }
-        throw new Error("Api call failed: " + "Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") + " | " + rest.join(" | "));
+        throw new Error(("Api call failed: Url: " + url) + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") + " | " + rest.join(" | "));
       }
     });
   };
