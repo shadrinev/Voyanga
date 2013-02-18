@@ -70,7 +70,7 @@ $(function () {
                 $('#submit-passport').removeClass('inactive');
             else
                 $('#submit-passport').addClass('inactive');
-        });
+        }).click();
         $('#submit-passport').click(function () {
             if ($(this).hasClass('inactive'))
                 return;
