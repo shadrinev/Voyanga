@@ -25,7 +25,8 @@ class Sibling
         ratio = 0
       if ratio > 0
         if ratio < 0.1
-          console.error @height, @absDelta, @price
+          true
+#          console.error @height, @absDelta, @price
       ratio * (@graphHeight() - spacing) + spacing - 10
   
   columnValue: ->
@@ -63,6 +64,8 @@ class Siblings
       return false
     if @active().initialActive && @selection().initialActive
       return false
+    if @active().nonsearchable || @selection().nonsearchable
+      return false
     return true
 
   showPrice: =>
@@ -96,7 +99,7 @@ class Siblings
       return
     @handleSearch @selection().rawDate
 
-  populate: (root, siblings, todayDate, rtTodayDate) =>
+  populate: (root, siblings, todayDate, rtTodayDate, rec=false) =>
     # middle segment price
     todayPrice = _.filter siblings, (item) -> item.price != false
     if todayPrice.length == 0
@@ -123,10 +126,13 @@ class Siblings
 
       if sib.price==false
         newsib.nodata = true
+        
+      if rec && (date < rtTodayDate)
+        newsib.nonsearchable = true
       newsib.showMonth = showMonth
       root.data.push newsib
       if sib.siblings.length
-        @populate newsib, sib.siblings, rtTodayDate
+        @populate newsib, sib.siblings, rtTodayDate, date, true
     minPrice = _.min root.data, (item)-> if item.price==false then todayPrice else item.price 
     maxPrice = _.max root.data, (item)-> if item.price==false then todayPrice else item.price
     if maxPrice.price == false
