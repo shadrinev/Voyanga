@@ -213,27 +213,7 @@
                             </div>
                         </td>
                         <td class="tdPeople">
-                        <span data-bind="template: { data: passengers,afterRender: passengers.afterRenderPeoplePopup}">
-                            <div class="how-many-man">
-                                <div class="content active" data-bind="click: showPeoplePopup">
-                                    <!-- ko if: overall()>5 -->
-                                    <!-- ko if: adults()>0 -->
-                                    <div class="man"></div>
-                                    <div class="count"><span>x</span><i data-bind="text: adults()"></i></div>
-                                    <!-- /ko -->
-                                    <!-- ko if: (sum_children())>0 -->
-                                    <div class="child"></div>
-                                    <div class="count"><span>x</span><i data-bind="text: sum_children()"></i></div>
-                                    <!-- /ko -->
-                                    <!-- /ko -->
-                                    <!-- ko if: overall()<=5 -->
-                                    <div class="man" data-bind="repeat: adults"></div>
-                                    <div class="child" data-bind="repeat: sum_children"></div>
-                                    <!-- /ko -->
-                                </div>
-                                <div class="btn active" data-bind="click: showPeoplePopup"></div>
-
-                            </div>
+                        <span data-bind="template: {name: passengers.template, data: passengers}">
                         </span>
                         </td>
                         <td class="tdButton">

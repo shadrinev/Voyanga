@@ -172,6 +172,11 @@ AviaPanel = (function(_super) {
   };
 
   AviaPanel.prototype.handlePanelSubmit = function() {
+    if (window.location.pathname.replace('/', '') !== '') {
+      $('#loadWrapBgMin').show();
+      window.location.href = '/#' + this.sp.getHash();
+      return;
+    }
     app.navigate(this.sp.getHash(), {
       trigger: true
     });

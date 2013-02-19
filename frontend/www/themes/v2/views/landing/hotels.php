@@ -101,27 +101,14 @@
                             </td>
 
                             <td class="tdPeople final">
-
-                                        <span data-bind="template: { data: $data.peopleSelectorVM}">
-                                          <div class="how-many-man hotel">
-                                              <!-- ko foreach: rawRooms -->
-                                              <div class="content" data-bind="click: $parent.showPeoplePopup">
-                                                  <span class="num" data-bind="text: $index() + 1">1</span>
-
-                                                  <div class="man" data-bind="repeat: adults"></div>
-                                                  <div class="child" data-bind="repeat: children"></div>
-                                              </div>
-                                              <!-- /ko -->
-                                              <div class="btn" data-bind="click: showPeoplePopup"></div>
-
-                                          </div>
+                                        <span
+                                            data-bind="template: {name: peopleSelectorVM.template, data: peopleSelectorVM}">
                                         </span>
-
                             </td>
                             <td class="tdButton">
 
                                 <div class="btn-find inactive"
-                                     data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
+                                     data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}"></div>
 
                             </td>
 

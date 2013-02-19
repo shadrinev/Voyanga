@@ -134,6 +134,10 @@ class AviaPanel extends SearchPanel
     @rt(true)
 
   handlePanelSubmit: =>
+    if window.location.pathname.replace('/', '') != ''
+      $('#loadWrapBgMin').show()
+      window.location.href = '/#' + @sp.getHash()
+      return
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
 
