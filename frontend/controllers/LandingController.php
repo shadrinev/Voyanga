@@ -410,7 +410,7 @@ class LandingController extends Controller
 
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
-        $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'));
+        $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'), 'casePre' => $this->getCase($countryUp, 'ПР'));
         $currentCity = Geoip::getCurrentCity();
 
         $citiesFrom = array();
@@ -428,20 +428,32 @@ class LandingController extends Controller
         $cities = City::model()->findAll($criteria);
         $cityIds = array();
         foreach ($cities as $city) {
-            $cityIds[$city->id] = $city->id;
+            $cityIds[$city->id] = "'" . $city->id . "'";
         }
 
         if (isset($cityIds[$currentCity->id])) {
             unset($cityIds[$currentCity->id]);
         }
-        $criteria = new CDbCriteria();
+
+        $flightCache = array();
+        if ($cityIds) {
+            $connection = Yii::app()->db;
+            $sql = 'SELECT `from`,`to`,`dateFrom`,`dateBack`,`priceBestPrice` from (SELECT * FROM `flight_cache` WHERE `from` = \'' . $currentCity->id . '\' AND `to` IN (' . implode(',', $cityIds) . ') AND `dateFrom` > \'' . date('Y-m-d') . '\' AND `dateFrom` < \'' . date('Y-m-d', time() + 3600 * 24 * 60) . '\' ORDER BY priceBestPrice) as tbl1 GROUP BY `to` ORDER BY priceBestPrice  limit 14';
+            $command = $connection->createCommand($sql);
+            $dataReader = $command->query();
+            while (($row = $dataReader->read()) !== false) {
+                $flightCache[] = (object)$row;
+            }
+        }
+
+        /*$criteria = new CDbCriteria();
         $criteria->addInCondition('`to`', $cityIds);
         $criteria->addCondition('`from` = ' . $currentCity->id);
         $criteria->order = 'updatedAt';
         $criteria->limit = 14;
         $criteria->group = '`to`';
 
-        $flightCache = FlightCache::model()->findAll($criteria);
+        $flightCache = FlightCache::model()->findAll($criteria);*/
 
         $criteria = new CDbCriteria();
         //$criteria->addInCondition('`cityId`',$cityIds);
