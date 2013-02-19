@@ -1,0 +1,4 @@
+Twisted==12.3.0
+pyOpenSSL==0.13
+wsgiref==0.1.2
+zope.interface==4.0.3
