@@ -793,6 +793,7 @@ ToursResultSet = (function() {
         _this.panelContainer.setActiveTimelineHotels = _this.setActiveTimelineHotels;
         if (!_this.panelContainer.onlyTimeline) {
           _this.panelContainer.onlyTimeline = false;
+          _this.panelContainer.timeline.termsActive = true;
         } else {
           _this.panelContainer.timeline.termsActive = false;
         }

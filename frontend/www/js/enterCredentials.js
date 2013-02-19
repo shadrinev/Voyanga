@@ -70,7 +70,7 @@ $(function () {
                 $('#submit-passport').removeClass('inactive');
             else
                 $('#submit-passport').addClass('inactive');
-        });
+        }).click();
         $('#submit-passport').click(function () {
             if ($(this).hasClass('inactive'))
                 return;
@@ -135,12 +135,46 @@ function analyzeValidationResult(response) {
             _.each(el, function (fName, key) {
                 var name = 'FlightAdultPassportForm[' + i + '][' + key + ']',
                     inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+
                 if (key == 'genderId')
                     inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
+
+                    name = 'FlightChildPassportForm[' + i + '][' + key + ']';
+                    inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+
+                if (key == 'genderId')
+                    inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
+
+                    name = 'FlightInfantPassportForm[' + i + '][' + key + ']';
+                    inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+
+                if (key == 'genderId')
+                    inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
+
                 if (key == 'birthday')
                 {
                     var namePrefix = 'FlightAdultPassportForm[' + i + '][',
                         inputNames = [
+                            namePrefix + 'birthdayDay]',
+                            namePrefix + 'birthdayMonth]',
+                            namePrefix + 'birthdayYear]'
+                        ];
+                    _.each(inputNames, function(name, i){
+                        $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+                    });
+
+                    namePrefix = 'FlightChildPassportForm[' + i + '][';
+                    inputNames = [
+                            namePrefix + 'birthdayDay]',
+                            namePrefix + 'birthdayMonth]',
+                            namePrefix + 'birthdayYear]'
+                        ];
+                    _.each(inputNames, function(name, i){
+                        $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+                    });
+
+                    namePrefix = 'FlightInfantPassportForm[' + i + '][';
+                    inputNames = [
                             namePrefix + 'birthdayDay]',
                             namePrefix + 'birthdayMonth]',
                             namePrefix + 'birthdayYear]'
@@ -153,6 +187,26 @@ function analyzeValidationResult(response) {
                 {
                     var namePrefix = 'FlightAdultPassportForm[' + i + '][',
                         inputNames = [
+                            namePrefix + 'expirationDay]',
+                            namePrefix + 'expirationMonth]',
+                            namePrefix + 'expirationYear]'
+                        ];
+                    _.each(inputNames, function(name, i){
+                        $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+                    });
+
+                    namePrefix = 'FlightChildPassportForm[' + i + '][';
+                    inputNames = [
+                            namePrefix + 'expirationDay]',
+                            namePrefix + 'expirationMonth]',
+                            namePrefix + 'expirationYear]'
+                        ];
+                    _.each(inputNames, function(name, i){
+                        $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+                    });
+
+                    namePrefix = 'FlightInfantPassportForm[' + i + '][';
+                    inputNames = [
                             namePrefix + 'expirationDay]',
                             namePrefix + 'expirationMonth]',
                             namePrefix + 'expirationYear]'

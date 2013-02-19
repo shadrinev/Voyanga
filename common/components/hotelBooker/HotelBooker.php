@@ -76,7 +76,7 @@ class HotelBooker extends SWLogActiveRecord
                 Yii::app()->hotelBooker->$method();
                 return parent::afterSave();
             }
-            throw new CException('Unknown '.$method.' of FlightBooker');
+            throw new CException('Unknown '.$method.' of HotelBooker');
         }
     }
 

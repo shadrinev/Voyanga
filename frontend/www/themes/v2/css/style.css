@@ -2691,6 +2691,9 @@ input.hotel-input {
 	background-position: 0px -66px;
 	text-transform:none;
 }
+.dopInfoPassengers .tdEmail input.error[type="email"] {
+    background-position: 0px -99px;
+}
 .dopInfoPassengers .tdEmail input[type='text'][disabled="disabled"], .dopInfoPassengers .tdEmail input[type='email'][disabled="disabled"] {
     background-position: 0px -132px;
 }

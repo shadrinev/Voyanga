@@ -12,7 +12,7 @@ class PassportManager
 
     public $counters;
     public $roomCounters;
-    public $passportForms;
+    public $passportForms=array();
 
     public function generatePassportForms()
     {

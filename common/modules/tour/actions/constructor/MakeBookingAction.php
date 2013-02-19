@@ -73,7 +73,10 @@ class MakeBookingAction extends CAction
         {
             if (($pf instanceof FlightAdultPassportForm) and (!isset($_POST['FlightAdultPassportForm'][$i])))
                 return false;
-
+            if (($pf instanceof FlightChildPassportForm) and (!isset($_POST['FlightChildPassportForm'][$i])))
+                return false;
+            if (($pf instanceof FlightInfantPassportForm) and (!isset($_POST['FlightInfantPassportForm'][$i])))
+                return false;
         }
         return isset($_POST['BookingForm']);
     }
@@ -231,6 +234,7 @@ class MakeBookingAction extends CAction
             return Yii::app()->user->getState('todayOrderId');
         $orderBooking = new OrderBooking();
         $orderBooking->secretKey = md5(microtime().time().appParams('salt'));
+        $orderBooking->readableId = ""; //to prevent warning about "string should be here" of EAdvancedArBehavior
         $orderBooking->save();
         $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
         $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);

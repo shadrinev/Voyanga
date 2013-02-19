@@ -38,7 +38,7 @@ Sibling = (function() {
       }
       if (ratio > 0) {
         if (ratio < 0.1) {
-          console.error(_this.height, _this.absDelta, _this.price);
+          true;
         }
       }
       return ratio * (_this.graphHeight() - spacing) + spacing - 10;
@@ -115,6 +115,9 @@ Siblings = (function() {
     if (this.active().initialActive && this.selection().initialActive) {
       return false;
     }
+    if (this.active().nonsearchable || this.selection().nonsearchable) {
+      return false;
+    }
     return true;
   };
 
@@ -163,8 +166,11 @@ Siblings = (function() {
     return this.handleSearch(this.selection().rawDate);
   };
 
-  Siblings.prototype.populate = function(root, siblings, todayDate, rtTodayDate) {
+  Siblings.prototype.populate = function(root, siblings, todayDate, rtTodayDate, rec) {
     var absDelta, date, index, isActive, item, maxPrice, minPrice, newsib, prevMonth, showMonth, sib, siblingPrice, todayPrice, _i, _j, _len, _len1, _ref, _results;
+    if (rec == null) {
+      rec = false;
+    }
     todayPrice = _.filter(siblings, function(item) {
       return item.price !== false;
     });
@@ -195,10 +201,13 @@ Siblings = (function() {
       if (sib.price === false) {
         newsib.nodata = true;
       }
+      if (rec && (date < rtTodayDate)) {
+        newsib.nonsearchable = true;
+      }
       newsib.showMonth = showMonth;
       root.data.push(newsib);
       if (sib.siblings.length) {
-        this.populate(newsib, sib.siblings, rtTodayDate);
+        this.populate(newsib, sib.siblings, rtTodayDate, date, true);
       }
     }
     minPrice = _.min(root.data, function(item) {

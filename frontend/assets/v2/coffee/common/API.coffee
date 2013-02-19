@@ -22,11 +22,11 @@ class API
         if showLoad
           $('#loadWrapBg').hide()
           loaderChange(false)
-      error: ->
+      error: (jqXHR, rest...)->
         if showLoad
           $('#loadWrapBg').hide()
           loaderChange(false)
-        throw new Error("Api call failed")
+        throw new Error("Api call failed: Url: #{url}" + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") +  " | " + rest.join(" | "))
 #        cb(false)
 
 class ToursAPI extends API

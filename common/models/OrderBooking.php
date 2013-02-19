@@ -10,6 +10,7 @@
  * @property string $userId
  * @property string $timestamp
  * @property string $partnerId
+ * @property string $readableId
  *
  * The followings are the available model relations:
  * @property FlightBooker[] $flightBookers

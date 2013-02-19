@@ -37,7 +37,16 @@ class SearchController extends ApiController
                 if ($httpCode=$response->headers['http_code'] == 200)
                 {
                     $combined = json_decode($response->body);
-                    $flights = $combined->flights;
+                    if ((isset($combined->flights)) and (is_iterable($combined->flights)))
+                    {
+                        $flights = $combined->flights;
+                    }
+                    else
+                    {
+                        $newException = new Exception("Error: combined->flights is not iterable. Response: ".CVarDumper::dumpAsString($response));
+                        Yii::app()->RSentryException->logException($newException);
+                        $flights = array();
+                    }
                     $searchParams = $combined->searchParams;
                     $variants = CMap::mergeArray($variants, FlightManager::injectForBe($flights, $searchParams));
                 }

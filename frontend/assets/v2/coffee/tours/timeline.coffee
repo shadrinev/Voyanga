@@ -2,7 +2,7 @@ class Timeline
   constructor: (@toursData)->
     @timelinePosition = ko.observable 0
     # INTENTIONALLY NOT OBSERVABLE 
-    @termsActive = false
+    @termsActive = true
 
     @data = ko.computed =>
       spans = []
