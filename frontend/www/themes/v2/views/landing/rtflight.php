@@ -58,6 +58,7 @@
 
 </script>
 <div class="headBlockOne">
+    <?php if (!$fromCity): ?>
     <div class="center-block">
         <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
 
@@ -65,15 +66,28 @@
             <?php
             foreach ($citiesFrom as $cityPoint):
                 ?>
-                <a href="#" class="cityChoise<?php echo $cityPoint['cityId'] == $currentCity->id ? ' active' : '';?>">
+                <?php if ($cityPoint['cityId'] == $currentCity->id): ?>
+                <a href="#" class="cityChoise active">
                     <span><?php echo $cityPoint['cityName'];?></span>
                 </a>
+                <?php else: ?>
+                <a href="/land/<?php echo $city->country->code;?>/<?php echo $cityPoint['cityCode'];?>/<?php echo $city->code;?>/ "
+                   class="cityChoise">
+                    <span><?php echo $cityPoint['cityName'];?></span>
+                </a>
+                <?php endif; ?>
+
                 <?php
 
             endforeach;
             ?>
         </h3>
     </div>
+    <?php else: ?>
+    <div class="center-block">
+        <h1>Авиабилеты из <?php echo $fromCity->caseGen;?> в <?php echo $city->caseAcc;?></h1>
+    </div>
+    <?php endif;?>
     <div class="center-block">
         <div class="floatLeft">
             <ul class="grafik first-child" data-bind="foreach: landBP.datesArr">
