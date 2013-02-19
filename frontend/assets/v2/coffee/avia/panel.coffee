@@ -4,7 +4,8 @@ class AviaPanel extends SearchPanel
     @prevPanel = 'tours'
     @nextPanel = 'hotels'
     @mainLabel = 'Поиск авиабилетов'
-    @icon = 'fly-ico';
+    @icon = 'fly-ico'
+    ;
 
     @template = 'avia-panel-template'
     @sp = new AviaSearchParams()
@@ -21,6 +22,7 @@ class AviaPanel extends SearchPanel
     @arrivalCityReadableGen = ko.observable ''
     @arrivalCityReadableAcc = ko.observable ''
     @prefixText = 'Все направления<br>500+ авиакомпаний'
+    @calendarActive = ko.observable(true)
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
@@ -45,7 +47,7 @@ class AviaPanel extends SearchPanel
     @formFilled = ko.computed =>
       result = @departureCity() && @arrivalCity() && @fromChosen()
       if @rt()
-       result = result && @rtFromChosen()
+        result = result && @rtFromChosen()
       return result
 
     @formNotFilled = ko.computed =>
@@ -57,13 +59,14 @@ class AviaPanel extends SearchPanel
     @maximizedCalendar.subscribe (newValue) =>
       if !newValue
         return
-      if @rt() && !@rtFromChosen()
-        @showCalendar()
-        return
-      if !@fromChosen()
-        @showCalendar()
-        return
-        
+      if @calendarActive()
+        if @rt() && !@rtFromChosen()
+          @showCalendar()
+          return
+        if !@fromChosen()
+          @showCalendar()
+          return
+
     @calendarValue = ko.computed =>
       twoSelect: @rt()
       from: @departureDate()
@@ -95,12 +98,12 @@ class AviaPanel extends SearchPanel
         arrow = ' ↔ '
       else
         arrow = ' → '
-      if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length>0))
-        result +=@departureCityReadable() + arrow + @arrivalCityReadable()
-      else if ((@departureCityReadable().length==0) && (@arrivalCityReadable().length>0))
-        result+=' в ' + @arrivalCityReadableAcc()
-      else if ((@departureCityReadable().length>0) && (@arrivalCityReadable().length==0))
-        result+=' из ' + @departureCityReadableGen()
+      if ((@departureCityReadable().length > 0) && (@arrivalCityReadable().length > 0))
+        result += @departureCityReadable() + arrow + @arrivalCityReadable()
+      else if ((@departureCityReadable().length == 0) && (@arrivalCityReadable().length > 0))
+        result += ' в ' + @arrivalCityReadableAcc()
+      else if ((@departureCityReadable().length > 0) && (@arrivalCityReadable().length == 0))
+        result += ' из ' + @departureCityReadableGen()
       return result
 
   rtTumbler: (newValue) ->
@@ -143,8 +146,9 @@ class AviaPanel extends SearchPanel
 
   returnRecommend: (context, event)->
     $('.recomended-content').slideDown()
-    $('.order-hide').fadeIn();
-    $(event.currentTarget).animate {top : '-19px'}, 500, null, ->
+    $('.order-hide').fadeIn()
+    ;
+    $(event.currentTarget).animate {top: '-19px'}, 500, null, ->
       ResizeAvia()
 
   afterRender: =>
@@ -161,5 +165,5 @@ $(document).on "autocompleted", "input.departureCity", ->
 $(document).on "keyup change", "input.second-path", (e) ->
   firstValue = $(this).val()
   secondEl = $(this).siblings('input.input-path')
-  if ((e.keyCode==8) || (firstValue.length<3))
+  if ((e.keyCode == 8) || (firstValue.length < 3))
     secondEl.val('')

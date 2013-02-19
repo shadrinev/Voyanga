@@ -1,7 +1,6 @@
 <script>
     //window.flightBestPrice = <?php //echo json_encode($flightCache); ?>;
     window.defaultCity = '<?php echo $currentCity->code; ?>';
-    window.pointCity = '<?php echo $city->code; ?>';
     //window.apiEndPoint = 'http://api.oleg.voyanga';
 
     function setDepartureDate(strDate) {
@@ -31,7 +30,6 @@
         app.activeModule('tours');
         var panelSet = new HotelsPanel();
         //panelSet.departureCity(window.defaultCity);
-        panelSet.city(window.pointCity);
         panelSet.calendarActive(false);
 
         //panelSet.rt(false);
@@ -55,7 +53,9 @@
     })
 
 </script>
-<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
+<?php foreach ($hotelsCaches as $cityId => $hotelsInfo): ?>
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => City::getCityByPk($cityId), 'hotelsInfo' => $hotelsInfo)); ?>
+<?php endforeach; ?>
 
 <!--<div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
 

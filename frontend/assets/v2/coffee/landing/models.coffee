@@ -1,50 +1,75 @@
 class landBestPriceBack
-  constructor: (data,@parent) ->
-    @price = parseInt(data.price)
-    @showPrice = ko.computed =>
-      return (@price - @parent.showPrice())
-    @showPriceText = ko.computed =>
-      return Utils.formatPrice(@showPrice())
-    @showWidth = ko.computed =>
-      if (@parent.backMaxPrice() - @parent.backMinPrice())
-        #console.log('sp',@showPrice(),'pmBP',@parent.minBestPrice().showPrice(),'pp',@parent.minBestPrice())
-        k = 10 + Math.ceil( (@showPrice() - @parent.backMinPrice()) / (@parent.backMaxPrice() - @parent.backMinPrice()) * 90 )
-        #console.log('k back is',k,((k == 0) ? 1 : k))
-        return k
-      else
-        #console.log('no maxPrice')
-        return 50
+  constructor: (data, @parent) ->
+    if data.price
+      @price = parseInt(data.price)
+      @empty = false
+      @showPrice = ko.computed =>
+        return (@price - @parent.showPrice())
+      @showPriceText = ko.computed =>
+        return Utils.formatPrice(@showPrice())
+      @showWidth = ko.computed =>
+        if (@parent.backMaxPrice() - @parent.backMinPrice())
+          #console.log('sp',@showPrice(),'pmBP',@parent.minBestPrice().showPrice(),'pp',@parent.minBestPrice())
+          k = 10 + Math.ceil((@showPrice() - @parent.backMinPrice()) / (@parent.backMaxPrice() - @parent.backMinPrice()) * 90)
+          #console.log('k back is',k,((k == 0) ? 1 : k))
+          return k
+        else
+          #console.log('no maxPrice')
+          return 50
+    else
+      @empty = true
     @backDate = moment(data.dateBack)
     @selected = ko.observable(false)
 
   selectThis: =>
-    @parent.setActiveBack(@backDate.format('YYYY-MM-DD'))
-    @parent.selectThis()
+    if @backDate.diff(@parent.date) >= 0
+      @parent.setActiveBack(@backDate.format('YYYY-MM-DD'))
+      @parent.selectThis()
 
 class landBestPrice
-  constructor: (data,@parent) ->
-    @minPrice = ko.observable(parseInt(data.price) * 2 + 5)
+  constructor: (data, @parent) ->
     @date = moment(data.date)
     @_results = {}
-    @backMaxPrice = ko.observable(1)
-    @backMinPrice = ko.observable(@minPrice())
-    @showPrice = ko.computed =>
-      return Math.ceil(@minPrice() / 2)
-    @showPriceText = ko.computed =>
-      return Utils.formatPrice(@showPrice())
-    @showWidth = ko.computed =>
-      if (@parent.maxPrice() - @parent.minPrice())
-        #console.log('sp',@showPrice(),'pmBP',@parent.minBestPrice().showPrice(),'pp',@parent.minBestPrice())
-        k = 10 + Math.ceil( (@showPrice() - @parent.minPrice()) / (@parent.maxPrice() - @parent.minPrice()) * 90 )
-        return k
-      else
-        #console.log('no maxPrice')
-        return 50
+    if data.price
+      @minPrice = ko.observable(parseInt(data.price) * 2 + 5)
+      @backMaxPrice = ko.observable(1)
+      @backMinPrice = ko.observable(@minPrice())
+      @showPrice = ko.computed =>
+        return Math.ceil(@minPrice() / 2)
+      @showPriceText = ko.computed =>
+        return Utils.formatPrice(@showPrice())
+      @showWidth = ko.computed =>
+        if (@parent.maxPrice() - @parent.minPrice())
+          #console.log('sp',@showPrice(),'pmBP',@parent.minBestPrice().showPrice(),'pp',@parent.minBestPrice())
+          k = 10 + Math.ceil((@showPrice() - @parent.minPrice()) / (@parent.maxPrice() - @parent.minPrice()) * 90)
+          return k
+        else
+          #console.log('no maxPrice')
+          return 50
+    else
+      @empty = true
+
+    @_emptyResults = ko.computed =>
+      ret = {}
+      if @parent.datesArr()
+        for obj in @parent.datesArr()
+          ret[obj.date] = new landBestPriceBack({dateBack: obj.date}, @)
+      console.log(ret)
+      return ret
+    #for obj in @parent.datesArr()
+    #  @_emptyResults[obj.date] = new landBestPriceBack({dateBack: obj.date},@)
+    #console.log('er',@_emptyResults)l
+
     @results = ko.computed =>
       ret = []
       if @parent.datesArr()
         for obj in @parent.datesArr()
-          ret.push {date:obj.date,landBP:@_results[obj.date]}
+          if @_results[obj.date]
+            #console.log('add not empty',@_results[obj.date])
+            ret.push {date: obj.date, landBP: @_results[obj.date]}
+          else
+            console.log('add empty', @_emptyResults()[obj.date])
+            ret.push {date: obj.date, landBP: @_emptyResults()[obj.date]}
       return ret
 
     @selected = ko.observable(false)
@@ -54,7 +79,7 @@ class landBestPrice
 
   addBack: (data)=>
     if data.dateBack
-      back = new landBestPriceBack(data,@)
+      back = new landBestPriceBack(data, @)
       if back.price < @minPrice()
         @minPrice(back.price)
         if @selBack()
@@ -69,14 +94,17 @@ class landBestPrice
       @_results[data.dateBack] = back
 
   setActiveBack: (date)=>
-    @active().selected(false)
-    @active(@_results[date])
+    if @active()
+      @active().selected(false)
+    if @_results[date]
+      @active(@_results[date])
+    else
+      @active(@_emptyResults()[date])
     @active().selected(true)
 
   selectThis: =>
-
     @parent.setActive(@date.format('YYYY-MM-DD'))
-    console.log('selectThis',@date,@date.format('YYYY-MM-DD'))
+    console.log('selectThis', @date, @date.format('YYYY-MM-DD'))
     setDepartureDate(@date.format('YYYY-MM-DD'))
 
     if @active()
@@ -106,10 +134,10 @@ class landBestPriceSet
       if @_results[data.date]
         @_results[data.date].addBack(data)
       else
-        @_results[data.date] = new landBestPrice(data,@)
+        @_results[data.date] = new landBestPrice(data, @)
       if(!@minBestPrice() || @_results[data.date].minPrice() < @minBestPrice().minPrice())
         @minBestPrice(@_results[data.date])
-        console.log('set new minBestPrice',@minBestPrice())
+        console.log('set new minBestPrice', @minBestPrice())
     for key,landBP of @_results
       if( landBP.showPrice() > @maxPrice() )
         @maxPrice(landBP.showPrice())
@@ -119,10 +147,14 @@ class landBestPriceSet
 
 
 
+
     for dataKey,empty of @dates
-      @datesArr.push {date:dataKey,landBP:@_results[dataKey],monthName:'',monthChanged: false,dateText:'',today:false}
+      if @_results[dataKey]
+        @datesArr.push {date: dataKey, landBP: @_results[dataKey], monthName: '', monthChanged: false, dateText: '', today: false}
+      else
+        @datesArr.push {date: dataKey, landBP: new landBestPrice({date: dataKey}, @), monthName: '', monthChanged: false, dateText: '', today: false}
     @datesArr.sort(
-      (objDateLeft,objDateRight)->
+      (objDateLeft, objDateRight)->
         l = moment(objDateLeft.date).unix()
         r = moment(objDateRight.date).unix()
         if l < r
@@ -149,14 +181,14 @@ class landBestPriceSet
 
       dataObj.monthName = monthName
       dataObj.monthChanged = monthChanged
-      dataObj.dateText = SHORT_WEEKDAYS[( (mom.day()+6) % 7)]+'<br><span>'+mom.format('DD')+'</span>'
+      dataObj.dateText = SHORT_WEEKDAYS[( (mom.day() + 6) % 7)] + '<br><span>' + mom.format('DD') + '</span>'
       dataObj.today = dataObj.date == today
-      console.log('date',dataObj.date, today,dataObj.date == today)
+      console.log('date', dataObj.date, today, dataObj.date == today)
       if firstElem
         firstElem = false
       prevMonth = mom.month()
-      #@datesArr.push {date:dataKey,landBP:@_results[dataKey]}
-    console.log('dates',@datesArr())
+    #@datesArr.push {date:dataKey,landBP:@_results[dataKey]}
+    console.log('dates', @datesArr())
 
     @active(@minBestPrice())
     @active().selected(true)
@@ -167,12 +199,15 @@ class landBestPriceSet
         if price = @active().active()
           price = @active().active().price
         else
-          if @active()
+          if @active() && @active().showPrice
             price = @active().showPrice()
           else
-            console.log('active not set',@active())
-
-      return Utils.formatPrice(price)
+            console.log('active not set', @active())
+      if !price
+        price = '???'
+      else
+        price = Utils.formatPrice(price)
+      return price
     @bestDate = ko.computed =>
       if @directBestPriceData()
         dateFrom = moment(@directBestPriceData().date)
@@ -192,29 +227,52 @@ class landBestPriceSet
       if @directBestPriceData().dateBack
         setBackDate(moment(@directBestPriceData().dateBack).format('YYYY-MM-DD'))
       if @active()
-        console.log('yes have active',@active())
+        console.log('yes have active', @active())
         @active().selected(false)
         if @active().active()
           @active().active().selected(false)
         else
-          console.log('not have active',@active())
+          console.log('not have active', @active())
 
   setActive: (date)=>
     @active().selected(false)
-    @active(@_results[date])
+    if @_results[date]
+      @active(@_results[date])
+    else
+      for obj in @datesArr()
+        if obj.date == date
+          @active(obj.landBP)
+    console.log('@active()', @active())
     @active().selected(true)
     @directBestPrice(null)
+
+  setDirectBackDate: (date)=>
+
 
   setDirectBestPrice: (data)=>
     console.log('DIRECCCCTTTTTT')
     @directBestPrice(data.price)
     @directBestPriceData(data)
     if @active()
-      console.log('yes have active',@active())
+      console.log('yes have active', @active())
       @active().selected(false)
       if @active().active()
         @active().active().selected(false)
     else
-      console.log('not have active',@active())
+      console.log('not have active', @active())
+    if @directBestPriceData()
+      if !@directBestPrice()
+        @directBestPrice(@directBestPriceData().price)
+      if @directBestPriceData().date
+        setDepartureDate(moment(@directBestPriceData().date).format('YYYY-MM-DD'))
+      if @directBestPriceData().dateBack
+        setBackDate(moment(@directBestPriceData().dateBack).format('YYYY-MM-DD'))
+      if @active()
+        console.log('yes have active', @active())
+        @active().selected(false)
+        if @active().active()
+          @active().active().selected(false)
+        else
+          console.log('not have active', @active())
 
 

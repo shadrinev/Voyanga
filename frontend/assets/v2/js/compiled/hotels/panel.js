@@ -38,6 +38,7 @@ HotelsPanel = (function(_super) {
     this.cityReadable = ko.observable();
     this.cityReadableAcc = ko.observable();
     this.cityReadableGen = ko.observable();
+    this.calendarActive = ko.observable(true);
     this.calendarText = ko.computed(function() {
       var ret;
       ret = "Выберите дату проживания";
@@ -68,10 +69,12 @@ HotelsPanel = (function(_super) {
       return (_this.city().length > 0) && (!_.isObject(_this.checkIn()));
     });
     this.maximizedCalendar.subscribe(function(newValue) {
-      if (!newValue) {
-        return;
+      if (_this.calendarActive()) {
+        if (!newValue) {
+          return;
+        }
+        return _this.showCalendar();
       }
-      return _this.showCalendar();
     });
     this.calendarValue = ko.computed(function() {
       return {

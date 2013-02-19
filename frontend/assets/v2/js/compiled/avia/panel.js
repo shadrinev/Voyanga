@@ -40,6 +40,7 @@ AviaPanel = (function(_super) {
     this.arrivalCityReadableGen = ko.observable('');
     this.arrivalCityReadableAcc = ko.observable('');
     this.prefixText = 'Все направления<br>500+ авиакомпаний';
+    this.calendarActive = ko.observable(true);
     this.oldCalendarState = this.minimizedCalendar();
     this.show = this.passengers.show;
     this.fromChosen = ko.computed(function() {
@@ -75,12 +76,14 @@ AviaPanel = (function(_super) {
       if (!newValue) {
         return;
       }
-      if (_this.rt() && !_this.rtFromChosen()) {
-        _this.showCalendar();
-        return;
-      }
-      if (!_this.fromChosen()) {
-        _this.showCalendar();
+      if (_this.calendarActive()) {
+        if (_this.rt() && !_this.rtFromChosen()) {
+          _this.showCalendar();
+          return;
+        }
+        if (!_this.fromChosen()) {
+          _this.showCalendar();
+        }
       }
     });
     this.calendarValue = ko.computed(function() {
