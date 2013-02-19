@@ -38,7 +38,9 @@ class SearchController extends ApiController
                 {
                     $combined = json_decode($response->body);
                     if ((isset($combined->flights)) and (is_iterable($combined->flights)))
+                    {
                         $flights = $combined->flights;
+                    }
                     else
                     {
                         $newException = new Exception("Error: combined->flights is not iterable. Response: ".CVarDumper::dumpAsString($response));
