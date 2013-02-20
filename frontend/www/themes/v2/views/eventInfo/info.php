@@ -15,6 +15,7 @@ else
     $titleTwitter = $title;
 }
 $description = $event->preview;
+$shortDescription = mb_substr($description, 0, 197).'...';
 
 // Set opengraph meta tags
 $cs = Yii::app()->getClientScript();
@@ -25,6 +26,14 @@ $cs->registerMetaTag($title, NULL, NULL, array('property'=>'og:title'));
 $cs->registerMetaTag('article', NULL, NULL, array('property'=>'og:type'));
 $cs->registerMetaTag($description, NULL, NULL, array('property'=>'og:description'));
 $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));
+
+//set twitter cards tags
+$cs->registerMetaTag('summary', NULL, NULL, array('property'=> 'twitter:card'));
+$cs->registerMetaTag($url, NULL, NULL, array('property'=> 'twitter:url'));
+$cs->registerMetaTag($title, NULL, NULL, array('property'=> 'twitter:title'));
+$cs->registerMetaTag($shortDescription, NULL, NULL, array('property'=> 'twitter:description'));
+$cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'twitter:image'));
+$cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'));
 ?>
 
 <script>
