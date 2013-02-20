@@ -129,4 +129,28 @@ class AjaxController extends BaseAjaxController
         }
         $this->send($response);
     }
+
+    public function actionGetShortUrl($checkIfUrl=true)
+    {
+        try
+        {
+            if (!isset($_POST['long']))
+                throw new CHttpException(400);
+            $longUrl = $_POST['long'];
+            if ($checkIfUrl)
+            {
+                $validator = new CUrlValidator();
+                if (!$validator->validateValue($longUrl))
+                    throw CHttpException(500, 'Incorrect url to short');
+            }
+            $short = new ShortUrl();
+            $short = $short->createShortUrl($longUrl);
+            $response = array('short'=>Yii::app()->params['baseUrl'].'/'.$short);
+            $this->send($response);
+        }
+        catch (Exception $e)
+        {
+            $this->sendError(500, $e->getMessage());
+        }
+    }
 }

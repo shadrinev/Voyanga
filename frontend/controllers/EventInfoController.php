@@ -47,7 +47,7 @@ class EventInfoController extends FrontendController
                     }
             $cities[$tour->startCityId] = City::getCityByPk($tour->startCityId)->getAttributes();
         }
-        //die();
+
         if (!isset($cities[$defaultCityId]))
         {
             foreach ($cities as $defaultCityId => $city)

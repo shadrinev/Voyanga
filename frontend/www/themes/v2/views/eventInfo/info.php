@@ -28,23 +28,29 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
     window.eventId = <?php echo $event->id; ?>;
     $(document).ready(function(){
         initEventPage();
-        //eventPhotos = new EventPhotoBox(window.eventPhotos);
+        $.post('/ajax/getShortUrl', {long : window.location.href} , function(response) {
+            window.shortUrl = response.short;
+            $('a.addthis_button_vk').attr('addthis:url', window.shortUrl);
+            $('a.addthis_button_facebook').attr('addthis:url', window.shortUrl);
+            $('input[name=textTextText]').val(window.shortUrl);
+            $('#socialButtons').show();
+        });
     })
 </script>
 <span style="display: none" id='socialSource'>
     <div id='socialButtons' style="display: none">
         <a href="javascript:void(0);" id="followLink" title="Прямая ссылка">
-            <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText" value="http://example.com/"> </span>
+            <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText" value=""> </span>
         </a>
         <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
 
             <a class="addthis_button_vk"
-               addthis:url="http://example.com"
-               addthis:title="An Example Title"
+               addthis:url=""
+               addthis:title="<?php echo $title ?>"
                addthis:description="<?php echo $event->preview;?>" title="Вконтакте"></a>
             <a class="addthis_button_facebook"
-               addthis:url="http://example.com"
-               addthis:title="An Example Title"
+               addthis:url=""
+               addthis:title="<?php echo $title ?>"
                addthis:description="<?php echo $event->preview;?>" title="Facebook"></a>
             <a class="addthis_button_twitter" title="Twitter"></a>
         </div>
