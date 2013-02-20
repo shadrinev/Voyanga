@@ -55,7 +55,7 @@
 <div class="headBlockOne">
     <div class="center-block">
         <h1>Авиабилеты в <?php echo $countryMorph['caseAcc'];?></h1>
-
+        <?php if ($flightCache): ?>
         <h3>Стоимость из
             <?php
             foreach ($citiesFrom as $cityPoint):
@@ -68,7 +68,11 @@
             endforeach;
             ?>
         </h3>
+        <?php else: ?>
+        <br/>
+        <?php endif;?>
     </div>
+    <?php if ($flightCache): ?>
     <table class="tableFlight first up">
         <thead>
         <tr>
@@ -90,39 +94,39 @@
         </tr>
         </thead>
         <tbody>
-        <?php
-        $firstHalf = round(count($flightCache) / 2);
-        $secondHalf = count($flightCache) - $firstHalf;
-        $i = 0;
-        foreach ($flightCache as $fc):
-            $i++;
-            if ($i <= $firstHalf):
-                $back = ($fc->dateBack == '0000-00-00' ? false : true);
-                ?>
-            <tr<?php echo (($i + 1) % 2) == 0 ? ' class="select"' : '';?>>
-                <td class="tdEmpty">
+            <?php
+            $firstHalf = round(count($flightCache) / 2);
+            $secondHalf = count($flightCache) - $firstHalf;
+            $i = 0;
+            foreach ($flightCache as $fc):
+                $i++;
+                if ($i <= $firstHalf):
+                    $back = ($fc->dateBack == '0000-00-00' ? false : true);
+                    ?>
+                <tr<?php echo (($i + 1) % 2) == 0 ? ' class="select"' : '';?>>
+                    <td class="tdEmpty">
 
-                </td>
-                <td class="tdFlight">
-                    <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span
-                        class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?>
-                    </div>
-                </td>
-                <td class="tdTo">
-                    <?php echo date('d.m', strtotime($fc->dateFrom));?>
-                </td>
-                <td class="tdFrom">
-                    <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m', strtotime($fc->dateBack)));?>
-                </td>
-                <td class="tdPrice">
-                    <a href="<?php echo '/land/' . City::getCityByPk($fc->to)->country->code . '/' . City::getCityByPk($fc->from)->code . '/' . City::getCityByPk($fc->to)->code . ($fc->dateBack == '0000-00-00' ? '/trip/OW' : '');?>"><span
-                        class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span
-                        class="rur">o</span></a>
-                </td>
-            </tr>
-                <?php
-            endif;
-        endforeach;?>
+                    </td>
+                    <td class="tdFlight">
+                        <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span
+                            class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?>
+                        </div>
+                    </td>
+                    <td class="tdTo">
+                        <?php echo date('d.m', strtotime($fc->dateFrom));?>
+                    </td>
+                    <td class="tdFrom">
+                        <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m', strtotime($fc->dateBack)));?>
+                    </td>
+                    <td class="tdPrice">
+                        <a href="<?php echo '/land/' . City::getCityByPk($fc->to)->country->code . '/' . City::getCityByPk($fc->from)->code . '/' . City::getCityByPk($fc->to)->code . ($fc->dateBack == '0000-00-00' ? '/trip/OW' : '');?>"><span
+                            class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span
+                            class="rur">o</span></a>
+                    </td>
+                </tr>
+                    <?php
+                endif;
+            endforeach;?>
         </tbody>
     </table>
     <table class="tableFlight second up">
@@ -147,35 +151,36 @@
         </tr>
         </thead>
         <tbody>
-        <?php $i = 0;
-        foreach ($flightCache as $fc):
-            $i++;
-            if ($i > $firstHalf):
-                $back = ($fc->dateBack == '0000-00-00' ? false : true);?>
-            <tr<?php echo ($i % 2) == 0 ? ' class="select"' : '';?>>
-                <td class="tdFlight">
-                    <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span
-                        class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?>
-                    </div>
-                </td>
-                <td class="tdTo">
-                    <?php echo date('d.m', strtotime($fc->dateFrom));?>
-                </td>
-                <td class="tdFrom">
-                    <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m', strtotime($fc->dateBack)));?>
-                </td>
-                <td class="tdPrice">
-                    <a href="<?php echo '/land/' . City::getCityByPk($fc->to)->country->code . '/' . City::getCityByPk($fc->from)->code . '/' . City::getCityByPk($fc->to)->code . ($fc->dateBack == '0000-00-00' ? '/trip/OW' : '');?>"><span
-                        class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span
-                        class="rur">o</span></a>
-                </td>
-            </tr>
-                <?php
-            endif;
-        endforeach;?>
+            <?php $i = 0;
+            foreach ($flightCache as $fc):
+                $i++;
+                if ($i > $firstHalf):
+                    $back = ($fc->dateBack == '0000-00-00' ? false : true);?>
+                <tr<?php echo ($i % 2) == 0 ? ' class="select"' : '';?>>
+                    <td class="tdFlight">
+                        <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span
+                            class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?>
+                        </div>
+                    </td>
+                    <td class="tdTo">
+                        <?php echo date('d.m', strtotime($fc->dateFrom));?>
+                    </td>
+                    <td class="tdFrom">
+                        <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m', strtotime($fc->dateBack)));?>
+                    </td>
+                    <td class="tdPrice">
+                        <a href="<?php echo '/land/' . City::getCityByPk($fc->to)->country->code . '/' . City::getCityByPk($fc->from)->code . '/' . City::getCityByPk($fc->to)->code . ($fc->dateBack == '0000-00-00' ? '/trip/OW' : '');?>"><span
+                            class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span
+                            class="rur">o</span></a>
+                    </td>
+                </tr>
+                    <?php
+                endif;
+            endforeach;?>
 
         </tbody>
     </table>
+    <?php endif;?>
     <div class="clear"></div>
 
 </div>

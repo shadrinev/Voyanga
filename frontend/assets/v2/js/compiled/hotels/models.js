@@ -608,6 +608,7 @@ HotelResult = (function() {
       marker = new google.maps.Marker({
         position: coords,
         map: map,
+        icon: 'http://voyanga.com/themes/v2/images/pin1.png',
         title: this.hotelName
       });
       return this.mapInitialized = true;
@@ -649,6 +650,7 @@ HotelResult = (function() {
       marker = new google.maps.Marker({
         position: coords,
         map: map,
+        icon: 'http://voyanga.com/themes/v2/images/pin1.png',
         title: this.hotelName
       });
       this.mapInitialized = true;
@@ -840,7 +842,7 @@ HotelResult = (function() {
 
   HotelResult.prototype.smallMapUrl = function() {
     var base;
-    base = "//maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C";
+    base = "//maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=icon:http://voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C";
     base += "%7C";
     base += this.lat + "," + this.lng;
     base += "&sensor=false";

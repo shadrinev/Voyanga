@@ -1,6 +1,6 @@
 STARS_VERBOSE = ['one', 'two', 'three', 'four', 'five']
-HOTEL_SERVICE_VERBOSE = {'Сервис':'service','Спорт и отдых':'sport','Туристам':'turist','Интернет':'internet','Развлечения и досуг':'dosug','Парковка':'parkovka','Дополнительно':'dop','В отеле':'in-hotel'}
-MEAL_VERBOSE = {'Американский завтрак':'Завтрак','Английский завтрак':'Завтрак','Завтрак в номер':'Завтрак','Завтрак + обед':'Завтрак и обед','Завтрак + обед + ужин':'Завтрак и обед и ужин','Завтрак + обед + ужин + напитки':'Завтрак и обед и ужин и напитки','Завтрак + ужин':'Завтрак и ужин','Континентальный завтрак':'Завтрак','Завтрак Шведский стол':'Завтрак'}
+HOTEL_SERVICE_VERBOSE = {'Сервис': 'service', 'Спорт и отдых': 'sport', 'Туристам': 'turist', 'Интернет': 'internet', 'Развлечения и досуг': 'dosug', 'Парковка': 'parkovka', 'Дополнительно': 'dop', 'В отеле': 'in-hotel'}
+MEAL_VERBOSE = {'Американский завтрак': 'Завтрак', 'Английский завтрак': 'Завтрак', 'Завтрак в номер': 'Завтрак', 'Завтрак + обед': 'Завтрак и обед', 'Завтрак + обед + ужин': 'Завтрак и обед и ужин', 'Завтрак + обед + ужин + напитки': 'Завтрак и обед и ужин и напитки', 'Завтрак + ужин': 'Завтрак и ужин', 'Континентальный завтрак': 'Завтрак', 'Завтрак Шведский стол': 'Завтрак'}
 
 
 class Room
@@ -36,15 +36,16 @@ class Room
       if window.app.debugMode()
         text = 'debugInfo:{'
         for propName,propVal of @roomData
-          text += propName+'='+propVal + ', '
+          text += propName + '=' + propVal + ', '
         text += '}'
         return text
       return false
   key: =>
     return @nameNemo + @name + @meal
   printDebug: =>
-    console.log('room data:',@roomData);
-    
+    console.log('room data:', @roomData)
+    ;
+
   getParams: =>
     result = {}
     result.showName = @name
@@ -62,7 +63,7 @@ class RoomSet
     @resultId = data.resultId
     @searchId = data.searchId
     @_data = data
-    @pricePerNight =  Math.ceil(@price / duration)
+    @pricePerNight = Math.ceil(@price / duration)
     @visible = ko.observable(true)
     @cancelRules = ko.observable(false)
     @cancelText = ko.computed =>
@@ -70,7 +71,7 @@ class RoomSet
         result = []
         for cancelObject in @cancelRules()
           if cancelObject.charge
-            nowDate = dateUtils.formatDayMonth( moment()._d )
+            nowDate = dateUtils.formatDayMonth(moment()._d)
             if nowDate == dateUtils.formatDayMonth(cancelObject.cancelDate._d)
               result.push 'Штраф взымается в размере ' + Math.ceil(cancelObject.price) + ' руб'
             else
@@ -89,7 +90,7 @@ class RoomSet
       if room.offerText && !@specialOffer()
         @specialOffer(room.offerText)
       @rooms.push new Room room
-    @rooms[(@rooms.length-1)].last(true)
+    @rooms[(@rooms.length - 1)].last(true)
     @selectedCount = ko.observable 0
     @selectedCount.subscribe (newValue)=>
       @checkCount(newValue)
@@ -125,19 +126,19 @@ class RoomSet
   key: =>
     result = @price
     for room in @rooms
-      result +=room.key()
+      result += room.key()
     return result
 
   similarityHash: =>
     result = ""
     for room in @rooms
-      result +=room.key()
+      result += room.key()
     return result
 
   addCancelationRules: (roomSetData)=>
     if roomSetData.cancelCharges
       roomSetData.cancelCharges.sort(
-        (left,right)->
+        (left, right)->
           if left.fromTimestamp < right.fromTimestamp
             return 1
           else if left.fromTimestamp > right.fromTimestamp
@@ -145,13 +146,13 @@ class RoomSet
           return 0
       )
       #cancelObject = roomSetData.cancelCharges.shift()
-      console.log('adding cancel rules',roomSetData.cancelCharges)
+      console.log('adding cancel rules', roomSetData.cancelCharges)
       for cancelObject in roomSetData.cancelCharges
         cancelObject.cancelDate = moment.unix(cancelObject.fromTimestamp)
-        console.log('date convert',cancelObject,cancelObject.fromTimestamp,cancelObject.cancelDate)
+        console.log('date convert', cancelObject, cancelObject.fromTimestamp, cancelObject.cancelDate)
       @cancelRules(roomSetData.cancelCharges)
 
-  showCancelationRules: (el,e)=>
+  showCancelationRules: (el, e)=>
     #miniPopUp = '<div class="miniPopUp"></div>'
     console.log(e)
     widthThisElement = $(e.currentTarget).width()
@@ -159,16 +160,17 @@ class RoomSet
     @parent.showRulesPopup(true)
     #$('body').append(miniPopUp)
     #$('.miniPopUp').html($(e.currentTarget).attr('rel'))
-    offset = $('#content > :eq(0)').offset();
+    offset = $('#content > :eq(0)').offset()
+    ;
 
-    $('.miniPopUp').css('left', (e.pageX - (widthThisElement / 2) - offset.left)+'px').css('top', (e.pageY + 50 - offset.top)+'px')
+    $('.miniPopUp').css('left', (e.pageX - (widthThisElement / 2) - offset.left) + 'px').css('top', (e.pageY + 50 - offset.top) + 'px')
 
-  hideCancelationRules: (el,ev)=>
+  hideCancelationRules: (el, ev)=>
     @parent.showRulesPopup(false)
-  #price: ->
-  #  console.log prm
-  #  console.log 'tt'
-  #  return 22
+#price: ->
+#  console.log prm
+#  console.log 'tt'
+#  return 22
 #
 # Stacked hotel, FIXME can we use this as roomset ?
 #
@@ -176,12 +178,12 @@ class HotelResult
   constructor: (data, parent, duration, @activeHotel, hotelDatails) ->
     @isFlight = false
     @isHotel = true
-  # Mix in events
+    # Mix in events
     _.extend @, Backbone.Events
     if !hotelDatails
       hotelDatails = {}
     @totalPeople = 0
-    @tours =  parent.tours || @falseFunction
+    @tours = parent.tours || @falseFunction
     @hotelId = data.hotelId
     @checkIn = moment(data.checkIn) || false
     @checkOut = moment(data.checkOut) || false
@@ -199,7 +201,7 @@ class HotelResult
     @description = hotelDatails.description
     if !@description
       @description = ""
-    @limitDesc = Utils.limitTextLenght(@description,195)
+    @limitDesc = Utils.limitTextLenght(@description, 195)
     @showMoreDesc = ko.observable(true)
     @showMoreDescText = ko.computed =>
       if @showMoreDesc()
@@ -230,7 +232,7 @@ class HotelResult
       if @checkIn
         @checkInText = @checkIn.format('LL') + ", c " + @checkInTime
       else
-        console.log('strange ...',@checkIn,@checkInText,@hotelName,@hotelId)
+        console.log('strange ...', @checkIn, @checkInText, @hotelName, @hotelId)
     else
       @checkInText = @checkIn.format('LL')
     # FIXME trollface
@@ -245,7 +247,7 @@ class HotelResult
     @activePhoto = @frontPhoto['largeUrl']
     # FIXME check if categoryId matches star rating
     @starsNumeric = data.categoryId
-    @stars = STARS_VERBOSE[@starsNumeric-1]
+    @stars = STARS_VERBOSE[@starsNumeric - 1]
     @rating = data.rating
     if @rating == '-'
       @rating = 0
@@ -265,7 +267,7 @@ class HotelResult
     # coords
     @lat = hotelDatails.latitude / 1
     @lng = hotelDatails.longitude / 1
-    @distanceToCenter = Math.ceil(data.centerDistance/1000)
+    @distanceToCenter = Math.ceil(data.centerDistance / 1000)
     if @distanceToCenter > 30
       @distanceToCenter = 30
 
@@ -288,7 +290,7 @@ class HotelResult
     @hotelGroupServices = []
     if hotelDatails.hotelGroupServices
       for groupName,elements of hotelDatails.hotelGroupServices
-        @hotelGroupServices.push {groupName: groupName,elements: elements,groupIcon: HOTEL_SERVICE_VERBOSE[groupName]}
+        @hotelGroupServices.push {groupName: groupName, elements: elements, groupIcon: HOTEL_SERVICE_VERBOSE[groupName]}
     @hasRoomAmenities = if hotelDatails.roomAmenities then true else false
     @roomAmenities = hotelDatails.roomAmenities
     @roomSets = ko.observableArray([])
@@ -318,24 +320,24 @@ class HotelResult
     set.resultId = data.resultId
     set.searchId = data.searchId
     if @hotelId == '17897'
-      console.log('setPrice',set.price)
+      console.log('setPrice', set.price)
     if @roomSets().length == 0
       @cheapest = set.price
-      @cheapestSet = set  
+      @cheapestSet = set
       @minPrice = set.pricePerNight
       @maxPrice = set.pricePerNight
     else
       #@cheapestSet = if set.price < @cheapest then set else @cheapestSet
       if set.price < @cheapest
         @cheapestSet = set
-        console.log('set cheapest setPrice',set.price)
+        console.log('set cheapest setPrice', set.price)
       @cheapest = if set.price < @cheapest then set.price else @cheapest
       @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
       @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
     @activeRoomSet(set)
     #@roomSets = _.sortBy @roomSets, (entry)-> entry.price
-    @roomSets.sort (left,right)=>
+    @roomSets.sort (left, right)=>
       if left.price > right.price
         return 1
       else if left.price < right.price
@@ -347,7 +349,7 @@ class HotelResult
       return @activeHotel() == @hotelId
     return false
 
-  showPhoto: (fp,ev)=>
+  showPhoto: (fp, ev)=>
     #window.voyanga_debug('click info',fp,ev)
     #console.log(ev.target)
     #console.log($(ev.target).data())
@@ -356,22 +358,26 @@ class HotelResult
     if !ind
       ind = 0
     #console.log(ind)
-    new PhotoBox(@photos,@hotelName,@stars,ind)
+    new PhotoBox(@photos, @hotelName, @stars, ind)
 
-  showAllResults: (data,event)->
+  showAllResults: (data, event)->
     #console.log(event)
     if @isShowAll()
       $(event.currentTarget).parent().parent().find('.hidden-roomSets').hide(
         'fast', ->
-          jsPaneScrollHeight();
-      );
+          jsPaneScrollHeight()
+          ;
+      )
+      ;
       #$(event.currentTarget).parent().hide()
       @isShowAll(false)
     else
       $(event.currentTarget).parent().parent().find('.hidden-roomSets').show(
         'fast', ->
-          jsPaneScrollHeight();
-      );
+          jsPaneScrollHeight()
+          ;
+      )
+      ;
       #$(event.currentTarget).parent().hide()
       @isShowAll(true)
 
@@ -398,14 +404,14 @@ class HotelResult
       window.app.render({results: ko.observable(hotel.parent)}, 'results')
       window.setTimeout(
         ->
-          Utils.scrollTo(hotel.oldPageTop,false)
+          Utils.scrollTo(hotel.oldPageTop, false)
           console.log(hotel.oldPageTop)
         , 50
       )
 
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
-    Utils.scrollTo('#content',false)
+    Utils.scrollTo('#content', false)
 
 
   showMapDetails: (data, event)=>
@@ -423,7 +429,7 @@ class HotelResult
     el.addClass('active')
     $('#descr').hide()
     $('#map').show()
-    if ! @mapInitialized
+    if !@mapInitialized
       coords = new google.maps.LatLng(@lat, @lng)
       mapOptions =
         center: coords
@@ -433,6 +439,7 @@ class HotelResult
       marker = new google.maps.Marker
         position: coords
         map: map
+        icon: 'http://voyanga.com/themes/v2/images/pin1.png'
         title: @hotelName
       @mapInitialized = true
 
@@ -442,7 +449,8 @@ class HotelResult
       return
     $('.place-buy .tmblr li').removeClass('active')
     el.addClass('active')
-    $('#map').hide();
+    $('#map').hide()
+    ;
     $('#descr').show()
     #$(".description .text").dotdotdot({watch: 'window'})
     $('#boxContent').css 'height', 'auto'
@@ -454,10 +462,11 @@ class HotelResult
       return
     $('.place-buy .tmblr li').removeClass('active')
     el.addClass('active')
-    $('.tab').hide();
+    $('.tab').hide()
+    ;
     $('#hotels-popup-map').show()
     $('#boxContent').css 'height', $('#hotels-popup-map').height() + $('#hotels-popup-header1').height() + $('#hotels-popup-header2').height() + 'px'
-    if ! @mapInitialized
+    if !@mapInitialized
       coords = new google.maps.LatLng(@lat, @lng)
       mapOptions =
         center: coords
@@ -467,6 +476,7 @@ class HotelResult
       marker = new google.maps.Marker
         position: coords
         map: map
+        icon: 'http://voyanga.com/themes/v2/images/pin1.png'
         title: @hotelName
       @mapInitialized = true
     SizeBox 'hotels-popup-body'
@@ -477,7 +487,8 @@ class HotelResult
       return
     $('.place-buy .tmblr li').removeClass('active')
     el.addClass('active')
-    $('.tab').hide();
+    $('.tab').hide()
+    ;
     $('#hotels-popup-description').show()
     #$(".description .text").dotdotdot({watch: 'window'})
     $('#boxContent').css 'height', 'auto'
@@ -489,7 +500,7 @@ class HotelResult
       res = 0
       for roomSet in @roomCombinations()
         if roomSet.selectedCount()
-          res += roomSet.selectedCount()*roomSet.price
+          res += roomSet.selectedCount() * roomSet.price
       return res
 
 
@@ -505,16 +516,16 @@ class HotelResult
       hotelResults = []
       for roomSet in @roomSets()
         key = roomSet.resultId
-        hotelResults.push roomSet.resultId+':'+roomSet.searchId
+        hotelResults.push roomSet.resultId + ':' + roomSet.searchId
 
-      url = 'hotel/search/info?hotelId='+@hotelId
-      url += '&hotelResult='+hotelResults.join(',')
+      url = 'hotel/search/info?hotelId=' + @hotelId
+      url += '&hotelResult=' + hotelResults.join(',')
       console.log @parent.cacheId
       api.search(
         url,
         (data)=>
           #adding info to elements
-          window.voyanga_debug 'searchInfo',data
+          window.voyanga_debug 'searchInfo', data
           if !data.hotel
             return false
           @initFullInfo()
@@ -531,7 +542,7 @@ class HotelResult
             if cancelObjs[key]
               roomSet.addCancelationRules(cancelObjs[key])
             else
-              console.log('not found result with key',key)
+              console.log('not found result with key', key)
 
           @roomMixed = ko.computed =>
             resultsObj = {}
@@ -567,12 +578,12 @@ class HotelResult
   #    $('.tab').hide();
   #    $('#'+var_nameBlock).show()
 
-#    sliderPhoto('.photo-slide-hotel');
-#    $('a.photo').click(function(e) {
-#      e.preventDefault();
-#      createPhotoBox(this);
-#    });
-#    $(".description .text").dotdotdot({watch: 'window'});
+  #    sliderPhoto('.photo-slide-hotel');
+  #    $('a.photo').click(function(e) {
+  #      e.preventDefault();
+  #      createPhotoBox(this);
+  #    });
+  #    $(".description .text").dotdotdot({watch: 'window'});
 
 
   # Click handler for read more button in popup
@@ -583,7 +594,7 @@ class HotelResult
       text_el.find('.endDesc').fadeIn(
         'fast',
         ()->
-          text_el.find('.endDesc').css('display','inline')
+          text_el.find('.endDesc').css('display', 'inline')
       )
       @showMoreDesc(false)
     else
@@ -593,18 +604,18 @@ class HotelResult
       @showMoreDesc(true)
 
     #if ! el.hasClass('active')
-      #var_heightCSS = el.parent().find('.text').css('height');
-      #var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
-      #text_el.attr('rel',var_heightCSS).css('height','auto');
-      #text_el.dotdotdot({watch: 'window'});
-      #el.text('Свернуть');
-      #el.addClass('active');
+    #var_heightCSS = el.parent().find('.text').css('height');
+    #var_heightCSS = Math.abs(parseInt(var_heightCSS.slice(0,-2)));
+    #text_el.attr('rel',var_heightCSS).css('height','auto');
+    #text_el.dotdotdot({watch: 'window'});
+    #el.text('Свернуть');
+    #el.addClass('active');
     #else
-      #rel = el.parent().find('.text').attr('rel');
-      #text_el.css('height', rel+'px');
-      #el.text('Подробнее');
-      #el.removeClass('active');
-      #text_el.dotdotdot({watch: 'window'});
+    #rel = el.parent().find('.text').attr('rel');
+    #text_el.css('height', rel+'px');
+    #el.text('Подробнее');
+    #el.removeClass('active');
+    #text_el.dotdotdot({watch: 'window'});
     #FIXME should not be called on details page
     SizeBox('hotels-popup-body')
 
@@ -623,7 +634,6 @@ class HotelResult
       @activeResultId room.resultId
       @trigger 'select', {roomSet: room, hotel: @}
     else
-
       ticketValidCheck = $.Deferred()
       ticketValidCheck.done (roomSet)=>
         result = {}
@@ -636,27 +646,27 @@ class HotelResult
         result.age = false
         result.cots = 0
         for room in @parent.rawSP.rooms
-          result.adults += room.adultCount*1
+          result.adults += room.adultCount * 1
           # FIXME looks like this could be array
           if room.childAge
             result.age = room.childAgeage
-      
-          result.cots += room.cots*1
+
+          result.cots += room.cots * 1
         Utils.toBuySubmit [result]
-      
+
       @parent.checkTicket room, ticketValidCheck
 
 
   smallMapUrl: =>
-      base = "//maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C"
-      base += "%7C"
-      base += @lat + "," + @lng
-      base += "&sensor=false"
-      return base
+    base = "//maps.googleapis.com/maps/api/staticmap?zoom=13&size=310x259&maptype=roadmap&markers=icon:http://voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C"
+    base += "%7C"
+    base += @lat + "," + @lng
+    base += "&sensor=false"
+    return base
 
   putToMap: (gMap)=>
     if(@lat && @lng)
-      console.log('add point to coords',@lat, @lng)
+      console.log('add point to coords', @lat, @lng)
       latLng = new google.maps.LatLng(@lat, @lng)
       @parent.addMapPoint(latLng)
       gMarker = new google.maps.Marker({
@@ -672,29 +682,29 @@ class HotelResult
         'mouseover',
         ((hotel)=>
           return (ev)=>
-            @parent.gMapPointShowWin(ev,hotel))(@)
+            @parent.gMapPointShowWin(ev, hotel))(@)
       )
       google.maps.event.addListener(
         gMarker,
         'mouseout',
         ((hotel)=>
           return (ev)=>
-            @parent.gMapPointHideWin(ev,hotel))(@)
+            @parent.gMapPointHideWin(ev, hotel))(@)
       )
       google.maps.event.addListener(
         gMarker,
         'click',
         ((hotel)=>
           return (ev)=>
-            @parent.gMapPointClick(ev,hotel))(@)
+            @parent.gMapPointClick(ev, hotel))(@)
       )
       @parent.gMarkers.push gMarker
     else
       city = @parent.city.localEn
       country = if @parent.city.country then (', ' + @parent.city.country) else ''
       @parent.gMapGeocoder.geocode(
-        {address:@address+', '+city+country},
-        (geoInfo,status)=>
+        {address: @address + ', ' + city + country},
+        (geoInfo, status)=>
           console.log(geoInfo)
           if status == google.maps.GeocoderStatus.OK
             @lat = geoInfo[0].geometry.location.lat()
@@ -711,8 +721,8 @@ class HotelResult
       country = if @parent.city.country then (', ' + @parent.city.country) else ''
       gMapGeocoder = new google.maps.Geocoder()
       gMapGeocoder.geocode(
-        {address:@address+', '+city+country},
-        (geoInfo,status)=>
+        {address: @address + ', ' + city + country},
+        (geoInfo, status)=>
           console.log(geoInfo)
           if status == google.maps.GeocoderStatus.OK
             @lat = geoInfo[0].geometry.location.lat()
@@ -745,7 +755,7 @@ class HotelsResultSet
       throw rawData.error
     if !rawData.hotels
       throw "404"
-    @noresults = rawData.hotels.length == 0  
+    @noresults = rawData.hotels.length == 0
     @creationMoment = moment()
     # FIXME FIXME FIXEM
     @rawSP = @searchParams
@@ -753,7 +763,7 @@ class HotelsResultSet
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
-    window.voyanga_debug('checkOut',@checkOut)
+    window.voyanga_debug('checkOut', @checkOut)
     @city = @searchParams.cityFull
     if @searchParams.duration
       duration = @searchParams.duration
@@ -766,13 +776,13 @@ class HotelsResultSet
           console.log hotel.checkOut
           console.log checkOut
           duration = checkOut.valueOf() - checkIn.valueOf()
-          duration =  Math.floor(duration / (3600 * 24 * 1000))
+          duration = Math.floor(duration / (3600 * 24 * 1000))
         else
           duration = hotel.duration
           console.log('yes set')
         break
-    @wordDays = Utils.wordAfterNum(duration,'день','дня','дней')
-    @wordNights = Utils.wordAfterNum(duration,'ночь','ночи','ночей')
+    @wordDays = Utils.wordAfterNum(duration, 'день', 'дня', 'дней')
+    @wordNights = Utils.wordAfterNum(duration, 'ночь', 'ночи', 'ночей')
     @fullMapInitialized = false
     @showFullMap = ko.observable false
 
@@ -787,7 +797,7 @@ class HotelsResultSet
       else
         #hotelsDetails = false
         #if
-        result =  new HotelResult hotel, @, duration, @activeHotel, rawData.hotelsDetails[key+'d']
+        result =  new HotelResult hotel, @, duration, @activeHotel, rawData.hotelsDetails[key + 'd']
         @_results[key] = result
         if @minPrice == false
           @minPrice = @_results[key].minPrice
@@ -801,7 +811,7 @@ class HotelsResultSet
     @data = ko.observableArray()
     @showParts = ko.observable 1
     @showLimit = 20
-    @sortBy = ko.observable( 'minPrice')
+    @sortBy = ko.observable('minPrice')
     @ordBy = ko.observable 1
 
     @resultsForRender = ko.computed =>
@@ -813,9 +823,9 @@ class HotelsResultSet
 
       @data.sort (left, right)=>
         if left[sortKey] < right[sortKey]
-          return -1*ordKey
+          return -1 * ordKey
         if left[sortKey] > right[sortKey]
-          return  1*ordKey
+          return  1 * ordKey
         return 0
       for result in @data()
         if result.visible()
@@ -835,11 +845,9 @@ class HotelsResultSet
     @toursOpened = false
 
 
-
     for key, result of @_results
       if result.numPhotos
         @data.push result
-
 
 
     @sortByPriceClass = ko.computed =>
@@ -867,7 +875,7 @@ class HotelsResultSet
 
 
   select: (hotel, event) =>
-    window.voyanga_debug ' i wonna get hotel for you',hotel
+    window.voyanga_debug ' i wonna get hotel for you', hotel
     hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     hotel.off 'back'
     hotel.on 'back', =>
@@ -875,10 +883,10 @@ class HotelsResultSet
       window.setTimeout(
         =>
           if !@showFullMap()
-            Utils.scrollTo(hotel.oldPageTop,false)
-            Utils.scrollTo('#hotelResult'+hotel.hotelId)
+            Utils.scrollTo(hotel.oldPageTop, false)
+            Utils.scrollTo('#hotelResult' + hotel.hotelId)
           else
-            @showFullMapFunc(null,null,true)
+            @showFullMapFunc(null, null, true)
             @gAllMap.setCenter(@gMapCenter)
             @gAllMap.setZoom(@gMapZoom)
 
@@ -887,10 +895,10 @@ class HotelsResultSet
 
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
-    Utils.scrollTo('#content',false)
+    Utils.scrollTo('#content', false)
 
   findAndSelect: (roomSet)=>
-    console.log('find roomSet', roomSet,'hotelId',roomSet.parent.hotelId)
+    console.log('find roomSet', roomSet, 'hotelId', roomSet.parent.hotelId)
     for hotel in @data()
       if hotel.hotelId == roomSet.parent.hotelId
         console.log('ok, hotel found2')
@@ -910,20 +918,20 @@ class HotelsResultSet
             return possibleRoomSet
     return result
 
-  findAndSelectSameParams: (stars,latLngObservable)=>
+  findAndSelectSameParams: (stars, latLngObservable)=>
     sameHotel = false
     minDistance = 5000
     minPrice = 99999
     for hotel in @data()
       if !sameHotel
         sameHotel = hotel
-        #minDistance = Utils.calculateTheDistance(latLngObservable().lat(),latLngObservable().lng(),hotel.lat,hotel.lng)
-        #if minDistance > 5000 then minDistance = 5000
-        #minPrice = hotel.minPrice
+      #minDistance = Utils.calculateTheDistance(latLngObservable().lat(),latLngObservable().lng(),hotel.lat,hotel.lng)
+      #if minDistance > 5000 then minDistance = 5000
+      #minPrice = hotel.minPrice
       if hotel.categoryId == stars
-        dist = Utils.calculateTheDistance(latLngObservable().lat(),latLngObservable().lng(),hotel.lat,hotel.lng)
+        dist = Utils.calculateTheDistance(latLngObservable().lat(), latLngObservable().lng(), hotel.lat, hotel.lng)
         if dist > 5000 then dist = 5000
-        if( (dist*2 + hotel.minPrice) < (minDistance*2 + minPrice))
+        if( (dist * 2 + hotel.minPrice) < (minDistance * 2 + minPrice))
           sameHotel = hotel
           minDistance = dist
           minPrice = hotel.minPrice
@@ -943,8 +951,8 @@ class HotelsResultSet
 
     @gAllMap.setCenter(@computedCenter.getCenter())
 
-  showFullMapFunc: (targetObject,event,fromBackAction = false, fromFilters = false)=>
-    console.log('show full map',fromBackAction,fromFilters)
+  showFullMapFunc: (targetObject, event, fromBackAction = false, fromFilters = false)=>
+    console.log('show full map', fromBackAction, fromFilters)
 
     @oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     if !@showFullMap()
@@ -960,17 +968,20 @@ class HotelsResultSet
         $('#all-hotels-results').hide()
         $('#all-hotels-map').show()
         mapAllPageView()
-        center = new google.maps.LatLng(@city.latitude, @city.longitude);
-        options = {'zoom': 10,'center': center,'mapTypeId': google.maps.MapTypeId.ROADMAP}
+        center = new google.maps.LatLng(@city.latitude, @city.longitude)
+        ;
+        options = {'zoom': 10, 'center': center, 'mapTypeId': google.maps.MapTypeId.ROADMAP}
         @fullMapInitialized = false
         @mapCluster = null
 
 
         if !@fullMapInitialized
-          @gAllMap = new google.maps.Map($('#all-hotels-map')[0],options)
+          @gAllMap = new google.maps.Map($('#all-hotels-map')[0], options)
           window.gmap = @gAllMap
-          @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png',new google.maps.Size(31, 31));
-          @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png',new google.maps.Size(31, 31));
+          @markerImage = new google.maps.MarkerImage('/themes/v2/images/pin1.png', new google.maps.Size(31, 31))
+          ;
+          @markerImageHover = new google.maps.MarkerImage('/themes/v2/images/pin2.png', new google.maps.Size(31, 31))
+          ;
           @gMapGeocoder = new google.maps.Geocoder()
           @resetMapCenter()
           @gMapOverlay = new googleInfoDiv()
@@ -1011,7 +1022,7 @@ class HotelsResultSet
             hotel.putToMap(@gAllMap)
 
         if !@fullMapInitialized
-          @mapCluster = new MarkerClusterer(@gAllMap,@gMarkers,{styles: @clusterStyle})
+          @mapCluster = new MarkerClusterer(@gAllMap, @gMarkers, {styles: @clusterStyle})
           @fullMapInitialized = true
         else
           @mapCluster.addMarkers(@gMarkers)
@@ -1044,9 +1055,9 @@ class HotelsResultSet
     )
 
 
-  gMapPointShowWin: (event,hotel) =>
-    console.log('showDiv',event)
-    div = '<div id="relInfoPosition"><div id="infoWrapperDiv"><div class="hotelMapInfo"><div class="hotelMapImage"><img src="'+hotel.frontPhoto.largeUrl+'"></div><div class="stars '+hotel.stars+'"></div><div class="hotelMapName">'+hotel.hotelName+'</div><div class="mapPriceDiv">от <div class="mapPriceValue">'+hotel.minPrice+'</div> <span class="rur">o</span>/ночь</div></div></div></div>'
+  gMapPointShowWin: (event, hotel) =>
+    console.log('showDiv', event)
+    div = '<div id="relInfoPosition"><div id="infoWrapperDiv"><div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> <span class="rur">o</span>/ночь</div></div></div></div>'
     @gMapOverlay.setContent(div)
     @gMapOverlay.setPosition(event.latLng)
     @gMapOverlay.show()
@@ -1055,7 +1066,7 @@ class HotelsResultSet
     hotel.gMarker.setIcon(@markerImageHover)
 
 
-  gMapPointHideWin: (event,hotel) =>
+  gMapPointHideWin: (event, hotel) =>
     hotel.gMarker.setIcon(@markerImage)
     console.log('mouseout')
     rnd = Math.round(Math.random() * 5)
@@ -1063,13 +1074,13 @@ class HotelsResultSet
     if rnd == 40
       @gMapInfoWin.close()
 
-  gMapPointClick: (event,hotel) =>
+  gMapPointClick: (event, hotel) =>
     #@hideFullMap()
     @gMapCenter = @gAllMap.getCenter()
     @gMapZoom = @gAllMap.getZoom()
-    console.log('save map params', @gMapCenter,@gMapZoom)
+    console.log('save map params', @gMapCenter, @gMapZoom)
     @select(hotel)
-    console.log('gMapEventClick',event,hotel)
+    console.log('gMapEventClick', event, hotel)
 
   selectFromPopup: (hotel, event) =>
     hotel.activePopup.close()
@@ -1078,30 +1089,30 @@ class HotelsResultSet
       window.app.render({results: ko.observable(hotel.parent)}, 'results')
       window.setTimeout(
         ->
-          Utils.scrollTo(hotel.oldPageTop,false)
-          Utils.scrollTo('#hotelResult'+hotel.hotelId)
+          Utils.scrollTo(hotel.oldPageTop, false)
+          Utils.scrollTo('#hotelResult' + hotel.hotelId)
           console.log(hotel.oldPageTop)
         , 50
       )
 
     hotel.getFullInfo()
     window.app.render(hotel, 'info-template')
-    Utils.scrollTo('#content',false)
+    Utils.scrollTo('#content', false)
 
   getDateInterval: =>
-    dateUtils.formatDayMonthInterval(@checkIn._d,@checkOut._d)
+    dateUtils.formatDayMonthInterval(@checkIn._d, @checkOut._d)
 
   showMoreResults: =>
     fv = @data()[0]
     sv = @data()[1]
-    console.log('before more results',fv,sv,@showParts())
+    console.log('before more results', fv, sv, @showParts())
 
     if @numResults() > (@showParts() * @showLimit)
-      @showParts(@showParts()+1)
+      @showParts(@showParts() + 1)
 
     fv = @data()[0]
     sv = @data()[1]
-    console.log('after more results',fv,sv,@showParts(),'resultsForRender length',@resultsForRender().length)
+    console.log('after more results', fv, sv, @showParts(), 'resultsForRender length', @resultsForRender().length)
 
 
 
@@ -1109,27 +1120,27 @@ class HotelsResultSet
     posTop = $('html').scrollTop() || $('body').scrollTop()
     fullHeight = $('html')[0].scrollHeight || $('body')[0].scrollHeight
     winHeight = $(window).height()
-    if((fullHeight - (posTop+winHeight)) < 2) && !@showFullMap()
+    if((fullHeight - (posTop + winHeight)) < 2) && !@showFullMap()
       if (window.app.activeView() == 'hotels-results') || (window.app.activeView() == 'tours-results' && window.app.activeModuleInstance().innerTemplate == 'hotels-results')
         @showMoreResults()
 
 
 
-  sortByPrice:  =>
+  sortByPrice: =>
     if @sortBy() != 'minPrice'
       @sortBy('minPrice')
       @ordBy(1)
       @showParts 1
 
-      #ko.processAllDeferredBindingUpdates()
+  #ko.processAllDeferredBindingUpdates()
 
-  sortByRating:  =>
+  sortByRating: =>
     if @sortBy() != 'rating'
       @sortBy('rating')
       @ordBy(-1)
       @showParts 1
-      #console.log(@data())
-      #ko.processAllDeferredBindingUpdates()
+  #console.log(@data())
+  #ko.processAllDeferredBindingUpdates()
 
   selectHotel: (hotel, event) =>
     @select(hotel, event)
@@ -1161,9 +1172,9 @@ class HotelsResultSet
         else if (@toursOpened && @tours() && @filtersConfig) || (@tours() && @showFullMap())
           kb = true
         else
-          Utils.scrollTo(0,false)
+          Utils.scrollTo(0, false)
         if @showFullMap()
-          @showFullMapFunc(null,null,false,true)
+          @showFullMapFunc(null, null, false, true)
 
         @toursOpened = false
         fv = @data()[0]

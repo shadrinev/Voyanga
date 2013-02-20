@@ -621,7 +621,9 @@ class HotelBookClient
                     $hotel->checkIn = $checkIn;
                     $hotel->duration = $duration;
                     $hotel->cityId = (string)$hotelsObject->HotelSearch['cityId'];
-                    $response->hotels[] = $hotel;
+                    if ($hotel && isset($hotel->rubPrice) && ($hotel->rubPrice > 0)) {
+                        $response->hotels[] = $hotel;
+                    }
                     $endTime2 = microtime(true);
                     $cnt++;
                 }
@@ -658,7 +660,7 @@ class HotelBookClient
     {
         $i = 0;
         $distance = 0;
-        $distances=array();
+        $distances = array();
         if ($response->hotels) {
             foreach ($response->hotels as $hotel) {
                 $distance += $hotel->centerDistance;

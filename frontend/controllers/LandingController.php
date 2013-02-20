@@ -71,14 +71,16 @@ class LandingController extends Controller
 
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
-        $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'));
+        $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'), 'casePre' => $this->getCase($countryUp, 'ПР'));
         //if(!$cityFromCode){
         $currentCity = Geoip::getCurrentCity();
         //}else{
         //    $currentCity = City::getCityByCode($cityFromCode);
         //}
+        $citySet = false;
         if ($cityCode) {
             $city = City::getCityByCode($cityCode);
+            $citySet = true;
         } else {
             $criteria = new CDbCriteria();
             $criteria->addCondition('`countryId` = ' . $country->id);
@@ -156,7 +158,7 @@ class LandingController extends Controller
 
 
         $this->layout = 'static';
-        $this->render('hotels', array('city' => $city, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'currentCity' => $currentCity, 'flightCache' => $sortFc,
+        $this->render('hotels', array('city' => $city, 'citySet' => $citySet, 'countryMorph' => $countryMorph, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'currentCity' => $currentCity, 'flightCache' => $sortFc,
             'flightCacheFromCurrent' => $flightCacheFromCurrent
         ));
     }
@@ -214,7 +216,7 @@ class LandingController extends Controller
         //print_r($serviceList);die();
 
         $this->layout = 'static';
-        $this->render('hotelInfo', array('hotelInfo' => $hotelInfo, 'serviceList' => $serviceList
+        $this->render('hotelInfo', array('hotelInfo' => $hotelInfo, 'city' => $city, 'serviceList' => $serviceList
         ));
     }
 

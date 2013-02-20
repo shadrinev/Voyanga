@@ -55,12 +55,18 @@
     })
 
 </script>
-<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
+<div class="headBlockOne">
+    <div class="center-block">
+        <?php if ($citySet): ?>
+        <h1>Отели в <?php echo $city->casePre;?></h1>
+        <?php else: ?>
+        <h1>Отели в <?php echo $countryMorph['casePre'];?></h1>
+        <?php endif;?>
+        <br/>
+    </div>
+    <div class="clear"></div>
 
-<!--<div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
-
-<div class="board"  style="position: static;">
-<div class="constructor" style="position: static;">-->
+</div>
 
 <div class="sub-head event" style="height: auto;width: auto;"
      data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
@@ -181,7 +187,7 @@
 
 
 <!-- END CENTER BLOCK -->
-
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
