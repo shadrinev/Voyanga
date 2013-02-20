@@ -40,7 +40,8 @@ class EventInfoController extends FrontendController
             $tours[$tour->startCityId] = $items;
             $tours[$tour->startCityId]['city'] = City::getCityByPk($tour->startCityId)->getAttributes();
             $eventPrice = EventPrice::model()->findByAttributes(array('eventId' => $eventId, 'cityId' => $tour->startCityId));
-            $first = reset($items)[0];
+            $first = reset($items);
+            $first = $first[0];
             $peopleAmount = isset($first['searchParams']['adt']) ? $first['searchParams']['adt'] + $first['searchParams']['chd'] + $first['searchParams']['inf'] : false;
             $ttl = 0;
             if ($peopleAmount === false)
