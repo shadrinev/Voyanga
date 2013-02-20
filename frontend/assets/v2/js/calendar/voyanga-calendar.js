@@ -458,6 +458,7 @@ VoyangaCalendarStandart.update = function (dontset) {
         }
         if (!dontset) {
             console.log('sat date and value will be updated', this.panel());
+            VoyangaCalendarStandart.scrollDate = this.values[0];
             if (this.panel().setDate) {
                 this.panel().setDate(this.values);
             }

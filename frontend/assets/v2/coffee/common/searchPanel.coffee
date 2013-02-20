@@ -78,7 +78,7 @@ class SearchPanel
   showCalendar: =>
     $('.calenderWindow').show()
     console.log('show calendar')
-    VoyangaCalendarStandart.panel.notifySubscribers(VoyangaCalendarStandart.panel())
+    #VoyangaCalendarStandart.panel.notifySubscribers(VoyangaCalendarStandart.panel())
     VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true)
     #@calendarValue.notifySubscribers(@calendarValue())
     if @minimizedCalendar()
