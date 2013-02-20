@@ -4,7 +4,7 @@ return array(
     'title.default' => 'Voyanga',
     'title.prefix' => 'Voyanga, ',
     'title.suffix' => '',
-    'title.main' => 'Авиабилеты и гостиницы по низким ценам, планирование путешествий',
+    'title.main' => 'Авиабилеты онлайн. Купить билет на самолет. Бронирование авиабилетов и гостиниц - Voyanga',
     'title.enterCredentials' => 'Ввод паспортных данных',
     'title.event' => '##eventTitle##',
     'title.error' => 'Ошибка',
