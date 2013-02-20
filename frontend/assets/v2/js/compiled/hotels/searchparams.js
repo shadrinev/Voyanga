@@ -56,7 +56,7 @@ SpRoom = (function() {
           _this.ages.push({
             age: ko.observable(12).extend({
               integerOnly: {
-                min: 2,
+                min: 0,
                 max: 12
               }
             })
@@ -78,11 +78,11 @@ SpRoom = (function() {
     this.children(parts[1]);
     this.infants(parts[2]);
     if (this.children() > 0) {
-      for (i = _i = 0, _ref = this.children() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      for (i = _i = 0, _ref = this.children()(-1); 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         this.ages.push({
           age: ko.observable(parts[3 + i]).extend({
             integerOnly: {
-              min: 2,
+              min: 0,
               max: 12
             }
           })
@@ -93,8 +93,8 @@ SpRoom = (function() {
   };
 
   SpRoom.prototype.fromObject = function(item) {
-    this.adults(+item.adultCount);
-    return this.children(+item.childCount);
+    this.adults + item.adultCount;
+    return this.children + item.childCount;
   };
 
   SpRoom.prototype.getHash = function() {

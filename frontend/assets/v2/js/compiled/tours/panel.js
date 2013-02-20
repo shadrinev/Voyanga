@@ -324,9 +324,7 @@ TourPanel = (function(_super) {
     el.find(".startInputTo").show();
     return el.find('.cityStart').animate({
       width: "261px"
-    }, 300, function() {
-      return el.find(".startInputTo").find("input").focus().select();
-    });
+    }, 300, function() {}, el.find(".startInputTo").find("input").focus().select());
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
@@ -335,6 +333,7 @@ TourPanel = (function(_super) {
 
   TourPanel.prototype.showCalendar = function() {
     $('.calenderWindow').show();
+    console.log('show calendar');
     this.trigger("tourPanel:showCalendar", this);
     if (this.minimizedCalendar()) {
       ResizeAvia();
@@ -376,18 +375,13 @@ $(document).on("keyup change", '.cityStart input.second-path', function(e) {
     if (elem.parent().hasClass("overflow")) {
       elem.parent().animate({
         width: "271px"
-      }, 300, function() {
-        $(this).removeClass("overflow");
-        return $('.from.active .second-path').focus();
-      });
+      }, 300, function() {}, $(this).removeClass("overflow"), $('.from.active .second-path').focus());
       $(".cityStart").animate({
         width: "115px"
       }, 300);
       return $(".cityStart").find(".startInputTo").animate({
         opacity: "1"
-      }, 300, function() {
-        return $(this).hide();
-      });
+      }, 300, function() {}, $(this).hide());
     }
   }
 });

@@ -135,6 +135,9 @@ SearchPanel = (function() {
 
   SearchPanel.prototype.showCalendar = function() {
     $('.calenderWindow').show();
+    console.log('show calendar');
+    VoyangaCalendarStandart.panel.notifySubscribers(VoyangaCalendarStandart.panel());
+    VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true);
     if (this.minimizedCalendar()) {
       return this.minimizedCalendar(false);
     }

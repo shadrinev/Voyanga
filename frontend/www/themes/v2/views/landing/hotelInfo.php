@@ -67,7 +67,7 @@
 <div class="center-block">
     <div class="main-block" style="width: 935px; margin-left: auto; margin-right: auto;">
         <div id="content" style="width: 935px;">
-            <div class="title hotel">
+            <div class="title hotel" style="margin-top: 0px">
                 <h1><?php echo $hotelInfo->hotelName;?></h1>
 
                 <div class="rating" style="display: none;">

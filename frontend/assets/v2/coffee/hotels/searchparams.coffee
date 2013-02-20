@@ -1,50 +1,55 @@
 class SpRoom
   constructor: (@parent) ->
     console.log('SpRoom Constructor')
-    @adults = ko.observable(1).extend({integerOnly: {min: 1, max:4}})
-    @children = ko.observable(0).extend({integerOnly: {min: 0, max:1}})
+    @adults = ko.observable(1).extend({integerOnly:
+      {min: 1, max: 4}})
+    @children = ko.observable(0).extend({integerOnly:
+      {min: 0, max: 1}})
     @ages = ko.observableArray()
-    @infants = ko.observable(0).extend({integerOnly: {min:0, max:2}})
+    @infants = ko.observable(0).extend({integerOnly:
+      {min: 0, max: 2}})
 
     @adults.subscribe (newValue)=>
       if newValue + @children() > 4
         @adults 4 - @children()
       if (@parent.overall() - @adults() + newValue) > 9
-        @adults  9 - @parent.overall() + @adults()
+        @adults 9 - @parent.overall() + @adults()
 
     @children.subscribe (newValue)=>
       if newValue + @adults() > 4
         newValue = 4 - @adults()
         @children newValue
       if (@parent.overall() - @children() + newValue) > 9
-        @children  9 - @parent.overall() + @children()
+        @children 9 - @parent.overall() + @children()
 
 
       if @ages().length == newValue
         return
       if @ages().length < newValue
-        for i in [0..(newValue-@ages().length-1)]
-          @ages.push {age: ko.observable(12).extend {integerOnly: {min: 2, max:12}}}
+        for i in [0..(newValue - @ages().length - 1)]
+          @ages.push {age: ko.observable(12).extend {integerOnly:
+            {min: 0, max: 12}}}
       else if @ages().length > newValue
         @ages.splice(newValue)
       ko.processAllDeferredBindingUpdates()
 
   fromList: (item) ->
-    console.log('SpRoom FromList',item)
+    console.log('SpRoom FromList', item)
     parts = item.split(':')
-    console.log('parts:',parts)
+    console.log('parts:', parts)
     @adults parts[0]
     @children parts[1]
     @infants parts[2]
     # FIXME: FIXME FIXME
     if @children() > 0
-      for i in [0..(@children()-1)]
-        @ages.push {age: ko.observable(parts[3+i]).extend {integerOnly: {min: 2, max:12}}}
-    console.log('ages:',@ages())
+      for i in [0..(@children() -1)]
+        @ages.push {age: ko.observable(parts[3 + i]).extend {integerOnly:
+          {min: 0, max: 12}}}
+    console.log('ages:', @ages())
 
   fromObject: (item) ->
-    @adults +item.adultCount
-    @children +item.childCount
+    @adults + item.adultCount
+    @children + item.childCount
 
   getHash: =>
     parts = [@adults(), @children(), @infants()]
@@ -56,9 +61,9 @@ class SpRoom
   getUrl: (i)=>
     # FIXME FIMXE FIMXE
     agesText = ''
-    console.log('age p',@ages(), @)
+    console.log('age p', @ages(), @)
     for ageObj in @ages()
-      console.log('age',ageObj,ageObj.age())
+      console.log('age', ageObj, ageObj.age())
       agesText = "rooms[#{i}][chdAge]=" + ageObj.age()
     if !agesText
       agesText = "rooms[#{i}][chdAge]=0"
@@ -76,7 +81,7 @@ class HotelsSearchParams
         result += room.adults()
         result += room.children()
       return result
-        
+
   getHash: =>
     parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
     for room in @rooms()
@@ -101,7 +106,7 @@ class HotelsSearchParams
   fromObject: (data)=>
     @city data.city
     @checkIn moment(data.checkIn, 'YYYY-M-D').toDate()
-    @checkOut moment(data.checkIn, 'YYYY-M-D').add('days',data.duration).toDate()
+    @checkOut moment(data.checkIn, 'YYYY-M-D').add('days', data.duration).toDate()
     @rooms.splice(0)
     for item in data.rooms
       r = new SpRoom(@)

@@ -81,7 +81,7 @@ class TourPanelSet
     console.log "Elem", elem
     index = @panels.indexOf(elem)
     @panels.remove(elem)
-    @sp.destinations.splice(index,1)
+    @sp.destinations.splice(index, 1)
     console.log "Panels after", @panels()
     console.log "Destinations after", @sp.destinations()
     _.last(@panels()).isLast(true)
@@ -134,10 +134,10 @@ class TourPanelSet
 
   calendarHidden: =>
     @activeCalendarPanel().calendarHidden()
-    
+
   afterRender: =>
     do resizePanel
-    
+
   beforeRemove: (el) ->
     if $(el).hasClass 'panel'
       $(el).remove()
@@ -148,14 +148,16 @@ class TourPanelSet
 class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
     super(isFirst, true)
-    @toggleSubscribers.dispose();
+    @toggleSubscribers.dispose()
+    ;
     _.extend @, Backbone.Events
 
     @hasfocus = ko.observable false
     @sp = sp
     @isLast = ko.observable true
     @peopleSelectorVM = new HotelPeopleSelector sp
-    @destinationSp = _.last(sp.destinations());
+    @destinationSp = _.last(sp.destinations())
+    ;
     @city = @destinationSp.city
     @checkIn = @destinationSp.dateFrom
     @checkOut = @destinationSp.dateTo
@@ -212,25 +214,26 @@ class TourPanel extends SearchPanel
 
   showFromCityInput: (panel, event) ->
     event.stopPropagation()
-    elem = $('.cityStart').find('.second-path');
+    elem = $('.cityStart').find('.second-path')
+    ;
     elem.data('old', elem.val())
     el = elem.closest('.cityStart')
     el.closest('.tdCityStart')
-      .animate({
-      width: '+=130', 300
+    .animate({
+    width: '+=130', 300
     })
     el.closest('.tdCityStart').find('.bgInput')
-      .animate({
-      width: '+=150', 300
+    .animate({
+    width: '+=150', 300
     })
     el.closest('.tdCityStart').next().find('.data')
-      .animate({
-      width: '-=130', 300
-      })
+    .animate({
+    width: '-=130', 300
+    })
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
       width: "261px"
-    , 300, ->
+      , 300, ->
       el.find(".startInputTo").find("input").focus().select()
 
   hideFromCityInput: (panel, event) ->
@@ -238,6 +241,8 @@ class TourPanel extends SearchPanel
 
   showCalendar: =>
     $('.calenderWindow').show()
+    console.log('show calendar')
+    #@calendarValue.notifySubscribers(@calendarValue())
     @trigger "tourPanel:showCalendar", @
     if @minimizedCalendar()
       ResizeAvia()
@@ -265,14 +270,14 @@ $(document).on "keyup change", '.cityStart input.second-path', (e) ->
     if elem.parent().hasClass("overflow")
       elem.parent().animate
         width: "271px"
-      , 300, ->
+        , 300, ->
         $(this).removeClass "overflow"
         $('.from.active .second-path').focus()
 
       $(".cityStart").animate
         width: "115px"
-      , 300
+        , 300
       $(".cityStart").find(".startInputTo").animate
         opacity: "1"
-      , 300, ->
+        , 300, ->
         $(this).hide()

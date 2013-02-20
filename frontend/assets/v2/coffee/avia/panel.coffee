@@ -5,7 +5,7 @@ class AviaPanel extends SearchPanel
     @nextPanel = 'hotels'
     @mainLabel = 'Поиск авиабилетов'
     @icon = 'fly-ico'
-    ;
+
 
     @template = 'avia-panel-template'
     @sp = new AviaSearchParams()
