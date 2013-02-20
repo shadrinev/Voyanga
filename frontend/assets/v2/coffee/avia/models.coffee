@@ -189,16 +189,22 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
     return htmlResult
 
+  _formatStopOver: (part)->
+    'Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText()
+
   # Returns cup html for flight part 
   getCupHtmlForPart: (part, style="")->
     cupClass = if part.stopoverLength < 2.5*60*60 then "cup" else "cup long"
-    '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>'
+    '<span class="' + cupClass + ' tooltip" rel="' + @_formatStopOver(part) + '" style="' + style + '"></span>'
 
   # FIXME prolly should have cupLong here too
   recommendStopoverIco: ->
     if @direct
       return
-    '<span class="cup"></span>'
+    tooltip = []
+    for part in @parts[0..-2]
+      tooltip.push(@_formatStopOver(part))
+    '<span class="cup tooltip" rel="' + tooltip.join("<br>") + '"></span>'
 
   sort: ->
     #console.log "SORTENG "

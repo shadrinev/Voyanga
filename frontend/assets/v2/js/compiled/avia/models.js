@@ -249,20 +249,31 @@ Voyage = (function() {
     return htmlResult;
   };
 
+  Voyage.prototype._formatStopOver = function(part) {
+    return 'Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText();
+  };
+
   Voyage.prototype.getCupHtmlForPart = function(part, style) {
     var cupClass;
     if (style == null) {
       style = "";
     }
     cupClass = part.stopoverLength < 2.5 * 60 * 60 ? "cup" : "cup long";
-    return '<span class="' + cupClass + ' tooltip" rel="Пересадка в ' + part.arrivalCityPre + ', ' + part.stopoverText() + '" style="' + style + '"></span>';
+    return '<span class="' + cupClass + ' tooltip" rel="' + this._formatStopOver(part) + '" style="' + style + '"></span>';
   };
 
   Voyage.prototype.recommendStopoverIco = function() {
+    var part, tooltip, _i, _len, _ref;
     if (this.direct) {
       return;
     }
-    return '<span class="cup"></span>';
+    tooltip = [];
+    _ref = this.parts.slice(0, -1);
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      part = _ref[_i];
+      tooltip.push(this._formatStopOver(part));
+    }
+    return '<span class="cup tooltip" rel="' + tooltip.join("<br>") + '"></span>';
   };
 
   Voyage.prototype.sort = function() {

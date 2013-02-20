@@ -85,5 +85,58 @@ Yii::app()->clientScript->registerCssFile('/themes/v2/css/style.css');
       poll();
     });
     </script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38508830-1']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_addTrans',
+    '<?= $order->getOrderBooking()->id ?>',           // order ID - required
+    'Voyanga.com',  // affiliation or store name
+    '<?= $order->getOrderBooking()->fullPrice ?>',          // total - required
+  ]);
+
+   // add item might be called for every item in the shopping cart
+   // where your ecommerce engine loops through each item in the cart and
+   // prints out _addItem for each
+  <?php foreach($order->getBookers() as $booker): ?>
+  _gaq.push(['_addItem',
+    '<?= $order->getOrderBooking()->id ?>',           // order ID - required
+    '<?= $booker->getSKU() ?>',           // SKU/code - required
+    '<?= isset($booker->getCurrent()->hotel)?$booker->getCurrent()->hotel->rubPrice:$booker->getCurrent()->price ?>',          // unit price - required
+    '1'               // quantity - required
+  ]);
+  <?php endforeach; ?>
+  _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<!-- Google Code for &#1050;&#1086;&#1088;&#1079;&#1080;&#1085;&#1072; Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 993261133;
+var google_conversion_language = "en";
+var google_conversion_format = "2";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "sWalCPPuqQQQzezP2QM";
+var google_conversion_value = 0;
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/993261133/?value=0&amp;label=sWalCPPuqQQQzezP2QM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
   </body>
 </html>

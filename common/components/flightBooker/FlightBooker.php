@@ -247,6 +247,21 @@ class FlightBooker extends SWLogActiveRecord
         return $description;
     }
 
+    public function getSKU()
+    {
+        $fw = $this->getFlightVoyage();
+        $result = $fw->getDepartureCity(0)->code;
+        $result.= '-';
+        if($fw->isRoundTrip())
+            $result.= $fw->getArrivalCity(0)->code;
+        else
+            $result.= $fw->getArrivalCity(count($fw->flights)-1)->code;
+        $result.='-'.$fw->valAirline->code;
+        return $result;
+    }
+
+
+
     public function setFlightVoyage($value)
     {
         $element = serialize($value);

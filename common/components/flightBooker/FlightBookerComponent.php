@@ -358,4 +358,10 @@ class FlightBookerComponent extends CApplicationComponent
         return $this->flightBooker->getSmallDescription();
     }
 
+    public function getSKU()
+    {
+        return $this->flightBooker->getSKU();
+
+    }
+
 }

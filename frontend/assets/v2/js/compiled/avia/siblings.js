@@ -41,7 +41,7 @@ Sibling = (function() {
           true;
         }
       }
-      return ratio * (_this.graphHeight() - spacing) + spacing - 10;
+      return ratio * (_this.graphHeight() - spacing) + spacing - 5;
     });
   }
 
