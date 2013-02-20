@@ -258,4 +258,9 @@ class HotelBooker extends SWLogActiveRecord
     {
         $this->hotelBookerComponent = &$hotelBookerComponent;
     }
+
+    public function getSKU()
+    {
+        return preg_replace('~\s+~', '-',$this->getHotel()->hotelName);
+    }
 }

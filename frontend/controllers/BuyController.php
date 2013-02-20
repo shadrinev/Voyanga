@@ -234,7 +234,11 @@ class BuyController extends FrontendController
     public function actionWaitpayment()
     {
         $this->layout = false;
-        $this->render('waiting');
+        $order = Yii::app()->order;
+        $this->render('waiting',array(
+                          'order' => $order
+                          ));
+
     }
 
     public function actionPaymentstatus()

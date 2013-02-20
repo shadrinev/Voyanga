@@ -306,7 +306,7 @@ class HotelBookerComponent extends CApplicationComponent
     public function setHotelBookerSearchParams($searchParams)
     {
 
-   }
+    }
 
     public function getHotelBookerId()
     {
@@ -317,5 +317,10 @@ class HotelBookerComponent extends CApplicationComponent
     {
         $hotelBookClient = new HotelBookClient();
         return $hotelBookClient->checkHotel($this->hotel);
+    }
+
+    public function getSKU()
+    {
+        return $this->hotelBooker->getSKU();
     }
 }
