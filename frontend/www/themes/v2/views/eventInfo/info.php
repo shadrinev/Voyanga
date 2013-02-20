@@ -5,7 +5,15 @@ $imageBig = (isset($event->pictureBig) ? $event->imgSrc.$event->pictureBig->url 
 $imageSmall = (isset($event->pictureSmall) ? $event->imgSrc.$event->pictureSmall->url : $event->defaultSmallImageUrl);
 $imageBigAbs = Yii::app()->createAbsoluteUrl('/'). '/' . $imageBig;
 $imageSmallAbs = Yii::app()->createAbsoluteUrl('/'). '/' . $imageSmall;
-$title = $event->title;
+$title = $event->title.', '.$minPrice.' руб. '.$peopleAmountReadable;
+if (mb_strlen($title)>130)
+{
+    $titleTwitter = mb_substr($title, 0, 127).'...';
+}
+else
+{
+    $titleTwitter = $title;
+}
 $description = $event->preview;
 
 // Set opengraph meta tags
@@ -16,7 +24,7 @@ $cs->registerMetaTag($url, NULL, NULL, array('property' =>'og:url'));
 $cs->registerMetaTag($title, NULL, NULL, array('property'=>'og:title'));
 $cs->registerMetaTag('article', NULL, NULL, array('property'=>'og:type'));
 $cs->registerMetaTag($description, NULL, NULL, array('property'=>'og:description'));
-$cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
+$cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));
 ?>
 
 <script>
@@ -52,12 +60,15 @@ $cs->registerMetaTag($imageBig, NULL, NULL, array('property'=> 'og:image'));11
                addthis:url=""
                addthis:title="<?php echo $title ?>"
                addthis:description="<?php echo $event->preview;?>" title="Facebook"></a>
-            <a class="addthis_button_twitter" title="Twitter"></a>
+            <a
+                class="addthis_button_twitter"
+                addthis:title="<?php echo $titleTwitter ?>"
+                title="Twitter"></a>
         </div>
         <script>
             var addthis_share = {
                 templates : {
-                    twitter : "{{title}} (via @voyanga) #voyanga {{url}}"
+                    twitter : "{{title}} #voyanga {{url}}"
                 }
             }
         </script>
