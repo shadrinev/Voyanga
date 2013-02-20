@@ -27,7 +27,7 @@ class Sibling
         if ratio < 0.1
           true
 #          console.error @height, @absDelta, @price
-      ratio * (@graphHeight() - spacing) + spacing - 10
+      ratio * (@graphHeight() - spacing) + spacing - 5
   
   columnValue: ->
     return @price
