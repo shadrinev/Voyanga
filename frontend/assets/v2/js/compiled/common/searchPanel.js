@@ -100,6 +100,12 @@ SearchPanel = (function() {
           return _this.calendarShadow(false);
         });
       } else {
+        $('.calenderWindow .calendarSlide').css({
+          'top': '-341px'
+        });
+        $('.calenderWindow').css({
+          'height': '0px'
+        });
         this.calendarHidden(true);
         return this.calendarShadow(false);
       }

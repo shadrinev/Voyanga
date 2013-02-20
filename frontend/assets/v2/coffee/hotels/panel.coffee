@@ -5,7 +5,8 @@ class HotelsPanel extends SearchPanel
 
     @prevPanel = 'avia'
     @nextPanel = 'tours'
-    @icon = 'hotel-ico';
+    @icon = 'hotel-ico'
+    ;
     @mainLabel = 'Поиск отелей'
     @indexMode = ko.observable true
 
@@ -18,21 +19,22 @@ class HotelsPanel extends SearchPanel
     @cityReadable = ko.observable()
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
+    @calendarActive = ko.observable(true)
     @calendarText = ko.computed =>
       ret = "Выберите дату проживания"
       if @cityReadable()
-        ret += " в городе "+@cityReadable()
+        ret += " в городе " + @cityReadable()
     @prefixText = "Выберите город<br>200 000+ отелей"
 
     @formFilled = ko.computed =>
       if @checkIn().getDay
         cin = true
       else
-        cin =(@checkIn().length>0)
+        cin =(@checkIn().length > 0)
       if @checkOut().getDay
         cout = true
       else
-        cout =(@checkOut().length>0)
+        cout =(@checkOut().length > 0)
 
       result = @city() && cin && cout
       return result
@@ -44,9 +46,10 @@ class HotelsPanel extends SearchPanel
       (@city().length > 0) && (!_.isObject(@checkIn()))
 
     @maximizedCalendar.subscribe (newValue) =>
-      if !newValue
-        return
-      @showCalendar()
+      if @calendarActive()
+        if !newValue
+          return
+        @showCalendar()
 
     @calendarValue = ko.computed =>
       twoSelect: true
@@ -56,6 +59,10 @@ class HotelsPanel extends SearchPanel
       activeSearchPanel: @
 
   handlePanelSubmit: =>
+    if window.location.pathname.replace('/', '') != ''
+      $('#loadWrapBgMin').show()
+      window.location.href = '/#' + @sp.getHash()
+      return
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
 
