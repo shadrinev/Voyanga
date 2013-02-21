@@ -593,3 +593,7 @@
 	background: url(../images/btnCloseCal.png) no-repeat 0 0;
 	cursor: pointer;
 }
+
+.highlight {
+    text-shadow: 0px 1px 10px rgba(82, 168, 236, 0.9) !important;
+}

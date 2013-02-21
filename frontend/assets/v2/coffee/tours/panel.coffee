@@ -70,7 +70,9 @@ class TourPanelSet
 
   navigateToNewSearch: =>
     if (@formNotFilled())
+      $('div.innerCalendar').find('h1').addClass('highlight');
       return
+    $('div.innerCalendar').find('h1').removeClass('highlight');
     _.last(@panels()).handlePanelSubmit()
     _.last(@panels()).minimizedCalendar(true)
 
@@ -99,6 +101,7 @@ class TourPanelSet
     @i == 1
 
   addPanel: =>
+    $('div.innerCalendar').find('h1').removeClass('highlight');
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)

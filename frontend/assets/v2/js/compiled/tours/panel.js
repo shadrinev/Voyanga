@@ -105,8 +105,10 @@ TourPanelSet = (function() {
 
   TourPanelSet.prototype.navigateToNewSearch = function() {
     if (this.formNotFilled()) {
+      $('div.innerCalendar').find('h1').addClass('highlight');
       return;
     }
+    $('div.innerCalendar').find('h1').removeClass('highlight');
     _.last(this.panels()).handlePanelSubmit();
     return _.last(this.panels()).minimizedCalendar(true);
   };
@@ -145,6 +147,7 @@ TourPanelSet = (function() {
   TourPanelSet.prototype.addPanel = function() {
     var newPanel, prevPanel,
       _this = this;
+    $('div.innerCalendar').find('h1').removeClass('highlight');
     this.sp.destinations.push(new DestinationSearchParams());
     if (_.last(this.panels())) {
       _.last(this.panels()).isLast(false);
