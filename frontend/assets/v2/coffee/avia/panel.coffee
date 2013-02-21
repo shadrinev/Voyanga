@@ -29,6 +29,8 @@ class AviaPanel extends SearchPanel
 
     @show = @passengers.show
 
+    $('div.innerCalendar').find('h1').removeClass('highlight')
+
     #helper to handle dispaying of calendar
     @fromChosen = ko.computed =>
       if @departureDate().getDay
