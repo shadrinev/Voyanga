@@ -52,7 +52,9 @@
                     </div>
                 </td>
                 <td class="tdAddTour">
+                    <!-- ko if: ($index()+1) == $length() -->
                     <input type="checkbox" data-bind="checkbox:{label: 'И вернуться в<br/>Санкт-Петербург'}" />
+                    <!-- /ko -->
                 </td>
                 <td class="tdPeople" data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
                     <!-- ko if: ($index()+1) == $length() -->
