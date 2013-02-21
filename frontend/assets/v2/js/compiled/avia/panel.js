@@ -110,7 +110,8 @@ AviaPanel = (function (_super) {
                 from:_this.departureDate(),
                 to:_this.rtDate(),
                 hotels:false,
-                activeSearchPanel:_this
+                activeSearchPanel:_this,
+                valuesDescriptions:['Вылет туда', 'Вылет обратно']
             };
         });
         this.departureDateDay = ko.computed(function () {
@@ -203,8 +204,10 @@ AviaPanel = (function (_super) {
 
     AviaPanel.prototype.navigateToNewSearch = function () {
         if (this.formNotFilled()) {
+            $('div.innerCalendar').find('h1').addClass('highlight');
             return;
         }
+        $('div.innerCalendar').find('h1').removeClass('highlight');
         this.handlePanelSubmit();
         return this.minimizedCalendar(true);
     };

@@ -512,6 +512,7 @@ VoyangaCalendarStandart.getCellByDate = function (oDate) {
 
 VoyangaCalendarStandart.update = function (dontset) {
     VoyangaCalendarStandart.unsetCellInterval();
+    var selIndex = 0;
     if (VoyangaCalendarStandart.lastFromCell) {
         console.log('try unset from', VoyangaCalendarStandart.lastFromCell);
         VoyangaCalendarStandart.unsetCellFrom(VoyangaCalendarStandart.lastFromCell);
@@ -530,8 +531,10 @@ VoyangaCalendarStandart.update = function (dontset) {
         VoyangaCalendarStandart.setCellFrom(jCell);
         VoyangaCalendarStandart.lastFromCell = jCell;
         jCell.addClass('selectData');
+        selIndex = 1;
 
         if (this.values.length > 1) {
+            selIndex = 0;
             jCell = this.getCellByDate(this.values[1]);
             VoyangaCalendarStandart.setCellTo(jCell);
             VoyangaCalendarStandart.lastToCell = jCell;
@@ -552,6 +555,9 @@ VoyangaCalendarStandart.update = function (dontset) {
                 }
             }
         }
+        if (!VoyangaCalendarStandart.twoSelect && selIndex == 1) {
+            selIndex == 0;
+        }
         if (!dontset) {
             console.log('sat date and value will be updated', this.panel());
             VoyangaCalendarStandart.scrollDate = this.values[0];
@@ -559,6 +565,9 @@ VoyangaCalendarStandart.update = function (dontset) {
                 this.panel().setDate(this.values);
             }
         }
+    }
+    if (VoyangaCalendarStandart.selectionIndex) {
+        VoyangaCalendarStandart.selectionIndex(selIndex);
     }
 }
 
@@ -721,6 +730,11 @@ VoyangaCalendarStandart.newValueHandler = function (newCalendarValue) {
         VoyangaCalendarStandart.values.push(new Date());
         newCalendarValue.from = new Date();
     }
+    if (newCalendarValue.selectionIndex !== undefined) {
+        VoyangaCalendarStandart.selectionIndex = newCalendarValue.selectionIndex;
+    } else {
+        VoyangaCalendarStandart.selectionIndex = false;
+    }
     if (newCalendarValue.valuesDescriptions !== undefined) {
         VoyangaCalendarStandart.valuesDescriptions = newCalendarValue.valuesDescriptions;
     } else {
@@ -836,6 +850,7 @@ VoyangaCalendarStandart.init = function (panel, element) {
     this.intervalDescription = false;
     this.intervalWords = ['ночь', 'ночи', 'ночей'];
     this.intervalLastCell = false;
+    this.selectionIndex = false;
     this.lastFromCell = false;
     this.lastToCell = false;
     var self = this;
