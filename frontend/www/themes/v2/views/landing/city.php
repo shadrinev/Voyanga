@@ -168,7 +168,7 @@
                                     <input class="input-path departureCity" type="text" tabindex="-1"
                                            style="width: 227.5px;">
                                     <input class="second-path departureCity" type="text" placeholder="Откуда"
-                                           data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen}"
+                                           data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen, readablePre: departureCityReadablePre}"
                                            style="width: 227.5px;" autocomplete="off">
 
                                     <div class="date" data-bind="click: showCalendar">
@@ -201,7 +201,7 @@
                                     <input class="input-path arrivalCity" type="text" tabindex="-1"
                                            style="width: 227.5px;">
                                     <input class="second-path arrivalCity" placeholder="Куда"
-                                           data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen}"
+                                           data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen, readablePre: arrivalCityReadablePre}"
                                            style="width: 227.5px;" autocomplete="off">
 
                                     <div class="date" data-bind="click: showCalendar">

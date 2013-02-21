@@ -15,12 +15,14 @@ class AviaPanel extends SearchPanel
     @departureCityReadable = ko.observable ''
     @departureCityReadableGen = ko.observable ''
     @departureCityReadableAcc = ko.observable ''
+    @departureCityReadablePre = ko.observable ''
     @rt = @sp.rt
     @rtDate = @sp.rtDate
     @arrivalCity = @sp.arr
     @arrivalCityReadable = ko.observable ''
     @arrivalCityReadableGen = ko.observable ''
     @arrivalCityReadableAcc = ko.observable ''
+    @arrivalCityReadablePre = ko.observable ''
     @prefixText = 'Все направления<br>500+ авиакомпаний'
     @calendarActive = ko.observable(true)
 
@@ -73,6 +75,7 @@ class AviaPanel extends SearchPanel
       to: @rtDate()
       hotels: false
       activeSearchPanel: @
+      valuesDescriptions: ['Вылет туда', 'Вылет обратно']
 
     @departureDateDay = ko.computed =>
       dateUtils.formatDay(@departureDate())
@@ -144,7 +147,9 @@ class AviaPanel extends SearchPanel
   # FIXME decouple!
   navigateToNewSearch: ->
     if (@formNotFilled())
+      $('div.innerCalendar').find('h1').addClass('highlight')
       return
+    $('div.innerCalendar').find('h1').removeClass('highlight')
     @handlePanelSubmit()
     @minimizedCalendar(true)
 

@@ -18,13 +18,14 @@
 
 }
 .panelTable tr td.tdAddTour {
-    min-width: 140px;
+    min-width: 165px;
 }
 .panelTable tr td.tdAddTour .ui-hover {
     color: #A5A8B1;
     font-size: 13px;
-    margin-left: 10px;
+    margin-left: 20px;
 }
+
 .panelTable tr td.tdAddTour .ui-hover .checkbox {
     margin: 8px 8px 2px 0;
 }
@@ -1059,9 +1060,10 @@
 }
 .tdCity .data .add-tour {
     background: url("../images/add-tours.png") no-repeat scroll 0 0 transparent;
-    bottom: -25px;
+    bottom: -26px;
     height: 22px;
     position: absolute;
     right: 0;
     width: 160px;
+    z-index: 997;
 }

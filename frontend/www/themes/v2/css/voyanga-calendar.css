@@ -1,9 +1,9 @@
 .calenderWindow {
-	overflow: hidden;
-	position: absolute;
-	top: 70px;
-	width: 100%;
-	height: 341px;
+    overflow: hidden;
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    height: 341px;
 }
 .bg-Calendar {
 	background: url("../images/bg-calendar.png") repeat-x scroll 0 0 transparent;
@@ -130,6 +130,41 @@
     width: 100%;
     z-index: 1;
 }
+
+.dayCellVoyanga.from .fromDesc, .dayCellVoyanga.to .toDesc {
+    z-index: 2;
+    font-size: 11px;
+    left: 35px;
+    top: 4px;
+    position: absolute;
+    vertical-align: middle;
+    width: 47%;
+    height: 40px;
+    white-space: normal !important;
+}
+
+.dayCellVoyanga.from .fromDesc table tr td, .dayCellVoyanga.to .toDesc table tr td {
+    width: 100%;
+    height: 40px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.dayCellVoyanga .intDesc {
+    position: absolute;
+    padding: 2px 10px;
+    border-radius: 15px;
+    background: #fb7d20;
+    color: #FFF;
+    font-size: 11px;
+    top: 17px;
+    right: 42px;
+}
+
+.dayCellVoyanga.from .toDesc {
+    display: none;
+}
+
 .dayCellVoyanga.selectData .innerDayCellVoyanga {
 	background: none repeat scroll 0 0 #E1E8EC;
     border: 2px solid #198ACB;
@@ -591,4 +626,8 @@
 	right: 14px;
 	background: url(../images/btnCloseCal.png) no-repeat 0 0;
 	cursor: pointer;
+}
+
+.highlight {
+    text-shadow: 0px 1px 10px rgba(82, 168, 236, 0.9) !important;
 }

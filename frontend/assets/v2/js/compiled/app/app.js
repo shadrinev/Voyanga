@@ -91,7 +91,8 @@ Application = (function(_super) {
         if (result !== null) {
           _this.fakoPanel(result);
           _this.activeSearchPanel(_this.fakoPanel());
-          return ko.processAllDeferredBindingUpdates();
+          ko.processAllDeferredBindingUpdates();
+          return $('div.innerCalendar').find('h1').removeClass('highlight');
         }
       }
     });

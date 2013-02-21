@@ -17,6 +17,17 @@ class TourPanelSet
     @startCityReadable = ko.observable ''
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
+    @startCityReadablePre = ko.observable ''
+    @startCityReadableAccShort = ko.computed =>
+      if @startCityReadableAcc().length > 15
+        result = '<div class="backCity">' + @startCityReadableAcc() + '</div>'
+      else
+        result = @startCityReadableAcc()
+      result
+
+    @returnBack = @sp.returnBack
+    @returnBackLabel = ko.computed =>
+      'И вернуться в<br/>' + @startCityReadableAccShort()
     @panels = ko.observableArray []
     @activeCity = ko.observable('')
     @sp.calendarActivated = ko.observable(true)
@@ -48,6 +59,8 @@ class TourPanelSet
       from: @activeCalendarPanel().checkIn()
       to: @activeCalendarPanel().checkOut()
       activeSearchPanel: @activeCalendarPanel()
+      valuesDescriptions: [('Заезд в отель<br>в ' + @activeCalendarPanel().cityReadablePre()), ('Выезд из отеля<br>в ' + @activeCalendarPanel().cityReadablePre())]
+      intervalDescription: '0'
 
 
     @formFilled = ko.computed =>
@@ -61,7 +74,11 @@ class TourPanelSet
 
   navigateToNewSearch: =>
     if (@formNotFilled())
+      $('div.innerCalendar').find('h1').addClass('highlight')
+      ;
       return
+    $('div.innerCalendar').find('h1').removeClass('highlight')
+    ;
     _.last(@panels()).handlePanelSubmit()
     _.last(@panels()).minimizedCalendar(true)
 
@@ -90,6 +107,8 @@ class TourPanelSet
     @i == 1
 
   addPanel: =>
+    $('div.innerCalendar').find('h1').removeClass('highlight')
+    ;
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
@@ -157,13 +176,14 @@ class TourPanel extends SearchPanel
     @isLast = ko.observable true
     @peopleSelectorVM = new HotelPeopleSelector sp
     @destinationSp = _.last(sp.destinations())
-    ;
+
     @city = @destinationSp.city
     @checkIn = @destinationSp.dateFrom
     @checkOut = @destinationSp.dateTo
     @cityReadable = ko.observable ''
     @cityReadableGen = ko.observable ''
     @cityReadableAcc = ko.observable ''
+    @cityReadablePre = ko.observable ''
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
@@ -215,7 +235,7 @@ class TourPanel extends SearchPanel
   showFromCityInput: (panel, event) ->
     event.stopPropagation()
     elem = $('.cityStart').find('.second-path')
-    ;
+
     elem.data('old', elem.val())
     el = elem.closest('.cityStart')
     el.closest('.tdCityStart')
@@ -232,9 +252,8 @@ class TourPanel extends SearchPanel
     })
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
-      width: "261px"
-      , 300, ->
-      el.find(".startInputTo").find("input").focus().select()
+      width: "261px", 300, ->
+    el.find(".startInputTo").find("input").focus().select()
 
   hideFromCityInput: (panel, event) ->
     hideFromCityInput(panel, event)
@@ -269,15 +288,12 @@ $(document).on "keyup change", '.cityStart input.second-path', (e) ->
   if (e.keyCode == 13)
     if elem.parent().hasClass("overflow")
       elem.parent().animate
-        width: "271px"
-        , 300, ->
-        $(this).removeClass "overflow"
-        $('.from.active .second-path').focus()
+        width: "271px", 300, ->
+      $(this).removeClass "overflow"
+      $('.from.active .second-path').focus()
 
       $(".cityStart").animate
-        width: "115px"
-        , 300
+        width: "115px", 300
       $(".cityStart").find(".startInputTo").animate
-        opacity: "1"
-        , 300, ->
-        $(this).hide()
+        opacity: "1", 300, ->
+      $(this).hide()

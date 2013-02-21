@@ -1,7 +1,5 @@
 checkVoybox = (el) ->
-#  if button == 'radio'
-#    $('.radio').removeClass 'on'
-    el.find('.ui-control').addClass('on')
+  el.find('.ui-control').addClass('on')
 uncheckVoybox = (el) ->
   el.find('.ui-control').removeClass('on');		
 
@@ -41,9 +39,15 @@ ko.bindingHandlers.checkbox =
 
 
   update: (element, valueAccessor) ->
+    label = ko.utils.unwrapObservable valueAccessor().label
     checked = ko.utils.unwrapObservable valueAccessor().checked
     el = $(element).next()
+    el.find('.ui-label').html(label)
     if checked
       checkVoybox(el)
+      if (_.isFunction(valueAccessor().checked))
+        valueAccessor().checked(1)
     else
       uncheckVoybox(el)
+      if (_.isFunction(valueAccessor().checked))
+        valueAccessor().checked(0)

@@ -6,7 +6,7 @@ class HotelsPanel extends SearchPanel
     @prevPanel = 'avia'
     @nextPanel = 'tours'
     @icon = 'hotel-ico'
-    ;
+
     @mainLabel = 'Поиск отелей'
     @indexMode = ko.observable true
 
@@ -19,12 +19,15 @@ class HotelsPanel extends SearchPanel
     @cityReadable = ko.observable()
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
+    @cityReadablePre = ko.observable()
     @calendarActive = ko.observable(true)
     @calendarText = ko.computed =>
       ret = "Выберите дату проживания"
       if @cityReadable()
         ret += " в городе " + @cityReadable()
     @prefixText = "Выберите город<br>200 000+ отелей"
+
+    $('div.innerCalendar').find('h1').removeClass('highlight')
 
     @formFilled = ko.computed =>
       if @checkIn().getDay
@@ -57,6 +60,8 @@ class HotelsPanel extends SearchPanel
       from: @checkIn()
       to: @checkOut()
       activeSearchPanel: @
+      valuesDescriptions: [('Заезд в отель<br>в ' + @cityReadablePre()), ('Выезд из отеля<br>в ' + @cityReadablePre())]
+      intervalDescription: '0'
 
   handlePanelSubmit: =>
     if window.location.pathname.replace('/', '') != ''
@@ -82,7 +87,9 @@ class HotelsPanel extends SearchPanel
   # FIXME decouple!
   navigateToNewSearch: ->
     if (@formNotFilled())
+      $('div.innerCalendar').find('h1').addClass('highlight')
       return
+    $('div.innerCalendar').find('h1').removeClass('highlight')
     @handlePanelSubmit()
     @minimizedCalendar(true)
 

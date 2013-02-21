@@ -364,23 +364,91 @@ VoyangaCalendarStandart.slider = new VoyangaCalendarSlider({
     }
 });
 
+VoyangaCalendarStandart.setCellFrom = function (jCell) {
+    if (!jCell.hasClass('from')) {
+        jCell.addClass('from');
+        if (VoyangaCalendarStandart.valuesDescriptions[0]) {
+            if (jCell.find('.fromDesc').length == 0) {
+                jCell.append('<div class="fromDesc"><table><tr><td>' + VoyangaCalendarStandart.valuesDescriptions[0] + '</td></tr></table></div>');
+            }
+        }
+    }
+    //VoyangaCalendarStandart.lastFromCell = jCell;
+}
+
+VoyangaCalendarStandart.unsetCellFrom = function (jCell) {
+    if (jCell.hasClass('from')) {
+        jCell.removeClass('from');
+        if (jCell.find('.fromDesc').length) {
+            jCell.find('.fromDesc').remove();
+        }
+    }
+}
+
+VoyangaCalendarStandart.setCellTo = function (jCell) {
+    if (!jCell.hasClass('to')) {
+        jCell.addClass('to');
+        if (VoyangaCalendarStandart.valuesDescriptions.length > 1 && VoyangaCalendarStandart.valuesDescriptions[1]) {
+            if (jCell.find('.toDesc').length == 0) {
+                jCell.append('<div class="toDesc"><table><tr><td>' + VoyangaCalendarStandart.valuesDescriptions[1] + '</td></tr></table></div>');
+            }
+        }
+    }
+    //VoyangaCalendarStandart.lastToCell = jCell;
+}
+
+VoyangaCalendarStandart.unsetCellTo = function (jCell) {
+    if (jCell.hasClass('to')) {
+        jCell.removeClass('to');
+        if (jCell.find('.toDesc').length) {
+            jCell.find('.toDesc').remove();
+        }
+    }
+}
+
+VoyangaCalendarStandart.setCellInterval = function (jCell, diff) {
+    if (VoyangaCalendarStandart.intervalLastCell) {
+        VoyangaCalendarStandart.unsetCellInterval();
+    }
+    VoyangaCalendarStandart.intervalLastCell = jCell;
+    if (!jCell.hasClass('intervalDescription')) {
+        jCell.addClass('intervalDescription');
+        var cnt = diff - parseInt(VoyangaCalendarStandart.intervalDescription);
+        var strCnt = 'всего ' + Utils.wordAfterNum(cnt, VoyangaCalendarStandart.intervalWords[0], VoyangaCalendarStandart.intervalWords[1], VoyangaCalendarStandart.intervalWords[2]);
+        jCell.append('<div class="intDesc">' + strCnt + '</div>');
+    }
+}
+
+VoyangaCalendarStandart.unsetCellInterval = function () {
+    //VoyangaCalendarStandart.intervalLastCell
+    if (VoyangaCalendarStandart.intervalLastCell) {
+        if (VoyangaCalendarStandart.intervalLastCell.hasClass('intervalDescription')) {
+            VoyangaCalendarStandart.intervalLastCell.removeClass('intervalDescription');
+            if (VoyangaCalendarStandart.intervalLastCell.find('.intDesc').length) {
+                VoyangaCalendarStandart.intervalLastCell.find('.intDesc').remove();
+            }
+        }
+    }
+    VoyangaCalendarStandart.intervalLastCell = false;
+}
+
 VoyangaCalendarStandart.onCellOver = function (obj, e) {
     var jCell = $(obj);
     if (!jCell.hasClass('inactive')) {
         var cellDate = Date.fromIso(jCell.data('cell-date'));
         if (this.values.length == 1) {
             if (cellDate < this.values[0]) {
-                jCell.addClass('from');
+                VoyangaCalendarStandart.setCellFrom(jCell);
             } else {
                 if (this.twoSelect) {
-                    jCell.addClass('to');
+                    VoyangaCalendarStandart.setCellTo(jCell);
                 } else {
-                    jCell.addClass('from');
+                    VoyangaCalendarStandart.setCellFrom(jCell);
                 }
             }
 
         } else {
-            jCell.addClass('from');
+            VoyangaCalendarStandart.setCellFrom(jCell);
         }
         if (cellDate.getDate() == 1) {
             jCell.addClass('startMonth');
@@ -393,24 +461,28 @@ VoyangaCalendarStandart.onCellOut = function (obj, e) {
         var cellDate = Date.fromIso(jCell.data('cell-date'));
         if (this.values.length == 1) {
             if (cellDate < this.values[0]) {
-                jCell.removeClass('from');
+                //jCell.removeClass('from');
+                VoyangaCalendarStandart.unsetCellFrom(jCell);
             } else {
                 if (this.twoSelect) {
-                    jCell.removeClass('to');
+                    VoyangaCalendarStandart.unsetCellTo(jCell);
                 } else {
-                    jCell.removeClass('from');
+                    //jCell.removeClass('from');
+                    VoyangaCalendarStandart.unsetCellFrom(jCell);
                 }
             }
 
         } else {
-            jCell.removeClass('from');
+            //jCell.removeClass('from');
+            VoyangaCalendarStandart.unsetCellFrom(jCell);
         }
         if (cellDate.getDate() == 1) {
             jCell.removeClass('startMonth');
         }
         if (this.values.length > 0) {
             if (this.values[0].valueOf() == cellDate.valueOf()) {
-                jCell.addClass('selectData from');
+                VoyangaCalendarStandart.setCellFrom(jCell);
+                jCell.addClass('selectData');
                 if (cellDate.getDate() == 1) {
                     jCell.addClass('startMonth');
                 }
@@ -418,7 +490,8 @@ VoyangaCalendarStandart.onCellOut = function (obj, e) {
         }
         if (this.values.length > 1) {
             if (this.values[1].valueOf() == cellDate.valueOf()) {
-                jCell.addClass('selectData to');
+                VoyangaCalendarStandart.setCellTo(jCell);
+                jCell.addClass('selectData');
                 if (cellDate.getDate() == 1) {
                     jCell.addClass('startMonth');
                 }
@@ -438,23 +511,52 @@ VoyangaCalendarStandart.getCellByDate = function (oDate) {
 }
 
 VoyangaCalendarStandart.update = function (dontset) {
+    VoyangaCalendarStandart.unsetCellInterval();
+    var selIndex = 0;
+    if (VoyangaCalendarStandart.lastFromCell) {
+        console.log('try unset from', VoyangaCalendarStandart.lastFromCell);
+        VoyangaCalendarStandart.unsetCellFrom(VoyangaCalendarStandart.lastFromCell);
+    }
+    if (VoyangaCalendarStandart.lastToCell) {
+        console.log('try unset to', VoyangaCalendarStandart.lastToCell);
+        VoyangaCalendarStandart.unsetCellTo(VoyangaCalendarStandart.lastToCell);
+    }
     // FIXME SUPER SLOW
     $('.dayCellVoyanga').removeClass('selectData from to selectDay');
+
     console.log('dontset is ' + (dontset ? 'true' : 'false') + ' values:', this.values);
 
     if (this.values.length) {
         var jCell = this.getCellByDate(this.values[0]);
-        jCell.addClass('selectData from');
+        VoyangaCalendarStandart.setCellFrom(jCell);
+        VoyangaCalendarStandart.lastFromCell = jCell;
+        jCell.addClass('selectData');
+        selIndex = 1;
 
         if (this.values.length > 1) {
+            selIndex = 0;
             jCell = this.getCellByDate(this.values[1]);
-            jCell.addClass('selectData to');
-            var tmpDate = new Date(this.values[0].toDateString());
+            VoyangaCalendarStandart.setCellTo(jCell);
+            VoyangaCalendarStandart.lastToCell = jCell;
+            jCell.addClass('selectData');
+            //clone date object
+            var tmpDate = moment(moment(this.values[0]))._d;
             tmpDate.setDate(tmpDate.getDate() + 1);
             while (tmpDate < this.values[1]) {
                 this.getCellByDate(tmpDate).addClass('selectDay');
                 tmpDate.setDate(tmpDate.getDate() + 1);
             }
+            if (VoyangaCalendarStandart.intervalDescription) {
+                var diff = moment(this.values[1]).diff(moment(this.values[0]), 'days');
+                if (diff >= 2) {
+                    tmpDate.setDate(tmpDate.getDate() - 1);
+                    jCell = this.getCellByDate(tmpDate);
+                    VoyangaCalendarStandart.setCellInterval(jCell, diff);
+                }
+            }
+        }
+        if (!VoyangaCalendarStandart.twoSelect && selIndex == 1) {
+            selIndex == 0;
         }
         if (!dontset) {
             console.log('sat date and value will be updated', this.panel());
@@ -463,6 +565,9 @@ VoyangaCalendarStandart.update = function (dontset) {
                 this.panel().setDate(this.values);
             }
         }
+    }
+    if (VoyangaCalendarStandart.selectionIndex) {
+        VoyangaCalendarStandart.selectionIndex(selIndex);
     }
 }
 
@@ -625,6 +730,21 @@ VoyangaCalendarStandart.newValueHandler = function (newCalendarValue) {
         VoyangaCalendarStandart.values.push(new Date());
         newCalendarValue.from = new Date();
     }
+    if (newCalendarValue.selectionIndex !== undefined) {
+        VoyangaCalendarStandart.selectionIndex = newCalendarValue.selectionIndex;
+    } else {
+        VoyangaCalendarStandart.selectionIndex = false;
+    }
+    if (newCalendarValue.valuesDescriptions !== undefined) {
+        VoyangaCalendarStandart.valuesDescriptions = newCalendarValue.valuesDescriptions;
+    } else {
+        VoyangaCalendarStandart.valuesDescriptions = ['', ''];
+    }
+    if (newCalendarValue.intervalDescription !== undefined && newCalendarValue.intervalDescription) {
+        VoyangaCalendarStandart.intervalDescription = newCalendarValue.intervalDescription;
+    } else {
+        VoyangaCalendarStandart.intervalDescription = false;
+    }
     //if((newCalendarValue.twoSelect == true) && (VoyangaCalendarStandart.twoSelect == false)){
 
     //}
@@ -726,6 +846,13 @@ VoyangaCalendarStandart.init = function (panel, element) {
     VoyangaCalendarStandart.slider.jObj = this.jObj;
     this.alreadyInited = false;
     this.minimalDateChanged = false;
+    this.valuesDescriptions = ['', ''];
+    this.intervalDescription = false;
+    this.intervalWords = ['ночь', 'ночи', 'ночей'];
+    this.intervalLastCell = false;
+    this.selectionIndex = false;
+    this.lastFromCell = false;
+    this.lastToCell = false;
     var self = this;
     this.oldCalendarValue = null;
     if (!this.panel || (this.panel && panel() != this.panel() )) {
