@@ -18,7 +18,23 @@
 
 }
 .panelTable tr td.tdAddTour {
-    min-width: 117px;
+    min-width: 140px;
+}
+.panelTable tr td.tdAddTour .ui-hover {
+    color: #A5A8B1;
+    font-size: 13px;
+    margin-left: 10px;
+}
+.panelTable tr td.tdAddTour .ui-hover .checkbox {
+    margin: 8px 8px 2px 0;
+}
+.panelTable tr td.tdAddTour .ui-hover .ui-label .backCity {
+    display: block;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
 }
 .panelTable tr td.tdButton {
     text-align: center;
@@ -1031,4 +1047,12 @@
 }
 .divCondition {
     top: 62px;
+}
+.tdCity .data .add-tour {
+    background: url("../images/add-tours.png") no-repeat scroll 0 0 transparent;
+    bottom: -25px;
+    height: 22px;
+    position: absolute;
+    right: 0;
+    width: 160px;
 }

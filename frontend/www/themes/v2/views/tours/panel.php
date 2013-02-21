@@ -45,13 +45,14 @@
                                 <div class="right"></div>
                             </div>
                         </div>
+                        <!-- ko if: ($index()+1) == $length() -->
+                        <a href="#" class="add-tour"
+                           data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
+                        <!-- /ko -->
                     </div>
                 </td>
                 <td class="tdAddTour">
-                    <!-- ko if: ($index()+1) == $length() -->
-                    <a href="#" class="add-tour"
-                       data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
-                    <!-- /ko -->
+                    <input type="checkbox" data-bind="checkbox:{label: 'И вернуться в<br/>Санкт-Петербург'}" />
                 </td>
                 <td class="tdPeople" data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
                     <!-- ko if: ($index()+1) == $length() -->
