@@ -84,7 +84,9 @@ class HotelsPanel extends SearchPanel
   # FIXME decouple!
   navigateToNewSearch: ->
     if (@formNotFilled())
+      $('div.innerCalendar').find('h1').addClass('highlight')
       return
+    $('div.innerCalendar').find('h1').removeClass('highlight')
     @handlePanelSubmit()
     @minimizedCalendar(true)
 
