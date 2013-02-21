@@ -64,7 +64,11 @@ ko.bindingHandlers.autocomplete = {
       valueAccessor().readable(data[iataCode].name);
       valueAccessor().readableGen(data[iataCode].nameGen);
       valueAccessor().readableAcc(data[iataCode].nameAcc);
-      return valueAccessor().readablePre(data[iataCode].namePre);
+      valueAccessor().readablePre(data[iataCode].namePre);
+      if ($(element).val().length === 0) {
+        $(element).val(data[iataCode].name);
+        return $(element).siblings('input.input-path').val(data[iataCode].label);
+      }
     };
     if (iataCode.length > 0) {
       return $.ajax({

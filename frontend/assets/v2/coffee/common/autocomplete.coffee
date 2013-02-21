@@ -55,6 +55,9 @@ ko.bindingHandlers.autocomplete =
       valueAccessor().readableGen(data[iataCode].nameGen)
       valueAccessor().readableAcc(data[iataCode].nameAcc)
       valueAccessor().readablePre(data[iataCode].namePre)
+      if ($(element).val().length == 0)
+        $(element).val(data[iataCode].name)
+        $(element).siblings('input.input-path').val(data[iataCode].label)
 
     if (iataCode.length > 0)
       $.ajax
