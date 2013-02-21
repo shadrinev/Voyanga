@@ -34,6 +34,7 @@
     margin-bottom: 6px;
     margin-left: 50px;
     text-shadow: 0 1px 0 #2A2C30;
+    text-align: center;
 }
 .weekDaysVoyanga {
     height: 23px;
@@ -629,5 +630,5 @@
 }
 
 .highlight {
-    text-shadow: 0px 1px 10px rgba(82, 168, 236, 0.9) !important;
+    text-shadow: 0px 1px 15px rgba(255, 255, 255, 0.9) !important;
 }

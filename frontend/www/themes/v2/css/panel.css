@@ -66,6 +66,8 @@
 .panelTable tr td.tdCity .data .to, tr td.tdCity .data .from {
     width: 100%;
     height: 36px;
+    position: relative;
+    z-index: 999;
 }
 /* INPUT */
 .input-path {
