@@ -20,11 +20,19 @@ class HotelsPanel extends SearchPanel
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
     @cityReadablePre = ko.observable()
+    @selectionIndex = ko.observable ''
     @calendarActive = ko.observable(true)
     @calendarText = ko.computed =>
-      ret = "Выберите дату проживания"
-      if @cityReadable()
-        ret += " в городе " + @cityReadable()
+      result = 'Введите город'
+      if @city()
+        if @selectionIndex()==0
+          result = 'Выберите дату приезда в ' + @cityReadableAcc()
+        else if @selectionIndex()==1
+          result = 'Выберите дату отъезда из ' + @cityReadableGen()
+        else if @selectionIndex()==2
+          result = @cityReadable() + ', ' +  dateUtils.formatDayShortMonth(@checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@checkOut())
+      result
+
     @prefixText = "Выберите город<br>200 000+ отелей"
 
     $('div.innerCalendar').find('h1').removeClass('highlight')
@@ -62,6 +70,7 @@ class HotelsPanel extends SearchPanel
       activeSearchPanel: @
       valuesDescriptions: [('Заезд в отель<br>в ' + @cityReadablePre()), ('Выезд из отеля<br>в ' + @cityReadablePre())]
       intervalDescription: '0'
+      selectionIndex: @selectionIndex
 
   handlePanelSubmit: =>
     if window.location.pathname.replace('/', '') != ''

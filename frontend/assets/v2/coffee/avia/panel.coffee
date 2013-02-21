@@ -25,6 +25,7 @@ class AviaPanel extends SearchPanel
     @arrivalCityReadablePre = ko.observable ''
     @prefixText = 'Все направления<br>500+ авиакомпаний'
     @calendarActive = ko.observable(true)
+    @selectionIndex = ko.observable ''
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
@@ -76,6 +77,7 @@ class AviaPanel extends SearchPanel
       hotels: false
       activeSearchPanel: @
       valuesDescriptions: ['Вылет туда', 'Вылет обратно']
+      selectionIndex: @selectionIndex
 
     @departureDateDay = ko.computed =>
       dateUtils.formatDay(@departureDate())
@@ -96,18 +98,25 @@ class AviaPanel extends SearchPanel
     $('.how-many-man .btn')
 
     @calendarText = ko.computed =>
-      result = "Выберите дату перелета "
+      result = "Выберите дату вылета "
       if @rt()
         arrow = ' ↔ '
       else
         arrow = ' → '
-      if ((@departureCityReadable().length > 0) && (@arrivalCityReadable().length > 0))
-        result += @departureCityReadable() + arrow + @arrivalCityReadable()
-      else if ((@departureCityReadable().length == 0) && (@arrivalCityReadable().length > 0))
-        result += ' в ' + @arrivalCityReadableAcc()
-      else if ((@departureCityReadable().length > 0) && (@arrivalCityReadable().length == 0))
-        result += ' из ' + @departureCityReadableGen()
-      return result
+      console.log "updating"
+      if (@departureCityReadable().length == 0)
+        result = 'Выберите город вылета'
+      else if (@arrivalCityReadable().length == 0)
+        result = 'Выберите город прилёта'
+      else if (@selectionIndex()==0)
+        result = 'Выберите дату вылета из ' + @departureCityReadableGen()
+      else if ((@rt()) && (@selectionIndex()==1))
+        result = 'Выберите дату вылета из ' + @arrivalCityReadableGen()
+      else
+        result = @departureCityReadable() + arrow + @arrivalCityReadable() + ', ' + dateUtils.formatDayShortMonth(@departureDate())
+        if @rt()
+          result += ' - ' + dateUtils.formatDayShortMonth(@rtDate())
+      result
 
   rtTumbler: (newValue) ->
     if newValue

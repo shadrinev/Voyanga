@@ -18,6 +18,7 @@ class TourPanelSet
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
     @startCityReadablePre = ko.observable ''
+    @selectionIndex = ko.observable ''
     @startCityReadableAccShort = ko.computed =>
       if @startCityReadableAcc().length > 15
         result = '<div class="backCity">' + @startCityReadableAcc() + '</div>'
@@ -30,13 +31,18 @@ class TourPanelSet
       'И вернуться в<br/>' + @startCityReadableAccShort()
     @panels = ko.observableArray []
     @activeCity = ko.observable('')
+    @activeCityAcc = ko.observable('')
+    @activeCityGen = ko.observable('')
     @sp.calendarActivated = ko.observable(true)
     @calendarText = ko.computed =>
-      result = 'Выберите даты пребывания в городе'
+      result = 'Введите город'
       if @activeCity()
-        result += ' ' + @activeCity()
-      else
-        result = 'Введите город'
+        if @selectionIndex()==0
+          result = 'Выберите дату приезда в ' + @activeCityAcc()
+        else if @selectionIndex()==1
+          result = 'Выберите дату отъезда из ' + @activeCityGen()
+        else if @selectionIndex()==2
+          result = @activeCity() + ', ' +  dateUtils.formatDayShortMonth(@activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkOut())
       result
 
     @lastPanel = null
@@ -61,6 +67,7 @@ class TourPanelSet
       activeSearchPanel: @activeCalendarPanel()
       valuesDescriptions: [('Заезд в отель<br>в ' + @activeCalendarPanel().cityReadablePre()), ('Выезд из отеля<br>в ' + @activeCalendarPanel().cityReadablePre())]
       intervalDescription: '0'
+      selectionIndex: @selectionIndex
 
 
     @formFilled = ko.computed =>
@@ -93,9 +100,6 @@ class TourPanelSet
     _.last(@panels()).saveStartParams()
 
   deletePanel: (elem) =>
-    console.log "Panels before", @panels()
-    console.log "Destinations before", @sp.destinations()
-    console.log "Elem", elem
     index = @panels.indexOf(elem)
     @panels.remove(elem)
     @sp.destinations.splice(index, 1)
@@ -116,6 +120,8 @@ class TourPanelSet
     newPanel = new TourPanel(@sp, @i, @i == 0)
     newPanel.on "tourPanel:showCalendar", (args...) =>
       @activeCity(newPanel.cityReadable())
+      @activeCityAcc(newPanel.cityReadableAcc())
+      @activeCityGen(newPanel.cityReadableGen())
       @showPanelCalendar(args)
     #need remove focusOut(blur)
     newPanel.on "tourPanel:hasFocus", (args...) =>
@@ -128,6 +134,9 @@ class TourPanelSet
     @lastPanel = newPanel
     @i = @panels().length
     VoyangaCalendarStandart.clear()
+    @activeCity('')
+    @activeCityAcc('')
+    @activeCityGen('')
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
@@ -154,8 +163,10 @@ class TourPanelSet
   calendarHidden: =>
     @activeCalendarPanel().calendarHidden()
 
-  afterRender: =>
+  afterRender: (el) =>
     do resizePanel
+    if $(el).hasClass 'panel'
+      $(el).find('.second-path').focus()
 
   beforeRemove: (el) ->
     if $(el).hasClass 'panel'

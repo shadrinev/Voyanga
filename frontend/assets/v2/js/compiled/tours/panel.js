@@ -43,6 +43,7 @@ TourPanelSet = (function() {
     this.startCityReadableGen = ko.observable('');
     this.startCityReadableAcc = ko.observable('');
     this.startCityReadablePre = ko.observable('');
+    this.selectionIndex = ko.observable('');
     this.startCityReadableAccShort = ko.computed(function() {
       var result;
       if (_this.startCityReadableAcc().length > 15) {
@@ -58,14 +59,20 @@ TourPanelSet = (function() {
     });
     this.panels = ko.observableArray([]);
     this.activeCity = ko.observable('');
+    this.activeCityAcc = ko.observable('');
+    this.activeCityGen = ko.observable('');
     this.sp.calendarActivated = ko.observable(true);
     this.calendarText = ko.computed(function() {
       var result;
-      result = 'Выберите даты пребывания в городе';
+      result = 'Введите город';
       if (_this.activeCity()) {
-        result += ' ' + _this.activeCity();
-      } else {
-        result = 'Введите город';
+        if (_this.selectionIndex() === 0) {
+          result = 'Выберите дату приезда в ' + _this.activeCityAcc();
+        } else if (_this.selectionIndex() === 1) {
+          result = 'Выберите дату отъезда из ' + _this.activeCityGen();
+        } else if (_this.selectionIndex() === 2) {
+          result = _this.activeCity() + ', ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkOut());
+        }
       }
       return result;
     });
@@ -90,7 +97,8 @@ TourPanelSet = (function() {
         to: _this.activeCalendarPanel().checkOut(),
         activeSearchPanel: _this.activeCalendarPanel(),
         valuesDescriptions: ['Заезд в отель<br>в ' + _this.activeCalendarPanel().cityReadablePre(), 'Выезд из отеля<br>в ' + _this.activeCalendarPanel().cityReadablePre()],
-        intervalDescription: '0'
+        intervalDescription: '0',
+        selectionIndex: _this.selectionIndex
       };
     });
     this.formFilled = ko.computed(function() {
@@ -132,9 +140,6 @@ TourPanelSet = (function() {
 
   TourPanelSet.prototype.deletePanel = function(elem) {
     var index;
-    console.log("Panels before", this.panels());
-    console.log("Destinations before", this.sp.destinations());
-    console.log("Elem", elem);
     index = this.panels.indexOf(elem);
     this.panels.remove(elem);
     this.sp.destinations.splice(index, 1);
@@ -161,6 +166,8 @@ TourPanelSet = (function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       _this.activeCity(newPanel.cityReadable());
+      _this.activeCityAcc(newPanel.cityReadableAcc());
+      _this.activeCityGen(newPanel.cityReadableGen());
       return _this.showPanelCalendar(args);
     });
     newPanel.on("tourPanel:hasFocus", function() {
@@ -176,7 +183,10 @@ TourPanelSet = (function() {
     this.panels.push(newPanel);
     this.lastPanel = newPanel;
     this.i = this.panels().length;
-    return VoyangaCalendarStandart.clear();
+    VoyangaCalendarStandart.clear();
+    this.activeCity('');
+    this.activeCityAcc('');
+    return this.activeCityGen('');
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
@@ -213,8 +223,11 @@ TourPanelSet = (function() {
     return this.activeCalendarPanel().calendarHidden();
   };
 
-  TourPanelSet.prototype.afterRender = function() {
-    return resizePanel();
+  TourPanelSet.prototype.afterRender = function(el) {
+    resizePanel();
+    if ($(el).hasClass('panel')) {
+      return $(el).find('.second-path').focus();
+    }
   };
 
   TourPanelSet.prototype.beforeRemove = function(el) {
