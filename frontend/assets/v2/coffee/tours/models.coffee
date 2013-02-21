@@ -750,6 +750,7 @@ class TourSearchParams extends SearchParams
       @startCity = ko.observable window.currentCityCode
     else
       @startCity = ko.observable 'LED'
+    @returnBack = ko.observable 1
     @destinations = ko.observableArray []
     # FIXME copy paste from hotel search params
     @rooms = ko.observableArray [new SpRoom(@)]
@@ -770,8 +771,6 @@ class TourSearchParams extends SearchParams
         result += room.children()
       return result
 
-    @returnBack = ko.observable 1
-
   addSpRoom: =>
     @rooms.push new SpRoom(@)
 
@@ -779,6 +778,7 @@ class TourSearchParams extends SearchParams
     result = 'tour/search?'
     params = []
     params.push 'start=' + @startCity()
+    params.push 'return=' + @returnBack()
     _.each @destinations(), (destination, ind) =>
       params.push 'destinations[' + ind + '][city]=' + destination.city()
       params.push 'destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY')
@@ -804,7 +804,6 @@ class TourSearchParams extends SearchParams
   getHash: ->
     parts =  [@startCity(), @returnBack()]
     _.each @destinations(), (destination) ->
-      console.log('destination',destination)
       parts.push destination.city()
       parts.push moment(destination.dateFrom()).format('D.M.YYYY')
       parts.push moment(destination.dateTo()).format('D.M.YYYY')
@@ -817,7 +816,6 @@ class TourSearchParams extends SearchParams
     return hash
 
   fromList: (data)->
-    window.voyanga_debug "Restoring TourSearchParams from list"
     @startCity data[0]
     @returnBack data[1]
     # FIXME REWRITE ME

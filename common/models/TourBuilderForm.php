@@ -13,6 +13,8 @@ class TourBuilderForm extends CFormModel
     public $startDate;
     public $endDate;
 
+    public $returnBack = true;
+
     //temp var for no warning
     private $startCityId;
 

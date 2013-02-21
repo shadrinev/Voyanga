@@ -17,6 +17,15 @@ class TourPanelSet
     @startCityReadable = ko.observable ''
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
+    @startCityReadableAccShort = ko.computed =>
+      if @startCityReadableAcc().length > 15
+        result = '<div class="backCity">'+ @startCityReadableAcc() + '</div>'
+      else
+        result = @startCityReadableAcc()
+      result
+    @returnBack = @sp.returnBack
+    @returnBackLabel = ko.computed =>
+      'И вернуться в<br/>' + @startCityReadableAccShort()
     @panels = ko.observableArray []
     @activeCity = ko.observable('')
     @sp.calendarActivated = ko.observable(true)

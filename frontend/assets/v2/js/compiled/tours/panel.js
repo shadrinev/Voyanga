@@ -42,6 +42,19 @@ TourPanelSet = (function() {
     this.startCityReadable = ko.observable('');
     this.startCityReadableGen = ko.observable('');
     this.startCityReadableAcc = ko.observable('');
+    this.startCityReadableAccShort = ko.computed(function() {
+      var result;
+      if (_this.startCityReadableAcc().length > 15) {
+        result = '<div class="backCity">' + _this.startCityReadableAcc() + '</div>';
+      } else {
+        result = _this.startCityReadableAcc();
+      }
+      return result;
+    });
+    this.returnBack = this.sp.returnBack;
+    this.returnBackLabel = ko.computed(function() {
+      return 'И вернуться в<br/>' + _this.startCityReadableAccShort();
+    });
     this.panels = ko.observableArray([]);
     this.activeCity = ko.observable('');
     this.sp.calendarActivated = ko.observable(true);
