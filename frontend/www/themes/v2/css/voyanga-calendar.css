@@ -1,33 +1,39 @@
 .calenderWindow {
-	overflow: hidden;
-	position: absolute;
-	top: 70px;
-	width: 100%;
-	height: 341px;
+    overflow: hidden;
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    height: 341px;
 }
+
 .bg-Calendar {
-	background: url("../images/bg-calendar.png") repeat-x scroll 0 0 transparent;
+    background: url("../images/bg-calendar.png") repeat-x scroll 0 0 transparent;
 }
+
 #voyanga-calendar {
-	margin: 0 auto;
+    margin: 0 auto;
 }
+
 .calendarSlide {
-	background: url("../images/bg-calendare-head.png") repeat-x scroll 0 0 transparent;
+    background: url("../images/bg-calendare-head.png") repeat-x scroll 0 0 transparent;
     position: absolute;
     top: 0px;
     width: 100%;
     z-index: 1;
 }
+
 .panel-index .innerCalendar {
-	height: 32px;
+    height: 32px;
 }
+
 .innerCalendar {
     margin: 0 auto;
     padding-top: 9px;
     position: relative;
 }
+
 .innerCalendar h1 {
-	color: #FFFFFF;
+    color: #FFFFFF;
     font-family: Arial;
     font-size: 22px;
     font-weight: normal;
@@ -35,25 +41,28 @@
     margin-left: 50px;
     text-shadow: 0 1px 0 #2A2C30;
 }
+
 .weekDaysVoyanga {
     height: 23px;
     overflow: hidden;
     white-space: nowrap;
     width: 100%;
 }
+
 .weekDaysVoyanga .weekDaysVoyangaInner {
-	height: 22px;
-	border-left: 1px solid #D7D7D8;
+    height: 22px;
+    border-left: 1px solid #D7D7D8;
     width: 100%;
     white-space: nowrap;
 }
+
 .weekDayVoyanga {
     background: none repeat scroll 0 0 #E2E5EB;
     border-bottom: 1px solid #D7D7D8;
     border-right: 1px solid #D7D7D8;
     color: #1C1F24;
     float: left;
-    font-family: Tahoma,Arial;
+    font-family: Tahoma, Arial;
     font-size: 13px;
     height: 22px;
     text-align: right;
@@ -61,15 +70,18 @@
     text-transform: lowercase;
     width: 14.2%;
 }
+
 .allTourCal .weekDayVoyanga {
-	width: 14.28%;
+    width: 14.28%;
 }
+
 .weekDayVoyanga:last-child {
-	margin-right: -10px;
+    margin-right: -10px;
 }
+
 .weekDayVoyanga span {
-	margin-right: 15px;
-	border-top: 1px solid #D7D7D8;
+    margin-right: 15px;
+    border-top: 1px solid #D7D7D8;
     height: 22px;
     margin: -1px 0px -1px 0px;
     z-index: 1;
@@ -77,12 +89,14 @@
     text-align: right;
     padding-right: 15px;
 }
+
 .allTourCal .weekDayVoyanga span {
     text-align: left;
     padding-left: 15px;
     text-transform: capitalize;
 }
-.calendarGridVoyanga{
+
+.calendarGridVoyanga {
     /* may be in percents??*/
     /*width: 950px;*/
     width: 100%;
@@ -92,17 +106,20 @@
     color: #1c1f24;
     padding-left: 1px;
 }
-.calendarUnscrollVoyanga{
+
+.calendarUnscrollVoyanga {
     width: 100%;
     height: 245px;
     overflow-x: hidden;
     overflow-y: hidden;
     clear: both;
 }
-.calendarLineVoyanga{
+
+.calendarLineVoyanga {
     height: 49px;
     white-space: nowrap;
 }
+
 .dayCellVoyanga {
     width: 14.2%;
     height: 48px;
@@ -119,19 +136,56 @@
 .allTourCal .dayCellVoyanga.inactive {
     background: none repeat scroll 0 0 #F5F5F6;
 }
+
 .allTourCal .dayCellVoyanga {
-	width: 14.28%;
+    width: 14.28%;
 }
+
 .innerDayCellVoyanga {
-	border: 1px solid #D7D7D8;
+    border: 1px solid #D7D7D8;
     height: 48px;
     margin: -1px;
     position: absolute;
     width: 100%;
     z-index: 1;
 }
+
+.dayCellVoyanga.from .fromDesc, .dayCellVoyanga.to .toDesc {
+    z-index: 2;
+    font-size: 11px;
+    left: 35px;
+    top: 4px;
+    position: absolute;
+    vertical-align: middle;
+    width: 47%;
+    height: 40px;
+    white-space: normal !important;
+}
+
+.dayCellVoyanga.from .fromDesc table tr td, .dayCellVoyanga.to .toDesc table tr td {
+    width: 100%;
+    height: 40px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.dayCellVoyanga .intDesc {
+    position: absolute;
+    padding: 2px 10px;
+    border-radius: 15px;
+    background: #fb7d20;
+    color: #FFF;
+    font-size: 11px;
+    top: 17px;
+    right: 42px;
+}
+
+.dayCellVoyanga.from .toDesc {
+    display: none;
+}
+
 .dayCellVoyanga.selectData .innerDayCellVoyanga {
-	background: none repeat scroll 0 0 #E1E8EC;
+    background: none repeat scroll 0 0 #E1E8EC;
     border: 2px solid #198ACB;
     color: #198ACB !important;
     height: 46px;
@@ -139,26 +193,32 @@
     z-index: 2;
     font-size: 23px;
 }
+
 .dayCellVoyanga.to .innerDayCellVoyanga {
-	background: url("../images/ico-fly-from.png") no-repeat scroll 0 0 #E1E8EC;
+    background: url("../images/ico-fly-from.png") no-repeat scroll 0 0 #E1E8EC;
 }
+
 .dayCellVoyanga.from .innerDayCellVoyanga {
-	background: url("../images/ico-fly-to.png") no-repeat scroll 0 0 #E1E8EC;
+    background: url("../images/ico-fly-to.png") no-repeat scroll 0 0 #E1E8EC;
 }
+
 .dayCellVoyanga.from.to .innerDayCellVoyanga {
-	background: url("../images/ico-fly-to-from.png") no-repeat scroll 0 0 #E1E8EC;
+    background: url("../images/ico-fly-to-from.png") no-repeat scroll 0 0 #E1E8EC;
 }
+
 .dayCellVoyanga.selectData .dayLabel {
-	padding-top: 13px;
+    padding-top: 13px;
 }
+
 .dayCellVoyanga.startMonth.selectData .dayLabel {
-	color: #198ACB !important;
+    color: #198ACB !important;
     font-size: 23px;
     padding-right: 41px;
     padding-top: 13px;
 }
+
 .dayCellVoyanga.startMonth.selectDay .monthLabel, .dayCellVoyanga.startMonth.to .monthLabel, .dayCellVoyanga.startMonth.from .monthLabel {
-	background: none;
+    background: none;
     color: #198ACB !important;
     font-size: 14px;
     left: auto;
@@ -168,14 +228,16 @@
     text-transform: lowercase;
     width: 21px;
 }
+
 .dayCellVoyanga.startMonth.selectDay .dayLabel, .dayCellVoyanga.startMonth.to .dayLabel, .dayCellVoyanga.startMonth.from .dayLabel {
-	color: #198ACB !important;
+    color: #198ACB !important;
     font-size: 23px;
     padding-right: 41px;
     padding-top: 13px;
 }
+
 .dayCellVoyanga.startMonth.selectData .monthLabel {
-	background: none repeat scroll 0 0 transparent;
+    background: none repeat scroll 0 0 transparent;
     color: #198ACB !important;
     font-size: 14px;
     left: auto;
@@ -185,9 +247,11 @@
     text-transform: lowercase;
     width: 21px;
 }
+
 .dayCellVoyanga.selectDay {
-	background: none repeat scroll 0 0 #E1E8EC;
+    background: none repeat scroll 0 0 #E1E8EC;
 }
+
 .monthLineVoyanga {
     width: 99.987%;
     height: 29px;
@@ -195,21 +259,25 @@
     background: url(../images/main-avia-route_05.png) repeat-x;
     font-size: 12px;
 }
-.monthLineVoyanga .monthNameVoyanga{
+
+.monthLineVoyanga .monthNameVoyanga {
     position: absolute;
     z-index: 10;
     text-align: center;
-        color: #767b84;
+    color: #767b84;
 }
-.monthLineVoyangaYear .monthNameVoyanga{
-     position: absolute;
-     z-index: 10;
-     text-align: center;
-     color: #767b84;
- }
+
+.monthLineVoyangaYear .monthNameVoyanga {
+    position: absolute;
+    z-index: 10;
+    text-align: center;
+    color: #767b84;
+}
+
 .allTourCal .monthLineVoyangaYear .monthNameVoyanga {
     text-transform: lowercase;
 }
+
 .monthLineVoyangaYear .monthNameVoyangaSplit {
     border-right: 1px solid #C9C9C9;
     color: #767B84;
@@ -219,13 +287,15 @@
     text-align: center;
     z-index: 9;
 }
-.monthLineVoyanga .monthNameVoyanga .monthWrapper{
+
+.monthLineVoyanga .monthNameVoyanga .monthWrapper {
     padding: 5px;
     cursor: pointer;
     display: inline-block;
 
 }
-.monthLineVoyanga .knobVoyanga{
+
+.monthLineVoyanga .knobVoyanga {
     position: absolute;
     z-index: 5;
     height: 27px;
@@ -233,92 +303,110 @@
     border-radius: 0px 0px 8px 8px;
     background: url(../images/main-avia-route_03.png) repeat-x;
 }
+
 .monthLabel {
-	background: url(../images/monthLabel.png) no-repeat;
-	width: 69px;
-	height: 33px;
-	position: absolute;
-	z-index: 1;
-	top: 0px;
-	left: 0px;
-	font-size: 14px;
-	color: #535359;
-	text-shadow: 0px 1px 0px #FFF;
-	padding-left: 8px;
-	padding-top: 15px;
-	text-align: left;
+    background: url(../images/monthLabel.png) no-repeat;
+    width: 69px;
+    height: 33px;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    font-size: 14px;
+    color: #535359;
+    text-shadow: 0px 1px 0px #FFF;
+    padding-left: 8px;
+    padding-top: 15px;
+    text-align: left;
 }
+
 .dayLabel {
-	vertical-align: middle;
-	text-align: right;
-	padding-top: 16px;
-	padding-right: 15px;
-	text-shadow: 0px 1px 0px #FFF;
+    vertical-align: middle;
+    text-align: right;
+    padding-top: 16px;
+    padding-right: 15px;
+    text-shadow: 0px 1px 0px #FFF;
 }
+
 .weekEnd {
-	color: #e50808;
+    color: #e50808;
 }
+
 .selectData.to .weekEnd, .selectData.from .weekEnd {
-	color: #198ACB !important;
+    color: #198ACB !important;
 }
+
 .dayCellVoyanga.inactive {
-	background: #e8eaef;
-	color: #898f9a;
+    background: #e8eaef;
+    color: #898f9a;
 }
 
 .knobUpAllMonth {
-	cursor: pointer;
+    cursor: pointer;
     height: 27px;
     position: absolute;
     width: 9.43%;
     z-index: 20;
 }
+
 .monthLineVoyanga .highlited {
-	color: #24272e !important;
+    color: #24272e !important;
 }
 
 /* HOTEL */
 .hotel .dayCellVoyanga.from .innerDayCellVoyanga, .hotel .dayCellVoyanga.to .innerDayCellVoyanga {
-	background: url("../images/ico-hotel-to.png") no-repeat scroll 0 0 #f5e9e0;
-}
-.hotel .dayCellVoyanga.selectData .innerDayCellVoyanga {
-	border-color: #fb7d20;
-	color: #fb7d20 !important;
-}
-.hotel .dayCellVoyanga.selectDay {
-	background: none repeat scroll 0 0 #f5e9e0;
-}
-.hotel .dayCellVoyanga.startMonth.selectData .dayLabel, .hotel .dayCellVoyanga.startMonth.selectData .monthLabel {
-	color: #fb7d20 !important;
-}
-.hotel .selectData.to .weekEnd, .hotel .selectData.from .weekEnd {
-	color: #fb7d20 !important;
-}
-.hotel .dayCellVoyanga.startMonth.to .monthLabel, .hotel .dayCellVoyanga.startMonth.from .monthLabel {
-	color: #fb7d20 !important;
-	background: none;
-}
-.hotel .dayCellVoyanga.startMonth.to .dayLabel, .hotel .dayCellVoyanga.startMonth.from .dayLabel {
-	color: #fb7d20 !important;
-}
-/* CONSTRUCTOR */
-.constructor .dayCellVoyanga.from .innerDayCellVoyanga, .constructor .dayCellVoyanga.to .innerDayCellVoyanga {
-	background: url("../images/ico-constructor-to.png") no-repeat scroll 0 0 #E1E8EC;
-	background: none repeat scroll 0 0 #f5e9e0;
+    background: url("../images/ico-hotel-to.png") no-repeat scroll 0 0 #f5e9e0;
 }
 
+.hotel .dayCellVoyanga.selectData .innerDayCellVoyanga {
+    border-color: #fb7d20;
+    color: #fb7d20 !important;
+}
+
+.hotel .dayCellVoyanga.selectDay {
+    background: none repeat scroll 0 0 #f5e9e0;
+}
+
+.hotel .dayCellVoyanga.startMonth.selectData .dayLabel, .hotel .dayCellVoyanga.startMonth.selectData .monthLabel {
+    color: #fb7d20 !important;
+}
+
+.hotel .selectData.to .weekEnd, .hotel .selectData.from .weekEnd {
+    color: #fb7d20 !important;
+}
+
+.hotel .dayCellVoyanga.startMonth.to .monthLabel, .hotel .dayCellVoyanga.startMonth.from .monthLabel {
+    color: #fb7d20 !important;
+    background: none;
+}
+
+.hotel .dayCellVoyanga.startMonth.to .dayLabel, .hotel .dayCellVoyanga.startMonth.from .dayLabel {
+    color: #fb7d20 !important;
+}
+
+/* CONSTRUCTOR */
+.constructor .dayCellVoyanga.from .innerDayCellVoyanga, .constructor .dayCellVoyanga.to .innerDayCellVoyanga {
+    background: url("../images/ico-constructor-to.png") no-repeat scroll 0 0 #E1E8EC;
+    background: none repeat scroll 0 0 #f5e9e0;
+}
 
 /* ALL TOURS*/
 
-.allTourCal .calendarLineVoyanga, .allTourCal .dayCellVoyanga, .allTourCal .innerDayCellVoyanga { height: 106px;	position: relative;}
+.allTourCal .calendarLineVoyanga, .allTourCal .dayCellVoyanga, .allTourCal .innerDayCellVoyanga {
+    height: 106px;
+    position: relative;
+}
+
 .allTourCal .calendarGridVoyanga, .allTourCal .calendarUnscrollVoyanga {
-	height: 318px;
+    height: 318px;
 }
+
 .allTourCal .monthLineVoyanga {
-	background: url(../images/bg-foot-calendare.png) repeat-x;
-	height: 25px;
-	overflow: hidden;
+    background: url(../images/bg-foot-calendare.png) repeat-x;
+    height: 25px;
+    overflow: hidden;
 }
+
 .allTourCal .monthLineVoyangaYear {
     background: url("../images/bg-foot-calendare.png") repeat-x scroll 0 0 transparent;
     font-size: 12px;
@@ -326,15 +414,17 @@
     overflow: hidden;
     width: 100%;
 }
-.allTourCal .monthLineWrapper{
+
+.allTourCal .monthLineWrapper {
     overflow: hidden;
 }
 
 .allTourCal  .monthLineVoyanga .monthNameVoyanga .monthWrapper {
-	padding-top: 3px;
-	color: #4d4d4d;
-	text-shadow: 0px 1px 0px #FFF;
+    padding-top: 3px;
+    color: #4d4d4d;
+    text-shadow: 0px 1px 0px #FFF;
 }
+
 .allTourCal  .monthLineVoyangaYear .monthNameVoyanga .monthWrapper {
     padding: 5px;
     padding-top: 3px;
@@ -342,31 +432,39 @@
     text-shadow: 0px 1px 0px #FFF;
     display: inline-block;
 }
+
 .allTourCal .monthLineVoyanga .knobVoyanga {
-	height: 25px;
-	border-radius: 0px;
-	background: none;
+    height: 25px;
+    border-radius: 0px;
+    background: none;
 }
+
 .allTourCal .monthLineVoyanga .knobVoyanga img {
     width: 100%;
     height: 24px;
     margin-top: 0px;
-}}
-.allTourCal .dayCellVoyanga {
-	background: #f2f6f8;
 }
+
+    }
+
+.allTourCal .dayCellVoyanga {
+    background: #f2f6f8;
+}
+
 .allTourCal .dayLabel {
-	font-family: Verdana; font-size: 12px;
-	padding-top: 5px;
-	padding-right: 8px;
+    font-family: Verdana;
+    font-size: 12px;
+    padding-top: 5px;
+    padding-right: 8px;
     text-transform: lowercase;
 }
 
 .allTourCal .innerDayCellVoyanga.startMonth .dayLabel {
-	padding-right: 35px;
+    padding-right: 35px;
 }
+
 .allTourCal .innerDayCellVoyanga.startMonth .monthLabel {
-	background: none repeat scroll 0 0 transparent;
+    background: none repeat scroll 0 0 transparent;
     font-family: Verdana;
     font-size: 11px;
     height: 15px;
@@ -378,8 +476,9 @@
     top: 5px;
     width: 21px
 }
+
 .startYourTours {
-	background: url("../images/all-tours-slice.png") no-repeat scroll -16px 0 transparent;
+    background: url("../images/all-tours-slice.png") no-repeat scroll -16px 0 transparent;
     height: 106px;
     left: -8px;
     position: absolute;
@@ -387,8 +486,9 @@
     width: 16px;
     z-index: 210;
 }
+
 .endYourTours {
-	background: url("../images/all-tours-slice.png") no-repeat scroll -16px 0 transparent;
+    background: url("../images/all-tours-slice.png") no-repeat scroll -16px 0 transparent;
     height: 106px;
     position: absolute;
     right: -8px;
@@ -396,8 +496,9 @@
     width: 16px;
     z-index: 210;
 }
+
 .yourTrip {
-	height: 106px;
+    height: 106px;
     padding: 0px;
     position: absolute;
     top: 0;
@@ -406,8 +507,9 @@
     left: 9%;
     width: 29%;
 }
+
 .yourTrip .startHotel {
-	background: url("../images/all-tours-slice.png") no-repeat scroll 0 -107px transparent;
+    background: url("../images/all-tours-slice.png") no-repeat scroll 0 -107px transparent;
     height: 106px;
     left: -25px;
     position: absolute;
@@ -415,21 +517,24 @@
     width: 47px;
     z-index: 209;
 }
+
 .yourTrip .pathHotel {
-	width: 100%;
-	height: 106px;
-	background: url("../images/all-tours-slice.png") repeat scroll 0 -213px transparent;
-	z-index: 209;
+    width: 100%;
+    height: 106px;
+    background: url("../images/all-tours-slice.png") repeat scroll 0 -213px transparent;
+    z-index: 209;
 }
+
 .yourTrip .endHotel {
-	position: absolute;
-	top: 0px;
-	right: -25px;
-	background: url("../images/all-tours-slice.png") no-repeat scroll 0 -319px transparent;
-	height: 106px;
-	width: 48px;
-	z-index: 209;
+    position: absolute;
+    top: 0px;
+    right: -25px;
+    background: url("../images/all-tours-slice.png") no-repeat scroll 0 -319px transparent;
+    height: 106px;
+    width: 48px;
+    z-index: 209;
 }
+
 .yourTrip .nameHotel {
     color: #EAEFF3;
     left: -10px;
@@ -442,29 +547,33 @@
 }
 
 .flyTrip {
-	height: 55px;
+    height: 55px;
     position: absolute;
     top: 0;
     z-index: 209;
 
     width: 14.2%;
 }
+
 .allTourCal .flyTrip {
-	width: 14.28%;
+    width: 14.28%;
 }
+
 .tripFlyAll {
-	margin-top: 15px;
+    margin-top: 15px;
     padding: 0 0px;
     position: relative;
     z-index: 209;
 }
+
 .tripFlyAll img {
-	position: relative;
-	z-index: 209;
+    position: relative;
+    z-index: 209;
     margin-top: 6px;
 }
+
 .flyTrip .startNameCity {
-	color: #252628;
+    color: #252628;
     font-family: Arial;
     font-size: 11px;
     height: 16px;
@@ -477,26 +586,31 @@
     width: 32px;
     z-index: 209;
     overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 .flyTrip.fd1 .startNameCity {
-	width: 60px;
+    width: 60px;
 }
+
 .flyTrip.fd1 .endNameCity {
     right: -36px;
     text-align: left;
     width: 50px;
 }
+
 .flyTrip.fd2 .startNameCity {
-	width: 107px;
+    width: 107px;
 }
+
 .flyTrip.fd2 .endNameCity {
-	width: 107px;
-	right: -80px;
+    width: 107px;
+    right: -80px;
 }
+
 .flyTrip .endNameCity {
-	color: #252628;
+    color: #252628;
     font-family: Arial;
     font-size: 11px;
     height: 16px;
@@ -509,11 +623,12 @@
     width: 32px;
     z-index: 209;
     overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 .tripFlyAll .jetFly {
-	background: url("../images/trip-jet-fly.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/trip-jet-fly.png") no-repeat scroll 0 0 transparent;
     height: 13px;
     left: 7%;
     position: absolute;
@@ -521,17 +636,20 @@
     width: 29px;
     z-index: 210;
 }
+
 .tripFlyAll .jetFly.twoDays {
-	top:4px;
+    top: 4px;
 }
+
 .tripFlyAll .jetFly.threeDays {
-	top: 9px;
+    top: 9px;
 }
 
 .allTourCal .dayCellVoyanga {
     border-right: none;
     border-bottom: none;
 }
+
 .allTourCal .innerDayCellVoyanga {
     border-right: 1px #d7d7d8 solid;
     border-bottom: 1px #d7d7d8 solid;
@@ -551,11 +669,13 @@
     border-right: 1px #d7d7d8 solid;
     margin: -1px;
 }
+
 .allTourCal .weekDaysVoyanga .weekDaysVoyangaInner {
     width: 100%;
     overflow-y: hidden;
     white-space: nowrap;
 }
+
 .allTourCal .monthLineVoyanga {
     position: absolute;
     top: 0;
@@ -563,32 +683,39 @@
     background: none repeat scroll 0 0 transparent;
     border-left: 1px solid #999a9d;
 }
+
 .allTourCal .monthLineVoyanga.BackPlane {
     z-index: 9 !important;
     border-right: 1px solid #999a9d;
     background: url("../images/bg-foot-calendare-hover.png") repeat-x scroll 0 0 transparent;
 }
+
 .allTourCal .monthNameVoyanga .monthWrapper {
     color: #9D9EA1 !important;
 }
+
 .allTourCal .monthNameVoyanga.highlited .monthWrapper {
     color: #4D4D4D !important;
 }
+
 .allTourCal .startNameCity, .allTourCal .endNameCity {
     text-transform: none;
 }
+
 .z-indexTop {
-	z-index: 995;
+    z-index: 995;
 }
+
 .zIndexTopUp {
-	z-index: 996;
+    z-index: 996;
 }
+
 .btnCloseCal {
-	width: 25px;
-	height: 26px;
-	position: absolute;
-	top: 9px;
-	right: 14px;
-	background: url(../images/btnCloseCal.png) no-repeat 0 0;
-	cursor: pointer;
+    width: 25px;
+    height: 26px;
+    position: absolute;
+    top: 9px;
+    right: 14px;
+    background: url(../images/btnCloseCal.png) no-repeat 0 0;
+    cursor: pointer;
 }

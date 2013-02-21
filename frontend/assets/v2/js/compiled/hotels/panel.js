@@ -38,6 +38,7 @@ HotelsPanel = (function(_super) {
     this.cityReadable = ko.observable();
     this.cityReadableAcc = ko.observable();
     this.cityReadableGen = ko.observable();
+    this.cityReadablePre = ko.observable();
     this.calendarActive = ko.observable(true);
     this.calendarText = ko.computed(function() {
       var ret;
@@ -82,7 +83,9 @@ HotelsPanel = (function(_super) {
         hotels: true,
         from: _this.checkIn(),
         to: _this.checkOut(),
-        activeSearchPanel: _this
+        activeSearchPanel: _this,
+        valuesDescriptions: ['Заезд в отель<br>в ' + _this.cityReadablePre(), 'Выезд из отеля<br>в ' + _this.cityReadablePre()],
+        intervalDescription: '0'
       };
     });
   }

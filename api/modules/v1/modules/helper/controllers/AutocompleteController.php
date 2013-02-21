@@ -10,24 +10,19 @@ class AutocompleteController extends ApiController
     {
         $cacheKey = 'apiAutocompleteCities4' . md5(serialize(array($query, $airport_req, $hotel_req)));
         $citiesCache = Yii::app()->cache->get($cacheKey);
-        if ($citiesCache)
-        {
+        if ($citiesCache) {
             $this->send($citiesCache);
             Yii::app()->end();
         }
-        if ($airport_req && $hotel_req)
-        {
+        if ($airport_req && $hotel_req) {
             if ($airport_req > $hotel_req)
                 $cities = CityManager::getCitiesWithAirportsAndHotels($query);
             else
                 $cities = CityManager::getCitiesWithHotelsAndAirports($query);
-        }
-        elseif ($airport_req)
-        {
+        } elseif ($airport_req) {
             $cities = CityManager::getCitiesWithAirports($query);
         }
-        elseif ($hotel_req)
-        {
+        elseif ($hotel_req) {
             $cities = CityManager::getCitiesWithHotels($query);
         }
         else
@@ -42,15 +37,13 @@ class AutocompleteController extends ApiController
     {
         $cacheKey = 'apiAutocompleteCitiesReadable4' . md5(serialize($codes));
         $citiesCache = Yii::app()->cache->get($cacheKey);
-        if ($citiesCache)
-        {
+        if ($citiesCache) {
             $this->send($citiesCache);
             Yii::app()->end();
         }
 
         $result = array();
-        foreach ($codes as $cityCode)
-        {
+        foreach ($codes as $cityCode) {
             $city = City::getCityByCode($cityCode);
             $element = array();
             $element['id'] = $city->id;
@@ -72,12 +65,12 @@ class AutocompleteController extends ApiController
         $result['query'] = $query;
         $result['suggestions'] = array();
         $result['data'] = array();
-        foreach ($cities as $i => $city)
-        {
+        foreach ($cities as $i => $city) {
             $suggestion = $city['label'];
             $data['name'] = $city['name'];
             $data['nameGen'] = $city['nameGen'];
             $data['nameAcc'] = $city['nameAcc'];
+            $data['namePre'] = $city['namePre'];
             $data['code'] = $city['code'];
             $data['country'] = $city['country'];
             $result['suggestions'][] = $suggestion;
@@ -88,13 +81,13 @@ class AutocompleteController extends ApiController
 
     private function addMoreInfo($cities)
     {
-        foreach ($cities as $i => $one)
-        {
+        foreach ($cities as $i => $one) {
             $city = City::getCityByPk($one['id']);
             $cities[$i]['code'] = $city->code;
             $cities[$i]['name'] = $city->localRu;
             $cities[$i]['nameGen'] = $city->caseGen;
             $cities[$i]['nameAcc'] = $city->caseAcc;
+            $cities[$i]['namePre'] = $city->casePre;
             $cities[$i]['country'] = $city->country->localRu;
             $cities[$i]['label'] = CityManager::parseTemplate(CityManager::templateForLabelAutocomplete(), $city);
         }

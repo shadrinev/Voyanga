@@ -6,7 +6,7 @@ class HotelsPanel extends SearchPanel
     @prevPanel = 'avia'
     @nextPanel = 'tours'
     @icon = 'hotel-ico'
-    ;
+
     @mainLabel = 'Поиск отелей'
     @indexMode = ko.observable true
 
@@ -19,6 +19,7 @@ class HotelsPanel extends SearchPanel
     @cityReadable = ko.observable()
     @cityReadableAcc = ko.observable()
     @cityReadableGen = ko.observable()
+    @cityReadablePre = ko.observable()
     @calendarActive = ko.observable(true)
     @calendarText = ko.computed =>
       ret = "Выберите дату проживания"
@@ -57,6 +58,8 @@ class HotelsPanel extends SearchPanel
       from: @checkIn()
       to: @checkOut()
       activeSearchPanel: @
+      valuesDescriptions: [('Заезд в отель<br>в ' + @cityReadablePre()), ('Выезд из отеля<br>в ' + @cityReadablePre())]
+      intervalDescription: '0'
 
   handlePanelSubmit: =>
     if window.location.pathname.replace('/', '') != ''

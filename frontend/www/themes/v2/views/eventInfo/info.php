@@ -1,39 +1,36 @@
 <?php
 $images = '/themes/v2';
 $url = Yii::app()->createAbsoluteUrl('/') . Yii::app()->request->url;
-$imageBig = (isset($event->pictureBig) ? $event->imgSrc.$event->pictureBig->url : $event->defaultBigImageUrl);
-$imageSmall = (isset($event->pictureSmall) ? $event->imgSrc.$event->pictureSmall->url : $event->defaultSmallImageUrl);
-$imageBigAbs = Yii::app()->createAbsoluteUrl('/'). '/' . $imageBig;
-$imageSmallAbs = Yii::app()->createAbsoluteUrl('/'). '/' . $imageSmall;
-$title = $event->title.', '.$minPrice.' руб. '.$peopleAmountReadable;
-if (mb_strlen($title)>130)
-{
-    $titleTwitter = mb_substr($title, 0, 127).'...';
-}
-else
-{
+$imageBig = (isset($event->pictureBig) ? $event->imgSrc . $event->pictureBig->url : $event->defaultBigImageUrl);
+$imageSmall = (isset($event->pictureSmall) ? $event->imgSrc . $event->pictureSmall->url : $event->defaultSmallImageUrl);
+$imageBigAbs = Yii::app()->createAbsoluteUrl('/') . '/' . $imageBig;
+$imageSmallAbs = Yii::app()->createAbsoluteUrl('/') . '/' . $imageSmall;
+$title = $event->title . ', ' . $minPrice . ' руб. ' . $peopleAmountReadable;
+if (mb_strlen($title) > 130) {
+    $titleTwitter = mb_substr($title, 0, 127) . '...';
+} else {
     $titleTwitter = $title;
 }
 $description = $event->preview;
-$shortDescription = mb_substr($description, 0, 197).'...';
+$shortDescription = mb_substr($description, 0, 197) . '...';
 
 // Set opengraph meta tags
 $cs = Yii::app()->getClientScript();
-$cs->registerMetaTag('Voyanga.com', NULL, NULL, array('property'=>'og:site_name'));
-$cs->registerMetaTag('shadrinev', NULL, NULL, array('property'=>'fb:admins'));
-$cs->registerMetaTag($url, NULL, NULL, array('property' =>'og:url'));
-$cs->registerMetaTag($title, NULL, NULL, array('property'=>'og:title'));
-$cs->registerMetaTag('article', NULL, NULL, array('property'=>'og:type'));
-$cs->registerMetaTag($description, NULL, NULL, array('property'=>'og:description'));
-$cs->registerMetaTag($imageBigAbs, NULL, NULL, array('property'=> 'og:image'));
+$cs->registerMetaTag('Voyanga.com', NULL, NULL, array('property' => 'og:site_name'));
+$cs->registerMetaTag('shadrinev', NULL, NULL, array('property' => 'fb:admins'));
+$cs->registerMetaTag($url, NULL, NULL, array('property' => 'og:url'));
+$cs->registerMetaTag($title, NULL, NULL, array('property' => 'og:title'));
+$cs->registerMetaTag('article', NULL, NULL, array('property' => 'og:type'));
+$cs->registerMetaTag($description, NULL, NULL, array('property' => 'og:description'));
+$cs->registerMetaTag($imageBigAbs, NULL, NULL, array('property' => 'og:image'));
 
 //set twitter cards tags
-$cs->registerMetaTag('summary', NULL, NULL, array('property'=> 'twitter:card'));
-$cs->registerMetaTag($url, NULL, NULL, array('property'=> 'twitter:url'));
-$cs->registerMetaTag($title, NULL, NULL, array('property'=> 'twitter:title'));
-$cs->registerMetaTag($shortDescription, NULL, NULL, array('property'=> 'twitter:description'));
-$cs->registerMetaTag($imageBigAbs, NULL, NULL, array('property'=> 'twitter:image'));
-$cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'));
+$cs->registerMetaTag('summary', NULL, NULL, array('property' => 'twitter:card'));
+$cs->registerMetaTag($url, NULL, NULL, array('property' => 'twitter:url'));
+$cs->registerMetaTag($title, NULL, NULL, array('property' => 'twitter:title'));
+$cs->registerMetaTag($shortDescription, NULL, NULL, array('property' => 'twitter:description'));
+$cs->registerMetaTag($imageBigAbs, NULL, NULL, array('property' => 'twitter:image'));
+$cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site'));
 ?>
 
 <script>
@@ -43,9 +40,9 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
     window.priceData = <?php echo json_encode($priceData); ?>;
     window.eventPhotos = <?php echo json_encode($pictures); ?>;
     window.eventId = <?php echo $event->id; ?>;
-    $(document).ready(function(){
+    $(document).ready(function () {
         initEventPage();
-        $.post('/ajax/getShortUrl', {long : window.location.href} , function(response) {
+        $.post('/ajax/getShortUrl', {long:window.location.href}, function (response) {
             window.shortUrl = response.short;
             $('a.addthis_button_vk').attr('addthis:url', window.shortUrl);
             $('a.addthis_button_facebook').attr('addthis:url', window.shortUrl);
@@ -57,8 +54,10 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
 <span style="display: none" id='socialSource'>
     <div id='socialButtons' style="display: none">
         <a href="javascript:void(0);" id="followLink" title="Прямая ссылка">
-            <span class="text">Получить ссылку</span><span class="getLink"><input  type="text" name="textTextText" value=""> </span>
+            <span class="text">Получить ссылку</span><span class="getLink"><input type="text" name="textTextText"
+                                                                                  value=""> </span>
         </a>
+
         <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
 
             <a class="addthis_button_vk"
@@ -76,12 +75,13 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
         </div>
         <script>
             var addthis_share = {
-                templates : {
-                    twitter : "{{title}} #voyanga {{url}}"
+                templates:{
+                    twitter:"{{title}} #voyanga {{url}}"
                 }
             }
         </script>
-        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
+        <script type="text/javascript"
+                src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
 
     </div>
 </span>
@@ -93,9 +93,11 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
             <div id="eventsContent">
                 <h1><?php echo $event->title;?></h1>
                 <em class="f17"><?php echo $event->preview;?></em>
+
                 <div class="clear" style="margin-top: 20px"></div>
                 <!-- ko if: itemsToBuy.photoBox.boxHeight() > 0 -->
-                <div class="photoGallery" data-bind="template: {name: 'event-photo-box', data: itemsToBuy.photoBox, afterRender: itemsToBuy.photoBox.afterRender},style:{height: itemsToBuy.photoBox.boxHeight() + 'px'}">
+                <div class="photoGallery"
+                     data-bind="template: {name: 'event-photo-box', data: itemsToBuy.photoBox, afterRender: itemsToBuy.photoBox.afterRender},style:{height: itemsToBuy.photoBox.boxHeight() + 'px'}">
                 </div>
                 <div data-bind="style:{height: itemsToBuy.photoBox.boxHeight()+'px'}" style="width: 100%"></div>
                 <!-- /ko -->
@@ -108,21 +110,30 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
                 <div class="clear" style="margin-top: 20px"></div>
                 <div class="rightBlock">
                     <h3>Вылет из:</h3>
+
                     <div>
-                    <select data-bind="slider: true, value: itemsToBuy.selectedCity">
-                        <?php foreach($twoCities as $cityId=>$city):?>
-                            <?php echo '<option value="'.$cityId.'" '.($defaultCity == $cityId ? 'selected="selected"' : '').'>'.$city['localRu'].'</option>';?>
-                        <?php endforeach;?>
-                    </select>
+                        <select data-bind="slider: true, value: itemsToBuy.selectedCity">
+                            <?php foreach ($twoCities as $cityId => $city): ?>
+                            <?php echo '<option value="' . $cityId . '" ' . ($defaultCity == $cityId ? 'selected="selected"' : '') . '>' . $city['localRu'] . '</option>'; ?>
+                            <?php endforeach;?>
+                        </select>
                     </div>
                     <a href="#" data-bind="click: itemsToBuy.gotoAndShowPanel" class="otherCity">Другой город</a>
                     <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
-                    <div class="divPrice"><span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span> <span class="rur">o</span></div>
-                    <a href="#" style="margin-top:0px;" class="otherCity" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2 взрослых</a>
-                    <span class="check">Последняя проверка цены<br>выполнена <span data-bind="text: itemsToBuy.fullPriceUpdateTimeText"></span></span>
+
+                    <div class="divPrice"><span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span>
+                        <span class="rur">o</span></div>
+                    <a href="#" style="margin-top:0px;" class="otherCity"
+                       data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2
+                        взрослых</a>
+                    <span class="check">Последняя проверка цены<br>выполнена <span
+                        data-bind="text: itemsToBuy.fullPriceUpdateTimeText"></span></span>
                     <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
+
                     <div style="width: 144px; height: 40px;">
-                        <div class="btn-order floatRight" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage,visible: !itemsToBuy.visiblePanel(), css: {inactive: itemsToBuy.activePanel().formNotFilled}">Проверить<span class="l"></span></div>
+                        <div class="btn-order floatRight"
+                             data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage,visible: !itemsToBuy.visiblePanel(), css: {inactive: itemsToBuy.activePanel().formNotFilled}">
+                            Проверить<span class="l"></span></div>
                     </div>
                 </div>
                 <div class="textBlock"><?php echo $event->description;?></div>
@@ -136,102 +147,116 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
 <!--====**********===-->
 <!-- SUB HEAD -->
 
-        <!-- ko if: itemsToBuy.correctTour() -->
-        <!-- PANEL -->
-        <div class="sub-head event"  data-bind="css: {calSelectedPanelActive: !itemsToBuy.activePanel().calendarHidden()}">
+<!-- ko if: itemsToBuy.correctTour() -->
+<!-- PANEL -->
+<div class="sub-head event" data-bind="css: {calSelectedPanelActive: !itemsToBuy.activePanel().calendarHidden()}">
 
-            <div class="board" >
-                <div class="constructor" >
-                    <!-- BOARD CONTENT -->
-                    <div class="board-content" data-bind="with: itemsToBuy.activePanel()" >
-                        <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender, beforeRemove: $data.beforeRemove} -->
-                            <!-- ko if: $index()!=0 -->
-                            <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
-                            <!-- /ko -->
-                        <div class="panel">
-                            <table class="panelTable constructorTable">
-                                <tr>
-                                    <td class="tdCityStart">
-                                        <div class="cityStart">
-                                            <!-- ko if: $index()==0 || ($parent.isFirst()) -->
-                                            <div class="to">
-                                                Старт из:
-                                                <a href="#"><span data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербурга</span></a>
-                                            </div>
-                                            <div class="startInputTo">
-                                                <div class="bgInput">
-                                                    <div class="left"></div>
-                                                    <div class="center"></div>
-                                                    <div class="right"></div>
-                                                </div>
-                                                <input type="text" tabindex="-1" class="input-path" data-bind="blur: hideFromCityInput">
-                                                <input type="text" placeholder="Санкт-Петербург" class="second-path" data-bind="blur: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen}" autocomplete="off" style="">
-                                            </div>
-                                            <!-- /ko -->
+    <div class="board">
+        <div class="constructor">
+            <!-- BOARD CONTENT -->
+            <div class="board-content" data-bind="with: itemsToBuy.activePanel()">
+                <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender, beforeRemove: $data.beforeRemove} -->
+                <!-- ko if: $index()!=0 -->
+                <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
+                <!-- /ko -->
+                <div class="panel">
+                    <table class="panelTable constructorTable">
+                        <tr>
+                            <td class="tdCityStart">
+                                <div class="cityStart">
+                                    <!-- ko if: $index()==0 || ($parent.isFirst()) -->
+                                    <div class="to">
+                                        Старт из:
+                                        <a href="#"><span
+                                            data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербурга</span></a>
+                                    </div>
+                                    <div class="startInputTo">
+                                        <div class="bgInput">
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
                                         </div>
-                                    </td>
-                                    <td class="tdCity">
-                                        <div class="data">
-                                            <div class="from" data-bind="css: {active: checkIn()}">
-                                                <div class="bgInput">
-                                                    <div class="left"></div>
-                                                    <div class="center"></div>
-                                                    <div class="right"></div>
-                                                </div>
-                                                <input type="text" placeholder="Куда едем?" class="second-path" data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen}, css: {isFirst: $parent.isFirst()}" autocomplete="off">
-                                                <input type="text" tabindex="-1" class="input-path">
-
-                                                <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
-                                                <div class="date noDate" data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
-                                            </div>
+                                        <input type="text" tabindex="-1" class="input-path"
+                                               data-bind="blur: hideFromCityInput">
+                                        <input type="text" placeholder="Санкт-Петербург" class="second-path"
+                                               data-bind="blur: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen, readablePre: $parent.startCityReadablePre}"
+                                               autocomplete="off" style="">
+                                    </div>
+                                    <!-- /ko -->
+                                </div>
+                            </td>
+                            <td class="tdCity">
+                                <div class="data">
+                                    <div class="from" data-bind="css: {active: checkIn()}">
+                                        <div class="bgInput">
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
                                         </div>
-                                    </td>
-                                    <td class="tdAddTour">
-                                        <!-- ko if: ($index()+1) == $length() -->
-                                        <a href="#" class="add-tour" data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
-                                        <!-- /ko -->
-                                    </td>
+                                        <input type="text" placeholder="Куда едем?" class="second-path"
+                                               data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen, readablePre: cityReadablePre}, css: {isFirst: $parent.isFirst()}"
+                                               autocomplete="off">
+                                        <input type="text" tabindex="-1" class="input-path">
 
-                                    <td class="tdPeople" data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
-                                        <!-- ko if: ($index()+1) == $length() -->
-                    <span data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}"></span>
-                                        <!-- /ko -->
-                                    </td>
-                                    <td class="tdButton">
-                                        <!-- ko if: ($index()+1) == $length() -->
-                                        <div class="btn-find inactive" data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
-                                        <!-- /ko -->
-                                    </td>
+                                        <div class="date noDate"
+                                             data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
+                                        <div class="date noDate"
+                                             data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="tdAddTour">
+                                <!-- ko if: ($index()+1) == $length() -->
+                                <a href="#" class="add-tour"
+                                   data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
+                                <!-- /ko -->
+                            </td>
 
-                                </tr>
-                            </table>
-                        </div>
+                            <td class="tdPeople"
+                                data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
+                                <!-- ko if: ($index()+1) == $length() -->
+                                <span
+                                    data-bind="template: {name: $data.peopleSelectorVM.template, data: $data.peopleSelectorVM}"></span>
+                                <!-- /ko -->
+                            </td>
+                            <td class="tdButton">
+                                <!-- ko if: ($index()+1) == $length() -->
+                                <div class="btn-find inactive"
+                                     data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
+                                <!-- /ko -->
+                            </td>
 
-
-                        <!-- /ko -->
-                    </div>
-                    <!-- END BOARD CONTENT -->
-
-
+                        </tr>
+                    </table>
                 </div>
 
 
-
-                <!-- END CONSTRUCTOR -->
-
+                <!-- /ko -->
             </div>
-            <div class="clear"></div>
-            <!-- BTN MINIMIZE -->
-            <a href="#" class="btn-minimizePanel" data-bind="click: itemsToBuy.togglePanel,html: '<span></span>'+itemsToBuy.showPanelText()"><span></span></a>
-        </div>
-        <!-- END PANEL -->
-        <!-- CALENDAR -->
-        <div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarEvent}" style="top: -302px; overflow: hidden; height: 341px;display:none;">
-        </div>
-        <!-- END CALENDAR -->
-        <!-- /ko -->
+            <!-- END BOARD CONTENT -->
 
-    <!-- END CENTER BLOCK -->
+
+        </div>
+
+
+        <!-- END CONSTRUCTOR -->
+
+    </div>
+    <div class="clear"></div>
+    <!-- BTN MINIMIZE -->
+    <a href="#" class="btn-minimizePanel"
+       data-bind="click: itemsToBuy.togglePanel,html: '<span></span>'+itemsToBuy.showPanelText()"><span></span></a>
+</div>
+<!-- END PANEL -->
+<!-- CALENDAR -->
+<div class="calenderWindow z-indexTop"
+     data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarEvent}"
+     style="top: -302px; overflow: hidden; height: 341px;display:none;">
+</div>
+<!-- END CALENDAR -->
+<!-- /ko -->
+
+<!-- END CENTER BLOCK -->
 
 <!--====**********===-->
 <div class="center-block" data-bind="if: itemsToBuy.correctTour()">
@@ -246,7 +271,9 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
                     </div>
                     <div class="shareSocial">
                     </div>
-                    <div class="btn-order floatRight" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}">Проверить<span class="l"></span></div>
+                    <div class="btn-order floatRight"
+                         data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}">
+                        Проверить<span class="l"></span></div>
                 </td>
                 <td class="secondTd">
 
@@ -267,9 +294,11 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
                     <table class="headTitle">
                         <tr>
                             <td class="icoTD">
-                                <div class="ico-hotel"></div>      </td>
+                                <div class="ico-hotel"></div>
+                            </td>
                             <td class="nameTD">
-                                <div class="title"><span  data-bind="text:$parent.startCity"> Санкт-Петербург</span><span class="f13"> &mdash; начало путешествия</span></div>
+                                <div class="title"><span data-bind="text:$parent.startCity"> Санкт-Петербург</span><span
+                                    class="f13"> &mdash; начало путешествия</span></div>
                             </td>
                             <td class="costTD"></td>
                             <td class="removeTD"></td>
@@ -277,7 +306,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
                     </table>
                 </div>
                 <div class="hr-bg">
-                    <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
+                    <img src="<?php echo $images . '/images/shadow-hotel.png' ?>" width="100%" height="31">
                 </div>
             </div>
         </div>
@@ -307,7 +336,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
 
                 </div>
                 <div class="hr-bg">
-                    <img src="<?php echo $images.'/images/shadow-hotel.png' ?>" width="100%" height="31">
+                    <img src="<?php echo $images . '/images/shadow-hotel.png' ?>" width="100%" height="31">
                 </div>
             </div>
         </div>
@@ -364,7 +393,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
                     <!-- END FINISH -->
                     <div class="clear"></div>
                     <div class="airlinesLogo">
-                        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+                        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}">
                         <br>
                         <span data-bind="text:airlineName">Россия</span>
                     </div>
@@ -419,7 +448,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
                     <!-- END FINISH -->
                     <div class="clear"></div>
                     <div class="airlinesLogo">
-                        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+                        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}">
                         <br>
                         <span data-bind="text:airlineName">Россия</span>
                     </div>
@@ -451,7 +480,8 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
             <div class="full-info">
                 <div class="preview-photo">
                     <ul>
-                        <li><a href="#" data-bind="click: showPhoto,attr: {'href': frontPhoto.largeUrl}" class="photo"><img data-bind="attr:{src: frontPhoto.largeUrl}"></a></li>
+                        <li><a href="#" data-bind="click: showPhoto,attr: {'href': frontPhoto.largeUrl}"
+                               class="photo"><img data-bind="attr:{src: frontPhoto.largeUrl}"></a></li>
                     </ul>
                     <div class="how-much" data-bind="visible: numPhotos">
                         <a href="#">Фотографий (<span data-bind="text: numPhotos">11</span>)</a>
@@ -459,7 +489,9 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
                 </div>
                 <div class="description">
                     <div class="title">
-                        <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span></h2>
+                        <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span>
+                        </h2>
+
                         <div data-bind="attr: {'class': 'stars ' + stars}"></div>
                     </div>
                     <div class="place">
@@ -467,15 +499,18 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
                             <span data-bind="text:address">Санкт-Петребург. ул. Морская Набережная, 31/2</span>
                             <span class="gradient"></span>
                         </div>
-                        <a href="#"  data-bind="click: showMapDetails" class="in-the-map"><span class="ico-see-map"></span> <span class="link">На карте</span></a>
+                        <a href="#" data-bind="click: showMapDetails" class="in-the-map"><span
+                            class="ico-see-map"></span> <span class="link">На карте</span></a>
                     </div>
                     <div class="text">
-                        <span data-bind="html: limitDesc.startText">Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...</span><span data-bind="visible: limitDesc.isBigText">...</span>
+                        <span data-bind="html: limitDesc.startText">Этот 4-звездочный отель расположен рядом с площадью Победы и парком Городов-Героев. К услугам гостей большой крытый бассейн и номера с телевизорами с плоским экраном...</span><span
+                        data-bind="visible: limitDesc.isBigText">...</span>
                     </div>
                 </div>
                 <div class="choose-a-hotel">
-                    <div class="rating"  data-bind="visible: rating">
-                        <div class="textRating" onmouseover="ratingHoverActive(this)" onmouseout="ratingHoverNoActive(this)">
+                    <div class="rating" data-bind="visible: rating">
+                        <div class="textRating" onmouseover="ratingHoverActive(this)"
+                             onmouseout="ratingHoverNoActive(this)">
                             <span class="value" data-bind="text: rating"></span>
                             <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
                         </div>
@@ -490,7 +525,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
             </div>
             <div class="details">
                 <ul>
-                    <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: roomSets()[0]}" />
+                    <li class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: roomSets()[0]}"/>
                 </ul>
                 <!-- div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
                    <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
@@ -509,8 +544,8 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property'=> 'twitter:site'))
 </script>
 <script id="event-photo-box" type="text/html">
 
-            <div class="leftButton" data-bind="click: prev"></div>
-            <div class="centerPosition"></div>
-            <div class="rightButton" data-bind="click: next"></div>
+    <div class="leftButton" data-bind="click: prev"></div>
+    <div class="centerPosition"></div>
+    <div class="rightButton" data-bind="click: next"></div>
 
 </script>

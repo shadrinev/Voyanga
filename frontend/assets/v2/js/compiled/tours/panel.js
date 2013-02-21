@@ -42,6 +42,7 @@ TourPanelSet = (function() {
     this.startCityReadable = ko.observable('');
     this.startCityReadableGen = ko.observable('');
     this.startCityReadableAcc = ko.observable('');
+    this.startCityReadablePre = ko.observable('');
     this.panels = ko.observableArray([]);
     this.activeCity = ko.observable('');
     this.sp.calendarActivated = ko.observable(true);
@@ -74,7 +75,9 @@ TourPanelSet = (function() {
         hotels: true,
         from: _this.activeCalendarPanel().checkIn(),
         to: _this.activeCalendarPanel().checkOut(),
-        activeSearchPanel: _this.activeCalendarPanel()
+        activeSearchPanel: _this.activeCalendarPanel(),
+        valuesDescriptions: ['Заезд в отель<br>в ' + _this.activeCalendarPanel().cityReadablePre(), 'Выезд из отеля<br>в ' + _this.activeCalendarPanel().cityReadablePre()],
+        intervalDescription: '0'
       };
     });
     this.formFilled = ko.computed(function() {
@@ -243,6 +246,7 @@ TourPanel = (function(_super) {
     this.cityReadable = ko.observable('');
     this.cityReadableGen = ko.observable('');
     this.cityReadableAcc = ko.observable('');
+    this.cityReadablePre = ko.observable('');
     this.oldCalendarState = this.minimizedCalendar();
     this.formFilled = ko.computed(function() {
       return _this.city() && _this.checkIn() && _this.checkOut();
@@ -322,9 +326,10 @@ TourPanel = (function(_super) {
       300: 300
     });
     el.find(".startInputTo").show();
-    return el.find('.cityStart').animate({
+    el.find('.cityStart').animate({
       width: "261px"
-    }, 300, function() {}, el.find(".startInputTo").find("input").focus().select());
+    }, 300, function() {});
+    return el.find(".startInputTo").find("input").focus().select();
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
@@ -375,13 +380,16 @@ $(document).on("keyup change", '.cityStart input.second-path', function(e) {
     if (elem.parent().hasClass("overflow")) {
       elem.parent().animate({
         width: "271px"
-      }, 300, function() {}, $(this).removeClass("overflow"), $('.from.active .second-path').focus());
+      }, 300, function() {});
+      $(this).removeClass("overflow");
+      $('.from.active .second-path').focus();
       $(".cityStart").animate({
         width: "115px"
       }, 300);
-      return $(".cityStart").find(".startInputTo").animate({
+      $(".cityStart").find(".startInputTo").animate({
         opacity: "1"
-      }, 300, function() {}, $(this).hide());
+      }, 300, function() {});
+      return $(this).hide();
     }
   }
 });

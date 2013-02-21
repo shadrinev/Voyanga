@@ -15,12 +15,14 @@ class AviaPanel extends SearchPanel
     @departureCityReadable = ko.observable ''
     @departureCityReadableGen = ko.observable ''
     @departureCityReadableAcc = ko.observable ''
+    @departureCityReadablePre = ko.observable ''
     @rt = @sp.rt
     @rtDate = @sp.rtDate
     @arrivalCity = @sp.arr
     @arrivalCityReadable = ko.observable ''
     @arrivalCityReadableGen = ko.observable ''
     @arrivalCityReadableAcc = ko.observable ''
+    @arrivalCityReadablePre = ko.observable ''
     @prefixText = 'Все направления<br>500+ авиакомпаний'
     @calendarActive = ko.observable(true)
 

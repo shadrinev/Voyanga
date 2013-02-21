@@ -24,6 +24,7 @@ ko.bindingHandlers.autocomplete = {
           valueAccessor().readable(data.name);
           valueAccessor().readableGen(data.nameGen);
           valueAccessor().readableAcc(data.nameAcc);
+          valueAccessor().readablePre(data.namePre);
           $(element).val(data.name);
           return $(element).siblings('input.input-path').val(value);
         },
@@ -31,17 +32,19 @@ ko.bindingHandlers.autocomplete = {
           valueAccessor().readable(data.name);
           valueAccessor().readableGen(data.nameGen);
           valueAccessor().readableAcc(data.nameAcc);
+          valueAccessor().readablePre(data.namePre);
           $(element).val(data.name);
           return $(element).siblings('input.input-path').val(value);
         }
-      });
-    }, 500);
+      }, 500);
+    });
     return $(element).on("keyup", function(e) {
       if ((e.keyCode === 8) || (e.keyCode === 46)) {
         valueAccessor().iata('');
         valueAccessor().readable('');
         valueAccessor().readableGen('');
-        return valueAccessor().readableAcc('');
+        valueAccessor().readableAcc('');
+        return valueAccessor().readablePre('');
       }
     });
   },
@@ -60,6 +63,7 @@ ko.bindingHandlers.autocomplete = {
       valueAccessor().readable(data[iataCode].name);
       valueAccessor().readableGen(data[iataCode].nameGen);
       valueAccessor().readableAcc(data[iataCode].nameAcc);
+      valueAccessor().readablePre(data[iataCode].namePre);
       $(element).val(data[iataCode].name);
       return $(element).siblings('input.input-path').val(data[iataCode].label);
     };

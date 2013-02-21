@@ -18,22 +18,25 @@ ko.bindingHandlers.autocomplete =
           valueAccessor().readable(data.name)
           valueAccessor().readableGen(data.nameGen)
           valueAccessor().readableAcc(data.nameAcc)
+          valueAccessor().readablePre(data.namePre)
           $(element).val(data.name)
           $(element).siblings('input.input-path').val(value)
         onActivate: (value, data) ->
           valueAccessor().readable(data.name)
           valueAccessor().readableGen(data.nameGen)
           valueAccessor().readableAcc(data.nameAcc)
+          valueAccessor().readablePre(data.namePre)
           $(element).val(data.name)
           $(element).siblings('input.input-path').val(value)
-    , 500
+      , 500
 
     $(element).on "keyup", (e) ->
-        if ((e.keyCode==8) || (e.keyCode==46))
-          valueAccessor().iata('')
-          valueAccessor().readable('')
-          valueAccessor().readableGen('')
-          valueAccessor().readableAcc('')
+      if ((e.keyCode == 8) || (e.keyCode == 46))
+        valueAccessor().iata('')
+        valueAccessor().readable('')
+        valueAccessor().readableGen('')
+        valueAccessor().readableAcc('')
+        valueAccessor().readablePre('')
 
 
   update: (element, valueAccessor) =>
@@ -50,10 +53,11 @@ ko.bindingHandlers.autocomplete =
       valueAccessor().readable(data[iataCode].name)
       valueAccessor().readableGen(data[iataCode].nameGen)
       valueAccessor().readableAcc(data[iataCode].nameAcc)
+      valueAccessor().readablePre(data[iataCode].namePre)
       $(element).val(data[iataCode].name)
       $(element).siblings('input.input-path').val(data[iataCode].label)
 
-    if (iataCode.length>0)
+    if (iataCode.length > 0)
       $.ajax
         url: url iataCode
         dataType: 'json'
