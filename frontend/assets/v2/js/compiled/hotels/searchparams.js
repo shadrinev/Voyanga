@@ -93,8 +93,24 @@ SpRoom = (function() {
   };
 
   SpRoom.prototype.fromObject = function(item) {
-    this.adults + item.adultCount;
-    return this.children + item.childCount;
+    var i, _i, _ref, _results;
+    this.adults(item.adultCount);
+    this.children(item.childCount);
+    this.infants(item.cots);
+    if (this.children() > 0) {
+      _results = [];
+      for (i = _i = 0, _ref = this.children() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        _results.push(this.ages.push({
+          age: ko.observable(item.childAge).extend({
+            integerOnly: {
+              min: 0,
+              max: 12
+            }
+          })
+        }));
+      }
+      return _results;
+    }
   };
 
   SpRoom.prototype.getHash = function() {

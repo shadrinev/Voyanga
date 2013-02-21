@@ -48,8 +48,15 @@ class SpRoom
     console.log('ages:', @ages())
 
   fromObject: (item) ->
-    @adults + item.adultCount
-    @children + item.childCount
+    @adults item.adultCount
+    @children item.childCount
+    @infants item.cots
+    
+    if @children() > 0
+      for i in [0..(@children()-1)]
+        @ages.push {age: ko.observable(item.childAge).extend {integerOnly:
+          {min: 0, max: 12}}}
+
 
   getHash: =>
     parts = [@adults(), @children(), @infants()]
