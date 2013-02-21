@@ -12,7 +12,7 @@ return array(
     'enableHotelLogging' => true,
     'enableFlightLogging' => true,
 
-    "api.endPoint" => "http://api.test.voyanga.com/v1/",
+    "api.endPoint" => "http://api.voyanga.lcl/v1/",
     'app.api.flightSearchUrl' => 'http://api.test.voyanga.com/v1/flight/search/BE',
     'app.api.flightSearchNoSecure' => 'http://api.voyanga.com/v1/flight',
     'app.api.hotelSearchUrl' => 'http://api.test.voyanga.com/v1/hotel/search',

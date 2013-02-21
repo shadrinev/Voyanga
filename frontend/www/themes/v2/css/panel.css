@@ -18,8 +18,26 @@
 
 }
 .panelTable tr td.tdAddTour {
-    min-width: 117px;
+    min-width: 165px;
 }
+.panelTable tr td.tdAddTour .ui-hover {
+    color: #A5A8B1;
+    font-size: 13px;
+    margin-left: 20px;
+}
+
+.panelTable tr td.tdAddTour .ui-hover .checkbox {
+    margin: 8px 8px 2px 0;
+}
+.panelTable tr td.tdAddTour .ui-hover .ui-label .backCity {
+    display: block;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
 .panelTable tr td.tdButton {
     text-align: center;
     min-width: 85px;
@@ -420,9 +438,17 @@
 .how-many-man  .popup .adults, .how-many-man  .popup .childs, .how-many-man  .popup .small-childs {
 	float: left;
 	width: 48px; font-size: 11px; color: #272728; text-shadow: 0px 1px 0px #FFF; line-height: 13px;
-	margin-left: 13px;
+	margin-left: 10px;
 	padding-top: 13px;
 	position: relative;
+}
+.how-many-man  .popup .childs {
+    margin-left: 12px;
+    width: 55px;
+}
+.how-many-man .popup .small-childs {
+    margin-left: 4px;
+    width: 58px;
 }
 .how-many-man  .popup .adults input, .how-many-man  .popup .childs input, .how-many-man  .popup .small-childs input  {
 	background: url("../images/slice.png") no-repeat scroll -264px -941px transparent;
@@ -1031,4 +1057,13 @@
 }
 .divCondition {
     top: 62px;
+}
+.tdCity .data .add-tour {
+    background: url("../images/add-tours.png") no-repeat scroll 0 0 transparent;
+    bottom: -26px;
+    height: 22px;
+    position: absolute;
+    right: 0;
+    width: 160px;
+    z-index: 997;
 }

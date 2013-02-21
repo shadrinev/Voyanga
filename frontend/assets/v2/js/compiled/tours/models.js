@@ -1175,6 +1175,7 @@ TourSearchParams = (function(_super) {
     } else {
       this.startCity = ko.observable('LED');
     }
+    this.returnBack = ko.observable(1);
     this.destinations = ko.observableArray([]);
     this.rooms = ko.observableArray([new SpRoom(this)]);
     this.overall = ko.computed(function() {
@@ -1208,7 +1209,6 @@ TourSearchParams = (function(_super) {
       }
       return result;
     });
-    this.returnBack = ko.observable(1);
   }
 
   TourSearchParams.prototype.addSpRoom = function() {
@@ -1221,6 +1221,7 @@ TourSearchParams = (function(_super) {
     result = 'tour/search?';
     params = [];
     params.push('start=' + this.startCity());
+    params.push('return=' + this.returnBack());
     _.each(this.destinations(), function(destination, ind) {
       params.push('destinations[' + ind + '][city]=' + destination.city());
       params.push('destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY'));
@@ -1253,7 +1254,6 @@ TourSearchParams = (function(_super) {
     var hash, parts;
     parts = [this.startCity(), this.returnBack()];
     _.each(this.destinations(), function(destination) {
-      console.log('destination', destination);
       parts.push(destination.city());
       parts.push(moment(destination.dateFrom()).format('D.M.YYYY'));
       return parts.push(moment(destination.dateTo()).format('D.M.YYYY'));
@@ -1269,7 +1269,6 @@ TourSearchParams = (function(_super) {
 
   TourSearchParams.prototype.fromList = function(data) {
     var destination, doingrooms, i, oldSelection, room, _i, _ref;
-    window.voyanga_debug("Restoring TourSearchParams from list");
     this.startCity(data[0]);
     this.returnBack(data[1]);
     doingrooms = false;

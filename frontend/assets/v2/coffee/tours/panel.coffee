@@ -65,7 +65,9 @@ class TourPanelSet
 
   navigateToNewSearch: =>
     if (@formNotFilled())
+      $('div.innerCalendar').find('h1').addClass('highlight');
       return
+    $('div.innerCalendar').find('h1').removeClass('highlight');
     _.last(@panels()).handlePanelSubmit()
     _.last(@panels()).minimizedCalendar(true)
 
@@ -94,6 +96,7 @@ class TourPanelSet
     @i == 1
 
   addPanel: =>
+    $('div.innerCalendar').find('h1').removeClass('highlight');
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
@@ -237,8 +240,9 @@ class TourPanel extends SearchPanel
     })
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
-      width: "261px", 300, ->
-    el.find(".startInputTo").find("input").focus().select()
+      width: "261px"
+      , 300, ->
+      el.find(".startInputTo").find("input").focus().select()
 
   hideFromCityInput: (panel, event) ->
     hideFromCityInput(panel, event)
@@ -273,12 +277,15 @@ $(document).on "keyup change", '.cityStart input.second-path', (e) ->
   if (e.keyCode == 13)
     if elem.parent().hasClass("overflow")
       elem.parent().animate
-        width: "271px", 300, ->
-      $(this).removeClass "overflow"
-      $('.from.active .second-path').focus()
+        width: "271px"
+        , 300, ->
+        $(this).removeClass "overflow"
+        $('.from.active .second-path').focus()
 
       $(".cityStart").animate
-        width: "115px", 300
+        width: "115px"
+        , 300
       $(".cityStart").find(".startInputTo").animate
-        opacity: "1", 300, ->
-      $(this).hide()
+        opacity: "1"
+        , 300, ->
+        $(this).hide()

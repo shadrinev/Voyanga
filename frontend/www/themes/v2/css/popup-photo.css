@@ -13,13 +13,13 @@
 	height: 100%;
 }
 #body-popup-Photo table #left, #body-popup-Photo table #right {
-	width: 48%;
-	position: relative;
+    position: relative;
+    width: 22%;
 }
 #body-popup-Photo table #center {
-	width: 4%;
-	text-align: center;
-	vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
+    width: 56%;
 }
 #body-popup-Photo table #left {
     background: url("../images/navigation-slide-photo-left.png") no-repeat scroll left center transparent;
@@ -111,15 +111,15 @@
     color: #696C72;
 }
 #boxClosePhoto {
-    background: url("../images/closePhotoPopUp.png") no-repeat scroll center center transparent;
+    background: url("../images/close-popup-big.png") no-repeat scroll center center transparent;
     cursor: pointer;
     display: block;
-    height: 18px;
-    position: absolute;
-    right: -3px;
+    height: 42px;
+    position: fixed;
+    right: 30px;
     text-indent: -9999px;
-    top: 0px;
-    width: 17px;
+    top: 30px;
+    width: 42px;
     z-index: 2100;
 }
 .keyBoard {

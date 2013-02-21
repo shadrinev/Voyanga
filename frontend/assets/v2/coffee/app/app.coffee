@@ -40,6 +40,7 @@ class Application extends Backbone.Router
           @fakoPanel result
           @activeSearchPanel(@fakoPanel())
           ko.processAllDeferredBindingUpdates()
+          $('div.innerCalendar').find('h1').removeClass('highlight')
 
     @_view = ko.observable false
 

@@ -48,6 +48,7 @@ HotelsPanel = (function(_super) {
       }
     });
     this.prefixText = "Выберите город<br>200 000+ отелей";
+    $('div.innerCalendar').find('h1').removeClass('highlight');
     this.formFilled = ko.computed(function() {
       var cin, cout, result;
       if (_this.checkIn().getDay) {

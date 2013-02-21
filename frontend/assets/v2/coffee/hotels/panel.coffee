@@ -27,6 +27,8 @@ class HotelsPanel extends SearchPanel
         ret += " в городе " + @cityReadable()
     @prefixText = "Выберите город<br>200 000+ отелей"
 
+    $('div.innerCalendar').find('h1').removeClass('highlight')
+
     @formFilled = ko.computed =>
       if @checkIn().getDay
         cin = true

@@ -51,24 +51,27 @@ class ConstructorBuilder
             $prevDate = $hotel->checkOut;
         }
 
-        //back to home now
-        $next = $form->getStartCityId();
-        $flight = new FlightTripElement();
-        $flight->departureCity = $prev;
-        $flight->arrivalCity = $next;
-        $flight->departureDate = $prevDate;
-        $flight->adultCount = $form->adultCount;
-        $flight->childCount = $form->childCount;
-        $flight->infantCount = $form->infantCount;
-        $flight->id = $ind++;
-        if(count($form->trips) == 1)
+        if ($form->returnBack)
         {
-            $flight->groupId = $firstGroup;
+            //back to home now
+            $next = $form->getStartCityId();
+            $flight = new FlightTripElement();
+            $flight->departureCity = $prev;
+            $flight->arrivalCity = $next;
+            $flight->departureDate = $prevDate;
+            $flight->adultCount = $form->adultCount;
+            $flight->childCount = $form->childCount;
+            $flight->infantCount = $form->infantCount;
+            $flight->id = $ind++;
+            if(count($form->trips) == 1)
+            {
+                $flight->groupId = $firstGroup;
+            }
+            else
+            {
+                $flight->groupId = $firstGroup = substr(md5('group'. uniqid('',true)),0,10);
+            }
+            Yii::app()->shoppingCart->put($flight);/**/
         }
-        else
-        {
-            $flight->groupId = $firstGroup = substr(md5('group'. uniqid('',true)),0,10);
-        }
-        Yii::app()->shoppingCart->put($flight);/**/
     }
 }

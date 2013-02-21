@@ -46,13 +46,21 @@ ko.bindingHandlers.checkbox = {
     return el.hide();
   },
   update: function(element, valueAccessor) {
-    var checked, el;
+    var checked, el, label;
+    label = ko.utils.unwrapObservable(valueAccessor().label);
     checked = ko.utils.unwrapObservable(valueAccessor().checked);
     el = $(element).next();
+    el.find('.ui-label').html(label);
     if (checked) {
-      return checkVoybox(el);
+      checkVoybox(el);
+      if (_.isFunction(valueAccessor().checked)) {
+        return valueAccessor().checked(1);
+      }
     } else {
-      return uncheckVoybox(el);
+      uncheckVoybox(el);
+      if (_.isFunction(valueAccessor().checked)) {
+        return valueAccessor().checked(0);
+      }
     }
   }
 };

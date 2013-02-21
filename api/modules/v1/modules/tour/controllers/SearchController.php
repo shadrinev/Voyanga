@@ -26,10 +26,10 @@ class SearchController extends ApiController
      *  [Х][chdAge]
      *  [Х][cots]
      */
-    public function actionDefault($start, array $destinations, array $rooms, $format = 'json', $eventId = null)
+    public function actionDefault($start, array $destinations, array $rooms, $format = 'json', $eventId = null, $return = 1)
     {
 
-        $tourSearchParams = $this->buildSearchParams($start, $destinations, $rooms);
+        $tourSearchParams = $this->buildSearchParams($start, $destinations, $rooms, $return);
         if($eventId){
             $event = Event::model()->findByPk($eventId);
             $dataProvider = new TripDataProvider();
@@ -185,10 +185,11 @@ class SearchController extends ApiController
         $this->asyncExecutor->add($url);
     }
 
-    private function buildSearchParams($start, $destinations, $rooms)
+    private function buildSearchParams($start, $destinations, $rooms, $returnBack)
     {
         $tourBuilder = new TourBuilderForm();
         $tourBuilder->setStartCityName($start);
+        $tourBuilder->returnBack = $returnBack;
         $tourBuilder->rooms = array();
         foreach ($rooms as $room)
         {
