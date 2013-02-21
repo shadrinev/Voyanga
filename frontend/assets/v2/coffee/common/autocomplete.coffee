@@ -14,6 +14,7 @@ ko.bindingHandlers.autocomplete =
         delay: 0
         showCode: showCode
         onSelect: (value, data) -> # Callback функция, срабатывающая на выбор одного из предложенных вариантов,
+          console.log "autocomplete:onSelect"
           valueAccessor().iata(data.code)
           valueAccessor().readable(data.name)
           valueAccessor().readableGen(data.nameGen)
@@ -54,8 +55,6 @@ ko.bindingHandlers.autocomplete =
       valueAccessor().readableGen(data[iataCode].nameGen)
       valueAccessor().readableAcc(data[iataCode].nameAcc)
       valueAccessor().readablePre(data[iataCode].namePre)
-      $(element).val(data[iataCode].name)
-      $(element).siblings('input.input-path').val(data[iataCode].label)
 
     if (iataCode.length > 0)
       $.ajax

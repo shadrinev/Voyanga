@@ -20,6 +20,7 @@ ko.bindingHandlers.autocomplete = {
         delay: 0,
         showCode: showCode,
         onSelect: function(value, data) {
+          console.log("autocomplete:onSelect");
           valueAccessor().iata(data.code);
           valueAccessor().readable(data.name);
           valueAccessor().readableGen(data.nameGen);
@@ -63,9 +64,7 @@ ko.bindingHandlers.autocomplete = {
       valueAccessor().readable(data[iataCode].name);
       valueAccessor().readableGen(data[iataCode].nameGen);
       valueAccessor().readableAcc(data[iataCode].nameAcc);
-      valueAccessor().readablePre(data[iataCode].namePre);
-      $(element).val(data[iataCode].name);
-      return $(element).siblings('input.input-path').val(data[iataCode].label);
+      return valueAccessor().readablePre(data[iataCode].namePre);
     };
     if (iataCode.length > 0) {
       return $.ajax({

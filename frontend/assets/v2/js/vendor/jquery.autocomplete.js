@@ -138,8 +138,9 @@
 		},
 
 		fixPosition: function () {
-			var offset = this.el.offset();
+            var offset = this.el.offset();
 			$('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight()) + 'px', left: offset.left + 'px' });
+            this.el.select();
 		},
 
 		enableKillerFn: function () {
