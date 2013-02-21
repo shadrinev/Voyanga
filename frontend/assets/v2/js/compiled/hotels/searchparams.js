@@ -78,7 +78,7 @@ SpRoom = (function() {
     this.children(parts[1]);
     this.infants(parts[2]);
     if (this.children() > 0) {
-      for (i = _i = 0, _ref = this.children()(-1); 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      for (i = _i = 0, _ref = this.children() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         this.ages.push({
           age: ko.observable(parts[3 + i]).extend({
             integerOnly: {

@@ -42,7 +42,7 @@ class SpRoom
     @infants parts[2]
     # FIXME: FIXME FIXME
     if @children() > 0
-      for i in [0..(@children() -1)]
+      for i in [0..(@children()-1)]
         @ages.push {age: ko.observable(parts[3 + i]).extend {integerOnly:
           {min: 0, max: 12}}}
     console.log('ages:', @ages())
