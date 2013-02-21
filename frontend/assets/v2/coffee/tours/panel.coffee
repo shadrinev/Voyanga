@@ -165,8 +165,8 @@ class TourPanelSet
 
   afterRender: (el) =>
     do resizePanel
-    if $(el).hasClass 'panel'
-      $(el).find('.second-path').focus()
+#    if $(el).hasClass 'panel'
+#      $(el).find('.second-path').focus().select()
 
   beforeRemove: (el) ->
     if $(el).hasClass 'panel'

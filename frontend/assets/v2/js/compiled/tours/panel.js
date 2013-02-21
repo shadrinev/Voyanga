@@ -224,10 +224,7 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.afterRender = function(el) {
-    resizePanel();
-    if ($(el).hasClass('panel')) {
-      return $(el).find('.second-path').focus();
-    }
+    return resizePanel();
   };
 
   TourPanelSet.prototype.beforeRemove = function(el) {
