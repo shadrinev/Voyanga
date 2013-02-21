@@ -1065,4 +1065,5 @@
     position: absolute;
     right: 0;
     width: 160px;
+    z-index: 997;
 }
