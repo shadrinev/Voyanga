@@ -27,7 +27,7 @@ HotelsPanel = (function(_super) {
     this.prevPanel = 'avia';
     this.nextPanel = 'tours';
     this.icon = 'hotel-ico';
-    this.mainLabel = 'Поиск отелей';
+    this.mainLabel = 'Бронирование отелей';
     this.indexMode = ko.observable(true);
     this.sp = new HotelsSearchParams();
     this.calendarHidden = ko.observable(true);
@@ -159,7 +159,10 @@ HotelsPanel = (function(_super) {
   };
 
   HotelsPanel.prototype.afterRender = function() {
-    return resizePanel();
+    resizePanel();
+    if (this.city() && (!this.checkIn() || !this.checkOut())) {
+      return this.minimizedCalendar(false);
+    }
   };
 
   return HotelsPanel;

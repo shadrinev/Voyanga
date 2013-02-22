@@ -222,7 +222,10 @@ AviaPanel = (function(_super) {
     $(function() {
       _this.sp.passengers.afterRender();
       _this.rtTumbler(_this.rt());
-      return $('.how-many-man .btn');
+      $('.how-many-man .btn');
+      if (_this.departureCity() && _this.arrivalCity().length > 0 && (!_this.departureDate() || (_this.rt() && (!_this.rtDate)))) {
+        return _this.minimizedCalendar(false);
+      }
     });
     return resizePanel();
   };

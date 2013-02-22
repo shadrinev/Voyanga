@@ -10,7 +10,7 @@ class TourPanelSet
     @prevPanel = 'hotels'
     @nextPanel = 'avia'
     @icon = 'constructor-ico'
-    @mainLabel = 'Спланируй свое путешествие <img src="/themes/v2/images/saleTitle.png">'
+    @mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">'
     @indexMode = true
 
     @startCity = @sp.startCity
@@ -69,7 +69,6 @@ class TourPanelSet
       intervalDescription: '0'
       selectionIndex: @selectionIndex
 
-
     @formFilled = ko.computed =>
       isFilled = @startCity()
       _.each @panels(), (panel) ->
@@ -101,8 +100,6 @@ class TourPanelSet
     index = @panels.indexOf(elem)
     @panels.remove(elem)
     @sp.destinations.splice(index, 1)
-    console.log "Panels after", @panels()
-    console.log "Destinations after", @sp.destinations()
     _.last(@panels()).isLast(true)
 
   isFirst: =>
@@ -136,7 +133,7 @@ class TourPanelSet
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
-    if ((@activeCity()) && (@selectionIndex() != 2))
+    if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
       @activeCalendarPanel().showCalendar(false)
 
   # calendar handler
@@ -163,6 +160,8 @@ class TourPanelSet
 
   afterRender: (el) =>
     do resizePanel
+    if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
+      @activeCalendarPanel().showCalendar(false)
 
   beforeRemove: (el) ->
     if $(el).hasClass 'panel'

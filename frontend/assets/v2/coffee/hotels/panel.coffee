@@ -7,7 +7,7 @@ class HotelsPanel extends SearchPanel
     @nextPanel = 'tours'
     @icon = 'hotel-ico'
 
-    @mainLabel = 'Поиск отелей'
+    @mainLabel = 'Бронирование отелей'
     @indexMode = ko.observable true
 
     @sp = new HotelsSearchParams()
@@ -116,3 +116,6 @@ class HotelsPanel extends SearchPanel
 
   afterRender: =>
     do resizePanel
+    if (@city() && (!@checkIn() || !@checkOut()))
+      @minimizedCalendar(false)
+

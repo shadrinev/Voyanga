@@ -36,7 +36,7 @@ TourPanelSet = (function() {
     this.prevPanel = 'hotels';
     this.nextPanel = 'avia';
     this.icon = 'constructor-ico';
-    this.mainLabel = 'Спланируй свое путешествие <img src="/themes/v2/images/saleTitle.png">';
+    this.mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">';
     this.indexMode = true;
     this.startCity = this.sp.startCity;
     this.startCityReadable = ko.observable('');
@@ -144,8 +144,6 @@ TourPanelSet = (function() {
     index = this.panels.indexOf(elem);
     this.panels.remove(elem);
     this.sp.destinations.splice(index, 1);
-    console.log("Panels after", this.panels());
-    console.log("Destinations after", this.sp.destinations());
     return _.last(this.panels()).isLast(true);
   };
 
@@ -191,7 +189,7 @@ TourPanelSet = (function() {
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
     this.activeCalendarPanel(args[0]);
-    if ((this.activeCity()) && (this.selectionIndex() !== 2)) {
+    if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
       return this.activeCalendarPanel().showCalendar(false);
     }
   };
@@ -227,7 +225,10 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.afterRender = function(el) {
-    return resizePanel();
+    resizePanel();
+    if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
+      return this.activeCalendarPanel().showCalendar(false);
+    }
   };
 
   TourPanelSet.prototype.beforeRemove = function(el) {
