@@ -8,7 +8,6 @@ class AviaPanel extends SearchPanel
     @mainLabel = 'Поиск авиабилетов'
     @icon = 'fly-ico'
 
-
     @template = 'avia-panel-template'
     @sp = new AviaSearchParams()
     @passengers = @sp.passengers
