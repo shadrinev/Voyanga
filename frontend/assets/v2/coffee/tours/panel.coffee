@@ -109,8 +109,6 @@ class TourPanelSet
     @i == 1
 
   addPanel: =>
-    $('div.innerCalendar').find('h1').removeClass('highlight')
-    ;
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
