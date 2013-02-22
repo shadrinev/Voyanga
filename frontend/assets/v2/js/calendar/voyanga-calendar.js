@@ -589,8 +589,6 @@ VoyangaCalendarStandart.onCellClick = function (obj) {
     var jCell = $(obj);
     if (jCell.hasClass('inactive'))
         return;
-    VoyangaCalendarStandart.unsetCellFrom(jCell);
-    VoyangaCalendarStandart.unsetCellTo(jCell);
     var cellDate = Date.fromIso(jCell.data('cell-date'));
     var dontset = true;
 
@@ -599,8 +597,18 @@ VoyangaCalendarStandart.onCellClick = function (obj) {
             this.values = new Array();
         } else if (this.values.length == 1) {
             if (cellDate < this.values[0]) {
+                console.log('AAA1');
                 this.values = new Array();
             } else {
+                console.log('bbb2 ');
+                if (this.hotels) {
+                    console.log('AAA2 hotels');
+                    if (moment(this.values[0]).diff(moment(cellDate), 'days') == 0) {
+                        console.log('AAA2 ret');
+                        return;
+                    }
+                    console.log('AAA2 not null');
+                }
                 dontset = false;
                 this.values.push(cellDate);
             }
@@ -612,6 +620,9 @@ VoyangaCalendarStandart.onCellClick = function (obj) {
         dontset = false;
 
     }
+    VoyangaCalendarStandart.unsetCellFrom(jCell);
+    VoyangaCalendarStandart.unsetCellTo(jCell);
+
 
     if (this.values.length == 0) {
         this.values.push(cellDate);
@@ -735,10 +746,13 @@ VoyangaCalendarStandart.scrollToDate = function (dateVar, forceScroll) {
 
 VoyangaCalendarStandart.newValueHandler = function (newCalendarValue) {
     console.log('send new value handler, now values:', VoyangaCalendarStandart.values, ' calVal:', newCalendarValue);
-    if (newCalendarValue.hotels)
+    if (newCalendarValue.hotels) {
+        VoyangaCalendarStandart.hotels = true;
         $('#voyanga-calendar').addClass('hotel');
-    else
+    } else {
+        VoyangaCalendarStandart.hotels = false;
         $('#voyanga-calendar').removeClass('hotel');
+    }
     if (VoyangaCalendarStandart.lastFromOverCell) {
         VoyangaCalendarStandart.unsetCellFrom(VoyangaCalendarStandart.lastFromOverCell);
     }
