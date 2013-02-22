@@ -156,7 +156,6 @@ TourPanelSet = (function() {
   TourPanelSet.prototype.addPanel = function() {
     var newPanel, prevPanel,
       _this = this;
-    $('div.innerCalendar').find('h1').removeClass('highlight');
     this.sp.destinations.push(new DestinationSearchParams());
     if (_.last(this.panels())) {
       _.last(this.panels()).isLast(false);
