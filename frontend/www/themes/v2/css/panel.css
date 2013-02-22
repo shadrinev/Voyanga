@@ -680,12 +680,7 @@
 .panel-index .sub-head .navi-r:hover {
 	background-position: -26px -64px;
 }
-/*.fly-panel {*/
-	/*width: 100%;*/
-	/*height: 64px;*/
-	/*position: relative;*/
-	/*background: url("../images/bgBoardSmall.png") repeat-x scroll 0 0 transparent;*/
-/*}*/
+
 .board {
 	/*background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;*/
     bottom: 366px;
@@ -722,6 +717,9 @@
 .rightPageBtn:hover {
 	background-position: -26px -0px;
 }
+
+
+
 
 
 .constructor {

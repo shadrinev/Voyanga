@@ -36,7 +36,7 @@ TourPanelSet = (function() {
     this.prevPanel = 'hotels';
     this.nextPanel = 'avia';
     this.icon = 'constructor-ico';
-    this.mainLabel = 'Спланируй свое путешествие <img src="/themes/v2/images/saleTitle.png">';
+    this.mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">';
     this.indexMode = true;
     this.startCity = this.sp.startCity;
     this.startCityReadable = ko.observable('');

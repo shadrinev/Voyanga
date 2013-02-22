@@ -247,7 +247,7 @@
     padding-top: 13px;
 }
 
-.dayCellVoyanga.startMonth.selectDay .monthLabel, .dayCellVoyanga.startMonth.to .monthLabel, .dayCellVoyanga.startMonth.from .monthLabel {
+.dayCellVoyanga.startMonth.to .monthLabel, .dayCellVoyanga.startMonth.from .monthLabel {
     background: none;
     color: #198ACB !important;
     font-size: 14px;
@@ -258,8 +258,7 @@
     text-transform: lowercase;
     width: 21px;
 }
-
-.dayCellVoyanga.startMonth.selectDay .dayLabel, .dayCellVoyanga.startMonth.to .dayLabel, .dayCellVoyanga.startMonth.from .dayLabel {
+.dayCellVoyanga.startMonth.to .dayLabel, .dayCellVoyanga.startMonth.from .dayLabel {
     color: #198ACB !important;
     font-size: 23px;
     padding-right: 41px;

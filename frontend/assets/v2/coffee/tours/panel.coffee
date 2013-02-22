@@ -10,7 +10,7 @@ class TourPanelSet
     @prevPanel = 'hotels'
     @nextPanel = 'avia'
     @icon = 'constructor-ico'
-    @mainLabel = 'Спланируй свое путешествие <img src="/themes/v2/images/saleTitle.png">'
+    @mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">'
     @indexMode = true
 
     @startCity = @sp.startCity
