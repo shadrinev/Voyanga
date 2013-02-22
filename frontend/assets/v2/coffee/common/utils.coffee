@@ -277,6 +277,15 @@ Utils =
     return $dist
     ;
 
+  flashMessage: (element) =>
+    l = 20
+    i = 0
+
+    while i < 10
+      element.animate
+        "margin-left": "+=" + (l = -l) + "px"
+      , 50
+      i++
 
 exTrim = (str, charlist) ->
   charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
@@ -301,4 +310,4 @@ waitElement = (selector, callback) ->
   else
     setTimeout ->
       waitElement(selector, callback)
-      , 100
+    , 100

@@ -115,11 +115,12 @@ TourPanelSet = (function() {
   }
 
   TourPanelSet.prototype.navigateToNewSearch = function() {
+    var el;
     if (this.formNotFilled()) {
-      $('div.innerCalendar').find('h1').addClass('highlight');
+      el = $('div.innerCalendar').find('h1');
+      Utils.flashMessage(el);
       return;
     }
-    $('div.innerCalendar').find('h1').removeClass('highlight');
     _.last(this.panels()).handlePanelSubmit();
     return _.last(this.panels()).minimizedCalendar(true);
   };
