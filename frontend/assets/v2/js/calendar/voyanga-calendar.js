@@ -446,67 +446,71 @@ VoyangaCalendarStandart.unsetCellInterval = function () {
 }
 
 VoyangaCalendarStandart.onCellOver = function (obj, e) {
-    var jCell = $(obj);
-    if (!jCell.hasClass('inactive')) {
-        var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if (this.values.length == 1) {
-            if (cellDate < this.values[0]) {
-                VoyangaCalendarStandart.setCellFrom(jCell);
-            } else {
-                if (this.twoSelect) {
-                    VoyangaCalendarStandart.setCellTo(jCell);
-                } else {
+    if (!VoyangaCalendarStandart.isMobileDevice) {
+        var jCell = $(obj);
+        if (!jCell.hasClass('inactive')) {
+            var cellDate = Date.fromIso(jCell.data('cell-date'));
+            if (this.values.length == 1) {
+                if (cellDate < this.values[0]) {
                     VoyangaCalendarStandart.setCellFrom(jCell);
+                } else {
+                    if (this.twoSelect) {
+                        VoyangaCalendarStandart.setCellTo(jCell);
+                    } else {
+                        VoyangaCalendarStandart.setCellFrom(jCell);
+                    }
                 }
-            }
 
-        } else {
-            VoyangaCalendarStandart.setCellFrom(jCell);
-        }
-        if (cellDate.getDate() == 1) {
-            jCell.addClass('startMonth');
+            } else {
+                VoyangaCalendarStandart.setCellFrom(jCell);
+            }
+            if (cellDate.getDate() == 1) {
+                jCell.addClass('startMonth');
+            }
         }
     }
 }
 VoyangaCalendarStandart.onCellOut = function (obj, e) {
-    var jCell = $(obj);
-    if (!jCell.hasClass('inactive')) {
-        var cellDate = Date.fromIso(jCell.data('cell-date'));
-        if (this.values.length == 1) {
-            if (cellDate < this.values[0]) {
-                //jCell.removeClass('from');
-                VoyangaCalendarStandart.unsetCellFrom(jCell);
-            } else {
-                if (this.twoSelect) {
-                    VoyangaCalendarStandart.unsetCellTo(jCell);
-                } else {
+    if (!VoyangaCalendarStandart.isMobileDevice) {
+        var jCell = $(obj);
+        if (!jCell.hasClass('inactive')) {
+            var cellDate = Date.fromIso(jCell.data('cell-date'));
+            if (this.values.length == 1) {
+                if (cellDate < this.values[0]) {
                     //jCell.removeClass('from');
                     VoyangaCalendarStandart.unsetCellFrom(jCell);
+                } else {
+                    if (this.twoSelect) {
+                        VoyangaCalendarStandart.unsetCellTo(jCell);
+                    } else {
+                        //jCell.removeClass('from');
+                        VoyangaCalendarStandart.unsetCellFrom(jCell);
+                    }
                 }
-            }
 
-        } else {
-            //jCell.removeClass('from');
-            VoyangaCalendarStandart.unsetCellFrom(jCell);
-        }
-        if (cellDate.getDate() == 1) {
-            jCell.removeClass('startMonth');
-        }
-        if (this.values.length > 0) {
-            if (this.values[0].valueOf() == cellDate.valueOf()) {
-                VoyangaCalendarStandart.setCellFrom(jCell);
-                jCell.addClass('selectData');
-                if (cellDate.getDate() == 1) {
-                    jCell.addClass('startMonth');
+            } else {
+                //jCell.removeClass('from');
+                VoyangaCalendarStandart.unsetCellFrom(jCell);
+            }
+            if (cellDate.getDate() == 1) {
+                jCell.removeClass('startMonth');
+            }
+            if (this.values.length > 0) {
+                if (this.values[0].valueOf() == cellDate.valueOf()) {
+                    VoyangaCalendarStandart.setCellFrom(jCell);
+                    jCell.addClass('selectData');
+                    if (cellDate.getDate() == 1) {
+                        jCell.addClass('startMonth');
+                    }
                 }
             }
-        }
-        if (this.values.length > 1) {
-            if (this.values[1].valueOf() == cellDate.valueOf()) {
-                VoyangaCalendarStandart.setCellTo(jCell);
-                jCell.addClass('selectData');
-                if (cellDate.getDate() == 1) {
-                    jCell.addClass('startMonth');
+            if (this.values.length > 1) {
+                if (this.values[1].valueOf() == cellDate.valueOf()) {
+                    VoyangaCalendarStandart.setCellTo(jCell);
+                    jCell.addClass('selectData');
+                    if (cellDate.getDate() == 1) {
+                        jCell.addClass('startMonth');
+                    }
                 }
             }
         }
@@ -893,6 +897,7 @@ VoyangaCalendarStandart.init = function (panel, element) {
     this.lastToCell = false;
     this.lastFromOverCell = false;
     this.lastToOverCell = false;
+    this.isMobileDevice = DetectMobileQuick() || DetectTierTablet();
     var self = this;
     console.log('ReINIT calendar');
     this.oldCalendarValue = null;
