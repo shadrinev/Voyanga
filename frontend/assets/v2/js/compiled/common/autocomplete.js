@@ -20,7 +20,6 @@ ko.bindingHandlers.autocomplete = {
         delay: 0,
         showCode: showCode,
         onSelect: function(value, data) {
-          console.log("autocomplete:onSelect");
           valueAccessor().iata(data.code);
           valueAccessor().readable(data.name);
           valueAccessor().readableGen(data.nameGen);

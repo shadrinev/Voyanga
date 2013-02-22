@@ -575,9 +575,10 @@ function ResizeCenterBlock() {
 		resizeLeftStage();
 		resizeMainStage();
 	}
-	$(".second-path").focus(function () {
-        $(this).select();
-    }).mouseup(function(e){
+	$(document).on('focus', ".second-path", function (e) {
+        console.log(e);
+        $(e.currentTarget).select();
+    }).on('mouseup', ".second-path", function(e){
         e.preventDefault();
     });
     

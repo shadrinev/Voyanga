@@ -14,7 +14,6 @@ ko.bindingHandlers.autocomplete =
         delay: 0
         showCode: showCode
         onSelect: (value, data) -> # Callback функция, срабатывающая на выбор одного из предложенных вариантов,
-          console.log "autocomplete:onSelect"
           valueAccessor().iata(data.code)
           valueAccessor().readable(data.name)
           valueAccessor().readableGen(data.nameGen)
