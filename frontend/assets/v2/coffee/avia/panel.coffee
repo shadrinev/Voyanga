@@ -156,9 +156,9 @@ class AviaPanel extends SearchPanel
   # FIXME decouple!
   navigateToNewSearch: ->
     if (@formNotFilled())
-      $('div.innerCalendar').find('h1').addClass('highlight')
+      el = $('div.innerCalendar').find('h1')
+      Utils.flashMessage el
       return
-    $('div.innerCalendar').find('h1').removeClass('highlight')
     @handlePanelSubmit()
     @minimizedCalendar(true)
 

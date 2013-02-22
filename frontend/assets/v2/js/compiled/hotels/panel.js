@@ -131,11 +131,12 @@ HotelsPanel = (function(_super) {
   };
 
   HotelsPanel.prototype.navigateToNewSearch = function() {
+    var el;
     if (this.formNotFilled()) {
-      $('div.innerCalendar').find('h1').addClass('highlight');
+      el = $('div.innerCalendar').find('h1');
+      Utils.flashMessage(el);
       return;
     }
-    $('div.innerCalendar').find('h1').removeClass('highlight');
     this.handlePanelSubmit();
     return this.minimizedCalendar(true);
   };
