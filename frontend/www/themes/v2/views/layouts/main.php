@@ -48,9 +48,9 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 
         <div class="board" data-bind="style: {height: fakoPanel().height}">
             <div class="newTitleHead">
-                <div class="leftPoint" data-bind="swapPanel: {to: fakoPanel().prevPanel}">Только отели<span></span></div>
+                <div class="leftPoint" data-bind="swapPanel: {to: fakoPanel().prevPanel}, text: fakoPanel().prevPanelLabel">Только отели<span></span></div>
                     <h1 class="title"><span data-bind="html: fakoPanel().mainLabel"></span></h1>
-                <div class="rightPoint" data-bind="swapPanel: {to: fakoPanel().nextPanel}"><span></span>Только авиабилеты</div>
+                <div class="rightPoint" data-bind="swapPanel: {to: fakoPanel().nextPanel}, text: fakoPanel().nextPanelLabel"><span></span>Только авиабилеты</div>
             </div>
             <!-- ko if:fakoPanel().template=='tour-panel-template' -->
                 <div class="constructor">

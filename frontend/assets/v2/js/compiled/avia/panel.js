@@ -22,7 +22,9 @@ AviaPanel = (function(_super) {
     var _this = this;
     AviaPanel.__super__.constructor.call(this);
     this.prevPanel = 'tours';
+    this.prevPanelLabel = 'Поиск туров';
     this.nextPanel = 'hotels';
+    this.nextPanelLabel = 'Бронирование отелей';
     this.mainLabel = 'Поиск авиабилетов';
     this.icon = 'fly-ico';
     this.template = 'avia-panel-template';
