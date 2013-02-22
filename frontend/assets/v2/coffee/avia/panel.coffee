@@ -76,7 +76,7 @@ class AviaPanel extends SearchPanel
       to: @rtDate()
       hotels: false
       activeSearchPanel: @
-      valuesDescriptions: ['Вылет туда', 'Вылет обратно', 'Вылет туда и обратно']
+      valuesDescriptions: ['Вылет туда', 'Вылет обратно', 'Туда и обратно']
       selectionIndex: @selectionIndex
 
     @departureDateDay = ko.computed =>
