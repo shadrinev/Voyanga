@@ -37,12 +37,12 @@ class TourPanelSet
     @calendarText = ko.computed =>
       result = 'Введите город'
       if @activeCity()
-        if @selectionIndex() == 0
-          result = 'Выберите дату приезда в ' + @activeCityAcc()
-        else if @selectionIndex() == 1
-          result = 'Выберите дату отъезда из ' + @activeCityGen()
-        else if @selectionIndex() == 2
-          result = @activeCity() + ', ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkOut())
+        if (@selectionIndex()==0)
+          result = 'Выберите дату приезда в город ' + @activeCity()
+        else if (@selectionIndex()==1)
+          result = 'Выберите дату отъезда из города ' + @activeCity()
+        else if @selectionIndex()==2
+          result = @activeCity() + ', ' +  dateUtils.formatDayShortMonth(@activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkOut())
       result
 
     @lastPanel = null
@@ -65,7 +65,7 @@ class TourPanelSet
       from: @activeCalendarPanel().checkIn()
       to: @activeCalendarPanel().checkOut()
       activeSearchPanel: @activeCalendarPanel()
-      valuesDescriptions: [('Заезд в отель<div class="breakWord">в ' + @activeCalendarPanel().cityReadablePre() + '</div>'), ('Выезд из отеля<div class="breakWord">в ' + @activeCalendarPanel().cityReadablePre() + '</div>')]
+      valuesDescriptions: [('Заезд в отель<br>в ' + @activeCalendarPanel().cityReadablePre()), ('Выезд из отеля<br>в ' + @activeCalendarPanel().cityReadablePre())]
       intervalDescription: '0'
       selectionIndex: @selectionIndex
 
@@ -165,8 +165,6 @@ class TourPanelSet
 
   afterRender: (el) =>
     do resizePanel
-  #    if $(el).hasClass 'panel'
-  #      $(el).find('.second-path').focus().select()
 
   beforeRemove: (el) ->
     if $(el).hasClass 'panel'
@@ -263,8 +261,9 @@ class TourPanel extends SearchPanel
     })
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
-      width: "261px", 300, ->
-    el.find(".startInputTo").find("input").focus().select()
+      width: "261px"
+      , 300, ->
+      el.find(".startInputTo").find("input").focus()
 
   hideFromCityInput: (panel, event) ->
     hideFromCityInput(panel, event)
