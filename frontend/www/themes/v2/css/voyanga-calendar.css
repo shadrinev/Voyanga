@@ -154,12 +154,11 @@
 .dayCellVoyanga.from .fromDesc, .dayCellVoyanga.to .toDesc, .dayCellVoyanga.to .fromToDesc {
     z-index: 2;
     font-size: 11px;
-    left: 35px;
-    top: 4px;
+    left: 38px;
+    top: 50%;
     position: absolute;
-    vertical-align: middle;
-    width: 47%;
-    height: 40px;
+    width: 50%;
+    height: 1px;
     white-space: normal !important;
 }
 
@@ -168,6 +167,19 @@
     height: 40px;
     vertical-align: middle;
     text-align: left;
+}
+
+.dayCellVoyanga .relate {
+    position: relative;
+}
+
+.dayCellVoyanga .absUp {
+    position: absolute;
+    top: -50%;
+}
+
+.dayCellVoyanga .visHid {
+    visibility: hidden;
 }
 
 .dayCellVoyanga .intDesc {

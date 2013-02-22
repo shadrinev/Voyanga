@@ -93,7 +93,7 @@ HotelsPanel = (function(_super) {
         from: _this.checkIn(),
         to: _this.checkOut(),
         activeSearchPanel: _this,
-        valuesDescriptions: ['Заезд в отель<br>в ' + _this.cityReadablePre(), 'Выезд из отеля<br>в ' + _this.cityReadablePre()],
+        valuesDescriptions: ['Заезд в отель<div class="breakWord">в ' + _this.cityReadablePre() + '</div>', 'Выезд из отеля<div class="breakWord">в ' + _this.cityReadablePre() + '</div>'],
         intervalDescription: '0',
         selectionIndex: _this.selectionIndex
       };

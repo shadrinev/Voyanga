@@ -25,12 +25,12 @@ class HotelsPanel extends SearchPanel
     @calendarText = ko.computed =>
       result = 'Введите город'
       if @city()
-        if @selectionIndex()==0
+        if @selectionIndex() == 0
           result = 'Выберите дату приезда в ' + @cityReadableAcc()
-        else if @selectionIndex()==1
+        else if @selectionIndex() == 1
           result = 'Выберите дату отъезда из ' + @cityReadableGen()
-        else if @selectionIndex()==2
-          result = @cityReadable() + ', ' +  dateUtils.formatDayShortMonth(@checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@checkOut())
+        else if @selectionIndex() == 2
+          result = @cityReadable() + ', ' + dateUtils.formatDayShortMonth(@checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@checkOut())
       result
 
     @prefixText = "Выберите город<br>200 000+ отелей"
@@ -68,7 +68,7 @@ class HotelsPanel extends SearchPanel
       from: @checkIn()
       to: @checkOut()
       activeSearchPanel: @
-      valuesDescriptions: [('Заезд в отель<br>в ' + @cityReadablePre()), ('Выезд из отеля<br>в ' + @cityReadablePre())]
+      valuesDescriptions: [('Заезд в отель<div class="breakWord">в ' + @cityReadablePre() + '</div>'), ('Выезд из отеля<div class="breakWord">в ' + @cityReadablePre() + '</div>')]
       intervalDescription: '0'
       selectionIndex: @selectionIndex
 

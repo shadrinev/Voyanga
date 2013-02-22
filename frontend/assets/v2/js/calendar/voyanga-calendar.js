@@ -369,7 +369,8 @@ VoyangaCalendarStandart.setCellFrom = function (jCell) {
         jCell.addClass('from');
         if (VoyangaCalendarStandart.valuesDescriptions[0]) {
             if (jCell.find('.fromDesc').length == 0) {
-                jCell.append('<div class="fromDesc"><table><tr><td>' + VoyangaCalendarStandart.valuesDescriptions[0] + '</td></tr></table></div>');
+                //jCell.append('<div class="fromDesc"><table><tr><td>' + VoyangaCalendarStandart.valuesDescriptions[0] + '</td></tr></table></div>');
+                jCell.append('<div class="fromDesc"><div class="relate"><div class="absUp">' + VoyangaCalendarStandart.valuesDescriptions[0] + '</div><div class="visHid">' + VoyangaCalendarStandart.valuesDescriptions[0] + '</div></div>');
             }
         }
     }
@@ -390,13 +391,13 @@ VoyangaCalendarStandart.setCellTo = function (jCell) {
         jCell.addClass('to');
         if (VoyangaCalendarStandart.valuesDescriptions.length > 1 && VoyangaCalendarStandart.valuesDescriptions[1] && (!jCell.hasClass('from'))) {
             if (jCell.find('.toDesc').length == 0) {
-                jCell.append('<div class="toDesc"><table><tr><td>' + VoyangaCalendarStandart.valuesDescriptions[1] + '</td></tr></table></div>');
+                jCell.append('<div class="toDesc"><div class="relate"><div class="absUp">' + VoyangaCalendarStandart.valuesDescriptions[1] + '</div><div class="visHid">' + VoyangaCalendarStandart.valuesDescriptions[1] + '</div></div>');
             }
         }
         if (VoyangaCalendarStandart.valuesDescriptions.length > 2 && VoyangaCalendarStandart.valuesDescriptions[2] && (jCell.hasClass('from'))) {
             jCell.addClass('fromTo');
             if (jCell.find('.fromToDesc').length == 0) {
-                jCell.append('<div class="fromToDesc"><table><tr><td>' + VoyangaCalendarStandart.valuesDescriptions[2] + '</td></tr></table></div>');
+                jCell.append('<div class="fromToDesc"><div class="relate"><div class="absUp">' + VoyangaCalendarStandart.valuesDescriptions[2] + '</div><div class="visHid">' + VoyangaCalendarStandart.valuesDescriptions[2] + '</div></div>');
             }
         }
     }
