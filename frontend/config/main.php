@@ -20,7 +20,7 @@ $packagesCss = require('frontend/assets/v2/css/packagesCss.php');
 return CMap::mergeArray(
     require_once ('common/config/main.php'),
     array(
-        'id' => 'frontend.voyanga.com',
+        'id' => 'frontend.voyanga.com-'.$params['env.code'],
         'name' => 'Voyanga-frontend-'.$params['env.code'],
         'basePath' => 'frontend',
         'params' => $params,
