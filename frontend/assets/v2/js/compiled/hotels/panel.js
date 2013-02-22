@@ -131,11 +131,12 @@ HotelsPanel = (function(_super) {
   };
 
   HotelsPanel.prototype.navigateToNewSearch = function() {
+    var el;
     if (this.formNotFilled()) {
-      $('div.innerCalendar').find('h1').addClass('highlight');
+      el = $('div.innerCalendar').find('h1');
+      Utils.flashMessage(el);
       return;
     }
-    $('div.innerCalendar').find('h1').removeClass('highlight');
     this.handlePanelSubmit();
     return this.minimizedCalendar(true);
   };
@@ -158,7 +159,10 @@ HotelsPanel = (function(_super) {
   };
 
   HotelsPanel.prototype.afterRender = function() {
-    return resizePanel();
+    resizePanel();
+    if (this.city() && (!this.checkIn() || !this.checkOut())) {
+      return this.minimizedCalendar(false);
+    }
   };
 
   return HotelsPanel;

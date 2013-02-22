@@ -67,9 +67,9 @@ TourPanelSet = (function() {
       result = 'Введите город';
       if (_this.activeCity()) {
         if (_this.selectionIndex() === 0) {
-          result = 'Выберите дату приезда в ' + _this.activeCityAcc();
+          result = 'Выберите дату приезда в город ' + _this.activeCity();
         } else if (_this.selectionIndex() === 1) {
-          result = 'Выберите дату отъезда из ' + _this.activeCityGen();
+          result = 'Выберите дату отъезда из города ' + _this.activeCity();
         } else if (_this.selectionIndex() === 2) {
           result = _this.activeCity() + ', ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkOut());
         }
@@ -115,11 +115,12 @@ TourPanelSet = (function() {
   }
 
   TourPanelSet.prototype.navigateToNewSearch = function() {
+    var el;
     if (this.formNotFilled()) {
-      $('div.innerCalendar').find('h1').addClass('highlight');
+      el = $('div.innerCalendar').find('h1');
+      Utils.flashMessage(el);
       return;
     }
-    $('div.innerCalendar').find('h1').removeClass('highlight');
     _.last(this.panels()).handlePanelSubmit();
     return _.last(this.panels()).minimizedCalendar(true);
   };
@@ -143,8 +144,6 @@ TourPanelSet = (function() {
     index = this.panels.indexOf(elem);
     this.panels.remove(elem);
     this.sp.destinations.splice(index, 1);
-    console.log("Panels after", this.panels());
-    console.log("Destinations after", this.sp.destinations());
     return _.last(this.panels()).isLast(true);
   };
 
@@ -155,7 +154,6 @@ TourPanelSet = (function() {
   TourPanelSet.prototype.addPanel = function() {
     var newPanel, prevPanel,
       _this = this;
-    $('div.innerCalendar').find('h1').removeClass('highlight');
     this.sp.destinations.push(new DestinationSearchParams());
     if (_.last(this.panels())) {
       _.last(this.panels()).isLast(false);
@@ -190,7 +188,10 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
-    return this.activeCalendarPanel(args[0]);
+    this.activeCalendarPanel(args[0]);
+    if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
+      return this.activeCalendarPanel().showCalendar(false);
+    }
   };
 
   TourPanelSet.prototype.setDate = function(values) {
@@ -224,7 +225,10 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.afterRender = function(el) {
-    return resizePanel();
+    resizePanel();
+    if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
+      return this.activeCalendarPanel().showCalendar(false);
+    }
   };
 
   TourPanelSet.prototype.beforeRemove = function(el) {
@@ -352,20 +356,23 @@ TourPanel = (function(_super) {
       300: 300
     });
     el.find(".startInputTo").show();
-    el.find('.cityStart').animate({
+    return el.find('.cityStart').animate({
       width: "261px"
-    }, 300, function() {});
-    return el.find(".startInputTo").find("input").focus().select();
+    }, 300, function() {}, el.find(".startInputTo").find("input").focus());
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
     return hideFromCityInput(panel, event);
   };
 
-  TourPanel.prototype.showCalendar = function() {
+  TourPanel.prototype.showCalendar = function(trig) {
+    if (trig == null) {
+      trig = true;
+    }
     $('.calenderWindow').show();
-    console.log('show calendar');
-    this.trigger("tourPanel:showCalendar", this);
+    if (trig) {
+      this.trigger("tourPanel:showCalendar", this);
+    }
     if (this.minimizedCalendar()) {
       ResizeAvia();
       return this.minimizedCalendar(false);

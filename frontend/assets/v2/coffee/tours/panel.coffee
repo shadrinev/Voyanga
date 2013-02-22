@@ -37,10 +37,10 @@ class TourPanelSet
     @calendarText = ko.computed =>
       result = 'Введите город'
       if @activeCity()
-        if @selectionIndex()==0
-          result = 'Выберите дату приезда в ' + @activeCityAcc()
-        else if @selectionIndex()==1
-          result = 'Выберите дату отъезда из ' + @activeCityGen()
+        if (@selectionIndex()==0)
+          result = 'Выберите дату приезда в город ' + @activeCity()
+        else if (@selectionIndex()==1)
+          result = 'Выберите дату отъезда из города ' + @activeCity()
         else if @selectionIndex()==2
           result = @activeCity() + ', ' +  dateUtils.formatDayShortMonth(@activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkOut())
       result
@@ -69,7 +69,6 @@ class TourPanelSet
       intervalDescription: '0'
       selectionIndex: @selectionIndex
 
-
     @formFilled = ko.computed =>
       isFilled = @startCity()
       _.each @panels(), (panel) ->
@@ -81,11 +80,9 @@ class TourPanelSet
 
   navigateToNewSearch: =>
     if (@formNotFilled())
-      $('div.innerCalendar').find('h1').addClass('highlight')
-      ;
+      el = $('div.innerCalendar').find('h1')
+      Utils.flashMessage el
       return
-    $('div.innerCalendar').find('h1').removeClass('highlight')
-    ;
     _.last(@panels()).handlePanelSubmit()
     _.last(@panels()).minimizedCalendar(true)
 
@@ -103,16 +100,12 @@ class TourPanelSet
     index = @panels.indexOf(elem)
     @panels.remove(elem)
     @sp.destinations.splice(index, 1)
-    console.log "Panels after", @panels()
-    console.log "Destinations after", @sp.destinations()
     _.last(@panels()).isLast(true)
 
   isFirst: =>
     @i == 1
 
   addPanel: =>
-    $('div.innerCalendar').find('h1').removeClass('highlight')
-    ;
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
@@ -123,7 +116,7 @@ class TourPanelSet
       @activeCityAcc(newPanel.cityReadableAcc())
       @activeCityGen(newPanel.cityReadableGen())
       @showPanelCalendar(args)
-    #need remove focusOut(blur)
+
     newPanel.on "tourPanel:hasFocus", (args...) =>
       @activeCity(newPanel.cityReadable())
       @showPanelCalendar(args)
@@ -140,6 +133,8 @@ class TourPanelSet
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
+    if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
+      @activeCalendarPanel().showCalendar(false)
 
   # calendar handler
   setDate: (values) =>
@@ -165,8 +160,8 @@ class TourPanelSet
 
   afterRender: (el) =>
     do resizePanel
-#    if $(el).hasClass 'panel'
-#      $(el).find('.second-path').focus().select()
+    if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
+      @activeCalendarPanel().showCalendar(false)
 
   beforeRemove: (el) ->
     if $(el).hasClass 'panel'
@@ -263,17 +258,17 @@ class TourPanel extends SearchPanel
     })
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
-      width: "261px", 300, ->
-    el.find(".startInputTo").find("input").focus().select()
+      width: "261px"
+      , 300, ->
+      el.find(".startInputTo").find("input").focus()
 
   hideFromCityInput: (panel, event) ->
     hideFromCityInput(panel, event)
 
-  showCalendar: =>
+  showCalendar: (trig = true) =>
     $('.calenderWindow').show()
-    console.log('show calendar')
-    #@calendarValue.notifySubscribers(@calendarValue())
-    @trigger "tourPanel:showCalendar", @
+    if trig
+      @trigger "tourPanel:showCalendar", @
     if @minimizedCalendar()
       ResizeAvia()
       @minimizedCalendar(false)
