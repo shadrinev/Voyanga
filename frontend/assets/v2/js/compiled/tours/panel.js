@@ -152,8 +152,19 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.addPanel = function() {
-    var newPanel, prevPanel,
+    var el, newPanel, prevPanel,
       _this = this;
+    if ((this.panels().length > 0) && (this.selectionIndex() !== 2)) {
+      if ((this.panels().length === 1) && (!this.activeCity())) {
+        el = $('div.from');
+        $(el).find('.second-path').attr('placeholder', 'Введите первый город');
+        Utils.flashMessage(el);
+      } else {
+        el = $('div.innerCalendar').find('h1');
+        Utils.flashMessage(el);
+      }
+      return;
+    }
     this.sp.destinations.push(new DestinationSearchParams());
     if (_.last(this.panels())) {
       _.last(this.panels()).isLast(false);

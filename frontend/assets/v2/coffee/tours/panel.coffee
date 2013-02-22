@@ -106,6 +106,15 @@ class TourPanelSet
     @i == 1
 
   addPanel: =>
+    if (@panels().length>0) && (@selectionIndex() != 2)
+      if ((@panels().length==1) && (!@activeCity()))
+        el = $('div.from')
+        $(el).find('.second-path').attr('placeholder', 'Введите первый город')
+        Utils.flashMessage el
+      else
+        el = $('div.innerCalendar').find('h1')
+        Utils.flashMessage el
+      return
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
@@ -224,7 +233,6 @@ class TourPanel extends SearchPanel
       url = '/#' + @sp.getHash()
       if @startParams == url
         url += 'eventId/' + @selectedParams.eventId
-
 
       window.location.href = url
 
