@@ -52,6 +52,8 @@ class FrontendUser extends CActiveRecord
 		return array(
 			array('requires_new_password, login_attempts, login_time, create_id, create_time, update_id, update_time', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>45),
+            array('username', 'unique'),
+            array('email', 'unique'),
 			array('password, salt, email, validation_key', 'length', 'max'=>255),
 			array('password_strategy', 'length', 'max'=>50),
 			array('login_ip, recover_pwd_key', 'length', 'max'=>32),

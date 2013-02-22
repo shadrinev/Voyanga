@@ -67,9 +67,9 @@ TourPanelSet = (function() {
       result = 'Введите город';
       if (_this.activeCity()) {
         if (_this.selectionIndex() === 0) {
-          result = 'Выберите дату приезда в ' + _this.activeCityAcc();
+          result = 'Выберите дату приезда в город ' + _this.activeCity();
         } else if (_this.selectionIndex() === 1) {
-          result = 'Выберите дату отъезда из ' + _this.activeCityGen();
+          result = 'Выберите дату отъезда из города ' + _this.activeCity();
         } else if (_this.selectionIndex() === 2) {
           result = _this.activeCity() + ', ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkOut());
         }
@@ -352,10 +352,9 @@ TourPanel = (function(_super) {
       300: 300
     });
     el.find(".startInputTo").show();
-    el.find('.cityStart').animate({
+    return el.find('.cityStart').animate({
       width: "261px"
-    }, 300, function() {});
-    return el.find(".startInputTo").find("input").focus().select();
+    }, 300, function() {}, el.find(".startInputTo").find("input").focus());
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
