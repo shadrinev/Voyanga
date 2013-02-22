@@ -157,7 +157,7 @@
     left: 38px;
     top: 50%;
     position: absolute;
-    width: 50%;
+    width: 48%;
     height: 1px;
     white-space: normal !important;
 }
@@ -176,12 +176,18 @@
 .dayCellVoyanga .absUp {
     position: absolute;
     top: -50%;
+    width: 100%;
 }
 
 .dayCellVoyanga .visHid {
     visibility: hidden;
 }
-
+.dayCellVoyanga .breakWord {
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+}
 .dayCellVoyanga .intDesc {
     position: absolute;
     padding: 2px 10px;
@@ -191,6 +197,7 @@
     font-size: 11px;
     top: 17px;
     right: 42px;
+    z-index: 2;
 }
 
 .dayCellVoyanga.from .toDesc {
