@@ -182,12 +182,14 @@
 .dayCellVoyanga .visHid {
     visibility: hidden;
 }
+
 .dayCellVoyanga .breakWord {
     overflow: hidden;
     width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap !important;
 }
+
 .dayCellVoyanga .intDesc {
     position: absolute;
     padding: 2px 10px;
@@ -201,6 +203,10 @@
 }
 
 .dayCellVoyanga.from .toDesc {
+    display: none;
+}
+
+.dayCellVoyanga.from .intDesc {
     display: none;
 }
 
