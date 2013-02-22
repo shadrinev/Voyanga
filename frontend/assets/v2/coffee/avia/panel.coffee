@@ -76,7 +76,7 @@ class AviaPanel extends SearchPanel
       to: @rtDate()
       hotels: false
       activeSearchPanel: @
-      valuesDescriptions: ['Вылет туда', 'Вылет обратно']
+      valuesDescriptions: ['Вылет туда', 'Вылет обратно', 'Вылет туда и обратно']
       selectionIndex: @selectionIndex
 
     @departureDateDay = ko.computed =>
@@ -108,9 +108,9 @@ class AviaPanel extends SearchPanel
         result = 'Выберите город вылета'
       else if (@arrivalCityReadable().length == 0)
         result = 'Выберите город прилёта'
-      else if (@selectionIndex()==0)
+      else if (@selectionIndex() == 0)
         result = 'Выберите дату вылета из ' + @departureCityReadableGen()
-      else if ((@rt()) && (@selectionIndex()==1))
+      else if ((@rt()) && (@selectionIndex() == 1))
         result = 'Выберите дату вылета из ' + @arrivalCityReadableGen()
       else
         result = @departureCityReadable() + arrow + @arrivalCityReadable() + ', ' + dateUtils.formatDayShortMonth(@departureDate())

@@ -96,7 +96,7 @@ AviaPanel = (function(_super) {
         to: _this.rtDate(),
         hotels: false,
         activeSearchPanel: _this,
-        valuesDescriptions: ['Вылет туда', 'Вылет обратно'],
+        valuesDescriptions: ['Вылет туда', 'Вылет обратно', 'Вылет туда и обратно'],
         selectionIndex: _this.selectionIndex
       };
     });
