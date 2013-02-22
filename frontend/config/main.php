@@ -21,7 +21,7 @@ return CMap::mergeArray(
     require_once ('common/config/main.php'),
     array(
         'id' => 'frontend.voyanga.com',
-        'name' => 'Voyanga',
+        'name' => 'Voyanga-frontend-'.$params['env.code'],
         'basePath' => 'frontend',
         'params' => $params,
         'language' => 'ru',

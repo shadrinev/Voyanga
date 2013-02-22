@@ -19,7 +19,7 @@ return CMap::mergeArray(
     require_once ('common/config/main.php'),
     array(
         'id' => 'api.voyanga.com',
-        'name' => 'Voyanga',
+        'name' => 'Voyanga-api-'.$params['env.code'],
         'basePath' => 'api',
         'params' => $params,
         'language' => 'en',
