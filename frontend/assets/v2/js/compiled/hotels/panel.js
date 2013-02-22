@@ -159,7 +159,10 @@ HotelsPanel = (function(_super) {
   };
 
   HotelsPanel.prototype.afterRender = function() {
-    return resizePanel();
+    resizePanel();
+    if (this.city() && (!this.checkIn() || !this.checkOut())) {
+      return this.minimizedCalendar(false);
+    }
   };
 
   return HotelsPanel;

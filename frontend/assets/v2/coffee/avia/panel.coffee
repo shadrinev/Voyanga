@@ -165,7 +165,6 @@ class AviaPanel extends SearchPanel
   returnRecommend: (context, event)->
     $('.recomended-content').slideDown()
     $('.order-hide').fadeIn()
-    ;
     $(event.currentTarget).animate {top: '-19px'}, 500, null, ->
       ResizeAvia()
 
@@ -175,6 +174,8 @@ class AviaPanel extends SearchPanel
       # Initial state for tumbler
       @rtTumbler(@rt())
       $('.how-many-man .btn')
+      if (@departureCity() && @arrivalCity().length>0 && (!@departureDate() || (@rt() && (!@rtDate))))
+        @minimizedCalendar(false)
     do resizePanel
 
 $(document).on "autocompleted", "input.departureCity", ->

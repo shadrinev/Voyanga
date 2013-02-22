@@ -116,3 +116,6 @@ class HotelsPanel extends SearchPanel
 
   afterRender: =>
     do resizePanel
+    if (@city() && (!@checkIn() || !@checkOut()))
+      @minimizedCalendar(false)
+
