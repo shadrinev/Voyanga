@@ -119,7 +119,7 @@ class TourPanelSet
       @activeCityAcc(newPanel.cityReadableAcc())
       @activeCityGen(newPanel.cityReadableGen())
       @showPanelCalendar(args)
-    #need remove focusOut(blur)
+
     newPanel.on "tourPanel:hasFocus", (args...) =>
       @activeCity(newPanel.cityReadable())
       @showPanelCalendar(args)
@@ -136,6 +136,8 @@ class TourPanelSet
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
+    if ((@activeCity()) && (@selectionIndex() != 2))
+      @activeCalendarPanel().showCalendar(false)
 
   # calendar handler
   setDate: (values) =>
@@ -264,11 +266,10 @@ class TourPanel extends SearchPanel
   hideFromCityInput: (panel, event) ->
     hideFromCityInput(panel, event)
 
-  showCalendar: =>
+  showCalendar: (trig = true) =>
     $('.calenderWindow').show()
-    console.log('show calendar')
-    #@calendarValue.notifySubscribers(@calendarValue())
-    @trigger "tourPanel:showCalendar", @
+    if trig
+      @trigger "tourPanel:showCalendar", @
     if @minimizedCalendar()
       ResizeAvia()
       @minimizedCalendar(false)

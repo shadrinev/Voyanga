@@ -190,7 +190,10 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
-    return this.activeCalendarPanel(args[0]);
+    this.activeCalendarPanel(args[0]);
+    if ((this.activeCity()) && (this.selectionIndex() !== 2)) {
+      return this.activeCalendarPanel().showCalendar(false);
+    }
   };
 
   TourPanelSet.prototype.setDate = function(values) {
@@ -361,10 +364,14 @@ TourPanel = (function(_super) {
     return hideFromCityInput(panel, event);
   };
 
-  TourPanel.prototype.showCalendar = function() {
+  TourPanel.prototype.showCalendar = function(trig) {
+    if (trig == null) {
+      trig = true;
+    }
     $('.calenderWindow').show();
-    console.log('show calendar');
-    this.trigger("tourPanel:showCalendar", this);
+    if (trig) {
+      this.trigger("tourPanel:showCalendar", this);
+    }
     if (this.minimizedCalendar()) {
       ResizeAvia();
       return this.minimizedCalendar(false);
