@@ -34,9 +34,9 @@ TourPanelSet = (function() {
     this.template = 'tour-panel-template';
     this.sp = new TourSearchParams();
     this.prevPanel = 'hotels';
-    this.prevPanelLabel = 'Бронирование отелей';
+    this.prevPanelLabel = 'Только отели';
     this.nextPanel = 'avia';
-    this.nextPanelLabel = 'Бронирование авиабилетов';
+    this.nextPanelLabel = 'Только авиабилеты';
     this.icon = 'constructor-ico';
     this.mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">';
     this.indexMode = true;

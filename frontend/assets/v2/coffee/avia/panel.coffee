@@ -2,9 +2,9 @@ class AviaPanel extends SearchPanel
   constructor: ->
     super()
     @prevPanel = 'tours'
-    @prevPanelLabel = 'Поиск туров'
+    @prevPanelLabel = 'Путешествия'
     @nextPanel = 'hotels'
-    @nextPanelLabel = 'Бронирование отелей'
+    @nextPanelLabel = 'Только отели'
     @mainLabel = 'Поиск авиабилетов'
     @icon = 'fly-ico'
 

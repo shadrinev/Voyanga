@@ -8,9 +8,9 @@ class TourPanelSet
     @sp = new TourSearchParams()
 
     @prevPanel = 'hotels'
-    @prevPanelLabel = 'Бронирование отелей'
+    @prevPanelLabel = 'Только отели'
     @nextPanel = 'avia'
-    @nextPanelLabel = 'Бронирование авиабилетов'
+    @nextPanelLabel = 'Только авиабилеты'
     @icon = 'constructor-ico'
     @mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">'
     @indexMode = true
