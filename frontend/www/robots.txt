@@ -1,2 +1,14 @@
 User-agent: *
+Allow: /eventInfo/info/eventId/32
+Allow: /eventInfo/info/eventId/33
+Allow: /eventInfo/info/eventId/28
+Allow: /eventInfo/info/eventId/30
+Allow: /eventInfo/info/eventId/35
+Allow: /eventInfo/info/eventId/31
+Allow: /eventInfo/info/eventId/34
+Allow: /eventInfo/info/eventId/25
+Allow: /faq
+Allow: /agreement
+Allow: /land
 Disallow: /
+Host: voyanga.com
