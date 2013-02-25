@@ -46,6 +46,13 @@ TourPanelSet = (function() {
     this.startCityReadableAcc = ko.observable('');
     this.startCityReadablePre = ko.observable('');
     this.selectionIndex = ko.observable('');
+    this.selectionIndex.subscribe(function(newValue) {
+      if (newValue === 1) {
+        VoyangaCalendarStandart.checkCalendarValue(false);
+        _this.activeCalendarPanel().checkIn('');
+        return _this.activeCalendarPanel().checkOut('');
+      }
+    });
     this.startCityReadableAccShort = ko.computed(function() {
       var result;
       if (_this.startCityReadableAcc().length > 15) {
@@ -103,6 +110,13 @@ TourPanelSet = (function() {
         selectionIndex: _this.selectionIndex
       };
     });
+    this.calendarValue.subscribe(function() {
+      if (!VoyangaCalendarStandart.checkCalendarValue()) {
+        return window.setTimeout(function() {
+          return VoyangaCalendarStandart.checkCalendarValue(true);
+        }, 100);
+      }
+    });
     this.formFilled = ko.computed(function() {
       var isFilled;
       isFilled = _this.startCity();
@@ -153,10 +167,13 @@ TourPanelSet = (function() {
     return this.i === 1;
   };
 
-  TourPanelSet.prototype.addPanel = function() {
+  TourPanelSet.prototype.addPanel = function(force) {
     var el, newPanel, prevPanel,
       _this = this;
-    if ((this.panels().length > 0) && (this.selectionIndex() !== 2)) {
+    if (force == null) {
+      force = false;
+    }
+    if (!force && (this.panels().length > 0) && (this.selectionIndex() !== 2)) {
       console.log(this.panels()[0].city());
       if ((this.panels().length === 1) && (this.panels()[0].city().length === 0)) {
         el = $('div.from');
@@ -370,9 +387,10 @@ TourPanel = (function(_super) {
       300: 300
     });
     el.find(".startInputTo").show();
-    return el.find('.cityStart').animate({
+    el.find('.cityStart').animate({
       width: "261px"
-    }, 300, function() {}, el.find(".startInputTo").find("input").focus());
+    }, 300, function() {});
+    return el.find(".startInputTo").find("input").focus();
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {

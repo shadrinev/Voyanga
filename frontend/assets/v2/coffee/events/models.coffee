@@ -33,12 +33,12 @@ ko.bindingHandlers.highlightChange =
       CenterIMGResize(1)
       $(".IMGmain").eq(0).animate
         opacity: 0
-      , speedAnimateChangePic, ->
-          $(".IMGmain:not(:last-child)").eq(0).remove()
+        , speedAnimateChangePic, ->
+        $(".IMGmain:not(:last-child)").eq(0).remove()
 
       $(".IMGmain").eq(1).animate
         opacity: 1
-      , speedAnimateChangePic
+        , speedAnimateChangePic
 
 
 class Event extends Backbone.Events
@@ -48,7 +48,7 @@ class Event extends Backbone.Events
     @address = ko.observable data.address
     @contact = ko.observable data.contact
     @eventId = data.id
-    @eventPageUrl = '/eventInfo/info/eventId/'+ @eventId
+    @eventPageUrl = '/eventInfo/info/eventId/' + @eventId
     @preview = ko.observable data.preview
     @description = ko.observable data.description
     @title = ko.observable data.title
@@ -80,7 +80,8 @@ class EventSet
       @currentTitle activeEvents[0].title()
       return activeEvents[0]
     @previousImage = ko.observable ''
-    @activeMaps = 0;
+    @activeMaps = 0
+    ;
     @mapsInited = false
     @isRendered = false
 
@@ -90,23 +91,23 @@ class EventSet
     if(@activeMaps == 1)
       @closeEventsMaps()
 
-    $('.slideTours').find('.triangle').animate {'top' : '0px'}, 200
+    $('.slideTours').find('.triangle').animate {'top': '0px'}, 200
     @events(_.map @events(), (event) =>
       event.active(false)
     )
     valueAccessor.active(true)
-    $(event.target).closest('.toursTicketsMain').find('.triangle').animate {'top' : '-16px'}, 200
+    $(event.target).closest('.toursTicketsMain').find('.triangle').animate {'top': '-16px'}, 200
 
   closeEventsPhoto: =>
     return if $(".mapsBigAll").is(':visible')
     $(".slideTours").find(".active").find(".triangle").animate
       top: "0px"
-    , 200
+      , 200
     $(".toursTicketsMain").removeClass "active"
     $(".mapsBigAll").css "opacity", "0"
     $(".toursBigAll").animate
       opacity: 0
-    , 700, ->
+      , 700, ->
       $(this).css "display", "none"
 
     $(".mapsBigAll").show()
@@ -114,30 +115,31 @@ class EventSet
       @mapsInit()
     $(".mapsBigAll").animate
       opacity: 1
-    , 700
+      , 700
     @activeMaps = 1
 
   closeEventsMaps: =>
     $(".toursBigAll").css "opacity", "0"
     $(".mapsBigAll").animate
       opacity: 0
-    , 700, ->
+      , 700, ->
       $(this).css "display", "none"
 
     $(".toursBigAll").show()
     $(".toursBigAll").animate
       opacity: 1
-    , 700
+      , 700
     @activeMaps = 0
 
   mapsInit: =>
     if !google
       return
-    value = {lat:52,lng:10}
+    value = {lat: 52, lng: 10}
     @mapsInited = true
     # wait till element is present in document
     waitElement ".mapsBigAll", (element)->
-      gMap = new google.maps.Map(element[0],{'mapTypeControl':false,'panControl':false,'zoomControlOptions':{position: google.maps.ControlPosition.LEFT_TOP,style:google.maps.ZoomControlStyle.SMALL},'streetViewControl':false,'zoom': 3,'mapTypeId': google.maps.MapTypeId.TERRAIN,'center': new google.maps.LatLng(value.lat,value.lng)})
+      gMap = new google.maps.Map(element[0], {'mapTypeControl': false, 'panControl': false, 'zoomControlOptions':
+        {position: google.maps.ControlPosition.LEFT_TOP, style: google.maps.ZoomControlStyle.SMALL}, 'streetViewControl': false, 'zoom': 3, 'mapTypeId': google.maps.MapTypeId.TERRAIN, 'center': new google.maps.LatLng(value.lat, value.lng)})
 
   afterRender: =>
     @mapsInited = false
@@ -209,7 +211,7 @@ class EventTourSet
 
 
 class EventTourResultSet
-  constructor: (resultSet,@eventId) ->
+  constructor: (resultSet, @eventId) ->
     @items = ko.observableArray([])
     @selectedCity = ko.observable(resultSet.city.id)
     @fullPrice = ko.observable 0
@@ -217,9 +219,10 @@ class EventTourResultSet
     @fullPriceUpdateTimeText = ko.computed =>
       upTime = moment(@fullPriceUpdateTime())
       #upTime = moment('2013-01-19T14:10:05')
-      console.log('upDate',upTime,upTime._d)
+      console.log('upDate', upTime, upTime._d)
       updateText = dateUtils.formatDayMonth(upTime._d) + ', ' + dateUtils.formatTime(upTime._d)
-      return updateText #'29 сентября, 18:04'
+      return updateText
+    #'29 сентября, 18:04'
     @selectedCity.subscribe (newCityId)=>
       @fullPriceUpdateTime(window.priceData[newCityId]["updateTime"])
       @reinit(window.toursArr[newCityId])
@@ -256,19 +259,19 @@ class EventTourResultSet
     panelSet = new TourPanelSet()
     @activePanel(panelSet)
     @activePanel().startCity(@resultSet.city.code)
-    @activePanel().selectedParams = {ticketParams:[],eventId:@eventId}
+    @activePanel().selectedParams = {ticketParams: [], eventId: @eventId}
     @activePanel().sp.calendarActivated(false)
     window.app.fakoPanel(panelSet)
 
     @startCity(@resultSet.city.localRu)
-    console.log('reinitEventData',@)
+    console.log('reinitEventData', @)
     @flightCounterWord = ko.computed =>
-      res = Utils.wordAfterNum  @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
-      if (@hotelCounter()>0)
+      res = Utils.wordAfterNum @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
+      if (@hotelCounter() > 0)
         res = res + ', '
       return res
     @hotelCounterWord = ko.computed =>
-      Utils.wordAfterNum  @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
+      Utils.wordAfterNum @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
 
     try
 
@@ -276,7 +279,7 @@ class EventTourResultSet
       _.each @resultSet.items, (item) =>
         if (item.isFlight)
           @hasFlight = true
-          @flightCounter(@flightCounter()+1)
+          @flightCounter(@flightCounter() + 1)
           @roundTrip = item.flights.length == 2
           aviaResult = new AviaResult(item, @)
           aviaResult.sort()
@@ -287,14 +290,14 @@ class EventTourResultSet
           aviaResult.isAvia = ko.observable(item.isFlight)
           aviaResult.isHotel = ko.observable(item.isHotel)
           aviaResult.startDate = aviaResult.departureDate()
-          aviaResult.dateHtml = ko.observable('<div class="day">'+dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate())+'</div>' + (if @roundTrip then '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' else '') )
+          aviaResult.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate()) + '</div>' + (if @roundTrip then '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' else ''))
           @activePanel().selectedParams.ticketParams.push aviaResult.getParams()
           aviaResult.overviewPeople = ko.observable
           @items.push aviaResult
           @totalCost += aviaResult.price
         else if (item.isHotel)
           @hasHotel = true
-          @hotelCounter(@hotelCounter()+1)
+          @hotelCounter(@hotelCounter() + 1)
           @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
           @lastHotel.priceHtml = ko.observable(@lastHotel.roomSets()[0].price + '<span class="rur">o</span>')
           @lastHotel.dateClass = ko.observable('orange-two')
@@ -304,7 +307,7 @@ class EventTourResultSet
           @lastHotel.startDate = @lastHotel.checkIn
           @lastHotel.serachParams = item.searchParams
           @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
-          @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn)+'</div>'+'<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut)+'</div>')
+          @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut) + '</div>')
           @activePanel().selectedParams.ticketParams.push @lastHotel.getParams()
           console.log "Add to items hotel ", @lastHotel
           @items.push(@lastHotel)
@@ -316,13 +319,13 @@ class EventTourResultSet
       )
 
       @startDate = @items()[0].startDate
-      @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate)+'</div>')
+      @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate) + '</div>')
       firstHotel = true
-      console.log('items',@items())
+      console.log('items', @items())
       for item in @items()
         if item.isHotel()
           if !firstHotel
-            @activePanel().addPanel()
+            @activePanel().addPanel(true)
           else
             #@activePanel().sp.rooms = item.serachParams.rooms
             #@activePanel().sp.rooms([])
@@ -339,14 +342,14 @@ class EventTourResultSet
           @activePanel().lastPanel.checkIn(moment(item.checkIn)._d)
           @activePanel().lastPanel.checkOut(moment(item.checkOut)._d)
           @activePanel().lastPanel.city(item.cityCode)
-          console.log('try set destData',moment(item.checkIn)._d,moment(item.checkOut)._d,item.cityCode,'to',@activePanel().lastPanel,@activePanel().lastPanel.checkIn())
-      @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(),'человек','человека','человек'))
+          console.log('try set destData', moment(item.checkIn)._d, moment(item.checkOut)._d, item.cityCode, 'to', @activePanel().lastPanel, @activePanel().lastPanel.checkIn())
+      @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(), 'человек', 'человека', 'человек'))
       @overviewPricePeople(
-        'Цена за ' +  (if @activePanel().sp.adults() then Utils.wordAfterNum(@activePanel().sp.adults(),'взрослого','взрослых','взрослых')
-        else '') + (if @activePanel().sp.children() then ' '+Utils.wordAfterNum(@activePanel().sp.children(),'ребенка','детей','детей')
+        'Цена за ' + (if @activePanel().sp.adults() then Utils.wordAfterNum(@activePanel().sp.adults(), 'взрослого', 'взрослых', 'взрослых')
+        else '') + (if @activePanel().sp.children() then ' ' + Utils.wordAfterNum(@activePanel().sp.children(), 'ребенка', 'детей', 'детей')
         else '')
       )
-      console.log('activePanel',@activePanel())
+      console.log('activePanel', @activePanel())
       @activePanel().saveStartParams()
       _.last(@activePanel().panels()).minimizedCalendar(true)
       window.setTimeout(
@@ -361,12 +364,14 @@ class EventTourResultSet
         =>
           if @visiblePanel()
             console.log('need showPanel')
-            $('.sub-head.event').css('margin-top','0px')
+            $('.sub-head.event').css('margin-top', '0px')
           else
-            $('.sub-head.event').stop(true);
-            $('.sub-head.event').css('height', (@activePanel().heightPanelSet())+'px');
-            $('.sub-head.event').css('margin-top', (-@activePanel().heightPanelSet() + 4)+'px')
-            console.log('need hidePanel',$('.sub-head.event'),@activePanel().heightPanelSet(),$('.sub-head.event').css('margin-top'))
+            $('.sub-head.event').stop(true)
+            ;
+            $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px')
+            ;
+            $('.sub-head.event').css('margin-top', (-@activePanel().heightPanelSet() + 4) + 'px')
+            console.log('need hidePanel', $('.sub-head.event'), @activePanel().heightPanelSet(), $('.sub-head.event').css('margin-top'))
 
         , 200
       )
@@ -387,10 +392,10 @@ class EventTourResultSet
     console.log('showPanel')
     $('.sub-head.event').animate({'margin-top': '0px'})
   hidePanel: =>
-    console.log('hidePanel',@activePanel().heightPanelSet())
-    $('.sub-head.event').css('height', (@activePanel().heightPanelSet())+'px');
-    $('.sub-head.event').animate({'margin-top': (-@activePanel().heightPanelSet() + 4)+'px'})
-
+    console.log('hidePanel', @activePanel().heightPanelSet())
+    $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px')
+    ;
+    $('.sub-head.event').animate({'margin-top': (-@activePanel().heightPanelSet() + 4) + 'px'})
 
 
 class EventPhotoBox
@@ -413,17 +418,23 @@ class EventPhotoBox
     for photoObj in picturesRaw
       picture = new Image()
 
-      @unloadedCount++;
+      @unloadedCount++
+      ;
       $(picture).bind(
         'load error',
         (e)=>
-          console.log('image is loaded',e,@);
+          console.log('image is loaded', e, @)
+          ;
           if e.type == 'load'
-            @totalCount++;
+            @totalCount++
+            ;
             photo = {}
-            photo.url = e.currentTarget.src;
-            photo.height = e.currentTarget.height;
-            photo.width = e.currentTarget.width;
+            photo.url = e.currentTarget.src
+            ;
+            photo.height = e.currentTarget.height
+            ;
+            photo.width = e.currentTarget.width
+            ;
             photo.width = Math.round(photo.width * (400 / photo.height))
             photo.height = 400
             #if @boxHeight() < photo.height
@@ -431,7 +442,8 @@ class EventPhotoBox
             @boxHeight(400)
             @photos.push photo
 
-          @unloadedCount--;
+          @unloadedCount--
+          ;
           if(@unloadedCount <= 0 )
             @picturesLoaded = true
             @afterLoad()
@@ -449,17 +461,17 @@ class EventPhotoBox
   afterLoad: =>
     if @afterRendered && @picturesLoaded
       @renderedDivs = []
-      console.log('phts',@photos(),@boxHeight())
+      console.log('phts', @photos(), @boxHeight())
       for i in [-2..2]
         divInfo = {}
-        console.log('cmpW',i,'out',@getIndex(i))
-        divInfo.div = $('<div class="eventPhoto"><img src="'+@photos()[@getIndex(i)].url+'" height="400"/></div>')
-        divInfo.prevInd = @getIndex(i-1)
-        divInfo.nextInd = @getIndex(i+1)
+        console.log('cmpW', i, 'out', @getIndex(i))
+        divInfo.div = $('<div class="eventPhoto"><img src="' + @photos()[@getIndex(i)].url + '" height="400"/></div>')
+        divInfo.prevInd = @getIndex(i - 1)
+        divInfo.nextInd = @getIndex(i + 1)
         divInfo.thisInd = @getIndex(i)
         @renderedDivs.push divInfo
       dw = Math.round(@photos()[@renderedDivs[2].thisInd].width / 2)
-      tmpdw = dw+@picturesPadding()
+      tmpdw = dw + @picturesPadding()
       @renderedDivs[2].left = -dw
       for i in [3..4]
         @renderedDivs[i].left = tmpdw
@@ -470,15 +482,16 @@ class EventPhotoBox
         @renderedDivs[i].left = tmpdw
 
       for elem in @renderedDivs
-        elem.div.css('left',elem.left + 'px')
-        $('#eventsContent .photoGallery .centerPosition').append(elem.div);
-      console.log('all loaded',@renderedDivs)
-      $('.events .center-block').css('position','static')
+        elem.div.css('left', elem.left + 'px')
+        $('#eventsContent .photoGallery .centerPosition').append(elem.div)
+        ;
+      console.log('all loaded', @renderedDivs)
+      $('.events .center-block').css('position', 'static')
 
-  onAnimate: (pos,info)=>
+  onAnimate: (pos, info)=>
     deltaLeft = pos - info.start
     for elem in @renderedDivs
-      elem.div.css('left',(elem.left+deltaLeft) + 'px')
+      elem.div.css('left', (elem.left + deltaLeft) + 'px')
 
 
   onComplete: ()=>
@@ -499,12 +512,14 @@ class EventPhotoBox
       left = @renderedDivs[0].left - @photos()[i].width - @picturesPadding()
 
     divInfo = {}
-    divInfo.div = $('<div class="eventPhoto"><img src="'+@photos()[@getIndex(i)].url+'" height="400"/></div>')
-    divInfo.prevInd = @getIndex(i-1)
-    divInfo.nextInd = @getIndex(i+1)
+    divInfo.div = $('<div class="eventPhoto"><img src="' + @photos()[@getIndex(i)].url + '" height="400"/></div>')
+    divInfo.prevInd = @getIndex(i - 1)
+    divInfo.nextInd = @getIndex(i + 1)
     divInfo.thisInd = @getIndex(i)
-    divInfo.left = left;
-    divInfo.div.css('left',divInfo.left+'px');
+    divInfo.left = left
+    ;
+    divInfo.div.css('left', divInfo.left + 'px')
+    ;
 
     if @delta < 0
       @renderedDivs.push(divInfo)
@@ -512,7 +527,7 @@ class EventPhotoBox
     else
       @renderedDivs.unshift(divInfo)
       $('#eventsContent .photoGallery .centerPosition').prepend(divInfo.div)
-    console.log('divs',@renderedDivs)
+    console.log('divs', @renderedDivs)
     @animation = false
 
 
@@ -524,13 +539,12 @@ class EventPhotoBox
       @animation = true
       dw = -Math.round(@photos()[@renderedDivs[1].thisInd].width / 2)
       @delta = dw - @renderedDivs[1].left
-      console.log('delta',@delta)
+      console.log('delta', @delta)
       @renderedDivs[1].div.animate(
         {left: (dw) + 'px'},
         {
-        step: (pos,info)=>
-          @onAnimate(pos,info)
-        ,
+        step: (pos, info)=>
+          @onAnimate(pos, info),
         complete: =>
           @onComplete()
         }
@@ -540,13 +554,12 @@ class EventPhotoBox
       @animation = true
       dw = -Math.round(@photos()[@renderedDivs[3].thisInd].width / 2)
       @delta = dw - @renderedDivs[3].left
-      console.log('delta',@delta)
+      console.log('delta', @delta)
       @renderedDivs[3].div.animate(
         {left: (dw) + 'px'},
         {
-        step: (pos,info)=>
-          @onAnimate(pos,info)
-        ,
+        step: (pos, info)=>
+          @onAnimate(pos, info),
         complete: =>
           @onComplete()
 

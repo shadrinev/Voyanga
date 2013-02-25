@@ -23,6 +23,13 @@ class HotelsPanel extends SearchPanel
     @cityReadableGen = ko.observable()
     @cityReadablePre = ko.observable()
     @selectionIndex = ko.observable ''
+    @selectionIndex.subscribe(
+      (newValue)=>
+        if(newValue == 1)
+          VoyangaCalendarStandart.checkCalendarValue(false)
+          @checkIn('')
+          @checkOut('')
+    )
     @calendarActive = ko.observable(true)
     @calendarText = ko.computed =>
       result = 'Введите город'
@@ -73,6 +80,14 @@ class HotelsPanel extends SearchPanel
       valuesDescriptions: [('Заезд в отель<div class="breakWord">в ' + @cityReadablePre() + '</div>'), ('Выезд из отеля<div class="breakWord">в ' + @cityReadablePre() + '</div>')]
       intervalDescription: '0'
       selectionIndex: @selectionIndex
+
+    @calendarValue.subscribe =>
+      if !VoyangaCalendarStandart.checkCalendarValue()
+        window.setTimeout(
+          =>
+            VoyangaCalendarStandart.checkCalendarValue(true)
+          , 100
+        )
 
   handlePanelSubmit: =>
     if window.location.pathname.replace('/', '') != ''

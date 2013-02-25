@@ -46,6 +46,13 @@ AviaPanel = (function(_super) {
     this.prefixText = 'Все направления<br>500+ авиакомпаний';
     this.calendarActive = ko.observable(true);
     this.selectionIndex = ko.observable('');
+    this.selectionIndex.subscribe(function(newValue) {
+      if (newValue === 1 && _this.rt()) {
+        VoyangaCalendarStandart.checkCalendarValue(false);
+        _this.departureDate('');
+        return _this.rtDate('');
+      }
+    });
     this.oldCalendarState = this.minimizedCalendar();
     this.show = this.passengers.show;
     this.fromChosen = ko.computed(function() {
@@ -101,6 +108,13 @@ AviaPanel = (function(_super) {
         valuesDescriptions: ['Вылет туда', 'Вылет обратно', 'Туда и обратно'],
         selectionIndex: _this.selectionIndex
       };
+    });
+    this.calendarValue.subscribe(function() {
+      if (!VoyangaCalendarStandart.checkCalendarValue()) {
+        return window.setTimeout(function() {
+          return VoyangaCalendarStandart.checkCalendarValue(true);
+        }, 100);
+      }
     });
     this.departureDateDay = ko.computed(function() {
       return dateUtils.formatDay(_this.departureDate());
