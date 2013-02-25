@@ -27,6 +27,7 @@
         app.register('tours', tour, true);
         app.register('hotels', hotels);
         app.register('avia', avia);
+        console.log('WILL BE RUN',app.runWithModule);
         app.runWithModule('tours');
         app.activeModule('tours');
         var panelSet = new HotelsPanel();
@@ -41,12 +42,13 @@
         setDepartureDate(moment(new Date()).add('days', 1).format('YYYY-MM-DD'));
         window.setTimeout(function () {
             panelSet.calendarActive(true);
-
+            ResizeAvia();
         }, 1000);
 
 
         ko.applyBindings(app);
         ko.processAllDeferredBindingUpdates();
+
     };
 
     $(document).ready(function () {
