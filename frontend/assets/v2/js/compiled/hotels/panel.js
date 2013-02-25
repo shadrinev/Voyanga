@@ -25,7 +25,9 @@ HotelsPanel = (function(_super) {
     this.template = 'hotels-panel-template';
     HotelsPanel.__super__.constructor.call(this);
     this.prevPanel = 'avia';
+    this.prevPanelLabel = 'Только авиабилеты';
     this.nextPanel = 'tours';
+    this.nextPanelLabel = 'Путешествия';
     this.icon = 'hotel-ico';
     this.mainLabel = 'Бронирование отелей';
     this.indexMode = ko.observable(true);

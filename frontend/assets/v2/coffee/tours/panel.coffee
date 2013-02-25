@@ -8,7 +8,9 @@ class TourPanelSet
     @sp = new TourSearchParams()
 
     @prevPanel = 'hotels'
+    @prevPanelLabel = 'Только отели'
     @nextPanel = 'avia'
+    @nextPanelLabel = 'Только авиабилеты'
     @icon = 'constructor-ico'
     @mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">'
     @indexMode = true
@@ -106,6 +108,16 @@ class TourPanelSet
     @i == 1
 
   addPanel: =>
+    if (@panels().length>0) && (@selectionIndex() != 2)
+      console.log @panels()[0].city()
+      if ((@panels().length==1) && (@panels()[0].city().length==0))
+        el = $('div.from')
+        $(el).find('.second-path').attr('placeholder', 'Введите первый город')
+        Utils.flashMessage el
+      else
+        el = $('div.innerCalendar').find('h1')
+        Utils.flashMessage el
+      return
     @sp.destinations.push new DestinationSearchParams()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
@@ -224,7 +236,6 @@ class TourPanel extends SearchPanel
       url = '/#' + @sp.getHash()
       if @startParams == url
         url += 'eventId/' + @selectedParams.eventId
-
 
       window.location.href = url
 

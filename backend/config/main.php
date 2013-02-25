@@ -18,8 +18,8 @@ $backendMainLocal = file_exists('backend/config/main-local.php') ? require('back
 return CMap::mergeArray(
     require_once ('common/config/main.php'),
     array(
-        'id' => 'backend.voyanga.com',
-        'name' => 'Voyanga',
+        'id' => 'backend.voyanga.com-'.$params['env.code'],
+        'name' => 'Voyanga-backend-'.$params['env.code'],
         'basePath' => 'backend',
         'params' => $params,
         'language' => 'ru',

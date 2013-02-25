@@ -947,7 +947,7 @@ VoyangaCalendarStandart.init = function (panel, element) {
          VoyangaCalendarStandart.newValueHandler(newPanel.calendarValue());
          }*/
     } else {
-//        console.log('Else',panel,this.panel,this.panel(),panel());
+        console.log('Else', panel, this.panel, this.panel(), panel());
     }
 
     VoyangaCalendarStandart.generateGrid();

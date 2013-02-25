@@ -4,7 +4,9 @@ class HotelsPanel extends SearchPanel
     super()
 
     @prevPanel = 'avia'
+    @prevPanelLabel = 'Только авиабилеты'
     @nextPanel = 'tours'
+    @nextPanelLabel = 'Путешествия'
     @icon = 'hotel-ico'
 
     @mainLabel = 'Бронирование отелей'

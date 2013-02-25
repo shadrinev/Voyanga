@@ -34,7 +34,9 @@ TourPanelSet = (function() {
     this.template = 'tour-panel-template';
     this.sp = new TourSearchParams();
     this.prevPanel = 'hotels';
+    this.prevPanelLabel = 'Только отели';
     this.nextPanel = 'avia';
+    this.nextPanelLabel = 'Только авиабилеты';
     this.icon = 'constructor-ico';
     this.mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">';
     this.indexMode = true;
@@ -152,8 +154,20 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.addPanel = function() {
-    var newPanel, prevPanel,
+    var el, newPanel, prevPanel,
       _this = this;
+    if ((this.panels().length > 0) && (this.selectionIndex() !== 2)) {
+      console.log(this.panels()[0].city());
+      if ((this.panels().length === 1) && (this.panels()[0].city().length === 0)) {
+        el = $('div.from');
+        $(el).find('.second-path').attr('placeholder', 'Введите первый город');
+        Utils.flashMessage(el);
+      } else {
+        el = $('div.innerCalendar').find('h1');
+        Utils.flashMessage(el);
+      }
+      return;
+    }
     this.sp.destinations.push(new DestinationSearchParams());
     if (_.last(this.panels())) {
       _.last(this.panels()).isLast(false);

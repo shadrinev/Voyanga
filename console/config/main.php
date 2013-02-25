@@ -17,8 +17,8 @@ $consoleMainLocal = file_exists('console/config/main-local.php') ? require('cons
 return CMap::mergeArray (
     require_once ('common/config/main.php'), //currently doesn't exist
     array(
-        'id'=>'bootstrap.clevertech.com',
-        'name'=>'bootstrap',
+        'id'=>'console.voyanga.com',
+        'name' => 'Voyanga-console-'.$params['env.code'],
         'basePath'=>'console',
         'params'=>$params,
         'preload'=>array('log'),
