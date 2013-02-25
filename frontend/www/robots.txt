@@ -9,5 +9,6 @@ Allow: /eventInfo/info/eventId/34
 Allow: /eventInfo/info/eventId/25
 Allow: /faq
 Allow: /agreement
+Allow: /land
 Disallow: /
 Host: voyanga.com
