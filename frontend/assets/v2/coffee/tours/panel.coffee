@@ -21,6 +21,13 @@ class TourPanelSet
     @startCityReadableAcc = ko.observable ''
     @startCityReadablePre = ko.observable ''
     @selectionIndex = ko.observable ''
+    @selectionIndex.subscribe(
+      (newValue)=>
+        if(newValue == 1)
+          VoyangaCalendarStandart.checkCalendarValue(false)
+          @activeCalendarPanel().checkIn('')
+          @activeCalendarPanel().checkOut('')
+    )
     @startCityReadableAccShort = ko.computed =>
       if @startCityReadableAcc().length > 15
         result = '<div class="backCity">' + @startCityReadableAcc() + '</div>'
@@ -39,12 +46,12 @@ class TourPanelSet
     @calendarText = ko.computed =>
       result = 'Введите город'
       if @activeCity()
-        if (@selectionIndex()==0)
+        if (@selectionIndex() == 0)
           result = 'Выберите дату приезда в город ' + @activeCity()
-        else if (@selectionIndex()==1)
+        else if (@selectionIndex() == 1)
           result = 'Выберите дату отъезда из города ' + @activeCity()
-        else if @selectionIndex()==2
-          result = @activeCity() + ', ' +  dateUtils.formatDayShortMonth(@activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkOut())
+        else if @selectionIndex() == 2
+          result = @activeCity() + ', ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkOut())
       result
 
     @lastPanel = null
@@ -70,6 +77,14 @@ class TourPanelSet
       valuesDescriptions: [('Заезд в отель<br>в ' + @activeCalendarPanel().cityReadablePre()), ('Выезд из отеля<br>в ' + @activeCalendarPanel().cityReadablePre())]
       intervalDescription: '0'
       selectionIndex: @selectionIndex
+
+    @calendarValue.subscribe =>
+      if !VoyangaCalendarStandart.checkCalendarValue()
+        window.setTimeout(
+          =>
+            VoyangaCalendarStandart.checkCalendarValue(true)
+          , 100
+        )
 
     @formFilled = ko.computed =>
       isFilled = @startCity()
@@ -107,10 +122,10 @@ class TourPanelSet
   isFirst: =>
     @i == 1
 
-  addPanel: =>
-    if (@panels().length>0) && (@selectionIndex() != 2)
+  addPanel: (force = false)=>
+    if !force && (@panels().length > 0) && (@selectionIndex() != 2)
       console.log @panels()[0].city()
-      if ((@panels().length==1) && (@panels()[0].city().length==0))
+      if ((@panels().length == 1) && (@panels()[0].city().length == 0))
         el = $('div.from')
         $(el).find('.second-path').attr('placeholder', 'Введите первый город')
         Utils.flashMessage el
@@ -269,9 +284,8 @@ class TourPanel extends SearchPanel
     })
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
-      width: "261px"
-      , 300, ->
-      el.find(".startInputTo").find("input").focus()
+      width: "261px", 300, ->
+    el.find(".startInputTo").find("input").focus()
 
   hideFromCityInput: (panel, event) ->
     hideFromCityInput(panel, event)

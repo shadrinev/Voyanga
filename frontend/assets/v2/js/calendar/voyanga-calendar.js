@@ -910,6 +910,7 @@ VoyangaCalendarStandart.init = function (panel, element) {
     this.lastToCell = false;
     this.lastFromOverCell = false;
     this.lastToOverCell = false;
+    this.checkCalendarValue = ko.observable(true);
     this.isMobileDevice = DetectMobileQuick() || DetectTierTablet();
     var self = this;
     console.log('ReINIT calendar');
@@ -923,7 +924,7 @@ VoyangaCalendarStandart.init = function (panel, element) {
                 console.log('iil be st new subscr');
                 VoyangaCalendarStandart.subscription = newPanel.calendarValue.subscribe(
                     function (calendarValue) {
-                        if (!VoyangaCalendarStandart.compareCalendarValue(self.oldCalendarValue, calendarValue)) {
+                        if (VoyangaCalendarStandart.checkCalendarValue() && !VoyangaCalendarStandart.compareCalendarValue(self.oldCalendarValue, calendarValue)) {
                             console.log('values not same, new value detected');
                             //VoyangaCalendarStandart.clear();
                             self.oldCalendarValue = calendarValue;

@@ -27,6 +27,13 @@ class AviaPanel extends SearchPanel
     @prefixText = 'Все направления<br>500+ авиакомпаний'
     @calendarActive = ko.observable(true)
     @selectionIndex = ko.observable ''
+    @selectionIndex.subscribe(
+      (newValue)=>
+        if(newValue == 1 && @rt())
+          VoyangaCalendarStandart.checkCalendarValue(false)
+          @departureDate('')
+          @rtDate('')
+    )
 
     #helper to save calendar state
     @oldCalendarState = @minimizedCalendar()
@@ -79,6 +86,14 @@ class AviaPanel extends SearchPanel
       activeSearchPanel: @
       valuesDescriptions: ['Вылет туда', 'Вылет обратно', 'Туда и обратно']
       selectionIndex: @selectionIndex
+
+    @calendarValue.subscribe =>
+      if !VoyangaCalendarStandart.checkCalendarValue()
+        window.setTimeout(
+          =>
+            VoyangaCalendarStandart.checkCalendarValue(true)
+          , 100
+        )
 
     @departureDateDay = ko.computed =>
       dateUtils.formatDay(@departureDate())
@@ -175,7 +190,7 @@ class AviaPanel extends SearchPanel
       # Initial state for tumbler
       @rtTumbler(@rt())
       $('.how-many-man .btn')
-      if (@departureCity() && @arrivalCity().length>0 && (!@departureDate() || (@rt() && (!@rtDate))))
+      if (@departureCity() && @arrivalCity().length > 0 && (!@departureDate() || (@rt() && (!@rtDate))))
         @minimizedCalendar(false)
     do resizePanel
 

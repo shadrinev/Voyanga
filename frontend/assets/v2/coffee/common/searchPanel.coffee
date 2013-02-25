@@ -76,13 +76,14 @@ class SearchPanel
       @minimizedCalendar(true)
 
   showCalendar: =>
-    $('.calenderWindow').show()
-    console.log('show calendar')
-    #VoyangaCalendarStandart.panel.notifySubscribers(VoyangaCalendarStandart.panel())
-    VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true)
-    #@calendarValue.notifySubscribers(@calendarValue())
-    if @minimizedCalendar()
-      @minimizedCalendar(false)
+    if(@minimizedCalendar())
+      $('.calenderWindow').show()
+      console.log('show calendar')
+      #VoyangaCalendarStandart.panel.notifySubscribers(VoyangaCalendarStandart.panel())
+      VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true)
+      #@calendarValue.notifySubscribers(@calendarValue())
+      if @minimizedCalendar()
+        @minimizedCalendar(false)
 
   handlePanelSubmit: =>
     app.navigate @sp.getHash(), {trigger: true}
