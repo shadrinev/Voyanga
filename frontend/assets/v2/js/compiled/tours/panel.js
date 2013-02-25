@@ -387,10 +387,9 @@ TourPanel = (function(_super) {
       300: 300
     });
     el.find(".startInputTo").show();
-    el.find('.cityStart').animate({
+    return el.find('.cityStart').animate({
       width: "261px"
-    }, 300, function() {});
-    return el.find(".startInputTo").find("input").focus();
+    }, 300, function() {}, el.find(".startInputTo").find("input").focus());
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
@@ -401,7 +400,11 @@ TourPanel = (function(_super) {
     if (trig == null) {
       trig = true;
     }
+    console.log('show calendar func');
     $('.calenderWindow').show();
+    window.setTimeout(function() {
+      return VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true);
+    }, 50);
     if (trig) {
       this.trigger("tourPanel:showCalendar", this);
     }
