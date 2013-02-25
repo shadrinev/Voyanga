@@ -42,7 +42,7 @@
         setDepartureDate(moment(new Date()).add('days', 1).format('YYYY-MM-DD'));
         window.setTimeout(function () {
             panelSet.calendarActive(true);
-            ResizeAvia();
+            //ResizeAvia();
         }, 1000);
 
 
@@ -70,13 +70,12 @@
 
 </div>
 
-<div class="sub-head event" style="height: auto;width: auto;"
-     data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
+<div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
 
     <div class="board" style="position: static;">
         <div class="constructor" style="position: static;">
             <!-- BOARD CONTENT -->
-            <div class="board-content" data-bind="with: fakoPanel()" style="position: static;height: auto;">
+            <div class="board-content" data-bind="template:{ data:fakoPanel(),afterRender: contentRendered}" style="position: static;height: auto;">
 
                 <div class="panel">
                     <table class="panelTable hotel">
@@ -92,15 +91,11 @@
                                             <div class="center"></div>
                                             <div class="right"></div>
                                         </div>
-                                        <input type="text" placeholder="Куда едем?" class="second-path"
-                                               data-bind="autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen, readablePre: cityReadablePre}"
-                                               autocomplete="off">
+                                        <input type="text" placeholder="Куда едем?" class="second-path" data-bind="autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen, readablePre: cityReadablePre}" autocomplete="off">
                                         <input type="text" tabindex="-1" class="input-path">
 
-                                        <div class="date noDate"
-                                             data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
-                                        <div class="date noDate"
-                                             data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
+                                        <div class="date noDate" data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
+                                        <div class="date noDate" data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
                                     </div>
                                 </div>
                             </td>
@@ -109,14 +104,12 @@
                             </td>
 
                             <td class="tdPeople final">
-                                        <span
-                                            data-bind="template: {name: peopleSelectorVM.template, data: peopleSelectorVM}">
+                                        <span data-bind="template: {name: peopleSelectorVM.template, data: peopleSelectorVM}">
                                         </span>
                             </td>
                             <td class="tdButton">
 
-                                <div class="btn-find inactive"
-                                     data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}"></div>
+                                <div class="btn-find inactive" data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}"></div>
 
                             </td>
 
@@ -181,9 +174,7 @@
 </div>
 <!-- END PANEL -->
 <!-- CALENDAR -->
-<div class="calenderWindow z-indexTop"
-     data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarStatic}"
-     style="top: -302px; overflow: hidden; height: 341px; position: static;">
+<div class="calenderWindow z-indexTop" data-bind="template: {name: 'calendar-template-hotel', afterRender: reRenderCalendarStatic}" style="top: -302px; overflow: hidden; height: 341px; position: static;">
 </div>
 <!-- END CALENDAR -->
 
