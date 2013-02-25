@@ -109,7 +109,8 @@ class TourPanelSet
 
   addPanel: =>
     if (@panels().length>0) && (@selectionIndex() != 2)
-      if ((@panels().length==1) && (!@activeCity()))
+      console.log @panels()[0].city()
+      if ((@panels().length==1) && (@panels()[0].city().length==0))
         el = $('div.from')
         $(el).find('.second-path').attr('placeholder', 'Введите первый город')
         Utils.flashMessage el
