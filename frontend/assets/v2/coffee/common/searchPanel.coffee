@@ -76,7 +76,9 @@ class SearchPanel
       @minimizedCalendar(true)
 
   showCalendar: =>
-    if(@minimizedCalendar())
+    ch = $('.calenderWindow').height()
+    console.log('show calend params', ch, (ch == 0), $('.calenderWindow').css('height'), $('.calenderWindow .calendarSlide').css('top'))
+    if(ch == 0)
       $('.calenderWindow').show()
       console.log('show calendar')
       #VoyangaCalendarStandart.panel.notifySubscribers(VoyangaCalendarStandart.panel())
