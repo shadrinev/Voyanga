@@ -884,7 +884,7 @@ VoyangaCalendarStandart.compareCalendarValue = function (oldValue, newValue) {
             if ((oldValue[propName] != newValue[propName]) && (newValue[propName] != VoyangaCalendarStandart.values[1])) {
                 return false;
             }
-        } else if ((Array.isArray(oldValue[propName]))) {
+        } else if (($.isArray(oldValue[propName]))) {
             if (!VoyangaCalendarStandart.compareArrays(oldValue[propName], newValue[propName])) {
                 return false;
             }
