@@ -729,17 +729,19 @@ VoyangaCalendarStandart.minimalDateUpdated = function () {
 }
 
 VoyangaCalendarStandart.scrollToDate = function (dateVar, forceScroll) {
-    if (!forceScroll) {
-        forceScroll = false;
-    }
-    var dateLabel = dateVar.getFullYear() + '-' + (dateVar.getMonth() + 1) + '-' + dateVar.getDate();
-    var scrollLine = $('#dayCell-' + dateLabel).parent().data('weeknum');
-    var scrollTop = (scrollLine / this.slider.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
-    var deltaNeedScroll = scrollTop - this.jObj.find('.calendarGridVoyanga').scrollTop();
-    var lineHeight = Math.round(this.jObj.find('.calendarGridVoyanga').prop('scrollHeight') / VoyangaCalendarStandart.slider.totalLines);
-    console.log('delta need scroll', deltaNeedScroll, lineHeight);
-    if ((deltaNeedScroll < 0) || (deltaNeedScroll > VoyangaCalendarStandart.slider.linesWidth * lineHeight) || forceScroll) {
-        this.jObj.find('.calendarGridVoyanga').scrollTop(Math.abs(scrollTop - lineHeight));
+    if(VoyangaCalendarStandart.checkCalendarValue()){
+        if (!forceScroll) {
+            forceScroll = false;
+        }
+        var dateLabel = dateVar.getFullYear() + '-' + (dateVar.getMonth() + 1) + '-' + dateVar.getDate();
+        var scrollLine = $('#dayCell-' + dateLabel).parent().data('weeknum');
+        var scrollTop = (scrollLine / this.slider.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
+        var deltaNeedScroll = scrollTop - this.jObj.find('.calendarGridVoyanga').scrollTop();
+        var lineHeight = Math.round(this.jObj.find('.calendarGridVoyanga').prop('scrollHeight') / VoyangaCalendarStandart.slider.totalLines);
+        console.log('delta need scroll', deltaNeedScroll, lineHeight);
+        if ((deltaNeedScroll < 0) || (deltaNeedScroll > VoyangaCalendarStandart.slider.linesWidth * lineHeight) || forceScroll) {
+            this.jObj.find('.calendarGridVoyanga').scrollTop(Math.abs(scrollTop - lineHeight));
+        }
     }
 }
 
