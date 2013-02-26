@@ -18,20 +18,24 @@ pack:
 	cat \
 	    {{jsFiles}} \
 	    ./frontend/www/js/disableLogging.js \
-		> ./frontend/www/js/all.js;
+		> all.js;
 
 	cat \
         {{cssFiles}} \
         > ./frontend/www/themes/v2/css/all.css;
 
 compress:
-	java -jar $(CLOSUREFILE) --js_output_file=./frontend/www/js/all.min.js --js=./frontend/www/js/all.js --compilation_level SIMPLE_OPTIMIZATIONS;
+	java -jar $(CLOSUREFILE) --js_output_file=all.min.js --create_source_map all.min.js.map --source_map_format=V3 --js=all.js --compilation_level SIMPLE_OPTIMIZATIONS;
 	java -jar $(YUIFILE) ./frontend/www/themes/v2/css/all.css -o ./frontend/www/themes/v2/css/all.min.css
 
 build:
 	$(MAKE) pack;
 	$(MAKE) compress;
-	
+	echo "//@ sourceMappingURL=/js/all.min.js.map" >> all.min.js
+	mv -f all.js ./frontend/www/js/all.js
+	mv -f all.min.js ./frontend/www/js/all.min.js
+	mv -f all.min.js.map ./frontend/www/js/all.min.js.map
+
 build-update:
 	$(MAKE) clean;
 	mkdir $(BUILDDIR) $(CLOSUREDIR) $(YUIDIR);
