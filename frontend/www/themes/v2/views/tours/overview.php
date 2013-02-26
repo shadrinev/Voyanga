@@ -2,6 +2,35 @@
 $images = 'themes/v2';
 $theme = Yii::app()->theme->baseUrl;
 ?>
+<script>
+    var addthis_share = {
+        templates:{
+            twitter:"{{title}} #voyanga {{url}}"
+        }
+    }
+</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
+<div class="socialSharePlaceholder" style="display: none">
+    <a href="javascript:void(0);" id="followLink" title="Прямая ссылка">
+        <span class="text">Получить ссылку</span><span class="getLink"><input type="text" name="textTextText" value=""> </span>
+    </a>
+
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+
+        <a class="addthis_button_vk"
+           addthis:url=""
+           addthis:title=""
+           addthis:description="" title="Вконтакте"></a>
+        <a class="addthis_button_facebook"
+           addthis:url=""
+           addthis:title=""
+           addthis:description="" title="Facebook"></a>
+        <a
+            class="addthis_button_twitter"
+            addthis:title=""
+            title="Twitter"></a>
+    </div>
+</div>
 <script id="tours-index"></script>
 <script id="tours-overview" type="text/html">
     <div class="main-block">
@@ -92,14 +121,13 @@ $theme = Yii::app()->theme->baseUrl;
             <div class="hr-bg" data-bind="visible: someSegmentsSelected">
                 <img src="<?php echo $images . '/images/shadow-hotel.png' ?>" width="100%" height="31">
             </div>
-            <div class="shareSocial" id="socialButtons">
-            </div>
             <div class="costItAll" data-bind="visible: someSegmentsSelected">
                 Итого <span class="allCost"><span data-bind="text: price()-savings()">86 250</span> <span
                 class="rur">o</span></span>
                 <a href="#" class="btn-order btnGoBuy" data-bind="click:buy">Перейти к оплате<span class="l"></span></a>
             </div>
-            <div class="clear"></div>
+            <div class="shareSocial" style="display:none">
+            </div>
         </div>
         <div class="clear"></div>
     </div>

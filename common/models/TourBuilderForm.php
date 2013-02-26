@@ -50,7 +50,7 @@ class TourBuilderForm extends CFormModel
         $element->adultCount = 2;
         $element->childCount = 0;
         $element->cots = 0;
-        $element->childAge = 0;
+        $element->childAges = array();
         $this->rooms[] = $element;
     }
 

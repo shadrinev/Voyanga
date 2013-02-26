@@ -21,7 +21,7 @@ SpRoom = (function() {
     this.children = ko.observable(0).extend({
       integerOnly: {
         min: 0,
-        max: 1
+        max: 2
       }
     });
     this.ages = ko.observableArray();
@@ -32,8 +32,8 @@ SpRoom = (function() {
       }
     });
     this.adults.subscribe(function(newValue) {
-      if (newValue + _this.children() > 4) {
-        _this.adults(4 - _this.children());
+      if (newValue + _this.children() > 5) {
+        _this.adults(5 - _this.children());
       }
       if ((_this.parent.overall() - _this.adults() + newValue) > 9) {
         return _this.adults(9 - _this.parent.overall() + _this.adults());
@@ -41,8 +41,8 @@ SpRoom = (function() {
     });
     this.children.subscribe(function(newValue) {
       var i, _i, _ref;
-      if (newValue + _this.adults() > 4) {
-        newValue = 4 - _this.adults();
+      if (newValue + _this.adults() > 5) {
+        newValue = 5 - _this.adults();
         _this.children(newValue);
       }
       if ((_this.parent.overall() - _this.children() + newValue) > 9) {
@@ -94,14 +94,15 @@ SpRoom = (function() {
 
   SpRoom.prototype.fromObject = function(item) {
     var i, _i, _ref, _results;
-    this.adults(item.adultCount);
-    this.children(item.childCount);
+    console.log('search params FromObject', item);
+    this.adults(item.adt);
+    this.children(item.chd);
     this.infants(item.cots);
     if (this.children() > 0) {
       _results = [];
       for (i = _i = 0, _ref = this.children() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         _results.push(this.ages.push({
-          age: ko.observable(item.childAge).extend({
+          age: ko.observable(item.chdAges[i]).extend({
             integerOnly: {
               min: 0,
               max: 12
@@ -125,17 +126,23 @@ SpRoom = (function() {
   };
 
   SpRoom.prototype.getUrl = function(i) {
-    var ageObj, agesText, _i, _len, _ref;
+    var ageObj, agesText, agesTextVals, j, _i, _len, _ref;
     agesText = '';
     console.log('age p', this.ages(), this);
+    agesTextVals = [];
+    j = 0;
     _ref = this.ages();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       ageObj = _ref[_i];
       console.log('age', ageObj, ageObj.age());
-      agesText = ("rooms[" + i + "][chdAge]=") + ageObj.age();
+      agesTextVals.push(("rooms[" + i + "][chdAges][" + j + "]=") + ageObj.age());
+      j++;
+    }
+    if (agesTextVals.length) {
+      agesText = agesTextVals.join('&');
     }
     if (!agesText) {
-      agesText = "rooms[" + i + "][chdAge]=0";
+      agesText = "rooms[" + i + "][chdAges]=0";
     }
     return ("rooms[" + i + "][adt]=") + this.adults() + ("&rooms[" + i + "][chd]=") + this.children() + "&" + agesText + ("&rooms[" + i + "][cots]=") + this.infants();
   };

@@ -27,7 +27,7 @@
 </script>
 <div class="headBlockOne">
 <div class="center-block">
-    <h1>Туры по всему миру!</h1>
+    <h1>Авиабилеты и отели по всему миру!</h1>
 
 </div>
 <?php

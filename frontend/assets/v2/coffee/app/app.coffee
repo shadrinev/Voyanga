@@ -12,19 +12,17 @@ class Application extends Backbone.Router
       return _oldOnerrorHandler.apply(this, rest)  if _oldOnerrorHandler
 
     # FIXME
-    @activeModule = ko.observable null
-    #ko.observable window.activeModule || 'avia'
+    @activeModule = ko.observable null #ko.observable window.activeModule || 'avia'
     @activeModuleInstance = ko.observable null
     @activeSearchPanel = ko.observable null
 
     result =
-      template: ''
-      data:
-        {}
+      template:''
+      data:{}
       rt: -> true
       departureDate: -> '12.11.2013'
       arrivalDate: -> '12.12.2013'
-      calendarText: 'DOH'
+      calendarText:'DOH'
       minimizeCalendar: -> true
       calendarHidden: -> true
       calendarShadow: -> true
@@ -77,43 +75,43 @@ class Application extends Backbone.Router
   initCalendar: =>
     throw "Deprecated"
 
-  #if (!@calendarInitialized)
-  #  new Calendar(@fakoPanel)
-  #  @calendarInitialized = true
+    #if (!@calendarInitialized)
+    #  new Calendar(@fakoPanel)
+    #  @calendarInitialized = true
   minimizeCalendar: =>
-    console.log('activeSearchPanel', @activeSearchPanel())
+    console.log('activeSearchPanel',@activeSearchPanel())
     @activeSearchPanel().minimizedCalendar(true) if @activeSearchPanel()
 
-  reRenderCalendar: (elements) =>
+  reRenderCalendar:(elements) =>
     VoyangaCalendarStandart.panel = false
     ;
     VoyangaCalendarStandart.init @fakoPanel, elements[1]
-    @fakoPanel.subscribe((newPanel)=>
+    @fakoPanel.subscribe( (newPanel)=>
       if newPanel.panels
         @activeSearchPanel(_.last(newPanel.panels()))
     )
     if @fakoPanel().panels
       @activeSearchPanel(_.last(@fakoPanel().panels()))
 
-  reRenderCalendarStatic: (elements) =>
-    $('.calenderWindow').css('position', 'static').find('.calendarSlide').css('position', 'static')
+  reRenderCalendarStatic:(elements) =>
+    $('.calenderWindow').css('position','static').find('.calendarSlide').css('position','static')
     VoyangaCalendarStandart.init @fakoPanel, elements[1]
-    @fakoPanel.subscribe((newPanel)=>
-      console.log('change panel', newPanel, newPanel.panels)
+    @fakoPanel.subscribe( (newPanel)=>
+      console.log('change panel',newPanel,newPanel.panels)
       if newPanel.panels
         @activeSearchPanel(_.last(newPanel.panels()))
       else
         @activeSearchPanel(newPanel)
     )
-    console.log('set panel', @fakoPanel(), @fakoPanel().panels)
+    console.log('set panel',@fakoPanel(),@fakoPanel().panels)
     if @fakoPanel().panels
       @activeSearchPanel(_.last(@fakoPanel().panels()))
     else
       @activeSearchPanel(@fakoPanel())
 
-  reRenderCalendarEvent: (elements) =>
+  reRenderCalendarEvent:(elements) =>
     console.log('rerender calendar')
-    $('.calenderWindow').css('position', 'static').find('.calendarSlide').css('position', 'static')
+    $('.calenderWindow').css('position','static').find('.calendarSlide').css('position','static')
     VoyangaCalendarStandart.init @itemsToBuy.activePanel, elements[1]
     @activeSearchPanel(_.last(@itemsToBuy.activePanel().panels()))
 
@@ -127,7 +125,7 @@ class Application extends Backbone.Router
   #
   # @param prefix url prefix for given controller
   # @param controler - controller to register
-  register: (prefix, module, isDefault = false)->
+  register: (prefix, module, isDefault=false)->
     controller = module.controller
 
     # Change view when controller wants to
@@ -143,7 +141,7 @@ class Application extends Backbone.Router
 
     # FIXME extract to method
     # Handles module switching
-    @ on "beforeroute:" + prefix, (args...)->
+    @on "beforeroute:" + prefix, (args...)->
       window.voyanga_debug "APP: routing", args
       # hide sidebar
       if @panel() == undefined || (prefix != @activeModule())
@@ -172,7 +170,7 @@ class Application extends Backbone.Router
   runWithModule: (module) =>
     # set default module
     Backbone.history.start({silent: true})
-    window.app.navigate '#' + module, {replace: true}
+    window.app.navigate '#'+ module, {replace: true}
     @activeModule module
     $(window).unbind 'resize'
     $(window).resize ResizeAvia
@@ -186,11 +184,11 @@ class Application extends Backbone.Router
 
   bindItemsToBuy: =>
     tourTrip = new TourTripResultSet(window.tripRaw)
-    @itemsToBuy = tourTrip
+    @itemsToBuy =  tourTrip
 
   bindItemsToEvent: =>
-    tourTrip = new EventTourResultSet(window.tripRaw, window.eventId)
-    @itemsToBuy = tourTrip
+    tourTrip = new EventTourResultSet(window.tripRaw,window.eventId)
+    @itemsToBuy =  tourTrip
 
   # FIXME write better handler
   handle404: =>
@@ -199,8 +197,8 @@ class Application extends Backbone.Router
   # beforeroute event, cuz backbone cant do this for us
   route: (route, name, callback) ->
     Backbone.Router.prototype.route.call this, route, name, ->
-      @trigger.apply(@, ['beforeroute:' + name].concat(_.toArray(arguments)))
-      callback.apply(@, arguments)
+            @trigger.apply(@, ['beforeroute:' + name].concat(_.toArray(arguments)))
+            callback.apply(@, arguments)
 
   contentRendered: =>
     window.voyanga_debug "APP: Content rendered"
@@ -209,12 +207,10 @@ class Application extends Backbone.Router
     WidthMine()
 
   mapRendered: (elem) =>
-    $('.slideTours').find('.active').find('.triangle').animate({'top': '-16px'}, 200)
-    ;
+    $('.slideTours').find('.active').find('.triangle').animate({'top' : '-16px'}, 200);
 
   isNotEvent: =>
-    !@isEvent()
-    ;
+    !@isEvent();
 
   isEvent: =>
     @activeView() == 'tours-index'

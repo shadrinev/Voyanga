@@ -284,14 +284,22 @@ class TourPanel extends SearchPanel
     })
     el.find(".startInputTo").show()
     el.find('.cityStart').animate
-      width: "261px", 300, ->
-    el.find(".startInputTo").find("input").focus()
+      width: "261px"
+      , 300, ->
+      el.find(".startInputTo").find("input").focus()
 
   hideFromCityInput: (panel, event) ->
     hideFromCityInput(panel, event)
 
   showCalendar: (trig = true) =>
+    console.log('show calendar func')
     $('.calenderWindow').show()
+    window.setTimeout(
+      ->
+        VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true)
+      ,50
+    )
+
     if trig
       @trigger "tourPanel:showCalendar", @
     if @minimizedCalendar()

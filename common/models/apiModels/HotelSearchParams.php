@@ -29,9 +29,22 @@ class HotelSearchParams
      */
     public $rooms;
 
-    public function addRoom($adultCount, $cots = 0, $childAge = false)
+    public function addRoom($adultCount, $cots = 0, $childAges = array())
     {
         $sameRoom = false;
+        $childAge = false;
+        if($childAges){
+            foreach($childAges as $age){
+                if($age < 2){
+                    $cots++;
+                }else{
+                    if($childAge) $adultCount++;
+                    if(!$childAge || $childAge > $age){
+                        $childAge = $age;
+                    }
+                }
+            }
+        }
         $room = array('adultCount' => $adultCount, 'cots' => $cots, 'childAge' => $childAge, 'childCount' => $childAge === false ? 0 : 1, 'roomCount' => 1);
         if (!$sameRoom)
         {

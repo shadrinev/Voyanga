@@ -103,6 +103,9 @@
                             class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span
                             class="rur">o</span></a>
                     </td>
+                    <td class="tdEmpty">
+
+                    </td>
                 </tr>
                     <?php
                 endif;

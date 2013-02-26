@@ -4,20 +4,20 @@ class SpRoom
     @adults = ko.observable(1).extend({integerOnly:
       {min: 1, max: 4}})
     @children = ko.observable(0).extend({integerOnly:
-      {min: 0, max: 1}})
+      {min: 0, max: 2}})
     @ages = ko.observableArray()
     @infants = ko.observable(0).extend({integerOnly:
       {min: 0, max: 2}})
 
     @adults.subscribe (newValue)=>
-      if newValue + @children() > 4
-        @adults 4 - @children()
+      if newValue + @children() > 5
+        @adults 5 - @children()
       if (@parent.overall() - @adults() + newValue) > 9
         @adults 9 - @parent.overall() + @adults()
 
     @children.subscribe (newValue)=>
-      if newValue + @adults() > 4
-        newValue = 4 - @adults()
+      if newValue + @adults() > 5
+        newValue = 5 - @adults()
         @children newValue
       if (@parent.overall() - @children() + newValue) > 9
         @children 9 - @parent.overall() + @children()
@@ -27,8 +27,7 @@ class SpRoom
         return
       if @ages().length < newValue
         for i in [0..(newValue - @ages().length - 1)]
-          @ages.push {age: ko.observable(12).extend {integerOnly:
-            {min: 0, max: 12}}}
+          @ages.push {age: ko.observable(12).extend {integerOnly:{min: 0, max: 12}}}
       else if @ages().length > newValue
         @ages.splice(newValue)
       ko.processAllDeferredBindingUpdates()
@@ -43,19 +42,18 @@ class SpRoom
     # FIXME: FIXME FIXME
     if @children() > 0
       for i in [0..(@children()-1)]
-        @ages.push {age: ko.observable(parts[3 + i]).extend {integerOnly:
-          {min: 0, max: 12}}}
+        @ages.push {age: ko.observable(parts[3 + i]).extend {integerOnly:{min: 0, max: 12}}}
     console.log('ages:', @ages())
 
   fromObject: (item) ->
-    @adults item.adultCount
-    @children item.childCount
+    console.log('search params FromObject',item)
+    @adults item.adt
+    @children item.chd
     @infants item.cots
     
     if @children() > 0
       for i in [0..(@children()-1)]
-        @ages.push {age: ko.observable(item.childAge).extend {integerOnly:
-          {min: 0, max: 12}}}
+        @ages.push {age: ko.observable(item.chdAges[i]).extend {integerOnly:{min: 0, max: 12}}}
 
 
   getHash: =>
@@ -69,11 +67,16 @@ class SpRoom
     # FIXME FIMXE FIMXE
     agesText = ''
     console.log('age p', @ages(), @)
+    agesTextVals = []
+    j = 0
     for ageObj in @ages()
       console.log('age', ageObj, ageObj.age())
-      agesText = "rooms[#{i}][chdAge]=" + ageObj.age()
+      agesTextVals.push("rooms[#{i}][chdAges][#{j}]=" + ageObj.age())
+      j++
+    if(agesTextVals.length)
+      agesText = agesTextVals.join('&')
     if !agesText
-      agesText = "rooms[#{i}][chdAge]=0"
+      agesText = "rooms[#{i}][chdAges]=0"
     return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&" + agesText + "&rooms[#{i}][cots]=" + @infants()
 
 class HotelsSearchParams

@@ -6,7 +6,16 @@ class HotelBookClient
     public $lastHeaders;
     public $multiCurl;
     public static $roomSizeRoomTypesMap = array(1 => array(1), 2 => array(2, 3), 3 => array(5), 4 => array(6));
+    public static $roomSizeRoomTypesChldMap =
+        array(
+            2 => array(array('size'=>2,'child'=>false),array('size'=>3,'child'=>false),),
+            3 => array(array('size'=>5,'child'=>false),array('size'=>2,'child'=>true),array('size'=>3,'child'=>true),),
+            4 => array(array('size'=>6,'child'=>false),),
+            5 => array(array('size'=>6,'child'=>true),),
+            6 => array()
+        );
     public static $roomSizeIdNamesMap = array(1 => 'SGL', 2 => 'DBL', 3 => 'TWN', 4 => 'TWNSU', 5 => 'TRLP', 6 => 'QUAD', 7 => 'DBLSU', 8 => 'DBLORTWIN');
+    public static $roomSizeIdCotsMap = array(1 => false, 2 => true, 3 => true, 4 => false, 5 => false, 6 => true, 7 => false, 8 => 'DBLORTWIN');
     public static $lastRequestMethod;
     /** @var City lastRequestCity */
     public static $lastRequestCity;
@@ -670,8 +679,8 @@ class HotelBookClient
                     break;
             }
         }
-        $smallest = min($distances);
-        $biggest = max($distances);
+        $smallest = (sizeof($distances)>0) ? min($distances) : 1;
+        $biggest = (sizeof($distances)>0) ? max($distances): 100;
         # если у нас есть отели и они не слишком сильно разбросаны
         if (($i > 0) && (($biggest / $smallest) < 50)) {
             $avgDistance = $distance / $i;
@@ -748,24 +757,53 @@ class HotelBookClient
         //Make combinations to combinations Array
         uasort($rooms, 'HotelBookClient::compareArrayAdultCount');
         $combinations = array();
+        $impossibleRequest = false;
         foreach ($rooms as $key => $room) {
+            if($room['cots'] > 2){
+                $impossibleRequest = true;
+            }
+            if($room['adultCount'] > 4){
+                $impossibleRequest = true;
+            }
             $rooms[$key]['bigPeoples'] = $room['adultCount'] + $room['childCount'];
-            $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesMap[$rooms[$key]['bigPeoples']]);
+            if($room['childCount']){
+                $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesChldMap[$rooms[$key]['bigPeoples']]);
+            }else{
+                $rooms[$key]['sizeCount'] = count(self::$roomSizeRoomTypesMap[$rooms[$key]['bigPeoples']]);
+            }
             $rooms[$key]['sizeIndex'] = 0;
         }
         $allCombined = false;
         // Make ALL possible combinations
-        while (!$allCombined) {
+        while (!$impossibleRequest && !$allCombined) {
             $combination = array();
             $allCombined = true;
+            $combPossible = true;
             foreach ($rooms as $key => $room) {
 
                 if ($room['sizeCount'] !== ($room['sizeIndex'] + 1)) $allCombined = false;
-                $rooms[$key]['roomSizeId'] = self::$roomSizeRoomTypesMap[$rooms[$key]['bigPeoples']][$room['sizeIndex']];
-                $combination[] = array('roomSizeId' => $rooms[$key]['roomSizeId'], 'child' => $rooms[$key]['childCount'], 'cots' => $rooms[$key]['cots'], 'ChildAge' => $rooms[$key]['childAge']);
+                if($room['childCount']){
+                    $combInfo = self::$roomSizeRoomTypesChldMap[$rooms[$key]['bigPeoples']][$room['sizeIndex']];
+                    $rooms[$key]['roomSizeId'] = $combInfo['size'];
+                    if($combInfo['child']){
+                        $combination[] = array('roomSizeId' => $rooms[$key]['roomSizeId'], 'child' => $rooms[$key]['childCount'], 'cots' => $rooms[$key]['cots'], 'ChildAge' => $rooms[$key]['childAge']);
+                    }else{
+                        $combination[] = array('roomSizeId' => $rooms[$key]['roomSizeId'], 'child' => 0, 'cots' => $rooms[$key]['cots'], 'ChildAge' => false);
+                    }
+                }else{
+                    $rooms[$key]['roomSizeId'] = self::$roomSizeRoomTypesMap[$rooms[$key]['bigPeoples']][$room['sizeIndex']];
+                    $combination[] = array('roomSizeId' => $rooms[$key]['roomSizeId'], 'child' => $rooms[$key]['childCount'], 'cots' => $rooms[$key]['cots'], 'ChildAge' => $rooms[$key]['childAge']);
+                }
+                if($rooms[$key]['cots']){
+                    if(!self::$roomSizeIdCotsMap[$rooms[$key]['roomSizeId']]){
+                        $combPossible = false;
+                    }
+                }
             }
-            sort($combination);
-            $combinations[] = $combination;
+            if($combPossible){
+                sort($combination);
+                $combinations[] = $combination;
+            }
             if (!$allCombined) {
                 //next possible state
                 $overflow = false;
@@ -799,6 +837,12 @@ class HotelBookClient
                 }
             }
         }
+        if(!$combinations){
+            $response = new HotelSearchResponse();
+            $response->responseStatus = ResponseStatus::ERROR_CODE_EMPTY;
+            return $response;
+        }
+
         //delete same combinations
         sort($combinations);
         foreach ($combinations as $key => $combination) {
