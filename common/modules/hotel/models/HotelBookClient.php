@@ -670,8 +670,8 @@ class HotelBookClient
                     break;
             }
         }
-        $smallest = min($distances);
-        $biggest = max($distances);
+        $smallest = (sizeof($distances)>0) ? min($distances) : 1;
+        $biggest = (sizeof($distances)>0) ? max($distances): 100;
         # если у нас есть отели и они не слишком сильно разбросаны
         if (($i > 0) && (($biggest / $smallest) < 50)) {
             $avgDistance = $distance / $i;
