@@ -40,13 +40,13 @@ class SearchController extends ApiController
         $hotelSearchParams->duration = $duration;
         foreach ($rooms as $i => $room)
         {
-            if ($room['chd'] == 1)
-                $hotelSearchParams->addRoom($room['adt'], $room['cots'], $room['chdAge']);
-            elseif ($room['chd'] == 0)
+            if ($room['chd'] == 0)
                 $hotelSearchParams->addRoom($room['adt'], $room['cots'], false);
+            elseif($room['chd'] > 0 && $room['chd'] < 3)
+                $hotelSearchParams->addRoom($room['adt'], $room['cots'], $room['chdAges']);
             else
             {
-                $this->sendError(200, 'Only 0 or 1 child at one hotel room accepted');
+                $this->sendError(200, 'Only 0 or 1 or 2 child at one hotel room accepted');
                 Yii::app()->end();
             }
         }
@@ -67,6 +67,8 @@ class SearchController extends ApiController
 
         $this->results['cacheId'] = $cacheId;
         $this->results['searchParams'] = $hotelSearchParams->getJsonObject();
+        if($rooms)
+            $this->results['searchParams']['rooms'] = $rooms;
 
         if ($format == 'json')
             $this->sendJson($this->results);

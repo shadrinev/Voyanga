@@ -83,6 +83,7 @@ class SearchController extends ApiController
     public function actionUpdateEvent()
     {
         print_r($_POST);
+        if(!isset($_POST['eventId'])) return false;
         $event = Event::model()->findByPk($_POST['eventId']);
         if(isset($_POST['startCity'])){
             $startCity = City::getCityByCode($_POST['startCity']);
@@ -196,7 +197,7 @@ class SearchController extends ApiController
             $newRoom = new HotelRoomForm;
             $newRoom->adultCount = $room['adt'];
             $newRoom->childCount = $room['chd'];
-            $newRoom->childAge = $room['chdAge'];
+            $newRoom->childAges = $room['chdAges'];
             $newRoom->cots = $room['cots'];
             $tourBuilder->rooms[] = $newRoom;
         }

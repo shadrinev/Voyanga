@@ -203,7 +203,7 @@ class HotelTripElement extends TripElement
             $newRoom = array(
                 'adt' => $room->adultCount,
                 'chd' => $room->childCount,
-                'chdAge' => $room->childAge,
+                'chdAges' => $room->childAges,
                 'cots' => $room->cots
             );
             $search['rooms'][] = $newRoom;
@@ -240,7 +240,7 @@ class HotelTripElement extends TripElement
             $newRoom = array(
                 'adt' => $room['adultCount'],
                 'chd' => $room['childCount'],
-                'chdAge' => $room['childAge'],
+                'chdAges' => $room['childAges'],
                 'cots' => $room['cots']
             );
             $this->rooms[] = $newRoom;

@@ -10,12 +10,12 @@ class HotelRoomForm extends CFormModel
     public $adultCount=2;
     public $childCount=0;
     public $cots=0;
-    public $childAge=0;
+    public $childAges=array();
 
     public function rules()
     {
         return array(
-            array('adultCount, childCount, cots, childAge', 'numerical', 'integerOnly'=>true),
+            array('adultCount, childCount, cots', 'numerical', 'integerOnly'=>true),
             array('adultCount', 'required'),
         );
     }
@@ -26,7 +26,7 @@ class HotelRoomForm extends CFormModel
             'adultCount' => 'Количество взрослых',
             'childCount' => 'Количество детей',
             'cots' => 'Количество люлек',
-            'childAge' => 'Возраст ребёнка',
+            'childAges' => 'Возраст ребёнка',
         );
     }
 }
