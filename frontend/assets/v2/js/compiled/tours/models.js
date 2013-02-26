@@ -962,7 +962,7 @@ ToursResultSet = (function() {
     });
     ResizeAvia();
     return window.setTimeout(function() {
-      var aviaRes, calendarEvents, checkIn, checkOut, dest, flight, flights, hotelEvent, resSet, shareContent, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
+      var aviaRes, calendarEvents, checkIn, checkOut, dest, flight, flights, hotelEvent, resSet, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
       console.log('after render tours all tour page');
       console.log(_this.data());
       calendarEvents = [];
@@ -1029,8 +1029,10 @@ ToursResultSet = (function() {
       VoyangaCalendarTimeline.calendarEvents = calendarEvents;
       VoyangaCalendarTimeline.jObj = '#voyanga-calendar-timeline';
       VoyangaCalendarTimeline.init();
-      shareContent = $('.socialSharePlaceholder').html();
-      return $('.shareSocial').html(shareContent).show();
+      $('.shareSocial').html('');
+      $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial');
+      addthis.toolbox('.socialSharePlaceholder');
+      return $('.shareSocial').show();
     }, 1000);
   };
 

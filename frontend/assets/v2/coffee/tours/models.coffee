@@ -648,8 +648,10 @@ class ToursResultSet
         VoyangaCalendarTimeline.init()
 
         #показываем кнопки шаринга
-        shareContent = $('.socialSharePlaceholder').html();
-        $('.shareSocial').html(shareContent).show();
+        $('.shareSocial').html('')
+        $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial')
+        addthis.toolbox('.socialSharePlaceholder')
+        $('.shareSocial').show()
       ,1000
     )
 

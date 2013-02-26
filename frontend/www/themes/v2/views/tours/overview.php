@@ -9,7 +9,6 @@ $theme = Yii::app()->theme->baseUrl;
         }
     }
 </script>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
 <div class="socialSharePlaceholder" style="display: none">
     <a href="javascript:void(0);" id="followLink" title="Прямая ссылка">
         <span class="text">Получить ссылку</span><span class="getLink"><input type="text" name="textTextText" value=""> </span>
@@ -31,6 +30,7 @@ $theme = Yii::app()->theme->baseUrl;
             title="Twitter"></a>
     </div>
 </div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
 <script id="tours-index"></script>
 <script id="tours-overview" type="text/html">
     <div class="main-block">
