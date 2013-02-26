@@ -13,6 +13,7 @@ if (YII_DEBUG)
 
 date_default_timezone_set('Europe/Moscow');
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
 chdir(dirname(__FILE__) . '/../..');
 
