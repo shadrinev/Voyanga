@@ -126,8 +126,9 @@ $theme = Yii::app()->theme->baseUrl;
                 class="rur">o</span></span>
                 <a href="#" class="btn-order btnGoBuy" data-bind="click:buy">Перейти к оплате<span class="l"></span></a>
             </div>
-            <div class="shareSocial" style="display:none">
+            <div class="shareSocial" id="socialButtons" style="display:none">
             </div>
+            <div class="clear"></div>
         </div>
         <div class="clear"></div>
     </div>
