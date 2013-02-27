@@ -329,6 +329,24 @@ Utils = {
       _results.push(i++);
     }
     return _results;
+  },
+  peopleReadable: function(amount) {
+    switch (amount) {
+      case 1:
+        return "за одного";
+      case 2:
+        return "за двоих";
+      case 3:
+        return "за троих";
+      case 4:
+        return "за четверых";
+      case 5:
+        return "за пятерых";
+      case 6:
+        return "за шестерых";
+      default:
+        return "за компанию";
+    }
   }
 };
 

@@ -24,6 +24,7 @@ class TourPanelSet
     @selectionIndex.subscribe(
       (newValue)=>
         if(newValue == 1)
+          console.log('now we are clear values')
           VoyangaCalendarStandart.checkCalendarValue(false)
           @activeCalendarPanel().checkIn('')
           @activeCalendarPanel().checkOut('')
@@ -123,8 +124,7 @@ class TourPanelSet
     @i == 1
 
   addPanel: (force = false)=>
-    if !force && (@panels().length > 0) && (@selectionIndex() != 2)
-      console.log @panels()[0].city()
+    if (force != true) && (@panels().length > 0) && (@selectionIndex() != 2)
       if ((@panels().length == 1) && (@panels()[0].city().length == 0))
         el = $('div.from')
         $(el).find('.second-path').attr('placeholder', 'Введите первый город')
@@ -201,7 +201,6 @@ class TourPanel extends SearchPanel
   constructor: (sp, ind, isFirst) ->
     super(isFirst, true)
     @toggleSubscribers.dispose()
-    ;
     _.extend @, Backbone.Events
 
     @hasfocus = ko.observable false
@@ -292,19 +291,21 @@ class TourPanel extends SearchPanel
     hideFromCityInput(panel, event)
 
   showCalendar: (trig = true) =>
-    console.log('show calendar func')
-    $('.calenderWindow').show()
-    window.setTimeout(
-      ->
-        VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true)
-      ,50
-    )
+    ch = $('.calenderWindow').height()
+    if(ch == 0)
+      console.log('show calendar func')
+      $('.calenderWindow').show()
+      window.setTimeout(
+        ->
+          VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true)
+        ,50
+      )
 
-    if trig
-      @trigger "tourPanel:showCalendar", @
-    if @minimizedCalendar()
-      ResizeAvia()
-      @minimizedCalendar(false)
+      if trig
+        @trigger "tourPanel:showCalendar", @
+      if @minimizedCalendar()
+        ResizeAvia()
+        @minimizedCalendar(false)
 
   checkInHtml: =>
     if @checkIn()

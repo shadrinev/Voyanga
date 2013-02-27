@@ -7,7 +7,7 @@
 class TripStorage
 {
     private $name;
-    private $order;
+    public $order;
     private $items;
     private $itemsOnePerGroup;
     private $event;
@@ -85,7 +85,7 @@ class TripStorage
         $eventOrder->delete();
     }
 
-    private function saveItemsOfOrder()
+    public function saveItemsOfOrder()
     {
         foreach ($this->itemsOnePerGroup as $item)
         {

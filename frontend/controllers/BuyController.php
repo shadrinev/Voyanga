@@ -144,10 +144,11 @@ class BuyController extends FrontendController
         return $status;
     }
 
-    public function addItems()
+    public function addItems($from='GET')
     {
+        $items = ($from == 'GET') ? $_GET['item'] : $_POST['item'];
         Yii::app()->shoppingCart->clear();
-        foreach ($_GET['item'] as $i => $item)
+        foreach ($items as $i => $item)
         {
             if (!isset($item['type']))
                 continue;

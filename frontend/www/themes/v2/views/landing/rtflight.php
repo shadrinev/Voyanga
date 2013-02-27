@@ -110,8 +110,9 @@
             </ul>
         </div>
         <div class="floatRight textBlockPrice">
-            <div class="cena"> от <span class="price" data-bind="text: landBP.selectedPrice()">3 250</span> <span
-                class="rur">o</span></div>
+            <div class="cena" data-bind="if: landBP.selectedPrice() != '???'"> от <span class="price" data-bind="text: landBP.selectedPrice()">3 250</span> <span
+                class="rur">o</span>
+            </div>
             <div>
                 Самая низкая цена<br>
                 по этому направлению:<br>

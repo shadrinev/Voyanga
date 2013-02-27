@@ -184,7 +184,7 @@ landBestPriceSet = (function() {
 
     this.bestDateClick = __bind(this.bestDateClick, this);
 
-    var data, dataKey, dataObj, empty, firstElem, key, landBP, mom, monthChanged, monthName, prevMonth, today, _i, _len, _ref, _ref1, _ref2,
+    var cnt, data, dataKey, dataObj, dateKey, datesObj, empty, firstElem, key, landBP, mom, monthChanged, monthName, prevMonth, tmpMom, today, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3,
       _this = this;
     this._results = {};
     this.dates = {};
@@ -224,6 +224,17 @@ landBestPriceSet = (function() {
       if (landBP.showPrice() < this.minPrice()) {
         this.minPrice(landBP.showPrice());
       }
+    }
+    console.log('DATES:', this.dates);
+    cnt = 0;
+    tmpMom = moment();
+    while (cnt < 18) {
+      cnt++;
+      dateKey = tmpMom.format('YYYY-MM-DD');
+      if (!this.dates[dateKey]) {
+        this.dates[dateKey] = true;
+      }
+      tmpMom._d.setDate(tmpMom._d.getDate() + 1);
     }
     _ref1 = this.dates;
     for (dataKey in _ref1) {
@@ -292,19 +303,31 @@ landBestPriceSet = (function() {
     }
     console.log('dates', this.datesArr());
     this.active(this.minBestPrice());
-    this.active().selected(true);
+    if (this.active()) {
+      this.active().selected(true);
+    } else {
+      _ref3 = this.datesArr();
+      for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
+        datesObj = _ref3[_j];
+        this.active(datesObj.landBP);
+        this.active().selected(true);
+        break;
+      }
+    }
     this.selectedPrice = ko.computed(function() {
       var price;
       if (_this.directBestPrice()) {
         price = _this.directBestPrice();
       } else {
-        if (price = _this.active().active()) {
-          price = _this.active().active().price;
-        } else {
-          if (_this.active() && _this.active().showPrice) {
-            price = _this.active().showPrice();
+        if (_this.active()) {
+          if (_this.active().active()) {
+            price = _this.active().active().price;
           } else {
-            console.log('active not set', _this.active());
+            if (_this.active() && _this.active().showPrice) {
+              price = _this.active().showPrice();
+            } else {
+              console.log('active not set', _this.active());
+            }
           }
         }
       }

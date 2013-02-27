@@ -20,6 +20,8 @@ Application = (function(_super) {
 
     this.handle404 = __bind(this.handle404, this);
 
+    this.bindItemsToTour = __bind(this.bindItemsToTour, this);
+
     this.bindItemsToEvent = __bind(this.bindItemsToEvent, this);
 
     this.bindItemsToBuy = __bind(this.bindItemsToBuy, this);
@@ -263,6 +265,12 @@ Application = (function(_super) {
   Application.prototype.bindItemsToEvent = function() {
     var tourTrip;
     tourTrip = new EventTourResultSet(window.tripRaw, window.eventId);
+    return this.itemsToBuy = tourTrip;
+  };
+
+  Application.prototype.bindItemsToTour = function() {
+    var tourTrip;
+    tourTrip = new TourResultSet(window.tripRaw);
     return this.itemsToBuy = tourTrip;
   };
 
