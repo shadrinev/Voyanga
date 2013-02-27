@@ -1188,7 +1188,8 @@ function openPopUpProj() {
             }
         }
     });
-    $('.mainWrapBg').find('.centerImg').click(function() {
+    $('.mainWrapBg').find('.centerImg').unbind('click');
+    $('.mainWrapBg').find('.centerImg').bind('click', function() {
         ClikRightProj();
     });
 }
@@ -1643,17 +1644,15 @@ $(function(){
 
 function resizePanel(arg) {
 
-        //console.log('!!!==== 7 ====!!!');
         $('.panelTable').each(function(index){
-
-            var _panelTable = $(this);//$('.panel').last().find('.panelTable');
+            var _panelTable = $(this);
             var _classThis;
             var _midWidth = 1130;
             var _minWidth = 1000;
             var _newMean;
 
-            var _allWidthPanel, _midWidthPanel, _maxWidthPanel;
-            //_panelTable.find('.tdPeople').css('width', 'auto');
+            var _allWidthPanel;
+            _panelTable.find('.tdCity').find('.data').css('width', 'auto');
 
             if (_panelTable.hasClass('avia')) {
                 _classThis = 'avia';
@@ -1706,7 +1705,6 @@ function resizePanel(arg) {
             else {
                 _allWidthPanel = 900;
             }
-
             if (_widthPanelTable >= _allWidthPanel) {
                 _newMean = (_allWidthPanel - _widthTdTumblr - _widthTdPeople - _widthTdButton - _widthTdCityStart - _widthTdAddTour) / _howManyInput;
             }
