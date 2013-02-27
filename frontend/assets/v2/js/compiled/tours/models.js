@@ -964,7 +964,7 @@ ToursResultSet = (function() {
     });
     ResizeAvia();
     return window.setTimeout(function() {
-      var aviaRes, calendarEvents, checkIn, checkOut, cur, data, description, dest, el, flight, flights, hash, hotelEvent, interval, people, resSet, room, title, tmp, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3;
+      var aviaRes, calendarEvents, checkIn, checkOut, cur, data, description, dest, el, flight, flights, hash, hotelEvent, interval, people, resSet, title, tmp, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
       people = 0;
       calendarEvents = [];
       _ref = _this.data();
@@ -1003,11 +1003,7 @@ ToursResultSet = (function() {
         }
         if (resSet.isHotel()) {
           if (people === 0) {
-            _ref2 = resSet.rawSP.rooms;
-            for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
-              room = _ref2[_l];
-              people += room.overall();
-            }
+            people = resSet.rawSP.overall();
           }
           checkIn = moment(resSet.rawSP.checkIn).add('h', 8);
           checkOut = moment(resSet.rawSP.checkIn).add('d', resSet.rawSP.duration);
@@ -1019,7 +1015,6 @@ ToursResultSet = (function() {
             city: resSet.rawSP.city
           };
           if (resSet.selection()) {
-            console.log('select:', resSet.selection());
             hotelEvent.description = resSet.selection().hotel.hotelName;
           }
           calendarEvents.push(hotelEvent);
@@ -1054,13 +1049,13 @@ ToursResultSet = (function() {
       description = tmp.join(', ');
       hash = dateUtils.formatDayMonthInterval(calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd);
       hash += (_this.price() - _this.savings()) + people;
-      _ref3 = _this.data();
-      for (_m = 0, _len4 = _ref3.length; _m < _len4; _m++) {
-        el = _ref3[_m];
+      _ref2 = _this.data();
+      for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
+        el = _ref2[_l];
         cur = el.selection();
-        if (el.isAvia()) {
+        if (cur && el.isAvia()) {
           hash += cur.similarityHash();
-        } else {
+        } else if (cur && el.isHotel()) {
           hash += cur.hotel.hotelId + cur.roomSet.similarityHash();
         }
       }

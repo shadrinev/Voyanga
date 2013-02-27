@@ -626,15 +626,13 @@ class ToursResultSet
           if resSet.isHotel()
 
             if people==0
-              for room in resSet.rawSP.rooms
-                people += room.overall()
+              people = resSet.rawSP.overall()
 
             checkIn = moment(resSet.rawSP.checkIn).add('h',8);
             checkOut = moment(resSet.rawSP.checkIn).add('d',resSet.rawSP.duration);
 
             hotelEvent = {dayStart: checkIn._d,dayEnd: checkOut._d,type: 'hotel',description:  '', city: resSet.rawSP.city}
             if resSet.selection()
-              console.log('select:',resSet.selection())
               hotelEvent.description = resSet.selection().hotel.hotelName
 
             calendarEvents.push hotelEvent
@@ -671,9 +669,9 @@ class ToursResultSet
         hash += (@price() - @savings()) + people
         for el in @data()
           cur = el.selection()
-          if el.isAvia()
+          if cur && el.isAvia()
             hash += cur.similarityHash()
-          else
+          else if cur && el.isHotel()
             hash += cur.hotel.hotelId + cur.roomSet.similarityHash()
 
         data = $.extend {}, {hash: hash, name: description}, @createTourData()
