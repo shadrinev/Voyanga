@@ -26,6 +26,7 @@ class ShareController extends FrontendController
         }
         catch(CException $e)
         {
+            Yii::app()->RSentryException->logException($e);
             throw new CHttpException(404);
         }
 
