@@ -79,6 +79,16 @@ class EventInfoController extends FrontendController
             $pictures[] = array('url' => $picture->getUrl());
         }
 
-        $this->render('info', array('peopleAmountReadable'=>UtilsHelper::peopleReadable($peopleAmount), 'minPrice' => $minPrice, 'event' => $event, 'priceData' => $pricesData, 'defaultCity' => $defaultCityId, 'tours' => $tours, 'cities' => $cities, 'twoCities' => $twoCities, 'pictures' => $pictures));
+        $this->render('info', array(
+            'peopleAmountReadable'=>UtilsHelper::peopleReadable($peopleAmount),
+            'minPrice' => $minPrice,
+            'event' => $event,
+            'priceData' => $pricesData,
+            'defaultCity' => $defaultCityId,
+            'tours' => $tours,
+            'cities' => $cities,
+            'twoCities' => $twoCities,
+            'pictures' => $pictures
+        ));
     }
 }

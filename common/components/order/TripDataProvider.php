@@ -83,9 +83,6 @@ class TripDataProvider
             $searchParams = @unserialize($item->searchParams);
             if ($searchParams)
                 $hotelTripElement->fillFromSearchParams($searchParams);
-            /*$city = City::model()->findByPk($item->cityId);
-            $hotelTripElement->city = $city;
-            $hotelTripElement->checkIn = $item->checkIn;*/
             $object = @unserialize($item->object);
             if ($object)
             {
@@ -97,6 +94,7 @@ class TripDataProvider
             }
             Yii::app()->shoppingCart->put($hotelTripElement);
         }
+        return $order;
     }
 
     public function getSortedCartItemsOnePerGroup($cache = true)

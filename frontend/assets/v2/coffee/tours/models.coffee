@@ -962,7 +962,6 @@ class TourTripResultSet
       resArr = @flightIds()
       return resArr.join(':')
     @showTariffRules = =>
-      console.log('i wonna show tariff rules')
       aviaApi = new AviaAPI();
       aviaApi.search('flight/search/tariffRules?flightIds='+@flightIdsString(),
         (data)=>
@@ -1053,3 +1052,153 @@ class TourTripResultSet
         @totalCost = @totalCostWithDiscount
     else
         @totalCost = @totalCostWithoutDiscount
+
+class TourResultSet
+  constructor: (resultSet) ->
+    @items = ko.observableArray([])
+    @fullPrice = ko.observable 0
+    @activePanel = ko.observable(null)
+    @overviewPeople = ko.observable 0
+    @overviewPricePeople = ko.observable('')
+    @visiblePanel = ko.observable(true)
+    @startCity = ko.observable ''
+    @visiblePanel.subscribe (newValue)=>
+      if newValue
+        @showPanel()
+      else
+        @hidePanel()
+    @showPanelText = ko.computed =>
+      if @visiblePanel()
+        return "свернуть"
+      else
+        return "развернуть"
+
+    @reinit(resultSet)
+
+  reinit: (@resultSet)=>
+    @hasFlight = false
+    @hasHotel = false
+    @items([])
+    @flightCounter = ko.observable 0
+    @hotelCounter = ko.observable 0
+    @selected_key = ko.observable ''
+    @selected_best = ko.observable ''
+    @correctTour = ko.observable false
+    @overviewPeople = ko.observable 0
+    @totalCost = 0
+    panelSet = new TourPanelSet()
+    @activePanel(panelSet)
+    if @resultSet.items[0].isAvia
+      startCity = @resultSet.items[0].searchParams.departure_iata
+      startCityReadable = @resultSet.items[0].searchParams.departure
+    else
+      startCity = window.currentCityCode
+      startCityReadable = window.currentCityCodeReadable
+    @activePanel().startCity(startCity)
+    @activePanel().selectedParams = {ticketParams: []}
+    @activePanel().sp.calendarActivated(false)
+    window.app.fakoPanel(panelSet)
+
+    @startCity(startCityReadable)
+    @flightCounterWord = ko.computed =>
+      res = Utils.wordAfterNum @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
+      if (@hotelCounter() > 0)
+        res = res + ', '
+      return res
+    @hotelCounterWord = ko.computed =>
+      Utils.wordAfterNum @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
+
+    try
+      _.each @resultSet.items, (item) =>
+        if (item.isFlight)
+          @hasFlight = true
+          @flightCounter(@flightCounter() + 1)
+          @roundTrip = item.flights.length == 2
+          aviaResult = new AviaResult(item, @)
+          aviaResult.sort()
+          aviaResult.priceHtml = ko.observable(aviaResult.price + '<span class="rur">o</span>')
+          aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity())
+          aviaResult.overviewTemplate = 'tours-event-avia-ticket'
+          aviaResult.dateClass = ko.observable(if @roundTrip then 'blue-two' else 'blue-one')
+          aviaResult.isAvia = ko.observable(item.isFlight)
+          aviaResult.isHotel = ko.observable(item.isHotel)
+          aviaResult.startDate = aviaResult.departureDate()
+          aviaResult.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate()) + '</div>' + (if @roundTrip then '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' else ''))
+          @activePanel().selectedParams.ticketParams.push aviaResult.getParams()
+          aviaResult.overviewPeople = ko.observable
+          @items.push aviaResult
+          @totalCost += aviaResult.price
+        else if (item.isHotel)
+          @hasHotel = true
+          @hotelCounter(@hotelCounter() + 1)
+          @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
+          @lastHotel.priceHtml = ko.observable(@lastHotel.roomSets()[0].price + '<span class="rur">o</span>')
+          @lastHotel.dateClass = ko.observable('orange-two')
+          @lastHotel.overviewTemplate = 'tours-event-hotels-ticket'
+          @lastHotel.isAvia = ko.observable(item.isFlight)
+          @lastHotel.isHotel = ko.observable(item.isHotel)
+          @lastHotel.startDate = @lastHotel.checkIn
+          @lastHotel.serachParams = item.searchParams
+          @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
+          @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut) + '</div>')
+          @activePanel().selectedParams.ticketParams.push @lastHotel.getParams()
+          @items.push(@lastHotel)
+          @totalCost += @lastHotel.roomSets()[0].discountPrice
+      _.sortBy @items(), (item)->
+        item.startDate
+
+      @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(), 'человек', 'человека', 'человек'))
+      @startDate = @items()[0].startDate
+      @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate) + '</div>')
+      firstHotel = true
+      for item in @items()
+        if item.isHotel()
+          if !firstHotel
+            @activePanel().addPanel(true)
+          else
+            i = 0
+            for room in item.serachParams.rooms
+              if !@activePanel().sp.rooms()[i]
+                @activePanel().sp.addSpRoom()
+              @activePanel().sp.rooms()[i].adults(room.adultCount)
+              @activePanel().sp.rooms()[i].children(room.childCount)
+              @activePanel().sp.rooms()[i].ages(room.childAge)
+              i++
+            firstHotel = false
+
+          @activePanel().lastPanel.checkIn(moment(item.checkIn)._d)
+          @activePanel().lastPanel.checkOut(moment(item.checkOut)._d)
+          @activePanel().lastPanel.city(item.cityCode)
+
+      @activePanel().saveStartParams()
+      _.last(@activePanel().panels()).minimizedCalendar(true)
+
+      setTimeout ()=>
+        @activePanel().sp.calendarActivated(true)
+      , 1000
+
+      window.setTimeout ()=>
+        if @visiblePanel()
+          $('.sub-head.event').css('margin-top', '0px')
+        else
+          $('.sub-head.event').stop(true).css('height', (@activePanel().heightPanelSet()) + 'px').css('margin-top', (-@activePanel().heightPanelSet() + 4) + 'px')
+      , 200
+      @correctTour(true)
+    catch exept
+      console.log("Cannot process tour")
+      @correctTour(false)
+
+    if @resultSet.price
+      @totalCost = @resultSet.price
+    @fullPrice(@totalCost)
+
+  gotoAndShowPanel: =>
+    Utils.scrollTo('.panel')
+    @visiblePanel(true)
+  togglePanel: =>
+    @visiblePanel(!@visiblePanel())
+  showPanel: =>
+    $('.sub-head.event').animate({'margin-top': '0px'})
+  hidePanel: =>
+    $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px').animate({'margin-top': (-@activePanel().heightPanelSet() + 4) + 'px'})
+

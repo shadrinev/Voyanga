@@ -321,7 +321,6 @@ class EventTourResultSet
       @startDate = @items()[0].startDate
       @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate) + '</div>')
       firstHotel = true
-      console.log('items', @items())
       for item in @items()
         if item.isHotel()
           if !firstHotel

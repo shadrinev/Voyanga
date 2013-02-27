@@ -16,6 +16,7 @@ Yii::app()->clientScript->registerPackage('landing');
 Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
 Yii::app()->clientScript->registerScriptFile('/js/completed.js');
 Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
+Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--[if IE 8 ]>    <html xmlns="http://www.w3.org/1999/xhtml" class="ie ie8"> <![endif]-->
@@ -33,6 +34,8 @@ Yii::app()->clientScript->registerScriptFile('/js/eventPage.js');
 <body>
 <?php $this->renderPartial('//layouts/_counters'); ?>
 <script type="text/javascript">
+    window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
+    window.currentCityCodeReadable = '<?php echo Geoip::getCurrentCity()->localRu;?>';
     $(function(){
         Raven.config('<?php echo Yii::app()->params['sentry.dsn']; ?>').install()
     })
