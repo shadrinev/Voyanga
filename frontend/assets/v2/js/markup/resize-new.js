@@ -1188,7 +1188,8 @@ function openPopUpProj() {
             }
         }
     });
-    $('.mainWrapBg').find('.centerImg').click(function() {
+    $('.mainWrapBg').find('.centerImg').unbind('click');
+    $('.mainWrapBg').find('.centerImg').bind('click', function() {
         ClikRightProj();
     });
 }
@@ -1203,6 +1204,7 @@ function ClikRightProj() {
 
     var lenSlideProj = $('.textSlideProj').find('li').length;
     var _countSlide = $('.bgCount').find('span').text();
+    //alert(_countSlide);
     if (_countSlide >= lenSlideProj) {
         return false;
     }
