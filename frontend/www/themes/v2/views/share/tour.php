@@ -202,12 +202,11 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                     <div class="hr-bg big">
                         <img width="100%" height="31" src="/themes/v2/images/shadow-hotel.png">
                     </div>
-                    <div class="divPrice"><span class="price" data-bind="text: itemsToBuy.fullPrice()"></span>
-                        <span class="rur">o</span>
+                    <div class="costItAll" style='padding-right: 0px'>
+                        Итого <span class="allCost"><span data-bind="text: itemsToBuy.fullPrice()">86 250</span> <span
+                                class="rur">o</span></span>
+                        <a href="#" class="btn-order btnGoBuy" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}">Проверить<span class="l"></span></a>
                     </div>
-                    <div class="btn-order floatRight"
-                         data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}">
-                        Проверить<span class="l"></span></div>
                 </td>
                 <td class="secondTd">
 
