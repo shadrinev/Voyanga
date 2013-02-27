@@ -26,7 +26,7 @@ class SearchController extends ApiController
      *  [Х][chdAge]
      *  [Х][cots]
      */
-    public function actionDefault($start, array $destinations, array $rooms, $format = 'json', $eventId = null, $return = 1)
+    public function actionDefault($start, array $destinations, array $rooms, $format = 'json', $eventId = null, $orderId = null, $return = 1)
     {
 
         $tourSearchParams = $this->buildSearchParams($start, $destinations, $rooms, $return);
@@ -39,6 +39,11 @@ class SearchController extends ApiController
                     $items = $dataProvider->getWithAdditionalInfo($dataProvider->getSortedCartItemsOnePerGroup(false));
                 }
             }
+        }
+        if($orderId) {
+            $dataProvider = new TripDataProvider();
+            $dataProvider->restoreFromDb($orderId);
+            $items = $dataProvider->getWithAdditionalInfo($dataProvider->getSortedCartItemsOnePerGroup(false));
         }
         $this->buildTour($tourSearchParams);
         $results = $this->searchTourVariants();

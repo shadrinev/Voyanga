@@ -1288,6 +1288,9 @@ TourSearchParams = (function(_super) {
     if (this.eventId) {
       params.push('eventId=' + this.eventId);
     }
+    if (this.orderId) {
+      params.push('orderId=' + this.orderId);
+    }
     result += params.join("&");
     window.voyanga_debug("Generated search url for tours", result);
     return result;
@@ -1323,7 +1326,7 @@ TourSearchParams = (function(_super) {
   };
 
   TourSearchParams.prototype.fromList = function(data) {
-    var destination, doingrooms, i, oldSelection, room, _i, _ref;
+    var destination, doingrooms, i, oldSelection, room, toSaveIn, _i, _ref;
     this.startCity(data[0]);
     this.returnBack(data[1]);
     doingrooms = false;
@@ -1342,7 +1345,8 @@ TourSearchParams = (function(_super) {
     i = i + 1;
     oldSelection = false;
     while (i < data.length) {
-      if (data[i] === 'eventId') {
+      if ((data[i] === 'eventId') || (data[i] === 'orderId')) {
+        toSaveIn = data[i];
         oldSelection = true;
         break;
       }
@@ -1352,12 +1356,9 @@ TourSearchParams = (function(_super) {
       i++;
     }
     if (oldSelection) {
-      console.log('really have oldParams');
       i++;
-      console.log('old params is', data[i]);
-      this.eventId = data[i];
+      return this[toSaveIn] = data[i];
     }
-    return window.voyanga_debug('Result', this);
   };
 
   TourSearchParams.prototype.fromObject = function(data) {
@@ -1608,7 +1609,7 @@ TourTripResultSet = (function() {
 
 TourResultSet = (function() {
 
-  function TourResultSet(resultSet) {
+  function TourResultSet(resultSet, orderId) {
     this.hidePanel = __bind(this.hidePanel, this);
 
     this.showPanel = __bind(this.showPanel, this);
@@ -1624,6 +1625,7 @@ TourResultSet = (function() {
     this.fullPrice = ko.observable(0);
     this.activePanel = ko.observable(null);
     this.overviewPeople = ko.observable(0);
+    this.orderId = orderId;
     this.overviewPricePeople = ko.observable('');
     this.visiblePanel = ko.observable(true);
     this.startCity = ko.observable('');
@@ -1660,16 +1662,17 @@ TourResultSet = (function() {
     this.totalCost = 0;
     panelSet = new TourPanelSet();
     this.activePanel(panelSet);
-    if (this.resultSet.items[0].isAvia) {
-      startCity = this.resultSet.items[0].searchParams.departure_iata;
-      startCityReadable = this.resultSet.items[0].searchParams.departure;
+    if (this.resultSet.items[0].isFlight) {
+      startCity = this.resultSet.items[0].searchParams.destinations[0].departure_iata;
+      startCityReadable = this.resultSet.items[0].searchParams.destinations[0].departure;
     } else {
       startCity = window.currentCityCode;
       startCityReadable = window.currentCityCodeReadable;
     }
     this.activePanel().startCity(startCity);
     this.activePanel().selectedParams = {
-      ticketParams: []
+      ticketParams: [],
+      orderId: this.orderId
     };
     this.activePanel().sp.calendarActivated(false);
     window.app.fakoPanel(panelSet);
@@ -1727,7 +1730,6 @@ TourResultSet = (function() {
       _.sortBy(this.items(), function(item) {
         return item.startDate;
       });
-      this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
       this.startDate = this.items()[0].startDate;
       this.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(this.startDate) + '</div>');
       firstHotel = true;
@@ -1759,6 +1761,7 @@ TourResultSet = (function() {
       }
       this.activePanel().saveStartParams();
       _.last(this.activePanel().panels()).minimizedCalendar(true);
+      this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
       setTimeout(function() {
         return _this.activePanel().sp.calendarActivated(true);
       }, 1000);

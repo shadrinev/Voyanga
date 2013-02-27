@@ -349,7 +349,11 @@ TourPanel = (function(_super) {
     } else {
       url = '/#' + this.sp.getHash();
       if (this.startParams === url) {
-        url += 'eventId/' + this.selectedParams.eventId;
+        if (this.selectedParams.eventId) {
+          url += 'eventId/' + this.selectedParams.eventId;
+        } else if (this.selectedParams.orderId) {
+          url += 'orderId/' + this.selectedParams.orderId;
+        }
       }
       return window.location.href = url;
     }

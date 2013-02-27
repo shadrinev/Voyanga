@@ -827,6 +827,8 @@ class TourSearchParams extends SearchParams
 
     if(@eventId)
       params.push 'eventId='+@eventId
+    if(@orderId)
+      params.push 'orderId='+@orderId
     result += params.join "&"
     window.voyanga_debug "Generated search url for tours", result
     return result
@@ -872,7 +874,8 @@ class TourSearchParams extends SearchParams
     i = i + 1
     oldSelection = false
     while i < data.length
-      if data[i] == 'eventId'
+      if ((data[i] == 'eventId') || (data[i] == 'orderId'))
+        toSaveIn = data[i]
         oldSelection = true
         break
       room = new SpRoom(@)
@@ -880,12 +883,8 @@ class TourSearchParams extends SearchParams
       @rooms.push room
       i++
     if oldSelection
-      console.log('really have oldParams')
       i++;
-      console.log('old params is',data[i])
-      @eventId = data[i]
-
-    window.voyanga_debug 'Result', @
+      @[toSaveIn] = data[i]
 
   fromObject: (data)->
     window.voyanga_debug "Restoring TourSearchParams from object"
@@ -1052,11 +1051,12 @@ class TourTripResultSet
         @totalCost = @totalCostWithoutDiscount
 
 class TourResultSet
-  constructor: (resultSet) ->
+  constructor: (resultSet, orderId) ->
     @items = ko.observableArray([])
     @fullPrice = ko.observable 0
     @activePanel = ko.observable(null)
     @overviewPeople = ko.observable 0
+    @orderId = orderId
     @overviewPricePeople = ko.observable('')
     @visiblePanel = ko.observable(true)
     @startCity = ko.observable ''
@@ -1086,14 +1086,14 @@ class TourResultSet
     @totalCost = 0
     panelSet = new TourPanelSet()
     @activePanel(panelSet)
-    if @resultSet.items[0].isAvia
-      startCity = @resultSet.items[0].searchParams.departure_iata
-      startCityReadable = @resultSet.items[0].searchParams.departure
+    if @resultSet.items[0].isFlight
+      startCity = @resultSet.items[0].searchParams.destinations[0].departure_iata
+      startCityReadable = @resultSet.items[0].searchParams.destinations[0].departure
     else
       startCity = window.currentCityCode
       startCityReadable = window.currentCityCodeReadable
     @activePanel().startCity(startCity)
-    @activePanel().selectedParams = {ticketParams: []}
+    @activePanel().selectedParams = {ticketParams: [], orderId: @orderId}
     @activePanel().sp.calendarActivated(false)
     window.app.fakoPanel(panelSet)
 
@@ -1145,7 +1145,6 @@ class TourResultSet
       _.sortBy @items(), (item)->
         item.startDate
 
-      @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(), 'человек', 'человека', 'человек'))
       @startDate = @items()[0].startDate
       @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate) + '</div>')
       firstHotel = true
@@ -1170,6 +1169,8 @@ class TourResultSet
 
       @activePanel().saveStartParams()
       _.last(@activePanel().panels()).minimizedCalendar(true)
+
+      @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(), 'человек', 'человека', 'человек'))
 
       setTimeout ()=>
         @activePanel().sp.calendarActivated(true)

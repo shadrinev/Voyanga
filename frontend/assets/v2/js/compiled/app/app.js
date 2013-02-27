@@ -270,7 +270,7 @@ Application = (function(_super) {
 
   Application.prototype.bindItemsToTour = function() {
     var tourTrip;
-    tourTrip = new TourResultSet(window.tripRaw);
+    tourTrip = new TourResultSet(window.tripRaw, window.orderId);
     return this.itemsToBuy = tourTrip;
   };
 

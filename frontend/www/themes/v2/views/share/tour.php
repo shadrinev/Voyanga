@@ -37,6 +37,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
 
 <script>
     window.tripRaw = <?php echo json_encode($tour); ?>;
+    window.orderId = <?php echo $orderId; ?>;
     $(document).ready(function () {
         initTourPage();
     })

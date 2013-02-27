@@ -191,7 +191,7 @@ class Application extends Backbone.Router
     @itemsToBuy =  tourTrip
 
   bindItemsToTour: =>
-    tourTrip = new TourResultSet(window.tripRaw)
+    tourTrip = new TourResultSet(window.tripRaw, window.orderId)
     @itemsToBuy =  tourTrip
 
   # FIXME write better handler

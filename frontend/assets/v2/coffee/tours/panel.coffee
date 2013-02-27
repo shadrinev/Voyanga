@@ -249,7 +249,10 @@ class TourPanel extends SearchPanel
     else
       url = '/#' + @sp.getHash()
       if @startParams == url
-        url += 'eventId/' + @selectedParams.eventId
+        if @selectedParams.eventId
+          url += 'eventId/' + @selectedParams.eventId
+        else if @selectedParams.orderId
+          url += 'orderId/' + @selectedParams.orderId
 
       window.location.href = url
 

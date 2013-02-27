@@ -27,7 +27,8 @@ class ShareController extends FrontendController
         $this->render('tour', array(
             'title' => 'Я составил путешествие на Воянге',
             'description' => $order->name,
-            'tour' => $tdp->getWithAdditionalInfo($tdp->getSortedCartItemsOnePerGroup(false))
+            'tour' => $tdp->getWithAdditionalInfo($tdp->getSortedCartItemsOnePerGroup(false)),
+            'orderId' => $id
         ));
     }
 }
