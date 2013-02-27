@@ -145,7 +145,15 @@ class landBestPriceSet
         @minPrice(landBP.showPrice())
 
 
-
+    console.log('DATES:',@dates)
+    cnt = 0
+    tmpMom = moment()
+    while(cnt < 18)
+      cnt++
+      dateKey = tmpMom.format('YYYY-MM-DD')
+      if(!@dates[dateKey])
+        @dates[dateKey] = true
+      tmpMom._d.setDate(tmpMom._d.getDate() + 1)
 
 
     for dataKey,empty of @dates
@@ -191,18 +199,25 @@ class landBestPriceSet
     console.log('dates', @datesArr())
 
     @active(@minBestPrice())
-    @active().selected(true)
+    if @active()
+      @active().selected(true)
+    else
+      for datesObj in @datesArr()
+        @active(datesObj.landBP)
+        @active().selected(true)
+        break
     @selectedPrice = ko.computed =>
       if @directBestPrice()
         price = @directBestPrice()
       else
-        if price = @active().active()
-          price = @active().active().price
-        else
-          if @active() && @active().showPrice
-            price = @active().showPrice()
+        if @active()
+          if @active().active()
+            price = @active().active().price
           else
-            console.log('active not set', @active())
+            if @active() && @active().showPrice
+              price = @active().showPrice()
+            else
+              console.log('active not set', @active())
       if !price
         price = '???'
       else

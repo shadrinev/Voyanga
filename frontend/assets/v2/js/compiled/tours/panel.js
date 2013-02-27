@@ -48,6 +48,7 @@ TourPanelSet = (function() {
     this.selectionIndex = ko.observable('');
     this.selectionIndex.subscribe(function(newValue) {
       if (newValue === 1) {
+        console.log('now we are clear values');
         VoyangaCalendarStandart.checkCalendarValue(false);
         _this.activeCalendarPanel().checkIn('');
         return _this.activeCalendarPanel().checkOut('');
@@ -397,20 +398,24 @@ TourPanel = (function(_super) {
   };
 
   TourPanel.prototype.showCalendar = function(trig) {
+    var ch;
     if (trig == null) {
       trig = true;
     }
-    console.log('show calendar func');
-    $('.calenderWindow').show();
-    window.setTimeout(function() {
-      return VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true);
-    }, 50);
-    if (trig) {
-      this.trigger("tourPanel:showCalendar", this);
-    }
-    if (this.minimizedCalendar()) {
-      ResizeAvia();
-      return this.minimizedCalendar(false);
+    ch = $('.calenderWindow').height();
+    if (ch === 0) {
+      console.log('show calendar func');
+      $('.calenderWindow').show();
+      window.setTimeout(function() {
+        return VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true);
+      }, 50);
+      if (trig) {
+        this.trigger("tourPanel:showCalendar", this);
+      }
+      if (this.minimizedCalendar()) {
+        ResizeAvia();
+        return this.minimizedCalendar(false);
+      }
     }
   };
 
