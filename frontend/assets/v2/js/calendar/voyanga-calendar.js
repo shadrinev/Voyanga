@@ -915,7 +915,7 @@ VoyangaCalendarStandart.init = function (panel, element) {
     this.checkCalendarValue = ko.observable(true);
     this.isMobileDevice = DetectMobileQuick() || DetectTierTablet();
     var self = this;
-    console.log('ReINIT calendar');
+    console.log('ReINIT calendar',this.checkCalendarValue(),VoyangaCalendarStandart.checkCalendarValue());
     this.oldCalendarValue = null;
     if (!this.panel || (this.panel && panel() != this.panel() )) {
         this.panel = panel;

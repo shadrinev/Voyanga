@@ -222,6 +222,11 @@ EOD;
 
     }
 
+    public function actionMetaphone($word)
+    {
+        echo UtilsHelper::ruMetaphone($word)."\n";
+    }
+
     /**
      * Execute the action.
      * @param array command line parameters specific for this command
