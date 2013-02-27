@@ -37,7 +37,7 @@ class ShareController extends FrontendController
         $this->assignTitle('tour', array('##tourTitle##' => $order->name));
         $this->layout = 'static';
         $this->render('tour', array(
-            'title' => 'Я составил путешествие на Воянге',
+            'title' => 'Я составил путешествие на Voyanga',
             'description' => $order->name,
             'tour' => $tdp->getWithAdditionalInfo($tdp->getSortedCartItemsOnePerGroup(false)),
             'orderId' => $id,

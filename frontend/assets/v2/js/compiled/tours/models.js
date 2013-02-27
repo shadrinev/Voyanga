@@ -1045,7 +1045,7 @@ ToursResultSet = (function() {
       interval = dateUtils.formatDayMonthInterval(calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd);
       tmp.push(interval);
       tmp.push((_this.price() - _this.savings()) + ' руб. ' + Utils.peopleReadable(people));
-      title = "Я составил путешествие на Воянге";
+      title = "Я составил путешествие на Voyanga";
       description = tmp.join(', ');
       hash = dateUtils.formatDayMonthInterval(calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd);
       hash += (_this.price() - _this.savings()) + people;

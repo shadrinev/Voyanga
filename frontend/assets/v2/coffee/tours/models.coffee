@@ -661,7 +661,7 @@ class ToursResultSet
         tmp.push interval
         tmp.push (@price() - @savings()) + ' руб. ' + Utils.peopleReadable(people)
 
-        title = "Я составил путешествие на Воянге"
+        title = "Я составил путешествие на Voyanga"
         description = tmp.join(', ')
 
         #готовим почву для генерации ссылки

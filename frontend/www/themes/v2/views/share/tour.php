@@ -1,26 +1,23 @@
 <?php
 $images = '/themes/v2';
 $url = $shortUrl;
-$image = Yii::app()->createAbsoluteUrl('/') . '/themes/v2/images/mini-loading.png' ;
+$image = Yii::app()->createAbsoluteUrl('/') . '/themes/v2/images/mini-loading.png';
 
-if (mb_strlen($title) > 130)
-{
+if (mb_strlen($title) > 130) {
     $titleTwitter = mb_substr($title, 0, 127) . '...';
-}
-else
-{
+} else {
     $titleTwitter = $title;
 }
 
 $shortDescription = mb_substr($description, 0, 197);
-if (mb_strlen($description)>197)
+if (mb_strlen($description) > 197)
     $shortDescription .= '...';
 
-//set image src for vk.com
-$cs->registerLinkTag("image_src", NULL, $image);
 
 // Set opengraph meta tags
 $cs = Yii::app()->getClientScript();
+//set image src for vk.com
+$cs->registerLinkTag("image_src", NULL, $image);
 $cs->registerMetaTag('Voyanga.com', NULL, NULL, array('property' => 'og:site_name'));
 $cs->registerMetaTag('shadrinev', NULL, NULL, array('property' => 'fb:admins'));
 $cs->registerMetaTag($url, NULL, NULL, array('property' => 'og:url'));
@@ -63,11 +60,11 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
             <a class="addthis_button_vk"
                addthis:url=""
                addthis:title="<?php echo $title ?>"
-               addthis:description="<?php echo $description;?>" title="Вконтакте"></a>
+               addthis:description="<?php echo $description; ?>" title="Вконтакте"></a>
             <a class="addthis_button_facebook"
                addthis:url=""
                addthis:title="<?php echo $title ?>"
-               addthis:description="<?php echo $description;?>" title="Facebook"></a>
+               addthis:description="<?php echo $description; ?>" title="Facebook"></a>
             <a
                 class="addthis_button_twitter"
                 addthis:title="<?php echo $titleTwitter ?>"
@@ -75,8 +72,8 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
         </div>
         <script>
             var addthis_share = {
-                templates:{
-                    twitter:"{{title}} #voyanga {{url}}"
+                templates: {
+                    twitter: "{{title}} #voyanga {{url}}"
                 }
             }
         </script>
@@ -205,7 +202,8 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                     <div class="hr-bg big">
                         <img width="100%" height="31" src="/themes/v2/images/shadow-hotel.png">
                     </div>
-                    <div class="shareSocial">
+                    <div class="divPrice"><span class="price" data-bind="text: itemsToBuy.fullPrice()"></span>
+                        <span class="rur">o</span>
                     </div>
                     <div class="btn-order floatRight"
                          data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}">
