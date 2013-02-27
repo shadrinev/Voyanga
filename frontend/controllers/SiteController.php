@@ -26,6 +26,9 @@ class SiteController extends FrontendController
         {
             throw new CHttpException(404);
         }
+        // Load all tables of the application in the schema
+        Yii::app()->db->schema->getTables();
+        // clear the cache of all loaded tables
         Yii::app()->db->schema->refresh();
         Yii::app()->clientScript->buildingMode = true;
         $myModule = Yii::app()->getModule('v2');
