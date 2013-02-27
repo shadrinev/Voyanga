@@ -16,6 +16,9 @@ $shortDescription = mb_substr($description, 0, 197);
 if (mb_strlen($description)>197)
     $shortDescription .= '...';
 
+//set image src for vk.com
+$cs->registerLinkTag("image_src", NULL, $image);
+
 // Set opengraph meta tags
 $cs = Yii::app()->getClientScript();
 $cs->registerMetaTag('Voyanga.com', NULL, NULL, array('property' => 'og:site_name'));
@@ -25,9 +28,6 @@ $cs->registerMetaTag($title, NULL, NULL, array('property' => 'og:title'));
 $cs->registerMetaTag('article', NULL, NULL, array('property' => 'og:type'));
 $cs->registerMetaTag($description, NULL, NULL, array('property' => 'og:description'));
 $cs->registerMetaTag($image, NULL, NULL, array('property' => 'og:image'));
-
-//set image src for vk.com
-$cs->registerLinkTag("image_src", NULL, $image);
 
 //set twitter cards tags
 $cs->registerMetaTag('summary', NULL, NULL, array('property' => 'twitter:card'));
