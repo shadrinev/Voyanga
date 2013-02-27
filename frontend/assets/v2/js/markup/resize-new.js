@@ -1204,7 +1204,6 @@ function ClikRightProj() {
 
     var lenSlideProj = $('.textSlideProj').find('li').length;
     var _countSlide = $('.bgCount').find('span').text();
-    //alert(_countSlide);
     if (_countSlide >= lenSlideProj) {
         return false;
     }
