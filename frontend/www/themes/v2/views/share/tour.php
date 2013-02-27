@@ -1,7 +1,7 @@
 <?php
 $images = '/themes/v2';
 $url = $shortUrl;
-$image = Yii::app()->createAbsoluteUrl('/') . '/themes/v2/mini-loading.png' ;
+$image = Yii::app()->createAbsoluteUrl('/') . '/themes/v2/images/mini-loading.png' ;
 
 if (mb_strlen($title) > 130)
 {
@@ -25,6 +25,9 @@ $cs->registerMetaTag($title, NULL, NULL, array('property' => 'og:title'));
 $cs->registerMetaTag('article', NULL, NULL, array('property' => 'og:type'));
 $cs->registerMetaTag($description, NULL, NULL, array('property' => 'og:description'));
 $cs->registerMetaTag($image, NULL, NULL, array('property' => 'og:image'));
+
+//set image src for vk.com
+$cs->registerLinkTag("image_src", NULL, $image);
 
 //set twitter cards tags
 $cs->registerMetaTag('summary', NULL, NULL, array('property' => 'twitter:card'));
