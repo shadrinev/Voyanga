@@ -173,8 +173,7 @@ TourPanelSet = (function() {
     if (force == null) {
       force = false;
     }
-    if (!force && (this.panels().length > 0) && (this.selectionIndex() !== 2)) {
-      console.log(this.panels()[0].city());
+    if ((force !== true) && (this.panels().length > 0) && (this.selectionIndex() !== 2)) {
       if ((this.panels().length === 1) && (this.panels()[0].city().length === 0)) {
         el = $('div.from');
         $(el).find('.second-path').attr('placeholder', 'Введите первый город');

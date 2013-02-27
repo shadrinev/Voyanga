@@ -601,13 +601,14 @@ class ToursResultSet
     do ResizeAvia
     window.setTimeout(
       ()=>
-        console.log('after render tours all tour page')
-        console.log(@data());
+        people = 0
         calendarEvents = []
         for resSet in @data()
           if resSet.isAvia()
-            console.log('avia',resSet.data.results(),resSet.rawSP);
             flights = []
+            if people==0
+              people = resSet.rawSP.adt + resSet.rawSP.chd + resSet.rawSP.inf
+
             for dest in resSet.rawSP.destinations
               flight = {type: 'flight',description:  dest.departure+' || ' + dest.arrival, cityFrom: dest.departure_iata, cityTo: dest.arrival_iata}
               flight.dayStart = moment(dest.date)._d
@@ -615,7 +616,6 @@ class ToursResultSet
               flights.push flight
 
             if resSet.selection()
-              console.log('select:',resSet.selection())
               aviaRes = resSet.selection()
               flights[0].dayEnd = aviaRes.arrivalDate();
               if aviaRes.roundTrip
@@ -624,7 +624,11 @@ class ToursResultSet
             for flight in flights
               calendarEvents.push flight
           if resSet.isHotel()
-            console.log('hotel',resSet.data.results(),resSet.rawSP);
+
+            if people==0
+              for room in resSet.rawSP.rooms
+                people += room.overall()
+
             checkIn = moment(resSet.rawSP.checkIn).add('h',8);
             checkOut = moment(resSet.rawSP.checkIn).add('d',resSet.rawSP.duration);
 
@@ -647,13 +651,58 @@ class ToursResultSet
         VoyangaCalendarTimeline.jObj = '#voyanga-calendar-timeline'
         VoyangaCalendarTimeline.init()
 
-        #показываем кнопки шаринга
-        $('.shareSocial').html('')
-        $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial')
-        addthis.toolbox('.socialSharePlaceholder')
-        $('.shareSocial').show()
+        #подготавливаем текст шаринга
+        tmp = []
+        _.each calendarEvents, (e) ->
+          if e.type == 'flight'
+            tmp.push e.description.replace('||', '→').replace(/^\s+|\s+$/g, '')
+          else if e.type == 'hotel'
+            duration = Math.ceil((e.dayEnd - e.dayStart) / (1000 * 60 * 60 * 24)) #ночей в отеле
+            tmp.push 'отель ' + e.description.replace(/^\s+|\s+$/g, '') + '(' + Utils.wordAfterNum(duration, 'ночь', 'ночи', 'ночей') + ')'
+        interval = dateUtils.formatDayMonthInterval calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd
+        tmp.push interval
+        tmp.push (@price() - @savings()) + ' руб. ' + Utils.peopleReadable(people)
+
+        title = "Я составил путешествие на Воянге"
+        description = tmp.join(', ')
+
+        #готовим почву для генерации ссылки
+        hash = dateUtils.formatDayMonthInterval calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd
+        hash += (@price() - @savings()) + people
+        for el in @data()
+          cur = el.selection()
+          if el.isAvia()
+            hash += cur.similarityHash()
+          else
+            hash += cur.hotel.hotelId + cur.roomSet.similarityHash()
+
+        data = $.extend {}, {hash: hash, name: description}, @createTourData()
+
+        $.post '/ajax/getSharingUrl', data, (response) ->
+          #показываем кнопки шаринга
+          $('.shareSocial').html('')
+          $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial')
+          $('.shareSocial').find('input[name=textTextText]').val(response.short)
+          $('.shareSocial').show().find('a').each ()->
+            $(this).attr('addthis:title', title)
+            $(this).attr('addthis:description', description)
+            $(this).attr('addthis:url', response.short)
+            addthis.toolbox('.socialSharePlaceholder')
       ,1000
     )
+
+  createTourData: =>
+    toBuy = []
+    data = {}
+    for x in @data()
+      if x.selection()
+        toBuy.push {module: 'Tours'}
+        toBuy.push x.toBuyRequest()
+    for params, index in toBuy
+      for key,value of params
+        key = "item[#{index}][#{key}]"
+        data[key] = value
+    data
 
   buy: =>
     ticketValidCheck = $.Deferred()
@@ -837,22 +886,7 @@ class TourSearchParams extends SearchParams
       i++;
       console.log('old params is',data[i])
       @eventId = data[i]
-      ###@oldParams = JSON.parse(decodeURIComponent(data[i]))
-      @oldItems = []
-      for elem in @oldParams.ticketParams
-        params = JSON.parse(elem);
-        if(params.hotelId)
-          console.log('try make hotel from params:',params)
-          hotelItem = new HotelResult(params,null,false,null,null);
-          @oldItems.push( hotelItem)
-        else
-          console.log('try make avia from params:',params)
-          aviaItem = new AviaResult(params,null);
-          @oldItems.push(aviaItem)
-      console.log('items',@oldItems)
 
-
-      console.log(@oldParams)###
     window.voyanga_debug 'Result', @
 
   fromObject: (data)->

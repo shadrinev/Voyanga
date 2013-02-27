@@ -11,7 +11,6 @@ SpRoom = (function() {
 
     this.getHash = __bind(this.getHash, this);
 
-    console.log('SpRoom Constructor');
     this.adults = ko.observable(1).extend({
       integerOnly: {
         min: 1,

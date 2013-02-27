@@ -287,6 +287,16 @@ Utils =
       , 50
       i++
 
+  peopleReadable: (amount) ->
+    switch amount
+      when 1 then "за одного"
+      when 2 then "за двоих"
+      when 3 then "за троих"
+      when 4 then "за четверых"
+      when 5 then "за пятерых"
+      when 6 then "за шестерых"
+      else "за компанию"
+
 exTrim = (str, charlist) ->
   charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
   re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g")

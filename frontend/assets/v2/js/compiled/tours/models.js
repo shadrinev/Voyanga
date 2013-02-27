@@ -730,6 +730,8 @@ ToursResultSet = (function() {
 
     this.buy = __bind(this.buy, this);
 
+    this.createTourData = __bind(this.createTourData, this);
+
     this.showOverview = __bind(this.showOverview, this);
 
     this.removeItem = __bind(this.removeItem, this);
@@ -962,16 +964,17 @@ ToursResultSet = (function() {
     });
     ResizeAvia();
     return window.setTimeout(function() {
-      var aviaRes, calendarEvents, checkIn, checkOut, dest, flight, flights, hotelEvent, resSet, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
-      console.log('after render tours all tour page');
-      console.log(_this.data());
+      var aviaRes, calendarEvents, checkIn, checkOut, cur, data, description, dest, el, flight, flights, hash, hotelEvent, interval, people, resSet, room, title, tmp, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3;
+      people = 0;
       calendarEvents = [];
       _ref = _this.data();
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         resSet = _ref[_i];
         if (resSet.isAvia()) {
-          console.log('avia', resSet.data.results(), resSet.rawSP);
           flights = [];
+          if (people === 0) {
+            people = resSet.rawSP.adt + resSet.rawSP.chd + resSet.rawSP.inf;
+          }
           _ref1 = resSet.rawSP.destinations;
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             dest = _ref1[_j];
@@ -986,7 +989,6 @@ ToursResultSet = (function() {
             flights.push(flight);
           }
           if (resSet.selection()) {
-            console.log('select:', resSet.selection());
             aviaRes = resSet.selection();
             flights[0].dayEnd = aviaRes.arrivalDate();
             if (aviaRes.roundTrip) {
@@ -1000,7 +1002,13 @@ ToursResultSet = (function() {
           }
         }
         if (resSet.isHotel()) {
-          console.log('hotel', resSet.data.results(), resSet.rawSP);
+          if (people === 0) {
+            _ref2 = resSet.rawSP.rooms;
+            for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
+              room = _ref2[_l];
+              people += room.overall();
+            }
+          }
           checkIn = moment(resSet.rawSP.checkIn).add('h', 8);
           checkOut = moment(resSet.rawSP.checkIn).add('d', resSet.rawSP.duration);
           hotelEvent = {
@@ -1029,11 +1037,74 @@ ToursResultSet = (function() {
       VoyangaCalendarTimeline.calendarEvents = calendarEvents;
       VoyangaCalendarTimeline.jObj = '#voyanga-calendar-timeline';
       VoyangaCalendarTimeline.init();
-      $('.shareSocial').html('');
-      $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial');
-      addthis.toolbox('.socialSharePlaceholder');
-      return $('.shareSocial').show();
+      tmp = [];
+      _.each(calendarEvents, function(e) {
+        var duration;
+        if (e.type === 'flight') {
+          return tmp.push(e.description.replace('||', '→').replace(/^\s+|\s+$/g, ''));
+        } else if (e.type === 'hotel') {
+          duration = Math.ceil((e.dayEnd - e.dayStart) / (1000 * 60 * 60 * 24));
+          return tmp.push('отель ' + e.description.replace(/^\s+|\s+$/g, '') + '(' + Utils.wordAfterNum(duration, 'ночь', 'ночи', 'ночей') + ')');
+        }
+      });
+      interval = dateUtils.formatDayMonthInterval(calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd);
+      tmp.push(interval);
+      tmp.push((_this.price() - _this.savings()) + ' руб. ' + Utils.peopleReadable(people));
+      title = "Я составил путешествие на Воянге";
+      description = tmp.join(', ');
+      hash = dateUtils.formatDayMonthInterval(calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd);
+      hash += (_this.price() - _this.savings()) + people;
+      _ref3 = _this.data();
+      for (_m = 0, _len4 = _ref3.length; _m < _len4; _m++) {
+        el = _ref3[_m];
+        cur = el.selection();
+        if (el.isAvia()) {
+          hash += cur.similarityHash();
+        } else {
+          hash += cur.hotel.hotelId + cur.roomSet.similarityHash();
+        }
+      }
+      data = $.extend({}, {
+        hash: hash,
+        name: description
+      }, _this.createTourData());
+      return $.post('/ajax/getSharingUrl', data, function(response) {
+        $('.shareSocial').html('');
+        $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial');
+        $('.shareSocial').find('input[name=textTextText]').val(response.short);
+        return $('.shareSocial').show().find('a').each(function() {
+          $(this).attr('addthis:title', title);
+          $(this).attr('addthis:description', description);
+          $(this).attr('addthis:url', response.short);
+          return addthis.toolbox('.socialSharePlaceholder');
+        });
+      });
     }, 1000);
+  };
+
+  ToursResultSet.prototype.createTourData = function() {
+    var data, index, key, params, toBuy, value, x, _i, _j, _len, _len1, _ref;
+    toBuy = [];
+    data = {};
+    _ref = this.data();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      x = _ref[_i];
+      if (x.selection()) {
+        toBuy.push({
+          module: 'Tours'
+        });
+        toBuy.push(x.toBuyRequest());
+      }
+    }
+    for (index = _j = 0, _len1 = toBuy.length; _j < _len1; index = ++_j) {
+      params = toBuy[index];
+      for (key in params) {
+        value = params[key];
+        key = "item[" + index + "][" + key + "]";
+        data[key] = value;
+      }
+    }
+    return data;
   };
 
   ToursResultSet.prototype.buy = function() {
@@ -1290,24 +1361,6 @@ TourSearchParams = (function(_super) {
       i++;
       console.log('old params is', data[i]);
       this.eventId = data[i];
-      /*@oldParams = JSON.parse(decodeURIComponent(data[i]))
-      @oldItems = []
-      for elem in @oldParams.ticketParams
-        params = JSON.parse(elem);
-        if(params.hotelId)
-          console.log('try make hotel from params:',params)
-          hotelItem = new HotelResult(params,null,false,null,null);
-          @oldItems.push( hotelItem)
-        else
-          console.log('try make avia from params:',params)
-          aviaItem = new AviaResult(params,null);
-          @oldItems.push(aviaItem)
-      console.log('items',@oldItems)
-      
-      
-      console.log(@oldParams)
-      */
-
     }
     return window.voyanga_debug('Result', this);
   };
