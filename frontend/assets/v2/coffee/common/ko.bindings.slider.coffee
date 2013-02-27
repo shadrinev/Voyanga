@@ -3,7 +3,7 @@ ko.bindingHandlers.slider =
   init: (element, valueAccessor) ->
     value = ko.utils.unwrapObservable valueAccessor()
 #    $(element).addClass('selectSlider')
-    $(element).selectSlider({})
+#    $(element).selectSlider({})
 
   update: (element, valueAccessor) ->
     #value = ko.utils.unwrapObservable valueAccessor()

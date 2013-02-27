@@ -54,8 +54,7 @@ ToursController = (function() {
         return _this.trigger('inner-template', data);
       });
       _this.trigger("results", _this.stacked);
-      _this.render('results', _this.stacked);
-      return ko.processAllDeferredBindingUpdates();
+      return _this.render('results', _this.stacked);
     });
   };
 

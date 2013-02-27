@@ -399,6 +399,7 @@ HotelResult = (function() {
     };
     if (this.photos && this.photos.length) {
       this.frontPhoto = this.photos[0];
+      this.frontPhoto.largeUrl = "http://voyanga.com" + this.frontPhoto.largeUrl;
       this.numPhotos = this.photos.length;
     }
     this.activePhoto = this.frontPhoto['largeUrl'];

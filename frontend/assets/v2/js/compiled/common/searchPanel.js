@@ -39,8 +39,13 @@ SearchPanel = (function() {
     this.toggleSubscribers = this.minimized.subscribe(function(minimized) {
       return _this.togglePanel(minimized);
     });
+    this.oldCalendar = null;
     this.minimizedCalendar.subscribe(function(minimizedCalendar) {
-      return _this.toggleCalendar(minimizedCalendar);
+      if ((_this.oldCalendar != null) && _this.oldCalendar === minimizedCalendar) {
+        return;
+      }
+      _this.toggleCalendar(minimizedCalendar);
+      return _this.oldCalendar = minimizedCalendar;
     });
   }
 
@@ -51,7 +56,7 @@ SearchPanel = (function() {
     }
     if (!fromTourPanel) {
       speed = 300;
-      heightSubHead = $('.sub-head').height();
+      heightSubHead = dimMemo.getHeight('.sub-head');
       if (!minimized) {
         return $('.sub-head').animate({
           'margin-top': '0px'
@@ -71,8 +76,8 @@ SearchPanel = (function() {
       initialize = false;
     }
     speed = 500;
-    heightSubHead = $('.sub-head').height();
-    heightCalendar1 = $('.calenderWindow').height();
+    heightSubHead = dimMemo.getHeight('.sub-head');
+    heightCalendar1 = 0;
     heightCalendar2 = heightSubHead;
     if (!minimizedCalendar) {
       this.calendarHidden(false);
@@ -135,9 +140,8 @@ SearchPanel = (function() {
 
   SearchPanel.prototype.showCalendar = function() {
     var ch;
-    ch = $('.calenderWindow').height();
-    console.log('show calend params', ch, ch === 0, $('.calenderWindow').css('height'), $('.calenderWindow .calendarSlide').css('top'));
-    if (ch === 0) {
+    ch = !$('.calenderWindow').is(':visible');
+    if (ch) {
       $('.calenderWindow').show();
       console.log('show calendar');
       VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true);

@@ -13,34 +13,7 @@ ko.bindingHandlers.singleSlider = {
     if (dimension) {
       dimension = '&nbsp;' + dimension;
     }
-    $(element).val(value);
-    $(element).jslider({
-      from: limits.from,
-      to: limits.to,
-      dimension: dimension,
-      skin: 'round_voyanga',
-      scale: false,
-      limits: false,
-      round: 1,
-      calculate: function(value) {
-        var strVal;
-        strVal = value.toString();
-        if (strVal.length > 3) {
-          strVal = strVal.substr(0, strVal.length - 3) + '&nbsp;' + strVal.substr(-3);
-        }
-        return strVal;
-      },
-      callback: function(newValue) {
-        return valueAccessor().selection(newValue);
-      }
-    });
-    return valueAccessor().element = $(element);
+    return $(element).val(value);
   },
-  update: function(element, valueAccessor) {
-    var s;
-    s = $(element).data("jslider");
-    return setTimeout(function() {
-      return s.onresize();
-    }, 5);
-  }
+  update: function(element, valueAccessor) {}
 };

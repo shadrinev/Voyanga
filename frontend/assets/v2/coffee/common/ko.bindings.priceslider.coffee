@@ -12,27 +12,27 @@ ko.bindingHandlers.priceSlider =
     value.to = limits.to unless Utils.inRange(value.to, limits)
 
     $(element).val(value.from+';'+value.to)
-    $(element).jslider
-      from: limits.from,
-      to: limits.to,
-      dimension: '&nbsp;Р',
-      skin: 'round_voyanga',
-      scale: false,
-      limits: false,
-      minInterval: 60,
-      calculate: (value)->
+#    $(element).jslider
+#      from: limits.from,
+#      to: limits.to,
+#      dimension: '&nbsp;Р',
+#      skin: 'round_voyanga',
+#      scale: false,
+#      limits: false,
+#      minInterval: 60,
+#      calculate: (value)->
         # FIXME use date utils here
-        strVal = value.toString()
-        if strVal.length > 3
-          strVal = strVal.substr(0,strVal.length - 3) + '&nbsp;' + strVal.substr(-3)
-        strVal
-      callback: (newValue) ->
-        valueAccessor().selection(newValue)
-    valueAccessor().element = $(element)
+#        strVal = value.toString()
+#        if strVal.length > 3
+#          strVal = strVal.substr(0,strVal.length - 3) + '&nbsp;' + strVal.substr(-3)
+#        strVal
+#      callback: (newValue) ->
+#        valueAccessor().selection(newValue)
+#    valueAccessor().element = $(element)
 
   update: (element, valueAccessor) ->
-    s = $(element).data("jslider")
+#    s = $(element).data("jslider")
     # FIXME FIXME FIXME
-    setTimeout ->
-      s.onresize()
-    , 5
+#    setTimeout ->
+#      s.onresize()
+#    , 5

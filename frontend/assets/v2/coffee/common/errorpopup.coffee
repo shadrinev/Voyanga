@@ -53,7 +53,7 @@ class ErrorPopup extends GenericPopup
     if !@onclose
       @onclose = data.onclose
     super '#' + id, data, true
-    ko.processAllDeferredBindingUpdates()
+#    ko.processAllDeferredBindingUpdates()
 
     SizeBox(id);
     ResizeBox(id);

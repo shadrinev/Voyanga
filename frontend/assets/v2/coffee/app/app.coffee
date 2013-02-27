@@ -39,7 +39,6 @@ class Application extends Backbone.Router
         if result != null
           @fakoPanel result
           @activeSearchPanel(@fakoPanel())
-          ko.processAllDeferredBindingUpdates()
           $('div.innerCalendar').find('h1').removeClass('highlight')
 
     @_view = ko.observable false
@@ -153,7 +152,6 @@ class Application extends Backbone.Router
         @activeModuleInstance module
         $(window).unbind 'resize'
         $(window).resize module.resize
-        ko.processAllDeferredBindingUpdates()
         @toggleGMaps(false)
 
   toggleGMaps: (force) ->

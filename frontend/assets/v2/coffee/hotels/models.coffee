@@ -241,6 +241,7 @@ class HotelResult
       largeUrl: 'http://ya.ru'
     if @photos && @photos.length
       @frontPhoto = @photos[0]
+      @frontPhoto.largeUrl = "http://voyanga.com" + @frontPhoto.largeUrl
       @numPhotos = @photos.length
 
     # for popup

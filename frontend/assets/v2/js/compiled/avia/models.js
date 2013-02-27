@@ -681,7 +681,6 @@ AviaResult = (function() {
 
   AviaResult.prototype.showDetailsPopup = function() {
     this.parent._popup = new GenericPopup('#avia-body-popup', this);
-    ko.processAllDeferredBindingUpdates();
     SizeBox('avia-body-popup');
     return ResizeBox('avia-body-popup');
   };
@@ -1029,7 +1028,6 @@ AviaResultSet = (function() {
     this.numResults(data.length);
     this.updateCheapest(data);
     this.updateBest(data);
-    ko.processAllDeferredBindingUpdates();
     jsPaneScrollHeight();
     return ResizeAvia();
   };
@@ -1164,9 +1162,7 @@ AviaResultSet = (function() {
     return this.data[0];
   };
 
-  AviaResultSet.prototype.filtersRendered = function() {
-    return ko.processAllDeferredBindingUpdates();
-  };
+  AviaResultSet.prototype.filtersRendered = function() {};
 
   return AviaResultSet;
 

@@ -13,6 +13,5 @@ $(function() {
     console.timeEnd("App dispatching");
     console.time("Rendering");
     ko.applyBindings(app);
-    ko.processAllDeferredBindingUpdates();
     return console.timeEnd("Rendering");
 });

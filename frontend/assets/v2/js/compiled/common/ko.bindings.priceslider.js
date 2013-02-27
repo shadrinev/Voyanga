@@ -15,34 +15,7 @@ ko.bindingHandlers.priceSlider = {
     if (!Utils.inRange(value.to, limits)) {
       value.to = limits.to;
     }
-    $(element).val(value.from + ';' + value.to);
-    $(element).jslider({
-      from: limits.from,
-      to: limits.to,
-      dimension: '&nbsp;Р',
-      skin: 'round_voyanga',
-      scale: false,
-      limits: false,
-      minInterval: 60,
-      calculate: function(value) {
-        var strVal;
-        strVal = value.toString();
-        if (strVal.length > 3) {
-          strVal = strVal.substr(0, strVal.length - 3) + '&nbsp;' + strVal.substr(-3);
-        }
-        return strVal;
-      },
-      callback: function(newValue) {
-        return valueAccessor().selection(newValue);
-      }
-    });
-    return valueAccessor().element = $(element);
+    return $(element).val(value.from + ';' + value.to);
   },
-  update: function(element, valueAccessor) {
-    var s;
-    s = $(element).data("jslider");
-    return setTimeout(function() {
-      return s.onresize();
-    }, 5);
-  }
+  update: function(element, valueAccessor) {}
 };

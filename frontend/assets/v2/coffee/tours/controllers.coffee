@@ -31,7 +31,7 @@ class ToursController
         @trigger 'inner-template', data
       @trigger "results", @stacked
       @render 'results', @stacked
-      ko.processAllDeferredBindingUpdates()
+      #ko.processAllDeferredBindingUpdates()
 
   handleResults: (data) =>
     console.log "Handling results", data

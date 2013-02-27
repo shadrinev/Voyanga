@@ -77,7 +77,6 @@ ErrorPopup = (function(_super) {
       this.onclose = data.onclose;
     }
     ErrorPopup.__super__.constructor.call(this, '#' + id, data, true);
-    ko.processAllDeferredBindingUpdates();
     SizeBox(id);
     ResizeBox(id);
   }

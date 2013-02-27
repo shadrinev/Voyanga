@@ -35,7 +35,6 @@ GenericPopup = (function() {
       data: data,
       close: this.close
     }, this.el[0]);
-    ko.processAllDeferredBindingUpdates();
     if (this.modal) {
       return;
     }
