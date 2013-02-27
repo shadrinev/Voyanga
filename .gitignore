@@ -33,5 +33,6 @@ frontend/www/resources/
 
 /frontend/www/themes/v2/all.css
 /frontend/www/themes/v2/all.min.css
-/frontend/www/js/v2/all.js
-/frontend/www/js/v2/all.min.js
+/frontend/www/js/all.js
+/frontend/www/js/all.min.js
+/frontend/www/js/all.min.js.map
