@@ -16,6 +16,13 @@ class ShareController extends FrontendController
         {
             $tdp = new TripDataProvider();
             $order = $tdp->restoreFromDb($id);
+            $inMonth = time() + 30*24*3600;
+            if (strtotime($order->ttl) < $inMonth)
+            {
+                $order->ttl = date('Y-m-d H:i:s', $inMonth);
+                if (!$order->update(array('ttl')))
+                    Yii::app()->RSentryException->logException(new CException('Cannot increase ttl of link'));
+            }
         }
         catch(CException $e)
         {
