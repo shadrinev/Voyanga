@@ -91,7 +91,6 @@ Application = (function(_super) {
         if (result !== null) {
           _this.fakoPanel(result);
           _this.activeSearchPanel(_this.fakoPanel());
-          ko.processAllDeferredBindingUpdates();
           return $('div.innerCalendar').find('h1').removeClass('highlight');
         }
       }
@@ -208,7 +207,6 @@ Application = (function(_super) {
         this.activeModuleInstance(module);
         $(window).unbind('resize');
         $(window).resize(module.resize);
-        ko.processAllDeferredBindingUpdates();
         return this.toggleGMaps(false);
       }
     });

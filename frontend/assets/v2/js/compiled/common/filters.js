@@ -715,7 +715,6 @@ AviaFiltersT = (function() {
 
   AviaFiltersT.prototype.filter = function() {
     this.iterate(this.filterResult, this.filterVoyage, this.filterBackVoyage);
-    ko.processAllDeferredBindingUpdates();
     return scrollValue('avia', {});
   };
 

@@ -15,8 +15,7 @@ ToursModule = (function() {
     this.innerTemplate = '';
     this.controller = new ToursController(this.p.sp);
     this.controller.on('results', function(results) {
-      _this.panel(results.panel);
-      return ko.processAllDeferredBindingUpdates();
+      return _this.panel(results.panel);
     });
     this.controller.on('index', function(results) {
       return _this.panel(_this.p);

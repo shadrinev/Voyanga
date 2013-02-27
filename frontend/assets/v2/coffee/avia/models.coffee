@@ -469,7 +469,6 @@ class AviaResult
   # show details popup
   showDetailsPopup: =>
     @parent._popup = new GenericPopup '#avia-body-popup', @
-    ko.processAllDeferredBindingUpdates()
 
     SizeBox('avia-body-popup');
     ResizeBox('avia-body-popup');
@@ -582,7 +581,6 @@ class AviaResultSet
 
     @numResults = ko.observable 0
     @filtersConfig = false
-
     for key, result of @_results
       result.sort()
       result.removeSimilar()
@@ -713,7 +711,6 @@ class AviaResultSet
     @updateCheapest(data)
     @updateBest(data)
 
-    ko.processAllDeferredBindingUpdates()
     # FIXME
     jsPaneScrollHeight()
     ResizeAvia()
@@ -803,7 +800,7 @@ class AviaResultSet
     
 
   filtersRendered: ->
-    ko.processAllDeferredBindingUpdates()
+#    ko.processAllDeferredBindingUpdates()
 
 # Model for avia search params,
 # Used in AviaPanel and search controller

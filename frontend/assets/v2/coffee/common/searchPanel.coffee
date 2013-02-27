@@ -17,13 +17,21 @@ class SearchPanel
     @toggleSubscribers = @minimized.subscribe (minimized) =>
       @togglePanel(minimized)
 
+    @oldCalendar = null;
+
+#    console.error("NEWH PAWNL")
+
     @minimizedCalendar.subscribe (minimizedCalendar) =>
+      if @oldCalendar? && @oldCalendar == minimizedCalendar
+        return
+#      console.log "Y NIGA Y", @oldCalendar, minimizedCalendar
       @toggleCalendar(minimizedCalendar)
+      @oldCalendar = minimizedCalendar
 
   togglePanel: (minimized, fromTourPanel = false) =>
     if(!fromTourPanel)
       speed =  300
-      heightSubHead = $('.sub-head').height()
+      heightSubHead = dimMemo.getHeight('.sub-head')
       if !minimized
         $('.sub-head').animate {'margin-top': '0px'}, speed
       else
@@ -32,8 +40,10 @@ class SearchPanel
 
   toggleCalendar: (minimizedCalendar, initialize = false) =>
     speed =  500
-    heightSubHead = $('.sub-head').height()
-    heightCalendar1 = $('.calenderWindow').height()
+#    console.error "HEAR WE GO"
+#    console.trace("toggle")
+    heightSubHead = dimMemo.getHeight('.sub-head')
+    heightCalendar1 = 0 #$('.calenderWindow').height()
     heightCalendar2 = heightSubHead
     if !minimizedCalendar
       @calendarHidden(false)
@@ -76,9 +86,9 @@ class SearchPanel
       @minimizedCalendar(true)
 
   showCalendar: =>
-    ch = $('.calenderWindow').height()
-    console.log('show calend params', ch, (ch == 0), $('.calenderWindow').css('height'), $('.calenderWindow .calendarSlide').css('top'))
-    if(ch == 0)
+    ch = !$('.calenderWindow').is(':visible')
+#    console.log('show calend params', ch, (ch == 0), $('.calenderWindow').css('height'), $('.calenderWindow .calendarSlide').css('top'))
+    if(ch)
       $('.calenderWindow').show()
       console.log('show calendar')
       #VoyangaCalendarStandart.panel.notifySubscribers(VoyangaCalendarStandart.panel())

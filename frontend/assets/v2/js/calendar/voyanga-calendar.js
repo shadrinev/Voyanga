@@ -18,10 +18,14 @@ Date.fromIso = function (dateIsoString) {
 };
 
 (function () {
+//    var memo = {};
     var D = new Date('2011-06-02T09:34:29+02:00');
     if (isNaN(D) || D.getUTCMonth() !== 5 || D.getUTCDate() !== 2 ||
         D.getUTCHours() !== 7 || D.getUTCMinutes() !== 34) {
         Date.fromISO = function (s) {
+//	    if(memo[s]!=null) {
+//		return memo[s];
+//	    }
             var day, tz,
                 rx = /^(\d{4}\-\d\d\-\d\d([tT][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/,
                 p = rx.exec(s) || [];
@@ -39,8 +43,10 @@ Date.fromIso = function (dateIsoString) {
                     if (p[4] == '+') tz *= -1;
                     if (tz) day.setUTCMinutes(day.getUTCMinutes() + tz);
                 }
+//		memo[s] = day;
                 return day;
             }
+//	    memo[s] = NaN;
             return NaN;
         }
     }
@@ -733,6 +739,8 @@ VoyangaCalendarStandart.scrollToDate = function (dateVar, forceScroll) {
         if (!forceScroll) {
             forceScroll = false;
         }
+	if(!dateVar)
+	    return;
         var dateLabel = dateVar.getFullYear() + '-' + (dateVar.getMonth() + 1) + '-' + dateVar.getDate();
         var scrollLine = $('#dayCell-' + dateLabel).parent().data('weeknum');
         var scrollTop = (scrollLine / this.slider.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');
@@ -899,6 +907,7 @@ VoyangaCalendarStandart.compareCalendarValue = function (oldValue, newValue) {
 }
 
 VoyangaCalendarStandart.init = function (panel, element) {
+    console.error("INEAT");
     this.jObj = $(element);
     VoyangaCalendarStandart.slider.jObj = this.jObj;
     this.alreadyInited = false;
@@ -920,6 +929,7 @@ VoyangaCalendarStandart.init = function (panel, element) {
     if (!this.panel || (this.panel && panel() != this.panel() )) {
         this.panel = panel;
         panel.subscribe(function (newPanel) {
+	    console.error("NEW PANEL IN TAWN");
             if (newPanel.template) {
                 if (VoyangaCalendarStandart.subscription)
                     VoyangaCalendarStandart.subscription.dispose();

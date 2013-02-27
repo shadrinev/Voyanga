@@ -11,29 +11,29 @@ ko.bindingHandlers.timeSlider =
     value.to = limits.to unless Utils.inRange(value.to, limits)
 
     $(element).val(value.from+';'+value.to)
-    $(element).jslider
-      from: limits.from,
-      to: limits.to,
-      step: 15,
-      dimension: '',
-      skin: 'round_voyanga',
-      scale: false,
-      limits: false,
-      minInterval: 60,
-      calculate: (value)->
+#    $(element).jslider
+#      from: limits.from,
+#      to: limits.to,
+#      step: 15,
+#      dimension: '',
+#      skin: 'round_voyanga',
+#      scale: false,
+#      limits: false,
+#      minInterval: 60,
+#      calculate: (value)->
         # FIXME use date utils here
-        hours = Math.floor( value / 60 );
-        mins = ( value - hours*60 );
-        hours = "0"+hours if hours < 10
-        mins = "00" if mins == 0
-        hours + ':' + mins
-      callback: (newValue) ->
-        valueAccessor().selection(newValue)
+#        hours = Math.floor( value / 60 );
+#        mins = ( value - hours*60 );
+#        hours = "0"+hours if hours < 10
+#        mins = "00" if mins == 0
+#        hours + ':' + mins
+#      callback: (newValue) ->
+#        valueAccessor().selection(newValue)
     valueAccessor().element = $(element)
 
   update: (element, valueAccessor) ->
-    s = $(element).data("jslider")
+#    s = $(element).data("jslider")
     # FIXME FIXME FIXME
-    setTimeout ->
-      s.onresize()
-    , 5
+#    setTimeout ->
+#      s.onresize()
+#    , 5

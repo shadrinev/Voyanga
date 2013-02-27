@@ -556,9 +556,11 @@ class ToursResultSet
       if entry.afterRender && afterRender
         console.log('arin')
         entry.afterRender()
+      console.profile("RENDER");
       @selection entry
-      ko.processAllDeferredBindingUpdates()
-      ResizeAvia()
+#      ko.processAllDeferredBindingUpdates()
+#      ResizeAvia()
+      console.profileEnd("RENDER");
       $('#loadWrapBgMin').hide()
       if !(scrollTo == false)
         Utils.scrollTo(scrollTo,false)

@@ -892,9 +892,9 @@ ToursResultSet = (function() {
         console.log('arin');
         entry.afterRender();
       }
+      console.profile("RENDER");
       _this.selection(entry);
-      ko.processAllDeferredBindingUpdates();
-      ResizeAvia();
+      console.profileEnd("RENDER");
       $('#loadWrapBgMin').hide();
       if (!(scrollTo === false)) {
         Utils.scrollTo(scrollTo, false);

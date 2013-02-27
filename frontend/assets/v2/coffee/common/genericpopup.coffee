@@ -17,7 +17,6 @@ class GenericPopup
     $('body').prepend(@el)
     @el.css('z-index', @zindex())
     ko.applyBindings({data: data, close:@close}, @el[0])
-    ko.processAllDeferredBindingUpdates()
     if @modal
       return
 

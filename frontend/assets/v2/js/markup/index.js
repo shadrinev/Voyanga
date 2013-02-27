@@ -1,6 +1,7 @@
 var speedAnimateChangePic = 500;
 
 function slideToursSlide() {
+return;
     if ($('.innerBlockMain').length > 0 && $('.innerBlockMain').is(':visible')) {
         //console.log('!!!==== 2 ====!!!');
 
@@ -55,6 +56,7 @@ function slideToursSlide() {
 }
 
 function CenterIMGResize(index) {
+return;
     if (index == undefined)
         index = 0
 	if ($('.innerBlockMain').length > 0 && $('.innerBlockMain').is(':visible')) {
@@ -109,6 +111,7 @@ function CenterIMGResize(index) {
 }
 
 function smallIMGresizeIndex() {
+return;
 	var _this = $('.imgTours');
     if (_this.length > 0 && _this.is(':visible')) {
         var _img = _this.find('img');
@@ -134,6 +137,7 @@ function smallIMGresizeIndex() {
 }
 
 function indexIMGresizeCenter(index) {
+return;
 	var _indexIMG = $('.IMGmain').eq(index).find('img');
 	_indexIMG.css('width','100%');
 	var _imgHeight = _indexIMG.height();

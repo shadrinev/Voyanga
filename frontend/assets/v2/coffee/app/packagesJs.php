@@ -43,7 +43,7 @@
             'raven.js',
             'knockout-2.1.0.js',
             'knockout-repeat.js',
-            'knockout-deferred-updates.js',
+#            'knockout-deferred-updates.js',
             'underscore.js',
             'backbone.js',
             'jquery-ui-1.8.22.custom.min.js',
@@ -71,6 +71,7 @@
             'photobox.js',
             'module.slider.js',
             'utils.js', 
+            'dimMemo.js',
             'ko.extenders.js',
             
             // custom bindings

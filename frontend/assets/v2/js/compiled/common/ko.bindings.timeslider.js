@@ -20,38 +20,7 @@ ko.bindingHandlers.timeSlider = {
       value.to = limits.to;
     }
     $(element).val(value.from + ';' + value.to);
-    $(element).jslider({
-      from: limits.from,
-      to: limits.to,
-      step: 15,
-      dimension: '',
-      skin: 'round_voyanga',
-      scale: false,
-      limits: false,
-      minInterval: 60,
-      calculate: function(value) {
-        var hours, mins;
-        hours = Math.floor(value / 60);
-        mins = value - hours * 60;
-        if (hours < 10) {
-          hours = "0" + hours;
-        }
-        if (mins === 0) {
-          mins = "00";
-        }
-        return hours + ':' + mins;
-      },
-      callback: function(newValue) {
-        return valueAccessor().selection(newValue);
-      }
-    });
     return valueAccessor().element = $(element);
   },
-  update: function(element, valueAccessor) {
-    var s;
-    s = $(element).data("jslider");
-    return setTimeout(function() {
-      return s.onresize();
-    }, 5);
-  }
+  update: function(element, valueAccessor) {}
 };

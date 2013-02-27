@@ -3,8 +3,7 @@
 ko.bindingHandlers.slider = {
   init: function(element, valueAccessor) {
     var value;
-    value = ko.utils.unwrapObservable(valueAccessor());
-    return $(element).selectSlider({});
+    return value = ko.utils.unwrapObservable(valueAccessor());
   },
   update: function(element, valueAccessor) {}
 };

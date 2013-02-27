@@ -11,27 +11,27 @@ ko.bindingHandlers.singleSlider =
       dimension = '&nbsp;'+ dimension
 
     $(element).val(value)
-    $(element).jslider
-      from: limits.from,
-      to: limits.to,
-      dimension: dimension,
-      skin: 'round_voyanga',
-      scale: false,
-      limits: false,
-      round: 1,
-      calculate: (value)->
+#    $(element).jslider
+#      from: limits.from,
+#      to: limits.to,
+#      dimension: dimension,
+#      skin: 'round_voyanga',
+#      scale: false,
+#      limits: false,
+#      round: 1,
+#      calculate: (value)->
         # FIXME use date utils here
-        strVal = value.toString()
-        if strVal.length > 3
-          strVal = strVal.substr(0,strVal.length - 3) + '&nbsp;' + strVal.substr(-3)
-        strVal
-      callback: (newValue) ->
-        valueAccessor().selection(newValue)
-    valueAccessor().element = $(element)
+#        strVal = value.toString()
+#        if strVal.length > 3
+#          strVal = strVal.substr(0,strVal.length - 3) + '&nbsp;' + strVal.substr(-3)
+#        strVal
+#      callback: (newValue) ->
+#        valueAccessor().selection(newValue)
+#    valueAccessor().element = $(element)
 
   update: (element, valueAccessor) ->
-    s = $(element).data("jslider")
+#    s = $(element).data("jslider")
     # FIXME FIXME FIXME
-    setTimeout ->
-      s.onresize()
-    , 5
+#    setTimeout ->
+#      s.onresize()
+#    , 5
