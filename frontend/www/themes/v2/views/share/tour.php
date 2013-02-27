@@ -1,6 +1,6 @@
 <?php
 $images = '/themes/v2';
-$url = Yii::app()->createAbsoluteUrl('/') . Yii::app()->request->url;
+$url = $shortUrl;
 $image = Yii::app()->createAbsoluteUrl('/') . '/themes/v2/mini-loading.png' ;
 
 if (mb_strlen($title) > 130)
@@ -38,11 +38,50 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
 <script>
     window.tripRaw = <?php echo json_encode($tour); ?>;
     window.orderId = <?php echo $orderId; ?>;
+    window.shortUrl = '<?php echo $url; ?>';
     $(document).ready(function () {
         initTourPage();
+        $('a.addthis_button_vk').attr('addthis:url', window.shortUrl);
+        $('a.addthis_button_facebook').attr('addthis:url', window.shortUrl);
+        $('input[name=textTextText]').val(window.shortUrl);
+        $('#socialButtons').show();
     })
 </script>
 
+<span style="display: none" id='socialSource'>
+    <div id='socialButtons' style="display: none">
+        <a href="javascript:void(0);" id="followLink" title="Прямая ссылка">
+            <span class="text">Получить ссылку</span><span class="getLink"><input type="text" name="textTextText"
+                                                                                  value=""> </span>
+        </a>
+
+        <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+
+            <a class="addthis_button_vk"
+               addthis:url=""
+               addthis:title="<?php echo $title ?>"
+               addthis:description="<?php echo $description;?>" title="Вконтакте"></a>
+            <a class="addthis_button_facebook"
+               addthis:url=""
+               addthis:title="<?php echo $title ?>"
+               addthis:description="<?php echo $description;?>" title="Facebook"></a>
+            <a
+                class="addthis_button_twitter"
+                addthis:title="<?php echo $titleTwitter ?>"
+                title="Twitter"></a>
+        </div>
+        <script>
+            var addthis_share = {
+                templates:{
+                    twitter:"{{title}} #voyanga {{url}}"
+                }
+            }
+        </script>
+        <script type="text/javascript"
+                src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
+
+    </div>
+</span>
 
 <div class="sub-head event" data-bind="css: {calSelectedPanelActive: !itemsToBuy.activePanel().calendarHidden()}">
     <div class="board">

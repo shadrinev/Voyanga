@@ -22,13 +22,19 @@ class ShareController extends FrontendController
             throw new CHttpException(404);
         }
 
+        $longUrl = Yii::app()->params['baseUrl'].'/share/tour/id/'.$id;
+        $short = new ShortUrl();
+        $short = $short->createShortUrl($longUrl);
+        $short = Yii::app()->params['baseUrl'].'/'.$short;
+
         $this->assignTitle('tour', array('##tourTitle##' => $order->name));
         $this->layout = 'static';
         $this->render('tour', array(
             'title' => 'Я составил путешествие на Воянге',
             'description' => $order->name,
             'tour' => $tdp->getWithAdditionalInfo($tdp->getSortedCartItemsOnePerGroup(false)),
-            'orderId' => $id
+            'orderId' => $id,
+            'shortUrl' => $short
         ));
     }
 }
