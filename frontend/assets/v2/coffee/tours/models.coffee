@@ -678,13 +678,14 @@ class ToursResultSet
 
         $.post '/ajax/getSharingUrl', data, (response) ->
           #показываем кнопки шаринга
+          url = response['short']
           $('.shareSocial').html('')
           $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial')
-          $('.shareSocial').find('input[name=textTextText]').val(response.short)
+          $('.shareSocial').find('input[name=textTextText]').val(url)
           $('.shareSocial').show().find('a').each ()->
             $(this).attr('addthis:title', title)
             $(this).attr('addthis:description', description)
-            $(this).attr('addthis:url', response.short)
+            $(this).attr('addthis:url', url)
             addthis.toolbox('.socialSharePlaceholder')
       ,1000
     )

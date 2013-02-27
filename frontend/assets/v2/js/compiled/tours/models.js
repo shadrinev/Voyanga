@@ -1064,13 +1064,15 @@ ToursResultSet = (function() {
         name: description
       }, _this.createTourData());
       return $.post('/ajax/getSharingUrl', data, function(response) {
+        var url;
+        url = response['short'];
         $('.shareSocial').html('');
         $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial');
-        $('.shareSocial').find('input[name=textTextText]').val(response.short);
+        $('.shareSocial').find('input[name=textTextText]').val(url);
         return $('.shareSocial').show().find('a').each(function() {
           $(this).attr('addthis:title', title);
           $(this).attr('addthis:description', description);
-          $(this).attr('addthis:url', response.short);
+          $(this).attr('addthis:url', url);
           return addthis.toolbox('.socialSharePlaceholder');
         });
       });
