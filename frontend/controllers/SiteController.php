@@ -26,6 +26,7 @@ class SiteController extends FrontendController
         {
             throw new CHttpException(404);
         }
+        Yii::app()->db->schema->refresh();
         Yii::app()->clientScript->buildingMode = true;
         $myModule = Yii::app()->getModule('v2');
         Yii::app()->runController($myModule->id . '/default/index');
