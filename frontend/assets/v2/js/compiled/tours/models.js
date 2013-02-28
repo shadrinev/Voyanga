@@ -1171,11 +1171,14 @@ ToursResultSet = (function() {
       entry = items[index];
       console.log('findAndSelectItems entry', entry, ' in ', index, this.data()[index]);
       if (this.data()[index].isAvia()) {
-        result = this.data()[index].findAndSelect(this.data()[index].results().cheapest());
+        result = this.data()[index].findAndSelect(entry);
+        if (!result) {
+          result = this.data()[index].findAndSelect(this.data()[index].results().cheapest());
+        }
         if (!result) {
           success = false;
-          console.log('false res1:', result, this.data()[index], this.data()[index].results().cheapest());
         }
+        console.log('false res1:', result, this.data()[index], this.data()[index].results().cheapest());
       } else {
         result = this.data()[index].findAndSelectSame(entry);
         if (!result) {

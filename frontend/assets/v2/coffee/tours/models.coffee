@@ -751,15 +751,13 @@ class ToursResultSet
     for entry, index in items
       console.log('findAndSelectItems entry',entry,' in ',index,@data()[index])
       if(@data()[index].isAvia())
-        result = @data()[index].findAndSelect(@data()[index].results().cheapest())
+        result = @data()[index].findAndSelect(entry)
+        if !result
+          result = @data()[index].findAndSelect(@data()[index].results().cheapest())
         if !result
           success = false
-          console.log('false res1:',result,@data()[index],@data()[index].results().cheapest())
+        console.log('false res1:',result,@data()[index],@data()[index].results().cheapest())
       else
-        #if !entry.isHotel
-        #  for en,ind in items
-        #    if !isHotel
-
         result = @data()[index].findAndSelectSame(entry)
         if !result
           success = false
