@@ -148,7 +148,7 @@
 
             <div class="textBlock telefon">
                 <div class="floatLeft">Служба<br> поддержки</div>
-                <div class="floatRight">+7 (499) 533-09-33</div>
+                <div class="floatRight">+7 (499) 553-09-33</div>
             </div>
             <div class="textBlock hEmail">
                 <div class="floatLeft">
