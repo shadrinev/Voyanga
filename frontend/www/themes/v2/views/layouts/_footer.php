@@ -18,7 +18,7 @@
             <li style="background: none">
                 <div style="margin-top: 3px;" class="fb-like" data-href="http://voyanga.com" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial"></div>
             </li>
-            <li style="background: none">
+            <li style="background: none; padding-top: 3px">
                 <!-- Put this script tag to the <head> of your page -->
                 <script type="text/javascript" src="//vk.com/js/api/openapi.js?79"></script>
 
