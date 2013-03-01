@@ -7,8 +7,11 @@
     window.lastCityId = false;
 
     function setDepartureDate(strDate) {
-        VoyangaCalendarStandart.values = new Array(moment(strDate)._d);
         window.app.fakoPanel().departureDate(moment(strDate)._d);
+    }
+    function setBackDate(strDate) {
+        console.log('fako', window.app.fakoPanel());
+        window.app.fakoPanel().rtDate(moment(strDate)._d);
     }
     function setCityFrom(cityId,cityCode) {
         console.log('setCity frommm',cityId,cityCode);
@@ -55,10 +58,14 @@
         }, 1000);
 
 
-        panelSet.rt(false);
+        panelSet.rt(true);
+
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
+        panelSet.minimizedCalendar(false);
         setCityFrom(window.defaultCityId,window.defaultCity);
+        setDepartureDate(moment(new Date()).add('days', 1).format('YYYY-MM-DD'));
+        setBackDate(moment(new Date()).add('days', 3).format('YYYY-MM-DD'));
         if(window.pointCity){
             panelSet.arrivalCity(window.pointCity);
         }

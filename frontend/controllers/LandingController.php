@@ -440,7 +440,7 @@ class LandingController extends Controller
                 unset($cityIds[$cityId]);
             }
             if ($tmpCityIds) {
-                $sql = 'SELECT `from`,`to`,`dateFrom`,`dateBack`,`priceBestPrice` from (SELECT * FROM `flight_cache` WHERE `from` = \'' . $cityId . '\' AND `to` IN (' . implode(',', $tmpCityIds) . ') AND `dateFrom` > \'' . date('Y-m-d') . '\' AND `dateFrom` < \'' . date('Y-m-d', time() + 3600 * 24 * 60) . '\' ORDER BY priceBestPrice) as tbl1 GROUP BY `to` ORDER BY priceBestPrice  limit 14';
+                $sql = 'SELECT `from`,`to`,`dateFrom`,`dateBack`,`priceBestPrice` from (SELECT * FROM `flight_cache` WHERE `from` = \'' . $cityId . '\' AND `to` IN (' . implode(',', $tmpCityIds) . ') AND `dateFrom` > \'' . date('Y-m-d') . '\' AND `dateFrom` < \'' . date('Y-m-d', time() + 3600 * 24 * 60) . '\' ORDER BY priceBestPrice) as tbl1 GROUP BY `to` ORDER BY priceBestPrice  limit 10';
                 $command = $connection->createCommand($sql);
                 $dataReader = $command->query();
                 while (($row = $dataReader->read()) !== false) {
