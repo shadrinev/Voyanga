@@ -137,6 +137,17 @@ class HotelManager
 
     static private function storeToCache($hotelSearchParams, $variants, $cacheId)
     {
+        if($variants instanceof HotelSearchResponse){
+            if($variants->hotels){
+                foreach($variants->hotels as $key=>$hotel){
+                    foreach($variants->hotels[$key]->rooms as $rkey=>$room){
+                        $sn = $variants->hotels[$key]->rooms[$rkey]->showName;
+                        break;
+                    }
+                    break;
+                }
+            }
+        }/**/
         Yii::app()->pCache->set('hotelSearchResult' . $cacheId, $variants, appParams('hotel_search_cache_time'));
         Yii::app()->pCache->set('hotelSearchParams' . $cacheId, $hotelSearchParams, appParams('hotel_search_cache_time'));
 
