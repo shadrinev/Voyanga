@@ -89,7 +89,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
     </div>
     <?php endif;?>
     <div class="center-block">
-        <h3>Туда</h3>
+        <h3 class="label">Туда</h3>
         <div class="floatLeft">
             <ul class="grafik first-child" data-bind="foreach: landBP.datesArr">
                 <!-- ko ifnot: landBP.empty -->
@@ -122,7 +122,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
     </div>
     <hr>
     <div class="center-block">
-        <h3>Обратно</h3>
+        <h3 class="label">Обратно</h3>
         <div class="floatLeft">
             <ul class="grafik second-child" data-bind="foreach: landBP.active().results()">
                 <!-- ko ifnot: landBP.empty -->
