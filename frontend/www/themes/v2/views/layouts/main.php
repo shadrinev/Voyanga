@@ -10,8 +10,10 @@ if (YII_DEBUG || Yii::app()->clientScript->buildingMode)
 }
 else
 {
-    Yii::app()->clientScript->registerCssFile('/themes/v2/css/all.min.css');
-    Yii::app()->clientScript->registerScriptFile('/js/all.min.js');
+    $path = Yii::getPathOfAlias('webroot');
+    $suffix = require_once($path.'/suffix.php');
+    Yii::app()->clientScript->registerCssFile('/themes/v2/css/all'.$suffix.'.min.css');
+    Yii::app()->clientScript->registerScriptFile('/js/all'.$suffix.'.min.js');
 }
 Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 ?>
