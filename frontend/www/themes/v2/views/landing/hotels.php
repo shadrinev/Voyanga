@@ -28,8 +28,8 @@
         app.register('hotels', hotels);
         app.register('avia', avia);
         console.log('WILL BE RUN',app.runWithModule);
-        app.runWithModule('tours');
-        app.activeModule('tours');
+        app.runWithModule('hotels');
+        app.activeModule('hotels');
         var panelSet = new HotelsPanel();
         //panelSet.departureCity(window.defaultCity);
         panelSet.city(window.pointCity);
@@ -163,6 +163,7 @@
         <!-- END CONSTRUCTOR -->
 
     </div>
+    <div class="hotel-ico"></div>
     <div class="clear"></div>
     <!-- BTN MINIMIZE -->
 

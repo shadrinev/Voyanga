@@ -17,8 +17,8 @@
         app.register('tours', tour, true);
         app.register('hotels', hotels);
         app.register('avia', avia);
-        app.runWithModule('tours');
-        app.activeModule('tours');
+        app.runWithModule('hotels');
+        app.activeModule('hotels');
         app.photos = window.hotPhotos;
         app.numPhotos = window.hotPhotos.length;
         window.mapInitialized = false;

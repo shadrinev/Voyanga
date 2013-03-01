@@ -108,8 +108,6 @@ class HotelRoom extends CApplicationComponent
             $this->sizeId = array_search($this->sizeName, RoomNamesNemo::$roomSizes);
             $this->typeName = $params['type'];
             $this->viewName = $params['view'];
-            $this->_showName = $params['showName'];
-            $this->_showName = $params['showName'];
         }
 
         $roomNameCanonical = null;
