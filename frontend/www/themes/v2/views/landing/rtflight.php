@@ -293,6 +293,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
         <!-- END CONSTRUCTOR -->
 
     </div>
+    <div class="fly-ico"></div>
     <div class="clear"></div>
 </div>
 <!-- END PANEL -->
