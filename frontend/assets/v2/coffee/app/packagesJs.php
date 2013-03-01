@@ -18,7 +18,6 @@
         'basePath' => 'frontend.assets.v2.js.markup',
         'js' => array(
             'iedebug.js',
-            'resize-new.js',
             'jquery.color.js',
             'popup.js',
             'popup-photo.js',
@@ -61,6 +60,12 @@
             'mdetect.js',
         ),
         'depends' => array('jquery')
+    ),
+    'markupc' => array(
+        'basePath' => 'frontend.assets.v2.js.compiled.markup',
+        'js' => array(
+            'resize.js',
+        )
     ),
     'common' => array(
         'basePath' => 'frontend.assets.v2.js.compiled.common',
@@ -144,6 +149,7 @@
         ),
         'depends' => array(
             'markup',
+            'markupc',
             'calendar',
             'timelineCalendar',
             'vendor',

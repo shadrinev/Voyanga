@@ -739,8 +739,6 @@ VoyangaCalendarStandart.scrollToDate = function (dateVar, forceScroll) {
         if (!forceScroll) {
             forceScroll = false;
         }
-	if(!dateVar)
-	    return;
         var dateLabel = dateVar.getFullYear() + '-' + (dateVar.getMonth() + 1) + '-' + dateVar.getDate();
         var scrollLine = $('#dayCell-' + dateLabel).parent().data('weeknum');
         var scrollTop = (scrollLine / this.slider.totalLines) * this.jObj.find('.calendarGridVoyanga').prop('scrollHeight');

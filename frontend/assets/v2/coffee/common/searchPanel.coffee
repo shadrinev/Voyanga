@@ -87,8 +87,8 @@ class SearchPanel
 
   showCalendar: =>
     ch = !$('.calenderWindow').is(':visible')
-#    console.log('show calend params', ch, (ch == 0), $('.calenderWindow').css('height'), $('.calenderWindow .calendarSlide').css('top'))
-    if(ch)
+    console.error('show calend params', ch, (ch == 0), $('.calenderWindow').css('height'), $('.calenderWindow .calendarSlide').css('top'))
+    if(true)
       $('.calenderWindow').show()
       console.log('show calendar')
       #VoyangaCalendarStandart.panel.notifySubscribers(VoyangaCalendarStandart.panel())

@@ -6,7 +6,6 @@ uncheckVoybox = (el) ->
 # FIXME most likely leaks
 ko.bindingHandlers.checkbox =
   init: (element, valueAccessor) ->
-    return
     label = ko.utils.unwrapObservable valueAccessor().label
     checked = valueAccessor().checked
 
@@ -40,7 +39,6 @@ ko.bindingHandlers.checkbox =
 
 
   update: (element, valueAccessor) ->
-    return
     label = ko.utils.unwrapObservable valueAccessor().label
     checked = ko.utils.unwrapObservable valueAccessor().checked
     el = $(element).next()

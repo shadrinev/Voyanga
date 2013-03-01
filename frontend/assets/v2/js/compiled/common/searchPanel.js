@@ -141,7 +141,8 @@ SearchPanel = (function() {
   SearchPanel.prototype.showCalendar = function() {
     var ch;
     ch = !$('.calenderWindow').is(':visible');
-    if (ch) {
+    console.error('show calend params', ch, ch === 0, $('.calenderWindow').css('height'), $('.calenderWindow .calendarSlide').css('top'));
+    if (true) {
       $('.calenderWindow').show();
       console.log('show calendar');
       VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true);

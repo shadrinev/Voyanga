@@ -12,7 +12,6 @@ uncheckVoybox = function(el) {
 ko.bindingHandlers.checkbox = {
   init: function(element, valueAccessor) {
     var checked, classCheck, el, htm, label, new_el;
-    return;
     label = ko.utils.unwrapObservable(valueAccessor().label);
     checked = valueAccessor().checked;
     el = $(element);
@@ -48,7 +47,6 @@ ko.bindingHandlers.checkbox = {
   },
   update: function(element, valueAccessor) {
     var checked, el, label;
-    return;
     label = ko.utils.unwrapObservable(valueAccessor().label);
     checked = ko.utils.unwrapObservable(valueAccessor().checked);
     el = $(element).next();
