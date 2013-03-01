@@ -163,6 +163,7 @@
         <!-- END CONSTRUCTOR -->
 
     </div>
+    <div class="hotel-ico"></div>
     <div class="clear"></div>
     <!-- BTN MINIMIZE -->
 
