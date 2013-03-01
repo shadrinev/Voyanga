@@ -31,8 +31,8 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
         app.register('tours', tour, true);
         app.register('hotels', hotels);
         app.register('avia', avia);
-        app.runWithModule('tours');
-        app.activeModule('tours');
+        app.runWithModule('avia');
+        app.activeModule('avia');
         var panelSet = new AviaPanel();
         panelSet.departureCity(window.defaultCity);
         panelSet.arrivalCity(window.pointCity);
@@ -96,7 +96,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
                 </li>
                 <!-- /ko -->
                 <!-- ko if: landBP.empty -->
-                <li class="grafikMean inactive">
+                <li class="grafikMean inactive" data-bind="css: 'grafikMean' + (landBP.selected() ? ' active' : ' inactive'), click: landBP.selectThis">
                     <div class="price question" style="bottom: 0px; left: 0px;">?</div>
                 </li>
                 <!-- /ko -->

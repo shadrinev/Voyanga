@@ -42,8 +42,8 @@
         app.register('tours', tour, true);
         app.register('hotels', hotels);
         app.register('avia', avia);
-        app.runWithModule('tours');
-        app.activeModule('tours');
+        app.runWithModule('avia');
+        app.activeModule('avia');
         var panelSet = new AviaPanel();
 
 

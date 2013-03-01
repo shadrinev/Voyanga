@@ -308,7 +308,7 @@ class LandingController extends Controller
             $criteria->group = 'dateFrom';
             $criteria->addCondition('`from` = ' . $cityId);
             $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
-            $criteria->addCondition('`dateFrom` <= ' . date("'Y-m-d'", time() + 3600 * 24 * 18));
+            $criteria->addCondition('`dateFrom` <= ' . date("'Y-m-d'", time() + 3600 * 24 * 17));
             $criteria->addCondition('`dateBack` = \'0000-00-00\'' );
             $criteria->order = 'priceBestPrice';
             //$criteria->limit = 18;
