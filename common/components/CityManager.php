@@ -127,7 +127,7 @@ class CityManager extends CApplicationComponent
             $items = array();
             $cityIds = array();
 
-            if (strlen($query) == 3)
+            if (strlen($query) > 1)
             {
                 $criteria = new CDbCriteria();
                 $criteria->limit = $currentLimit;

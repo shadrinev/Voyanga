@@ -33,7 +33,8 @@
         var panelSet = new HotelsPanel();
         //panelSet.departureCity(window.defaultCity);
         panelSet.city(window.pointCity);
-        panelSet.calendarActive(false);
+        //panelSet.calendarActive(false);
+        panelSet.minimizedCalendar(false);
 
         //panelSet.rt(false);
         //panelSet.sp.calendarActivated(false);
@@ -41,7 +42,7 @@
 
         setDepartureDate(moment(new Date()).add('days', 1).format('YYYY-MM-DD'));
         window.setTimeout(function () {
-            panelSet.calendarActive(true);
+            //panelSet.calendarActive(true);
             //ResizeAvia();
         }, 1000);
 
@@ -99,20 +100,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="tdAddTour">
-
-                            </td>
 
                             <td class="tdPeople final">
                                         <span data-bind="template: {name: peopleSelectorVM.template, data: peopleSelectorVM}">
                                         </span>
                             </td>
                             <td class="tdButton">
-
                                 <div class="btn-find inactive" data-bind="click: navigateToNewSearch, css: {inactive: formNotFilled}"></div>
-
                             </td>
-
                         </tr>
                     </table>
                 </div>

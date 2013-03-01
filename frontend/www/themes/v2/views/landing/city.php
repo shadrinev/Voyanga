@@ -1,10 +1,16 @@
-<script>
+<?php
+//print_r($citiesFrom);die();
+if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
+    $bestPrice = $citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)]['flightCacheBestPriceArr'];
+}else{
+    $bestPrice = array('price'=> '?');
+}
+?><script>
     //window.flightBestPrice = <?php //echo json_encode($flightCache); ?>;
     window.defaultCity = '<?php echo ($fromCity ? $fromCity->code : $currentCity->code); ?>';
     window.pointCity = '<?php echo $city->code; ?>';
 
-    window.flightCache = <?php echo json_encode($flightCache);?>;
-    window.bestDateData = <?php echo json_encode($flightCacheBestPrice);?>;
+    window.allCaches = <?php echo json_encode($citiesFrom);?>;
 
     function setDepartureDate(strDate) {
         VoyangaCalendarStandart.values = new Array(moment(strDate)._d);
@@ -34,25 +40,21 @@
 
         //panelSet.minimized(true);
         //panelSet.calendarHidden(true);
-        var landBP = new landBestPriceSet(window.flightCache);
+        var landBP = new landingCitySelector(window.allCaches);
+        landBP.rt(false);
 
-        console.log('i will be run setDirectBestPrice', window.bestDateData);
         window.setTimeout(function () {
-            landBP.setDirectBestPrice(window.bestDateData);
+            //landBP.setDirectBestPrice(window.bestDateData);
 
         }, 200);
         window.setTimeout(function () {
             panelSet.calendarActive(true);
 
         }, 1000);
-
-        app.landBP = landBP;
-
         panelSet.rt(false);
-        //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
-
-
+        app.landBP = landBP;
+        landBP.selectCity(window.defaultCity);
         ko.applyBindings(app);
         ko.processAllDeferredBindingUpdates();
     };
@@ -69,24 +71,12 @@
         <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
 
         <h3>Стоимость на месяц вперед из
-            <?php
-            foreach ($citiesFrom as $cityPoint):
-                ?>
-                <?php if ($cityPoint['cityId'] == $currentCity->id): ?>
-                <a href="#" class="cityChoise active">
-                    <span><?php echo $cityPoint['cityName'];?></span>
-                </a>
-                <?php else: ?>
-                <a href="/land/<?php echo $city->country->code;?>/<?php echo $cityPoint['cityCode'];?>/<?php echo $city->code;?>/trip/OW "
-                   class="cityChoise">
-                    <span><?php echo $cityPoint['cityName'];?></span>
-                </a>
-                <?php endif; ?>
+            <!-- ko foreach: landBP.citiesInfoArr -->
+            <a href="#" class="cityChoise" data-bind="click: $parent.landBP.selectCity,css: 'cityChoise' + ($parent.landBP.currentCityCode() === code ? ' active' : '')">
+                <span data-bind="text: name"></span>
+            </a>
+            <!-- /ko -->
 
-                <?php
-
-            endforeach;
-            ?>
         </h3>
     </div>
     <?php else: ?>
@@ -95,19 +85,16 @@
     </div>
     <?php endif;?>
     <div class="center-block">
+        <h3>График цен</h3>
         <div class="floatLeft">
             <ul class="grafik first-child" data-bind="foreach: landBP.datesArr">
-                <!-- ko if: landBP -->
-                <li class="grafikMean"
-                    data-bind="css: 'grafikMean' + (landBP.selected() ? ' active' : ''), click: landBP.selectThis"
-                ">
-                <div class="price" style="bottom: 30px"
-                     data-bind="style: { bottom: landBP.showWidth() + 'px'}, text: landBP.showPriceText()"></div>
-                <div class="statusBar" style="height: 30px"
-                     data-bind="style: { height: landBP.showWidth() + 'px'}"></div>
+                <!-- ko ifnot: landBP.empty -->
+                <li class="grafikMean" data-bind="css: 'grafikMean' + (landBP.selected() ? ' active' : ''), click: landBP.selectThis">
+                <div class="price" style="bottom: 30px" data-bind="style: { bottom: landBP.showWidth() + 'px'}, text: landBP.showPriceText()"></div>
+                <div class="statusBar" style="height: 30px" data-bind="style: { height: landBP.showWidth() + 'px'}"></div>
                 </li>
                 <!-- /ko -->
-                <!-- ko ifnot: landBP -->
+                <!-- ko if: landBP.empty -->
                 <li class="grafikMean inactive">
                     <div class="price question" style="bottom: 0px; left: 0px;">?</div>
                 </li>
@@ -115,7 +102,7 @@
             </ul>
         </div>
         <div class="floatRight textBlockPrice">
-            <div class="cena"> от <span class="price" data-bind="text: landBP.selectedPrice()">3 250</span> <span
+            <div class="cena" data-bind="if: landBP.selectedPrice() != '???'"> от <span class="price" data-bind="text: landBP.selectedPrice()">3 250</span> <span
                 class="rur">o</span></div>
             <div>
                 Самая низкая цена<br>
@@ -198,11 +185,8 @@
                                         <div class="center"></div>
                                         <div class="right"></div>
                                     </div>
-                                    <input class="input-path arrivalCity" type="text" tabindex="-1"
-                                           style="width: 227.5px;">
-                                    <input class="second-path arrivalCity" placeholder="Куда"
-                                           data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen, readablePre: arrivalCityReadablePre}"
-                                           style="width: 227.5px;" autocomplete="off">
+                                    <input class="input-path arrivalCity" type="text" tabindex="-1" style="width: 227.5px;">
+                                    <input class="second-path arrivalCity" placeholder="Куда" data-bind="autocomplete: {source:'city/airport_req/1', iata: arrivalCity, readable: arrivalCityReadable, readableAcc: arrivalCityReadableAcc, readableGen: arrivalCityReadableGen, readablePre: arrivalCityReadablePre}" style="width: 227.5px;" autocomplete="off">
 
                                     <div class="date" data-bind="click: showCalendar">
                                         <span class="f17" data-bind="text: rtDateDay()"></span>
@@ -284,12 +268,12 @@
 </div>
 <!-- END CALENDAR -->
 
-<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
         <h2>Что такое Voyanga</h2>
-
+        <p>Это инфотрмация о том что из <?php echo ($fromCity ? $fromCity->caseGen : $currentCity->caseGen); ?> в <?php echo $city->caseAcc; ?> можно добраться за <?php echo $bestPrice['price'];?> <span class="rur">o</span></p>
         <p>Voyanga.com — это самый простой, удобный и современный способ поиска и покупки авиабилетов. Мы постоянно
             работаем над развитием и улучшением сервиса. Наш сайт подключен сразу к нескольким системам бронирования,
             что позволяет сравнивать тарифы и подбирать наиболее выгодные и удобные тарифы и рейсы.</p>
