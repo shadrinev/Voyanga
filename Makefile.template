@@ -30,16 +30,9 @@ compress:
 
 build:
 	$(MAKE) pack;
-	$(MAKE) compress;
-	echo "//@ sourceMappingURL=/js/all{{suffix}}.min.js.map" >> all.min.js
-	mv -f all.js ./frontend/www/js/all{{suffix}}.js
-	mv -f all.min.js ./frontend/www/js/all{{suffix}}.min.js
-	mv -f all.css ./frontend/www/themes/v2/css/all{{suffix}}.css
-	mv -f all.min.css ./frontend/www/themes/v2/css/all{{suffix}}.min.css
-	mv -f all.min.js.map ./frontend/www/js/all{{suffix}}.min.js.map
-	rm -f ./frontend/www/js/all{{oldsuffix}}.js
+	mv -f all.js ./frontend/www/js/all{{suffix}}.min.js
+	mv -f all.css ./frontend/www/themes/v2/css/all{{suffix}}.min.css
 	rm -f ./frontend/www/js/all{{oldsuffix}}.min.js
-	rm -f ./frontend/www/js/all{{oldsuffix}}.min.js.map
 	rm -f ./frontend/www/themes/v2/css/all{{oldsuffix}}.min.css
 	mv -f suffix.php ./frontend/www/suffix.php
 
