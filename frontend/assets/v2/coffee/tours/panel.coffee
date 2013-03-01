@@ -124,8 +124,7 @@ class TourPanelSet
     @i == 1
 
   addPanel: (force = false)=>
-    if !force && (@panels().length > 0) && (@selectionIndex() != 2)
-      console.log @panels()[0].city()
+    if (force != true) && (@panels().length > 0) && (@selectionIndex() != 2)
       if ((@panels().length == 1) && (@panels()[0].city().length == 0))
         el = $('div.from')
         $(el).find('.second-path').attr('placeholder', 'Введите первый город')
@@ -250,7 +249,10 @@ class TourPanel extends SearchPanel
     else
       url = '/#' + @sp.getHash()
       if @startParams == url
-        url += 'eventId/' + @selectedParams.eventId
+        if @selectedParams.eventId
+          url += 'eventId/' + @selectedParams.eventId
+        else if @selectedParams.orderId
+          url += 'orderId/' + @selectedParams.orderId
 
       window.location.href = url
 

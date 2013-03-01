@@ -133,13 +133,17 @@ class EventSet
 
   mapsInit: =>
     if !google
+      # main google file was not loaded
       return
+    if !google.maps.ControlPosition
+      # file that gets loaded by main google file was not loaded
+      return
+      
     value = {lat: 52, lng: 10}
     @mapsInited = true
     # wait till element is present in document
     waitElement ".mapsBigAll", (element)->
-      gMap = new google.maps.Map(element[0], {'mapTypeControl': false, 'panControl': false, 'zoomControlOptions':
-        {position: google.maps.ControlPosition.LEFT_TOP, style: google.maps.ZoomControlStyle.SMALL}, 'streetViewControl': false, 'zoom': 3, 'mapTypeId': google.maps.MapTypeId.TERRAIN, 'center': new google.maps.LatLng(value.lat, value.lng)})
+      gMap = new google.maps.Map(element[0], {'mapTypeControl': false, 'panControl': false, 'zoomControlOptions':{position: google.maps.ControlPosition.LEFT_TOP, style: google.maps.ZoomControlStyle.SMALL}, 'streetViewControl': false, 'zoom': 3, 'mapTypeId': google.maps.MapTypeId.TERRAIN, 'center': new google.maps.LatLng(value.lat, value.lng)})
 
   afterRender: =>
     @mapsInited = false
@@ -321,7 +325,6 @@ class EventTourResultSet
       @startDate = @items()[0].startDate
       @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate) + '</div>')
       firstHotel = true
-      console.log('items', @items())
       for item in @items()
         if item.isHotel()
           if !firstHotel
@@ -544,8 +547,8 @@ class EventPhotoBox
         {left: (dw) + 'px'},
         {
         step: (pos, info)=>
-          @onAnimate(pos, info),
-        complete: =>
+          @onAnimate(pos, info)
+        ,complete: =>
           @onComplete()
         }
       )
@@ -559,8 +562,8 @@ class EventPhotoBox
         {left: (dw) + 'px'},
         {
         step: (pos, info)=>
-          @onAnimate(pos, info),
-        complete: =>
+          @onAnimate(pos, info)
+        ,complete: =>
           @onComplete()
 
         }

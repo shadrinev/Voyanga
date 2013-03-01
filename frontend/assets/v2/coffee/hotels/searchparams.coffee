@@ -1,6 +1,5 @@
 class SpRoom
   constructor: (@parent) ->
-    console.log('SpRoom Constructor')
     @adults = ko.observable(1).extend({integerOnly:
       {min: 1, max: 4}})
     @children = ko.observable(0).extend({integerOnly:

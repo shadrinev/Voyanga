@@ -174,8 +174,7 @@ TourPanelSet = (function() {
     if (force == null) {
       force = false;
     }
-    if (!force && (this.panels().length > 0) && (this.selectionIndex() !== 2)) {
-      console.log(this.panels()[0].city());
+    if ((force !== true) && (this.panels().length > 0) && (this.selectionIndex() !== 2)) {
       if ((this.panels().length === 1) && (this.panels()[0].city().length === 0)) {
         el = $('div.from');
         $(el).find('.second-path').attr('placeholder', 'Введите первый город');
@@ -350,7 +349,11 @@ TourPanel = (function(_super) {
     } else {
       url = '/#' + this.sp.getHash();
       if (this.startParams === url) {
-        url += 'eventId/' + this.selectedParams.eventId;
+        if (this.selectedParams.eventId) {
+          url += 'eventId/' + this.selectedParams.eventId;
+        } else if (this.selectedParams.orderId) {
+          url += 'orderId/' + this.selectedParams.orderId;
+        }
       }
       return window.location.href = url;
     }

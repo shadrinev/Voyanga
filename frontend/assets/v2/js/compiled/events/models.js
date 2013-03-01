@@ -29,9 +29,7 @@ ko.bindingHandlers.highlightChange = {
       CenterIMGResize(1);
       $(".IMGmain").eq(0).animate({
         opacity: 0
-      }, speedAnimateChangePic, function() {
-        return $(".IMGmain:not(:last-child)").eq(0).remove();
-      });
+      }, speedAnimateChangePic, function() {}, $(".IMGmain:not(:last-child)").eq(0).remove());
       return $(".IMGmain").eq(1).animate({
         opacity: 1
       }, speedAnimateChangePic);
@@ -141,9 +139,7 @@ EventSet = (function() {
     $(".mapsBigAll").css("opacity", "0");
     $(".toursBigAll").animate({
       opacity: 0
-    }, 700, function() {
-      return $(this).css("display", "none");
-    });
+    }, 700, function() {}, $(this).css("display", "none"));
     $(".mapsBigAll").show();
     if (!this.mapsInited) {
       this.mapsInit();
@@ -158,9 +154,7 @@ EventSet = (function() {
     $(".toursBigAll").css("opacity", "0");
     $(".mapsBigAll").animate({
       opacity: 0
-    }, 700, function() {
-      return $(this).css("display", "none");
-    });
+    }, 700, function() {}, $(this).css("display", "none"));
     $(".toursBigAll").show();
     $(".toursBigAll").animate({
       opacity: 1
@@ -171,6 +165,9 @@ EventSet = (function() {
   EventSet.prototype.mapsInit = function() {
     var value;
     if (!google) {
+      return;
+    }
+    if (!google.maps.ControlPosition) {
       return;
     }
     value = {
@@ -478,7 +475,6 @@ EventTourResultSet = (function() {
       this.startDate = this.items()[0].startDate;
       this.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(this.startDate) + '</div>');
       firstHotel = true;
-      console.log('items', this.items());
       _ref = this.items();
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];

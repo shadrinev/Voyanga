@@ -190,6 +190,10 @@ class Application extends Backbone.Router
     tourTrip = new EventTourResultSet(window.tripRaw,window.eventId)
     @itemsToBuy =  tourTrip
 
+  bindItemsToTour: =>
+    tourTrip = new TourResultSet(window.tripRaw, window.orderId)
+    @itemsToBuy =  tourTrip
+
   # FIXME write better handler
   handle404: =>
     new ErrorPopup 'avia500'

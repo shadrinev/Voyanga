@@ -153,4 +153,54 @@ class AjaxController extends BaseAjaxController
             $this->sendError(500, $e->getMessage());
         }
     }
+
+    public function actionGetSharingUrl()
+    {
+        if (!isset($_POST['hash']))
+            throw new CHttpException(400);
+        $hash = md5($_POST['hash']);
+        $name = isset($_POST['name']) ? $_POST['name'] : 'Путешествие';
+
+        $order = Order::model()->findByAttributes(array('hash'=>$hash));
+        $isNewOrder = false;
+        if (!$order)
+        {
+            $order = new Order();
+            $order->hash = $hash;
+            $order->name = $name;
+            $order->userId = Yii::app()->user->id;
+            $order->ttl = date('Y-m-d H:i:s', time() + 30*24*3600);
+            if (!$order->save())
+                throw new CException(500, CHtml::errorSummary($order));
+            $isNewOrder = true;
+        }
+        else
+        {
+            $inTwoDays = time() + 30*24*3600;
+            if (strtotime($order->ttl) < $inTwoDays)
+            {
+                $order->ttl = date('Y-m-d H:i:s', $inTwoDays);
+                if (!$order->save())
+                    throw new CException(500, CHtml::errorSummary($order));
+            }
+        }
+
+        //create short url
+        $longUrl = Yii::app()->params['baseUrl'].'/share/tour/id/'.$order->id;
+        $short = new ShortUrl();
+        $short = $short->createShortUrl($longUrl);
+        $response = array('short'=>Yii::app()->params['baseUrl'].'/'.$short);
+
+        //save tour
+        if ($isNewOrder)
+        {
+            $controller = new BuyController('fakeBuy');
+            $controller->addItems('POST');
+            $ts = new TripStorage();
+            $ts->order = $order;
+            $ts->saveItemsOfOrder();
+        }
+
+        $this->send($response);
+    }
 }

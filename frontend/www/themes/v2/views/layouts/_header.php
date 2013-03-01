@@ -8,7 +8,7 @@
         <a href="javascript:void(0)" onclick="openPopUpProj()" class="about">О проекте</a>
 
         <div class="telefon">
-            <span class="prefix">+7 (499)</span> 533-09-33
+            <span class="prefix">+7 (499)</span> 553-09-33
         </div>
         <div class="slide-turn-mode">
             <div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>
