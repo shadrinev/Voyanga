@@ -96,9 +96,6 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="tdAddTour">
-
-                            </td>
 
                             <td class="tdPeople final">
                                 <span data-bind="template: {name: peopleSelectorVM.template, data: peopleSelectorVM}">
