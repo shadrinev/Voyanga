@@ -34,7 +34,7 @@ ko.bindingHandlers.highlightChange =
       $(".IMGmain").eq(0).animate
         opacity: 0
         , speedAnimateChangePic, ->
-        $(".IMGmain:not(:last-child)").eq(0).remove()
+          $(".IMGmain:not(:last-child)").eq(0).remove()
 
       $(".IMGmain").eq(1).animate
         opacity: 1
@@ -108,7 +108,7 @@ class EventSet
     $(".toursBigAll").animate
       opacity: 0
       , 700, ->
-      $(this).css "display", "none"
+        $(this).css "display", "none"
 
     $(".mapsBigAll").show()
     if !@mapsInited
@@ -123,7 +123,7 @@ class EventSet
     $(".mapsBigAll").animate
       opacity: 0
       , 700, ->
-      $(this).css "display", "none"
+        $(this).css "display", "none"
 
     $(".toursBigAll").show()
     $(".toursBigAll").animate
