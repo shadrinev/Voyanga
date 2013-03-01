@@ -93,12 +93,12 @@
                     <div class="btn-right" data-bind="click: timeline.scrollRight"></div>
                     <div class="timedatelineOverflow">
                         <ul class="timedateline"
-                            data-bind="foreach: timeline.data, style: {width: timeline.data().length * 32 + 'px', marginLeft: '-' + timeline.timelinePosition() + 'px'}">
+                            data-bind="foreach: timeline.realData, style: {width: timeline.realData().length * 32 + 'px', marginLeft: '-' + timeline.timelinePosition() + 'px'}">
                             <li>
                                 <!-- ko if: avia -->
                                 <div data-bind="css:{icoFlyTimeline:first}"></div>
                                 <div class="trip-fly"
-                                     data-bind="click: $parent.setActiveTimelineAvia, css:{active: avia.item==$parent.selection()}"></div>
+                                     data-bind="click: $parent.setActiveTimelineAvia, css:{active: avia.item==$parent.selection()}, style:  {width:'' + avia.duration * 32 + 'px'}"></div>
                                 <!-- /ko -->
                                 <!-- ko if:hotel -->
                                 <div data-bind="css:{icoHotelTimeline:first}"></div>
@@ -107,10 +107,6 @@
                                 <!-- /ko -->
                                 <div class="date" data-bind="text: day"></div>
                             </li>
-                            <!-- li>
-                             <div class="trip-hotel" style="left:18px; width:188px;"></div>
-                             <div class="date">26</div>
-                           </li -->
                         </ul>
                     </div>
                     <div class="left-corners"></div>

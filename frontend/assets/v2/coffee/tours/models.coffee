@@ -196,6 +196,14 @@ class ToursAviaResultSet extends TourEntry
       return sp.destinations[1].date
     source.rtDepartureDate()
 
+  rtTimelineEnd: =>
+    sp = @observableSP()
+    source = @selection()
+    if source == null
+      return sp.destinations[1].date
+    source.rtArrivalDate()
+
+
   rt: =>
     # trigger dep
     sp = @observableSP()

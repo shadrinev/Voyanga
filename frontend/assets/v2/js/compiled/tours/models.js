@@ -95,6 +95,8 @@ ToursAviaResultSet = (function(_super) {
 
     this.rt = __bind(this.rt, this);
 
+    this.rtTimelineEnd = __bind(this.rtTimelineEnd, this);
+
     this.rtTimelineStart = __bind(this.rtTimelineStart, this);
 
     this.timelineEnd = __bind(this.timelineEnd, this);
@@ -332,6 +334,16 @@ ToursAviaResultSet = (function(_super) {
       return sp.destinations[1].date;
     }
     return source.rtDepartureDate();
+  };
+
+  ToursAviaResultSet.prototype.rtTimelineEnd = function() {
+    var source, sp;
+    sp = this.observableSP();
+    source = this.selection();
+    if (source === null) {
+      return sp.destinations[1].date;
+    }
+    return source.rtArrivalDate();
   };
 
   ToursAviaResultSet.prototype.rt = function() {
