@@ -29,7 +29,7 @@
                 <!-- Put this div tag to the place, where the Like block will be -->
                 <div id="vk_like"></div>
                 <script type="text/javascript">
-                    VK.Widgets.Like("vk_like", {type: "mini"});
+                    VK.Widgets.Like("vk_like", {type: "mini", height: 20});
                 </script>
             </li>
             <li><a href="javascript:void(0)" onclick="openPopUpProj()">О проекте</a></li>
