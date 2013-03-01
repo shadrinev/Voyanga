@@ -3,6 +3,12 @@
 ko.bindingHandlers.gMap = {
   init: function(element, valueAccessor) {
     var disp, gMap, value;
+    if (!google) {
+      return;
+    }
+    if (!google.maps.ControlPosition) {
+      return;
+    }
     value = ko.utils.unwrapObservable(valueAccessor());
     disp = $(element).css('display');
     $(element).css('display', 'block');
