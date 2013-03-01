@@ -3057,7 +3057,7 @@ input.hotel-input {
     margin-top: 25px;
     margin-bottom: 15px;
 }
-.headBlockOne .center-block h3 {
+.headBlockOne .center-block h3.label {
     background: none repeat scroll 0 0 #F4F7F9;
     display: block;
     float: left;
@@ -3069,7 +3069,6 @@ input.hotel-input {
     top: 0;
     z-index: 3;
     border-radius: 5px;
-}
 }
 hr {
     background: #afb4b8;
