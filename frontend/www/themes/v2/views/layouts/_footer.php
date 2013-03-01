@@ -16,9 +16,9 @@
         </div>
         <ul class="foot-menu">
             <li style="background: none">
-                <div style="margin-top: 3px;" class="fb-like" data-href="http://voyanga.com" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial"></div>
+                <div style="margin-top: 3px;" class="fb-like" data-href="http://facebook.com/voyanga" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
             </li>
-            <li style="background: none; padding-top: 3px">
+            <li style="background: none; padding-top: 4px">
                 <!-- Put this script tag to the <head> of your page -->
                 <script type="text/javascript" src="//vk.com/js/api/openapi.js?79"></script>
 
@@ -29,7 +29,7 @@
                 <!-- Put this div tag to the place, where the Like block will be -->
                 <div id="vk_like"></div>
                 <script type="text/javascript">
-                    VK.Widgets.Like("vk_like", {type: "mini"});
+                    VK.Widgets.Like("vk_like", {type: "mini", height: 20});
                 </script>
             </li>
             <li><a href="javascript:void(0)" onclick="openPopUpProj()">О проекте</a></li>
