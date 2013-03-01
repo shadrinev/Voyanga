@@ -36,7 +36,8 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
         var panelSet = new AviaPanel();
         panelSet.departureCity(window.defaultCity);
         panelSet.arrivalCity(window.pointCity);
-        panelSet.calendarActive(false);
+        panelSet.minimizedCalendar(false);
+        //panelSet.calendarActive(false);
 
         //panelSet.minimized(true);
         //panelSet.calendarHidden(true);
@@ -48,7 +49,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
 
         }, 200);
         window.setTimeout(function () {
-            panelSet.calendarActive(true);
+            //panelSet.calendarActive(true);
 
         }, 1000);
         panelSet.rt(false);
