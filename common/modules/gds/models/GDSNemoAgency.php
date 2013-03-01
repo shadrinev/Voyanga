@@ -495,7 +495,7 @@ class GDSNemoAgency extends CComponent
                         'Name' => 'Easy',
                         'Telephone' => array(
                             'Type' => 'A',
-                            'PhoneNumber' => '5745698'
+                            'PhoneNumber' => '84995530933'
                         ),
                         'Address' => array(
                             'City' => 'Saint-Petersburg'
