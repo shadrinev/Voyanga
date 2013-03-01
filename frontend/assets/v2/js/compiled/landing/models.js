@@ -340,10 +340,12 @@ landBestPriceSet = (function() {
     this.bestDate = ko.computed(function() {
       var dateFrom, strDate;
       if (_this.directBestPriceData()) {
-        dateFrom = moment(_this.directBestPriceData().date);
-        console.log(dateFrom);
-        strDate = dateUtils.formatDayMonthYear(dateFrom._d);
-        return strDate;
+        if (_this.directBestPriceData().date) {
+          dateFrom = moment(_this.directBestPriceData().date);
+          console.log('SETTING UP BACK DATE', _this.directBestPriceData());
+          strDate = dateUtils.formatDayMonthYear(dateFrom._d);
+          return strDate;
+        }
       }
       return false;
     });
@@ -468,9 +470,13 @@ landingCitySelector = (function() {
       }
     });
     this.bestDate = ko.computed(function() {
+      var val;
       if (_this.currentCityCode()) {
-        return _this.landBestPriceSets[_this.currentCityCode()].bestDate();
+        val = _this.landBestPriceSets[_this.currentCityCode()].bestDate();
+        console.log('valueeeee:', val, typeof val);
+        return val;
       }
+      return false;
     });
     this.selectedPrice = ko.computed(function() {
       if (_this.currentCityCode()) {

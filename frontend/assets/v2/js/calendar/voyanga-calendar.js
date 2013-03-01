@@ -740,7 +740,11 @@ VoyangaCalendarStandart.scrollToDate = function (dateVar, forceScroll) {
         var lineHeight = Math.round(this.jObj.find('.calendarGridVoyanga').prop('scrollHeight') / VoyangaCalendarStandart.slider.totalLines);
         console.log('delta need scroll', deltaNeedScroll, lineHeight);
         if ((deltaNeedScroll < 0) || (deltaNeedScroll > VoyangaCalendarStandart.slider.linesWidth * lineHeight) || forceScroll) {
-            this.jObj.find('.calendarGridVoyanga').scrollTop(Math.abs(scrollTop - lineHeight));
+            var scrollVal = scrollTop - lineHeight;
+            if(scrollVal < 0){
+                scrollVal = 0;
+            }
+            this.jObj.find('.calendarGridVoyanga').scrollTop(scrollVal);
         }
     }
 }
