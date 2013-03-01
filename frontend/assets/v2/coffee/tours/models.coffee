@@ -51,11 +51,13 @@ class ToursAviaResultSet extends TourEntry
     @panel.original_template = @panel.template
     @results = ko.observable()
     @selection = ko.observable null
+    @observableSP = ko.observable null
     @newResults raw, sp
     @data = {results: @results}
 
   newResults: (raw, sp)=>
     @rawSP = sp
+    @observableSP sp
     result = new AviaResultSet raw
     result.injectSearchParams sp
     result.postInit()
@@ -95,14 +97,15 @@ class ToursAviaResultSet extends TourEntry
 
     
   toBuyRequest: =>
+    sp = @observableSP()
     result = {}
     result.type = 'avia'
     result.searchId = @selection().cacheId
     # FIXME FIXME FXIME
     result.searchKey = @selection().flightKey()
-    result.adults = @rawSP.adt
-    result.children = @rawSP.chd
-    result.infants = @rawSP.inf
+    result.adults = sp.adt
+    result.children = sp.chd
+    result.infants = sp.inf
     return result
 
   doNewSearch: =>
@@ -158,38 +161,44 @@ class ToursAviaResultSet extends TourEntry
     if @rt() then 'blue-two' else 'blue-one'
 
   dateHtml: (startonly=false)=>
+    sp = @observableSP()
     # FIXME SEARCH PARAMS
     result = '<div class="day">'
-    result+= dateUtils.formatHtmlDayShortMonth moment(@rawSP.destinations[0].date)
+    result+= dateUtils.formatHtmlDayShortMonth moment(sp.destinations[0].date)
     result+='</div>'
     if startonly
       return result
     if @rt()
       result+= '<div class="day">'
-      result+= dateUtils.formatHtmlDayShortMonth moment(@rawSP.destinations[1].date)
+      result+= dateUtils.formatHtmlDayShortMonth moment(sp.destinations[1].date)
       result+= '</div>'
     return result
 
   timelineStart: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return @rawSP.destinations[0].date
+      return sp.destinations[0].date
       source = @results().data[0]
     source.departureDate()
 
   timelineEnd: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return @rawSP.destinations[0].date
+      return sp.destinations[0].date
     source.arrivalDate()
 
   rtTimelineStart: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return @rawSP.destinations[1].date
+      return sp.destinations[1].date
     source.rtDepartureDate()
 
   rt: =>
+    # trigger dep
+    sp = @observableSP()
     source = @selection()
     if source == null
       source = @results().data[0]
@@ -197,15 +206,17 @@ class ToursAviaResultSet extends TourEntry
 
   # Надо переименовать или зареюзать то что уже есть
   timelineEndDate: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return moment(@rawSP.destinations[0].date).toDate()
+      return moment(sp.destinations[0].date).toDate()
     source.arrivalDate()
 
   timelineStartDate: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return moment(@rawSP.destinations[0].date).toDate()
+      return moment(sp.destinations[0].date).toDate()
     source.departureDate()
 
         
@@ -245,13 +256,16 @@ class ToursHotelsResultSet extends TourEntry
     @selection = ko.observable null
     @results = ko.observable()
     @data = {results: @results}
-
+    @observableSP = ko.observable()
+    
     @savingsWithAviaOnly = true
 
     @newResults raw, sp
 
   newResults: (data, sp)=>
     @rawSP = sp
+    @observableSP sp
+    
     result = new HotelsResultSet data, sp, @activeHotel
     result.tours true
     result.postInit()
@@ -344,7 +358,8 @@ class ToursHotelsResultSet extends TourEntry
     result.adults = 0
     result.age = false
     result.cots = 0
-    for room in @rawSP.rooms
+    sp = @observableSP()
+    for room in sp.rooms
       result.adults += room.adultCount*1
       # FIXME looks like this could be array
       if room.childAge
@@ -380,10 +395,12 @@ class ToursHotelsResultSet extends TourEntry
 
   # tours overview
   destinationText: =>
+    # trigger dependencies
+    sp = @observableSP()
     if @noresults
-      @rawSP.cityFull.caseNom
+      sp.cityFull.caseNom
     else
-      "<span class='hotel-left-long'>Отель в " + @rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + @rawSP.cityFull.caseNom + "</span>"
+      "<span class='hotel-left-long'>Отель в " + sp.cityFull.casePre + "</span><span class='hotel-left-short'>" + sp.cityFull.caseNom + "</span>"
 
   price: =>
     if @selection() == null
@@ -604,12 +621,13 @@ class ToursResultSet
         people = 0
         calendarEvents = []
         for resSet in @data()
+          sp = resSet.observableSP()
           if resSet.isAvia()
             flights = []
             if people==0
-              people = resSet.rawSP.adt + resSet.rawSP.chd + resSet.rawSP.inf
+              people = sp.adt + sp.chd + sp.inf
 
-            for dest in resSet.rawSP.destinations
+            for dest in sp.destinations
               flight = {type: 'flight',description:  dest.departure+' || ' + dest.arrival, cityFrom: dest.departure_iata, cityTo: dest.arrival_iata}
               flight.dayStart = moment(dest.date)._d
               flight.dayEnd = moment(dest.date)._d
@@ -626,12 +644,12 @@ class ToursResultSet
           if resSet.isHotel()
 
             if people==0
-              people = resSet.rawSP.overall()
+              people = sp.overall()
 
-            checkIn = moment(resSet.rawSP.checkIn).add('h',8);
-            checkOut = moment(resSet.rawSP.checkIn).add('d',resSet.rawSP.duration);
+            checkIn = moment(sp.checkIn).add('h',8);
+            checkOut = moment(sp.checkIn).add('d',sp.duration);
 
-            hotelEvent = {dayStart: checkIn._d,dayEnd: checkOut._d,type: 'hotel',description:  '', city: resSet.rawSP.city}
+            hotelEvent = {dayStart: checkIn._d,dayEnd: checkOut._d,type: 'hotel',description:  '', city: sp.city}
             if resSet.selection()
               hotelEvent.description = resSet.selection().hotel.hotelName
 
