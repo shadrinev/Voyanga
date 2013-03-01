@@ -16,7 +16,7 @@
         </div>
         <ul class="foot-menu">
             <li style="background: none">
-                <div style="margin-top: 3px;" class="fb-like" data-href="http://voyanga.com" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial"></div>
+                <div style="margin-top: 3px;" class="fb-like" data-href="http://voyanga.com" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
             </li>
             <li style="background: none; padding-top: 3px">
                 <!-- Put this script tag to the <head> of your page -->
