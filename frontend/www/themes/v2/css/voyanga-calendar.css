@@ -566,7 +566,9 @@
 
 .yourTrip .nameHotel {
     color: #EAEFF3;
+    height: 17px;
     left: -10px;
+    line-height: 18px;
     overflow: hidden;
     position: absolute;
     text-overflow: ellipsis;
