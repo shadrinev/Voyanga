@@ -45,6 +45,7 @@ class EmailManager
         $msg
             ->setFrom(appParams('adminEmail'), appParams('adminEmailName'))
             ->setTo($params['email'])
+            ->setBcc(array("orders@voyanga.com"))
             ->setSubject('Заказ номер '.$params['orderBookingId'].' готов');
         $msg->setBody($params, 'text/html');
         foreach($pdfFileNames as $key=>$pdfInfo){
