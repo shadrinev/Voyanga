@@ -98,9 +98,11 @@
                         карте</a></li>
                 </ul>
                 <div class="book">
+                    <?php if($hotelInfo->price): ?>
                     <div class="how-cost">
-                        от <span class="cost">4389</span><span class="rur f21">o</span> / ночь
+                        от <span class="cost"><?php echo ($hotelInfo->price); ?></span><span class="rur f21">o</span> / ночь
                     </div>
+                    <?php endif; ?>
                     <a class="pressButton"
                        href="/#hotels/search/<?php echo $city->code . '/' . date('d.m.Y', time() + 3600 * 24) . '/' . date('d.m.Y', time() + 3600 * 24 * 3);?>/2:0:0/"><span
                         class="l"></span><span class="text">Забронировать</span></a>

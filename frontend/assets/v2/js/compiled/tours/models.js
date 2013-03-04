@@ -583,7 +583,8 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype._selectRoomSet = function(roomSet) {
-    var hotel;
+    var hotel, limit, ordKey, pageFound, result, sortKey, _i, _len, _ref,
+      _this = this;
     hotel = roomSet.parent;
     hotel.parent = this.results();
     this.activeHotel(hotel.hotelId);
@@ -593,7 +594,34 @@ ToursHotelsResultSet = (function(_super) {
       hotel: hotel
     });
     hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
-    return hotel.parent.pagesLoad = hotel.parent.showParts();
+    limit = 0;
+    sortKey = hotel.parent.sortBy();
+    ordKey = hotel.parent.ordBy();
+    hotel.parent.data.sort(function(left, right) {
+      if (left[sortKey] < right[sortKey]) {
+        return -1 * ordKey;
+      }
+      if (left[sortKey] > right[sortKey]) {
+        return 1 * ordKey;
+      }
+      return 0;
+    });
+    _ref = hotel.parent.data();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      result = _ref[_i];
+      if (result.visible()) {
+        limit++;
+        if (result.hotelId === hotel.hotelId) {
+          break;
+        }
+      }
+    }
+    pageFound = Math.ceil(limit / hotel.parent.showLimit);
+    if (pageFound > hotel.parent.showParts()) {
+      return hotel.parent.pagesLoad = pageFound;
+    } else {
+      return hotel.parent.pagesLoad = hotel.parent.showParts();
+    }
   };
 
   ToursHotelsResultSet.prototype.toBuyRequest = function() {

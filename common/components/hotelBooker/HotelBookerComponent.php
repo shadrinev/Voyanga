@@ -131,7 +131,11 @@ class HotelBookerComponent extends CApplicationComponent
         if ($orderInfo->orderId)
         {
             $this->hotelBooker->orderId = $orderInfo->orderId;
-            $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
+            try{
+                $confirmInfo = $hotelBookClient->confirmOrder($orderInfo->orderId);
+            }catch (CException $e){
+                $confirmInfo = (object) array('error'=>'error:'.$e->getMessage());
+            }
             SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,HotelBookClient::$requestIds);
             HotelBookClient::$requestIds = array();
             if (!$confirmInfo->error)

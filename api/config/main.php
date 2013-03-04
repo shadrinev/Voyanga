@@ -18,8 +18,8 @@ $backendMainLocal = file_exists('api/config/main-local.php') ? require('api/conf
 return CMap::mergeArray(
     require_once ('common/config/main.php'),
     array(
-        'id' => 'api.voyanga.com-'.$params['env.code'],
-        'name' => 'Voyanga-api-'.$params['env.code'],
+        'id' => 'api.voyanga.com-' . $params['env.code'],
+        'name' => 'Voyanga-api-' . $params['env.code'],
         'basePath' => 'api',
         'params' => $params,
         'language' => 'en',
@@ -27,6 +27,10 @@ return CMap::mergeArray(
         'preload' => array(
             'log',
         ),
+
+        'onBeginRequest' => function ($event) {
+            Partner::setPartnerByKey();
+        },
 
         // autoloading model and component classes
         'import' => array(
@@ -70,7 +74,7 @@ return CMap::mergeArray(
 
             'sharedMemory' => array(
                 'class' => 'site.frontend.components.SharedMemory',
-                'maxSize' =>  2 * 1024, //2*1024*1024
+                'maxSize' => 2 * 1024, //2*1024*1024
             ),
 
             'errorHandler' => array(
