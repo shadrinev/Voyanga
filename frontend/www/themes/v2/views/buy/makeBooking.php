@@ -78,7 +78,7 @@
            </label>
         </div>
         <div class="pressButton inactive" id='submit-passport'>
-            <span>Забронировать</span>&nbsp;&nbsp;
+            <span>Перейти к оплате</span>&nbsp;&nbsp;
             <span class="price"data-bind="text: itemsToBuy.totalCost">33 770</span>
             <span class="rur">o</span>
             <span class="l"></span>

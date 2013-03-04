@@ -101,7 +101,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                                     <div class="to">
                                         Старт из:
                                         <a href="#"><span
-                                                data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербурга</span></a>
+                                            data-bind="click: showFromCityInput, text: $parent.startCityReadableGen">Санкт-Петербурга</span></a>
                                     </div>
                                     <div class="startInputTo">
                                         <div class="bgInput">
@@ -121,30 +121,35 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                             <td class="tdCity">
                                 <div class="data">
                                     <div class="from" data-bind="css: {active: checkIn()}">
+                                        <input type="text" tabindex="-1" readonly="readonly" autocomplete="off" class="input-path">
+                                        <input type="text" placeholder="Куда едем?" class="second-path"
+                                               data-bind="hasfocus: hasfocus, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen,readablePre: cityReadablePre}, css: {isFirst: $parent.isFirst()}">
+
+
+                                        <div class="date"
+                                             data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}">
+                                        </div>
+                                        <div class="date"
+                                             data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}">
+                                        </div>
+
                                         <div class="bgInput">
                                             <div class="left"></div>
                                             <div class="center"></div>
                                             <div class="right"></div>
                                         </div>
-                                        <input type="text" placeholder="Куда едем?" class="second-path"
-                                               data-bind="hasfocus: hasfocus, click: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen, readablePre: cityReadablePre}, css: {isFirst: $parent.isFirst()}"
-                                               autocomplete="off">
-                                        <input type="text" tabindex="-1" class="input-path">
-
-                                        <div class="date noDate"
-                                             data-bind="click: showCalendar, html:checkInHtml(), css: {'noDate': !checkIn()}"></div>
-                                        <div class="date noDate"
-                                             data-bind="click: showCalendar, html:checkOutHtml(), css: {'noDate': !checkOut()}"></div>
                                     </div>
+                                    <!-- ko if: ($index()+1) == $length() -->
+                                    <a href="#" class="add-tour"
+                                       data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
+                                    <!-- /ko -->
                                 </div>
                             </td>
                             <td class="tdAddTour">
                                 <!-- ko if: ($index()+1) == $length() -->
-                                <a href="#" class="add-tour"
-                                   data-bind="click: $parent.addPanel, visible: !$parent.isMaxReached()"></a>
+                                <input type="checkbox" data-bind="checkbox:{label: $parent.returnBackLabel(), checked:$parent.returnBack}" />
                                 <!-- /ko -->
                             </td>
-
                             <td class="tdPeople"
                                 data-bind="css: {final: ($index()+1) == $length(), notFinal: ($index()+1) != $length()}">
                                 <!-- ko if: ($index()+1) == $length() -->
@@ -154,7 +159,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                             </td>
                             <td class="tdButton">
                                 <!-- ko if: ($index()+1) == $length() -->
-                                <div class="btn-find inactive"
+                                <div class="btn-find"
                                      data-bind="click: $parent.navigateToNewSearchMainPage, css: {inactive: $parent.formNotFilled}"></div>
                                 <!-- /ko -->
                             </td>
@@ -162,11 +167,10 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                         </tr>
                     </table>
                 </div>
-
-
                 <!-- /ko -->
             </div>
             <!-- END BOARD CONTENT -->
+            <div class="constructor-ico"></div>
 
 
         </div>

@@ -2,6 +2,9 @@
 //print_r($citiesFrom);die();
 if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
     $bestPrice = $citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)]['flightCacheBestPriceArr'];
+    if(!$bestPrice){
+        $bestPrice = array('price'=> '?');
+    }
 }else{
     $bestPrice = array('price'=> '?');
 }
@@ -111,7 +114,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
             <div class="cena" data-bind="if: landBP.selectedPrice() != '???'"> от <span class="price" data-bind="text: landBP.selectedPrice()">3 250</span> <span
                 class="rur">o</span>
             </div>
-            <div>
+            <div data-bind="visible: landBP.bestDate()">
                 Самая низкая цена<br>
                 по этому направлению:<br>
                 <a href="#" data-bind="text: landBP.bestDate(),click: landBP.bestDateClick">12 июня 2012</a>

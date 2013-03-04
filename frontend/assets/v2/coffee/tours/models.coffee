@@ -196,6 +196,14 @@ class ToursAviaResultSet extends TourEntry
       return sp.destinations[1].date
     source.rtDepartureDate()
 
+  rtTimelineEnd: =>
+    sp = @observableSP()
+    source = @selection()
+    if source == null
+      return sp.destinations[1].date
+    source.rtArrivalDate()
+
+
   rt: =>
     # trigger dep
     sp = @observableSP()
@@ -1214,7 +1222,12 @@ class TourResultSet
   togglePanel: =>
     @visiblePanel(!@visiblePanel())
   showPanel: =>
-    $('.sub-head.event').animate({'margin-top': '0px'})
+    $('.sub-head.event').animate(
+      {'margin-top': '0px'},
+      ->
+        $('.tdCity .add-tour').show()
+    )
   hidePanel: =>
+    $('.tdCity .add-tour').hide()
     $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px').animate({'margin-top': (-@activePanel().heightPanelSet() + 4) + 'px'})
 

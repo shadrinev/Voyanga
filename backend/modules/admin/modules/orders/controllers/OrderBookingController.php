@@ -247,6 +247,8 @@ class OrderBookingController extends Controller
                 return array('Отметить как оплаченный' => $this->createUrl('markFlightPaid', array('bookingId'=>$booker->id)));
             case 'swFlightBooker/paid':
                  return array("Автовыписка(без письма)" => $this->createUrl('ticketFlight', array('bookingId'=>$booker->id)));
+            case 'swFlightBooker/ticketingError':
+                 return array("Автовыписка(без письма)" => $this->createUrl('ticketFlight', array('bookingId'=>$booker->id)));
             default:
                 return array();
 

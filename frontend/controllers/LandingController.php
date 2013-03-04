@@ -200,6 +200,7 @@ class LandingController extends Controller
             }
         }
         $hotelsInfo = array();
+        $city = false;
         if ($hc) {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
@@ -209,7 +210,10 @@ class LandingController extends Controller
         } else {
             $hotelInfo = $hotelClient->hotelDetail($hotelId);
             if ($hotelInfo->city) {
-                $city = $hotelInfo->city;
+                $city = City::getCityByHotelbookId($hotelInfo->city);
+            }else{
+                //print_r($hotelInfo);
+                //die();
             }
         }
         if ($city) {
@@ -635,7 +639,11 @@ class LandingController extends Controller
             $criteria->order = 'priceBestPrice';
 
             $flightCacheBestPrice = FlightCache::model()->find($criteria);
-            $flightCacheBestPriceArr = array('price' => $flightCacheBestPrice->priceBestPrice, 'date' => $flightCacheBestPrice->dateFrom, 'dateBack' => $flightCacheBestPrice->dateBack);
+            if($flightCacheBestPrice){
+                $flightCacheBestPriceArr = array('price' => $flightCacheBestPrice->priceBestPrice, 'date' => $flightCacheBestPrice->dateFrom, 'dateBack' => $flightCacheBestPrice->dateBack);
+            }else{
+                $flightCacheBestPriceArr = array();
+            }
             $citiesFrom[$cityId]['flightCacheBestPriceArr'] = $flightCacheBestPriceArr;
         }
 

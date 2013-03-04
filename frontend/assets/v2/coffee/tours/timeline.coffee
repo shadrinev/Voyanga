@@ -4,10 +4,14 @@ class Timeline
     # INTENTIONALLY NOT OBSERVABLE 
     @termsActive = true
 
-    @data = ko.computed =>
+
+    @realData = ko.observableArray();
+
+    @timelineFiller = ko.computed =>
       spans = []
       avia_map = {}
       hotel_map = {}
+
       for item in @toursData()
 #        obj =  {start: moment(item.timelineStart()), end: moment(item.timelineEnd())}
         obj =  {start: moment(item.timelineStart()).clone().hours(0).minutes(5), end: moment(item.timelineEnd()).clone().hours(0).minutes(5)}
@@ -15,23 +19,41 @@ class Timeline
         if item.isHotel()
           hotel_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days'), item: item}
         else
-          avia_map[obj.start.format('M.D')] = {duration:obj.end.diff(obj.start, 'days'), item: item}
-      start_date = spans[0].start
-      end_date = spans[spans.length-1].end
+          duration = obj.end.diff(obj.start, 'days')
+          if duration == 0
+            duration = 20/32
+          avia_map[obj.start.format('M.D')] = {duration:duration, item: item}
       # FIXME FIXME FIXME
       if true#@searchParams.returnBack
         item = @toursData()[0]
         if item.isAvia()
           if item.rt()
-            end_date = moment(item.rtTimelineStart()).clone().hours(0).minutes(5)
-            avia_map[end_date.format('M.D')] = {duration: 1, item: item}
+            start_date = moment(item.rtTimelineStart()).clone().hours(0).minutes(5)
+            end_date = moment(item.rtTimelineEnd()).clone().hours(0).minutes(5)
+            duration = end_date.diff(start_date, 'days')
+
+            if duration == 0
+              duration = 20/32
+            avia_map[start_date.format('M.D')] = {duration: duration, item: item}
+
+      start_date = spans[0].start
+      end_date = spans[spans.length-1].end
+      for item in spans
+        if start_date > item.start
+          start_date = item.start
+        if end_date < item.end
+          end_date = item.end
+      
       timeline_length = end_date.diff(start_date, 'days')
+
       middle_date = start_date.clone().add('days', timeline_length/2)
       if timeline_length < 23
         timeline_length = 23
       left = Math.round(timeline_length / 2)
       right = Math.round(timeline_length /2)
-      results = []
+      results = @realData
+      results.removeAll()
+
       has_first_avia = false
       has_first_hotel = false
       for x in [2..left]
@@ -74,7 +96,7 @@ class Timeline
             obj.first = true
             has_first_avia = true
         results.push obj
-      return results
+      return true
                     
   showConditions: (context, event) =>
     el = $(event.currentTarget)
@@ -104,17 +126,19 @@ class Timeline
         @termsActive = false
       ).addClass('hide')
 
-  scrollTimelineRight: =>
-    scrollableFrame = @data().length* 32 - 23*32
+  scrollRight: =>
+    scrollableFrame = @realData().length* 32 - 23*32
     if scrollableFrame < 0
       return
     @timelinePosition @timelinePosition() + 32
+
     if @timelinePosition() > scrollableFrame
       @timelinePosition scrollableFrame
+
     
 
   scrollTimelineLeft: =>
-    scrollableFrame = @data().length* 32 - 23*32
+    scrollableFrame = @realData().length* 32 - 23*32
     if scrollableFrame < 0
       return
             

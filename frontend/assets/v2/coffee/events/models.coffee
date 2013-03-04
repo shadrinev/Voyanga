@@ -370,9 +370,9 @@ class EventTourResultSet
             $('.sub-head.event').css('margin-top', '0px')
           else
             $('.sub-head.event').stop(true)
-            ;
+
             $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px')
-            ;
+            $('.tdCity .add-tour').hide()
             $('.sub-head.event').css('margin-top', (-@activePanel().heightPanelSet() + 4) + 'px')
             console.log('need hidePanel', $('.sub-head.event'), @activePanel().heightPanelSet(), $('.sub-head.event').css('margin-top'))
 
@@ -393,11 +393,15 @@ class EventTourResultSet
     @visiblePanel(!@visiblePanel())
   showPanel: =>
     console.log('showPanel')
-    $('.sub-head.event').animate({'margin-top': '0px'})
+    $('.sub-head.event').animate(
+      {'margin-top': '0px'},
+      ->
+        $('.tdCity .add-tour').show()
+    )
   hidePanel: =>
     console.log('hidePanel', @activePanel().heightPanelSet())
     $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px')
-    ;
+    $('.tdCity .add-tour').hide()
     $('.sub-head.event').animate({'margin-top': (-@activePanel().heightPanelSet() + 4) + 'px'})
 
 

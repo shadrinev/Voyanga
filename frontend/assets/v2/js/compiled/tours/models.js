@@ -95,6 +95,8 @@ ToursAviaResultSet = (function(_super) {
 
     this.rt = __bind(this.rt, this);
 
+    this.rtTimelineEnd = __bind(this.rtTimelineEnd, this);
+
     this.rtTimelineStart = __bind(this.rtTimelineStart, this);
 
     this.timelineEnd = __bind(this.timelineEnd, this);
@@ -332,6 +334,16 @@ ToursAviaResultSet = (function(_super) {
       return sp.destinations[1].date;
     }
     return source.rtDepartureDate();
+  };
+
+  ToursAviaResultSet.prototype.rtTimelineEnd = function() {
+    var source, sp;
+    sp = this.observableSP();
+    source = this.selection();
+    if (source === null) {
+      return sp.destinations[1].date;
+    }
+    return source.rtArrivalDate();
   };
 
   ToursAviaResultSet.prototype.rt = function() {
@@ -1816,10 +1828,13 @@ TourResultSet = (function() {
   TourResultSet.prototype.showPanel = function() {
     return $('.sub-head.event').animate({
       'margin-top': '0px'
+    }, function() {
+      return $('.tdCity .add-tour').show();
     });
   };
 
   TourResultSet.prototype.hidePanel = function() {
+    $('.tdCity .add-tour').hide();
     return $('.sub-head.event').css('height', (this.activePanel().heightPanelSet()) + 'px').animate({
       'margin-top': (-this.activePanel().heightPanelSet() + 4) + 'px'
     });
