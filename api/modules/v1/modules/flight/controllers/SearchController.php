@@ -156,6 +156,11 @@ class SearchController extends ApiController
             $newFlight = $flight;
             $newFlight['searchId'] = $searchId;
             $newFlight['cacheId'] = $cacheId;
+            if (Partner::getCurrentPartner())
+            {
+                $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$cacheId.'&item[0][searchKey]='.$flight['flightKey'].'&pid='.Partner::getCurrentPartnerKey();
+                $newFlight['url'] = Yii::app()->params['baseUrl'].'/buy?'.$query;
+            }
             $newFlights[] = $newFlight;
         }
         return $newFlights;

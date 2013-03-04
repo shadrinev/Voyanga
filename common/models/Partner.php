@@ -139,12 +139,13 @@ class Partner extends CActiveRecord
         $chars = 'a2bc3de4fg5hk6mn7pq8su9vxyz'; // Используем непохожие друг на друга символы
         $length = 27; //strlen($chars); // если изменяем набор символов, то число нужно изменить
         $hash = '';
+        //todo: php5.4 fails here
         while ($id > $length - 1)
         {
-            $hash = $chars[fmod($id, $length)] . $hash;
+            $hash = @$chars[fmod($id, $length)] . $hash;
             $id = floor($id / $length);
         }
-        return $chars[$id] . $hash;
+        return @$chars[$id] . $hash;
     }
 
     /**
@@ -187,6 +188,11 @@ class Partner extends CActiveRecord
     public function getPartnerKey()
     {
         return self::encodeId(($this->id + 10100));
+    }
+
+    public static function getCurrentPartnerKey()
+    {
+        return self::encodeId((self::getCurrentPartner()->id + 10100));
     }
 
     public static function getPartnerByKey($key)
