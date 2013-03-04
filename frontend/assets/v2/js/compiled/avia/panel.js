@@ -48,9 +48,11 @@ AviaPanel = (function(_super) {
     this.selectionIndex = ko.observable('');
     this.selectionIndex.subscribe(function(newValue) {
       if (newValue === 1 && _this.rt()) {
-        VoyangaCalendarStandart.checkCalendarValue(false);
-        _this.departureDate('');
-        return _this.rtDate('');
+        if (_this.departureDate()) {
+          VoyangaCalendarStandart.checkCalendarValue(false);
+          _this.departureDate('');
+          return _this.rtDate('');
+        }
       }
     });
     this.oldCalendarState = this.minimizedCalendar();
