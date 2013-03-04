@@ -225,10 +225,11 @@ class landBestPriceSet
       return price
     @bestDate = ko.computed =>
       if @directBestPriceData()
-        dateFrom = moment(@directBestPriceData().date)
-        console.log(dateFrom)
-        strDate = dateUtils.formatDayMonthYear(dateFrom._d)
-        return strDate
+        if @directBestPriceData().date
+          dateFrom = moment(@directBestPriceData().date)
+          console.log('SETTING UP BACK DATE',@directBestPriceData())
+          strDate = dateUtils.formatDayMonthYear(dateFrom._d)
+          return strDate
       return false
 
 
@@ -317,7 +318,10 @@ class landingCitySelector
         return @landBestPriceSets[@currentCityCode()].active()
     @bestDate = ko.computed =>
       if @currentCityCode()
-        return @landBestPriceSets[@currentCityCode()].bestDate()
+        val = @landBestPriceSets[@currentCityCode()].bestDate()
+        console.log('valueeeee:',val, (typeof(val)))
+        return val
+      return false
     @selectedPrice = ko.computed =>
       if @currentCityCode()
         return @landBestPriceSets[@currentCityCode()].selectedPrice()

@@ -219,6 +219,7 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
+    console.log('SPC1');
     this.activeCalendarPanel(args[0]);
     if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
       return this.activeCalendarPanel().showCalendar(false);
@@ -256,6 +257,7 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.afterRender = function(el) {
+    console.log('SPC2');
     resizePanel();
     if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
       return this.activeCalendarPanel().showCalendar(false);
@@ -327,6 +329,7 @@ TourPanel = (function(_super) {
       return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
+      console.log('SPC3');
       if (_this.sp.calendarActivated()) {
         return _this.showCalendar();
       }
@@ -393,7 +396,9 @@ TourPanel = (function(_super) {
     el.find(".startInputTo").show();
     return el.find('.cityStart').animate({
       width: "261px"
-    }, 300, function() {}, el.find(".startInputTo").find("input").focus());
+    }, 300, function() {
+      return el.find(".startInputTo").find("input").focus();
+    });
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
@@ -456,16 +461,18 @@ $(document).on("keyup change", '.cityStart input.second-path', function(e) {
     if (elem.parent().hasClass("overflow")) {
       elem.parent().animate({
         width: "271px"
-      }, 300, function() {});
-      $(this).removeClass("overflow");
-      $('.from.active .second-path').focus();
+      }, 300, function() {
+        $(this).removeClass("overflow");
+        return $('.from.active .second-path').focus();
+      });
       $(".cityStart").animate({
         width: "115px"
       }, 300);
-      $(".cityStart").find(".startInputTo").animate({
+      return $(".cityStart").find(".startInputTo").animate({
         opacity: "1"
-      }, 300, function() {});
-      return $(this).hide();
+      }, 300, function() {
+        return $(this).hide();
+      });
     }
   }
 });

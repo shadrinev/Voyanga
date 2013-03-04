@@ -524,6 +524,7 @@ EventTourResultSet = (function() {
         } else {
           $('.sub-head.event').stop(true);
           $('.sub-head.event').css('height', (_this.activePanel().heightPanelSet()) + 'px');
+          $('.tdCity .add-tour').hide();
           $('.sub-head.event').css('margin-top', (-_this.activePanel().heightPanelSet() + 4) + 'px');
           return console.log('need hidePanel', $('.sub-head.event'), _this.activePanel().heightPanelSet(), $('.sub-head.event').css('margin-top'));
         }
@@ -552,12 +553,15 @@ EventTourResultSet = (function() {
     console.log('showPanel');
     return $('.sub-head.event').animate({
       'margin-top': '0px'
+    }, function() {
+      return $('.tdCity .add-tour').show();
     });
   };
 
   EventTourResultSet.prototype.hidePanel = function() {
     console.log('hidePanel', this.activePanel().heightPanelSet());
     $('.sub-head.event').css('height', (this.activePanel().heightPanelSet()) + 'px');
+    $('.tdCity .add-tour').hide();
     return $('.sub-head.event').animate({
       'margin-top': (-this.activePanel().heightPanelSet() + 4) + 'px'
     });

@@ -1828,10 +1828,13 @@ TourResultSet = (function() {
   TourResultSet.prototype.showPanel = function() {
     return $('.sub-head.event').animate({
       'margin-top': '0px'
+    }, function() {
+      return $('.tdCity .add-tour').show();
     });
   };
 
   TourResultSet.prototype.hidePanel = function() {
+    $('.tdCity .add-tour').hide();
     return $('.sub-head.event').css('height', (this.activePanel().heightPanelSet()) + 'px').animate({
       'margin-top': (-this.activePanel().heightPanelSet() + 4) + 'px'
     });
