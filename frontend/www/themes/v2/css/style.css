@@ -3074,6 +3074,7 @@ input.hotel-input {
     top: 0;
     z-index: 3;
     border-radius: 5px;
+    font-weight: bold;
 }
 hr {
     background: #afb4b8;
