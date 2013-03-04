@@ -354,7 +354,31 @@ class ToursHotelsResultSet extends TourEntry
     @overviewTemplate = 'tours-overview-hotels-ticket'
     @selection {roomSet: roomSet, hotel: hotel}
     hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
-    hotel.parent.pagesLoad = hotel.parent.showParts()
+    #Код для того чтобы выбранный результат попал в отображение -->
+    limit = 0
+    sortKey = hotel.parent.sortBy()
+    ordKey = hotel.parent.ordBy()
+
+
+    hotel.parent.data.sort (left, right)=>
+      if left[sortKey] < right[sortKey]
+        return -1 * ordKey
+      if left[sortKey] > right[sortKey]
+        return  1 * ordKey
+      return 0
+
+    for result in hotel.parent.data()
+      if result.visible()
+        limit++
+        if result.hotelId == hotel.hotelId
+          break
+
+    pageFound = Math.ceil(limit/hotel.parent.showLimit)
+    # <--
+    if pageFound > hotel.parent.showParts()
+      hotel.parent.pagesLoad = pageFound
+    else
+      hotel.parent.pagesLoad = hotel.parent.showParts()
 
 
   toBuyRequest: =>
