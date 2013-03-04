@@ -635,7 +635,11 @@ class LandingController extends Controller
             $criteria->order = 'priceBestPrice';
 
             $flightCacheBestPrice = FlightCache::model()->find($criteria);
-            $flightCacheBestPriceArr = array('price' => $flightCacheBestPrice->priceBestPrice, 'date' => $flightCacheBestPrice->dateFrom, 'dateBack' => $flightCacheBestPrice->dateBack);
+            if($flightCacheBestPrice){
+                $flightCacheBestPriceArr = array('price' => $flightCacheBestPrice->priceBestPrice, 'date' => $flightCacheBestPrice->dateFrom, 'dateBack' => $flightCacheBestPrice->dateBack);
+            }else{
+                $flightCacheBestPriceArr = array();
+            }
             $citiesFrom[$cityId]['flightCacheBestPriceArr'] = $flightCacheBestPriceArr;
         }
 
