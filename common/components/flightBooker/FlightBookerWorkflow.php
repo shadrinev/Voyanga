@@ -16,7 +16,7 @@ return array(
         array('id'=>'bookingTimeLimitError',    'transition'=>'bookingTimeLimitError,error'),
         array('id'=>'ticketing',                'transition'=>'done,ticketingRepeat'),
         array('id'=>'ticketingRepeat',          'transition'=>'ticketingRepeat,ticketingError,done'),
-        array('id'=>'ticketingError',           'transition'=>'error,manualSuccess'),
+        array('id'=>'ticketingError',           'transition'=>'error,manualSuccess,ticketing'),
         array('id'=>'manualSuccess',            'transition'=>'done'),
         array('id'=>'done',                     'transition'=>'canceled'),
         array('id'=>'error'),

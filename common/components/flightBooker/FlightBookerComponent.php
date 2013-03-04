@@ -217,6 +217,7 @@ class FlightBookerComponent extends CApplicationComponent
         else
         {
             $this->status('ticketingRepeat');
+            return;
         }
         $this->status('done');
     }
