@@ -1094,12 +1094,15 @@ function loadPayFly() {
         var _widthLoadPayFly = _loadPayFly.width() - (230 + 60);
         var _loadJet = $('.loadJet');
         var _Jet = _loadJet.find('.jetFly');
-
         _loadJet.css('margin-left', '-'+offsetPayBlock.left+'px').css('width', (offsetPayBlock.left + _widthLoadPayFly)+'px');
         _loadJet.find('.overflowBlock').css('width', (offsetPayBlock.left + _widthLoadPayFly)+'px');
-        _loadJet.find('.pathBlock').clone().prependTo('.loadJet').addClass('blue');
+        if (_loadPayFly.find('.pathBlock').length < 2) {
+            _loadJet.find('.pathBlock').clone().prependTo('.loadJet').addClass('blue');
+        }
+        else {
+            return;
+        }
         _loadJet.find('.pathBlock').eq(1).attr('id','grey');
-
         function startFlyJet() {
             _Jet.animate({'right' : '0%'}, 20000, 'linear', function() {
                 $(this).animate({'right' : '-241px'}, 4000, 'linear', function() {
