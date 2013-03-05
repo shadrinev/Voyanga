@@ -38,21 +38,43 @@ class API
 #        cb(false)
 
 class ToursAPI extends API
-  search: (url,cb)=>
+  search: (url,cb, showLoad = true, description = '')=>
+    if(showLoad && !description)
+      description = 'Идет поиск лучших авиабилетов и отелей<br>Это может занять от 5 до 30 секунд'
     #@call "tour/search?start=BCN&destinations%5B0%5D%5Bcity%5D=MOW&destinations%5B0%5D%5BdateFrom%5D=10.10.2012&destinations%5B0%5D%5BdateTo%5D=15.10.2012&rooms%5B0%5D%5Badt%5D=1&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0", (data) -> cb(data)
-    @call url, (data) -> cb(data)
-
-class AviaAPI extends API
-  search: (url, cb)=>
-    @call url, (data) -> cb(data)
-
-class HotelsAPI extends API
-  search: (url, cb, showLoad = true)=>
     @call(
       url,
       (data) ->
         cb(data)
-      , showLoad
+      , showLoad,
+      description
+    )
+
+class AviaAPI extends API
+  search: (url, cb, showLoad = true, description = '')=>
+    if(showLoad && !description)
+      description = 'Идет поиск лучших авиабилетов<br>Это может занять от 5 до 30 секунд'
+    #@call "tour/search?start=BCN&destinations%5B0%5D%5Bcity%5D=MOW&destinations%5B0%5D%5BdateFrom%5D=10.10.2012&destinations%5B0%5D%5BdateTo%5D=15.10.2012&rooms%5B0%5D%5Badt%5D=1&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0", (data) -> cb(data)
+    @call(
+      url,
+      (data) ->
+        cb(data)
+      , showLoad,
+      description
+    )
+
+
+class HotelsAPI extends API
+  search: (url, cb, showLoad = true)=>
+    if(showLoad && !description)
+      description = 'Идет поиск лучших отелей<br>Это может занять от 5 до 30 секунд'
+    #@call "tour/search?start=BCN&destinations%5B0%5D%5Bcity%5D=MOW&destinations%5B0%5D%5BdateFrom%5D=10.10.2012&destinations%5B0%5D%5BdateTo%5D=15.10.2012&rooms%5B0%5D%5Badt%5D=1&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0", (data) -> cb(data)
+    @call(
+      url,
+      (data) ->
+        cb(data)
+      , showLoad,
+      description
     )
 
 class VisualLoader
@@ -87,14 +109,14 @@ class VisualLoader
     if 98 > percent >= 0
       rand = Math.random()
       if(percent < @separator)
-        rtime = Math.ceil(rand * (@separatedTime / 3))
-        newPerc = Math.ceil(rand * (@separator / 3) )
+        rtime = Math.ceil(rand * (@separatedTime / 8))
+        newPerc = Math.ceil(rand * (@separator / 8) )
         if((percent + newPerc) > @separator)
           newPerc = @separator - percent
         if(newPerc > 3)
-          newPerc = newPerc + Math.ceil( (newPerc / 10) * (Math.random() - 0.5) )
+          newPerc = newPerc + Math.ceil( (newPerc / 18) * (Math.random() - 0.5) )
       else
-        rtime = Math.ceil(rand * (@separatedTime / 3))
+        rtime = Math.ceil(rand * (@separatedTime / 8))
         newPerc = Math.ceil(Math.random() * 2 )
       console.log('time: '+rtime+'sec')
       @timeFromStart +=rtime

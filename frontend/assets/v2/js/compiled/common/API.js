@@ -64,10 +64,19 @@ ToursAPI = (function(_super) {
     return ToursAPI.__super__.constructor.apply(this, arguments);
   }
 
-  ToursAPI.prototype.search = function(url, cb) {
+  ToursAPI.prototype.search = function(url, cb, showLoad, description) {
+    if (showLoad == null) {
+      showLoad = true;
+    }
+    if (description == null) {
+      description = '';
+    }
+    if (showLoad && !description) {
+      description = 'Идет поиск лучших авиабилетов и отелей<br>Это может занять от 5 до 30 секунд';
+    }
     return this.call(url, function(data) {
       return cb(data);
-    });
+    }, showLoad, description);
   };
 
   return ToursAPI;
@@ -83,10 +92,19 @@ AviaAPI = (function(_super) {
     return AviaAPI.__super__.constructor.apply(this, arguments);
   }
 
-  AviaAPI.prototype.search = function(url, cb) {
+  AviaAPI.prototype.search = function(url, cb, showLoad, description) {
+    if (showLoad == null) {
+      showLoad = true;
+    }
+    if (description == null) {
+      description = '';
+    }
+    if (showLoad && !description) {
+      description = 'Идет поиск лучших авиабилетов<br>Это может занять от 5 до 30 секунд';
+    }
     return this.call(url, function(data) {
       return cb(data);
-    });
+    }, showLoad, description);
   };
 
   return AviaAPI;
@@ -103,12 +121,16 @@ HotelsAPI = (function(_super) {
   }
 
   HotelsAPI.prototype.search = function(url, cb, showLoad) {
+    var description;
     if (showLoad == null) {
       showLoad = true;
     }
+    if (showLoad && !description) {
+      description = 'Идет поиск лучших отелей<br>Это может занять от 5 до 30 секунд';
+    }
     return this.call(url, function(data) {
       return cb(data);
-    }, showLoad);
+    }, showLoad, description);
   };
 
   return HotelsAPI;
@@ -166,16 +188,16 @@ VisualLoader = (function() {
     if ((98 > percent && percent >= 0)) {
       rand = Math.random();
       if (percent < this.separator) {
-        rtime = Math.ceil(rand * (this.separatedTime / 3));
-        newPerc = Math.ceil(rand * (this.separator / 3));
+        rtime = Math.ceil(rand * (this.separatedTime / 8));
+        newPerc = Math.ceil(rand * (this.separator / 8));
         if ((percent + newPerc) > this.separator) {
           newPerc = this.separator - percent;
         }
         if (newPerc > 3) {
-          newPerc = newPerc + Math.ceil((newPerc / 10) * (Math.random() - 0.5));
+          newPerc = newPerc + Math.ceil((newPerc / 18) * (Math.random() - 0.5));
         }
       } else {
-        rtime = Math.ceil(rand * (this.separatedTime / 3));
+        rtime = Math.ceil(rand * (this.separatedTime / 8));
         newPerc = Math.ceil(Math.random() * 2);
       }
       console.log('time: ' + rtime + 'sec');
