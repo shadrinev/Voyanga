@@ -14,15 +14,74 @@
 
 #loadContentWin {
 	position:relative;
-	width: 252px;
-	height: 331px;
+    width: 351px;
+	height: 415px;
 	
 	top: 40%;
 	left: 50%;
 	margin-left: -121px;
-	margin-top: -165px;
+	margin-top: -175px;
 	z-index: 801;
-	background: url("../images/slice.png") no-repeat scroll 0 0 transparent;
+
+
+}
+#loadContentWin .layer01 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 351px;
+    height: 284px;
+    z-index: 1;
+    background: url(../images/load01.png) no-repeat;
+}
+#loadContentWin .layer02 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 351px;
+    height: 284px;
+    z-index: 2;
+}
+#loadContentWin .layer03 {
+    background: url("../images/load03.gif") no-repeat scroll 0 0 transparent;
+    height: 159px;
+    left: 94px;
+    position: absolute;
+    top: 97px;
+    width: 170px;
+    z-index: 3;
+}
+
+#loadContentWin .procent {
+    bottom: 85px;
+    color: #FFFFFF;
+    font-family: Verdana;
+    font-size: 40px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 0 #000000;
+    width: 100%;
+}
+#loadContentWin .text {
+    bottom: 0;
+    color: #FFFFFF;
+    font-family: Arial;
+    font-size: 24px;
+    left: -69px;
+    line-height: 34px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 0 #070707;
+    white-space: nowrap;
+    width: 490px;
+}
+#loadContentWin .procent .simbol {
+    background: url(../images/procentLoad.png) no-repeat;
+    width: 12px;
+    height: 13px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
 }
 #loadContentWinMin {
 	position:relative;
