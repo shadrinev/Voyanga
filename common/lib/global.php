@@ -14,7 +14,7 @@ defined('DS') or define('DS',DIRECTORY_SEPARATOR);
 function yiiCorrectShutdown()
 {
     $error = error_get_last();
-    $exception = new Exception($error);
+    $exception = new CException(CVarDumper::dumpAsString($error));
     Yii::app()->RSentryException->logException($exception);
     Yii::app()->end();
     Yii::app()->log->processLogs(null);
