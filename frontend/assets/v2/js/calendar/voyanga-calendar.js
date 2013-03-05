@@ -729,7 +729,7 @@ VoyangaCalendarStandart.minimalDateUpdated = function () {
 }
 
 VoyangaCalendarStandart.scrollToDate = function (dateVar, forceScroll) {
-    if(VoyangaCalendarStandart.checkCalendarValue()){
+    if(VoyangaCalendarStandart.checkCalendarValue() && dateVar){
         if (!forceScroll) {
             forceScroll = false;
         }
