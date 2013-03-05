@@ -30,9 +30,10 @@ class AviaPanel extends SearchPanel
     @selectionIndex.subscribe(
       (newValue)=>
         if(newValue == 1 && @rt())
-          VoyangaCalendarStandart.checkCalendarValue(false)
-          @departureDate('')
-          @rtDate('')
+          if @departureDate()
+            VoyangaCalendarStandart.checkCalendarValue(false)
+            @departureDate('')
+            @rtDate('')
     )
 
     #helper to save calendar state

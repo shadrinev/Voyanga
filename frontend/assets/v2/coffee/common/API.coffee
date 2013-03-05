@@ -46,3 +46,50 @@ class HotelsAPI extends API
         cb(data)
       , showLoad
     )
+
+class VisualLoader
+  constructor: ->
+    @percents = ko.observable(0)
+    @separator = 90
+    @separatedTime = 30
+    @timeoutHandler = null
+    @description = ko.observable('')
+    @timeFromStart = 0
+    @percents.subscribe (newVal)=>
+      console.log('loder changed... NOW: '+newVal + '% time from start: '+ @timeFromStart+'sec')
+
+
+  renew: (percent)=>
+    @percents percent
+    if 98 > percent >= 0
+      rand = Math.random()
+      if(percent < 90)
+        rtime = Math.ceil(rand * (@separatedTime / 3))
+        newPerc = Math.ceil(rand * (@separator / 3) )
+        if(newPerc > 3)
+          newPerc = newPerc + Math.ceil( (newPerc / 10) * (Math.random() - 0.5) )
+      else
+        rtime = Math.ceil(rand * (@separatedTime / 3))
+        newPerc = Math.ceil(Math.random() * 2 )
+      console.log('time: '+rtime+'sec')
+      @timeFromStart +=rtime
+      @timeoutHandler = window.setTimeout(
+        =>
+          @renew(percent + newPerc)
+        , 1000 * rtime
+      )
+    else if 100 > percent >= 98
+      console.log('loadrer more 98')
+    else
+      if(@timeoutHandler)
+        window.clearTimeout(@timeoutHandler)
+
+      @timeoutHandler = null
+
+
+  start: (description)=>
+    @description description
+    @timeFromStart = 0
+    @renew 0
+
+
