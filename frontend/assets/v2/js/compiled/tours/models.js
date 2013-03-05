@@ -944,7 +944,6 @@ ToursResultSet = (function() {
     }
     this.trigger('inner-template', entry.template);
     return window.setTimeout(function() {
-      console.log('TourOut', window.hrs.data()[0]);
       if (entry.afterRender && afterRender) {
         console.log('arin');
         entry.afterRender();

@@ -42,11 +42,10 @@ return array(
         ),
 
         'session' => array(
-            'class'=>'site.common.extensions.EMongoDbHttpSession.EMongoDbHttpSession',
-            'connectionString' => $params['mongo.connectionString'],
-            'dbName'         => $params['mongo.dbName'],
-            'collectionName' => 'session',
-            'timeout' => 3600 //1hr to store items inside cache
+            'class'=>'CDbHttpSession',
+            'connectionID'=>'db',
+            'sessionTableName'=>'yii_session',
+            'timeout' => 3600 //1hr to store items inside session
         ),
 
         'pCache' => array(
