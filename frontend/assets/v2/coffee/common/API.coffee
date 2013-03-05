@@ -27,10 +27,11 @@ class API
         window.setTimeout(
           =>
             cb(data)
+            if showLoad
+              @loader.hide()
           , 50
         )
-        if showLoad
-          @loader.hide()
+
           #$('#loadWrapBg').hide()
           #loaderChange(false)
       error: (jqXHR, rest...)->
@@ -120,7 +121,7 @@ class VisualLoader
         if(newPerc > 3)
           newPerc = newPerc + Math.ceil( (newPerc / 18) * (Math.random() - 0.5) )
       else
-        rtime = Math.ceil(rand * (@separatedTime / 8))
+        rtime = Math.ceil(rand * (@separatedTime / 3))
         newPerc = Math.ceil(Math.random() * 2 )
       console.log('time: '+rtime+'sec')
       @timeFromStart +=rtime

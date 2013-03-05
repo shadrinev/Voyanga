@@ -35,12 +35,12 @@ API = (function() {
         if (showLoad) {
           _this.loader.renew(100);
         }
-        window.setTimeout(function() {
-          return cb(data);
+        return window.setTimeout(function() {
+          cb(data);
+          if (showLoad) {
+            return _this.loader.hide();
+          }
         }, 50);
-        if (showLoad) {
-          return _this.loader.hide();
-        }
       },
       error: function() {
         var jqXHR, rest;
@@ -199,7 +199,7 @@ VisualLoader = (function() {
           newPerc = newPerc + Math.ceil((newPerc / 18) * (Math.random() - 0.5));
         }
       } else {
-        rtime = Math.ceil(rand * (this.separatedTime / 8));
+        rtime = Math.ceil(rand * (this.separatedTime / 3));
         newPerc = Math.ceil(Math.random() * 2);
       }
       console.log('time: ' + rtime + 'sec');
