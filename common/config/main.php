@@ -42,6 +42,7 @@ return array(
         ),
 
         'session' => array(
+            'autoCreateSessionTable' => YII_DEBUG,
             'class'=>'CDbHttpSession',
             'connectionID'=>'db',
             'sessionTableName'=>'yii_session',
