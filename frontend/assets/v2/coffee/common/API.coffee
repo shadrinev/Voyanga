@@ -24,7 +24,11 @@ class API
         #sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
         if showLoad
           @loader.renew(100)
-        cb(data)
+        window.setTimeout(
+          =>
+            cb(data)
+          , 50
+        )
         if showLoad
           @loader.hide()
           #$('#loadWrapBg').hide()

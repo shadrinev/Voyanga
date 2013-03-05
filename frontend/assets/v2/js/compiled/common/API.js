@@ -35,7 +35,9 @@ API = (function() {
         if (showLoad) {
           _this.loader.renew(100);
         }
-        cb(data);
+        window.setTimeout(function() {
+          return cb(data);
+        }, 50);
         if (showLoad) {
           return _this.loader.hide();
         }
