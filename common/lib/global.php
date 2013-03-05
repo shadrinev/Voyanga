@@ -14,7 +14,7 @@ defined('DS') or define('DS',DIRECTORY_SEPARATOR);
 function yiiCorrectShutdown()
 {
     $error = error_get_last();
-    if ($error !== null)
+    if (($error !== null) && (isset($error['type'])) && ($error['type'] & E_ERROR))
     {
         $exception = new CException(CVarDumper::dumpAsString($error));
         Yii::app()->RSentryException->logException($exception);
