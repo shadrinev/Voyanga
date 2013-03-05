@@ -20,17 +20,22 @@ class HotelsController
     # update search params with values in route
 
     @searchParams.fromList(args)
-    @api.search @searchParams.url(), (data)=>
-      try
-        stacked = @handleResults data
-      catch err
-        if err=='e404'
-          new ErrorPopup 'hotels404'
-          return
-        throw new Error("Unable to build HotelResultSet from search response")
-        
-      @results stacked
-      @render 'results', {'results' : @results}
+    @api.search(
+      @searchParams.url(),
+      (data)=>
+        try
+          stacked = @handleResults data
+        catch err
+          if err=='e404'
+            new ErrorPopup 'hotels404'
+            return
+          throw new Error("Unable to build HotelResultSet from search response")
+
+        @results stacked
+        @render 'results', {'results' : @results}
+      , true,
+      'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд'
+    )
 
   handleResults: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data

@@ -1025,6 +1025,8 @@ class TourTripResultSet
               console.log(tariffs)
               gp = new GenericPopup('#tariff-rules',{'tariffs': tariffs})
           #for()
+        , true,
+        'Загружаем правила применения тарифов'
       )
 
     @flightCounterWord = ko.computed =>

@@ -142,7 +142,7 @@ ToursController = (function() {
         new ErrorPopup('toursNoTicketOnValidation', false, function() {});
         return _this.results(stacked);
       }
-    });
+    }, true, 'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд');
   };
 
   ToursController.prototype.render = function(view, data) {

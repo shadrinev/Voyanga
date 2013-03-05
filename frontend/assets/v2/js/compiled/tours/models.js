@@ -1555,7 +1555,7 @@ TourTripResultSet = (function() {
             });
           }
         }
-      });
+      }, true, 'Загружаем правила применения тарифов');
     };
     this.flightCounterWord = ko.computed(function() {
       var res;

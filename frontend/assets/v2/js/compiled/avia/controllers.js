@@ -98,7 +98,7 @@ AviaController = (function() {
         new ErrorPopup('aviaNoTicketOnValidation', "Билет не найден, выберите другой.", false, function() {});
         return _this.results(stacked);
       }
-    });
+    }, true, 'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд');
   };
 
   AviaController.prototype.render = function(view, data) {

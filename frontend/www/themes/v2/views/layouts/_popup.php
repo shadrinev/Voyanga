@@ -3,7 +3,7 @@
         <div class="layer01"></div>
         <div class="layer02"><img src="<?= $theme ?>/images/load02.gif" width="351" height="284"></div>
         <div class="layer03"></div>
-        <div class="procent">45<span class="simbol"></span></div>
+        <div class="procent"><span class="digit">45</span><span class="symbol">%</span></div>
         <div class="text">
             Идет поиск лучших авиабилетов и отелей<br>
             Это может занять от 5 до 30 секунд

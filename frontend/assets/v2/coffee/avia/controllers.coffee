@@ -54,17 +54,22 @@ class AviaController
       resultDeferred.resolve(result)
       return
 
-    @api.search  @searchParams.url(), (data)=>
-      try
-        stacked = @handleResults(data)
-      catch err
-        throw new Error("Unable to build AviaResultSet from search response. Check ticket")
-      result = stacked.findAndSelect(result)
-      if result
-        resultDeferred.resolve(result)
-      else
-        new ErrorPopup 'aviaNoTicketOnValidation', "Билет не найден, выберите другой.", false, ->
-        @results stacked
+    @api.search(
+      @searchParams.url(),
+      (data)=>
+        try
+          stacked = @handleResults(data)
+        catch err
+          throw new Error("Unable to build AviaResultSet from search response. Check ticket")
+        result = stacked.findAndSelect(result)
+        if result
+          resultDeferred.resolve(result)
+        else
+          new ErrorPopup 'aviaNoTicketOnValidation', "Билет не найден, выберите другой.", false, ->
+          @results stacked
+      , true,
+      'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд'
+    )
 
   render: (view, data) ->
     @trigger "viewChanged", view, data

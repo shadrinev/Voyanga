@@ -88,18 +88,23 @@ class ToursController
       resultDeferred.resolve(@stacked)
       return
 
-    @api.search  @searchParams.url(), (data)=>
-      try
-        stacked = @handleResults(data)
-      catch err
-        new ErrorPopup 'avia500'
-        return
-      result = stacked.findAndSelect(toursData)
-      if result
-        resultDeferred.resolve(stacked)
-      else
-        new ErrorPopup 'toursNoTicketOnValidation', false, ->
-        @results stacked
+    @api.search(
+      @searchParams.url(),
+      (data)=>
+        try
+          stacked = @handleResults(data)
+        catch err
+          new ErrorPopup 'avia500'
+          return
+        result = stacked.findAndSelect(toursData)
+        if result
+          resultDeferred.resolve(stacked)
+        else
+          new ErrorPopup 'toursNoTicketOnValidation', false, ->
+          @results stacked
+      , true,
+      'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд'
+    )
 
 
 

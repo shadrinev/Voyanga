@@ -52,7 +52,7 @@ HotelsController = (function() {
       return _this.render('results', {
         'results': _this.results
       });
-    });
+    }, true, 'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд');
   };
 
   HotelsController.prototype.handleResults = function(data) {

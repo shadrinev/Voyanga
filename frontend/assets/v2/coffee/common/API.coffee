@@ -70,7 +70,7 @@ class AviaAPI extends API
 
 
 class HotelsAPI extends API
-  search: (url, cb, showLoad = true)=>
+  search: (url, cb, showLoad = true, description = '')=>
     if(showLoad && !description)
       description = 'Идет поиск лучших отелей<br>Это может занять от 5 до 30 секунд'
     #@call "tour/search?start=BCN&destinations%5B0%5D%5Bcity%5D=MOW&destinations%5B0%5D%5BdateFrom%5D=10.10.2012&destinations%5B0%5D%5BdateTo%5D=15.10.2012&rooms%5B0%5D%5Badt%5D=1&rooms%5B0%5D%5Bchd%5D=0&rooms%5B0%5D%5BchdAge%5D=0&rooms%5B0%5D%5Bcots%5D=0", (data) -> cb(data)
@@ -88,6 +88,11 @@ class VisualLoader
     @separator = 90
     @separatedTime = 30
     @timeoutHandler = null
+    @glowState = false
+    @glowHandler = null
+    @tooltips = ['aga1','aga2']
+    @tooltipInd = null
+    @tooltipHandler = null
     @description = ko.observable('')
     @description.subscribe (newVal)=>
       $('#loadWrapBg').find('.text').html(newVal)
@@ -101,11 +106,34 @@ class VisualLoader
 
   hide: =>
     $('#loadWrapBg').hide()
+    if(@glowHandler)
+      window.clearInterval(@glowHandler)
+      @glowHandler = null
+
+    if(@tooltipHandler)
+      window.clearInterval(@tooltipHandler)
+      @tooltipHandler = null
 
   setPerc: (perc)=>
     h = Math.ceil( (156 - (perc / 100) * 156 ) )
-    $('#loadWrapBg').find('.procent').html(perc + '<span class="simbol"></span>')
+    $('#loadWrapBg').find('.procent .digit').html(perc)
     $('#loadWrapBg').find('.layer03').height(h)
+
+  glowStep: =>
+    if @glowState
+      $('#loadWrapBg').find('.procent .symbol').addClass('glowMore')
+    else
+      $('#loadWrapBg').find('.procent .symbol').removeClass('glowMore')
+    @glowState = !@glowState
+
+
+  tooltipStep: =>
+    count = @tooltips.length
+    randVal = Math.ceil(Math.random() * count)
+    randInd = randVal % count
+    if randInd == @tooltipInd
+      randInd = (randVal+1) % count
+    @tooltipInd = randInd
 
 
   renew: (percent)=>
@@ -114,12 +142,12 @@ class VisualLoader
     if 98 > percent >= 0
       rand = Math.random()
       if(percent < @separator)
-        rtime = Math.ceil(rand * (@separatedTime / 8))
-        newPerc = Math.ceil(rand * (@separator / 8) )
+        rtime = Math.ceil(rand * (@separatedTime / 15))
+        newPerc = Math.ceil(rand * (@separator / 15) )
         if((percent + newPerc) > @separator)
           newPerc = @separator - percent
         if(newPerc > 3)
-          newPerc = newPerc + Math.ceil( (newPerc / 18) * (Math.random() - 0.5) )
+          newPerc = newPerc + Math.ceil( (newPerc / 20) * (Math.random() - 0.5) )
       else
         rtime = Math.ceil(rand * (@separatedTime / 3))
         newPerc = Math.ceil(Math.random() * 2 )
@@ -137,14 +165,30 @@ class VisualLoader
     else
       if(@timeoutHandler)
         window.clearTimeout(@timeoutHandler)
+      if(@glowHandler)
+        window.clearInterval(@glowHandler)
+        @glowHandler = null
 
       @timeoutHandler = null
 
 
   start: (description)=>
+
     @description description
     @timeFromStart = 0
+    if !@glowHandler
+      @glowHandler = window.setInterval(
+        =>
+          @glowStep()
+        , 500
+      )
+    if !@tooltipHandler
+      @tooltipHandler = window.setInterval(
+        =>
+          @tooltipStep()
+        , 10000
+      )
     @show()
-    @renew 0
+    @renew 3
 
 

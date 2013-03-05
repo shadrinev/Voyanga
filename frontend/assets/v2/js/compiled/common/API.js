@@ -122,10 +122,12 @@ HotelsAPI = (function(_super) {
     return HotelsAPI.__super__.constructor.apply(this, arguments);
   }
 
-  HotelsAPI.prototype.search = function(url, cb, showLoad) {
-    var description;
+  HotelsAPI.prototype.search = function(url, cb, showLoad, description) {
     if (showLoad == null) {
       showLoad = true;
+    }
+    if (description == null) {
+      description = '';
     }
     if (showLoad && !description) {
       description = 'Идет поиск лучших отелей<br>Это может занять от 5 до 30 секунд';
@@ -146,6 +148,10 @@ VisualLoader = (function() {
 
     this.renew = __bind(this.renew, this);
 
+    this.tooltipStep = __bind(this.tooltipStep, this);
+
+    this.glowStep = __bind(this.glowStep, this);
+
     this.setPerc = __bind(this.setPerc, this);
 
     this.hide = __bind(this.hide, this);
@@ -157,6 +163,11 @@ VisualLoader = (function() {
     this.separator = 90;
     this.separatedTime = 30;
     this.timeoutHandler = null;
+    this.glowState = false;
+    this.glowHandler = null;
+    this.tooltips = ['aga1', 'aga2'];
+    this.tooltipInd = null;
+    this.tooltipHandler = null;
     this.description = ko.observable('');
     this.description.subscribe(function(newVal) {
       return $('#loadWrapBg').find('.text').html(newVal);
@@ -172,14 +183,42 @@ VisualLoader = (function() {
   };
 
   VisualLoader.prototype.hide = function() {
-    return $('#loadWrapBg').hide();
+    $('#loadWrapBg').hide();
+    if (this.glowHandler) {
+      window.clearInterval(this.glowHandler);
+      this.glowHandler = null;
+    }
+    if (this.tooltipHandler) {
+      window.clearInterval(this.tooltipHandler);
+      return this.tooltipHandler = null;
+    }
   };
 
   VisualLoader.prototype.setPerc = function(perc) {
     var h;
     h = Math.ceil(156 - (perc / 100) * 156);
-    $('#loadWrapBg').find('.procent').html(perc + '<span class="simbol"></span>');
+    $('#loadWrapBg').find('.procent .digit').html(perc);
     return $('#loadWrapBg').find('.layer03').height(h);
+  };
+
+  VisualLoader.prototype.glowStep = function() {
+    if (this.glowState) {
+      $('#loadWrapBg').find('.procent .symbol').addClass('glowMore');
+    } else {
+      $('#loadWrapBg').find('.procent .symbol').removeClass('glowMore');
+    }
+    return this.glowState = !this.glowState;
+  };
+
+  VisualLoader.prototype.tooltipStep = function() {
+    var count, randInd, randVal;
+    count = this.tooltips.length;
+    randVal = Math.ceil(Math.random() * count);
+    randInd = randVal % count;
+    if (randInd === this.tooltipInd) {
+      randInd = (randVal + 1) % count;
+    }
+    return this.tooltipInd = randInd;
   };
 
   VisualLoader.prototype.renew = function(percent) {
@@ -190,13 +229,13 @@ VisualLoader = (function() {
     if ((98 > percent && percent >= 0)) {
       rand = Math.random();
       if (percent < this.separator) {
-        rtime = Math.ceil(rand * (this.separatedTime / 8));
-        newPerc = Math.ceil(rand * (this.separator / 8));
+        rtime = Math.ceil(rand * (this.separatedTime / 15));
+        newPerc = Math.ceil(rand * (this.separator / 15));
         if ((percent + newPerc) > this.separator) {
           newPerc = this.separator - percent;
         }
         if (newPerc > 3) {
-          newPerc = newPerc + Math.ceil((newPerc / 18) * (Math.random() - 0.5));
+          newPerc = newPerc + Math.ceil((newPerc / 20) * (Math.random() - 0.5));
         }
       } else {
         rtime = Math.ceil(rand * (this.separatedTime / 3));
@@ -216,15 +255,30 @@ VisualLoader = (function() {
       if (this.timeoutHandler) {
         window.clearTimeout(this.timeoutHandler);
       }
+      if (this.glowHandler) {
+        window.clearInterval(this.glowHandler);
+        this.glowHandler = null;
+      }
       return this.timeoutHandler = null;
     }
   };
 
   VisualLoader.prototype.start = function(description) {
+    var _this = this;
     this.description(description);
     this.timeFromStart = 0;
+    if (!this.glowHandler) {
+      this.glowHandler = window.setInterval(function() {
+        return _this.glowStep();
+      }, 500);
+    }
+    if (!this.tooltipHandler) {
+      this.tooltipHandler = window.setInterval(function() {
+        return _this.tooltipStep();
+      }, 10000);
+    }
     this.show();
-    return this.renew(0);
+    return this.renew(3);
   };
 
   return VisualLoader;
