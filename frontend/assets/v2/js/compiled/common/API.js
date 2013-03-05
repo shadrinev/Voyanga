@@ -10,34 +10,41 @@ API = (function() {
   function API() {
     this.call = __bind(this.call, this);
     this.endpoint = window.apiEndPoint;
+    this.loader = new VisualLoader;
   }
 
-  API.prototype.call = function(url, cb, showLoad) {
+  API.prototype.call = function(url, cb, showLoad, description) {
     var _this = this;
     if (showLoad == null) {
       showLoad = true;
     }
+    if (description == null) {
+      description = 'voyanga';
+    }
     if (showLoad) {
-      $('#loadWrapBg').show();
-      loaderChange(true);
+      if (description === 'voyanga') {
+        description = 'Идет поиск лучших авиабилетов и отелей<br>Это может занять от 5 до 30 секунд';
+      }
+      this.loader.start(description);
     }
     return $.ajax({
       url: "" + this.endpoint + url,
       dataType: 'json',
       timeout: 200000,
       success: function(data) {
+        if (showLoad) {
+          _this.loader.renew(100);
+        }
         cb(data);
         if (showLoad) {
-          $('#loadWrapBg').hide();
-          return loaderChange(false);
+          return _this.loader.hide();
         }
       },
       error: function() {
         var jqXHR, rest;
         jqXHR = arguments[0], rest = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
         if (showLoad) {
-          $('#loadWrapBg').hide();
-          loaderChange(false);
+          this.loader.hide();
         }
         throw new Error(("Api call failed: Url: " + url) + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") + " | " + rest.join(" | "));
       }
@@ -115,27 +122,55 @@ VisualLoader = (function() {
 
     this.renew = __bind(this.renew, this);
 
+    this.setPerc = __bind(this.setPerc, this);
+
+    this.hide = __bind(this.hide, this);
+
+    this.show = __bind(this.show, this);
+
     var _this = this;
     this.percents = ko.observable(0);
     this.separator = 90;
     this.separatedTime = 30;
     this.timeoutHandler = null;
     this.description = ko.observable('');
+    this.description.subscribe(function(newVal) {
+      return $('#loadWrapBg').find('.text').html(newVal);
+    });
     this.timeFromStart = 0;
     this.percents.subscribe(function(newVal) {
       return console.log('loder changed... NOW: ' + newVal + '% time from start: ' + _this.timeFromStart + 'sec');
     });
   }
 
+  VisualLoader.prototype.show = function() {
+    return $('#loadWrapBg').show();
+  };
+
+  VisualLoader.prototype.hide = function() {
+    return $('#loadWrapBg').hide();
+  };
+
+  VisualLoader.prototype.setPerc = function(perc) {
+    var h;
+    h = Math.ceil(156 - (perc / 100) * 156);
+    $('#loadWrapBg').find('.procent').html(perc + '<span class="simbol"></span>');
+    return $('#loadWrapBg').find('.layer03').height(h);
+  };
+
   VisualLoader.prototype.renew = function(percent) {
     var newPerc, rand, rtime,
       _this = this;
     this.percents(percent);
+    this.setPerc(percent);
     if ((98 > percent && percent >= 0)) {
       rand = Math.random();
-      if (percent < 90) {
+      if (percent < this.separator) {
         rtime = Math.ceil(rand * (this.separatedTime / 3));
         newPerc = Math.ceil(rand * (this.separator / 3));
+        if ((percent + newPerc) > this.separator) {
+          newPerc = this.separator - percent;
+        }
         if (newPerc > 3) {
           newPerc = newPerc + Math.ceil((newPerc / 10) * (Math.random() - 0.5));
         }
@@ -146,6 +181,9 @@ VisualLoader = (function() {
       console.log('time: ' + rtime + 'sec');
       this.timeFromStart += rtime;
       return this.timeoutHandler = window.setTimeout(function() {
+        if ((percent + newPerc) > 100) {
+          newPerc = 98 - percent;
+        }
         return _this.renew(percent + newPerc);
       }, 1000 * rtime);
     } else if ((100 > percent && percent >= 98)) {
@@ -161,6 +199,7 @@ VisualLoader = (function() {
   VisualLoader.prototype.start = function(description) {
     this.description(description);
     this.timeFromStart = 0;
+    this.show();
     return this.renew(0);
   };
 
