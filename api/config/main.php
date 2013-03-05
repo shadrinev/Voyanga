@@ -85,22 +85,12 @@ return CMap::mergeArray(
                 'class' => 'CLogRouter',
                 'routes' => array(
                     array(
-                        'class' => 'CFileLogRoute',
-                        'levels' => 'trace, info',
-                        'categories' => 'application.*'
-                    ),
-                    array(
                         'class' => 'CDbLogRoute',
-                        'levels' => 'info',
-                        'categories' => 'system.*, application.db.*',
                         'connectionID' => 'logdb',
                         'autoCreateLogTable' => true,
-                        'logTableName' => 'log_table'
-                    ),
-                    array(
-                        'class' => 'CProfileLogRoute',
-                        'levels' => 'profile',
-                        'enabled' => false
+                        'levels' => 'info',
+                        'logTableName' => 'api_log',
+                        'categories' => 'application.api.*'
                     ),
                     array(
                         'class' => 'CEmailLogRoute',
