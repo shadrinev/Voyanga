@@ -32,8 +32,6 @@ build:
 	$(MAKE) pack;
 	mv -f all.js ./frontend/www/js/all{{suffix}}.min.js
 	mv -f all.css ./frontend/www/themes/v2/css/all{{suffix}}.min.css
-	rm -f ./frontend/www/js/all{{oldsuffix}}.min.js
-	rm -f ./frontend/www/themes/v2/css/all{{oldsuffix}}.min.css
 	mv -f suffix.php ./frontend/www/suffix.php
 
 build-update:
