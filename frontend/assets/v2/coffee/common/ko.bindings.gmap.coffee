@@ -1,10 +1,10 @@
 # FIXME most likely leaks
 ko.bindingHandlers.gMap =
   init: (element, valueAccessor) ->
-    if !google
+    if !window.google
       # main google file was not loaded
       return
-    if !google.maps.ControlPosition
+    if !window.google.maps.ControlPosition
       # file that gets loaded by main google file was not loaded
       return
 

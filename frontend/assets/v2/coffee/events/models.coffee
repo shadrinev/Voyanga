@@ -76,12 +76,11 @@ class EventSet
     @currentEvent = ko.computed =>
       activeEvents = _.filter @events(), (event) ->
         event.active()
-      console.log "SETTING TAITL", activeEvents[0].title()
       @currentTitle activeEvents[0].title()
       return activeEvents[0]
     @previousImage = ko.observable ''
     @activeMaps = 0
-    ;
+    
     @mapsInited = false
     @isRendered = false
 
@@ -132,10 +131,10 @@ class EventSet
     @activeMaps = 0
 
   mapsInit: =>
-    if !google
+    if !window.google
       # main google file was not loaded
       return
-    if !google.maps.ControlPosition
+    if !window.google.maps.ControlPosition
       # file that gets loaded by main google file was not loaded
       return
       
@@ -156,11 +155,11 @@ class EventCategory
     @id = ko.observable data.id
     @title = ko.observable data.title
 
-class EventCategorySet
-  constructor: (data) ->
+EventCategorySet = (data) ->
     set = []
     $.each data, (i, eventCategory) ->
       set.push new EventCategory(eventCategory)
+    # FIXME 
     return set
 
 class EventLink
@@ -168,8 +167,7 @@ class EventLink
     @title = ko.observable data.title
     @url = ko.observable data.url
 
-class EventLinkSet
-  constructor: (data) ->
+EventLinkSet = (data) ->
     set = []
     $.each data, (i, eventLink) ->
       set.push new EventLink(eventLink)
@@ -179,8 +177,7 @@ class EventTag
   constructor: (data) ->
     @name = ko.observable data.name
 
-class EventTagSet
-  constructor: (data) ->
+EventTagSet = (data) ->
     set = []
     $.each data, (i, eventTag) ->
       set.push new EventTag(eventTag)
@@ -195,8 +192,7 @@ class EventPrice
     @city = ko.observable new City(data.city)
     @price = ko.observable data.price
 
-class EventPriceSet
-  constructor: (data) ->
+EventPriceSet = (data) ->
     set = []
     $.each data, (i, eventPrice) ->
       set.push new EventPrice(eventPrice)
@@ -206,8 +202,7 @@ class EventTour
   constructor: (data) ->
     @name = data.name
 
-class EventTourSet
-  constructor: (data) ->
+EventTourSet = (data) ->
     set = []
     $.each data, (i, tour) ->
       set.push new EventTour(tour)
