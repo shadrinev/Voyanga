@@ -26,6 +26,13 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <?php if (!isset($this->title)) $title = Yii::app()->params['title.default']; else $title = $this->title ?>
     <title><?php echo $title ?></title>
+    <script>
+        var _rollbarParams = {"server.environment": "<?php echo Yii::app()->params['env.code'] ?>"};
+        _rollbarParams["notifier.snippet_version"] = "2"; var _rollbar=["07c62e6cb5334856804ec3a260644fda", _rollbarParams]; var _ratchet=_rollbar;
+        (function(w,d){w.onerror=function(e,u,l){_rollbar.push({_t:'uncaught',e:e,u:u,l:l});};var i=function(){var s=d.createElement("script");var
+            f=d.getElementsByTagName("script")[0];s.src="//d37gvrvc0wt4s1.cloudfront.net/js/1/rollbar.min.js";s.async=!0;
+            f.parentNode.insertBefore(s,f);};if(w.addEventListener){w.addEventListener("load",i,!1);}else{w.attachEvent("onload",i);}})(window,document);
+    </script>
     <script type="text/javascript"
             src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
@@ -34,9 +41,6 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 <?php $this->renderPartial('//layouts/_counters'); ?>
 <script type="text/javascript">
     window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
-    $(function(){
-        Raven.config('<?php echo Yii::app()->params['sentry.dsn']; ?>').install()
-    })
 </script>
 
 <?php echo $content; ?>
