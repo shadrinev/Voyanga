@@ -100,7 +100,6 @@ EventSet = (function() {
       activeEvents = _.filter(_this.events(), function(event) {
         return event.active();
       });
-      console.log("SETTING TAITL", activeEvents[0].title());
       _this.currentTitle(activeEvents[0].title());
       return activeEvents[0];
     });
@@ -170,10 +169,10 @@ EventSet = (function() {
 
   EventSet.prototype.mapsInit = function() {
     var value;
-    if (!google) {
+    if (!window.google) {
       return;
     }
-    if (!google.maps.ControlPosition) {
+    if (!window.google.maps.ControlPosition) {
       return;
     }
     value = {
@@ -220,20 +219,14 @@ EventCategory = (function() {
 
 })();
 
-EventCategorySet = (function() {
-
-  function EventCategorySet(data) {
-    var set;
-    set = [];
-    $.each(data, function(i, eventCategory) {
-      return set.push(new EventCategory(eventCategory));
-    });
-    return set;
-  }
-
-  return EventCategorySet;
-
-})();
+EventCategorySet = function(data) {
+  var set;
+  set = [];
+  $.each(data, function(i, eventCategory) {
+    return set.push(new EventCategory(eventCategory));
+  });
+  return set;
+};
 
 EventLink = (function() {
 
@@ -246,20 +239,14 @@ EventLink = (function() {
 
 })();
 
-EventLinkSet = (function() {
-
-  function EventLinkSet(data) {
-    var set;
-    set = [];
-    $.each(data, function(i, eventLink) {
-      return set.push(new EventLink(eventLink));
-    });
-    return set;
-  }
-
-  return EventLinkSet;
-
-})();
+EventLinkSet = function(data) {
+  var set;
+  set = [];
+  $.each(data, function(i, eventLink) {
+    return set.push(new EventLink(eventLink));
+  });
+  return set;
+};
 
 EventTag = (function() {
 
@@ -271,20 +258,14 @@ EventTag = (function() {
 
 })();
 
-EventTagSet = (function() {
-
-  function EventTagSet(data) {
-    var set;
-    set = [];
-    $.each(data, function(i, eventTag) {
-      return set.push(new EventTag(eventTag));
-    });
-    return set;
-  }
-
-  return EventTagSet;
-
-})();
+EventTagSet = function(data) {
+  var set;
+  set = [];
+  $.each(data, function(i, eventTag) {
+    return set.push(new EventTag(eventTag));
+  });
+  return set;
+};
 
 City = (function() {
 
@@ -307,20 +288,14 @@ EventPrice = (function() {
 
 })();
 
-EventPriceSet = (function() {
-
-  function EventPriceSet(data) {
-    var set;
-    set = [];
-    $.each(data, function(i, eventPrice) {
-      return set.push(new EventPrice(eventPrice));
-    });
-    return set;
-  }
-
-  return EventPriceSet;
-
-})();
+EventPriceSet = function(data) {
+  var set;
+  set = [];
+  $.each(data, function(i, eventPrice) {
+    return set.push(new EventPrice(eventPrice));
+  });
+  return set;
+};
 
 EventTour = (function() {
 
@@ -332,20 +307,14 @@ EventTour = (function() {
 
 })();
 
-EventTourSet = (function() {
-
-  function EventTourSet(data) {
-    var set;
-    set = [];
-    $.each(data, function(i, tour) {
-      return set.push(new EventTour(tour));
-    });
-    return set;
-  }
-
-  return EventTourSet;
-
-})();
+EventTourSet = function(data) {
+  var set;
+  set = [];
+  $.each(data, function(i, tour) {
+    return set.push(new EventTour(tour));
+  });
+  return set;
+};
 
 EventTourResultSet = (function() {
 
