@@ -271,7 +271,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
     if((this.slider.monthShowArray.length > 0) && (this.slider.monthShowArray[this.slider.monthShowArray.length - 1])){
         var lastLineMonth = this.slider.monthShowArray[this.slider.monthShowArray.length - 1].line;
     }else{
-        Raven.captureMessage('cant define lastLineMonth',{'monthShowArray':this.slider.monthShowArray,'monthArray':this.slider.monthArray,'events': VoyangaCalendarTimeline.calendarEvents,'stopDate':stopDate,'tmpDate':tmpDate});
+        //Raven.captureMessage('cant define lastLineMonth',{'monthShowArray':this.slider.monthShowArray,'monthArray':this.slider.monthArray,'events': VoyangaCalendarTimeline.calendarEvents,'stopDate':stopDate,'tmpDate':tmpDate});
     }
     //console.log(this.slider.monthArray);
     if((lineNumber - lastLineMonth) < 2){
