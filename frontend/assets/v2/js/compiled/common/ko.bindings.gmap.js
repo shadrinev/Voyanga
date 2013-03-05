@@ -3,10 +3,10 @@
 ko.bindingHandlers.gMap = {
   init: function(element, valueAccessor) {
     var disp, gMap, value;
-    if (!google) {
+    if (!window.google) {
       return;
     }
-    if (!google.maps.ControlPosition) {
+    if (!window.google.maps.ControlPosition) {
       return;
     }
     value = ko.utils.unwrapObservable(valueAccessor());

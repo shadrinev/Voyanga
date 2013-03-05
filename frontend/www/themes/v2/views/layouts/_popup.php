@@ -1,18 +1,13 @@
 <div id="loadWrapBg" class="loadWrapBg" style='display: none;'>
     <div id="loadContentWin">
-        <div id="loadGIF"><img src="/themes/v2/images/loading-5frame.gif"></div>
-        <div id="loadTXT">
-            Voyanga ищет <br> лучшие предложения...<br>
-            <ul id="loadLight">
-                <li class=""></li>
-                <li class=""></li>
-                <li class=""></li>
-                <li class=""></li>
-                <li class="active"></li>
-            </ul>
-            <div id="changeText"></div>
+        <div class="layer01"></div>
+        <div class="layer02"><img src="<?= $theme ?>/images/load02.gif" width="351" height="284"></div>
+        <div class="layer03"></div>
+        <div class="procent">45<span class="simbol"></span></div>
+        <div class="text">
+            Идет поиск лучших авиабилетов и отелей<br>
+            Это может занять от 5 до 30 секунд
         </div>
-        <div id="footBg"></div>
     </div>
 </div>
 
