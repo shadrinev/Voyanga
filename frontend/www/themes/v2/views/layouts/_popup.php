@@ -147,13 +147,13 @@
             <h2>Контактная информация</h2>
 
             <div class="textBlock telefon">
-                <div class="floatLeft">Служба<br> поддержки</div>
+                <div class="floatLeft">Операторы<br>10:00 - 21:00</div>
                 <div class="floatRight">+7 (499) 553-09-33</div>
             </div>
             <div class="textBlock hEmail">
                 <div class="floatLeft">
-                    По вопросам бронирования и<br>
-                    возврата
+                    По вопросам бронирования, <br>
+                    оплаты и возврата
                 </div>
                 <div class="floatRight"><a href="mailto:support@voyanga.com">support@voyanga.com</a></div>
             </div>
@@ -167,12 +167,11 @@
             <div class="shadowContact"></div>
             <div class="textBlock ">
                 <div class="floatLeft">
-                    Представительства<br>
-                    в трех городах
+                    Адреса офисов
                 </div>
                 <div class="floatRight lh28">
-                    Юр.адрес: Москва, ул. Профсоюзная, 26/44<br>
-                    Фактический: С-Петербург, 7-линия, 76, оф. 419
+                    Москва, ул. Профсоюзная, 26/44<br>
+                    Санкт-Петербург, 7-линия В.О., 76, оф. 419
                 </div>
             </div>
             <div class="shadowContact"></div>
@@ -182,10 +181,10 @@
                     в социальных сетях
                 </div>
                 <div class="floatRight lh28">
-                    <img src="<?= $theme ?>/images/ico-vk-small.png" alt="vk.com/voyanga"> <a
-                        href="http://vk.com/voyanga" target="_blank">vk.com/voyanga</a><br>
                     <img src="<?= $theme ?>/images/ico-fb-small.png" alt="facebook.com/voyanga"> <a
                         href="http://facebook.com/voyanga" target="_blank">facebook.com/voyanga</a>
+                    <img src="<?= $theme ?>/images/ico-vk-small.png" alt="vk.com/voyanga"> <a
+                        href="http://vk.com/voyanga" target="_blank">vk.com/voyanga</a><br>
                 </div>
             </div>
             <div class="shadowContact"></div>
