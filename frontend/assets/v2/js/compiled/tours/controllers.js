@@ -15,6 +15,8 @@ ToursController = (function() {
 
     this.handleResults = __bind(this.handleResults, this);
 
+    this.doSearch = __bind(this.doSearch, this);
+
     this.searchAction = __bind(this.searchAction, this);
 
     this.indexAction = __bind(this.indexAction, this);
@@ -38,13 +40,17 @@ ToursController = (function() {
   };
 
   ToursController.prototype.searchAction = function() {
-    var args,
-      _this = this;
+    var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     args[0] = exTrim(args[0], '/');
     args = args[0].split('/');
     this.searchParams.fromList(args);
     window.VisualLoaderInstance.start(this.api.loaderDescription);
+    return this.doSearch();
+  };
+
+  ToursController.prototype.doSearch = function() {
+    var _this = this;
     return this.api.search(this.searchParams.url(), function(data) {
       if (!data || data.error) {
         window.VisualLoaderInstance.start(_this.api.loaderDescription);

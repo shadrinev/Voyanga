@@ -216,7 +216,7 @@ ToursAviaResultSet = (function(_super) {
     window.VisualLoaderInstance.start(this.api.loaderDescription);
     return this.api.search(this.panel.sp.url(), function(data) {
       _this.newResults(data.flights.flightVoyages, data.searchParams);
-      ko.processDeferedBindingsUpdates();
+      ko.processAllDeferredBindingUpdates();
       return window.VisualLoaderInstance.hide();
     });
   };
@@ -655,7 +655,7 @@ ToursHotelsResultSet = (function(_super) {
     return this.api.search(this.panel.sp.url(), function(data) {
       data.searchParams.cacheId = data.cacheId;
       _this.newResults(data, data.searchParams);
-      ko.processDeferedBindingsUpdate();
+      ko.processAllDeferredBindingUpdates();
       return window.VisualLoaderInstance.hide();
     });
   };
@@ -1534,6 +1534,7 @@ TourTripResultSet = (function() {
     this.showTariffRules = function() {
       var aviaApi;
       aviaApi = new AviaAPI();
+      window.VisualLoaderInstance.start('Загружаем правила применения тарифов');
       return aviaApi.search('flight/search/tariffRules?flightIds=' + _this.flightIdsString(), function(data) {
         var code, gp, item, key, tariff, tariffs, _i, _len, _ref, _ref1;
         if (data) {
@@ -1554,13 +1555,13 @@ TourTripResultSet = (function() {
             }
           }
           if (tariffs) {
-            console.log(tariffs);
-            return gp = new GenericPopup('#tariff-rules', {
+            gp = new GenericPopup('#tariff-rules', {
               'tariffs': tariffs
             });
           }
         }
-      }, true, 'Загружаем правила применения тарифов');
+        return window.VisualLoaderInstance.hide();
+      });
     };
     this.flightCounterWord = ko.computed(function() {
       var res;

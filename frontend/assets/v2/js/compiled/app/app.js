@@ -290,6 +290,10 @@ Application = (function(_super) {
     this.trigger(this.activeModule() + ':contentRendered');
     ResizeFun();
     WidthMine();
+    if (!this.runned) {
+      this.runned = true;
+      return;
+    }
     return window.VisualLoaderInstance.hide();
   };
 

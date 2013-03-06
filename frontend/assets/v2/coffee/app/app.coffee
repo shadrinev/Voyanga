@@ -208,6 +208,10 @@ class Application extends Backbone.Router
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
     WidthMine()
+    if !@runned
+      @runned = true
+      return
+      
     window.VisualLoaderInstance.hide()
 
   mapRendered: (elem) =>

@@ -1015,7 +1015,7 @@ class TourTripResultSet
     @showTariffRules = =>
       aviaApi = new AviaAPI();
       window.VisualLoaderInstance.start  'Загружаем правила применения тарифов'
-      aviaApi.search('flight/search/tariffRules?flightIds='+@flightIdsString(),
+      aviaApi.search 'flight/search/tariffRules?flightIds='+@flightIdsString(),
         (data)=>
           if(data)
             tariffs = []

@@ -23,6 +23,9 @@ class ToursController
     args = args[0].split('/')
     @searchParams.fromList(args)
     window.VisualLoaderInstance.start(@api.loaderDescription)
+    @doSearch()
+
+  doSearch: =>
     @api.search @searchParams.url(), (data) =>
       if !data || data.error
         window.VisualLoaderInstance.start(@api.loaderDescription)
