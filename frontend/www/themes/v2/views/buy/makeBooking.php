@@ -91,7 +91,7 @@
                 <span class="l"></span>
             </div>
             <div class="text">
-                Процесс бронирования может занять до 45 секунд...
+                Подождите, бронирование займет от 5 до 30 секунд
             </div>
         </div>
         <div class="clear"></div>
@@ -101,8 +101,13 @@
         <div class="centerBlock">
             <table class="headerTitle">
                 <tr>
-                    <td class="h1">Оплатить <span class="grey">или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
+                    <td class="h1">Оплатить <span class="grey">банковской картой или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
                     <td class="time"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="grey1">Билеты будут отправлены по электронной почте сразу после оплаты. Сайт полностью отвечает стандартам безопасности PCI DSS Compliance.</span>
+                    </td>
                 </tr>
             </table>
             <table class="mainTable">
