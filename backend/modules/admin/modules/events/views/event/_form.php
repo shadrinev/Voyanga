@@ -103,6 +103,8 @@
 
     <?php echo $form->dropDownListRow($model,'status',$model->getPossibleStatus(),array('class'=>'span5')); ?>
 
+    <?php echo $form->textFieldRow($model,'urls', array('class'=>'span5')); ?>
+
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.BootButton', array(
 			'buttonType'=>'submit',
@@ -120,21 +122,9 @@
             'label'=>'Отмена',
         )); ?>
         <?php foreach ($model->prices as $price): ?>
-            <?php echo '<br>Оптимальная цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestPriceTime ?>
-            <?php echo '<br>Самая низкая цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestPrice ?>
-            <?php echo '<br>Самая "быстрая" цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestTime ?>
-            <?php echo '<br>' ?>
+            <?php echo '<br>Цена из <b>'.$price->city->caseGen.'</b>: '.$price->bestPrice.' руб.' ?>
         <?php endforeach ?>
-        <?php foreach ($model->startCities as $city): ?>
-            <?php $this->widget('bootstrap.widgets.BootButton', array(
-                'buttonType'=>'submit',
-                'type'=>'warning',
-                'label' => ($model->isNewRecord) ? 'Запросить цену для '.$city->caseGen : 'Уточнить цену для '.$city->caseGen,
-                'htmlOptions'=> array ('class'=>'getPrice', 'data-cityid'=>$city->id, 'data-eventid'=>$model->id),
-                'loadingText'=>'Запрос цены...',
-             ));
-            ?>
-        <?php endforeach ?>
+        <?php echo '<br>' ?>
 	</div>
 
 <?php $this->endWidget(); ?>
