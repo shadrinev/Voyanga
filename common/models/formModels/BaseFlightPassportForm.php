@@ -151,4 +151,11 @@ class BaseFlightPassportForm extends BasePassportForm
             self::GENDER_FEMALE => 'Жен'
         );
     }
+
+    public function handleFields()
+    {
+        $oldValue = $this->seriesNumber;
+        $newValue = preg_replace('/[^А-Яа-яёЁA-Za-z0-9]/', '', $oldValue);
+        $this->seriesNumber = $newValue;
+    }
 }
