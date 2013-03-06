@@ -274,17 +274,17 @@ class TripDataProvider
         if ($onlyFlights)
         {
             $icon = 'ico-fly';
-            $message = 'Пассажиры';
+            $message = 'Данные пассажиров';
         }
         elseif ($onlyHotels)
         {
             $icon = 'ico-hotel';
-            $message = 'Гости';
+            $message = 'Гости отеля';
         }
         else
         {
             $icon = 'ico-fly';
-            $message = 'Пассажиры';
+            $message = 'Данные пассажиров';
         }
         return array($icon, $message);
     }
