@@ -6,6 +6,7 @@ resizePanel = function() {};
 ResizeFun = function() {};
 
 ResizeAvia = function() {
+  return;
   return ResizeCenter();
 };
 

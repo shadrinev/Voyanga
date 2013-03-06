@@ -6,6 +6,7 @@ ResizeFun = ->
 
 
 ResizeAvia = ->
+  return
   do ResizeCenter
 
 jsPaneScrollHeight = ->
