@@ -9,45 +9,33 @@ API = (function() {
 
   function API() {
     this.call = __bind(this.call, this);
+
+    this.init = __bind(this.init, this);
     this.endpoint = window.apiEndPoint;
-    this.loader = new VisualLoader;
+    this.loader = window.VisualLoaderInstance;
+    this.init();
   }
 
-  API.prototype.call = function(url, cb, showLoad, description) {
+  API.prototype.init = function() {
+    return this.loaderDescription = "Идет поиск лучших авиабилетов и отелей<br>Это может занять от 5 до 30 секунд";
+  };
+
+  API.prototype.call = function(url, cb) {
     var _this = this;
-    if (showLoad == null) {
-      showLoad = true;
-    }
-    if (description == null) {
-      description = 'voyanga';
-    }
-    if (showLoad) {
-      if (description === 'voyanga') {
-        description = 'Идет поиск лучших авиабилетов и отелей<br>Это может занять от 5 до 30 секунд';
-      }
-      this.loader.start(description);
-    }
     return $.ajax({
       url: "" + this.endpoint + url,
       dataType: 'json',
       timeout: 200000,
       success: function(data) {
-        if (showLoad) {
-          _this.loader.renew(100);
-        }
+        _this.loader.renew(100);
         return window.setTimeout(function() {
-          cb(data);
-          if (showLoad) {
-            return _this.loader.hide();
-          }
-        }, 50);
+          return cb(data);
+        }, 10);
       },
       error: function() {
         var jqXHR, rest;
         jqXHR = arguments[0], rest = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        if (showLoad) {
-          this.loader.hide();
-        }
+        this.loader.hide();
         throw new Error(("Api call failed: Url: " + url) + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") + " | " + rest.join(" | "));
       }
     });
@@ -63,22 +51,17 @@ ToursAPI = (function(_super) {
 
   function ToursAPI() {
     this.search = __bind(this.search, this);
+
+    this.init = __bind(this.init, this);
     return ToursAPI.__super__.constructor.apply(this, arguments);
   }
 
-  ToursAPI.prototype.search = function(url, cb, showLoad, description) {
-    if (showLoad == null) {
-      showLoad = true;
-    }
-    if (description == null) {
-      description = '';
-    }
-    if (showLoad && !description) {
-      description = 'Идет поиск лучших авиабилетов и отелей<br>Это может занять от 5 до 30 секунд';
-    }
-    return this.call(url, function(data) {
-      return cb(data);
-    }, showLoad, description);
+  ToursAPI.prototype.init = function() {
+    return this.loaderDescription = 'Идет поиск лучших авиабилетов и отелей<br>Это может занять от 5 до 30 секунд';
+  };
+
+  ToursAPI.prototype.search = function(url, cb) {
+    return this.call(url, cb);
   };
 
   return ToursAPI;
@@ -91,22 +74,17 @@ AviaAPI = (function(_super) {
 
   function AviaAPI() {
     this.search = __bind(this.search, this);
+
+    this.init = __bind(this.init, this);
     return AviaAPI.__super__.constructor.apply(this, arguments);
   }
 
-  AviaAPI.prototype.search = function(url, cb, showLoad, description) {
-    if (showLoad == null) {
-      showLoad = true;
-    }
-    if (description == null) {
-      description = '';
-    }
-    if (showLoad && !description) {
-      description = 'Идет поиск лучших авиабилетов<br>Это может занять от 5 до 30 секунд';
-    }
-    return this.call(url, function(data) {
-      return cb(data);
-    }, showLoad, description);
+  AviaAPI.prototype.init = function() {
+    return this.loaderDescription = 'Идет поиск лучших авиабилетов<br>Это может занять от 5 до 30 секунд';
+  };
+
+  AviaAPI.prototype.search = function(url, cb) {
+    return this.call(url, cb);
   };
 
   return AviaAPI;
@@ -119,22 +97,17 @@ HotelsAPI = (function(_super) {
 
   function HotelsAPI() {
     this.search = __bind(this.search, this);
+
+    this.init = __bind(this.init, this);
     return HotelsAPI.__super__.constructor.apply(this, arguments);
   }
 
-  HotelsAPI.prototype.search = function(url, cb, showLoad, description) {
-    if (showLoad == null) {
-      showLoad = true;
-    }
-    if (description == null) {
-      description = '';
-    }
-    if (showLoad && !description) {
-      description = 'Идет поиск лучших отелей<br>Это может занять от 5 до 30 секунд';
-    }
-    return this.call(url, function(data) {
-      return cb(data);
-    }, showLoad, description);
+  HotelsAPI.prototype.init = function() {
+    return this.loaderDescription = 'Идет поиск лучших отелей<br>Это может занять от 5 до 30 секунд';
+  };
+
+  HotelsAPI.prototype.search = function(url, cb) {
+    return this.call(url, cb);
   };
 
   return HotelsAPI;
@@ -284,3 +257,5 @@ VisualLoader = (function() {
   return VisualLoader;
 
 })();
+
+window.VisualLoaderInstance = new VisualLoader;

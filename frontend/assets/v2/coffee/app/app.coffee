@@ -120,7 +120,6 @@ class Application extends Backbone.Router
     @_view(view)
     $(window).resize()
 
-
   # Register routes from controller
   #
   # @param prefix url prefix for given controller
@@ -209,6 +208,7 @@ class Application extends Backbone.Router
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
     WidthMine()
+    window.VisualLoaderInstance.hide()
 
   mapRendered: (elem) =>
     $('.slideTours').find('.active').find('.triangle').animate({'top' : '-16px'}, 200);

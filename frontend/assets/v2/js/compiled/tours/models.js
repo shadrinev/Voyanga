@@ -213,8 +213,11 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.doNewSearch = function() {
     var _this = this;
+    window.VisualLoaderInstance.start(this.api.loaderDescription);
     return this.api.search(this.panel.sp.url(), function(data) {
-      return _this.newResults(data.flights.flightVoyages, data.searchParams);
+      _this.newResults(data.flights.flightVoyages, data.searchParams);
+      ko.processDeferedBindingsUpdates();
+      return window.VisualLoaderInstance.hide();
     });
   };
 
@@ -648,9 +651,12 @@ ToursHotelsResultSet = (function(_super) {
 
   ToursHotelsResultSet.prototype.doNewSearch = function() {
     var _this = this;
+    window.VisualLoaderInstance.start(this.api.loaderDescription);
     return this.api.search(this.panel.sp.url(), function(data) {
       data.searchParams.cacheId = data.cacheId;
-      return _this.newResults(data, data.searchParams);
+      _this.newResults(data, data.searchParams);
+      ko.processDeferedBindingsUpdate();
+      return window.VisualLoaderInstance.hide();
     });
   };
 

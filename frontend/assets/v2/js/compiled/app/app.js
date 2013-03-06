@@ -289,7 +289,8 @@ Application = (function(_super) {
     window.voyanga_debug("APP: Content rendered");
     this.trigger(this.activeModule() + ':contentRendered');
     ResizeFun();
-    return WidthMine();
+    WidthMine();
+    return window.VisualLoaderInstance.hide();
   };
 
   Application.prototype.mapRendered = function(elem) {

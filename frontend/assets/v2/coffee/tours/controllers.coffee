@@ -21,10 +21,11 @@ class ToursController
   searchAction: (args...)=>
     args[0] = exTrim args[0], '/'
     args = args[0].split('/')
-    window.voyanga_debug "TOURS: Invoking searchAction", args
     @searchParams.fromList(args)
+    window.VisualLoaderInstance.start(@api.loaderDescription)
     @api.search @searchParams.url(), (data) =>
       if !data || data.error
+        window.VisualLoaderInstance.start(@api.loaderDescription)
         throw new Error("Successfull api call with wrong/error response")
       @stacked = @handleResults data
       @stacked.on 'inner-template', (data)=>
@@ -49,7 +50,6 @@ class ToursController
           items.push new AviaResult(item, stacked)
       if(stacked.findAndSelectItems(items))
         stacked.showOverview()
-        console.log('ssseeellleecctt',items,true)
         #need save to tours
         postData = []
         for resultSet in stacked.data()
@@ -57,8 +57,7 @@ class ToursController
             postData.push resultSet.selection().getPostData()
           else
             postData.push resultSet.selection().hotel.getPostData()
-          console.log('result:',  resultSet.selection())
-        console.log('post data',postData,@searchParams)
+
         $.ajax
           url: @api.endpoint + 'tour/search/updateEvent'
           data: {eventId:@searchParams.eventId,startCity:@searchParams.startCity(), items:postData}
@@ -68,14 +67,6 @@ class ToursController
           success: (data)=>
             #sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
             cb(data)
-            if showLoad
-              $('#loadWrapBg').hide()
-              loaderChange(false)
-          error: ->
-            #
-      else
-        console.log('ssseeellleecctt',items,false)
-
 
     stacked.checkTicket = @checkTicketAction
     return stacked
@@ -88,23 +79,21 @@ class ToursController
       resultDeferred.resolve(@stacked)
       return
 
-    @api.search(
-      @searchParams.url(),
-      (data)=>
-        try
-          stacked = @handleResults(data)
-        catch err
-          new ErrorPopup 'avia500'
-          return
-        result = stacked.findAndSelect(toursData)
-        if result
-          resultDeferred.resolve(stacked)
-        else
-          new ErrorPopup 'toursNoTicketOnValidation', false, ->
-          @results stacked
-      , true,
-      'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд'
-    )
+    window.VisualLoaderInstance.start("Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд")
+    @api.search  @searchParams.url(), (data)=>
+      try
+        stacked = @handleResults(data)
+      catch err
+        window.VisualLoaderInstance.hide()
+        new ErrorPopup 'avia500'
+        return
+      result = stacked.findAndSelect(toursData)
+      if result
+        resultDeferred.resolve(stacked)
+      else
+        window.VisualLoaderInstance.hide()
+        new ErrorPopup 'toursNoTicketOnValidation', false, ->
+        @results stacked
 
 
 
