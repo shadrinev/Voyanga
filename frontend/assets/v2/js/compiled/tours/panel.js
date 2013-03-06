@@ -106,7 +106,7 @@ TourPanelSet = (function() {
         from: _this.activeCalendarPanel().checkIn(),
         to: _this.activeCalendarPanel().checkOut(),
         activeSearchPanel: _this.activeCalendarPanel(),
-        valuesDescriptions: ['Заезд в отель<br>в ' + _this.activeCalendarPanel().cityReadablePre(), 'Выезд из отеля<br>в ' + _this.activeCalendarPanel().cityReadablePre()],
+        valuesDescriptions: ['Заезд в отель<div class="breakWord">в ' + _this.activeCalendarPanel().cityReadablePre() + '</div>', 'Выезд из отеля<div class="breakWord">в ' + _this.activeCalendarPanel().cityReadablePre() + '</div>'],
         intervalDescription: '0',
         selectionIndex: _this.selectionIndex
       };

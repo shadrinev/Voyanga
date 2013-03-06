@@ -47,13 +47,28 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
 
         $xml = '<?xml version="1.0" encoding="utf-8"?>
 <LandingUrls>
-<cityUrl><url>kgam</url></cityUrl>
+<cityUrl countryCode="RU" cityCodeFrom="LED" cityCodeTo="MOW"><url>kgam</url></cityUrl>
 </LandingUrls>';
         $mainSxe = simplexml_load_string($xml);
         $sxe = &$mainSxe->cityUrl;
         $citiesInfo = array();
         while(($row=$dataReader->read())!==false) {
             $citiesInfo[$row['id']] = array('cityCode'=>$row['code'],'countryCode'=>$row['countryCode'],);
+        }
+        foreach($citiesInfo as $cityFromKey=>$cityFromInfo){
+            foreach($citiesInfo as $cityToKey=>$cityToInfo){
+                if($cityFromKey != $cityToKey){
+                    $url = 'https://voyanga.com/land/'.$cityToInfo['countryCode'].'/'.$cityFromInfo['cityCode'].'/'.$cityToInfo['cityCode'].'/';
+                    $sxe->url = $url;
+                    $sxe['countryCode'] = $cityToInfo['countryCode'];
+                    $sxe['cityCodeFrom'] = $cityFromInfo['cityCode'];
+                    $sxe['cityCodeTo'] = $cityToInfo['cityCode'];
+                    fwrite($fp,$sxe->asXML()."\n");
+                }
+                //echo "xml:".$sxe->asXML();
+                //break;
+            }
+            //break;
         }
 
 
