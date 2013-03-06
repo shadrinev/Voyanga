@@ -138,12 +138,16 @@ VisualLoader = (function() {
     this.timeoutHandler = null;
     this.glowState = false;
     this.glowHandler = null;
-    this.tooltips = ['aga1', 'aga2'];
+    this.tooltips = [];
+    this.tooltips.push('Мы всегда показываем только финальную цену без скрытых платежей и комиссий');
+    this.tooltips.push('При бронировании комплексных поездок (авиабилет плюс гостиница) мы даём скидку до 10%');
+    this.tooltips.push('Наш сайт полностью отвечает международным требованиям безопасности платежных систем');
+    this.tooltips.push('Воянга любит тебя сильнее чем твоя бабушка');
     this.tooltipInd = null;
     this.tooltipHandler = null;
     this.description = ko.observable('');
     this.description.subscribe(function(newVal) {
-      return $('#loadWrapBg').find('.text').html(newVal);
+      return $('#loadWrapBg').find('.loadContentWin .text').html(newVal);
     });
     this.timeFromStart = 0;
     this.percents.subscribe(function(newVal) {
@@ -185,13 +189,17 @@ VisualLoader = (function() {
 
   VisualLoader.prototype.tooltipStep = function() {
     var count, randInd, randVal;
+    console.log('RUN TOOLTIP', $('#loadWrapBg').find('.tips .text').length);
     count = this.tooltips.length;
     randVal = Math.ceil(Math.random() * count);
     randInd = randVal % count;
     if (randInd === this.tooltipInd) {
       randInd = (randVal + 1) % count;
     }
-    return this.tooltipInd = randInd;
+    this.tooltipInd = randInd;
+    console.log('RUN TOOLTIP HTML:', $('#loadWrapBg').find('.tips .text').html());
+    $('#loadWrapBg').find('.tips .text').html(this.tooltips[this.tooltipInd]);
+    return console.log('RUN TOOLTIP HTML2:', $('#loadWrapBg').find('.tips .text').html());
   };
 
   VisualLoader.prototype.renew = function(percent) {
@@ -251,7 +259,8 @@ VisualLoader = (function() {
       }, 10000);
     }
     this.show();
-    return this.renew(3);
+    this.renew(3);
+    return this.tooltipStep();
   };
 
   return VisualLoader;

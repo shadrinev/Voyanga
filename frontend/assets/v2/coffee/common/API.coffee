@@ -53,12 +53,16 @@ class VisualLoader
     @timeoutHandler = null
     @glowState = false
     @glowHandler = null
-    @tooltips = ['aga1','aga2']
+    @tooltips = []
+    @tooltips.push 'Мы всегда показываем только финальную цену без скрытых платежей и комиссий'
+    @tooltips.push 'При бронировании комплексных поездок (авиабилет плюс гостиница) мы даём скидку до 10%'
+    @tooltips.push 'Наш сайт полностью отвечает международным требованиям безопасности платежных систем'
+    @tooltips.push 'Воянга любит тебя сильнее чем твоя бабушка'
     @tooltipInd = null
     @tooltipHandler = null
     @description = ko.observable('')
     @description.subscribe (newVal)=>
-      $('#loadWrapBg').find('.text').html(newVal)
+      $('#loadWrapBg').find('.loadContentWin .text').html(newVal)
 
     @timeFromStart = 0
     @percents.subscribe (newVal)=>
@@ -91,12 +95,17 @@ class VisualLoader
 
 
   tooltipStep: =>
+    console.log('RUN TOOLTIP',$('#loadWrapBg').find('.tips .text').length)
     count = @tooltips.length
     randVal = Math.ceil(Math.random() * count)
     randInd = randVal % count
     if randInd == @tooltipInd
       randInd = (randVal+1) % count
     @tooltipInd = randInd
+    console.log('RUN TOOLTIP HTML:',$('#loadWrapBg').find('.tips .text').html())
+    $('#loadWrapBg').find('.tips .text').html(@tooltips[@tooltipInd])
+    console.log('RUN TOOLTIP HTML2:',$('#loadWrapBg').find('.tips .text').html())
+
 
 
   renew: (percent)=>
@@ -151,8 +160,10 @@ class VisualLoader
           @tooltipStep()
         , 10000
       )
+
     @show()
     @renew 3
+    @tooltipStep()
 
 
 window.VisualLoaderInstance = new VisualLoader

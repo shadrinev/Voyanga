@@ -40,6 +40,7 @@ class Event extends FrontendActiveRecord
     public $defaultThumbImageUrl = '/img/events/defaultSmall.jpg';
     public $defaultBigImageUrl = '/img/events/defaultBig.jpg';
     public $imgSrc = '';
+    public $urls;
 
     /**
      * The behaviors associated with the user model.
@@ -147,7 +148,7 @@ class Event extends FrontendActiveRecord
             array('title, startDate, endDate, status', 'required', 'on'=>'backend'),
             array('status', 'numerical', 'integerOnly'=>true, 'on'=>'backend'),
             array('title, address, contact', 'length', 'max'=>255, 'on'=>'backend'),
-            array('startDate, endDate, preview, description', 'safe', 'on'=>'backend'),
+            array('startDate, endDate, preview, description, urls', 'safe', 'on'=>'backend'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, startDate, endDate, cityId, address, contact, status, preview, description', 'safe', 'on'=>'search'),
@@ -211,7 +212,8 @@ class Event extends FrontendActiveRecord
             'pictureSmall' => 'Картинка-превью',
             'pictureBig' => 'Картинка полноразмерная',
             'pictures' => 'Галерея',
-            'tagsString' => 'Теги'
+            'tagsString' => 'Теги',
+            'urls' => 'Урлы на сохранённые туры'
         );
     }
 
@@ -401,5 +403,78 @@ class Event extends FrontendActiveRecord
             $arr[] = $tour->getJsonObject();
         }
         return $arr;
+    }
+
+    public function analyzeLinksAndLinkOrders()
+    {
+        $urls = array_unique(array_map('trim', explode(',', $this->urls)));
+        $correctUrls = array();
+        $linksToOrders = array();
+        $orderIds = array();
+        $errors = array();
+        foreach ($urls as $url)
+        {
+            $pos = strpos($url, 't/');
+            if ($pos !== FALSE)
+            {
+                $correctUrls[] = substr($url, $pos);
+            }
+        }
+        foreach ($correctUrls as $short)
+        {
+            $linkToOrder = ShortUrl::model()->findByAttributes(array('short_url'=>$short));
+            if ($linkToOrder)
+                $linksToOrders[] = $linkToOrder->full_url;
+        }
+        foreach ($linksToOrders as $url)
+        {
+            $pos = strpos($url, 'tour/id/');
+            if ($pos !== FALSE)
+            {
+                $orderIds[] = substr($url, $pos+8);
+            }
+        }
+        foreach ($orderIds as $id)
+        {
+            $tdp = new TripDataProvider();
+            $tdp->restoreFromDb($id);
+            try
+            {
+                $ts = new TripStorage();
+                $items = $tdp->getSortedCartItemsOnePerGroup(false);
+                $first = reset($items);
+                if ($first instanceof FlightTripElement)
+                {
+                    $startCityId = $first->departureCity;
+                    $startCity = City::model()->findByPk($startCityId);
+                    $order = $ts->saveOrder($this, $startCityId, 'Тур для события "'.$this->title.'" из '.$startCity->caseGen);
+
+                    $eventOrder = new EventOrder();
+                    $eventOrder->startCityId = $startCityId;
+                    $eventOrder->orderId = $order->id;
+                    $eventOrder->eventId = $this->id;
+                    $eventOrder->save();
+
+                    $eventPrice = EventPrice::model()->findByAttributes(array('eventId'=>$this->id, 'cityId'=>$startCityId));
+                    if (!$eventPrice)
+                        $eventPrice = new EventPrice();
+                    $eventPrice->eventId = $this->id;
+                    $eventPrice->cityId = $startCityId;
+                    $eventPrice->bestPrice = $ts->getPrice();
+                    if (!$eventPrice->save())
+                        $errors[] = 'Could not save price for event - city.'.CVarDumper::dumpAsString($eventPrice);
+
+                }
+                else
+                {
+                    $errors[] = 'First element of trip should be flight';
+                }
+            }
+            catch (Exception $e)
+            {
+                $errors[] = 'We cannot find out trip with id = '.$id;
+            }
+        }
+
     }
 }

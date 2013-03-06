@@ -39,6 +39,7 @@ class EventController extends Controller
         {
             $model->scenario = 'backend';
             $model->attributes=$_POST['Event'];
+            $model->urls = $_POST['Event']['urls'];
             $categories = EventCategory::model()->findAllByPk($_POST['Event']['categories']);
             $links = array();
             if (!$model->isNewRecord)
@@ -63,7 +64,12 @@ class EventController extends Controller
                 if ($pictureBig=CUploadedFile::getInstance($model, 'pictureBig'))
                     $model->pictureBig = $pictureBig;
                 $model->setTags($_POST['Event']['tagsString'])->save();
-                $this->redirect(array('view','id'=>$model->id));
+                if (strlen($model->urls)>0)
+                    $errors = $model->analyzeLinksAndLinkOrders();
+                if (sizeof($errors)==0)
+                    $this->redirect(array('view','id'=>$model->id));
+                else
+                    $model->addErrors($errors);
             }
         }
     }
