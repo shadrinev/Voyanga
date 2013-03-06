@@ -62,7 +62,7 @@ class VisualLoader
     @tooltipHandler = null
     @description = ko.observable('')
     @description.subscribe (newVal)=>
-      $('#loadWrapBg').find('.loadContentWin .text').html(newVal)
+      $('#loadWrapBg').find('#loadContentWin .text').html(newVal)
 
     @timeFromStart = 0
     @percents.subscribe (newVal)=>

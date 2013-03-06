@@ -147,7 +147,7 @@ VisualLoader = (function() {
     this.tooltipHandler = null;
     this.description = ko.observable('');
     this.description.subscribe(function(newVal) {
-      return $('#loadWrapBg').find('.loadContentWin .text').html(newVal);
+      return $('#loadWrapBg').find('#loadContentWin .text').html(newVal);
     });
     this.timeFromStart = 0;
     this.percents.subscribe(function(newVal) {
