@@ -549,7 +549,14 @@ function ResizeCenterBlock() {
 		var_leftBlock.find('.left-content').css('margin-left', paddingLeftLogo+'px');
 		var_telefonBlock.css('left', paddingLeftTel+'px');
 
-		if (widthContent < 690) {
+        if (var_leftBlockIsset && var_mainBlockIsset ) {
+            var minWid = 840;
+        }
+        else {
+            var minWid = 690;
+        }
+		if (widthContent < minWid) {
+
 			var mathWidthRicket = Math.floor(253 + ((widthBlock - var_widthMIN) / (var_valueMIN / (318 - 253))) );
 			$('.recommended-ticket').css('width', mathWidthRicket+'px');
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
