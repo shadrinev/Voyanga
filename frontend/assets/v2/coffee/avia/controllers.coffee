@@ -18,7 +18,6 @@ class AviaController
     # update search params with values in route
     @searchParams.fromList(args)
     window.VisualLoaderInstance.start(@api.loaderDescription)
-    do @search
     @api.search  @searchParams.url(), @handleSearch
 
   handleSearch: (data)=>
