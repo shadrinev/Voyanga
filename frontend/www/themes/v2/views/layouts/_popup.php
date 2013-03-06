@@ -9,6 +9,11 @@
             Это может занять от 5 до 30 секунд
         </div>
     </div>
+    <div class="tips">
+        <div class="text">
+            Чем раньше от момента вылета вы покупаете авиабилеты, тем они, как правило, дешевле.
+        </div>
+    </div>
 </div>
 
 <div id="loadWrapBgMin" class="loadWrapBg" style='display: none;'>

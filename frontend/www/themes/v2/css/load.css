@@ -1,8 +1,8 @@
 @charset "UTF-8";
 /* CSS Document */
 .loadWrapBg {
-	background: rgba(38,41,46,0.8);
-	position: fixed;
+	background: rgba(30,33,39,0.8);
+	position: absolute;
 	width: 100%;
 	height: 100%;
 	top: 0px;
@@ -11,20 +11,45 @@
 	bottom: 0px;
 	z-index: 1000;
 }
+.loadWrapBg .tips {
+    background: -moz-linear-gradient(top,  rgba(30,33,39,0) 0%, rgba(15,18,25,0.8) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,33,39,0)), color-stop(100%,rgba(15,18,25,0.8)));
+    background: -webkit-linear-gradient(top,  rgba(30,33,39,0) 0%,rgba(15,18,25,0.8) 100%);
+    background: -o-linear-gradient(top,  rgba(30,33,39,0) 0%,rgba(15,18,25,0.8) 100%);
+    background: -ms-linear-gradient(top,  rgba(30,33,39,0) 0%,rgba(15,18,25,0.8) 100%);
+    background: linear-gradient(to bottom,  rgba(30,33,39,0) 0%,rgba(15,18,25,0.8) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001e2127', endColorstr='#cc0f1219',GradientType=0 );
 
-#loadContentWin {
-	position:relative;
-    width: 351px;
-	height: 415px;
-	
-	top: 40%;
-	left: 50%;
-	margin-left: -125px;
-	margin-top: -175px;
-	z-index: 801;
-
-
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 280px;
+    width: 100%;
+    min-width: 1000px;
 }
+.loadWrapBg .tips .text {
+    position: absolute;
+    border-top: 1px solid rgba(246,247,249, 0.3);
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    line-height: 60px;
+    font-size: 14px;
+    color: #f6f7f9;
+    bottom: 0px;
+    left: 0px;
+}
+#loadContentWin {
+    height: 415px;
+    left: 50%;
+    margin-left: -179px;
+    margin-top: -175px;
+    position: relative;
+    top: 40%;
+    width: 351px;
+    z-index: 801;
+}
+
 #loadContentWin .layer01 {
     position: absolute;
     top: 0px;
@@ -60,7 +85,7 @@
     position: absolute;
     text-align: center;
     text-shadow: 0 1px 0 #000000;
-    width: 100%;
+    width: 106%;
 }
 #loadContentWin .text {
     bottom: 0;
