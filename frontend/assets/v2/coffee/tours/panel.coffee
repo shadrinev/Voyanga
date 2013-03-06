@@ -75,7 +75,7 @@ class TourPanelSet
       from: @activeCalendarPanel().checkIn()
       to: @activeCalendarPanel().checkOut()
       activeSearchPanel: @activeCalendarPanel()
-      valuesDescriptions: [('Заезд в отель<br>в ' + @activeCalendarPanel().cityReadablePre()), ('Выезд из отеля<br>в ' + @activeCalendarPanel().cityReadablePre())]
+      valuesDescriptions: [('Заезд в отель<div class="breakWord">в ' + @activeCalendarPanel().cityReadablePre() + '</div>'), ('Выезд из отеля<div class="breakWord">в ' + @activeCalendarPanel().cityReadablePre() + '</div>')]
       intervalDescription: '0'
       selectionIndex: @selectionIndex
 
