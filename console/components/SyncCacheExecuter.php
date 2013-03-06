@@ -73,7 +73,7 @@ class SyncCacheExecuter extends Component
     public function getCacheFile($url)
     {
         echo "trying to get file from ".$url."\n";
-        $result = file_get_contents_curl($url);
+        $result = file_get_contents($url);
         return $result;
     }
 
