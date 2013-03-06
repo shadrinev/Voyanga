@@ -11,6 +11,16 @@
         )
     ),
     'appCss' => array(
+        'basePath' => 'frontend.assets.v2.css',
+        'css' => array(
+            'static.css'
+        ),
+        'depends' => array(
+            'cssFromLess',
+            'commonCss'
+        )
+    ),
+    'commonCss' => array(
         'baseUrl' => '/themes/v2/css',
         'css' => array(
             'body.css',
@@ -33,9 +43,7 @@
             'jquery.jscrollpane.css',
             'chosen.css'
         ),
-        'depends' => array(
-            'cssFromLess'
-        )
     ),
+
 );
 ?>

@@ -1,0 +1,41 @@
+@import "varStatic.less";
+
+#header {
+  .center-block {
+    width: @allWidth;
+
+    .logo {
+      left: @headLeftLogo;
+    }
+    .about {
+      left: @headLeftLogo + 122;
+    }
+    .telefon {
+      left: @headLeftTelefon;
+    }
+    .slide-turn-mode {
+      right: @headRightSlideTurnMode;
+    }
+  }
+}
+.wrapper {
+
+  > .center-block {
+    width: @allWidth;
+
+    .left-block {
+      width: @leftBlockWidth;
+    }
+
+    .main-block {
+      width: @mainBlockWidth;
+
+      #content {
+        width: @contentWidth;
+      }
+      .filter-block {
+        width: @filterBlockWidth;
+      }
+    }
+  }
+}
