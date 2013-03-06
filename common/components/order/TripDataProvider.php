@@ -58,6 +58,7 @@ class TripDataProvider
     public function restoreFromDb($orderId)
     {
         Yii::app()->shoppingCart->clear();
+        $this->usedGroups = array();
         $order = Order::model()->findByPk($orderId);
         if (!$order)
             throw new CException("No such order");
