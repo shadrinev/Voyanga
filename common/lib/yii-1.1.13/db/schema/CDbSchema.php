@@ -166,7 +166,7 @@ abstract class CDbSchema extends CComponent
 				if(!isset($this->_cacheExclude[$name]))
 				{
 					$key='yii:dbschema'.$this->_connection->connectionString.':'.$this->_connection->username.':'.$name;
-					$cache->set($key, 0, -1);
+					$cache->delete($key);
 				}
 			}
 		}
