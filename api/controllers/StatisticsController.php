@@ -21,7 +21,6 @@ class StatisticsController extends ApiController
         $criteria->addCondition('timestamp >= \''.$from.'\'');
         $criteria->addCondition('timestamp <= \''.$to.'\'');
         $orders = OrderBooking::model()->findAll($criteria);
-        VarDumper::dump($orders); die();
         $results = array();
         foreach ($orders as $i=>$order)
         {
