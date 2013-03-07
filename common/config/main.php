@@ -152,6 +152,7 @@ return array(
             'username' => $params['db.username'],
             'password' => $params['db.password'],
             'schemaCachingDuration' => YII_DEBUG ? 0 : 864000,  // 1000 days
+            'schemaCachingExclude' => array('order_booking'),
             'enableParamLogging' => YII_DEBUG,
             'charset' => 'utf8',
         ),
