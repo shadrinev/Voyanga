@@ -278,13 +278,12 @@ class SearchController extends ApiController
         }
         $serviceClass = strtr($cabin, array('Y' => 'E', 'C' => 'B'));
         $flightSearchParams = $this->buildSearchParams($destinations, $adults, $children, $infants, $serviceClass);
-        $cacheId = $this->storeToCache($flightSearchParams);
         $partnerCacheId = $this->getPartnerCacheId($flightSearchParams);
         $prepared = Yii::app()->pCache->get($partnerCacheId);
         if (!$prepared)
         {
             $results = $this->doFlightSearch($flightSearchParams);
-            $prepared = $this->prepareForAviasales($results, $cabin, $cacheId);
+            $prepared = $this->prepareForAviasales($results, $cabin);
             Yii::app()->pCache->set($partnerCacheId, $prepared, appParams('flight_search_cache_time_partner'));
         }
         $this->data = $prepared;
@@ -303,13 +302,13 @@ class SearchController extends ApiController
         Yii::app()->end();
     }
 
-    private function prepareForAviasales(&$results, $cabin, $cacheId)
+    private function prepareForAviasales(&$results, $cabin)
     {
         $prepared = array();
         $i = 0;
         foreach ($results as $variant)
         {
-            $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$cacheId.'&item[0][searchKey]='.$variant['flightKey'].'&pid='.Partner::getCurrentPartnerKey();
+            $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$variant['cacheId'].'&item[0][searchKey]='.$variant['flightKey'].'&pid='.Partner::getCurrentPartnerKey();
             $url = Yii::app()->params['baseUrl'].'/buy?'.$query;
             $prepared[$i] = array(
                 'price' => $variant['price'],
