@@ -28,7 +28,6 @@ class SiteController extends FrontendController
         }
         // Load all tables of the application in the schema
         Yii::app()->db->schema->getTables();
-        VarDumper::dump(Yii::app()->db->schema); die();
         // clear the cache of all loaded tables
         Yii::app()->db->schema->refresh();
         Yii::app()->clientScript->buildingMode = true;
