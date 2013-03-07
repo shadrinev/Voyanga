@@ -255,7 +255,7 @@ class SearchController extends ApiController
     private function getPartnerCacheId($flightSearchParams)
     {
         $partner = Partner::getCurrentPartner();
-        $cacheId = 'Partner'.md5(md5(serialize($flightSearchParams)).$partner->id);
+        $cacheId = 'partner-'.md5(md5(serialize($flightSearchParams)).$partner->id);
         return $cacheId;
     }
 
