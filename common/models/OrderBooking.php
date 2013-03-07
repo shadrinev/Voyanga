@@ -192,6 +192,26 @@ class OrderBooking extends CActiveRecord
         return join(',', $states);
     }
 
+    public function getStatus()
+    {
+        $state = '';
+        $ok = true;
+        $first = true;
+        foreach ($this->flightBookers as $flightBooker)
+        {
+            $first = false;
+            $cur = $this->getPrefixlessState($flightBooker->status);
+            $ok = $ok && ($cur=='done');
+            if (($cur=='error') || ($cur=='canceled'))
+                $state = 'CANCELLED';
+        }
+        if (($ok) && (!$first))
+            $state = 'PAID';
+        elseif ($state=='')
+            $state = 'PROCESSING';
+        return $state;
+    }
+
     private function getPrefixlessState($state) {
         if (strpos($state, '/') !== false) {
             $state = substr($state, strpos($state, '/') + 1);

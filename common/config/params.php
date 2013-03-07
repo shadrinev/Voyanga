@@ -13,7 +13,7 @@ $commonParamsEnv = require('common/config/environments/params-'.$commonParamsLoc
 return CMap::mergeArray(array(
 
     'flight_search_cache_time' => 15*60, //seconds before show notification message for flight page + cache expiration time
-    'flight_search_cache_time_partner' => 5*60, //как долго выдача для партнёра лежит в нашем кэше
+    'flight_search_cache_time_partner' => 3*60, //как долго выдача для партнёра лежит в нашем кэше
     //Price factor for flight optimal
     'flight_price_factor' => 100,
     //Time factor for flight optimal
