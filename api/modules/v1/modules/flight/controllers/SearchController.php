@@ -346,8 +346,7 @@ class SearchController extends ApiController
         }
         $xml = new ArrayToXml('variants');
         $prepared = $xml->toXml($prepared);
-        $prepared = str_replace('flight0>', 'flight>', $prepared);
-        $prepared = str_replace('flight1>', 'flight>', $prepared);
+        $prepared = preg_replace('/flight\d+/', 'flight', $prepared);
         return $prepared;
     }
 }
