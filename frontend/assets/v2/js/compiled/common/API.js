@@ -35,7 +35,7 @@ API = (function() {
       error: function() {
         var jqXHR, rest;
         jqXHR = arguments[0], rest = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        this.loader.hide();
+        _this.loader.hide();
         throw new Error(("Api call failed: Url: " + url) + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") + " | " + rest.join(" | "));
       }
     });

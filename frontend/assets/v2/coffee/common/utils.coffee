@@ -46,7 +46,6 @@ dateUtils =
   formatDayMonthYear: (date) ->
     if (date.length == 0)
       return
-    console.log('dmy', date, date.getYear())
     result = ""
     result += date.getDate()
     result += " "
@@ -82,7 +81,6 @@ dateUtils =
     result += SHORT_MONTHS[date.getMonth()]
 
   formatDayMonthWeekday: (date) ->
-    console.log "formatDayMonthWeekday", date
     if !date.getDate()
       #moment.js date
       date = date.toDate()

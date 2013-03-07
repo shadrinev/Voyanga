@@ -58,7 +58,6 @@ dateUtils = {
     if (date.length === 0) {
       return;
     }
-    console.log('dmy', date, date.getYear());
     result = "";
     result += date.getDate();
     result += " ";
@@ -101,7 +100,6 @@ dateUtils = {
   },
   formatDayMonthWeekday: function(date) {
     var result;
-    console.log("formatDayMonthWeekday", date);
     if (!date.getDate()) {
       date = date.toDate();
     }

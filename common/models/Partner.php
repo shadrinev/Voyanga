@@ -32,7 +32,7 @@ class Partner extends CActiveRecord
                 "strategies" => array(
                     "bcrypt" => array(
                         "class" => "common.extensions.YiiPasswords.ABcryptPasswordStrategy",
-                        "workFactor" => 14
+                        "workFactor" => 12
                     ),
                     "legacy" => array(
                         "class" => "common.extensions.YiiPasswords.ALegacyMd5PasswordStrategy",
@@ -71,7 +71,8 @@ class Partner extends CActiveRecord
             array('name, password, passwordStrategy, requiresNewPassword', 'required'),
             array('requiresNewPassword, cookieTime', 'numerical', 'integerOnly' => true),
             array('name, password', 'length', 'max' => 45),
-            array('salt', 'length', 'max' => 15),
+            array('password', 'length', 'max' => 100),
+            array('salt', 'length', 'max' => 40),
             array('passwordStrategy', 'length', 'max' => 40),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -204,9 +205,21 @@ class Partner extends CActiveRecord
         return false;
     }
 
-    public static function setPartnerByKey()
+    public static function setPartnerByName($name)
+    {
+        $partner = Partner::model()->findByAttributes(array('name'=>$name));
+        if ($partner)
+        {
+            $pid = self::encodeId(($partner->id + 10100));
+            self::setPartnerByKey($pid);
+        }
+    }
+
+    public static function setPartnerByKey($forcePid = false)
     {
         $partner = false;
+        if ($forcePid)
+            $_REQUEST['pid'] = $forcePid;
         if (isset($_REQUEST['pid']))
         {
             if ($partner = self::getPartnerByKey($_REQUEST['pid']))
