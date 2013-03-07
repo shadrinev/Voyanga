@@ -88,6 +88,9 @@ class AviaPanel extends SearchPanel
       selectionIndex: @selectionIndex
 
     @calendarValue.subscribe =>
+      # FIXME
+      if !VoyangaCalendarStandart.initialized
+        return
       if !VoyangaCalendarStandart.checkCalendarValue()
         window.setTimeout(
           =>

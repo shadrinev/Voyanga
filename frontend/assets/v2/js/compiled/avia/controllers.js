@@ -53,10 +53,9 @@ AviaController = (function() {
         throw new Error("Unable to build AviaResultSet from search response");
       }
       _this.results(stacked);
-      _this.render('results', {
+      return _this.render('results', {
         results: _this.results
       });
-      return ko.processAllDeferredBindingUpdates();
     });
   };
 

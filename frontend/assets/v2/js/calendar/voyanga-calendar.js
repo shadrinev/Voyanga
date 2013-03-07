@@ -735,6 +735,9 @@ VoyangaCalendarStandart.minimalDateUpdated = function () {
 }
 
 VoyangaCalendarStandart.scrollToDate = function (dateVar, forceScroll) {
+    // FIXME
+    if(!VoyangaCalendarStandart.initialized)
+	return;
     if(VoyangaCalendarStandart.checkCalendarValue()){
         if (!forceScroll) {
             forceScroll = false;
@@ -909,7 +912,7 @@ VoyangaCalendarStandart.compareCalendarValue = function (oldValue, newValue) {
 }
 
 VoyangaCalendarStandart.init = function (panel, element) {
-    console.error("INEAT");
+    this.initialized = true;
     this.jObj = $(element);
     VoyangaCalendarStandart.slider.jObj = this.jObj;
     this.alreadyInited = false;

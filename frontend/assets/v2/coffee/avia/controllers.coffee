@@ -32,7 +32,7 @@ class AviaController
       @results stacked
 
       @render 'results', {results: @results}
-      ko.processAllDeferredBindingUpdates()
+#      ko.processAllDeferredBindingUpdates()
 
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
