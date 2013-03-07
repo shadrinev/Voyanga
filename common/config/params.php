@@ -81,7 +81,7 @@ return CMap::mergeArray(array(
 
     'smtp.host' => 'smtp.yandex.ru',
     'smtp.username' => 'support@voyanga.com',
-    'smtp.password' => 'supportteam',
+    'smtp.password' => 'rabotakipit',
     'smtp.port' => 25,
 
     'autoAssignCurrentOrders' => true,

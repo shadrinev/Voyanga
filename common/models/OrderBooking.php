@@ -126,6 +126,10 @@ class OrderBooking extends CActiveRecord
             {
                 $this->partnerId = $partner->id;
             }
+            if (isset($_GET['marker']))
+            {
+                $this->marker = $_GET['marker'];
+            }
         }
         if($this->phone){
             $this->phone = str_replace(array(' ','(',')','-'),'',$this->phone);
