@@ -54,7 +54,8 @@ AviaController = (function() {
       }
       _this.results(stacked);
       return _this.render('results', {
-        results: _this.results
+        results: _this.results,
+        notours: true
       });
     });
   };

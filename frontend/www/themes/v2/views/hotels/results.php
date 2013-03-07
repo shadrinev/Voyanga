@@ -4,7 +4,7 @@
 ?>
 <script id="hotels-results" type="text/html">
         <!-- MAIN BLOCK -->
-        <div class="main-block">
+        <div class="main-block" data-bind="attr: {id: $data.notours?'twoWithOutThree':'twoPlusThree'}">
             <div id="content" data-bind="template: {name: results().noresults?'hotels-no-results':'hotels-results-inner', data: results()}" >
             </div>
             <!-- END MAIN BLOCK -->

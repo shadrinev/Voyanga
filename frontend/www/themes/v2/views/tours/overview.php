@@ -33,7 +33,7 @@ $theme = Yii::app()->theme->baseUrl;
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51091a35689a0426"></script>
 <script id="tours-index"></script>
 <script id="tours-overview" type="text/html">
-    <div class="main-block">
+    <div id="onePlusThree" class="main-block">
         <div id="content">
             <div class="headAndTmblr">
                 <h1 class="ourTripH1">Ваша поездка, сэр</h1>

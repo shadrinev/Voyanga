@@ -31,7 +31,7 @@ class AviaController
         throw new Error("Unable to build AviaResultSet from search response")
       @results stacked
 
-      @render 'results', {results: @results}
+      @render 'results', {results: @results, notours: true}
 #      ko.processAllDeferredBindingUpdates()
 
   handleResults: (data) =>

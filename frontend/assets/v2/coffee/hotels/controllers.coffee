@@ -30,7 +30,7 @@ class HotelsController
         throw new Error("Unable to build HotelResultSet from search response")
         
       @results stacked
-      @render 'results', {'results' : @results}
+      @render 'results', {results : @results, notours: true}
 
   handleResults: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data
