@@ -108,6 +108,9 @@ HotelsPanel = (function(_super) {
       };
     });
     this.calendarValue.subscribe(function() {
+      if (!VoyangaCalendarStandart.initialized) {
+        return;
+      }
       if (!VoyangaCalendarStandart.checkCalendarValue()) {
         return window.setTimeout(function() {
           return VoyangaCalendarStandart.checkCalendarValue(true);

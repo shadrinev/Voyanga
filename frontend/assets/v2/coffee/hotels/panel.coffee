@@ -82,6 +82,8 @@ class HotelsPanel extends SearchPanel
       selectionIndex: @selectionIndex
 
     @calendarValue.subscribe =>
+      if !VoyangaCalendarStandart.initialized
+        return
       if !VoyangaCalendarStandart.checkCalendarValue()
         window.setTimeout(
           =>
