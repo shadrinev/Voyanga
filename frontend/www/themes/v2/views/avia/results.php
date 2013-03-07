@@ -29,7 +29,7 @@
   <div class="clear"></div>
   
   <!-- ko foreach: data -->
-  <div class="ticket-items" data-bind="visible: visible()">
+  <div class="ticket-items small" data-bind="visible: visible()">
     <div class="content">
       <div class="airlines">
 	

@@ -76,7 +76,7 @@
 
 </script>
 <script id="recommend-ticket-template" type="text/html">
-  <div class="ticket-items">
+  <div class="ticket-items small">
     <div data-bind="attr: {'class': ribbon}"></div>
     <div class="content">
       <div class="airlines-line">

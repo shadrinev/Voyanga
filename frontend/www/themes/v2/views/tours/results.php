@@ -1,6 +1,6 @@
 <script id="tours-results" type="text/html">
   <!-- LEFT BLOCK -->
-  <div class="left-block">
+  <div class="left-block smallBlock">
     <!-- LEFT CONTENT -->
     <div class="left-content">
       <h1>Мой маршрут</h1>
