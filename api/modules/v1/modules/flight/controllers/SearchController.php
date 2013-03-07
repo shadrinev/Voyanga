@@ -317,17 +317,15 @@ class SearchController extends ApiController
                 'validatingCarrier' => $variant['valCompany'],
                 'segment' => array()
             );
-            $j = 0;
-            foreach ($variant['flights'] as $flight)
+            foreach ($variant['flights'] as $u=>$flight)
             {
-                $prepared[$i]['segment']['flight'.$j] = array();
-                foreach ($flight['flightParts'] as $flightPart)
+                foreach ($flight['flightParts'] as $j=>$flightPart)
                 {
                     $departureCity = City::getCityByPk($flightPart['departureCityId']);
                     $departureDate = strtotime($flightPart['datetimeBegin']);
                     $arrivalCity = City::getCityByPk($flightPart['arrivalCityId']);
                     $arrivalDate = strtotime($flightPart['datetimeEnd']);
-                    $prepared[$i]['segment']['flight'.$j] = array(
+                    $prepared[$i]['segment'.$u]['flight'.$j] = array(
                         'operatingCarrier' => $flightPart['transportAirline'],
                         'number' => $flightPart['flightCode'],
                         'departure' => $departureCity->code,
@@ -346,6 +344,7 @@ class SearchController extends ApiController
         }
         $xml = new ArrayToXml('variants');
         $prepared = $xml->toXml($prepared);
+        $prepared = preg_replace('/segment\d+/', 'segment', $prepared);
         $prepared = preg_replace('/flight\d+/', 'flight', $prepared);
         return $prepared;
     }
