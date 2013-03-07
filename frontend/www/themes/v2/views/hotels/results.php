@@ -38,7 +38,7 @@
         <div id="all-hotels-results">
             <!-- ko if: ! showFullMap() -->
             <!-- ko foreach: resultsForRender -->
-            <div class="hotels-tickets" data-bind="visible: visible(),attr:{id: 'hotelResult'+hotelId}">
+            <div class="hotels-tickets small" data-bind="visible: visible(),attr:{id: 'hotelResult'+hotelId}">
                 <div class="content">
                     <div class="full-info">
                         <div class="preview-photo">
