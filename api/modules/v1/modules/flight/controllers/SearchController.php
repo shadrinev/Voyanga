@@ -315,7 +315,6 @@ class SearchController extends ApiController
                 'currency' => 'rub',
                 'url' => $url,
                 'validatingCarrier' => $variant['valCompany'],
-                'segment' => array()
             );
             foreach ($variant['flights'] as $u=>$flight)
             {
