@@ -255,7 +255,7 @@ class SearchController extends ApiController
     private function getPartnerCacheId($flightSearchParams)
     {
         $partner = Partner::getCurrentPartner();
-        $cacheId = md5(md5(serialize($flightSearchParams)).microtime().rand(1000,9999).$partner->id);
+        $cacheId = 'partner-'.md5(md5(serialize($flightSearchParams)).$partner->id);
         return $cacheId;
     }
 
@@ -278,14 +278,13 @@ class SearchController extends ApiController
         }
         $serviceClass = strtr($cabin, array('Y' => 'E', 'C' => 'B'));
         $flightSearchParams = $this->buildSearchParams($destinations, $adults, $children, $infants, $serviceClass);
-        $cacheId = $this->storeToCache($flightSearchParams);
         $partnerCacheId = $this->getPartnerCacheId($flightSearchParams);
         $prepared = Yii::app()->pCache->get($partnerCacheId);
         if (!$prepared)
         {
             $results = $this->doFlightSearch($flightSearchParams);
-            $prepared = $this->prepareForAviasales($results, $cabin, $cacheId);
-            Yii::app()->pCache->get($partnerCacheId, $prepared, appParams('flight_search_cache_time_parner'));
+            $prepared = $this->prepareForAviasales($results, $cabin);
+            Yii::app()->pCache->set($partnerCacheId, $prepared, appParams('flight_search_cache_time_partner'));
         }
         $this->data = $prepared;
         $this->_sendResponse(true, 'application/xml');
@@ -303,32 +302,29 @@ class SearchController extends ApiController
         Yii::app()->end();
     }
 
-    private function prepareForAviasales(&$results, $cabin, $cacheId)
+    private function prepareForAviasales(&$results, $cabin)
     {
         $prepared = array();
         $i = 0;
         foreach ($results as $variant)
         {
-            $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$cacheId.'&item[0][searchKey]='.$variant['flightKey'].'&pid='.Partner::getCurrentPartnerKey();
+            $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$variant['cacheId'].'&item[0][searchKey]='.$variant['flightKey'].'&pid='.Partner::getCurrentPartnerKey();
             $url = Yii::app()->params['baseUrl'].'/buy?'.$query;
             $prepared[$i] = array(
                 'price' => $variant['price'],
                 'currency' => 'rub',
                 'url' => $url,
                 'validatingCarrier' => $variant['valCompany'],
-                'segment' => array()
             );
-            $j = 0;
-            foreach ($variant['flights'] as $flight)
+            foreach ($variant['flights'] as $u=>$flight)
             {
-                $prepared[$i]['segment']['flight'.$j] = array();
-                foreach ($flight['flightParts'] as $flightPart)
+                foreach ($flight['flightParts'] as $j=>$flightPart)
                 {
                     $departureCity = City::getCityByPk($flightPart['departureCityId']);
                     $departureDate = strtotime($flightPart['datetimeBegin']);
                     $arrivalCity = City::getCityByPk($flightPart['arrivalCityId']);
                     $arrivalDate = strtotime($flightPart['datetimeEnd']);
-                    $prepared[$i]['segment']['flight'.$j] = array(
+                    $prepared[$i]['segment'.$u]['flight'.$j] = array(
                         'operatingCarrier' => $flightPart['transportAirline'],
                         'number' => $flightPart['flightCode'],
                         'departure' => $departureCity->code,
@@ -347,8 +343,8 @@ class SearchController extends ApiController
         }
         $xml = new ArrayToXml('variants');
         $prepared = $xml->toXml($prepared);
-        $prepared = str_replace('flight0>', 'flight>', $prepared);
-        $prepared = str_replace('flight1>', 'flight>', $prepared);
+        $prepared = preg_replace('/segment\d+/', 'segment', $prepared);
+        $prepared = preg_replace('/flight\d+/', 'flight', $prepared);
         return $prepared;
     }
 }

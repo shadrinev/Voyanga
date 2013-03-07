@@ -11,6 +11,7 @@
 class LandingGeneratorCommand extends CConsoleCommand
 {
 
+    public $morphy;
     public function getHelp()
     {
         return <<<EOD
@@ -28,12 +29,37 @@ EOD;
      */
     public function actionIndex()
     {
+        $path =  YiiBase::getPathOfAlias('frontend.www.meteorit');
+
+        Yii::import('site.common.components.statistic.reports.*');
+        $report = new PopularityOfFlightsSearch();
+        $model = ReportExecuter::run($report);
+        $directs = $model->findAll();
+        $citiesDirects = array();
+        $allCityIds = array();
+        foreach($directs as $direct){
+            $fromId = intval($direct->_id['departureCityId']);
+            $toId = intval($direct->_id['arrivalCityId']);
+            $allCityIds[$fromId] = $fromId;
+            $allCityIds[$toId] = $toId;
+            if(!isset($citiesDirects[$toId])){
+                $citiesDirects[$toId] = array();
+            }
+            $citiesDirects[$toId][$fromId] = true;
+        }
+
+
+
         $connection=Yii::app()->db;
+        /*$sql = 'SELECT city.id, city.code, city.countryId, ctr.code AS countryCode,caseGen,caseAcc
+FROM  `city`
+INNER JOIN  `country` AS ctr ON ctr.`id` =  `city`.`countryId`
+WHERE  `countAirports` >0 AND city.hotelbookId >0';*/
         $sql = 'SELECT city.id, city.code, city.countryId, ctr.code AS countryCode,caseGen,caseAcc
 FROM  `city`
 INNER JOIN  `country` AS ctr ON ctr.`id` =  `city`.`countryId`
-WHERE  `countAirports` >0 AND city.hotelbookId >0';
-        $outFilename = 'landingFromTo.xml';
+WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
+        $outFilename = $path.'/landingFromTo.csv';
         $fp = fopen($outFilename,'w');
         if(!$fp){
             echo 'Cant open file '.$outFilename;
@@ -76,10 +102,12 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
         }
 
         $j = 0;
-        foreach($citiesInfo as $cityFromKey=>$cityFromInfo){
-            foreach($citiesInfo as $cityToKey=>$cityToInfo){
+        foreach($citiesDirects as $cityToKey=>$citiesFrom){
+            foreach($citiesFrom as $cityFromKey=>$boolVar){
                 if($cityFromKey != $cityToKey){
-                    if(isset($ruCityIds[$cityFromKey]) || isset($ruCityIds[$cityToKey])){
+                    //if(isset($ruCityIds[$cityFromKey]) || isset($ruCityIds[$cityToKey])){
+                        $cityToInfo = $citiesInfo[$cityToKey];
+                        $cityFromInfo = $citiesInfo[$cityFromKey];
                         $j++;
                         $minPrice = '';
                         $url = 'https://voyanga.com/land/'.$cityToInfo['countryCode'].'/'.$cityFromInfo['cityCode'].'/'.$cityToInfo['cityCode'].'/';
@@ -96,7 +124,7 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
                         $desc = "из {$cityFromInfo['caseGen']} в {$cityToInfo['caseAcc']}";
                         $str = "$j;{$cityFromInfo['cityCode']};{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
                         fwrite($fp,$str);
-                    }
+                    //}
                 }
                 //echo "xml:".$sxe->asXML();
                 //break;
@@ -110,25 +138,19 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
         echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
         echo "count:".count($citiesInfo);
         fclose($fp);
-        die();
+
         // -------------------------- Only to one City
-        $outFilename = 'landingTo.xml';
+        $outFilename = $path.'/landingTo.csv';
         $fp = fopen($outFilename,'w');
         if(!$fp){
             echo 'Cant open file '.$outFilename;
             return '';
         }
-        fwrite($fp,'<?xml version="1.0" encoding="utf-8"?>
-<LandingUrls>');
+        fwrite($fp,"id;codeTo;ctrCodeTo;url;desc;price\r\n");
 
-        $xml = '<?xml version="1.0" encoding="utf-8"?>
-<LandingUrls>
-<url country="RU" to="MOW" minPrice="" desc=""></url>
-</LandingUrls>';
-        $mainSxe = simplexml_load_string($xml);
-        $sxe = &$mainSxe->url;
+        $j = 0;
         foreach($citiesInfo as $cityToKey=>$cityToInfo){
-
+            $j++;
             $minPrice = '';
             $url = 'https://voyanga.com/land/'.$cityToInfo['countryCode'].'/'.$cityToInfo['cityCode'].'/';
             if(isset($ruCityIds[$cityToKey])){
@@ -147,68 +169,133 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
             }
             $desc = "в {$cityToInfo['caseAcc']}";
             //$sxe['url'] = $url;
-            $sxe['country'] = $cityToInfo['countryCode'];
-            $sxe['to'] = $cityToInfo['cityCode'];
-            $sxe['minPrice'] = $minPrice;
-            $sxe['desc'] = $desc;
-            $mainSxe->url = $url;
-            fwrite($fp,$sxe->asXML()."\n");
-
+            $str = "$j;{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
+            fwrite($fp,$str);
         }
 
-        fwrite($fp,'</LandingUrls>');
         fclose($fp);
+        echo "ok";
+
+    }
+
+    private function getCase($word, $case)
+    {
+        $info = $this->morphy->castFormByGramInfo($word, 'С', array($case, 'ЕД'), false);
+        if (isset($info[0]))
+            return $this->mb_ucwords($info[0]['form']);
+        return $this->mb_ucwords($word);
+    }
+    function mb_ucwords($str)
+    {
+        $str = mb_convert_case($str, MB_CASE_TITLE, "UTF-8");
+        return ($str);
+    }
+
+    public function actionHotels(){
+        $path =  YiiBase::getPathOfAlias('frontend.www.meteorit');
+        $connection=Yii::app()->db;
+        $sql = 'SELECT city.id, city.code, city.countryId, ctr.code AS countryCode,casePre,caseAcc
+FROM  `city`
+INNER JOIN  `country` AS ctr ON ctr.`id` =  `city`.`countryId`
+WHERE  `countAirports` >0 AND city.hotelbookId >0';
+
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+
+        $citiesInfo = array();
+        $ruCityIds = array();
+        while(($row=$dataReader->read())!==false) {
+            $citiesInfo[$row['id']] = array('cityCode'=>$row['code'],'countryCode'=>$row['countryCode'],'casePre'=>$row['casePre'],'caseAcc'=>$row['caseAcc']);
+            if($row['countryCode'] == 'RU'){
+                $ruCityIds[$row['id']] = $row['id'];
+            }
+        }
+
+        $sql = 'SELECT minPrice, cityId FROM (SELECT * FROM `hotel` ORDER BY minPrice) as tbl1 GROUP BY `cityId`';
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+        $hotelPrices = array();
+        while(($row=$dataReader->read())!==false) {
+            if(isset($citiesInfo[$row['cityId']])){
+                $hotelPrices[$row['cityId']] = $row['minPrice'];
+            }
+        }
+
         // -------------------------- Hotels in City
-        $outFilename = 'landingHotelsInCity.xml';
+        $outFilename = $path.'/landingHotelsInCity.csv';
         $fp = fopen($outFilename,'w');
         if(!$fp){
             echo 'Cant open file '.$outFilename;
             return '';
         }
-        fwrite($fp,'<?xml version="1.0" encoding="utf-8"?>
-<LandingUrls>');
+        fwrite($fp,"id;city;ctrCode;url;desc;price\r\n");
 
-        $xml = '<?xml version="1.0" encoding="utf-8"?>
-<LandingUrls>
-<url country="RU" to="MOW" minPrice="" desc=""></url>
-</LandingUrls>';
-        $mainSxe = simplexml_load_string($xml);
-        $sxe = &$mainSxe->url;
+        $j=0;
         foreach($citiesInfo as $cityToKey=>$cityToInfo){
-
+            $j++;
             $minPrice = '';
-            $url = 'https://voyanga.com/land/'.$cityToInfo['countryCode'].'/'.$cityToInfo['cityCode'].'/';
-            if(isset($ruCityIds[$cityToKey])){
-
-                if(isset($bestPricesOw[$cityToKey])){
-                    foreach($bestPricesOw[$cityToKey] as $minPrice)
-                        break;
-                    //$minPrice = $bestPricesOw[$cityFromKey][$cityToKey];
-                }
-            }else{
-                if(isset($bestPricesRt[$cityToKey])){
-                    foreach($bestPricesRt[$cityToKey] as $minPrice)
-                        break;
-                    //$minPrice = $bestPricesRt[$cityFromKey][$cityToKey];
-                }
+            $url = 'https://voyanga.com/land/hotels/'.$cityToInfo['countryCode'].'/'.$cityToInfo['cityCode'].'/';
+            if(isset($hotelPrices[$cityToKey])){
+                $minPrice = $hotelPrices[$cityToKey];
             }
-            $desc = "в {$cityToInfo['caseAcc']}";
+            $desc = "Отели в {$cityToInfo['casePre']}";
             //$sxe['url'] = $url;
-            $sxe['country'] = $cityToInfo['countryCode'];
-            $sxe['to'] = $cityToInfo['cityCode'];
-            $sxe['minPrice'] = $minPrice;
-            $sxe['desc'] = $desc;
-            $mainSxe->url = $url;
-            fwrite($fp,$sxe->asXML()."\n");
-
+            $str = "$j;{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
+            fwrite($fp,$str);
         }
 
-        fwrite($fp,'</LandingUrls>');
         fclose($fp);
 
+        $this->morphy = Yii::app()->morphy;
 
 
 
+        $sql = 'SELECT * FROM `country`';
 
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+
+        $countriesInfo = array();
+        while(($row=$dataReader->read())!==false) {
+            $countryUp = mb_strtoupper($row['localRu'], 'utf-8');
+            $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'), 'casePre' => $this->getCase($countryUp, 'ПР'));
+            $countriesInfo[$row['id']] = array('code'=>$row['code'],'casePre'=>$countryMorph['casePre']);
+        }
+
+        $sql = 'SELECT minPrice, countryId FROM (SELECT * FROM `hotel` ORDER BY minPrice) as tbl1 GROUP BY `countryId`';
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+        $hotelPrices = array();
+        while(($row=$dataReader->read())!==false) {
+            if(isset($countriesInfo[$row['countryId']])){
+                $hotelPrices[$row['countryId']] = $row['minPrice'];
+            }
+        }
+
+        // -------------------------- Hotels in Country
+        $outFilename = $path.'/landingHotelsInCountry.csv';
+        $fp = fopen($outFilename,'w');
+        if(!$fp){
+            echo 'Cant open file '.$outFilename;
+            return '';
+        }
+        fwrite($fp,"id;ctrCode;url;desc;price\r\n");
+
+        $j=0;
+        foreach($countriesInfo as $countryId=>$countryInfo){
+            $j++;
+            $minPrice = '';
+            $url = 'https://voyanga.com/land/hotels/'.$countryInfo['code'].'/';
+            if(isset($hotelPrices[$countryId])){
+                $minPrice = $hotelPrices[$countryId];
+            }
+            $desc = "Отели в {$countryInfo['casePre']}";
+            //$sxe['url'] = $url;
+            $str = "$j;{$countryInfo['code']};{$url};{$desc};{$minPrice}\r\n";
+            fwrite($fp,$str);
+        }
+
+        fclose($fp);
+        echo 'ok';
     }
 }
