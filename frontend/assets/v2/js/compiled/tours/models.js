@@ -1058,9 +1058,9 @@ ToursResultSet = (function() {
       for (_m = 0, _len4 = _ref3.length; _m < _len4; _m++) {
         el = _ref3[_m];
         cur = el.selection();
-        if (el.isAvia()) {
+        if (cur && el.isAvia()) {
           hash += cur.similarityHash();
-        } else {
+        } else if (cur && el.isHotel()) {
           hash += cur.hotel.hotelId + cur.roomSet.similarityHash();
         }
       }

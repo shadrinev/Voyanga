@@ -673,9 +673,9 @@ class ToursResultSet
         hash += (@price() - @savings()) + people
         for el in @data()
           cur = el.selection()
-          if el.isAvia()
+          if cur && el.isAvia()
             hash += cur.similarityHash()
-          else
+          else if cur && el.isHotel()
             hash += cur.hotel.hotelId + cur.roomSet.similarityHash()
 
         data = $.extend {}, {hash: hash, name: description}, @createTourData()
