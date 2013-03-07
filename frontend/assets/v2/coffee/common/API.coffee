@@ -19,10 +19,9 @@ class API
         window.setTimeout ->
           cb(data)
         ,10
-      error: (jqXHR, rest...)->
+      error: (jqXHR, rest...)=>
         @loader.hide()
         throw new Error("Api call failed: Url: #{url}" + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") +  " | " + rest.join(" | "))
-#        cb(false)
 
 class ToursAPI extends API
   init: =>
