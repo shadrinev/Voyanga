@@ -259,9 +259,9 @@ class SearchController extends ApiController
         return $cacheId;
     }
 
-    public function actionAviasales($from, $to, $date1, $adults, $children, $infants, $cabin, $partner, $password, $date2='')
+    public function actionPartner($from, $to, $date1, $adults, $children, $infants, $cabin, $partner, $password, $date2='')
     {
-        $this->checkAviasalesCredentials($partner, $password);
+        $this->checkCredentials($partner, $password);
         $destinations = array();
         $destinations[] = array(
             'departure' => $from,
@@ -285,17 +285,18 @@ class SearchController extends ApiController
         {
             $results = $this->doFlightSearch($flightSearchParams);
             $prepared = $this->prepareForAviasales($results, $cabin, $cacheId);
-            //Yii::app()->pCache->get($partnerCacheId, $prepared, appParams('flight_search_cache_time_parner'));
+            Yii::app()->pCache->get($partnerCacheId, $prepared, appParams('flight_search_cache_time_parner'));
         }
         $this->data = $prepared;
         $this->_sendResponse(true, 'application/xml');
     }
 
-    private function checkAviasalesCredentials($u, $p)
+    private function checkCredentials($u, $p)
     {
-        if (($u == Yii::app()->params['aviasales.partnerId']) && ($p == Yii::app()->params['aviasales.password']))
+        $partner = Partner::model()->findByAttributes(array('name'=>$u));
+        if (($partner) && ($partner->verifyPassword($p)))
         {
-            Partner::setPartnerByName(Yii::app()->params['aviasales.partnerId']);
+            Partner::setPartnerByName($u);
             return;
         }
         $this->sendError(403, 'Permission denied');

@@ -88,7 +88,4 @@ return CMap::mergeArray(array(
 
     'shortUrl.prefix' => 't/',
 
-    'aviasales.partnerId' => 'avsls',
-    'aviasales.password' => '8DzlQc1MmmR8'
-
 ), CMap::mergeArray( $commonParamsEnv, $commonParamsLocal));

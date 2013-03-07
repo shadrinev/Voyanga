@@ -32,7 +32,7 @@ class Partner extends CActiveRecord
                 "strategies" => array(
                     "bcrypt" => array(
                         "class" => "common.extensions.YiiPasswords.ABcryptPasswordStrategy",
-                        "workFactor" => 14
+                        "workFactor" => 12
                     ),
                     "legacy" => array(
                         "class" => "common.extensions.YiiPasswords.ALegacyMd5PasswordStrategy",
@@ -71,7 +71,8 @@ class Partner extends CActiveRecord
             array('name, password, passwordStrategy, requiresNewPassword', 'required'),
             array('requiresNewPassword, cookieTime', 'numerical', 'integerOnly' => true),
             array('name, password', 'length', 'max' => 45),
-            array('salt', 'length', 'max' => 15),
+            array('password', 'length', 'max' => 100),
+            array('salt', 'length', 'max' => 40),
             array('passwordStrategy', 'length', 'max' => 40),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
