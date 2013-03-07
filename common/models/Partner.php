@@ -204,9 +204,21 @@ class Partner extends CActiveRecord
         return false;
     }
 
-    public static function setPartnerByKey()
+    public static function setPartnerByName($name)
+    {
+        $partner = Partner::model()->findByAttributes(array('name'=>$name));
+        if ($partner)
+        {
+            $pid = self::encodeId(($partner->id + 10100));
+            self::setPartnerByKey($pid);
+        }
+    }
+
+    public static function setPartnerByKey($forcePid = false)
     {
         $partner = false;
+        if ($forcePid)
+            $_REQUEST['pid'] = $forcePid;
         if (isset($_REQUEST['pid']))
         {
             if ($partner = self::getPartnerByKey($_REQUEST['pid']))

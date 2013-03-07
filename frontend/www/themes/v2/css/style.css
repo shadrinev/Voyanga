@@ -1648,6 +1648,20 @@ input.hotel-input {
 	padding-left: 3px;
 	white-space: normal;
 }
+.slideTours .toursTicketsMain .textTours > a > span {
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.slideTours.small .toursTicketsMain .textTours > a > span {
+    width: 100%;
+    display: inherit;
+    overflow: inherit;
+    text-overflow: clip;
+    white-space: normal;
+}
 .slideTours.small .toursTicketsMain .textTours > span {
 	width: 100%;
 	display: inherit;
