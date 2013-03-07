@@ -91,8 +91,7 @@ abstract class CDbSchema extends CComponent
 			{
 				$key='yii:dbschema'.$this->_connection->connectionString.':'.$this->_connection->username.':'.$name;
 				$table=$cache->get($key);
-                VarDumper::dump($name);
-                VarDumper::dump($table);
+
 				if($refresh===true || $table===false)
 				{
 					$table=$this->loadTable($realName);
