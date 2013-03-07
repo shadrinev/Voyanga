@@ -129,3 +129,18 @@ class HotelsSearchParams
     for room, i in @rooms()
       result += '&' + room.getUrl(i)
     return result
+
+  GAKey: =>
+    @city()
+
+  GAData: =>
+    result = "1"
+    passangers = [0, 0, 0]
+    for room in @rooms()
+      passangers[0] += room.adults()
+      passangers[1] += room.children()
+      passangers[2] += room.infants()
+    result += ", " + passangers.join(" - ")
+    result += ", " + moment(@checkIn()).format('D.M.YYYY') + ' - ' + moment(@checkOut()).format('D.M.YYYY')
+    result += ", " + moment(@checkIn()).diff(moment(), 'days') + " - " + moment(@checkOut()).diff(moment(@checkIn()), 'days')
+    return result

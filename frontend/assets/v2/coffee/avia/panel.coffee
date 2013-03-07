@@ -167,6 +167,10 @@ class AviaPanel extends SearchPanel
       $('#loadWrapBgMin').show()
       window.location.href = '/#' + @sp.getHash()
       return
+
+
+    _gaq.push(['_trackEvent','Avia_press_button_search', @sp.GAKey(), @sp.GAData()])
+
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
 

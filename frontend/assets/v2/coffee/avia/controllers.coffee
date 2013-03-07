@@ -29,8 +29,10 @@ class AviaController
         new ErrorPopup 'avia404'
         return
       throw new Error("Unable to build AviaResultSet from search response")
-    @results stacked
 
+    @results stacked
+    
+    _gaq.push(['_trackEvent', 'Avia_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data.length, true])
     @render 'results', {results: @results}
     ko.processAllDeferredBindingUpdates()
 

@@ -52,6 +52,7 @@ AviaController = (function() {
       throw new Error("Unable to build AviaResultSet from search response");
     }
     this.results(stacked);
+    _gaq.push(['_trackEvent', 'Avia_show_search_results', this.searchParams.GAKey(), this.searchParams.GAData(), stacked.data.length, true]);
     this.render('results', {
       results: this.results
     });
