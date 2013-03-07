@@ -126,6 +126,10 @@ class OrderBooking extends CActiveRecord
             {
                 $this->partnerId = $partner->id;
             }
+            if (isset($_GET['marker']))
+            {
+                $this->marker = $_GET['marker'];
+            }
         }
         if($this->phone){
             $this->phone = str_replace(array(' ','(',')','-'),'',$this->phone);
@@ -186,6 +190,26 @@ class OrderBooking extends CActiveRecord
             $states[$this->stateAdapter($hotelBooker->status)] = $this->stateAdapter($hotelBooker->status);
         }
         return join(',', $states);
+    }
+
+    public function getStatus()
+    {
+        $state = '';
+        $ok = true;
+        $first = true;
+        foreach ($this->flightBookers as $flightBooker)
+        {
+            $first = false;
+            $cur = $this->getPrefixlessState($flightBooker->status);
+            $ok = $ok && ($cur=='done');
+            if (($cur=='error') || ($cur=='canceled'))
+                $state = 'CANCELLED';
+        }
+        if (($ok) && (!$first))
+            $state = 'PAID';
+        elseif ($state=='')
+            $state = 'PROCESSING';
+        return $state;
     }
 
     private function getPrefixlessState($state) {
