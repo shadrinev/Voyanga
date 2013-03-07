@@ -8,41 +8,14 @@
 @headRightSlideTurnMode: 165px;
 
 @leftBlockWidth: 220px;
-@mainBlockWidth: 585px;
-@contentWidth: 530px;
-@filterBlockWidth: 200px;
+@mainBlockWidth01: 585px;
+@contentWidth01: 530px;
+@filterBlockWidth01: 200px;
 
+@mainBlockWidth02: 705px;
+@contentWidth02: @mainBlockWidth02;
+@streetWidth: 210px;
 
-/* COLOR */
-@blackMain: #1d222b;
-@blueLink: #1C81BB;
-@greyTitle: #4b525c;
-@white: #FFFFFF;
-@greyShadow: #acb0b4;
-@blueShadow: #0B5B88;
-@orangeShadow: #c36408;
-@greyBtnShadow: #444D57;
-@redShadow: #850606;
-.text-shadow (@color: @white) {
-  text-shadow: 0px 1px 0px @color;
-//  filter: Shadow(Color=@color, Direction=90, Strength=1);
-}
-/* FONT */
-.font-family (@main : Arial) {
-  font-family: @main, sans-serif;
-}
-.font-size(@size : 12px) {font-size: @size;}
-/* RADIUS */
-.border-radius(@radius : 5px) {
-  border-radius: @radius;
-  -moz-border-radius: @radius;
-  -webkit-border-radius: @radius;
-}
-.box-shadow (@x: 0, @y: 0, @blur: 10px, @color: rgba(0, 1, 0, 0.5)) {
-  box-shadow: @arguments;
-  -moz-box-shadow: @arguments;
-  -webkit-box-shadow: @arguments;
-}
-.min-width(@minWidth : 1000px) {min-width: 1000px;}
-.text-overflow() {white-space: nowrap; text-overflow: ellipsis; -o-text-overflow: ellipsis; overflow: hidden;}
-.text-indent(@size : -9999px) {text-indent: @size};
+@mainBlockWidth03: 740px;
+@contentWidth03: @mainBlockWidth03;
+@filterBlockWidth03: 220px;

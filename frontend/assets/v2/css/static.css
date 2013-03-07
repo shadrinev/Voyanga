@@ -2,6 +2,15 @@
 #header .center-block .about{left:134px;}
 #header .center-block .telefon{left:220px;}
 #header .center-block .slide-turn-mode{right:165px;}
-.wrapper>.center-block{width:1000px;}.wrapper>.center-block .left-block{width:220px;}
-.wrapper>.center-block .main-block{width:585px;}.wrapper>.center-block .main-block #content{width:530px;}.wrapper>.center-block .main-block #content .recommended-ticket{width:253px;}
-.wrapper>.center-block .main-block .filter-block{width:200px;}
+.wrapper>.center-block{width:1000px;overflow:hidden;}.wrapper>.center-block .left-block{width:220px;}
+.wrapper>.center-block .main-block#twoPlusThree{width:585px;}.wrapper>.center-block .main-block#twoPlusThree #content{width:530px;}.wrapper>.center-block .main-block#twoPlusThree #content .recommended-ticket{width:253px;}
+.wrapper>.center-block .main-block#twoPlusThree .filter-block{width:200px;}
+.wrapper>.center-block .main-block#onePlusThree{width:705px;margin-left:265px;margin-right:45px;}.wrapper>.center-block .main-block#onePlusThree #content{width:705px;}.wrapper>.center-block .main-block#onePlusThree #content .recommended-ticket{width:253px;}
+.wrapper>.center-block .main-block#onePlusThree #content .place-buy .street{width:210px;}
+.wrapper>.center-block .main-block#onePlusThree #content .shadowHotel{width:705px;}.wrapper>.center-block .main-block#onePlusThree #content .shadowHotel>img{width:100%;}
+.wrapper>.center-block .main-block#onePlusThree .filter-block{width:200px;}
+.wrapper>.center-block .main-block#twoWithOutThree{width:740px;margin-left:15px;margin-right:255px;}.wrapper>.center-block .main-block#twoWithOutThree #content{width:690px;}.wrapper>.center-block .main-block#twoWithOutThree #content .recommended-ticket,.wrapper>.center-block .main-block#twoWithOutThree #content .prices-of-3days{width:328px;}
+.wrapper>.center-block .main-block#twoWithOutThree #content .prices-of-3days .schedule-of-prices{width:328px;}.wrapper>.center-block .main-block#twoWithOutThree #content .prices-of-3days .schedule-of-prices li{width:46.857142857142854px;}
+.wrapper>.center-block .main-block#twoWithOutThree #content .place-buy .street{width:210px;}
+.wrapper>.center-block .main-block#twoWithOutThree #content .shadowHotel{width:705px;}.wrapper>.center-block .main-block#twoWithOutThree #content .shadowHotel>img{width:100%;}
+.wrapper>.center-block .main-block#twoWithOutThree .filter-block{width:220px;margin-right:15px;}

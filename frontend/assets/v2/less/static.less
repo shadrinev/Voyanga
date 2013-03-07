@@ -22,24 +22,103 @@
 
   > .center-block {
     width: @allWidth;
+    overflow: hidden;
 
     .left-block {
       width: @leftBlockWidth;
     }
 
-    .main-block {
-      width: @mainBlockWidth;
+    .main-block#twoPlusThree {
+      width: @mainBlockWidth01;
 
       #content {
-        width: @contentWidth;
+        width: @contentWidth01;
 
         .recommended-ticket {
-          width: (@contentWidth - 24) / 2;
+          width: (@contentWidth01 - 24) / 2;
         }
+
+        /* END #content */
       }
       .filter-block {
-        width: @filterBlockWidth;
+        width: @filterBlockWidth01;
       }
+
+      /* END #twoPlusThree */
     }
+    /* = = = */
+    .main-block#onePlusThree {
+      width: @mainBlockWidth02;
+      margin-left: (((1015 - @mainBlockWidth02) - @leftBlockWidth) / 2) + @leftBlockWidth;
+      margin-right: ((1015 - @mainBlockWidth02) - @leftBlockWidth) / 2;
+      #content {
+
+        width: @contentWidth02;
+
+        .recommended-ticket {
+          width: (@contentWidth01 - 24) / 2;
+        }
+
+        .place-buy {
+          .street {
+            width: @streetWidth;
+          }
+        }
+        .shadowHotel {
+          width: @contentWidth02;
+          > img {
+            width: 100%;
+          }
+        }
+
+        /* END #content */
+      }
+      .filter-block {
+        width: @filterBlockWidth01;
+      }
+      /* END #onePlusThree */
+    }
+    /* = = = */
+    .main-block#twoWithOutThree {
+      width: @mainBlockWidth03;
+      margin-left: 15px;
+      margin-right: @filterBlockWidth03 + 35;
+      #content {
+
+        width: @contentWidth03 - 50;
+
+        .recommended-ticket, .prices-of-3days {
+          width: (@contentWidth03 - 84) / 2;
+        }
+        .prices-of-3days {
+          .schedule-of-prices {
+            width: (@contentWidth03 - 84) / 2;
+
+            li {
+              width: ((@contentWidth03 - 84) / 2) / 7;
+            }
+          }
+        }
+        .place-buy {
+          .street {
+            width: @streetWidth;
+          }
+        }
+        .shadowHotel {
+          width: @contentWidth02;
+          > img {
+            width: 100%;
+          }
+        }
+
+      /* END #content */
+      }
+      .filter-block {
+        width: @filterBlockWidth03;
+        margin-right: 15px;
+      }
+    /* END #onePlusThree */
+    }
+  /* = = = */
   }
 }
