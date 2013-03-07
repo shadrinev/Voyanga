@@ -20,7 +20,8 @@ class StatisticsController extends ApiController
         $criteria->compare('partnerId', Partner::getCurrentPartner()->id);
         $criteria->addCondition('timestamp >= \''.$from.'\'');
         $criteria->addCondition('timestamp <= \''.$to.'\'');
-        $orders = OrderBooking::model()->findAll($criteria);
+        $orders = OrderBooking::model()->findAll($criteria)
+        VarDumper::dump($orders); die();
         $results = array();
         foreach ($orders as $i=>$order)
         {
