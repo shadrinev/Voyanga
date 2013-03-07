@@ -151,7 +151,7 @@ return array(
             'connectionString' => $params['db.connectionString'],
             'username' => $params['db.username'],
             'password' => $params['db.password'],
-            'schemaCachingDuration' => YII_DEBUG ? 0 : 10,  // 1000 days
+            'schemaCachingDuration' => 0,  // 1000 days
             'enableParamLogging' => YII_DEBUG,
             'charset' => 'utf8',
         ),
