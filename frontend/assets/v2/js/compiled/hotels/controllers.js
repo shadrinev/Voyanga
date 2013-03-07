@@ -19,6 +19,8 @@ HotelsController = (function() {
 
     this.handleResults = __bind(this.handleResults, this);
 
+    this.handleSearch = __bind(this.handleSearch, this);
+
     this.searchAction = __bind(this.searchAction, this);
 
     this.api = new HotelsAPI;
@@ -32,27 +34,30 @@ HotelsController = (function() {
   }
 
   HotelsController.prototype.searchAction = function() {
-    var args,
-      _this = this;
+    var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("HOTELS: Invoking searchAction", args);
     this.searchParams.fromList(args);
-    return this.api.search(this.searchParams.url(), function(data) {
-      var stacked;
-      try {
-        stacked = _this.handleResults(data);
-      } catch (err) {
-        if (err === 'e404') {
-          new ErrorPopup('hotels404');
-          return;
-        }
-        throw new Error("Unable to build HotelResultSet from search response");
+    window.VisualLoaderInstance.start(this.api.loaderDescription);
+    return this.api.search(this.searchParams.url(), this.handleSearch);
+  };
+
+  HotelsController.prototype.handleSearch = function(data) {
+    var stacked;
+    try {
+      stacked = this.handleResults(data);
+    } catch (err) {
+      window.VisualLoaderInstance.hide();
+      if (err === 'e404') {
+        new ErrorPopup('hotels404');
+        return;
       }
-      _this.results(stacked);
-      return _this.render('results', {
-        'results': _this.results
-      });
-    }, true, 'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд');
+      throw new Error("Unable to build HotelResultSet from search response");
+    }
+    this.results(stacked);
+    return this.render('results', {
+      'results': this.results
+    });
   };
 
   HotelsController.prototype.handleResults = function(data) {
@@ -73,17 +78,21 @@ HotelsController = (function() {
       resultDeferred.resolve(roomSet);
       return;
     }
+    window.VisualLoaderInstance.start("Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд");
     return this.api.search(this.searchParams.url(), function(data) {
       var result, stacked;
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
+        window.VisualLoaderInstance.hide();
         throw new Error("Unable to bould HotelResultSet from api response. Check ticket.");
       }
       result = stacked.findAndSelect(roomSet);
       if (result) {
+        window.VisualLoaderInstance.hide();
         return resultDeferred.resolve(result);
       } else {
+        window.VisualLoaderInstance.hide();
         new ErrorPopup('hotelsNoTicketOnValidation', false, function() {});
         return _this.results(stacked);
       }

@@ -17,7 +17,7 @@ AviaController = (function() {
 
     this.handleResults = __bind(this.handleResults, this);
 
-    this.search = __bind(this.search, this);
+    this.handleSearch = __bind(this.handleSearch, this);
 
     this.searchAction = __bind(this.searchAction, this);
 
@@ -34,30 +34,28 @@ AviaController = (function() {
   AviaController.prototype.searchAction = function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    window.voyanga_debug("AVIA: Invoking searchAction", args);
     this.searchParams.fromList(args);
-    return this.search();
+    window.VisualLoaderInstance.start(this.api.loaderDescription);
+    return this.api.search(this.searchParams.url(), this.handleSearch);
   };
 
-  AviaController.prototype.search = function() {
-    var _this = this;
-    return this.api.search(this.searchParams.url(), function(data) {
-      var stacked;
-      try {
-        stacked = _this.handleResults(data);
-      } catch (err) {
-        if (err === '404') {
-          new ErrorPopup('avia404');
-          return;
-        }
-        throw new Error("Unable to build AviaResultSet from search response");
+  AviaController.prototype.handleSearch = function(data) {
+    var stacked;
+    try {
+      stacked = this.handleResults(data);
+    } catch (err) {
+      window.VisualLoaderInstance.hide();
+      if (err === '404') {
+        new ErrorPopup('avia404');
+        return;
       }
-      _this.results(stacked);
-      _this.render('results', {
-        results: _this.results
-      });
-      return ko.processAllDeferredBindingUpdates();
+      throw new Error("Unable to build AviaResultSet from search response");
+    }
+    this.results(stacked);
+    this.render('results', {
+      results: this.results
     });
+    return ko.processAllDeferredBindingUpdates();
   };
 
   AviaController.prototype.handleResults = function(data) {
@@ -84,21 +82,24 @@ AviaController = (function() {
       resultDeferred.resolve(result);
       return;
     }
+    window.VisualLoaderInstance.start('Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд');
     return this.api.search(this.searchParams.url(), function(data) {
       var stacked;
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
+        window.VisualLoaderInstance.hide();
         throw new Error("Unable to build AviaResultSet from search response. Check ticket");
       }
       result = stacked.findAndSelect(result);
+      window.VisualLoaderInstance.hide();
       if (result) {
         return resultDeferred.resolve(result);
       } else {
         new ErrorPopup('aviaNoTicketOnValidation', "Билет не найден, выберите другой.", false, function() {});
         return _this.results(stacked);
       }
-    }, true, 'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд');
+    });
   };
 
   AviaController.prototype.render = function(view, data) {

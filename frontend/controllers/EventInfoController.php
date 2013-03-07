@@ -27,13 +27,12 @@ class EventInfoController extends FrontendController
         foreach ($event->prices as $price) {
             $pricesData[$price->city->id] = array('price' => floor($price->bestPrice), 'cityName' => $price->city->localRu, 'cityId' => $price->city->id, 'updateTime' => str_replace(' ', 'T', $price->updated));
         }
-
         $tours = array();
-        $dataProvider = new TripDataProvider();
         $cities = array();
         $minPrice = 2e6; // ohuliard
-        foreach ($event->tours as $tour) {
-
+        $dataProvider = new TripDataProvider();
+        foreach ($event->tours as $tour)
+        {
             $tours[$tour->startCityId] = array();
             $dataProvider->restoreFromDb($tour->orderId);
             $items = $dataProvider->getWithAdditionalInfo($dataProvider->getSortedCartItemsOnePerGroup(false));

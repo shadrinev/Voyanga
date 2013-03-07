@@ -28,7 +28,6 @@ class SearchController extends ApiController
      */
     public function actionDefault($start, array $destinations, array $rooms, $format = 'json', $eventId = null, $orderId = null, $return = 1)
     {
-
         $tourSearchParams = $this->buildSearchParams($start, $destinations, $rooms, $return);
         if($eventId){
             $event = Event::model()->findByPk($eventId);

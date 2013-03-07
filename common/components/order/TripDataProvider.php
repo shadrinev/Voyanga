@@ -58,6 +58,7 @@ class TripDataProvider
     public function restoreFromDb($orderId)
     {
         Yii::app()->shoppingCart->clear();
+        $this->usedGroups = array();
         $order = Order::model()->findByPk($orderId);
         if (!$order)
             throw new CException("No such order");
@@ -273,17 +274,17 @@ class TripDataProvider
         if ($onlyFlights)
         {
             $icon = 'ico-fly';
-            $message = 'Пассажиры';
+            $message = 'Данные пассажиров';
         }
         elseif ($onlyHotels)
         {
             $icon = 'ico-hotel';
-            $message = 'Гости';
+            $message = 'Гости отеля';
         }
         else
         {
             $icon = 'ico-fly';
-            $message = 'Пассажиры';
+            $message = 'Данные пассажиров';
         }
         return array($icon, $message);
     }

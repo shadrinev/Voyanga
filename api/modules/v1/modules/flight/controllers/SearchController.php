@@ -251,4 +251,103 @@ class SearchController extends ApiController
         Yii::app()->pCache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('flight_search_cache_time'));
         return $cacheId;
     }
+
+    private function getPartnerCacheId($flightSearchParams)
+    {
+        $partner = Partner::getCurrentPartner();
+        $cacheId = md5(md5(serialize($flightSearchParams)).microtime().rand(1000,9999).$partner->id);
+        return $cacheId;
+    }
+
+    public function actionAviasales($from, $to, $date1, $adults, $children, $infants, $cabin, $partner, $password, $date2='')
+    {
+        $this->checkAviasalesCredentials($partner, $password);
+        $destinations = array();
+        $destinations[] = array(
+            'departure' => $from,
+            'arrival' => $to,
+            'date' => date('d.m.Y', strtotime($date1))
+        );
+        if (strlen($date2)>0)
+        {
+            $destinations[] = array(
+                'departure' => $to,
+                'arrival' => $from,
+                'date' => date('d.m.Y', strtotime($date2))
+            );
+        }
+        $serviceClass = strtr($cabin, array('Y' => 'E', 'C' => 'B'));
+        $flightSearchParams = $this->buildSearchParams($destinations, $adults, $children, $infants, $serviceClass);
+        $cacheId = $this->storeToCache($flightSearchParams);
+        $partnerCacheId = $this->getPartnerCacheId($flightSearchParams);
+        $prepared = Yii::app()->pCache->get($partnerCacheId);
+        if (!$prepared)
+        {
+            $results = $this->doFlightSearch($flightSearchParams);
+            $prepared = $this->prepareForAviasales($results, $cabin, $cacheId);
+            //Yii::app()->pCache->get($partnerCacheId, $prepared, appParams('flight_search_cache_time_parner'));
+        }
+        $this->data = $prepared;
+        $this->_sendResponse(true, 'application/xml');
+    }
+
+    private function checkAviasalesCredentials($u, $p)
+    {
+        if (($u == Yii::app()->params['aviasales.partnerId']) && ($p == Yii::app()->params['aviasales.password']))
+        {
+            Partner::setPartnerByName(Yii::app()->params['aviasales.partnerId']);
+            return;
+        }
+        $this->sendError(403, 'Permission denied');
+        Yii::app()->end();
+    }
+
+    private function prepareForAviasales(&$results, $cabin, $cacheId)
+    {
+        $prepared = array();
+        $i = 0;
+        foreach ($results as $variant)
+        {
+            $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$cacheId.'&item[0][searchKey]='.$variant['flightKey'].'&pid='.Yii::app()->params['aviasales.partnerId'];
+            $url = Yii::app()->params['baseUrl'].'/buy?'.$query;
+            $prepared[$i] = array(
+                'price' => $variant['price'],
+                'currency' => 'rub',
+                'url' => $url,
+                'validatingCarrier' => $variant['valCompany'],
+                'segment' => array()
+            );
+            $j = 0;
+            foreach ($variant['flights'] as $flight)
+            {
+                $prepared[$i]['segment']['flight'.$j] = array();
+                foreach ($flight['flightParts'] as $flightPart)
+                {
+                    $departureCity = City::getCityByPk($flightPart['departureCityId']);
+                    $departureDate = strtotime($flightPart['datetimeBegin']);
+                    $arrivalCity = City::getCityByPk($flightPart['arrivalCityId']);
+                    $arrivalDate = strtotime($flightPart['datetimeEnd']);
+                    $prepared[$i]['segment']['flight'.$j] = array(
+                        'operatingCarrier' => $flightPart['transportAirline'],
+                        'number' => $flightPart['flightCode'],
+                        'departure' => $departureCity->code,
+                        'departureDate' => date('Y-m-d', $departureDate),
+                        'departureTime' => date('H:i', $departureDate),
+                        'arrival' => $arrivalCity->code,
+                        'arrivalDate' => date('Y-m-d', $arrivalDate),
+                        'arrivalTime' => date('H:i', $arrivalDate),
+                        'equipment' => $flightPart['aircraftCode'],
+                        'cabin' => $cabin
+                    );
+                    $j++;
+                }
+            }
+            $i++;
+        }
+        $xml = new ArrayToXml('variants');
+        $prepared = $xml->toXml($prepared);
+        $prepared = str_replace('flight0>', 'flight>', $prepared);
+        $prepared = str_replace('flight1>', 'flight>', $prepared);
+        return $prepared;
+    }
 }

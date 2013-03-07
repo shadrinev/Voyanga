@@ -109,9 +109,11 @@ class ToursAviaResultSet extends TourEntry
     return result
 
   doNewSearch: =>
+    window.VisualLoaderInstance.start(@api.loaderDescription)
     @api.search @panel.sp.url(), (data)=>
       @newResults data.flights.flightVoyages, data.searchParams
-
+      ko.processAllDeferredBindingUpdates()
+      window.VisualLoaderInstance.hide()
   # Overview VM
   overviewText: =>
     "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity
@@ -402,9 +404,13 @@ class ToursHotelsResultSet extends TourEntry
 
 
   doNewSearch: =>
+    window.VisualLoaderInstance.start(@api.loaderDescription)
     @api.search @panel.sp.url(), (data)=>
       data.searchParams.cacheId = data.cacheId
       @newResults data, data.searchParams
+      ko.processAllDeferredBindingUpdates()
+      window.VisualLoaderInstance.hide()
+
 
   # Overview VM
   overviewText: =>
@@ -1008,7 +1014,8 @@ class TourTripResultSet
       return resArr.join(':')
     @showTariffRules = =>
       aviaApi = new AviaAPI();
-      aviaApi.search('flight/search/tariffRules?flightIds='+@flightIdsString(),
+      window.VisualLoaderInstance.start  'Загружаем правила применения тарифов'
+      aviaApi.search 'flight/search/tariffRules?flightIds='+@flightIdsString(),
         (data)=>
           if(data)
             tariffs = []
@@ -1021,12 +1028,8 @@ class TourTripResultSet
                   tariff.codes.push code
                 tariffs.push tariff
             if tariffs
-              console.log(tariffs)
               gp = new GenericPopup('#tariff-rules',{'tariffs': tariffs})
-          #for()
-        , true,
-        'Загружаем правила применения тарифов'
-      )
+          window.VisualLoaderInstance.hide()
 
     @flightCounterWord = ko.computed =>
       if @flightCounter()==0

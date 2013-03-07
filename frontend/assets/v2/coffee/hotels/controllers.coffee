@@ -20,22 +20,23 @@ class HotelsController
     # update search params with values in route
 
     @searchParams.fromList(args)
-    @api.search(
-      @searchParams.url(),
-      (data)=>
-        try
-          stacked = @handleResults data
-        catch err
-          if err=='e404'
-            new ErrorPopup 'hotels404'
-            return
-          throw new Error("Unable to build HotelResultSet from search response")
+    window.VisualLoaderInstance.start(@api.loaderDescription)
 
-        @results stacked
-        @render 'results', {'results' : @results}
-      , true,
-      'Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд'
-    )
+    @api.search  @searchParams.url(), @handleSearch
+
+  handleSearch: (data)=>
+    try
+      stacked = @handleResults data
+    catch err
+      window.VisualLoaderInstance.hide()
+      if err=='e404'
+        new ErrorPopup 'hotels404'
+        return
+      throw new Error("Unable to build HotelResultSet from search response")
+
+    @results stacked
+    @render 'results', {'results' : @results}
+
 
   handleResults: (data) =>
     window.voyanga_debug "HOTELS: searchAction: handling results", data
@@ -52,15 +53,20 @@ class HotelsController
       resultDeferred.resolve(roomSet)
       return
 
+    window.VisualLoaderInstance.start("Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд")
+
     @api.search  @searchParams.url(), (data)=>
       try
         stacked = @handleResults(data)
       catch err
+        window.VisualLoaderInstance.hide()
         throw new Error("Unable to bould HotelResultSet from api response. Check ticket.")
       result = stacked.findAndSelect(roomSet)
       if result
+        window.VisualLoaderInstance.hide()
         resultDeferred.resolve(result)
       else
+        window.VisualLoaderInstance.hide()
         new ErrorPopup 'hotelsNoTicketOnValidation', false,  ->
         @results stacked
 
