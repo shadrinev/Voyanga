@@ -255,7 +255,7 @@ class SearchController extends ApiController
     private function getPartnerCacheId($flightSearchParams)
     {
         $partner = Partner::getCurrentPartner();
-        $cacheId = md5(md5(serialize($flightSearchParams)).microtime().rand(1000,9999).$partner->id);
+        $cacheId = 'Partner'.md5(md5(serialize($flightSearchParams)).$partner->id);
         return $cacheId;
     }
 
@@ -285,7 +285,7 @@ class SearchController extends ApiController
         {
             $results = $this->doFlightSearch($flightSearchParams);
             $prepared = $this->prepareForAviasales($results, $cabin, $cacheId);
-            Yii::app()->pCache->get($partnerCacheId, $prepared, appParams('flight_search_cache_time_parner'));
+            Yii::app()->pCache->set($partnerCacheId, $prepared, appParams('flight_search_cache_time_partner'));
         }
         $this->data = $prepared;
         $this->_sendResponse(true, 'application/xml');
