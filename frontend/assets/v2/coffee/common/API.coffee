@@ -34,7 +34,7 @@ class API
 
           #$('#loadWrapBg').hide()
           #loaderChange(false)
-      error: (jqXHR, rest...)->
+      error: (jqXHR, rest...)=>
         if showLoad
           @loader.hide()
           #$('#loadWrapBg').hide()
