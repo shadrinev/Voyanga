@@ -324,8 +324,10 @@ class SearchController extends ApiController
                     $departureDate = strtotime($flightPart['datetimeBegin']);
                     $arrivalCity = City::getCityByPk($flightPart['arrivalCityId']);
                     $arrivalDate = strtotime($flightPart['datetimeEnd']);
+                    $marketingCarrier = $flightPart['markAirline'];
+                    $transportAirline = $flightPart['transportAirline'];
                     $prepared[$i]['segment'.$u]['flight'.$j] = array(
-                        'operatingCarrier' => $flightPart['transportAirline'],
+                        'operatingCarrier' => $transportAirline,
                         'number' => $flightPart['flightCode'],
                         'departure' => $departureCity->code,
                         'departureDate' => date('Y-m-d', $departureDate),
@@ -336,6 +338,10 @@ class SearchController extends ApiController
                         'equipment' => $flightPart['aircraftCode'],
                         'cabin' => $cabin
                     );
+                    if ($marketingCarrier != $transportAirline)
+                    {
+                        $prepared[$i]['segment'.$u]['flight'.$j]['marketingCarrier'] = $marketingCarrier;
+                    }
                     $j++;
                 }
             }
