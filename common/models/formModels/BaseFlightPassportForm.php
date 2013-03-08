@@ -156,6 +156,8 @@ class BaseFlightPassportForm extends BasePassportForm
     {
         $oldValue = $this->seriesNumber;
         $newValue = preg_replace('/[^А-Яа-яёЁA-Za-z0-9]/', '', $oldValue);
+        $newValue = str_replace('n', '', $newValue);
+        $newValue = str_replace('N', '', $newValue);
         $this->seriesNumber = $newValue;
     }
 }
