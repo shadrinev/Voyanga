@@ -12,7 +12,7 @@ if (YII_DEBUG)
 }
 else
 {
-    error_reporting(0);
+    error_reporting(E_ALL & ~E_NOTICE);
     ini_set('display_errors', false);
 }
 
