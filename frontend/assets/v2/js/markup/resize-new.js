@@ -549,7 +549,7 @@ function ResizeCenterBlock() {
 		var_leftBlock.find('.left-content').css('margin-left', paddingLeftLogo+'px');
 		var_telefonBlock.css('left', paddingLeftTel+'px');
 
-        if (var_leftBlockIsset && var_mainBlockIsset ) {
+        if (var_leftBlockIsset && var_mainBlockIsset && ! var_filterBlockIsset ) {
             var minWid = 820;
         }
         else {
