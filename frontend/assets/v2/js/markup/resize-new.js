@@ -1755,7 +1755,7 @@ function ifIpadLoad() {
             else { return }
         }
 
-        $('.loadWrapBg').css('position','fixed');
+        $('.loadWrapBg').css('position','absolute');
     }
 }
 
