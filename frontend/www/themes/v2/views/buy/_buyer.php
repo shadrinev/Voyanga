@@ -14,7 +14,7 @@
             <tbody>
             <tr>
                 <td class="tdEmail">
-                    <?php echo CHtml::activeEmailField($model, "contactEmail", array('id' => 'contactEmail')); ?>
+                    <?php echo CHtml::activeEmailField($model, "contactEmail", array('id' => 'contactEmail', 'placeholder' => 'example@mail.ru')); ?>
                 </td>
                 <td class="tdTelefon">
                     <div class="divInputTelefon <?php if ($hide) echo "inactive" ?>">
