@@ -1578,6 +1578,7 @@
     top: 7px;
     left: -9px;
     font-weight: bold;
+    z-index: 10;
 }
 .prices-of-3days .two-way {
 	position: relative;
@@ -1589,6 +1590,7 @@
     top: 7px;
     left: -9px;
     font-weight: bold;
+    z-index: 10;
 }
 .cena {
 	margin-top: 15px;
