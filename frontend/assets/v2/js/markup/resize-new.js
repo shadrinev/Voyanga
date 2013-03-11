@@ -1754,6 +1754,8 @@ function ifIpadLoad() {
             }
             else { return }
         }
+
+        $('.loadWrapBg').css('position','fixed');
     }
 }
 
