@@ -19,7 +19,9 @@ ko.bindingHandlers.checkbox =
     htm += '</div>';
     htm += '</label>';
     new_el = $(htm)
-    new_el.click ->
+    new_el.click (e)->
+      if ($(e.target).is('a'))
+        return
       el = $(@)
       if el.find('.ui-control').hasClass('on') != true
         checkVoybox(el)
@@ -36,6 +38,7 @@ ko.bindingHandlers.checkbox =
 
     el.after(new_el)
     el.hide()
+
 
 
   update: (element, valueAccessor) ->

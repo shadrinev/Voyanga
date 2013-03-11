@@ -24,7 +24,10 @@ ko.bindingHandlers.checkbox = {
     htm += '</div>';
     htm += '</label>';
     new_el = $(htm);
-    new_el.click(function() {
+    new_el.click(function(e) {
+      if ($(e.target).is('a')) {
+        return;
+      }
       el = $(this);
       if (el.find('.ui-control').hasClass('on') !== true) {
         checkVoybox(el);
