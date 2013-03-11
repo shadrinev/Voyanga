@@ -17,6 +17,9 @@ class SearchController extends Controller
             'keyField' => 'primaryKey',
             'pagination' => array(
                 'pageSize' => self::PAGE_SIZE
+            ),
+            'sort' => array(
+                'defaultOrder' => '_id.year desc, _id.month desc, _id.day desc'
             )
         ));
         $this->render('flight', array('dataProvider'=>$dataProvider));
