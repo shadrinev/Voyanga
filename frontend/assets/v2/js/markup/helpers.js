@@ -159,13 +159,13 @@ function onFocusInput() {
     $('.male input').each(function(index) {
         if ($('.male').eq(index).find('input').attr('checked') == 'checked') {
             $('.male').eq(index).find('input').closest('label').addClass('active');
-            $('.male').eq(index).find('input').attr('checked','checked');
+            //$('.male').eq(index).find('input').attr('checked','checked');
         }
     });
     $('.female input').each(function(index) {
         if ($('.female').eq(index).find('input').attr('checked') == 'checked') {
             $('.female').eq(index).find('input').closest('label').addClass('active');
-            $('.female').eq(index).find('input').attr('checked','checked');
+            //$('.female').eq(index).find('input').attr('checked','checked');
         }
     });
     $('.male input').focusin(function(e) {
@@ -180,7 +180,7 @@ function onFocusInput() {
         $(this).parent().removeClass('active');
         $(this).parent().next().removeClass('active');
         $(this).parent().addClass('active');
-        $(this).attr('checked','checked');
+        //$(this).attr('checked','checked');
         if ($(this).attr('ckecked') == 'checked') {
 
         }
@@ -239,7 +239,7 @@ function onFocusInput() {
         else if (e.which == 32) {
             var _this = $(e.target);
             $(_this).parent().addClass('active');
-            (_this).attr('checked','checked');
+            //(_this).attr('checked','checked');
         }
     });
 }
