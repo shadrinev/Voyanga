@@ -144,6 +144,7 @@
 
 		enableKillerFn: function () {
 			var me = this;
+            me.select(me.selectedIndex);
 			$(document).bind('click', me.killerFn);
 		},
 
@@ -424,7 +425,6 @@
 			} else if (offsetTop > lowerBound) {
 				this.container.scrollTop(offsetTop - this.options.maxHeight + 25);
 			}
-			this.el.val(this.data[i].name);
 		},
 
 		onSelect: function (i) {
