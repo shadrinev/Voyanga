@@ -550,7 +550,7 @@ function ResizeCenterBlock() {
 		var_telefonBlock.css('left', paddingLeftTel+'px');
 
         if (var_leftBlockIsset && var_mainBlockIsset ) {
-            var minWid = 840;
+            var minWid = 820;
         }
         else {
             var minWid = 690;
