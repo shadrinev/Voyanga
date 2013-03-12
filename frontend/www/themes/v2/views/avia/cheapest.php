@@ -28,7 +28,7 @@
           <div class="to" data-bind='text:roundTrip?"Туда":"Вылет"'>Туда</div>
         <ul class="schedule-of-prices" data-bind="foreach: $data">
           <li data-bind="css: {active: isActive}, click: $parent.select">
-            <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+40) + 'px'}, text: columnValue(), visible: !nodata">-100</div>
+            <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+40) + 'px'}, text: Utils.formatPrice(columnValue()), visible: !nodata">-100</div>
             <div class="chart" data-bind="style: {backgroundPosition: background(), height: $parent.graphHeight() + 'px'}" ></div>
 	    <div class="price question" data-bind="visible:nodata" style="bottom: 30px">?</div>
             <div class="date" data-bind="text: date">16</div>
@@ -43,7 +43,7 @@
         <ul class="schedule-of-prices" data-bind="foreach: active">
           <li data-bind="css: {active: isActive}, click: $parent.select">
 <!-- columnValue() -->
-            <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+40) + 'px'}, text: columnValue(), visible: !nodata">-100</div>
+            <div class="price" data-bind="style: {bottom: ($parent.graphHeight()-scaledHeight()+40) + 'px'}, text: Utils.formatPrice(columnValue()), visible: !nodata">-100</div>
             <div class="chart" data-bind="style: {backgroundPosition: background(), height: $parent.graphHeight() + 'px'}" ></div>
 	    <div class="price question" data-bind="visible:nodata" style="bottom: 30px">?</div>
             <div class="date" data-bind="text: date">16</div>
@@ -58,7 +58,7 @@
         <div class="txt" data-bind="visible: !showControls()">Данные получены на основании поисковых запросов и могут отличаться от актуальных значений</div>
         <div class="txtCena" data-bind="visible: showControls()">
 	  <div class="leftFloat" data-bind="visible: showPrice()">
-	    Итого <span class="price" data-bind="text: priceDisplay()">4150</span> <span class="rur">o</span>
+	    Итого <span class="price" data-bind="text: Utils.formatPrice(priceDisplay())">4150</span> <span class="rur">o</span>
 	  </div>
 	  <div class="rightFloat">
 	    <a class="btnLook" href="#" data-bind="click: search">Посмотреть</a>
@@ -222,7 +222,7 @@
         <a href="#" class="pressButton" data-bind="click: $parent.select, css:{selected:$parent.selected_key()==data.key}">
           <span class="l"></span>
           <span class="text" data-bind="text: $parent.tours?($parent.selected_key()==data.key?'Выбран':'Выбрать'):'Купить'"></span>
-          <span class="price" data-bind="text: data.price"></span>
+          <span class="price" data-bind="text: Utils.formatPrice(data.price)"></span>
           <span class="rur">o</span>
         </a>
       </div>

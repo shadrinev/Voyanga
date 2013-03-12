@@ -60,7 +60,7 @@
         <div class="tdPrice">
             <div class="statusOrder">
                 <span class="price">
-                    <span data-bind="text:$data[0].price">12 500</span> руб. за
+                    <span data-bind="text: Utils.formatPrice($data[0].price)">12 500</span> руб. за
                     <span data-bind="text: $data[0].totalPeopleGen">2 человека</span>
                 </span>
                 <div class="status wait">

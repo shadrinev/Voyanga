@@ -62,7 +62,7 @@
       <div class="floatRight" data-bind="visible: !overviewMode">
 	<span style="color:#2e333b;" class="f14 bold" data-bind="text: parent.tours?(isActive()?'Выбран':'Выбрать'):'Оформить'">Оформить</span>
 	<a class="btn-order leftColumn" href="#" data-bind="click: parent.select,visible: !isActive()">
-	  <span class="cost" data-bind="text: price">63 502</span> <span class="rur f26">o</span>
+	  <span class="cost" data-bind="text: Utils.formatPrice(price)">63 502</span> <span class="rur f26">o</span>
         <span class="l"></span>
 	</a>
       </div>

@@ -190,7 +190,7 @@
         <span class="txtBuy" data-bind="text: $parent.tours?($parent.selected_key()==key?'Выбран':'Выбрать'):'Купить'"></span>
         <a href="#" class="pressButton" data-bind="click:$parent.select, css:{selected:$parent.selected_key()==key}">
             <span class="l"></span>
-            <span class="price" data-bind="text: price">3 250</span>
+            <span class="price" data-bind="text: Utils.formatPrice(price)">3 250</span>
             <span class="rur">o</span>
         </a>
     </div>
