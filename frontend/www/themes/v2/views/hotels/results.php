@@ -178,7 +178,7 @@
                     </td>
                     <td class="td-cost">
                         <div class="how-cost">
-                            <span class="cost" data-bind="text: pricePerNight">14 200</span><span class="rur f21">o</span> / ночь<br>
+                            <span class="cost" data-bind="text: Utils.formatPrice(pricePerNight)">14 200</span><span class="rur f21">o</span> / ночь<br>
                             <span class="offer tooltip" data-bind="visible: specialOffer(),attr: {rel: specialOffer()}">Спецпредложение<br></span>
                             <span class="grey em" data-bind="visible: rooms.length == 2">За оба номера</span>
                         </div>

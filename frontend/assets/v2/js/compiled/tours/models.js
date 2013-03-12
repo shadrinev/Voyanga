@@ -50,15 +50,15 @@ TourEntry = (function() {
     if (this.selection() === null) {
       return "Не выбрано";
     }
-    return this.price() + '<span class="rur">o</span>';
+    return Utils.formatPrice(this.price()) + '<span class="rur">o</span>';
   };
 
   TourEntry.prototype.minPriceHtml = function() {
-    return this.minPrice() + '<span class="rur">o</span>';
+    return Utils.formatPrice(this.minPrice()) + '<span class="rur">o</span>';
   };
 
   TourEntry.prototype.maxPriceHtml = function() {
-    return this.maxPrice() + '<span class="rur">o</span>';
+    return Utils.formatPrice(this.maxPrice()) + '<span class="rur">o</span>';
   };
 
   TourEntry.prototype.savings = function() {

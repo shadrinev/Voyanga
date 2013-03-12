@@ -122,7 +122,7 @@ $theme = Yii::app()->theme->baseUrl;
                 <img src="<?php echo $images . '/images/shadow-hotel.png' ?>" width="100%" height="31">
             </div>
             <div class="costItAll" data-bind="visible: someSegmentsSelected">
-                Итого <span class="allCost"><span data-bind="text: price()-savings()">86 250</span> <span
+                Итого <span class="allCost"><span data-bind="text: Utils.formatPrice(price()-savings())">86 250</span> <span
                 class="rur">o</span></span>
                 <a href="#" class="btn-order btnGoBuy" data-bind="click:buy">Перейти к оплате<span class="l"></span></a>
             </div>
@@ -336,7 +336,7 @@ $theme = Yii::app()->theme->baseUrl;
             <div class="buy-ticket">
                 <div class="text">
                     <!-- FIXME -->
-                    <span class="txtBuy" data-bind="text: price"></span> <span class="rur">o</span>
+                    <span class="txtBuy" data-bind="text: Utils.formatPrice(price)"></span> <span class="rur">o</span>
                 </div>
                 <a class="details" data-bind="click: showDetailsOverview" href="#">Подробнее о перелете</a>
             </div>
