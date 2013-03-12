@@ -193,6 +193,10 @@ function onFocusInput() {
         }
         $(this).parent().parent().next().find('input.dd').focus();
     });
+    $('.female input').click(function() {
+        $(this).parent().next().find('input').removeAttr('checked');
+        $(this).attr('checked','checked');
+    });
     $('.female input').focusin(function() {
         $(this).parent().addClass('focus');
         $(this).removeAttr('checked');
@@ -213,6 +217,10 @@ function onFocusInput() {
 
         }
         $(this).parent().parent().next().find('input.dd').focus();
+    });
+    $('.female input').click(function() {
+        $(this).parent().prev().find('input').removeAttr('checked');
+        $(this).attr('checked','checked');
     });
     $(window).unbind('keydown');
     $(window).bind('keydown', function(e) {
@@ -246,6 +254,7 @@ function onFocusInput() {
             $(_this).attr('checked','checked');
         }
     });
+
 }
 $(window).load(onFocusInput);
 function showUserMenu() {
