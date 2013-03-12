@@ -159,8 +159,8 @@ function onFocusInput() {
     $('#passport_form').find('input[id!="contactPhone"]').bind('click', function() {
         $(this).select();
     });
-    var ua = navigator.userAgent;
-    if (ua.search(/Opera/) > 0) {
+
+    if ($.browser.opera) {
         alert('HI OPERA!');
         $('.male').click(function() {
             $(this).find('input').attr('checked');
