@@ -156,16 +156,20 @@ $(window).load(telefonLoad);
 
 
 function onFocusInput() {
+    $('#passport_form').find('input[id!="contactPhone"]').bind('click', function() {
+        $(this).select();
+    });
+
     $('.male input').each(function(index) {
         if ($('.male').eq(index).find('input').attr('checked') == 'checked') {
             $('.male').eq(index).find('input').closest('label').addClass('active');
-            //$('.male').eq(index).find('input').attr('checked','checked');
+            $('.male').eq(index).find('input').attr('checked','checked');
         }
     });
     $('.female input').each(function(index) {
         if ($('.female').eq(index).find('input').attr('checked') == 'checked') {
             $('.female').eq(index).find('input').closest('label').addClass('active');
-            //$('.female').eq(index).find('input').attr('checked','checked');
+            $('.female').eq(index).find('input').attr('checked','checked');
         }
     });
     $('.male input').focusin(function(e) {
@@ -180,7 +184,7 @@ function onFocusInput() {
         $(this).parent().removeClass('active');
         $(this).parent().next().removeClass('active');
         $(this).parent().addClass('active');
-        //$(this).attr('checked','checked');
+        $(this).attr('checked','checked');
         if ($(this).attr('ckecked') == 'checked') {
 
         }
@@ -188,6 +192,10 @@ function onFocusInput() {
 
         }
         $(this).parent().parent().next().find('input.dd').focus();
+    });
+    $('.female input').click(function() {
+        $(this).parent().next().find('input').removeAttr('checked');
+        $(this).attr('checked','checked');
     });
     $('.female input').focusin(function() {
         $(this).parent().addClass('focus');
@@ -209,6 +217,10 @@ function onFocusInput() {
 
         }
         $(this).parent().parent().next().find('input.dd').focus();
+    });
+    $('.female input').click(function() {
+        $(this).parent().prev().find('input').removeAttr('checked');
+        $(this).attr('checked','checked');
     });
     $(window).unbind('keydown');
     $(window).bind('keydown', function(e) {
@@ -239,9 +251,10 @@ function onFocusInput() {
         else if (e.which == 32) {
             var _this = $(e.target);
             $(_this).parent().addClass('active');
-            //(_this).attr('checked','checked');
+            $(_this).attr('checked','checked');
         }
     });
+
 }
 $(window).load(onFocusInput);
 function showUserMenu() {
