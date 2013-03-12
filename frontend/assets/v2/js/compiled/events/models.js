@@ -413,7 +413,7 @@ EventTourResultSet = (function() {
           _this.roundTrip = item.flights.length === 2;
           aviaResult = new AviaResult(item, _this);
           aviaResult.sort();
-          aviaResult.priceHtml = ko.observable(aviaResult.price + '<span class="rur">o</span>');
+          aviaResult.priceHtml = ko.observable(Utils.formatPrice(aviaResult.price) + '<span class="rur">o</span>');
           aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity());
           aviaResult.overviewTemplate = 'tours-event-avia-ticket';
           aviaResult.dateClass = ko.observable(_this.roundTrip ? 'blue-two' : 'blue-one');
@@ -429,7 +429,7 @@ EventTourResultSet = (function() {
           _this.hasHotel = true;
           _this.hotelCounter(_this.hotelCounter() + 1);
           _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
-          _this.lastHotel.priceHtml = ko.observable(_this.lastHotel.roomSets()[0].price + '<span class="rur">o</span>');
+          _this.lastHotel.priceHtml = ko.observable(Utils.formatPrice(_this.lastHotel.roomSets()[0].price) + '<span class="rur">o</span>');
           _this.lastHotel.dateClass = ko.observable('orange-two');
           _this.lastHotel.overviewTemplate = 'tours-event-hotels-ticket';
           _this.lastHotel.isAvia = ko.observable(item.isFlight);
