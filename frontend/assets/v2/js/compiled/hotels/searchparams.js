@@ -69,31 +69,29 @@ SpRoom = (function() {
   }
 
   SpRoom.prototype.fromList = function(item) {
-    var i, parts, _i, _ref;
-    console.log('SpRoom FromList', item);
+    var i, parts, _i, _ref, _results;
     parts = item.split(':');
-    console.log('parts:', parts);
     this.adults(parts[0]);
     this.children(parts[1]);
     this.infants(parts[2]);
     if (this.children() > 0) {
+      _results = [];
       for (i = _i = 0, _ref = this.children() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-        this.ages.push({
+        _results.push(this.ages.push({
           age: ko.observable(parts[3 + i]).extend({
             integerOnly: {
               min: 0,
               max: 12
             }
           })
-        });
+        }));
       }
+      return _results;
     }
-    return console.log('ages:', this.ages());
   };
 
   SpRoom.prototype.fromObject = function(item) {
     var i, _i, _ref, _results;
-    console.log('search params FromObject', item);
     this.adults(item.adt);
     this.children(item.chd);
     this.infants(item.cots);
@@ -127,7 +125,6 @@ SpRoom = (function() {
   SpRoom.prototype.getUrl = function(i) {
     var ageObj, agesText, agesTextVals, j, _i, _len, _ref;
     agesText = '';
-    console.log('age p', this.ages(), this);
     agesTextVals = [];
     j = 0;
     _ref = this.ages();

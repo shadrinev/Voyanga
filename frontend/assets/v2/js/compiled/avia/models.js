@@ -882,6 +882,7 @@ AviaResultSet = (function() {
       result.type = 'avia';
       result.searchId = selection.cacheId;
       result.searchKey = selection.flightKey();
+      _gaq.push(['_trackEvent', 'Avia_press_button_buy', this.rawSP.GAKey(), this.rawSP.GAData(), selection.airline, true]);
       return Utils.toBuySubmit([result]);
     });
     return this.checkTicket(selection, ticketValidCheck);

@@ -150,9 +150,6 @@ VisualLoader = (function() {
       return $('#loadWrapBg').find('#loadContentWin .text').html(newVal);
     });
     this.timeFromStart = 0;
-    this.percents.subscribe(function(newVal) {
-      return console.log('loder changed... NOW: ' + newVal + '% time from start: ' + _this.timeFromStart + 'sec');
-    });
   }
 
   VisualLoader.prototype.show = function() {
@@ -189,7 +186,6 @@ VisualLoader = (function() {
 
   VisualLoader.prototype.tooltipStep = function() {
     var count, randInd, randVal;
-    console.log('RUN TOOLTIP', $('#loadWrapBg').find('.tips .text').length);
     count = this.tooltips.length;
     randVal = Math.ceil(Math.random() * count);
     randInd = randVal % count;
@@ -197,9 +193,7 @@ VisualLoader = (function() {
       randInd = (randVal + 1) % count;
     }
     this.tooltipInd = randInd;
-    console.log('RUN TOOLTIP HTML:', $('#loadWrapBg').find('.tips .text').html());
-    $('#loadWrapBg').find('.tips .text').html(this.tooltips[this.tooltipInd]);
-    return console.log('RUN TOOLTIP HTML2:', $('#loadWrapBg').find('.tips .text').html());
+    return $('#loadWrapBg').find('.tips .text').html(this.tooltips[this.tooltipInd]);
   };
 
   VisualLoader.prototype.renew = function(percent) {
@@ -222,7 +216,6 @@ VisualLoader = (function() {
         rtime = Math.ceil(rand * (this.separatedTime / 3));
         newPerc = Math.ceil(Math.random() * 2);
       }
-      console.log('time: ' + rtime + 'sec');
       this.timeFromStart += rtime;
       return this.timeoutHandler = window.setTimeout(function() {
         if ((percent + newPerc) > 100) {

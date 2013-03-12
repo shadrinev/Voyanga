@@ -624,6 +624,8 @@ class AviaResultSet
       result.searchId = selection.cacheId
       # FIXME FIXME FXIME
       result.searchKey = selection.flightKey()
+      _gaq.push(['_trackEvent', 'Avia_press_button_buy', @rawSP.GAKey(),  @rawSP.GAData(), selection.airline, true])
+
       Utils.toBuySubmit [result]
       
     @checkTicket selection, ticketValidCheck
