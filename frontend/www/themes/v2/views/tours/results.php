@@ -59,7 +59,7 @@
       <table class="finish-result voyasha"  data-bind="foreach: voyashki">
         <tr data-bind="click:choose">
           <td class="txt" data-bind="text: title">Самый дешевый:</td>
-          <td class="price"><div><span data-bind="text: Utils.formatPrice(price)">30 300</span> <span class="rur">o</span></div></td>
+          <td class="price"><div><span data-bind="text: Utils.formatPrice(price())">30 300</span> <span class="rur">o</span></div></td>
         </tr>
       </table>
     </div>
