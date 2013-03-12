@@ -74,12 +74,21 @@ class PdfGenerator extends CApplicationComponent
         $flightPassports = FlightBookingPassport::model()->findAllByAttributes(array('flightBookingId'=>$item->flightBookerId));
         if ($flightBooker)
         {
+            $serviceIsEconom = true;
+            $searchParams = $flightBooker->searchParams;
+            if($searchParams){
+                $searchParams = unserialize($searchParams);
+                if($searchParams->flight_class != "E"){
+                    $serviceIsEconom = false;
+                }
+            }
             if(!$this->orderBookingId){
                 $this->orderBookingId = $flightBooker->orderBookingId;
                 $this->orderBooking = OrderBooking::model()->findByPk($this->orderBookingId);
             }
             $pdfFileName = $this->controller->renderPdf('ticketAvia', array(
                 'type'=>'avia',
+                'isEconom'=>$serviceIsEconom,
                 'ticket'=>$flightBooker->flightVoyage,
                 'bookingId'=>$this->orderBooking->readableId,
                 'pnr'=>$flightBooker->pnr,

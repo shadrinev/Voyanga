@@ -48,7 +48,7 @@ class Airport extends CActiveRecord
             else
             {
                 Yii::log('Unknown airport ' . $code . ' ', CLogger::LEVEL_INFO, 'application.db.missing.airports');
-                throw new CException(Yii::t('application', 'City with code {code} not found', array(
+                throw new CException(Yii::t('application', 'Airport with code {code} not found', array(
                     '{code}' => $code
                 )));
             }
@@ -73,7 +73,7 @@ class Airport extends CActiveRecord
             }
             else
             {
-                throw new CException(Yii::t('application', 'City with id {id} not found', array(
+                throw new CException(Yii::t('application', 'Airport with id {id} not found', array(
                     '{id}' => $id
                 )));
             }

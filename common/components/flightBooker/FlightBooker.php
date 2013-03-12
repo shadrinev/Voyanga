@@ -101,7 +101,7 @@ class FlightBooker extends SWLogActiveRecord
             array('timeout, flightVoyageInfo, updated, timestamp', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, status, pnr, timeout, flightVoyageInfo, updated, flightVoyageId, orderBookingId, nemoBookId, timestamp, price', 'safe', 'on'=>'search'),
+            array('id, status, pnr, timeout, flightVoyageInfo, updated, flightVoyageId, orderBookingId, nemoBookId, timestamp, price, searchParams', 'safe', 'on'=>'search'),
         );
     }
 
