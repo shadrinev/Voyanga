@@ -16,7 +16,7 @@
 <h1>В выбранные даты, к сожалению, перелета не найдено!</h1>
 </script>
 <script type="text/html" id="avia-results-inner">
-  <h1 data-bind="visible: tours"><div class="hideTitle">Выберите авиабилет</div>
+  <h1 data-bind="visible: tours"><div class="hideTitle" style="display:none;">Выберите авиабилет</div>
     <span data-bind="text: departureCity">Санкт-Петербург</span> → <span data-bind="text: arrivalCity">Амстердам</span>, <div class="inlineBlock"><span data-bind="text: dateHeadingText">19 мая</span></div></h1>
   
   <div class="recomended-content" data-bind="template: {name: recommendTemplate, data: $data}">

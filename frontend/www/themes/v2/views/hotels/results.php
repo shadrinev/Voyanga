@@ -25,7 +25,7 @@
 </script>
 <script type="text-html" id="hotels-results-inner">
 <!-- ko template:{data: $data,afterRender: afterRender} -->
-    <h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city.casePre">Амстердам</span><div class="hideTitle">, <span data-bind="text: getDateInterval()">19-26 мая</span></div></h1>
+    <h1  data-bind="visible: true">Выберите отель в <span data-bind="text: city.casePre">Амстердам</span><div class="hideTitle"  style="display:none;">, <span data-bind="text: getDateInterval()">19-26 мая</span></div></h1>
     <div class="ticket-content hotels">
         <h2>Найдено отелей: <span data-bind="text: numResults">##</span>
             <ul class="tmblr">
