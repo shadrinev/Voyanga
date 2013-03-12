@@ -174,7 +174,13 @@ function onFocusInput() {
     });
     $('.male input').focusin(function(e) {
         $(this).parent().addClass('focus');
-        $(this).removeAttr('checked');
+        var ua = navigator.userAgent;
+        if (ua.search(/Opera/) > 0) {
+            return true;
+        }
+        else {
+            $(this).removeAttr('checked');
+        }
     });
     $('.male input').blur(function () {
         $(this).parent().removeClass('focus');
@@ -196,7 +202,13 @@ function onFocusInput() {
 
     $('.female input').focusin(function() {
         $(this).parent().addClass('focus');
-        $(this).removeAttr('checked');
+        var ua = navigator.userAgent;
+        if (ua.search(/Opera/) > 0) {
+            return true;
+        }
+        else {
+            $(this).removeAttr('checked');
+        }
     });
     $('.female input').blur(function () {
         $(this).parent().removeClass('focus');
