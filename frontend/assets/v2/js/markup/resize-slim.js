@@ -1,6 +1,7 @@
 function resizePanel(arg) {
-
+        console.log('PANEL GO GO!!!');
         $('.panelTable').each(function(index){
+            console.log('PANEL GO GO GO!!! ');
             var _panelTable = $(this);
             var _classThis;
             var _midWidth = 1130;
