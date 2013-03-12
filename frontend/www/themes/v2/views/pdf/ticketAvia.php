@@ -170,7 +170,7 @@
                     <td class="tdInfo">
                         Билет <?php echo ($ticket->refundable ? "возвратный" : "невозвратный");?>.<br>
                         <br>
-                        <?php echo $ticket->valAirline->economDescription;?><br>
+                        <?php echo $isEconom ? $ticket->valAirline->economDescription : $ticket->valAirline->businessDescription;?><br>
                         <br>
                         Время отправления и прибытия местное.
                     </td>

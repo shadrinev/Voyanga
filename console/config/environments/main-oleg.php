@@ -26,5 +26,6 @@ return array(
 			),
 		),
 	),
+    'themePath'=>'/srv/www/oleg.voyanga/public_html/frontend/www/themes/',
 
 );

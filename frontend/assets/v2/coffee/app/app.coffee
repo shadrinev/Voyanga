@@ -8,6 +8,8 @@ class Application extends Backbone.Router
       if rest.length == 3 and rest[2] == 0
         # most likely extension or inline script(?) error
         return
+      if rest[0].indexOf('VK') > 0
+        return
       new ErrorPopup('e500')
       return _oldOnerrorHandler.apply(this, rest)  if _oldOnerrorHandler
 

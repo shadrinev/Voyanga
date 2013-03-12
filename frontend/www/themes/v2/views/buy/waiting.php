@@ -94,7 +94,7 @@ Yii::app()->clientScript->registerCssFile('/themes/v2/css/style.css');
   _gaq.push(['_addTrans',
     '<?= $order->getOrderBooking()->id ?>',           // order ID - required
     'Voyanga.com',  // affiliation or store name
-    '<?= $order->getOrderBooking()->fullPrice ?>',          // total - required
+    '<?= $order->getOrderBooking()->fullPrice ?>'          // total - required
   ]);
 
    // add item might be called for every item in the shopping cart
