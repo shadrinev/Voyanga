@@ -159,6 +159,10 @@ function onFocusInput() {
     $('#passport_form').find('input[id!="contactPhone"]').bind('click', function() {
         $(this).select();
     });
+    var ua = navigator.userAgent;
+    if (ua.search(/Opera/) > 0) {
+        alert('HI OPERA!');
+    }
 
     $('.male input').each(function(index) {
         if ($('.male').eq(index).find('input').attr('checked') == 'checked') {
@@ -174,13 +178,7 @@ function onFocusInput() {
     });
     $('.male input').focusin(function(e) {
         $(this).parent().addClass('focus');
-        var ua = navigator.userAgent;
-        if (ua.search(/Opera/) > 0) {
-            return true;
-        }
-        else {
-            $(this).removeAttr('checked');
-        }
+        $(this).removeAttr('checked');
     });
     $('.male input').blur(function () {
         $(this).parent().removeClass('focus');
@@ -202,13 +200,8 @@ function onFocusInput() {
 
     $('.female input').focusin(function() {
         $(this).parent().addClass('focus');
-        var ua = navigator.userAgent;
-        if (ua.search(/Opera/) > 0) {
-            return true;
-        }
-        else {
-            $(this).removeAttr('checked');
-        }
+        $(this).removeAttr('checked');
+
     });
     $('.female input').blur(function () {
         $(this).parent().removeClass('focus');
