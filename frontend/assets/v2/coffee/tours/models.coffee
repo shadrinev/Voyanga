@@ -20,14 +20,14 @@ class TourEntry
       return "Нет результатов"
     if @selection() == null
       return "Не выбрано"
-    return @price() + '<span class="rur">o</span>'
+    return Utils.formatPrice(@price()) + '<span class="rur">o</span>'
 
 
   minPriceHtml: =>
-    @minPrice() + '<span class="rur">o</span>'
+    Utils.formatPrice(@minPrice()) + '<span class="rur">o</span>'
 
   maxPriceHtml: =>
-    @maxPrice() + '<span class="rur">o</span>'
+    Utils.formatPrice(@maxPrice()) + '<span class="rur">o</span>'
 
   savings: =>
     if @selection() == null
