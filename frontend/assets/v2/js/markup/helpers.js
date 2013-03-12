@@ -156,6 +156,10 @@ $(window).load(telefonLoad);
 
 
 function onFocusInput() {
+    $('#passport_form').find('input[id!="contactPhone"]').bind('click', function() {
+        $(this).select();
+    });
+
     $('.male input').each(function(index) {
         if ($('.male').eq(index).find('input').attr('checked') == 'checked') {
             $('.male').eq(index).find('input').closest('label').addClass('active');
