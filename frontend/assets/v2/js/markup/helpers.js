@@ -160,15 +160,15 @@ function onFocusInput() {
         $(this).select();
     });
 
-    if ($.browser.opera) {
-        alert('HI OPERA!');
-        $('.male').click(function() {
-            $(this).find('input').attr('checked');
-        });
-        $('.female').click(function() {
-            $(this).find('input').attr('checked');
-        });
-    }
+//    if ($.browser.opera) {
+//        //alert('HI OPERA!');
+//        $('.male').click(function() {
+//            $(this).find('input').attr('checked');
+//        });
+//        $('.female').click(function() {
+//            $(this).find('input').attr('checked');
+//        });
+//    }
 
     $('.male input').each(function(index) {
         if ($('.male').eq(index).find('input').attr('checked') == 'checked') {
@@ -184,7 +184,7 @@ function onFocusInput() {
     });
     $('.male input').focusin(function(e) {
         $(this).parent().addClass('focus');
-        $(this).removeAttr('checked');
+        //$(this).removeAttr('checked');
     });
     $('.male input').blur(function () {
         $(this).parent().removeClass('focus');
@@ -206,7 +206,7 @@ function onFocusInput() {
 
     $('.female input').focusin(function() {
         $(this).parent().addClass('focus');
-        $(this).removeAttr('checked');
+        //$(this).removeAttr('checked');
 
     });
     $('.female input').blur(function () {
