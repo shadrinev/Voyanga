@@ -51,6 +51,9 @@ Application = (function(_super) {
       if (rest.length === 3 && rest[2] === 0) {
         return;
       }
+      if (rest[0].indexOf('VK') > 0) {
+        return;
+      }
       new ErrorPopup('e500');
       if (_oldOnerrorHandler) {
         return _oldOnerrorHandler.apply(_this, rest);
