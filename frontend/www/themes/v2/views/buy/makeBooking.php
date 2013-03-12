@@ -79,7 +79,7 @@
         </div>
         <div class="pressButton inactive" id='submit-passport'>
             <span>Перейти к оплате</span>&nbsp;&nbsp;
-            <span class="price"data-bind="text: itemsToBuy.totalCost">33 770</span>
+            <span class="price"data-bind="text: Utils.formatPrice(itemsToBuy.totalCost)">33 770</span>
             <span class="rur">o</span>
             <span class="l"></span>
         </div>
@@ -123,7 +123,7 @@
                             </thead>
                             <tbody data-bind="foreach:transactions">
                                 <tr>
-                                    <td class="price"><div><span data-bind="text: price">5 500</span> <span class="rur">o</span></div></td>
+                                    <td class="price"><div><span data-bind="text: Utils.formatPrice(price)">5 500</span> <span class="rur">o</span></div></td>
                                     <td class="text" data-bind="text: title">тариф и таксы</td>
                                 </tr>
                             </tbody>

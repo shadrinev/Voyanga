@@ -30,10 +30,10 @@
         <div class="statusOrder">
                 <span class="price">
                     <!-- ko if: $parent.tour -->
-                        <span data-bind="text: roomSets()[0].discountPrice">12 500</span> руб. за
+                        <span data-bind="text: Utils.formatPrice(roomSets()[0].discountPrice)">12 500</span> руб. за
                     <!-- /ko -->
                     <!-- ko ifnot: $parent.tour -->
-                        <span data-bind="text: roomSets()[0].price">12 500</span> руб. за
+                        <span data-bind="text: Utils.formatPrice(roomSets()[0].price)">12 500</span> руб. за
                     <!-- /ko -->
                     <span data-bind="text: $data.totalPeopleGen">2 человека</span>
                 </span>
