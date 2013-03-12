@@ -162,6 +162,12 @@ function onFocusInput() {
     var ua = navigator.userAgent;
     if (ua.search(/Opera/) > 0) {
         alert('HI OPERA!');
+        $('.male').click(function() {
+            $(this).find('input').attr('checked');
+        });
+        $('.female').click(function() {
+            $(this).find('input').attr('checked');
+        });
     }
 
     $('.male input').each(function(index) {
