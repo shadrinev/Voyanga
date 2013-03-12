@@ -10,5 +10,5 @@ $(function() {
     app.register('avia', avia);
     app.run();
     ko.applyBindings(app);
-#    ko.processAllDeferredBindingUpdates();
+//    ko.processAllDeferredBindingUpdates();
 });

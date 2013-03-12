@@ -6,12 +6,19 @@ ResizeFun = ->
 
 
 ResizeAvia = ->
-  return
-  do ResizeCenter
+#  return
+#  do ResizeCenter
+  do CenterIMGResize
+  do resizePanel
+  do jsPaneScrollHeight
+  do ifIpadLoad
+  do smallIMGresizeIndex
+  do mapAllPageView
+  do inTheTwoLines
 
-jsPaneScrollHeight = ->
+# jsPaneScrollHeight = ->
 
-scrollValue = ->
+# scrollValue = ->
 
 
 var_widthMAX = 1390
