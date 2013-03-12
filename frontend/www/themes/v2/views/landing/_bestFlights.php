@@ -1,8 +1,10 @@
 <?php if ($flightCacheFromCurrent): ?>
+<?php if($currentCity): ?>
 <div class="headBlockOne">
     <div class="center-block">
         <h2 class="tableH2">Дешевые билеты из <?php echo $currentCity->caseGen;?></h2>
     </div>
+    <?php endif; ?>
     <table class="tableFlight first">
         <thead>
         <tr>
@@ -113,6 +115,8 @@
 
         </tbody>
     </table>
+    <?php if($currentCity): ?>
     <div class="clear"></div>
 </div>
+<?php endif; ?>
 <?php endif; ?>

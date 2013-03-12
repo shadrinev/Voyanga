@@ -1,11 +1,31 @@
 <script>
     //window.flightBestPrice = <?php //echo json_encode($flightCache); ?>;
     window.defaultCity = '<?php echo  $currentCity->code; ?>';
+    window.defaultCityId = '<?php echo  $currentCity->id; ?>';
+    window.pointCity = '<?php echo  $city ? $city->code : ''; ?>';
 
+    window.lastCityId = false;
 
     function setDepartureDate(strDate) {
-        VoyangaCalendarStandart.values = new Array(moment(strDate)._d);
         window.app.fakoPanel().departureDate(moment(strDate)._d);
+    }
+    function setBackDate(strDate) {
+        console.log('fako', window.app.fakoPanel());
+        window.app.fakoPanel().rtDate(moment(strDate)._d);
+    }
+    function setCityFrom(cityId,cityCode) {
+        console.log('setCity frommm',cityId,cityCode);
+        $('input.second-path.departureCity').val('');
+        $('input.input-path.departureCity').val('');
+        if(window.lastCityId){
+            $('#cityFlights'+window.lastCityId).hide();
+            $('#citySelector'+window.lastCityId).removeClass('active');
+        }
+        window.lastCityId = cityId;
+        $('#cityFlights'+window.lastCityId).show();
+        $('#citySelector'+window.lastCityId).addClass('active');
+        app.fakoPanel().departureCity(cityCode);
+        return false;
     }
     initLandingPage = function () {
         var app, avia, hotels, tour;
@@ -22,24 +42,33 @@
         app.register('tours', tour, true);
         app.register('hotels', hotels);
         app.register('avia', avia);
-        app.runWithModule('tours');
-        app.activeModule('tours');
+        app.runWithModule('avia');
+        app.activeModule('avia');
         var panelSet = new AviaPanel();
-        panelSet.departureCity(window.defaultCity);
+
+
         //panelSet.arrivalCity(window.pointCity);
-        panelSet.calendarActive(false);
+        //panelSet.calendarActive(false);
 
         //panelSet.minimized(true);
         //panelSet.calendarHidden(true);
         window.setTimeout(function () {
-            panelSet.calendarActive(true);
+            //panelSet.calendarActive(true);
 
         }, 1000);
 
 
-        panelSet.rt(false);
+        panelSet.rt(true);
+
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
+        panelSet.minimizedCalendar(false);
+        setCityFrom(window.defaultCityId,window.defaultCity);
+        setDepartureDate(moment(new Date()).add('days', 1).format('YYYY-MM-DD'));
+        setBackDate(moment(new Date()).add('days', 3).format('YYYY-MM-DD'));
+        if(window.pointCity){
+            panelSet.arrivalCity(window.pointCity);
+        }
 
 
         ko.applyBindings(app);
@@ -55,12 +84,12 @@
 <div class="headBlockOne">
     <div class="center-block">
         <h1>Авиабилеты в <?php echo $countryMorph['caseAcc'];?></h1>
-        <?php if ($flightCache): ?>
+        <?php if ($citiesFrom): ?>
         <h3>Стоимость из
             <?php
             foreach ($citiesFrom as $cityPoint):
                 ?>
-                <a href="#" class="cityChoise<?php echo $cityPoint['cityId'] == $currentCity->id ? ' active' : '';?>">
+                <a href="#" class="cityChoise<?php echo $cityPoint['cityId'] == $currentCity->id ? ' active' : '';?>" id="citySelector<?php echo $cityPoint['cityId'];?>" onclick="return setCityFrom(<?php echo $cityPoint['cityId'] . ",'" . $cityPoint['cityCode'] . "'";?>)">
                     <span><?php echo $cityPoint['cityName'];?></span>
                 </a>
                 <?php
@@ -72,115 +101,16 @@
         <br/>
         <?php endif;?>
     </div>
-    <?php if ($flightCache): ?>
-    <table class="tableFlight first up">
-        <thead>
-        <tr>
-            <td class="tdEmpty">
+    <?php
+    foreach ($citiesFrom as $cityPoint):
+        ?>
+        <div id="cityFlights<?php echo $cityPoint['cityId'];?>" style="display: none;">
+            <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => false, 'flightCacheFromCurrent' => $cityPoint['flightCache'])); ?>
+        </div>
+        <?php
 
-            </td>
-            <td class="tdFlight">
-                Рейс
-            </td>
-            <td class="tdTo">
-                Туда
-            </td>
-            <td class="tdFrom">
-                Обратно
-            </td>
-            <td class="tdPrice">
-                Цена
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-            <?php
-            $firstHalf = round(count($flightCache) / 2);
-            $secondHalf = count($flightCache) - $firstHalf;
-            $i = 0;
-            foreach ($flightCache as $fc):
-                $i++;
-                if ($i <= $firstHalf):
-                    $back = ($fc->dateBack == '0000-00-00' ? false : true);
-                    ?>
-                <tr<?php echo (($i + 1) % 2) == 0 ? ' class="select"' : '';?>>
-                    <td class="tdEmpty">
-
-                    </td>
-                    <td class="tdFlight">
-                        <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span
-                            class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?>
-                        </div>
-                    </td>
-                    <td class="tdTo">
-                        <?php echo date('d.m', strtotime($fc->dateFrom));?>
-                    </td>
-                    <td class="tdFrom">
-                        <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m', strtotime($fc->dateBack)));?>
-                    </td>
-                    <td class="tdPrice">
-                        <a href="<?php echo '/land/' . City::getCityByPk($fc->to)->country->code . '/' . City::getCityByPk($fc->from)->code . '/' . City::getCityByPk($fc->to)->code . ($fc->dateBack == '0000-00-00' ? '/trip/OW' : '');?>"><span
-                            class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span
-                            class="rur">o</span></a>
-                    </td>
-                </tr>
-                    <?php
-                endif;
-            endforeach;?>
-        </tbody>
-    </table>
-    <table class="tableFlight second up">
-        <thead>
-        <tr>
-
-            <td class="tdFlight">
-                Рейс
-            </td>
-            <td class="tdTo">
-                Туда
-            </td>
-            <td class="tdFrom">
-                Обратно
-            </td>
-            <td class="tdPrice">
-                Цена
-            </td>
-            <td class="tdEmpty">
-
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-            <?php $i = 0;
-            foreach ($flightCache as $fc):
-                $i++;
-                if ($i > $firstHalf):
-                    $back = ($fc->dateBack == '0000-00-00' ? false : true);?>
-                <tr<?php echo ($i % 2) == 0 ? ' class="select"' : '';?>>
-                    <td class="tdFlight">
-                        <div><?php echo City::getCityByPk($fc->from)->localRu;?> <span
-                            class="<?php echo $back ? 'toFrom' : 'to';?>"></span> <?php echo City::getCityByPk($fc->to)->localRu;?>
-                        </div>
-                    </td>
-                    <td class="tdTo">
-                        <?php echo date('d.m', strtotime($fc->dateFrom));?>
-                    </td>
-                    <td class="tdFrom">
-                        <?php echo ($fc->dateBack == '0000-00-00' ? '' : date('d.m', strtotime($fc->dateBack)));?>
-                    </td>
-                    <td class="tdPrice">
-                        <a href="<?php echo '/land/' . City::getCityByPk($fc->to)->country->code . '/' . City::getCityByPk($fc->from)->code . '/' . City::getCityByPk($fc->to)->code . ($fc->dateBack == '0000-00-00' ? '/trip/OW' : '');?>"><span
-                            class="price"><?php echo UtilsHelper::formatPrice($fc->priceBestPrice);?></span> <span
-                            class="rur">o</span></a>
-                    </td>
-                </tr>
-                    <?php
-                endif;
-            endforeach;?>
-
-        </tbody>
-    </table>
-    <?php endif;?>
+    endforeach;
+    ?>
     <div class="clear"></div>
 
 </div>
@@ -315,6 +245,7 @@
         <!-- END CONSTRUCTOR -->
 
     </div>
+    <div class="fly-ico"></div>
     <div class="clear"></div>
 </div>
 <!-- END PANEL -->
@@ -326,13 +257,13 @@
 </div>
 <!-- END CALENDAR -->
 
-
-<?php echo $this->renderPartial('//landing/_hotelList', array('city' => (object)$countryMorph, 'hotelsInfo' => $hotelsInfo)); ?>
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => (object)$countryMorph, 'hotelsInfo' => $hotelsInfo)); ?>
+
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
         <h2>Что такое Voyanga</h2>
-
+        <p>Это инфотрмация о том что из <?php echo $currentCity->caseGen; ?> в <?php echo $countryMorph['caseAcc']; ?> можно добраться за <?php echo '??';?> <span class="rur">o</span></p>
         <p>Voyanga.com — это самый простой, удобный и современный способ поиска и покупки авиабилетов. Мы постоянно
             работаем над развитием и улучшением сервиса. Наш сайт подключен сразу к нескольким системам бронирования,
             что позволяет сравнивать тарифы и подбирать наиболее выгодные и удобные тарифы и рейсы.</p>

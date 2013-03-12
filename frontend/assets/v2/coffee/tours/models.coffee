@@ -51,11 +51,13 @@ class ToursAviaResultSet extends TourEntry
     @panel.original_template = @panel.template
     @results = ko.observable()
     @selection = ko.observable null
+    @observableSP = ko.observable null
     @newResults raw, sp
     @data = {results: @results}
 
   newResults: (raw, sp)=>
     @rawSP = sp
+    @observableSP sp
     result = new AviaResultSet raw
     result.injectSearchParams sp
     result.postInit()
@@ -95,20 +97,23 @@ class ToursAviaResultSet extends TourEntry
 
     
   toBuyRequest: =>
+    sp = @observableSP()
     result = {}
     result.type = 'avia'
     result.searchId = @selection().cacheId
     # FIXME FIXME FXIME
     result.searchKey = @selection().flightKey()
-    result.adults = @rawSP.adt
-    result.children = @rawSP.chd
-    result.infants = @rawSP.inf
+    result.adults = sp.adt
+    result.children = sp.chd
+    result.infants = sp.inf
     return result
 
   doNewSearch: =>
+    window.VisualLoaderInstance.start(@api.loaderDescription)
     @api.search @panel.sp.url(), (data)=>
       @newResults data.flights.flightVoyages, data.searchParams
-
+      ko.processAllDeferredBindingUpdates()
+      window.VisualLoaderInstance.hide()
   # Overview VM
   overviewText: =>
     "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity
@@ -158,38 +163,52 @@ class ToursAviaResultSet extends TourEntry
     if @rt() then 'blue-two' else 'blue-one'
 
   dateHtml: (startonly=false)=>
+    sp = @observableSP()
     # FIXME SEARCH PARAMS
     result = '<div class="day">'
-    result+= dateUtils.formatHtmlDayShortMonth moment(@rawSP.destinations[0].date)
+    result+= dateUtils.formatHtmlDayShortMonth moment(sp.destinations[0].date)
     result+='</div>'
     if startonly
       return result
     if @rt()
       result+= '<div class="day">'
-      result+= dateUtils.formatHtmlDayShortMonth moment(@rawSP.destinations[1].date)
+      result+= dateUtils.formatHtmlDayShortMonth moment(sp.destinations[1].date)
       result+= '</div>'
     return result
 
   timelineStart: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return @rawSP.destinations[0].date
+      return sp.destinations[0].date
       source = @results().data[0]
     source.departureDate()
 
   timelineEnd: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return @rawSP.destinations[0].date
+      return sp.destinations[0].date
     source.arrivalDate()
 
   rtTimelineStart: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return @rawSP.destinations[1].date
+      return sp.destinations[1].date
     source.rtDepartureDate()
 
+  rtTimelineEnd: =>
+    sp = @observableSP()
+    source = @selection()
+    if source == null
+      return sp.destinations[1].date
+    source.rtArrivalDate()
+
+
   rt: =>
+    # trigger dep
+    sp = @observableSP()
     source = @selection()
     if source == null
       source = @results().data[0]
@@ -197,15 +216,17 @@ class ToursAviaResultSet extends TourEntry
 
   # Надо переименовать или зареюзать то что уже есть
   timelineEndDate: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return moment(@rawSP.destinations[0].date).toDate()
+      return moment(sp.destinations[0].date).toDate()
     source.arrivalDate()
 
   timelineStartDate: =>
+    sp = @observableSP()
     source = @selection()
     if source == null
-      return moment(@rawSP.destinations[0].date).toDate()
+      return moment(sp.destinations[0].date).toDate()
     source.departureDate()
 
         
@@ -245,13 +266,16 @@ class ToursHotelsResultSet extends TourEntry
     @selection = ko.observable null
     @results = ko.observable()
     @data = {results: @results}
-
+    @observableSP = ko.observable()
+    
     @savingsWithAviaOnly = true
 
     @newResults raw, sp
 
   newResults: (data, sp)=>
     @rawSP = sp
+    @observableSP sp
+    
     result = new HotelsResultSet data, sp, @activeHotel
     result.tours true
     result.postInit()
@@ -332,7 +356,31 @@ class ToursHotelsResultSet extends TourEntry
     @overviewTemplate = 'tours-overview-hotels-ticket'
     @selection {roomSet: roomSet, hotel: hotel}
     hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
-    hotel.parent.pagesLoad = hotel.parent.showParts()
+    #Код для того чтобы выбранный результат попал в отображение -->
+    limit = 0
+    sortKey = hotel.parent.sortBy()
+    ordKey = hotel.parent.ordBy()
+
+
+    hotel.parent.data.sort (left, right)=>
+      if left[sortKey] < right[sortKey]
+        return -1 * ordKey
+      if left[sortKey] > right[sortKey]
+        return  1 * ordKey
+      return 0
+
+    for result in hotel.parent.data()
+      if result.visible()
+        limit++
+        if result.hotelId == hotel.hotelId
+          break
+
+    pageFound = Math.ceil(limit/hotel.parent.showLimit)
+    # <--
+    if pageFound > hotel.parent.showParts()
+      hotel.parent.pagesLoad = pageFound
+    else
+      hotel.parent.pagesLoad = hotel.parent.showParts()
 
 
   toBuyRequest: =>
@@ -344,7 +392,8 @@ class ToursHotelsResultSet extends TourEntry
     result.adults = 0
     result.age = false
     result.cots = 0
-    for room in @rawSP.rooms
+    sp = @observableSP()
+    for room in sp.rooms
       result.adults += room.adultCount*1
       # FIXME looks like this could be array
       if room.childAge
@@ -355,9 +404,13 @@ class ToursHotelsResultSet extends TourEntry
 
 
   doNewSearch: =>
+    window.VisualLoaderInstance.start(@api.loaderDescription)
     @api.search @panel.sp.url(), (data)=>
       data.searchParams.cacheId = data.cacheId
       @newResults data, data.searchParams
+      ko.processAllDeferredBindingUpdates()
+      window.VisualLoaderInstance.hide()
+
 
   # Overview VM
   overviewText: =>
@@ -380,10 +433,12 @@ class ToursHotelsResultSet extends TourEntry
 
   # tours overview
   destinationText: =>
+    # trigger dependencies
+    sp = @observableSP()
     if @noresults
-      @rawSP.cityFull.caseNom
+      sp.cityFull.caseNom
     else
-      "<span class='hotel-left-long'>Отель в " + @rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + @rawSP.cityFull.caseNom + "</span>"
+      "<span class='hotel-left-long'>Отель в " + sp.cityFull.casePre + "</span><span class='hotel-left-short'>" + sp.cityFull.caseNom + "</span>"
 
   price: =>
     if @selection() == null
@@ -552,7 +607,6 @@ class ToursResultSet
     @trigger 'inner-template', entry.template
     # FIXME 
     window.setTimeout =>
-      console.log('TourOut',window.hrs.data()[0])
       if entry.afterRender && afterRender
         console.log('arin')
         entry.afterRender()
@@ -606,12 +660,13 @@ class ToursResultSet
         people = 0
         calendarEvents = []
         for resSet in @data()
+          sp = resSet.observableSP()
           if resSet.isAvia()
             flights = []
             if people==0
-              people = resSet.rawSP.adt + resSet.rawSP.chd + resSet.rawSP.inf
+              people = sp.adt + sp.chd + sp.inf
 
-            for dest in resSet.rawSP.destinations
+            for dest in sp.destinations
               flight = {type: 'flight',description:  dest.departure+' || ' + dest.arrival, cityFrom: dest.departure_iata, cityTo: dest.arrival_iata}
               flight.dayStart = moment(dest.date)._d
               flight.dayEnd = moment(dest.date)._d
@@ -628,15 +683,13 @@ class ToursResultSet
           if resSet.isHotel()
 
             if people==0
-              for room in resSet.rawSP.rooms
-                people += room.overall()
+              people = sp.overall()
 
-            checkIn = moment(resSet.rawSP.checkIn).add('h',8);
-            checkOut = moment(resSet.rawSP.checkIn).add('d',resSet.rawSP.duration);
+            checkIn = moment(sp.checkIn).add('h',8);
+            checkOut = moment(sp.checkIn).add('d',sp.duration);
 
-            hotelEvent = {dayStart: checkIn._d,dayEnd: checkOut._d,type: 'hotel',description:  '', city: resSet.rawSP.city}
+            hotelEvent = {dayStart: checkIn._d,dayEnd: checkOut._d,type: 'hotel',description:  '', city: sp.city}
             if resSet.selection()
-              console.log('select:',resSet.selection())
               hotelEvent.description = resSet.selection().hotel.hotelName
 
             calendarEvents.push hotelEvent
@@ -665,7 +718,7 @@ class ToursResultSet
         tmp.push interval
         tmp.push (@price() - @savings()) + ' руб. ' + Utils.peopleReadable(people)
 
-        title = "Я составил путешествие на Воянге"
+        title = "Я составил путешествие на Voyanga"
         description = tmp.join(', ')
 
         #готовим почву для генерации ссылки
@@ -682,13 +735,14 @@ class ToursResultSet
 
         $.post '/ajax/getSharingUrl', data, (response) ->
           #показываем кнопки шаринга
+          url = response['short']
           $('.shareSocial').html('')
           $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial')
-          $('.shareSocial').find('input[name=textTextText]').val(response.short)
+          $('.shareSocial').find('input[name=textTextText]').val(url)
           $('.shareSocial').show().find('a').each ()->
             $(this).attr('addthis:title', title)
             $(this).attr('addthis:description', description)
-            $(this).attr('addthis:url', response.short)
+            $(this).attr('addthis:url', url)
             addthis.toolbox('.socialSharePlaceholder')
       ,1000
     )
@@ -754,15 +808,13 @@ class ToursResultSet
     for entry, index in items
       console.log('findAndSelectItems entry',entry,' in ',index,@data()[index])
       if(@data()[index].isAvia())
-        result = @data()[index].findAndSelect(@data()[index].results().cheapest())
+        result = @data()[index].findAndSelect(entry)
+        if !result
+          result = @data()[index].findAndSelect(@data()[index].results().cheapest())
         if !result
           success = false
-          console.log('false res1:',result,@data()[index],@data()[index].results().cheapest())
+        console.log('false res1:',result,@data()[index],@data()[index].results().cheapest())
       else
-        #if !entry.isHotel
-        #  for en,ind in items
-        #    if !isHotel
-
         result = @data()[index].findAndSelectSame(entry)
         if !result
           success = false
@@ -831,6 +883,8 @@ class TourSearchParams extends SearchParams
 
     if(@eventId)
       params.push 'eventId='+@eventId
+    if(@orderId)
+      params.push 'orderId='+@orderId
     result += params.join "&"
     window.voyanga_debug "Generated search url for tours", result
     return result
@@ -876,7 +930,8 @@ class TourSearchParams extends SearchParams
     i = i + 1
     oldSelection = false
     while i < data.length
-      if data[i] == 'eventId'
+      if ((data[i] == 'eventId') || (data[i] == 'orderId'))
+        toSaveIn = data[i]
         oldSelection = true
         break
       room = new SpRoom(@)
@@ -884,12 +939,8 @@ class TourSearchParams extends SearchParams
       @rooms.push room
       i++
     if oldSelection
-      console.log('really have oldParams')
       i++;
-      console.log('old params is',data[i])
-      @eventId = data[i]
-
-    window.voyanga_debug 'Result', @
+      @[toSaveIn] = data[i]
 
   fromObject: (data)->
     window.voyanga_debug "Restoring TourSearchParams from object"
@@ -965,7 +1016,8 @@ class TourTripResultSet
       return resArr.join(':')
     @showTariffRules = =>
       aviaApi = new AviaAPI();
-      aviaApi.search('flight/search/tariffRules?flightIds='+@flightIdsString(),
+      window.VisualLoaderInstance.start  'Загружаем правила применения тарифов'
+      aviaApi.search 'flight/search/tariffRules?flightIds='+@flightIdsString(),
         (data)=>
           if(data)
             tariffs = []
@@ -978,10 +1030,8 @@ class TourTripResultSet
                   tariff.codes.push code
                 tariffs.push tariff
             if tariffs
-              console.log(tariffs)
               gp = new GenericPopup('#tariff-rules',{'tariffs': tariffs})
-          #for()
-      )
+          window.VisualLoaderInstance.hide()
 
     @flightCounterWord = ko.computed =>
       if @flightCounter()==0
@@ -1056,11 +1106,12 @@ class TourTripResultSet
         @totalCost = @totalCostWithoutDiscount
 
 class TourResultSet
-  constructor: (resultSet) ->
+  constructor: (resultSet, orderId) ->
     @items = ko.observableArray([])
     @fullPrice = ko.observable 0
     @activePanel = ko.observable(null)
     @overviewPeople = ko.observable 0
+    @orderId = orderId
     @overviewPricePeople = ko.observable('')
     @visiblePanel = ko.observable(true)
     @startCity = ko.observable ''
@@ -1090,14 +1141,14 @@ class TourResultSet
     @totalCost = 0
     panelSet = new TourPanelSet()
     @activePanel(panelSet)
-    if @resultSet.items[0].isAvia
-      startCity = @resultSet.items[0].searchParams.departure_iata
-      startCityReadable = @resultSet.items[0].searchParams.departure
+    if @resultSet.items[0].isFlight
+      startCity = @resultSet.items[0].searchParams.destinations[0].departure_iata
+      startCityReadable = @resultSet.items[0].searchParams.destinations[0].departure
     else
       startCity = window.currentCityCode
       startCityReadable = window.currentCityCodeReadable
     @activePanel().startCity(startCity)
-    @activePanel().selectedParams = {ticketParams: []}
+    @activePanel().selectedParams = {ticketParams: [], orderId: @orderId}
     @activePanel().sp.calendarActivated(false)
     window.app.fakoPanel(panelSet)
 
@@ -1149,7 +1200,6 @@ class TourResultSet
       _.sortBy @items(), (item)->
         item.startDate
 
-      @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(), 'человек', 'человека', 'человек'))
       @startDate = @items()[0].startDate
       @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate) + '</div>')
       firstHotel = true
@@ -1174,6 +1224,8 @@ class TourResultSet
 
       @activePanel().saveStartParams()
       _.last(@activePanel().panels()).minimizedCalendar(true)
+
+      @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(), 'человек', 'человека', 'человек'))
 
       setTimeout ()=>
         @activePanel().sp.calendarActivated(true)
@@ -1200,7 +1252,12 @@ class TourResultSet
   togglePanel: =>
     @visiblePanel(!@visiblePanel())
   showPanel: =>
-    $('.sub-head.event').animate({'margin-top': '0px'})
+    $('.sub-head.event').animate(
+      {'margin-top': '0px'},
+      ->
+        $('.tdCity .add-tour').show()
+    )
   hidePanel: =>
+    $('.tdCity .add-tour').hide()
     $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px').animate({'margin-top': (-@activePanel().heightPanelSet() + 4) + 'px'})
 

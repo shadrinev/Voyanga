@@ -42,6 +42,11 @@ class BuyController extends FrontendController
     public function actionIndex()
     {
         Yii::app()->user->setState('blockedToBook', null);
+        if (isset($_GET['pid']))
+        {
+            Yii::app()->user->setState('orderBookingId', null);
+            Yii::app()->user->setState('todayOrderId', null);
+        }
         $this->layout = 'main';
         $this->addItems();
         if (isset($_GET['item'][0]['module']))
@@ -49,7 +54,8 @@ class BuyController extends FrontendController
         else
             //todo: think what is default here
             Yii::app()->user->setState('currentModule', 'Tours');
-        $this->redirect('buy/makeBooking');
+        $marker = (isset($_GET['marker'])) ? '?marker='.$_GET['marker'] : '';
+        $this->redirect('buy/makeBooking'.$marker);
     }
 
     public function actionOrder($id)

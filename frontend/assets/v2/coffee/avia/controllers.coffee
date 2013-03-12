@@ -15,24 +15,26 @@ class AviaController
     _.extend @, Backbone.Events
 
   searchAction: (args...)=>
-    window.voyanga_debug "AVIA: Invoking searchAction", args
     # update search params with values in route
     @searchParams.fromList(args)
-    do @search
+    window.VisualLoaderInstance.start(@api.loaderDescription)
+    @api.search  @searchParams.url(), @handleSearch
 
-  search: =>
-    @api.search  @searchParams.url(), (data)=>
-      try
-        stacked = @handleResults(data)
-      catch err
-        if err=='404'
-          new ErrorPopup 'avia404'
-          return
-        throw new Error("Unable to build AviaResultSet from search response")
-      @results stacked
+  handleSearch: (data)=>
+    try
+      stacked = @handleResults(data)
+    catch err
+      window.VisualLoaderInstance.hide()   
+      if err=='404'
+        new ErrorPopup 'avia404'
+        return
+      throw new Error("Unable to build AviaResultSet from search response")
 
-      @render 'results', {results: @results, notours: true}
-#      ko.processAllDeferredBindingUpdates()
+    @results stacked
+    
+    _gaq.push(['_trackEvent', 'Avia_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data.length, true])
+    @render 'results', {results: @results, notours: true}
+#    ko.processAllDeferredBindingUpdates()
 
   handleResults: (data) =>
     window.voyanga_debug "searchAction: handling results", data
@@ -53,13 +55,17 @@ class AviaController
     if diff < AVIA_TICKET_TIMELIMIT
       resultDeferred.resolve(result)
       return
-
+      
+    window.VisualLoaderInstance.start('Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд')
+   
     @api.search  @searchParams.url(), (data)=>
       try
         stacked = @handleResults(data)
       catch err
+        window.VisualLoaderInstance.hide()
         throw new Error("Unable to build AviaResultSet from search response. Check ticket")
       result = stacked.findAndSelect(result)
+      window.VisualLoaderInstance.hide()
       if result
         resultDeferred.resolve(result)
       else

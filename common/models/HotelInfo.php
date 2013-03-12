@@ -66,6 +66,8 @@ class HotelInfo extends CApplicationComponent
     /** @var City */
     public $city;
 
+    public $cityName;
+
     public $categoryId;
     public $address;
     public $phone;
@@ -100,7 +102,7 @@ class HotelInfo extends CApplicationComponent
     public $locations;
     public $metroList;
     public $price;
-    public $hotelName;
+    private $hotelName;
     public $rating;
     public $hotelId;
 
@@ -147,7 +149,23 @@ class HotelInfo extends CApplicationComponent
                $this->earliestCheckInTime = false;
             }
         }
+        if($this->hotelName){
+            $normName = mb_convert_case($this->hotelName,MB_CASE_TITLE, "UTF-8");
+            $this->hotelName = $normName;
+        }
         $this->makeServices();
+    }
+    public function setHotelName($val)
+    {
+        if($val){
+            $this->hotelName = mb_convert_case($val,MB_CASE_TITLE, "UTF-8");
+        }else{
+            $this->hotelName = '';
+        }
+    }
+    public function getHotelName()
+    {
+        return $this->hotelName;
     }
 
     private static function addToServiceGroup(&$serviceGroups,$groupName,$servName){

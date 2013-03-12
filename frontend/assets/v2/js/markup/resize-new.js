@@ -549,7 +549,14 @@ function ResizeCenterBlock() {
 		var_leftBlock.find('.left-content').css('margin-left', paddingLeftLogo+'px');
 		var_telefonBlock.css('left', paddingLeftTel+'px');
 
-		if (widthContent < 690) {
+        if (var_leftBlockIsset && var_mainBlockIsset ) {
+            var minWid = 840;
+        }
+        else {
+            var minWid = 690;
+        }
+		if (widthContent < minWid) {
+
 			var mathWidthRicket = Math.floor(253 + ((widthBlock - var_widthMIN) / (var_valueMIN / (318 - 253))) );
 			$('.recommended-ticket').css('width', mathWidthRicket+'px');
 			$('.recommended-ticket').find('.ticket-items').addClass('small');
@@ -1094,12 +1101,15 @@ function loadPayFly() {
         var _widthLoadPayFly = _loadPayFly.width() - (230 + 60);
         var _loadJet = $('.loadJet');
         var _Jet = _loadJet.find('.jetFly');
-
         _loadJet.css('margin-left', '-'+offsetPayBlock.left+'px').css('width', (offsetPayBlock.left + _widthLoadPayFly)+'px');
         _loadJet.find('.overflowBlock').css('width', (offsetPayBlock.left + _widthLoadPayFly)+'px');
-        _loadJet.find('.pathBlock').clone().prependTo('.loadJet').addClass('blue');
+        if (_loadPayFly.find('.pathBlock').length < 2) {
+            _loadJet.find('.pathBlock').clone().prependTo('.loadJet').addClass('blue');
+        }
+        else {
+            return;
+        }
         _loadJet.find('.pathBlock').eq(1).attr('id','grey');
-
         function startFlyJet() {
             _Jet.animate({'right' : '0%'}, 20000, 'linear', function() {
                 $(this).animate({'right' : '-241px'}, 4000, 'linear', function() {
@@ -1744,6 +1754,8 @@ function ifIpadLoad() {
             }
             else { return }
         }
+
+        $('.loadWrapBg').css('position','absolute');
     }
 }
 

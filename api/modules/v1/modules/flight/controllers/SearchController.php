@@ -10,6 +10,18 @@ class SearchController extends ApiController
     public $defaultAction = 'default';
     private $results;
 
+    private $logId;
+
+    private function log()
+    {
+        if (!$this->logId)
+            $this->logId = 'req'.rand(1, 10000);
+        $args = func_get_args();
+        $other = array_slice($args, 1);
+        $time = date('Y-m-d H:i:s', time());
+        Yii::log($time."\n".$args[0] ."\n".CVarDumper::dumpAsString($other), CLogger::LEVEL_INFO, 'application.api.'.$this->logId);
+    }
+
     /**
      * @param array $destinations
      *  [Х][departure] - departure city iata code,
@@ -22,24 +34,34 @@ class SearchController extends ApiController
      */
     public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
     {
+        $this->log('Search for business and econom', $destinations, $adt, $chd, $inf, $format);
         if (!$this->filter($destinations))
+        {
+            $this->log('Current request doesn\'t pass filter and we close it');
             $variants = array();
+        }
         else
         {
+            $this->log('Dividing request to two branches');
             $asyncExecutor = new AsyncCurl();
             $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
             $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+            $this->log('Sending requests');
             $responses = $asyncExecutor->send();
             $errors = array();
             $variants = array();
-            foreach ($responses as $response)
+            $this->log('We got response');
+            foreach ($responses as $i=>$response)
             {
+                $this->log("For $i response we got headers:", $response->headers);
                 if ($httpCode=$response->headers['http_code'] == 200)
                 {
                     $combined = json_decode($response->body);
+                    $this->log("Decoding response. Length of body response:", strlen($response->body));
                     if ((isset($combined->flights)) and (is_iterable($combined->flights)))
                     {
                         $flights = $combined->flights;
+                        $this->log("Ok. We got flights. Amount:", sizeof($flights));
                     }
                     else
                     {
@@ -48,10 +70,14 @@ class SearchController extends ApiController
                         $flights = array();
                     }
                     $searchParams = $combined->searchParams;
+                    $this->log("Adding specific params for b/e to response");
                     $variants = CMap::mergeArray($variants, FlightManager::injectForBe($flights, $searchParams));
                 }
                 else
+                {
                     $errors[] = 'Error '.$httpCode;
+                    $this->log("Response ended without 200 http response. Code:", $httpCode);
+                }
             }
             if (!empty($this->errors))
             {
@@ -62,8 +88,11 @@ class SearchController extends ApiController
         $this->results = $variants;
         $result['flights']['flightVoyages'] = $this->results;
         $result['searchParams'] = $flightSearchParams->getJsonObject();
+        $this->log("We added search params");
         $siblingsEconom = FlightManager::createSiblingsData($flightSearchParams);
+        $this->log("We added siblings params");
         $result['siblings']['E'] = $siblingsEconom;
+        $this->log("We are sending to output with format", $format);
         $this->sendWithCorrectFormat($format, $result);
     }
 
@@ -80,6 +109,7 @@ class SearchController extends ApiController
 
     private function addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
     {
+        $this->log('add Business Class Async Response');
         $businessUrl = Yii::app()->params['app.api.flightSearchNoSecure'].'/search/withParams';
         $query = http_build_query(array(
             'destinations' => $destinations,
@@ -94,6 +124,7 @@ class SearchController extends ApiController
 
     private function addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
     {
+        $this->log('add Econom Class Async Response');
         $businessUrl = Yii::app()->params['app.api.flightSearchNoSecure'].'/search/withParams';
         $query = http_build_query(array(
             'destinations' => $destinations,
@@ -156,6 +187,11 @@ class SearchController extends ApiController
             $newFlight = $flight;
             $newFlight['searchId'] = $searchId;
             $newFlight['cacheId'] = $cacheId;
+            if (Partner::getCurrentPartner())
+            {
+                $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$cacheId.'&item[0][searchKey]='.$flight['flightKey'].'&pid='.Partner::getCurrentPartnerKey();
+                $newFlight['url'] = Yii::app()->params['baseUrl'].'/buy?'.$query;
+            }
             $newFlights[] = $newFlight;
         }
         return $newFlights;
@@ -214,5 +250,107 @@ class SearchController extends ApiController
         Yii::app()->pCache->set('flightSearchResult' . $cacheId, $this->results, appParams('flight_search_cache_time'));
         Yii::app()->pCache->set('flightSearchParams' . $cacheId, $flightSearchParams, appParams('flight_search_cache_time'));
         return $cacheId;
+    }
+
+    private function getPartnerCacheId($flightSearchParams)
+    {
+        $partner = Partner::getCurrentPartner();
+        $cacheId = 'partner-'.md5(md5(serialize($flightSearchParams)).$partner->id);
+        return $cacheId;
+    }
+
+    public function actionPartner($from, $to, $date1, $adults, $children, $infants, $cabin, $partner, $password, $date2='')
+    {
+        $this->checkCredentials($partner, $password);
+        $destinations = array();
+        $destinations[] = array(
+            'departure' => $from,
+            'arrival' => $to,
+            'date' => date('d.m.Y', strtotime($date1))
+        );
+        if (strlen($date2)>0)
+        {
+            $destinations[] = array(
+                'departure' => $to,
+                'arrival' => $from,
+                'date' => date('d.m.Y', strtotime($date2))
+            );
+        }
+        $serviceClass = strtr($cabin, array('Y' => 'E', 'C' => 'B'));
+        $flightSearchParams = $this->buildSearchParams($destinations, $adults, $children, $infants, $serviceClass);
+        $partnerCacheId = $this->getPartnerCacheId($flightSearchParams);
+        $prepared = Yii::app()->pCache->get($partnerCacheId);
+        if (!$prepared)
+        {
+            $results = $this->doFlightSearch($flightSearchParams);
+            $prepared = $this->prepareForAviasales($results, $cabin);
+            Yii::app()->pCache->set($partnerCacheId, $prepared, appParams('flight_search_cache_time_partner'));
+        }
+        $this->data = $prepared;
+        $this->_sendResponse(true, 'application/xml');
+    }
+
+    private function checkCredentials($u, $p)
+    {
+        $partner = Partner::model()->findByAttributes(array('name'=>$u));
+        if (($partner) && ($partner->verifyPassword($p)))
+        {
+            Partner::setPartnerByName($u);
+            return;
+        }
+        $this->sendError(403, 'Permission denied');
+        Yii::app()->end();
+    }
+
+    private function prepareForAviasales(&$results, $cabin)
+    {
+        $prepared = array();
+        $i = 0;
+        foreach ($results as $variant)
+        {
+            $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$variant['cacheId'].'&item[0][searchKey]='.$variant['flightKey'].'&pid='.Partner::getCurrentPartnerKey();
+            $url = Yii::app()->params['baseUrl'].'/buy?'.$query;
+            $prepared[$i] = array(
+                'price' => $variant['price'],
+                'currency' => 'rub',
+                'url' => $url,
+                'validatingCarrier' => $variant['valCompany'],
+            );
+            foreach ($variant['flights'] as $u=>$flight)
+            {
+                foreach ($flight['flightParts'] as $j=>$flightPart)
+                {
+                    $departureCity = City::getCityByPk($flightPart['departureCityId']);
+                    $departureDate = strtotime($flightPart['datetimeBegin']);
+                    $arrivalCity = City::getCityByPk($flightPart['arrivalCityId']);
+                    $arrivalDate = strtotime($flightPart['datetimeEnd']);
+                    $marketingCarrier = $flightPart['markAirline'];
+                    $transportAirline = $flightPart['transportAirline'];
+                    $prepared[$i]['segment'.$u]['flight'.$j] = array(
+                        'operatingCarrier' => $transportAirline,
+                        'number' => $flightPart['flightCode'],
+                        'departure' => $departureCity->code,
+                        'departureDate' => date('Y-m-d', $departureDate),
+                        'departureTime' => date('H:i', $departureDate),
+                        'arrival' => $arrivalCity->code,
+                        'arrivalDate' => date('Y-m-d', $arrivalDate),
+                        'arrivalTime' => date('H:i', $arrivalDate),
+                        'equipment' => $flightPart['aircraftCode'],
+                        'cabin' => $cabin
+                    );
+                    if ($marketingCarrier != $transportAirline)
+                    {
+                        $prepared[$i]['segment'.$u]['flight'.$j]['marketingCarrier'] = $marketingCarrier;
+                    }
+                    $j++;
+                }
+            }
+            $i++;
+        }
+        $xml = new ArrayToXml('variants');
+        $prepared = $xml->toXml($prepared);
+        $prepared = preg_replace('/segment\d+/', 'segment', $prepared);
+        $prepared = preg_replace('/flight\d+/', 'flight', $prepared);
+        return $prepared;
     }
 }

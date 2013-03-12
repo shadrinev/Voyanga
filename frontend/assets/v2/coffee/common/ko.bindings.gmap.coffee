@@ -1,6 +1,13 @@
 # FIXME most likely leaks
 ko.bindingHandlers.gMap =
   init: (element, valueAccessor) ->
+    if !window.google
+      # main google file was not loaded
+      return
+    if !window.google.maps.ControlPosition
+      # file that gets loaded by main google file was not loaded
+      return
+
     value = ko.utils.unwrapObservable valueAccessor()
     #console.log('mapParams',element,value)
 

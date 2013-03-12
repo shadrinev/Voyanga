@@ -30,9 +30,10 @@ class AviaPanel extends SearchPanel
     @selectionIndex.subscribe(
       (newValue)=>
         if(newValue == 1 && @rt())
-          VoyangaCalendarStandart.checkCalendarValue(false)
-          @departureDate('')
-          @rtDate('')
+          if @departureDate()
+            VoyangaCalendarStandart.checkCalendarValue(false)
+            @departureDate('')
+            @rtDate('')
     )
 
     #helper to save calendar state
@@ -169,6 +170,10 @@ class AviaPanel extends SearchPanel
       $('#loadWrapBgMin').show()
       window.location.href = '/#' + @sp.getHash()
       return
+
+
+    _gaq.push(['_trackEvent','Avia_press_button_search', @sp.GAKey(), @sp.GAData()])
+
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
 

@@ -1173,6 +1173,11 @@ AviaSearchParams = (function(_super) {
   __extends(AviaSearchParams, _super);
 
   function AviaSearchParams() {
+    this.GAData = __bind(this.GAData, this);
+
+    this.GAKey = __bind(this.GAKey, this);
+
+    this.fromObject = __bind(this.fromObject, this);
     AviaSearchParams.__super__.constructor.apply(this, arguments);
     if (window.currentCityCode) {
       this.dep = ko.observable(window.currentCityCode);
@@ -1248,7 +1253,6 @@ AviaSearchParams = (function(_super) {
   };
 
   AviaSearchParams.prototype.fromObject = function(data) {
-    console.log(data);
     this.adults(data.adt);
     this.children(data.chd);
     this.infants(data.inf);
@@ -1258,6 +1262,30 @@ AviaSearchParams = (function(_super) {
     this.date(new Date(data.destinations[0].date));
     if (this.rt()) {
       return this.rtDate(new Date(data.destinations[1].date));
+    }
+  };
+
+  AviaSearchParams.prototype.GAKey = function() {
+    return this.dep() + "/" + this.arr();
+  };
+
+  AviaSearchParams.prototype.GAData = function() {
+    var passangers, result;
+    result = '';
+    if (this.rt()) {
+      result += '2';
+    } else {
+      result += '1';
+    }
+    passangers = [this.adults(), this.children(), this.infants()];
+    result += ', ' + passangers.join(" - ");
+    result += ', ' + moment(this.date()).format('D.M.YYYY');
+    if (this.rt()) {
+      result += ' - ' + moment(this.rtDate()).format('D.M.YYYY');
+    }
+    result += ', ' + moment(this.date()).diff(moment(), 'days');
+    if (this.rt()) {
+      return result += ' - ' + moment(this.rtDate()).diff(moment(this.date()), 'days');
     }
   };
 

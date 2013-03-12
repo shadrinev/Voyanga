@@ -15,6 +15,8 @@ ToursController = (function() {
 
     this.handleResults = __bind(this.handleResults, this);
 
+    this.doSearch = __bind(this.doSearch, this);
+
     this.searchAction = __bind(this.searchAction, this);
 
     this.indexAction = __bind(this.indexAction, this);
@@ -38,15 +40,20 @@ ToursController = (function() {
   };
 
   ToursController.prototype.searchAction = function() {
-    var args,
-      _this = this;
+    var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     args[0] = exTrim(args[0], '/');
     args = args[0].split('/');
-    window.voyanga_debug("TOURS: Invoking searchAction", args);
     this.searchParams.fromList(args);
+    window.VisualLoaderInstance.start(this.api.loaderDescription);
+    return this.doSearch();
+  };
+
+  ToursController.prototype.doSearch = function() {
+    var _this = this;
     return this.api.search(this.searchParams.url(), function(data) {
       if (!data || data.error) {
+        window.VisualLoaderInstance.start(_this.api.loaderDescription);
         throw new Error("Successfull api call with wrong/error response");
       }
       _this.stacked = _this.handleResults(data);
@@ -77,7 +84,6 @@ ToursController = (function() {
       }
       if (stacked.findAndSelectItems(items)) {
         stacked.showOverview();
-        console.log('ssseeellleecctt', items, true);
         postData = [];
         _ref1 = stacked.data();
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
@@ -87,9 +93,7 @@ ToursController = (function() {
           } else {
             postData.push(resultSet.selection().hotel.getPostData());
           }
-          console.log('result:', resultSet.selection());
         }
-        console.log('post data', postData, this.searchParams);
         $.ajax({
           url: this.api.endpoint + 'tour/search/updateEvent',
           data: {
@@ -101,16 +105,9 @@ ToursController = (function() {
           timeout: 90000,
           type: 'POST',
           success: function(data) {
-            cb(data);
-            if (showLoad) {
-              $('#loadWrapBg').hide();
-              return loaderChange(false);
-            }
-          },
-          error: function() {}
+            return cb(data);
+          }
         });
-      } else {
-        console.log('ssseeellleecctt', items, false);
       }
     }
     stacked.checkTicket = this.checkTicketAction;
@@ -126,11 +123,13 @@ ToursController = (function() {
       resultDeferred.resolve(this.stacked);
       return;
     }
+    window.VisualLoaderInstance.start("Идет проверка выбранных выриантов<br>Это может занять от 5 до 30 секунд");
     return this.api.search(this.searchParams.url(), function(data) {
       var result, stacked;
       try {
         stacked = _this.handleResults(data);
       } catch (err) {
+        window.VisualLoaderInstance.hide();
         new ErrorPopup('avia500');
         return;
       }
@@ -138,6 +137,7 @@ ToursController = (function() {
       if (result) {
         return resultDeferred.resolve(stacked);
       } else {
+        window.VisualLoaderInstance.hide();
         new ErrorPopup('toursNoTicketOnValidation', false, function() {});
         return _this.results(stacked);
       }

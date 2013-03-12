@@ -629,7 +629,7 @@ input:focus:-moz-placeholder {
     float: left;
     font-size: 14px;
     line-height: 20px;
-    margin-right: 30px;
+    margin-right: 25px;
     margin-top: 11px;
     max-width: 450px;
 }
@@ -1648,6 +1648,20 @@ input.hotel-input {
 	padding-left: 3px;
 	white-space: normal;
 }
+.slideTours .toursTicketsMain .textTours > a > span {
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.slideTours.small .toursTicketsMain .textTours > a > span {
+    width: 100%;
+    display: inherit;
+    overflow: inherit;
+    text-overflow: clip;
+    white-space: normal;
+}
 .slideTours.small .toursTicketsMain .textTours > span {
 	width: 100%;
 	display: inherit;
@@ -1935,13 +1949,13 @@ input.hotel-input {
     margin-bottom: 18px;
 }
 .paybuyEnd {
-	margin: 0 auto;
+    color: #1D222B;
+    height: 65px;
+    margin: 0 auto 22px;
     max-width: 950px;
-    color: #1d222b;
     padding-top: 22px;
-    text-align: right;
     position: relative;
-    margin-bottom: 22px;
+    text-align: right;
 }
 .paybuyEnd .agreeConditions {
     display: inline-block;
@@ -1999,12 +2013,14 @@ input.hotel-input {
     cursor: pointer;
 }
 .paybuyEnd .loadJet {
-	position: absolute;
-	top: 30px;
-	left: 0px;
-	width: 500px;
-	height: 49px;
-	overflow: hidden;
+    color: #808186 !important;
+    height: 49px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 40px;
+    width: 500px;
+    font-size: 13px;
 }
 .paybuyEnd .loadJet .pathBlock {
 	height: 49px;
@@ -2385,7 +2401,7 @@ input.hotel-input {
 }
 .paybuyContent .theSum {
 	overflow: hidden;
-	margin-top: 24px;
+	margin-top: 17px;
 	font-size: 17px;
 	color: #1d222b;
 }
@@ -2810,10 +2826,13 @@ input.hotel-input {
     line-height: 20px;
 }
 .paybuyEnd .armoring {
-	float: right;
-	text-align: left;
-	width: 235px;
-	color: #32363f;
+    color: #808186;
+    position: absolute;
+    text-align: left;
+    width: 235px;
+    right: 0px;
+    top: 36px;
+    font-size: 13px;
 }
 .paybuyEnd .armoring .text {
 	margin-top: 8px;
@@ -2903,22 +2922,22 @@ input.hotel-input {
 	z-index: 1;
 }
 .naviProj .left {
-    background: url("../images/proj-left-point.png") no-repeat scroll left center transparent;
+    background: url("../images/proj-left-point.png") no-repeat scroll 100px center transparent;
     cursor: pointer;
-    height: 120px;
-    left: 0;
+    height: 185px;
     position: absolute;
-    top: 0;
-    width: 65px;
+    left: -100px;
+    top: -34px;
+    width: 165px;
 }
 .naviProj .right {
-    background: url("../images/proj-right-point.png") no-repeat scroll right center transparent;
+    background: url("../images/proj-right-point.png") no-repeat scroll 30px center transparent;
     cursor: pointer;
-    height: 120px;
-    right: 0;
+    height: 185px;
     position: absolute;
-    top: 0;
-    width: 65px;
+    right: -100px;
+    top: -34px;
+    width: 165px;
 }
 .naviProj .right.inactive, .naviProj .left.inactive {
     opacity: 0.3;
@@ -3056,6 +3075,20 @@ input.hotel-input {
     font-size: 18px;
     margin-top: 25px;
     margin-bottom: 15px;
+}
+.headBlockOne .center-block h3.label {
+    background: none repeat scroll 0 0 #F4F7F9;
+    display: block;
+    float: left;
+    font-size: 11px;
+    left: 0px;
+    margin-top: 8px;
+    padding: 1px 2px;
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    border-radius: 5px;
+    font-weight: bold;
 }
 hr {
     background: #afb4b8;

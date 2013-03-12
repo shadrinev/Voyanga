@@ -75,7 +75,7 @@ class TourPanelSet
       from: @activeCalendarPanel().checkIn()
       to: @activeCalendarPanel().checkOut()
       activeSearchPanel: @activeCalendarPanel()
-      valuesDescriptions: [('Заезд в отель<br>в ' + @activeCalendarPanel().cityReadablePre()), ('Выезд из отеля<br>в ' + @activeCalendarPanel().cityReadablePre())]
+      valuesDescriptions: [('Заезд в отель<div class="breakWord">в ' + @activeCalendarPanel().cityReadablePre() + '</div>'), ('Выезд из отеля<div class="breakWord">в ' + @activeCalendarPanel().cityReadablePre() + '</div>')]
       intervalDescription: '0'
       selectionIndex: @selectionIndex
 
@@ -159,6 +159,7 @@ class TourPanelSet
     @activeCityGen('')
 
   showPanelCalendar: (args) =>
+    console.log('SPC1')
     @activeCalendarPanel args[0]
     if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
       @activeCalendarPanel().showCalendar(false)
@@ -186,6 +187,7 @@ class TourPanelSet
     @activeCalendarPanel().calendarHidden()
 
   afterRender: (el) =>
+    console.log('SPC2')
     do resizePanel
     if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
       @activeCalendarPanel().showCalendar(false)
@@ -237,6 +239,7 @@ class TourPanel extends SearchPanel
       @trigger "tourPanel:hasFocus", @
 
     @city.subscribe (newValue) =>
+      console.log('SPC3')
       if @sp.calendarActivated()
         @showCalendar()
 
@@ -249,7 +252,10 @@ class TourPanel extends SearchPanel
     else
       url = '/#' + @sp.getHash()
       if @startParams == url
-        url += 'eventId/' + @selectedParams.eventId
+        if @selectedParams.eventId
+          url += 'eventId/' + @selectedParams.eventId
+        else if @selectedParams.orderId
+          url += 'orderId/' + @selectedParams.orderId
 
       window.location.href = url
 
@@ -285,7 +291,7 @@ class TourPanel extends SearchPanel
     el.find('.cityStart').animate
       width: "261px"
       , 300, ->
-      el.find(".startInputTo").find("input").focus()
+        el.find(".startInputTo").find("input").focus()
 
   hideFromCityInput: (panel, event) ->
     hideFromCityInput(panel, event)
@@ -328,12 +334,15 @@ $(document).on "keyup change", '.cityStart input.second-path', (e) ->
   if (e.keyCode == 13)
     if elem.parent().hasClass("overflow")
       elem.parent().animate
-        width: "271px", 300, ->
-      $(this).removeClass "overflow"
-      $('.from.active .second-path').focus()
+        width: "271px"
+      , 300, ->
+        $(this).removeClass "overflow"
+        $('.from.active .second-path').focus()
 
       $(".cityStart").animate
-        width: "115px", 300
+        width: "115px"
+      , 300
       $(".cityStart").find(".startInputTo").animate
-        opacity: "1", 300, ->
-      $(this).hide()
+        opacity: "1"
+      , 300, ->
+        $(this).hide()

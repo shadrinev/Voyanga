@@ -1,16 +1,66 @@
+<!-- Google Analytics counter -->
 <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-38508830-1']);
-  _gaq.push(['_trackPageview']);
+//Стандартное 2 строки начинающие последовательность отслеживания
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-38508830-1']);
+//Поиск картинок
+_gaq.push(['_addOrganic', 'images.yandex.ru', 'text', true]);
+_gaq.push(['_addOrganic', 'images.rambler.ru', 'query', true]);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+//Поиск по блогам
+_gaq.push(['_addOrganic', 'blogs.yandex.ru', 'text', true]);
+
+//Поисковики рунета
+_gaq.push(['_addOrganic', 'go.mail.ru', 'q']);
+_gaq.push(['_addOrganic', 'nova.rambler.ru', 'query', true]);
+_gaq.push(['_addOrganic', 'nigma.ru', 's']);
+_gaq.push(['_addOrganic', 'webalta.ru', 'q']);
+_gaq.push(['_addOrganic', 'aport.ru', 'r']);
+_gaq.push(['_addOrganic', 'poisk.ru', 'text']);
+_gaq.push(['_addOrganic', 'liveinternet.ru', 'q']);
+_gaq.push(['_addOrganic', 'quintura.ru', 'request']);
+_gaq.push(['_addOrganic', 'search.qip.ru', 'query']);
+_gaq.push(['_addOrganic', 'ru.search.yahoo.com', 'p', true]);
+_gaq.push(['_addOrganic', 'ru.ask.com', 'q', true]);
+_gaq.push(['_addOrganic', 'search.icq.com', 'q']);
+
+//Поисковики укрнета
+_gaq.push(['_addOrganic', 'meta.ua', 'q']);
+_gaq.push(['_addOrganic', 'search.bigmir.net', 'z']);
+_gaq.push(['_addOrganic', 'search.i.ua', 'q']);
+_gaq.push(['_addOrganic', 'index.online.ua', 'q']);
+_gaq.push(['_addOrganic', 'web20.a.ua', 'query']);
+_gaq.push(['_addOrganic', 'search.ukr.net', 'search_query']);
+_gaq.push(['_addOrganic', 'search.ua', 'q']);
+
+//Поисковики байнета
+_gaq.push(['_addOrganic', 'search.tut.by', 'query']);
+_gaq.push(['_addOrganic', 'all.by', 'query']);
+
+//Другие поисковики
+_gaq.push(['_addOrganic', 'daemon-search.com', 'q']);
+_gaq.push(['_addOrganic', 'search.conduit.com', 'q']);
+_gaq.push(['_addOrganic', 'search.babylon.com', 'q']);
+_gaq.push(['_addOrganic', 'search.mywebsearch.com', 'searchfor']);
+_gaq.push(['_addOrganic', 'gigabase.ru', 'q']);
+_gaq.push(['_addOrganic', 'search.nur.kz', 'query']);
+_gaq.push(['_addOrganic', 'results.metabot.ru', 'st']);
+//Отслеживанием просмотры страниц
+_gaq.push(['_trackPageview']);
+
+//Фиксируем скорость загрузки страницы
+_gaq.push(['_trackPageLoadTime']);
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 
 </script>
+<!-- /Google Analytics counter -->
+
 <!-- Yandex.Metrika counter -->
 
 <script type="text/javascript">

@@ -22,19 +22,17 @@ pack:
 
 	cat \
         {{cssFiles}} \
-        > ./frontend/www/themes/v2/css/all.css;
+        > all.css;
 
 compress:
 	java -jar $(CLOSUREFILE) --js_output_file=all.min.js --create_source_map all.min.js.map --source_map_format=V3 --js=all.js --compilation_level SIMPLE_OPTIMIZATIONS;
-	java -jar $(YUIFILE) ./frontend/www/themes/v2/css/all.css -o ./frontend/www/themes/v2/css/all.min.css
+	java -jar $(YUIFILE) all.css -o all.min.css
 
 build:
 	$(MAKE) pack;
-	$(MAKE) compress;
-	echo "//@ sourceMappingURL=/js/all.min.js.map" >> all.min.js
-	mv -f all.js ./frontend/www/js/all.js
-	mv -f all.min.js ./frontend/www/js/all.min.js
-	mv -f all.min.js.map ./frontend/www/js/all.min.js.map
+	mv -f all.js ./frontend/www/js/all{{suffix}}.min.js
+	mv -f all.css ./frontend/www/themes/v2/css/all{{suffix}}.min.css
+	mv -f suffix.php ./frontend/www/suffix.php
 
 build-update:
 	$(MAKE) clean;

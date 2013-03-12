@@ -32,7 +32,7 @@ class Partner extends CActiveRecord
                 "strategies" => array(
                     "bcrypt" => array(
                         "class" => "common.extensions.YiiPasswords.ABcryptPasswordStrategy",
-                        "workFactor" => 14
+                        "workFactor" => 12
                     ),
                     "legacy" => array(
                         "class" => "common.extensions.YiiPasswords.ALegacyMd5PasswordStrategy",
@@ -71,7 +71,8 @@ class Partner extends CActiveRecord
             array('name, password, passwordStrategy, requiresNewPassword', 'required'),
             array('requiresNewPassword, cookieTime', 'numerical', 'integerOnly' => true),
             array('name, password', 'length', 'max' => 45),
-            array('salt', 'length', 'max' => 15),
+            array('password', 'length', 'max' => 100),
+            array('salt', 'length', 'max' => 40),
             array('passwordStrategy', 'length', 'max' => 40),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -139,12 +140,13 @@ class Partner extends CActiveRecord
         $chars = 'a2bc3de4fg5hk6mn7pq8su9vxyz'; // Используем непохожие друг на друга символы
         $length = 27; //strlen($chars); // если изменяем набор символов, то число нужно изменить
         $hash = '';
+        //todo: php5.4 fails here
         while ($id > $length - 1)
         {
-            $hash = $chars[fmod($id, $length)] . $hash;
+            $hash = @$chars[fmod($id, $length)] . $hash;
             $id = floor($id / $length);
         }
-        return $chars[$id] . $hash;
+        return @$chars[$id] . $hash;
     }
 
     /**
@@ -189,6 +191,11 @@ class Partner extends CActiveRecord
         return self::encodeId(($this->id + 10100));
     }
 
+    public static function getCurrentPartnerKey()
+    {
+        return self::encodeId((self::getCurrentPartner()->id + 10100));
+    }
+
     public static function getPartnerByKey($key)
     {
         $id = self::decodeId($key);
@@ -198,9 +205,21 @@ class Partner extends CActiveRecord
         return false;
     }
 
-    public static function setPartnerByKey()
+    public static function setPartnerByName($name)
+    {
+        $partner = Partner::model()->findByAttributes(array('name'=>$name));
+        if ($partner)
+        {
+            $pid = self::encodeId(($partner->id + 10100));
+            self::setPartnerByKey($pid);
+        }
+    }
+
+    public static function setPartnerByKey($forcePid = false)
     {
         $partner = false;
+        if ($forcePid)
+            $_REQUEST['pid'] = $forcePid;
         if (isset($_REQUEST['pid']))
         {
             if ($partner = self::getPartnerByKey($_REQUEST['pid']))

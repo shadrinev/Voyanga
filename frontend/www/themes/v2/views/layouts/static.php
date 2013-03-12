@@ -9,8 +9,10 @@ if (YII_DEBUG || Yii::app()->clientScript->buildingMode)
 }
 else
 {
-    Yii::app()->clientScript->registerCssFile('/themes/v2/css/all.min.css');
-    Yii::app()->clientScript->registerScriptFile('/js/all.min.js');
+    $path = Yii::getPathOfAlias('webroot');
+    $suffix = require_once($path.'/suffix.php');
+    Yii::app()->clientScript->registerCssFile('/themes/v2/css/all'.$suffix.'.min.css');
+    Yii::app()->clientScript->registerScriptFile('/js/all'.$suffix.'.min.js');
 }
 Yii::app()->clientScript->registerPackage('landing');
 Yii::app()->clientScript->registerScriptFile('/js/enterCredentials.js');
@@ -27,6 +29,15 @@ Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <?php if (!isset($this->title)) $title = Yii::app()->params['title.default']; else $title = $this->title ?>
     <title><?php echo $title ?></title>
+    <?php if (!YII_DEBUG): ?>
+        <script>
+            var _rollbarParams = {"server.environment": "<?php echo Yii::app()->params['env.code'] ?>"};
+            _rollbarParams["notifier.snippet_version"] = "2"; var _rollbar=["07c62e6cb5334856804ec3a260644fda", _rollbarParams]; var _ratchet=_rollbar;
+            (function(w,d){w.onerror=function(e,u,l){_rollbar.push({_t:'uncaught',e:e,u:u,l:l});};var i=function(){var s=d.createElement("script");var
+                f=d.getElementsByTagName("script")[0];s.src="//d37gvrvc0wt4s1.cloudfront.net/js/1/rollbar.min.js";s.async=!0;
+                f.parentNode.insertBefore(s,f);};if(w.addEventListener){w.addEventListener("load",i,!1);}else{w.attachEvent("onload",i);}})(window,document);
+        </script>
+    <?php endif ?>
     <script type="text/javascript"
             src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
@@ -36,9 +47,6 @@ Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
 <script type="text/javascript">
     window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
     window.currentCityCodeReadable = '<?php echo Geoip::getCurrentCity()->localRu;?>';
-    $(function(){
-        Raven.config('<?php echo Yii::app()->params['sentry.dsn']; ?>').install()
-    })
 </script>
 
 <div class="wrapper">

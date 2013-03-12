@@ -116,6 +116,8 @@ $(function () {
                     });
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
+		    _rollbar.push({level: 'error', msg: "passport500", data: formData});
+
                     new ErrorPopup('passport500'); //ошибка, когда мы не смогли сохранить паспортные данные
                 });
         });
@@ -289,7 +291,7 @@ function checkStatuses(statuses, ids) {
         if (el == 0)
             completed = false;
         if (_.isString(el))
-            errors += 'Ошибка бронирования сегмента номер ' + (i + 1) + ' = ' + el + '.<br>';
+            errors += 'Ошибка бронирования сегмента номер ' + (i + 1) + '.<br>';
     });
     if (!completed)
         return;
@@ -297,9 +299,10 @@ function checkStatuses(statuses, ids) {
         .done(function () {
 	    if (errors.length > 0)
 		return;
-
+	    
             $.get('/buy/startPayment', function (data) {
                 if (data.error) {
+		    _rollbar.push({level: 'error', msg: "startPayment Error", response: data});
                     new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
                 } else {
                     //if everything is ok then go to payment
@@ -319,14 +322,14 @@ function checkStatuses(statuses, ids) {
             });
         })
         .error(function () {
-            console.log('ERROR WHILE /buy/done')
+	    _rollbar.push({level: 'error', msg: "ERROR WHILE /buy/done", bookingIds: ids});
         });
     if (errors.length > 0) {
         errorText = errors;
+	_rollbar.push({level: 'error', msg: "Booking failed", bookingIds: ids, errorText: errors});
         new ErrorPopup('passportBookingError', [errorText]);
         return;
-    }
-
+    }   
 }
 
 initCredentialsPage = function () {

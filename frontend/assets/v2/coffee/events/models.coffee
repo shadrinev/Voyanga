@@ -34,7 +34,7 @@ ko.bindingHandlers.highlightChange =
       $(".IMGmain").eq(0).animate
         opacity: 0
         , speedAnimateChangePic, ->
-        $(".IMGmain:not(:last-child)").eq(0).remove()
+          $(".IMGmain:not(:last-child)").eq(0).remove()
 
       $(".IMGmain").eq(1).animate
         opacity: 1
@@ -76,12 +76,11 @@ class EventSet
     @currentEvent = ko.computed =>
       activeEvents = _.filter @events(), (event) ->
         event.active()
-      console.log "SETTING TAITL", activeEvents[0].title()
       @currentTitle activeEvents[0].title()
       return activeEvents[0]
     @previousImage = ko.observable ''
     @activeMaps = 0
-    ;
+    
     @mapsInited = false
     @isRendered = false
 
@@ -108,7 +107,7 @@ class EventSet
     $(".toursBigAll").animate
       opacity: 0
       , 700, ->
-      $(this).css "display", "none"
+        $(this).css "display", "none"
 
     $(".mapsBigAll").show()
     if !@mapsInited
@@ -123,7 +122,7 @@ class EventSet
     $(".mapsBigAll").animate
       opacity: 0
       , 700, ->
-      $(this).css "display", "none"
+        $(this).css "display", "none"
 
     $(".toursBigAll").show()
     $(".toursBigAll").animate
@@ -132,14 +131,18 @@ class EventSet
     @activeMaps = 0
 
   mapsInit: =>
-    if !google
+    if !window.google
+      # main google file was not loaded
       return
+    if !window.google.maps.ControlPosition
+      # file that gets loaded by main google file was not loaded
+      return
+      
     value = {lat: 52, lng: 10}
     @mapsInited = true
     # wait till element is present in document
     waitElement ".mapsBigAll", (element)->
-      gMap = new google.maps.Map(element[0], {'mapTypeControl': false, 'panControl': false, 'zoomControlOptions':
-        {position: google.maps.ControlPosition.LEFT_TOP, style: google.maps.ZoomControlStyle.SMALL}, 'streetViewControl': false, 'zoom': 3, 'mapTypeId': google.maps.MapTypeId.TERRAIN, 'center': new google.maps.LatLng(value.lat, value.lng)})
+      gMap = new google.maps.Map(element[0], {'mapTypeControl': false, 'panControl': false, 'zoomControlOptions':{position: google.maps.ControlPosition.LEFT_TOP, style: google.maps.ZoomControlStyle.SMALL}, 'streetViewControl': false, 'zoom': 3, 'mapTypeId': google.maps.MapTypeId.TERRAIN, 'center': new google.maps.LatLng(value.lat, value.lng)})
 
   afterRender: =>
     @mapsInited = false
@@ -152,11 +155,11 @@ class EventCategory
     @id = ko.observable data.id
     @title = ko.observable data.title
 
-class EventCategorySet
-  constructor: (data) ->
+EventCategorySet = (data) ->
     set = []
     $.each data, (i, eventCategory) ->
       set.push new EventCategory(eventCategory)
+    # FIXME 
     return set
 
 class EventLink
@@ -164,8 +167,7 @@ class EventLink
     @title = ko.observable data.title
     @url = ko.observable data.url
 
-class EventLinkSet
-  constructor: (data) ->
+EventLinkSet = (data) ->
     set = []
     $.each data, (i, eventLink) ->
       set.push new EventLink(eventLink)
@@ -175,8 +177,7 @@ class EventTag
   constructor: (data) ->
     @name = ko.observable data.name
 
-class EventTagSet
-  constructor: (data) ->
+EventTagSet = (data) ->
     set = []
     $.each data, (i, eventTag) ->
       set.push new EventTag(eventTag)
@@ -191,8 +192,7 @@ class EventPrice
     @city = ko.observable new City(data.city)
     @price = ko.observable data.price
 
-class EventPriceSet
-  constructor: (data) ->
+EventPriceSet = (data) ->
     set = []
     $.each data, (i, eventPrice) ->
       set.push new EventPrice(eventPrice)
@@ -202,8 +202,7 @@ class EventTour
   constructor: (data) ->
     @name = data.name
 
-class EventTourSet
-  constructor: (data) ->
+EventTourSet = (data) ->
     set = []
     $.each data, (i, tour) ->
       set.push new EventTour(tour)
@@ -366,9 +365,9 @@ class EventTourResultSet
             $('.sub-head.event').css('margin-top', '0px')
           else
             $('.sub-head.event').stop(true)
-            ;
+
             $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px')
-            ;
+            $('.tdCity .add-tour').hide()
             $('.sub-head.event').css('margin-top', (-@activePanel().heightPanelSet() + 4) + 'px')
             console.log('need hidePanel', $('.sub-head.event'), @activePanel().heightPanelSet(), $('.sub-head.event').css('margin-top'))
 
@@ -389,11 +388,15 @@ class EventTourResultSet
     @visiblePanel(!@visiblePanel())
   showPanel: =>
     console.log('showPanel')
-    $('.sub-head.event').animate({'margin-top': '0px'})
+    $('.sub-head.event').animate(
+      {'margin-top': '0px'},
+      ->
+        $('.tdCity .add-tour').show()
+    )
   hidePanel: =>
     console.log('hidePanel', @activePanel().heightPanelSet())
     $('.sub-head.event').css('height', (@activePanel().heightPanelSet()) + 'px')
-    ;
+    $('.tdCity .add-tour').hide()
     $('.sub-head.event').animate({'margin-top': (-@activePanel().heightPanelSet() + 4) + 'px'})
 
 
@@ -543,8 +546,8 @@ class EventPhotoBox
         {left: (dw) + 'px'},
         {
         step: (pos, info)=>
-          @onAnimate(pos, info),
-        complete: =>
+          @onAnimate(pos, info)
+        ,complete: =>
           @onComplete()
         }
       )
@@ -558,8 +561,8 @@ class EventPhotoBox
         {left: (dw) + 'px'},
         {
         step: (pos, info)=>
-          @onAnimate(pos, info),
-        complete: =>
+          @onAnimate(pos, info)
+        ,complete: =>
           @onComplete()
 
         }

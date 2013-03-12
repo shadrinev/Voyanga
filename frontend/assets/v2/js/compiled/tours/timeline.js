@@ -9,7 +9,7 @@ Timeline = (function() {
     this.toursData = toursData;
     this.scrollTimelineLeft = __bind(this.scrollTimelineLeft, this);
 
-    this.scrollTimelineRight = __bind(this.scrollTimelineRight, this);
+    this.scrollRight = __bind(this.scrollRight, this);
 
     this.showTimeline = __bind(this.showTimeline, this);
 
@@ -17,8 +17,9 @@ Timeline = (function() {
 
     this.timelinePosition = ko.observable(0);
     this.termsActive = true;
-    this.data = ko.computed(function() {
-      var avia_map, end_date, has_first_avia, has_first_hotel, hotel_map, item, item_avia, item_hotel, left, middle_date, obj, results, right, spans, start_date, timeline_length, x, _i, _j, _k, _len, _ref;
+    this.realData = ko.observableArray();
+    this.timelineFiller = ko.computed(function() {
+      var avia_map, duration, end_date, has_first_avia, has_first_hotel, hotel_map, item, item_avia, item_hotel, left, middle_date, obj, results, right, spans, start_date, timeline_length, x, _i, _j, _k, _l, _len, _len1, _ref;
       spans = [];
       avia_map = {};
       hotel_map = {};
@@ -36,24 +37,42 @@ Timeline = (function() {
             item: item
           };
         } else {
+          duration = obj.end.diff(obj.start, 'days');
+          if (duration === 0) {
+            duration = 20 / 32;
+          }
           avia_map[obj.start.format('M.D')] = {
-            duration: obj.end.diff(obj.start, 'days'),
+            duration: duration,
             item: item
           };
         }
       }
-      start_date = spans[0].start;
-      end_date = spans[spans.length - 1].end;
       if (true) {
         item = _this.toursData()[0];
         if (item.isAvia()) {
           if (item.rt()) {
-            end_date = moment(item.rtTimelineStart()).clone().hours(0).minutes(5);
-            avia_map[end_date.format('M.D')] = {
-              duration: 1,
+            start_date = moment(item.rtTimelineStart()).clone().hours(0).minutes(5);
+            end_date = moment(item.rtTimelineEnd()).clone().hours(0).minutes(5);
+            duration = end_date.diff(start_date, 'days');
+            if (duration === 0) {
+              duration = 20 / 32;
+            }
+            avia_map[start_date.format('M.D')] = {
+              duration: duration,
               item: item
             };
           }
+        }
+      }
+      start_date = spans[0].start;
+      end_date = spans[spans.length - 1].end;
+      for (_j = 0, _len1 = spans.length; _j < _len1; _j++) {
+        item = spans[_j];
+        if (start_date > item.start) {
+          start_date = item.start;
+        }
+        if (end_date < item.end) {
+          end_date = item.end;
         }
       }
       timeline_length = end_date.diff(start_date, 'days');
@@ -63,10 +82,11 @@ Timeline = (function() {
       }
       left = Math.round(timeline_length / 2);
       right = Math.round(timeline_length / 2);
-      results = [];
+      results = _this.realData;
+      results.removeAll();
       has_first_avia = false;
       has_first_hotel = false;
-      for (x = _j = 2; 2 <= left ? _j <= left : _j >= left; x = 2 <= left ? ++_j : --_j) {
+      for (x = _k = 2; 2 <= left ? _k <= left : _k >= left; x = 2 <= left ? ++_k : --_k) {
         obj = {
           date: middle_date.clone().subtract('days', left - x + 1)
         };
@@ -92,7 +112,7 @@ Timeline = (function() {
         }
         results.push(obj);
       }
-      for (x = _k = 0; 0 <= right ? _k <= right : _k >= right; x = 0 <= right ? ++_k : --_k) {
+      for (x = _l = 0; 0 <= right ? _l <= right : _l >= right; x = 0 <= right ? ++_l : --_l) {
         obj = {
           date: middle_date.clone().add('days', x)
         };
@@ -118,7 +138,7 @@ Timeline = (function() {
         }
         results.push(obj);
       }
-      return results;
+      return true;
     });
   }
 
@@ -161,9 +181,9 @@ Timeline = (function() {
     }
   };
 
-  Timeline.prototype.scrollTimelineRight = function() {
+  Timeline.prototype.scrollRight = function() {
     var scrollableFrame;
-    scrollableFrame = this.data().length * 32 - 23 * 32;
+    scrollableFrame = this.realData().length * 32 - 23 * 32;
     if (scrollableFrame < 0) {
       return;
     }
@@ -175,7 +195,7 @@ Timeline = (function() {
 
   Timeline.prototype.scrollTimelineLeft = function() {
     var scrollableFrame;
-    scrollableFrame = this.data().length * 32 - 23 * 32;
+    scrollableFrame = this.realData().length * 32 - 23 * 32;
     if (scrollableFrame < 0) {
       return;
     }

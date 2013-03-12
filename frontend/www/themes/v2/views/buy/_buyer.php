@@ -14,7 +14,7 @@
             <tbody>
             <tr>
                 <td class="tdEmail">
-                    <?php echo CHtml::activeEmailField($model, "contactEmail", array('id' => 'contactEmail')); ?>
+                    <?php echo CHtml::activeEmailField($model, "contactEmail", array('id' => 'contactEmail', 'placeholder' => 'example@mail.ru')); ?>
                 </td>
                 <td class="tdTelefon">
                     <div class="divInputTelefon <?php if ($hide) echo "inactive" ?>">
@@ -23,7 +23,7 @@
                     </div>
                 </td>
                 <td class="tdText">
-                    Чтобы мы знали куда прислать электронный билет и куда звонить в случае каких-либо изменений
+                    На адрес электронной почты будут высланы билеты, а по указанному номеру мы отправим смс с подтверждением
                 </td>
             </tr>
             </tbody>

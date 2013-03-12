@@ -2,7 +2,7 @@
 <div class="oneBlock">
     <!--=== ===-->
     <div class="paybuyContent">
-        <h1>Ваш заказ &#8470;<?php echo $orderId; ?></h1>
+        <h1>Оформление заказа &#8470;<?php echo $orderId; ?></h1>
         <!-- ALL TICKETS DIV -->
         <div class="allTicketsDIV">
             <span data-bind="template: {name: 'items', data: itemsToBuy}"></span>

@@ -169,14 +169,14 @@ class AjaxController extends BaseAjaxController
             $order->hash = $hash;
             $order->name = $name;
             $order->userId = Yii::app()->user->id;
-            $order->ttl = date('Y-m-d H:i:s', time() + 2*24*3600);
+            $order->ttl = date('Y-m-d H:i:s', time() + 30*24*3600);
             if (!$order->save())
                 throw new CException(500, CHtml::errorSummary($order));
             $isNewOrder = true;
         }
         else
         {
-            $inTwoDays = time() + 2*24*3600;
+            $inTwoDays = time() + 30*24*3600;
             if (strtotime($order->ttl) < $inTwoDays)
             {
                 $order->ttl = date('Y-m-d H:i:s', $inTwoDays);

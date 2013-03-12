@@ -14,7 +14,7 @@ class LandingController extends Controller
     {
         $currentCity = Geoip::getCurrentCity();
 
-        $sql = 'Select count(*) as cnt, cityId  from `hotel`  group by `cityId` order by cnt desc limit 3';
+        $sql = 'SELECT count(*) as cnt, cityId  FROM `hotel`  GROUP BY `cityId` ORDER BY cnt DESC LIMIT 3';
         $cityIds = array();
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
@@ -78,14 +78,28 @@ class LandingController extends Controller
         //    $currentCity = City::getCityByCode($cityFromCode);
         //}
         $citySet = false;
+        $city = false;
         if ($cityCode) {
             $city = City::getCityByCode($cityCode);
             $citySet = true;
         } else {
             $criteria = new CDbCriteria();
+            //$criteria->addInCondition('`cityId`',$cityIds);
             $criteria->addCondition('`countryId` = ' . $country->id);
-            $criteria->order = 'position desc';
-            $city = City::model()->find($criteria);
+
+            $criteria->limit = 1;
+
+            $hc = HotelDb::model()->find($criteria);
+            if($hc){
+                $city = City::getCityByPk($hc->cityId);
+            }
+            if(!$city){
+                $criteria = new CDbCriteria();
+                $criteria->addCondition('`countryId` = ' . $country->id);
+                $criteria->addCondition('`hotelbookId` > 0');
+                $criteria->order = 'position desc';
+                $city = City::model()->find($criteria);
+            }
         }
         if (!$city) {
             $city = City::getCityByPk(5185);
@@ -186,6 +200,7 @@ class LandingController extends Controller
             }
         }
         $hotelsInfo = array();
+        $city = false;
         if ($hc) {
             $hotelInfo = $hotelClient->hotelDetail($hc->id);
             $hotelInfo->price = $hc->minPrice;
@@ -195,7 +210,10 @@ class LandingController extends Controller
         } else {
             $hotelInfo = $hotelClient->hotelDetail($hotelId);
             if ($hotelInfo->city) {
-                $city = $hotelInfo->city;
+                $city = City::getCityByHotelbookId($hotelInfo->city);
+            }else{
+                //print_r($hotelInfo);
+                //die();
             }
         }
         if ($city) {
@@ -263,15 +281,19 @@ class LandingController extends Controller
         }
 
         $citiesFrom = array();
-        if (!$fromCity) {
-            if ($city->id != 4466) {
-                $this->addCityFrom($citiesFrom, 4466); // Moscow
-            }
-            if ($city->id != 5185) {
-                $this->addCityFrom($citiesFrom, 5185); // Spb
-            }
-            if ($currentCity->id != $city->id) {
-                $this->addCityFrom($citiesFrom, $currentCity->id);
+
+        if ($city->id != 4466) {
+            $this->addCityFrom($citiesFrom, 4466); // Moscow
+        }
+        if ($city->id != 5185) {
+            $this->addCityFrom($citiesFrom, 5185); // Spb
+        }
+        if ($currentCity->id != $city->id) {
+            $this->addCityFrom($citiesFrom, $currentCity->id);
+        }
+        if ($fromCity) {
+            if ($fromCity->id != $city->id) {
+                $this->addCityFrom($citiesFrom, $fromCity->id);
             }
         }
 
@@ -279,56 +301,53 @@ class LandingController extends Controller
         Yii::import('site.common.modules.hotel.models.*');
         $hotelClient = new HotelBookClient();
 
-        /*$criteria = new CDbCriteria();
-        $criteria->addCondition('countAirports > 0');
-        $criteria->addCondition('countryId = '.$country->id);
-        $cities = City::model()->findAll($criteria);
-        $cityIds = array();
-        foreach($cities as $city){
-            $cityIds[$city->id] = $city->id;
+        foreach($citiesFrom as $cityId=>$cityFromInfo){
+            $criteria = new CDbCriteria();
+            $criteria->addCondition('`to` = ' . $city->id);
+            /*if ($fromCity) {
+                $criteria->addCondition('`from` = ' . $fromCity->id);
+            } else {
+                $criteria->addCondition('`from` = ' . $currentCity->id);
+            }*/
+            $criteria->group = 'dateFrom';
+            $criteria->addCondition('`from` = ' . $cityId);
+            $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
+            $criteria->addCondition('`dateFrom` <= ' . date("'Y-m-d'", time() + 3600 * 24 * 17));
+            $criteria->addCondition('`dateBack` = \'0000-00-00\'' );
+            $criteria->order = 'priceBestPrice';
+            //$criteria->limit = 18;
+
+            $flightCache = FlightCache::model()->findAll($criteria);
+            $sortFc = array();
+            foreach ($flightCache as $fc) {
+                $k = strtotime($fc->dateFrom);
+                $sortFc[$k] = array('date' => $fc->dateFrom, 'price' => $fc->priceBestPrice);
+            }
+            ksort($sortFc);
+            $sortFc = array_slice($sortFc, 0, 18);
+            $citiesFrom[$cityId]['flightCache'] = $sortFc;
+
+            //select bast price for all future time
+            $criteria = new CDbCriteria();
+            $criteria->addCondition('`to` = ' . $city->id);
+
+            $criteria->addCondition('`from` = ' . $cityId);
+
+            $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
+            $criteria->addCondition('`dateBack` = \'0000-00-00\'' );
+
+            $criteria->order = 'priceBestPrice';
+
+            $flightCacheBestPrice = FlightCache::model()->find($criteria);
+            if ($flightCacheBestPrice) {
+                $flightCacheBestPriceArr = array('price' => $flightCacheBestPrice->priceBestPrice, 'date' => $flightCacheBestPrice->dateFrom);
+            } else {
+                $flightCacheBestPriceArr = array();
+            }
+            $citiesFrom[$cityId]['flightCacheBestPriceArr'] = $flightCacheBestPriceArr;
         }
 
-        if(isset($cityIds[$currentCity->id])){
-            unset($cityIds[$currentCity->id]);
-        }*/
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('`to` = ' . $city->id);
-        if ($fromCity) {
-            $criteria->addCondition('`from` = ' . $fromCity->id);
-        } else {
-            $criteria->addCondition('`from` = ' . $currentCity->id);
-        }
-        $criteria->group = 'dateFrom';
-        //$criteria->addCondition('`from` = ' . $currentCity->id);
-        $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
-        $criteria->addCondition('`dateFrom` <= ' . date("'Y-m-d'", time() + 3600 * 24 * 30));
-        $criteria->order = 'priceBestPrice';
-        //$criteria->limit = 18;
 
-        $flightCache = FlightCache::model()->findAll($criteria);
-        $sortFc = array();
-        foreach ($flightCache as $fc) {
-            $k = strtotime($fc->dateFrom);
-            $sortFc[$k] = array('date' => $fc->dateFrom, 'price' => $fc->priceBestPrice);
-        }
-        ksort($sortFc);
-        $sortFc = array_slice($sortFc, 0, 18);
-
-        //print_r($flightCache);die();
-
-
-        //Will be best price
-        /*$criteria = new CDbCriteria();
-        $criteria->addCondition('`to` = '.$city->id);
-        $criteria->addCondition('`from` = '.$currentCity->id);
-        $criteria->group = 'dateFrom';
-        $criteria->addCondition('`from` = '.$currentCity->id);
-        $criteria->addCondition('`dateFrom` >= '.date("'Y-m-d'"));
-        $criteria->addCondition('`dateTo` <= '.date("'Y-m-d'", time()+ 3600*24*30));
-        $criteria->order = 'priceBestPrice';
-        //$criteria->limit = 18;
-
-        $flightMinPrice = FlightCache::model()->findAll($criteria);*/
 
 
         $criteria = new CDbCriteria();
@@ -358,28 +377,10 @@ class LandingController extends Controller
             $flightCacheFromCurrent[] = (object)$row;
         }
 
-        //select bast price for all future time
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('`to` = ' . $city->id);
-        if ($fromCity) {
-            $criteria->addCondition('`from` = ' . $fromCity->id);
-        } else {
-            $criteria->addCondition('`from` = ' . $currentCity->id);
-        }
-        $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
 
-        $criteria->order = 'priceBestPrice';
-
-        $flightCacheBestPrice = FlightCache::model()->find($criteria);
-        if ($flightCacheBestPrice) {
-            $flightCacheBestPriceArr = array('price' => $flightCacheBestPrice->priceBestPrice, 'date' => $flightCacheBestPrice->dateFrom);
-        } else {
-            $flightCacheBestPriceArr = array();
-        }
         $this->layout = 'static';
-        $this->render('city', array('city' => $city, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'fromCity' => $fromCity, 'currentCity' => $currentCity, 'flightCache' => $sortFc,
-            'flightCacheFromCurrent' => $flightCacheFromCurrent,
-            'flightCacheBestPrice' => $flightCacheBestPriceArr
+        $this->render('city', array('city' => $city, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'fromCity' => $fromCity, 'currentCity' => $currentCity,
+            'flightCacheFromCurrent' => $flightCacheFromCurrent
         ));
     }
 
@@ -433,29 +434,41 @@ class LandingController extends Controller
             $cityIds[$city->id] = "'" . $city->id . "'";
         }
 
-        if (isset($cityIds[$currentCity->id])) {
-            unset($cityIds[$currentCity->id]);
-        }
+        $connection = Yii::app()->db;
+        $city = false;
 
-        $flightCache = array();
-        if ($cityIds) {
-            $connection = Yii::app()->db;
-            $sql = 'SELECT `from`,`to`,`dateFrom`,`dateBack`,`priceBestPrice` from (SELECT * FROM `flight_cache` WHERE `from` = \'' . $currentCity->id . '\' AND `to` IN (' . implode(',', $cityIds) . ') AND `dateFrom` > \'' . date('Y-m-d') . '\' AND `dateFrom` < \'' . date('Y-m-d', time() + 3600 * 24 * 60) . '\' ORDER BY priceBestPrice) as tbl1 GROUP BY `to` ORDER BY priceBestPrice  limit 14';
+        foreach($citiesFrom as $cityId=>$cityFromInfo){
+            $flightCache = array();
+            $tmpCityIds = $cityIds;
+            if (isset($cityIds[$cityId])) {
+                unset($cityIds[$cityId]);
+            }
+            if ($tmpCityIds) {
+                $sql = 'SELECT `from`,`to`,`dateFrom`,`dateBack`,`priceBestPrice` from (SELECT * FROM `flight_cache` WHERE `from` = \'' . $cityId . '\' AND `to` IN (' . implode(',', $tmpCityIds) . ') AND `dateFrom` > \'' . date('Y-m-d') . '\' AND `dateFrom` < \'' . date('Y-m-d', time() + 3600 * 24 * 60) . '\' ORDER BY priceBestPrice) as tbl1 GROUP BY `to` ORDER BY priceBestPrice  limit 10';
+                $command = $connection->createCommand($sql);
+                $dataReader = $command->query();
+                while (($row = $dataReader->read()) !== false) {
+                    $flightCache[] = (object)$row;
+                    if(!$city){
+                        if(!isset($citiesFrom[$row['to']])){
+                            $city = City::getCityByPk($row['to']);
+                        }
+                    }
+                }
+            }
+            $citiesFrom[$cityId]['flightCache'] = $flightCache;
+        }
+        if(!$city){
+            $sql = "SELECT * FROM city WHERE `countAirports` > 0 AND `countryId` = {$country->id} ORDER BY countAirports desc  limit 1";
             $command = $connection->createCommand($sql);
-            $dataReader = $command->query();
-            while (($row = $dataReader->read()) !== false) {
-                $flightCache[] = (object)$row;
+            $row = $command->queryRow();
+            if($row){
+                $city = new City;
+                $city->populateRecord($row);
             }
         }
 
-        /*$criteria = new CDbCriteria();
-        $criteria->addInCondition('`to`', $cityIds);
-        $criteria->addCondition('`from` = ' . $currentCity->id);
-        $criteria->order = 'updatedAt';
-        $criteria->limit = 14;
-        $criteria->group = '`to`';
 
-        $flightCache = FlightCache::model()->findAll($criteria);*/
 
         $criteria = new CDbCriteria();
         //$criteria->addInCondition('`cityId`',$cityIds);
@@ -486,8 +499,9 @@ class LandingController extends Controller
         }
 
         $this->layout = 'static';
-        $this->render('country', array('country', $country, 'countryMorph' => $countryMorph, 'flightCache' => $flightCache, 'flightCacheFromCurrent' => $flightCacheFromCurrent, 'hotelsInfo' => $hotelsInfo,
+        $this->render('country', array('country'=> $country, 'countryMorph' => $countryMorph, 'flightCacheFromCurrent' => $flightCacheFromCurrent, 'hotelsInfo' => $hotelsInfo,
             'currentCity' => $currentCity,
+            'city'=>$city,
             'citiesFrom' => $citiesFrom
         ));
     }
@@ -532,7 +546,7 @@ class LandingController extends Controller
         }
 
         $citiesFrom = array();
-        if (!$fromCity) {
+        //if (!$fromCity) {
             if ($city->id != 4466) {
                 $this->addCityFrom($citiesFrom, 4466); // Moscow
             }
@@ -541,6 +555,11 @@ class LandingController extends Controller
             }
             if ($currentCity->id != $city->id) {
                 $this->addCityFrom($citiesFrom, $currentCity->id);
+            }
+        //}
+        if ($fromCity) {
+            if ($fromCity->id != $city->id) {
+                $this->addCityFrom($citiesFrom, $fromCity->id);
             }
         }
 
@@ -561,70 +580,73 @@ class LandingController extends Controller
             unset($cityIds[$currentCity->id]);
         }*/
 
-        // selection flight cache for show best price grafik
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('`to` = ' . $city->id);
-        if ($fromCity) {
-            $criteria->addCondition('`from` = ' . $fromCity->id);
-        } else {
-            $criteria->addCondition('`from` = ' . $currentCity->id);
-        }
-        //$criteria->group = 'dateBack';
-        //$criteria->addCondition('`from` = '.$currentCity->id);
-        $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
-        $criteria->addCondition('`dateFrom` <= ' . date("'Y-m-d'", time() + 3600 * 24 * 17));
-        $criteria->addCondition('`dateBack` >= ' . date("'Y-m-d'"));
-        $criteria->addCondition('`dateBack` <= ' . date("'Y-m-d'", time() + 3600 * 24 * 17));
 
-        //$criteria->addCondition("`dateBack` <> '0000-00-00'");
-        $criteria->order = 'priceBestPrice';
-        //$criteria->limit = 18;
+        foreach($citiesFrom as $cityId=>$cityFromInfo){
+            // selection flight cache for show best price grafik
+            $criteria = new CDbCriteria();
+            $criteria->addCondition('`to` = ' . $city->id);
+            $criteria->addCondition('`from` = ' . $cityId);
+            //$criteria->group = 'dateBack';
+            //$criteria->addCondition('`from` = '.$currentCity->id);
+            $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
+            $criteria->addCondition('`dateFrom` <= ' . date("'Y-m-d'", time() + 3600 * 24 * 17));
+            $criteria->addCondition('`dateBack` >= ' . date("'Y-m-d'"));
+            $criteria->addCondition('`dateBack` <= ' . date("'Y-m-d'", time() + 3600 * 24 * 17));
 
-        $flightCache = FlightCache::model()->findAll($criteria);
+            //$criteria->addCondition("`dateBack` <> '0000-00-00'");
+            $criteria->order = 'priceBestPrice';
+            //$criteria->limit = 18;
 
-        $minPrice = false;
-        $maxPrice = false;
-        $activeMin = null;
-        $activeMax = null;
-        foreach ($flightCache as $k => $fc) {
-            $k = strtotime($fc->dateFrom);
-            if (!$minPrice) {
-                $minPrice = $fc->priceBestPrice;
-                $maxPrice = $fc->priceBestPrice;
-            } else {
-                if ($fc->priceBestPrice < $minPrice) {
+            $flightCache = FlightCache::model()->findAll($criteria);
+
+            $minPrice = false;
+            $maxPrice = false;
+            $activeMin = null;
+            $activeMax = null;
+            foreach ($flightCache as $k => $fc) {
+                $k = strtotime($fc->dateFrom);
+                if (!$minPrice) {
                     $minPrice = $fc->priceBestPrice;
-                    $activeMin = $k;
-                }
-                if ($fc->priceBestPrice > $maxPrice) {
                     $maxPrice = $fc->priceBestPrice;
-                    $activeMax = $k;
+                } else {
+                    if ($fc->priceBestPrice < $minPrice) {
+                        $minPrice = $fc->priceBestPrice;
+                        $activeMin = $k;
+                    }
+                    if ($fc->priceBestPrice > $maxPrice) {
+                        $maxPrice = $fc->priceBestPrice;
+                        $activeMax = $k;
+                    }
                 }
             }
+            $sortFc = array();
+            foreach ($flightCache as $fc) {
+                //$k = strtotime($fc->dateFrom);
+                $sortFc[] = array('price' => $fc->priceBestPrice, 'date' => $fc->dateFrom, 'dateBack' => $fc->dateBack);
+            }
+            $citiesFrom[$cityId]['flightCache'] = $sortFc;
+            //print_r($flightCache);die();
+
+
+            //select bast price for all future time
+            $criteria = new CDbCriteria();
+            $criteria->addCondition('`to` = ' . $city->id);
+            $criteria->addCondition('`from` = ' . $cityId);
+
+            $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
+            $criteria->addCondition('`dateBack` >= ' . date("'Y-m-d'"));
+
+            $criteria->order = 'priceBestPrice';
+
+            $flightCacheBestPrice = FlightCache::model()->find($criteria);
+            if($flightCacheBestPrice){
+                $flightCacheBestPriceArr = array('price' => $flightCacheBestPrice->priceBestPrice, 'date' => $flightCacheBestPrice->dateFrom, 'dateBack' => $flightCacheBestPrice->dateBack);
+            }else{
+                $flightCacheBestPriceArr = array();
+            }
+            $citiesFrom[$cityId]['flightCacheBestPriceArr'] = $flightCacheBestPriceArr;
         }
-        $sortFc = array();
-        foreach ($flightCache as $fc) {
-            //$k = strtotime($fc->dateFrom);
-            $sortFc[] = array('price' => $fc->priceBestPrice, 'date' => $fc->dateFrom, 'dateBack' => $fc->dateBack);
-        }
-        //print_r($flightCache);die();
 
-
-        //select bast price for all future time
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('`to` = ' . $city->id);
-        if ($fromCity) {
-            $criteria->addCondition('`from` = ' . $fromCity->id);
-        } else {
-            $criteria->addCondition('`from` = ' . $currentCity->id);
-        }
-        $criteria->addCondition('`dateFrom` >= ' . date("'Y-m-d'"));
-        $criteria->addCondition('`dateBack` >= ' . date("'Y-m-d'"));
-
-        $criteria->order = 'priceBestPrice';
-
-        $flightCacheBestPrice = FlightCache::model()->find($criteria);
-        $flightCacheBestPriceArr = array('price' => $flightCacheBestPrice->priceBestPrice, 'date' => $flightCacheBestPrice->dateFrom, 'dateBack' => $flightCacheBestPrice->dateBack);
 
 
         $criteria = new CDbCriteria();
@@ -668,9 +690,8 @@ class LandingController extends Controller
 
         $this->layout = 'static';
         //$this->render('landing');
-        $this->render('rtflight', array('city' => $city, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'fromCity' => $fromCity, 'currentCity' => $currentCity, 'flightCache' => $sortFc, 'maxPrice' => $maxPrice, 'minPrice' => $minPrice, 'activeMin' => $activeMin,
+        $this->render('rtflight', array('city' => $city, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'fromCity' => $fromCity, 'currentCity' => $currentCity,
             'flightCacheFromCurrent' => $flightCacheFromCurrent,
-            'flightCacheBestPrice' => $flightCacheBestPriceArr
         ));
     }
 

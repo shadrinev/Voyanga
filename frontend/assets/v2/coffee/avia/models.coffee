@@ -871,8 +871,7 @@ class AviaSearchParams extends SearchParams
     else
       @rt false
 
-  fromObject: (data)->
-    console.log data
+  fromObject: (data)=>
     @adults data.adt
     @children data.chd
     @infants data.inf
@@ -883,3 +882,22 @@ class AviaSearchParams extends SearchParams
     @date new Date(data.destinations[0].date)
     if @rt()
       @rtDate new Date(data.destinations[1].date)
+
+  GAKey: =>
+    @dep() + "/" + @arr()
+
+  GAData: =>
+    result = ''
+    if @rt()
+      result += '2'
+    else
+      result += '1'
+    passangers = [@adults(), @children(), @infants()]
+    result +=', ' + passangers.join(" - ")
+    result += ', ' + moment(@date()).format('D.M.YYYY')
+    if @rt()
+      result += ' - ' + moment(@rtDate()).format('D.M.YYYY')
+    result += ', ' + moment(@date()).diff(moment(), 'days')
+    if @rt()
+      result += ' - ' + moment(@rtDate()).diff(moment(@date()), 'days')
+      

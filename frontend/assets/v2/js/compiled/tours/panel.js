@@ -106,7 +106,7 @@ TourPanelSet = (function() {
         from: _this.activeCalendarPanel().checkIn(),
         to: _this.activeCalendarPanel().checkOut(),
         activeSearchPanel: _this.activeCalendarPanel(),
-        valuesDescriptions: ['Заезд в отель<br>в ' + _this.activeCalendarPanel().cityReadablePre(), 'Выезд из отеля<br>в ' + _this.activeCalendarPanel().cityReadablePre()],
+        valuesDescriptions: ['Заезд в отель<div class="breakWord">в ' + _this.activeCalendarPanel().cityReadablePre() + '</div>', 'Выезд из отеля<div class="breakWord">в ' + _this.activeCalendarPanel().cityReadablePre() + '</div>'],
         intervalDescription: '0',
         selectionIndex: _this.selectionIndex
       };
@@ -219,6 +219,7 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
+    console.log('SPC1');
     this.activeCalendarPanel(args[0]);
     if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
       return this.activeCalendarPanel().showCalendar(false);
@@ -256,6 +257,7 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.afterRender = function(el) {
+    console.log('SPC2');
     resizePanel();
     if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
       return this.activeCalendarPanel().showCalendar(false);
@@ -327,6 +329,7 @@ TourPanel = (function(_super) {
       return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
+      console.log('SPC3');
       if (_this.sp.calendarActivated()) {
         return _this.showCalendar();
       }
@@ -349,7 +352,11 @@ TourPanel = (function(_super) {
     } else {
       url = '/#' + this.sp.getHash();
       if (this.startParams === url) {
-        url += 'eventId/' + this.selectedParams.eventId;
+        if (this.selectedParams.eventId) {
+          url += 'eventId/' + this.selectedParams.eventId;
+        } else if (this.selectedParams.orderId) {
+          url += 'orderId/' + this.selectedParams.orderId;
+        }
       }
       return window.location.href = url;
     }
@@ -389,7 +396,9 @@ TourPanel = (function(_super) {
     el.find(".startInputTo").show();
     return el.find('.cityStart').animate({
       width: "261px"
-    }, 300, function() {}, el.find(".startInputTo").find("input").focus());
+    }, 300, function() {
+      return el.find(".startInputTo").find("input").focus();
+    });
   };
 
   TourPanel.prototype.hideFromCityInput = function(panel, event) {
@@ -452,16 +461,18 @@ $(document).on("keyup change", '.cityStart input.second-path', function(e) {
     if (elem.parent().hasClass("overflow")) {
       elem.parent().animate({
         width: "271px"
-      }, 300, function() {});
-      $(this).removeClass("overflow");
-      $('.from.active .second-path').focus();
+      }, 300, function() {
+        $(this).removeClass("overflow");
+        return $('.from.active .second-path').focus();
+      });
       $(".cityStart").animate({
         width: "115px"
       }, 300);
-      $(".cityStart").find(".startInputTo").animate({
+      return $(".cityStart").find(".startInputTo").animate({
         opacity: "1"
-      }, 300, function() {});
-      return $(this).hide();
+      }, 300, function() {
+        return $(this).hide();
+      });
     }
   }
 });

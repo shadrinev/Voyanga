@@ -68,7 +68,7 @@ class landBestPrice
             #console.log('add not empty',@_results[obj.date])
             ret.push {date: obj.date, landBP: @_results[obj.date]}
           else
-            console.log('add empty', @_emptyResults()[obj.date])
+            #console.log('add empty', @_emptyResults()[obj.date])
             ret.push {date: obj.date, landBP: @_emptyResults()[obj.date]}
       return ret
 
@@ -225,10 +225,11 @@ class landBestPriceSet
       return price
     @bestDate = ko.computed =>
       if @directBestPriceData()
-        dateFrom = moment(@directBestPriceData().date)
-        console.log(dateFrom)
-        strDate = dateUtils.formatDayMonthYear(dateFrom._d)
-        return strDate
+        if @directBestPriceData().date
+          dateFrom = moment(@directBestPriceData().date)
+          console.log('SETTING UP BACK DATE',@directBestPriceData())
+          strDate = dateUtils.formatDayMonthYear(dateFrom._d)
+          return strDate
       return false
 
 
@@ -290,4 +291,59 @@ class landBestPriceSet
         else
           console.log('not have active', @active())
 
+class landingCitySelector
+  constructor: (allCaches)->
+    @datesArr = ko.observableArray([])
 
+    @currentCityCode = ko.observable('')
+    @citiesInfo = {}
+    @citiesInfoArr = []
+    @landBestPriceSets = {}
+    @rt = ko.observable(true)
+    console.log('BeforeRender ',allCaches)
+    for cityId,cacheInfo of allCaches
+      console.log('in loop ',cacheInfo)
+      cityInfo = {
+        'code':cacheInfo['cityCode'],
+        'id':cacheInfo['cityId'],
+        'name':cacheInfo['cityName'],
+        'caseAcc':cacheInfo['cityAcc'],
+        'bestPrice':cacheInfo['flightCacheBestPriceArr']
+      }
+      @citiesInfo[cityInfo.code] = cityInfo
+      @citiesInfoArr.push cityInfo
+      @landBestPriceSets[cityInfo.code] = new landBestPriceSet(cacheInfo['flightCache'])
+    @active = ko.computed =>
+      if @currentCityCode()
+        return @landBestPriceSets[@currentCityCode()].active()
+    @bestDate = ko.computed =>
+      if @currentCityCode()
+        val = @landBestPriceSets[@currentCityCode()].bestDate()
+        console.log('valueeeee:',val, (typeof(val)))
+        return val
+      return false
+    @selectedPrice = ko.computed =>
+      if @currentCityCode()
+        return @landBestPriceSets[@currentCityCode()].selectedPrice()
+    console.log('AFTER RENDER CitySelector',@citiesInfo)
+
+  selectCity: (cityCode)=>
+    console.log('select city')
+    if typeof(cityCode)!='string' && cityCode.code
+      cityCode = cityCode.code
+    @currentCityCode(cityCode)
+    console.log('best price info',@citiesInfo[cityCode].bestPrice)
+    @landBestPriceSets[cityCode].setDirectBestPrice(@citiesInfo[cityCode].bestPrice)
+    $('input.second-path.departureCity').val('')
+    $('input.input-path.departureCity').val('')
+    console.log('Im rest this fields:',$('input.second-path.departureCity').val(''),$('input.input-path.departureCity').val(''));
+    app.fakoPanel().departureCity(cityCode)
+    app.fakoPanel().arrivalCity(window.pointCity)
+    app.fakoPanel().rt(@rt())
+    @datesArr @landBestPriceSets[cityCode].datesArr()
+
+
+  bestDateClick: ()=>
+    if @currentCityCode()
+      @landBestPriceSets[@currentCityCode()].bestDateClick()
+      app.fakoPanel().navigateToNewSearch()

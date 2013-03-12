@@ -90,7 +90,7 @@ class PartnerManageController extends ABaseAdminController
             if ($model->save())
             {
                 Yii::app()->user->setFlash('success', 'Данные о партнере '.($isCreated ? 'созданы' : 'обновлены').$newPasswordIs);
-                #$this->redirect(array('view','id'=>$model->id));
+                $this->redirect(array('edit','id'=>$model->id));
             }
         }
         $model->password = ""; // we don't pass the password to the view

@@ -48,9 +48,11 @@ AviaPanel = (function(_super) {
     this.selectionIndex = ko.observable('');
     this.selectionIndex.subscribe(function(newValue) {
       if (newValue === 1 && _this.rt()) {
-        VoyangaCalendarStandart.checkCalendarValue(false);
-        _this.departureDate('');
-        return _this.rtDate('');
+        if (_this.departureDate()) {
+          VoyangaCalendarStandart.checkCalendarValue(false);
+          _this.departureDate('');
+          return _this.rtDate('');
+        }
       }
     });
     this.oldCalendarState = this.minimizedCalendar();
@@ -209,6 +211,7 @@ AviaPanel = (function(_super) {
       window.location.href = '/#' + this.sp.getHash();
       return;
     }
+    _gaq.push(['_trackEvent', 'Avia_press_button_search', this.sp.GAKey(), this.sp.GAData()]);
     app.navigate(this.sp.getHash(), {
       trigger: true
     });

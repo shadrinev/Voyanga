@@ -95,6 +95,8 @@ ToursAviaResultSet = (function(_super) {
 
     this.rt = __bind(this.rt, this);
 
+    this.rtTimelineEnd = __bind(this.rtTimelineEnd, this);
+
     this.rtTimelineStart = __bind(this.rtTimelineStart, this);
 
     this.timelineEnd = __bind(this.timelineEnd, this);
@@ -140,6 +142,7 @@ ToursAviaResultSet = (function(_super) {
     this.panel.original_template = this.panel.template;
     this.results = ko.observable();
     this.selection = ko.observable(null);
+    this.observableSP = ko.observable(null);
     this.newResults(raw, sp);
     this.data = {
       results: this.results
@@ -150,6 +153,7 @@ ToursAviaResultSet = (function(_super) {
     var result,
       _this = this;
     this.rawSP = sp;
+    this.observableSP(sp);
     result = new AviaResultSet(raw);
     result.injectSearchParams(sp);
     result.postInit();
@@ -195,21 +199,25 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.toBuyRequest = function() {
-    var result;
+    var result, sp;
+    sp = this.observableSP();
     result = {};
     result.type = 'avia';
     result.searchId = this.selection().cacheId;
     result.searchKey = this.selection().flightKey();
-    result.adults = this.rawSP.adt;
-    result.children = this.rawSP.chd;
-    result.infants = this.rawSP.inf;
+    result.adults = sp.adt;
+    result.children = sp.chd;
+    result.infants = sp.inf;
     return result;
   };
 
   ToursAviaResultSet.prototype.doNewSearch = function() {
     var _this = this;
+    window.VisualLoaderInstance.start(this.api.loaderDescription);
     return this.api.search(this.panel.sp.url(), function(data) {
-      return _this.newResults(data.flights.flightVoyages, data.searchParams);
+      _this.newResults(data.flights.flightVoyages, data.searchParams);
+      ko.processAllDeferredBindingUpdates();
+      return window.VisualLoaderInstance.hide();
     });
   };
 
@@ -281,54 +289,69 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.dateHtml = function(startonly) {
-    var result;
+    var result, sp;
     if (startonly == null) {
       startonly = false;
     }
+    sp = this.observableSP();
     result = '<div class="day">';
-    result += dateUtils.formatHtmlDayShortMonth(moment(this.rawSP.destinations[0].date));
+    result += dateUtils.formatHtmlDayShortMonth(moment(sp.destinations[0].date));
     result += '</div>';
     if (startonly) {
       return result;
     }
     if (this.rt()) {
       result += '<div class="day">';
-      result += dateUtils.formatHtmlDayShortMonth(moment(this.rawSP.destinations[1].date));
+      result += dateUtils.formatHtmlDayShortMonth(moment(sp.destinations[1].date));
       result += '</div>';
     }
     return result;
   };
 
   ToursAviaResultSet.prototype.timelineStart = function() {
-    var source;
+    var source, sp;
+    sp = this.observableSP();
     source = this.selection();
     if (source === null) {
-      return this.rawSP.destinations[0].date;
+      return sp.destinations[0].date;
       source = this.results().data[0];
     }
     return source.departureDate();
   };
 
   ToursAviaResultSet.prototype.timelineEnd = function() {
-    var source;
+    var source, sp;
+    sp = this.observableSP();
     source = this.selection();
     if (source === null) {
-      return this.rawSP.destinations[0].date;
+      return sp.destinations[0].date;
     }
     return source.arrivalDate();
   };
 
   ToursAviaResultSet.prototype.rtTimelineStart = function() {
-    var source;
+    var source, sp;
+    sp = this.observableSP();
     source = this.selection();
     if (source === null) {
-      return this.rawSP.destinations[1].date;
+      return sp.destinations[1].date;
     }
     return source.rtDepartureDate();
   };
 
+  ToursAviaResultSet.prototype.rtTimelineEnd = function() {
+    var source, sp;
+    sp = this.observableSP();
+    source = this.selection();
+    if (source === null) {
+      return sp.destinations[1].date;
+    }
+    return source.rtArrivalDate();
+  };
+
   ToursAviaResultSet.prototype.rt = function() {
-    var source;
+    var source, sp;
+    sp = this.observableSP();
     source = this.selection();
     if (source === null) {
       source = this.results().data[0];
@@ -337,19 +360,21 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.timelineEndDate = function() {
-    var source;
+    var source, sp;
+    sp = this.observableSP();
     source = this.selection();
     if (source === null) {
-      return moment(this.rawSP.destinations[0].date).toDate();
+      return moment(sp.destinations[0].date).toDate();
     }
     return source.arrivalDate();
   };
 
   ToursAviaResultSet.prototype.timelineStartDate = function() {
-    var source;
+    var source, sp;
+    sp = this.observableSP();
     source = this.selection();
     if (source === null) {
-      return moment(this.rawSP.destinations[0].date).toDate();
+      return moment(sp.destinations[0].date).toDate();
     }
     return source.departureDate();
   };
@@ -449,6 +474,7 @@ ToursHotelsResultSet = (function(_super) {
     this.data = {
       results: this.results
     };
+    this.observableSP = ko.observable();
     this.savingsWithAviaOnly = true;
     this.newResults(raw, sp);
   }
@@ -457,6 +483,7 @@ ToursHotelsResultSet = (function(_super) {
     var result,
       _this = this;
     this.rawSP = sp;
+    this.observableSP(sp);
     result = new HotelsResultSet(data, sp, this.activeHotel);
     result.tours(true);
     result.postInit();
@@ -559,7 +586,8 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype._selectRoomSet = function(roomSet) {
-    var hotel;
+    var hotel, limit, ordKey, pageFound, result, sortKey, _i, _len, _ref,
+      _this = this;
     hotel = roomSet.parent;
     hotel.parent = this.results();
     this.activeHotel(hotel.hotelId);
@@ -569,11 +597,38 @@ ToursHotelsResultSet = (function(_super) {
       hotel: hotel
     });
     hotel.parent.filtersConfig = hotel.parent.filters.getConfig();
-    return hotel.parent.pagesLoad = hotel.parent.showParts();
+    limit = 0;
+    sortKey = hotel.parent.sortBy();
+    ordKey = hotel.parent.ordBy();
+    hotel.parent.data.sort(function(left, right) {
+      if (left[sortKey] < right[sortKey]) {
+        return -1 * ordKey;
+      }
+      if (left[sortKey] > right[sortKey]) {
+        return 1 * ordKey;
+      }
+      return 0;
+    });
+    _ref = hotel.parent.data();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      result = _ref[_i];
+      if (result.visible()) {
+        limit++;
+        if (result.hotelId === hotel.hotelId) {
+          break;
+        }
+      }
+    }
+    pageFound = Math.ceil(limit / hotel.parent.showLimit);
+    if (pageFound > hotel.parent.showParts()) {
+      return hotel.parent.pagesLoad = pageFound;
+    } else {
+      return hotel.parent.pagesLoad = hotel.parent.showParts();
+    }
   };
 
   ToursHotelsResultSet.prototype.toBuyRequest = function() {
-    var result, room, _i, _len, _ref;
+    var result, room, sp, _i, _len, _ref;
     result = {};
     result.type = 'hotel';
     result.searchId = this.selection().hotel.cacheId;
@@ -581,7 +636,8 @@ ToursHotelsResultSet = (function(_super) {
     result.adults = 0;
     result.age = false;
     result.cots = 0;
-    _ref = this.rawSP.rooms;
+    sp = this.observableSP();
+    _ref = sp.rooms;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
       result.adults += room.adultCount * 1;
@@ -595,9 +651,12 @@ ToursHotelsResultSet = (function(_super) {
 
   ToursHotelsResultSet.prototype.doNewSearch = function() {
     var _this = this;
+    window.VisualLoaderInstance.start(this.api.loaderDescription);
     return this.api.search(this.panel.sp.url(), function(data) {
       data.searchParams.cacheId = data.cacheId;
-      return _this.newResults(data, data.searchParams);
+      _this.newResults(data, data.searchParams);
+      ko.processAllDeferredBindingUpdates();
+      return window.VisualLoaderInstance.hide();
     });
   };
 
@@ -624,10 +683,12 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.destinationText = function() {
+    var sp;
+    sp = this.observableSP();
     if (this.noresults) {
-      return this.rawSP.cityFull.caseNom;
+      return sp.cityFull.caseNom;
     } else {
-      return "<span class='hotel-left-long'>Отель в " + this.rawSP.cityFull.casePre + "</span><span class='hotel-left-short'>" + this.rawSP.cityFull.caseNom + "</span>";
+      return "<span class='hotel-left-long'>Отель в " + sp.cityFull.casePre + "</span><span class='hotel-left-short'>" + sp.cityFull.caseNom + "</span>";
     }
   };
 
@@ -889,7 +950,6 @@ ToursResultSet = (function() {
     }
     this.trigger('inner-template', entry.template);
     return window.setTimeout(function() {
-      console.log('TourOut', window.hrs.data()[0]);
       if (entry.afterRender && afterRender) {
         console.log('arin');
         entry.afterRender();
@@ -964,18 +1024,19 @@ ToursResultSet = (function() {
     });
     ResizeAvia();
     return window.setTimeout(function() {
-      var aviaRes, calendarEvents, checkIn, checkOut, cur, data, description, dest, el, flight, flights, hash, hotelEvent, interval, people, resSet, room, title, tmp, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3;
+      var aviaRes, calendarEvents, checkIn, checkOut, cur, data, description, dest, el, flight, flights, hash, hotelEvent, interval, people, resSet, sp, title, tmp, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
       people = 0;
       calendarEvents = [];
       _ref = _this.data();
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         resSet = _ref[_i];
+        sp = resSet.observableSP();
         if (resSet.isAvia()) {
           flights = [];
           if (people === 0) {
-            people = resSet.rawSP.adt + resSet.rawSP.chd + resSet.rawSP.inf;
+            people = sp.adt + sp.chd + sp.inf;
           }
-          _ref1 = resSet.rawSP.destinations;
+          _ref1 = sp.destinations;
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             dest = _ref1[_j];
             flight = {
@@ -1003,23 +1064,18 @@ ToursResultSet = (function() {
         }
         if (resSet.isHotel()) {
           if (people === 0) {
-            _ref2 = resSet.rawSP.rooms;
-            for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
-              room = _ref2[_l];
-              people += room.overall();
-            }
+            people = sp.overall();
           }
-          checkIn = moment(resSet.rawSP.checkIn).add('h', 8);
-          checkOut = moment(resSet.rawSP.checkIn).add('d', resSet.rawSP.duration);
+          checkIn = moment(sp.checkIn).add('h', 8);
+          checkOut = moment(sp.checkIn).add('d', sp.duration);
           hotelEvent = {
             dayStart: checkIn._d,
             dayEnd: checkOut._d,
             type: 'hotel',
             description: '',
-            city: resSet.rawSP.city
+            city: sp.city
           };
           if (resSet.selection()) {
-            console.log('select:', resSet.selection());
             hotelEvent.description = resSet.selection().hotel.hotelName;
           }
           calendarEvents.push(hotelEvent);
@@ -1050,13 +1106,13 @@ ToursResultSet = (function() {
       interval = dateUtils.formatDayMonthInterval(calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd);
       tmp.push(interval);
       tmp.push((_this.price() - _this.savings()) + ' руб. ' + Utils.peopleReadable(people));
-      title = "Я составил путешествие на Воянге";
+      title = "Я составил путешествие на Voyanga";
       description = tmp.join(', ');
       hash = dateUtils.formatDayMonthInterval(calendarEvents[0].dayStart, _.last(calendarEvents).dayEnd);
       hash += (_this.price() - _this.savings()) + people;
-      _ref3 = _this.data();
-      for (_m = 0, _len4 = _ref3.length; _m < _len4; _m++) {
-        el = _ref3[_m];
+      _ref2 = _this.data();
+      for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
+        el = _ref2[_l];
         cur = el.selection();
         if (cur && el.isAvia()) {
           hash += cur.similarityHash();
@@ -1069,13 +1125,15 @@ ToursResultSet = (function() {
         name: description
       }, _this.createTourData());
       return $.post('/ajax/getSharingUrl', data, function(response) {
+        var url;
+        url = response['short'];
         $('.shareSocial').html('');
         $('.socialSharePlaceholder').clone(true).show().appendTo('.shareSocial');
-        $('.shareSocial').find('input[name=textTextText]').val(response.short);
+        $('.shareSocial').find('input[name=textTextText]').val(url);
         return $('.shareSocial').show().find('a').each(function() {
           $(this).attr('addthis:title', title);
           $(this).attr('addthis:description', description);
-          $(this).attr('addthis:url', response.short);
+          $(this).attr('addthis:url', url);
           return addthis.toolbox('.socialSharePlaceholder');
         });
       });
@@ -1174,11 +1232,14 @@ ToursResultSet = (function() {
       entry = items[index];
       console.log('findAndSelectItems entry', entry, ' in ', index, this.data()[index]);
       if (this.data()[index].isAvia()) {
-        result = this.data()[index].findAndSelect(this.data()[index].results().cheapest());
+        result = this.data()[index].findAndSelect(entry);
+        if (!result) {
+          result = this.data()[index].findAndSelect(this.data()[index].results().cheapest());
+        }
         if (!result) {
           success = false;
-          console.log('false res1:', result, this.data()[index], this.data()[index].results().cheapest());
         }
+        console.log('false res1:', result, this.data()[index], this.data()[index].results().cheapest());
       } else {
         result = this.data()[index].findAndSelectSame(entry);
         if (!result) {
@@ -1293,6 +1354,9 @@ TourSearchParams = (function(_super) {
     if (this.eventId) {
       params.push('eventId=' + this.eventId);
     }
+    if (this.orderId) {
+      params.push('orderId=' + this.orderId);
+    }
     result += params.join("&");
     window.voyanga_debug("Generated search url for tours", result);
     return result;
@@ -1328,7 +1392,7 @@ TourSearchParams = (function(_super) {
   };
 
   TourSearchParams.prototype.fromList = function(data) {
-    var destination, doingrooms, i, oldSelection, room, _i, _ref;
+    var destination, doingrooms, i, oldSelection, room, toSaveIn, _i, _ref;
     this.startCity(data[0]);
     this.returnBack(data[1]);
     doingrooms = false;
@@ -1347,7 +1411,8 @@ TourSearchParams = (function(_super) {
     i = i + 1;
     oldSelection = false;
     while (i < data.length) {
-      if (data[i] === 'eventId') {
+      if ((data[i] === 'eventId') || (data[i] === 'orderId')) {
+        toSaveIn = data[i];
         oldSelection = true;
         break;
       }
@@ -1357,12 +1422,9 @@ TourSearchParams = (function(_super) {
       i++;
     }
     if (oldSelection) {
-      console.log('really have oldParams');
       i++;
-      console.log('old params is', data[i]);
-      this.eventId = data[i];
+      return this[toSaveIn] = data[i];
     }
-    return window.voyanga_debug('Result', this);
   };
 
   TourSearchParams.prototype.fromObject = function(data) {
@@ -1472,6 +1534,7 @@ TourTripResultSet = (function() {
     this.showTariffRules = function() {
       var aviaApi;
       aviaApi = new AviaAPI();
+      window.VisualLoaderInstance.start('Загружаем правила применения тарифов');
       return aviaApi.search('flight/search/tariffRules?flightIds=' + _this.flightIdsString(), function(data) {
         var code, gp, item, key, tariff, tariffs, _i, _len, _ref, _ref1;
         if (data) {
@@ -1492,12 +1555,12 @@ TourTripResultSet = (function() {
             }
           }
           if (tariffs) {
-            console.log(tariffs);
-            return gp = new GenericPopup('#tariff-rules', {
+            gp = new GenericPopup('#tariff-rules', {
               'tariffs': tariffs
             });
           }
         }
+        return window.VisualLoaderInstance.hide();
       });
     };
     this.flightCounterWord = ko.computed(function() {
@@ -1613,7 +1676,7 @@ TourTripResultSet = (function() {
 
 TourResultSet = (function() {
 
-  function TourResultSet(resultSet) {
+  function TourResultSet(resultSet, orderId) {
     this.hidePanel = __bind(this.hidePanel, this);
 
     this.showPanel = __bind(this.showPanel, this);
@@ -1629,6 +1692,7 @@ TourResultSet = (function() {
     this.fullPrice = ko.observable(0);
     this.activePanel = ko.observable(null);
     this.overviewPeople = ko.observable(0);
+    this.orderId = orderId;
     this.overviewPricePeople = ko.observable('');
     this.visiblePanel = ko.observable(true);
     this.startCity = ko.observable('');
@@ -1665,16 +1729,17 @@ TourResultSet = (function() {
     this.totalCost = 0;
     panelSet = new TourPanelSet();
     this.activePanel(panelSet);
-    if (this.resultSet.items[0].isAvia) {
-      startCity = this.resultSet.items[0].searchParams.departure_iata;
-      startCityReadable = this.resultSet.items[0].searchParams.departure;
+    if (this.resultSet.items[0].isFlight) {
+      startCity = this.resultSet.items[0].searchParams.destinations[0].departure_iata;
+      startCityReadable = this.resultSet.items[0].searchParams.destinations[0].departure;
     } else {
       startCity = window.currentCityCode;
       startCityReadable = window.currentCityCodeReadable;
     }
     this.activePanel().startCity(startCity);
     this.activePanel().selectedParams = {
-      ticketParams: []
+      ticketParams: [],
+      orderId: this.orderId
     };
     this.activePanel().sp.calendarActivated(false);
     window.app.fakoPanel(panelSet);
@@ -1732,7 +1797,6 @@ TourResultSet = (function() {
       _.sortBy(this.items(), function(item) {
         return item.startDate;
       });
-      this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
       this.startDate = this.items()[0].startDate;
       this.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(this.startDate) + '</div>');
       firstHotel = true;
@@ -1764,6 +1828,7 @@ TourResultSet = (function() {
       }
       this.activePanel().saveStartParams();
       _.last(this.activePanel().panels()).minimizedCalendar(true);
+      this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
       setTimeout(function() {
         return _this.activePanel().sp.calendarActivated(true);
       }, 1000);
@@ -1797,10 +1862,13 @@ TourResultSet = (function() {
   TourResultSet.prototype.showPanel = function() {
     return $('.sub-head.event').animate({
       'margin-top': '0px'
+    }, function() {
+      return $('.tdCity .add-tour').show();
     });
   };
 
   TourResultSet.prototype.hidePanel = function() {
+    $('.tdCity .add-tour').hide();
     return $('.sub-head.event').css('height', (this.activePanel().heightPanelSet()) + 'px').animate({
       'margin-top': (-this.activePanel().heightPanelSet() + 4) + 'px'
     });

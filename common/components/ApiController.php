@@ -32,7 +32,7 @@ class ApiController extends Controller
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
 
-    private function _sendResponse($raw=false, $dataType = false)
+    public function _sendResponse($raw=false, $dataType = false)
     {
         $status = $this->_statusCode;
         if ($dataType === false)

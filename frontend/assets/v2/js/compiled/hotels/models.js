@@ -698,7 +698,7 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.getFullInfo = function() {
-    var api, hotelResults, key, roomSet, url, _i, _len, _ref,
+    var api, handler, hotelResults, key, roomSet, url, _i, _len, _ref,
       _this = this;
     if (!this.haveFullInfo()) {
       api = new HotelsAPI;
@@ -711,10 +711,8 @@ HotelResult = (function() {
       }
       url = 'hotel/search/info?hotelId=' + this.hotelId;
       url += '&hotelResult=' + hotelResults.join(',');
-      console.log(this.parent.cacheId);
-      return api.search(url, function(data) {
+      handler = function(data) {
         var cancelObjs, ind, set, _j, _len1, _ref1, _ref2, _ref3;
-        window.voyanga_debug('searchInfo', data);
         if (!data.hotel) {
           return false;
         }
@@ -731,16 +729,14 @@ HotelResult = (function() {
           roomSet = _ref2[ind];
           key = roomSet.resultId;
           cancelObjs[key] = roomSet;
+          console.log(cancelObjs);
         }
-        console.log(cancelObjs);
         _ref3 = _this.roomSets();
         for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
           roomSet = _ref3[_j];
           key = roomSet.resultId;
           if (cancelObjs[key]) {
             roomSet.addCancelationRules(cancelObjs[key]);
-          } else {
-            console.log('not found result with key', key);
           }
         }
         _this.roomMixed = ko.computed(function() {
@@ -769,9 +765,9 @@ HotelResult = (function() {
           }
           return result;
         });
-        _this.haveFullInfo(true);
-        return console.log(_this.roomCombinations());
-      }, false);
+        return _this.haveFullInfo(true);
+      };
+      return api.search(url, handler);
     }
   };
 

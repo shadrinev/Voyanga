@@ -242,6 +242,10 @@ class Hotel extends CApplicationComponent
         {
             $this->_rating = $params['rating'];
         }
+        if($this->hotelName){
+            $normName = mb_convert_case($this->hotelName,MB_CASE_TITLE, "UTF-8");
+            $this->hotelName = $normName;
+        }
     }
 
     public function addRoom($room)

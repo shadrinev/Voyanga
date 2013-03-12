@@ -19,7 +19,7 @@ $dayFormat = "d|n|w";
             <tr>
                 <td class="tdLogo"><img src="images/logo.png" width="209" height="50"></td>
                 <td class="tdEticket">Подтверждение<br>бронирования</td>
-                <td class="tdTelefon">+7 (499) 533-09-33</td>
+                <td class="tdTelefon">+7 (499) 553-09-33</td>
                 <td class="tdLink"><a href="http://www.voyanga.com">www.voyanga.com</a><br>
                     <a href="mailto:support@voyanga.com">support@voyanga.com</a></td>
             </tr>

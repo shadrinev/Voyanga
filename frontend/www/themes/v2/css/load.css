@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* CSS Document */
 .loadWrapBg {
-	background: rgba(38,41,46,0.8);
+	background: rgba(30,33,39,0.8);
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -10,19 +10,122 @@
 	left: 0px;
 	bottom: 0px;
 	z-index: 1000;
+    min-width: 1000px;
+}
+.loadWrapBg .tips {
+    background: -moz-linear-gradient(top,  rgba(30,33,39,0) 0%, rgba(15,18,25,0.8) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,33,39,0)), color-stop(100%,rgba(15,18,25,0.8)));
+    background: -webkit-linear-gradient(top,  rgba(30,33,39,0) 0%,rgba(15,18,25,0.8) 100%);
+    background: -o-linear-gradient(top,  rgba(30,33,39,0) 0%,rgba(15,18,25,0.8) 100%);
+    background: -ms-linear-gradient(top,  rgba(30,33,39,0) 0%,rgba(15,18,25,0.8) 100%);
+    background: linear-gradient(to bottom,  rgba(30,33,39,0) 0%,rgba(15,18,25,0.8) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001e2127', endColorstr='#cc0f1219',GradientType=0 );
+
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 280px;
+    width: 100%;
+    min-width: 1000px;
+}
+.loadWrapBg .tips .text {
+    position: absolute;
+    border-top: 1px solid rgba(246,247,249, 0.3);
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    line-height: 60px;
+    font-size: 14px;
+    color: #f6f7f9;
+    bottom: 0px;
+    left: 0px;
+}
+#loadContentWin {
+    height: 415px;
+    left: 50%;
+    margin-left: -179px;
+    margin-top: -175px;
+    position: relative;
+    top: 40%;
+    width: 351px;
+    z-index: 801;
 }
 
-#loadContentWin {
-	position:relative;
-	width: 252px;
-	height: 331px;
-	
-	top: 40%;
-	left: 50%;
-	margin-left: -121px;
-	margin-top: -165px;
-	z-index: 801;
-	background: url("../images/slice.png") no-repeat scroll 0 0 transparent;
+#loadContentWin .layer01 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 351px;
+    height: 284px;
+    z-index: 1;
+    background: url(../images/load01.png) no-repeat;
+}
+#loadContentWin .layer02 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 351px;
+    height: 284px;
+    z-index: 2;
+}
+#loadContentWin .layer03 {
+    background: url("../images/load03.gif") no-repeat scroll 0 0 transparent;
+    height: 159px;
+    left: 94px;
+    position: absolute;
+    top: 97px;
+    width: 170px;
+    z-index: 3;
+}
+
+#loadContentWin .procent {
+    bottom: 85px;
+    color: #FFFFFF;
+    font-family: Verdana;
+    font-size: 40px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 0 #000000;
+    width: 106%;
+}
+#loadContentWin .text {
+    bottom: 0;
+    color: #FFFFFF;
+    font-family: Arial;
+    font-size: 24px;
+    left: -69px;
+    line-height: 34px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 0 #070707;
+    white-space: nowrap;
+    width: 490px;
+}
+#loadContentWin .procent .simbol {
+    background: url(../images/procentLoad.png) no-repeat;
+    width: 12px;
+    height: 13px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+#loadContentWin .procent .symbol {
+    font-size: 15px;
+    transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    /*display: inline-block;
+    vertical-align: middle;*/
+    color: #fff;
+    width: 12px;
+    height: 23px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+#loadContentWin .procent .symbol.glowMore {
+    text-shadow: 0px 0px 10px white,0px 0px 10px white;
 }
 #loadContentWinMin {
 	position:relative;

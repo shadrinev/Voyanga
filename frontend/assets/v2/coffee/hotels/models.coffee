@@ -521,50 +521,44 @@ class HotelResult
 
       url = 'hotel/search/info?hotelId=' + @hotelId
       url += '&hotelResult=' + hotelResults.join(',')
-      console.log @parent.cacheId
-      api.search(
-        url,
-        (data)=>
-          #adding info to elements
-          window.voyanga_debug 'searchInfo', data
-          if !data.hotel
-            return false
-          @initFullInfo()
-          for ind,roomSet of data.hotel.details
-            set = new RoomSet roomSet, @, @duration
-            @roomCombinations.push set
-          cancelObjs = {}
-          for ind,roomSet of data.hotel.oldHotels
-            key = roomSet.resultId
-            cancelObjs[key] = roomSet
+
+      handler = (data)=>
+        if !data.hotel
+          return false
+        @initFullInfo()
+        for ind,roomSet of data.hotel.details
+          set = new RoomSet roomSet, @, @duration
+          @roomCombinations.push set
+        cancelObjs = {}
+        for ind,roomSet of data.hotel.oldHotels
+          key = roomSet.resultId
+          cancelObjs[key] = roomSet
           console.log(cancelObjs)
+        for roomSet in @roomSets()
+          key = roomSet.resultId
+          if cancelObjs[key]
+            roomSet.addCancelationRules(cancelObjs[key])
+#            else
+#              console.log('not found result with key', key)
+
+        @roomMixed = ko.computed =>
+          resultsObj = {}
           for roomSet in @roomSets()
-            key = roomSet.resultId
-            if cancelObjs[key]
-              roomSet.addCancelationRules(cancelObjs[key])
-            else
-              console.log('not found result with key', key)
+            key = roomSet.key()
+            if typeof resultsObj[key] == 'undefined'
+              resultsObj[key] = roomSet
 
-          @roomMixed = ko.computed =>
-            resultsObj = {}
-            for roomSet in @roomSets()
-              key = roomSet.key()
-              if typeof resultsObj[key] == 'undefined'
-                resultsObj[key] = roomSet
+          for roomSet in @roomCombinations()
+            key = roomSet.key()
+            if typeof resultsObj[key] == 'undefined'
+              resultsObj[key] = roomSet
 
-            for roomSet in @roomCombinations()
-              key = roomSet.key()
-              if typeof resultsObj[key] == 'undefined'
-                resultsObj[key] = roomSet
-
-            result = []
-            for key,roomSet of resultsObj
-              result.push roomSet
-            return result
-          @haveFullInfo(true)
-          console.log(@roomCombinations())
-        , false
-      )
+          result = []
+          for key,roomSet of resultsObj
+            result.push roomSet
+          return result
+        @haveFullInfo(true)
+      api.search  url, handler
 
   combinationClick: =>
     console.log 'combinati data = _.filter @data(), (el) -> el.visible()on click'

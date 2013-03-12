@@ -1,0 +1,244 @@
+id;ctrCode;url;desc;price
+1;AD;https://voyanga.com/land/hotels/AD/;Отели в Андорре;
+2;PR;https://voyanga.com/land/hotels/PR/;Отели в Пуэрто-Риковиче;
+3;VI;https://voyanga.com/land/hotels/VI/;Отели в Вирджинские Острова (Сша);
+4;AZ;https://voyanga.com/land/hotels/AZ/;Отели в Азербайджане;10503
+5;AQ;https://voyanga.com/land/hotels/AQ/;Отели в Антарктике;
+6;AU;https://voyanga.com/land/hotels/AU/;Отели в Австралии;5137
+7;AT;https://voyanga.com/land/hotels/AT/;Отели в Австрии;2426
+8;AX;https://voyanga.com/land/hotels/AX/;Отели в Аландские Острове;
+9;AL;https://voyanga.com/land/hotels/AL/;Отели в Албании;
+10;DZ;https://voyanga.com/land/hotels/DZ/;Отели в Алжире;
+11;AS;https://voyanga.com/land/hotels/AS/;Отели в Американское Самоа;
+12;AI;https://voyanga.com/land/hotels/AI/;Отели в Ангилье;
+13;AO;https://voyanga.com/land/hotels/AO/;Отели в Анголе;
+14;AG;https://voyanga.com/land/hotels/AG/;Отели в Антигуа И Барбуде;
+15;AR;https://voyanga.com/land/hotels/AR/;Отели в Аргентине;1309
+16;AM;https://voyanga.com/land/hotels/AM/;Отели в Армении;5805
+17;AW;https://voyanga.com/land/hotels/AW/;Отели в Арубе;
+18;AF;https://voyanga.com/land/hotels/AF/;Отели в Афганистане;
+19;BS;https://voyanga.com/land/hotels/BS/;Отели в Багамские Острове;
+20;BD;https://voyanga.com/land/hotels/BD/;Отели в Бангладеше;
+21;BB;https://voyanga.com/land/hotels/BB/;Отели в Барбадосе;
+22;BH;https://voyanga.com/land/hotels/BH/;Отели в Бахрейне;
+23;BY;https://voyanga.com/land/hotels/BY/;Отели в Беларуси;11659
+24;BZ;https://voyanga.com/land/hotels/BZ/;Отели в Белизе;
+25;BE;https://voyanga.com/land/hotels/BE/;Отели в Бельгии;
+26;BJ;https://voyanga.com/land/hotels/BJ/;Отели в Бенине;
+27;BM;https://voyanga.com/land/hotels/BM/;Отели в Бермудские Острове;
+28;BG;https://voyanga.com/land/hotels/BG/;Отели в Болгарии;1909
+29;BO;https://voyanga.com/land/hotels/BO/;Отели в Боливии;
+30;BA;https://voyanga.com/land/hotels/BA/;Отели в Босния И Герцеговине;
+31;BW;https://voyanga.com/land/hotels/BW/;Отели в Ботсване;
+32;BR;https://voyanga.com/land/hotels/BR/;Отели в Бразилии;2268
+33;VG;https://voyanga.com/land/hotels/VG/;Отели в Британские Виргинские Острове;
+34;BN;https://voyanga.com/land/hotels/BN/;Отели в Брунее;
+35;BF;https://voyanga.com/land/hotels/BF/;Отели в Буркина-Фасо;
+36;BI;https://voyanga.com/land/hotels/BI/;Отели в Бурунди;
+37;BT;https://voyanga.com/land/hotels/BT/;Отели в Бутане;
+38;VU;https://voyanga.com/land/hotels/VU/;Отели в Вануате;
+39;GB;https://voyanga.com/land/hotels/GB/;Отели в Великобритании;2408
+40;HU;https://voyanga.com/land/hotels/HU/;Отели в Венгрии;2873
+41;VE;https://voyanga.com/land/hotels/VE/;Отели в Венесуэле;
+42;TL;https://voyanga.com/land/hotels/TL/;Отели в Восточный Тиморе;
+43;VN;https://voyanga.com/land/hotels/VN/;Отели в Вьетнаме;
+44;GA;https://voyanga.com/land/hotels/GA/;Отели в Габоне;
+45;HT;https://voyanga.com/land/hotels/HT/;Отели в Гаити;
+46;GY;https://voyanga.com/land/hotels/GY/;Отели в Гайане;
+47;GM;https://voyanga.com/land/hotels/GM/;Отели в Гамбии;
+48;GH;https://voyanga.com/land/hotels/GH/;Отели в Гане;
+49;GP;https://voyanga.com/land/hotels/GP/;Отели в Гваделупе;
+50;GT;https://voyanga.com/land/hotels/GT/;Отели в Гватемале;
+51;GN;https://voyanga.com/land/hotels/GN/;Отели в Гвинее;
+52;GW;https://voyanga.com/land/hotels/GW/;Отели в Гвинея-Бисау;
+53;DE;https://voyanga.com/land/hotels/DE/;Отели в Германии;1898
+54;GG;https://voyanga.com/land/hotels/GG/;Отели в Гернси;
+55;GI;https://voyanga.com/land/hotels/GI/;Отели в Гибралтаре;
+56;HN;https://voyanga.com/land/hotels/HN/;Отели в Гондурасе;
+57;HK;https://voyanga.com/land/hotels/HK/;Отели в Гонконге;3897
+58;VA;https://voyanga.com/land/hotels/VA/;Отели в Город-Государство Ватикане;
+59;GD;https://voyanga.com/land/hotels/GD/;Отели в Гренаде;
+60;GL;https://voyanga.com/land/hotels/GL/;Отели в Гренландии;
+61;GR;https://voyanga.com/land/hotels/GR/;Отели в Греции;1560
+62;GE;https://voyanga.com/land/hotels/GE/;Отели в Грузии;
+63;GU;https://voyanga.com/land/hotels/GU/;Отели в Гуаме;
+64;DK;https://voyanga.com/land/hotels/DK/;Отели в Дании;5902
+65;DJ;https://voyanga.com/land/hotels/DJ/;Отели в Джибути;
+66;DM;https://voyanga.com/land/hotels/DM/;Отели в Доминике;
+67;DO;https://voyanga.com/land/hotels/DO/;Отели в Доминиканская Республике;3911
+68;EG;https://voyanga.com/land/hotels/EG/;Отели в Египте;830
+69;ZM;https://voyanga.com/land/hotels/ZM/;Отели в Замбии;
+70;EH;https://voyanga.com/land/hotels/EH/;Отели в Западная Сахаре;
+71;ZW;https://voyanga.com/land/hotels/ZW/;Отели в Зимбабве;
+72;IL;https://voyanga.com/land/hotels/IL/;Отели в Израиле;2242
+73;IN;https://voyanga.com/land/hotels/IN/;Отели в Индии;3148
+74;ID;https://voyanga.com/land/hotels/ID/;Отели в Индонезии;1560
+75;JO;https://voyanga.com/land/hotels/JO/;Отели в Иордании;
+76;IQ;https://voyanga.com/land/hotels/IQ/;Отели в Ираке;
+77;IR;https://voyanga.com/land/hotels/IR/;Отели в Иране;
+78;IE;https://voyanga.com/land/hotels/IE/;Отели в Ирландии;760
+79;IS;https://voyanga.com/land/hotels/IS/;Отели в Исландии;28092
+80;ES;https://voyanga.com/land/hotels/ES/;Отели в Испании;1070
+81;IT;https://voyanga.com/land/hotels/IT/;Отели в Италии;1511
+82;YE;https://voyanga.com/land/hotels/YE/;Отели в Йемен, Республике;
+83;CV;https://voyanga.com/land/hotels/CV/;Отели в Кабо-Верде, Республике;
+84;KZ;https://voyanga.com/land/hotels/KZ/;Отели в Казахстане;
+85;KY;https://voyanga.com/land/hotels/KY/;Отели в Каймановы Острове;
+86;KH;https://voyanga.com/land/hotels/KH/;Отели в Камбодже;
+87;CM;https://voyanga.com/land/hotels/CM/;Отели в Камерун, Объединенная Республике;
+88;CA;https://voyanga.com/land/hotels/CA/;Отели в Канаде;8318
+89;QA;https://voyanga.com/land/hotels/QA/;Отели в Катаре;
+90;KE;https://voyanga.com/land/hotels/KE/;Отели в Кении;
+91;CY;https://voyanga.com/land/hotels/CY/;Отели в Кипре;7644
+92;KG;https://voyanga.com/land/hotels/KG/;Отели в Киргизии;
+93;KI;https://voyanga.com/land/hotels/KI/;Отели в Кирибати;
+94;CN;https://voyanga.com/land/hotels/CN/;Отели в Китае;3460
+95;CC;https://voyanga.com/land/hotels/CC/;Отели в Кокосовые Острове;
+96;CO;https://voyanga.com/land/hotels/CO/;Отели в Колумбии;
+97;KM;https://voyanga.com/land/hotels/KM/;Отели в Коморские Острове;
+98;CG;https://voyanga.com/land/hotels/CG/;Отели в Конго;
+99;CD;https://voyanga.com/land/hotels/CD/;Отели в Конго, Демократическая Республике;
+100;KP;https://voyanga.com/land/hotels/KP/;Отели в Корейская Народно-Демократическая Республике;
+101;CR;https://voyanga.com/land/hotels/CR/;Отели в Коста-Рике;
+102;CI;https://voyanga.com/land/hotels/CI/;Отели в Кот-Д'ивуаре;
+103;CU;https://voyanga.com/land/hotels/CU/;Отели в Кубе;66126
+104;KW;https://voyanga.com/land/hotels/KW/;Отели в Кувейте;
+105;LA;https://voyanga.com/land/hotels/LA/;Отели в Лаос, Народно-Демократическая  Республике;
+106;LV;https://voyanga.com/land/hotels/LV/;Отели в Латвии;1279
+107;LS;https://voyanga.com/land/hotels/LS/;Отели в Лесото;
+108;LR;https://voyanga.com/land/hotels/LR/;Отели в Либерии;
+109;LB;https://voyanga.com/land/hotels/LB/;Отели в Ливане;
+110;LY;https://voyanga.com/land/hotels/LY/;Отели в Ливийская Арабская Джамахирии;
+111;LT;https://voyanga.com/land/hotels/LT/;Отели в Литве;
+112;LI;https://voyanga.com/land/hotels/LI/;Отели в Лихтенштейне;
+113;LU;https://voyanga.com/land/hotels/LU/;Отели в Люксембурге;12490
+114;MZ;https://voyanga.com/land/hotels/MZ/;Отели в Мозамбике;
+115;MU;https://voyanga.com/land/hotels/MU/;Отели в Маврикии;27699
+116;MR;https://voyanga.com/land/hotels/MR/;Отели в Мавритании;
+117;MG;https://voyanga.com/land/hotels/MG/;Отели в Мадагаскар (Малагасия);
+118;YT;https://voyanga.com/land/hotels/YT/;Отели в Майотте;
+119;MO;https://voyanga.com/land/hotels/MO/;Отели в Макао;
+120;MK;https://voyanga.com/land/hotels/MK/;Отели в Македонии;
+121;MW;https://voyanga.com/land/hotels/MW/;Отели в Малави;
+122;MY;https://voyanga.com/land/hotels/MY/;Отели в Малайзии;5846
+123;ML;https://voyanga.com/land/hotels/ML/;Отели в Мали;
+124;UM;https://voyanga.com/land/hotels/UM/;Отели в Малые Отдаленные Острова Сше;
+125;MV;https://voyanga.com/land/hotels/MV/;Отели в Мальдивские Острове;78855
+126;MT;https://voyanga.com/land/hotels/MT/;Отели в Мальте;
+127;MP;https://voyanga.com/land/hotels/MP/;Отели в Марианские Острове;
+128;MA;https://voyanga.com/land/hotels/MA/;Отели в Марокко;12115
+129;MQ;https://voyanga.com/land/hotels/MQ/;Отели в Мартинике;
+130;MH;https://voyanga.com/land/hotels/MH/;Отели в Маршалловы Острове;
+131;MX;https://voyanga.com/land/hotels/MX/;Отели в Мексике;21514
+132;FM;https://voyanga.com/land/hotels/FM/;Отели в Микронезии;
+133;MD;https://voyanga.com/land/hotels/MD/;Отели в Молдове;1176
+134;MC;https://voyanga.com/land/hotels/MC/;Отели в Монако;
+135;MN;https://voyanga.com/land/hotels/MN/;Отели в Монголии;
+136;MS;https://voyanga.com/land/hotels/MS/;Отели в Монтсеррате;
+137;MM;https://voyanga.com/land/hotels/MM/;Отели в Мьянме;
+138;NA;https://voyanga.com/land/hotels/NA/;Отели в Намибии;
+139;NR;https://voyanga.com/land/hotels/NR/;Отели в Науре;
+140;WS;https://voyanga.com/land/hotels/WS/;Отели в Независимое Государство Самоа;
+141;NP;https://voyanga.com/land/hotels/NP/;Отели в Непале;18684
+142;NE;https://voyanga.com/land/hotels/NE/;Отели в Нигере;
+143;NG;https://voyanga.com/land/hotels/NG/;Отели в Нигерии;
+144;AN;https://voyanga.com/land/hotels/AN/;Отели в Нидерландские Антильские Острове;
+145;NL;https://voyanga.com/land/hotels/NL/;Отели в Нидерланды;2545
+146;NI;https://voyanga.com/land/hotels/NI/;Отели в Никарагуа;
+147;NU;https://voyanga.com/land/hotels/NU/;Отели в Ниуэ;
+148;NZ;https://voyanga.com/land/hotels/NZ/;Отели в Новая Зеландии;4042
+149;NC;https://voyanga.com/land/hotels/NC/;Отели в Новая Каледонии;
+150;NO;https://voyanga.com/land/hotels/NO/;Отели в Норвегии;3250
+151;AE;https://voyanga.com/land/hotels/AE/;Отели в Объединенные Арабские Эмирате;1169
+152;PS;https://voyanga.com/land/hotels/PS/;Отели в Оккупированные Палестинские Территории;
+153;BV;https://voyanga.com/land/hotels/BV/;Отели в Остров Буве;
+154;SH;https://voyanga.com/land/hotels/SH/;Отели в Остров Вознесения/ Остров Святой Елене;
+155;JE;https://voyanga.com/land/hotels/JE/;Отели в Остров Джерси;
+156;IM;https://voyanga.com/land/hotels/IM/;Отели в Остров Мэн;
+157;NF;https://voyanga.com/land/hotels/NF/;Отели в Остров Норфолку;
+158;CX;https://voyanga.com/land/hotels/CX/;Отели в Остров Рождестве;
+159;HM;https://voyanga.com/land/hotels/HM/;Отели в Остров Херд И Острова Макдональде;
+160;CK;https://voyanga.com/land/hotels/CK/;Отели в Острова Куке;
+161;TC;https://voyanga.com/land/hotels/TC/;Отели в Острова Теркс И Кайкосе;
+162;WF;https://voyanga.com/land/hotels/WF/;Отели в Острова Уоллис И Футуне;
+163;SJ;https://voyanga.com/land/hotels/SJ/;Отели в Острова Шпицберген И Ян-Майене;
+164;PK;https://voyanga.com/land/hotels/PK/;Отели в Пакистане;
+165;PW;https://voyanga.com/land/hotels/PW/;Отели в Палау;
+166;PA;https://voyanga.com/land/hotels/PA/;Отели в Панаме;
+167;PG;https://voyanga.com/land/hotels/PG/;Отели в Папуа-Новая Гвинея (Ниугини);
+168;PY;https://voyanga.com/land/hotels/PY/;Отели в Парагвае;4301
+169;PE;https://voyanga.com/land/hotels/PE/;Отели в Пере;
+170;PN;https://voyanga.com/land/hotels/PN/;Отели в Питкэрне;
+171;PL;https://voyanga.com/land/hotels/PL/;Отели в Польше;
+172;PT;https://voyanga.com/land/hotels/PT/;Отели в Португалии;1888
+173;RE;https://voyanga.com/land/hotels/RE/;Отели в Реюньоне;
+174;RU;https://voyanga.com/land/hotels/RU/;Отели в России;1313
+175;RW;https://voyanga.com/land/hotels/RW/;Отели в Руанде;
+176;RO;https://voyanga.com/land/hotels/RO/;Отели в Румынии;2121
+177;SD;https://voyanga.com/land/hotels/SD/;Отели в Судане;
+178;SM;https://voyanga.com/land/hotels/SM/;Отели в Сан-Марино;
+179;ST;https://voyanga.com/land/hotels/ST/;Отели в Сан-Томе И Принсипи;
+180;SA;https://voyanga.com/land/hotels/SA/;Отели в Саудовская Аравии;
+181;SZ;https://voyanga.com/land/hotels/SZ/;Отели в Свазиленде;
+182;SC;https://voyanga.com/land/hotels/SC/;Отели в Сейшельские Острове;
+183;SN;https://voyanga.com/land/hotels/SN/;Отели в Сенегале;
+184;KN;https://voyanga.com/land/hotels/KN/;Отели в Сент- Китс И Невисе;
+185;PM;https://voyanga.com/land/hotels/PM/;Отели в Сент- Пьер И Микелоне;
+186;VC;https://voyanga.com/land/hotels/VC/;Отели в Сент-Винсент И Гренадине;
+187;LC;https://voyanga.com/land/hotels/LC/;Отели в Сент-Люсии;
+188;CS;https://voyanga.com/land/hotels/CS/;Отели в Сербия И Черногории;
+189;SG;https://voyanga.com/land/hotels/SG/;Отели в Сингапуре;5619
+190;SY;https://voyanga.com/land/hotels/SY/;Отели в Сирийская Арабская Республике;14826
+191;SK;https://voyanga.com/land/hotels/SK/;Отели в Словакии;
+192;SI;https://voyanga.com/land/hotels/SI/;Отели в Словении;
+193;US;https://voyanga.com/land/hotels/US/;Отели в Соединенные Штаты Америке;2020
+194;SB;https://voyanga.com/land/hotels/SB/;Отели в Соломоновы Острове;
+195;SO;https://voyanga.com/land/hotels/SO/;Отели в Сомали;
+196;OM;https://voyanga.com/land/hotels/OM/;Отели в Омане;
+197;SR;https://voyanga.com/land/hotels/SR/;Отели в Суринаме;
+198;SL;https://voyanga.com/land/hotels/SL/;Отели в Сьерра-Леоне;
+199;TJ;https://voyanga.com/land/hotels/TJ/;Отели в Таджикистане;9166
+200;TH;https://voyanga.com/land/hotels/TH/;Отели в Таиланде;1055
+201;TW;https://voyanga.com/land/hotels/TW/;Отели в Тайвань, Китайская Республике;
+202;TZ;https://voyanga.com/land/hotels/TZ/;Отели в Танзании;
+203;TG;https://voyanga.com/land/hotels/TG/;Отели в Того;
+204;TO;https://voyanga.com/land/hotels/TO/;Отели в Тонге;
+205;TT;https://voyanga.com/land/hotels/TT/;Отели в Тринидад И Тобаго;
+206;TV;https://voyanga.com/land/hotels/TV/;Отели в Тувале;
+207;TN;https://voyanga.com/land/hotels/TN/;Отели в Тунисе;
+208;TM;https://voyanga.com/land/hotels/TM/;Отели в Туркменистане;
+209;TR;https://voyanga.com/land/hotels/TR/;Отели в Турции;1419
+210;UG;https://voyanga.com/land/hotels/UG/;Отели в Уганде;
+211;UZ;https://voyanga.com/land/hotels/UZ/;Отели в Узбекистане;
+212;UA;https://voyanga.com/land/hotels/UA/;Отели в Украине;1852
+213;UY;https://voyanga.com/land/hotels/UY/;Отели в Уругвае;10268
+214;FO;https://voyanga.com/land/hotels/FO/;Отели в Фарерские Острове;
+215;FJ;https://voyanga.com/land/hotels/FJ/;Отели в Фиджи;
+216;PH;https://voyanga.com/land/hotels/PH/;Отели в Филиппине;
+217;FI;https://voyanga.com/land/hotels/FI/;Отели в Финляндии;2183
+218;FK;https://voyanga.com/land/hotels/FK/;Отели в Фолклендские Острове;
+219;FR;https://voyanga.com/land/hotels/FR/;Отели в Франции;2621
+220;GF;https://voyanga.com/land/hotels/GF/;Отели в Французская Гвиане;
+221;PF;https://voyanga.com/land/hotels/PF/;Отели в Французская Полинезии;
+222;HR;https://voyanga.com/land/hotels/HR/;Отели в Хорватии;4971
+223;CF;https://voyanga.com/land/hotels/CF/;Отели в Центральноафриканская Республике;
+224;TD;https://voyanga.com/land/hotels/TD/;Отели в Чаде;
+225;CZ;https://voyanga.com/land/hotels/CZ/;Отели в Чешская Республике;5090
+226;CL;https://voyanga.com/land/hotels/CL/;Отели в Чили;
+227;CH;https://voyanga.com/land/hotels/CH/;Отели в Швейцарии;4852
+228;SE;https://voyanga.com/land/hotels/SE/;Отели в Швеции;5321
+229;LK;https://voyanga.com/land/hotels/LK/;Отели в Шри-Ланке;8949
+230;EC;https://voyanga.com/land/hotels/EC/;Отели в Эквадоре;
+231;GQ;https://voyanga.com/land/hotels/GQ/;Отели в Экваториальная Гвинее;
+232;SV;https://voyanga.com/land/hotels/SV/;Отели в Эль-Сальвадоре;
+233;ER;https://voyanga.com/land/hotels/ER/;Отели в Эритрее;
+234;EE;https://voyanga.com/land/hotels/EE/;Отели в Эстонии;948
+235;ET;https://voyanga.com/land/hotels/ET/;Отели в Эфиопии;
+236;YU;https://voyanga.com/land/hotels/YU/;Отели в Югославии;
+237;ZA;https://voyanga.com/land/hotels/ZA/;Отели в Южная Африке;26449
+238;KR;https://voyanga.com/land/hotels/KR/;Отели в Южная Корее;
+239;JM;https://voyanga.com/land/hotels/JM/;Отели в Ямайке;
+240;JP;https://voyanga.com/land/hotels/JP/;Отели в Японии;1933
+241;RS;https://voyanga.com/land/hotels/RS/;Отели в Сербии;3182
+242;ME;https://voyanga.com/land/hotels/ME/;Отели в Черногории;40490
+243;ZR;https://voyanga.com/land/hotels/ZR/;Отели в Республика Заире;
