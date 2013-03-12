@@ -50,7 +50,7 @@
       </ul>
       <div class="book">
         <div class="how-cost">
-          от <span class="cost" data-bind="text: cheapestSet.pricePerNight">5 200</span><span class="rur f21">o</span> / ночь
+          от <span class="cost" data-bind="text: Utils.formatPrice(cheapestSet.pricePerNight)">5 200</span><span class="rur f21">o</span> / ночь
         </div>
         <a href="#" class="pressButton" data-bind="click: parent.selectFromPopup, css:{selected: tours()?isActive():false}, visible: !window.toursOverviewActive"><span class="l"></span><span class="text" data-bind="text:selectText">Выбрать отель</span></a>
       </div>

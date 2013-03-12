@@ -34,18 +34,18 @@
       <div id="tour-buy-btn" style="display: none">
 	<span class="f14 bold" style="color:#2e333b;">Оформить</span>
 	<a href="#" class="btn-order leftColumn" data-bind="click: buy">
-          <span class="cost" data-bind="text: price() - savings()"></span> <span class="rur f26">o</span>
+          <span class="cost" data-bind="text: Utils.formatPrice(price() - savings())"></span> <span class="rur f26">o</span>
         <span class="l"></span>
 	</a>
       </div>
       <table class="finish-result">
         <tr>
           <td class="txt">Общая стоимость:</td>
-          <td class="price"><span data-bind="text: price()">65 300</span> <span class="rur">o</span></td>
+          <td class="price"><span data-bind="text: Utils.formatPrice(price())">65 300</span> <span class="rur">o</span></td>
         </tr>
         <tr>
           <td class="txt">Скидка за комплекс:</td>
-          <td class="price"><span data-bind="text: savings()">4 800</span> <span class="rur">o</span></td>
+          <td class="price"><span data-bind="text: Utils.formatPrice(savings())">4 800</span> <span class="rur">o</span></td>
         </tr>
       </table>
       <hr class="hr">
@@ -59,7 +59,7 @@
       <table class="finish-result voyasha"  data-bind="foreach: voyashki">
         <tr data-bind="click:choose">
           <td class="txt" data-bind="text: title">Самый дешевый:</td>
-          <td class="price"><div><span data-bind="text: price">30 300</span> <span class="rur">o</span></div></td>
+          <td class="price"><div><span data-bind="text: Utils.formatPrice(price())">30 300</span> <span class="rur">o</span></div></td>
         </tr>
       </table>
     </div>

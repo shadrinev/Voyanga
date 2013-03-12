@@ -37,7 +37,7 @@
     </ul>
     <div class="book">
       <div class="how-cost">
-        от <span class="cost" data-bind="text: cheapestSet.pricePerNight">5 200</span><span class="rur f21">o</span> / ночь
+        от <span class="cost" data-bind="text: Utils.formatPrice(cheapestSet.pricePerNight)">5 200</span><span class="rur f21">o</span> / ночь
       </div>
       <a class="pressButton" href="#" data-bind="click:select, css: {selected: cheapestSet.resultId == activeResultId()}"><span class="l"></span><span class="text" data-bind="text: selectText"></span></a>
     </div>
