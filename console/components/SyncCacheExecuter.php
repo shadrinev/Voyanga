@@ -170,7 +170,10 @@ SyncCacheExecuter extends Component
                 {
                     $attr = @unserialize($item->attributes);
                     if (!is_array($attr))
+                    {
+                        echo "one of incoming flight record is older than inside db. next\n";
                         continue;
+                    }
                     $result[$hash]['time'] = $item->createdAt;
                     $flightCache = new FlightCache;
                     $attr['updatedAt'] = date('Y-m-d H:i:s', $item->createdAt);
@@ -192,7 +195,10 @@ SyncCacheExecuter extends Component
                     'dateBack' => date('Y-m-d H:i:s', strtotime($item->dateTo)),
                 ));
                 if (($hc) and (strtotime($hc->updatedAt) > $item->createdAt))
+                {
+                    echo "one of incoming hotel record is older than inside db. next\n";
                     continue;
+                }
                 if ($flag)
                 {
                     if ($item->createdAt > $result[$hash]['time'])
