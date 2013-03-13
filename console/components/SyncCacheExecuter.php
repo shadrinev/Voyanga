@@ -140,12 +140,19 @@ SyncCacheExecuter extends Component
             if ($item instanceof FlightCacheDump)
             {
                 $hash = $item->from.'_'.$item->to.'_'.$item->dateFrom.'_'.$item->dateBack;
-                $fc = FlightCache::model()->findByAttributes(array(
-                    'from' => $item->from,
-                    'to' => $item->to,
-                    'dateFrom' => date('Y-m-d', strtotime($item->dateFrom)),
-                    'dateBack' => date('Y-m-d', strtotime($item->dateBack)),
-                ));
+                $criteria = new CDbCriteria();
+                $criteria->compare('from', $item->from);
+                $criteria->compare('to', $item->to);
+                $criteria->compare('dateFrom', $item->dateFrom);
+                if (strtotime($item->dateBack)>0)
+                {
+                    $criteria->compare('dateBack', $item->dateBack);
+                }
+                else
+                {
+                    $criteria->addCondition('dateBack is null');
+                }
+                $fc = FlightCache::model()->find($criteria);
                 $flag = isset($result[$hash]);
                 if (($fc) and (strtotime($fc->updatedAt) > $item->createdAt))
                     continue;
@@ -188,12 +195,12 @@ SyncCacheExecuter extends Component
             {
                 $hash = $item->cityId.'_'.$item->dateFrom.'_'.$item->dateTo.'_'.$item->stars;
                 $flag = isset($result[$hash]);
-                $hc = FlightCache::model()->findByAttributes(array(
-                    'cityId' => $item->cityId,
-                    'start' => $item->stars,
-                    'dateFrom' => date('Y-m-d', strtotime($item->dateFrom)),
-                    'dateBack' => date('Y-m-d', strtotime($item->dateTo)),
-                ));
+                $criteria = new CDbCriteria();
+                $criteria->compare('cityId', $item->cityId);
+                $criteria->compare('dateFrom', $item->dateFrom);
+                $criteria->compare('dateTo', $item->dateTo);
+                $criteria->compare('stars', $item->stars);
+                $hc = HotelCache::model()->find($criteria);
                 if (($hc) and (strtotime($hc->updatedAt) > $item->createdAt))
                 {
                     echo "one of incoming hotel record is older than inside db. next\n";
