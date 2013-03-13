@@ -5,7 +5,8 @@
  * Date: 22.05.12
  * Time: 16:46
  */
-class SyncCacheExecuter extends Component
+class
+SyncCacheExecuter extends Component
 {
     public $maxQuerySize = 4000000; //10kb
 
@@ -139,7 +140,15 @@ class SyncCacheExecuter extends Component
             if ($item instanceof FlightCacheDump)
             {
                 $hash = $item->from.'_'.$item->to.'_'.$item->dateFrom.'_'.$item->dateBack;
+                $fc = FlightCache::model()->findByAttributes(array(
+                    'from' => $item->from,
+                    'to' => $item->to,
+                    'dateFrom' => date('Y-m-d H:i:s', strtotime($item->dateFrom)),
+                    'dateBack' => date('Y-m-d H:i:s', strtotime($item->dateBack)),
+                ));
                 $flag = isset($result[$hash]);
+                if (($fc) and (strtotime($fc->updatedAt) > $item->createdAt))
+                    continue;
                 if ($flag)
                 {
                     if ($item->createdAt > $result[$hash]['time'])
@@ -176,6 +185,14 @@ class SyncCacheExecuter extends Component
             {
                 $hash = $item->cityId.'_'.$item->dateFrom.'_'.$item->dateTo.'_'.$item->stars;
                 $flag = isset($result[$hash]);
+                $hc = FlightCache::model()->findByAttributes(array(
+                    'cityId' => $item->cityId,
+                    'start' => $item->stars,
+                    'dateFrom' => date('Y-m-d H:i:s', strtotime($item->dateFrom)),
+                    'dateBack' => date('Y-m-d H:i:s', strtotime($item->dateTo)),
+                ));
+                if (($hc) and (strtotime($hc->updatedAt) > $item->createdAt))
+                    continue;
                 if ($flag)
                 {
                     if ($item->createdAt > $result[$hash]['time'])
