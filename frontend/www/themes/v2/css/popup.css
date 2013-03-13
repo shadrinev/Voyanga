@@ -49,6 +49,13 @@
 #pv_box .contentText,  .pv_box .contentText {
     margin: 20px 20px 0;
 }
+.pv_box .contentText h2 {
+    color: #1D222B;
+    font-size: 22px;
+    letter-spacing: 0.001em;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 0 #ACB0B4;
+}
 #pv_box .contentText p, .pv_box .contentText p {
     line-height: 22px;
     color: #1d222b;
