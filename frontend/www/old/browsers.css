@@ -1,0 +1,71 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  background: url(../images/bg.png);
+  padding: 0px;
+  margin: 0px;
+  color: #000;
+  margin: 0px;
+  padding: 0px;
+  direction: ltr;
+  font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
+  font-size: 11px;
+  font-weight: normal;
+}
+a {
+  color: #1C81BB;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: underline;
+}
+img {
+  border: 0px;
+}
+#bad_browser {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-bottom: 1px solid #E4E4E4;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+    left: 50%;
+    line-height: 180%;
+    margin: -200px 0 0 -250px;
+    position: absolute;
+    text-align: left;
+    top: 50%;
+    width: 530px;
+}
+#content {
+  padding: 20px;
+  font-size: 1.19em;
+}
+#content div {
+  margin: 10px 0 15px 0;
+}
+#content #browsers {
+  width: 480px;
+  height: 136px;
+  margin: 15px auto 0px;
+  text-align: center;
+}
+#browsers a {
+  float: left;
+  width: 120px;
+  height: 20px;
+  padding: 106px 0px 13px 0;
+  -webkit-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+#browsers a:hover {
+  text-decoration: none;
+  background-color: #edf1f5!important;
+}
+.is_2x #head {
+  background-size: 132px 26px;
+}
+.is_2x #browsers a  {
+  background-size: 80px 80px!important;
+}
