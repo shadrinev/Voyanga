@@ -20,7 +20,6 @@ $(function() {
     badImages = 0;
     for (var i = 0; i < document.images.length; i++) {
         if (!isImageOk(document.images[i])) {
-            document.images[i].style.visibility = "hidden";
             badImages++;
         }
     }
