@@ -141,8 +141,8 @@ SyncCacheExecuter extends Component
             {
                 $hash = $item->from.'_'.$item->to.'_'.$item->dateFrom.'_'.$item->dateBack;
                 $criteria = new CDbCriteria();
-                $criteria->compare('from', $item->from);
-                $criteria->compare('to', $item->to);
+                $criteria->compare('`from`', $item->from);
+                $criteria->compare('`to`', $item->to);
                 $criteria->compare('dateFrom', $item->dateFrom);
                 if (strtotime($item->dateBack)>0)
                 {
