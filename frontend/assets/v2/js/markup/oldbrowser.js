@@ -25,4 +25,6 @@ $(function() {
     }
     if (badImages == document.images.length)
         $('.noimage').show();
+    else
+        $('.noimage').hide();
 })
