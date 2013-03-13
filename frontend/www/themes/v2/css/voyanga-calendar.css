@@ -32,7 +32,7 @@
     position: relative;
 }
 
-.innerCalendar h1 {
+.innerCalendar h1, .innerCalendar h2 {
     color: #FFFFFF;
     font-family: Arial;
     font-size: 22px;

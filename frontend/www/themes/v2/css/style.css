@@ -2802,6 +2802,8 @@ input.hotel-input {
 }
 .headerTitle .time {
     text-align: right;
+    font-size: 15px;
+    padding-bottom: 1px;
 }
 .payCardPal .payCardPaliFrame {
     border: medium none;
