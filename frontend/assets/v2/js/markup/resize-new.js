@@ -729,6 +729,9 @@ function ResizeAviaClb() {
     startIE();
     ifIpadLoad();
     slideToursPanel();
+
+
+
 }
 
 function ResizeFun() {

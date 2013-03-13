@@ -1,5 +1,5 @@
 @charset "UTF-8";
-#popupOverlay {
+#popupOverlay, .popupOverlay {
     background: none repeat scroll 0 0 #26292E;
     height: 100%;
     left: 0;
@@ -39,17 +39,17 @@
 .pv_cont > table {
     margin: 0 auto;
 }
-#pv_box {
+#pv_box, .pv_box {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 6px 6px 6px 6px;
     padding: 1px 0 25px;
     position: relative;
     overflow: hidden;
 }
-#pv_box .contentText {
+#pv_box .contentText,  .pv_box .contentText {
     margin: 20px 20px 0;
 }
-#pv_box .contentText p {
+#pv_box .contentText p, .pv_box .contentText p {
     line-height: 22px;
     color: #1d222b;
     font-size: 14px;
