@@ -60,7 +60,7 @@ class Payments_MetaBookerTour extends CComponent{
         $price = 0;
         foreach ($this->bookers as $booker) {
             if($booker instanceof HotelBookerComponent)
-                $price += $booker->hotel->rubPrice;
+                $price += $booker->hotel->getDiscountPrice();
             else
                 $price += $booker->getCurrent()->price;
         }

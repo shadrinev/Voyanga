@@ -93,22 +93,17 @@
             <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
         </td>
         <td class="tdSex">
-            <?php if (!$roomCounters): ?>
-                <label class="male <?php if ($hide) echo 'inactive' ?>" for="male<?php echo $i ?>">
-                    <input type="radio" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" id="male<?php echo $i ?>"
-                           value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
-                        <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
-                </label>
-                <label class="female <?php if ($hide) echo 'inactive' ?>" for="female<?php echo $i ?>">
-                    <input type="radio" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]"
-                           id="female<?php echo $i ?>"
-                           value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"
-                        <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
-                </label>
-            <?php else: ?>
-                <input type="hidden" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]"
-                       value="<?php echo BaseFlightPassportForm::GENDER_MALE?>">
-            <?php endif ?>
+            <label class="male <?php if ($hide) echo 'inactive' ?>" for="male<?php echo $i ?>">
+                <input type="radio" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" id="male<?php echo $i ?>"
+                       value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
+                    <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+            </label>
+            <label class="female <?php if ($hide) echo 'inactive' ?>" for="female<?php echo $i ?>">
+                <input type="radio" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]"
+                       id="female<?php echo $i ?>"
+                       value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>"
+                    <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+            </label>
         </td>
         <td class="tdBirthday">
             <?php if (!$roomCounters): ?>
@@ -160,7 +155,7 @@
             <?php if (!$roomCounters): ?>
                 <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
             <?php else: ?>
-                <?php echo CHtml::activeHiddenField($model, "[$i]seriesNumber", array('value'=>'-')); ?>
+                <?php echo CHtml::activeHiddenField($model, "[$i]seriesNumber", array('value'=>'123')); ?>
             <?php endif ?>
         </td>
         <td class="tdDuration">
