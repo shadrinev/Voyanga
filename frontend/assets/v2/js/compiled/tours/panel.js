@@ -132,12 +132,14 @@ TourPanelSet = (function() {
   }
 
   TourPanelSet.prototype.navigateToNewSearch = function() {
-    var el;
+    var el, sp;
     if (this.formNotFilled()) {
       el = $('div.innerCalendar').find('h1');
       Utils.flashMessage(el);
       return;
     }
+    sp = _.last(this.panels()).sp;
+    _gaq.push(['_trackEvent', 'Trip_press_button_search', sp.GAKey(), sp.GAData()]);
     _.last(this.panels()).handlePanelSubmit();
     return _.last(this.panels()).minimizedCalendar(true);
   };

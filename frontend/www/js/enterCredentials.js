@@ -78,6 +78,7 @@ $(function () {
             var statuses = [],
                 ids = [];
             disableAllFieldsAndHideButton();
+	    window.app.itemsToBuy.trackBuyClick();
             $('#loadPayFly').find('.armoring').show();
             loadPayFly();
             $('#loadPayFly').find('.loadJet').show();

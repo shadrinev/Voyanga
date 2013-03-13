@@ -526,7 +526,25 @@ class AviaResult
     result.type = 'avia'
     return result
 
+  GAKey: =>
+    @departureAirport() + "/" + @arrivalAirport()
 
+  GAData: =>
+    result = ''
+    if @roundTrip
+      result += '2'
+    else
+      result += '1'
+    passangers = [@rawSP.adt, @rawSP.chd, @rawSP.inf]
+    result +=', ' + passangers.join(" - ")
+    result += ', ' + moment(@departureDate()).format('D.M.YYYY')
+    if @roundTrip
+      result += ' - ' + moment(@rtDepartureDate()).format('D.M.YYYY')
+    result += ', ' + moment(@departureDate()).diff(moment(), 'days')
+    if @roundTrip
+      result += ' - ' + moment(@rtDepartureDate()).diff(moment(@departureDate()), 'days')
+
+    return result
 
 #
 # Result container

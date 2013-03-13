@@ -336,6 +336,10 @@ AviaResult = (function() {
     var fields, flights, name, rtName, _i, _len,
       _this = this;
     this.parent = parent;
+    this.GAData = __bind(this.GAData, this);
+
+    this.GAKey = __bind(this.GAKey, this);
+
     this.getPostData = __bind(this.getPostData, this);
 
     this.getParams = __bind(this.getParams, this);
@@ -753,6 +757,31 @@ AviaResult = (function() {
     result = {};
     result.data = this._data;
     result.type = 'avia';
+    return result;
+  };
+
+  AviaResult.prototype.GAKey = function() {
+    return this.departureAirport() + "/" + this.arrivalAirport();
+  };
+
+  AviaResult.prototype.GAData = function() {
+    var passangers, result;
+    result = '';
+    if (this.roundTrip) {
+      result += '2';
+    } else {
+      result += '1';
+    }
+    passangers = [this.rawSP.adt, this.rawSP.chd, this.rawSP.inf];
+    result += ', ' + passangers.join(" - ");
+    result += ', ' + moment(this.departureDate()).format('D.M.YYYY');
+    if (this.roundTrip) {
+      result += ' - ' + moment(this.rtDepartureDate()).format('D.M.YYYY');
+    }
+    result += ', ' + moment(this.departureDate()).diff(moment(), 'days');
+    if (this.roundTrip) {
+      result += ' - ' + moment(this.rtDepartureDate()).diff(moment(this.departureDate()), 'days');
+    }
     return result;
   };
 

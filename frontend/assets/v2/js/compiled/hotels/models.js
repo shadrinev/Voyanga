@@ -287,6 +287,10 @@ HotelResult = (function() {
     var elemId, elements, groupName, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8,
       _this = this;
     this.activeHotel = activeHotel;
+    this.GAData = __bind(this.GAData, this);
+
+    this.GAKey = __bind(this.GAKey, this);
+
     this.getPostData = __bind(this.getPostData, this);
 
     this.getParams = __bind(this.getParams, this);
@@ -930,6 +934,30 @@ HotelResult = (function() {
     result = {};
     result.data = this.roomSets()[0]._data;
     result.type = 'hotel';
+    return result;
+  };
+
+  HotelResult.prototype.GAKey = function() {
+    return this.cityCode;
+  };
+
+  HotelResult.prototype.GAData = function() {
+    var passangers, result, room, _i, _len, _ref;
+    result = "1";
+    passangers = [0, 0, 0];
+    _.each(item.searchParams.rooms, function(room) {
+      return totalPeople += room.adultCount / 1 + room.childCount / 1 + room.cots / 1;
+    });
+    _ref = this.rawSP.rooms;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      room = _ref[_i];
+      passangers[0] += room.adultCount / 1;
+      passangers[1] += room.childCount / 1;
+      passangers[2] += room.cots / 1;
+    }
+    result += ", " + passangers.join(" - ");
+    result += ", " + moment(this.checkIn()).format('D.M.YYYY') + ' - ' + moment(this.checkOut()).format('D.M.YYYY');
+    result += ", " + moment(this.checkIn()).diff(moment(), 'days') + " - " + moment(this.checkOut()).diff(moment(this.checkIn()), 'days');
     return result;
   };
 
