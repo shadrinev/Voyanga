@@ -143,8 +143,8 @@ SyncCacheExecuter extends Component
                 $fc = FlightCache::model()->findByAttributes(array(
                     'from' => $item->from,
                     'to' => $item->to,
-                    'dateFrom' => date('Y-m-d H:i:s', strtotime($item->dateFrom)),
-                    'dateBack' => date('Y-m-d H:i:s', strtotime($item->dateBack)),
+                    'dateFrom' => date('Y-m-d', strtotime($item->dateFrom)),
+                    'dateBack' => date('Y-m-d', strtotime($item->dateBack)),
                 ));
                 $flag = isset($result[$hash]);
                 if (($fc) and (strtotime($fc->updatedAt) > $item->createdAt))
@@ -191,8 +191,8 @@ SyncCacheExecuter extends Component
                 $hc = FlightCache::model()->findByAttributes(array(
                     'cityId' => $item->cityId,
                     'start' => $item->stars,
-                    'dateFrom' => date('Y-m-d H:i:s', strtotime($item->dateFrom)),
-                    'dateBack' => date('Y-m-d H:i:s', strtotime($item->dateTo)),
+                    'dateFrom' => date('Y-m-d', strtotime($item->dateFrom)),
+                    'dateBack' => date('Y-m-d', strtotime($item->dateTo)),
                 ));
                 if (($hc) and (strtotime($hc->updatedAt) > $item->createdAt))
                 {
