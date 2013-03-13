@@ -207,7 +207,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                         <img width="100%" height="31" src="/themes/v2/images/shadow-hotel.png">
                     </div>
                     <div class="costItAll" style='padding-right: 0px'>
-                        Итого <span class="allCost"><span data-bind="text: itemsToBuy.fullPrice()">86 250</span> <span
+                        Итого <span class="allCost"><span data-bind="text: Utils.formatPrice(itemsToBuy.fullPrice())">86 250</span> <span
                                 class="rur">o</span></span>
                         <a href="#" class="btn-order btnGoBuy" data-bind="click: itemsToBuy.activePanel().navigateToNewSearchMainPage, css: {inactive: itemsToBuy.activePanel().formNotFilled}">Проверить<span class="l"></span></a>
                     </div>
@@ -397,7 +397,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
             <div class="buy-ticket">
                 <div class="text">
                     <!-- FIXME -->
-                    <span class="txtBuy" data-bind="text: price"></span> <span class="rur">o</span>
+                    <span class="txtBuy" data-bind="text: Utils.formatPrice(price)"></span> <span class="rur">o</span>
                 </div>
             </div>
             <!-- END BUY TICKET -->

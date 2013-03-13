@@ -121,13 +121,11 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                     <a href="#" data-bind="click: itemsToBuy.gotoAndShowPanel" class="otherCity">Другой город</a>
                     <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
 
-                    <div class="divPrice"><span class="price" data-bind="text: itemsToBuy.fullPrice()">15 600 </span>
+                    <div class="divPrice"><span class="price" data-bind="text: Utils.formatPrice(itemsToBuy.fullPrice())">15 600 </span>
                         <span class="rur">o</span></div>
-                    <a href="#" style="margin-top:0px;" class="otherCity"
-                       data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2
+                    <a href="#" style="margin-top:0px;" class="otherCity" data-bind="text: itemsToBuy.overviewPricePeople(),click: itemsToBuy.gotoAndShowPanel">Цена за 2
                         взрослых</a>
-                    <span class="check">Последняя проверка цены<br>выполнена <span
-                        data-bind="text: itemsToBuy.fullPriceUpdateTimeText"></span></span>
+                    <span class="check">Последняя проверка цены<br>выполнена <span data-bind="text: itemsToBuy.fullPriceUpdateTimeText"></span></span>
                     <img src="/themes/v2/images/hr-gradient-events.png" style="margin-top: 5px;">
 
                     <div style="width: 144px; height: 40px;">
@@ -463,7 +461,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
             <div class="buy-ticket">
                 <div class="text">
                     <!-- FIXME -->
-                    <span class="txtBuy" data-bind="text: price"></span> <span class="rur">o</span>
+                    <span class="txtBuy" data-bind="text: Utils.formatPrice(price)"></span> <span class="rur">o</span>
                 </div>
             </div>
             <!-- END BUY TICKET -->

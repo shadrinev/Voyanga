@@ -55,7 +55,7 @@ EOD;
 FROM  `city`
 INNER JOIN  `country` AS ctr ON ctr.`id` =  `city`.`countryId`
 WHERE  `countAirports` >0 AND city.hotelbookId >0';*/
-        $sql = 'SELECT city.id, city.code, city.countryId, ctr.code AS countryCode,caseGen,caseAcc
+        $sql = 'SELECT city.id, city.code, city.countryId, ctr.code AS countryCode,caseGen,caseAcc,caseNom
 FROM  `city`
 INNER JOIN  `country` AS ctr ON ctr.`id` =  `city`.`countryId`
 WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
@@ -68,12 +68,12 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
 
         $command=$connection->createCommand($sql);
         $dataReader=$command->query();
-        fwrite($fp,"id;codeFrom;codeTo;ctrCodeTo;url;desc;price\r\n");
+        fwrite($fp,"id;codeFrom;codeTo;from;to;ctrCodeTo;url;desc;price\r\n");
 
         $citiesInfo = array();
         $ruCityIds = array();
         while(($row=$dataReader->read())!==false) {
-            $citiesInfo[$row['id']] = array('cityCode'=>$row['code'],'countryCode'=>$row['countryCode'],'caseGen'=>$row['caseGen'],'caseAcc'=>$row['caseAcc']);
+            $citiesInfo[$row['id']] = array('cityCode'=>$row['code'],'countryCode'=>$row['countryCode'],'caseGen'=>$row['caseGen'],'caseAcc'=>$row['caseAcc'],'caseNom'=>$row['caseNom']);
             if($row['countryCode'] == 'RU'){
                 $ruCityIds[$row['id']] = $row['id'];
             }
@@ -122,7 +122,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
                             }
                         }
                         $desc = "из {$cityFromInfo['caseGen']} в {$cityToInfo['caseAcc']}";
-                        $str = "$j;{$cityFromInfo['cityCode']};{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
+                        $str = "$j;{$cityFromInfo['cityCode']};{$cityToInfo['cityCode']};{$cityFromInfo['caseNom']};{$cityToInfo['caseNom']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
                         fwrite($fp,$str);
                     //}
                 }

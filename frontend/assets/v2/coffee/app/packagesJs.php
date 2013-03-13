@@ -17,6 +17,8 @@
     'markup' => array(
         'basePath' => 'frontend.assets.v2.js.markup',
         'js' => array(
+            'jquery.browser.min.js',
+            'oldbrowser.js',
             'iedebug.js',
             'resize-new.js',
             'jquery.color.js',
@@ -37,6 +39,7 @@
         ),
         'depends' => array('jquery')
     ),
+
     'vendor' => array(
         'basePath' => 'frontend.assets.v2.js.vendor',
         'js' => array(
@@ -55,8 +58,6 @@
             'scroll/jquery.jscrollpane.min.js',
             'markerclusterer_compiled.js',
             'chosen/chosen.jquery.min.js',
-            'socialite/socialite.js',
-            'socialite/socialite.vkontakte.js',
             'mdetect.js',
         ),
         'depends' => array('jquery')
@@ -89,7 +90,6 @@
             'searchPanel.js',
             'autocomplete.js',
             'API.js',
-            'sharer.js'
         )
     ),
     'avia' => array(

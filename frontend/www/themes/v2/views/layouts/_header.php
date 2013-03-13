@@ -9,6 +9,10 @@
 <script type="text/javascript">
     window.apiEndPoint = '<?php echo Yii::app()->params['api.endPoint'] ?>';
 </script>
+<noscript>
+    <?php $this->renderPartial('//layouts/_noscript'); ?>
+</noscript>
+<?php $this->renderPartial('//layouts/_noimage'); ?>
 <div class="head" id="header">
     <!-- CENTER BLOCK -->
     <div class="center-block">
