@@ -28,5 +28,5 @@ $(function() {
             $('.noimage').show();
         else
             $('.noimage').hide();
-    }, 2000);
+    }, 3000);
 })
