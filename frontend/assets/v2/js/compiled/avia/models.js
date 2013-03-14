@@ -4,7 +4,7 @@ var AviaResult, AviaResultSet, AviaSearchParams, FlightPart, MINUTE_PRICE_STEP, 
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-STOPOVER_MINUTE_PRICE = 700 / 60;
+STOPOVER_MINUTE_PRICE = 400 / 60;
 
 MINUTE_PRICE_STEP = 2 * 300 / (60 * 60);
 

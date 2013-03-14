@@ -1,7 +1,7 @@
 # FIXME use mixins for most getters(?)
 # TODO aviaresult.grep could be usefull
 
-STOPOVER_MINUTE_PRICE = 700/60
+STOPOVER_MINUTE_PRICE = 400/60
 MINUTE_PRICE_STEP = 2*300/(60*60)
 
 # Atomic journey unit.
