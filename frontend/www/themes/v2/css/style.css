@@ -2802,6 +2802,8 @@ input.hotel-input {
 }
 .headerTitle .time {
     text-align: right;
+    font-size: 15px;
+    padding-bottom: 1px;
 }
 .payCardPal .payCardPaliFrame {
     border: medium none;
@@ -2964,9 +2966,11 @@ input.hotel-input {
     -moz-border-radius   : 0px 0px 8px 8px;
     border-radius: 0px 0px 8px 8px;
 }
-.projectPopUp h3 {
+.projectPopUp h3, .projectPopUp h1 {
 	font-size: 24px;
 	line-height: 27px;
+    text-shadow: none;
+    margin-bottom: 10px;
 }
 .projectPopUp .centerImg {
 	width: 670px;

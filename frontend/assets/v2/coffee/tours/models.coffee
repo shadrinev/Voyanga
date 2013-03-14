@@ -971,6 +971,24 @@ class TourSearchParams extends SearchParams
     if item == @selection()
       @setActive @data()[0]
 
+  GAKey: =>
+    @destinations()[0].city()
+
+  GAData: =>
+    result = "1"
+    passangers = [0, 0, 0]
+    for room in @rooms()
+      passangers[0] += room.adults()
+      passangers[1] += room.children()
+      passangers[2] += room.infants()
+    result += ", " + passangers.join(" - ")
+
+    destination = @destinations()[0]
+    result += ", " + moment(destination.dateFrom()).format('D.M.YYYY') + ' - ' + moment(destination.dateTo()).format('D.M.YYYY')
+    result += ", " + moment(destination.dateFrom()).diff(moment(), 'days') + " - " + moment(destination.dateTo()).diff(moment(destination.dateTo()), 'days')
+    return result
+
+
 # decoupling some presentation logic from resultset
 class ToursOverviewVM
   constructor: (@resultSet)->
@@ -1055,6 +1073,7 @@ class TourTripResultSet
         aviaResult.sort()
         aviaResult.totalPeople = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек'
         aviaResult.totalPeopleGen = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек'
+        aviaResult.rawSP = item.searchParams
         if (@roundTrip)
           @cities.push {isLast: false, cityName: item.flights[0].departureCity}
           @cities.push {isLast: false, cityName: item.flights[0].arrivalCity}
@@ -1071,7 +1090,9 @@ class TourTripResultSet
         @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
         @cities.push {cityName: @lastHotel.activeHotel.city}
         totalPeople = 0
+        # no side effects here ?!
         _.each item.searchParams.rooms, (room) -> totalPeople += room.adultCount/1 + room.childCount/1 + room.cots/1
+        @lastHotel.rawSP = item.searchParams
         @lastHotel.totalPeople = Utils.wordAfterNum totalPeople, 'человек', 'человека', 'человек'
         @lastHotel.totalPeopleGen = Utils.wordAfterNum totalPeople, 'человека', 'человек', 'человек'
         @items.push(@lastHotel)
@@ -1102,6 +1123,20 @@ class TourTripResultSet
         @totalCost = @totalCostWithDiscount
     else
         @totalCost = @totalCostWithoutDiscount
+
+  trackBuyClick: =>
+    # Отпавляем в гугол инфу о нажатии на кнопку перейти к оплате
+    if @hasFlight && @items.length == 1
+      # Один самолет -> пришли с авиа
+      aviaResult = @items[0]
+      _gaq.push(['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData(), aviaResult.airline, true])
+
+    if @hasHotel && @items.length == 1
+      # Один отель -> пришли с отелей
+      aviaResult = @items[0]
+      _gaq.push(['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData(), aviaResult.airline, true])
+      
+      
 
 class TourResultSet
   constructor: (resultSet, orderId) ->

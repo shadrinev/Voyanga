@@ -1,6 +1,9 @@
 # FIXME use mixins for most getters(?)
 # TODO aviaresult.grep could be usefull
 
+FIRST_TWO_HOURS_PRICE = 600
+REST_HOURS_PRICE = 800
+
 # Atomic journey unit.
 class FlightPart
   constructor: (part)->
@@ -53,7 +56,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     @flightKey = flight.flightKey
     @hasStopover = if @stopoverCount > 1 then true else false
     @stopoverLength = 0
-    @maxStopoverLength = 0 
+    @maxStopoverLength = 0
+    @stopoverPrice = 0 
     @direct = @parts.length == 1
     if ! @direct
       for part, index in @parts
@@ -62,7 +66,11 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
         @stopoverLength += part.stopoverLength
         if part.stopoverLength > @maxStopoverLength
           @maxStopoverLength = part.stopoverLength
-
+        stopoverInHours = part.stopoverLength / (60*60)
+        if stopoverInHours < 2
+          @stopoverPrice += stopoverInHours * FIRST_TWO_HOURS_PRICE
+        else
+          @stopoverPrice += 2 * FIRST_TWO_HOURS_PRICE + (stopoverInHours - 2) * REST_HOURS_PRICE
     @departureDate = Date.fromISO(flight.departureDate+Utils.tzOffset)
     # fime it is converted already
     @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
@@ -183,7 +191,6 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     htmlResult = ''
 
     for part in @parts[0..-2]
-      console.log part
       if part.stopoverLength  > 0
         htmlResult += @getCupHtmlForPart(part)
 
@@ -208,11 +215,15 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   sort: ->
     #console.log "SORTENG "
+    if not @already_sorted?
+      @act = @_backVoyages[0]
+      @already_sorted = true
     @_backVoyages.sort((a,b) -> a.departureInt() - b.departureInt())
-    @activeBackVoyage(@_backVoyages[0])
+    @activeBackVoyage(@act)
 
   # FIXME copypaste
   removeSimilar: ->
+    return
     if @_backVoyages.length < 2
       return
     _helper = {}
@@ -280,9 +291,14 @@ class AviaResult
     @freeWeightText = data.freeWeightDescription
     flights[0].flightKey = data.flightKey
     @activeVoyage = new Voyage(flights[0], @airline)
+    @old_price = @price
     if @roundTrip
       flights[1].flightKey = data.flightKey
-      @activeVoyage.push new Voyage(flights[1], @airline)
+      v = new Voyage(flights[1], @airline)
+      @activeVoyage.push v
+      @price += v.stopoverPrice
+    @price += @activeVoyage.stopoverPrice
+
     @voyages = []
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
@@ -337,7 +353,6 @@ class AviaResult
     Utils.implode(', ', codes)
 
   isActive: ->
-    console.log @parent.selected_key(), @key, @parent.selected_best()
     if @parent.selected_best()
       return @parent.selected_key()==@key
     @parent.selected_key()==@key
@@ -439,15 +454,20 @@ class AviaResult
     @activeVoyage()._backVoyages
 
   sort: ->
+    if not @already_sorted?
+      @act = @activeVoyage()
+      @already_sorted = true
+
     @voyages.sort((a,b) -> a.departureInt() - b.departureInt())
     if @roundTrip
       _.each @voyages,
        (x)->
         x.sort()
         x.removeSimilar() 
-    @activeVoyage(@voyages[0])
+    @activeVoyage(@act)
 
   removeSimilar: ->
+    return
     if @voyages.length < 2
       return
     _helper = {}
@@ -526,7 +546,25 @@ class AviaResult
     result.type = 'avia'
     return result
 
+  GAKey: =>
+    @departureAirport() + "/" + @arrivalAirport()
 
+  GAData: =>
+    result = ''
+    if @roundTrip
+      result += '2'
+    else
+      result += '1'
+    passangers = [@rawSP.adt, @rawSP.chd, @rawSP.inf]
+    result +=', ' + passangers.join(" - ")
+    result += ', ' + moment(@departureDate()).format('D.M.YYYY')
+    if @roundTrip
+      result += ' - ' + moment(@rtDepartureDate()).format('D.M.YYYY')
+    result += ', ' + moment(@departureDate()).diff(moment(), 'days')
+    if @roundTrip
+      result += ' - ' + moment(@rtDepartureDate()).diff(moment(@departureDate()), 'days')
+
+    return result
 
 #
 # Result container
@@ -624,6 +662,8 @@ class AviaResultSet
       result.searchId = selection.cacheId
       # FIXME FIXME FXIME
       result.searchKey = selection.flightKey()
+      _gaq.push(['_trackEvent', 'Avia_press_button_buy', @rawSP.GAKey(),  @rawSP.GAData(), selection.airline, true])
+
       Utils.toBuySubmit [result]
       
     @checkTicket selection, ticketValidCheck
@@ -634,7 +674,6 @@ class AviaResultSet
 
   findAndSelect: (result)=>
     hash = result.similarityHash()
-    console.log('hash find avia ',hash)
     for result in @data
       for voyage in result.voyages
         if voyage.similarityHash()==hash

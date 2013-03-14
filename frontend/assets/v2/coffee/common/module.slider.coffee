@@ -17,8 +17,6 @@ class Slider
     if activeLIindex == -1
       activeLIindex = 1
 
-    console.log "activeLIindex", activeLIindex
-
     @switchSlide = $('.slide-turn-mode').find('.switch')
     @valueWidth = [@plannerWidth, @aviaticketsWidth, @hotelWidth, @finishStagesWidth]
 
@@ -38,7 +36,6 @@ class Slider
   handler: (newValue)=>
     if newValue is `undefined`
       return
-    console.log "HANDLER: ", newValue
     activeLI = $('#h-' + newValue + '-slider')
     activeLIindex = activeLI.index()
     $('.btn').removeClass 'active'

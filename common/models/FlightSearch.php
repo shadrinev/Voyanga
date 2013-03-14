@@ -81,8 +81,7 @@ class FlightSearch extends CModel implements IStatisticItem
                     );
                     $this->flightVoyageStack->setAttributes($attributes);
                     Yii::app()->observer->notify('onAfterFlightSearch', $this);
-                    Yii::log('TRYING TO ADD CACHE FROM STACK', 'info');
-                    if (($flightSearchParams->adultCount==1) && ($flightSearchParams->childCount==0) && ($flightSearchParams->infantCount==0))
+                    if (($flightSearchParams->adultCount==1) && ($flightSearchParams->childCount==0) && ($flightSearchParams->infantCount==0) && ($flightSearchParams->flight_class=='E'))
                         FlightCache::addCacheFromStack($this->flightVoyageStack);
                     return $this->flightVoyageStack;
                 }

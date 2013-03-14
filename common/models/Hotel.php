@@ -124,8 +124,12 @@ class Hotel extends CApplicationComponent
      */
     public function getPrice()
     {
-        //return $this->markupPrice;
         return DiscountManager::calculateHotelPrice($this->rubPrice);
+    }
+
+    public function getDiscountPrice()
+    {
+        return DiscountManager::calculateDiscountHotelPrice($this->rubPrice);
     }
 
     /**
@@ -427,9 +431,9 @@ class Hotel extends CApplicationComponent
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'currency' => $this->currency,
-            'price' => $this->price,
+            'price' => $this->rubPrice,
             'rubPrice' => $this->getPrice(),
-            'discountPrice' => $this->rubPrice,
+            'discountPrice' => $this->getDiscountPrice(),
             'bestMask' => $this->bestMask,
             'categoryId' => $this->categoryId,
             'checkIn' => $this->checkIn,

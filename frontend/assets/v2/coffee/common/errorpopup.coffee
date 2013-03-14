@@ -47,9 +47,21 @@ ERRORS =
 
 class ErrorPopup extends GenericPopup
   constructor: (key, params = false, @onclose=false)->
+    activeModule = window.app.activeModule()
+    if activeModule == 'tours'
+      activeModule = 'trip'
+    if activeModule == 'hotels'
+      activeModule = 'hotel'
+
+
     id = 'errorpopup'
     data = ERRORS[key]
     data.text = data.text.format params
+
+    cat = 'error-' + activeModule
+    _gaq.push(['_trackEvent', 'error-message', cat, data.text.substring(0,200), '', true])
+
+    
     if !@onclose
       @onclose = data.onclose
     super '#' + id, data, true

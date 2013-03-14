@@ -42,23 +42,8 @@ Application = (function(_super) {
 
     this.initCalendar = __bind(this.initCalendar, this);
 
-    var result, _oldOnerrorHandler,
+    var result,
       _this = this;
-    _oldOnerrorHandler = window.onerror;
-    window.onerror = function() {
-      var rest;
-      rest = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      if (rest.length === 3 && rest[2] === 0) {
-        return;
-      }
-      if (rest[0].indexOf('VK') > 0) {
-        return;
-      }
-      new ErrorPopup('e500');
-      if (_oldOnerrorHandler) {
-        return _oldOnerrorHandler.apply(_this, rest);
-      }
-    };
     this.activeModule = ko.observable(null);
     this.activeModuleInstance = ko.observable(null);
     this.activeSearchPanel = ko.observable(null);
@@ -161,7 +146,6 @@ Application = (function(_super) {
         return _this.activeSearchPanel(newPanel);
       }
     });
-    console.log('set panel', this.fakoPanel(), this.fakoPanel().panels);
     if (this.fakoPanel().panels) {
       return this.activeSearchPanel(_.last(this.fakoPanel().panels()));
     } else {
@@ -170,7 +154,6 @@ Application = (function(_super) {
   };
 
   Application.prototype.reRenderCalendarEvent = function(elements) {
-    console.log('rerender calendar');
     $('.calenderWindow').css('position', 'static').find('.calendarSlide').css('position', 'static');
     VoyangaCalendarStandart.init(this.itemsToBuy.activePanel, elements[1]);
     return this.activeSearchPanel(_.last(this.itemsToBuy.activePanel().panels()));
@@ -283,6 +266,7 @@ Application = (function(_super) {
 
   Application.prototype.route = function(route, name, callback) {
     return Backbone.Router.prototype.route.call(this, route, name, function() {
+      _gaq.push(['_trackPageview', '/' + window.location.hash.replace('#', '')]);
       this.trigger.apply(this, ['beforeroute:' + name].concat(_.toArray(arguments)));
       return callback.apply(this, arguments);
     });
@@ -321,5 +305,6 @@ Application = (function(_super) {
 window.voyanga_debug = function() {
   var args;
   args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  return;
   return console.log.apply(console, args);
 };

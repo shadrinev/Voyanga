@@ -56,8 +56,10 @@ class PassportManager
                     $roomCounters = array(
                         'adult' => $room['adt'],
                         'child' => $room['chd'],
-                        'label' => $hotelRoom->roomName . ' (' . $hotelRoom->showName .')'
+                        'label' => $hotelRoom->roomName
                     );
+                    if ($hotelRoom->roomName != $hotelRoom->showName)
+                        $roomCounters['label'] = $hotelRoom->roomName . ' (' . $hotelRoom->showName .')';
                     $this->counters['adultCount'] += $room['adt'];
                     $this->counters['childCount'] += $room['chd'];
                     $this->counters['infantCount'] += ($room['cots'] > 0) ? 1 : 0;

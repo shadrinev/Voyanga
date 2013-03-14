@@ -259,7 +259,7 @@ function onFocusInput() {
         else if (e.which == 32) {
             var _this = $(e.target);
             $(_this).parent().addClass('active');
-            $(_this).attr('checked','checked');
+            //$(_this).attr('checked','checked');
         }
     });
 

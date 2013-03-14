@@ -32,9 +32,7 @@ class SpRoom
       ko.processAllDeferredBindingUpdates()
 
   fromList: (item) ->
-    console.log('SpRoom FromList', item)
     parts = item.split(':')
-    console.log('parts:', parts)
     @adults parts[0]
     @children parts[1]
     @infants parts[2]
@@ -42,10 +40,8 @@ class SpRoom
     if @children() > 0
       for i in [0..(@children()-1)]
         @ages.push {age: ko.observable(parts[3 + i]).extend {integerOnly:{min: 0, max: 12}}}
-    console.log('ages:', @ages())
 
   fromObject: (item) ->
-    console.log('search params FromObject',item)
     @adults item.adt
     @children item.chd
     @infants item.cots
@@ -65,7 +61,6 @@ class SpRoom
   getUrl: (i)=>
     # FIXME FIMXE FIMXE
     agesText = ''
-    console.log('age p', @ages(), @)
     agesTextVals = []
     j = 0
     for ageObj in @ages()

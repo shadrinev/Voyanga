@@ -64,9 +64,7 @@
         //eventPhotos = new EventPhotoBox(window.eventPhotos);
     })
 </script>
-
 <div class="center-block">
-
     <div class="main-block" style="width: 935px; margin-left: auto; margin-right: auto;">
         <?php
         $this->widget('common.components.BreadcrumbsVoyanga', array(

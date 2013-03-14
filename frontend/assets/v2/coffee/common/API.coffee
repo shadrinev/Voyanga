@@ -21,7 +21,8 @@ class API
         ,10
       error: (jqXHR, rest...)=>
         @loader.hide()
-        throw new Error("Api call failed: Url: #{url}" + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") +  " | " + rest.join(" | "))
+        if (jqXHR.status > 0)
+          throw new Error("Api call failed: Url: #{url}" + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") +  " | " + rest.join(" | "))
 
 class ToursAPI extends API
   init: =>
@@ -65,8 +66,6 @@ class VisualLoader
       $('#loadWrapBg').find('#loadContentWin .text').html(newVal)
 
     @timeFromStart = 0
-    @percents.subscribe (newVal)=>
-      console.log('loder changed... NOW: '+newVal + '% time from start: '+ @timeFromStart+'sec')
 
   show: =>
     $('#loadWrapBg').show()
@@ -95,16 +94,13 @@ class VisualLoader
 
 
   tooltipStep: =>
-    console.log('RUN TOOLTIP',$('#loadWrapBg').find('.tips .text').length)
     count = @tooltips.length
     randVal = Math.ceil(Math.random() * count)
     randInd = randVal % count
     if randInd == @tooltipInd
       randInd = (randVal+1) % count
     @tooltipInd = randInd
-    console.log('RUN TOOLTIP HTML:',$('#loadWrapBg').find('.tips .text').html())
     $('#loadWrapBg').find('.tips .text').html(@tooltips[@tooltipInd])
-    console.log('RUN TOOLTIP HTML2:',$('#loadWrapBg').find('.tips .text').html())
 
 
 
@@ -123,7 +119,6 @@ class VisualLoader
       else
         rtime = Math.ceil(rand * (@separatedTime / 3))
         newPerc = Math.ceil(Math.random() * 2 )
-      console.log('time: '+rtime+'sec')
       @timeFromStart +=rtime
       @timeoutHandler = window.setTimeout(
         =>

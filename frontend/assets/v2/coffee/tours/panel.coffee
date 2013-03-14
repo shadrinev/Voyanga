@@ -101,6 +101,10 @@ class TourPanelSet
       el = $('div.innerCalendar').find('h1')
       Utils.flashMessage el
       return
+
+    sp = _.last(@panels()).sp
+    _gaq.push(['_trackEvent','Trip_press_button_search', sp.GAKey(), sp.GAData()])
+
     _.last(@panels()).handlePanelSubmit()
     _.last(@panels()).minimizedCalendar(true)
 

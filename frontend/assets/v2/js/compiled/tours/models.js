@@ -1285,6 +1285,10 @@ TourSearchParams = (function(_super) {
   __extends(TourSearchParams, _super);
 
   function TourSearchParams() {
+    this.GAData = __bind(this.GAData, this);
+
+    this.GAKey = __bind(this.GAKey, this);
+
     this.removeItem = __bind(this.removeItem, this);
 
     this.addSpRoom = __bind(this.addSpRoom, this);
@@ -1462,6 +1466,28 @@ TourSearchParams = (function(_super) {
     }
   };
 
+  TourSearchParams.prototype.GAKey = function() {
+    return this.destinations()[0].city();
+  };
+
+  TourSearchParams.prototype.GAData = function() {
+    var destination, passangers, result, room, _i, _len, _ref;
+    result = "1";
+    passangers = [0, 0, 0];
+    _ref = this.rooms();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      room = _ref[_i];
+      passangers[0] += room.adults();
+      passangers[1] += room.children();
+      passangers[2] += room.infants();
+    }
+    result += ", " + passangers.join(" - ");
+    destination = this.destinations()[0];
+    result += ", " + moment(destination.dateFrom()).format('D.M.YYYY') + ' - ' + moment(destination.dateTo()).format('D.M.YYYY');
+    result += ", " + moment(destination.dateFrom()).diff(moment(), 'days') + " - " + moment(destination.dateTo()).diff(moment(destination.dateTo()), 'days');
+    return result;
+  };
+
   return TourSearchParams;
 
 })(SearchParams);
@@ -1512,6 +1538,8 @@ TourTripResultSet = (function() {
     var newCity,
       _this = this;
     this.resultSet = resultSet;
+    this.trackBuyClick = __bind(this.trackBuyClick, this);
+
     this.items = [];
     this.cities = [];
     this.hasFlight = false;
@@ -1592,6 +1620,7 @@ TourTripResultSet = (function() {
         aviaResult.sort();
         aviaResult.totalPeople = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек');
         aviaResult.totalPeopleGen = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек');
+        aviaResult.rawSP = item.searchParams;
         if (_this.roundTrip) {
           _this.cities.push({
             isLast: false,
@@ -1629,6 +1658,7 @@ TourTripResultSet = (function() {
         _.each(item.searchParams.rooms, function(room) {
           return totalPeople += room.adultCount / 1 + room.childCount / 1 + room.cots / 1;
         });
+        _this.lastHotel.rawSP = item.searchParams;
         _this.lastHotel.totalPeople = Utils.wordAfterNum(totalPeople, 'человек', 'человека', 'человек');
         _this.lastHotel.totalPeopleGen = Utils.wordAfterNum(totalPeople, 'человека', 'человек', 'человек');
         _this.items.push(_this.lastHotel);
@@ -1669,6 +1699,18 @@ TourTripResultSet = (function() {
       this.totalCost = this.totalCostWithoutDiscount;
     }
   }
+
+  TourTripResultSet.prototype.trackBuyClick = function() {
+    var aviaResult;
+    if (this.hasFlight && this.items.length === 1) {
+      aviaResult = this.items[0];
+      _gaq.push(['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData(), aviaResult.airline, true]);
+    }
+    if (this.hasHotel && this.items.length === 1) {
+      aviaResult = this.items[0];
+      return _gaq.push(['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData(), aviaResult.airline, true]);
+    }
+  };
 
   return TourTripResultSet;
 

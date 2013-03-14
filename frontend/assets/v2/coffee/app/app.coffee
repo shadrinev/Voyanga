@@ -3,17 +3,6 @@
 # FIXME maybe modules is not that good idea?
 class Application extends Backbone.Router
   constructor: ->
-    _oldOnerrorHandler = window.onerror
-    window.onerror = (rest...)=>
-      if rest.length == 3 and rest[2] == 0
-        # most likely extension or inline script(?) error
-        return
-      if rest[0].indexOf('VK') > 0
-        return
-      new ErrorPopup('e500')
-      return _oldOnerrorHandler.apply(this, rest)  if _oldOnerrorHandler
-
-    # FIXME
     @activeModule = ko.observable null #ko.observable window.activeModule || 'avia'
     @activeModuleInstance = ko.observable null
     @activeSearchPanel = ko.observable null
@@ -105,14 +94,12 @@ class Application extends Backbone.Router
       else
         @activeSearchPanel(newPanel)
     )
-    console.log('set panel',@fakoPanel(),@fakoPanel().panels)
     if @fakoPanel().panels
       @activeSearchPanel(_.last(@fakoPanel().panels()))
     else
       @activeSearchPanel(@fakoPanel())
 
   reRenderCalendarEvent:(elements) =>
-    console.log('rerender calendar')
     $('.calenderWindow').css('position','static').find('.calendarSlide').css('position','static')
     VoyangaCalendarStandart.init @itemsToBuy.activePanel, elements[1]
     @activeSearchPanel(_.last(@itemsToBuy.activePanel().panels()))
@@ -202,8 +189,9 @@ class Application extends Backbone.Router
   # beforeroute event, cuz backbone cant do this for us
   route: (route, name, callback) ->
     Backbone.Router.prototype.route.call this, route, name, ->
-            @trigger.apply(@, ['beforeroute:' + name].concat(_.toArray(arguments)))
-            callback.apply(@, arguments)
+      _gaq.push(['_trackPageview', '/' + window.location.hash.replace('#', '')]); 
+      @trigger.apply(@, ['beforeroute:' + name].concat(_.toArray(arguments)))
+      callback.apply(@, arguments)
 
   contentRendered: =>
     window.voyanga_debug "APP: Content rendered"
@@ -226,4 +214,6 @@ class Application extends Backbone.Router
     @activeView() == 'tours-index'
 
 window.voyanga_debug = (args...)->
+  return
+  # crashes in bad browsers sometimes
   console.log.apply(console, args)

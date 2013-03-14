@@ -1,7 +1,7 @@
 <script type="text/html" id="calendar-template">
     <div class="calendarSlide">
         <div class="innerCalendar">
-            <h1 data-bind="text:fakoPanel().calendarText"></h1>
+            <h2 data-bind="text:fakoPanel().calendarText"></h2>
             <a href='#' class="btnCloseCal" data-bind="click:fakoPanel().minimizeCalendar"></a>
         </div>
         <div class="bg-Calendar">

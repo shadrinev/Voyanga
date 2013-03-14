@@ -17,7 +17,6 @@ class FlightCache extends CommonFlightCache
         $dumper = new FlightCacheDumper();
         $dumper->model = $this;
         $dumper->save();
-        Yii::log("FLIGHT CACHE DUMPER = \n".CVarDumper::dumpAsString($dumper->model->attributes));
         return false;
     }
 }

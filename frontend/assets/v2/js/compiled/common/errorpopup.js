@@ -63,16 +63,25 @@ ErrorPopup = (function(_super) {
   __extends(ErrorPopup, _super);
 
   function ErrorPopup(key, params, onclose) {
-    var data, id;
+    var activeModule, cat, data, id;
     if (params == null) {
       params = false;
     }
     this.onclose = onclose != null ? onclose : false;
     this.close = __bind(this.close, this);
 
+    activeModule = window.app.activeModule();
+    if (activeModule === 'tours') {
+      activeModule = 'trip';
+    }
+    if (activeModule === 'hotels') {
+      activeModule = 'hotel';
+    }
     id = 'errorpopup';
     data = ERRORS[key];
     data.text = data.text.format(params);
+    cat = 'error-' + activeModule;
+    _gaq.push(['_trackEvent', 'error-message', cat, data.text.substring(0, 200), '', true]);
     if (!this.onclose) {
       this.onclose = data.onclose;
     }
