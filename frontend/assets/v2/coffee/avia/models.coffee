@@ -1,6 +1,9 @@
 # FIXME use mixins for most getters(?)
 # TODO aviaresult.grep could be usefull
 
+STOPOVER_MINUTE_PRICE = 700/60
+MINUTE_PRICE_STEP = 2*300/(60*60)
+
 # Atomic journey unit.
 class FlightPart
   constructor: (part)->
@@ -53,16 +56,26 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     @flightKey = flight.flightKey
     @hasStopover = if @stopoverCount > 1 then true else false
     @stopoverLength = 0
-    @maxStopoverLength = 0 
+    @maxStopoverLength = 0
+    @stopoverPrice = 0 
     @direct = @parts.length == 1
     if ! @direct
       for part, index in @parts
         if index < (@parts.length - 1)
           part.calculateStopoverLength @parts[index+1]
         @stopoverLength += part.stopoverLength
+        hours = (part.stopoverLength/3600)
+        minute_price = STOPOVER_MINUTE_PRICE
+        if hours < 2.1
+          minute_price = 700/60
+        @stopoverPrice += (index+1) * (part.stopoverLength/60)*minute_price
         if part.stopoverLength > @maxStopoverLength
           @maxStopoverLength = part.stopoverLength
-
+      stopoverInMinutes = @stopoverLength / 60
+      console.log "LENGTH", @stopoverLength
+      console.log "IJ ", (@stopoverLength-1)*MINUTE_PRICE_STEP
+      console.log "SUMMA", (@stopoverLength-1)*MINUTE_PRICE_STEP*@stopoverLength/2 
+      @stopoverPrice += (stopoverInMinutes-1)*MINUTE_PRICE_STEP*stopoverInMinutes/2
     @departureDate = Date.fromISO(flight.departureDate+Utils.tzOffset)
     # fime it is converted already
     @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
@@ -183,7 +196,6 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     htmlResult = ''
 
     for part in @parts[0..-2]
-      console.log part
       if part.stopoverLength  > 0
         htmlResult += @getCupHtmlForPart(part)
 
@@ -280,9 +292,14 @@ class AviaResult
     @freeWeightText = data.freeWeightDescription
     flights[0].flightKey = data.flightKey
     @activeVoyage = new Voyage(flights[0], @airline)
+    @old_price = @price
     if @roundTrip
       flights[1].flightKey = data.flightKey
-      @activeVoyage.push new Voyage(flights[1], @airline)
+      v = new Voyage(flights[1], @airline)
+      @activeVoyage.push v
+      @price += v.stopoverPrice
+    @price += @activeVoyage.stopoverPrice
+
     @voyages = []
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
@@ -337,7 +354,6 @@ class AviaResult
     Utils.implode(', ', codes)
 
   isActive: ->
-    console.log @parent.selected_key(), @key, @parent.selected_best()
     if @parent.selected_best()
       return @parent.selected_key()==@key
     @parent.selected_key()==@key
@@ -654,7 +670,6 @@ class AviaResultSet
 
   findAndSelect: (result)=>
     hash = result.similarityHash()
-    console.log('hash find avia ',hash)
     for result in @data
       for voyage in result.voyages
         if voyage.similarityHash()==hash
