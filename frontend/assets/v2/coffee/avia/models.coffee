@@ -2,7 +2,7 @@
 # TODO aviaresult.grep could be usefull
 
 FIRST_TWO_HOURS_PRICE = 600
-REST_HOURS_PRICE = 1000
+REST_HOURS_PRICE = 800
 
 # Atomic journey unit.
 class FlightPart

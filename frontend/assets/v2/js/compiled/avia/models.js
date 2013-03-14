@@ -6,7 +6,7 @@ var AviaResult, AviaResultSet, AviaSearchParams, FIRST_TWO_HOURS_PRICE, FlightPa
 
 FIRST_TWO_HOURS_PRICE = 600;
 
-REST_HOURS_PRICE = 1000;
+REST_HOURS_PRICE = 800;
 
 FlightPart = (function() {
 
