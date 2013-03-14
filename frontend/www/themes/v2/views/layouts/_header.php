@@ -12,7 +12,6 @@
 <noscript>
     <?php $this->renderPartial('//layouts/_noscript'); ?>
 </noscript>
-<?php $this->renderPartial('//layouts/_noimage'); ?>
 <div class="head" id="header">
     <!-- CENTER BLOCK -->
     <div class="center-block">
