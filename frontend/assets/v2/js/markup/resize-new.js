@@ -177,7 +177,7 @@ window.hotelsScrollCallback = function(){}
 function ResizeCenterBlock() {
 	var block = $('.center-block');
 	var isset = block.length;
-	if (isset) {
+    if (isset) {
         //console.log('!!!==== 0 ====!!!');
 		var var_leftBlock = $('.left-block');
 		var var_head = $('.head');

@@ -102,11 +102,16 @@
             <table class="headerTitle">
                 <tr>
                     <td class="h1">Оплатить <span class="grey">банковской картой или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
-                    <td class="time"></td>
+                    <td class="time">
+                       Необходимо оплатить в течение <strong>1 часа</strong>
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        <span class="grey1">Билеты будут отправлены по электронной почте сразу после оплаты. Сайт полностью отвечает стандартам безопасности PCI DSS Compliance.</span>
+                        <span style="line-height: 18px;">Билеты будут отправлены по электронной почте сразу после оплаты.</span>
+                    </td>
+                    <td>
+
                     </td>
                 </tr>
             </table>

@@ -21,7 +21,8 @@ class API
         ,10
       error: (jqXHR, rest...)=>
         @loader.hide()
-        throw new Error("Api call failed: Url: #{url}" + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") +  " | " + rest.join(" | "))
+        if (jqXHR.status > 0)
+          throw new Error("Api call failed: Url: #{url}" + " | Status: " + jqXHR.status + " | Status text '" + jqXHR.statusText + "' | " + jqXHR.getAllResponseHeaders().replace("\n", ";") +  " | " + rest.join(" | "))
 
 class ToursAPI extends API
   init: =>

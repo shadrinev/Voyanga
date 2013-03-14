@@ -64,6 +64,7 @@
         //eventPhotos = new EventPhotoBox(window.eventPhotos);
     })
 </script>
+    11
 <div class="center-block">
     <div class="main-block" style="width: 935px; margin-left: auto; margin-right: auto;">
         <div id="content" style="width: 935px;">
