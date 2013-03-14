@@ -2,7 +2,9 @@
 # TODO aviaresult.grep could be usefull
 
 STOPOVER_MINUTE_PRICE = 400/60
-MINUTE_PRICE_STEP = 2*300/(60*60)
+#MINUTE_PRICE_STEP = 2*300/(60*60)
+FIRST_TWO_HOURS_PRICE = 200
+REST_HOURS_PRICE = 600
 
 # Atomic journey unit.
 class FlightPart
@@ -64,18 +66,14 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
         if index < (@parts.length - 1)
           part.calculateStopoverLength @parts[index+1]
         @stopoverLength += part.stopoverLength
-        hours = (part.stopoverLength/3600)
-        minute_price = STOPOVER_MINUTE_PRICE
-        if hours < 2.1
-          minute_price = 700/60
-        @stopoverPrice += (index+1) * (part.stopoverLength/60)*minute_price
+        @stopoverPrice += (index+1) * (part.stopoverLength/60)*STOPOVER_MINUTE_PRICE
         if part.stopoverLength > @maxStopoverLength
           @maxStopoverLength = part.stopoverLength
-      stopoverInMinutes = @stopoverLength / 60
-      console.log "LENGTH", @stopoverLength
-      console.log "IJ ", (@stopoverLength-1)*MINUTE_PRICE_STEP
-      console.log "SUMMA", (@stopoverLength-1)*MINUTE_PRICE_STEP*@stopoverLength/2 
-      @stopoverPrice += (stopoverInMinutes-1)*MINUTE_PRICE_STEP*stopoverInMinutes/2
+      stopoverInHours = @stopoverLength / (60*60)
+      if stopoverInHours < 2
+        @stopoverPrice += stopoverInHours * FIRST_TWO_HOURS_PRICE
+      else
+        @stopoverPrice += 2 * FIRST_TWO_HOURS_PRICE + (stopoverInHours - 2) * REST_HOURS_PRICE
     @departureDate = Date.fromISO(flight.departureDate+Utils.tzOffset)
     # fime it is converted already
     @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
