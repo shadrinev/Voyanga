@@ -1,10 +1,8 @@
 # FIXME use mixins for most getters(?)
 # TODO aviaresult.grep could be usefull
 
-STOPOVER_MINUTE_PRICE = 400/60
-#MINUTE_PRICE_STEP = 2*300/(60*60)
-FIRST_TWO_HOURS_PRICE = 200
-REST_HOURS_PRICE = 600
+FIRST_TWO_HOURS_PRICE = 600
+REST_HOURS_PRICE = 1000
 
 # Atomic journey unit.
 class FlightPart
@@ -66,14 +64,13 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
         if index < (@parts.length - 1)
           part.calculateStopoverLength @parts[index+1]
         @stopoverLength += part.stopoverLength
-        @stopoverPrice += (index+1) * (part.stopoverLength/60)*STOPOVER_MINUTE_PRICE
         if part.stopoverLength > @maxStopoverLength
           @maxStopoverLength = part.stopoverLength
-      stopoverInHours = @stopoverLength / (60*60)
-      if stopoverInHours < 2
-        @stopoverPrice += stopoverInHours * FIRST_TWO_HOURS_PRICE
-      else
-        @stopoverPrice += 2 * FIRST_TWO_HOURS_PRICE + (stopoverInHours - 2) * REST_HOURS_PRICE
+        stopoverInHours = part.stopoverLength / (60*60)
+        if stopoverInHours < 2
+          @stopoverPrice += stopoverInHours * FIRST_TWO_HOURS_PRICE
+        else
+          @stopoverPrice += 2 * FIRST_TWO_HOURS_PRICE + (stopoverInHours - 2) * REST_HOURS_PRICE
     @departureDate = Date.fromISO(flight.departureDate+Utils.tzOffset)
     # fime it is converted already
     @arrivalDate = new Date(@parts[@parts.length-1].arrivalDate)
@@ -218,11 +215,15 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   sort: ->
     #console.log "SORTENG "
+    if not @already_sorted?
+      @act = @_backVoyages[0]
+      @already_sorted = true
     @_backVoyages.sort((a,b) -> a.departureInt() - b.departureInt())
-    @activeBackVoyage(@_backVoyages[0])
+    @activeBackVoyage(@act)
 
   # FIXME copypaste
   removeSimilar: ->
+    return
     if @_backVoyages.length < 2
       return
     _helper = {}
@@ -453,15 +454,20 @@ class AviaResult
     @activeVoyage()._backVoyages
 
   sort: ->
+    if not @already_sorted?
+      @act = @activeVoyage()
+      @already_sorted = true
+
     @voyages.sort((a,b) -> a.departureInt() - b.departureInt())
     if @roundTrip
       _.each @voyages,
        (x)->
         x.sort()
         x.removeSimilar() 
-    @activeVoyage(@voyages[0])
+    @activeVoyage(@act)
 
   removeSimilar: ->
+    return
     if @voyages.length < 2
       return
     _helper = {}
