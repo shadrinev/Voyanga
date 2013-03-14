@@ -1,8 +1,9 @@
 <?php
 
-class LandingController extends Controller
+class LandingController extends FrontendController
 {
     public $morphy;
+    public $breadLinks = array();
 
     public function actionIndex()
     {
@@ -13,6 +14,8 @@ class LandingController extends Controller
     public function actionBestHotels()
     {
         $currentCity = Geoip::getCurrentCity();
+        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks['отели'] = '/land/hotels/';
 
         $sql = 'SELECT count(*) as cnt, cityId  FROM `hotel`  GROUP BY `cityId` ORDER BY cnt DESC LIMIT 3';
         $cityIds = array();
@@ -58,6 +61,7 @@ class LandingController extends Controller
         }
 
         $this->layout = 'static';
+        $this->assignTitle('landHotels');
         $this->render('bestHotels', array('hotelsCaches' => $hotelsCaches, 'currentCity' => $currentCity,
             'flightCacheFromCurrent' => $flightCacheFromCurrent
         ));
@@ -68,10 +72,12 @@ class LandingController extends Controller
     {
         if (!($country = $this->testCountry($countryCode)))
             return false;
-
+        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks['отели'] = '/land/hotels/';
+        $this->breadLinks[$country->localRu] = '/land/hotels/'.$country->code.'/';
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
-        $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'), 'casePre' => $this->getCase($countryUp, 'ПР'));
+        $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'), 'casePre' => $this->getCase($countryUp, 'ПР'),'caseGen' => $this->getCase($countryUp, 'РД'));
         //if(!$cityFromCode){
         $currentCity = Geoip::getCurrentCity();
         //}else{
@@ -172,7 +178,19 @@ class LandingController extends Controller
 
 
         $this->layout = 'static';
-        $this->render('hotels', array('city' => $city, 'citySet' => $citySet, 'countryMorph' => $countryMorph, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'currentCity' => $currentCity, 'flightCache' => $sortFc,
+        $countryCities = false;
+        if($citySet){
+            $this->breadLinks['в '.$city->casePre] = '/land/hotels/'.$country->code.'/'.$city->code;
+            $this->assignTitle('landHotelsCity',array('##cityCasePre##'=>$city->casePre,'##cityCaseAcc##'=>$city->caseAcc,'##countryCaseGen##'=>$countryMorph['caseGen'],'##countryCaseAcc##'=>$countryMorph['caseAcc']));
+        }else{
+            $criteria = new CDbCriteria();
+            $criteria->addCondition('`countryId` = ' . $country->id);
+            $criteria->addCondition('`hotelbookId` > 0');
+            $criteria->order = 'position desc';
+            $countryCities = City::model()->findAll($criteria);
+            $this->assignTitle('landHotelsCountry',array('##countryCaseGen##'=>$countryMorph['caseGen'],'##countryCaseAcc##'=>$countryMorph['caseAcc']));
+        }
+        $this->render('hotels', array('countryCities'=>$countryCities,'city' => $city, 'citySet' => $citySet, 'countryMorph' => $countryMorph, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'currentCity' => $currentCity, 'flightCache' => $sortFc,
             'flightCacheFromCurrent' => $flightCacheFromCurrent
         ));
     }
@@ -181,6 +199,10 @@ class LandingController extends Controller
     {
         Yii::import('site.common.modules.hotel.models.*');
         $hotelClient = new HotelBookClient();
+
+        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks['отели'] = '/land/hotels/';
+
 
         $criteria = new CDbCriteria();
         //$criteria->addInCondition('`cityId`',$cityIds);
@@ -223,6 +245,9 @@ class LandingController extends Controller
                 foreach ($ratings as $rate) break;
                 $hotelInfo->rating = $rate;
             }
+            $country = $city->country;
+            $this->breadLinks[$country->localRu] = '/land/hotels/'.$country->code.'/';
+            $this->breadLinks[$city->caseNom] = '/land/hotels/'.$country->code.'/'.$city->casePre;
         }
         $serviceGroupIcons = array('Сервис' => 'service', 'Спорт и отдых' => 'sport', 'Туристам' => 'turist', 'Интернет' => 'internet', 'Развлечения и досуг' => 'dosug', 'Парковка' => 'parkovka', 'Дополнительно' => 'dop', 'В отеле' => 'in-hotel');
         $serviceList = array();
@@ -232,8 +257,10 @@ class LandingController extends Controller
             }
         }
         //print_r($serviceList);die();
+        $this->breadLinks[$hotelInfo->hotelName] = '/land/hotel/'.$hotelId;
 
         $this->layout = 'static';
+        $this->assignTitle('landHotel',array('##hotelName##'=>$hotelInfo->hotelName,'##wordStars##'=>UtilsHelper::WordAfterNum(array('звезда','здезды','звезд'),$hotelInfo->categoryId)));
         $this->render('hotelInfo', array('hotelInfo' => $hotelInfo, 'city' => $city, 'serviceList' => $serviceList
         ));
     }
@@ -260,6 +287,9 @@ class LandingController extends Controller
         if (!($country = $this->testCountry($countryCode)))
             return false;
 
+        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks[$country->localRu] = '/land/'.$country->code.'/';
+
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
         $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'));
@@ -271,6 +301,7 @@ class LandingController extends Controller
             $fromCity = City::getCityByCode($cityFromCode);
         }
         $city = City::getCityByCode($cityCode);
+        $this->breadLinks['в '.$city->caseAcc] = '/land/'.$country->code.'/'.$city->code.'/trip/OW/';
 
         if ($city->id == $currentCity->id) {
             if ($currentCity->id != 4466) {
@@ -379,6 +410,12 @@ class LandingController extends Controller
 
 
         $this->layout = 'static';
+        if($fromCity){
+            $this->breadLinks['из '.$fromCity->caseGen] = '/land/'.$country->code.'/'.$fromCity->code.'/'.$city->code.'/trip/OW/';
+            $this->assignTitle('landFromTo',array('##cityFrom##'=>$fromCity->caseNom,'##cityTo##'=>$city->caseNom,'##cityFromCaseGen##'=>$fromCity->caseGen,'##cityToCaseAcc##'=>$city->caseAcc));
+        }else{
+            $this->assignTitle('landTo',array('##cityTo##'=>$city->caseNom,'##cityToCaseAcc##'=>$city->caseAcc));
+        }
         $this->render('city', array('city' => $city, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'fromCity' => $fromCity, 'currentCity' => $currentCity,
             'flightCacheFromCurrent' => $flightCacheFromCurrent
         ));
@@ -410,10 +447,12 @@ class LandingController extends Controller
     {
         if (!($country = $this->testCountry($countryCode)))
             return false;
+        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks[$country->localRu] = '/land/'.$country->code.'/';
 
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
-        $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'), 'casePre' => $this->getCase($countryUp, 'ПР'));
+        $countryMorph = array('caseAcc' => $this->getCase($countryUp, 'ВН'), 'casePre' => $this->getCase($countryUp, 'ПР'), 'caseGen' => $this->getCase($countryUp, 'РД'));
         $currentCity = Geoip::getCurrentCity();
 
         $citiesFrom = array();
@@ -497,9 +536,15 @@ class LandingController extends Controller
         while (($row = $dataReader->read()) !== false) {
             $flightCacheFromCurrent[] = (object)$row;
         }
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('`countryId` = ' . $country->id);
+        $criteria->addCondition('`countAirports` > 0');
+        $criteria->order = 'position desc';
+        $countryCities = City::model()->findAll($criteria);
 
         $this->layout = 'static';
-        $this->render('country', array('country'=> $country, 'countryMorph' => $countryMorph, 'flightCacheFromCurrent' => $flightCacheFromCurrent, 'hotelsInfo' => $hotelsInfo,
+        $this->assignTitle('landToCountry',array('##countryCaseGen##'=>$countryMorph['caseGen'],'##countryCaseAcc##'=>$countryMorph['caseAcc']));
+        $this->render('country', array('countryCities'=>$countryCities,'country'=> $country, 'countryMorph' => $countryMorph, 'flightCacheFromCurrent' => $flightCacheFromCurrent, 'hotelsInfo' => $hotelsInfo,
             'currentCity' => $currentCity,
             'city'=>$city,
             'citiesFrom' => $citiesFrom
@@ -509,9 +554,11 @@ class LandingController extends Controller
 
     public function actionCountries()
     {
+        $this->breadLinks['список стран'] = '/land/';
         $countries = Country::model()->findAll();
         $this->layout = 'static';
-        $this->render('countries', array('countries' => $countries));
+        $this->assignTitle('landCountries');
+        $this->render('countries', array('breadLinks'=>$this->breadLinks,'countries' => $countries));
     }
 
     public function actionOWFlight($countryCode = '', $cityCodeFrom = '', $cityCodeTo = '')
@@ -523,6 +570,8 @@ class LandingController extends Controller
     {
         if (!($country = $this->testCountry($countryCode)))
             return false;
+        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks[$country->localRu] = '/land/'.$country->code.'/';
 
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
@@ -536,6 +585,7 @@ class LandingController extends Controller
             $fromCity = City::getCityByCode($cityCodeFrom);
         }
         $city = City::getCityByCode($cityCodeTo);
+        $this->breadLinks['в '.$city->caseAcc] = '/land/'.$country->code.'/'.$city->code.'/';
 
         if ($city->id == $currentCity->id) {
             if ($currentCity->id != 4466) {
@@ -690,6 +740,12 @@ class LandingController extends Controller
 
         $this->layout = 'static';
         //$this->render('landing');
+        if($fromCity){
+            $this->breadLinks['из '.$fromCity->caseGen] = '/land/'.$country->code.'/'.$fromCity->code.'/'.$city->code.'/';
+            $this->assignTitle('landFromTo',array('##cityFrom##'=>$fromCity->caseNom,'##cityTo##'=>$city->caseNom,'##cityFromCaseGen##'=>$fromCity->caseGen,'##cityToCaseAcc##'=>$city->caseAcc));
+        }else{
+            $this->assignTitle('landTo',array('##cityTo##'=>$city->caseNom,'##cityToCaseAcc##'=>$city->caseAcc));
+        }
         $this->render('rtflight', array('city' => $city, 'citiesFrom' => $citiesFrom, 'hotelsInfo' => $hotelsInfo, 'fromCity' => $fromCity, 'currentCity' => $currentCity,
             'flightCacheFromCurrent' => $flightCacheFromCurrent,
         ));

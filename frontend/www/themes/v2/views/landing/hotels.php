@@ -59,6 +59,16 @@
 
 </script>
 <div class="headBlockOne">
+    <?php
+    $this->widget('common.components.BreadcrumbsVoyanga', array(
+        'links'=>$this->breadLinks,
+        'separator'=>' &rarr; ',
+        'homeLink'=>CHtml::link('Главная','/'),
+        'htmlOptions' => array(
+            'class' => 'breadcrumbs'
+        )
+    ));
+    ?>
     <div class="center-block">
         <?php if ($citySet): ?>
         <h1>Отели в <?php echo $city->casePre;?></h1>
@@ -68,7 +78,6 @@
         <br/>
     </div>
     <div class="clear"></div>
-
 </div>
 
 <div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
@@ -178,6 +187,14 @@
 <!-- END CENTER BLOCK -->
 <?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
+<?php echo $this->renderPartial('//landing/_citiesList', array('cities' => $countryCities,'isHotels'=>true,'title'=>'Города в '.$countryMorph['caseGen'])); ?>
+<?php if ($citySet && ($city->countAirports > 0)): ?>
+<div class="headBlockOne">
+    <div class="center-block">
+        <h2>Перелеты в город <a href="/land/<?php echo $city->country->code.'/'.$city->code;?>"><?php echo $city->caseNom;?></a></h2>
+    </div>
+</div>
+<?php endif;?>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
         <h2>Что такое Voyanga</h2>

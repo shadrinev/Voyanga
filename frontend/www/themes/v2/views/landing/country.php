@@ -81,9 +81,21 @@
     })
 
 </script>
+
 <div class="headBlockOne">
+    <?php
+    $this->widget('common.components.BreadcrumbsVoyanga', array(
+        'links'=>$this->breadLinks,
+        'separator'=>' &rarr; ',
+        'homeLink'=>CHtml::link('Главная','/'),
+        'htmlOptions' => array(
+            'class' => 'breadcrumbs'
+        )
+    ));
+    ?>
+
     <div class="center-block">
-        <h1>Авиабилеты в <?php echo $countryMorph['caseAcc'];?></h1>
+        <h1>Дешевые авиабилеты в <?php echo $countryMorph['caseAcc'];?></h1>
         <?php if ($citiesFrom): ?>
         <h3>Стоимость из
             <?php
@@ -259,6 +271,7 @@
 
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
 <?php echo $this->renderPartial('//landing/_hotelList', array('city' => (object)$countryMorph, 'hotelsInfo' => $hotelsInfo)); ?>
+<?php echo $this->renderPartial('//landing/_citiesList', array('cities' => $countryCities,'isHotels'=>false,'title'=>'Города в '.$countryMorph['caseGen'])); ?>
 
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">

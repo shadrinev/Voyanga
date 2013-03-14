@@ -73,6 +73,16 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
 
 </script>
 <div class="headBlockOne">
+    <?php
+    $this->widget('common.components.BreadcrumbsVoyanga', array(
+        'links'=>$this->breadLinks,
+        'separator'=>' &rarr; ',
+        'homeLink'=>CHtml::link('Главная','/'),
+        'htmlOptions' => array(
+            'class' => 'breadcrumbs'
+        )
+    ));
+    ?>
     <?php if (!$fromCity): ?>
     <div class="center-block">
         <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
@@ -307,7 +317,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
 </div>
 <!-- END CALENDAR -->
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
-<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo,'hotelsUrl'=>true)); ?>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
         <h2>Что такое Voyanga</h2>

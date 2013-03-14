@@ -3062,6 +3062,29 @@ input.hotel-input {
     padding-top: 25px;
     color: #1d222b;
 }
+.headBlockOne .breadcrumbs{
+    max-width: 960px !important;
+    min-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    top: -15px;
+}
+.headBlockOne .breadcrumbs a{
+    color: #1c81bb;
+    text-decoration: underline;
+}
+.center-block .breadcrumbs{
+    max-width: 960px !important;
+    min-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    top: 10px;
+}
+.center-block .breadcrumbs a{
+    color: #1c81bb;
+    text-decoration: underline;
+}
+
 .headBlockOne .center-block, .headBlockTwo .center-block {
     max-width: 960px !important;
     color: #1d222b;
